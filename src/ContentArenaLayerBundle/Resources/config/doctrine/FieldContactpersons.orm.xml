@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ContentArenaLayerBundle\Entity\FieldContactpersons" table="field_contactpersons">
+    <indexes>
+      <index name="data_exact" columns="data"/>
+      <index name="count" columns="count,pages_id"/>
+      <index name="parent_id" columns="parent_id,pages_id"/>
+      <index name="data" columns="data"/>
+    </indexes>
+    <id name="pagesId" type="integer" column="pages_id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="data" type="text" column="data" length="65535" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="count" type="integer" column="count" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="parentId" type="integer" column="parent_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

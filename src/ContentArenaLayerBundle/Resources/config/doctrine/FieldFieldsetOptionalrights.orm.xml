@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ContentArenaLayerBundle\Entity\FieldFieldsetOptionalrights" table="field_fieldset_optionalrights">
+    <indexes>
+      <index name="data" columns="data"/>
+    </indexes>
+    <id name="pagesId" type="integer" column="pages_id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="data" type="integer" column="data" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

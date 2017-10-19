@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ContentArenaLayerBundle\Entity\FieldMetaImage" table="field_meta_image">
+    <indexes>
+      <index name="data" columns="data"/>
+      <index name="modified" columns="modified"/>
+      <index name="created" columns="created"/>
+      <index name="description" columns="description"/>
+    </indexes>
+    <id name="pagesId" type="integer" column="pages_id"/>
+    <id name="sort" type="integer" column="sort"/>
+    <field name="data" type="string" column="data" length="250" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="description" type="text" column="description" length="65535" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="modified" type="datetime" column="modified" nullable="true"/>
+    <field name="created" type="datetime" column="created" nullable="true"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="ContentArenaLayerBundle\Entity\FieldSystemOptions" table="field_system_options">
+    <indexes>
+      <index name="data" columns="data"/>
+    </indexes>
+    <id name="pagesId" type="integer" column="pages_id"/>
+    <id name="sort" type="integer" column="sort"/>
+    <field name="data" type="integer" column="data" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
