@@ -4,12 +4,9 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 require __DIR__.'/../vendor/autoload.php';
-if (PHP_VERSION_ID < 70000) {
-    include_once __DIR__.'/../var/bootstrap.php.cache';
-}
 
 Debug::enable();
-$kernel = new AppKernel('test', false);
+$kernel = new AppKernel('test', true);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }
