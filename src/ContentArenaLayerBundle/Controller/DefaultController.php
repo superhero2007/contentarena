@@ -12,6 +12,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('ContentArenaLayerBundle:Default:index.html.twig');
+
+        $entities = array();
+        $em = $this->getDoctrine()->getManager();
+        $meta = $em->getMetadataFactory()->getAllMetadata();
+        foreach ($meta as $m) {
+            $entities[] = $m->getName();
+        }
+
+        return $this->render('ContentArenaLayerBundle:Default:index.html.twig', [
+            'entities' => $entities
+        ]);
     }
 }
