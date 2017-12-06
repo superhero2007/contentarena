@@ -12,6 +12,7 @@ parameters:
 framework:
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
+    translator: ~
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -68,3 +69,22 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: info@contentarena.com
+        sender_name: Content Arena
+    registration:
+        confirmation:
+            enabled: false # Must be true when SMTP server is ready.
+            template:   Registration/email.txt.twig
+        form:
+            type: AppBundle\Form\RegistrationFormType
+    service:
+        mailer: fos_user.mailer.twig_swift
+    resetting:
+        email:
+            template:   email/password_resetting.email.twig
