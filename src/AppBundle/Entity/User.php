@@ -64,10 +64,10 @@ class User extends BaseUser
     private $country;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Rol", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Role", inversedBy="roles")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $rol;
+    private $role;
 
 
     /**
@@ -223,13 +223,13 @@ class User extends BaseUser
     }
 
     /**
-     * Set rol
+     * Set role
      *
-     * @param Rol $rol
+     * @param Role $role
      *
      * @return User
      */
-    public function setRol(Country $rol)
+    public function setRol(Role $role)
     {
         $this->rol = $rol;
     }
@@ -241,7 +241,7 @@ class User extends BaseUser
      */
     public function getRol()
     {
-        return $this->rol;
+        return $this->role;
     }
 
 }
