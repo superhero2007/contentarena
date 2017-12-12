@@ -50,6 +50,25 @@ class User extends BaseUser
      */
     protected $companyWebsite;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    protected $title;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="countries")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $country;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Rol", inversedBy="roles")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $rol;
+
 
     /**
      * Get id
@@ -156,5 +175,73 @@ class User extends BaseUser
     {
         return $this->companyWebsite;
     }
-}
 
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return User
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set country
+     *
+     * @param Country $country
+     *
+     * @return User
+     */
+    public function setCountry(Country $country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set rol
+     *
+     * @param Rol $rol
+     *
+     * @return User
+     */
+    public function setRol(Country $rol)
+    {
+        $this->rol = $rol;
+    }
+
+    /**
+     * Get rol
+     *
+     * @return Rol
+     */
+    public function getRol()
+    {
+        return $this->rol;
+    }
+
+}
