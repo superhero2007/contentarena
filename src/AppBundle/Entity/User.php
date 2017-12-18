@@ -58,16 +58,17 @@ class User extends BaseUser
     protected $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="countries")
-     * @ORM\JoinColumn(nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=25)
      */
     private $country;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Role", inversedBy="roles")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile", inversedBy="profiles")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $role;
+    private $profile;
 
 
     /**
@@ -207,7 +208,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setCountry(Country $country)
+    public function setCountry($country)
     {
         $this->country = $country;
     }
@@ -223,15 +224,15 @@ class User extends BaseUser
     }
 
     /**
-     * Set role
+     * Set profile
      *
-     * @param Role $role
+     * @param Profile $profile
      *
      * @return User
      */
-    public function setRol(Role $role)
+    public function setProfile(Profile $profile)
     {
-        $this->rol = $rol;
+        $this->rol = $profile;
     }
 
     /**
@@ -239,9 +240,9 @@ class User extends BaseUser
      *
      * @return Rol
      */
-    public function getRol()
+    public function getProfile()
     {
-        return $this->role;
+        return $this->profile;
     }
 
 }

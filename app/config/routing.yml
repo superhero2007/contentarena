@@ -1,3 +1,8 @@
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 content_arena_layer:
     resource: "@ContentArenaLayerBundle/Controller/"
     type:     annotation
@@ -9,3 +14,18 @@ app:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+api_rest:
+    type: rest
+    resource: ApiBundle\Controller\LoginController
+    prefix:   /v1/auth
+
+api_rest_utils:
+    type: rest
+    resource: ApiBundle\Controller\UtilsController
+    prefix:   /v1/utils

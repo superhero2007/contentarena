@@ -19,6 +19,10 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new ContentArenaLayerBundle\ContentArenaLayerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new ApiBundle\ApiBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

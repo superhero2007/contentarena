@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@ContentArenaLayerBundle/Resources/config/services.yml" }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -64,6 +65,8 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
+    encryption: ssl
+    auth_mode: login
     transport: '%mailer_transport%'
     host: '%mailer_host%'
     username: '%mailer_user%'
@@ -79,7 +82,7 @@ fos_user:
         sender_name: Content Arena
     registration:
         confirmation:
-            enabled: false # Must be true when SMTP server is ready.
+            enabled: true # Must be true when SMTP server is ready.
             template:   Registration/email.txt.twig
         form:
             type: AppBundle\Form\RegistrationFormType
@@ -88,3 +91,22 @@ fos_user:
     resetting:
         email:
             template:   email/password_resetting.email.twig
+
+fos_rest:
+    routing_loader:
+        default_format: json                            # All responses should be JSON formated
+        include_format: false                           # We do not include format in request, so that all responses
+                                                        # will eventually be JSON formated
+
+
+easy_admin:
+    site_name: 'Content Arena'
+    entities:
+            User:
+                class: AppBundle\Entity\User
+                list:
+                    fields: ['id', 'firstName', 'lastName', 'email']
+            Profile:
+                class: AppBundle\Entity\Profile
+            Company:
+                class: AppBundle\Entity\Company

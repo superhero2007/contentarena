@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Country
+ * Rol
  *
- * @ORM\Table(name="country")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CountryRepository")
+ * @ORM\Table(name="profile")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProfileRepository")
  */
-class Country
+class Profile
 {
     /**
      * @var int
@@ -44,7 +44,7 @@ class Country
      *
      * @param string $name
      *
-     * @return Country
+     * @return Rol
      */
     public function setName($name)
     {
@@ -62,7 +62,6 @@ class Country
     {
         return $this->name;
     }
-
 
     public function __toString() {
         return $this->name;
