@@ -67,7 +67,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
      */
     protected $password;
 
