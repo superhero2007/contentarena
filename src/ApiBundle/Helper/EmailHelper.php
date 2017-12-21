@@ -13,7 +13,7 @@ trait EmailHelper
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
-            ->setFrom('info@contentarena.com')
+            ->setFrom('info@contentarena.com', "Content Arena")
             ->setTo($to)
             ->setBody(
                 $this->renderView( $template, $params )
