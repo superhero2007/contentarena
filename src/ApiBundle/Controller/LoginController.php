@@ -9,8 +9,9 @@ use FOS\RestBundle\Controller\FOSRestController;
 class LoginController extends FOSRestController
 {
     use \ApiBundle\Helper\ControllerHelper;
+    use \ApiBundle\Helper\EmailHelper;
 
-    public function getLoginAction()
+    public function postLoginAction()
     {
         $data = array("hello" => "world");
         $view = $this->view($data);
@@ -19,9 +20,6 @@ class LoginController extends FOSRestController
 
     public function postRegisterAction(Request $request)
     {
-
-
-
 
         $user = $this->getDoctrine()
             ->getRepository('AppBundle:User')
@@ -45,23 +43,18 @@ class LoginController extends FOSRestController
         $user->setUsername($request->get("username"));
         $user->setFirstName($request->get("firstName"));
         $user->setLastName($request->get("lastName"));
+        $user->setPhone($request->get("phone"));
         $user->setCompanyLegalName($request->get("companyLegalName"));
         $user->setCompanyWebsite($request->get("companyWebsite"));
         $userManager->updateUser($user);
         //$event = new GetResponseUserEvent($user, $request);
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
-            ->setFrom('send@example.com')
-            ->setTo($request->get("email"))
-            ->setBody(
-                $this->renderView(
-                    'Registration/email.txt.twig',
-                    array('user' => $user, 'confirmationUrl' => 'asd')
-                )
-            )
-        ;
-        $this->get('mailer')->send($message);
+        $this->sendEmail(
+            'Registration/email.txt.twig',
+            'Welcome to Content Arena',
+            $request->get("email"),
+            array('user' => $user, 'confirmationUrl' => 'asd')
+        );
 
         //if (!$user) {
         //    throw $this->createNotFoundException();

@@ -1,0 +1,4 @@
+register:
+    emils:
+        confirmation:
+            header : 'Account confimed'

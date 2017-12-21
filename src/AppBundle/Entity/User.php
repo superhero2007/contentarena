@@ -53,9 +53,23 @@ class User extends BaseUser
     /**
      * @var string
      *
+     * @ORM\Column(name="phone", type="string", length=255)
+     */
+    protected $phone;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    protected $password;
 
     /**
      * @var string
@@ -244,5 +258,40 @@ class User extends BaseUser
     {
         return $this->profile;
     }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+
+
 
 }
