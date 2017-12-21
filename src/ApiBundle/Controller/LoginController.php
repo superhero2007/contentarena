@@ -46,6 +46,7 @@ class LoginController extends FOSRestController
         $user->setPhone($request->get("phone"));
         $user->setCompanyLegalName($request->get("companyLegalName"));
         $user->setCompanyWebsite($request->get("companyWebsite"));
+        $user->setPlainPassword('');
         $userManager->updateUser($user);
         //$event = new GetResponseUserEvent($user, $request);
 

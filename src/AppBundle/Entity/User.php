@@ -67,13 +67,6 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=true)
-     */
-    protected $password;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="country", type="string", length=25)
      */
     private $country;
@@ -273,22 +266,6 @@ class User extends BaseUser
     public function setPhone($phone)
     {
         $this->phone = $phone;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
     }
 
 
