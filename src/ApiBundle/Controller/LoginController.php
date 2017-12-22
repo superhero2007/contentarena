@@ -48,13 +48,13 @@ class LoginController extends FOSRestController
         $user->setCompanyWebsite($request->get("companyWebsite"));
         $user->setPlainPassword('');
         $userManager->updateUser($user);
-        //$event = new GetResponseUserEvent($user, $request);
+        $confirmationUrl = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $this->sendEmail(
             'Registration/email.txt.twig',
             'Welcome to Content Arena',
             $request->get("email"),
-            array('user' => $user, 'confirmationUrl' => 'asd')
+            array('user' => $user, 'confirmationUrl' => $confirmationUrl)
         );
 
         //if (!$user) {
