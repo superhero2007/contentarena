@@ -5,6 +5,8 @@ namespace ApiBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use FOS\UserBundle\FOSUserEvents;
 
 class LoginController extends FOSRestController
 {
@@ -35,6 +37,8 @@ class LoginController extends FOSRestController
         /** @var $userManager UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
 
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+
         $user = $userManager->createUser();
         $user->setEnabled(true);
         $user->setEmail($request->get("email"));
@@ -47,8 +51,14 @@ class LoginController extends FOSRestController
         $user->setCompanyLegalName($request->get("companyLegalName"));
         $user->setCompanyWebsite($request->get("companyWebsite"));
         $user->setPlainPassword('');
+        if (null === $user->getConfirmationToken()) {
+            $user->setConfirmationToken($tokenGenerator->generateToken());
+        }
+
         $userManager->updateUser($user);
-        $confirmationUrl = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+
+
+        $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $this->sendEmail(
             'Registration/email.txt.twig',
