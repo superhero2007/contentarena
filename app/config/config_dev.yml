@@ -11,6 +11,11 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+twig:
+    globals:
+        frontend_url : 'http://localhost:8200/content-arena-pwire/'
+
+
 monolog:
     handlers:
         main:

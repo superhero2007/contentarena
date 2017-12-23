@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use FOS\UserBundle\FOSUserEvents;
 
 class LoginController extends FOSRestController
 {
