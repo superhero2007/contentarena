@@ -4,12 +4,25 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping\AttributeOverrides;
+use Doctrine\ORM\Mapping\AttributeOverride;
 
 /**
  * User
  *
  * @ORM\Table(name="`user`")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @AttributeOverrides({
+ *     @AttributeOverride(name="password",
+ *         column=@ORM\Column(
+ *             name="password",
+ *             type="string",
+ *             length=255,
+ *             unique=false,
+ *             nullable=true
+ *         )
+ *     )
+ * })
  */
 class User extends BaseUser
 {
@@ -76,6 +89,59 @@ class User extends BaseUser
      * @ORM\JoinColumn(nullable=true)
      */
     private $profile;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="unconfirmed_checked", type="boolean", nullable=true)
+     */
+    protected $unconfirmedChecked = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="approved", type="boolean")
+     */
+    protected $approved = false;
+
+
+    /**
+     * @ORM\Column(name="registered_at", type="datetime", nullable=true)
+     */
+    protected $registeredAt;
+
+    /**
+     * @return mixed
+     */
+    public function getRegisteredAt()
+    {
+        return $this->registeredAt;
+    }
+
+    /**
+     * @param mixed $registered_at
+     */
+    public function setRegisteredAt($registeredAt)
+    {
+        $this->registeredAt = $registeredAt;
+    }
+
+
+    /**
+     * @return boolean
+     */
+    public function isUnconfirmedChecked()
+    {
+        return $this->unconfirmedChecked;
+    }
+
+    /**
+     * @param boolean $unconfirmedChecked
+     */
+    public function setUnconfirmedChecked($unconfirmedChecked)
+    {
+        $this->unconfirmedChecked = $unconfirmedChecked;
+    }
 
 
     /**
@@ -266,6 +332,22 @@ class User extends BaseUser
     public function setPhone($phone)
     {
         $this->phone = $phone;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isApproved()
+    {
+        return $this->approved;
+    }
+
+    /**
+     * @param boolean $approved
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
     }
 
 

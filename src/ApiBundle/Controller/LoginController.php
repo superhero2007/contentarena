@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class LoginController extends FOSRestController
 {
@@ -39,7 +40,7 @@ class LoginController extends FOSRestController
         $tokenGenerator = $this->get('fos_user.util.token_generator');
 
         $user = $userManager->createUser();
-        $user->setEnabled(true);
+        $user->setEnabled(false);
         $user->setEmail($request->get("email"));
         $user->setTitle($request->get("title"));
         $user->setCountry($request->get("country"));
@@ -47,6 +48,7 @@ class LoginController extends FOSRestController
         $user->setFirstName($request->get("firstName"));
         $user->setLastName($request->get("lastName"));
         $user->setPhone($request->get("phone"));
+        $user->setRegisteredAt(new \DateTime());
         $user->setCompanyLegalName($request->get("companyLegalName"));
         $user->setCompanyWebsite($request->get("companyWebsite"));
         $user->setPlainPassword('');
