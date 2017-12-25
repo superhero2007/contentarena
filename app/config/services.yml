@@ -38,3 +38,9 @@ services:
             class: AppBundle\Form\RegistrationFormType
             tags:
                 - { name: form.type }
+
+    app_bundle.registration_confirmed:
+        class: AppBundle\EventListener\RegisterConfirmationSuccess
+        arguments: ['@twig','@mailer']
+        tags:
+            - { name: kernel.event_subscriber }

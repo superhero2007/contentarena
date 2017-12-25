@@ -1,0 +1,12 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body_text %}
+{% autoescape false %}
+A reminder to activate the account was sent to the user:
+
+Name: {{ user.firstName }} {{ user.lastName }}
+Email: {{ user.email }}
+Company: {{ user.companyLegalName }}
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

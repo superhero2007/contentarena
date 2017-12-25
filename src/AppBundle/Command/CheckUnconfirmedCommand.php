@@ -55,6 +55,19 @@ class CheckUnconfirmedCommand extends ContainerAwareCommand
             ;
             $this->getContainer()->get('mailer')->send($message);
 
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Content Arena Reminders')
+                ->setFrom('noreply@contentarena.com', "Content Arena Admin")
+                ->setTo('info@contentarena.com')
+                ->setBody(
+                    $this->getContainer()->get('templating')->render(
+                        'Registration/unconfirmed_admin_reminder.txt.twig',
+                        array('user' => $user )
+                    )
+                )
+            ;
+            $this->getContainer()->get('mailer')->send($message);
+
             $user->setUnconfirmedChecked( true );
 
             $userManager->updateUser($user);

@@ -119,7 +119,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $registered_at
+     * @param mixed $registeredAt
      */
     public function setRegisteredAt($registeredAt)
     {
