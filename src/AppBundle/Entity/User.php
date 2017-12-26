@@ -91,6 +91,12 @@ class User extends BaseUser
     private $profile;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserStatus", inversedBy="statuses")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $status;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="unconfirmed_checked", type="boolean", nullable=true)
@@ -348,6 +354,22 @@ class User extends BaseUser
     public function setApproved($approved)
     {
         $this->approved = $approved;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
 

@@ -105,8 +105,12 @@ easy_admin:
             User:
                 class: AppBundle\Entity\User
                 list:
-                    fields: ['id', 'firstName', 'lastName', 'email']
+                    fields: ['id', 'firstName', 'lastName', 'email', 'approved', 'profile']
+                    actions: ['createCompany']
             Profile:
                 class: AppBundle\Entity\Profile
             Company:
                 class: AppBundle\Entity\Company
+
+            Status:
+                class: AppBundle\Entity\UserStatus

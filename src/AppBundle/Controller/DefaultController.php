@@ -18,4 +18,11 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
+
+    /**
+     * @Route("/genus/feed", name="genus_feed")
+     */
+    public function feedAction(Request $request)
+    {
+    }
 }
