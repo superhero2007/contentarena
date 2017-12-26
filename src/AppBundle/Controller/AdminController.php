@@ -23,10 +23,16 @@ class AdminController extends BaseAdminController
         // change the properties of the given entity and save the changes
         $id = $this->request->query->get('id');
         $entity = $this->em->getRepository('AppBundle:User')->find($id);
-        $entity->setApproved(true);
-        $this->em->flush();
 
-        $company =  new \AppBundle\Entity\Company();
+        $company = $this->em->getRepository('AppBundle:Company')->findBylegalName($entity->getCompanyLegalName());
+
+        if ( $company == null ) {
+            $company =  new \AppBundle\Entity\Company();
+            $company->setLegalName($entity->getCompanyLegalName());
+            $company->setWebsite($entity->getCompanyWebsite());
+            $this->em->persist($company);
+            $this->em->flush();
+        }
 
         // redirect to the 'list' view of the given entity
       /*  return $this->redirectToRoute('easyadmin', array(
@@ -36,8 +42,9 @@ class AdminController extends BaseAdminController
 
         // redirect to the 'edit' view of the given entity item
         return $this->redirectToRoute('easyadmin', array(
-            'action' => 'new',
-            'entity' => 'Company',
+            'action' => 'edit',
+            'id' => $company->getId(),
+            'entity' => 'Company'
         ));
     }
 }

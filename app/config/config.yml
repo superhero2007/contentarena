@@ -106,7 +106,10 @@ easy_admin:
                 class: AppBundle\Entity\User
                 list:
                     fields: ['id', 'firstName', 'lastName', 'email', 'approved', 'profile']
-                    actions: ['createCompany']
+                    actions:
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+                        - { name: 'createCompany' }
             Profile:
                 class: AppBundle\Entity\Profile
             Company:

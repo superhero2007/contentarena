@@ -10,4 +10,18 @@ namespace AppBundle\Repository;
  */
 class CompanyRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByLegalName($name)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where($qb->expr()->orX(
+                $qb->expr()->like('u.legalName', ':name')
+            ))
+            ->setParameter('name', '%"'.$name.'"%');
+
+        return $qb->getQuery()->getResult();
+    }
+
 }
