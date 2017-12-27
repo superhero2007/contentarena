@@ -13,14 +13,14 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
 
     public function findByLegalName($name)
     {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('u')
-            ->from($this->_entityName, 'u')
-            ->where($qb->expr()->orX(
-                $qb->expr()->like('u.legalName', ':name')
-            ))
-            ->setParameter('name', '%"'.$name.'"%');
 
+var_dump($name);
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('c')
+            ->from($this->_entityName, 'c')
+            ->where( 'c.legalName = :legalName')
+            ->setParameter('legalName', $name );
+        var_dump($qb->getQuery()->getSQL());
         return $qb->getQuery()->getResult();
     }
 

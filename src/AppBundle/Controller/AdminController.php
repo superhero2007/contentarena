@@ -24,14 +24,18 @@ class AdminController extends BaseAdminController
         $id = $this->request->query->get('id');
         $entity = $this->em->getRepository('AppBundle:User')->find($id);
 
-        $company = $this->em->getRepository('AppBundle:Company')->findBylegalName($entity->getCompanyLegalName());
+        $company_results = $this->em->getRepository('AppBundle:Company')->findBylegalName($entity->getCompanyLegalName());
 
-        if ( $company == null ) {
+
+
+        if ( $company_results == null || count($company_results) == 0) {
             $company =  new \AppBundle\Entity\Company();
             $company->setLegalName($entity->getCompanyLegalName());
             $company->setWebsite($entity->getCompanyWebsite());
             $this->em->persist($company);
             $this->em->flush();
+        } else {
+            $company = $company_results[0];
         }
 
         // redirect to the 'list' view of the given entity
