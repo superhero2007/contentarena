@@ -9,7 +9,7 @@ body {
 }
 
 .page-home{
-    padding: 40px;
+    padding-top: 40px;
     text-align: center;
 }
 
@@ -36,6 +36,38 @@ body {
 .landing-message label {
     width: 100%;
 
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    background-color: #052e44;
+    font-family: 'Roboto Condensed',sans-serif;
+}
+
+.footer .logo, .footer .content, .footer .social{
+    flex: 1;
+}
+
+.footer .content{
+    width: calc(100%*2/3.001);
+    color: rgba(255,255,255,.7);
+}
+
+.footer .logo, .footer .social{
+    width: calc(100%*1/6.001);
+}
+
+.footer .logo img {
+    max-width: 150px;
+}
+
+.footer .logo {
+    padding: 0;
+}
+
+.footer .content a {
+    color: #ffffff;
 }
 
 input {
