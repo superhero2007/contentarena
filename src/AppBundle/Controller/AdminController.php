@@ -32,6 +32,7 @@ class AdminController extends BaseAdminController
             $company =  new \AppBundle\Entity\Company();
             $company->setLegalName($entity->getCompanyLegalName());
             $company->setWebsite($entity->getCompanyWebsite());
+            $company->setOwner($entity);
             $this->em->persist($company);
             $this->em->flush();
         } else {

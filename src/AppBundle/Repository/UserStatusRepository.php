@@ -10,4 +10,16 @@ namespace AppBundle\Repository;
  */
 class UserStatusRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByName($name)
+    {
+
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('c')
+            ->from($this->_entityName, 'c')
+            ->where( 'c.name = :name')
+            ->setParameter('name', $name );
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 }

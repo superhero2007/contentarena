@@ -1,0 +1,13 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body_text %}
+{% autoescape false %}
+Congratulations!
+
+Your company {{ company.legalName }} has been registered successfully and it's ready to operate in Content Arena!
+
+    Enter the following link to set up your password for your account:
+
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

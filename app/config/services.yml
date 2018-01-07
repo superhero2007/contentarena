@@ -44,3 +44,9 @@ services:
         arguments: ['@twig','@mailer']
         tags:
             - { name: kernel.event_subscriber }
+
+    app_bundle.admin_edit_action:
+        class: AppBundle\EventListener\AdminEditAction
+        arguments: ['@twig','@mailer']
+        tags:
+            - { name: kernel.event_subscriber }

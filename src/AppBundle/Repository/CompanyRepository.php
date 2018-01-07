@@ -14,7 +14,6 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
     public function findByLegalName($name)
     {
 
-var_dump($name);
         $qb = $this->_em->createQueryBuilder();
         $qb->select('c')
             ->from($this->_entityName, 'c')

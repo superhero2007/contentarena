@@ -19,3 +19,5 @@
 .DS_Store
 /npm-debug.log
 /bin/*.tmp
+/web/phpinfo.php
+/web/app_dev.php
