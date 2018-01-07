@@ -1,7 +1,7 @@
 api:
     resource: "@ApiBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /v1
 
 content_arena_layer:
     resource: "@ContentArenaLayerBundle/Controller/"

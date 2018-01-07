@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/app/css/main.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/layout.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/inherited.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/app/javascript/main.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body class="page-home main-page-home">
+
+    <div id="mainmenuLandingpage" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; top: 200; animation: uk-animation-slide-top" class="mainnavbar-sticky uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 534px;">
+        <nav class="uk-navbar-container uk-container uk-navbar-transparent uk-navbar uk-navbar-sticky" uk-navbar="">
+            <div class="uk-navbar-left">
+                <div class="">
+                    <a class="uk-navbar-item uk-logo mainMenuLogo" href="{{ path('homepage') }}">
+                        <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}" alt="Content Arena  Pte Ltd. 2017" class="uk-responsive-height">
+                    </a>
+                </div>
+            </div>
+            <div class="uk-navbar-right">
+                <div class="uk-visible@m">
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a href="{{ path('homepage') }}" uk-scroll="offset:200">
+                                <i uk-icon="icon: triangle-down" class="uk-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
+                                </i>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('sell') }}" uk-scroll="offset:200">
+                                <i uk-icon="icon: triangle-down" class="uk-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
+                                </i>
+                                Sell
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('buy') }}" uk-scroll="offset:200">
+                                <i uk-icon="icon: triangle-down" class="uk-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
+                                </i>
+                                Buy
+                            </a>
+                        </li>
+                        <li>
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <a href="{{ path('profile') }}"  uk-scroll="offset:200">
+                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <a href="{{ path('fos_user_security_logout') }}"  uk-scroll="offset:200">
+                                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                            {% else %}
+                                <a href="{{ path('fos_user_security_login') }}"  uk-scroll="offset:200">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <ul class="uk-navbar-nav uk-hidden@m">
+                    <li><a href="#mainMenuOffCanvas" uk-toggle=""><span class="menubuttontext uk-margin-small-right uk-text-uppercase"> Menu</span> <span uk-icon="icon: menu" class="uk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <rect x="2" y="4" width="16" height="1"></rect> <rect x="2" y="9" width="16" height="1"></rect> <rect x="2" y="14" width="16" height="1"></rect></svg></span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="main-content">
+            {% block main_content %}
+            {% endblock main_content %}
+        </div>
+
+        <div class="footer">
+            <div class="logo">
+                <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}">
+            </div>
+            <div class="content">
+                <p class="footerInfo uk-margin"><span class="footerCompanyName">Content Arena  Pte Ltd. 2017</span>
+                    <span> <a href="https://contentarena.com/web/privacy-policy/">Privacy Policy</a></span>
+                    <span> <a href="https://contentarena.com/web/terms-of-use/">Terms of Use</a></span>
+                    <span> <a href="https://contentarena.com/web/cookie-policy/">Cookie Policy</a></span>
+                </p>
+            </div>
+            <div class="social">
+                <ul class="uk-list">
+                    <li><a href=" https://www.linkedin.com/company/11294986/" target="_blank" class="uk-icon-button uk-icon" uk-icon="icon: linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <path d="M5.77,17.89 L5.77,7.17 L2.21,7.17 L2.21,17.89 L5.77,17.89 L5.77,17.89 Z M3.99,5.71 C5.23,5.71 6.01,4.89 6.01,3.86 C5.99,2.8 5.24,2 4.02,2 C2.8,2 2,2.8 2,3.85 C2,4.88 2.77,5.7 3.97,5.7 L3.99,5.7 L3.99,5.71 L3.99,5.71 Z"></path> <path d="M7.75,17.89 L11.31,17.89 L11.31,11.9 C11.31,11.58 11.33,11.26 11.43,11.03 C11.69,10.39 12.27,9.73 13.26,9.73 C14.55,9.73 15.06,10.71 15.06,12.15 L15.06,17.89 L18.62,17.89 L18.62,11.74 C18.62,8.45 16.86,6.92 14.52,6.92 C12.6,6.92 11.75,7.99 11.28,8.73 L11.3,8.73 L11.3,7.17 L7.75,7.17 C7.79,8.17 7.75,17.89 7.75,17.89 L7.75,17.89 L7.75,17.89 Z"></path></svg></a></li>
+                    <li><a href="mailto:info@contentarena.com" class="emo_email uk-icon-button uk-icon" uk-icon="icon: mail"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polyline fill="none" stroke="#000" points="1.4,6.5 10,11 18.6,6.5"></polyline> <path d="M 1,4 1,16 19,16 19,4 1,4 Z M 18,15 2,15 2,5 18,5 18,15 Z"></path></svg></a></li>
+                </ul>
+            </div>
+        </div>
+
+    </body>
+</html>
