@@ -11,6 +11,7 @@ namespace AppBundle\EventListener;
 use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use AppBundle\Entity\Company;
 
 /**
  * Listener responsible to change the redirection at the end of the password resetting
@@ -39,6 +40,9 @@ class AdminEditAction implements EventSubscriberInterface
     public function onPostEdit($obj)
     {
         $company = $obj->getArgument('entity');
+
+        if ( !$company instanceof Company ) return;
+
         $em = $obj->getArgument('em');
         $owner = $company->getOwner();
 
