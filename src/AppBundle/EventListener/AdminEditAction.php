@@ -50,6 +50,7 @@ class AdminEditAction implements EventSubscriberInterface
             $userStatus = $em->getRepository('AppBundle:UserStatus')->findByName("Registration Data Sent");
 
             if ( $userStatus != null ) $owner->setStatus($userStatus);
+            $owner->setApproved(true);
             $em->persist($owner);
             $em->flush();
 
