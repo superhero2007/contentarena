@@ -52,6 +52,7 @@ class AdminEditAction implements EventSubscriberInterface
              * Update user status
              */
             $userStatus = $em->getRepository('AppBundle:UserStatus')->findByName("Registration Data Sent");
+            $emailContent = $em->getRepository('AppBundle:EmailContent')->findBySlug("company_registered_owner");
 
             if ( $userStatus != null ) $owner->setStatus($userStatus);
             $owner->setApproved(true);
@@ -68,7 +69,7 @@ class AdminEditAction implements EventSubscriberInterface
                 ->setBody(
                     $this->twig->render(
                         'Registration/company_registered_owner.txt.twig',
-                        array('company' => $company )
+                        array('company' => $company, 'content'=> $emailContent  )
                     )
                 )
             ;

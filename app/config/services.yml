@@ -29,6 +29,10 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\DataFixtures\:
+        resource: '../../src/AppBundle/DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
@@ -41,7 +45,13 @@ services:
 
     app_bundle.registration_confirmed:
         class: AppBundle\EventListener\RegisterConfirmationSuccess
-        arguments: ['@twig','@mailer']
+        arguments: ['@twig','@mailer', '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app_bundle.resettin_password_completed:
+        class: AppBundle\EventListener\ResetPasswordSuccess
+        arguments: ['@twig','@mailer', '@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_subscriber }
 

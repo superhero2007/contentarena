@@ -140,3 +140,13 @@ easy_admin:
 
             Status:
                 class: AppBundle\Entity\UserStatus
+            EmailContent:
+                class: AppBundle\Entity\EmailContent
+                label: 'Email Content'
+                list:
+                    fields: ['slug', 'description', 'content']
+                    actions:
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+                form:
+                    fields: ['slug', 'description', 'content']
