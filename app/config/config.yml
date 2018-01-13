@@ -57,7 +57,8 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #path: '%database_path%'
-
+        mapping_types:
+            enum: string
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -140,6 +141,38 @@ easy_admin:
 
             Status:
                 class: AppBundle\Entity\UserStatus
+            RightsPackage:
+                class: AppBundle\Entity\RightsPackage
+                label: 'Rights Package'
+                list:
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+                form:
+                    fields:
+                        - 'name'
+            Rights:
+                class: AppBundle\Entity\Rights
+                label: 'Rights'
+                list:
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+            RightsItemContent:
+                class: AppBundle\Entity\RightsItemContent
+                label: 'Rights Items'
+                form:
+                    label: 'Rights Items'
+                    fields: ['name', 'form_content', 'contract_content', 'description']
+                list:
+                    label: 'Rights Items'
+                    fields: ['name', 'form_content', 'contract_content', 'description']
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
             EmailContent:
                 class: AppBundle\Entity\EmailContent
                 label: 'Email Content'
