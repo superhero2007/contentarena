@@ -70,7 +70,7 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                     for ($x = 0; $x < count($content[$i][2]); $x++) {
 
                         $data = $manager->getRepository("AppBundle:RightsItemContent")->findOneBy( array('name' => $content[$i][2][$x] ));
-                        $items[] = $data;
+                        if ($data != null ) $items[] = $data;
                     }
                 }
 
