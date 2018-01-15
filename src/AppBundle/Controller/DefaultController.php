@@ -67,9 +67,20 @@ class DefaultController extends Controller
     {
 
         $user = $this->getUser();
+
+        $packages = $this->getDoctrine()
+            ->getRepository('AppBundle:RightsPackage')
+            ->findAll();
+
+        $rights = $this->getDoctrine()
+            ->getRepository('AppBundle:Rights')
+            ->findAll();
+
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'user' => $user
+        return $this->render('sell/sell.html.twig', [
+            'user' => $user,
+            'packages' => $packages,
+            'rights' => $rights
         ]);
 
     }

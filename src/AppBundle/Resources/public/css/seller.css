@@ -1,0 +1,65 @@
+.seller-box {
+    background: white;
+    color: grey;
+    text-transform: capitalize;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.seller-box-title {
+    background: darkslategrey;
+    padding: 7px 15px;
+    border: 1px solid black;
+    color: white;
+    text-align: left;
+    font-size: 80%;
+}
+
+.seller-box-content {
+    font-size: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    border: 1px solid black;
+    border-top: none;
+    justify-content: flex-start;
+    padding: 15px;
+}
+
+.select-box-item {
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    height: 25px;
+}
+
+.select-box-item-full {
+    width: 100%;
+}
+
+.select-box-item-label {
+    display: flex;
+    align-items: center;
+    padding-top: 2px;
+}
+
+.select-box-item-container {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.select-box-item-title{
+    text-align: left;
+    font-weight: bold;
+}
+
+.select-box-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.select-box-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0 10px;
+}
+

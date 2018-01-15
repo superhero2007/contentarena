@@ -13,6 +13,12 @@
             <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/app/javascript/main.js') }}"></script>
         {% endblock %}
+
+        <script>
+            var hosturl = "{{ path('homepage')|escape('js') }}";
+            console.log(hosturl)
+        </script>
+
     </head>
     <body class="page-home main-page-home">
 
@@ -68,6 +74,13 @@
                                 <a href="{{ path('fos_user_security_login') }}"  uk-scroll="offset:200">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
                             {% endif %}
                         </li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li>
+                                <a href="{{ path('admin') }}"  uk-scroll="offset:200">
+                                    Admin
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <ul class="uk-navbar-nav uk-hidden@m">

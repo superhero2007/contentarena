@@ -19,5 +19,25 @@ class UtilsController extends FOSRestController
         return $this->handleView($view);
     }
 
+    public function getPackagesAction()
+    {
 
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:RightsPackage')
+            ->findAll();
+
+        $view = $this->view($user);
+        return $this->handleView($view);
+    }
+
+    public function getRightsAction()
+    {
+
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:Rights')
+            ->findAll();
+
+        $view = $this->view($user);
+        return $this->handleView($view);
+    }
 }

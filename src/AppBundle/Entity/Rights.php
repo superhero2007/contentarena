@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * Rights
@@ -39,8 +40,11 @@ class Rights
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", inversedBy="rights")
-     * @JoinTable(name="rights_package_join")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage")
+     * @JoinTable(name="rights_package_join"),
+     *      joinColumns={@JoinColumn(name="rights_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="rights_package_id", referencedColumnName="id")}
+     *      )
      */
     private $packages;
 
@@ -52,7 +56,6 @@ class Rights
     private $definition;
 
     /**
-     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsItemContent", inversedBy="rights")
      * @JoinTable(name="rights_items_join")
      */
@@ -204,8 +207,6 @@ class Rights
     {
         $this->all_enabled = $all_enabled;
     }
-
-
 
 
     public function __toString() {

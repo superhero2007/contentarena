@@ -1,0 +1,79 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/seller.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block main_content %}
+    <p>
+
+        Sell screen step 2
+
+    </p>
+
+    <div class="seller-box">
+        <div class="seller-box-title">
+            Pick rights
+        </div>
+        <div class="seller-box-content">
+            {% for package in packages %}
+                <div class="select-box-item">
+                    <div class="select-box-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="select-box-item-label">
+                        {{ package.name|e }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="seller-box">
+        <div class="seller-box-title">
+            Specify
+        </div>
+        <div class="seller-box-content">
+            {% for right in rights %}
+                <div class="select-box-item-container">
+
+                    <div class="select-box-item-title">
+                        {{ right.name }}
+                    </div>
+
+                    {% if right.allEnabled %}
+                        <div class="select-box-item select-box-item-full">
+                            <div class="select-box-checkbox">
+                                <input type="checkbox">
+                            </div>
+                            <div class="select-box-item-label">
+                                All
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% for item in right.items %}
+                        <div class="select-box-item select-box-item-full">
+                            <div class="select-box-checkbox">
+                                <input type="checkbox">
+                            </div>
+                            <div class="select-box-item-label">
+                                {{ item.formContent|e }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell.js') }}"></script>
+    {% endblock %}
+
+{% endblock main_content %}
+

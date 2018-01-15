@@ -29,16 +29,6 @@ class RightsPackage
      */
     private $name;
 
-    /**
-     * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Rights", mappedBy="packages")
-     */
-    private $rights;
-
-
-    public function __construct() {
-        $this->rights = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -78,21 +68,6 @@ class RightsPackage
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRights()
-    {
-        return $this->rights;
-    }
-
-    /**
-     * @param mixed $rights
-     */
-    public function setRights($rights)
-    {
-        $this->rights = $rights;
-    }
 
 
 }

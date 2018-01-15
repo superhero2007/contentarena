@@ -54,6 +54,8 @@ body {
     font-size: 18px;
     font-weight: normal;
     line-height: 1.5;
+    background-color: #052e44;
+    padding-bottom: 100px;
 }
 
 .footer {
