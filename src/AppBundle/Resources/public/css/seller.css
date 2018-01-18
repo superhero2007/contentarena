@@ -99,3 +99,7 @@
 .sell-buttons-container {
     margin: 10px 10px;
 }
+
+.disabled{
+    color: lightgrey;
+}
