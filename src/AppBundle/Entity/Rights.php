@@ -136,6 +136,17 @@ class Rights
         return $this->packages;
     }
 
+    public function getPackagesIds()
+    {
+        $ids = [];
+
+        foreach ($this->packages as $key => $val){
+            $ids[] = $val->getId();
+        }
+
+        return $ids;
+    }
+
     /**
      * @param mixed $packages
      */

@@ -16,6 +16,10 @@
     font-size: 80%;
 }
 
+.seller-box-title span{
+    font-weight: bold;
+}
+
 .seller-box-content {
     font-size: 80%;
     display: flex;
@@ -29,23 +33,31 @@
 .select-box-item {
     display: flex;
     flex-direction: row;
-    width: 25%;
+    /*width: 25%;*/
     height: 25px;
+    min-width: 250px;
 }
 
 .select-box-item-full {
     width: 100%;
+    height: auto;
 }
 
 .select-box-item-label {
     display: flex;
     align-items: center;
     padding-top: 2px;
+    flex-wrap: wrap;
+    margin: 2px;
+    text-transform: none;
+    width: 100%;
 }
 
 .select-box-item-container {
     width: 50%;
     margin-bottom: 20px;
+    min-width: 400px;
+    display: none;
 }
 
 .select-box-item-title{
@@ -63,3 +75,27 @@
     margin: 0 10px;
 }
 
+.select-box-item-label input[type="text"] {
+    margin: 0 5px;
+    padding: 2px;
+}
+
+.select-box-item-label textarea{
+    width: 100% !important;
+    min-height: 100px;
+    padding: 7px;
+    max-width: 300px;
+}
+
+.is-hidden,.package-ready-button{
+    display: none;
+}
+
+.standard-button{
+    color: darkslategray;
+    border-radius: 5px;
+}
+
+.sell-buttons-container {
+    margin: 10px 10px;
+}

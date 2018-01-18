@@ -80,7 +80,8 @@ class DefaultController extends Controller
         return $this->render('sell/sell.html.twig', [
             'user' => $user,
             'packages' => $packages,
-            'rights' => $rights
+            'rights' => $rights,
+            'price' => 4
         ]);
 
     }

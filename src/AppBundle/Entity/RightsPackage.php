@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="rights_package")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RightsPackageRepository")
  */
-class RightsPackage
+class RightsPackage extends \AppBundle\Helper\SerializerHelper
 {
     /**
      * @var int
@@ -28,6 +28,22 @@ class RightsPackage
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
+    /**
+     * One Category has Many Categories.
+     * @ORM\ManyToMany(targetEntity="RightsPackage", inversedBy="parent")
+     */
+    private $children;
+
+    /**
+     * Many Categories have One Category.
+     * @ORM\ManyToMany(targetEntity="RightsPackage", mappedBy="children")
+     */
+    private $parent;
+
+    public function __construct() {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -66,6 +82,38 @@ class RightsPackage
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param mixed $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
     }
 
 

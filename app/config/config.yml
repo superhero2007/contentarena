@@ -145,6 +145,9 @@ easy_admin:
                 class: AppBundle\Entity\RightsPackage
                 label: 'Rights Package'
                 list:
+                    fields:
+                        - 'name'
+                        - 'children'
                     actions:
                         - { name: 'show', icon: 'eye', label: '' }
                         - { name: 'edit', icon: 'pencil', label: '' }
@@ -152,6 +155,7 @@ easy_admin:
                 form:
                     fields:
                         - 'name'
+                        - 'children'
             Rights:
                 class: AppBundle\Entity\Rights
                 label: 'Rights'
