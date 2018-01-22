@@ -1,3 +1,9 @@
 register:
     email:
         test: 'Account confimedasd'
+
+sell:
+    step1:
+        event:
+            description:
+                placeholder: 'Describe your sports event(s) here. E.g. competition details, history, viewing rates - anything that potential buyers may find interesting(5000 characters maximum)'

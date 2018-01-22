@@ -1,13 +1,13 @@
 <div class="select-box-item-container {% for id in right.packagesIds %}has-package-{{ id }} {% endfor %}{% if right.packagesIds|length > 1 %} has-many-packages{% endif %}">
 
-    <div class="select-box-item-title">
-        {{ right.name }}
+    <div class="select-box-item-title" {% if right.definition %}title="{{ right.definition }}"{% endif %}>
+        {{ right.name }} {% if right.definition %}<i class="fa fa-info-circle" aria-hidden="true"></i>{% endif %}
     </div>
 
     {% if right.allEnabled %}
-        <div class="select-box-item select-box-item-full">
+        <div class="select-box-item select-box-item-full all-type">
             <div class="select-box-checkbox">
-                <input type="checkbox">
+                <input type="checkbox" class="unselect-others">
             </div>
             <div class="select-box-item-label">
                 All
@@ -18,7 +18,7 @@
     {% for item in right.items %}
         <div class="select-box-item select-box-item-full">
             <div class="select-box-checkbox">
-                <input type="checkbox">
+                <input type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
             </div>
             <div class="select-box-item-label">
                 {{ item.formContent|rightItem | raw}}

@@ -38,6 +38,20 @@ $(function () {
         $("#price-sell-box .select-box-item-container").show();
     }
 
+    function addLanguageBehaviour(){
+        $('.uls-trigger').uls({
+            onSelect: function (language) {
+                var languageName = $.uls.data.getAutonym(language);
+                var el = $('.uls-trigger');
+                el.val(languageName);
+                el.after("<input class='uls-trigger' placeholder='Select language' />");
+                el.removeClass("uls-trigger");
+                addLanguageBehaviour();
+            },
+            quickList: ['en','fr', 'es']
+        });
+    }
+
 
     $(".package-selector").change(function () {
 
@@ -96,5 +110,45 @@ $(function () {
         });
     });
 
+    $("#select-event").click(function(){
+        $("#step1-event").show();
+        $("#step1-non-event").hide();
+        $(this).addClass("standard-button-active");
+        $("#select-non-event").removeClass("standard-button-active");
+    });
+
+    $("#select-non-event").click(function(){
+        $("#step1-non-event").show();
+        $("#step1-event").hide();
+        $(this).addClass("standard-button-active");
+        $("#select-event").removeClass("standard-button-active");
+    });
+
+    $(".go-to-rights").click(function(){
+        $("#step2").show();
+        $("#step1").hide();
+    });
+
+    $(".has-datepicker").datepicker();
+
+    $(".unselect-others").change(function(){
+
+        var _this = this;
+
+        $.each($(this).parent().parent().siblings(), function (k, item) {
+            if ( _this != item ) $(item).find("input").attr("checked", false);
+        });
+    });
+
+    $(".unselect-all").change(function(){
+
+        $.each($(this).parent().parent().siblings(), function (k, item) {
+            if ( $(item).hasClass('all-type') ) $(item).find("input").attr("checked", false);
+        });
+    });
+
+    $( document ).tooltip();
+
+    addLanguageBehaviour();
 
 });

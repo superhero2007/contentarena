@@ -4,192 +4,22 @@
 
     {{ parent() }}
     <link href="{{ asset('bundles/app/css/seller.css') }}" type="text/css" rel="stylesheet" />
+
+    {{ include('statics/language.css.html.twig', { }) }}
+
 {% endblock %}
 
 {% block main_content %}
-    <p>
 
-        Sell screen step 2
+    {{ include('sell/step1.html.twig', { }) }}
 
-    </p>
-
-    <div class="seller-box">
-        <div class="seller-box-title">
-            Pick rights
-        </div>
-        <div id="packages" class="seller-box-content" >
-            {% for package in packages %}
-                <div class="select-box-item" >
-                    <div class="select-box-checkbox">
-                        <input type="checkbox"
-                               class="package-selector"
-                               id="package-{{ package.id }}"
-                               name="package-{{ package.name }}"
-                               data-packages="{{ package.serializer }}">
-                    </div>
-                    <div class="select-box-item-label">
-                        {{ package.name|e }}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <div class="sell-buttons-container">
-        <button id="reset-packages" class="uk-button standard-button package-ready-button">Reset package selection</button>
-        <button id="create-packages" class="uk-button standard-button ">Create new package</button>
-    </div>
-
-    <div id="main-sell-box" class="seller-box sell-items-box is-hidden">
-        <div class="seller-box-title">
-            Specify <span class="">collectively</span>
-        </div>
-        <div class="seller-box-content">
-            {% for right in rights %}
-                {% if right.packagesIds|length > 1 %}
-                    {{ include('sell/right.html.twig', { 'right': right }) }}
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-
-    {% for package in packages %}
-        <div id="sell-box-package-{{ package.id }}" class="seller-box sell-items-box is-hidden">
-            <div class="seller-box-title">
-                Specify <span>{{ package.name|e }}</span>
-            </div>
-            <div class="seller-box-content">
-                {% for right in rights %}
-                    {% if right.packagesIds|length == 1 and package.id in right.packagesIds  %}
-                        {{ include('sell/right.html.twig', { 'right': right }) }}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    {% endfor %}
-
-    <div id="price-sell-box" class="seller-box sell-price-box is-hidden">
-        <div class="seller-box-title">
-           Pricing and territory
-        </div>
-        <div class="seller-box-content">
-            <div class="select-box-item-container">
-
-                <div class="select-box-item-title">
-                    Sales method
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        Pre-defined fee
-                    </div>
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        Open bid
-                    </div>
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        Closed bid
-                    </div>
-                </div>
-
-                <div class="select-box-item-title">
-                    Fee
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="text">
-                    </div>
-                    <div class="select-box-item-label">
-                    </div>
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        USD
-                    </div>
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        EUR
-                    </div>
-                </div>
-
-                <div class="select-box-item-title">
-                    Territories
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        Wordwide
-                    </div>
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        Selected territories only
-                    </div>
-                </div>
-
-                <div class="select-box-item select-box-item-full">
-                    <div class="select-box-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="select-box-item-label">
-                        Worldwide excluding <input type="text">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="sell-buttons-container">
-        <button id="reset-packages" class="uk-button standard-button package-ready-button">
-            View preliminary license agreement
-        </button>
-        <button id="create-packages" class="uk-button standard-button package-ready-button">
-            Upload own license agreement
-        </button>
-    </div>
-
-    <div class="sell-buttons-container">
-        <button id="reset-packages" class="uk-button standard-button package-ready-button">
-            Submit listing
-        </button>
-    </div>
-
+    {{ include('sell/step2.html.twig', { 'packages' : packages, 'rights' : rights }) }}
 
     {% block javascripts %}
         {{ parent() }}
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell.js') }}"></script>
+
+        {{ include('statics/language.js.html.twig', { }) }}
     {% endblock %}
 
 {% endblock main_content %}
