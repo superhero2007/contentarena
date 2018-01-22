@@ -47,7 +47,7 @@ class AppExtension extends AbstractExtension
         $big_input_template = '<textarea></textarea>';
         $big_input_placeholder_template = '<textarea placeholder="{{placeholder}}"></textarea>';
         $datepicker_input_template = '<input type="text" class="has-datepicker" />';
-        $language_template = '<input class="uls-trigger" placeholder="Select language" />';
+        $language_template = '<input class="has-language-trigger" placeholder="Select language" />';
 
         // Item has language selector
         if (strpos($content, $language) !== false) {

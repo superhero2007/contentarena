@@ -202,9 +202,7 @@ button.go-to-rights {
     margin: 20px;
 }
 
-.uls-trigger {
-    background: none !important;
-    background-image: none !important;
+.has-language-trigger {
     margin: 0px 10px;
     width: 100px;
     padding: 5px 8px !important;

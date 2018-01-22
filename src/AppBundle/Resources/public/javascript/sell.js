@@ -39,19 +39,18 @@ $(function () {
     }
 
     function addLanguageBehaviour(){
-        $('.uls-trigger').uls({
-            onSelect: function (language) {
-                var languageName = $.uls.data.getAutonym(language);
-                var el = this.$element;
-                el.before("<div title='language' class='selected-language'>"+languageName+", </div>");
-                //el.val(languageName);
-                //el.after("<input class='uls-trigger' placeholder='Select language' />");
-                //el.removeClass("uls-trigger");
-                //el.addClass("selected-language");
-                //addLanguageBehaviour();
-            },
-            quickList: ['en','fr', 'es']
+
+        $.each($(".has-language-trigger"),function(k,el){
+            $(el).uls({
+                onSelect: function (language) {
+                    var languageName = $.uls.data.getAutonym(language);
+                    var el = this.$element;
+                    el.before("<div title='language' class='selected-language'>"+languageName+", </div>");
+                },
+                quickList: ['en','fr', 'es']
+            });
         });
+
     }
 
     $(".package-selector").change(function () {
