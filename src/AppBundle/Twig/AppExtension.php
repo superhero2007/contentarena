@@ -45,7 +45,7 @@ class AppExtension extends AbstractExtension
         $small_input_template = '<input type="text" style="width: 50px" />';
         $small_input_placeholder_template = '<input type="text" style="width: 50px"  placeholder="{{placeholder}}" />';
         $big_input_template = '<textarea></textarea>';
-        $big_input_placeholder_template = '<textarea>{{placeholder}}</textarea>';
+        $big_input_placeholder_template = '<textarea placeholder="{{placeholder}}"></textarea>';
         $datepicker_input_template = '<input type="text" class="has-datepicker" />';
         $language_template = '<input class="uls-trigger" placeholder="Select language" />';
 

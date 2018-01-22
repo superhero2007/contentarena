@@ -42,16 +42,17 @@ $(function () {
         $('.uls-trigger').uls({
             onSelect: function (language) {
                 var languageName = $.uls.data.getAutonym(language);
-                var el = $('.uls-trigger');
-                el.val(languageName);
-                el.after("<input class='uls-trigger' placeholder='Select language' />");
-                el.removeClass("uls-trigger");
-                addLanguageBehaviour();
+                var el = this.$element;
+                el.before("<div title='language' class='selected-language'>"+languageName+", </div>");
+                //el.val(languageName);
+                //el.after("<input class='uls-trigger' placeholder='Select language' />");
+                //el.removeClass("uls-trigger");
+                //el.addClass("selected-language");
+                //addLanguageBehaviour();
             },
             quickList: ['en','fr', 'es']
         });
     }
-
 
     $(".package-selector").change(function () {
 
@@ -122,6 +123,16 @@ $(function () {
         $("#step1-event").hide();
         $(this).addClass("standard-button-active");
         $("#select-event").removeClass("standard-button-active");
+    });
+
+    $("#single-events-selector").click(function(){
+        $(this).addClass("standard-button-active");
+        $("#series-events-selector").removeClass("standard-button-active");
+    });
+
+    $("#series-events-selector").click(function(){
+        $(this).addClass("standard-button-active");
+        $("#single-events-selector").removeClass("standard-button-active");
     });
 
     $(".go-to-rights").click(function(){

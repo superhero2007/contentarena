@@ -48,6 +48,7 @@ html{
 
 .seller-box-content-rights{
     column-count: 2;
+    column-width: 400px;
     display: block;
 }
 
@@ -194,6 +195,7 @@ html{
 .step1-event-item-title-small{
     width: 23%;
     margin-right: 2%;
+    text-align: center;
 }
 
 button.go-to-rights {
@@ -203,5 +205,31 @@ button.go-to-rights {
 .uls-trigger {
     background: none !important;
     background-image: none !important;
-    padding-left: 8px !important;
+    margin: 0px 10px;
+    width: 100px;
+    padding: 5px 8px !important;
+}
+
+.tag-member-title {
+    text-transform: none;
+    font-size: 90%;
+    width: 175px;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.tag-members-container {
+    display: flex;
+    margin: 20px 10%;
+}
+
+input.tag-member-input {
+    width: 60%;
+}
+
+.selected-language {
+    color: black;
+    margin: 0 1px 0 4px;
 }
