@@ -30,3 +30,8 @@ api_rest_utils:
     type: rest
     resource: ApiBundle\Controller\UtilsController
     prefix:   /v1/utils
+
+api_rest_feed:
+    type: rest
+    resource: ApiBundle\Controller\FeedController
+    prefix:   /v1/feed

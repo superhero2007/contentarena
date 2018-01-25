@@ -1,6 +1,11 @@
 imports:
     - { resource: config.yml }
 
+parameters:
+    locale: en
+    sportradar_api_token: dqahyKSX6u5J1vNHMp
+    sportradar_api_host: https://api.betradar.com/v1
+
 framework:
     router:
         resource: '%kernel.project_dir%/app/config/routing_dev.yml'

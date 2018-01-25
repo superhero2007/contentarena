@@ -16,54 +16,52 @@
                 <div class="step1-event-title">
                     Select an event from the database by clicking the tabs below
                 </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="search for player/team"/>
-                </div>
+               {# <div class="step1-event-item">
+                    <input type="text" placeholder="search for player/team" id="tags"/>
+                </div>#}
 
                 <div class="step1-event-item">
-                    <div class="step1-event-item-title">
-                        Sport
+                    <input type="text" placeholder="Sport" id="event-sport-selector"/>
+                    <div class="step1-event-item-content"  id="event-sport-selection">
                     </div>
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-title">
-                        Continent or world
+                    <input type="text" placeholder="Continent or world" id="event-territory-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content"  id="event-territory-selection">
                     </div>
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-title">
-                        Country
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Country" id="event-country-selector"  disabled="disabled"/>
+                    <div class="step1-event-item-content"  id="event-country-selection">
                     </div>
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-title">
-                        Competition
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Competition" id="event-tournament-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content"  id="event-tournament-selection">
                     </div>
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-title">
-                        Season
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Season" id="event-season-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content"  id="event-season-selection">
                     </div>
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-title">
-                        Fixture
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Fixture" id="event-schedule-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content"  id="event-schedule-selection">
                     </div>
                 </div>
                 <div class="step1-event-item">
                     <textarea placeholder="{{ 'sell.step1.event.description.placeholder'|trans }}"></textarea>
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-label">
-                        Website domain
-                    </div>
-                    <input type="text" />
+                    <input type="text" placeholder="Website domain" id="event-schedule-selector" />
                 </div>
                 <div class="step1-event-item">
-                    <div class="step1-event-item-label">
-                        Add other link
-                    </div>
-                    <input type="text" />
+                    <input type="text" placeholder="Add other link" id="event-schedule-selector" />
                 </div>
                 <div class="step1-event-item">
                     <div class="step1-event-item-title">

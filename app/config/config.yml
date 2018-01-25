@@ -9,6 +9,9 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    sportradar_api_token: dqahyKSX6u5J1vNHMp
+    sportradar_api_host: https://api.betradar.com/v1
+    sportradar_api_cache_ttl : 432000
 
 framework:
     #esi: ~

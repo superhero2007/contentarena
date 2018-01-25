@@ -158,8 +158,23 @@ html{
 
 .step1-event-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: left;
+    position: relative;
+}
+
+.step1-event-item .fa {
+    display: none;
+    position: absolute;
+    font-size: 150%;
+    right: 50%;
+    top: 5px;
+}
+
+.step1-event-item-content {
+    display: flex;
+    align-items: center;
+    margin: 0 15px;
 }
 
 .step1-event-item input[type="text"] {
