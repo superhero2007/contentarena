@@ -177,7 +177,7 @@ html{
     margin: 0 15px;
 }
 
-.step1-event-item input[type="text"] {
+.step1-event-item input[type="text"], .step1-event-item input[type="file"]  {
     border: 1px solid black;
     width: 50%;
     margin: 5px 0;

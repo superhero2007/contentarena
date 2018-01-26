@@ -4,7 +4,7 @@
 
 $(function () {
 
-    var data = {}, regions, countryCodes= [], rounds = {};
+    var data = {}, regions, countryCodes= [], rounds = {}, current_date = new Date();
 
     var selectorCounter = 0,
         mainPackage = null;
@@ -398,6 +398,18 @@ $(function () {
 
                 }
             });
+
+            $( "#non-event-sport-selector" ).autocomplete({
+                source: data.sports,
+                select: function( event, ui ) {
+                    event.preventDefault();
+                    $("#non-event-sport-selection").attr("selected-id", ui.item.value).html(ui.item.label);
+                    $(event.target).val("");
+
+                }
+            });
+
+
         }
     });
 
@@ -426,6 +438,88 @@ $(function () {
     }).focus(function(){
         if (this.value == ""){
             $(this).autocomplete("search", "");
+        }
+    });
+    //magazine, highlight show, preview, talk-show, documentary
+    $( "#non-event-program-type-selector" ).autocomplete({
+        source : [
+            { label: "Magazine", value : 0},
+            { label: "Highlight show", value : 1},
+            { label: "Preview", value : 2},
+            { label: "Talk-show", value : 3},
+            { label: "Documentary", value : 4 },
+            { label: "Other", value : 5 }
+        ],
+        minLength: 0,
+        select: function( event, ui ) {
+            event.preventDefault();
+            $("#non-event-program-type-selection").attr("selected-id", ui.item.value).html(ui.item.label);
+            $(event.target).val("").blur();
+        }
+    }).focus(function(){
+        if (this.value == ""){
+            $(this).autocomplete("search", "");
+        }
+    });
+
+    $( "#non-event-year-selector" ).autocomplete({
+        source : [
+            { label: current_date.getFullYear(), value : current_date.getFullYear()},
+            { label: current_date.getFullYear() + 1, value : current_date.getFullYear() + 1 },
+            { label: current_date.getFullYear() + 2, value : current_date.getFullYear() + 2 },
+            { label: current_date.getFullYear() + 3, value : current_date.getFullYear() + 3 },
+            { label: current_date.getFullYear() + 4, value : current_date.getFullYear() + 4 },
+            { label: "to be announced", value : 0 }
+        ],
+        minLength: 0,
+        select: function( event, ui ) {
+            event.preventDefault();
+            $("#non-event-year-selection").attr("selected-id", ui.item.value).html(ui.item.label);
+            $(event.target).val("").blur();
+        }
+    }).focus(function(){
+        if (this.value == ""){
+            $(this).autocomplete("search", "");
+        }
+    });
+
+    $( "#non-event-duration-selector" ).mask('00:00').blur(function() {
+        if( $(this).val() != "") {
+            $( "#non-event-duration-selection").html($(this).val());
+            $(this).val("")
+        }
+    }).keyup(function(e) {
+        if (e.keyCode === 13){
+            $(this).blur();
+        }
+    });
+
+    $( "#non-event-program-name-selector").blur(function() {
+
+        if( $(this).val() != "") {
+            $( "#non-event-program-name-selection").html($(this).val());
+            $(this).val("")
+        }
+
+    }).keyup(function(e) {
+        if (e.keyCode === 13){
+            $(this).blur();
+        }
+    });
+
+    $("#non-event-availability-selector").datepicker({
+        onSelect : function(date){
+            $("#non-event-availability-selection").html(date);
+            $("#non-event-availability-selector").val("");
+        }
+    });
+
+    $('#non-event-file-selector').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
         }
     });
 
