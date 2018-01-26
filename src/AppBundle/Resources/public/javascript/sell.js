@@ -4,7 +4,7 @@
 
 $(function () {
 
-    var data = {}, regions, countryCodes= [];
+    var data = {}, regions, countryCodes= [], rounds = {};
 
     var selectorCounter = 0,
         mainPackage = null;
@@ -106,7 +106,7 @@ $(function () {
     }
 
     function fillSchedule(){
-        fillSelector({
+        fillMultipleSelector({
             selector : "#event-schedule-selector",
             selection : "#event-schedule-selection",
             parentSelection : "#event-season-selection",
@@ -114,11 +114,31 @@ $(function () {
             requestType : "POST",
             getSource : function(response){
 
+                var tournament = $("#event-tournament-selection").attr("selected-id");
+
                 console.log(response);
 
                 if ( response.sport_events === undefined || response.sport_events.sport_event === undefined ) return false;
 
-                return $.map(response.sport_events.sport_event, function (item) {
+
+                $.each(response.sport_events.sport_event, function (k, item) {
+
+                    var tournament_id = item.tournament['@attributes'].id,
+                        round = item.tournament_round['@attributes'].number;
+
+                    if ( rounds[tournament_id] == undefined) rounds[tournament_id] = {};
+                    if ( rounds[tournament_id][round] == undefined ) rounds[tournament_id][round] = [];
+                    rounds[tournament_id][round].push(item);
+
+                });
+
+                console.log(rounds)
+
+                return $.map(rounds[tournament], function (item, k) {
+                    return {label: "Matchday " + k, value: "matchday-"+k}
+                });
+
+                /*return $.map(response.sport_events.sport_event, function (item) {
 
                     var label = "",
                         attrs = item['@attributes'],
@@ -132,7 +152,7 @@ $(function () {
                     });
 
                     return {label: label, value: item['@attributes'].id}
-                });
+                });*/
             }
         })
     }
@@ -185,6 +205,67 @@ $(function () {
                 }).focus(function(){
                     if (this.value == ""){
                         $(this).autocomplete("search", "");
+                    }
+                });
+
+                spinner.hide();
+            }
+        });
+    }
+
+    function fillMultipleSelector( options ){
+        var el = $(options.selector),
+            spinner = el.parent().find("i");
+
+        spinner.show();
+
+        el.attr("disabled", "disabled");
+        if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
+
+        $.ajax({
+            url: hosturl + options.endpoint,
+            type: options.requestType || "GET",
+            data : { id : $(options.parentSelection).attr('selected-id') },
+            success: function (response) {
+
+                var source = options.getSource(response),
+                    tournament = $("#event-tournament-selection").attr("selected-id");
+                el.attr("disabled", null);
+                $('#event-schedule-subitems').parent().show();
+                $.each( source, function(k, item){
+                    var roundNumber = item.value.replace("matchday-", "");
+                    $('#event-schedule-subitems')
+                        .append('<div class="step1-event-subitem-title" ref="'+ item.value +'" >'+item.label+'</div><div class="step1-event-subitems-container is-hidden" id="'+ item.value +'" ></div>');
+
+                    $.each( rounds[tournament][roundNumber], function(k, match){
+
+                        var label = "",
+                            attrs = match['@attributes'],
+                            competitors = match.competitors.competitor;
+
+                        label += new Date(attrs.scheduled).toISOString().split('T')[0];
+                        label += " - ";
+
+                        $.each(competitors, function(k, v){
+                            label += v['@attributes'].name + " "
+                        });
+
+                        $('#'+ item.value)
+                            .append('<div class="step1-event-subitem-title">'+label+'</div><div class="step1-event-subitems-container" id="match-'+  match['@attributes'].id +'" ></div>');
+                    });
+
+                });
+
+                $("#event-schedule-subitems .step1-event-subitem-title").click(function(){
+
+                    var id = $(this).attr("ref");
+
+                    $(this).toggleClass("standard-button-active");
+
+                    if( $(this).hasClass("standard-button-active") ){
+                        $('#'+ id).show()
+                    } else {
+                        $('#'+ id).hide()
                     }
                 });
 

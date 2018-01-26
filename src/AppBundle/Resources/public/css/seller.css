@@ -246,3 +246,15 @@ input.tag-member-input {
     color: black;
     margin: 0 1px 0 4px;
 }
+
+.step1-event-subitem-title {
+    border: 1px solid black;
+    margin: 4px 0px;
+    padding: 5px;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.step1-event-subitems-container {
+    margin-left: 40px;
+}
