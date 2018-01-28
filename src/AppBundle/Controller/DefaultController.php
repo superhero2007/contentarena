@@ -2,6 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Content;
+use AppBundle\Entity\Season;
+use AppBundle\Entity\Tournament;
+use AppBundle\Entity\User;
+use AppBundle\Entity\Sport;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,6 +61,113 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'user' => $user
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/published", name="sellPublished")
+     */
+    public function sellPublishedAction(Request $request)
+    {
+
+        /**
+         * @var User
+         */
+        $user = $this->getUser();
+        $company = $user->getCompany();
+        $data = json_decode($request->get("json"));
+        $em = $this->getDoctrine()->getEntityManager();
+
+
+        $content = new Content();
+
+        $content->setEventType($data->eventType);
+        $content->setCompany($company);
+
+
+        /**
+         * Create element in DB if it doesn't exist.
+         */
+        $sport = $this->getDoctrine()
+            ->getRepository('AppBundle:Sport')
+            ->findOneBy(array( 'externalId'=> $data->sport->value));
+
+        if ( !$sport ){
+            $sport = new Sport();
+            $sport->setExternalId($data->sport->value);
+            $sport->setName($data->sport->name);
+            $em->persist($sport);
+            $em->flush();
+        }
+
+        $content->setSport($sport);
+
+        $tournament = $this->getDoctrine()
+            ->getRepository('AppBundle:Tournament')
+            ->findOneBy(array( 'externalId'=> $data->tournament->value));
+
+        if ( !$tournament ){
+            $tournament = new Tournament();
+            $tournament->setExternalId($data->tournament->value);
+            $tournament->setName($data->tournament->name);
+            $em->persist($tournament);
+            $em->flush();
+        }
+
+        $content->setTournament($tournament);
+
+        $season = $this->getDoctrine()
+            ->getRepository('AppBundle:Season')
+            ->findOneBy(array( 'externalId'=> $data->season->value));
+
+        if ( !$season ){
+            $season = new Season();
+            $season->setExternalId($data->season->value);
+            $season->setName($data->season->name);
+            $em->persist($season);
+            $em->flush();
+        }
+
+        $content->setSeason($season);
+
+        if ( isset($data->rightItems) ){
+
+            $rightItems = array();
+
+            foreach ( $data->rightItems as $rightItem ){
+
+                if ( !isset($rightItem->id) ) continue;
+
+                $item = $this->getDoctrine()
+                    ->getRepository('AppBundle:RightsItemContent')
+                    ->findOneBy(array( 'id'=> $rightItem->id));
+
+                $rightItems[] = $item;
+            }
+
+            $content->setRightsItems($rightItems);
+        }
+
+        if ( isset($data->duration) ) $content->setDuration($data->duration->value);
+        if ( isset($data->description) ) $content->setDescription($data->description->value);
+        if ( isset($data->fee) && isset($data->fee->amount) ) $content->setFee($data->fee->amount);
+        if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
+        if ( isset($data->website) ) $content->setWebsite($data->website->value);
+        if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
+        if ( isset($data->availability) ){
+            $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
+        }
+
+        //var_dump($data->sport);
+
+        $em->persist($content);
+        $em->flush();
+
+        // replace this example code with whatever you need
+        return $this->render('sell/contentUploaded.html.twig', [
+            'user' => $user,
+            'sport' => $data->sport->name
         ]);
 
     }

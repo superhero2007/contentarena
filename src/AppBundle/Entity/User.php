@@ -85,6 +85,12 @@ class User extends BaseUser
     private $country;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $company;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile", inversedBy="profiles")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -370,6 +376,22 @@ class User extends BaseUser
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param mixed $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 
 

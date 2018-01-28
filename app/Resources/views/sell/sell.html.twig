@@ -15,12 +15,11 @@
 
     {{ include('sell/step2.html.twig', { 'packages' : packages, 'rights' : rights }) }}
 
-    {% block javascripts %}
-        {{ parent() }}
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell.js') }}"></script>
-
-        {{ include('statics/language.js.html.twig', { }) }}
-    {% endblock %}
-
 {% endblock main_content %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell.js') }}"></script>
+
+    {{ include('statics/language.js.html.twig', { }) }}
+{% endblock %}

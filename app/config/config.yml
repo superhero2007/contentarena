@@ -125,10 +125,8 @@ easy_admin:
                         - 'title'
                         - 'phone'
                         - 'country'
+                        - 'company'
 
-
-            Profile:
-                class: AppBundle\Entity\Profile
             Company:
                 class: AppBundle\Entity\Company
                 controller: AppBundle\Controller\Admin\CompanyController
@@ -141,7 +139,13 @@ easy_admin:
                         - 'owner'
                         - 'zip'
                         - 'phone'
-
+            Content:
+                class: AppBundle\Entity\Content
+                list:
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
             Status:
                 class: AppBundle\Entity\UserStatus
             RightsPackage:
@@ -190,3 +194,5 @@ easy_admin:
                         - { name: 'delete', icon: 'times', label: '' }
                 form:
                     fields: ['slug', 'description', 'content']
+            Profile:
+                class: AppBundle\Entity\Profile

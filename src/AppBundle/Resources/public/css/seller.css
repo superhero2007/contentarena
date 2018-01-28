@@ -147,6 +147,7 @@ html{
 
 .step1-container {
     width: 100%;
+    text-transform: none !important;
 }
 
 .step1-event-title{
@@ -175,6 +176,7 @@ html{
     display: flex;
     align-items: center;
     margin: 0 15px;
+    color: black;
 }
 
 .step1-event-item input[type="text"], .step1-event-item input[type="file"]  {
@@ -183,7 +185,6 @@ html{
     margin: 5px 0;
     padding: 6px 5px;
     font-size: 100%;
-    text-transform: capitalize;
 }
 
 .step1-event-item textarea {
@@ -193,7 +194,7 @@ html{
     border: 1px solid black;
     font-family: 'Roboto Condensed', sans-serif;
     padding: 1%;
-    color: grey;
+    color: black;
     font-size: 100%;
 }
 
@@ -257,4 +258,12 @@ input.tag-member-input {
 
 .step1-event-subitems-container {
     margin-left: 40px;
+}
+
+.go-to-rights {
+    margin: 20px auto !important;
+}
+
+.invalid {
+    border-color: red !important;
 }

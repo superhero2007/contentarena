@@ -1,8 +1,9 @@
 <div id="step1" class="">
 
+    {# Main selector #}
     <div class="sell-buttons-container">
-        <button id="select-event" class="uk-button standard-button">Select event from database</button>
-        <button id="select-non-event" class="uk-button standard-button ">List non-event based content</button>
+        <button class="event-origin-selector uk-button standard-button standard-button-active" ref="database-event-item" >Select event from database</button>
+        <button class="event-origin-selector uk-button standard-button" ref="custom-event-item">List event based content</button>
     </div>
 
     <div class="seller-box">
@@ -10,87 +11,15 @@
             Step 1/2
         </div>
         <div class="seller-box-content">
-
-            <div id="step1-event" class="step1-container is-hidden">
-
+            <div class="step1-container is-hidden">
                 <div class="step1-event-title">
-                    Select an event from the database by clicking the tabs below
-                </div>
-                {# <div class="step1-event-item">
-                     <input type="text" placeholder="search for player/team" id="tags"/>
-                 </div>#}
-
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Sport" id="event-sport-selector"/>
-
-                    <div class="step1-event-item-content" id="event-sport-selection">
-                    </div>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Continent or world" id="event-territory-selector"
-                           disabled="disabled"/>
-
-                    <div class="step1-event-item-content" id="event-territory-selection">
-                    </div>
-                </div>
-                <div class="step1-event-item">
-                    <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" placeholder="Country" id="event-country-selector" disabled="disabled"/>
-
-                    <div class="step1-event-item-content" id="event-country-selection">
-                    </div>
-                </div>
-                <div class="step1-event-item">
-                    <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" placeholder="Competition" id="event-tournament-selector" disabled="disabled"/>
-
-                    <div class="step1-event-item-content" id="event-tournament-selection">
-                    </div>
-                </div>
-                <div class="step1-event-item">
-                    <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" placeholder="Season" id="event-season-selector" disabled="disabled"/>
-
-                    <div class="step1-event-item-content" id="event-season-selection">
-                    </div>
-                </div>
-                <div class="step1-event-item">
-                    <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" placeholder="Fixture" id="event-schedule-selector" disabled="disabled"/>
-
-                    <div class="step1-event-item-content">
-                    </div>
-                </div>
-                <div class="step1-event-item is-hidden">
-                    <div class="step1-event-subitems-container" id="event-schedule-subitems"></div>
-                </div>
-                <div class="step1-event-item">
-                    <textarea placeholder="{{ 'sell.step1.event.description.placeholder'|trans }}"></textarea>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Website domain" id="event-website-selector"/>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Add other link" id="event-link-selector"/>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder=" Attach file" id="event-file-selector" />
-                    <div class="step1-event-item-content">
-                    </div>
+                    <span class="step1-event-item database-event-item">Select an event from the database by clicking the tabs below</span>
+                    <span class="step1-event-item custom-event-item">Create your program by filling in the boxes below</span>
                 </div>
 
-                <div class="step1-event-item">
-                    <button class="uk-button go-to-rights">Continue with rights selection</button>
-                </div>
-
-            </div>
-
-            <div id="step1-non-event" class="step1-container is-hidden">
-                <div class="step1-event-title">
-                    Create your program by filling in the boxes below
-                </div>
-                <div class="step1-non-event-item">
-                    <div id="single-events-selector" class="step1-event-item-title step1-event-item-title-small ">
+                {# Single/Series Selector #}
+                <div class="step1-event-item custom-event-item">
+                    <div id="single-events-selector" class="standard-button-active step1-event-item-title step1-event-item-title-small ">
                         Single
                     </div>
                     <div id="series-events-selector" class="step1-event-item-title step1-event-item-title-small">
@@ -98,55 +27,120 @@
                     </div>
                 </div>
 
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Sport" id="non-event-sport-selector"/>
-                    <div class="step1-event-item-content"  id="non-event-sport-selection"></div>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Program type" id="non-event-program-type-selector"/>
-                    <div class="step1-event-item-content"  id="non-event-program-type-selection"></div>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Program name" id="non-event-program-name-selector"/>
-                    <div class="step1-event-item-content"  id="non-event-program-name-selection"></div>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Year of release" id="non-event-year-selector"/>
-                    <div class="step1-event-item-content"  id="non-event-year-selection"></div>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Duration - hh:mm" id="non-event-duration-selector"/>
-                    <div class="step1-event-item-content"  id="non-event-duration-selection"></div>
-                </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Availability" id="non-event-availability-selector"/>
-                    <div class="step1-event-item-content"  id="non-event-availability-selection"></div>
+                {# Sport Selector #}
+                <div class="step1-event-item database-event-item custom-event-item">
+                    <input type="text" placeholder="Sport" id="event-sport-selector"/>
+                    <div class="step1-event-item-content" id="event-sport-selection" required>
+                    </div>
                 </div>
 
-                <div class="step1-event-item">
-                    <textarea placeholder="{{ 'sell.step1.event.description.placeholder'|trans }}"></textarea>
+                {# Territory Selector #}
+                <div class="step1-event-item database-event-item">
+                    <input type="text" placeholder="Continent or world" id="event-territory-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content" id="event-territory-selection" required>
+                    </div>
                 </div>
 
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Website domain" id="non-event-wesite-selector"/>
+                {# Country Selector #}
+                <div class="step1-event-item database-event-item">
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Country" id="event-country-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content" id="event-country-selection" required>
+                    </div>
                 </div>
-                <div class="step1-event-item">
-                    <input type="text" placeholder="Add other link" id="non-event-link-selector"/>
+
+                {# Competition Selector #}
+                <div class="step1-event-item  database-event-item">
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Competition" id="event-tournament-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content" id="event-tournament-selection" required>
+                    </div>
                 </div>
-                <div class="step1-event-item">
-                    <input placeholder="Attach file" id="non-event-file-selector" type="file" name="files[]" />
+
+                {# Season Selector  #}
+                <div class="step1-event-item  database-event-item">
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Season" id="event-season-selector" disabled="disabled"/>
+                    <div class="step1-event-item-content" id="event-season-selection" required>
+                    </div>
+                </div>
+
+                {# Fixture Selector #}
+                <div class="step1-event-item database-event-item">
+                    <i class="fa fa-cog fa-spin"></i>
+                    <input type="text" placeholder="Fixture" id="event-schedule-selector" disabled="disabled"/>
                     <div class="step1-event-item-content">
                     </div>
                 </div>
 
-                <div class="step1-event-item">
+                {# Fixture Container #}
+                <div class="step1-event-item database-event-item">
+                    <div class="step1-event-subitems-container" id="event-schedule-subitems"></div>
+                </div>
+
+                {# Program Type #}
+                <div class="step1-event-item custom-event-item">
+                    <input type="text" placeholder="Program type" id="event-programType-selector"/>
+                    <div class="step1-event-item-content"  id="event-programType-selection"></div>
+                </div>
+
+                {# Program Name #}
+                <div class="step1-event-item custom-event-item">
+                    <input type="text" placeholder="Program name" id="event-programName-selector"/>
+                    <div class="step1-event-item-content"  id="event-programName-selection"></div>
+                </div>
+
+                {# Number of programs #}
+                <div class="step1-event-item custom-series-event-item">
+                    <input type="text" placeholder="Number of programs" id="event-programs-selector"/>
+                    <div class="step1-event-item-content"  id="event-programs-selection"></div>
+                </div>
+
+                {# Year of release #}
+                <div class="step1-event-item custom-event-item">
+                    <input type="text" placeholder="Year of release" id="event-year-selector"/>
+                    <div class="step1-event-item-content"  id="event-year-selection"></div>
+                </div>
+
+                {# Duration #}
+                <div class="step1-event-item custom-event-item">
+                    <input type="text" placeholder="Duration - hh:mm" id="event-duration-selector"/>
+                    <div class="step1-event-item-content"  id="event-duration-selection"></div>
+                </div>
+
+                {# Availability #}
+                <div class="step1-event-item custom-event-item">
+                    <input type="text" placeholder="Availability" id="event-availability-selector"/>
+                    <div class="step1-event-item-content"  id="event-availability-selection"></div>
+                </div>
+
+                {# Description  #}
+                <div class="step1-event-item database-event-item custom-event-item">
+                    <textarea id="event-description" placeholder="{{ 'sell.step1.event.description.placeholder'|trans }}" class="step1-event-input-content"></textarea>
+                </div>
+
+                {# Website #}
+                <div class="step1-event-item database-event-item custom-event-item">
+                    <input type="text" placeholder="Website domain" id="event-website-selector" class="step1-event-input-content"/>
+                </div>
+
+                {# Link #}
+                <div class="step1-event-item database-event-item custom-event-item">
+                    <input type="text" placeholder="Add other link" id="event-link-selector" class="step1-event-input-content"/>
+                </div>
+
+                {# File #}
+                <div class="step1-event-item database-event-item custom-event-item">
+                    <input placeholder="Attach file" id="event-file-selector" type="text" />
+                    <input placeholder="Attach file" class="is-hidden step1-event-input-content" id="event-file-selector-hidden" type="file" name="files[]" />
+                </div>
+
+                {# Go to step 2 button #}
+                <div class="step1-event-item database-event-item custom-event-item">
                     <button class="uk-button go-to-rights">Continue with rights selection</button>
                 </div>
 
             </div>
-
         </div>
     </div>
-
-
 </div>

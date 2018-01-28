@@ -12,12 +12,6 @@
             <link href="{{ asset('bundles/app/css/jquery-ui.structure.min.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
-        {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery-ui.min.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('bundles/app/javascript/main.js') }}"></script>
-        {% endblock %}
-
         <script>
             var hosturl = "{{ path('homepage')|escape('js') }}";
         </script>
@@ -108,6 +102,12 @@
             {% block main_content %}
             {% endblock main_content %}
         </div>
+
+    {% block javascripts %}
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/main.js') }}"></script>
+    {% endblock %}
 
         <div class="footer">
             <div class="logo">

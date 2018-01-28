@@ -67,7 +67,7 @@ $(function() {
 
     });
 
-    $("form").submit(function(e){
+    $("form").not("#myform").submit(function(e){
 
         var result = checkValues();
 

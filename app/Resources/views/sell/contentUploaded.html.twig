@@ -1,0 +1,23 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/seller.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block main_content %}
+
+    <div>
+        The listing was created successfully
+    </div>
+
+{% endblock main_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell.js') }}"></script>
+
+
+{% endblock javascripts %}

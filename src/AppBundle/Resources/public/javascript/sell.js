@@ -4,7 +4,7 @@
 
 $(function () {
 
-    var data = {}, regions, countryCodes= [], rounds = {}, current_date = new Date();
+    var data = {}, regions, countryCodes= [], rounds = {}, current_date = new Date(), eventData = {};
 
     var selectorCounter = 0,
         mainPackage = null;
@@ -240,6 +240,7 @@ $(function () {
                     $.each( rounds[tournament][roundNumber], function(k, match){
 
                         var label = "",
+                            selId,
                             attrs = match['@attributes'],
                             competitors = match.competitors.competitor;
 
@@ -250,8 +251,12 @@ $(function () {
                             label += v['@attributes'].name + " "
                         });
 
+                        selId = "match-" + match['@attributes'].id.split(":")[2];
+
                         $('#'+ item.value)
-                            .append('<div class="step1-event-subitem-title">'+label+'</div><div class="step1-event-subitems-container" id="match-'+  match['@attributes'].id +'" ></div>');
+                            .append('<div class="step1-event-subitem-title" ref="'+ item.value +'" id="'+  match['@attributes'].id +'" selId="'+selId+'" >'+label+'</div>');
+
+                        $("[selId="+  selId + "]").data(match);
                     });
 
                 });
@@ -272,6 +277,137 @@ $(function () {
                 spinner.hide();
             }
         });
+    }
+
+    function validateStepOne(){
+
+        var eventTypeSelector = $(".event-origin-selector.standard-button-active").attr("ref"),
+            eventType = eventTypeSelector.split("-")[0],
+            hasErrors = false;
+
+        if ( $("#series-events-selector").hasClass("standard-button-active") ) {
+            eventTypeSelector += ", .custom-series-event-item";
+        }
+
+        eventData = {};
+        eventData.eventType = eventType;
+
+        $("." + eventTypeSelector).each(function(k, item){
+
+            var itemSelection = $(item).find(".step1-event-item-content"),
+                itemInput = $(item).find(".step1-event-input-content"),
+                input = $(item).find("input"),
+                id,
+                required = itemSelection.attr("required"),
+                name;
+
+
+            if ( itemSelection.length > 0 ){
+                id  = itemSelection.attr("selected-id");
+                name = (itemSelection.attr("id")) ? itemSelection.attr("id").split("-")[1] : false;
+
+                if ( name && id && eventData[name] == undefined ) eventData[name] = {
+                    name : itemSelection.html(),
+                    value : (id == "-") ? itemSelection.html() : id
+                };
+
+            } else if ( itemInput.length > 0){
+                name = (itemInput.attr("id")) ? itemInput.attr("id").split("-")[1] : false;
+                id = itemInput.val();
+                if ( name && id && eventData[name] == undefined ) eventData[name] = {
+                    value : id
+                };
+            }
+
+
+            if ( !id && required ){
+                $(input).addClass("invalid");
+                hasErrors = true;
+            }
+
+        });
+
+        if (eventType == 'database' ){
+
+            eventData.matches = {};
+
+            $(".step1-event-subitem-title.standard-button-active").each(function(k,v){
+                var matchday = $(v).attr("ref"),
+                    matchId = $(v).attr("id");
+
+                if ( matchId == undefined ){
+                    if ( eventData.matches[matchday] == undefined ) eventData.matches[matchday] = [];
+                } else {
+                    eventData.matches[matchday].push($(v).data());
+                }
+            });
+
+            if ( $.isEmptyObject(eventData.matches) ){
+                $("#event-schedule-selector").addClass("invalid");
+                hasErrors = true;
+            }
+        }
+
+        console.log(eventData);
+
+        return !hasErrors;
+    }
+
+    function validateStepTwo(){
+
+
+        var rights = {},
+            rightItems = [];
+
+        $("input[type=checkbox]:checked", ".seller-box-content-rights").each(function(k, el){
+
+            var rightId = $(el).attr("right-id"),
+                rightItemId = $(el).attr("right-item-id"),
+                values = [];
+
+            $(el).parent().next().find("input").each(function(k,v){
+                values.push( $(v).val() );
+            });
+
+            if ( rights[rightId] == undefined ) rights[rightId] = [];
+            rights[rightId].push({
+                id : rightItemId,
+                values : values
+            });
+
+            rightItems.push({
+                id : rightItemId,
+                values : values,
+                right : rightId
+            })
+
+        });
+
+        eventData.rights = rights;
+        eventData.rightItems = rightItems;
+        eventData.packages = [];
+        $(".package-selector:checked").each(function(k,v){
+            eventData.packages.push($(v).attr("id").split("-")[1] );
+        });
+        eventData.salesMethod = $("input:checked", "#sales-method-selector").val();
+        eventData.fee = {
+            amount : $( "#fee-selector").val(),
+            currency : $("input:checked", "#fee-currency-selector").val()
+        };
+        eventData.territories = $("input:checked", "#territories-selector").val();
+
+        console.log(eventData);
+    }
+
+    function submitform() {
+        var url = hosturl + 'sell/published';
+
+        $('#myform').attr('action', url);
+
+        var data = JSON.stringify(eventData);
+
+        $('<input type="hidden" name="json"/>').val(data).appendTo('#myform');
+        $("#myform").submit();
     }
 
     $(".package-selector").change(function () {
@@ -331,33 +467,43 @@ $(function () {
         });
     });
 
-    $("#select-event").click(function(){
-        $("#step1-event").show();
-        $("#step1-non-event").hide();
-        $(this).addClass("standard-button-active");
-        $("#select-non-event").removeClass("standard-button-active");
-    });
+    $(".event-origin-selector").click(function(){
 
-    $("#select-non-event").click(function(){
-        $("#step1-non-event").show();
-        $("#step1-event").hide();
-        $(this).addClass("standard-button-active");
-        $("#select-event").removeClass("standard-button-active");
+        var ref = $(this).attr("ref");
+
+        $.each($(".event-origin-selector"), function(k, v){
+            $(v).toggleClass("standard-button-active");
+        });
+
+        $(".step1-event-item").hide();
+        $("." + ref).show();
+
     });
 
     $("#single-events-selector").click(function(){
         $(this).addClass("standard-button-active");
         $("#series-events-selector").removeClass("standard-button-active");
+        $(".custom-series-event-item").hide();
     });
 
     $("#series-events-selector").click(function(){
         $(this).addClass("standard-button-active");
         $("#single-events-selector").removeClass("standard-button-active");
+        $(".custom-series-event-item").show();
     });
 
     $(".go-to-rights").click(function(){
+
+        if ( !validateStepOne() ) return;
+
         $("#step2").show();
         $("#step1").hide();
+    });
+
+    $("#view-agreement").click(function(){
+
+        validateStepTwo();
+        submitform();
     });
 
     $(".has-datepicker").datepicker();
@@ -378,8 +524,14 @@ $(function () {
         });
     });
 
+    /**
+     * Renders all the tooltips
+     */
     $( document ).tooltip();
 
+    /**
+     * Fills the sport selector
+     */
     $.ajax({
         url: hosturl + "v1/feed/sports",
         type: "GET",
@@ -399,20 +551,14 @@ $(function () {
                 }
             });
 
-            $( "#non-event-sport-selector" ).autocomplete({
-                source: data.sports,
-                select: function( event, ui ) {
-                    event.preventDefault();
-                    $("#non-event-sport-selection").attr("selected-id", ui.item.value).html(ui.item.label);
-                    $(event.target).val("");
-
-                }
-            });
-
-
         }
     });
 
+    /**
+     * Fills the territory selector.
+     * The value tries to match the country code with the region code.
+     * The region code comes from a static JSON file and the country code is used in the Sportradar API
+     */
     $( "#event-territory-selector" ).autocomplete({
         source : [
             { label: "Africa", value : 2},
@@ -440,8 +586,11 @@ $(function () {
             $(this).autocomplete("search", "");
         }
     });
-    //magazine, highlight show, preview, talk-show, documentary
-    $( "#non-event-program-type-selector" ).autocomplete({
+
+    /**
+     * Fills the program type selector
+     */
+    $( "#event-programType-selector" ).autocomplete({
         source : [
             { label: "Magazine", value : 0},
             { label: "Highlight show", value : 1},
@@ -453,7 +602,7 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#non-event-program-type-selection").attr("selected-id", ui.item.value).html(ui.item.label);
+            $("#event-programType-selection").attr("selected-id", ui.item.value).html(ui.item.label);
             $(event.target).val("").blur();
         }
     }).focus(function(){
@@ -462,7 +611,7 @@ $(function () {
         }
     });
 
-    $( "#non-event-year-selector" ).autocomplete({
+    $( "#event-year-selector" ).autocomplete({
         source : [
             { label: current_date.getFullYear(), value : current_date.getFullYear()},
             { label: current_date.getFullYear() + 1, value : current_date.getFullYear() + 1 },
@@ -474,7 +623,7 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#non-event-year-selection").attr("selected-id", ui.item.value).html(ui.item.label);
+            $("#event-year-selection").attr("selected-id", ui.item.value).html(ui.item.label);
             $(event.target).val("").blur();
         }
     }).focus(function(){
@@ -483,9 +632,9 @@ $(function () {
         }
     });
 
-    $( "#non-event-duration-selector" ).mask('00:00').blur(function() {
+    $( "#event-duration-selector" ).mask('00:00').blur(function() {
         if( $(this).val() != "") {
-            $( "#non-event-duration-selection").html($(this).val());
+            $( "#event-duration-selection").html($(this).val()).attr("selected-id", "-");
             $(this).val("")
         }
     }).keyup(function(e) {
@@ -494,37 +643,61 @@ $(function () {
         }
     });
 
-    $( "#non-event-program-name-selector").blur(function() {
-
+    $( "#event-programName-selector").blur(function() {
         if( $(this).val() != "") {
-            $( "#non-event-program-name-selection").html($(this).val());
+            $( "#event-programName-selection").html($(this).val()).attr("selected-id", "-");
             $(this).val("")
         }
-
     }).keyup(function(e) {
         if (e.keyCode === 13){
             $(this).blur();
         }
     });
 
-    $("#non-event-availability-selector").datepicker({
+    $( "#event-programs-selector").blur(function() {
+        if( $(this).val() != "") {
+            $( "#event-programs-selection").html($(this).val()).attr("selected-id", "-");
+            $(this).val("")
+        }
+    }).keyup(function(e) {
+        if (e.keyCode === 13){
+            $(this).blur();
+        }
+    });
+
+    $("#event-availability-selector").datepicker({
         onSelect : function(date){
-            $("#non-event-availability-selection").html(date);
-            $("#non-event-availability-selector").val("");
+            $("#event-availability-selection").html(date).attr("selected-id", "-");
+            $("#event-availability-selector").val("");
         }
     });
 
-    $('#non-event-file-selector').fileupload({
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
-            });
+    $('#event-file-selector').off().focus(function(e){
+        $(this).blur();
+        $('#event-file-selector-hidden').trigger("click");
+        e.preventDefault();
+    });
+
+    $('#event-file-selector-hidden').change(function(){
+        $('#event-file-selector').val($(this).val());
+    });
+
+    $("input").focus(function(){ $(this).removeClass("invalid")});
+
+    $('#event-website-selector').mask("A", {
+        translation: {
+            "A": { pattern: /[\w/\-.+]/, recursive: true }
         }
     });
 
+    /**
+     * Initialization
+     */
     addLanguageBehaviour();
     loadRegions();
 
+    $(".step1-event-item").hide();
+    $(".step1-container").show();
+    $(".database-event-item").show();
 
 });

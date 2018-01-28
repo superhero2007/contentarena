@@ -22,22 +22,22 @@ class AdminController extends BaseAdminController
 
         // change the properties of the given entity and save the changes
         $id = $this->request->query->get('id');
-        $entity = $this->em->getRepository('AppBundle:User')->find($id);
-
-        $company_results = $this->em->getRepository('AppBundle:Company')->findBylegalName($entity->getCompanyLegalName());
-
-
+        $user = $this->em->getRepository('AppBundle:User')->find($id);
+        $company_results = $this->em->getRepository('AppBundle:Company')->findBylegalName($user->getCompanyLegalName());
 
         if ( $company_results == null || count($company_results) == 0) {
             $company =  new \AppBundle\Entity\Company();
-            $company->setLegalName($entity->getCompanyLegalName());
-            $company->setWebsite($entity->getCompanyWebsite());
-            $company->setOwner($entity);
+            $company->setLegalName($user->getCompanyLegalName());
+            $company->setWebsite($user->getCompanyWebsite());
+            $company->setOwner($user);
+
             $this->em->persist($company);
             $this->em->flush();
         } else {
             $company = $company_results[0];
         }
+
+        $user->setCompany($company);
 
         // redirect to the 'list' view of the given entity
       /*  return $this->redirectToRoute('easyadmin', array(

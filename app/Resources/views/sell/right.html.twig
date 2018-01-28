@@ -18,7 +18,10 @@
     {% for item in right.items %}
         <div class="select-box-item select-box-item-full">
             <div class="select-box-checkbox">
-                <input type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
+                <input
+                        right-id="{{ right.id }}"
+                        right-item-id="{{ item.id }}"
+                        type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
             </div>
             <div class="select-box-item-label">
                 {{ item.formContent|rightItem | raw}}

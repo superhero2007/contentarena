@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Company
@@ -70,11 +72,27 @@ class Company
     private $owner;
 
     /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="company", cascade={"persist","remove"})
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content", mappedBy="company", cascade={"persist","remove"})
+     */
+    private $content;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled = false;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->content = new ArrayCollection();
+    }
 
 
     /**
@@ -261,6 +279,68 @@ class Company
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
+    public function __toString() {
+        return $this->displayName;
+    }
+
+    /**
+     * Add user.
+     *
+     * @param User $user
+     */
+    public function addUser(User $user)
+    {
+
+        if ($this->users->contains($user)) {
+            return;
+        }
+        $this->users[] = $user;
+        $user->setCompany($this);
+
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param User $user
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * @return Collection|Content[]
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
     }
 
 
