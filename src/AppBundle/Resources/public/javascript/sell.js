@@ -500,7 +500,7 @@ $(function () {
         $("#step1").hide();
     });
 
-    $("#view-agreement").click(function(){
+    $("#submit-listing").click(function(){
 
         validateStepTwo();
         submitform();
@@ -540,17 +540,46 @@ $(function () {
                 return {label: item['@attributes'].name, value: item['@attributes'].id}
             });
 
-            $( "#event-sport-selector" ).autocomplete({
-                source: data.sports,
-                select: function( event, ui ) {
-                    event.preventDefault();
-                    $("#event-sport-selection").attr("selected-id", ui.item.value).html(ui.item.label);
-                    $(event.target).val("");
-                    $( "#event-territory-selector").attr('disabled', null);
+            data.sports.sort(function(a,b) {return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);} );
+        }
+    });
 
-                }
-            });
+    $( "#event-sport-selector" ).autocomplete({
+        source: [
+            { label : "Soccer", value: "sr:sport:1"},
+            { label : "Basketball", value: "sr:sport:2"},
+            { label : "Baseball", value: "sr:sport:3"},
+            { label : "Tennis", value: "sr:sport:5"},
+            { label : "Cricket", value: "sr:sport:21"},
+            { label : "Field Hockey", value: "sr:sport:24"},
+            { label : "Volleyball", value: "sr:sport:23"},
+            { label : "Table Tennis", value: "sr:sport:20"},
+            { label : "Golf", value: "sr:sport:9"},
+            { label : "American Football", value: "sr:sport:16"},
+            { label : "Handball", value: "sr:sport:6"},
+            { label : "Show All", value: "all"}
+        ],
+        minLength: 0,
+        select: function( event, ui ) {
+            event.preventDefault();
 
+            if (ui.item.value == "all"){
+                $( "#event-sport-selector" ).autocomplete( "option", "source", data.sports );
+                setTimeout(function(){
+                    $( "#event-sport-selector" ).autocomplete("search", "");
+                }, 500);
+
+                return;
+            }
+
+            $("#event-sport-selection").attr("selected-id", ui.item.value).html(ui.item.label);
+            $(event.target).val("").blur();;
+            $( "#event-territory-selector").attr('disabled', null);
+
+        }
+    }).focus(function(){
+        if (this.value == ""){
+            $(this).autocomplete("search", "");
         }
     });
 
