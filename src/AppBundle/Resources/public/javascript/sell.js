@@ -653,7 +653,7 @@ $(function () {
 
     $( "#event-duration-selector" ).mask('00:00').blur(function() {
         if( $(this).val() != "") {
-            $( "#event-duration-selection").html($(this).val()).attr("selected-id", "-");
+            $( "#event-duration-selection").attr("selected-id", "-");
         }
     }).keyup(function(e) {
         if (e.keyCode === 13){
@@ -663,7 +663,7 @@ $(function () {
 
     $( "#event-programName-selector").blur(function() {
         if( $(this).val() != "") {
-            $( "#event-programName-selection").html($(this).val()).attr("selected-id", "-");
+            $( "#event-programName-selection").attr("selected-id", "-");
         }
     }).keyup(function(e) {
         if (e.keyCode === 13){
@@ -673,7 +673,7 @@ $(function () {
 
     $( "#event-programs-selector").blur(function() {
         if( $(this).val() != "") {
-            $( "#event-programs-selection").html($(this).val()).attr("selected-id", "-");
+            $( "#event-programs-selection").attr("selected-id", "-");
         }
     }).keyup(function(e) {
         if (e.keyCode === 13){
@@ -683,7 +683,7 @@ $(function () {
 
     $("#event-availability-selector").datepicker({
         onSelect : function(date){
-            $("#event-availability-selection").html(date).attr("selected-id", "-");
+            $("#event-availability-selection").attr("selected-id", "-");
         }
     });
 
