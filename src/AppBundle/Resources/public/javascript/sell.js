@@ -198,14 +198,12 @@ $(function () {
                     minLength : 0,
                     select: function( event, ui ) {
                         event.preventDefault();
-                        $(options.selection).attr("selected-id", ui.item.value).html(ui.item.label);
-                        $(event.target).val("").blur();
+                        $(options.selection).attr("selected-id", ui.item.value);
+                        $(event.target).val(ui.item.label).blur();
                         if ( options.callback ) options.callback.call();
                     }
                 }).focus(function(){
-                    if (this.value == ""){
-                        $(this).autocomplete("search", "");
-                    }
+                   $(this).autocomplete("search", "");
                 });
 
                 spinner.hide();
@@ -572,15 +570,13 @@ $(function () {
                 return;
             }
 
-            $("#event-sport-selection").attr("selected-id", ui.item.value).html(ui.item.label);
-            $(event.target).val("").blur();;
+            $("#event-sport-selection").attr("selected-id", ui.item.value);
+            $(event.target).val(ui.item.label).blur();
             $( "#event-territory-selector").attr('disabled', null);
 
         }
     }).focus(function(){
-        if (this.value == ""){
-            $(this).autocomplete("search", "");
-        }
+       $(this).autocomplete("search", "");
     });
 
     /**
@@ -600,8 +596,8 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#event-territory-selection").attr("selected-id", ui.item.value).html(ui.item.label);
-            $(event.target).val("").blur();
+            $("#event-territory-selection").attr("selected-id", ui.item.value);
+            $(event.target).val(ui.item.label).blur();
 
             countryCodes = $.map(regions, function(i){
                 if ( i["region_code"]== ui.item.value) return i["country_code"]
@@ -611,9 +607,7 @@ $(function () {
 
         }
     }).focus(function(){
-        if (this.value == ""){
-            $(this).autocomplete("search", "");
-        }
+       $(this).autocomplete("search", "");
     });
 
     /**
@@ -631,13 +625,11 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#event-programType-selection").attr("selected-id", ui.item.value).html(ui.item.label);
-            $(event.target).val("").blur();
+            $("#event-programType-selection").attr("selected-id", ui.item.value);
+            $(event.target).val(ui.item.label).blur();
         }
     }).focus(function(){
-        if (this.value == ""){
-            $(this).autocomplete("search", "");
-        }
+        $(this).autocomplete("search", "");
     });
 
     $( "#event-year-selector" ).autocomplete({
@@ -652,19 +644,16 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#event-year-selection").attr("selected-id", ui.item.value).html(ui.item.label);
-            $(event.target).val("").blur();
+            $("#event-year-selection").attr("selected-id", ui.item.value);
+            $(event.target).val(ui.item.label).blur();
         }
     }).focus(function(){
-        if (this.value == ""){
-            $(this).autocomplete("search", "");
-        }
+       $(this).autocomplete("search", "");
     });
 
     $( "#event-duration-selector" ).mask('00:00').blur(function() {
         if( $(this).val() != "") {
             $( "#event-duration-selection").html($(this).val()).attr("selected-id", "-");
-            $(this).val("")
         }
     }).keyup(function(e) {
         if (e.keyCode === 13){
@@ -675,7 +664,6 @@ $(function () {
     $( "#event-programName-selector").blur(function() {
         if( $(this).val() != "") {
             $( "#event-programName-selection").html($(this).val()).attr("selected-id", "-");
-            $(this).val("")
         }
     }).keyup(function(e) {
         if (e.keyCode === 13){
@@ -686,7 +674,6 @@ $(function () {
     $( "#event-programs-selector").blur(function() {
         if( $(this).val() != "") {
             $( "#event-programs-selection").html($(this).val()).attr("selected-id", "-");
-            $(this).val("")
         }
     }).keyup(function(e) {
         if (e.keyCode === 13){
@@ -697,7 +684,6 @@ $(function () {
     $("#event-availability-selector").datepicker({
         onSelect : function(date){
             $("#event-availability-selection").html(date).attr("selected-id", "-");
-            $("#event-availability-selector").val("");
         }
     });
 
