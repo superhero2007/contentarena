@@ -104,6 +104,8 @@ $(function () {
         var el = $(options.selector),
             spinner = el.parent().find("i");
 
+        var source;
+
         spinner.show();
 
         el.attr("disabled", "disabled");
@@ -115,7 +117,7 @@ $(function () {
             data : { id : $(options.parentSelection).attr('externalId') },
             success: function (response) {
 
-                var source = options.getSource(response);
+                source = options.getSource(response);
                 el.attr("disabled", null);
                 el.autocomplete({
                     source: source,
@@ -123,11 +125,10 @@ $(function () {
                     select: function( event, ui ) {
 
                         var id = ui.item.value.replace(/\:/g, '-');
-                        var items = $.grep(source, function (el, i) {
+                        source = $.grep(source, function (el, i) {
                             if (el.value == ui.item.value ) {
                                 return false;
                             }
-
                             return true;
                         });
 
@@ -142,10 +143,15 @@ $(function () {
                         });
 
                         $("[mainref="+id+"]").click(function(){
+                            $(this).next().remove();
                             $(this).remove();
+                            source.unshift({
+                                label : ui.item.label,
+                                value : ui.item.value
+                            });
                         });
 
-                        $( event.target ).autocomplete( "option", "source", items);
+                        $( event.target ).autocomplete( "option", "source", source);
 
                         fillSchedule(id);
                     }

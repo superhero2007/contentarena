@@ -12,8 +12,12 @@
             <link href="{{ asset('bundles/app/css/jquery-ui.structure.min.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
-        <script>
+        {#<script>
             var hosturl = "{{ path('homepage')|escape('js') }}";
+        </script>#}
+
+        <script>
+            var hosturl = "http://api.contentarena.com/";
         </script>
 
     </head>
