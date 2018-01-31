@@ -651,14 +651,7 @@ $(function () {
     });
 
     $( "#event-year-selector" ).autocomplete({
-        source : [
-            { label: current_date.getFullYear(), value : current_date.getFullYear()},
-            { label: current_date.getFullYear() + 1, value : current_date.getFullYear() + 1 },
-            { label: current_date.getFullYear() + 2, value : current_date.getFullYear() + 2 },
-            { label: current_date.getFullYear() + 3, value : current_date.getFullYear() + 3 },
-            { label: current_date.getFullYear() + 4, value : current_date.getFullYear() + 4 },
-            { label: "to be announced", value : 0 }
-        ],
+        source : Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }}),
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
