@@ -229,7 +229,7 @@ $(function () {
                     $.each(response.sport_events.sport_event, function (k, item) {
 
                         var season_id = id,
-                            round = item.tournament_round['@attributes'].number;
+                            round = item.tournament_round['@attributes'].number || item.tournament_round['@attributes'].type;
 
                         if ( rounds[season_id] == undefined) rounds[season_id] = {};
                         if ( rounds[season_id][round] == undefined ) rounds[season_id][round] = [];
@@ -238,6 +238,8 @@ $(function () {
                     });
 
                     source = $.map(rounds[id], function (item, k) {
+
+                        if ( k === 'undefined' ) k = "";
                         return {label: "Matchday " + k, value: "matchday-"+k}
                     });
                 }
