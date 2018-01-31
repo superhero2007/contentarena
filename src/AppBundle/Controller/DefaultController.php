@@ -71,32 +71,28 @@ class DefaultController extends Controller
     public function sellPublishedAction(Request $request)
     {
 
-        /**
-         * @var User
-         */
+        $content = new Content();
         $user = $this->getUser();
         $company = $user->getCompany();
         $data = json_decode($request->get("json"));
         $em = $this->getDoctrine()->getEntityManager();
-
-
-        $content = new Content();
 
         $content->setEventType($data->eventType);
         $content->setCompany($company);
 
 
         /**
+         * Set sport
          * Create element in DB if it doesn't exist.
          */
         $sport = $this->getDoctrine()
             ->getRepository('AppBundle:Sport')
-            ->findOneBy(array( 'externalId'=> $data->sport->value));
+            ->findOneBy(array( 'externalId'=> $data->sport->externalId));
 
         if ( !$sport ){
             $sport = new Sport();
-            $sport->setExternalId($data->sport->value);
-            $sport->setName($data->sport->name);
+            $sport->setExternalId($data->sport->externalId);
+            $sport->setName($data->sport->value);
             $em->persist($sport);
             $em->flush();
         }
@@ -105,12 +101,12 @@ class DefaultController extends Controller
 
         $tournament = $this->getDoctrine()
             ->getRepository('AppBundle:Tournament')
-            ->findOneBy(array( 'externalId'=> $data->tournament->value));
+            ->findOneBy(array( 'externalId'=> $data->tournament->externalId));
 
         if ( !$tournament ){
             $tournament = new Tournament();
-            $tournament->setExternalId($data->tournament->value);
-            $tournament->setName($data->tournament->name);
+            $tournament->setExternalId($data->tournament->externalId);
+            $tournament->setName($data->tournament->value);
             $em->persist($tournament);
             $em->flush();
         }
@@ -119,12 +115,12 @@ class DefaultController extends Controller
 
         $season = $this->getDoctrine()
             ->getRepository('AppBundle:Season')
-            ->findOneBy(array( 'externalId'=> $data->season->value));
+            ->findOneBy(array( 'externalId'=> $data->season->externalId));
 
         if ( !$season ){
             $season = new Season();
-            $season->setExternalId($data->season->value);
-            $season->setName($data->season->name);
+            $season->setExternalId($data->season->externalId);
+            $season->setName($data->season->value);
             $em->persist($season);
             $em->flush();
         }
@@ -167,7 +163,6 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('sell/contentUploaded.html.twig', [
             'user' => $user,
-            'sport' => $data->sport->name
         ]);
 
     }

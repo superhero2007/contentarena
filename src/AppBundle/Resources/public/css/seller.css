@@ -252,12 +252,12 @@ input.tag-member-input {
     border: 1px solid black;
     margin: 4px 0px;
     padding: 5px;
-    max-width: 400px;
+    width: 50%;
     min-width: 300px;
 }
 
 .step1-event-subitems-container {
-    margin-left: 40px;
+    margin-left: 30px;
 }
 
 .go-to-rights {
@@ -274,4 +274,9 @@ input.tag-member-input {
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
     /* add padding to account for vertical scrollbar */
+}
+
+.pos-rel{
+    position: relative !important;
+    right: 0 !important;
 }

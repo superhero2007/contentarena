@@ -66,12 +66,11 @@ $(function () {
     function fillTournaments(){
         fillSelector({
             selector : "#event-tournament-selector",
-            selection : "#event-tournament-selection",
-            parentSelection : "#event-sport-selection",
+            parentSelection : "#event-sport-selector",
             endpoint : "v1/feed/tournaments",
             requestType : "POST",
             getSource : function(response){
-                var categoryId = $("#event-country-selection").attr('selected-id');
+                var categoryId = $("#event-country-selector").attr('externalId');
 
                 if ( response.tournaments === undefined || response.tournaments.tournament === undefined ) return false;
 
@@ -87,10 +86,9 @@ $(function () {
     }
 
     function fillSeasons(){
-        fillSelector({
+        var options = {
             selector : "#event-season-selector",
-            selection : "#event-season-selection",
-            parentSelection : "#event-tournament-selection",
+            parentSelection : "#event-tournament-selector",
             endpoint : "v1/feed/seasons",
             requestType : "POST",
             getSource : function(response){
@@ -99,69 +97,71 @@ $(function () {
 
                 return $.map(response.seasons.season, function (item) {
                     return {label: item['@attributes'].name, value: item['@attributes'].id}
-                });
-            },
-            callback : fillSchedule
-        })
-    }
-
-    function fillSchedule(){
-        fillMultipleSelector({
-            selector : "#event-schedule-selector",
-            selection : "#event-schedule-selection",
-            parentSelection : "#event-season-selection",
-            endpoint : "v1/feed/schedules",
-            requestType : "POST",
-            getSource : function(response){
-
-                var tournament = $("#event-tournament-selection").attr("selected-id");
-
-                console.log(response);
-
-                if ( response.sport_events === undefined || response.sport_events.sport_event === undefined ) return false;
-
-
-                $.each(response.sport_events.sport_event, function (k, item) {
-
-                    var tournament_id = item.tournament['@attributes'].id,
-                        round = item.tournament_round['@attributes'].number;
-
-                    if ( rounds[tournament_id] == undefined) rounds[tournament_id] = {};
-                    if ( rounds[tournament_id][round] == undefined ) rounds[tournament_id][round] = [];
-                    rounds[tournament_id][round].push(item);
-
-                });
-
-                console.log(rounds)
-
-                return $.map(rounds[tournament], function (item, k) {
-                    return {label: "Matchday " + k, value: "matchday-"+k}
-                });
-
-                /*return $.map(response.sport_events.sport_event, function (item) {
-
-                    var label = "",
-                        attrs = item['@attributes'],
-                        competitors = item.competitors.competitor;
-
-                    label += new Date(attrs.scheduled).toISOString().split('T')[0];
-                    label += " - ";
-
-                    $.each(competitors, function(k, v){
-                        label += v['@attributes'].name + " "
-                    });
-
-                    return {label: label, value: item['@attributes'].id}
-                });*/
+                }).reverse();
             }
-        })
+        };
+
+        var el = $(options.selector),
+            spinner = el.parent().find("i");
+
+        spinner.show();
+
+        el.attr("disabled", "disabled");
+        if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
+
+        $.ajax({
+            url: hosturl + options.endpoint,
+            type: options.requestType || "GET",
+            data : { id : $(options.parentSelection).attr('externalId') },
+            success: function (response) {
+
+                var source = options.getSource(response);
+                el.attr("disabled", null);
+                el.autocomplete({
+                    source: source,
+                    minLength : 0,
+                    select: function( event, ui ) {
+
+                        var id = ui.item.value.replace(/\:/g, '-');
+                        var items = $.grep(source, function (el, i) {
+                            if (el.value == ui.item.value ) {
+                                return false;
+                            }
+
+                            return true;
+                        });
+
+                        event.preventDefault();
+                        $('#event-schedule-subitems')
+                            .append('<div class="step1-event-subitem-title standard-button-active"  mainref="'+ id +'">'+ui.item.label+'</div><div class="step1-event-subitems-container"><div class="step1-event-subitem-title" ref="'+ id +'" >Fixture</div><div class="step1-event-subitems-container is-hidden" id="'+ id +'" ><i class="fa fa-cog fa-spin pos-rel"></i></div></div>');
+
+                        $("[ref="+id+"]").click(function(){
+                            $(this).toggleClass("standard-button-active");
+                            $("#"+id).toggle();
+                            $("#"+id).find("i").show();
+                        });
+
+                        $("[mainref="+id+"]").click(function(){
+                            $(this).remove();
+                        });
+
+                        $( event.target ).autocomplete( "option", "source", items);
+
+                        fillSchedule(id);
+                    }
+                }).focus(function(){
+                    $(this).autocomplete("search", "");
+                });
+
+                spinner.hide();
+            }
+        });
     }
 
     function fillCategories(){
         fillSelector({
             selector : "#event-country-selector",
-            selection : "#event-country-selection",
-            parentSelection : "#event-sport-selection",
+            parentSelection : "#event-sport-selector",
             endpoint : "v1/feed/categories",
             requestType : "POST",
             getSource : function(response){
@@ -188,7 +188,7 @@ $(function () {
         $.ajax({
             url: hosturl + options.endpoint,
             type: options.requestType || "GET",
-            data : { id : $(options.parentSelection).attr('selected-id') },
+            data : { id : $(options.parentSelection).attr('externalId') },
             success: function (response) {
 
                 var source = options.getSource(response);
@@ -198,8 +198,7 @@ $(function () {
                     minLength : 0,
                     select: function( event, ui ) {
                         event.preventDefault();
-                        $(options.selection).attr("selected-id", ui.item.value);
-                        $(event.target).val(ui.item.label).blur();
+                        $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
                         if ( options.callback ) options.callback.call();
                     }
                 }).focus(function(){
@@ -211,31 +210,38 @@ $(function () {
         });
     }
 
-    function fillMultipleSelector( options ){
-        var el = $(options.selector),
-            spinner = el.parent().find("i");
-
-        spinner.show();
-
-        el.attr("disabled", "disabled");
-        if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
-
+    function fillSchedule( id ){
         $.ajax({
-            url: hosturl + options.endpoint,
-            type: options.requestType || "GET",
-            data : { id : $(options.parentSelection).attr('selected-id') },
+            url: hosturl + "v1/feed/schedules",
+            type: "POST",
+            data : { id : id.replace(/\-/g, ':') },
             success: function (response) {
 
-                var source = options.getSource(response),
-                    tournament = $("#event-tournament-selection").attr("selected-id");
-                el.attr("disabled", null);
-                $('#event-schedule-subitems').parent().show();
+                var source = [];
+
+                if ( response.sport_events && response.sport_events.sport_event ){
+                    $.each(response.sport_events.sport_event, function (k, item) {
+
+                        var season_id = id,
+                            round = item.tournament_round['@attributes'].number;
+
+                        if ( rounds[season_id] == undefined) rounds[season_id] = {};
+                        if ( rounds[season_id][round] == undefined ) rounds[season_id][round] = [];
+                        rounds[season_id][round].push(item);
+
+                    });
+
+                    source = $.map(rounds[id], function (item, k) {
+                        return {label: "Matchday " + k, value: "matchday-"+k}
+                    });
+                }
+
                 $.each( source, function(k, item){
                     var roundNumber = item.value.replace("matchday-", "");
-                    $('#event-schedule-subitems')
-                        .append('<div class="step1-event-subitem-title" ref="'+ item.value +'" >'+item.label+'</div><div class="step1-event-subitems-container is-hidden" id="'+ item.value +'" ></div>');
+                    $('#' + id)
+                        .append('<div class="step1-event-subitem-title" ref="'+id + '-' +  item.value +'" >'+item.label+'</div><div class="step1-event-subitems-container is-hidden" id="'+ id + '-' +item.value +'" ></div>');
 
-                    $.each( rounds[tournament][roundNumber], function(k, match){
+                    $.each( rounds[id][roundNumber], function(k, match){
 
                         var label = "",
                             selId,
@@ -251,28 +257,31 @@ $(function () {
 
                         selId = "match-" + match['@attributes'].id.split(":")[2];
 
-                        $('#'+ item.value)
-                            .append('<div class="step1-event-subitem-title" ref="'+ item.value +'" id="'+  match['@attributes'].id +'" selId="'+selId+'" >'+label+'</div>');
+                        $('#'+ id + '-' + item.value)
+                            .append('<div class="step1-event-subitem-title" ref="'+ id + '-' + item.value +'" id="'+  match['@attributes'].id +'" selId="'+selId+'" >'+label+'</div>');
 
                         $("[selId="+  selId + "]").data(match);
                     });
 
                 });
 
-                $("#event-schedule-subitems .step1-event-subitem-title").click(function(){
+                $("#"+id).find("i").remove();
 
-                    var id = $(this).attr("ref");
+                $("#"+id + " .step1-event-subitem-title").click(function(){
+
+                    var subItemId = $(this).attr("ref");
 
                     $(this).toggleClass("standard-button-active");
 
+                    if ( $(this).attr("id") !== undefined ) return false;
+
                     if( $(this).hasClass("standard-button-active") ){
-                        $('#'+ id).show()
+                        $('#'+ subItemId).show()
                     } else {
-                        $('#'+ id).hide()
+                        $('#'+ subItemId).hide()
                     }
                 });
 
-                spinner.hide();
             }
         });
     }
@@ -292,34 +301,24 @@ $(function () {
 
         $("." + eventTypeSelector).each(function(k, item){
 
-            var itemSelection = $(item).find(".step1-event-item-content"),
-                itemInput = $(item).find(".step1-event-input-content"),
-                input = $(item).find("input"),
-                id,
-                required = itemSelection.attr("required"),
-                name;
+            var itemInput = $(item).find(".step1-event-input-content"),
+                required = itemInput.attr("required"),
+                name = (itemInput.attr("id")) ? itemInput.attr("id").split("-")[1] : false,
+                value,
+                externalId;
 
+            if ( itemInput.length > 0){
+                externalId = itemInput.attr("externalId");
+                value = itemInput.val();
 
-            if ( itemSelection.length > 0 ){
-                id  = itemSelection.attr("selected-id");
-                name = (itemSelection.attr("id")) ? itemSelection.attr("id").split("-")[1] : false;
+                if ( value && eventData[name] == undefined ) eventData[name] = {};
+                if ( value && externalId ) eventData[name].externalId = externalId;
+                if ( value ) eventData[name].value = value;
 
-                if ( name && id && eventData[name] == undefined ) eventData[name] = {
-                    name : itemSelection.html(),
-                    value : (id == "-") ? itemSelection.html() : id
-                };
-
-            } else if ( itemInput.length > 0){
-                name = (itemInput.attr("id")) ? itemInput.attr("id").split("-")[1] : false;
-                id = itemInput.val();
-                if ( name && id && eventData[name] == undefined ) eventData[name] = {
-                    value : id
-                };
             }
 
-
-            if ( !id && required ){
-                $(input).addClass("invalid");
+            if ( !value && required ){
+                $(itemInput).addClass("invalid");
                 hasErrors = true;
             }
 
@@ -348,6 +347,7 @@ $(function () {
 
         console.log(eventData);
 
+        return false;
         return !hasErrors;
     }
 
@@ -566,12 +566,14 @@ $(function () {
                 setTimeout(function(){
                     $( "#event-sport-selector" ).autocomplete("search", "");
                 }, 500);
-
                 return;
             }
 
-            $("#event-sport-selection").attr("selected-id", ui.item.value);
-            $(event.target).val(ui.item.label).blur();
+            $(event.target)
+                .val(ui.item.label)
+                .attr("externalId", ui.item.value)
+                .blur();
+
             $( "#event-territory-selector").attr('disabled', null);
 
         }
@@ -596,8 +598,7 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#event-territory-selection").attr("selected-id", ui.item.value);
-            $(event.target).val(ui.item.label).blur();
+            $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
 
             countryCodes = $.map(regions, function(i){
                 if ( i["region_code"]== ui.item.value) return i["country_code"]
@@ -625,8 +626,7 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#event-programType-selection").attr("selected-id", ui.item.value);
-            $(event.target).val(ui.item.label).blur();
+            $(event.target).val(ui.item.label).attr("externald", ui.item.value).blur();
         }
     }).focus(function(){
         $(this).autocomplete("search", "");
@@ -644,47 +644,18 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $("#event-year-selection").attr("selected-id", ui.item.value);
             $(event.target).val(ui.item.label).blur();
         }
     }).focus(function(){
        $(this).autocomplete("search", "");
     });
 
-    $( "#event-duration-selector" ).mask('00:00').blur(function() {
-        if( $(this).val() != "") {
-            $( "#event-duration-selection").attr("selected-id", "-");
-        }
-    }).keyup(function(e) {
-        if (e.keyCode === 13){
-            $(this).blur();
-        }
-    });
-
-    $( "#event-programName-selector").blur(function() {
-        if( $(this).val() != "") {
-            $( "#event-programName-selection").attr("selected-id", "-");
-        }
-    }).keyup(function(e) {
-        if (e.keyCode === 13){
-            $(this).blur();
-        }
-    });
-
-    $( "#event-programs-selector").blur(function() {
-        if( $(this).val() != "") {
-            $( "#event-programs-selection").attr("selected-id", "-");
-        }
-    }).keyup(function(e) {
-        if (e.keyCode === 13){
-            $(this).blur();
-        }
-    });
+    $( "#event-duration-selector" ).mask('00:00');
 
     $("#event-availability-selector").datepicker({
-        onSelect : function(date){
-            $("#event-availability-selection").attr("selected-id", "-");
-        }
+        //onSelect : function(date){
+        //    $("#event-availability-selection").attr("selected-id", "-");
+        //}
     });
 
     $('#event-file-selector').off().focus(function(e){
@@ -697,7 +668,9 @@ $(function () {
         $('#event-file-selector').val($(this).val());
     });
 
-    $("input").focus(function(){ $(this).removeClass("invalid")});
+    $("input").focus(function(){
+        $(this).removeClass("invalid");
+    });
 
     $('#event-website-selector').mask("A", {
         translation: {

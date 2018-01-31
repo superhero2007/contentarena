@@ -24,6 +24,12 @@ class Content
 
     /**
      * @var string
+     * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
+     */
+    protected $customId;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="eventType", type="string", length=255)
      */
@@ -391,7 +397,21 @@ class Content
         $this->season = $season;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCustomId()
+    {
+        return $this->customId;
+    }
 
+    /**
+     * @param mixed $customId
+     */
+    public function setCustomId($customId)
+    {
+        $this->customId = $customId;
+    }
 
 
 
