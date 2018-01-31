@@ -173,7 +173,7 @@ $(function () {
             getSource : function(response){
                 if ( response.categories === undefined || response.categories.category === undefined ) return false;
                 return $.map(response.categories.category, function (item) {
-                    if ( $.inArray(item['@attributes'].country_code, countryCodes) == -1 ) return null;
+                    if ( $.inArray(item['@attributes'].country_code, countryCodes) == -1 && $( "#event-territory-selector" ).attr("externalid") != 0 ) return null;
                     return {label: item['@attributes'].name, value: item['@attributes'].id}
                 });
             },
@@ -366,7 +366,6 @@ $(function () {
 
         console.log(eventData);
 
-        return false;
         return !hasErrors;
     }
 
