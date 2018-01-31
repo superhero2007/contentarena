@@ -245,7 +245,7 @@ $(function () {
                 $.each( source, function(k, item){
                     var roundNumber = item.value.replace("matchday-", "");
                     $('#' + id)
-                        .append('<div class="step1-event-subitem-title" ref="'+id + '-' +  item.value +'" >'+item.label+'</div><div class="step1-event-subitems-container is-hidden" id="'+ id + '-' +item.value +'" ></div>');
+                        .append('<div class="step1-event-subitem-title matchday-subitem" ref="'+id + '-' +  item.value +'" >'+item.label+'</div><div class="step1-event-subitems-container is-hidden" id="'+ id + '-' +item.value +'" ></div>');
 
                     $.each( rounds[id][roundNumber], function(k, match){
 
@@ -271,7 +271,18 @@ $(function () {
 
                 });
 
+                $('#' + id)
+                    .append('<div class="step1-event-subitem-title matchday-subitem-showall" >Show All</div>');
+
+
                 $("#"+id).find("i").remove();
+
+                $(".matchday-subitem:nth-child(n+18)", "#"+ id).hide();
+
+                $(".matchday-subitem-showall", "#"+ id).click(function () {
+                    $(".matchday-subitem:nth-child(n+18)", "#"+ id).show();
+                    $(this).remove();
+                });
 
                 $("#"+id + " .step1-event-subitem-title").click(function(){
 
