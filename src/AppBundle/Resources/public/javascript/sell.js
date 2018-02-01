@@ -4,7 +4,11 @@
 
 $(function () {
 
-    var data = {}, regions, countryCodes= [], rounds = {}, current_date = new Date(), eventData = {};
+    var data = {}, regions, countryCodes= [], rounds = {}, current_date = new Date(), eventData = {},
+        yearArray = Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }});
+
+    yearArray .push({label: "To be announced", value : 0 });
+    yearArray.reverse();
 
     var selectorCounter = 0,
         mainPackage = null;
@@ -633,14 +637,10 @@ $(function () {
 
                     $(event.target).blur();
                     return false;
-
                 }
             }).focus(function(){
                 $(this).autocomplete("search", "");
             });
-
-
-
         }
     });
 
@@ -696,7 +696,7 @@ $(function () {
     });
 
     $( "#event-year-selector" ).autocomplete({
-        source : Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }}),
+        source : yearArray,
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
