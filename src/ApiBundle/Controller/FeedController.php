@@ -56,6 +56,15 @@ class FeedController extends FOSRestController
         return $this->handleView($view);
     }
 
+    public function getCompanyAction()
+    {
+        $user = $this->getUser();
+        $company = $user->getCompany();
+        $view = $this->view($company->getUsers());
+
+        return $this->handleView($view);
+    }
+
     public function getSportsAction()
     {
         $ttl = $this->getParameter('sportradar_api_cache_ttl');
