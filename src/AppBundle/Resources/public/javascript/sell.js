@@ -72,6 +72,7 @@ $(function () {
             selector : "#event-tournament-selector",
             parentSelection : "#event-sport-selector",
             endpoint : "v1/feed/tournaments",
+            clear: ["#event-season-selector"],
             requestType : "POST",
             getSource : function(response){
                 var categoryId = $("#event-country-selector").attr('externalId');
@@ -172,6 +173,7 @@ $(function () {
         fillSelector({
             selector : "#event-country-selector",
             parentSelection : "#event-sport-selector",
+            clear: ["#event-tournament-selector", "#event-season-selector"],
             endpoint : "v1/feed/categories",
             requestType : "POST",
             getSource : function(response){
@@ -210,6 +212,13 @@ $(function () {
                         event.preventDefault();
                         $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
                         if ( options.callback ) options.callback.call();
+                        if ( options.clear ){
+                            $.each(options.clear, function(k, id){
+                                $(id).val("");
+                                if (k > 0 ) $(id).attr("disabled", "disabled");
+                            });
+                            $("#event-schedule-subitems").html("");
+                        }
                     }
                 }).focus(function(){
                    $(this).autocomplete("search", "");
@@ -596,7 +605,11 @@ $(function () {
                 .attr("externalId", ui.item.value)
                 .blur();
 
-            $( "#event-territory-selector").attr('disabled', null);
+            $( "#event-territory-selector").attr('disabled', null).val("");
+            $("#event-country-selector").val("").attr("disabled", "disabled");
+            $("#event-tournament-selector") .val("").attr("disabled", "disabled");
+            $("#event-season-selector") .val("").attr("disabled", "disabled");
+            $("#event-schedule-subitems").html("");
 
         }
     }).focus(function(){
@@ -668,10 +681,21 @@ $(function () {
             });
 
             if ( ui.item.value == 0 ) {
-                $("#event-country-selector").attr("placeholder", "Country/Category");
+                $("#event-country-selector")
+                    .attr("placeholder", "Country/Category")
+                    .val("")
+                    .attr("disabled", "disabled");
             } else {
-                $("#event-country-selector").attr("placeholder", "Country");
+                $("#event-country-selector")
+                    .attr("placeholder", "Country")
+                    .val("")
+                    .attr("disabled", "disabled");
             }
+
+
+            $("#event-tournament-selector") .val("").attr("disabled", "disabled");
+            $("#event-season-selector") .val("").attr("disabled", "disabled");
+            $("#event-schedule-subitems").html("");
 
             fillCategories();
 
