@@ -34,30 +34,44 @@
 
                 {# Territory Selector #}
                 <div class="step1-event-item database-event-item">
-                    <input type="text" class="step1-event-input-content" placeholder="Continent or world" id="event-territory-selector" disabled="disabled"/>
+                    <input type="text" class="step1-event-input-content" placeholder="Continent or world" id="event-territory-selector"/>
                 </div>
 
                 {# Country Selector #}
                 <div class="step1-event-item database-event-item">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" class="step1-event-input-content" placeholder="Country" id="event-country-selector" disabled="disabled"/>
+                    <input type="text" class="step1-event-input-content" placeholder="Country" id="event-country-selector"/>
                 </div>
 
                 {# Competition Selector #}
                 <div class="step1-event-item  database-event-item">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" class="step1-event-input-content" placeholder="Competition" id="event-tournament-selector" disabled="disabled"/>
+                    <input type="text" class="step1-event-input-content" placeholder="Competition" id="event-tournament-selector"/>
                 </div>
 
                 {# Season Selector  #}
                 <div class="step1-event-item  database-event-item">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" class="step1-event-input-content" placeholder="Season" id="event-season-selector" disabled="disabled"/>
+                    <input type="text" class="step1-event-input-content" placeholder="Season" id="event-season-selector" />
                 </div>
 
                 {# Fixture Container #}
                 <div class="step1-event-item database-event-item">
                     <div class="step1-event-subitems-container" id="event-schedule-subitems"></div>
+                    <div class="step1-event-subitems-container" id="event-custom-subitems">
+                        <div class="step1-event-item custom-event-item">
+                            <input type="text" class="step1-event-input-content" placeholder="Type" id="event-customType-selector"/>
+                        </div>
+                        <div class="step1-event-item custom-event-item">
+                            <input type="text" class="step1-event-input-content" placeholder="Number of events to be sold" id="event-customAmount-selector"/>
+                        </div>
+                        <div class="step1-event-item custom-event-item">
+                            <input type="text" class="step1-event-input-content" placeholder="Start date" id="event-customStart-selector"/>
+                        </div>
+                        <div class="step1-event-item custom-event-item">
+                            <input type="text" class="step1-event-input-content" placeholder="End date" id="event-customEnd-selector"/>
+                        </div>
+                    </div>
                 </div>
 
                 {# Program Type #}

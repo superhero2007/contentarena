@@ -280,3 +280,11 @@ input.tag-member-input {
     position: relative !important;
     right: 0 !important;
 }
+
+.custom-input{
+    border-color: blue !important;
+}
+
+#event-custom-subitems input{
+    width: 200px !important;
+}

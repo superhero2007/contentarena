@@ -68,26 +68,81 @@ $(function () {
     }
 
     function fillTournaments(){
-        fillSelector({
-            selector : "#event-tournament-selector",
-            parentSelection : "#event-sport-selector",
-            endpoint : "v1/feed/tournaments",
-            clear: ["#event-season-selector"],
-            requestType : "POST",
-            getSource : function(response){
-                var categoryId = $("#event-country-selector").attr('externalId');
+        var options = {
+                getSource : function(response){
+                    var categoryId = $("#event-country-selector").attr('externalId'),
+                        list;
 
-                if ( response.tournaments === undefined || response.tournaments.tournament === undefined ) return false;
+                    if ( response.tournaments === undefined || response.tournaments.tournament === undefined ) return false;
 
-                return $.map(response.tournaments.tournament, function (item) {
+                    list =  $.map(response.tournaments.tournament, function (item) {
 
-                    if ( item.category['@attributes'].id != categoryId) return null;
+                        if ( item.category['@attributes'].id != categoryId) return null;
 
-                    return {label: item['@attributes'].name, value: item['@attributes'].id}
-                });
+                        return {label: item['@attributes'].name, value: item['@attributes'].id}
+                    });
+
+                    list.push({
+                        label : "Add new",
+                        value : "new"
+                    });
+
+                    return list;
+                },
+                addCustom : function(){
+                    addCustomFn("#event-tournament-selector", "Enter Tournament");
+                    addCustomFn("#event-season-selector", "Enter Season");
+                    $("#event-schedule-subitems").html("");
+                    $("#event-custom-subitems").children().show();
+                }
             },
-            callback : fillSeasons
-        })
+            el = $("#event-tournament-selector"),
+            spinner = el.parent().find("i");
+
+        spinner.show();
+
+        el.attr("disabled", "disabled");
+        if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
+
+        $.ajax({
+            url: hosturl + "v1/feed/tournaments",
+            type: "POST",
+            data : { id : $("#event-sport-selector").attr('externalId') },
+            success: function (response) {
+
+                var source = options.getSource(response);
+                el.attr("disabled", null);
+
+                if ( source.length === 0 ){
+                    options.addCustom();
+                    spinner.hide();
+                    return;
+                }
+
+                el.autocomplete({
+                    source: source,
+                    minLength : 0,
+                    select: function( event, ui ) {
+                        event.preventDefault();
+
+                        if ( ui.item.value === "new" ){
+                            options.addCustom();
+                            return;
+                        }
+
+                        $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
+                        fillSeasons();
+                        $("#event-season-selector").val("").removeClass("custom-input");;
+                        $("#event-schedule-subitems").html("");
+                        $("#event-custom-subitems").children().hide();
+                    }
+                }).focus(function(){
+                    $(this).autocomplete("search", "");
+                });
+
+                spinner.hide();
+            }
+        });
     }
 
     function fillSeasons(){
@@ -98,18 +153,31 @@ $(function () {
             requestType : "POST",
             getSource : function(response){
 
+                var list;
+
                 if ( response.seasons === undefined || response.seasons.season === undefined ) return false;
 
-                return $.map(response.seasons.season, function (item) {
-                    return {label: item['@attributes'].name, value: item['@attributes'].id}
-                }).reverse();
+                if ( $.isArray(response.seasons.season) ){
+                    list = $.map(response.seasons.season, function (item) {
+                        return {label: item['@attributes'].name, value: item['@attributes'].id}
+                    }).reverse();
+                } else {
+                    list = [{label: response.seasons.season['@attributes'].name, value: response.seasons.season['@attributes'].id}]
+                }
+
+                list.push({
+                    label : "Add new",
+                    value : "new"
+                });
+
+                return list;
+
             }
         };
 
         var el = $(options.selector),
-            spinner = el.parent().find("i");
-
-        var source;
+            spinner = el.parent().find("i"),
+            source;
 
         spinner.show();
 
@@ -129,7 +197,23 @@ $(function () {
                     minLength : 0,
                     select: function( event, ui ) {
 
-                        var id = ui.item.value.replace(/\:/g, '-');
+                        // Prevent autocomplete plugin default action
+                        event.preventDefault();
+
+                        var id,
+                            selected = ui.item.value;
+
+                        // Add new functionality
+                        if ( selected === "new" ){
+                            addCustomFn(event.target, "Enter season name");
+                            $("#event-custom-subitems").children().show();
+
+                            return;
+                        }
+
+                        $("#event-custom-subitems").children().hide();
+
+                        id = selected.replace(/\:/g, '-');
                         source = $.grep(source, function (el, i) {
                             if (el.value == ui.item.value ) {
                                 return false;
@@ -137,7 +221,7 @@ $(function () {
                             return true;
                         });
 
-                        event.preventDefault();
+
                         $('#event-schedule-subitems')
                             .append('<div class="step1-event-subitem-title standard-button-active"  mainref="'+ id +'">'+ui.item.label+'</div><div class="step1-event-subitems-container"><div class="step1-event-subitem-title" ref="'+ id +'" >Fixture</div><div class="step1-event-subitems-container is-hidden" id="'+ id +'" ><i class="fa fa-cog fa-spin pos-rel"></i></div></div>');
 
@@ -170,26 +254,35 @@ $(function () {
     }
 
     function fillCategories(){
-        fillSelector({
-            selector : "#event-country-selector",
-            parentSelection : "#event-sport-selector",
-            clear: ["#event-tournament-selector", "#event-season-selector"],
-            endpoint : "v1/feed/categories",
-            requestType : "POST",
-            getSource : function(response){
-                if ( response.categories === undefined || response.categories.category === undefined ) return false;
-                return $.map(response.categories.category, function (item) {
-                    if ( $.inArray(item['@attributes'].country_code, countryCodes) == -1 && $( "#event-territory-selector" ).attr("externalid") != 0 ) return null;
-                    return {label: item['@attributes'].name, value: item['@attributes'].id}
-                });
+        var options = {
+                getSource : function(response){
+
+                    var list;
+
+                    if ( response.categories === undefined || response.categories.category === undefined ) return [];
+
+                    list = $.map(response.categories.category, function (item) {
+                        if ( $.inArray(item['@attributes'].country_code, countryCodes) == -1 && $( "#event-territory-selector" ).attr("externalid") != 0 ) return null;
+                        return {label: item['@attributes'].name, value: item['@attributes'].id}
+                    });
+
+                    list.push({
+                        label : "Add new",
+                        value : "new"
+                    });
+
+                    return list;
+
+                },
+                addCustom : function(){
+                    addCustomFn("#event-country-selector", "Enter Country/Category");
+                    addCustomFn("#event-tournament-selector", "Enter Tournament");
+                    addCustomFn("#event-season-selector", "Enter Season");
+                    $("#event-schedule-subitems").html("");
+                    $("#event-custom-subitems").children().show();
+                }
             },
-            callback : fillTournaments
-        })
-    }
-
-    function fillSelector( options ){
-
-        var el = $(options.selector),
+            el = $("#event-country-selector"),
             spinner = el.parent().find("i");
 
         spinner.show();
@@ -198,30 +291,41 @@ $(function () {
         if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
 
         $.ajax({
-            url: hosturl + options.endpoint,
-            type: options.requestType || "GET",
-            data : { id : $(options.parentSelection).attr('externalId') },
+            url: hosturl +"v1/feed/categories",
+            type: "POST",
+            data : { id : $("#event-sport-selector").attr('externalId') },
             success: function (response) {
 
                 var source = options.getSource(response);
                 el.attr("disabled", null);
+
+                if ( source.length === 0 ){
+                    options.addCustom();
+                    spinner.hide();
+                    return;
+                }
+
                 el.autocomplete({
                     source: source,
                     minLength : 0,
                     select: function( event, ui ) {
                         event.preventDefault();
-                        $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
-                        if ( options.callback ) options.callback.call();
-                        if ( options.clear ){
-                            $.each(options.clear, function(k, id){
-                                $(id).val("");
-                                if (k > 0 ) $(id).attr("disabled", "disabled");
-                            });
-                            $("#event-schedule-subitems").html("");
+
+                        if ( ui.item.value === "new" ){
+                            options.addCustom();
+                            return;
                         }
+
+                        $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
+                        fillTournaments();
+                        $.each(["#event-tournament-selector", "#event-season-selector"], function(k, id){
+                            $(id).val("").removeClass("custom-input");
+                        });
+                        $("#event-schedule-subitems").html("");
+                        $("#event-custom-subitems").children().hide;
                     }
                 }).focus(function(){
-                   $(this).autocomplete("search", "");
+                    $(this).autocomplete("search", "");
                 });
 
                 spinner.hide();
@@ -429,14 +533,25 @@ $(function () {
     }
 
     function submitform() {
-        var url = hosturl + 'sell/published';
+        var url = hosturl + 'sell/published',
+            form = $('#myform');
 
-        $('#myform').attr('action', url);
+        form.attr('action', url);
 
         var data = JSON.stringify(eventData);
 
         $('<input type="hidden" name="json"/>').val(data).appendTo('#myform');
-        $("#myform").submit();
+        form.submit();
+    }
+
+    function addCustomFn( el, placeholder ){
+        $(el)
+            .off()
+            .val("")
+            .addClass("custom-input")
+            .attr("placeholder", placeholder);
+
+        if ( $(el).data('ui-autocomplete') != undefined ) $(el).autocomplete('destroy');
     }
 
     $(".package-selector").change(function () {
@@ -570,6 +685,10 @@ $(function () {
             });
 
             data.sports.sort(function(a,b) {return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);} );
+            data.sports.push({
+                label : "Add new",
+                value : "new"
+            })
         }
     });
 
@@ -592,11 +711,16 @@ $(function () {
         select: function( event, ui ) {
             event.preventDefault();
 
-            if (ui.item.value == "all"){
+            if (ui.item.value === "all"){
                 $( "#event-sport-selector" ).autocomplete( "option", "source", data.sports );
                 setTimeout(function(){
                     $( "#event-sport-selector" ).autocomplete("search", "");
                 }, 500);
+                return;
+            }
+
+            if (ui.item.value === "new"){
+                addCustomFn(event.target, "Enter sport name");
                 return;
             }
 
@@ -605,10 +729,10 @@ $(function () {
                 .attr("externalId", ui.item.value)
                 .blur();
 
-            $( "#event-territory-selector").attr('disabled', null).val("");
-            $("#event-country-selector").val("").attr("disabled", "disabled");
-            $("#event-tournament-selector") .val("").attr("disabled", "disabled");
-            $("#event-season-selector") .val("").attr("disabled", "disabled");
+            $( "#event-territory-selector").val("");
+            $("#event-country-selector").val("");
+            $("#event-tournament-selector") .val("");
+            $("#event-season-selector") .val("");
             $("#event-schedule-subitems").html("");
 
         }
@@ -681,20 +805,14 @@ $(function () {
             });
 
             if ( ui.item.value == 0 ) {
-                $("#event-country-selector")
-                    .attr("placeholder", "Country/Category")
-                    .val("")
-                    .attr("disabled", "disabled");
+                $("#event-country-selector").attr("placeholder", "Country/Category").val("");
             } else {
-                $("#event-country-selector")
-                    .attr("placeholder", "Country")
-                    .val("")
-                    .attr("disabled", "disabled");
+                $("#event-country-selector").attr("placeholder", "Country").val("");
             }
 
 
-            $("#event-tournament-selector") .val("").attr("disabled", "disabled");
-            $("#event-season-selector") .val("").attr("disabled", "disabled");
+            $("#event-tournament-selector") .val("");
+            $("#event-season-selector") .val("");
             $("#event-schedule-subitems").html("");
 
             fillCategories();
@@ -736,6 +854,27 @@ $(function () {
        $(this).autocomplete("search", "");
     });
 
+    $( "#event-customAmount-selector" ).autocomplete({
+        source : Array.from(Array(50).keys()).map(function(item, index) { return {value : index +1, label : index+1 }}),
+        minLength: 0,
+    }).focus(function(){
+        $(this).autocomplete("search", "");
+    });
+
+    $( "#event-customType-selector" ).autocomplete({
+        source : [
+            { label: "League", value : 1},
+            { label: "Tournament", value : 2},
+        ],
+        minLength: 0,
+        select: function( event, ui ) {
+            event.preventDefault();
+            $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
+        }
+    }).focus(function(){
+        $(this).autocomplete("search", "");
+    });
+
     $( "#event-duration-selector" ).mask('00:00');
 
     $("#event-availability-selector").datepicker({
@@ -743,6 +882,10 @@ $(function () {
         //    $("#event-availability-selection").attr("selected-id", "-");
         //}
     });
+
+    $("#event-customStart-selector").datepicker();
+
+    $("#event-customEnd-selector").datepicker();
 
     $('#event-file-selector').off().focus(function(e){
         $(this).blur();
