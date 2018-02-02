@@ -667,6 +667,12 @@ $(function () {
                 if ( i["region_code"]== ui.item.value) return i["country_code"]
             });
 
+            if ( ui.item.value == 0 ) {
+                $("#event-country-selector").attr("placeholder", "Country/Category");
+            } else {
+                $("#event-country-selector").attr("placeholder", "Country");
+            }
+
             fillCategories();
 
         }
