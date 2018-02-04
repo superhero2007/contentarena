@@ -73,6 +73,12 @@ $(function() {
 
         return result.upper && result.match && result.special && result.digit && result.length;
 
-    })
+    });
+
+    $(".link-action").click(function () {
+        var url = $(this).attr("href");
+
+        window.location.href = url;
+    });
 
 });

@@ -103,6 +103,12 @@ fos_rest:
                                                         # will eventually be JSON formated
 
 
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
+        options:    []
+
 easy_admin:
     site_name: 'Content Arena'
     entities:
