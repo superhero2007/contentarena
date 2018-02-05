@@ -106,7 +106,7 @@ fos_rest:
 knp_snappy:
     pdf:
         enabled:    true
-        binary:     /usr/local/bin/wkhtmltopdf #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\"" for Windows users
+        binary:     /bin/wkhtmltox/bin/wkhtmltopdf
         options:    []
 
 easy_admin:
