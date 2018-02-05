@@ -103,11 +103,12 @@ fos_rest:
                                                         # will eventually be JSON formated
 
 knp_snappy:
+    temporary_folder: "%kernel.cache_dir%/snappy"
     pdf:
         enabled:    true
         binary:     /home/hogmorem/bin/wkhtmltox/bin/wkhtmltopdf
         options:    []
-        temporary_folder: "%kernel.cache_dir%/snappy"
+
 
 easy_admin:
     site_name: 'Content Arena'
