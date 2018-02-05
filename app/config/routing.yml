@@ -35,3 +35,8 @@ api_rest_feed:
     type: rest
     resource: ApiBundle\Controller\FeedController
     prefix:   /v1/feed
+
+api_rest_contract:
+    type: rest
+    resource: ApiBundle\Controller\ContractController
+    prefix:   /v1/contract

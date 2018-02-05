@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <style>
+            .contract-item{
+                margin: 20px 0 ;
+            }
+
+            .contract-title{
+                text-align: center;
+                font-size: 150%;
+            }
+
+            .contract-item-title{
+                font-size: 105%;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+        </style>
+    </head>
+    <body class="contract">
+
+        <div class="contract-content">
+            <div class="contract-item">
+                <div class="contract-title">LICENCE AGREEMENT</div>
+            </div>
+
+            {# DATE #}
+            <div class="contract-item">
+                <div class="contract-item-content">{{ content.createdAt|date }}</div>
+            </div>
+
+            {# LICENSOR#}
+            <div class="contract-item">
+                <div class="contract-item-title">Licensor:</div>
+                <div class="contract-item-content">Hogmore Media AG</div>
+                <div class="contract-item-content">Landstrasse 33</div>
+                <div class="contract-item-content">9491 Ruggell</div>
+                <div class="contract-item-content">Liechtenstein</div>
+                <div class="contract-item-content">VAT No. 59012</div>
+            </div>
+
+            {# LICENSEE #}
+            <div class="contract-item">
+                <div class="contract-item-title">Licensee:</div>
+                <div class="contract-item-content">{{ content.company.displayName }}</div>
+                <div class="contract-item-content">{{ content.company.address }}</div>
+                <div class="contract-item-content">{{ content.company.zip }}</div>
+            </div>
+
+            <div class="contract-item">
+                <div class="contract-item-content">
+                    Licensor hereby grants to Licensee a licence to broadcast, transmit, communicate to the public and distribute the following Event(s) subject to the Standard Terms and Conditions attached hereto in the Territory, the Licensed Media and the Languages.
+                </div>
+            </div>
+
+            {# EVENT #}
+            <div class="contract-item">
+                <div class="contract-item-title">Event(s):</div>
+
+                {% if content.sport is not empty %}
+                    <div class="contract-item-content">
+                        {{ content.sport.name }}
+                    </div>
+                {% endif %}
+
+                {% if content.tournament is not empty %}
+                    <div class="contract-item-content">
+                        {{ content.tournament.name }}
+                    </div>
+                {% endif %}
+
+                {% if content.season is not empty %}
+                    <div class="contract-item-content">
+                        {{ content.season.name }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            {# FEE #}
+            {% if content.fee is not empty %}
+                <div class="contract-item">
+                    <div class="contract-item-title">Fee:</div>
+                    <div class="contract-item-content">
+                        {{ content.fee }} USD
+                    </div>
+                </div>
+            {% endif %}
+
+            {# RIGHTS #}
+            {% for rightItem in content.rightsItems %}
+                <div class="contract-item">
+                    <div class="contract-item-title">
+                        {% for right in rightItem.rights %}
+                            {{ right.name }}
+                        {% endfor %}
+                    </div>
+
+                    <div class="contract-item-content">
+                        {{ rightItem.contractContent }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="footer">
+            <div class="logo">
+            </div>
+            <div class="content">
+                <p class="footerInfo uk-margin"><span class="footerCompanyName">Content Arena  Pte Ltd. 2017</span>
+                    <span> <a href="https://contentarena.com/web/privacy-policy/">Privacy Policy</a></span>
+                    <span> <a href="https://contentarena.com/web/terms-of-use/">Terms of Use</a></span>
+                    <span> <a href="https://contentarena.com/web/cookie-policy/">Cookie Policy</a></span>
+                    <span> <a href="mailto:info@contentarena.com">Email</a></span>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -533,7 +533,7 @@ $(function () {
     }
 
     function submitform() {
-        var url = hosturl + 'sell/published',
+        var url = envhosturl + 'sell/published',
             form = $('#myform');
 
         form.attr('action', url);
@@ -905,6 +905,26 @@ $(function () {
         translation: {
             "A": { pattern: /[\w/\-.+]/, recursive: true }
         }
+    });
+
+    $("#view-agreement").click(function () {
+
+        validateStepTwo();
+        $("#view-agreement").attr("disabled", "disabled").append('<i class="fa fa-cog fa-spin">');
+        $.ajax({
+            url : envhosturl + 'v1/contract/previews',
+            type: 'POST',
+            data : {
+                content : JSON.stringify(eventData)
+            },
+            success : function( response ){
+                console.log(response);
+                eventData.id = response.id;
+                window.location.href = envhosturl + 'contract/preview?id='+ response.id;
+                $("#view-agreement").attr("disabled", null).find('i').remove();
+            }
+        })
+
     });
 
     /**

@@ -118,6 +118,9 @@ class Content
      */
     private $rightsItems;
 
+    /** @ORM\Column(type="datetime", name="created_at", nullable=true) */
+    private $createdAt;
+
     public function __construct() {
         $this->rightsItems = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -411,6 +414,22 @@ class Content
     public function setCustomId($customId)
     {
         $this->customId = $customId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
 

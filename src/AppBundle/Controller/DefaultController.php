@@ -2,14 +2,12 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Content;
-use AppBundle\Entity\Season;
-use AppBundle\Entity\Tournament;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Sport;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\ContentService;
 
 class DefaultController extends Controller
 {
@@ -68,103 +66,54 @@ class DefaultController extends Controller
     /**
      * @Route("/sell/published", name="sellPublished")
      */
-    public function sellPublishedAction(Request $request)
+    public function sellPublishedAction(Request $request, ContentService $contentService)
     {
-
-        $content = new Content();
         $user = $this->getUser();
-        $company = $user->getCompany();
         $data = json_decode($request->get("json"));
-        $em = $this->getDoctrine()->getEntityManager();
 
-        $content->setEventType($data->eventType);
-        $content->setCompany($company);
-
-
-        /**
-         * Set sport
-         * Create element in DB if it doesn't exist.
-         */
-        $sport = $this->getDoctrine()
-            ->getRepository('AppBundle:Sport')
-            ->findOneBy(array( 'externalId'=> $data->sport->externalId));
-
-        if ( !$sport ){
-            $sport = new Sport();
-            $sport->setExternalId($data->sport->externalId);
-            $sport->setName($data->sport->value);
-            $em->persist($sport);
-            $em->flush();
-        }
-
-        $content->setSport($sport);
-
-        $tournament = $this->getDoctrine()
-            ->getRepository('AppBundle:Tournament')
-            ->findOneBy(array( 'externalId'=> $data->tournament->externalId));
-
-        if ( !$tournament ){
-            $tournament = new Tournament();
-            $tournament->setExternalId($data->tournament->externalId);
-            $tournament->setName($data->tournament->value);
-            $em->persist($tournament);
-            $em->flush();
-        }
-
-        $content->setTournament($tournament);
-
-        $season = $this->getDoctrine()
-            ->getRepository('AppBundle:Season')
-            ->findOneBy(array( 'externalId'=> $data->season->externalId));
-
-        if ( !$season ){
-            $season = new Season();
-            $season->setExternalId($data->season->externalId);
-            $season->setName($data->season->value);
-            $em->persist($season);
-            $em->flush();
-        }
-
-        $content->setSeason($season);
-
-        if ( isset($data->rightItems) ){
-
-            $rightItems = array();
-
-            foreach ( $data->rightItems as $rightItem ){
-
-                if ( !isset($rightItem->id) ) continue;
-
-                $item = $this->getDoctrine()
-                    ->getRepository('AppBundle:RightsItemContent')
-                    ->findOneBy(array( 'id'=> $rightItem->id));
-
-                $rightItems[] = $item;
-            }
-
-            $content->setRightsItems($rightItems);
-        }
-
-        if ( isset($data->duration) ) $content->setDuration($data->duration->value);
-        if ( isset($data->description) ) $content->setDescription($data->description->value);
-        if ( isset($data->fee) && isset($data->fee->amount) ) $content->setFee($data->fee->amount);
-        if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
-        if ( isset($data->website) ) $content->setWebsite($data->website->value);
-        if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
-        if ( isset($data->availability) ){
-            $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
-        }
-
-        //var_dump($data->sport);
-
-        $em->persist($content);
-        $em->flush();
+        $contentService->createContent($user, $data);
 
         // replace this example code with whatever you need
         return $this->render('sell/contentUploaded.html.twig', [
             'user' => $user,
         ]);
 
+    }
+
+    /**
+     * @Route("/test/sell/published", name="testSellPublished")
+     */
+    public function testSellPublishedAction(){
+
+        $user = $this->getUser();
+
+        return $this->render('sell/contentUploaded.html.twig', [
+            'user' => $user,
+        ]);
+
+    }
+
+    /**
+     * @Route("/contract/preview", name="contractPreview")
+     */
+    public function contractPreviewAction(Request $request){
+
+        $user = $this->getUser();
+        $time = new \DateTime();
+        $content = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->findOneBy(['id' => $request->get("id")]);
+
+
+        $html = $this->renderView('contract/layout.html.twig', [
+            'user' => $user,
+            'content' => $content
+        ]);
+
+        return new PdfResponse(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
+        );
     }
 
     /**
@@ -206,6 +155,8 @@ class DefaultController extends Controller
         ]);
 
     }
+
+
 
 
 }
