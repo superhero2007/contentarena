@@ -106,7 +106,7 @@ fos_rest:
 knp_snappy:
     pdf:
         enabled:    true
-        binary:     /bin/wkhtmltox/bin/wkhtmltopdf
+        binary:     /home/hogmorem/bin/wkhtmltox/bin/wkhtmltopdf
         options:    []
 
 easy_admin:
