@@ -64,6 +64,13 @@ class Content
     private $releaseYear;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="approved", type="boolean")
+     */
+    protected $approved = false;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="availability", type="date", nullable=true)
@@ -430,6 +437,22 @@ class Content
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApproved()
+    {
+        return $this->approved;
+    }
+
+    /**
+     * @param bool $approved
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
     }
 
 

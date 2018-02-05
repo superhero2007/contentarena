@@ -71,13 +71,14 @@ $(function () {
         var options = {
                 getSource : function(response){
                     var categoryId = $("#event-country-selector").attr('externalId'),
+                        territoryId= $("#event-territory-selector").attr('externalId'),
                         list;
 
                     if ( response.tournaments === undefined || response.tournaments.tournament === undefined ) return false;
 
                     list =  $.map(response.tournaments.tournament, function (item) {
-
-                        if ( item.category['@attributes'].id != categoryId) return null;
+                        if ( categoryId && item.category['@attributes'].id != categoryId) return null;
+                        if ( !categoryId && territoryId && $.inArray(item.category['@attributes'].country_code, countryCodes) == -1) return null;
 
                         return {label: item['@attributes'].name, value: item['@attributes'].id}
                     });
@@ -474,11 +475,6 @@ $(function () {
                     eventData.matches[matchday].push($(v).data());
                 }
             });
-
-            if ( $.isEmptyObject(eventData.matches) ){
-                $("#event-schedule-selector").addClass("invalid");
-                hasErrors = true;
-            }
         }
 
         console.log(eventData);
@@ -734,6 +730,7 @@ $(function () {
             $("#event-tournament-selector") .val("");
             $("#event-season-selector") .val("");
             $("#event-schedule-subitems").html("");
+            fillTournaments();
 
         }
     }).focus(function(){
@@ -816,7 +813,7 @@ $(function () {
             $("#event-schedule-subitems").html("");
 
             fillCategories();
-
+            fillTournaments();
         }
     }).focus(function(){
        $(this).autocomplete("search", "");

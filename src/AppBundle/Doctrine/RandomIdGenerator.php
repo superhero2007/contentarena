@@ -7,13 +7,19 @@
  */
 
 namespace AppBundle\Doctrine;
-use Doctrine\ORM\Id\AbstractIdGenerator;
 
-class RandomIdGenerator extends AbstractIdGenerator
+use Doctrine\ORM\EntityManager;
+
+class RandomIdGenerator
 {
-    public function generate(\Doctrine\ORM\EntityManager $em, $entity)
+
+    public function __construct(EntityManager $entityManager) {
+        $this->em = $entityManager;
+    }
+
+    public function generate($entity)
     {
-        $entity_name = $em->getClassMetadata(get_class($entity))->getName();
+        $entity_name = $this->em->getClassMetadata(get_class($entity))->getName();
 
         // Id must be 6 digits length, so range is 100000 - 999999
         $min_value = 100000;
@@ -25,7 +31,7 @@ class RandomIdGenerator extends AbstractIdGenerator
         while (true) {
             $id = $this->generateCode();
 
-            $item = $em->getRepository($entity_name)->findOneBy(array("custom_id" => $id));
+            $item = $this->em->getRepository($entity_name)->findOneBy(array("customId" => $id));
 
             if (!$item) {
                 return $id;
@@ -51,12 +57,12 @@ class RandomIdGenerator extends AbstractIdGenerator
 
             $chr = $chrDb[rand(0,count($chrDb)-1)];
 
-            if (rand(0,1) == 0){
+          /*  if (rand(0,1) == 0){
                 $chr = strtolower($chr);
             }
             if (3 == $count){
                 $str .= '-';
-            }
+            }*/
             $str .= $chr;
         }
 
