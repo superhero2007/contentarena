@@ -890,8 +890,16 @@ $(function () {
         e.preventDefault();
     });
 
-    $('#event-file-selector-hidden').change(function(){
-        $('#event-file-selector').val($(this).val());
+    $('#event-file-selector-hidden').checkFileType({
+        allowedExtensions: ['jpg', 'jpeg','png', 'pdf', 'doc', 'docx'],
+        success: function() {
+            $('#event-file-selector').val($(this).val());
+        },
+        error: function() {
+            $('#event-file-selector').attr("placeholder", "Allowed: .png, .jpg, .pdf, .doc, .docx").val("");
+            $(this).val("")
+            $('<div />').html('File type not allowed').dialog();
+        }
     });
 
     $("input").focus(function(){
@@ -922,6 +930,19 @@ $(function () {
             }
         })
 
+    });
+
+    $("#upload-agreement").click(function (){
+        $('#license-file-selector-hidden').trigger("click");
+    });
+
+    $('#license-file-selector-hidden').checkFileType({
+        allowedExtensions: [ 'pdf', 'doc', 'docx'],
+        success: function() {
+        },
+        error: function() {
+            $('<div />').html('File type not allowed. Please upload a .pdf, .doc or .docx file').dialog();
+        }
     });
 
     /**

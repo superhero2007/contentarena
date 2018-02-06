@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Content;
+use AppBundle\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -66,12 +68,11 @@ class DefaultController extends Controller
     /**
      * @Route("/sell/published", name="sellPublished")
      */
-    public function sellPublishedAction(Request $request, ContentService $contentService)
+    public function sellPublishedAction(Request $request, ContentService $contentService, FileUploader $fileUploader)
     {
         $user = $this->getUser();
-        $data = json_decode($request->get("json"));
 
-        $contentService->createContent($user, $data);
+        $contentService->createContent($user, $request);
 
         // replace this example code with whatever you need
         return $this->render('sell/contentUploaded.html.twig', [
@@ -160,3 +161,4 @@ class DefaultController extends Controller
 
 
 }
+

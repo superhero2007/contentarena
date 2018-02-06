@@ -92,6 +92,20 @@ class Content
     private $website;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="own_license", type="string", length=255, nullable=true)
+     */
+    private $ownLicense;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="brochure", type="string", length=255, nullable=true)
+     */
+    private $brochure;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -453,6 +467,38 @@ class Content
     public function setApproved($approved)
     {
         $this->approved = $approved;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnLicense()
+    {
+        return $this->ownLicense;
+    }
+
+    /**
+     * @param string $ownLicense
+     */
+    public function setOwnLicense($ownLicense)
+    {
+        $this->ownLicense = $ownLicense;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBrochure()
+    {
+        return $this->brochure;
+    }
+
+    /**
+     * @param string $brochure
+     */
+    public function setBrochure($brochure)
+    {
+        $this->brochure = $brochure;
     }
 
 

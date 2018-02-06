@@ -12,6 +12,9 @@ parameters:
     sportradar_api_token: dqahyKSX6u5J1vNHMp
     sportradar_api_host: https://api.betradar.com/v1
     sportradar_api_cache_ttl : 432000
+    uploads_main_folder: '%kernel.project_dir%/web/uploads'
+    uploads_uri_prefix: 'web/uploads'
+    admin_uploads_uri: '%kernel.project_dir%'
 
 framework:
     #esi: ~
@@ -149,6 +152,14 @@ easy_admin:
             Content:
                 class: AppBundle\Entity\Content
                 list:
+                    fields:
+                        - { property: 'customId' }
+                        - { property: 'company' }
+                        - { property: 'sport' }
+                        - { property: 'createdAt' }
+                        - { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
+                        - { property: 'brochure', template: ':easy_admin:brochure.list.html.twig', base_path: '%admin_uploads_uri%' }
+                        - { property: 'approved' }
                     actions:
                         - { name: 'show', icon: 'eye', label: '' }
                         - { name: 'edit', icon: 'pencil', label: '' }

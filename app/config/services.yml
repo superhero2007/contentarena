@@ -33,6 +33,11 @@ services:
         resource: '../../src/AppBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']
 
+
+    AppBundle\Service\FileUploader:
+        arguments:
+            $targetDir: '%uploads_main_folder%'
+            $uploadsUriPrefix: '%uploads_uri_prefix%'
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
@@ -70,3 +75,4 @@ services:
         class: ApiBundle\Controller\ContractController
         calls:
             - [setContainer, ["@service_container"]]
+

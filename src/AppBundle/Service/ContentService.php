@@ -8,7 +8,9 @@
 
 namespace AppBundle\Service;
 
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
+use AppBundle\Service\FileUploader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Season;
@@ -22,17 +24,27 @@ class ContentService
 
     private $em;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator) {
+    private $idGenerator;
+
+    private $fileUploader;
+
+    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
+        $this->fileUploader = $fileUploader;
     }
 
-    public function createContent(User $user, $data){
+    public function createContent(User $user, Request $request){
 
         /**
          * Instance new content object
          */
         $content = new Content();
+
+        /**
+         * Get json from form data
+         */
+        $data = json_decode($request->get("json"));
 
         /**
          * Set creation date
@@ -110,11 +122,38 @@ class ContentService
 
         //var_dump($data->sport);
 
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
+
         $this->em->persist($content);
         $this->em->flush();
 
         return $content;
 
+    }
+
+    /**
+     * @param Request $request
+     * @param Content $content
+     * @return Content
+     */
+    private function saveFiles( Request $request, Content $content ){
+        $license = $request->files->get("license");
+        $brochure = $request->files->get("brochure");
+
+        if ( count( $license ) > 0 ) {
+            $licenseFileName = $this->fileUploader->upload($license[0]);
+            $content->setOwnLicense($licenseFileName);
+        }
+
+        if ( count($brochure) > 0 ){
+            $brochureFileName = $this->fileUploader->upload($brochure[0]);
+            $content->setBrochure($brochureFileName);
+        }
+
+        return $content;
     }
 
     private function getSeason($data){
