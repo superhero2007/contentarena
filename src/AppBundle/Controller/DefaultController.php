@@ -58,9 +58,25 @@ class DefaultController extends Controller
     {
 
         $user = $this->getUser();
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'user' => $user
+        $contents = array(['Temporal string to show templates.']);
+        return $this->render('buy/buy.html.twig', [
+            'user' => $user,
+            'contents' => $contents
+        ]);
+
+    }
+
+    /**
+     * @Route("/buy/{id}", name="showContent")
+     */
+    public function showContent(Request $request)
+    {
+
+        $user = $this->getUser();
+        $content = "Temporal string to show template.";
+        return $this->render('buy/content.html.twig', [
+            'user' => $user,
+            'content' => $content
         ]);
 
     }
