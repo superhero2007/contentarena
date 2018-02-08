@@ -1,2 +1,23 @@
-<p>Render Content Item</p>
-<a href="buy/1" type="button">more info</a>
+<div class="buy-box">
+  <div class="buy-box-content">
+    <div class="buy-grid-container">
+      <div class="buy-grid-item">
+        <p>Image</p>
+        <p>{{ content.sport.name }}</p>
+      </div>
+      <div class="buy-grid-item">
+        <p align="left">{{ content.tournament.name }} Germany</p>
+        <p align="left">10/02/2018</p>
+        <p align="left">{{ content.description }}</p>
+        <p align="left">{{ content.eventType }}</p>
+      </div>
+      <div class="buy-grid-item">
+        <p>{{ content.company.displayName }}</p>
+        <div class="buy-grid-item">
+          <p>Offer deadline: 15 days</p>
+          <button class="event-origin-selector uk-button standard-button standard-button-active">More Info</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

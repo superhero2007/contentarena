@@ -58,7 +58,8 @@ class DefaultController extends Controller
     {
 
         $user = $this->getUser();
-        $contents = array(['Temporal string to show templates.']);
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findAll();
+
         return $this->render('buy/buy.html.twig', [
             'user' => $user,
             'contents' => $contents
