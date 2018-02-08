@@ -2,19 +2,21 @@
   <div class="buy-box-content">
     <div class="buy-grid-container">
       <div class="buy-grid-item">
-        <p>Image</p>
-        <p>{{ content.sport.name }}</p>
+        <img src="{{ asset('bundles/app/images/no-image.png') }}" />
+        <p>{{ content.sport.name | default("") }}</p>
       </div>
       <div class="buy-grid-item">
-        <p align="left">{{ content.tournament.name }} Germany</p>
-        <p align="left">10/02/2018</p>
-        <p align="left">{{ content.description }}</p>
-        <p align="left">{{ content.eventType }}</p>
+        <p align="left"><i class="fa fa-cog"></i>{{ content.tournament.name | default("") }} <i class="fa fa-globe"></i>{{ "Germany" | default("") }}</p>
+        <p align="left"><i class="fa fa-calendar"></i>{{ "10/02/2018" | default("") }}</p>
+        <p align="left"><i class="fa fa-arrow-circle-right"></i>{{ content.description | default("Borussia Dortmund vs FC Schalke 04") }}</p>
+        <p align="left"><i class="fa fa-gavel"></i>{{ content.eventType | default("Live transmission, Live betting, Highlights, News ") }}</p>
       </div>
       <div class="buy-grid-item">
-        <p>{{ content.company.displayName }}</p>
+      </div>
+      <div class="buy-grid-item">
+        <p><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</p>
         <div class="buy-grid-item">
-          <p>Offer deadline: 15 days</p>
+          <a href="#">Offer deadline: 15 days</a>
           <button class="event-origin-selector uk-button standard-button standard-button-active">More Info</a>
         </div>
       </div>
