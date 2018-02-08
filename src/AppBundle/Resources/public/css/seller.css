@@ -249,6 +249,7 @@ input.tag-member-input {
     border-color: red !important;
 }
 
+
 .ui-autocomplete {
     max-height: 400px;
     overflow-y: auto;
@@ -272,4 +273,20 @@ input.tag-member-input {
 
 .installment-number{
     margin-right: 5px;
+}
+
+input#fee-selector, input#bid-selector {
+    margin: 10px 10px -10px;
+}
+
+input.sales-package-name {
+    margin: 0;
+}
+
+.box-item-checkbox-list{
+    margin: 5px 10px;
+}
+
+.is-hidden{
+    display: none;
 }

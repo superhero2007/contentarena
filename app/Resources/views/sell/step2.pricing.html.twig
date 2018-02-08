@@ -1,9 +1,9 @@
-<div id="price-sell-box" class="seller-box sell-items-box">
+<div id="sales-package-1" class="seller-box sales-package">
     <div class="seller-box-title">
         Pricing and territory
     </div>
-    <div class="seller-box-content seller-box-content-rights">
-        <div class="select-box-item-container" id="sales-method-selector">
+    <div class="seller-box-content">
+        <div class="box-item" id="sales-method-selector">
 
             <div class="select-box-item-title">
                 Sales method
@@ -11,7 +11,11 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="pre-defined-fee"  class="unselect-others">
+                    <input type="checkbox"
+                           value="pre-defined-fee"
+                           show=".predefined-fee-option"
+                           hide=".price-optional"
+                           class="unselect-others toggler-checkbox">
                 </div>
                 <div class="select-box-item-label">
                     Pre-defined fee
@@ -20,7 +24,10 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="open-bid" class="unselect-others">
+                    <input type="checkbox" value="open-bid"
+                           show=".bid-option"
+                           hide=".price-optional"
+                           class="unselect-others toggler-checkbox">
                 </div>
                 <div class="select-box-item-label">
                     Open bid
@@ -29,26 +36,48 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="closed-bid" >
+                    <input type="checkbox" value="closed-bid"
+                           show=".bid-option, .closed-bid-option"
+                           hide=".price-optional"
+                           class="unselect-others toggler-checkbox" >
                 </div>
                 <div class="select-box-item-label">
                     Closed bid
                 </div>
             </div>
         </div>
-        <div class="select-box-item-container"  id="fee-currency-selector">
-            <div class="select-box-item-title">
+
+        <div class="box-item price-optional predefined-fee-option bid-option">
+            <div class="select-box-item-title price-optional predefined-fee-option">
                 Fee
             </div>
 
-            <div class="select-box-item select-box-item-full">
+            <div class="select-box-item select-box-item-full price-optional predefined-fee-option">
                 <div class="select-box-checkbox">
-                    <input type="text" id="fee-selector" >
+
                 </div>
                 <div class="select-box-item-label">
+                    <input type="text" id="fee-selector" class="small-input" >
                 </div>
             </div>
 
+            <div class="select-box-item-title price-optional bid-option">
+                Minimum bid
+            </div>
+
+            <div class="select-box-item select-box-item-full price-optional bid-option">
+                <div class="select-box-checkbox">
+
+                </div>
+                <div class="select-box-item-label">
+                    <input type="text" id="bid-selector" class="small-input" >
+                </div>
+            </div>
+
+        </div>
+
+        {# CURRENCY SELECTOR#}
+        <div class="box-item price-optional predefined-fee-option bid-option" id="fee-selector">
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
                     <input type="checkbox" value="USD" class="unselect-others">
@@ -67,7 +96,10 @@
                 </div>
             </div>
         </div>
-        <div class="select-box-item-container" id="territories-selector">
+
+
+        {# TERRITORY #}
+        <div class="box-item" id="territories-selector">
             <div class="select-box-item-title">
                 Territories
             </div>
@@ -99,5 +131,43 @@
                 </div>
             </div>
         </div>
+
+        {# PACKAGE #}
+        <div class="box-item">
+            <div class="select-box-item-title">
+                Package Configuration
+            </div>
+
+            <div class="select-box-item select-box-item-full ">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="territories-as-package" >
+                </div>
+                <div class="select-box-item-label">
+                    Sell territories as package
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full price-optional closed-bid-option">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="territories-bids">
+                </div>
+                <div class="select-box-item-label">
+                    Allow individual bids on territories
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-item-label box-item-checkbox-list">
+                    <input type="text" placeholder="Enter package name" class="sales-package-name">
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-item-label box-item-checkbox-list">
+                    <button class="small-button" id="add-sales-package">Add sales package</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

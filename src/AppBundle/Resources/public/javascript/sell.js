@@ -4,14 +4,19 @@
 
 $(function () {
 
-    var data = {}, regions, countryCodes= [], rounds = {}, current_date = new Date(), eventData = {},
+    var data = {},
+        regions,
+        selectorCounter = 0,
+        mainPackage = null,
+        countryCodes= [],
+        rounds = {},
+        current_date = new Date(),
+        eventData = {},
         yearArray = Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }});
 
     yearArray .push({label: "To be announced", value : 0 });
     yearArray.reverse();
 
-    var selectorCounter = 0,
-        mainPackage = null;
 
     function checkSelectedPackages() {
         $(".select-box-item-container").hide();
@@ -519,10 +524,9 @@ $(function () {
             eventData.packages.push($(v).attr("id").split("-")[1] );
         });
         eventData.salesMethod = $("input:checked", "#sales-method-selector").val();
-        eventData.fee = {
-            amount : $( "#fee-selector").val(),
-            currency : $("input:checked", "#fee-currency-selector").val()
-        };
+        eventData.fee = $( "#fee-selector").val();
+        eventData.bid = $( "#bid-selector").val();
+        eventData.currency = $("input:checked", "#currency-selector").val();
         eventData.territories = $("input:checked", "#territories-selector").val();
 
         console.log(eventData);
@@ -576,6 +580,24 @@ $(function () {
         return n + ord;
     }
 
+    function setupInstallment(){
+        $(".installment-percent").off().mask('00%', {reverse: true});
+    }
+
+    function setupSalesPackage( context ){
+        $(".toggler-checkbox", context).change(function () {
+
+            var selectorShow = $(this).attr("show"),
+                selectorHide = $(this).attr("hide");
+
+            $( selectorHide, context ).hide().find("input").val("");
+
+            if (this.checked){
+                $( selectorShow, context ).show();
+            }
+        });
+    }
+
     $(".package-selector").change(function () {
 
         var id = $(this).attr("id").split("-")[1],
@@ -615,6 +637,8 @@ $(function () {
         selectorCounter++;
 
     });
+
+
 
     $("#reset-packages").click(function () {
         $.each($(".package-selector"), function (i, pack) {
@@ -919,8 +943,6 @@ $(function () {
         }
     });
 
-    $(".installment-percent").mask('00%', {reverse: true});
-
     $("#view-agreement").click(function () {
 
         validateStepTwo();
@@ -987,21 +1009,42 @@ $(function () {
         var pos = $(".installment").length + 1,
             item = $(".installment:last").clone();
 
-        item.find("span").html( addOrdinal(pos)).find("input").val("");
-
+        item.attr("id", "instalmment" + pos);
+        item.find("span").html( addOrdinal(pos));
+        item.find("input").val("");
         item.insertAfter(".installment:last");
 
+        item.find("input:last")
+            .attr("id", null)
+            .removeClass("hasDatepicker")
+            .datepicker("destroy").off().datepicker();
+
+        setupInstallment()
+
+    });
+    
+    $("#add-sales-package").click(function () {
+        var pos = $(".sales-package").length + 1,
+            item = $(".sales-package:last").clone()
+        item.attr("id", "sales-package-"+ pos );
+        item.find("input").val("");
+        item.find("input[type=checkbox]").attr("checked", false);
+        item.insertAfter(".sales-package:last");
+        setupSalesPackage("#sales-package-"+ pos);
     });
 
+    $(".price-optional").hide();
 
     /**
      * Initialization
      */
     addLanguageBehaviour();
     loadRegions();
+    setupInstallment();
+    setupSalesPackage("#sales-package-1");
 
     $(".step1-event-item").hide();
     $(".step1-container").show();
     $(".database-event-item").show();
-
+    $(".package-ready-button").hide();
 });

@@ -204,7 +204,7 @@ i.fa {
  */
 
 .is-hidden{
-    display: none !important;
+    display: none;
 }
 
 .box-item, .select-box-item-label {
