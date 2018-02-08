@@ -550,6 +550,32 @@ $(function () {
         if ( $(el).data('ui-autocomplete') != undefined ) $(el).autocomplete('destroy');
     }
 
+    function addOrdinal( n ){
+        var str = n.toString().slice(-1),
+            ord = '';
+        switch (str) {
+            case '1':
+                ord = 'st';
+                break;
+            case '2':
+                ord = 'nd';
+                break;
+            case '3':
+                ord = 'rd';
+                break;
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case '0':
+                ord = 'th';
+                break;
+        }
+        return n + ord;
+    }
+
     $(".package-selector").change(function () {
 
         var id = $(this).attr("id").split("-")[1],
@@ -874,32 +900,13 @@ $(function () {
 
     $( "#event-duration-selector" ).mask('00:00');
 
-    $("#event-availability-selector").datepicker({
-        //onSelect : function(date){
-        //    $("#event-availability-selection").attr("selected-id", "-");
-        //}
-    });
+    $("#event-customEnd-selector, #event-customStart-selector, #event-availability-selector, #expiration-date, .installment-date").datepicker();
 
-    $("#event-customStart-selector").datepicker();
-
-    $("#event-customEnd-selector").datepicker();
-
-    $('#event-file-selector').off().focus(function(e){
+    $('.file-selector').off().focus(function(e){
+        var targetId = "#" + $(this).attr("ref");
         $(this).blur();
-        $('#event-file-selector-hidden').trigger("click");
+        $( targetId ).trigger("click");
         e.preventDefault();
-    });
-
-    $('#event-file-selector-hidden').checkFileType({
-        allowedExtensions: ['jpg', 'jpeg','png', 'pdf', 'doc', 'docx'],
-        success: function() {
-            $('#event-file-selector').val($(this).val());
-        },
-        error: function() {
-            $('#event-file-selector').attr("placeholder", "Allowed: .png, .jpg, .pdf, .doc, .docx").val("");
-            $(this).val("")
-            $('<div />').html('File type not allowed').dialog();
-        }
     });
 
     $("input").focus(function(){
@@ -911,6 +918,8 @@ $(function () {
             "A": { pattern: /[\w/\-.+]/, recursive: true }
         }
     });
+
+    $(".installment-percent").mask('00%', {reverse: true});
 
     $("#view-agreement").click(function () {
 
@@ -944,6 +953,46 @@ $(function () {
             $('<div />').html('File type not allowed. Please upload a .pdf, .doc or .docx file').dialog();
         }
     });
+
+    $('#event-file-selector-hidden').checkFileType({
+        allowedExtensions: ['jpg', 'jpeg','png', 'pdf', 'doc', 'docx'],
+        success: function() {
+            var targetId = "#" + $(this).attr("ref");
+            $( targetId ).val($(this).val());
+        },
+        error: function() {
+            var targetId = "#" + $(this).attr("ref");
+            $( targetId ).attr("placeholder", "Allowed: .png, .jpg, .pdf, .doc, .docx").val("");
+            $(this).val("")
+            $('<div />').html('File type not allowed').dialog();
+        }
+    });
+
+    $('#image-selector-hidden').checkFileType({
+        allowedExtensions: ['jpg', 'jpeg','png'],
+        success: function() {
+            var targetId = "#" + $(this).attr("ref");
+            $( targetId ).val($(this).val());
+        },
+        error: function() {
+            var targetId = "#" + $(this).attr("ref");
+            $( targetId ).attr("placeholder", "Allowed: .png, .jpg").val("");
+            $(this).val("")
+            $('<div />').html('File type not allowed').dialog();
+        }
+    });
+
+    $("#add-installment").click(function () {
+
+        var pos = $(".installment").length + 1,
+            item = $(".installment:last").clone();
+
+        item.find("span").html( addOrdinal(pos)).find("input").val("");
+
+        item.insertAfter(".installment:last");
+
+    });
+
 
     /**
      * Initialization

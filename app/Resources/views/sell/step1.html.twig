@@ -11,7 +11,7 @@
             Step 1/2
         </div>
         <div class="seller-box-content">
-            <div class="step1-container is-hidden">
+            <div class="step1-container">
                 <div class="step1-event-title">
                     <span class="step1-event-item database-event-item">Select an event from the database by clicking the tabs below</span>
                     <span class="step1-event-item custom-event-item">Create your program by filling in the boxes below</span>
@@ -135,7 +135,10 @@
 
                 {# File #}
                 <div class="step1-event-item database-event-item custom-event-item">
-                    <input placeholder="Attach file" id="event-file-selector" type="text" />
+                    <input placeholder="Attach file"
+                           ref="event-file-selector-hidden"
+                           id="event-file-selector"
+                           class="file-selector" type="text" />
                 </div>
 
                 {# Go to step 2 button #}
