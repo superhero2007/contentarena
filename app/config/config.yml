@@ -157,6 +157,7 @@ easy_admin:
                         - { property: 'company' }
                         - { property: 'sport' }
                         - { property: 'createdAt' }
+                        - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
                         - { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'brochure', template: ':easy_admin:brochure.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'approved' }

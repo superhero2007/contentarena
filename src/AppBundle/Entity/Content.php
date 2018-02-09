@@ -45,9 +45,21 @@ class Content
     /**
      * @var string
      *
-     * @ORM\Column(name="fee", type="string", length=255, nullable=true)
+     * @ORM\Column(name="fee", type="string", length=20, nullable=true)
      */
     private $fee;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bid", type="string", length=20, nullable=true)
+     */
+    private $bid;
+
+    /**
+     * @ORM\Column(type="datetime", name="expires_at", nullable=true)
+     */
+    private $expiresAt;
 
     /**
      * @var string
@@ -85,11 +97,18 @@ class Content
     private $duration;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     * @ORM\Column(name="website", type="array", length=255, nullable=true)
      */
     private $website;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="links", type="array", length=255, nullable=true)
+     */
+    private $links;
 
     /**
      * @var string
@@ -97,6 +116,13 @@ class Content
      * @ORM\Column(name="own_license", type="string", length=255, nullable=true)
      */
     private $ownLicense;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     */
+    private $image;
 
     /**
      * @var string
@@ -124,10 +150,13 @@ class Content
     private $tournament;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Season", inversedBy="content")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Season")
+     * @ORM\JoinTable(name="content_season",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
+     *      )
      */
-    private $season;
+    private $seasons;
 
     /**
      * Many Content have Many RightsItemContent.
@@ -139,11 +168,14 @@ class Content
      */
     private $rightsItems;
 
-    /** @ORM\Column(type="datetime", name="created_at", nullable=true) */
+    /**
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     */
     private $createdAt;
 
     public function __construct() {
         $this->rightsItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -342,7 +374,7 @@ class Content
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getWebsite()
     {
@@ -350,7 +382,7 @@ class Content
     }
 
     /**
-     * @param string $website
+     * @param array $website
      */
     public function setWebsite($website)
     {
@@ -406,19 +438,19 @@ class Content
     }
 
     /**
-     * @return mixed
+     * @return Collection|Season[]
      */
-    public function getSeason()
+    public function getSeasons()
     {
-        return $this->season;
+        return $this->seasons;
     }
 
     /**
-     * @param mixed $season
+     * @param mixed $seasons
      */
-    public function setSeason($season)
+    public function setSeason($seasons)
     {
-        $this->season = $season;
+        $this->seasons = $seasons;
     }
 
     /**
@@ -501,6 +533,69 @@ class Content
         $this->brochure = $brochure;
     }
 
+    /**
+     * @return string
+     */
+    public function getBid()
+    {
+        return $this->bid;
+    }
+
+    /**
+     * @param string $bid
+     */
+    public function setBid($bid)
+    {
+        $this->bid = $bid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExpiresAt()
+    {
+        return $this->expiresAt;
+    }
+
+    /**
+     * @param mixed $expiresAt
+     */
+    public function setExpiresAt($expiresAt)
+    {
+        $this->expiresAt = $expiresAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param array $links
+     */
+    public function setLinks($links)
+    {
+        $this->links = $links;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
 
 
 }

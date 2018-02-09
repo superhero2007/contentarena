@@ -408,7 +408,7 @@ $(function () {
 
 
                         $('#event-schedule-subitems')
-                            .append('<div class="step1-event-subitem-title standard-button-active"  mainref="'+ id +'">'+ui.item.label+'</div><div class="step1-event-subitems-container"><div class="step1-event-subitem-title" ref="'+ id +'" >Fixture</div><div class="step1-event-subitems-container is-hidden" id="'+ id +'" ><i class="fa fa-cog fa-spin pos-rel"></i></div></div>');
+                            .append('<div class="step1-event-subitem-title standard-button-active season"  mainref="'+ id +'">'+ui.item.label+'</div><div class="step1-event-subitems-container"><div class="step1-event-subitem-title" ref="'+ id +'" >Fixture</div><div class="step1-event-subitems-container is-hidden" id="'+ id +'" ><i class="fa fa-cog fa-spin pos-rel"></i></div></div>');
 
                         $("[ref="+id+"]").click(function(){
                             $(this).toggleClass("standard-button-active");
@@ -527,9 +527,18 @@ $(function () {
         });
     }
 
+    function apiIdToHtmlId( id){
+        return id.replace(/\:/g, '-');
+    }
+
+    function htmlIdToApiId( id){
+        return id.replace(/\-/g, ':');
+    }
+
     function validateStepOne(){
 
         var eventTypeSelector = $(".event-origin-selector.standard-button-active").attr("ref"),
+            season = $(".season"),
             eventType = eventTypeSelector.split("-")[0],
             hasErrors = false;
 
@@ -565,7 +574,26 @@ $(function () {
 
         });
 
+        if ( $("#event-website-selector").val() != "" ){
+            eventData.website = $("#event-website-selector").val().split(",");
+        }
+
+        if ( $("#event-link-selector").val() != "" ){
+            eventData.links = $("#event-link-selector").val().split(",");
+        }
+
         if (eventType == 'database' ){
+
+            // SEASON
+            if ( season.length > 0 ){
+                eventData.seasons = [];
+                season.each(function(){
+                    eventData.seasons.push({
+                        value : $(this).html(),
+                        externalId : htmlIdToApiId($(this).attr("mainref"))
+                    });
+                });
+            }
 
             eventData.matches = {};
 
@@ -586,8 +614,8 @@ $(function () {
 
     function validateStepTwo(){
 
-
         var rights = {},
+            hasErrors = false,
             rightItems = [];
 
         $("input[type=checkbox]:checked", ".seller-box-content-rights").each(function(k, el){
@@ -611,7 +639,6 @@ $(function () {
                 values : values,
                 right : rightId
             })
-
         });
 
         eventData.rights = rights;
@@ -623,8 +650,11 @@ $(function () {
         eventData.salesMethod = $("input:checked", "#sales-method-selector").val();
         eventData.fee = $( "#fee-selector").val();
         eventData.bid = $( "#bid-selector").val();
+        eventData.expiresAt = $("#expiration-date").val();
         eventData.currency = $("input:checked", "#currency-selector").val();
         eventData.territories = $("input:checked", "#territories-selector").val();
+
+        return !hasErrors;
 
     }
 
@@ -819,7 +849,8 @@ $(function () {
 
     $("#submit-listing").click(function(){
 
-        validateStepTwo();
+        if ( !validateStepTwo() ) return;
+
         submitform();
     });
 
@@ -1131,5 +1162,13 @@ $(function () {
     $(".step1-event-item").hide();
     $(".step1-container").show();
     $(".database-event-item").show();
+    $(".common-event-item").show();
     $(".package-ready-button").hide();
+
+    window.test = function () {
+        validateStepOne();
+        validateStepTwo();
+        console.log(eventData);
+    }
+
 });

@@ -86,12 +86,17 @@ class ContentService
         /**
          * Set season
          */
-        if ( isset($data->season) ) {
+        if ( isset($data->seasons) ) {
 
-            $season = $this->getSeason($data);
-            $content->setSeason($season);
+            $seasons = array();
+
+            foreach ($data->seasons as $season){
+                $season = $this->getSeason($season);
+                $seasons[] = $season;
+            }
+
+            $content->setSeason($seasons);
         }
-
 
         if ( isset($data->rightItems) ){
 
@@ -112,9 +117,11 @@ class ContentService
         }
         if ( isset($data->duration) ) $content->setDuration($data->duration->value);
         if ( isset($data->description) ) $content->setDescription($data->description->value);
-        if ( isset($data->fee) && isset($data->fee->amount) ) $content->setFee($data->fee->amount);
+        if ( isset($data->fee) ) $content->setFee($data->fee);
+        if ( isset($data->bid) ) $content->setBid($data->bid);
+        if ( isset($data->expiresAt) ) $content->getExpiresAt($data->expiresAt);
         if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
-        if ( isset($data->website) ) $content->setWebsite($data->website->value);
+        if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
         if ( isset($data->availability) ){
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
@@ -142,6 +149,12 @@ class ContentService
     private function saveFiles( Request $request, Content $content ){
         $license = $request->files->get("license");
         $brochure = $request->files->get("brochure");
+        $image = $request->files->get("image");
+
+        if ( count( $image ) > 0 ) {
+            $imageFileName = $this->fileUploader->upload($image[0]);
+            $content->setImage($imageFileName);
+        }
 
         if ( count( $license ) > 0 ) {
             $licenseFileName = $this->fileUploader->upload($license[0]);
@@ -156,22 +169,22 @@ class ContentService
         return $content;
     }
 
-    private function getSeason($data){
-        if ( isset($data->season->externalId) ) {
+    private function getSeason($seasonData){
+        if ( isset($seasonData->externalId) ) {
             $season = $this->em
                 ->getRepository('AppBundle:Season')
-                ->findOneBy(array('externalId' => $data->season->externalId));
+                ->findOneBy(array('externalId' => $seasonData->externalId));
 
-        } else if ( isset($data->season->value)  ){
+        } else if ( isset($seasonData->value)  ){
             $season = $this->em
                 ->getRepository('AppBundle:Season')
-                ->findOneBy(array('name' => $data->season->value));
+                ->findOneBy(array('name' => $seasonData->value));
         }
 
         if (!$season) {
             $season = new Season();
-            if ( isset($data->season->externalId) ) $season->setExternalId($data->season->externalId);
-            $season->setName($data->season->value);
+            if ( isset($seasonData->externalId) ) $season->setExternalId($seasonData->externalId);
+            $season->setName($seasonData->value);
             $this->em->persist($season);
             $this->em->flush();
         }
