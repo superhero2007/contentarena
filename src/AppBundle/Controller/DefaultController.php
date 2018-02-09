@@ -68,21 +68,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/buy/{id}", name="showContent")
-     */
-    public function showContent(Request $request)
-    {
-
-        $user = $this->getUser();
-        $content = "Temporal string to show template.";
-        return $this->render('buy/content.html.twig', [
-            'user' => $user,
-            'content' => $content
-        ]);
-
-    }
-
-    /**
      * @Route("/sell/published", name="sellPublished")
      */
     public function sellPublishedAction(Request $request, ContentService $contentService, FileUploader $fileUploader)
