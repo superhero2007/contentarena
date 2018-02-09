@@ -1,0 +1,29 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
+
+    {{ include('statics/language.css.html.twig', { }) }}
+
+{% endblock %}
+
+{% block main_content %}
+
+	{{ include('content/contentInformation.html.twig', { 'content' : content }) }}
+
+	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
+
+	<a hred="#">Download content information and term sheet</a>
+
+	{{ include('content/pricingAndTerritory.html.twig', { 'content' : content }) }}
+
+{% endblock main_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
+
+    {{ include('statics/language.js.html.twig', { }) }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet" />
+
+    {{ include('statics/language.css.html.twig', { }) }}
+
+{% endblock %}
+
+{% block main_content %}
+
+  <div class="row">
+    <div class="col">
+      <form role="form">
+        <div class="form-group">
+          <button class="buy-select-territories"><span>Territories</span></button>
+          <button class="buy-select-sport"><span>Sport</span></button>
+          <button class="buy-select-rights"><span>Rights</span></button>
+          <button class="buy-select-timing"><span>Timing</span></button>
+          <button class="btn" id="moreFilters">More Filters</button>
+          <input type="text" id="inputSearch" placeholder="Search"/>
+      </form>
+    </div>
+  </div>
+
+  {% for content in contents %}
+    {{ include('buy/contentItem.html.twig', { 'content' : content }) }}
+  {% endfor %}
+
+{% endblock main_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/buy.js') }}"></script>
+
+    {{ include('statics/language.js.html.twig', { }) }}
+{% endblock %}

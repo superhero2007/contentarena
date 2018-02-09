@@ -58,9 +58,11 @@ class DefaultController extends Controller
     {
 
         $user = $this->getUser();
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'user' => $user
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findAll();
+
+        return $this->render('buy/buy.html.twig', [
+            'user' => $user,
+            'contents' => $contents
         ]);
 
     }
