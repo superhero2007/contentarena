@@ -69,6 +69,29 @@ class Content
     private $salesMethod;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="programName", type="string", length=255, nullable=true)
+     */
+    private $programName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="programType", type="string", length=255, nullable=true)
+     */
+    private $programType;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seriesType", type="string", length=255, nullable=true)
+     */
+    private $seriesType;
+
+
+
+    /**
      * @var int
      *
      * @ORM\Column(name="releaseYear", type="smallint", nullable=true)
@@ -596,6 +619,55 @@ class Content
     {
         $this->image = $image;
     }
+
+    /**
+     * @return string
+     */
+    public function getProgramName()
+    {
+        return $this->programName;
+    }
+
+    /**
+     * @param string $programName
+     */
+    public function setProgramName($programName)
+    {
+        $this->programName = $programName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProgramType()
+    {
+        return $this->programType;
+    }
+
+    /**
+     * @param string $programType
+     */
+    public function setProgramType($programType)
+    {
+        $this->programType = $programType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeriesType()
+    {
+        return $this->seriesType;
+    }
+
+    /**
+     * @param string $seriesType
+     */
+    public function setSeriesType($seriesType)
+    {
+        $this->seriesType = $seriesType;
+    }
+
 
 
 }

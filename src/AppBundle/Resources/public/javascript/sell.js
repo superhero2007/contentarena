@@ -11,6 +11,7 @@ $(function () {
         mainPackage = null,
         countryCodes= [],
         tournaments = [],
+        countryList = [],
         categories = [],
         listedCountryCodes = [],
         rounds = {},
@@ -31,6 +32,13 @@ $(function () {
     yearArray .push({label: "To be announced", value : 0 });
     yearArray.reverse();
 
+    function split( val ) {
+        return val.split( /,\s*/ );
+    }
+
+    function extractLast( term ) {
+        return split( term ).pop();
+    }
 
     function checkSelectedPackages() {
         $(".select-box-item-container").hide();
@@ -61,7 +69,7 @@ $(function () {
         $("#price-sell-box .select-box-item-container").show();
     }
 
-    function fillTerritories(){
+    /*function fillTerritories(){
 
         var source = [],
             selector = $("#event-territory-selector");
@@ -77,11 +85,11 @@ $(function () {
             return;
         }
 
-        /**
+        /!**
          * Fills the territory selector.
          * The value tries to match the country code with the region code.
          * The region code comes from a static JSON file and the country code is used in the Sportradar API
-         */
+         *!/
         selector.autocomplete({
             source : source,
             minLength: 0,
@@ -111,15 +119,16 @@ $(function () {
         }).focus(function(){
             $(this).autocomplete("search", "");
         });
-    }
+    }*/
 
     function fillCategories(){
 
         var options = {
                 getSource : function(){
 
-                    var list,
-                        territoryId = $("#event-territory-selector").attr('externalId');
+                    var list;
+                    //,
+                    //    territoryId = $("#event-territory-selector").attr('externalId');
 
                     listedCountryCodes = [];
 
@@ -130,8 +139,8 @@ $(function () {
                         var countryCode =  item['@attributes'].country_code || item['@attributes'].name;
 
                         // Filter by region
-                        if ( territoryId != undefined
-                            && $.inArray( countryCode, countryCodes) == -1) return null;
+                        //if ( territoryId != undefined
+                        //    && $.inArray( countryCode, countryCodes) == -1) return null;
 
                         if ( $.inArray( countryCode, listedCountryCodes) == -1 ) {
                             listedCountryCodes.push(countryCode);
@@ -214,14 +223,13 @@ $(function () {
                 getSource : function(response){
 
                     var categoryId = $("#event-country-selector").attr('externalId'),
-                        territoryId= $("#event-territory-selector").attr('externalId'),
+                        //territoryId= $("#event-territory-selector").attr('externalId'),
                         list;
 
                     if ( !silent ){
                         categories = [];
                         availableTerritories = [];
                     }
-
 
                     if ( response.tournaments === undefined || response.tournaments.tournament === undefined ) return false;
 
@@ -241,9 +249,9 @@ $(function () {
                         if ( categoryId && item.category['@attributes'].id != categoryId) return null;
 
                         // Filter by region
-                        if ( !categoryId
-                            && territoryId != undefined
-                            && $.inArray(countryCode, countryCodes) == -1) return null;
+                        //if ( !categoryId
+                        //    && territoryId != undefined
+                        //   && $.inArray(countryCode, countryCodes) == -1) return null;
 
                         return {label: item['@attributes'].name, value: item['@attributes'].id}
                     });
@@ -271,7 +279,7 @@ $(function () {
 
                     if ( !silent ){
                         fillCategories();
-                        fillTerritories();
+                        /*fillTerritories();*/
                     }
 
                     el.attr("disabled", null);
@@ -539,7 +547,7 @@ $(function () {
 
         var eventTypeSelector = $(".event-origin-selector.standard-button-active").attr("ref"),
             season = $(".season"),
-            eventType = eventTypeSelector.split("-")[0],
+            eventType = eventTypeSelector.split("-")[0].replace(".", ""),
             hasErrors = false;
 
         if ( $("#series-events-selector").hasClass("standard-button-active") ) {
@@ -549,7 +557,7 @@ $(function () {
         eventData = {};
         eventData.eventType = eventType;
 
-        $("." + eventTypeSelector).each(function(k, item){
+        $( eventTypeSelector ).each(function(k, item){
 
             var itemInput = $(item).find(".step1-event-input-content"),
                 required = itemInput.attr("required"),
@@ -573,6 +581,10 @@ $(function () {
             }
 
         });
+
+        if ( eventType == "custom"){
+            eventData.seriesType = ( $("#single-events-selector").hasClass("standard-button-active") ) ? "single" : "series" ;
+        }
 
         if ( $("#event-website-selector").val() != "" ){
             eventData.website = $("#event-website-selector").val().split(",");
@@ -616,6 +628,7 @@ $(function () {
 
         var rights = {},
             hasErrors = false,
+            total = 0,
             rightItems = [];
 
         $("input[type=checkbox]:checked", ".seller-box-content-rights").each(function(k, el){
@@ -641,6 +654,16 @@ $(function () {
             })
         });
 
+
+        $(".installment-percent").each(function(){
+            total += Number ( $(this).val().replace("%", "") )
+        });
+
+        if ( total != 100 ) {
+            hasErrors = true;
+            $('<div />').html('Total installments must sum 100%!').dialog();
+        }
+
         eventData.rights = rights;
         eventData.rightItems = rightItems;
         eventData.packages = [];
@@ -664,11 +687,16 @@ $(function () {
             type: "GET",
             success: function (response) {
                 regions = response;
+                countryList = [];
                 regions.push ({ country_code : "INT", name: "International", region_code : 0});
 
 
                 $.each(response, function(k, v){
                     regionsByCode[v.country_code] = v;
+                    countryList.push({
+                        label : v.name,
+                        value : v.country_code
+                    })
                 });
 
                 regionsByCode["INT"] = { region_code : 0}
@@ -740,7 +768,7 @@ $(function () {
     }
 
     function setupInstallment(){
-        $(".installment-percent").off().mask('00%', {reverse: true});
+        $(".installment-percent").off().mask('000%', {reverse: true});
     }
 
     function setupSalesPackage( context ){
@@ -755,6 +783,12 @@ $(function () {
                 $( selectorShow, context ).show();
             }
         });
+
+        $(".close-box", context).click(function () {
+            $(context).remove();
+        });
+
+        $(".close-box").show().first().hide();
     }
 
     $(".package-selector").change(function () {
@@ -823,7 +857,7 @@ $(function () {
         });
 
         $(".step1-event-item").hide();
-        $("." + ref).show();
+        $(ref).show();
 
     });
 
@@ -933,7 +967,7 @@ $(function () {
                 .attr("externalId", ui.item.value)
                 .blur();
 
-            $( "#event-territory-selector").val("").attr('externalId', null);
+            //$( "#event-territory-selector").val("").attr('externalId', null);
             $("#event-country-selector").val("").attr('externalId', null);
             $("#event-tournament-selector") .val("").attr('externalId', null);
             $("#event-season-selector") .val("").attr('externalId', null);
@@ -945,6 +979,9 @@ $(function () {
        $(this).autocomplete("search", "");
     });
 
+    /**
+     * Fills company users tagging tool
+     */
     $.ajax({
         url: envhosturl + "v1/feed/company",
         type: "GET",
@@ -952,13 +989,6 @@ $(function () {
             var source = $.map(response, function (item) {
                 return {label: item.email, value: item.id}
             });
-
-            function split( val ) {
-                return val.split( /,\s*/ );
-            }
-            function extractLast( term ) {
-                return split( term ).pop();
-            }
 
             $(  "#tag-members" ).autocomplete({
                 source: function( request, response ) {
@@ -1034,6 +1064,30 @@ $(function () {
         select: function( event, ui ) {
             event.preventDefault();
             $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
+        }
+    }).focus(function(){
+        $(this).autocomplete("search", "");
+    });
+
+    $( "#territory-selection" ).autocomplete({
+        source: function( request, response ) {
+            // delegate back to autocomplete, but extract the last term
+            response( $.ui.autocomplete.filter(
+                countryList, extractLast( request.term ) ) );
+        },
+        minLength: 0,
+        select: function( event, ui ) {
+            var terms = split( this.value );
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push( ui.item.label );
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( ", " );
+
+            $(event.target).blur();
+            return false;
         }
     }).focus(function(){
         $(this).autocomplete("search", "");

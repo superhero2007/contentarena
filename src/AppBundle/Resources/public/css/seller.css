@@ -20,6 +20,7 @@ html{
     margin: 20px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .seller-box-title {

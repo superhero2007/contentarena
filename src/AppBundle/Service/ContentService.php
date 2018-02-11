@@ -121,6 +121,9 @@ class ContentService
         if ( isset($data->bid) ) $content->setBid($data->bid);
         if ( isset($data->expiresAt) ) $content->getExpiresAt($data->expiresAt);
         if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
+        if ( isset($data->programType) ) $content->setProgramType($data->programType->value);
+        if ( isset($data->programName) ) $content->setProgramName($data->programName->value);
+        if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
         if ( isset($data->availability) ){
