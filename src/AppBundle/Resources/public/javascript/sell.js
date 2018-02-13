@@ -5,27 +5,14 @@
 $(function () {
 
     var data = {},
-        regions,
-        regionsByCode= {},
         selectorCounter = 0,
         mainPackage = null,
-        countryCodes= [],
         tournaments = [],
         countryList = [],
         categories = [],
         listedCountryCodes = [],
         rounds = {},
-        availableTerritories = [],
-        territories = {
-            2: {label: "Africa", value: 2},
-            150: {label: "Europe", value: 150},
-            19: {label: "America", value: 19},
-            142: {label: "Asia", value: 142},
-            9: {label: "Oceania", value: 9},
-            0: {label: "International", value: 0},
-
-        },
-        current_date = new Date(),
+        //current_date = new Date(),
         eventData = {},
         yearArray = Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }});
 
@@ -38,6 +25,10 @@ $(function () {
 
     function extractLast( term ) {
         return split( term ).pop();
+    }
+
+    function sortByLabel(a, b){
+        return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0)
     }
 
     function checkSelectedPackages() {
@@ -68,58 +59,6 @@ $(function () {
         $(".package-ready-button").show();
         $("#price-sell-box .select-box-item-container").show();
     }
-
-    /*function fillTerritories(){
-
-        var source = [],
-            selector = $("#event-territory-selector");
-
-        $.each( availableTerritories, function (k, v) {
-            source.push(territories[v])
-        });
-
-        if (source.length > 1 ){
-            selector.show()
-        } else {
-            selector.hide();
-            return;
-        }
-
-        /!**
-         * Fills the territory selector.
-         * The value tries to match the country code with the region code.
-         * The region code comes from a static JSON file and the country code is used in the Sportradar API
-         *!/
-        selector.autocomplete({
-            source : source,
-            minLength: 0,
-            select: function( event, ui ) {
-
-                event.preventDefault();
-                $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
-
-                countryCodes = $.map(regions, function(i){
-                    if ( i["region_code"]== ui.item.value) return i["country_code"]
-                });
-
-                if ( ui.item.value == 0 ) {
-                    $("#event-country-selector").attr("placeholder", "Country/Category").val("");
-                } else {
-                    $("#event-country-selector").attr("placeholder", "Country").val("");
-                }
-
-
-                $("#event-tournament-selector") .val("").attr("externalId", null);
-                $("#event-season-selector") .val("").attr("externalId", null);
-                $("#event-schedule-subitems").html("").attr("externalId", null);
-
-                fillCategories();
-                fillTournaments(true);
-            }
-        }).focus(function(){
-            $(this).autocomplete("search", "");
-        });
-    }*/
 
     function fillCategories(){
 
@@ -228,7 +167,6 @@ $(function () {
 
                     if ( !silent ){
                         categories = [];
-                        availableTerritories = [];
                     }
 
                     if ( response.tournaments === undefined || response.tournaments.tournament === undefined ) return false;
@@ -239,10 +177,6 @@ $(function () {
 
                         if ( !silent ) {
                             categories.push(item.category);
-
-                            if (regionsByCode[countryCode] != undefined && $.inArray(regionsByCode[countryCode].region_code, availableTerritories) == -1) {
-                                availableTerritories.push(regionsByCode[countryCode].region_code);
-                            }
                         }
 
                         // Filter by category
@@ -344,6 +278,11 @@ $(function () {
             parentSelection : "#event-tournament-selector",
             endpoint : "v1/feed/seasons",
             requestType : "POST",
+            /**
+             *
+             * @param {{ seasons: { season: object}}} response
+             * @returns {*}
+             */
             getSource : function(response){
 
                 var list;
@@ -677,6 +616,16 @@ $(function () {
         eventData.currency = $("input:checked", "#currency-selector").val();
         eventData.territories = $("input:checked", "#territories-selector").val();
 
+        if ( eventData.territories === "selected"){
+            eventData.territoriesSelected = $("#territory-selected").val().split(", ");
+            eventData.territoriesSelected.pop();
+        }
+
+        if ( eventData.territories === "excluded"){
+            eventData.territoriesExcluded = $("#territory-excluded").val().split(", ");
+            eventData.territoriesExcluded.pop();
+        }
+
         return !hasErrors;
 
     }
@@ -686,20 +635,18 @@ $(function () {
             url: hosturl + "v1/feed/test",
             type: "GET",
             success: function (response) {
-                regions = response;
                 countryList = [];
-                regions.push ({ country_code : "INT", name: "International", region_code : 0});
-
-
+                /**
+                 * @param {{ country_code: string }} v
+                 */
                 $.each(response, function(k, v){
-                    regionsByCode[v.country_code] = v;
                     countryList.push({
                         label : v.name,
                         value : v.country_code
                     })
                 });
 
-                regionsByCode["INT"] = { region_code : 0}
+                countryList.sort(sortByLabel);
             }
         });
     }
@@ -738,7 +685,7 @@ $(function () {
             .addClass("custom-input")
             .attr("placeholder", placeholder);
 
-        if ( $(el).data('ui-autocomplete') != undefined ) $(el).autocomplete('destroy');
+        if ( $(el).data('ui-autocomplete') !== undefined ) $(el).autocomplete('destroy');
     }
 
     function addOrdinal( n ){
@@ -789,6 +736,21 @@ $(function () {
         });
 
         $(".close-box").show().first().hide();
+    }
+
+    function onSelectAutocompleteTag(event, ui ){
+        var terms = split( this.value );
+        // remove the current input
+        terms.pop();
+        // add the selected item
+        if ( terms.indexOf(ui.item.label) === -1 ) terms.push( ui.item.label );
+        // add placeholder to get the comma-and-space at the end
+        terms.push( "" );
+        this.value = terms.join( ", " );
+
+        $(event.target).blur();
+
+        return false;
     }
 
     $(".package-selector").change(function () {
@@ -917,12 +879,15 @@ $(function () {
     $.ajax({
         url: hosturl + "v1/feed/sports",
         type: "GET",
+        /**
+         * @param {{sport:object}} response
+         */
         success: function (response) {
+
             data.sports = $.map(response.sport, function (item) {
                 return {label: item['@attributes'].name, value: item['@attributes'].id}
             });
-
-            data.sports.sort(function(a,b) {return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0);} );
+            data.sports.sort(sortByLabel);
             data.sports.push({
                 label : "Add new",
                 value : "new"
@@ -965,9 +930,8 @@ $(function () {
             $(event.target)
                 .val(ui.item.label)
                 .attr("externalId", ui.item.value)
-                .blur();
+                .trigger('blur');
 
-            //$( "#event-territory-selector").val("").attr('externalId', null);
             $("#event-country-selector").val("").attr('externalId', null);
             $("#event-tournament-selector") .val("").attr('externalId', null);
             $("#event-season-selector") .val("").attr('externalId', null);
@@ -985,7 +949,11 @@ $(function () {
     $.ajax({
         url: envhosturl + "v1/feed/company",
         type: "GET",
+
         success: function (response) {
+            /**
+             * @param {{email:string}} item
+             */
             var source = $.map(response, function (item) {
                 return {label: item.email, value: item.id}
             });
@@ -997,19 +965,7 @@ $(function () {
                         source, extractLast( request.term ) ) );
                 },
                 minLength: 0,
-                select: function( event, ui ) {
-                    var terms = split( this.value );
-                    // remove the current input
-                    terms.pop();
-                    // add the selected item
-                    terms.push( ui.item.label );
-                    // add placeholder to get the comma-and-space at the end
-                    terms.push( "" );
-                    this.value = terms.join( ", " );
-
-                    $(event.target).blur();
-                    return false;
-                }
+                select: onSelectAutocompleteTag
             }).focus(function(){
                 $(this).autocomplete("search", "");
             });
@@ -1031,7 +987,7 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $(event.target).val(ui.item.label).attr("externald", ui.item.value).blur();
+            $(event.target).val(ui.item.label).attr("externald", ui.item.value).trigger('blur');
         }
     }).focus(function(){
         $(this).autocomplete("search", "");
@@ -1042,7 +998,7 @@ $(function () {
         minLength: 0,
         select: function( event, ui ) {
             event.preventDefault();
-            $(event.target).val(ui.item.label).blur();
+            $(event.target).val(ui.item.label).trigger('blur');
         }
     }).focus(function(){
        $(this).autocomplete("search", "");
@@ -1069,26 +1025,26 @@ $(function () {
         $(this).autocomplete("search", "");
     });
 
-    $( "#territory-selection" ).autocomplete({
+    $( "#territory-selected" ).autocomplete({
         source: function( request, response ) {
             // delegate back to autocomplete, but extract the last term
             response( $.ui.autocomplete.filter(
                 countryList, extractLast( request.term ) ) );
         },
         minLength: 0,
-        select: function( event, ui ) {
-            var terms = split( this.value );
-            // remove the current input
-            terms.pop();
-            // add the selected item
-            terms.push( ui.item.label );
-            // add placeholder to get the comma-and-space at the end
-            terms.push( "" );
-            this.value = terms.join( ", " );
+        select: onSelectAutocompleteTag
+    }).focus(function(){
+        $(this).autocomplete("search", "");
+    });
 
-            $(event.target).blur();
-            return false;
-        }
+    $( "#territory-excluded" ).autocomplete({
+        source: function( request, response ) {
+            // delegate back to autocomplete, but extract the last term
+            response( $.ui.autocomplete.filter(
+                countryList, extractLast( request.term ) ) );
+        },
+        minLength: 0,
+        select: onSelectAutocompleteTag
     }).focus(function(){
         $(this).autocomplete("search", "");
     });
@@ -1104,7 +1060,7 @@ $(function () {
         e.preventDefault();
     });
 
-    $("input").focus(function(){
+    $("input").on('focus', function(){
         $(this).removeClass("invalid");
     });
 
@@ -1155,7 +1111,7 @@ $(function () {
         error: function() {
             var targetId = "#" + $(this).attr("ref");
             $( targetId ).attr("placeholder", "Allowed: .png, .jpg, .pdf, .doc, .docx").val("");
-            $(this).val("")
+            $(this).val("");
             $('<div />').html('File type not allowed').dialog();
         }
     });
@@ -1169,17 +1125,17 @@ $(function () {
         error: function() {
             var targetId = "#" + $(this).attr("ref");
             $( targetId ).attr("placeholder", "Allowed: .png, .jpg").val("");
-            $(this).val("")
+            $(this).val("");
             $('<div />').html('File type not allowed').dialog();
         }
     });
 
-    $("#add-installment").click(function () {
+    $("#add-installment").on('click', function () {
 
         var pos = $(".installment").length + 1,
             item = $(".installment:last").clone();
 
-        item.attr("id", "instalmment" + pos);
+        item.attr("id", "installment" + pos);
         item.find("span").html( addOrdinal(pos));
         item.find("input").val("");
         item.insertAfter(".installment:last");
@@ -1193,9 +1149,9 @@ $(function () {
 
     });
     
-    $("#add-sales-package").click(function () {
+    $("#add-sales-package").on('click', function () {
         var pos = $(".sales-package").length + 1,
-            item = $(".sales-package:last").clone()
+            item = $(".sales-package:last").clone();
         item.attr("id", "sales-package-"+ pos );
         item.find("input").val("");
         item.find("input[type=checkbox]").attr("checked", false);

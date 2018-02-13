@@ -134,6 +134,20 @@ class Content
     private $links;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="territories_selected", type="array", length=255, nullable=true)
+     */
+    private $territoriesSelected;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="territories_excluded", type="array", length=255, nullable=true)
+     */
+    private $territoriesExcluded;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="own_license", type="string", length=255, nullable=true)
@@ -666,6 +680,38 @@ class Content
     public function setSeriesType($seriesType)
     {
         $this->seriesType = $seriesType;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTerritoriesSelected()
+    {
+        return $this->territoriesSelected;
+    }
+
+    /**
+     * @param array $territoriesSelected
+     */
+    public function setTerritoriesSelected($territoriesSelected)
+    {
+        $this->territoriesSelected = $territoriesSelected;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTerritoriesExcluded()
+    {
+        return $this->territoriesExcluded;
+    }
+
+    /**
+     * @param array $territoriesExcluded
+     */
+    public function setTerritoriesExcluded($territoriesExcluded)
+    {
+        $this->territoriesExcluded = $territoriesExcluded;
     }
 
 

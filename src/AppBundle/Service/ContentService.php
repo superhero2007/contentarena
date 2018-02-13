@@ -125,6 +125,10 @@ class ContentService
         if ( isset($data->programName) ) $content->setProgramName($data->programName->value);
         if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
+
+        if ( isset($data->territoriesSelected) ) $content->setTerritoriesSelected($data->territoriesSelected);
+        if ( isset($data->territoriesExcluded) ) $content->setTerritoriesExcluded($data->territoriesExcluded);
+
         if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
         if ( isset($data->availability) ){
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
