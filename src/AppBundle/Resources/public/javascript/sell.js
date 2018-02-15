@@ -617,13 +617,11 @@ $(function () {
         eventData.territories = $("input:checked", "#territories-selector").val();
 
         if ( eventData.territories === "selected"){
-            eventData.territoriesSelected = $("#territory-selected").val().split(", ");
-            eventData.territoriesSelected.pop();
+            eventData.countriesSelected = $("#territory-selected").val();
         }
 
         if ( eventData.territories === "excluded"){
-            eventData.territoriesExcluded = $("#territory-excluded").val().split(", ");
-            eventData.territoriesExcluded.pop();
+            eventData.countriesExcluded = $("#territory-excluded").val();
         }
 
         return !hasErrors;
@@ -631,20 +629,36 @@ $(function () {
     }
 
     function loadRegions(){
+
+        var excluded = $("#territory-excluded"),
+            selected = $("#territory-selected");
+
         $.ajax({
             url: hosturl + "v1/feed/test",
             type: "GET",
             success: function (response) {
                 countryList = [];
+
+                response.sort(function(a,b){return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
+
                 /**
                  * @param {{ country_code: string }} v
                  */
                 $.each(response, function(k, v){
+
+                    var option = '<option value=' + v.country_code + '>' + v.name + '</option>';
+
+                    excluded.append(option);
+                    selected.append(option);
+
                     countryList.push({
                         label : v.name,
                         value : v.country_code
                     })
                 });
+
+                excluded.chosen({ width: "50%"});
+                selected.chosen({ width: "50%"});
 
                 countryList.sort(sortByLabel);
             }
@@ -1037,7 +1051,7 @@ $(function () {
         $(this).autocomplete("search", "");
     });
 
-    $( "#territory-excluded" ).autocomplete({
+    /*$( "#territory-excluded" ).autocomplete({
         source: function( request, response ) {
             // delegate back to autocomplete, but extract the last term
             response( $.ui.autocomplete.filter(
@@ -1047,7 +1061,7 @@ $(function () {
         select: onSelectAutocompleteTag
     }).focus(function(){
         $(this).autocomplete("search", "");
-    });
+    });*/
 
     $( "#event-duration-selector" ).mask('00:00');
 
@@ -1179,6 +1193,7 @@ $(function () {
         validateStepOne();
         validateStepTwo();
         console.log(eventData);
-    }
+    };
+
 
 });

@@ -1,0 +1,35 @@
+<div class="filters">
+    <button class="filter select-territories" ref="#filter-territories"><span class="filter-territories-count"></span><span>Territories</span></button>
+    <button class="filter buy-select-sport"><span>Sport</span></button>
+    <button class="filter buy-select-rights"><span>Rights</span></button>
+    <button class="filter buy-select-timing"><span>Timing</span></button>
+    <button class="filter btn" id="moreFilters">More Filters</button>
+
+    <form role="form">
+        <input type="text" id="inputSearch" placeholder="Search"/>
+    </form>
+
+</div>
+
+
+<div id="filter-territories" class="is-hidden">
+    <div class="subfilter-container">
+        {% for territory in territories %}
+            <div class="territory subfilter" id="territory-{{ territory.id }}" toggle>{{ territory.name }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="subfilter-container country-list">
+        {% for country in countries %}
+            <div class="country subfilter territory-{{ country.territory.id }} is-hidden" id="country-{{ country.id }}">
+                {{ country.name }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="subfilter-container">
+        <button class="action close" ref="#filter-territories" clear=".territory, .country">Cancel</button>
+        <button class="action apply">Apply</button>
+    </div>
+
+</div>

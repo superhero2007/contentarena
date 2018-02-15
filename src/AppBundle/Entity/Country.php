@@ -28,6 +28,19 @@ class Country
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country_code", type="string", length=3, unique=true)
+     */
+    private $country_code;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory", inversedBy="country")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $territory;
+
 
     /**
      * Get id
@@ -67,5 +80,41 @@ class Country
     public function __toString() {
         return $this->name;
     }
+
+    /**
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->country_code;
+    }
+
+    /**
+     * @param string $country_code
+     */
+    public function setCountryCode($country_code)
+    {
+        $this->country_code = $country_code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTerritory()
+    {
+        return $this->territory;
+    }
+
+    /**
+     * @param mixed $territory
+     */
+    public function setTerritory($territory)
+    {
+        $this->territory = $territory;
+    }
+
+
+
+
 }
 

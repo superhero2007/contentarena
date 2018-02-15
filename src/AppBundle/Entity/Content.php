@@ -89,8 +89,6 @@ class Content
      */
     private $seriesType;
 
-
-
     /**
      * @var int
      *
@@ -134,18 +132,24 @@ class Content
     private $links;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="territories_selected", type="array", length=255, nullable=true)
+     * Many Content have Many Countries.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
+     * @ORM\JoinTable(name="content_selected_countries",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")}
+     *      )
      */
-    private $territoriesSelected;
+    private $countriesSelected;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="territories_excluded", type="array", length=255, nullable=true)
+     * Many Content have Many Countries.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
+     * @ORM\JoinTable(name="content_excluded_countries",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")}
+     *      )
      */
-    private $territoriesExcluded;
+    private $countriesExcluded;
 
     /**
      * @var string
@@ -213,8 +217,9 @@ class Content
     public function __construct() {
         $this->rightsItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->countriesSelected = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->countriesExcluded = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -683,35 +688,35 @@ class Content
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getTerritoriesSelected()
+    public function getCountriesSelected()
     {
-        return $this->territoriesSelected;
+        return $this->countriesSelected;
     }
 
     /**
-     * @param array $territoriesSelected
+     * @param mixed $countriesSelected
      */
-    public function setTerritoriesSelected($territoriesSelected)
+    public function setCountriesSelected($countriesSelected)
     {
-        $this->territoriesSelected = $territoriesSelected;
+        $this->countriesSelected = $countriesSelected;
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getTerritoriesExcluded()
+    public function getCountriesExcluded()
     {
-        return $this->territoriesExcluded;
+        return $this->countriesExcluded;
     }
 
     /**
-     * @param array $territoriesExcluded
+     * @param mixed $countriesExcluded
      */
-    public function setTerritoriesExcluded($territoriesExcluded)
+    public function setCountriesExcluded($countriesExcluded)
     {
-        $this->territoriesExcluded = $territoriesExcluded;
+        $this->countriesExcluded = $countriesExcluded;
     }
 
 

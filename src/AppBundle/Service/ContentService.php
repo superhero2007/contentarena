@@ -126,8 +126,38 @@ class ContentService
         if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
 
-        if ( isset($data->territoriesSelected) ) $content->setTerritoriesSelected($data->territoriesSelected);
-        if ( isset($data->territoriesExcluded) ) $content->setTerritoriesExcluded($data->territoriesExcluded);
+        if ( isset($data->countriesSelected) ){
+
+
+
+            $countriesSelected = array();
+            foreach ( $data->countriesSelected as $countryCode ){
+
+                $country = $this->em
+                    ->getRepository('AppBundle:Country')
+                    ->findOneBy(array( 'country_code'=> $countryCode));
+
+                if ( $country ) $countriesSelected[] = $country;
+
+            }
+            $content->setCountriesSelected($countriesSelected);
+
+        }
+
+        if ( isset($data->countriesExcluded) ){
+            $countriesExcluded = array();
+            foreach ( $data->countriesExcluded as $countryCode ){
+
+                $country = $this->em
+                    ->getRepository('AppBundle:Country')
+                    ->findOneBy(array( 'country_code'=> $countryCode));
+
+                if ( $country ) $countriesExcluded[] = $country;
+
+            }
+            $content->setCountriesExcluded($countriesExcluded);
+
+        }
 
         if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
         if ( isset($data->availability) ){

@@ -268,10 +268,74 @@ textarea{
 
 }
 
+.chosen-container {
+    margin-left: 10px;
+}
+
 .close-box {
     position: absolute;
     right: 10px;
     top: 5px;
     color: white;
     cursor: pointer;
+}
+
+.filters {
+    display: flex;
+    padding: 0 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.filter {
+    background: white;
+    border: 1px solid black;
+    padding: 5px;
+    flex: 1;
+    font-family: 'Roboto Condensed', sans-serif !important;
+    font-size: 74%;
+    cursor: pointer;
+}
+
+.filter.selected{
+    color : white;
+    background-color: #052e44 ;
+}
+
+.subfilter {
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 5px;
+    flex: 1;
+    padding: 2px 15px;
+    min-width: 80px !important;
+    cursor: pointer;
+}
+
+.subfilter.selected {
+    color : white;
+    background-color: #052e44 ;
+}
+
+.subfilter-container{
+    display: flex;
+}
+
+.country.subfilter {
+    flex: none;
+    font-size: 70%;
+    padding: 1px 4px;
+    min-width: 0 !important;
+    margin: 2px;
+}
+
+.subfilter-container.country-list {
+    flex-wrap: wrap;
+}
+
+input#inputSearch {
+    margin: 0 0 0 30px;
+    color: black;
+    font-size: 74%;
+    padding: 5px;
+    border: none;
 }

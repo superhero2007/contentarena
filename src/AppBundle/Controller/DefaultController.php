@@ -57,12 +57,23 @@ class DefaultController extends Controller
     public function buyAction(Request $request)
     {
 
+        //$countries = array();
         $user = $this->getUser();
         $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findAll();
+        $territories = $this->getDoctrine()->getRepository('AppBundle:Territory')->findAll();
+        $countries = $this->getDoctrine()->getRepository('AppBundle:Country')->findAll();
+
+        /*foreach ( $territories as $territory ){
+            $countries[$territory->getId()] = $this->getDoctrine()
+                ->getRepository('AppBundle:Country')
+                ->findBy(array('territory' => $territory->getId()));
+        }*/
 
         return $this->render('buy/buy.html.twig', [
             'user' => $user,
-            'contents' => $contents
+            'contents' => $contents,
+            'territories' => $territories,
+            'countries' =>  $countries
         ]);
 
     }

@@ -4,6 +4,7 @@
 
     {{ parent() }}
     <link href="{{ asset('bundles/app/css/seller.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('bundles/app/css/chosen.css') }}" type="text/css" rel="stylesheet" />
 
     {{ include('statics/language.css.html.twig', { }) }}
 
@@ -21,6 +22,7 @@
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/javascript/bootstrap-tagsinput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/chosen.jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.extension.validator.js') }}"></script>
 
 
