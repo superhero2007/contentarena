@@ -1,3 +1,131 @@
-<p>Show Content Information</p>
-<a href="#">View Seller</a>
-<a href="#">contact seller</a>
+<div class="box">
+    <div class="box-title">
+        Content information
+        <div class="box-subtitle">
+            #{{ content.customId }}
+        </div>
+    </div>
+
+    <div class="box-content">
+        <div class="box-content-item">
+            <div class="content-column content-column-image">
+                {% if content.image  %}
+                    <img src="{{ asset( content.image ) }}">
+                {% else  %}
+                    <img src="{{ asset('bundles/app/images/no-image.png') }}"/>
+                {% endif  %}
+                <div class="buy-content-sport">{{ content.sport.name | default("") }}</div>
+            </div>
+            <div class="content-column content-column-details">
+                <div class="buy-content-detail">
+                    {% if content.tournament  %}<i class="fa fa-cog"></i>{{ content.tournament.name }} {% endif %}
+                    {% if content.sportCategory  %}<i class="fa fa-globe"></i>{{ content.sportCategory.name }} {% endif %}
+                </div>
+
+                {% if content.seasons|length > 0  %}
+                    <div class="buy-content-detail">
+                        <i class="fa fa-calendar"></i>{{ content.seasons|join(", ") }}
+                    </div>
+                {% endif %}
+
+                <div class="buy-content-detail"><i class="fa fa-calendar"></i>{{ "10/02/2018" | default("") }}</div>
+
+                {% if ( content.programName or content.programType )  %}
+                    <div class="buy-content-detail">
+                        {% if content.programType %}<i class="fa fa-arrow-circle-right"></i>{{ content.programType }}{% endif %}
+                        {% if content.programName %}- {{ content.programName }}{% endif %}
+                    </div>
+                {% endif  %}
+
+                {% if content.rightsPackage|length > 0  %}
+                    <div class="buy-content-detail">
+                        <i class="fa fa-gavel"></i>{{ content.rightsPackage|join(", ") }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="content-column content-column-company">
+
+                <div><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</div>
+                <div class="content-expires">Offer deadline: {{ date( content.expiresAt|date ).diff( date("now") ).days }} days</div>
+            </div>
+        </div>
+        <div class="box-content-item">
+            <div class="content-column content-column-half">
+                <h7>Content description</h7>
+                {% if content.description  %}
+                    <div class="content-description">
+                        {{ content.description }}
+                    </div>
+                {% else %}
+                    -
+                {% endif  %}
+            </div>
+            <div class="content-column content-column-half">
+                <h7>Content details</h7>
+                <div class="content-details">
+                    <div class="content-detail">
+                        <div class="content-detail-title">
+                            Event date
+                        </div>
+                        <div class="content-detail-value">
+                            -
+                        </div>
+                    </div>
+
+                    <div class="content-detail">
+                        <div class="content-detail-title">
+                            Listing deadline
+                        </div>
+                        <div class="content-detail-value">
+                            {{ content.expiresAt|date }}
+                        </div>
+                    </div>
+
+                    <div class="content-detail">
+                        <div class="content-detail-title">
+                            Website link
+                        </div>
+                        <div class="content-detail-value">
+                            {% if content.website|length > 0  %}
+                                {{ content.website|join(', ') }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="content-detail">
+                        <div class="content-detail-title">
+                            Other links
+                        </div>
+                        <div class="content-detail-value">
+                            {% if content.links|length > 0  %}
+                                {{ content.links|join(', ') }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="content-detail">
+                        <div class="content-detail-title">
+                            Attachments
+                        </div>
+                        <div class="content-detail-value">
+                            {% if content.brochure %}
+                                <a href="{{ asset(content.brochure) }}">Brochure</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>

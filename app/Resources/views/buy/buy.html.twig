@@ -15,9 +15,11 @@
         {{ include('buy/filters.html.twig', { 'territories' : territories, 'countries' : countries }) }}
     </div>
 
+    <div class="buy-box">
     {% for content in contents %}
         {{ include('buy/contentItem.html.twig', { 'content' : content }) }}
     {% endfor %}
+    </div>
 
 {% endblock main_content %}
 

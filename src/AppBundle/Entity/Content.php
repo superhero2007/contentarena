@@ -185,6 +185,12 @@ class Content
     private $sport;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $sportCategory;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -210,12 +216,23 @@ class Content
     private $rightsItems;
 
     /**
+     * Many Content have Many RightsPackage.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage")
+     * @ORM\JoinTable(name="content_rights_package",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
+     *      )
+     */
+    private $rightsPackage;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
     private $createdAt;
 
     public function __construct() {
         $this->rightsItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->rightsPackage = new \Doctrine\Common\Collections\ArrayCollection();
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
         $this->countriesSelected = new \Doctrine\Common\Collections\ArrayCollection();
         $this->countriesExcluded = new \Doctrine\Common\Collections\ArrayCollection();
@@ -719,6 +736,37 @@ class Content
         $this->countriesExcluded = $countriesExcluded;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSportCategory()
+    {
+        return $this->sportCategory;
+    }
+
+    /**
+     * @param mixed $sportCategory
+     */
+    public function setSportCategory($sportCategory)
+    {
+        $this->sportCategory = $sportCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRightsPackage()
+    {
+        return $this->rightsPackage;
+    }
+
+    /**
+     * @param mixed $rightsPackage
+     */
+    public function setRightsPackage($rightsPackage)
+    {
+        $this->rightsPackage = $rightsPackage;
+    }
 
 
 }

@@ -66,9 +66,6 @@ $(function () {
                 getSource : function(){
 
                     var list;
-                    //,
-                    //    territoryId = $("#event-territory-selector").attr('externalId');
-
                     listedCountryCodes = [];
 
                     if ( categories === undefined  ) return [];
@@ -76,10 +73,6 @@ $(function () {
                     list = $.map(categories, function (item) {
 
                         var countryCode =  item['@attributes'].country_code || item['@attributes'].name;
-
-                        // Filter by region
-                        //if ( territoryId != undefined
-                        //    && $.inArray( countryCode, countryCodes) == -1) return null;
 
                         if ( $.inArray( countryCode, listedCountryCodes) == -1 ) {
                             listedCountryCodes.push(countryCode);
@@ -96,23 +89,23 @@ $(function () {
                     });
 
                     if (listedCountryCodes.length > 1 ){
-                        $("#event-country-selector").show()
+                        $("#event-category-selector").show()
                     } else {
-                        $("#event-country-selector").hide()
+                        $("#event-category-selector").hide()
                     }
 
                     return list;
 
                 },
                 addCustom : function(){
-                    addCustomFn("#event-country-selector", "Enter Country/Category");
+                    addCustomFn("#event-category-selector", "Enter Country/Category");
                     addCustomFn("#event-tournament-selector", "Enter Tournament");
                     addCustomFn("#event-season-selector", "Enter Season");
                     $("#event-schedule-subitems").html("");
                     $("#event-custom-subitems").children().show();
                 }
             },
-            el = $("#event-country-selector"),
+            el = $("#event-category-selector"),
             spinner = el.parent().find("i");
 
         spinner.show();
@@ -161,8 +154,7 @@ $(function () {
         var options = {
                 getSource : function(response){
 
-                    var categoryId = $("#event-country-selector").attr('externalId'),
-                        //territoryId= $("#event-territory-selector").attr('externalId'),
+                    var categoryId = $("#event-category-selector").attr('externalId'),
                         list;
 
                     if ( !silent ){
@@ -173,19 +165,12 @@ $(function () {
 
                     list =  $.map(response.tournaments.tournament, function (item) {
 
-                        var countryCode = item.category['@attributes'].country_code || "INT";
-
                         if ( !silent ) {
                             categories.push(item.category);
                         }
 
                         // Filter by category
                         if ( categoryId && item.category['@attributes'].id != categoryId) return null;
-
-                        // Filter by region
-                        //if ( !categoryId
-                        //    && territoryId != undefined
-                        //   && $.inArray(countryCode, countryCodes) == -1) return null;
 
                         return {label: item['@attributes'].name, value: item['@attributes'].id}
                     });
@@ -946,7 +931,7 @@ $(function () {
                 .attr("externalId", ui.item.value)
                 .trigger('blur');
 
-            $("#event-country-selector").val("").attr('externalId', null);
+            $("#event-category-selector").val("").attr('externalId', null);
             $("#event-tournament-selector") .val("").attr('externalId', null);
             $("#event-season-selector") .val("").attr('externalId', null);
             $("#event-schedule-subitems").html("");

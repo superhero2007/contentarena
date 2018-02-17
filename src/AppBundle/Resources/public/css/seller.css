@@ -13,29 +13,6 @@ html{
 
 }
 
-.seller-box {
-    background: white;
-    color: grey;
-    text-transform: capitalize;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.seller-box-title {
-    background: darkslategrey;
-    padding: 7px 15px;
-    border: 1px solid black;
-    color: white;
-    text-align: left;
-    font-size: 80%;
-}
-
-.seller-box-title span{
-    font-weight: bold;
-}
-
 .seller-box-content {
     font-size: 80%;
     display: flex;
@@ -108,20 +85,6 @@ html{
     max-width: 300px;
 }
 
-
-.standard-button{
-    color: darkslategray;
-    border-radius: 5px;
-}
-
-.standard-button-active{
-    background: darkslategray;
-    color: white;
-}
-
-.sell-buttons-container {
-    margin: 10px 10px;
-}
 
 .disabled{
     color: lightgrey;

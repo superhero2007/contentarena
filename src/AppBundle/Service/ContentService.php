@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Service\FileUploader;
@@ -84,6 +85,14 @@ class ContentService
         }
 
         /**
+         * Set category
+         */
+        if ( isset($data->category) ) {
+            $category = $this->getCategory($data);
+            $content->setSportCategory($category);
+        }
+
+        /**
          * Set season
          */
         if ( isset($data->seasons) ) {
@@ -119,16 +128,30 @@ class ContentService
         if ( isset($data->description) ) $content->setDescription($data->description->value);
         if ( isset($data->fee) ) $content->setFee($data->fee);
         if ( isset($data->bid) ) $content->setBid($data->bid);
-        if ( isset($data->expiresAt) ) $content->getExpiresAt($data->expiresAt);
+        if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
         if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
         if ( isset($data->programType) ) $content->setProgramType($data->programType->value);
         if ( isset($data->programName) ) $content->setProgramName($data->programName->value);
         if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
 
+        if ( isset($data->packages) ){
+
+            $packages = array();
+            foreach ( $data->packages as $packageId ){
+
+                $package = $this->em
+                    ->getRepository('AppBundle:RightsPackage')
+                    ->findOneBy(array( 'id'=> $packageId));
+
+                if ( $package ) $packages[] = $package;
+
+            }
+            $content->setRightsPackage($packages);
+
+        }
+
         if ( isset($data->countriesSelected) ){
-
-
 
             $countriesSelected = array();
             foreach ( $data->countriesSelected as $countryCode ){
@@ -251,6 +274,30 @@ class ContentService
         }
 
         return $tournament;
+    }
+
+    private function getCategory($data){
+        if ( isset($data->category->externalId) ) {
+
+            $category = $this->em
+                ->getRepository('AppBundle:SportCategory')
+                ->findOneBy(array('externalId' => $data->category->externalId));
+
+        } else if (isset($data->category->value) ){
+            $category = $this->em
+                ->getRepository('AppBundle:SportCategory')
+                ->findOneBy(array('name' => $data->category->value));
+        }
+
+        if (!$category) {
+            $category = new SportCategory();
+            if ( isset($data->category->externalId) ) $category->setExternalId($data->category->externalId);
+            $category->setName($data->category->value);
+            $this->em->persist($category);
+            $this->em->flush();
+        }
+
+        return $category;
     }
 
     private function getSport($data){

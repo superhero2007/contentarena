@@ -10,14 +10,13 @@ class ContentController extends Controller
 {
 
   /**
-   * @Route("/content/{id}", name="show")
+   * @Route("/content/{customId}", name="showContent")
    */
   public function show(Request $request)
   {
 
       $user = $this->getUser();
-      $content = "Temporal string to show template.";
-      #$content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['id' => $request->get("id")]);
+      $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
 
       return $this->render('content/content.html.twig', [
           'user' => $user,

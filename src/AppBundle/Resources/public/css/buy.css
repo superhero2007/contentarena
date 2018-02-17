@@ -13,48 +13,63 @@ html{
 }
 
 .buy-box {
-    background: white;
-    color: grey;
     text-transform: capitalize;
     margin: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.buy-box-content {
-    font-size: 80%;
+.content-column-company {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    border: 1px solid black;
-    border-top: none;
-    justify-content: flex-start;
-    padding: 20px;
+    flex-direction: column;
+    flex-basis: 150px;
+    align-content: right;
+    text-align: right;
+    justify-content: flex-end;
+    position: relative;
 }
 
-
-.is-hidden,.package-ready-button{
-    display: none;
-}
-
-.standard-button{
-    color: darkslategray;
-    border-radius: 5px;
-}
-
-.standard-button-active{
-    background: darkslategray;
-    color: white;
+.content-column-company button {
+    font-size: 90%;
+    max-height: 30px;
+    margin: 0;
+    padding: 0 15px;
 }
 
 .disabled{
     color: lightgrey;
 }
 
-.buy-grid-container {
-  display: grid;
-  grid-template-columns: 15% 40% 20% 20%;
+.content-column img{
+    border: 1px solid grey;
+    max-width: 125px;
+    width: 100%;
+    height: 125px;
 }
 
-.buy-grid-item {
+.buy-content-sport {
+    background-color: #4879a3;
+    color: white;
+    text-transform: uppercase;
+    font-size: 90%;
+    padding: 5px;
+    position: absolute;
+    top: 95px;
+    width: 115px;
+}
+
+.buy-content-detail{
+    text-align: left;
+}
+
+.content-custom-id {
+    font-size: 90%;
+    color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.content-expires{
+    font-size: 75%;
 }
