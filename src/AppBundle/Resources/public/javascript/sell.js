@@ -34,7 +34,9 @@ $(function () {
     function addDistributionPackages( packageId , id ){
 
         var distributionPackage = $(".production-standards", "#box-templates").clone(),
-            technicalDelivery = $(".technical-delivery", "#box-templates").clone();
+            technicalDelivery = $(".technical-delivery", "#box-templates").clone(),
+            distributionPackageTitle = distributionPackage.find(".box-title"),
+            technicalDeliveryTitle = technicalDelivery.find(".box-title");
 
         $(".has-package-"+packageId+"[group='Production standards']", ".rights-list").each(function(){
             var test = $(this).clone();
@@ -43,6 +45,8 @@ $(function () {
 
         distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
         technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
+        distributionPackageTitle.html(distributionPackageTitle.html() + id);
+        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + id);
     }
 
     function checkSelectedPackages() {
@@ -96,10 +100,13 @@ $(function () {
             mainTarget.show();
         });
 
-        addDistributionPackages(1, "test");
+
+        if ( packagesName.indexOf("Program") === -1 || packagesName.length > 1 ){
+            addDistributionPackages(packages[0], "Main");
+        }
 
         if ( packagesName.indexOf("Program") !== -1 ){
-            addDistributionPackages(packages[packagesName.indexOf("Program")], "program");
+            addDistributionPackages(packages[packagesName.indexOf("Program")], "Program");
         }
 
         $("#main-sell-box").show();
