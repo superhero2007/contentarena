@@ -244,6 +244,9 @@ h7 {
     flex-wrap: wrap;
     text-transform: none;
     width: 100%;
+    text-align: left;
+    margin: 4px 0;
+    line-height: 1.2em;
 }
 
 .box-item{

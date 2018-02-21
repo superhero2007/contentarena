@@ -31,6 +31,44 @@ class RightsItemContentFixtures extends Fixture
             array("Exploitation Form - Inship&Inflight", "Inship&Inflight", "Inship&Inflight", "The In-Flight and In-Ship Package is comprised of the right to broadcast content on ships and planes if these operate within the relevant acquired territories. "),
             array("Exploitation Form - Closed circuit hospitality", "Closed circuit hospitality", "Closed circuit hospitality", "Means the right to transmit content by means of any closed-circuit delivery system to closed user groups such as hotels, restaurants, bars, educational institutions, hospitals, oil rigs, transportation services (excluding ships and planes) within private internet groups and virtual private networks other than bettings shops.  "),
 
+            array("Reserved Rights - No rights reserved", "No rights reserved", "No rights reserved", ""),
+            array("Reserved Rights - 2", "The non exclusive right to exploit the archive right on own&operated platforms after {{smallInput}} days after single event completion. ", "The non exclusive right to exploit the archive right on own&operated platforms after {{smallInput}} days after single event completion. ", ""),
+            array("Reserved Rights - 3", "The non exclusive right to exploit a maximum of {{smallInput}} seconds of content of a single event {{smallInput}} hours after its offical completion.", "The non exclusive right to exploit a maximum of {{smallInput}} seconds of content of a single event {{smallInput}} hours after its offical completion.", ""),
+            array("Reserved Rights - 4", "The non-exclusive right for the organizer of a single event to exploit closed circuit and public screening inside the event location premises. ", "The non-exclusive right for the organizer of a single event to exploit closed circuit and public screening inside the event location premises. ", ""),
+            array("Reserved Rights - Other", "Other reserved right {{bigInput}}", "", ""),
+
+            array("Time Embargo - No", "No time embargo", "No time embargo", ""),
+            array("Time Embargo - Yes", "{{smallInput}} hours after the event {{bigInput}}", "", ""),
+
+            array("Video Standard - SD", "SD", "SD", ""),
+            array("Video Standard - HD", "HD", "HD", ""),
+            array("Video Standard - UHD", "UHD", "UHD", ""),
+            array("Video Standard - VR", "VR", "VR", ""),
+
+            array("Graphics - Yes", "Yes, graphics available in {{language}}", "Yes, graphics available in {{language}}", ""),
+            array("Graphics - No", "No graphics available", "No graphics available", ""),
+
+            array("Aspect Ratio - 16:9", "16:9", "16:9", ""),
+            array("Aspect Ratio - 4:3", "4:3", "46:3", ""),
+            array("Aspect Ratio - custom", "{{smallInput}}px width x {{smallInput}}px height", "", ""),
+
+            array("Subtitles - Yes", "Yes, subtitles available in {{language}}", "Yes, subtitles available in {{language}}", ""),
+            array("Subtitles - No", "No subtitles available", "No subtitles available", ""),
+
+            array("Commentary - Yes", "Yes, commentary available in {{language}}", "Yes, commentary available in {{language}}", ""),
+            array("Commentary - No", "No commentary available", "No commentary available", ""),
+
+            array("Script - Yes", "Yes, script available in {{language}}", "Yes, script available in {{language}}", ""),
+            array("Script - No", "No script available", "No script available", ""),
+
+            array("Number of Cameras - Minimum", "Event will be filmed by minimum of {{smallInput}} cameras", "Event will be filmed by minimum of {{smallInput}} cameras", ""),
+            array("Number of Cameras - Defined", "As defined in text field {{bigInput}}", "As defined in text field {{bigInput}}", ""),
+            array("Number of Cameras - No", "Not applicable", "Not applicable", ""),
+
+
+
+
+
         );
 
         for ($i = 0; $i < count($content); $i++) {

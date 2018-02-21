@@ -32,14 +32,14 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                 "Transmission Means - Internet"
             ), array(
                 "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
-            ), "", true, true),
+            ), "", true, true, true),
 
             array("Exclusivity", "Main Information", array(
                 "Exclusivity - Yes",
                 "Exclusivity - No",
             ), array(
                 "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
-            ), "", false, false),
+            ), "", false, false, true),
 
             array("Exploitation Form", "Main Information", array(
                 "Exploitation Form - Free only",
@@ -48,7 +48,77 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                 "Exploitation Form - Closed circuit hospitality"
             ), array(
                 "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
-            ), "", true, true),
+            ), "", true, true, true),
+
+            array("Reserved Rights", "Main Information", array(
+                "Reserved Rights - No rights reserved",
+                "Reserved Rights - 2",
+                "Reserved Rights - 3",
+                "Reserved Rights - 4",
+                "Reserved Rights - Other",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, true),
+
+            array("Time Embargo", "Main Information", array(
+                "Time Embargo - No",
+                "Time Embargo - Yer",
+            ), array(
+                "Delayed transmission", "News access", "Highlights", "Clips"
+            ), "", false, false, false),
+
+            array("Video standard", "Production standards", array(
+                "Video Standard - SD",
+                "Video Standard - HD",
+                "Video Standard - UHD",
+                "Video Standard - VR",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+            array("Graphics", "Production standards", array(
+                "Graphics - Yes",
+                "Graphics - No",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+            array("Subtitles", "Production standards", array(
+                "Subtitles - Yes",
+                "Subtitles - No",
+            ), array(
+                "Program"
+            ), "", false, false, false),
+
+            array("Commentary", "Production standards", array(
+                "Commentary - Yes",
+                "Commentary - No",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+            array("Script", "Production standards", array(
+                "Script - Yes",
+                "Script - No",
+            ), array(
+                "Program"
+            ), "", false, false, false),
+
+            array("Number of Cameras", "Production standards", array(
+                "Number of Cameras - Minimum",
+                "Number of Cameras - Defined",
+                "Number of Cameras - No",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+            array("Aspect Ratio", "Production standards", array(
+                "Aspect Ratio - 16:9",
+                "Aspect Ratio - 4:3",
+                "Aspect Ratio - custom",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
 
         );
 
@@ -85,7 +155,8 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                 $emailContent->setPackages($packages);
                 $emailContent->setDefinition($content[$i][4]);
                 $emailContent->setMultiple($content[$i][5]);
-                $emailContent->setAllEnabled($content[$i][5]);
+                $emailContent->setAllEnabled($content[$i][6]);
+                $emailContent->setCollectively($content[$i][7]);
                 $manager->persist($emailContent);
             }
         }

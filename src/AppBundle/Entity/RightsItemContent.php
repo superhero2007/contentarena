@@ -162,5 +162,6 @@ class RightsItemContent
     }
 
 
+
 }
 

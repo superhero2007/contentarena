@@ -18,9 +18,9 @@ class RightsGroupFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $content = array(
-            'Main Information',
-            'Technical Information',
-            'Price & Territory'
+            'Main information',
+            'Technical delivery',
+            'Production standards'
         );
 
         for ($i = 0; $i < count($content); $i++) {

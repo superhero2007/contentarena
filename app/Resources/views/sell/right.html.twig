@@ -1,4 +1,5 @@
-<div class="select-box-item-container {% for id in right.packagesIds %}has-package-{{ id }} {% endfor %}{% if right.packagesIds|length > 1 %} has-many-packages{% endif %}">
+<div class="select-box-item-container right-item {% if right.collectively %}is-collectively{% endif %} {% for id in right.packagesIds %}has-package-{{ id }} {% endfor %}{% if right.packagesIds|length > 1 %} has-many-packages{% endif %}"
+     group="{{ right.group }}">
 
     <div class="select-box-item-title" {% if right.definition %}title="{{ right.definition }}"{% endif %}>
         {{ right.name }} {% if right.definition %}<i class="fa fa-info-circle" aria-hidden="true"></i>{% endif %}
@@ -7,7 +8,10 @@
     {% if right.allEnabled %}
         <div class="select-box-item select-box-item-full all-type">
             <div class="select-box-checkbox">
-                <input type="checkbox" class="unselect-others">
+                <input type="checkbox"
+                       id="all-{{ right.id }}"
+                       class="unselect-others">
+                <label for="all-{{ right.id }}"></label>
             </div>
             <div class="select-box-item-label">
                 All
@@ -21,7 +25,9 @@
                 <input
                         right-id="{{ right.id }}"
                         right-item-id="{{ item.id }}"
+                        id="right-item-{{ item.id }}"
                         type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
+                <label for="right-item-{{ item.id }}"></label>
             </div>
             <div class="select-box-item-label">
                 {{ item.formContent|rightItem | raw}}

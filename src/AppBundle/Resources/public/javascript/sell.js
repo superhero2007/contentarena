@@ -31,18 +31,29 @@ $(function () {
         return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0)
     }
 
-    function checkSelectedPackages() {
-        $(".select-box-item-container").hide();
+    function addDistributionPackages( packageId , id ){
 
-        $.each($(".package-selector"), function (i, pack) {
+        var distributionPackage = $(".production-standards", "#box-templates").clone(),
+            technicalDelivery = $(".technical-delivery", "#box-templates").clone();
 
-            var id = $(pack).attr("id").split("-")[1];
-
-            if (pack.checked) {
-                $(".has-package-" + id).show();
-                $("#sell-box-package-" + id).show();
-            }
+        $(".has-package-"+packageId+"[group='Production standards']", ".rights-list").each(function(){
+            var test = $(this).clone();
+            distributionPackage.find(".seller-box-content").append(test);
         });
+
+        distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
+        technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
+    }
+
+    function checkSelectedPackages() {
+
+        var packages = getSelectedPackages(),
+            packagesName = getSelectedPackagesName(),
+            mainItems = [],
+            singleItems = [],
+            multiPackage = ( packages.length > 1),
+            mainTarget = (multiPackage) ? $("#main-multiple-package") : $("#main-single-package");
+
 
         $.each($(".seller-box-content"), function () {
             if ($(this).children().length == 0) {
@@ -53,6 +64,43 @@ $(function () {
                 }
             }
         });
+
+        $(".select-box-item-container").hide();
+        $(".rights-container").hide();
+        $(".rights-container:not(.technical-delivery) .seller-box-content").html("");
+        $(".production-standards", "#step2").remove();
+        $(".technical-delivery", "#step2").remove();
+
+        $.each(packages, function(k, v){
+
+            singleItems.push(".has-package-"+v+":not(.is-collectively)[group='Main Information']");
+
+            if ( multiPackage ){
+                mainItems.push(".has-package-"+v+".is-collectively[group='Main Information']");
+                $(singleItems.join(", "), ".rights-list").each(function(){
+                    var test = $(this).clone();
+                    $("#sell-box-package-"+ v +" .seller-box-content").append(test);
+                });
+                $("#sell-box-package-"+ v ).show();
+            } else {
+                mainItems.push(".has-package-"+v+"[group='Main Information']");
+            }
+
+            $(".has-package-" + v).show();
+
+        }) ;
+
+        $(mainItems.join(","), ".rights-list").each(function(){
+            var test = $(this).clone();
+            mainTarget.find(".seller-box-content").append(test);
+            mainTarget.show();
+        });
+
+        addDistributionPackages(1, "test");
+
+        if ( packagesName.indexOf("Program") !== -1 ){
+            addDistributionPackages(packages[packagesName.indexOf("Program")], "program");
+        }
 
         $("#main-sell-box").show();
         $("#price-sell-box").show();
@@ -548,6 +596,25 @@ $(function () {
         return !hasErrors;
     }
 
+    function getSelectedPackages() {
+        var list = [];
+
+        $(".package-selector:checked").each(function(k,v){
+            list.push($(v).attr("id").split("-")[1] );
+        });
+
+        return list;
+    }
+
+    function getSelectedPackagesName() {
+        var list = [];
+        $(".package-selector:checked").each(function(k,v){
+            list.push($(v).attr("name").split("-")[1]);
+        });
+
+        return list;
+    }
+
     function validateStepTwo(){
 
         var rights = {},
@@ -590,10 +657,8 @@ $(function () {
 
         eventData.rights = rights;
         eventData.rightItems = rightItems;
-        eventData.packages = [];
-        $(".package-selector:checked").each(function(k,v){
-            eventData.packages.push($(v).attr("id").split("-")[1] );
-        });
+        eventData.packages = getSelectedPackages();
+
         eventData.salesMethod = $("input:checked", "#sales-method-selector").val();
         eventData.fee = $( "#fee-selector").val();
         eventData.bid = $( "#bid-selector").val();
@@ -717,7 +782,7 @@ $(function () {
         $(".installment-percent").off().mask('000%', {reverse: true});
     }
 
-    function setupSalesPackage( context ){
+    function setupToggler( context ){
         $(".toggler-checkbox", context).change(function () {
 
             var selectorShow = $(this).attr("show"),
@@ -758,12 +823,6 @@ $(function () {
             name = $(this).attr("name").split("-")[1];
 
         checkSelectedPackages();
-
-        /*if ( selectorCounter == 0 ){
-            $(".main-specify").html(name);
-        } else {
-            $(".main-specify").html("collectively");
-        }*/
 
         if (!this.checked || selectorCounter >= 1) return;
 
@@ -1155,10 +1214,11 @@ $(function () {
         item.find("input").val("");
         item.find("input[type=checkbox]").attr("checked", false);
         item.insertAfter(".sales-package:last");
-        setupSalesPackage("#sales-package-"+ pos);
+        setupToggler("#sales-package-"+ pos);
     });
 
     $(".price-optional").hide();
+    $(".optional").hide();
 
     /**
      * Initialization
@@ -1166,7 +1226,8 @@ $(function () {
     addLanguageBehaviour();
     loadRegions();
     setupInstallment();
-    setupSalesPackage("#sales-package-1");
+    setupToggler("#sales-package-1");
+    setupToggler(".technical-delivery");
 
     $(".step1-event-item").hide();
     $(".step1-container").show();

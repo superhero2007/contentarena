@@ -1,0 +1,95 @@
+<div id="technical-single-{{ id }}" class="box sell-items-box technical-delivery rights-container ">
+    <div class="box-title">
+        Technical delivery
+    </div>
+    <div class="seller-box-content seller-box-content-rights" >
+        <div class="box-item" id="distribution-method-{{ id }}">
+
+            <div class="select-box-item-title">
+                Distribution Method
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox"
+                           id="distribution-method-ip-{{ id }}"
+                           value="pre-defined-fee"
+                           show=".technical-optional-ip"
+                           hide=".optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="distribution-method-ip-{{ id }}"></label>
+                </div>
+                <div class="select-box-item-label">
+                    IP
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="open-bid"
+                           id="distribution-method-fiber-{{ id }}"
+                           show=".technical-optional-fiber"
+                           hide=".optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="distribution-method-fiber-{{ id }}"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Fiber
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="closed-bid"
+                           id="distribution-method-ftp-{{ id }}"
+                           show=".technical-optional-ftp"
+                           hide=".optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="distribution-method-ftp-{{ id }}"></label>
+                </div>
+                <div class="select-box-item-label">
+                    FTP Server
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="closed-bid"
+                           id="distribution-method-satellite-{{ id }}"
+                           show=".technical-optional-satellite"
+                           hide=".optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="distribution-method-satellite-{{ id }}"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Satellite
+                </div>
+            </div>
+
+        </div>
+
+        {# DELIVERY TIME#}
+        <div class="box-item technical-optional-ip technical-optional-fiber technical-optional-ftp technical-optional-satellite optional">
+            <div class="select-box-item-title">
+                Technical delivery time
+            </div>
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-item-label">
+                    Content will be delivered within <input type="text" class="tiny-input" id="technical-delivery-time" /> hours before each single event.
+                </div>
+            </div>
+        </div>
+
+        {# FEE #}
+        <div class="box-item technical-optional-fiber technical-optional-ftp optional">
+            <div class="select-box-item-title">
+                Technical fee
+            </div>
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-item-label">
+                    <input type="text" class="tiny-input" id="technical-delivery-time" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

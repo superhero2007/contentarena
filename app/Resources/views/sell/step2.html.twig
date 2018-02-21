@@ -1,4 +1,4 @@
-<div id="step2" class="is-hidden">
+<div id="step2" class="">
 
     {# PACKAGE SELECTOR#}
     <div class="box">
@@ -14,6 +14,7 @@
                                id="package-{{ package.id }}"
                                name="package-{{ package.name }}"
                                data-packages="{{ package.serializer }}">
+                        <label for="package-{{ package.id }}"></label>
                     </div>
                     <div class="select-box-item-label">
                         {{ package.name|e }}
@@ -28,33 +29,38 @@
         <button id="reset-packages" class="standard-button package-ready-button">Reset package selection</button>
     </div>
 
-    <div id="main-sell-box" class="box sell-items-box is-hidden">
+    <div id="main-multiple-package" class="box sell-items-box is-hidden rights-container">
         <div class="box-title">
-            Specify <span class="">collectively</span>
+            Specify collectively
         </div>
         <div class="seller-box-content seller-box-content-rights" >
-            {% for right in rights %}
-                {% if right.packagesIds|length > 1 %}
-                    {{ include('sell/right.html.twig', { 'right': right }) }}
-                {% endif %}
-            {% endfor %}
+        </div>
+    </div>
+
+    <div id="main-single-package" class="box sell-items-box is-hidden rights-container ">
+        <div class="box-title">
+            Rights configuration
+        </div>
+        <div class="seller-box-content seller-box-content-rights" >
+
         </div>
     </div>
 
     {% for package in packages %}
-        <div id="sell-box-package-{{ package.id }}" class="box sell-items-box is-hidden">
+        <div id="sell-box-package-{{ package.id }}" class="box sell-items-box is-hidden rights-container">
             <div class="box-title">
-                Specify <span>{{ package.name|e }}</span>
+                Specify {{ package.name|e }}
             </div>
             <div class="seller-box-content seller-box-content-rights">
-                {% for right in rights %}
-                    {% if right.packagesIds|length == 1 and package.id in right.packagesIds  %}
-                        {{ include('sell/right.html.twig', { 'right': right }) }}
-                    {% endif %}
-                {% endfor %}
             </div>
         </div>
     {% endfor %}
+
+    <div class="rights-list is-hidden">
+        {% for right in rights %}
+            {{ include('sell/right.html.twig', { 'right': right }) }}
+        {% endfor %}
+    </div>
 
     {# PRICING AND TERRITORY #}
     {{ include('sell/step2.pricing.html.twig') }}
@@ -67,6 +73,18 @@
 
     {# BUTTONS #}
     {{ include('sell/step2buttons.html.twig') }}
+</div>
+
+<div id="box-templates" class="is-hidden">
+    <div class="box sell-items-box rights-container production-standards ">
+        <div class="box-title">
+            Production standards
+        </div>
+        <div class="seller-box-content seller-box-content-rights" >
+        </div>
+    </div>
+
+    {{ include('sell/step2.technical.html.twig', {id : 1} ) }}
 </div>
 
 {{ include('sell/mainForm.twig') }}

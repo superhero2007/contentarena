@@ -75,6 +75,13 @@ class Rights
      */
     private $all_enabled;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="collectively", type="boolean")
+     */
+    private $collectively;
+
     public function __construct()
     {
         $this->packages = new ArrayCollection();
@@ -222,6 +229,22 @@ class Rights
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCollectively()
+    {
+        return $this->collectively;
+    }
+
+    /**
+     * @param bool $collectively
+     */
+    public function setCollectively($collectively)
+    {
+        $this->collectively = $collectively;
     }
 
 
