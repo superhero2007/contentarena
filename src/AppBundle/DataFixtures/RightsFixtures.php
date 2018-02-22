@@ -120,6 +120,43 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                 "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
             ), "", false, false, false),
 
+            array("Highlights cut available", "Main Information", array(
+                "Highlights cut available - Yes",
+                "Highlights cut available - No",
+            ), array(
+                "Highlights"
+            ), "", false, false, false),
+
+            array("Clips cut available", "Main Information", array(
+                "Clips cut available - Yes",
+                "Clips cut available - No",
+            ), array(
+                "Clips"
+            ), "", false, false, false),
+
+            array("News access cut available", "Main Information", array(
+                "News access cut available - Yes",
+                "News access cut available - No",
+            ), array(
+                "News access"
+            ), "", false, false, false),
+
+
+            array("Distributed with Highlights", "Main Information", array(
+                "Distributed with Highlights - Yes",
+                "Distributed with Highlights - No",
+            ), array(
+                "News access", "Clips"
+            ), "", false, false, false),
+
+            array("Distributed with Clips", "Main Information", array(
+                "Distributed with Clips - Yes",
+                "Distributed with Clips - No",
+            ), array(
+                "News access"
+            ), "", false, false, false),
+
+
         );
 
         for ($i = 0; $i < count($content); $i++) {

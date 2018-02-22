@@ -25,6 +25,7 @@
                 <input
                         right-id="{{ right.id }}"
                         right-item-id="{{ item.id }}"
+                        right-name="{{ item.name | kebab }}"
                         id="right-item-{{ item.id }}"
                         type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
                 <label for="right-item-{{ item.id }}"></label>

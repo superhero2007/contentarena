@@ -45,8 +45,21 @@ $(function () {
 
         distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
         technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
-        distributionPackageTitle.html(distributionPackageTitle.html() + id);
-        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + id);
+        distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
+        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " -" + id);
+
+        addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
+        setupToggler("#technical-delivery-" + id);
+
+        $("label", distributionPackage ).each(function(){
+            $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
+        });
+
+        $("input", distributionPackage ).each(function(){
+            $(this).attr("id", "distribution-package-" + id + "-" + $(this).attr("id") )
+        });
+
+
     }
 
     function checkSelectedPackages() {
@@ -85,12 +98,36 @@ $(function () {
                     var test = $(this).clone();
                     $("#sell-box-package-"+ v +" .seller-box-content").append(test);
                 });
+
                 $("#sell-box-package-"+ v ).show();
             } else {
                 mainItems.push(".has-package-"+v+"[group='Main Information']");
             }
 
             $(".has-package-" + v).show();
+
+            $("label", "#sell-box-package-" + v ).each(function(){
+                $(this).attr("for", "package-" + v + "-" + $(this).attr("for") )
+            });
+
+            $("input", "#sell-box-package-" + v ).each(function(){
+                $(this).attr("id", "package-" + v + "-" + $(this).attr("id") )
+            });
+
+            $("[right-name$=-cut-available-yes]", "#sell-box-package-" + v ).change(function(){
+                if ( this.checked && $("#distribution-package-" + packagesName[k]).length == 0 ) {
+                    addDistributionPackages(v, packagesName[k]);
+                }
+
+            });
+
+            $("[right-name$=-cut-available-no]", "#sell-box-package-" + v ).change(function(){
+                if ( this.checked ) {
+                    $("#distribution-package-" + packagesName[k]).remove();
+                    $("#technical-delivery-" + packagesName[k]).remove();
+                }
+
+            });
 
         }) ;
 
@@ -113,6 +150,7 @@ $(function () {
         $("#price-sell-box").show();
         $(".package-ready-button").show();
         $("#price-sell-box .select-box-item-container").show();
+        setupUnselect();
     }
 
     function fillCategories(){
@@ -722,10 +760,10 @@ $(function () {
         });
     }
 
-    function addLanguageBehaviour(){
+    function addLanguageBehaviour( selector ){
 
-        $.each($(".has-language-trigger"),function(k,el){
-            $(el).uls({
+        $(selector).each(function () {
+            $(this).uls({
                 onSelect: function (language) {
                     var languageName = $.uls.data.getAutonym(language);
                     var el = this.$element;
@@ -733,7 +771,7 @@ $(function () {
                 },
                 quickList: ['en','fr', 'es']
             });
-        });
+        })
 
     }
 
@@ -807,6 +845,18 @@ $(function () {
         });
 
         $(".close-box").show().first().hide();
+    }
+
+    function setupUnselect(){
+        //$(".unselect-others").off();
+        $(".unselect-others").change(function(){
+
+            var _this = this;
+
+            $.each($(this).parent().parent().siblings(), function (k, item) {
+                if ( _this != item ) $(item).find("input").attr("checked", false);
+            });
+        });
     }
 
     function onSelectAutocompleteTag(event, ui ){
@@ -916,15 +966,6 @@ $(function () {
     });
 
     $(".has-datepicker").datepicker();
-
-    $(".unselect-others").change(function(){
-
-        var _this = this;
-
-        $.each($(this).parent().parent().siblings(), function (k, item) {
-            if ( _this != item ) $(item).find("input").attr("checked", false);
-        });
-    });
 
     $(".unselect-all").change(function(){
 
@@ -1230,11 +1271,11 @@ $(function () {
     /**
      * Initialization
      */
-    addLanguageBehaviour();
+    addLanguageBehaviour(".has-language-trigger");
     loadRegions();
     setupInstallment();
     setupToggler("#sales-package-1");
-    setupToggler(".technical-delivery");
+
 
     $(".step1-event-item").hide();
     $(".step1-container").show();

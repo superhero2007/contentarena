@@ -65,6 +65,21 @@ class RightsItemContentFixtures extends Fixture
             array("Number of Cameras - Defined", "As defined in text field {{bigInput}}", "As defined in text field {{bigInput}}", ""),
             array("Number of Cameras - No", "Not applicable", "Not applicable", ""),
 
+            array("Highlights cut available - Yes", "Yes", "Highlights cut available", ""),
+            array("Highlights cut available - No", "No", "Highlights cut no available", ""),
+
+            array("Clips cut available - Yes", "Yes", "Clips cut available", ""),
+            array("Clips cut available - No", "No", "Clips cut no available", ""),
+
+            array("News access cut available - Yes", "Yes", "News access cut available", ""),
+            array("News access cut available - No", "No", "News access cut no available", ""),
+
+            array("Distributed with Highlights - Yes", "Yes", "Distributed with Highlights", ""),
+            array("Distributed with Highlights - No", "No", "", ""),
+
+            array("Distributed with Clips - Yes", "Yes", "Distributed with Clips", ""),
+            array("Distributed with Clips - No", "No", "", ""),
+
 
 
 
