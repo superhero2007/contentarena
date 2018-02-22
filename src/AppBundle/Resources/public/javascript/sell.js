@@ -1131,30 +1131,6 @@ $(function () {
         $(this).autocomplete("search", "");
     });
 
-    $( "#territory-selected" ).autocomplete({
-        source: function( request, response ) {
-            // delegate back to autocomplete, but extract the last term
-            response( $.ui.autocomplete.filter(
-                countryList, extractLast( request.term ) ) );
-        },
-        minLength: 0,
-        select: onSelectAutocompleteTag
-    }).focus(function(){
-        $(this).autocomplete("search", "");
-    });
-
-    /*$( "#territory-excluded" ).autocomplete({
-        source: function( request, response ) {
-            // delegate back to autocomplete, but extract the last term
-            response( $.ui.autocomplete.filter(
-                countryList, extractLast( request.term ) ) );
-        },
-        minLength: 0,
-        select: onSelectAutocompleteTag
-    }).focus(function(){
-        $(this).autocomplete("search", "");
-    });*/
-
     $( "#event-duration-selector" ).mask('00:00');
 
     $("#event-customEnd-selector, #event-customStart-selector, #event-availability-selector, #expiration-date, .installment-date").datepicker();
