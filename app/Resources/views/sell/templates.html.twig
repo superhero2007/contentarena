@@ -1,8 +1,13 @@
 
-<script id="sales-package-template" type="text/x-jsrender">
+<script id="custom-fixture-template" type="text/x-jsrender">
 {% raw %}
-
-    
+<div class="step1-event-item database-event-item custom-fixtures">
+    <input type="text" class="step1-event-input-content"
+           id="custom-fixture-name-{{:id}}"
+           placeholder="enter fixture (optional)"/> <input type="text" class="step1-event-input-content"
+                                                           placeholder="Select date (optional)"
+                                                           id="custom-fixture-date-{{:id}}"/>
+</div>
 {% endraw %}
 </script>
 

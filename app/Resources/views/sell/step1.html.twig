@@ -67,9 +67,6 @@
                     <div class="step1-event-subitems-container" id="event-schedule-subitems"></div>
                     <div class="step1-event-subitems-container" id="event-custom-subitems">
                         <div class="step1-event-item database-event-item">
-                            <input type="text" class="step1-event-input-content" placeholder="Fixtures" id="event-customType-selector"/>
-                        </div>
-                        <div class="step1-event-item database-event-item">
                             <input type="number"
                                    class="step1-event-input-content"
                                    placeholder="Number of events"
@@ -81,6 +78,21 @@
                         <div class="step1-event-item database-event-item">
                             <input type="text" class="step1-event-input-content" placeholder="End date" id="event-customEnd-selector"/>
                         </div>
+
+                        <div class="step1-event-item database-event-item custom-fixtures">
+                            <input type="text"
+                                   class="step1-event-input-content"
+                                   id="custom-fixture-name-1"
+                                   placeholder="enter fixture (optional)"/> <input type="text"
+                                                                                   class="step1-event-input-content"
+                                                                                   placeholder="Select date (optional)"
+                                                                                   id="custom-fixture-date-1"/>
+                        </div>
+
+                        <div class="step1-event-item database-event-item">
+                            <button class="small-button" id="add-more-fixtures">Add more fixtures</button>
+                        </div>
+
                     </div>
                 </div>
 
