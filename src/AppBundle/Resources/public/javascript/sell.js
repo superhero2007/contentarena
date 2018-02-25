@@ -9,7 +9,28 @@ $(function () {
     var Content = function() {
 
         this.sport = {};
+        this.tournament = null;
+        this.category = null;
         this.eventType = "database";
+        this.programName = null;
+        this.programType = null;
+
+        this.getTitle = () => {
+
+            var title = "";
+
+            if ( this.sport.value !== undefined ) title += this.sport.value;
+
+            if ( this.eventType === "database" ){
+                if ( this.category.value !== undefined ) title += " - " + this.category.value;
+                if ( this.tournament.value !== undefined ) title += " - " + this.tournament.value;
+            } else {
+                if ( this.programName.value !== undefined ) title += " - " + this.programName.value;
+                if ( this.programType.value !== undefined ) title += " - " + this.programType.value;
+            }
+
+            return title;
+        };
 
         watch(this, "sport", function(){
             console.log("Updating sport", arguments);
@@ -486,7 +507,6 @@ $(function () {
             eventTypeSelector += ", .custom-series-event-item";
         }
 
-        eventData = {};
         eventData.eventType = eventType;
 
         $( eventTypeSelector ).each(function(k, item){
@@ -524,9 +544,9 @@ $(function () {
 
         if ( $("#event-link-selector").val() != "" ){
             eventData.links = $("#event-link-selector").val().split(",");
-        }
+        };
 
-        $("#event-title").html( $("#event-sport-selector").val() + " - " + $("#event-tournament-selector-selector").val() + " - " );
+        $("#event-title").html( eventData.getTitle() );
 
         if (eventType == 'database' ){
 
@@ -955,7 +975,7 @@ $(function () {
                 .trigger('blur');
 
             eventData.sport = {
-                label : ui.item.label,
+                value : ui.item.label,
                 externalId : ui.item.value
             };
 
