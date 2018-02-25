@@ -12,7 +12,7 @@
         <div class="box-title">
             Pick rights
         </div>
-        <div id="packages" class="seller-box-content" >
+        <div id="packages" class="seller-box-content seller-box-packages" >
             {% for package in packages %}
                 <div class="select-box-item" >
                     <div class="select-box-checkbox">
@@ -69,9 +69,6 @@
         {% endfor %}
     </div>
 
-    {# PRICING AND TERRITORY #}
-    {{ include('sell/step2.pricing.html.twig') }}
-
     {# PAYMENT TERMS #}
     {{ include('sell/step2.paymentTerms.html.twig') }}
 
@@ -95,3 +92,5 @@
 </div>
 
 {{ include('sell/mainForm.twig') }}
+
+{{ include('sell/templates.html.twig') }}

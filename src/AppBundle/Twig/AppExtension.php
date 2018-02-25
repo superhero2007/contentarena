@@ -54,13 +54,13 @@ class AppExtension extends AbstractExtension
         $datepicker_input = '{{dateInput}}';
         $language = '{{language}}';
 
-        $basic_input_template = '<input type="text" />';
-        $basic_input_placeholder_template = '<input type="text" placeholder="{{placeholder}}" />';
-        $small_input_template = '<input type="text" style="width: 50px" />';
-        $small_input_placeholder_template = '<input type="text" style="width: 50px"  placeholder="{{placeholder}}" />';
+        $basic_input_template = '<input type="text" class="right-form-input" />';
+        $basic_input_placeholder_template = '<input type="text" class="right-form-input" placeholder="{{placeholder}}" />';
+        $small_input_template = '<input type="text" class="right-form-input" style="width: 50px" />';
+        $small_input_placeholder_template = '<input type="text" class="right-form-input" style="width: 50px"  placeholder="{{placeholder}}" />';
         $big_input_template = '<textarea></textarea>';
         $big_input_placeholder_template = '<textarea placeholder="{{placeholder}}"></textarea>';
-        $datepicker_input_template = '<input type="text" class="has-datepicker" />';
+        $datepicker_input_template = '<input class="right-form-input" type="text" class="has-datepicker" />';
         $language_template = '<select type="text" class="has-language-trigger" data-placeholder="Select language" id="right-item-select-'.$id.'" multiple ></select>';
 
         // Item has language selector

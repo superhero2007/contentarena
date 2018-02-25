@@ -1,0 +1,204 @@
+
+<script id="sales-package-template" type="text/x-jsrender">
+{% raw %}
+
+    
+{% endraw %}
+</script>
+
+
+{# PRICING AND TERRITORY #}
+<script id="sales-package-template" type="text/x-jsrender">
+{% raw %}
+<div id="sales-package-{{:id}}" class="box sales-package">
+    <div class="box-title">
+        Pricing and territory
+    </div>
+    {{if id != 1}}
+    <div class="close-box" ref="#sales-package-{{:id}}">
+        <i class="fa fa-window-close"></i>
+    </div>
+    {{/if}}
+    <div class="seller-box-content">
+        <div class="box-item" id="sales-method-selector">
+
+            <div class="select-box-item-title">
+                Sales method
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox"
+                           id="sales-package-{{:id}}-pre-defined-fee"
+                           value="pre-defined-fee"
+                           show=".predefined-fee-option"
+                           hide=".price-optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="sales-package-{{:id}}-pre-defined-fee"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Pre-defined fee
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="open-bid"
+                           id="sales-package-{{:id}}--open-bid"
+                           show=".bid-option"
+                           hide=".price-optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="sales-package-{{:id}}--open-bid"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Open bid
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="closed-bid"
+                           id="sales-package-{{:id}}--closed-bid"
+                           show=".bid-option, .closed-bid-option"
+                           hide=".price-optional"
+                           class="unselect-others toggler-checkbox" />
+                    <label for="sales-package-{{:id}}--closed-bid"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Closed bid
+                </div>
+            </div>
+        </div>
+
+        <div class="box-item price-optional predefined-fee-option bid-option">
+            <div class="select-box-item-title price-optional predefined-fee-option">
+                Fee
+            </div>
+
+            <div class="select-box-item select-box-item-full price-optional predefined-fee-option">
+                <div class="select-box-checkbox">
+
+                </div>
+                <div class="select-box-item-label">
+                    <input type="text" id="sales-package-{{:id}}-fee" class="small-input custom-form-input " >
+                    <label for="sales-package-{{:id}}-fee"></label>
+                </div>
+            </div>
+
+            <div class="select-box-item-title price-optional bid-option">
+                Minimum bid
+            </div>
+
+            <div class="select-box-item select-box-item-full price-optional bid-option">
+                <div class="select-box-checkbox">
+
+                </div>
+                <div class="select-box-item-label">
+                    <input type="text" id="sales-package-{{:id}}-minimum-bid" class="small-input custom-form-input" >
+                    <label for="sales-package-{{:id}}-minimum-bid"></label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="box-item price-optional predefined-fee-option bid-option" id="fee-selector">
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="USD" class="unselect-others" id="sales-package-{{:id}}-currency-usd">
+                    <label for="sales-package-{{:id}}-currency-usd"></label>
+                </div>
+                <div class="select-box-item-label">
+                    USD
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="EUR" class="unselect-others" id="sales-package-{{:id}}-currency-eur">
+                    <label for="sales-package-{{:id}}-currency-eur"></label>
+                </div>
+                <div class="select-box-item-label">
+                    EUR
+                </div>
+            </div>
+        </div>
+
+        <div class="box-item" id="territories-selector">
+            <div class="select-box-item-title">
+                Territories
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="worldwide"  class="unselect-others" id="sales-package-{{:id}}-worldwide-selector">
+                    <label for="sales-package-{{:id}}-worldwide-selector"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Worldwide
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="selected" class="unselect-others" id="sales-package-{{:id}}-selected-territory-selector">
+                    <label for="sales-package-{{:id}}-selected-territory-selector"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Selected territories only <select type="text" id="sales-package-{{:id}}-territory-selected" data-placeholder="Choose a Country..." multiple  class="has-region-selector"></select>
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="excluded" class="unselect-others" id="sales-package-{{:id}}-excluded-territory-selector">
+                    <label for="sales-package-{{:id}}-excluded-territory-selector"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Worldwide excluding <select type="text" id="sales-package-{{:id}}-territory-excluded" data-placeholder="Choose a Country..." multiple class="has-region-selector"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-item">
+            <div class="select-box-item-title">
+                Package Configuration
+            </div>
+
+            <div class="select-box-item select-box-item-full ">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="territories-as-package" id="sales-package-{{:id}}-territories-as-package" >
+                    <label for="sales-package-{{:id}}-territories-as-package"></label>
+                </div>
+                <div class="select-box-item-label">
+                    Sell territories as package
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full price-optional closed-bid-option">
+                <div class="select-box-checkbox">
+                    <input type="checkbox" value="territories-bids" id="sales-package-{{:id}}-territories-bids">
+                    <label for="sales-package-{{:id}}-territories-bids"></label>
+
+                </div>
+                <div class="select-box-item-label">
+                    Allow individual bids on territories
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-item-label box-item-checkbox-list">
+                    <input type="text" placeholder="Enter package name" class="sales-package-name custom-form-input" id="sales-package-{{:id}}-name">
+                </div>
+            </div>
+
+            <div class="select-box-item select-box-item-full">
+                <div class="select-box-item-label box-item-checkbox-list">
+                    <button class="small-button add-sales-package">Add sales package</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endraw %}
+</script>

@@ -1,7 +1,43 @@
 $(function () {
     window.ContentArena = window.ContentArena || {};
 
-    window.ContentArena.LanguagesShort = {
+    ContentArena.Languages = {
+        addLanguageBehaviour( selector ){
+
+            $(selector).each(function () {
+
+                var _this = $(this);
+
+                if (_this.data("chosen") !== undefined ) return;
+
+                $.each(ContentArena.Languages.Short, function(k, v){
+
+                    var option = '<option value=' + k + '>' + v + '</option>';
+                    _this.append(option);
+                });
+
+                _this.chosen();
+
+                _this.chosen().change(function (e, opt) {
+                    if (opt.selected && opt.selected === "all"){
+
+                        _this.html("");
+                        $.each(ContentArena.Languages.Long, function(k, v){
+
+                            var option = '<option value=' + k + '>' + v + '</option>';
+                            _this.append(option);
+                        });
+
+                        _this.trigger("chosen:updated");
+                    }
+                });
+
+            })
+        }
+    };
+
+
+    ContentArena.Languages.Short = {
         "mdr": "Mandarin",
         "es": "Spanish",
         "en": "English",
@@ -16,7 +52,7 @@ $(function () {
         "all" : "Show All"
     };
 
-    window.ContentArena.LanguagesLong = {
+    ContentArena.Languages.Long = {
         "aa": "Afar",
         "af": "Afrikaans",
         "ain": "Ainu",
@@ -483,7 +519,7 @@ $(function () {
         "zun": "Zuni"
     }
 
-    window.ContentArena.Languages = {
+    /*window.ContentArena.Languages = {
         "ab": "Abkhazian",
         "ace": "Achinese",
         "ach": "Acoli",
@@ -1092,7 +1128,7 @@ $(function () {
         "gbz": "Zoroastrian Dari",
         "zu": "Zulu",
         "zun": "Zuni"
-    }
+    }*/
 
 });
 

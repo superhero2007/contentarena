@@ -80,8 +80,6 @@ $(function () {
         distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
         technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " -" + id);
 
-        setupToggler("#technical-delivery-" + id);
-
         $("label", distributionPackage ).each(function(){
             $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
         });
@@ -90,7 +88,7 @@ $(function () {
             $(this).attr("id", "distribution-package-" + id + "-" + $(this).attr("id") )
         });
 
-        addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
+        ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
 
 
     }
@@ -167,7 +165,7 @@ $(function () {
             });
 
 
-            addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
+            ContentArena.Languages.addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
 
         }) ;
 
@@ -190,8 +188,7 @@ $(function () {
         $("#price-sell-box").show();
         $(".package-ready-button").show();
         $("#price-sell-box .select-box-item-container").show();
-        addLanguageBehaviour( mainTarget.find(".has-language-trigger") );
-        setupUnselect();
+        ContentArena.Languages.addLanguageBehaviour( mainTarget.find(".has-language-trigger") );
     }
 
     function fillCategories(){
@@ -669,76 +666,6 @@ $(function () {
 
     }
 
-    function loadRegions(){
-
-        var excluded = $("#territory-excluded"),
-            selected = $("#territory-selected");
-
-        $.ajax({
-            url: hosturl + "v1/feed/test",
-            type: "GET",
-            success: function (response) {
-                countryList = [];
-
-                response.sort(function(a,b){return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);});
-
-                /**
-                 * @param {{ country_code: string }} v
-                 */
-                $.each(response, function(k, v){
-
-                    var option = '<option value=' + v.country_code + '>' + v.name + '</option>';
-
-                    excluded.append(option);
-                    selected.append(option);
-
-                    countryList.push({
-                        label : v.name,
-                        value : v.country_code
-                    })
-                });
-
-                excluded.chosen({ width: "50%"});
-                selected.chosen({ width: "50%"});
-
-                countryList.sort(ContentArena.Api.sortByLabel);
-            }
-        });
-    }
-
-    function addLanguageBehaviour( selector ){
-
-        $(selector).each(function () {
-
-            var _this = $(this);
-
-            if (_this.data("chosen") !== undefined ) return;
-
-            $.each(ContentArena.LanguagesShort, function(k, v){
-
-                var option = '<option value=' + k + '>' + v + '</option>';
-                _this.append(option);
-            });
-
-            _this.chosen({ width: "100%"});
-            
-            _this.chosen().change(function (e, opt) {
-                if (opt.selected && opt.selected === "all"){
-
-                    _this.html("");
-                    $.each(ContentArena.LanguagesLong, function(k, v){
-
-                        var option = '<option value=' + k + '>' + v + '</option>';
-                        _this.append(option);
-                    });
-
-                    _this.trigger("chosen:updated");
-                }
-            });
-
-        })
-    }
-
     function submitform() {
         var url = envhosturl + 'sell/published',
             form = $('#myform');
@@ -802,38 +729,6 @@ $(function () {
         $(".installment-percent").off().mask('000%', {reverse: true});
     }
 
-    function setupToggler( context ){
-        $(".toggler-checkbox", context).change(function () {
-
-            var selectorShow = $(this).attr("show"),
-                selectorHide = $(this).attr("hide");
-
-            $( selectorHide, context ).hide().find("input").val("");
-
-            if (this.checked){
-                $( selectorShow, context ).show();
-            }
-        });
-
-        $(".close-box", context).click(function () {
-            $(context).remove();
-        });
-
-        $(".close-box").show().first().hide();
-    }
-
-    function setupUnselect(){
-        //$(".unselect-others").off();
-        $(".unselect-others").change(function(){
-
-            var _this = this;
-
-            $.each($(this).parent().parent().siblings(), function (k, item) {
-                if ( _this != item ) $(item).find("input").attr("checked", false);
-            });
-        });
-    }
-
     function onSelectAutocompleteTag(event, ui ){
         var terms = split( this.value );
         // remove the current input
@@ -847,6 +742,23 @@ $(function () {
         $(event.target).blur();
 
         return false;
+    }
+
+    function addSalesPackage(){
+        var template = $.templates("#sales-package-template"),
+            salesPackages = $(".sales-package"),
+            id = salesPackages.length + 1,
+            htmlOutput = template.render({id: id });
+
+        if ( id === 1 ){
+            $(".rights-list").last().after(htmlOutput);
+        } else {
+            salesPackages.last().after(htmlOutput);
+        }
+
+        $(".price-optional", "#sales-package-" + id).hide();
+        ContentArena.Utils.addRegionBehaviour("#sales-package-" + id + " .has-region-selector");
+
     }
 
     $(".package-selector").change(function () {
@@ -1190,26 +1102,13 @@ $(function () {
 
     });
     
-    $("#add-sales-package").on('click', function () {
-        var pos = $(".sales-package").length + 1,
-            item = $(".sales-package:last").clone();
-        item.attr("id", "sales-package-"+ pos );
-        item.find("input").val("");
-        item.find("input[type=checkbox]").attr("checked", false);
-        item.insertAfter(".sales-package:last");
-        setupToggler("#sales-package-"+ pos);
-    });
-
-    $(".price-optional").hide();
-
     $(".optional").hide();
 
     /**
      * Initialization
      */
-    loadRegions();
     setupInstallment();
-    setupToggler("#sales-package-1");
+    addSalesPackage();
 
     $(".step1-event-item").hide();
     $(".step1-container").show();
@@ -1223,5 +1122,36 @@ $(function () {
         validateStepTwo();
         console.log(eventData);
     };
+
+    $(document).on("change", ".toggler-checkbox", function () {
+
+        var context = $(this).parent().parent().parent().parent();
+
+        var selectorShow = $(this).attr("show"),
+            selectorHide = $(this).attr("hide");
+
+        $( selectorHide, context ).hide().find("input").val("");
+
+        if (this.checked){
+            $( selectorShow, context ).show();
+        }
+    });
+
+    $(document).on("click", ".close-box", function () {
+        $( $(this).attr("ref") ).remove();
+    });
+
+    $(document).on("change", ".unselect-others", function(){
+
+        var _this = this;
+
+        $.each($(this).parent().parent().siblings(), function (k, item) {
+            if ( _this != item ) $(item).find("input").attr("checked", false);
+        });
+    });
+
+    $(document).on('click',".add-sales-package", function () {
+        addSalesPackage()
+    });
 
 });

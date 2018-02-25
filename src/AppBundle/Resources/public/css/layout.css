@@ -238,15 +238,10 @@ h7 {
 }
 
 .box-item, .select-box-item-label {
-    display: flex;
-    align-items: center;
-    padding-top: 2px;
-    flex-wrap: wrap;
+    display: inline-block;
     text-transform: none;
     width: 100%;
     text-align: left;
-    margin: 4px 0;
-    line-height: 1.2em;
 }
 
 .box-item{
@@ -317,7 +312,17 @@ textarea{
 }
 
 .chosen-container {
-    margin-left: 10px;
+    margin-left: 5px;
+    height: 26px;
+    min-width: 50%;
+}
+.chosen-container-multi .chosen-choices li.search-choice {
+    margin: 2px 5px 2px 0 !important;
+}
+
+input.chosen-search-input {
+    height: 24px !important;
+    margin: 0 !important;
 }
 
 .close-box {
