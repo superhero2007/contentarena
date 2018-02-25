@@ -22,11 +22,11 @@ $(function () {
             if ( this.sport.value !== undefined ) title += this.sport.value;
 
             if ( this.eventType === "database" ){
-                if ( this.category.value !== undefined ) title += " - " + this.category.value;
-                if ( this.tournament.value !== undefined ) title += " - " + this.tournament.value;
+                if ( this.category !== null ) title += " - " + this.category.value;
+                if ( this.tournament !== null ) title += " - " + this.tournament.value;
             } else {
-                if ( this.programName.value !== undefined ) title += " - " + this.programName.value;
-                if ( this.programType.value !== undefined ) title += " - " + this.programType.value;
+                if ( this.programName !== null  ) title += " - " + this.programName.value;
+                if ( this.programType !== null  ) title += " - " + this.programType.value;
             }
 
             return title;
@@ -80,16 +80,17 @@ $(function () {
         distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
         technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " -" + id);
 
-        addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
         setupToggler("#technical-delivery-" + id);
 
         $("label", distributionPackage ).each(function(){
             $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
         });
 
-        $("input", distributionPackage ).each(function(){
+        $("input, select", distributionPackage ).each(function(){
             $(this).attr("id", "distribution-package-" + id + "-" + $(this).attr("id") )
         });
+
+        addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
 
 
     }
@@ -146,6 +147,10 @@ $(function () {
                 $(this).attr("id", "package-" + v + "-" + $(this).attr("id") )
             });
 
+            $("select", "#sell-box-package-" + v ).each(function(){
+                $(this).attr("id", "package-" + v + "-" + $(this).attr("id") )
+            });
+
             $("[right-name$=-cut-available-yes]", "#sell-box-package-" + v ).change(function(){
                 if ( this.checked && $("#distribution-package-" + packagesName[k]).length == 0 ) {
                     addDistributionPackages(v, packagesName[k]);
@@ -160,6 +165,9 @@ $(function () {
                 }
 
             });
+
+
+            addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
 
         }) ;
 
@@ -182,6 +190,7 @@ $(function () {
         $("#price-sell-box").show();
         $(".package-ready-button").show();
         $("#price-sell-box .select-box-item-container").show();
+        addLanguageBehaviour( mainTarget.find(".has-language-trigger") );
         setupUnselect();
     }
 
@@ -700,16 +709,34 @@ $(function () {
     function addLanguageBehaviour( selector ){
 
         $(selector).each(function () {
-            $(this).uls({
-                onSelect: function (language) {
-                    var languageName = $.uls.data.getAutonym(language);
-                    var el = this.$element;
-                    el.before("<div title='language' class='selected-language'>"+languageName+", </div>");
-                },
-                quickList: ['en','fr', 'es']
-            });
-        })
 
+            var _this = $(this);
+
+            if (_this.data("chosen") !== undefined ) return;
+
+            $.each(ContentArena.LanguagesShort, function(k, v){
+
+                var option = '<option value=' + k + '>' + v + '</option>';
+                _this.append(option);
+            });
+
+            _this.chosen({ width: "100%"});
+            
+            _this.chosen().change(function (e, opt) {
+                if (opt.selected && opt.selected === "all"){
+
+                    _this.html("");
+                    $.each(ContentArena.LanguagesLong, function(k, v){
+
+                        var option = '<option value=' + k + '>' + v + '</option>';
+                        _this.append(option);
+                    });
+
+                    _this.trigger("chosen:updated");
+                }
+            });
+
+        })
     }
 
     function submitform() {
@@ -1180,7 +1207,6 @@ $(function () {
     /**
      * Initialization
      */
-    addLanguageBehaviour(".has-language-trigger");
     loadRegions();
     setupInstallment();
     setupToggler("#sales-package-1");

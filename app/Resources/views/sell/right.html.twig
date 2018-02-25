@@ -31,7 +31,7 @@
                 <label for="right-item-{{ item.id }}"></label>
             </div>
             <div class="select-box-item-label">
-                {{ item.formContent|rightItem | raw}}
+                {{ item.formContent|rightItem( item.id ) | raw}}
             </div>
         </div>
     {% endfor %}
