@@ -125,12 +125,13 @@ html{
     color: black;
 }
 
-.step1-event-item input[type="text"], .step1-event-item input[type="file"]  {
+.step1-event-item input[type="text"], .step1-event-item input[type="file"],  .step1-event-item input[type="number"],  .step1-event-item select   {
     border: 1px solid black;
-    width: 50%;
+    width: 50% !important;
     margin: 5px 0;
     padding: 6px 5px;
     font-size: 100%;
+    box-sizing: border-box;
 }
 
 .step1-event-item textarea {

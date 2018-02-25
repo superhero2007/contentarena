@@ -29,9 +29,8 @@ $(function () {
         });
     };
 
-    window.Filter = new Filter();
-
-    Filter = new Filter();
+    window.ContentArena = window.ContentArena || {};
+    window.ContentArena.Filter = new Filter();
 
     function updateFilter() {
 
@@ -46,8 +45,8 @@ $(function () {
             countries.push( $(this).attr('id').replace("country-", "") )
         });
 
-        Filter.countries = countries;
-        Filter.territories = territories;
+        ContentArena.Filter.countries = countries;
+        ContentArena.Filter.territories = territories;
     }
 
     $(".filter").on('click', function () {
@@ -82,9 +81,6 @@ $(function () {
             $(v).removeClass('selected');
             $(v+".is-hidden").hide();
         });
-
-
-
 
         updateFilter();
 

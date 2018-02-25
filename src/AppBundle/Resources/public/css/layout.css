@@ -96,7 +96,7 @@ body {
     color: #ffffff;
 }
 
-input {
+input, select {
     margin: 10px;
     padding: 8px;
     font-family: 'Roboto Condensed', sans-serif;
