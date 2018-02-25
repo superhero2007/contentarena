@@ -207,7 +207,6 @@ $(function () {
         el.attr("disabled", "disabled");
         if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
 
-
         ContentArena.Api.getTournaments( sportId, categoryId ).done(( tournaments ) => {
 
             if ( !silent ) fillCategories();
