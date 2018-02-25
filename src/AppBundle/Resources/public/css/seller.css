@@ -156,9 +156,10 @@ html{
     display: flex;
 }
 .step1-event-item-title-small{
-    width: 23%;
+    width: 24%;
     margin-right: 2%;
     text-align: center;
+    box-sizing: border-box;
 }
 
 button.go-to-rights {

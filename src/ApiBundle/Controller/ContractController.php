@@ -16,7 +16,7 @@ class ContractController extends FOSRestController
     public function postPreviewAction(Request $request)
     {
 
-        $data = json_decode($request->get("content"));
+        $data = json_decode($request->get("json"));
         $contentService = $this->container->get('AppBundle\Service\ContentService');
 
         if ( isset( $data->id ) ) {
@@ -25,7 +25,7 @@ class ContractController extends FOSRestController
                 ->findOneBy(['id' => $data->id]);
         } else {
             $user = $this->getUser();
-            $content = $contentService->createContent($user, $data);
+            $content = $contentService->createContent($user, $request);
         }
 
         $view = $this->view($content);

@@ -66,20 +66,20 @@
                 <div class="step1-event-item database-event-item">
                     <div class="step1-event-subitems-container" id="event-schedule-subitems"></div>
                     <div class="step1-event-subitems-container" id="event-custom-subitems">
-                        <div class="step1-event-item custom-event-item">
-                            <input type="text" class="step1-event-input-content" placeholder="Type" id="event-customType-selector"/>
+                        <div class="step1-event-item database-event-item">
+                            <input type="text" class="step1-event-input-content" placeholder="Fixtures" id="event-customType-selector"/>
                         </div>
-                        <div class="step1-event-item custom-event-item">
+                        <div class="step1-event-item database-event-item">
                             <input type="number"
                                    class="step1-event-input-content"
                                    placeholder="Number of events"
                                    id="event-customAmount-selector"
                                    required/>
                         </div>
-                        <div class="step1-event-item custom-event-item">
+                        <div class="step1-event-item database-event-item">
                             <input type="text" class="step1-event-input-content" placeholder="Start date" id="event-customStart-selector"/>
                         </div>
-                        <div class="step1-event-item custom-event-item">
+                        <div class="step1-event-item database-event-item">
                             <input type="text" class="step1-event-input-content" placeholder="End date" id="event-customEnd-selector"/>
                         </div>
                     </div>
@@ -115,7 +115,10 @@
 
                 {# Duration #}
                 <div class="step1-event-item custom-event-item">
-                    <input type="text" class="step1-event-input-content" placeholder="Duration per episode - hh:mm" id="event-duration-selector"/>
+                    <input type="number"
+                           class="step1-event-input-content"
+                           placeholder="Episode duration in minutes"
+                           id="event-duration-selector"/>
                 </div>
 
                 {# Availability #}

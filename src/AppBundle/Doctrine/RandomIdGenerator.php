@@ -31,6 +31,8 @@ class RandomIdGenerator
         while (true) {
             $id = $this->generateCode();
 
+            //var_dump($id);
+
             $item = $this->em->getRepository($entity_name)->findOneBy(array("customId" => $id));
 
             if (!$item) {

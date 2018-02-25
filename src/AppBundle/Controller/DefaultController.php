@@ -112,15 +112,21 @@ class DefaultController extends Controller
             ->findOneBy(['id' => $request->get("id")]);
 
 
-        $html = $this->renderView('contract/layout.html.twig', [
+        $html = $this->render('contract/layout.html.twig', [
             'user' => $user,
             'content' => $content
         ]);
 
+        return $html;
+
+        /*$html = $this->renderView('contract/layout.html.twig', [
+            'user' => $user,
+            'content' => $content
+        ]);
         return new PdfResponse(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
-        );
+        );*/
     }
 
     /**
