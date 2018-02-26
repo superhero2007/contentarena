@@ -5,6 +5,7 @@
 $(function () {
 
     window.ContentArena = window.ContentArena || {};
+    ContentArena.Model = ContentArena.Model || {};
 
     var Content = function() {
 
@@ -14,6 +15,7 @@ $(function () {
         this.eventType = "database";
         this.programName = null;
         this.programType = null;
+        this.salesPackages = {};
 
         this.getTitle = () => {
 
@@ -39,6 +41,52 @@ $(function () {
         watch(this, "eventType", function(){
             console.log("Updating eventType", arguments);
         });
+
+    };
+
+    ContentArena.Model.SalesPackage = function(){
+
+        this.salesMethod =  null;
+        this.fee = null;
+        this.currency = null;
+        this.id = null;
+        this.name = null;
+        this.territories = null;
+        this.selectedTerritories = [];
+        this.excludedTerritories = [];
+        this.territoryBids = false;
+        this.sellAsPackage = false;
+
+        this.validate = () => {
+
+            var description = "Sales Package " + this.id + ": ",
+                hasErrors = false;
+
+            if ( ! this.currency ) {
+                hasErrors = true;
+                description += "Currency can't be empty. ";
+            }
+
+            if ( ! this.fee ) {
+                hasErrors = true;
+                description += "Fee can't be empty. ";
+            }
+
+            if ( ! this.territories ) {
+                hasErrors = true;
+                description += "Territories can't be empty. ";
+            }
+
+            if ( ! this.salesMethod ) {
+                hasErrors = true;
+                description += "Sales method can't be empty. ";
+            }
+
+            return {
+                hasErrors: hasErrors,
+                description : description
+            }
+        }
 
     };
 
@@ -528,6 +576,33 @@ $(function () {
         return list;
     }
 
+    function validateSalesPackages(){
+
+        var packages = [];
+
+        $(".sales-package").each(function(k, packageContainer){
+
+            var salesPackage = new ContentArena.Model.SalesPackage();
+            var id = $(packageContainer).attr("id").replace("sales-package-","");
+
+            salesPackage.territories = $(".territories:checked", packageContainer).attr("val");
+            salesPackage.salesMethod = $(".sales-method:checked", packageContainer).attr("val");
+            salesPackage.currency = $(".currency:checked", packageContainer).attr("val");
+            salesPackage.id = id;
+            salesPackage.name = $("#sales-package-" + id +"-name").val();
+            salesPackage.fee = $(".fee:visible", packageContainer).val();
+            salesPackage.territoryBids = $("#sales-package-" + id +"-territory-bids").is(":checked");
+            salesPackage.territoryAsPackage = $("#sales-package-" + id +"-territories-as-package").is(":checked");
+
+            if ( salesPackage.territories === "selected") salesPackage.selectedTerritories = $("#sales-package-" + id +"-territory-selected").chosen().val();
+            if ( salesPackage.territories === "excluded") salesPackage.excludedTerritories = $("#sales-package-" + id +"-territory-excluded").chosen().val();
+
+            packages.push(salesPackage);
+        });
+
+        return packages;
+    }
+
     function validateStepOne(){
 
         var eventTypeSelector = $(".event-origin-selector.standard-button-active").attr("ref"),
@@ -614,6 +689,8 @@ $(function () {
 
         var rights = {},
             hasErrors = false,
+            messages = [],
+            messagesContainer = $('<div title="The form is incomplete!" />'),
             total = 0,
             rightItems = [];
 
@@ -647,26 +724,40 @@ $(function () {
 
         if ( total != 100 ) {
             hasErrors = true;
-            $('<div />').html('Total installments must sum 100%!').dialog();
+            messages.push( $('<div class="popup-error-message" />').html('Total installments must sum 100%!') );
         }
+
+        eventData.salesPackages = validateSalesPackages();
+        eventData.salesPackages.forEach(function(salesPackage){
+            var valid = salesPackage.validate();
+
+            if ( valid.hasErrors ){
+                hasErrors = true;
+                messages.push( $('<div class="popup-error-message" />').html(valid.description));
+            }
+
+        });
 
         eventData.rights = rights;
         eventData.rightItems = rightItems;
         eventData.packages = getSelectedPackages();
 
-        eventData.salesMethod = $("input:checked", "#sales-method-selector").val();
-        eventData.fee = $( "#fee-selector").val();
-        eventData.bid = $( "#bid-selector").val();
-        eventData.expiresAt = $("#expiration-date").val();
-        eventData.currency = $("input:checked", "#currency-selector").val();
-        eventData.territories = $("input:checked", "#territories-selector").val();
-
-        if ( eventData.territories === "selected"){
-            eventData.countriesSelected = $("#territory-selected").val();
+        if ( $("#expiration-date").val() === "" ){
+            hasErrors = true;
+            messages.push( $('<div class="popup-error-message" />').html('Please select an expiration date') );
+        } else {
+            eventData.expiresAt =  $("#expiration-date").val();
         }
 
-        if ( eventData.territories === "excluded"){
-            eventData.countriesExcluded = $("#territory-excluded").val();
+        if ( hasErrors ){
+
+            messages.forEach((content)=>{
+                messagesContainer.append(content);
+            });
+
+            messagesContainer.dialog({
+                minWidth: 400
+            });
         }
 
         return !hasErrors;
@@ -765,6 +856,7 @@ $(function () {
 
         $(".price-optional", "#sales-package-" + id).hide();
         ContentArena.Utils.addRegionBehaviour("#sales-package-" + id + " .has-region-selector");
+        //ContentArena.Content.salesPackages[id] = new SalesPackage();
 
     }
 

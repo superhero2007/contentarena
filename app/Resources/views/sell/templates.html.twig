@@ -35,10 +35,10 @@
                 <div class="select-box-checkbox">
                     <input type="checkbox"
                            id="sales-package-{{:id}}-pre-defined-fee"
-                           value="pre-defined-fee"
+                           val="fee"
                            show=".predefined-fee-option"
                            hide=".price-optional"
-                           class="unselect-others toggler-checkbox" />
+                           class="unselect-others toggler-checkbox sales-method" />
                     <label for="sales-package-{{:id}}-pre-defined-fee"></label>
                 </div>
                 <div class="select-box-item-label">
@@ -48,12 +48,13 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="open-bid"
-                           id="sales-package-{{:id}}--open-bid"
+                    <input type="checkbox"
+                           val="open-bid"
+                           id="sales-package-{{:id}}-open-bid"
                            show=".bid-option"
                            hide=".price-optional"
-                           class="unselect-others toggler-checkbox" />
-                    <label for="sales-package-{{:id}}--open-bid"></label>
+                           class="unselect-others toggler-checkbox sales-method" />
+                    <label for="sales-package-{{:id}}-open-bid"></label>
                 </div>
                 <div class="select-box-item-label">
                     Open bid
@@ -62,12 +63,13 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="closed-bid"
-                           id="sales-package-{{:id}}--closed-bid"
+                    <input type="checkbox"
+                           val="closed-bid"
+                           id="sales-package-{{:id}}-closed-bid"
                            show=".bid-option, .closed-bid-option"
                            hide=".price-optional"
-                           class="unselect-others toggler-checkbox" />
-                    <label for="sales-package-{{:id}}--closed-bid"></label>
+                           class="unselect-others toggler-checkbox sales-method" />
+                    <label for="sales-package-{{:id}}-closed-bid"></label>
                 </div>
                 <div class="select-box-item-label">
                     Closed bid
@@ -85,7 +87,7 @@
 
                 </div>
                 <div class="select-box-item-label">
-                    <input type="text" id="sales-package-{{:id}}-fee" class="small-input custom-form-input " >
+                    <input type="number" id="sales-package-{{:id}}-fee" class="small-input custom-form-input fee" >
                     <label for="sales-package-{{:id}}-fee"></label>
                 </div>
             </div>
@@ -99,17 +101,19 @@
 
                 </div>
                 <div class="select-box-item-label">
-                    <input type="text" id="sales-package-{{:id}}-minimum-bid" class="small-input custom-form-input" >
+                    <input type="number" id="sales-package-{{:id}}-minimum-bid" class="small-input custom-form-input fee" >
                     <label for="sales-package-{{:id}}-minimum-bid"></label>
                 </div>
             </div>
 
         </div>
 
-        <div class="box-item price-optional predefined-fee-option bid-option" id="fee-selector">
+        <div class="box-item price-optional predefined-fee-option bid-option">
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="USD" class="unselect-others" id="sales-package-{{:id}}-currency-usd">
+                    <input type="checkbox"
+                           val="USD"
+                           class="currency unselect-others" id="sales-package-{{:id}}-currency-usd">
                     <label for="sales-package-{{:id}}-currency-usd"></label>
                 </div>
                 <div class="select-box-item-label">
@@ -119,7 +123,9 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="EUR" class="unselect-others" id="sales-package-{{:id}}-currency-eur">
+                    <input type="checkbox"
+                           val="EUR"
+                           class="currency unselect-others" id="sales-package-{{:id}}-currency-eur">
                     <label for="sales-package-{{:id}}-currency-eur"></label>
                 </div>
                 <div class="select-box-item-label">
@@ -135,7 +141,9 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="worldwide"  class="unselect-others" id="sales-package-{{:id}}-worldwide-selector">
+                    <input type="checkbox"
+                            val="worldwide"
+                            class="territories unselect-others" id="sales-package-{{:id}}-worldwide-selector">
                     <label for="sales-package-{{:id}}-worldwide-selector"></label>
                 </div>
                 <div class="select-box-item-label">
@@ -145,7 +153,9 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="selected" class="unselect-others" id="sales-package-{{:id}}-selected-territory-selector">
+                    <input type="checkbox"
+                           val="selected"
+                           class="territories unselect-others" id="sales-package-{{:id}}-selected-territory-selector">
                     <label for="sales-package-{{:id}}-selected-territory-selector"></label>
                 </div>
                 <div class="select-box-item-label">
@@ -155,7 +165,7 @@
 
             <div class="select-box-item select-box-item-full">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="excluded" class="unselect-others" id="sales-package-{{:id}}-excluded-territory-selector">
+                    <input type="checkbox" val="excluded" class="territories unselect-others" id="sales-package-{{:id}}-excluded-territory-selector">
                     <label for="sales-package-{{:id}}-excluded-territory-selector"></label>
                 </div>
                 <div class="select-box-item-label">
@@ -181,8 +191,8 @@
 
             <div class="select-box-item select-box-item-full price-optional closed-bid-option">
                 <div class="select-box-checkbox">
-                    <input type="checkbox" value="territories-bids" id="sales-package-{{:id}}-territories-bids">
-                    <label for="sales-package-{{:id}}-territories-bids"></label>
+                    <input type="checkbox" value="territories-bids" id="sales-package-{{:id}}-territory-bids">
+                    <label for="sales-package-{{:id}}-territory-bids"></label>
 
                 </div>
                 <div class="select-box-item-label">

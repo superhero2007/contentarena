@@ -126,14 +126,14 @@ class ContentService
         }
         if ( isset($data->duration) ) $content->setDuration($data->duration->value);
         if ( isset($data->description) ) $content->setDescription($data->description->value);
-        if ( isset($data->fee) ) $content->setFee($data->fee);
-        if ( isset($data->bid) ) $content->setBid($data->bid);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
         if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
         if ( isset($data->programType) ) $content->setProgramType($data->programType->value);
         if ( isset($data->programName) ) $content->setProgramName($data->programName->value);
         if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
+
+        if ( isset($data->salesPackages) ) $content->setSalesPackages($data->salesPackages);
 
         if ( isset($data->packages) ){
 
@@ -151,7 +151,7 @@ class ContentService
 
         }
 
-        if ( isset($data->countriesSelected) ){
+        /*if ( isset($data->countriesSelected) ){
 
             $countriesSelected = array();
             foreach ( $data->countriesSelected as $countryCode ){
@@ -180,9 +180,8 @@ class ContentService
             }
             $content->setCountriesExcluded($countriesExcluded);
 
-        }
+        }*/
 
-        if ( isset($data->salesMethod) ) $content->setSalesMethod($data->salesMethod);
         if ( isset($data->availability) ){
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
         }

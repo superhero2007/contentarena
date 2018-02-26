@@ -43,30 +43,9 @@ class Content
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="fee", type="string", length=20, nullable=true)
-     */
-    private $fee;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="bid", type="string", length=20, nullable=true)
-     */
-    private $bid;
-
-    /**
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
      */
     private $expiresAt;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salesMethod", type="string", length=255, nullable=true)
-     */
-    private $salesMethod;
 
     /**
      * @var string
@@ -127,29 +106,16 @@ class Content
     /**
      * @var array
      *
+     * @ORM\Column(name="sales_packages", type="json_array", nullable=true)
+     */
+    private $salesPackages;
+
+    /**
+     * @var array
+     *
      * @ORM\Column(name="links", type="array", length=255, nullable=true)
      */
     private $links;
-
-    /**
-     * Many Content have Many Countries.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
-     * @ORM\JoinTable(name="content_selected_countries",
-     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")}
-     *      )
-     */
-    private $countriesSelected;
-
-    /**
-     * Many Content have Many Countries.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
-     * @ORM\JoinTable(name="content_excluded_countries",
-     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")}
-     *      )
-     */
-    private $countriesExcluded;
 
     /**
      * @var string
@@ -234,8 +200,6 @@ class Content
         $this->rightsItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rightsPackage = new \Doctrine\Common\Collections\ArrayCollection();
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->countriesSelected = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->countriesExcluded = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -294,54 +258,6 @@ class Content
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set fee
-     *
-     * @param string $fee
-     *
-     * @return Content
-     */
-    public function setFee($fee)
-    {
-        $this->fee = $fee;
-
-        return $this;
-    }
-
-    /**
-     * Get fee
-     *
-     * @return string
-     */
-    public function getFee()
-    {
-        return $this->fee;
-    }
-
-    /**
-     * Set salesMethod
-     *
-     * @param string $salesMethod
-     *
-     * @return Content
-     */
-    public function setSalesMethod($salesMethod)
-    {
-        $this->salesMethod = $salesMethod;
-
-        return $this;
-    }
-
-    /**
-     * Get salesMethod
-     *
-     * @return string
-     */
-    public function getSalesMethod()
-    {
-        return $this->salesMethod;
     }
 
     /**
@@ -593,22 +509,6 @@ class Content
     }
 
     /**
-     * @return string
-     */
-    public function getBid()
-    {
-        return $this->bid;
-    }
-
-    /**
-     * @param string $bid
-     */
-    public function setBid($bid)
-    {
-        $this->bid = $bid;
-    }
-
-    /**
      * @return mixed
      */
     public function getExpiresAt()
@@ -707,38 +607,6 @@ class Content
     /**
      * @return mixed
      */
-    public function getCountriesSelected()
-    {
-        return $this->countriesSelected;
-    }
-
-    /**
-     * @param mixed $countriesSelected
-     */
-    public function setCountriesSelected($countriesSelected)
-    {
-        $this->countriesSelected = $countriesSelected;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCountriesExcluded()
-    {
-        return $this->countriesExcluded;
-    }
-
-    /**
-     * @param mixed $countriesExcluded
-     */
-    public function setCountriesExcluded($countriesExcluded)
-    {
-        $this->countriesExcluded = $countriesExcluded;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getSportCategory()
     {
         return $this->sportCategory;
@@ -767,6 +635,23 @@ class Content
     {
         $this->rightsPackage = $rightsPackage;
     }
+
+    /**
+     * @return array
+     */
+    public function getSalesPackages()
+    {
+        return $this->salesPackages;
+    }
+
+    /**
+     * @param array $salesPackages
+     */
+    public function setSalesPackages($salesPackages)
+    {
+        $this->salesPackages = $salesPackages;
+    }
+
 
 
 }

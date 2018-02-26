@@ -304,3 +304,7 @@ input[type="checkbox"]:checked:disabled + label {
     background-image: linear-gradient(#eee 1%, #fff 15%);
     cursor: text;
 }
+
+.step1-event-subitems-container {
+    margin-left: 25px;
+}

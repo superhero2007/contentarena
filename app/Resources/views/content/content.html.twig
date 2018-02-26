@@ -13,9 +13,15 @@
 
 	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
 
-    {{ content.sport }}
+    {% if content.salesPackages | length > 0 %}
 
-	<a hred="#">Download content information and term sheet</a>
+        {% for salespackages in content.salesPackages %}
+
+            {{ include('content/salesPackage.html.twig', { 'package' : salespackages }) }}
+
+        {% endfor %}
+
+    {% endif %}
 
 
 {% endblock main_content %}

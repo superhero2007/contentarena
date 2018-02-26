@@ -494,3 +494,7 @@ input#inputSearch {
     box-sizing: border-box;
     color: darkslategrey;
 }
+
+.popup-error-message{
+    margin: 10px 0 ;
+}
