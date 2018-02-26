@@ -78,7 +78,7 @@ $(function () {
         distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
         technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
         distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
-        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " -" + id);
+        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " - " + id);
 
         $("label", distributionPackage ).each(function(){
             $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
@@ -86,6 +86,14 @@ $(function () {
 
         $("input, select", distributionPackage ).each(function(){
             $(this).attr("id", "distribution-package-" + id + "-" + $(this).attr("id") )
+        });
+
+        $("label", technicalDelivery ).each(function(){
+            $(this).attr("for", "technical-delivery-" + id + "-" + $(this).attr("for") )
+        });
+
+        $("input, select", technicalDelivery ).each(function(){
+            $(this).attr("id", "technical-delivery-" + id + "-" + $(this).attr("id") )
         });
 
         ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
