@@ -6,8 +6,6 @@ $(function () {
 
     window.ContentArena = window.ContentArena || {};
 
-    //$( "#event-customAmount-selector" )
-
     $("#add-more-fixtures").on("click", function(){
 
         var template = $.templates("#custom-fixture-template"),

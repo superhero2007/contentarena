@@ -178,8 +178,13 @@ input.tag-member-input {
     min-width: 300px;
 }
 
-.step1-event-subitems-container {
+.custom-template-item {
     margin-left: 30px;
+    width: 60%;
+}
+
+.custom-template-item input {
+    margin-right: 2px !important;
 }
 
 .go-to-rights {

@@ -47,7 +47,6 @@ $(function () {
     var data = {},
         selectorCounter = 0,
         mainPackage = null,
-        countryList = [],
         rounds = {},
         eventData = new Content(),
         yearArray = Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }});
@@ -236,7 +235,7 @@ $(function () {
                         $(id).val("").removeClass("custom-input");
                     });
                     $("#event-schedule-subitems").html("");
-                    $("#event-custom-subitems").children().hide;
+                    $(".custom-template-item").hide();
                 }
             }).focus(function(){
                 $(this).autocomplete("search", "");
@@ -290,7 +289,7 @@ $(function () {
                     fillSeasons();
                     $("#event-season-selector").val("").removeClass("custom-input");;
                     $("#event-schedule-subitems").html("");
-                    $("#event-custom-subitems").children().hide();
+                    $(".custom-template-item").children().hide();
                 }
             }).focus(function(){
                 $(this).autocomplete("search", "");
@@ -366,12 +365,12 @@ $(function () {
                         // Add new functionality
                         if ( selected === "new" ){
                             addCustomFn(event.target, "Enter season name");
-                            $("#event-custom-subitems").children().show();
+                            $(".custom-template-item").show();
 
                             return;
                         }
 
-                        $("#event-custom-subitems").children().hide();
+                        $(".custom-template-item").hide();
 
                         id = selected.replace(/\:/g, '-');
                         source = $.grep(source, function (el, i) {
@@ -510,6 +509,25 @@ $(function () {
         return id.replace(/\-/g, ':');
     }
 
+    function getSelectedPackages() {
+        var list = [];
+
+        $(".package-selector:checked").each(function(k,v){
+            list.push($(v).attr("id").split("-")[1] );
+        });
+
+        return list;
+    }
+
+    function getSelectedPackagesName() {
+        var list = [];
+        $(".package-selector:checked").each(function(k,v){
+            list.push($(v).attr("name").split("-")[1]);
+        });
+
+        return list;
+    }
+
     function validateStepOne(){
 
         var eventTypeSelector = $(".event-origin-selector.standard-button-active").attr("ref"),
@@ -526,7 +544,7 @@ $(function () {
         $( eventTypeSelector ).each(function(k, item){
 
             var itemInput = $(item).find(".step1-event-input-content"),
-                required = itemInput.attr("required"),
+                required = itemInput.is(":visible") && itemInput.attr("required"),
                 name = (itemInput.attr("id")) ? itemInput.attr("id").split("-")[1] : false,
                 value,
                 externalId;
@@ -590,25 +608,6 @@ $(function () {
         }
 
         return !hasErrors;
-    }
-
-    function getSelectedPackages() {
-        var list = [];
-
-        $(".package-selector:checked").each(function(k,v){
-            list.push($(v).attr("id").split("-")[1] );
-        });
-
-        return list;
-    }
-
-    function getSelectedPackagesName() {
-        var list = [];
-        $(".package-selector:checked").each(function(k,v){
-            list.push($(v).attr("name").split("-")[1]);
-        });
-
-        return list;
     }
 
     function validateStepTwo(){
@@ -704,7 +703,7 @@ $(function () {
         if ( tournament ) addCustomFn("#event-tournament-selector", "Enter Tournament");
         addCustomFn("#event-season-selector", "Enter Season");
         $("#event-schedule-subitems").html("");
-        $("#event-custom-subitems").children().show();
+        $(".custom-template-item").show();
     }
 
     function addOrdinal( n ){
@@ -873,11 +872,6 @@ $(function () {
             if ( $(item).hasClass('all-type') ) $(item).find("input").attr("checked", false);
         });
     });
-
-    /**
-     * Renders all the tooltips
-     */
-    $( document ).tooltip();
 
     /**
      * Fills the sport selector
@@ -1109,7 +1103,7 @@ $(function () {
     $(".database-event-item").show();
     $(".common-event-item").show();
     $(".package-ready-button").hide();
-    $("#event-custom-subitems").children().hide();
+    $(".custom-template-item").hide();
 
     window.test = function () {
         validateStepOne();
@@ -1147,5 +1141,10 @@ $(function () {
     $(document).on('click',".add-sales-package", function () {
         addSalesPackage()
     });
+
+    /**
+     * Renders all the tooltips
+     */
+    $( document ).tooltip();
 
 });
