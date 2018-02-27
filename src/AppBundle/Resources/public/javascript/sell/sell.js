@@ -221,6 +221,10 @@ $(function () {
 
 
             ContentArena.Languages.addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
+            $( "#sell-box-package-" + v +" .has-calendar").each(function (k, element) {
+                $("#" + $(element).attr("id")).datepicker();
+            })
+
 
         }) ;
 
@@ -244,6 +248,9 @@ $(function () {
         $(".package-ready-button").show();
         $("#price-sell-box .select-box-item-container").show();
         ContentArena.Languages.addLanguageBehaviour( mainTarget.find(".has-language-trigger") );
+        mainTarget.find(".has-calendar").each(function (k, element) {
+            $("#" + $(element).attr("id")).datepicker();
+        })
     }
 
     function fillCategories(){
