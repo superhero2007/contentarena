@@ -315,6 +315,18 @@ $(function () {
 
         ContentArena.Api.getTournaments( sportId, categoryId ).done(( tournaments ) => {
 
+            if ( sportId === "sr:sport:5"){
+
+                tournaments = tournaments.filter(function(tournament){
+                    return (tournament.label.search("Double") === -1);
+                });
+
+                tournaments = tournaments.map(function (tournament) {
+                    tournament.label = tournament.label.replace(" Singles", "");
+                    return tournament;
+                });
+            }
+
             if ( !silent ) fillCategories();
 
             el.attr("disabled", null);
