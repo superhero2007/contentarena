@@ -80,7 +80,8 @@ class RightsItemContentFixtures extends Fixture
             array("Distributed with Clips - Yes", "Yes", "Distributed with Clips", ""),
             array("Distributed with Clips - No", "No", "", ""),
 
-
+            array("Distributed with Live Signal - Yes", "Yes", "Distributed with Live Signal", ""),
+            array("Distributed with Live Signal - No", "No", "", ""),
 
 
 

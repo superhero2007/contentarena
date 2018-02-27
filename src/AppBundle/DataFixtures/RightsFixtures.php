@@ -156,6 +156,13 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                 "News access"
             ), "", false, false, false),
 
+            array("Distributed with Live Signal", "Main Information", array(
+                "Distributed with Live Signal - Yes",
+                "Distributed with Live Signal - No",
+            ), array(
+                "News access", "Clips", "Highlights"
+            ), "", false, false, false),
+
 
         );
 
