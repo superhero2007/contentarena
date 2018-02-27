@@ -412,9 +412,7 @@ $(function () {
 
                         // Add new functionality
                         if ( selected === "new" ){
-                            addCustomFn(event.target, "Enter season name");
-                            $(".custom-template-item").show();
-
+                            addCustomTemplate( false, false, false );
                             return;
                         }
 
@@ -790,11 +788,15 @@ $(function () {
     function addCustomTemplate( sport, category, tournament){
 
         if ( sport ) addCustomFn("#event-sport-selector", "Enter sport name");
+
+        if ( eventData.eventType === "custom" ) return;
+
         if ( category ) addCustomFn("#event-category-selector", "Enter Country/Category");
         if ( tournament ) addCustomFn("#event-tournament-selector", "Enter Tournament");
         addCustomFn("#event-season-selector", "Enter Season");
         $("#event-schedule-subitems").html("");
         $(".custom-template-item").show();
+        $(".custom-template-item").children().show();
     }
 
     function addOrdinal( n ){
