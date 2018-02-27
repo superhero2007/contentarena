@@ -180,7 +180,7 @@ $(function () {
 
             if ( multiPackage ){
                 mainItems.push(".has-package-"+v+".is-collectively[group='Main Information']");
-                $(singleItems.join(", "), ".rights-list").each(function(){
+                $(".has-package-"+v+":not(.is-collectively)[group='Main Information']", ".rights-list").each(function(){
                     var test = $(this).clone();
                     $("#sell-box-package-"+ v +" .seller-box-content").append(test);
                 });
