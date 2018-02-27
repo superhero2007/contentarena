@@ -95,6 +95,7 @@ $(function () {
     var data = {},
         selectorCounter = 0,
         mainPackage = null,
+        fullSportsLoaded,
         rounds = {},
         eventData = new Content(),
         yearArray = Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }});
@@ -986,16 +987,10 @@ $(function () {
         });
     });
 
-    $( "#event-sport-selector" ).parent().find("i").show();
-
     /**
      * Fills the sport selector
      */
-    ContentArena.Api.getSports().done( (sports ) => {
-        data.sports = sports;
-        $( "#event-sport-selector" ).autocomplete( "option", "source", data.sports );
-        $( "#event-sport-selector" ).parent().find("i").hide();
-    });
+    ContentArena.Api.getSports().done( (sports ) => data.sports = sports );
 
     $( "#event-sport-selector" ).autocomplete({
         source: [
@@ -1013,6 +1008,16 @@ $(function () {
             { label : "Show All", value: "all"}
         ],
         minLength: 0,
+        delay: 500,
+        search : function(event, ui){
+
+            if ( !fullSportsLoaded && $( "#event-sport-selector" ).val() !== ""){
+                $( "#event-sport-selector" ).autocomplete( "option", "source", data.sports );
+                fullSportsLoaded = true;
+            }
+
+
+        },
         select: function( event, ui ) {
             event.preventDefault();
 
