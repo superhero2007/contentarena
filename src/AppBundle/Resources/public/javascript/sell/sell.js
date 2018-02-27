@@ -967,10 +967,16 @@ $(function () {
         });
     });
 
+    $( "#event-sport-selector" ).parent().find("i").show();
+
     /**
      * Fills the sport selector
      */
-    ContentArena.Api.getSports().done( (sports ) => data.sports = sports );
+    ContentArena.Api.getSports().done( (sports ) => {
+        data.sports = sports;
+        $( "#event-sport-selector" ).autocomplete( "option", "source", data.sports );
+        $( "#event-sport-selector" ).parent().find("i").hide();
+    });
 
     $( "#event-sport-selector" ).autocomplete({
         source: [
