@@ -59,9 +59,9 @@ class RightsItemContent
     /**
      * @var boolean
      *
-     * @ORM\Column(name="not_optional", type="boolean")
+     * @ORM\Column(name="not_optional", type="boolean", )
      */
-    private $notOptional;
+    private $notOptional = false;
 
 
     public function __construct() {
