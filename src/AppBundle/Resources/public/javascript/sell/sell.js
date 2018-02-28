@@ -103,6 +103,99 @@ $(function () {
     yearArray .push({label: "To be announced", value : 0 });
     yearArray.reverse();
 
+    function collectRights (container){
+
+        var rights = {};
+
+        container.find("input:checked").each(function (k, el) {
+            var rightId = $(el).attr("right-id"),
+                rightItemId = $(el).attr("right-item-id");
+
+            if ( !rights[rightId] ){
+                rights[rightId] = new ContentArena.Model.Right();
+                rights[rightId].id = rightId;
+            }
+
+            if ( !rights[rightId].rightItems[rightItemId] ){
+                rights[rightId].rightItems[rightItemId]= new ContentArena.Model.RightItem();
+                rights[rightId].rightItems[rightItemId].id = rightItemId;
+            }
+
+            $(el).parent().parent().find("input:not([type='checkbox']):not(.chosen-search-input), textarea, select").each(function (key, element) {
+                rights[rightId].rightItems[rightItemId].inputs.push( $(element).val() );
+
+            })
+
+        });
+
+        return rights;
+    }
+
+    function collectRightPackages(container, name){
+
+        var rightsPackage = new ContentArena.Model.RightPackage();
+        rightsPackage.name = name;
+        rightsPackage.rights = collectRights(container);
+        return rightsPackage;
+    }
+
+    function collectDistributionPackages(container, name){
+
+        var distributionPackage = new ContentArena.Model.DistributionPackage();
+        distributionPackage.name = name;
+        distributionPackage.production = collectRights(container);
+        distributionPackage.technical = collectRights($("#technical-delivery-" + name));
+        return distributionPackage;
+    }
+
+    function collectPackages (){
+
+        var packages = {
+                distributionPackages : [],
+                rightPackages : []
+            },
+            selectedPackages = getSelectedFullPackages(),
+            multiple = $("#main-multiple-package"),
+            single = $("#main-single-package");
+
+        if ( multiple.is(":visible") ){
+            packages.rightPackages.push( collectRightPackages(multiple, "Collectively") );
+        }
+
+        if ( single.is(":visible") ){
+            packages.rightPackages.push( collectRightPackages(single, "Main Information") );
+        }
+
+        if ( selectedPackages.length > 1 ){
+            selectedPackages.forEach(function (pack) {
+                packages.rightPackages.push( collectRightPackages( $("#sell-box-package-" + pack.id ), pack.name ) );
+            })
+        }
+
+        $(".production-standards:visible").each(function(k, el){
+            var name = $(el).attr("id").replace("distribution-package-", "");
+            packages.distributionPackages.push( collectDistributionPackages( $(el), name ) )
+        });
+
+        return packages;
+    }
+
+    function getSelectedFullPackages() {
+        var list = [];
+
+        $(".package-selector:checked").each(function(k,v){
+
+            var pack = {
+                id : $(v).attr("id").split("-")[1],
+                name : $(v).attr("name").split("-")[1]
+            };
+
+            list.push(pack);
+        });
+
+        return list;
+    }
+
     function split( val ) {
         return val.split( /,\s*/ );
     }
@@ -121,6 +214,11 @@ $(function () {
         $(".has-package-"+packageId+"[group='Production standards']", ".rights-list").each(function(){
             var test = $(this).clone();
             distributionPackage.find(".seller-box-content").append(test);
+        });
+
+        $(".has-package-"+packageId+"[group='Technical delivery']", ".rights-list").each(function(){
+            var test = $(this).clone();
+            technicalDelivery.find(".seller-box-content").append(test);
         });
 
         distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
@@ -706,8 +804,11 @@ $(function () {
     function validateStepTwo(){
 
         var rights = {},
+            rightPackages= [],
+            distributionPackages =[],
             hasErrors = false,
             messages = [],
+            packagesInfo = collectPackages(),
             messagesContainer = $('<div title="The form is incomplete!" />'),
             total = 0,
             rightItems = [];
@@ -756,7 +857,8 @@ $(function () {
 
         });
 
-        eventData.rights = rights;
+        eventData.rights = packagesInfo.rightPackages;
+        eventData.distributionPackages = packagesInfo.distributionPackages;
         eventData.rightItems = rightItems;
         eventData.packages = getSelectedPackages();
 
@@ -1229,11 +1331,11 @@ $(function () {
     $(".package-ready-button").hide();
     $(".custom-template-item").hide();
 
-    window.test = function () {
-        validateStepOne();
-        validateStepTwo();
-        console.log(eventData);
-    };
+    ContentArena.Test = ContentArena.Test || {};
+    ContentArena.Test.collectPackages = collectPackages;
+    ContentArena.Test.validateStepOne = validateStepOne;
+    ContentArena.Test.validateStepTwo = validateStepTwo;
+    ContentArena.Test.logEventData = function(){ console.log( eventData )};
 
     $(document).on("change", ".toggler-checkbox", function () {
 

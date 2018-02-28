@@ -9,6 +9,7 @@
         <div class="select-box-item select-box-item-full all-type">
             <div class="select-box-checkbox">
                 <input type="checkbox"
+                       right-id="all-{{ right.id }}"
                        id="all-{{ right.id }}"
                        class="unselect-others">
                 <label for="all-{{ right.id }}"></label>
@@ -26,9 +27,10 @@
                         right-id="{{ right.id }}"
                         right-item-id="{{ item.id }}"
                         right-name="{{ item.name | kebab }}"
+                        {% if item.notOptional == true %}checked{% endif %}
                         id="right-item-{{ item.id }}"
                         type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
-                <label for="right-item-{{ item.id }}"></label>
+                {% if item.notOptional == false %}<label for="right-item-{{ item.id }}"></label>{% endif %}
             </div>
             <div class="select-box-item-label">
                 {{ item.formContent|rightItem( item.id ) | raw}}

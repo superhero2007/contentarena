@@ -182,6 +182,21 @@ class Content
     private $rightsItems;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="rights", type="json_array", nullable=true)
+     */
+    private $rights;
+
+    /**
+     *
+     * @var array
+     *
+     * @ORM\Column(name="distribution_packages", type="json_array", nullable=true)
+     */
+    private $distributionPackages;
+
+    /**
      * Many Content have Many RightsPackage.
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage")
      * @ORM\JoinTable(name="content_rights_package",
@@ -650,6 +665,38 @@ class Content
     public function setSalesPackages($salesPackages)
     {
         $this->salesPackages = $salesPackages;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRights()
+    {
+        return $this->rights;
+    }
+
+    /**
+     * @param array $rights
+     */
+    public function setRights($rights)
+    {
+        $this->rights = $rights;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDistributionPackages()
+    {
+        return $this->distributionPackages;
+    }
+
+    /**
+     * @param array $distributionPackages
+     */
+    public function setDistributionPackages($distributionPackages)
+    {
+        $this->distributionPackages = $distributionPackages;
     }
 
 

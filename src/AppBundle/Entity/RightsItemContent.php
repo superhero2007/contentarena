@@ -56,6 +56,13 @@ class RightsItemContent
      */
     private $description;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="not_optional", type="boolean")
+     */
+    private $notOptional;
+
 
     public function __construct() {
         $this->rights = new ArrayCollection();
@@ -160,6 +167,23 @@ class RightsItemContent
     {
         $this->rights = $rights;
     }
+
+    /**
+     * @return bool
+     */
+    public function isNotOptional()
+    {
+        return $this->notOptional;
+    }
+
+    /**
+     * @param bool $notOptional
+     */
+    public function setNotOptional($notOptional)
+    {
+        $this->notOptional = $notOptional;
+    }
+
 
 
 

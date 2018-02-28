@@ -107,7 +107,7 @@ class ContentService
             $content->setSeason($seasons);
         }
 
-        if ( isset($data->rightItems) ){
+        /*if ( isset($data->rightItems) ){
 
             $rightItems = array();
 
@@ -123,7 +123,7 @@ class ContentService
             }
 
             $content->setRightsItems($rightItems);
-        }
+        }*/
         if ( isset($data->duration) ) $content->setDuration($data->duration->value);
         if ( isset($data->description) ) $content->setDescription($data->description->value);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
@@ -134,6 +134,8 @@ class ContentService
         if ( isset($data->website) ) $content->setWebsite($data->website);
 
         if ( isset($data->salesPackages) ) $content->setSalesPackages($data->salesPackages);
+        if ( isset($data->rights) ) $content->setRights($data->rights);
+        if ( isset($data->distributionPackages) ) $content->setDistributionPackages($data->distributionPackages);
 
         if ( isset($data->packages) ){
 

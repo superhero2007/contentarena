@@ -163,6 +163,30 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
                 "News access", "Clips", "Highlights"
             ), "", false, false, false),
 
+            array("Distribution Method", "Technical delivery", array(
+                "Distribution Method - IP",
+                "Distribution Method - Fiber",
+                "Distribution Method - FTP Server",
+                "Distribution Method - Satellite"
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+            array("Technical Delivery Time", "Technical delivery", array(
+                "Technical Delivery Time",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+            array("Technical Fee", "Technical delivery", array(
+                "Technical Fee",
+            ), array(
+                "Live transmission","Delayed transmission", "News access", "Highlights", "Program", "Live betting", "Clips", "Archive"
+            ), "", false, false, false),
+
+
+
+
 
         );
 
