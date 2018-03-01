@@ -44,7 +44,7 @@
                 {% endif %}
             </div>
             <div class="content-column content-column-company">
-                <div><a id="opener" href="#"><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</a></div>
+                <div><a id="view-seller" href="#"><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</a></div>
                 <div class="content-expires">Offer deadline: {{ date( content.expiresAt|date ).diff( date("now") ).days }} days</div>
             </div>
         </div>
@@ -130,7 +130,7 @@
 </div>
 
 <!-- Modal -->
-<div id="dialog" title="{{ content.company.displayName | default("") }}" class="uk-text-left">
+<div id="seller-dialog" title="{{ content.company.displayName | default("") }}" class="uk-text-left is-hidden">
 
     <img src="" class="text-center">
     <span>Company Description</span>
@@ -167,7 +167,7 @@
         <div class="uk-width-1-3">
             <span>Country Of Incorporation</span>
             <div type="text" class="full-width modal-thin-div">
-
+                {{ company.country | default(" ") }}
             </div>
         </div>
     </div>
