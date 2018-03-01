@@ -1,4 +1,4 @@
-<div class="select-box-item-container right-item {% if right.collectively %}is-collectively{% endif %} {% for id in right.packagesIds %}has-package-{{ id }} {% endfor %}{% if right.packagesIds|length > 1 %} has-many-packages{% endif %}"
+<div class="{% if right.hidden %} optional to-show-{{ right.id }}{% endif %} select-box-item-container right-item {% if right.collectively %}is-collectively{% endif %} {% for id in right.packagesIds %}has-package-{{ id }} {% endfor %}{% if right.packagesIds|length > 1 %} has-many-packages{% endif %}"
      group="{{ right.group }}">
 
     <div class="select-box-item-title" {% if right.definition %}title="{{ right.definition }}"{% endif %}>
@@ -9,6 +9,7 @@
         <div class="select-box-item select-box-item-full all-type">
             <div class="select-box-checkbox">
                 <input type="checkbox"
+                       right-id="all-{{ right.id }}"
                        id="all-{{ right.id }}"
                        class="unselect-others">
                 <label for="all-{{ right.id }}"></label>
@@ -26,9 +27,13 @@
                         right-id="{{ right.id }}"
                         right-item-id="{{ item.id }}"
                         right-name="{{ item.name | kebab }}"
+                        {% if item.notOptional == true %}checked{% endif %}
                         id="right-item-{{ item.id }}"
-                        type="checkbox" class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %}">
-                <label for="right-item-{{ item.id }}"></label>
+                        type="checkbox"
+                        show="{% if item.children is defined %}{% for right in item.children %}.to-show-{{ right.id }}{% if not loop.last %}, {% endif %} {% endfor %}{% endif %}"
+                        hide=".optional"
+                        class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %} {% if item.children is defined %}toggler-checkbox{% endif %}">
+                {% if item.notOptional == false %}<label for="right-item-{{ item.id }}"></label>{% endif %}
             </div>
             <div class="select-box-item-label">
                 {{ item.formContent|rightItem( item.id ) | raw}}

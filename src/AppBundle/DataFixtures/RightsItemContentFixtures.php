@@ -80,9 +80,17 @@ class RightsItemContentFixtures extends Fixture
             array("Distributed with Clips - Yes", "Yes", "Distributed with Clips", ""),
             array("Distributed with Clips - No", "No", "", ""),
 
+            array("Distributed with Live Signal - Yes", "Yes", "Distributed with Live Signal", ""),
+            array("Distributed with Live Signal - No", "No", "", ""),
 
+            array("Distribution Method - IP", "IP", "", ""),
+            array("Distribution Method - Fiber", "Fiber", "", ""),
+            array("Distribution Method - FTP Server", "FTP Server", "", ""),
+            array("Distribution Method - Satellite", "Satellite", "", ""),
 
+            array("Technical Delivery Time", "Content will be delivered within {{smallInput}} hours before each single event.", "", ""),
 
+            array("Technical Fee", "{{smallInput}}", "", ""),
 
         );
 

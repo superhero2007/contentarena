@@ -4,6 +4,40 @@
     </div>
     <div class="box-content">
 
-    </div>
+        {% if content.rights %}
+            {% for  rightPackage in content.rights%}
 
+                <div class="right-package-name">
+                    {{ rightPackage.name }}
+                </div>
+
+                {% for  right in rightPackage.rights%}
+                    {{ include('content/contentRight.html.twig', {'right': right}) }}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
 </div>
+
+{% if content.distributionPackages %}
+    {% for distributionPackage in content.distributionPackages %}
+
+        <div class="box">
+            <div class="box-title">
+                Distribution Package {{ loop.index }} - {{ distributionPackage.name }}
+            </div>
+            <div class="box-content">
+
+
+                    <div class="right-package-name">
+                        Production Standards
+                    </div>
+
+                    {% for  right in distributionPackage.production %}
+                        {{ include('content/contentRight.html.twig', {'right': right}) }}
+                    {% endfor %}
+            </div>
+        </div>
+
+    {% endfor %}
+{% endif %}

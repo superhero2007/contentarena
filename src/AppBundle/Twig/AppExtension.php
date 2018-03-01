@@ -20,6 +20,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('rightItem', array($this, 'rightItemFilter')),
             new TwigFilter('idSort', array($this, 'idSortFilter')),
             new TwigFilter('kebab', array($this, 'kebabFilter')),
+            new TwigFilter('rightItemParse', array($this, 'rightItemParse')),
         );
     }
 
@@ -45,6 +46,22 @@ class AppExtension extends AbstractExtension
         return $item;
     }
 
+    public function rightItemParse($content, $inputs)
+    {
+
+        foreach ( $inputs as $input ){
+            if ( is_array($input) && count($input) > 0 ) {
+                $input = join(",", $input);
+            }
+
+            $temp = $this->get_string_between($content, "{{", "}}");
+            $content = str_replace("{{".$temp."}}", $input, $content);
+        }
+
+        return $content;
+
+    }
+
     public function rightItemFilter($content, $id)
     {
 
@@ -52,6 +69,7 @@ class AppExtension extends AbstractExtension
         $small_input = '{{smallInput';
         $big_input = '{{bigInput';
         $datepicker_input = '{{dateInput}}';
+        $calendar = '{{calendar}}';
         $language = '{{language}}';
 
         $basic_input_template = '<input type="text" class="right-form-input" />';
@@ -61,11 +79,18 @@ class AppExtension extends AbstractExtension
         $big_input_template = '<textarea></textarea>';
         $big_input_placeholder_template = '<textarea placeholder="{{placeholder}}"></textarea>';
         $datepicker_input_template = '<input class="right-form-input" type="text" class="has-datepicker" />';
+
+        $calendar_template = '<input class="right-form-input has-calendar" type="text" id="right-item-calendar-'.$id.'" />';
         $language_template = '<select type="text" class="has-language-trigger" data-placeholder="Select language" id="right-item-select-'.$id.'" multiple ></select>';
 
         // Item has language selector
         if (strpos($content, $language) !== false) {
             $content = str_replace($language, $language_template, $content);
+        }
+
+        // Item has calendar
+        if (strpos($content, $calendar) !== false) {
+            $content = str_replace($calendar, $calendar_template, $content);
         }
 
         // Item has basic input

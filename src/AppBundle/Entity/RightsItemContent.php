@@ -56,9 +56,22 @@ class RightsItemContent
      */
     private $description;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="not_optional", type="boolean", )
+     */
+    private $notOptional = false;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Rights", inversedBy="rights")
+     * @ORM\JoinTable(name="rights_items_children_join")
+     */
+    private $children;
 
     public function __construct() {
         $this->rights = new ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -160,6 +173,40 @@ class RightsItemContent
     {
         $this->rights = $rights;
     }
+
+    /**
+     * @return bool
+     */
+    public function isNotOptional()
+    {
+        return $this->notOptional;
+    }
+
+    /**
+     * @param bool $notOptional
+     */
+    public function setNotOptional($notOptional)
+    {
+        $this->notOptional = $notOptional;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param mixed $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+
 
 
 

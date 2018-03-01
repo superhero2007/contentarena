@@ -95,12 +95,106 @@ $(function () {
     var data = {},
         selectorCounter = 0,
         mainPackage = null,
+        fullSportsLoaded,
         rounds = {},
         eventData = new Content(),
         yearArray = Array(2022 - 1950 + 1).fill().map(function(item, index) { return {value : 1950 + index, label : 1950 + index }});
 
     yearArray .push({label: "To be announced", value : 0 });
     yearArray.reverse();
+
+    function collectRights (container){
+
+        var rights = {};
+
+        container.find("input:checked").each(function (k, el) {
+            var rightId = $(el).attr("right-id"),
+                rightItemId = $(el).attr("right-item-id");
+
+            if ( !rights[rightId] ){
+                rights[rightId] = new ContentArena.Model.Right();
+                rights[rightId].id = rightId;
+            }
+
+            if ( !rights[rightId].rightItems[rightItemId] ){
+                rights[rightId].rightItems[rightItemId]= new ContentArena.Model.RightItem();
+                rights[rightId].rightItems[rightItemId].id = rightItemId;
+            }
+
+            $(el).parent().parent().find("input:not([type='checkbox']):not(.chosen-search-input), textarea, select").each(function (key, element) {
+                rights[rightId].rightItems[rightItemId].inputs.push( $(element).val() );
+
+            })
+
+        });
+
+        return rights;
+    }
+
+    function collectRightPackages(container, name){
+
+        var rightsPackage = new ContentArena.Model.RightPackage();
+        rightsPackage.name = name;
+        rightsPackage.rights = collectRights(container);
+        return rightsPackage;
+    }
+
+    function collectDistributionPackages(container, name){
+
+        var distributionPackage = new ContentArena.Model.DistributionPackage();
+        distributionPackage.name = name;
+        distributionPackage.production = collectRights(container);
+        distributionPackage.technical = collectRights($("#technical-delivery-" + name));
+        return distributionPackage;
+    }
+
+    function collectPackages (){
+
+        var packages = {
+                distributionPackages : [],
+                rightPackages : []
+            },
+            selectedPackages = getSelectedFullPackages(),
+            multiple = $("#main-multiple-package"),
+            single = $("#main-single-package");
+
+        if ( multiple.is(":visible") ){
+            packages.rightPackages.push( collectRightPackages(multiple, "Collectively") );
+        }
+
+        if ( single.is(":visible") ){
+            packages.rightPackages.push( collectRightPackages(single, "Main Information") );
+        }
+
+        if ( selectedPackages.length > 1 ){
+            selectedPackages.forEach(function (pack) {
+                packages.rightPackages.push( collectRightPackages( $("#sell-box-package-" + pack.id ), pack.name ) );
+            })
+        }
+
+        $(".production-standards:visible").each(function(k, el){
+            var name = $(el).attr("id").replace("distribution-package-", "");
+            packages.distributionPackages.push( collectDistributionPackages( $(el), name ) )
+        });
+
+        return packages;
+    }
+
+    function getSelectedFullPackages() {
+        var list = [];
+
+        $(".package-selector:checked").each(function(k,v){
+
+            var pack = {
+                id : $(v).attr("id").split("-")[1],
+                name : $(v).attr("name").split("-")[1]
+            };
+
+            list.push(pack);
+        });
+
+        return list;
+    }
 
     function split( val ) {
         return val.split( /,\s*/ );
@@ -122,10 +216,17 @@ $(function () {
             distributionPackage.find(".seller-box-content").append(test);
         });
 
+        $(".has-package-"+packageId+"[group='Technical delivery']", ".rights-list").each(function(){
+            var test = $(this).clone();
+            technicalDelivery.find(".seller-box-content").append(test);
+        });
+
         distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
         technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
         distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
         technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " - " + id);
+
+        $(".optional",technicalDelivery).hide();
 
         $("label", distributionPackage ).each(function(){
             $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
@@ -180,7 +281,7 @@ $(function () {
 
             if ( multiPackage ){
                 mainItems.push(".has-package-"+v+".is-collectively[group='Main Information']");
-                $(singleItems.join(", "), ".rights-list").each(function(){
+                $(".has-package-"+v+":not(.is-collectively)[group='Main Information']", ".rights-list").each(function(){
                     var test = $(this).clone();
                     $("#sell-box-package-"+ v +" .seller-box-content").append(test);
                 });
@@ -221,6 +322,10 @@ $(function () {
 
 
             ContentArena.Languages.addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
+            $( "#sell-box-package-" + v +" .has-calendar").each(function (k, element) {
+                $("#" + $(element).attr("id")).datepicker();
+            })
+
 
         }) ;
 
@@ -244,6 +349,9 @@ $(function () {
         $(".package-ready-button").show();
         $("#price-sell-box .select-box-item-container").show();
         ContentArena.Languages.addLanguageBehaviour( mainTarget.find(".has-language-trigger") );
+        mainTarget.find(".has-calendar").each(function (k, element) {
+            $("#" + $(element).attr("id")).datepicker();
+        })
     }
 
     function fillCategories(){
@@ -307,6 +415,18 @@ $(function () {
         if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
 
         ContentArena.Api.getTournaments( sportId, categoryId ).done(( tournaments ) => {
+
+            if ( sportId === "sr:sport:5"){
+
+                tournaments = tournaments.filter(function(tournament){
+                    return (tournament.label.search("Double") === -1);
+                });
+
+                tournaments = tournaments.map(function (tournament) {
+                    tournament.label = tournament.label.replace(" Singles", "");
+                    return tournament;
+                });
+            }
 
             if ( !silent ) fillCategories();
 
@@ -412,9 +532,7 @@ $(function () {
 
                         // Add new functionality
                         if ( selected === "new" ){
-                            addCustomFn(event.target, "Enter season name");
-                            $(".custom-template-item").show();
-
+                            addCustomTemplate( false, false, false );
                             return;
                         }
 
@@ -688,8 +806,11 @@ $(function () {
     function validateStepTwo(){
 
         var rights = {},
+            rightPackages= [],
+            distributionPackages =[],
             hasErrors = false,
             messages = [],
+            packagesInfo = collectPackages(),
             messagesContainer = $('<div title="The form is incomplete!" />'),
             total = 0,
             rightItems = [];
@@ -738,7 +859,8 @@ $(function () {
 
         });
 
-        eventData.rights = rights;
+        eventData.rights = packagesInfo.rightPackages;
+        eventData.distributionPackages = packagesInfo.distributionPackages;
         eventData.rightItems = rightItems;
         eventData.packages = getSelectedPackages();
 
@@ -790,11 +912,15 @@ $(function () {
     function addCustomTemplate( sport, category, tournament){
 
         if ( sport ) addCustomFn("#event-sport-selector", "Enter sport name");
+
+        if ( eventData.eventType === "custom" ) return;
+
         if ( category ) addCustomFn("#event-category-selector", "Enter Country/Category");
         if ( tournament ) addCustomFn("#event-tournament-selector", "Enter Tournament");
         addCustomFn("#event-season-selector", "Enter Season");
         $("#event-schedule-subitems").html("");
         $(".custom-template-item").show();
+        $(".custom-template-item").children().show();
     }
 
     function addOrdinal( n ){
@@ -986,6 +1112,16 @@ $(function () {
             { label : "Show All", value: "all"}
         ],
         minLength: 0,
+        delay: 500,
+        search : function(event, ui){
+
+            if ( !fullSportsLoaded && $( "#event-sport-selector" ).val() !== ""){
+                $( "#event-sport-selector" ).autocomplete( "option", "source", data.sports );
+                fullSportsLoaded = true;
+            }
+
+
+        },
         select: function( event, ui ) {
             event.preventDefault();
 
@@ -1197,11 +1333,11 @@ $(function () {
     $(".package-ready-button").hide();
     $(".custom-template-item").hide();
 
-    window.test = function () {
-        validateStepOne();
-        validateStepTwo();
-        console.log(eventData);
-    };
+    ContentArena.Test = ContentArena.Test || {};
+    ContentArena.Test.collectPackages = collectPackages;
+    ContentArena.Test.validateStepOne = validateStepOne;
+    ContentArena.Test.validateStepTwo = validateStepTwo;
+    ContentArena.Test.logEventData = function(){ console.log( eventData )};
 
     $(document).on("change", ".toggler-checkbox", function () {
 

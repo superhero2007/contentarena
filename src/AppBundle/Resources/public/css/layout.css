@@ -498,3 +498,18 @@ input#inputSearch {
 .popup-error-message{
     margin: 10px 0 ;
 }
+
+.right {
+    display: flex;
+    padding: 3px 5px;
+}
+
+.right-name {
+    width: 50%;
+}
+
+.right-package-name {
+    background: lightgray;
+    color: white;
+    padding: 5px;
+}
