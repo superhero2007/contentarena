@@ -71,6 +71,13 @@ class Rights
     /**
      * @var boolean
      *
+     * @ORM\Column(name="hidden", type="boolean")
+     */
+    private $hidden;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="$all_enabled", type="boolean")
      */
     private $all_enabled;
@@ -246,6 +253,24 @@ class Rights
     {
         $this->collectively = $collectively;
     }
+
+    /**
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param bool $hidden
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+    }
+
+
 
 
 }

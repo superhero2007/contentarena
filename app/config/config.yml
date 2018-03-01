@@ -200,6 +200,7 @@ easy_admin:
                         - 'form_content'
                         - 'contract_content'
                         - 'description'
+                        - 'children'
                         - { property: 'not_optional', type: 'checkbox' }
                 list:
                     label: 'Rights Items'

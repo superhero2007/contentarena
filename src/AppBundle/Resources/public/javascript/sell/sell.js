@@ -226,6 +226,8 @@ $(function () {
         distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
         technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " - " + id);
 
+        $(".optional",technicalDelivery).hide();
+
         $("label", distributionPackage ).each(function(){
             $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
         });
