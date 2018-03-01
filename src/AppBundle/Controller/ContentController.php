@@ -17,10 +17,15 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+      $company = [];
+      if($content){
+          $company = $content->getCompany();
+      }
 
       return $this->render('content/content.html.twig', [
           'user' => $user,
-          'content' => $content
+          'content' => $content,
+          'company' => $company
       ]);
 
   }

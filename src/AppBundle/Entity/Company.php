@@ -88,6 +88,33 @@ class Company
      */
     private $enabled = false;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="year", type="integer", nullable=true)
+     */
+    private $year;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="size", type="integer", nullable=true)
+     */
+    private $size;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="companies")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     */
+    private $country_id;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -343,7 +370,134 @@ class Company
         $this->content = $content;
     }
 
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
 
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Company
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     *
+     * @return Company
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set size
+     *
+     * @param integer $size
+     *
+     * @return Company
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return integer
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * Add content
+     *
+     * @param \AppBundle\Entity\Content $content
+     *
+     * @return Company
+     */
+    public function addContent(\AppBundle\Entity\Content $content)
+    {
+        $this->content[] = $content;
+
+        return $this;
+    }
+
+    /**
+     * Remove content
+     *
+     * @param \AppBundle\Entity\Content $content
+     */
+    public function removeContent(\AppBundle\Entity\Content $content)
+    {
+        $this->content->removeElement($content);
+    }
+
+    /**
+     * Set countryId
+     *
+     * @param \AppBundle\Entity\Country $countryId
+     *
+     * @return Company
+     */
+    public function setCountryId(\AppBundle\Entity\Country $countryId = null)
+    {
+        $this->country_id = $countryId;
+
+        return $this;
+    }
+
+    /**
+     * Get countryId
+     *
+     * @return \AppBundle\Entity\Country
+     */
+    public function getCountryId()
+    {
+        return $this->country_id;
+    }
 }
 

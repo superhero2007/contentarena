@@ -44,8 +44,7 @@
                 {% endif %}
             </div>
             <div class="content-column content-column-company">
-
-                <div><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</div>
+                <div><a id="opener" href="#"><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</a></div>
                 <div class="content-expires">Offer deadline: {{ date( content.expiresAt|date ).diff( date("now") ).days }} days</div>
             </div>
         </div>
@@ -128,4 +127,51 @@
 
     </div>
 
+</div>
+
+<!-- Modal -->
+<div id="dialog" title="{{ content.company.displayName | default("") }}" class="uk-text-left">
+
+    <img src="" class="text-center">
+    <span>Company Description</span>
+    <div class="modal-head-div">
+        {{ company.description | default(" ") }}
+    </div>
+    <div class="uk-grid">
+        <div class="uk-width-1-2">
+            <span>Website URL</span>
+            <div type="text" class="full-width modal-thin-div">
+                {{ company.website | default(" ") }}
+            </div>
+        </div>
+        <div class="uk-width-1-2">
+            <span>Legal Name</span>
+            <div type="text" class="full-width modal-thin-div">
+                {{ company.legalName | default(" ") }}
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid">
+        <div class="uk-width-1-3">
+            <span>Year Founded</span>
+            <div type="text" class="full-width modal-thin-div">
+                {{ company.year | default(" ") }}
+            </div>
+        </div>
+        <div class="uk-width-1-3">
+            <span>Company Size</span>
+            <div type="text" class="full-width modal-thin-div">
+                {{ company.description | default(" ") }}
+            </div>
+        </div>
+        <div class="uk-width-1-3">
+            <span>Country Of Incorporation</span>
+            <div type="text" class="full-width modal-thin-div">
+                {{ company.description | default(" ") }}
+            </div>
+        </div>
+    </div>
+    <div class="uk-text-center margin-top-30">
+        <a href="">Download company presentation</a>
+    </div>
 </div>

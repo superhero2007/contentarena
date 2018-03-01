@@ -149,6 +149,10 @@ easy_admin:
                         - 'owner'
                         - 'zip'
                         - 'phone'
+                        - 'description'
+                        - 'year'
+                        - 'size'
+                        - 'country_id'
             Content:
                 class: AppBundle\Entity\Content
                 list:
