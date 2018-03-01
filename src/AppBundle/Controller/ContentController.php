@@ -20,6 +20,8 @@ class ContentController extends Controller
       $company = [];
       if($content){
           $company = $content->getCompany();
+          //$country = $company->getCountry();
+          //var_dump($country); exit;
       }
 
       $rightsPackages = $content->getRights();

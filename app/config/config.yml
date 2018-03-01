@@ -152,7 +152,7 @@ easy_admin:
                         - 'description'
                         - 'year'
                         - 'size'
-                        - 'country_id'
+                        - 'country'
             Content:
                 class: AppBundle\Entity\Content
                 list:

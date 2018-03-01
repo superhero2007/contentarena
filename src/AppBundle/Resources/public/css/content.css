@@ -1,0 +1,23 @@
+.modal-head-div {
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    width: 100% !important;
+    min-height: 100px;
+    padding: 7px;
+    font-size: 100%;
+}
+
+.full-width {
+    width: 100%
+}
+
+.modal-thin-div {
+    min-width: 250px;
+    border: 1px solid #ddd;
+    margin: 0 5px;
+    padding: 2px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}

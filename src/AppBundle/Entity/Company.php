@@ -113,7 +113,7 @@ class Company
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="companies")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
-    private $country_id;
+    private $country;
 
     public function __construct()
     {
@@ -477,27 +477,27 @@ class Company
     }
 
     /**
-     * Set countryId
+     * Set country
      *
-     * @param \AppBundle\Entity\Country $countryId
+     * @param \AppBundle\Entity\Country $country
      *
      * @return Company
      */
-    public function setCountryId(\AppBundle\Entity\Country $countryId = null)
+    public function setCountry(\AppBundle\Entity\Country $country = null)
     {
-        $this->country_id = $countryId;
+        $this->country = $country;
 
         return $this;
     }
 
     /**
-     * Get countryId
+     * Get country
      *
      * @return \AppBundle\Entity\Country
      */
-    public function getCountryId()
+    public function getCountry()
     {
-        return $this->country_id;
+        return $this->country;
     }
 }
 
