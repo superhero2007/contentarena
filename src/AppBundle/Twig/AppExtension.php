@@ -20,6 +20,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('rightItem', array($this, 'rightItemFilter')),
             new TwigFilter('idSort', array($this, 'idSortFilter')),
             new TwigFilter('kebab', array($this, 'kebabFilter')),
+            new TwigFilter('rightItemParse', array($this, 'rightItemParse')),
         );
     }
 
@@ -43,6 +44,22 @@ class AppExtension extends AbstractExtension
         });
 
         return $item;
+    }
+
+    public function rightItemParse($content, $inputs)
+    {
+
+        foreach ( $inputs as $input ){
+            if ( is_array($input) && count($input) > 0 ) {
+                $input = join(",", $input);
+            }
+
+            $temp = $this->get_string_between($content, "{{", "}}");
+            $content = str_replace("{{".$temp."}}", $input, $content);
+        }
+
+        return $content;
+
     }
 
     public function rightItemFilter($content, $id)
