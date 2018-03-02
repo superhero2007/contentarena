@@ -57,7 +57,7 @@ class ContentController extends Controller
               $dbRight = $rightsRepository->findOneBy(['id' => $right["id"]]);
           }
 
-          if ( $right ) {
+          if ( $dbRight ) {
 
               $right["name"] = $dbRight->getName();
 
