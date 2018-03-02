@@ -44,52 +44,6 @@ $(function () {
 
     };
 
-    ContentArena.Model.SalesPackage = function(){
-
-        this.salesMethod =  null;
-        this.fee = null;
-        this.currency = null;
-        this.id = null;
-        this.name = null;
-        this.territories = null;
-        this.selectedTerritories = [];
-        this.excludedTerritories = [];
-        this.territoryBids = false;
-        this.sellAsPackage = false;
-
-        this.validate = () => {
-
-            var description = "Sales Package " + this.id + ": ",
-                hasErrors = false;
-
-            if ( ! this.currency ) {
-                hasErrors = true;
-                description += "Currency can't be empty. ";
-            }
-
-            if ( ! this.fee ) {
-                hasErrors = true;
-                description += "Fee can't be empty. ";
-            }
-
-            if ( ! this.territories ) {
-                hasErrors = true;
-                description += "Territories can't be empty. ";
-            }
-
-            if ( ! this.salesMethod ) {
-                hasErrors = true;
-                description += "Sales method can't be empty. ";
-            }
-
-            return {
-                hasErrors: hasErrors,
-                description : description
-            }
-        }
-
-    };
-
     ContentArena.Content = new Content();
 
     var data = {},
@@ -196,6 +150,35 @@ $(function () {
         return list;
     }
 
+    function getFullSelectedPackages() {
+        var response = {
+            selected : {},
+            selectedIds : [],
+            selectedNames : []
+        };
+
+        $(".package-selector:checked").each(function(k,v){
+
+            var id = $(v).attr("id").split("-")[1],
+                name = $(v).attr("name").split("-")[1];
+
+            response.selected[id] = {
+                id : id,
+                name : name
+            };
+
+            response.selectedIds.push(id);
+            response.selectedNames.push(name)
+
+        });
+
+        response.getIdByName = function( name ){
+            return this.selectedIds[this.selectedNames.indexOf(name)]
+        };
+
+        return response;
+    }
+
     function split( val ) {
         return val.split( /,\s*/ );
     }
@@ -246,6 +229,41 @@ $(function () {
 
         ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
 
+        return distributionPackage;
+
+    }
+
+    function addExtraDistributionPackage( distributionPackage){
+
+        var selectors = [],
+            packages = getFullSelectedPackages(),
+            highlights = packages.selectedNames.indexOf("Highlights") !== -1,
+            clips = packages.selectedNames.indexOf("Clips") !== -1,
+            news = packages.selectedNames.indexOf("News access") !== -1;
+
+        distributionPackage.find(".seller-box-content").append( $(".extra-distribution-packages").clone().show());
+
+        if (highlights ) selectors.push(".extra-package-highlight" );
+        if (clips ) selectors.push(".extra-package-clips" );
+        if (news ) selectors.push(".extra-package-news" );
+        if (highlights && clips ) selectors.push(".extra-package-highlight-clips" );
+        if (highlights && news ) selectors.push(".extra-package-highlight-news" );
+        if (clips && news ) selectors.push(".extra-package-clips-news" );
+        if (highlights && news && clips ) selectors.push(".extra-package-highlight-clips-news" );
+
+        $(selectors.join(", "), distributionPackage).show();
+
+        $(".distribution-package-selector", distributionPackage).on("change", function () {
+            var values = $(this).val().split(", ");
+
+            values.forEach(function (packageName) {
+                addDistributionPackages(packages.getIdByName(packageName), packageName);
+            });
+
+            $(this).remove();
+
+        })
+
 
     }
 
@@ -255,6 +273,7 @@ $(function () {
             packagesName = getSelectedPackagesName(),
             mainItems = [],
             singleItems = [],
+            distributionPackage,
             multiPackage = ( packages.length > 1),
             mainTarget = (multiPackage) ? $("#main-multiple-package") : $("#main-single-package");
 
@@ -337,12 +356,15 @@ $(function () {
 
 
         if ( packagesName.indexOf("Program") === -1 || packagesName.length > 1 ){
-            addDistributionPackages(packages[0], "Main");
+            distributionPackage = addDistributionPackages(packages[0], "Main");
+            addExtraDistributionPackage(distributionPackage);
+
         }
 
         if ( packagesName.indexOf("Program") !== -1 ){
             addDistributionPackages(packages[packagesName.indexOf("Program")], "Program");
         }
+
 
         $("#main-sell-box").show();
         $("#price-sell-box").show();
@@ -1337,6 +1359,7 @@ $(function () {
     ContentArena.Test.collectPackages = collectPackages;
     ContentArena.Test.validateStepOne = validateStepOne;
     ContentArena.Test.validateStepTwo = validateStepTwo;
+    ContentArena.Test.getFullSelectedPackages = getFullSelectedPackages;
     ContentArena.Test.logEventData = function(){ console.log( eventData )};
 
     $(document).on("change", ".toggler-checkbox", function () {

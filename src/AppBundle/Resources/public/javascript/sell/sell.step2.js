@@ -31,4 +31,50 @@ $(function () {
         this.inputs = [];
     };
 
+    ContentArena.Model.SalesPackage = function(){
+
+        this.salesMethod =  null;
+        this.fee = null;
+        this.currency = null;
+        this.id = null;
+        this.name = null;
+        this.territories = null;
+        this.selectedTerritories = [];
+        this.excludedTerritories = [];
+        this.territoryBids = false;
+        this.sellAsPackage = false;
+
+        this.validate = () => {
+
+            var description = "Sales Package " + this.id + ": ",
+                hasErrors = false;
+
+            if ( ! this.currency ) {
+                hasErrors = true;
+                description += "Currency can't be empty. ";
+            }
+
+            if ( ! this.fee ) {
+                hasErrors = true;
+                description += "Fee can't be empty. ";
+            }
+
+            if ( ! this.territories ) {
+                hasErrors = true;
+                description += "Territories can't be empty. ";
+            }
+
+            if ( ! this.salesMethod ) {
+                hasErrors = true;
+                description += "Sales method can't be empty. ";
+            }
+
+            return {
+                hasErrors: hasErrors,
+                description : description
+            }
+        }
+
+    };
+
 });

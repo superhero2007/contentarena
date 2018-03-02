@@ -95,6 +95,31 @@
         <div class="seller-box-content seller-box-content-rights" >
         </div>
     </div>
+
+    <div class="select-box-item-container extra-distribution-packages">
+
+        <div class="select-box-item-title">
+            Add distribution packages
+        </div>
+
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+            </div>
+            <div class="select-box-item-label">
+                <select class="distribution-package-selector">
+                    <option value="" class="">Select </option>
+                    <option value="Highlights" class="is-hidden extra-package-highlight">Distribute Highlights separately</option>
+                    <option value="News access" class="is-hidden extra-package-news">Distributed News Access separately</option>
+                    <option value="Clips" class="is-hidden extra-package-clips">Distribute Clips separately</option>
+                    <option value="Highlights, News access" class="is-hidden extra-package-highlight-news">Distribute Highlights + News Access separately</option>
+                    <option value="Highlights, Clips" class="is-hidden extra-package-highlight-clips">Distributed Highlights + Clips separately </option>
+                    <option value="News access, Clips" class="is-hidden extra-package-clips-news">Distribute News Access + Clips separately</option>
+                    <option value="Highlights, Clips, News access" class="is-hidden extra-package-highlight-clips-news">Distribute Highlights + News Access + Clips separately </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 {{ include('sell/mainForm.twig') }}
