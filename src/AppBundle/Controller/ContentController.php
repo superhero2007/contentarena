@@ -51,17 +51,22 @@ class ContentController extends Controller
       $rightsRepository = $this->getDoctrine()->getRepository('AppBundle:Rights');
       $rightsItemsRepository = $this->getDoctrine()->getRepository('AppBundle:RightsItemContent');
 
+
       foreach ( $rights as &$right ){
           if ( isset ( $right["id"]) ){
               $dbRight = $rightsRepository->findOneBy(['id' => $right["id"]]);
-              $right["name"] = $dbRight->getName();
           }
 
-          foreach ( $right["rightItems"] as &$rightItem ){
+          if ( $right ) {
 
-              if ( isset ( $rightItem["id"]) ){
-                  $dbRightItem = $rightsItemsRepository->findOneBy(['id' => $rightItem["id"]]);
-                  $rightItem["name"] = $dbRightItem->getFormContent();
+              $right["name"] = $dbRight->getName();
+
+              foreach ($right["rightItems"] as &$rightItem) {
+
+                  if (isset ($rightItem["id"])) {
+                      $dbRightItem = $rightsItemsRepository->findOneBy(['id' => $rightItem["id"]]);
+                      $rightItem["name"] = $dbRightItem->getFormContent();
+                  }
               }
           }
       }
