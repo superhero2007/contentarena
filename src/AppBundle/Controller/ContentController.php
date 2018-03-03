@@ -17,12 +17,6 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
-      $company = [];
-      if($content){
-          $company = $content->getCompany();
-          //$country = $company->getCountry();
-          //var_dump($country); exit;
-      }
 
       $rightsPackages = $content->getRights();
       $distributionPackages = $content->getDistributionPackages();
@@ -40,8 +34,7 @@ class ContentController extends Controller
 
       return $this->render('content/content.html.twig', [
           'user' => $user,
-          'content' => $content,
-          'company' => $company
+          'content' => $content
       ]);
 
   }
