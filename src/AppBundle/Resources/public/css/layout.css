@@ -513,3 +513,27 @@ input#inputSearch {
     color: white;
     padding: 5px;
 }
+
+.remove-button {
+    height: 26px;
+    border: none;
+    background-color: lightcoral;
+    color: white;
+    padding: 5px 10px;
+    margin: 0 10px;
+    align-self: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-button {
+    height: 26px;
+    border: none;
+    background-color: #4879a3;
+    color: white;
+    padding: 5px 10px;
+    margin: 0 10px;
+    align-self: center;
+    font-weight: bold;
+    cursor: pointer;
+}

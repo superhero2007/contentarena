@@ -73,8 +73,13 @@ class ContentService
          * Set sport
          * Create element in DB if it doesn't exist.
          */
-        $sport = $this->getSport($data);
-        $content->setSport($sport);
+        if ( isset($data->sports) ) {
+            $sports = $this->getSports($data);
+            $content->setSports($sports);
+        } else if ( isset($data->sport) ) {
+            $sport = $this->getSport($data);
+            $content->setSport($sport);
+        }
 
         /**
          * Set tournament
@@ -107,23 +112,6 @@ class ContentService
             $content->setSeason($seasons);
         }
 
-        /*if ( isset($data->rightItems) ){
-
-            $rightItems = array();
-
-            foreach ( $data->rightItems as $rightItem ){
-
-                if ( !isset($rightItem->id) ) continue;
-
-                $item = $this->em
-                    ->getRepository('AppBundle:RightsItemContent')
-                    ->findOneBy(array( 'id'=> $rightItem->id));
-
-                $rightItems[] = $item;
-            }
-
-            $content->setRightsItems($rightItems);
-        }*/
         if ( isset($data->duration) ) $content->setDuration($data->duration->value);
         if ( isset($data->description) ) $content->setDescription($data->description->value);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
@@ -153,42 +141,10 @@ class ContentService
 
         }
 
-        /*if ( isset($data->countriesSelected) ){
-
-            $countriesSelected = array();
-            foreach ( $data->countriesSelected as $countryCode ){
-
-                $country = $this->em
-                    ->getRepository('AppBundle:Country')
-                    ->findOneBy(array( 'country_code'=> $countryCode));
-
-                if ( $country ) $countriesSelected[] = $country;
-
-            }
-            $content->setCountriesSelected($countriesSelected);
-
-        }
-
-        if ( isset($data->countriesExcluded) ){
-            $countriesExcluded = array();
-            foreach ( $data->countriesExcluded as $countryCode ){
-
-                $country = $this->em
-                    ->getRepository('AppBundle:Country')
-                    ->findOneBy(array( 'country_code'=> $countryCode));
-
-                if ( $country ) $countriesExcluded[] = $country;
-
-            }
-            $content->setCountriesExcluded($countriesExcluded);
-
-        }*/
-
         if ( isset($data->availability) ){
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
         }
 
-        //var_dump($data->sport);
 
         /**
          * Save files
@@ -301,26 +257,38 @@ class ContentService
         return $category;
     }
 
-    private function getSport($data){
+    private function sport($sportData){
 
-        if( isset ($data->sport->externalId ) ){
+        if( isset ($sportData->externalId ) ){
             $sport = $this->em
                 ->getRepository('AppBundle:Sport')
-                ->findOneBy(array( 'externalId'=> $data->sport->externalId));
-        } else if( isset ($data->sport->value ) ){
+                ->findOneBy(array( 'externalId'=> $sportData->externalId));
+        } else if( isset ($sportData->value ) ){
             $sport = $this->em
                 ->getRepository('AppBundle:Sport')
-                ->findOneBy(array( 'name'=> $data->sport->value));
+                ->findOneBy(array( 'name'=> $sportData->value));
         };
 
         if ( !$sport ){
             $sport = new Sport();
-            if( isset ($data->sport->externalId ) ) $sport->setExternalId($data->sport->externalId);
-            $sport->setName($data->sport->value);
+            if( isset ($sportData->externalId ) ) $sport->setExternalId($sportData->externalId);
+            $sport->setName($sportData->value);
             $this->em->persist($sport);
             $this->em->flush();
         }
 
         return $sport;
+    }
+
+    private function getSport($data){
+        return $this->sport( $data->sport);
+    }
+
+    private function getSports($data){
+        $sports = array();
+        forEach ( $data->sports as $sport ){
+            $sports[] = $this->sport($sport);
+        }
+        return $sports;
     }
 }
