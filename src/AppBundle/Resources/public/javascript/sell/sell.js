@@ -465,7 +465,7 @@ $(function () {
                 source: function(request, response) {
                     var results = $.ui.autocomplete.filter(tournaments, request.term);
 
-                    response(results.slice(0, 100));
+                    response(results.slice(0, 1000));
                 },
                 minLength : 0,
                 select: function( event, ui ) {
