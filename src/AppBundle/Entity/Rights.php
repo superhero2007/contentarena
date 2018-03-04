@@ -73,7 +73,7 @@ class Rights
      *
      * @ORM\Column(name="hidden", type="boolean")
      */
-    private $hidden;
+    private $hidden = false;
 
     /**
      * @var boolean
