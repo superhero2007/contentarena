@@ -27,7 +27,12 @@ $(function () {
                 });
             }
 
+            if ( this.eventType === "custom" ){
+
+            }
+
             if ( this.eventType === "database" ){
+                if ( this.sport !== null ) title += this.sport.value;
                 if ( this.category !== null ) title += " - " + this.category.value;
                 if ( this.tournament !== null ) title += " - " + this.tournament.value;
             }
@@ -187,27 +192,28 @@ $(function () {
         return split( term ).pop();
     }
 
-    function addDistributionPackages( packageId , id ){
+    function addDistributionPackages( id ){
 
         var distributionPackage = $(".production-standards", "#box-templates").clone(),
             technicalDelivery = $(".technical-delivery", "#box-templates").clone(),
             distributionPackageTitle = distributionPackage.find(".box-title"),
-            technicalDeliveryTitle = technicalDelivery.find(".box-title");
+            technicalDeliveryTitle = technicalDelivery.find(".box-title"),
+            title = id.replace("-", " - ");
 
-        $(".has-package-"+packageId+"[group='Production standards']", ".rights-list").each(function(){
+        $("[group='Production standards']", ".rights-list").each(function(){
             var test = $(this).clone();
             distributionPackage.find(".seller-box-content").append(test);
         });
 
-        $(".has-package-"+packageId+"[group='Technical delivery']", ".rights-list").each(function(){
+        $("[group='Technical delivery']", ".rights-list").each(function(){
             var test = $(this).clone();
             technicalDelivery.find(".seller-box-content").append(test);
         });
 
         distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
         technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
-        distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + id);
-        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " - " + id);
+        distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + title);
+        technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " - " + title);
 
         $(".optional",technicalDelivery).hide();
 
@@ -256,9 +262,11 @@ $(function () {
         $(".distribution-package-selector", distributionPackage).on("change", function () {
             var values = $(this).val().split(", ");
 
-            values.forEach(function (packageName) {
+            /*values.forEach(function (packageName) {
                 addDistributionPackages(packages.getIdByName(packageName), packageName);
-            });
+            });*/
+
+            addDistributionPackages( values.join("-") );
 
             $(this).remove();
 
@@ -325,7 +333,7 @@ $(function () {
                 $(this).attr("id", "package-" + v + "-" + $(this).attr("id") )
             });
 
-            $("[right-name$=-cut-available-yes]", "#sell-box-package-" + v ).change(function(){
+            /*$("[right-name$=-cut-available-yes]", "#sell-box-package-" + v ).change(function(){
                 if ( this.checked && $("#distribution-package-" + packagesName[k]).length == 0 ) {
                     addDistributionPackages(v, packagesName[k]);
                 }
@@ -339,7 +347,7 @@ $(function () {
                 }
 
             });
-
+*/
 
             ContentArena.Languages.addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
             $( "#sell-box-package-" + v +" .has-calendar").each(function (k, element) {
@@ -357,13 +365,13 @@ $(function () {
 
 
         if ( packagesName.indexOf("Program") === -1 || packagesName.length > 1 ){
-            distributionPackage = addDistributionPackages(packages[0], "Main");
+            distributionPackage = addDistributionPackages( "Main");
             addExtraDistributionPackage(distributionPackage);
 
         }
 
         if ( packagesName.indexOf("Program") !== -1 ){
-            addDistributionPackages(packages[packagesName.indexOf("Program")], "Program");
+            addDistributionPackages( "Program" );
         }
 
 
