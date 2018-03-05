@@ -16,9 +16,20 @@
     </div>
 
     <div class="buy-box">
-    {% for content in contents %}
-        {{ include('buy/contentItem.html.twig', { 'content' : content }) }}
-    {% endfor %}
+        {%if contents| length > 0 %}
+            {% for content in contents %}
+                {{ include('buy/contentItem.html.twig', { 'content' : content }) }}
+            {% endfor %}
+        {% else %}
+            <div class="content-column">
+                <h3 class="uk-align-center">No Results</h3>
+            </div>
+
+        {% endif %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(contents,'pagination/uikit_pagination.html.twig') }}
+        </div>
     </div>
 
 {% endblock main_content %}

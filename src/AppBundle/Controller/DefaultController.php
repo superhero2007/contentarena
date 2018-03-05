@@ -62,6 +62,15 @@ class DefaultController extends Controller
         $territories = $this->getDoctrine()->getRepository('AppBundle:Territory')->findAll();
         $countries = $this->getDoctrine()->getRepository('AppBundle:Country')->findAll();
 
+        if($request->query->get('inputSearch')){
+            $contents = $this->getDoctrine()
+                ->getRepository(Content::class)
+                ->getSearchContent($request->query->get('inputSearch'));
+        }
+
+        $paginator  = $this->get('knp_paginator');
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+
         return $this->render('buy/buy.html.twig', [
             'user' => $user,
             'contents' => $contents,

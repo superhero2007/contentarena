@@ -5,8 +5,9 @@
     <button class="filter buy-select-timing"><span>Timing</span></button>
     <button class="filter btn" id="moreFilters">More Filters</button>
 
-    <form role="form">
-        <input type="text" id="inputSearch" placeholder="Search"/>
+    <form role="form" action="{{ path('buy') }}" method="GET">
+        <input type="text" id="inputSearch" name="inputSearch" placeholder="Search"/>
+        {#<button type="submit">Search</button>#}
     </form>
 
 </div>
