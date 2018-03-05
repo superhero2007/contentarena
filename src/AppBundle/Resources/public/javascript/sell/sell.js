@@ -1387,6 +1387,7 @@ $(function () {
 
     $(".package-ready-button").hide();
     $(".custom-template-item").hide();
+    $(".step1-container").show();
 
     ContentArena.Test = ContentArena.Test || {};
     ContentArena.Test.collectPackages = collectPackages;
@@ -1454,6 +1455,10 @@ $(function () {
         });
         $(this).addClass("episode-availability-selected");
 
+    });
+
+    $(document).on('click', "#download-csv-sheet", function() {
+        window.location = envhosturl + "bundles/app/data/content-details.csv";
     });
 
     /**
