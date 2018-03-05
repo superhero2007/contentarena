@@ -151,6 +151,16 @@ class Content
     private $sport;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport", inversedBy="content")
+     * @ORM\JoinTable(name="content_sports",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="content_sport_id", referencedColumnName="id")}
+     *      )
+     */
+    private $sports;
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -697,6 +707,22 @@ class Content
     public function setDistributionPackages($distributionPackages)
     {
         $this->distributionPackages = $distributionPackages;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSports()
+    {
+        return $this->sports;
+    }
+
+    /**
+     * @param mixed $sports
+     */
+    public function setSports($sports)
+    {
+        $this->sports = $sports;
     }
 
 

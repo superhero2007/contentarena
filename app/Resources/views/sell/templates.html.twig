@@ -1,16 +1,110 @@
+<script id="content-details-template" type="text/x-jsrender">
+{% raw %}
+<div class="box-item">
+    <div class="select-box-item-title">
+        Number of episodes
+    </div>
+
+    <div class="select-box-item select-box-item-full">
+        <div class="select-box-checkbox">
+        </div>
+        <div class="select-box-item-label">
+            <input type="number" class="right-form-input content-input"
+                       id="episodes-quantity"
+                       placeholder=""/>
+        </div>
+    </div>
+</div>
+
+<div class="box-item">
+    <div class="select-box-item-title">
+        Content Details
+    </div>
+
+    <div class="select-box-item select-box-item-full">
+        <div class="select-box-checkbox">
+            <input type="checkbox"
+                   id="content-details-method-mask"
+                   show="#content-details-mask"
+                   hide="#content-details-upload"
+                   class="unselect-others toggler-checkbox" />
+            <label for="content-details-method-mask"></label>
+        </div>
+        <div class="select-box-item-label">
+            Enter via mask
+        </div>
+    </div>
+    <div class="select-box-item select-box-item-full">
+        <div class="select-box-checkbox">
+            <input type="checkbox"
+                   id="content-details-method-upload"
+                   hide="#content-details-mask"
+                   show="#content-details-upload"
+                   class="unselect-others toggler-checkbox" />
+            <label for="content-details-method-upload"></label>
+        </div>
+        <div class="select-box-item-label">
+            Upload as document
+        </div>
+    </div>
+</div>
+
+<div class="box-item is-hidden" id="content-details-mask">
+</div>
+
+<div class="box-item is-hidden" id="content-details-upload">
+    <div class="select-box-item-title">
+        Please note that the uploaded sheet should contain the titles and availability dates of the offered program episodes.
+    </div>
+    <div class="select-box-item select-box-item-full">
+        <button class="small-button" id="upload-content-csv">Upload CSV document</button>
+        <button class="small-button" id="download-csv-sheet">Download CSV sheet as framework </button>
+    </div>
+</div>
+
+
+
+
+{% endraw %}
+</script>
+
+<script id="episode-template" type="text/x-jsrender">
+{% raw %}
+<div class="step1-event-item">
+    <input type="text"
+           class="content-input"
+           id="episode-{{:id}}"
+           value="{{if episode}}{{:episode}}{{else}}Episode {{:id}}{{/if}}"/>
+
+    <input type="text"
+           class="episode-availability episode-availability-selected"
+           placeholder="Available"
+           id="episode-{{:id}}-available"/>
+
+    <input type="text"
+           class="episode-availability"
+           placeholder="Available on Date/Time"
+           id="episode-{{:id}}-available-date"/>
+
+    <input type="text"
+           class="episode-availability"
+           placeholder="Info N/A"
+           id="episode-{{:id}}-info"/>
+</div>
+{% endraw %}
+</script>
 
 <script id="custom-fixture-template" type="text/x-jsrender">
 {% raw %}
-<div class="step1-event-item database-event-item custom-template-item custom-fixtures">
-    <input type="text" class="step1-event-input-content"
+<div class="step1-event-item  custom-template-item custom-fixtures">
+    <input type="text" class="content-input"
            id="custom-fixture-name-{{:id}}"
-           placeholder="enter fixture (optional)"/> <input type="text" class="step1-event-input-content"
+           placeholder="enter fixture (optional)"/> <input type="text" class="content-input"
                                                            placeholder="Select date (optional)"
                                                            id="custom-fixture-date-{{:id}}"/>
 </div>
 {% endraw %}
 </script>
-
 
 {# PRICING AND TERRITORY #}
 <script id="sales-package-template" type="text/x-jsrender">

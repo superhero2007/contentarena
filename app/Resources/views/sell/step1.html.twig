@@ -1,144 +1,77 @@
 <div id="step1" class="">
 
-    {# Main selector #}
-    <div class="buttons-container">
-        <button class="event-origin-selector standard-button standard-button-active" ref=".database-event-item, .common-event-item" >Select event from database</button>
-        <button class="event-origin-selector standard-button" ref=".custom-event-item, .common-event-item">List event based content</button>
-    </div>
-
     <div class="box">
         <div class="box-title">
             Step 1/2
         </div>
-        <div class="seller-box-content">
+        <div class="seller-box-content ">
             <div class="step1-container is-hidden">
-                <div class="step1-event-title">
-                    <span class="step1-event-item database-event-item">Select an event from the database by clicking the tabs below</span>
-                    <span class="step1-event-item custom-event-item">Create your program by filling in the boxes below</span>
-                </div>
-
-                {# Single/Series Selector #}
-                <div class="step1-event-item custom-event-item">
-                    <div id="single-events-selector" class="standard-button-active step1-event-item-title step1-event-item-title-small ">
-                        Single
-                    </div>
-                    <div id="series-events-selector" class="step1-event-item-title step1-event-item-title-small">
-                        Series
-                    </div>
-                </div>
 
                 {# Sport Selector #}
-                <div class="step1-event-item database-event-item custom-event-item">
+                <div class="step1-event-item">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" placeholder="Sport" id="event-sport-selector" class="step1-event-input-content" required/>
-                </div>
-
-                {# Territory Selector #}
-                <div class="step1-event-item database-event-item">
-                    <input type="text" class="step1-event-input-content is-hidden" placeholder="Continent or world" id="event-territory-selector"/>
+                    <input type="text"
+                           placeholder="Sport"
+                           id="event-sport-selector"
+                           class="content-input"
+                           required/> <button class="add-button" id="add-sport-layer">Add sport</button>
                 </div>
 
                 {# Country Selector #}
-                <div class="step1-event-item database-event-item">
+                <div class="step1-event-item ">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" class="step1-event-input-content is-hidden" placeholder="Country/Category" id="event-category-selector"/>
+                    <input type="text" class="content-input is-hidden" placeholder="Country/Category" id="event-category-selector"/>
                 </div>
 
                 {# Competition Selector #}
-                <div class="step1-event-item  database-event-item">
+                <div class="step1-event-item">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" class="step1-event-input-content" placeholder="Competition" id="event-tournament-selector"/>
+                    <input type="text" class="content-input" placeholder="Competition" id="event-tournament-selector"/>
                 </div>
 
                 {# Season Selector  #}
-                <div class="step1-event-item  database-event-item">
+                <div class="step1-event-item">
                     <i class="fa fa-cog fa-spin"></i>
-                    <input type="text" class="step1-event-input-content" placeholder="Season" id="event-season-selector" />
+                    <input type="text" class="content-input" placeholder="Season" id="event-season-selector" />
                 </div>
 
-                {#<div class="step1-event-item  database-event-item">
-                    <select>
-                        <option value="1">asdasd</option>
-                        <option value="2">asdasd 2</option>
-                    </select>
-                </div>#}
-
                 {# Fixture Container #}
-                <div class="step1-event-item database-event-item">
+                <div class="step1-event-item ">
                     <div class="step1-event-subitems-container" id="event-schedule-subitems"></div>
                 </div>
 
 
-                <div class="step1-event-item database-event-item custom-template-item">
+                <div class="step1-event-item  custom-template-item">
                     <input type="number"
                            required
-                           class="step1-event-input-content"
+                           class="content-input"
                            placeholder="Number of events"
                            id="event-customAmount-selector"/>
                 </div>
-                <div class="step1-event-item database-event-item custom-template-item">
-                    <input type="text" class="step1-event-input-content" placeholder="Start date" id="event-customStart-selector"/>
+                <div class="step1-event-item  custom-template-item">
+                    <input type="text" class="content-input" placeholder="Start date" id="event-customStart-selector"/>
                 </div>
-                <div class="step1-event-item database-event-item custom-template-item">
-                    <input type="text" class="step1-event-input-content" placeholder="End date" id="event-customEnd-selector"/>
+                <div class="step1-event-item  custom-template-item">
+                    <input type="text" class="content-input" placeholder="End date" id="event-customEnd-selector"/>
                 </div>
-                <div class="step1-event-item database-event-item custom-template-item custom-fixtures">
+                <div class="step1-event-item  custom-template-item custom-fixtures">
                     <input type="text"
-                           class="step1-event-input-content"
+                           class="content-input"
                            id="custom-fixture-name-1"
                            placeholder="enter fixture (optional)"/> <input type="text"
-                                                                           class="step1-event-input-content"
+                                                                           class="content-input"
                                                                            placeholder="Select date (optional)"
                                                                            id="custom-fixture-date-1"/>
                 </div>
-                <div class="step1-event-item database-event-item custom-template-item">
+                <div class="step1-event-item  custom-template-item">
                     <button class="small-button" id="add-more-fixtures">Add more fixtures</button>
                 </div>
 
-                {# Program Type #}
-                <div class="step1-event-item custom-event-item">
-                    <input type="text"
-                           class="step1-event-input-content"
-                           placeholder="Program type"
-                           required
-                           id="event-programType-selector"/>
-                </div>
-
-                {# Program Name #}
-                <div class="step1-event-item custom-event-item">
-                    <input type="text"
-                           class="step1-event-input-content"
-                           placeholder="Program name"
-                           required
-                           id="event-programName-selector"/>
-                </div>
-
-                {# Number of programs #}
-                <div class="step1-event-item custom-series-event-item">
-                    <input type="text" class="step1-event-input-content" placeholder="Number of programs" id="event-programs-selector"/>
-                </div>
-
-                {# Year of release #}
-                <div class="step1-event-item custom-event-item">
-                    <input type="text" class="step1-event-input-content" placeholder="Year of release" id="event-year-selector"/>
-                </div>
-
-                {# Duration #}
-                <div class="step1-event-item custom-event-item">
-                    <input type="number"
-                           class="step1-event-input-content"
-                           placeholder="Episode duration in minutes"
-                           id="event-duration-selector"/>
-                </div>
-
-                {# Availability #}
-                <div class="step1-event-item custom-event-item">
-                    <input type="text" class="step1-event-input-content" placeholder="Availability" id="event-availability-selector"/>
-                </div>
-
                 {# Description  #}
-                <div class="step1-event-item database-event-item custom-event-item">
-                    <textarea id="event-description" placeholder="{{ 'sell.step1.event.description.placeholder'|trans }}" class="step1-event-input-content"></textarea>
+                <div class="step1-event-item">
+                    <textarea id="event-description" 
+                              placeholder="{{ 'sell.step1.event.description.placeholder'|trans }}" 
+                              class="content-input"></textarea>
                 </div>
 
                 {# Website #}
@@ -147,7 +80,7 @@
                            type="text"
                            placeholder="Website domain"
                            id="event-website-selector"
-                           class="step1-event-input-content"/>
+                           class="content-input"/>
                 </div>
 
                 {# Link #}
@@ -156,7 +89,7 @@
                            data-role="tagsinput"
                            placeholder="Add other link"
                            id="event-link-selector"
-                           class="step1-event-input-content"/>
+                           class="content-input"/>
                 </div>
 
                 {# File #}
@@ -168,7 +101,7 @@
                 </div>
 
                 {# Go to step 2 button #}
-                <div class="step1-event-item database-event-item custom-event-item">
+                <div class="step1-event-item">
                     <button class="uk-button go-to-rights">Continue with rights selection</button>
                 </div>
             </div>

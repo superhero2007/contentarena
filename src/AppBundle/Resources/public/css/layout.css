@@ -271,6 +271,7 @@ h7 {
     font-size: 80%;
     margin-bottom: 10px;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 .tiny-input{
@@ -512,4 +513,47 @@ input#inputSearch {
     background: lightgray;
     color: white;
     padding: 5px;
+}
+
+.remove-button {
+    height: 26px;
+    border: none;
+    background-color: lightcoral;
+    color: white;
+    padding: 5px 10px;
+    margin: 0 10px;
+    align-self: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-button {
+    height: 26px;
+    border: none;
+    background-color: #4879a3;
+    color: white;
+    padding: 5px 10px;
+    margin: 0 10px;
+    align-self: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+div#content-details-mask {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.episode-availability-selected {
+    background-color: #4879a3;
+    color: white;
+}
+
+.episode-availability-selected::placeholder {
+    color: white;
+}
+
+.episode-availability {
+    margin: 5px !important;
+    cursor: pointer;
 }

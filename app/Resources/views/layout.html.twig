@@ -111,11 +111,12 @@
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery-ui.min.js') }}"></script>
-        <script src="//www.jsviews.com/download/jsrender.js"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/libs/jsrender.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/languages.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/watch.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/main.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/api.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/ca/ca.data.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/utils.js') }}"></script>
 
     {% endblock %}
