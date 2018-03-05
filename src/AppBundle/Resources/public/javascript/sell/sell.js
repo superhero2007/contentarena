@@ -62,6 +62,29 @@ $(function () {
     yearArray .push({label: "To be announced", value : 0 });
     yearArray.reverse();
 
+    function isAPIAvailable() {
+        // Check for the various File API support.
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            // Great success! All the File APIs are supported.
+            return true;
+        } else {
+            // source: File API availability - http://caniuse.com/#feat=fileapi
+            // source: <output> availability - http://html5doctor.com/the-output-element/
+            document.writeln('The HTML5 APIs used in this form are only available in the following browsers:<br />');
+            // 6.0 File API & 13.0 <output>
+            document.writeln(' - Google Chrome: 13.0 or later<br />');
+            // 3.6 File API & 6.0 <output>
+            document.writeln(' - Mozilla Firefox: 6.0 or later<br />');
+            // 10.0 File API & 10.0 <output>
+            document.writeln(' - Internet Explorer: Not supported (partial support expected in 10.0)<br />');
+            // ? File API & 5.1 <output>
+            document.writeln(' - Safari: Not supported<br />');
+            // ? File API & 9.2 <output>
+            document.writeln(' - Opera: Not supported');
+            return false;
+        }
+    }
+
     function collectRights (container){
 
         var rights = {};
@@ -192,13 +215,15 @@ $(function () {
         return split( term ).pop();
     }
 
-    function addDistributionPackages( id ){
+    function addDistributionPackages( name ){
 
         var distributionPackage = $(".production-standards", "#box-templates").clone(),
             technicalDelivery = $(".technical-delivery", "#box-templates").clone(),
             distributionPackageTitle = distributionPackage.find(".box-title"),
             technicalDeliveryTitle = technicalDelivery.find(".box-title"),
-            title = id.replace("-", " - ");
+            title = name.replace("-", " - "),
+            template = $.templates("#content-details-template"),
+            episodeTemplate = $.templates("#episode-template");
 
         $("[group='Production standards']", ".rights-list").each(function(){
             var test = $(this).clone();
@@ -210,30 +235,65 @@ $(function () {
             technicalDelivery.find(".seller-box-content").append(test);
         });
 
-        distributionPackage.attr("id","distribution-package-" + id).show().insertBefore(".rights-list");
-        technicalDelivery.attr("id","technical-delivery-" + id).show().insertAfter(distributionPackage);
+        distributionPackage.attr("id","distribution-package-" + name).show().insertBefore(".rights-list");
+        technicalDelivery.attr("id","technical-delivery-" + name).show().insertAfter(distributionPackage);
         distributionPackageTitle.html("Distribution package - " + distributionPackageTitle.html() + " -"  + title);
         technicalDeliveryTitle.html(technicalDeliveryTitle.html() + " - " + title);
 
         $(".optional",technicalDelivery).hide();
 
         $("label", distributionPackage ).each(function(){
-            $(this).attr("for", "distribution-package-" + id + "-" + $(this).attr("for") )
+            $(this).attr("for", "distribution-package-" + name + "-" + $(this).attr("for") )
         });
 
         $("input, select", distributionPackage ).each(function(){
-            $(this).attr("id", "distribution-package-" + id + "-" + $(this).attr("id") )
+            $(this).attr("id", "distribution-package-" + name + "-" + $(this).attr("id") )
         });
 
         $("label", technicalDelivery ).each(function(){
-            $(this).attr("for", "technical-delivery-" + id + "-" + $(this).attr("for") )
+            $(this).attr("for", "technical-delivery-" + name + "-" + $(this).attr("for") )
         });
 
         $("input, select", technicalDelivery ).each(function(){
-            $(this).attr("id", "technical-delivery-" + id + "-" + $(this).attr("id") )
+            $(this).attr("id", "technical-delivery-" + name + "-" + $(this).attr("id") )
         });
 
-        ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + id + " .has-language-trigger");
+        ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + name + " .has-language-trigger");
+
+        if( name === "Program" ){
+            distributionPackage.find(".seller-box-content").append(template.render());
+            $("#upload-content-csv").on('click', function (){
+                $('#csv-selector-hidden').trigger("click");
+            });
+            if(isAPIAvailable()) {
+                $('#csv-selector-hidden').bind('change', function (evt) {
+                    var files = evt.target.files; // FileList object
+                    var file = files[0];
+                    var reader = new FileReader();
+
+                    $('#content-details-mask').html("");
+
+                    reader.readAsText(file);
+                    reader.onload = function(event){
+                        var csv = event.target.result;
+                        var data = $.csv.toArrays(csv);
+
+                        data.forEach(function (row, index) {
+                            if ( index > 0 ){
+                                $('#content-details-mask').append(episodeTemplate.render({
+                                    episode: row[0]
+                                })).show();
+                            }
+                        });
+
+                        $("#episodes-quantity").val(data.length - 1);
+
+
+                    };
+                    reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
+                });
+            }
+        }
 
         return distributionPackage;
 
@@ -262,16 +322,9 @@ $(function () {
         $(".distribution-package-selector", distributionPackage).on("change", function () {
             var values = $(this).val().split(", ");
 
-            /*values.forEach(function (packageName) {
-                addDistributionPackages(packages.getIdByName(packageName), packageName);
-            });*/
-
             addDistributionPackages( values.join("-") );
-
             $(this).remove();
-
         })
-
 
     }
 
@@ -1095,6 +1148,15 @@ $(function () {
         });
     }
 
+    function addGenericEpisodes( quantity ){
+        var template = $.templates("#episode-template");
+
+        for( var i = 0; i < quantity; i++){
+            $('#content-details-mask').append(template.render({id: i+1}));
+        }
+
+    }
+
     $("#add-sport-layer").on("click", addSportLayer);
 
     $(".package-selector").on('change', function () {
@@ -1215,38 +1277,6 @@ $(function () {
                 $(this).autocomplete("search", "");
             });
         }
-    });
-
-    /**
-     * Fills the program type selector
-     */
-    $( "#event-programType-selector" ).autocomplete({
-        source : [
-            { label: "Magazine", value : 0},
-            { label: "Highlight show", value : 1},
-            { label: "Preview", value : 2},
-            { label: "Talk-show", value : 3},
-            { label: "Documentary", value : 4 },
-            { label: "Other", value : 5 }
-        ],
-        minLength: 0,
-        select: function( event, ui ) {
-            event.preventDefault();
-            $(event.target).val(ui.item.label).attr("externald", ui.item.value).trigger('blur');
-        }
-    }).focus(function(){
-        $(this).autocomplete("search", "");
-    });
-
-    $( "#event-year-selector" ).autocomplete({
-        source : yearArray,
-        minLength: 0,
-        select: function( event, ui ) {
-            event.preventDefault();
-            $(event.target).val(ui.item.label).trigger('blur');
-        }
-    }).focus(function(){
-       $(this).autocomplete("search", "");
     });
 
     $("#event-customEnd-selector, #event-customStart-selector, #event-availability-selector, #expiration-date, .installment-date").datepicker();
@@ -1400,6 +1430,30 @@ $(function () {
         $.each($(this).parent().parent().siblings(), function (k, item) {
             if ( $(item).hasClass('all-type') ) $(item).find("input").attr("checked", false);
         });
+    });
+
+    $(document).on('change', '#content-details-method-mask', function () {
+        var el = $("#episodes-quantity"),
+            quantity = el.val();
+
+        if(this.checked){
+            if ( quantity !== "" ) addGenericEpisodes(quantity);
+            el.on('change', function () {
+                var newQuantity = $(this).val();
+                addGenericEpisodes(newQuantity);
+            });
+
+        } else {
+            $('#episodes-quantity').off();
+        }
+    });
+
+    $(document).on('click', ".episode-availability", function(){
+        $(this).parent().find('input').each(function(){
+            $(this).removeClass("episode-availability-selected");
+        });
+        $(this).addClass("episode-availability-selected");
+
     });
 
     /**
