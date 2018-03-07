@@ -1149,12 +1149,21 @@ $(function () {
     }
 
     function addGenericEpisodes( quantity ){
-        var template = $.templates("#episode-template");
+        var template = $.templates("#episode-template"),
+            container = $("#content-details-mask"),
+            currentQuantity = container.children().length,
+            start = 0;
 
-        for( var i = 0; i < quantity; i++){
-            $('#content-details-mask').append(template.render({id: i+1}));
+        if ( currentQuantity > quantity ) container.empty();
+
+        if ( currentQuantity < quantity ) start = currentQuantity;
+
+        for( var i = start; i < quantity; i++){
+            container.append(template.render({id: i + 1 }));
         }
 
+        $(".episode-availability", container ).off().datepicker();
+        console.log("current : " + currentQuantity, "Goal: " + quantity, "Start: " + start);
     }
 
     $("#add-sport-layer").on("click", addSportLayer);
@@ -1435,12 +1444,12 @@ $(function () {
 
     $(document).on('change', '#content-details-method-mask', function () {
         var el = $("#episodes-quantity"),
-            quantity = el.val();
+            quantity = Number( el.val() );
 
         if(this.checked){
             if ( quantity !== "" ) addGenericEpisodes(quantity);
             el.on('change', function () {
-                var newQuantity = $(this).val();
+                var newQuantity = Number(  $(this).val() );
                 addGenericEpisodes(newQuantity);
             });
 
