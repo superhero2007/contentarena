@@ -322,8 +322,10 @@ $(function () {
         $(".distribution-package-selector", distributionPackage).on("change", function () {
             var values = $(this).val().split(", ");
 
+            $(".technical-delivery:visible:not(#technical-delivery-Main)").remove();
+            $(".production-standards:visible:not(#distribution-package-Main)").remove();
+
             addDistributionPackages( values.join("-") );
-            $(this).remove();
         })
 
     }
