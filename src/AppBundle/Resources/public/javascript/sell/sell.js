@@ -1162,7 +1162,7 @@ $(function () {
             container.append(template.render({id: i + 1 }));
         }
 
-        $(".episode-availability", container ).off().datepicker();
+        $(".episode-availability-date", container ).off().datepicker();
         console.log("current : " + currentQuantity, "Goal: " + quantity, "Start: " + start);
     }
 
