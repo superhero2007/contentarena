@@ -422,8 +422,15 @@ $(function () {
 
         if ( packagesName.indexOf("Program") === -1 || packagesName.length > 1 ){
             distributionPackage = addDistributionPackages( "Main");
-            addExtraDistributionPackage(distributionPackage);
+        }
 
+        if ( packagesName.length > 1
+            && ( packagesName.indexOf("Clips") !== -1
+                || packagesName.indexOf("Highlights") !== -1
+                || packagesName.indexOf("News access") !== -1
+            )
+        ){
+            addExtraDistributionPackage(distributionPackage);
         }
 
         if ( packagesName.indexOf("Program") !== -1 ){
@@ -991,10 +998,12 @@ $(function () {
 
         if ( category ) addCustomFn("#event-category-selector", "Enter Country/Category");
         if ( tournament ) addCustomFn("#event-tournament-selector", "Enter Tournament");
-        addCustomFn("#event-season-selector", "Enter Season");
+        /*addCustomFn("#event-season-selector", "Enter Season");
         $("#event-schedule-subitems").html("");
         $(".custom-template-item").show();
-        $(".custom-template-item").children().show();
+        $(".custom-template-item").children().show();*/
+
+        ContentArena.Form.addCustomSeason();
     }
 
     function addOrdinal( n ){

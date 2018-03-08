@@ -12,7 +12,7 @@ $(function () {
             fixtureTemplate = $.templates("#custom-fixture-template"),
             container = $(containerSelector || "#event-schedule-subitems"),
             seasonData = {
-                id : id || 1,
+                id : $(".custom-season-container", container).length + 1,
                 startYear: new Date().getFullYear(),
                 endYear: new Date().getFullYear() + 1,
             },
