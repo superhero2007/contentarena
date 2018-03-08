@@ -1431,7 +1431,7 @@ $(function () {
         $( selectorHide, context ).hide().find("input").val("");
 
         if (this.checked){
-            $( selectorShow, context ).show();
+            $(this).parent().parent().parent().append($( selectorShow, context ).show())
         }
     });
 
