@@ -1,64 +1,66 @@
 <script id="content-details-template" type="text/x-jsrender">
 {% raw %}
-<div class="box-item">
-    <div class="select-box-item-title">
-        Number of episodes
+<div class="optional content-details is-hidden">
+    <div class="box-item">
+        <div class="select-box-item-title">
+            Number of episodes
+        </div>
+
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+            </div>
+            <div class="select-box-item-label">
+                <input type="number" class="right-form-input content-input"
+                           id="episodes-quantity"
+                           placeholder=""/>
+            </div>
+        </div>
     </div>
 
-    <div class="select-box-item select-box-item-full">
-        <div class="select-box-checkbox">
+    <div class="box-item">
+        <div class="select-box-item-title">
+            Content Availability Information
         </div>
-        <div class="select-box-item-label">
-            <input type="number" class="right-form-input content-input"
-                       id="episodes-quantity"
-                       placeholder=""/>
-        </div>
-    </div>
-</div>
 
-<div class="box-item">
-    <div class="select-box-item-title">
-        Content Details
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+                <input type="checkbox"
+                       id="content-details-method-mask"
+                       show="#content-details-mask"
+                       hide="#content-details-upload"
+                       class="unselect-others toggler-checkbox" />
+                <label for="content-details-method-mask"></label>
+            </div>
+            <div class="select-box-item-label">
+                Enter via mask
+            </div>
+        </div>
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+                <input type="checkbox"
+                       id="content-details-method-upload"
+                       hide="#content-details-mask"
+                       show="#content-details-upload"
+                       class="unselect-others toggler-checkbox" />
+                <label for="content-details-method-upload"></label>
+            </div>
+            <div class="select-box-item-label">
+                Upload as document
+            </div>
+        </div>
     </div>
 
-    <div class="select-box-item select-box-item-full">
-        <div class="select-box-checkbox">
-            <input type="checkbox"
-                   id="content-details-method-mask"
-                   show="#content-details-mask"
-                   hide="#content-details-upload"
-                   class="unselect-others toggler-checkbox" />
-            <label for="content-details-method-mask"></label>
-        </div>
-        <div class="select-box-item-label">
-            Enter via mask
-        </div>
+    <div class="box-item is-hidden" id="content-details-mask">
     </div>
-    <div class="select-box-item select-box-item-full">
-        <div class="select-box-checkbox">
-            <input type="checkbox"
-                   id="content-details-method-upload"
-                   hide="#content-details-mask"
-                   show="#content-details-upload"
-                   class="unselect-others toggler-checkbox" />
-            <label for="content-details-method-upload"></label>
-        </div>
-        <div class="select-box-item-label">
-            Upload as document
-        </div>
-    </div>
-</div>
 
-<div class="box-item is-hidden" id="content-details-mask">
-</div>
-
-<div class="box-item is-hidden" id="content-details-upload">
-    <div class="select-box-item-title">
-        Please note that the uploaded sheet should contain the titles and availability dates of the offered program episodes.
-    </div>
-    <div class="select-box-item select-box-item-full">
-        <button class="small-button" id="upload-content-csv">Upload CSV document</button>
-        <button class="small-button" id="download-csv-sheet">Download CSV sheet as framework </button>
+    <div class="box-item is-hidden" id="content-details-upload">
+        <div class="select-box-item-title">
+            Please note that the uploaded sheet should contain the titles and availability dates of the offered program episodes.
+        </div>
+        <div class="select-box-item select-box-item-full">
+            <button class="small-button" id="upload-content-csv">Upload CSV document</button>
+            <button class="small-button" id="download-csv-sheet">Download CSV sheet as framework </button>
+        </div>
     </div>
 </div>
 

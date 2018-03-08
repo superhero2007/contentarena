@@ -262,7 +262,7 @@ $(function () {
         ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + name + " .has-language-trigger");
 
         if( name === "Program" ){
-            distributionPackage.find(".seller-box-content").append(template.render());
+            technicalDelivery.find(".seller-box-content").append(template.render());
             $("#upload-content-csv").on('click', function (){
                 $('#csv-selector-hidden').trigger("click");
             });
@@ -294,6 +294,10 @@ $(function () {
                     reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
                 });
             }
+
+            $(".content-details", technicalDelivery).addClass($("[right-name=distribution-method-fiber]", technicalDelivery).attr("show").replace(".",""));
+
+
         }
 
         return distributionPackage;
@@ -419,7 +423,6 @@ $(function () {
             mainTarget.show();
         });
 
-
         if ( packagesName.indexOf("Program") === -1 || packagesName.length > 1 ){
             distributionPackage = addDistributionPackages( "Main");
         }
@@ -437,7 +440,6 @@ $(function () {
             addDistributionPackages( "Program" );
         }
 
-
         $("#main-sell-box").show();
         $("#price-sell-box").show();
         $(".package-ready-button").show();
@@ -446,6 +448,7 @@ $(function () {
         mainTarget.find(".has-calendar").each(function (k, element) {
             $("#" + $(element).attr("id")).datepicker();
         })
+
     }
 
     function fillCategories(){
