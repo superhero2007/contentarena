@@ -295,7 +295,7 @@ $(function () {
                 });
             }
 
-            $(".content-details", technicalDelivery).addClass($("[right-name=distribution-method-fiber]", technicalDelivery).attr("show").replace(".",""));
+            //$(".content-details", technicalDelivery).addClass($("[right-name=distribution-method-fiber]", technicalDelivery).attr("show").replace(".",""));
 
 
         }
