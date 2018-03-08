@@ -5,18 +5,40 @@
 $(function () {
 
     window.ContentArena = window.ContentArena || {};
+    ContentArena.Form = ContentArena.Form || {};
 
-    $("#add-more-fixtures").on("click", function(){
+    ContentArena.Form.addCustomSeason = function( id, containerSelector ){
+        var template = $.templates("#season-template"),
+            fixtureTemplate = $.templates("#custom-fixture-template"),
+            container = $(containerSelector || "#event-schedule-subitems"),
+            seasonData = {
+                id : id || 1,
+                startYear: new Date().getFullYear(),
+                endYear: new Date().getFullYear() + 1,
+            },
+            seasonElement = $(template.render(seasonData)) ;
 
-        var template = $.templates("#custom-fixture-template"),
-            salesPackages = $(".custom-fixtures"),
-            id = salesPackages.length + 1,
-            htmlOutput = template.render({id: id });
+        container.append( seasonElement );
 
-        salesPackages.last().after(htmlOutput);
-        $("#custom-fixture-date-" + id).datepicker();
-    });
+        $(".remove-season", seasonElement ).on("click", function () {
+            seasonElement.remove();
+        });
 
-    $("#custom-fixture-date-1").datepicker();
+        $(".add-fixture", seasonElement ).on("click", function () {
+            var fixtureContainer = $(".custom-fixtures", seasonElement),
+                fixture = $(fixtureTemplate.render({
+                    id : fixtureContainer.children().length + 1,
+                    seasonId: seasonData.id
+                }) );
+
+            fixtureContainer.append( fixture );
+
+            $(".fixture-date", fixture ).datepicker();
+
+        });
+
+        $(".fixture-date").datepicker();
+    };
+
 
 });

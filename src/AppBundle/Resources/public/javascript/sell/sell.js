@@ -6,6 +6,7 @@ $(function () {
 
     window.ContentArena = window.ContentArena || {};
     ContentArena.Model = ContentArena.Model || {};
+    ContentArena.Form = ContentArena.Form || {};
 
     var Content = function() {
 
@@ -618,7 +619,8 @@ $(function () {
 
                         // Add new functionality
                         if ( selected === "new" ){
-                            addCustomTemplate( false, false, false );
+                            //addCustomTemplate( false, false, false );
+                            ContentArena.Form.addCustomSeason();
                             return;
                         }
 
