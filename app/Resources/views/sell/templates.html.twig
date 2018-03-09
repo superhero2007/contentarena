@@ -1,64 +1,66 @@
 <script id="content-details-template" type="text/x-jsrender">
 {% raw %}
-<div class="box-item">
-    <div class="select-box-item-title">
-        Number of episodes
+<div class="optional content-details ">
+    <div class="box-item">
+        <div class="select-box-item-title">
+            Number of episodes
+        </div>
+
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+            </div>
+            <div class="select-box-item-label">
+                <input type="number" class="right-form-input content-input"
+                           id="episodes-quantity"
+                           placeholder=""/>
+            </div>
+        </div>
     </div>
 
-    <div class="select-box-item select-box-item-full">
-        <div class="select-box-checkbox">
+    <div class="box-item">
+        <div class="select-box-item-title">
+            Content Availability Information
         </div>
-        <div class="select-box-item-label">
-            <input type="number" class="right-form-input content-input"
-                       id="episodes-quantity"
-                       placeholder=""/>
-        </div>
-    </div>
-</div>
 
-<div class="box-item">
-    <div class="select-box-item-title">
-        Content Details
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+                <input type="checkbox"
+                       id="content-details-method-mask"
+                       show="#content-details-mask"
+                       hide="#content-details-upload"
+                       class="unselect-others toggler-checkbox" />
+                <label for="content-details-method-mask"></label>
+            </div>
+            <div class="select-box-item-label">
+                Enter via mask
+            </div>
+        </div>
+        <div class="select-box-item select-box-item-full">
+            <div class="select-box-checkbox">
+                <input type="checkbox"
+                       id="content-details-method-upload"
+                       hide="#content-details-mask"
+                       show="#content-details-upload"
+                       class="unselect-others toggler-checkbox" />
+                <label for="content-details-method-upload"></label>
+            </div>
+            <div class="select-box-item-label">
+                Upload as document
+            </div>
+        </div>
     </div>
 
-    <div class="select-box-item select-box-item-full">
-        <div class="select-box-checkbox">
-            <input type="checkbox"
-                   id="content-details-method-mask"
-                   show="#content-details-mask"
-                   hide="#content-details-upload"
-                   class="unselect-others toggler-checkbox" />
-            <label for="content-details-method-mask"></label>
-        </div>
-        <div class="select-box-item-label">
-            Enter via mask
-        </div>
+    <div class="box-item is-hidden" id="content-details-mask">
     </div>
-    <div class="select-box-item select-box-item-full">
-        <div class="select-box-checkbox">
-            <input type="checkbox"
-                   id="content-details-method-upload"
-                   hide="#content-details-mask"
-                   show="#content-details-upload"
-                   class="unselect-others toggler-checkbox" />
-            <label for="content-details-method-upload"></label>
-        </div>
-        <div class="select-box-item-label">
-            Upload as document
-        </div>
-    </div>
-</div>
 
-<div class="box-item is-hidden" id="content-details-mask">
-</div>
-
-<div class="box-item is-hidden" id="content-details-upload">
-    <div class="select-box-item-title">
-        Please note that the uploaded sheet should contain the titles and availability dates of the offered program episodes.
-    </div>
-    <div class="select-box-item select-box-item-full">
-        <button class="small-button" id="upload-content-csv">Upload CSV document</button>
-        <button class="small-button" id="download-csv-sheet">Download CSV sheet as framework </button>
+    <div class="box-item is-hidden" id="content-details-upload">
+        <div class="select-box-item-title">
+            Please note that the uploaded sheet should contain the titles and availability dates of the offered program episodes.
+        </div>
+        <div class="select-box-item select-box-item-full">
+            <button class="small-button" id="upload-content-csv">Upload CSV document</button>
+            <button class="small-button" id="download-csv-sheet">Download CSV sheet as framework </button>
+        </div>
     </div>
 </div>
 
@@ -82,7 +84,7 @@
            id="episode-{{:id}}-available"/>
 
     <input type="text"
-           class="episode-availability"
+           class="episode-availability episode-availability-date"
            placeholder="Available on Date/Time"
            id="episode-{{:id}}-available-date"/>
 
@@ -96,14 +98,18 @@
 
 <script id="custom-fixture-template" type="text/x-jsrender">
 {% raw %}
-<div class="step1-event-item  custom-template-item custom-fixtures">
+<div class="step1-event-item  custom-fixture" id="custom-fixture-{{:seasonId}}-{{:id}}">
     <input type="text" class="content-input"
-           id="custom-fixture-name-{{:id}}"
-           placeholder="enter fixture (optional)"/> <input type="text" class="content-input"
-                                                           placeholder="Select date (optional)"
-                                                           id="custom-fixture-date-{{:id}}"/>
+           id="custom-fixture-name-{{:seasonId}}-{{:id}}"
+           placeholder="enter fixture (optional)"/>
+
+           <input type="text"
+                  class="content-input  fixture-date"
+                  placeholder="Select date (optional)"
+                  id="custom-fixture-date-{{:seasonId}}-{{:id}}"/>
 </div>
 {% endraw %}
+
 </script>
 
 {# PRICING AND TERRITORY #}
@@ -307,6 +313,65 @@
             </div>
         </div>
 
+    </div>
+</div>
+{% endraw %}
+</script>
+
+<script id="season-template" type="text/x-jsrender">
+{% raw %}
+<div class="custom-season-container" id="custom-season-{{:id}}">
+
+    <div class="step1-event-item">
+        <input type="text"
+               required
+               class="content-input large-input"
+               placeholder="Name of the season"
+               id="custom-season-name-{{:id}}"/>
+
+        <input type="number"
+               required
+               value="{{:startYear}}"
+               class="content-input small-input"
+               placeholder="Start year"
+               id="custom-season-name-start-{{:id}}"/>
+
+        <input type="number"
+               value="{{:endYear}}"
+               class="content-input small-input"
+               placeholder="End year (optional)"
+               id="custom-season-name-end-{{:id}}"/>
+    </div>
+
+    <div class="step1-event-subitems-container">
+        <input type="number"
+               required
+               class="content-input"
+               placeholder="Number of events"
+               id="custom-season-events-{{:id}}"/>
+    </div>
+    <div class="step1-event-subitems-container">
+        <input type="text" class="content-input" placeholder="Start date" id="custom-season-start-{{:id}}"/>
+    </div>
+    <div class="step1-event-subitems-container">
+        <input type="text" class="content-input" placeholder="End date" id="custom-season-end-{{:id}}"/>
+    </div>
+    <div class="step1-event-subitems-container custom-fixtures" >
+        <div class="step1-event-item custom-fixture">
+            <input type="text"
+                   class="content-input"
+                   id="custom-fixture-name-{{:id}}-1"
+                   placeholder="enter fixture (optional)"/>
+
+            <input type="text"
+                   class="content-input fixture-date"
+                   placeholder="Select date (optional)"
+                   id="custom-fixture-date-{{:id}}-1"/>
+        </div>
+    </div>
+    <div class="step1-event-subitems-container">
+        <button class="small-button add-fixture">Add more fixtures</button>
+        <button class="small-button remove-season">Remove season</button>
     </div>
 </div>
 {% endraw %}

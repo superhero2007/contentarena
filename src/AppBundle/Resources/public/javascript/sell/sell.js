@@ -6,6 +6,7 @@ $(function () {
 
     window.ContentArena = window.ContentArena || {};
     ContentArena.Model = ContentArena.Model || {};
+    ContentArena.Form = ContentArena.Form || {};
 
     var Content = function() {
 
@@ -261,7 +262,7 @@ $(function () {
         ContentArena.Languages.addLanguageBehaviour("#distribution-package-" + name + " .has-language-trigger");
 
         if( name === "Program" ){
-            distributionPackage.find(".seller-box-content").append(template.render());
+            technicalDelivery.find(".seller-box-content").append(template.render());
             $("#upload-content-csv").on('click', function (){
                 $('#csv-selector-hidden').trigger("click");
             });
@@ -293,6 +294,10 @@ $(function () {
                     reader.onerror = function(){ alert('Unable to read ' + file.fileName); };
                 });
             }
+
+            //$(".content-details", technicalDelivery).addClass($("[right-name=distribution-method-fiber]", technicalDelivery).attr("show").replace(".",""));
+
+
         }
 
         return distributionPackage;
@@ -322,8 +327,10 @@ $(function () {
         $(".distribution-package-selector", distributionPackage).on("change", function () {
             var values = $(this).val().split(", ");
 
+            $(".technical-delivery:visible:not(#technical-delivery-Main)").remove();
+            $(".production-standards:visible:not(#distribution-package-Main)").remove();
+
             addDistributionPackages( values.join("-") );
-            $(this).remove();
         })
 
     }
@@ -416,17 +423,22 @@ $(function () {
             mainTarget.show();
         });
 
-
         if ( packagesName.indexOf("Program") === -1 || packagesName.length > 1 ){
             distributionPackage = addDistributionPackages( "Main");
-            addExtraDistributionPackage(distributionPackage);
+        }
 
+        if ( packagesName.length > 1
+            && ( packagesName.indexOf("Clips") !== -1
+                || packagesName.indexOf("Highlights") !== -1
+                || packagesName.indexOf("News access") !== -1
+            )
+        ){
+            addExtraDistributionPackage(distributionPackage);
         }
 
         if ( packagesName.indexOf("Program") !== -1 ){
             addDistributionPackages( "Program" );
         }
-
 
         $("#main-sell-box").show();
         $("#price-sell-box").show();
@@ -436,6 +448,7 @@ $(function () {
         mainTarget.find(".has-calendar").each(function (k, element) {
             $("#" + $(element).attr("id")).datepicker();
         })
+
     }
 
     function fillCategories(){
@@ -616,7 +629,8 @@ $(function () {
 
                         // Add new functionality
                         if ( selected === "new" ){
-                            addCustomTemplate( false, false, false );
+                            //addCustomTemplate( false, false, false );
+                            ContentArena.Form.addCustomSeason();
                             return;
                         }
 
@@ -987,10 +1001,12 @@ $(function () {
 
         if ( category ) addCustomFn("#event-category-selector", "Enter Country/Category");
         if ( tournament ) addCustomFn("#event-tournament-selector", "Enter Tournament");
-        addCustomFn("#event-season-selector", "Enter Season");
+        /*addCustomFn("#event-season-selector", "Enter Season");
         $("#event-schedule-subitems").html("");
         $(".custom-template-item").show();
-        $(".custom-template-item").children().show();
+        $(".custom-template-item").children().show();*/
+
+        ContentArena.Form.addCustomSeason();
     }
 
     function addOrdinal( n ){
@@ -1149,12 +1165,21 @@ $(function () {
     }
 
     function addGenericEpisodes( quantity ){
-        var template = $.templates("#episode-template");
+        var template = $.templates("#episode-template"),
+            container = $("#content-details-mask"),
+            currentQuantity = container.children().length,
+            start = 0;
 
-        for( var i = 0; i < quantity; i++){
-            $('#content-details-mask').append(template.render({id: i+1}));
+        if ( currentQuantity > quantity ) container.empty();
+
+        if ( currentQuantity < quantity ) start = currentQuantity;
+
+        for( var i = start; i < quantity; i++){
+            container.append(template.render({id: i + 1 }));
         }
 
+        $(".episode-availability-date:not(.hasDatepicker)", container ).datepicker();
+        console.log("current : " + currentQuantity, "Goal: " + quantity, "Start: " + start);
     }
 
     $("#add-sport-layer").on("click", addSportLayer);
@@ -1406,7 +1431,7 @@ $(function () {
         $( selectorHide, context ).hide().find("input").val("");
 
         if (this.checked){
-            $( selectorShow, context ).show();
+            $(this).parent().parent().parent().append($( selectorShow, context ).show())
         }
     });
 
@@ -1435,12 +1460,12 @@ $(function () {
 
     $(document).on('change', '#content-details-method-mask', function () {
         var el = $("#episodes-quantity"),
-            quantity = el.val();
+            quantity = Number( el.val() );
 
         if(this.checked){
             if ( quantity !== "" ) addGenericEpisodes(quantity);
             el.on('change', function () {
-                var newQuantity = $(this).val();
+                var newQuantity = Number(  $(this).val() );
                 addGenericEpisodes(newQuantity);
             });
 

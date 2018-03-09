@@ -308,3 +308,27 @@ input[type="checkbox"]:checked:disabled + label {
 .step1-event-subitems-container {
     margin-left: 25px;
 }
+
+.custom-season-container{
+    margin: 20px 0;
+}
+
+.custom-season-container input {
+    margin-right: 5px !important;
+    box-sizing: border-box;
+    max-width: 200px;
+}
+
+.custom-season-container .large-input{
+    min-width: 300px;
+}
+
+.custom-season-container .small-input{
+    width: 100px;
+
+}
+
+.custom-fixtures {
+    display: flex;
+    flex-direction: column;
+}
