@@ -2,7 +2,9 @@
  * Created by JuanCruz on 1/3/2018.
  */
 
-$(function () {
+$(document).ready(function(){
+
+    //$($('table.territory-table tr')[20]).nextAll('tr').hide(0);
 
     $("#view-seller").on("click", function () {
         $("#seller-dialog").dialog({
@@ -67,26 +69,6 @@ $(function () {
     });
 
 
-    $(document).on('click','.continent-name',function(){
-       var id = $(this).data('id');
-       var csrf_token = $('#csrf_token').val();
-       var custom_id = $('#custom-id').val();
-
-       $.ajax({
-           url:'/contents',
-           type:'POST',
-           data:{
-               id: id,
-               _csrf_token: csrf_token,
-               custom_id: custom_id
-           },
-           success:function(res){
-               console.log(res);
-               $('.territory-table').html(res);
-           }
-       });
-    });
-
     var i = 0;
     $(document).on('click','.main-check',function(){
         i++;
@@ -99,7 +81,46 @@ $(function () {
     })
 
     $(document).on('click','.continent-name',function(){
+
+        var id = $(this).data('id');
         $('.continent-name').removeClass('continent-name-color');
         $(this).addClass('continent-name-color');
+
+        $('.territory-id').val(id);
+        var rowCount = $('tbody.territory-table-body tr').length;
+        var continentRowCount = $('tbody.territory-table-body tr[data-id=' + id + ']').length;
+
+        if(id == 'world'){
+            if(rowCount > 20){
+                $('.view-all').show();
+                $('.view-all').text('View all ('+ rowCount + ')');
+            }
+            $('tbody.territory-table-body tr').removeClass('hide-item');
+            $($('tbody.territory-table-body tr').eq(20)).nextAll('tr').addClass('hide-item');
+        }else{
+
+            if(continentRowCount > 20){
+                $('.view-all').show();
+                $('.view-all').text('View all ('+ continentRowCount + ')');
+            }
+            $('tbody.territory-table-body tr').addClass('hide-item');
+            $($('tbody.territory-table-body tr[data-id=' + id + ']')).removeClass('hide-item');
+            $($('tbody.territory-table-body tr[data-id=' + id + ']').eq(20)).nextAll('tr').addClass('hide-item');
+        }
     })
+
+    $(document).on('click','.view-all',function(){
+
+        var id = $('.territory-id').val();
+        if(id == 'world'){
+            $('tbody.territory-table-body tr').removeClass('hide-item');
+        }else{
+            $('tbody.territory-table-body tr').addClass('hide-item');
+            $($('tbody.territory-table-body tr[data-id=' + id + ']')).removeClass('hide-item');
+        }
+
+        $(this).hide(0);
+    })
+
+
 });

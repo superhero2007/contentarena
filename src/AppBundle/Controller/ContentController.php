@@ -24,7 +24,7 @@ class ContentController extends Controller
 
       $countries = $this->getDoctrine()
           ->getRepository('AppBundle:Content')
-          ->getTerritoryInfo($request->get("customId"),5);
+          ->getTerritoryInfo($request->get("customId"));
 
       $rightsPackages = $content->getRights();
       $distributionPackages = $content->getDistributionPackages();
@@ -48,26 +48,6 @@ class ContentController extends Controller
           'custom_id'=>$request->get("customId")
       ]);
   }
-
-    /**
-     * @Route("/contents", name="contents")
-     * @param Request $request
-     * @return string
-     */
-
-    public function ajaxContents(Request $request){
-
-        if($request->isXmlHttpRequest()){
-
-            $countries = $this->getDoctrine()->getRepository('AppBundle:Content')
-                ->getAjaxTerritoryInfo($request->request->get('id'),$request->request->get('custom_id'),5);
-
-            return $this->render('content/find_territories_ajax.twig.html',[
-                'countries'=>$countries,
-            ]);
-        }
-
-    }
 
 
     private function getRightsContent( $rights ){

@@ -4,10 +4,7 @@
     </div>
 
     <div class="box-content">
-        <form action="">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('iuui') }}" id="csrf_token">
 
-        </form>
         <div>
             <button class="uk-button uk-button-success main-check">Select All</button>
         </div>
@@ -31,9 +28,10 @@
                     <th></th>  
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="territory-table-body">
                 {% for country in countries.countries %}
-                    <tr>
+
+                    <tr data-id="{{ country.territoryId }}" class="country-row {% if loop.index > 20 %} hide-item{% endif %}">
                         <td>
                             <input type="checkbox" class="subordinate-check">
                         </td>
@@ -45,14 +43,17 @@
                             <button class="uk-button-primary">Add to chart</button>
                         </td>
                     </tr>
+
                 {% endfor %}
             </tbody>
         </table>
         <div >
-            <span class="uk-float-left">View Next 10</span>
+            {% if countries.countries| length > 20 %}
+                <span class="uk-float-left view-all">View all ({{ countries.countries| length }})</span>
+            {% endif %}
             <button class="uk-button uk-button-primary uk-float-right">Add selections to chart</button>
 
         </div>
-        <input type="hidden" value="{{ custom_id }}" id="custom-id">
+        <input type="hidden" class="territory-id" value="world">
     </div>
 </div>
