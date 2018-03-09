@@ -65,4 +65,41 @@ $(function () {
             });
         }
     });
+
+
+    $(document).on('click','.continent-name',function(){
+       var id = $(this).data('id');
+       var csrf_token = $('#csrf_token').val();
+       var custom_id = $('#custom-id').val();
+
+       $.ajax({
+           url:'/contents',
+           type:'POST',
+           data:{
+               id: id,
+               _csrf_token: csrf_token,
+               custom_id: custom_id
+           },
+           success:function(res){
+               console.log(res);
+               $('.territory-table').html(res);
+           }
+       });
+    });
+
+    var i = 0;
+    $(document).on('click','.main-check',function(){
+        i++;
+        if(i == 1){
+            $('.subordinate-check').prop('checked',true);
+        }else if(i == 2){
+            $('.subordinate-check').prop('checked',false);
+            i = 0;
+        }
+    })
+
+    $(document).on('click','.continent-name',function(){
+        $('.continent-name').removeClass('continent-name-color');
+        $(this).addClass('continent-name-color');
+    })
 });

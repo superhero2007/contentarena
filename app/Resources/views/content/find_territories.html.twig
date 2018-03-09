@@ -1,0 +1,58 @@
+<div class="box">
+    <div class="box-title">
+        Find territories
+    </div>
+
+    <div class="box-content">
+        <form action="">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('iuui') }}" id="csrf_token">
+
+        </form>
+        <div>
+            <button class="uk-button uk-button-success main-check">Select All</button>
+        </div>
+
+        <div class="uk-grid uk-flex uk-flex-center">
+            <div class="continent-name continent-name-color" data-id="world">World</div>
+
+            {% for territory in territories %}
+                <div class="continent-name" data-id="{{ territory.id }}">{{ territory.name }}</div>
+            {% endfor %}
+        </div>
+
+        <table class="uk-table territory-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Territory</th>
+                    <th>Purchasing Method</th>
+                    <th>Fee/Minimum Bid</th>
+                    <th>Currensy</th>
+                    <th></th>  
+                </tr>
+            </thead>
+            <tbody>
+                {% for country in countries.countries %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="subordinate-check">
+                        </td>
+                        <td>{{ country.name }}</td>
+                        <td>{{ countries.salesPackages.salesMethod }}</td>
+                        <td>{{ countries.salesPackages.fee }}</td>
+                        <td>{{ countries.salesPackages.currency }}</td>
+                        <td>
+                            <button class="uk-button-primary">Add to chart</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div >
+            <span class="uk-float-left">View Next 10</span>
+            <button class="uk-button uk-button-primary uk-float-right">Add selections to chart</button>
+
+        </div>
+        <input type="hidden" value="{{ custom_id }}" id="custom-id">
+    </div>
+</div>
