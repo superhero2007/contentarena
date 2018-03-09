@@ -9,7 +9,7 @@
 
             {%  if rightItem.name is defined %}
                 {%  if rightItem.inputs|length > 0 %}
-                    {{ rightItem.name|rightItemParse(rightItem.inputs)}}
+                    {{ rightItem.name|rightItemParse(rightItem.inputs, right.name)}}
                 {% else %}
                     {{ rightItem.name }}
                 {%  endif %}

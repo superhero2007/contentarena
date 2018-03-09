@@ -8,11 +8,21 @@
 
 namespace AppBundle\Twig;
 
+use Psr\Container\ContainerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class AppExtension extends AbstractExtension
 {
+    /** @var ContainerInterface */
+    protected $container;
+
+    /** @param ContainerInterface $container */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     public function getFilters()
     {
         return array(
@@ -46,16 +56,30 @@ class AppExtension extends AbstractExtension
         return $item;
     }
 
-    public function rightItemParse($content, $inputs)
+    public function rightItemParse($content, $inputs, $name)
     {
 
-        foreach ( $inputs as $input ){
-            if ( is_array($input) && count($input) > 0 ) {
-                $input = join(",", $input);
+        if($name=="Graphics" || $name=="Commentary"){
+            if(count($inputs)>0){
+                $lng = '';
+                foreach ( $inputs[0] as $input ){
+                    $lng = $lng.$this->container->getParameter($input).', ';
+                }
+
+                $temp = $this->get_string_between($content, "{{", "}}");
+                $content = str_replace("{{".$temp."}}", rtrim($lng, ', '), $content);
             }
 
-            $temp = $this->get_string_between($content, "{{", "}}");
-            $content = str_replace("{{".$temp."}}", $input, $content);
+        }else {
+
+            foreach ($inputs as $input) {
+                if (is_array($input) && count($input) > 0) {
+                    $input = join(",", $input);
+                }
+
+                $temp = $this->get_string_between($content, "{{", "}}");
+                $content = str_replace("{{" . $temp . "}}", $input, $content);
+            }
         }
 
         return $content;
