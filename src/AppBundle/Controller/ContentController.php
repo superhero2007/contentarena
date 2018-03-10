@@ -2,9 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Country;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContentController extends Controller
 {
@@ -17,6 +20,11 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+      $teritorries = $this->getDoctrine()->getRepository('AppBundle:Territory')->findAll();
+
+      $countries = $this->getDoctrine()
+          ->getRepository('AppBundle:Content')
+          ->getTerritoryInfo($request->get("customId"),5);
 
       $rightsPackages = $content->getRights();
       $distributionPackages = $content->getDistributionPackages();
@@ -34,12 +42,35 @@ class ContentController extends Controller
 
       return $this->render('content/content.html.twig', [
           'user' => $user,
-          'content' => $content
+          'content' => $content,
+          'territories'=>$teritorries,
+          'countries'=>$countries,
+          'custom_id'=>$request->get("customId")
       ]);
-
   }
 
-  private function getRightsContent( $rights ){
+    /**
+     * @Route("/contents", name="contents")
+     * @param Request $request
+     * @return string
+     */
+
+    public function ajaxContents(Request $request){
+
+        if($request->isXmlHttpRequest()){
+
+            $countries = $this->getDoctrine()->getRepository('AppBundle:Content')
+                ->getAjaxTerritoryInfo($request->request->get('id'),$request->request->get('custom_id'),5);
+
+            return $this->render('content/find_territories_ajax.twig.html',[
+                'countries'=>$countries,
+            ]);
+        }
+
+    }
+
+
+    private function getRightsContent( $rights ){
 
       $rightsRepository = $this->getDoctrine()->getRepository('AppBundle:Rights');
       $rightsItemsRepository = $this->getDoctrine()->getRepository('AppBundle:RightsItemContent');
