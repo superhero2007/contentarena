@@ -73,7 +73,7 @@ class ContentService
          * Set sport
          * Create element in DB if it doesn't exist.
          */
-        if ( isset($data->sports) ) {
+        if ( isset($data->sports) && count($data->sports) > 0 ) {
             $sports = $this->getSports($data);
             $content->setSports($sports);
         } else if ( isset($data->sport) ) {
