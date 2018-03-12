@@ -44,25 +44,25 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    public function getTerritoryInfo($customId,$limit){
+    public function getTerritoryInfo($customId){
 
         $country = $this->getEntityManager()->getRepository(Country::class);
         $content = $this->findOneBy(['customId'=>$customId]);
         $salesPackages = $content->getSalesPackages()[0];
 
         if($salesPackages['territories'] == 'worldwide'){
+
             $result = $country->createQueryBuilder('c')
                 ->where('c.id >= 1')
-                ->setMaxResults($limit)
                 ->getQuery()
                 ->getResult();
+
 
         }elseif($salesPackages['territories'] == 'selected'){
             $str = $salesPackages['selectedTerritories'];
 
             $result = $country->createQueryBuilder('c')
                 ->where('c.country_code IN (:country)')
-                ->setMaxResults($limit)
                 ->setParameter('country',$str)
                 ->getQuery()
                 ->getResult();
@@ -72,7 +72,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
             $result = $country->createQueryBuilder('c')
                 ->where('c.country_code NOT IN (:country)')
-                ->setMaxResults($limit)
                 ->setParameter('country',$str)
                 ->getQuery()
                 ->getResult();
@@ -82,87 +81,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             'salesPackages'=>$salesPackages,
             'countries'=>$result
         ];
-
-        return $data;
-    }
-
-    public function getAjaxTerritoryInfo($id,$custom_id,$limit){
-
-        $country = $this->getEntityManager()->getRepository(Country::class);
-        $content = $this->findOneBy(['customId'=>$custom_id]);
-        $salesPackages = $content->getSalesPackages()[0];
-
-
-        if($id == 'world'){
-            if($salesPackages['territories'] == 'worldwide'){
-                $result = $country->createQueryBuilder('c')
-                    ->where('c.id >= :id')
-                    ->setMaxResults($limit)
-                    ->setParameter('id',1)
-                    ->getQuery()
-                    ->getResult();
-            }elseif($salesPackages['territories'] == 'selected'){
-                $str = $salesPackages['selectedTerritories'];
-
-                $result = $country->createQueryBuilder('c')
-                    ->where('c.country_code IN (:country)')
-                    ->setMaxResults($limit)
-                    ->setParameter('country',$str)
-                    ->getQuery()
-                    ->getResult();
-
-            }elseif($salesPackages['territories'] == 'excluded'){
-                $str = $salesPackages['excludedTerritories'];
-                $result = $country->createQueryBuilder('c')
-                    ->where('c.country_code NOT IN (:country)')
-                    ->setMaxResults($limit)
-                    ->setParameter('country',$str)
-                    ->getQuery()
-                    ->getResult();
-            }
-
-        }else{
-
-            if($salesPackages['territories'] == 'worldwide'){
-                $result = $country->createQueryBuilder('c')
-                    ->where('c.id >= 1')
-                    ->setMaxResults($limit)
-                    ->getQuery()
-                    ->getResult();
-
-            }elseif($salesPackages['territories'] == 'selected'){
-
-                $str = $salesPackages['selectedTerritories'];
-
-                $result = $country->createQueryBuilder('c')
-                    ->where('c.country_code IN (:country)')
-                    ->andWhere('c.territory_id = :ter')
-                    ->setMaxResults($limit)
-                    ->setParameter('ter',1)
-                    ->setParameter('country',$str)
-                    ->getQuery()
-                    ->getSQL();
-
-                var_dump($result);die;
-
-            }elseif($salesPackages['territories'] == 'excluded'){
-                $str = $salesPackages['excludedTerritories'];
-                $result = $country->createQueryBuilder('c')
-                    ->where('c.country_code NOT IN (:country)')
-                    ->andWhere('c,territory_id = :id')
-                    ->setMaxResults($limit)
-                    ->setParameter('country',$str)
-                    ->setParameter('id',$id)
-                    ->getQuery()
-                    ->getResult();
-            }
-        }
-
-        $data = [
-            'salesPackages'=>$salesPackages,
-            'countries'=>$result
-        ];
-
 
         return $data;
     }

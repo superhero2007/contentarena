@@ -31,3 +31,11 @@
     background: #38799F;
     color: #fff;
 }
+
+.hide-item{
+    display: none!important;
+}
+
+.view-all{
+    cursor:pointer;
+}
