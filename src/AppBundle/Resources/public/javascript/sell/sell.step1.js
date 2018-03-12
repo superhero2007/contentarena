@@ -8,15 +8,24 @@ $(function () {
     ContentArena.Form = ContentArena.Form || {};
 
     ContentArena.Form.addCustomSeason = function( id, containerSelector ){
-        var template = $.templates("#season-template"),
+        var container = $(containerSelector || "#event-schedule-subitems"),
+            seasonNumber = $(".custom-season-container", container).length + 1,
+            source = $("#event-season-selector").autocomplete( "option", "source" ),
+            hasSeason = source.length > 0,
+            labels = (hasSeason) ? source[0].label.split(" ") : [],
+            seasonYear = (hasSeason) ? labels.pop() : new Date().getFullYear() ,
+            startYear = (hasSeason) ? ( seasonYear.search("/") !== -1 ) ? Number(seasonYear.split("/")[0]) + seasonNumber : Number(seasonYear) + seasonNumber : seasonYear ,
+            endYear = (hasSeason) ? ( seasonYear.search("/") !== -1 ) ? Number(seasonYear.split("/")[1]) + seasonNumber : null : seasonYear ,
+            seasonName = (hasSeason) ? labels.join(" ") : "",
+            template = $.templates("#season-template"),
             fixtureTemplate = $.templates("#custom-fixture-template"),
-            container = $(containerSelector || "#event-schedule-subitems"),
             seasonData = {
-                id : $(".custom-season-container", container).length + 1,
-                startYear: new Date().getFullYear(),
-                endYear: new Date().getFullYear() + 1,
+                id : seasonNumber,
+                name : seasonName,
+                startYear: startYear,
+                endYear: endYear
             },
-            seasonElement = $(template.render(seasonData)) ;
+            seasonElement = $(template.render(seasonData));
 
         container.append( seasonElement );
 
@@ -38,6 +47,7 @@ $(function () {
         });
 
         $(".fixture-date").datepicker();
+
     };
 
 
