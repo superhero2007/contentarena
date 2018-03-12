@@ -93,5 +93,9 @@ class SportCategory
     {
         return $this->externalId;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
 }
 
