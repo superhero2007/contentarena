@@ -1,0 +1,59 @@
+<div class="box">
+    <div class="box-title">
+        Find territories
+    </div>
+
+    <div class="box-content">
+
+        <div>
+            <button class="uk-button uk-button-success main-check">Select All</button>
+        </div>
+
+        <div class="uk-grid uk-flex uk-flex-center">
+            <div class="continent-name continent-name-color" data-id="world">World</div>
+
+            {% for territory in territories %}
+                <div class="continent-name" data-id="{{ territory.id }}">{{ territory.name }}</div>
+            {% endfor %}
+        </div>
+
+        <table class="uk-table territory-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Territory</th>
+                    <th>Purchasing Method</th>
+                    <th>Fee/Minimum Bid</th>
+                    <th>Currensy</th>
+                    <th></th>  
+                </tr>
+            </thead>
+            <tbody class="territory-table-body">
+                {% for country in countries.countries %}
+
+                    <tr data-id="{{ country.territoryId }}" class="country-row {% if loop.index > 20 %} hide-item{% endif %}">
+                        <td>
+                            <input type="checkbox" class="subordinate-check">
+                        </td>
+                        <td>{{ country.name }}</td>
+                        <td>{{ countries.salesPackages.salesMethod }}</td>
+                        <td>{{ countries.salesPackages.fee }}</td>
+                        <td>{{ countries.salesPackages.currency }}</td>
+                        <td>
+                            <button class="uk-button-primary">Add to chart</button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <div >
+            {% if countries.countries| length > 20 %}
+                <span class="uk-float-left view-all">View all ({{ countries.countries| length }})</span>
+            {% endif %}
+            <button class="uk-button uk-button-primary uk-float-right">Add selections to chart</button>
+
+        </div>
+        <input type="hidden" class="territory-id" value="world">
+    </div>
+</div>

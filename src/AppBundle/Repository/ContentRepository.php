@@ -2,6 +2,10 @@
 
 namespace AppBundle\Repository;
 
+
+use AppBundle\Entity\Country;
+
+
 /**
  * ContentRepository
  *
@@ -38,6 +42,47 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
 
+    }
+
+    public function getTerritoryInfo($customId){
+
+        $country = $this->getEntityManager()->getRepository(Country::class);
+        $content = $this->findOneBy(['customId'=>$customId]);
+        $salesPackages = $content->getSalesPackages()[0];
+
+        if($salesPackages['territories'] == 'worldwide'){
+
+            $result = $country->createQueryBuilder('c')
+                ->where('c.id >= 1')
+                ->getQuery()
+                ->getResult();
+
+
+        }elseif($salesPackages['territories'] == 'selected'){
+            $str = $salesPackages['selectedTerritories'];
+
+            $result = $country->createQueryBuilder('c')
+                ->where('c.country_code IN (:country)')
+                ->setParameter('country',$str)
+                ->getQuery()
+                ->getResult();
+
+        }elseif($salesPackages['territories'] == 'excluded'){
+          $str = $salesPackages['excludedTerritories'];
+
+            $result = $country->createQueryBuilder('c')
+                ->where('c.country_code NOT IN (:country)')
+                ->setParameter('country',$str)
+                ->getQuery()
+                ->getResult();
+        }
+
+        $data = [
+            'salesPackages'=>$salesPackages,
+            'countries'=>$result
+        ];
+
+        return $data;
     }
 
 }
