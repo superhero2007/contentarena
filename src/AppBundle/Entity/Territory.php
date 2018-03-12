@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +29,11 @@ class Territory
      */
     private $name;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Country", mappedBy="territory")
+     */
+    private $country;
 
     /**
      * Get id
@@ -62,5 +68,40 @@ class Territory
     {
         return $this->name;
     }
-}
 
+    public function getCountry(){
+        return $this->counetry;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->country = new ArrayCollection();
+    }
+
+    /**
+     * Add country
+     *
+     * @param \AppBundle\Entity\Country $country
+     *
+     * @return Territory
+     */
+    public function addCountry(\AppBundle\Entity\Country $country)
+    {
+        $this->country[] = $country;
+
+        return $this;
+    }
+
+    /**
+     * Remove country
+     *
+     * @param \AppBundle\Entity\Country $country
+     */
+    public function removeCountry(\AppBundle\Entity\Country $country)
+    {
+        $this->country->removeElement($country);
+    }
+}
