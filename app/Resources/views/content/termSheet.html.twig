@@ -27,8 +27,7 @@
                 Distribution Package {{ loop.index }} - {{ distributionPackage.name }}
             </div>
             <div class="box-content">
-
-
+                {% if distributionPackage.production | length > 0 %}
                     <div class="right-package-name">
                         Production Standards
                     </div>
@@ -36,7 +35,27 @@
                     {% for  right in distributionPackage.production %}
                         {{ include('content/contentRight.html.twig', {'right': right}) }}
                     {% endfor %}
+                {% endif %}
+
+                {% if distributionPackage.technical | length > 0 %}
+                    <div class="right-package-name uk-margin-small-top">
+                        Technical delivery
+                    </div>
+
+                    {% set method = distributionPackage.technical|first.rightItems|first.name %}
+
+                    {% if method == 'IP' %}
+                        {{ include('content/technicalDeliveryIp.html.twig' ) }}
+                    {% else %}
+                        {% for  right in distributionPackage.technical %}
+                            {{ include('content/technicalDelivery.html.twig', {'right': right }) }}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
             </div>
+
+
         </div>
 
     {% endfor %}

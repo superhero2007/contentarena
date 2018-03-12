@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class ContentController extends Controller
 {
 
@@ -34,6 +35,7 @@ class ContentController extends Controller
 
       foreach ( $distributionPackages as &$distributionPackage ){
           $distributionPackage["production"] = $this->getRightsContent($distributionPackage["production"]);
+          $distributionPackage["technical"] = $this->getRightsContent($distributionPackage["technical"]);
       }
 
       $content->setRights($rightsPackages);
