@@ -37,16 +37,10 @@ class Country
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory", inversedBy="country")
-     * @ORM\JoinColumn(nullable=true, name="territory_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="territory_id", referencedColumnName="id")
      */
     private $territory;
 
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
 
     /**
      * @var integer
@@ -72,7 +66,11 @@ class Country
         $this->territoryId = $territoryId;
     }
 
-
+    /**
+     * Get id
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;

@@ -1,0 +1,131 @@
+easy_admin:
+    site_name: 'Content Arena'
+    entities:
+            User:
+                class: AppBundle\Entity\User
+                list:
+                    fields: ['id', 'firstName', 'lastName', 'email', 'approved', 'profile', 'status']
+                    actions:
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+                        - { name: 'createCompany' }
+
+                form:
+                    fields:
+                        - 'email'
+                        - 'firstName'
+                        - 'lastName'
+                        - 'profile'
+                        - 'status'
+                        - 'title'
+                        - 'phone'
+                        - 'country'
+                        - 'company'
+
+            Company:
+                class: AppBundle\Entity\Company
+                controller: AppBundle\Controller\Admin\CompanyController
+                form:
+                    fields:
+                        - 'legalName'
+                        - 'displayName'
+                        - 'website'
+                        - 'address'
+                        - 'owner'
+                        - 'zip'
+                        - 'phone'
+                        - 'description'
+                        - 'year'
+                        - 'size'
+                        - 'country'
+            Content:
+                class: AppBundle\Entity\Content
+                list:
+                    fields:
+                        - { property: 'customId' }
+                        - { property: 'company' }
+                        - { property: 'sport' }
+                        - { property: 'createdAt' }
+                        - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
+                        - { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
+                        - { property: 'brochure', template: ':easy_admin:brochure.list.html.twig', base_path: '%admin_uploads_uri%' }
+                        - { property: 'approved' }
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+            Status:
+                class: AppBundle\Entity\UserStatus
+            DistributionPackage:
+                class: AppBundle\Entity\DistributionPackage
+                label: 'Distribution Packages'
+                list:
+                    title: 'Distribution Packages'
+            RightsPackage:
+                class: AppBundle\Entity\RightsPackage
+                label: 'Super Rights'
+                list:
+                    title: 'Super Rights'
+                    fields:
+                        - 'name'
+                        - 'children'
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+                form:
+                    title: 'Super Rights'
+                    fields:
+                        - 'name'
+                        - 'children'
+            Rights:
+                class: AppBundle\Entity\Rights
+                label: 'Rights'
+                list:
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+            RightsItemContent:
+                class: AppBundle\Entity\RightsItemContent
+                label: 'Rights Items'
+                form:
+                    label: 'Rights Items'
+                    fields:
+                        - 'name'
+                        - 'form_content'
+                        - 'contract_content'
+                        - 'description'
+                        - 'children'
+                        - { property: 'not_optional', type: 'checkbox' }
+                list:
+                    label: 'Rights Items'
+                    actions:
+                        - { name: 'show', icon: 'eye', label: '' }
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+            EmailContent:
+                class: AppBundle\Entity\EmailContent
+                label: 'Email Content'
+                list:
+                    fields: ['slug', 'description', 'content']
+                    actions:
+                        - { name: 'edit', icon: 'pencil', label: '' }
+                        - { name: 'delete', icon: 'times', label: '' }
+                form:
+                    fields: ['slug', 'description', 'content']
+            Profile:
+                class: AppBundle\Entity\Profile
+knp_paginator:
+    page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
+    default_options:
+        page_name: page                 # page query parameter name
+        sort_field_name: sort           # sort field query parameter name
+        sort_direction_name: direction  # sort direction query parameter name
+        distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
+        filter_field_name: filterField  # filter field query parameter name
+        filter_value_name: filterValue  # filter value query paameter name
+    template:
+        pagination: '@KnpPaginator/Pagination/sliding.html.twig'     # sliding pagination controls template
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
+        filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
