@@ -45,8 +45,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-
-public function getBuyPackages($salesPackages){
+ public function getBuyPackages($salesPackages,$distributionPackages){
 
         $data = [];
 
@@ -55,6 +54,7 @@ public function getBuyPackages($salesPackages){
                 if($salesPackage['territories'] == 'worldwide'){
                     $data[] = [
                         'salesPackage'=>$salesPackage,
+                        'distributionPackages'=>$distributionPackages,
                         'countries'=>[],
                     ];
 
@@ -73,7 +73,8 @@ public function getBuyPackages($salesPackages){
                         ->getQuery()->getResult(2);
                     $data[] = [
                         'salesPackage'=>$salesPackage,
-                        'countries'=>$countries
+                        'distributionPackages'=>$distributionPackages,
+                        'countries'=>$countries,
                     ];
                 }
             }
