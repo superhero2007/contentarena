@@ -19,3 +19,14 @@
 .margin-top-30 {
     margin-top: 30px;
 }
+
+.buy-package-heading{
+    color:#fff;
+    padding: 5px;
+    text-transform: capitalize;
+}
+
+.country-wrapper{
+    padding: 5px;
+    padding-left: 35px;
+}

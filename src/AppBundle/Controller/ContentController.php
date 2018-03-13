@@ -17,6 +17,7 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+      $buyPackages =  $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
 
       $rightsPackages = $content->getRights();
       $distributionPackages = $content->getDistributionPackages();
@@ -27,6 +28,7 @@ class ContentController extends Controller
 
       foreach ( $distributionPackages as &$distributionPackage ){
           $distributionPackage["production"] = $this->getRightsContent($distributionPackage["production"]);
+          $distributionPackage["technical"] = $this->getRightsContent($distributionPackage["technical"]);
       }
 
       $content->setRights($rightsPackages);
@@ -34,7 +36,8 @@ class ContentController extends Controller
 
       return $this->render('content/content.html.twig', [
           'user' => $user,
-          'content' => $content
+          'content' => $content,
+          'buyPackages'=>$buyPackages,
       ]);
 
   }
