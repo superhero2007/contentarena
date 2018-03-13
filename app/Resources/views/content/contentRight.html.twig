@@ -1,5 +1,4 @@
 <div class="right">
-
     <div class="right-name">
         {%  if right.name is defined %}{{ right.name }}{% endif %}
     </div>
@@ -9,7 +8,7 @@
 
             {%  if rightItem.name is defined %}
                 {%  if rightItem.inputs|length > 0 %}
-                    {{ rightItem.name|rightItemParse(rightItem.inputs, right.name)}}
+                    {{ rightItem.name|rightItemParse(rightItem.inputs, right.rightItems|first.name)}}
                 {% else %}
                     {{ rightItem.name }}
                 {%  endif %}
