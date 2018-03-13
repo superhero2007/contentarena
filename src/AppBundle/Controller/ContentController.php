@@ -21,6 +21,7 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+      $buyPackages =  $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
 
       $countries = $this->getDoctrine()
           ->getRepository('AppBundle:Content')
@@ -44,10 +45,10 @@ class ContentController extends Controller
       return $this->render('content/content.html.twig', [
           'user' => $user,
           'content' => $content,
-//          'territories'=>$territories,
+//        'territories'=>$territories,
+		  'buyPackages'=>$buyPackages,
           'countries'=>$countries,
-          'custom_id'=>$request->get("customId")
-      ]);
+          'custom_id'=>$request->get("customId")      ]);
   }
 
 

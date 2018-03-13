@@ -24,6 +24,7 @@
     {% endif %}
 
     {{ include('content/find_territories.html.twig') }}
+    {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
 
 {% endblock main_content %}
 
