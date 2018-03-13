@@ -31,7 +31,7 @@
                         id="right-item-{{ item.id }}"
                         type="checkbox"
                         show="{% if item.children is defined %}{% for right in item.children %}.to-show-{{ right.id }}{% if not loop.last %}, {% endif %} {% endfor %}{% endif %}"
-                        hide="{% if item.children | length > 0 %}.optional{% endif %}"
+                        hide="{% if item.children | length > 0 %}{% for right in item.children %}.to-show-{{ right.id }}{% if not loop.last %}, {% endif %} {% endfor %}{% endif %}"
                         class="{% if right.multiple == false %}unselect-others{% endif %} {% if right.allEnabled %}unselect-all{% endif %} {% if item.children is defined %}toggler-checkbox{% endif %}">
                 {% if item.notOptional == false %}<label for="right-item-{{ item.id }}"></label>{% endif %}
             </div>
