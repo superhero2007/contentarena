@@ -17,7 +17,7 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
-      $buyPackages =  $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages(), $content->getDistributionPackages());
+      $buyPackages =  $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
 
       $rightsPackages = $content->getRights();
       $distributionPackages = $content->getDistributionPackages();
