@@ -1,66 +1,69 @@
-<div class="box">
-    <div class="box-title">
-        Buy Packages
+{% if buyPackages|length > 0 %}
+    <div class="box">
+        <div class="box-title">
+            Buy Packages
+        </div>
+        {% for buyPackage in buyPackages %}
+            <div class="box-content">
+
+                <div class="right">
+                    <div class="uk-width-1-1 buy-package-heading uk-background-muted uk-light ">
+                        Package {{ loop.index }} :  {{  buyPackage.salesPackage.name }}
+                    </div>
+                </div>
+                <div class="right uk-margin-remove">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading ">
+                        {% if buyPackage.salesPackage.salesMethod == 'open-bid' %}
+                            Open Bid
+                        {% elseif buyPackage.salesPackage.salesMethod == 'closed-bid'  %}
+                            Closed Bid
+                        {% else %}
+                            Fee
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="right uk-margin-remove">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
+                        {% if buyPackage.salesPackage.salesMethod == 'fee' %}
+                            Fee : {{ buyPackage.salesPackage.fee }}({{ buyPackage.salesPackage.currency }})
+                        {% else %}
+                            Minimum Bid: {{ buyPackage.salesPackage.fee }} ({{ buyPackage.salesPackage.currency }})
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="right uk-margin-remove">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
+                        Availibility:
+                        {% if buyPackage.salesPackage.territories == 'worldwide' %}
+                            Worldwide
+                        {% elseif buyPackage.salesPackage.territories == 'selected'%}
+                            Only in Selected {{ buyPackage.countries | length }} Countries
+                        {% else %}
+                            Worldwide excluding {{ buyPackage.countries | length }} Countries
+                        {% endif %}
+
+                    </div>
+                </div>
+                {% if buyPackage.countries | length > 0 %}
+                    <div class="right uk-grid uk-padding-small uk-margin-remove-bottom uk-padding-remove-bottom uk-padding-remove-top">
+                        {% set i = 0 %}
+                        {% for country in buyPackage.countries %}
+                            {% set i= i + 1 %}
+                            <div class="uk-width-1-2 country-wrapper">{{ i }}. {{ country.name }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="uk-grid uk-margin-remove-top">
+                    <div class="uk-width-1-2">
+                        <input type="text" placeholder="Enter bid here" class="uk-input">
+                    </div>
+                    <div class="uk-width-1-2">
+                        <button class="uk-button uk-button-secondary uk-width-1-1">Place bid + add to cart</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    {% for buyPackage in buyPackages %}
-         <div class="box-content">
+{% endif %}
 
-            <div class="right">
-                <div class="uk-width-1-1 buy-package-heading uk-background-muted uk-light ">
-                    Package {{ loop.index }} :  {{  buyPackage.salesPackage.name }}
-                </div>
-            </div>
-            <div class="right uk-margin-remove">
-                <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading ">
-                    {% if buyPackage.salesPackage.salesMethod == 'open-bid' %}
-                        Open Bid
-                    {% elseif buyPackage.salesPackage.salesMethod == 'closed-bid'  %}
-                        Closed Bid
-                    {% else %}
-                        Fee
-                    {% endif %}
-                </div>
-            </div>
-            <div class="right uk-margin-remove">
-                <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
-                    {% if buyPackage.salesPackage.salesMethod == 'fee' %}
-                        Fee : {{ buyPackage.salesPackage.fee }}({{ buyPackage.salesPackage.currency }})
-                    {% else %}
-                        Minimum Bid: {{ buyPackage.salesPackage.fee }} ({{ buyPackage.salesPackage.currency }})
-                    {% endif %}
-                </div>
-            </div>
-            <div class="right uk-margin-remove">
-                <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
-                    Availibility:
-                    {% if buyPackage.salesPackage.territories == 'worldwide' %}
-                        Worldwide
-                    {% elseif buyPackage.salesPackage.territories == 'selected'%}
-                        Only in Selected {{ buyPackage.countries | length }} Countries
-                    {% else %}
-                        Worldwide excluding {{ buyPackage.countries | length }} Countries
-                    {% endif %}
-
-                </div>
-            </div>
-             {% if buyPackage.countries | length > 0 %}
-                 <div class="right uk-grid uk-padding-small uk-margin-remove-bottom uk-padding-remove-bottom uk-padding-remove-top">
-                     {% set i = 0 %}
-                     {% for country in buyPackage.countries %}
-                         {% set i= i + 1 %}
-                          <div class="uk-width-1-2 country-wrapper">{{ i }}. {{ country.name }}</div>
-                     {% endfor %}
-                 </div>
-             {% endif %}
-
-             <div class="uk-grid uk-margin-remove-top">
-                 <div class="uk-width-1-2">
-                     <input type="text" placeholder="Enter bid here" class="uk-input">
-                 </div>
-                 <div class="uk-width-1-2">
-                     <button class="uk-button uk-button-secondary uk-width-1-1">Place bid + add to chart</button>
-                 </div>
-             </div>
-         </div>
-    {% endfor %}
-</div>
