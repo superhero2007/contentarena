@@ -1421,31 +1421,45 @@ $(function () {
     ContentArena.Test.getFullSelectedPackages = getFullSelectedPackages;
     ContentArena.Test.logEventData = function(){ console.log( eventData )};
 
-    $(document).on("change", ".toggler-checkbox", function () {
-
-        var context = $(this).parent().parent().parent().parent();
-
-        var selectorShow = $(this).attr("show"),
-            selectorHide = $(this).attr("hide");
-
-        $( selectorHide, context ).hide().find("input").val("");
-
-        if (this.checked){
-            $(this).parent().parent().parent().append($( selectorShow, context ).show())
-        }
-    });
-
-    $(document).on("click", ".close-box", function () {
-        $( $(this).attr("ref") ).remove();
-    });
-
     $(document).on("change", ".unselect-others", function(){
 
         var _this = this;
 
         $.each($(this).parent().parent().siblings(), function (k, item) {
-            if ( _this != item ) $(item).find("input").attr("checked", false);
+            var input = $(item).find("input");
+            if ( _this != item ) {
+                input.attr("checked", false);
+            } else {
+            }
+
         });
+    });
+
+    $(document).on("change", ".toggler-checkbox", function () {
+
+        var context = $(this).parent().parent().parent().parent();
+
+        $( $(this).attr("hide") + ", .optional", context ).hide().find("input").val("");
+
+        $("input:checked", context).each(function () {
+            var selectorShow = $(this).attr("show"),
+                selectorHide = $(this).attr("hide");
+
+            //selectorHide += ", .optional";
+
+            //$( selectorHide, context ).hide().find("input").val("");
+
+            if (this.checked){
+                $(this).parent().parent().parent().append($( selectorShow, context ).show())
+            }
+        });
+
+
+
+    });
+
+    $(document).on("click", ".close-box", function () {
+        $( $(this).attr("ref") ).remove();
     });
 
     $(document).on('click',".add-sales-package", function () {
