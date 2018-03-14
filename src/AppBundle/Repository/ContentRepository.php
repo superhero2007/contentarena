@@ -45,7 +45,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
- public function getBuyPackages($salesPackages,$distributionPackages){
+    public function getBuyPackages($salesPackages,$distributionPackages){
 
         $data = [];
 
@@ -83,9 +83,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         }
         return [];
     }
-
-}
-
 
     public function getTerritoryInfo($customId){
         $data = [];
