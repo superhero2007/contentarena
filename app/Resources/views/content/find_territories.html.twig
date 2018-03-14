@@ -1,20 +1,20 @@
-{% for item in countries %}
+{% if countries | length  > 1 %}
     <div class="box">
         <div class="box-title">
-            Find territories  {{ loop.index }}
+            Find territories
         </div>
 
         <div class="box-content">
 
             <div>
-                <button class="uk-button uk-button-success main-check" data-iteration="{{ loop.index }}" data-checked="false">Select All</button>
+                <button class="uk-button uk-button-success main-check" data-checked="false">Select All</button>
             </div>
 
             <div class="uk-grid uk-flex uk-flex-center">
-                <div class="continent-name continent-name-color" data-id="world" data-iteration="{{ loop.index }}">World</div>
+                <div class="continent-name continent-name-color" data-id="world">World</div>
 
-                {% for territory in item.territories %}
-                    <div class="continent-name" data-id="{{ territory.id }}" data-iteration="{{ loop.parent.loop.index }}">{{ territory.name }}</div>
+                {% for territory in countries.territories %}
+                    <div class="continent-name" data-id="{{ territory.id }}">{{ territory.name }}</div>
                 {% endfor %}
             </div>
 
@@ -30,34 +30,59 @@
                 </tr>
                 </thead>
                 <tbody class="territory-table-body">
-                {% for country in item.countries %}
 
-                    <tr data-id="{{ country.territoryId }}" class="country-row {% if loop.index > 20 %} hide-item{% endif %}" data-iteration="{{ loop.parent.loop.index }}">
-                        <td>
-                            <input type="checkbox" class="subordinate-check" data-iteration="{{ loop.parent.loop.index }}">
-                        </td>
-                        <td>{{ country.name }}</td>
-                        <td>{{ item.salesPackage.salesMethod }}</td>
-                        <td>{{ item.salesPackage.fee }}</td>
-                        <td>{{ item.salesPackage.currency }}</td>
-                        <td>
-                            <button class="uk-button-primary">Add to chart</button>
-                        </td>
-                    </tr>
+                {% set i = 0 %}
 
+                {% for item in countries %}
+                    {% if loop.index != loop.last %}
+                        {% for country in item.countries %}
+                            {% set i = i + 1 %}
+                            <tr data-id="{{ country.territoryId }}" class="country-row {% if i > 20 %} hide-item{% endif %}">
+                                <td>
+                                    <input type="checkbox" class="subordinate-check" >
+                                </td>
+                                <td>{{ country.name }}</td>
+                                <td>
+                                    {% if item.salesPackage.salesMethod == 'fee' %}
+                                        Fixed price
+                                    {% elseif item.salesPackage.salesMethod == 'closed-bid'%}
+                                        Closed bid
+
+                                    {% else %}
+                                        Open bid
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.salesPackage.salesMethod == 'fee' %}
+                                        {{ item.salesPackage.fee }}
+                                    {% else %}
+                                        <input type="text" placeholder="enter bid (> {{ item.salesPackage.fee }})">
+                                    {% endif %}
+
+                                </td>
+                                <td>{{ item.salesPackage.currency }}</td>
+                                <td>
+                                    <button class="uk-button-primary">Add to cart</button>
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
-            <div >
-                {% if item.countries| length > 20 %}
-                    <span class="uk-float-left view-all" data-iteration="{{ loop.index }}">View all ({{ item.countries| length }})</span>
+            <div>
+
+                {% if i > 20 %}
+                    <span class="uk-float-left view-all" >View all ({{ i }})</span>
                 {% endif %}
-                <button class="uk-button uk-button-primary uk-float-right">Add selections to chart</button>
+                <button class="uk-button uk-button-primary uk-float-right">Add selections to cart</button>
 
             </div>
-            <input type="hidden" class="territory-id" value="world" data-iteration="{{ loop.index }}">
+            <input type="hidden" class="territory-id" value="world">
         </div>
     </div>
 
-{% endfor %}
 
+
+{% endif %}

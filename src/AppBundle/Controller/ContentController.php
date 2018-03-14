@@ -41,14 +41,15 @@ class ContentController extends Controller
 
       $content->setRights($rightsPackages);
       $content->setDistributionPackages($distributionPackages);
-
       return $this->render('content/content.html.twig', [
           'user' => $user,
           'content' => $content,
-//        'territories'=>$territories,
+//          'territories'=>$territories,
 		  'buyPackages'=>$buyPackages,
           'countries'=>$countries,
-          'custom_id'=>$request->get("customId")      ]);
+          'custom_id'=>$request->get("customId")
+	]);
+
   }
 
 

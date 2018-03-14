@@ -69,54 +69,53 @@ $(document).ready(function(){
 
 
     $(document).on('click','.main-check',function(){
-        var id = $(this).data('iteration');
+
         if($(this).attr('data-checked') === 'false'){
-            $('.subordinate-check[data-iteration = '+ id +']').prop('checked',true);
+            $('.subordinate-check').prop('checked',true);
             $(this).attr('data-checked', 'true');
         }else {
-            $('.subordinate-check[data-iteration = '+ id +']').prop('checked',false);
+            $('.subordinate-check').prop('checked',false);
             $(this).attr('data-checked', 'false');
         }
     })
 
     $(document).on('click','.continent-name',function(){
 
-        var iter  = $(this).data('iteration');
         var id = $(this).data('id');
-        $('.continent-name[data-iteration='+ iter +']').removeClass('continent-name-color');
+        $('.continent-name').removeClass('continent-name-color');
         $(this).addClass('continent-name-color');
 
-        $('.territory-id[data-iteration='+ iter +']').val(id);
-        var rowCount = $('tbody.territory-table-body tr[data-iteration='+ iter +']').length;
-        var continentRowCount = $('tbody.territory-table-body tr[data-id=' + id + '][data-iteration='+iter+']').length;
+        $('.territory-id').val(id);
+        var rowCount = $('tbody.territory-table-body tr').length;
+        var continentRowCount = $('tbody.territory-table-body tr[data-id=' + id + ']').length;
 
         if(id == 'world'){
             if(rowCount > 20){
-                $('.view-all[data-iteration='+ iter +']').show();
-                $('.view-all[data-iteration='+ iter +']').text('View all ('+ rowCount + ')');
+                $('.view-all').show();
+                $('.view-all').text('View all ('+ rowCount + ')');
             }
-            $('tbody.territory-table-body tr[data-iteration='+ iter +']').removeClass('hide-item');
-            $($('tbody.territory-table-body tr[data-iteration='+ iter +']').eq(20)).nextAll('tr').addClass('hide-item');
+            $('tbody.territory-table-body tr').removeClass('hide-item');
+            $($('tbody.territory-table-body tr').eq(20)).nextAll('tr').addClass('hide-item');
         }else{
 
             if(continentRowCount > 20){
-                $('.view-all[data-iteration='+ iter +']').show();
-                $('.view-all[data-iteration='+ iter +']').text('View all ('+ continentRowCount + ')');
+                $('.view-all').show();
+                $('.view-all').text('View all ('+ continentRowCount + ')');
             }
-            $('tbody.territory-table-body tr[data-iteration='+ iter +']').addClass('hide-item');
-            $($('tbody.territory-table-body tr[data-id=' + id + '][data-iteration='+ iter +']')).removeClass('hide-item');
-            $($('tbody.territory-table-body tr[data-id=' + id + '][data-iteration='+ iter +']').eq(20)).nextAll('tr').addClass('hide-item');
+            $('tbody.territory-table-body tr').addClass('hide-item');
+            $($('tbody.territory-table-body tr[data-id=' + id + ']')).removeClass('hide-item');
+            $($('tbody.territory-table-body tr[data-id=' + id + ']').eq(20)).nextAll('tr').addClass('hide-item');
         }
     })
 
     $(document).on('click','.view-all',function(){
-        var iter  = $(this).data('iteration');
-        var id = $('.territory-id[data-iteration='+ iter +']').val();
+
+        var id = $('.territory-id').val();
         if(id == 'world'){
-            $('tbody.territory-table-body tr[data-iteration='+ iter +']').removeClass('hide-item');
+            $('tbody.territory-table-body tr').removeClass('hide-item');
         }else{
-            $('tbody.territory-table-body tr[data-iteration='+ iter +']').addClass('hide-item');
-            $($('tbody.territory-table-body tr[data-id=' + id + '][data-iteration='+ iter +']')).removeClass('hide-item');
+            $('tbody.territory-table-body tr').addClass('hide-item');
+            $($('tbody.territory-table-body tr[data-id=' + id + ']')).removeClass('hide-item');
         }
 
         $(this).hide(0);
