@@ -58,8 +58,7 @@ class AppExtension extends AbstractExtension
 
     public function rightItemParse($content, $inputs, $name)
     {
-
-        if($name=="Graphics" || $name=="Commentary"){
+        if(strpos($name,'language')){
             if(count($inputs)>0){
                 $lng = '';
                 foreach ( $inputs[0] as $input ){
