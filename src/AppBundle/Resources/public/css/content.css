@@ -20,7 +20,6 @@
     margin-top: 30px;
 }
 
-
 .resolution {
     margin: 0 5px;
     padding: 2px;
@@ -44,3 +43,28 @@
 .view-all{
     cursor:pointer;
 }
+
+.buy-package-heading{
+    color:#fff;
+    padding: 5px;
+    text-transform: capitalize;
+}
+
+.country-wrapper{
+    padding: 5px;
+    padding-left: 35px;
+}
+
+.sub-total-row{
+    text-align: right;
+}
+
+.total-sum{
+    color:#fff;
+}
+
+.delete-item{
+    cursor:pointer;
+    color:red;
+}
+

@@ -21,6 +21,7 @@ class ContentController extends Controller
 
       $user = $this->getUser();
       $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+      $buyPackages =  $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
 
       $countries = $this->getDoctrine()
           ->getRepository('AppBundle:Content')
@@ -44,7 +45,8 @@ class ContentController extends Controller
           'user' => $user,
           'content' => $content,
           'countries'=>$countries,
-          'custom_id'=>$request->get("customId")
+          'custom_id'=>$request->get("customId"),
+          'buyPackages'=>$buyPackages,
       ]);
   }
 
