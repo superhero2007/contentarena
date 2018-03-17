@@ -904,7 +904,7 @@ $(function () {
             rightItems = [],
             selectedPackages = getFullSelectedPackages();
 
-        $("input[type=checkbox]:checked", ".seller-box-content-rights").each(function(k, el){
+        $("input[type=checkbox]:checked:visible", ".seller-box-content-rights").each(function(k, el){
 
             var rightId = $(el).attr("right-id"),
                 rightItemId = $(el).attr("right-item-id"),
