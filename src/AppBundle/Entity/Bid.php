@@ -48,6 +48,12 @@ class Bid
     private $company;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="bid")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $type;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -168,6 +174,22 @@ class Bid
     public function setAmount($amount)
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
 
