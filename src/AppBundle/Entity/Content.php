@@ -110,12 +110,6 @@ class Content
      */
     private $salesPackages;
 
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="links", type="array", length=255, nullable=true)
-     */
-    private $links;
 
     /**
      * @var string
@@ -549,21 +543,6 @@ class Content
         $this->expiresAt = $expiresAt;
     }
 
-    /**
-     * @return array
-     */
-    public function getLinks()
-    {
-        return $this->links;
-    }
-
-    /**
-     * @param array $links
-     */
-    public function setLinks($links)
-    {
-        $this->links = $links;
-    }
 
     /**
      * @return string
