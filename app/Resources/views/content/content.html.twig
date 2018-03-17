@@ -13,22 +13,9 @@
 
 	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
 
-    {% if content.salesPackages | length > 0 %}
-
-        {% for salespackages in content.salesPackages %}
-
-            {{ include('content/salesPackage.html.twig', { 'package' : salespackages }) }}
-
-        {% endfor %}
-
-    {% endif %}
-
-
     {{ include('content/find_territories.html.twig') }}
-    {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
 
     {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
-
 
     {{  include('content/cartFixedFee.html.twig') }}
 
