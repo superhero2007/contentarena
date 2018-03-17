@@ -838,10 +838,6 @@ $(function () {
             eventData.website = $("#event-website-selector").val().split(",");
         }
 
-        if ( $("#event-link-selector").val() != "" ){
-            eventData.links = $("#event-link-selector").val().split(",");
-        }
-
         if ( eventData.eventType == "custom"){
             $(".sport-selector").each( function(){
                 sports.push({
