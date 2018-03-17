@@ -19,6 +19,8 @@ $(function () {
 
         this.getTitle = () => {
 
+            console.log(this);
+
             var title = "";
 
             if ( this.sports.length > 0 ){
@@ -36,6 +38,13 @@ $(function () {
                 if ( this.sport !== null ) title += this.sport.value;
                 if ( this.category !== null ) title += " - " + this.category.value;
                 if ( this.tournament !== null ) title += " - " + this.tournament.value;
+            }
+
+            if ( this.seasons.length > 0){
+                title += " " + this.seasons.map( ( season ) => {
+                    var values = season.value.split(" ");
+                    return values[values.length - 1]
+                }).join(" - ");
             }
 
             return title;
@@ -1415,7 +1424,7 @@ $(function () {
     ContentArena.Test.validateStepOne = validateStepOne;
     ContentArena.Test.validateStepTwo = validateStepTwo;
     ContentArena.Test.getFullSelectedPackages = getFullSelectedPackages;
-    ContentArena.Test.logEventData = function(){ console.log( eventData )};
+    ContentArena.Test.logEventData = function(){ console.log( eventData ); return eventData};
 
     $(document).on("change", ".unselect-others", function(){
 
