@@ -40,7 +40,7 @@ $(function () {
                 if ( this.tournament !== null ) title += " - " + this.tournament.value;
             }
 
-            if ( this.seasons.length > 0){
+            if ( this.seasons && this.seasons.length > 0){
                 title += " " + this.seasons.map( ( season ) => {
                     var values = season.value.split(" ");
                     return values[values.length - 1]
