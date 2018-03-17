@@ -1,46 +1,48 @@
 {% if buyPackages|length > 0 %}
-    <div class="box">
+    <div class="box buy-package-box">
         <div class="box-title">
             Buy Packages
         </div>
         {% for buyPackage in buyPackages %}
-            <div class="box-content">
+            <div class="box-content" data-type="{{ loop.index }}">
 
                 <div class="right">
-                    <div class="uk-width-1-1 buy-package-heading uk-background-muted uk-light ">
+                    <div class="uk-width-1-1 buy-package-heading uk-background-muted uk-light buy-package-name">
                         Package {{ loop.index }} :  {{  buyPackage.salesPackage.name }}
                     </div>
                 </div>
                 <div class="right uk-margin-remove">
-                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading ">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading buy-package-method">
                         {% if buyPackage.salesPackage.salesMethod == 'open-bid' %}
                             Open Bid
                         {% elseif buyPackage.salesPackage.salesMethod == 'closed-bid'  %}
                             Closed Bid
                         {% else %}
-                            Fee
+                            Fixed price
                         {% endif %}
                     </div>
                 </div>
                 <div class="right uk-margin-remove">
                     <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
                         {% if buyPackage.salesPackage.salesMethod == 'fee' %}
-                            Fee : {{ buyPackage.salesPackage.fee }}({{ buyPackage.salesPackage.currency }})
+                            Fee : <span class="buy-package-price">{{ buyPackage.salesPackage.fee }}</span>(<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
                         {% else %}
-                            Minimum Bid: {{ buyPackage.salesPackage.fee }} ({{ buyPackage.salesPackage.currency }})
+                            Minimum Bid: <span class="buy-package-price">{{ buyPackage.salesPackage.fee }}</span> (<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
                         {% endif %}
                     </div>
                 </div>
                 <div class="right uk-margin-remove">
                     <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
                         Availibility:
-                        {% if buyPackage.salesPackage.territories == 'worldwide' %}
-                            Worldwide
-                        {% elseif buyPackage.salesPackage.territories == 'selected'%}
-                            Only in Selected {{ buyPackage.countries | length }} Countries
-                        {% else %}
-                            Worldwide excluding {{ buyPackage.countries | length }} Countries
-                        {% endif %}
+                        <span class="buy-availibility">
+                            {% if buyPackage.salesPackage.territories == 'worldwide' %}
+                                Worldwide
+                            {% elseif buyPackage.salesPackage.territories == 'selected'%}
+                                Only in Selected {{ buyPackage.countries | length }} Countries
+                            {% else %}
+                                Worldwide excluding {{ buyPackage.countries | length }} Countries
+                            {% endif %}
+                        </span>
 
                     </div>
                 </div>
@@ -56,10 +58,10 @@
 
                 <div class="uk-grid uk-margin-remove-top">
                     <div class="uk-width-1-2">
-                        <input type="text" placeholder="Enter bid here" class="uk-input">
+                        <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.fee }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.fee }}">
                     </div>
                     <div class="uk-width-1-2">
-                        <button class="uk-button uk-button-secondary uk-width-1-1">Place bid + add to cart</button>
+                        <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Place bid + add to cart</button>
                     </div>
                 </div>
             </div>

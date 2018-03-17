@@ -23,8 +23,16 @@
 
     {% endif %}
 
+
     {{ include('content/find_territories.html.twig') }}
     {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
+
+    {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
+
+
+    {{  include('content/cartFixedFee.html.twig') }}
+
+    {{  include('content/cartBid.html.twig') }}
 
 {% endblock main_content %}
 

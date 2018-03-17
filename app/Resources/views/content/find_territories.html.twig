@@ -37,32 +37,31 @@
                     {% if loop.index != loop.last %}
                         {% for country in item.countries %}
                             {% set i = i + 1 %}
-                            <tr data-id="{{ country.territoryId }}" class="country-row {% if i > 20 %} hide-item{% endif %}">
+                            <tr data-id="{{ country.territoryId }}" class="country-row {% if i > 20 %} hide-item{% endif %}" data-disabled="false" data-checked="false">
                                 <td>
-                                    <input type="checkbox" class="subordinate-check" >
+                                    <input type="checkbox" class="subordinate-check" data-id="{{ country.territoryId }}">
                                 </td>
-                                <td>{{ country.name }}</td>
-                                <td>
+                                <td class="country-name">{{ country.name }}</td>
+                                <td class="pricing-method">
                                     {% if item.salesPackage.salesMethod == 'fee' %}
                                         Fixed price
                                     {% elseif item.salesPackage.salesMethod == 'closed-bid'%}
                                         Closed bid
-
                                     {% else %}
                                         Open bid
                                     {% endif %}
                                 </td>
-                                <td>
+                                <td class="sales-price">
                                     {% if item.salesPackage.salesMethod == 'fee' %}
                                         {{ item.salesPackage.fee }}
                                     {% else %}
-                                        <input type="text" placeholder="enter bid (> {{ item.salesPackage.fee }})">
+                                        <input type="text" class="price-input" data-price="{{ item.salesPackage.fee }}" placeholder="enter bid (> {{ item.salesPackage.fee }})">
                                     {% endif %}
 
                                 </td>
-                                <td>{{ item.salesPackage.currency }}</td>
+                                <td class="sales-currency">{{ item.salesPackage.currency }}</td>
                                 <td>
-                                    <button class="uk-button-primary">Add to cart</button>
+                                    <button class="uk-button-primary add-to-cart" data-country="{{ country.id }}" data-type="find-territories">Add to cart</button>
                                 </td>
                             </tr>
 
@@ -76,7 +75,7 @@
                 {% if i > 20 %}
                     <span class="uk-float-left view-all" >View all ({{ i }})</span>
                 {% endif %}
-                <button class="uk-button uk-button-primary uk-float-right">Add selections to cart</button>
+                <button class="uk-button uk-button-primary uk-float-right add-all-selections">Add selections to cart</button>
 
             </div>
             <input type="hidden" class="territory-id" value="world">

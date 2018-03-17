@@ -44,12 +44,10 @@ class ContentController extends Controller
       return $this->render('content/content.html.twig', [
           'user' => $user,
           'content' => $content,
-//          'territories'=>$territories,
-		  'buyPackages'=>$buyPackages,
           'countries'=>$countries,
-          'custom_id'=>$request->get("customId")
-	]);
-
+          'custom_id'=>$request->get("customId"),
+          'buyPackages'=>$buyPackages,
+      ]);
   }
 
 

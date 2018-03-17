@@ -44,7 +44,6 @@
     cursor:pointer;
 }
 
-
 .buy-package-heading{
     color:#fff;
     padding: 5px;
@@ -54,5 +53,18 @@
 .country-wrapper{
     padding: 5px;
     padding-left: 35px;
+}
+
+.sub-total-row{
+    text-align: right;
+}
+
+.total-sum{
+    color:#fff;
+}
+
+.delete-item{
+    cursor:pointer;
+    color:red;
 }
 
