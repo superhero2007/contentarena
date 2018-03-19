@@ -252,6 +252,8 @@ $(function () {
 
         $(".optional",technicalDelivery).hide();
 
+        $(".optional",distributionPackage).hide();
+
         $("label", distributionPackage ).each(function(){
             $(this).attr("for", "distribution-package-" + name + "-" + $(this).attr("for") )
         });
@@ -402,27 +404,12 @@ $(function () {
                 $(this).attr("id", "package-" + v + "-" + $(this).attr("id") )
             });
 
-            /*$("[right-name$=-cut-available-yes]", "#sell-box-package-" + v ).change(function(){
-                if ( this.checked && $("#distribution-package-" + packagesName[k]).length == 0 ) {
-                    addDistributionPackages(v, packagesName[k]);
-                }
-
-            });
-
-            $("[right-name$=-cut-available-no]", "#sell-box-package-" + v ).change(function(){
-                if ( this.checked ) {
-                    $("#distribution-package-" + packagesName[k]).remove();
-                    $("#technical-delivery-" + packagesName[k]).remove();
-                }
-
-            });
-*/
-
             ContentArena.Languages.addLanguageBehaviour( "#sell-box-package-" + v +" .has-language-trigger");
             $( "#sell-box-package-" + v +" .has-calendar").each(function (k, element) {
                 $("#" + $(element).attr("id")).datepicker();
             })
 
+            $(".optional", "#sell-box-package-" + v ).hide();
 
         }) ;
 
@@ -456,7 +443,8 @@ $(function () {
         ContentArena.Languages.addLanguageBehaviour( mainTarget.find(".has-language-trigger") );
         mainTarget.find(".has-calendar").each(function (k, element) {
             $("#" + $(element).attr("id")).datepicker();
-        })
+        });
+        mainTarget.find(".optional").hide();
 
     }
 
