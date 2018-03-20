@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
@@ -120,8 +121,52 @@ class ContentService
         if ( isset($data->programName) ) $content->setProgramName($data->programName->value);
         if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
+        if ( isset($data->salesPackages) ) {
 
-        if ( isset($data->salesPackages) ) $content->setSalesPackages($data->salesPackages);
+            $salesPackages = array();
+
+            if ( is_array($data->salesPackages)){
+
+                foreach ( $data->salesPackages as $salesPackage){
+                    $package = new SalesPackage();
+                    $package->setName($salesPackage->name);
+                    $package->setCurrency($this->getCurrency($salesPackage->currency));
+                    $package->setSalesMethod($this->getSalesMethod($salesPackage->salesMethod));
+                    $package->setAmount($salesPackage->fee);
+                    $package->setSellAsPackage($salesPackage->territoryAsPackage);
+
+                    if ( is_array($salesPackage->selectedTerritories) && count( $salesPackage->selectedTerritories) > 0  )
+                    {
+                        $countries = array();
+                        foreach ( $salesPackage->selectedTerritories as $country ){
+                            $country = $this->getCountry($country);
+                            if ( $country != null ) $countries[] = $country;
+                        }
+                        $package->setSelectedCountries($countries);
+                    }
+
+                    if ( is_array($salesPackage->excludedTerritories) && count( $salesPackage->excludedTerritories) > 0  )
+                    {
+                        $countries = array();
+                        foreach ( $salesPackage->excludedTerritories as $country ){
+                            $country = $this->getCountry($country);
+                            if ( $country != null ) $countries[] = $country;
+                        }
+                        $package->setExcludedCountries($countries);
+                    }
+
+                    if ( $salesPackage->territories == "worldwide" ) $package->setWorldwide(true);
+
+                    $salesPackages[] = $package;
+                }
+
+                $content->setSalesPackages($salesPackages);
+
+            }
+
+
+        }
+
         if ( isset($data->rights) ) $content->setRights($data->rights);
         if ( isset($data->distributionPackages) ) $content->setDistributionPackages($data->distributionPackages);
 
@@ -255,6 +300,29 @@ class ContentService
         }
 
         return $category;
+    }
+
+    private function getCurrency($currency){
+
+            return $this->em
+                ->getRepository('AppBundle:Currency')
+                ->findOneBy(array('code' => $currency));
+    }
+
+    private function getSalesMethod($method){
+
+        return $this->em
+            ->getRepository('AppBundle:BidType')
+            ->findOneBy(array('name' => $method));
+    }
+
+    private function getCountry($country){
+
+        $country =  $this->em
+            ->getRepository('AppBundle:Country')
+            ->findOneBy(array('country_code' => $country));
+
+        return $country;
     }
 
     private function sport($sportData){

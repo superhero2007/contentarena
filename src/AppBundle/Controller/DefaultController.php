@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Content;
+use AppBundle\Entity\User;
 use AppBundle\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -47,6 +48,29 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
             'user' => $user
+        ]);
+
+    }
+
+    /**
+     * @Route("/mycontent/sell", name="mycontent-sell")
+     */
+    public function mycontentSellAction(Request $request)
+    {
+        /**
+         * @var User
+         */
+        $user = $this->getUser();
+
+        $criteria = array(
+            'company' => $user->getCompany()
+        );
+
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy($criteria, ['createdAt' => 'DESC']);
+
+        return $this->render('mycontent/mycontent.html.twig', [
+            'user' => $user,
+            'contents' => $contents
         ]);
 
     }
@@ -177,9 +201,4 @@ class DefaultController extends Controller
         ]);
 
     }
-
-
-
-
 }
-

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Country;
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Territory;
 
 
@@ -47,59 +48,36 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     public function getTerritoryInfo($customId){
         $data = [];
-        $arr = [];
-        $codes = [];
-
         $country = $this->getEntityManager()->getRepository(Country::class);
         $content = $this->findOneBy(['customId'=>$customId]);
 
         $salesPackages = $content->getSalesPackages();
         foreach($salesPackages as $index => $salesPackage){
 
-            if(!$salesPackage['territoryAsPackage']){
+            if(!$salesPackage->getSellAsPackage()){
 
-                if($salesPackage['territories'] == 'worldwide'){
+                if( $salesPackage->isWorldwide() ){
 
                     $result = $country->createQueryBuilder('c')
                         ->where('c.id >= 1')
                         ->getQuery()
                         ->getResult(2);
 
-                }elseif($salesPackage['territories'] == 'selected'){
-                    $str = $salesPackage['selectedTerritories'];
-                    $result = $country->createQueryBuilder('c')
-                        ->where('c.country_code IN (:country)')
-                        ->setParameter('country',$str)
-                        ->getQuery()
-                        ->getResult(2);
+                } elseif ( count( $salesPackage->getSelectedCountries() ) > 0 ){
+                    $result = $salesPackage->getSelectedCountries();
 
-                }elseif($salesPackage['territories'] == 'excluded'){
-                    $str = $salesPackage['excludedTerritories'];
+                } elseif ( count( $salesPackage->getExcludedCountries() ) > 0 ){
 
-                    $result = $country->createQueryBuilder('c')
-                        ->where('c.country_code NOT IN (:country)')
-                        ->setParameter('country',$str)
-                        ->getQuery()
-                        ->getResult(2);
+                    $result = $salesPackage->getExcludedCountries();
                 }
 
+                $territories = array();
 
-                if ($index > 0) {
-                    foreach ($codes as $inc => $codeArray) {
-                        if ($index > $inc) {
-                            foreach ($result as $i => $item) {
-                                if (in_array($item['country_code'], $codeArray)) {
-                                    unset($result[$i]);
-                                }
-                            }
-                        }
+                foreach ( $result->getIterator() as $country ){
+                    if ( !in_array( $country->getTerritory(),$territories, true ) ){
+                        $territories[] = $country->getTerritory();
                     }
                 }
-
-                $codes[$index] = array_column($result,'country_code');
-
-                $a = array_unique(array_column($result,'territoryId'));
-                $arr = array_merge($arr,$a);
 
                 $data[] = [
                     'salesPackage'=>$salesPackage,
@@ -108,19 +86,15 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
-
-        $territories = $this->getEntityManager()->getRepository(Territory::class)
-            ->createQueryBuilder('t')
-            ->where('t.id IN (:ids)')
-            ->setParameter('ids',array_unique($arr))
-            ->getQuery()
-            ->getResult(2);
-
         $data['territories'] =$territories;
 
         return $data;
     }
 
+    /**
+     * @param SalesPackage[] $salesPackages
+     * @return array
+     */
     public function getBuyPackages($salesPackages){
 
         $data = [];
@@ -129,35 +103,24 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
             foreach ($salesPackages as $salesPackage){
 
-                if($salesPackage['territoryAsPackage']){
+                if($salesPackage->getSellAsPackage() ){
+                    $countries = [];
+                    if( !$salesPackage->isWorldwide() ){
 
-                    if($salesPackage['territories'] == 'worldwide'){
-                        $data[] = [
-                            'salesPackage'=>$salesPackage,
-                            'countries'=>[],
-                        ];
-
-                    }else{
-                        if($salesPackage['territories'] == 'selected'){
-                            $territories = $salesPackage['selectedTerritories'];
-                        }elseif($salesPackage['territories'] == 'excluded'){
-                            $territories = $salesPackage['excludedTerritories'];
+                        if( count( $salesPackage->getSelectedCountries() ) > 0){
+                            $countries = $salesPackage->getSelectedCountries();
+                        } elseif ( count( $salesPackage->getExcludedCountries() ) > 0 ){
+                            $countries = $salesPackage->getExcludedCountries();
                         }
 
-                        $countries = $this->getEntityManager()
-                            ->getRepository('AppBundle:Country')
-                            ->createQueryBuilder('c')
-                            ->where('c.country_code IN (:territories)')
-                            ->setParameter('territories',$territories)
-                            ->getQuery()->getResult(2);
-                        $data[] = [
-                            'salesPackage'=>$salesPackage,
-                            'countries'=>$countries,
-                        ];
                     }
+
+                    $data[] = [
+                        'salesPackage'=>$salesPackage,
+                        'countries'=>$countries,
+                    ];
+
                 }
-
-
             }
 
             return $data;

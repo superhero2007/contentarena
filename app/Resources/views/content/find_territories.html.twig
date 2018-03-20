@@ -55,7 +55,7 @@
                                     {% if item.salesPackage.salesMethod == 'fee' %}
                                         {{ item.salesPackage.fee }}
                                     {% else %}
-                                        <input type="text" class="price-input" data-price="{{ item.salesPackage.fee }}" placeholder="enter bid (> {{ item.salesPackage.fee }})">
+                                        <input type="text" class="price-input" data-price="{{ item.salesPackage.amount }}" placeholder="enter bid (> {{ item.salesPackage.amount }})">
                                     {% endif %}
 
                                 </td>

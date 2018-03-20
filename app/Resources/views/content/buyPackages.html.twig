@@ -13,9 +13,9 @@
                 </div>
                 <div class="right uk-margin-remove">
                     <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading buy-package-method">
-                        {% if buyPackage.salesPackage.salesMethod == 'open-bid' %}
+                        {% if buyPackage.salesPackage.salesMethod == 'OPEN' %}
                             Open Bid
-                        {% elseif buyPackage.salesPackage.salesMethod == 'closed-bid'  %}
+                        {% elseif buyPackage.salesPackage.salesMethod == 'CLOSED'  %}
                             Closed Bid
                         {% else %}
                             Fixed price
@@ -24,10 +24,10 @@
                 </div>
                 <div class="right uk-margin-remove">
                     <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
-                        {% if buyPackage.salesPackage.salesMethod == 'fee' %}
-                            Fee : <span class="buy-package-price">{{ buyPackage.salesPackage.fee }}</span>(<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
+                        {% if buyPackage.salesPackage.salesMethod == 'FIXED' %}
+                            Fee : <span class="buy-package-price">{{ buyPackage.salesPackage.amount }}</span>(<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
                         {% else %}
-                            Minimum Bid: <span class="buy-package-price">{{ buyPackage.salesPackage.fee }}</span> (<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
+                            Minimum Bid: <span class="buy-package-price">{{ buyPackage.salesPackage.amount }}</span> (<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
                         {% endif %}
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                     <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
                         Availibility:
                         <span class="buy-availibility">
-                            {% if buyPackage.salesPackage.territories == 'worldwide' %}
+                            {% if buyPackage.salesPackage.isWorldwide == 'worldwide' %}
                                 Worldwide
-                            {% elseif buyPackage.salesPackage.territories == 'selected'%}
+                            {% elseif buyPackage.salesPackage.selecteCountries | length > 0 %}
                                 Only in Selected {{ buyPackage.countries | length }} Countries
                             {% else %}
                                 Worldwide excluding {{ buyPackage.countries | length }} Countries
@@ -58,7 +58,7 @@
 
                 <div class="uk-grid uk-margin-remove-top">
                     <div class="uk-width-1-2">
-                        <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.fee }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.fee }}">
+                        <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.amount }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
                     </div>
                     <div class="uk-width-1-2">
                         <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Place bid + add to cart</button>

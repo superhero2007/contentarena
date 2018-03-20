@@ -104,12 +104,14 @@ class Content
     private $website;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="sales_packages", type="json_array", nullable=true)
+     * Many Content have Many Sales Packages.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SalesPackage",cascade={"persist"})
+     * @ORM\JoinTable(name="content_sales_package",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
+     *      )
      */
     private $salesPackages;
-
 
     /**
      * @var string
@@ -643,22 +645,6 @@ class Content
     /**
      * @return array
      */
-    public function getSalesPackages()
-    {
-        return $this->salesPackages;
-    }
-
-    /**
-     * @param array $salesPackages
-     */
-    public function setSalesPackages($salesPackages)
-    {
-        $this->salesPackages = $salesPackages;
-    }
-
-    /**
-     * @return array
-     */
     public function getRights()
     {
         return $this->rights;
@@ -702,6 +688,22 @@ class Content
     public function setSports($sports)
     {
         $this->sports = $sports;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalesPackages()
+    {
+        return $this->salesPackages;
+    }
+
+    /**
+     * @param mixed $salesPackages
+     */
+    public function setSalesPackages($salesPackages)
+    {
+        $this->salesPackages = $salesPackages;
     }
 
 

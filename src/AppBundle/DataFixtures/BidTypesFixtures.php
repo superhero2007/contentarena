@@ -18,8 +18,9 @@ class BidTypesFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $content = array(
-            'Open',
-            'Closed',
+            'OPEN',
+            'CLOSED',
+            'FIXED'
         );
 
         for ($i = 0; $i < count($content); $i++) {

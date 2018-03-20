@@ -1,0 +1,35 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet"/>
+
+    {{ include('statics/language.css.html.twig', { }) }}
+
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="buy-box">
+        {%if contents| length > 0 %}
+            {% for content in contents %}
+                {{ include('buy/contentItem.html.twig', { 'content' : content }) }}
+            {% endfor %}
+        {% else %}
+            <div class="content-column">
+                <h3 class="uk-align-center">No Results</h3>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+{% endblock main_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/buy.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/filters.js') }}"></script>
+{% endblock %}
