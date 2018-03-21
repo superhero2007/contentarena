@@ -1,0 +1,43 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    {#<link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet"/>#}
+
+{% endblock %}
+
+{% block main_content %}
+
+    <ul class="uk-navbar-nav">
+        <li>
+            <a href="{{ path('sellListings') }}" uk-scroll="offset:200">
+                Listings
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
+                Contracts
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
+                Event/Program Schedule
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
+                Create new listing
+            </a>
+        </li>
+    </ul>
+
+    {% block sell_content %}
+    {% endblock sell_content %}
+
+{% endblock main_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {#<script type="text/javascript" src="{{ asset('bundles/app/javascript/buy.js') }}"></script>#}
+{% endblock %}

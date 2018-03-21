@@ -4,10 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Content;
-use AppBundle\Entity\User;
-use AppBundle\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
@@ -27,7 +24,7 @@ class DefaultController extends Controller
            ));
 
        }
-        return $this->redirectToRoute('dashboard', array(
+        return $this->redirectToRoute('mycontent', array(
         ));
     }
 
@@ -39,38 +36,15 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/dashboard", name="dashboard")
+     * @Route("/mycontent", name="mycontent")
      */
-    public function dashboardAction(Request $request)
+    public function mycontentAction(Request $request)
     {
 
         $user = $this->getUser();
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'user' => $user
-        ]);
-
-    }
-
-    /**
-     * @Route("/mycontent/sell", name="mycontent-sell")
-     */
-    public function mycontentSellAction(Request $request)
-    {
-        /**
-         * @var User
-         */
-        $user = $this->getUser();
-
-        $criteria = array(
-            'company' => $user->getCompany()
-        );
-
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy($criteria, ['createdAt' => 'DESC']);
-
         return $this->render('mycontent/mycontent.html.twig', [
-            'user' => $user,
-            'contents' => $contents
+            'user' => $user
         ]);
 
     }
@@ -105,35 +79,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/sell/published", name="sellPublished")
-     */
-    public function sellPublishedAction(Request $request, ContentService $contentService, FileUploader $fileUploader)
-    {
-        $user = $this->getUser();
-
-        $contentService->createContent($user, $request);
-
-        // replace this example code with whatever you need
-        return $this->render('sell/contentUploaded.html.twig', [
-            'user' => $user,
-        ]);
-
-    }
-
-    /**
-     * @Route("/test/sell/published", name="testSellPublished")
-     */
-    public function testSellPublishedAction(){
-
-        $user = $this->getUser();
-
-        return $this->render('sell/contentUploaded.html.twig', [
-            'user' => $user,
-        ]);
-
-    }
-
-    /**
      * @Route("/contract/preview", name="contractPreview")
      */
     public function contractPreviewAction(Request $request){
@@ -160,32 +105,6 @@ class DefaultController extends Controller
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
         );*/
-    }
-
-    /**
-     * @Route("/sell", name="sell")
-     */
-    public function sellAction(Request $request)
-    {
-
-        $user = $this->getUser();
-
-        $packages = $this->getDoctrine()
-            ->getRepository('AppBundle:RightsPackage')
-            ->findAll();
-
-        $rights = $this->getDoctrine()
-            ->getRepository('AppBundle:Rights')
-            ->findAll();
-
-        // replace this example code with whatever you need
-        return $this->render('sell/sell.html.twig', [
-            'user' => $user,
-            'packages' => $packages,
-            'rights' => $rights,
-            'price' => 4
-        ]);
-
     }
 
     /**

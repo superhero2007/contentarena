@@ -31,3 +31,5 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/sell, role: ROLE_USER }
         - { path: ^/contract, role: ROLE_USER }
+        - { path: ^/mycontent, role: ROLE_USER }
+        - { path: ^/buy, role: ROLE_USER }

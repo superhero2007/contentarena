@@ -1,32 +1,19 @@
-{% extends "layout.html.twig" %}
+{% extends "@App/sell/sell.layout.html.twig" %}
 
 {% block stylesheets %}
 
     {{ parent() }}
-    <link href="{{ asset('bundles/app/css/seller.css') }}" type="text/css" rel="stylesheet" />
-    <link href="{{ asset('bundles/app/css/chosen.css') }}" type="text/css" rel="stylesheet" />
-
-    {{ include('statics/language.css.html.twig', { }) }}
+    {#<link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet"/>#}
 
 {% endblock %}
 
-{% block main_content %}
 
-    {{ include('sell/step1.html.twig', { }) }}
+{% block sell_content %}
+    test
+{% endblock sell_content %}
 
-    {{ include('sell/step2.html.twig', { 'packages' : packages, 'rights' : rights }) }}
-
-{% endblock main_content %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/libs/jquery.csv.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/bootstrap-tagsinput.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/chosen.jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.extension.validator.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell/sell.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell/sell.step1.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/sell/sell.step2.js') }}"></script>
-
-    {{ include('statics/language.js.html.twig', { }) }}
+    {#<script type="text/javascript" src="{{ asset('bundles/app/javascript/buy.js') }}"></script>#}
 {% endblock %}

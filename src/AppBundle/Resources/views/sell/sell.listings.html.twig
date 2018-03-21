@@ -1,0 +1,38 @@
+{% extends "@App/sell/sell.layout.html.twig" %}
+
+{% block sell_content %}
+
+    <ul class="uk-navbar-nav">
+        <li>
+            <a href="{{ path('sellListingsActive') }}" uk-scroll="offset:200">
+                Draft
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('sellListingsActive') }}" uk-scroll="offset:200">
+                Pending listings
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('sellListingsActive') }}" uk-scroll="offset:200">
+                Active Listings
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('sellListingsActive') }}" uk-scroll="offset:200">
+                Sold packages
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('sellListingsActive') }}" uk-scroll="offset:200">
+                Expired listings
+            </a>
+        </li>
+    </ul>
+
+    {% block listing_content %}
+        {{ include('@App/content/contentItemList.html.twig', { 'contents' : contents }) }}
+    {% endblock listing_content %}
+
+{% endblock sell_content %}
