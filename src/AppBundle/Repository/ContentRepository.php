@@ -48,7 +48,8 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     public function getTerritoryInfo($customId){
         $data = [];
-        $country = $this->getEntityManager()->getRepository(Country::class);
+        $countriesRepository = $this->getEntityManager()->getRepository(Country::class);
+        $territories = $this->getEntityManager()->getRepository(Territory::class)->findAll();
         $content = $this->findOneBy(['customId'=>$customId]);
 
         $salesPackages = $content->getSalesPackages();
@@ -58,24 +59,23 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
                 if( $salesPackage->isWorldwide() ){
 
-                    $result = $country->createQueryBuilder('c')
+                    $result = $countriesRepository->createQueryBuilder('c')
                         ->where('c.id >= 1')
                         ->getQuery()
                         ->getResult(2);
 
-                } elseif ( count( $salesPackage->getSelectedCountries() ) > 0 ){
-                    $result = $salesPackage->getSelectedCountries();
+                } else {
+                    $territories = array();
+                    if ( count( $salesPackage->getSelectedCountries() ) > 0 ){
+                        $result = $salesPackage->getSelectedCountries();
+                    } elseif ( count( $salesPackage->getExcludedCountries() ) > 0 ){
+                        $result = $salesPackage->getExcludedCountries();
+                    }
 
-                } elseif ( count( $salesPackage->getExcludedCountries() ) > 0 ){
-
-                    $result = $salesPackage->getExcludedCountries();
-                }
-
-                $territories = array();
-
-                foreach ( $result->getIterator() as $country ){
-                    if ( !in_array( $country->getTerritory(),$territories, true ) ){
-                        $territories[] = $country->getTerritory();
+                    foreach ( $result->getIterator() as $country ){
+                        if ( !in_array( $country->getTerritory(),$territories, true ) ){
+                            $territories[] = $country->getTerritory();
+                        }
                     }
                 }
 

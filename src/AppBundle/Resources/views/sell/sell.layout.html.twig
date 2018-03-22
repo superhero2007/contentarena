@@ -1,5 +1,7 @@
 {% extends "layout.html.twig" %}
 
+{% import "@App/macros/menu.html.twig" as menus %}
+
 {% block stylesheets %}
 
     {{ parent() }}
@@ -8,29 +10,24 @@
 {% endblock %}
 
 {% block main_content %}
+    <nav class="uk-navbar">
+        <ul class="uk-navbar-nav">
+            {{ menus.menuItem('Listings', path('sellListings'), {
+                'Draft': path('sellListingsDrafts'),
+                "Pending": path('sellListingsPending'),
+                "Active": path('sellListingsActive'),
+                "Sold Packages": path('sellListingsPackages'),
+                "Expired": path('sellListingsExpired'),
+            }) }}
 
-    <ul class="uk-navbar-nav">
-        <li>
-            <a href="{{ path('sellListings') }}" uk-scroll="offset:200">
-                Listings
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
-                Contracts
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
-                Event/Program Schedule
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
-                Create new listing
-            </a>
-        </li>
-    </ul>
+            {{ menus.menuItem('Contracts', path('newListing') ) }}
+
+            {{ menus.menuItem('Event/Program Schedule', path('newListing') ) }}
+
+            {{ menus.menuItem('Create new listing', path('newListing') ) }}
+        </ul>
+    </nav>
+
 
     {% block sell_content %}
     {% endblock sell_content %}

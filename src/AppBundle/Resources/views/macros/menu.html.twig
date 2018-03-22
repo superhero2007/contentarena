@@ -1,0 +1,23 @@
+{% macro menuItem(name, url, subitems) %}
+
+    {% spaceless %}
+        {% set subitems = subitems|default({}) %}
+        {% set currentUrl = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+        {% set isActive = currentUrl == url %}
+
+        {% for name, suburl in subitems if not isActive %}
+            {% set isActive = currentUrl == suburl %}
+        {% endfor %}
+
+        <li{% if isActive %} class="uk-active"{% endif %}>
+            <a href="{{ url }}"{% if subitems|length > 0 %} class="uk-parent"{% endif %}>{{ name|trans() }}</a>
+            {% if subitems|length > 0 %}
+                <ul class="uk-subnav">
+                    {% for name, url in subitems %}
+                        {{ _self.menuItem(name, url) }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endspaceless %}
+{% endmacro %}

@@ -25,6 +25,55 @@ body {
     width: 100% !important;
 }
 
+/* MENU */
+
+.uk-navbar {
+    background: transparent;
+}
+
+.uk-navbar-nav > li.uk-active > a,
+.uk-navbar-nav > li > a:active,
+.uk-navbar-nav > li:hover > a
+{
+    background: transparent;
+    color: #378db9;
+}
+
+.main-content .uk-navbar-nav > li.uk-active > a,
+.main-content .uk-navbar-nav > li > a:active,
+.main-content .uk-navbar-nav > li:hover > a
+{
+    color: white;
+}
+
+.main-content .uk-navbar-nav > li > a {
+    color: #378db9;
+    font-size: 12px;
+}
+
+.main-content .uk-subnav > li.uk-active > a {
+    background: transparent;
+    color: white;
+}
+
+.main-content .uk-subnav > li > a {
+    color: #378db9;
+    font-size: 12px;
+}
+
+.uk-navbar-nav .uk-active {
+    margin-bottom: 10px;
+}
+
+.uk-active .uk-subnav {
+    display: block;
+}
+
+ul.uk-subnav {
+    display: none;
+}
+
+
 .landing-message{
     padding: 40px;
     color: rgba(255, 255, 255, 0.7);

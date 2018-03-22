@@ -3,10 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         {% block stylesheets %}
-            <link href="{{ asset('bundles/app/css/main.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/layout.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/uikit.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/inherited.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/layout.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/jquery-ui.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/jquery-ui.theme.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/jquery-ui.structure.min.css') }}" type="text/css" rel="stylesheet" />
@@ -45,7 +44,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ path('sell') }}" uk-scroll="offset:200">
+                            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
                                 <i uk-icon="icon: triangle-down" class="uk-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
                                 </i>
@@ -111,6 +110,7 @@
     {% block javascripts %}
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/libs/uikit.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/libs/jsrender.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/languages.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/watch.js') }}"></script>

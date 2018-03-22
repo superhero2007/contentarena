@@ -127,4 +127,80 @@ class SellController extends Controller
 
     }
 
+    /**
+     * @Route("/sell/listings/drafts", name="sellListingsDrafts")
+     */
+    public function sellListingsDraftsAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $paginator  = $this->get('knp_paginator');
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+
+
+        return $this->render('@App/sell/sell.listings.active.html.twig', [
+            'user' => $user,
+            'contents' => $contents
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/listings/expired", name="sellListingsExpired")
+     */
+    public function sellListingsExpiredAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $paginator  = $this->get('knp_paginator');
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+
+
+        return $this->render('@App/sell/sell.listings.active.html.twig', [
+            'user' => $user,
+            'contents' => $contents
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/listings/pending", name="sellListingsPending")
+     */
+    public function sellListingsPendingAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $paginator  = $this->get('knp_paginator');
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+
+
+        return $this->render('@App/sell/sell.listings.active.html.twig', [
+            'user' => $user,
+            'contents' => $contents
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/listings/packages", name="sellListingsPackages")
+     */
+    public function sellListingsPackagesAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $paginator  = $this->get('knp_paginator');
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+
+
+        return $this->render('@App/sell/sell.listings.active.html.twig', [
+            'user' => $user,
+            'contents' => $contents
+        ]);
+
+    }
+
 }
