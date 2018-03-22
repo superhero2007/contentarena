@@ -47,6 +47,13 @@ class Bid
      */
     private $company;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $status;
+
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
@@ -189,6 +196,7 @@ class Bid
         return $this->type;
     }
 
+
     /**
      * @param mixed $type
      */
@@ -197,7 +205,21 @@ class Bid
         $this->type = $type;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 
 }
 
