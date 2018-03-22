@@ -35,9 +35,9 @@
                     <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
                         Availibility:
                         <span class="buy-availibility">
-                            {% if buyPackage.salesPackage.isWorldwide == 'worldwide' %}
+                            {% if buyPackage.salesPackage.isWorldwide %}
                                 Worldwide
-                            {% elseif buyPackage.salesPackage.selecteCountries | length > 0 %}
+                            {% elseif buyPackage.salesPackage.selectedCountries | length > 0 %}
                                 Only in Selected {{ buyPackage.countries | length }} Countries
                             {% else %}
                                 Worldwide excluding {{ buyPackage.countries | length }} Countries
@@ -56,14 +56,25 @@
                     </div>
                 {% endif %}
 
-                <div class="uk-grid uk-margin-remove-top">
-                    <div class="uk-width-1-2">
-                        <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.amount }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
+                {% if buyPackage.salesPackage.salesMethod == 'FIXED'  %}
+                    <div class="uk-grid uk-margin-remove-top">
+                        <div class="uk-width-1-2">
+                        </div>
+                        <div class="uk-width-1-2">
+                            <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Add to cart</button>
+                        </div>
                     </div>
-                    <div class="uk-width-1-2">
-                        <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Place bid + add to cart</button>
+                {% else %}
+                    <div class="uk-grid uk-margin-remove-top">
+                        <div class="uk-width-1-2">
+                            <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.amount }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
+                        </div>
+                        <div class="uk-width-1-2">
+                            <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Place bid + add to cart</button>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
+
             </div>
         {% endfor %}
     </div>
