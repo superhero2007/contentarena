@@ -115,10 +115,9 @@ class SellController extends Controller
     {
 
         $user = $this->getUser();
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy(['approved'=>true], ['createdAt' => 'DESC']);
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
-
 
         return $this->render('@App/sell/sell.listings.active.html.twig', [
             'user' => $user,
@@ -172,12 +171,12 @@ class SellController extends Controller
     {
 
         $user = $this->getUser();
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy(['approved'=>false], ['createdAt' => 'DESC']);
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
 
 
-        return $this->render('@App/sell/sell.listings.active.html.twig', [
+        return $this->render('@App/sell/sell.listings.pending.html.twig', [
             'user' => $user,
             'contents' => $contents
         ]);
