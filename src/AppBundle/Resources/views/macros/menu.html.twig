@@ -21,3 +21,20 @@
         </li>
     {% endspaceless %}
 {% endmacro %}
+
+{% macro mainMenuItem(name, url, subitems) %}
+
+    {% spaceless %}
+        {% set subitems = subitems|default({}) %}
+        {% set currentUrl = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+        {% set isActive = currentUrl == url %}
+
+        {% for suburl in subitems if not isActive %}
+            {% set isActive = currentUrl == suburl %}
+        {% endfor %}
+
+        <li{% if isActive %} class="uk-active"{% endif %}>
+            <a href="{{ url }}"{% if subitems|length > 0 %} class="uk-parent"{% endif %}>{{ name|trans() }}</a>
+        </li>
+    {% endspaceless %}
+{% endmacro %}

@@ -1,0 +1,15 @@
+{% extends "@App/myContent/myContent.layout.html.twig" %}
+
+{% block my_content %}
+
+    <nav class="uk-navbar">
+        <ul class="uk-navbar-nav">
+            {{ menus.menuItem('Active', path('myContentContractsActive') ) }}
+            {{ menus.menuItem('Expired', path('myContentContractsExpired') ) }}
+        </ul>
+    </nav>
+
+    {% block listing_content %}
+    {% endblock listing_content %}
+
+{% endblock my_content %}

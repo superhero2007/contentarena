@@ -1,0 +1,15 @@
+{% extends "@App/sell/sell.layout.html.twig" %}
+
+{% block sell_content %}
+
+    <nav class="uk-navbar">
+        <ul class="uk-navbar-nav">
+            {{ menus.menuItem('Active', path('sellContractsActive') ) }}
+            {{ menus.menuItem('Expired', path('sellContractsExpired') ) }}
+        </ul>
+    </nav>
+
+    {% block listing_content %}
+    {% endblock listing_content %}
+
+{% endblock sell_content %}

@@ -12,17 +12,21 @@
 {% block main_content %}
     <nav class="uk-navbar">
         <ul class="uk-navbar-nav">
-            {{ menus.menuItem('Listings', path('sellListings'), {
-                'Draft': path('sellListingsDrafts'),
-                "Pending": path('sellListingsPending'),
-                "Active": path('sellListingsActive'),
-                "Sold Packages": path('sellListingsPackages'),
-                "Expired": path('sellListingsExpired'),
-            }) }}
 
-            {{ menus.menuItem('Contracts', path('newListing') ) }}
+            {{ menus.mainMenuItem('Listings', path('sellListings'), [
+                path('sellListingsDrafts'),
+                path('sellListingsPending'),
+                path('sellListingsActive'),
+                path('sellListingsPackages'),
+                path('sellListingsExpired'),
+            ] ) }}
 
-            {{ menus.menuItem('Event/Program Schedule', path('newListing') ) }}
+            {{ menus.mainMenuItem('Contracts', path('sellContracts'), [
+                path('sellContractsActive'),
+                path('sellContractsExpired'),
+            ] ) }}
+
+            {{ menus.menuItem('Event/Program Schedule', path('sellSchedule') ) }}
 
             {{ menus.menuItem('Create new listing', path('newListing') ) }}
         </ul>

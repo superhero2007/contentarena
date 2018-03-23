@@ -36,20 +36,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/mycontent", name="mycontent")
-     */
-    public function mycontentAction(Request $request)
-    {
-
-        $user = $this->getUser();
-        // replace this example code with whatever you need
-        return $this->render('mycontent/mycontent.html.twig', [
-            'user' => $user
-        ]);
-
-    }
-
-    /**
      * @Route("/buy", name="buy")
      */
     public function buyAction(Request $request)

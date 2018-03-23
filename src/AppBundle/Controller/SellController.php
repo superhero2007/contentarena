@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -95,16 +94,8 @@ class SellController extends Controller
     public function sellListingsAction(Request $request)
     {
 
-        $user = $this->getUser();
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
-        $paginator  = $this->get('knp_paginator');
-        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
-
-
-        return $this->render('@App/sell/sell.listings.html.twig', [
-            'user' => $user,
-            'contents' => $contents
-        ]);
+        return $this->redirectToRoute('sellListingsActive', array(
+        ));
 
     }
 
@@ -197,6 +188,56 @@ class SellController extends Controller
         return $this->render('@App/sell/sell.listings.active.html.twig', [
             'user' => $user,
             'contents' => $contents
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/contracts", name="sellContracts")
+     */
+    public function sellContractsAction(Request $request)
+    {
+
+        return $this->redirectToRoute('sellContractsActive', array(
+        ));
+
+    }
+
+    /**
+     * @Route("/sell/contracts/expired", name="sellContractsExpired")
+     */
+    public function sellContractsExpiredAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        return $this->render('@App/sell/sell.contracts.expired.html.twig', [
+            'user' => $user,
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/contracts/active", name="sellContractsActive")
+     */
+    public function sellContractsActiveAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        return $this->render('@App/sell/sell.contracts.active.html.twig', [
+            'user' => $user,
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/schedule", name="sellSchedule")
+     */
+    public function sellScheduleAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        return $this->render('@App/sell/sell.schedule.html.twig', [
+            'user' => $user,
         ]);
 
     }
