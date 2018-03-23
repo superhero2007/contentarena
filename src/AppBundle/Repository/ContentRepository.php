@@ -128,6 +128,17 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         return [];
     }
 
+    public function getExpiredData(){
+
+        $now = date('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('c')
+            ->where('c.expiresAt < :now')
+            ->setParameter('now',$now)
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
 }
 
 
