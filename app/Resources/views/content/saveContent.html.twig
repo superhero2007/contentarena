@@ -1,0 +1,14 @@
+<div class="right uk-margin-small-top">
+    <form action="{{ path('get_content_data') }}" method="post">
+        <input type="hidden" name="content-id" value="{{ content.id }}">
+        <input type="hidden" name="content-data" value="" id="content-data">
+        <input type="hidden" name="custom-id" value="{{ custom_id }}">
+        <button class="uk-width-1-1 uk-button uk-button-primary license-btn">Continue with license agreement</button>
+    </form>
+</div>
+
+{% for msg in app.session.flashBag.get('success') %}
+    <div class="alert alert-success">
+        {{ msg }}
+    </div>
+{% endfor %}

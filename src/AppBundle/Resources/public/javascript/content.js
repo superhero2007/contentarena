@@ -138,8 +138,31 @@ $(document).ready(function(){
         $(this).hide(0);
     });
 
-    $(document).on('click','.add-to-cart',function(){
+    $(document).on('change','.price-input, .buy-package-input',function(){
+        $(this).parents('.country-row').find('.add-to-cart').attr('data-amount',$(this).val())
+    });
 
+    $('#content-data').val(JSON.stringify([]));
+
+    $(document).on('click','.add-to-cart',function(){
+        $('.license-btn').css({'display':'block'});
+        var countId = $(this).data('country');
+        var currencyId = $(this).data('currency');
+        var pricingId = $(this).data('pricing-type');
+        var amount = $(this).data('amount');
+        var rand = $(this).data('rand');
+        var temp = {
+            id:rand,
+            country: countId,
+            currency: currencyId,
+            pricingMethod:pricingId,
+            amount:amount,
+        };
+
+        var object = JSON.parse($('#content-data').val());
+        object.push(temp);
+
+        $('#content-data').val(JSON.stringify(object));
         if($(this).data('type') === 'find-territories'){
             var countryId = $(this).data('country');
             var countryName = $(this).parent().siblings('.country-name').text().trim();
@@ -168,7 +191,7 @@ $(document).ready(function(){
             var countryName = name +'(' + parent.find('.buy-availibility').text().trim()+')';
             var pricingMethod = parent.find('.buy-package-method').text().trim();
 
-            if(parent.find('.buy-package-input').val().length > 0){
+            if(parent.find('.buy-package-input').length > 0 && parent.find('.buy-package-input').val().length > 0){
                 price = parent.find('.buy-package-input').val();
             }else{
                 price = parent.find('.buy-package-input').data('price');
@@ -183,7 +206,7 @@ $(document).ready(function(){
 
         var row = "<tr><td>"+ countryName +"</td><td class='pricing-method'>"+ pricingMethod +"" +
             "</td><td class='sales-price'>"+ price +"</td><td class='sales-currency'>"+ currency +"</td>" +
-            "<td><i class='fa fa-times delete-item' data-id='"+countryId+"' data-type='"+ type +"'></i></td></tr>"
+            "<td><i class='fa fa-times delete-item' data-id='"+countryId+"' data-rand='"+rand+"' data-type='"+ type +"'></i></td></tr>"
 
         if(pricingMethod == 'Fixed price'){
             $('.fixed-fee-box').css({'display':'block'});
@@ -191,7 +214,6 @@ $(document).ready(function(){
 
             currency == 'USD' ? $('.sub-total-usd-fixed').text((+ $('.sub-total-usd-fixed').text()) + (+ price)) : $('.sub-total-eur-fixed').text((+ $('.sub-total-eur-fixed').text()) + (+ price))
         }else{
-            console.log(price);
             $('.bid-box').css({'display':'block'});
             $('.bid-body').prepend(row)
             currency == 'USD' ? $('.sub-total-usd-bid').text((+ $('.sub-total-usd-bid').text()) + (+ price )) : $('.sub-total-eur-bid').text((+ $('.sub-total-eur-bid').text()) + (+ price))
@@ -204,6 +226,19 @@ $(document).ready(function(){
     $(document).on('click','.delete-item',function(){
         var currency = $(this).parents('tr').find('.sales-currency').text().trim();
         var price = $(this).parents('tr').find('.sales-price').text().trim();
+        var id = $(this).data('rand');
+        var temp = JSON.parse($('#content-data').val());
+       $.each(temp,function (i,v) {
+            if(v && v.id == id){
+               // temp.splice(i,1);
+                delete temp[i]
+            }
+       });
+
+
+       temp = JSON.stringify(temp);
+        $('#content-data').val(temp);
+
 
         if($(this).data('type') ==='find-territories'){
             var id = $(this).data('id');
@@ -236,6 +271,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click','.add-all-selections',function(){
+        $('.license-btn').css({'display':'block'});
         var rows = $('.territory-table-body').find('tr[data-disabled="false"][data-checked="true"]');
         rows.find('.add-to-cart').prop('disabled',true);
         rows.attr('data-disabled','true');
@@ -243,11 +279,30 @@ $(document).ready(function(){
         rows.find('.subordinate-check').prop('checked',false);
         rows.find('.subordinate-check').prop('disabled',true);
 
+
+        var object = JSON.parse($('#content-data').val());
+
+
         $.each(rows, function (index, item) {
              var countryName = $(item).find('.country-name').text().trim();
              var countryId = $(item).find('.add-to-cart').data('country');
              var pricingMethod = $(item).find('.pricing-method').text().trim();
              var currency = $(item).find('.sales-currency').text().trim();
+            var btn = $(item).find('.add-to-cart');
+
+            var currencyId = $(btn).data('currency');
+            var pricingId = $(btn).data('pricing-type');
+            var amount = $(btn).data('amount');
+            var rand = $(btn).data('rand');
+            var temp = {
+                id:rand,
+                country: countryId,
+                currency: currencyId,
+                pricingMethod:pricingId,
+                amount:amount,
+            };
+
+            object.push(temp);
 
             var price = '';
 
@@ -258,7 +313,7 @@ $(document).ready(function(){
              }
             var row = "<tr><td>"+ countryName +"</td><td class='pricing-method'>"+ pricingMethod +"" +
                 "</td><td class='sales-price'>"+ price +"</td><td class='sales-currency'>"+ currency +"</td>" +
-                "<td><i class='fa fa-times delete-item' data-id='"+countryId+"'></i></td></tr>"
+                "<td><i class='fa fa-times delete-item' data-rand='"+rand+"' data-id='"+countryId+"'></i></td></tr>"
 
 
             if(pricingMethod == 'Fixed price'){
@@ -271,6 +326,8 @@ $(document).ready(function(){
 
             $(item).find('.add-to-cart').prop('disabled',true);
         });
+
+        $('#content-data').val(JSON.stringify(object));
 
     });
 
