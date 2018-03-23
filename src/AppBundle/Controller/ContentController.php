@@ -25,8 +25,8 @@ class ContentController extends Controller
            $manager = $this->getDoctrine()->getManager();
 
             $data = json_decode($request->get('content-data'));
-
-
+            $company = $this->getUser()->getCompany();
+            $user = $this->getUser();
             foreach ($data as $item){
 
                 if(!is_array($item->country)){
@@ -49,17 +49,18 @@ class ContentController extends Controller
                 $bid->setStatus($status);
                 $bid->setContent($content);
                 $bid->setCurrency($currensy);
-                $bid->setBuyerUser($this->getUser());
+                $bid->setBuyerUser($user);
                 $bid->setAmount($item->amount);
+                $bid->setCompany($company);
                 $bid->setCountries($countries);
                 $manager->persist($bid);
             }
 
             $manager->flush();
             $this->addFlash('success','Tha data was saved successfully');
-            return $this->redirect('/content/'.$request->request->get('custom-id'));
+            return $this->redirectToRoute('showContent',['customId'=>$request->request->get('custom-id')]);
         }
-        return $this->redirect('/content/'.$request->request->get('custom-id'));
+        return $this->redirectToRoute('showContent',['customId'=>$request->request->get('custom-id')]);
 
     }
 
