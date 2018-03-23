@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class CountryRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findCountriesByIds($ids){
+
+        return $this->createQueryBuilder('c')
+            ->where('c.id IN (:ids)')
+            ->setParameter('ids',$ids)
+            ->getQuery()
+            ->getResult();
+    }
 }

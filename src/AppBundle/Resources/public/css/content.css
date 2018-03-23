@@ -63,8 +63,12 @@
     color:#fff;
 }
 
-.delete-item{
-    cursor:pointer;
-    color:red;
+.delete-item {
+    cursor: pointer;
+    color: red;
+}
+
+.license-btn{
+    display: none;
 }
 

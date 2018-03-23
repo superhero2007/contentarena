@@ -9,7 +9,6 @@
             <div>
                 <button class="uk-button uk-button-success main-check" data-checked="false">Select All</button>
             </div>
-
             <div class="uk-grid uk-flex uk-flex-center">
                 <div class="continent-name continent-name-color" data-id="world">World</div>
 
@@ -41,19 +40,19 @@
                                 <td>
                                     <input type="checkbox" class="subordinate-check" data-id="{{ country.territoryId }}">
                                 </td>
-                                <td class="country-name">{{ country.name }}</td>
+                                <td class="country-name" >{{ country.name }}</td>
                                 <td class="pricing-method">
-                                    {% if item.salesPackage.salesMethod == 'fee' %}
+                                    {% if item.salesPackage.salesMethod.name == 'FIXED' %}
                                         Fixed price
-                                    {% elseif item.salesPackage.salesMethod == 'closed-bid'%}
+                                    {% elseif item.salesPackage.salesMethod.name == 'CLOSED'%}
                                         Closed bid
                                     {% else %}
                                         Open bid
                                     {% endif %}
                                 </td>
                                 <td class="sales-price">
-                                    {% if item.salesPackage.salesMethod == 'fee' %}
-                                        {{ item.salesPackage.fee }}
+                                    {% if item.salesPackage.salesMethod.name == 'FIXED' %}
+                                        {{ item.salesPackage.amount }}
                                     {% else %}
                                         <input type="text" class="price-input" data-price="{{ item.salesPackage.amount }}" placeholder="enter bid (> {{ item.salesPackage.amount }})">
                                     {% endif %}
@@ -61,7 +60,7 @@
                                 </td>
                                 <td class="sales-currency">{{ item.salesPackage.currency }}</td>
                                 <td>
-                                    <button class="uk-button-primary add-to-cart" data-country="{{ country.id }}" data-type="find-territories">Add to cart</button>
+                                    <button class="uk-button-primary add-to-cart"  data-amount="{{ item.salesPackage.amount }}" data-country="{{ country.id }}" data-type="find-territories" data-pricing-type="{{ item.salesPackage.salesMethod.id }}" data-currency="{{ item.salesPackage.currency.id }}" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}">Add to cart</button>
                                 </td>
                             </tr>
 

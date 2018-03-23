@@ -55,13 +55,17 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-
+                {% set ids = [] %}
+                {% for country in buyPackage.countries %}
+                   {% set ids = ids | merge([country.id])%}
+                {% endfor %}
                 {% if buyPackage.salesPackage.salesMethod == 'FIXED'  %}
                     <div class="uk-grid uk-margin-remove-top">
                         <div class="uk-width-1-2">
+                            <input type="hidden" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
                         </div>
                         <div class="uk-width-1-2">
-                            <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Add to cart</button>
+                            <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}" data-country="{{ ids|json_encode }}" data-amount="{{ buyPackage.salesPackage.amount }}" data-pricing-type="{{ buyPackage.salesPackage.salesMethod.id }}" data-type="buy-puckages" data-id="{{ loop.index }}" data-currency="{{ buyPackage.salesPackage.currency.id }}">Add to cart</button>
                         </div>
                     </div>
                 {% else %}
@@ -70,7 +74,7 @@
                             <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.amount }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
                         </div>
                         <div class="uk-width-1-2">
-                            <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-type="buy-puckages" data-id="{{ loop.index }}">Place bid + add to cart</button>
+                            <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}" data-country="{{ ids|json_encode }}" data-amount="{{ buyPackage.salesPackage.amount }}" data-pricing-type="{{ buyPackage.salesPackage.salesMethod.id }}" data-type="buy-puckages" data-id="{{ loop.index }}" data-currency="{{ buyPackage.salesPackage.currency.id }}">Add to cart</button>
                         </div>
                     </div>
                 {% endif %}
