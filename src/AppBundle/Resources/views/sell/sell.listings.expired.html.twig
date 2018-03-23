@@ -1,0 +1,7 @@
+{% extends "@App/sell/sell.listings.html.twig" %}
+
+{% block listing_content %}
+
+    {{ include('@App/content/contentItemList.html.twig', { 'contents' : contents }) }}
+
+{% endblock listing_content %}
