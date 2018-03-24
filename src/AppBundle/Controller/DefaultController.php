@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Content;
+use AppBundle\Entity\ContentFilter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,35 +34,6 @@ class DefaultController extends Controller
      */
     public function feedAction(Request $request)
     {
-    }
-
-    /**
-     * @Route("/buy", name="buy")
-     */
-    public function buyAction(Request $request)
-    {
-
-        $user = $this->getUser();
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
-        $territories = $this->getDoctrine()->getRepository('AppBundle:Territory')->findAll();
-        $countries = $this->getDoctrine()->getRepository('AppBundle:Country')->findAll();
-
-        if($request->query->get('inputSearch')){
-            $contents = $this->getDoctrine()
-                ->getRepository(Content::class)
-                ->getSearchContent($request->query->get('inputSearch'));
-        }
-
-        $paginator  = $this->get('knp_paginator');
-        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
-
-        return $this->render('buy/buy.html.twig', [
-            'user' => $user,
-            'contents' => $contents,
-            'territories' => $territories,
-            'countries' =>  $countries
-        ]);
-
     }
 
     /**

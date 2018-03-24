@@ -15,27 +15,15 @@
         {{ include('buy/filters.html.twig', { 'territories' : territories, 'countries' : countries }) }}
     </div>
 
-    <div class="buy-box">
-        {%if contents| length > 0 %}
-            {% for content in contents %}
-                {{ include('buy/contentItem.html.twig', { 'content' : content }) }}
-            {% endfor %}
-        {% else %}
-            <div class="content-column">
-                <h3 class="uk-align-center">No Results</h3>
-            </div>
-
-        {% endif %}
-
-        <div class="navigation">
-            {{ knp_pagination_render(contents,'pagination/uikit_pagination.html.twig') }}
-        </div>
+    <div class="content-list-container">
+        {{ include('@App/content/contentItemList.html.twig', { 'contents' : contents }) }}
     </div>
+
 
 {% endblock main_content %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/app/javascript/buy.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/filters.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/contentFilter.js') }}"></script>
 {% endblock %}

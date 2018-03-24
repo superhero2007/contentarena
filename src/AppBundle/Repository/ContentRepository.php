@@ -5,7 +5,9 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Country;
 use AppBundle\Entity\SalesPackage;
+use AppBundle\Entity\Sport;
 use AppBundle\Entity\Territory;
+use AppBundle\Entity\ContentFilter;
 
 
 /**
@@ -18,31 +20,112 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 {
 
 
-    public function getSearchContent($value)
+    public function getSearchContent($value = null, $filter = null)
     {
+        if($value){
+            return $this->createQueryBuilder('c')
+                ->leftJoin('c.company', 'com')
+                ->leftJoin('c.sport', 's')
+                ->leftJoin('c.tournament', 't')
+                ->leftJoin('c.sportCategory', 'cat')
+                ->where('c.eventType LIKE :value')
+                ->orWhere('c.description LIKE :value')
+                ->orWhere('c.releaseYear LIKE :value')
+                ->orWhere('c.ownLicense LIKE :value')
+                ->orWhere('c.brochure LIKE :value')
+                ->orWhere('c.programName LIKE :value')
+                ->orWhere('c.programType LIKE :value')
+                ->orWhere('c.seriesType LIKE :value')
+                ->orWhere('c.salesPackages LIKE :value')
+                ->orWhere('c.distributionPackages LIKE :value')
+                ->orWhere('com.legalName LIKE :value')
+                ->orWhere('s.name LIKE :value')
+                ->orWhere('t.name LIKE :value')
+                ->orWhere('cat.name LIKE :value')
+                ->setParameter('value', '%'.$value.'%')
+                ->getQuery()
+                ->getResult();
 
-        return $this->createQueryBuilder('c')
-            ->leftJoin('c.company', 'com')
-            ->leftJoin('c.sport', 's')
-            ->leftJoin('c.tournament', 't')
-            ->leftJoin('c.sportCategory', 'cat')
-            ->where('c.eventType LIKE :value')
-            ->orWhere('c.description LIKE :value')
-            ->orWhere('c.releaseYear LIKE :value')
-            ->orWhere('c.ownLicense LIKE :value')
-            ->orWhere('c.brochure LIKE :value')
-            ->orWhere('c.programName LIKE :value')
-            ->orWhere('c.programType LIKE :value')
-            ->orWhere('c.seriesType LIKE :value')
-            ->orWhere('c.salesPackages LIKE :value')
-            ->orWhere('c.distributionPackages LIKE :value')
-            ->orWhere('com.legalName LIKE :value')
-            ->orWhere('s.name LIKE :value')
-            ->orWhere('t.name LIKE :value')
-            ->orWhere('cat.name LIKE :value')
-            ->setParameter('value', '%'.$value.'%')
-            ->getQuery()
-            ->getResult();
+        }
+        elseif($filter){
+            $query = $this->createQueryBuilder('c')
+                ->leftJoin('c.sport', 's');
+            if(!empty($filter->sports)){
+                $query->andWhere('s.externalId = :sport')
+                    ->setParameter('sport',$filter->sports);
+            }
+
+
+            if(!empty($filter->timing)){
+                if($filter->timing == 'upcoming'){
+                    $date = date('Y-m-d h:i:s',time() - 3600 * 24 * 10);
+                    $query->andWhere('c.expiresAt < :date')
+                        ->setParameter('date',$date);
+                }else if($filter->timing == 'recent'){
+                    $date =date('Y-m-d h:i:s',time() - 3600 * 24 * 5);
+                    $query->andWhere('c.createdAt = :date')
+                        ->setParameter('date',$date);
+                }else{
+                    $date = json_decode($filter->timing);
+                    $startDate = date('Y-m-d H:i:s',strtotime(str_replace(' ','-',$date->startDate)));
+                    $endDate = date('Y-m-d H:i:s',strtotime(str_replace(' ','-',$date->endDate)));
+
+                    $query->andWhere('c.createdAt >= :startDate')
+                        ->andWhere('c.createdAt <= :endDate')
+                        ->setParameter('startDate',$startDate)
+                        ->setParameter('endDate',$endDate);
+                }
+            }
+
+            return $query;
+        }
+
+    }
+
+    public function getFilteredContent( ContentFilter $filter ){
+
+        $query = $this->createQueryBuilder('content');
+
+        if ( count( $filter->getSports() ) > 0 ) {
+            $query
+                ->innerJoin('content.sports', 'sports')
+                ->where("sports IN(:sportList)")
+                //->andWhere("content.approved = true")
+                ->setParameter('sportList', $filter->getSports());
+        }
+
+        if ( count( $filter->getCountries() ) > 0 ) {
+            $query
+                ->leftJoin('content.salesPackages', 'salesPackages')
+                ->leftJoin('salesPackages.selectedCountries', 'selectedCountries')
+                ->andWhere($query->expr()->orX(
+                    $query->expr()->eq('salesPackages.worldwide', '1'),
+                    $query->expr()->in('selectedCountries', ':countries')
+                ))
+                ->setParameter('countries', $filter->getCountries());
+        }
+
+        if ( count( $filter->getSuperRights() ) > 0 ) {
+            $query
+                ->leftJoin('content.rightsPackage', 'rightsPackage')
+                ->andWhere($query->expr()->orX(
+                    $query->expr()->in('rightsPackage', ':rightsPackages')
+                ))
+                ->setParameter('rightsPackages', $filter->getSuperRights());
+        }
+
+        if ( $filter->getFromDate() != null && $filter->getToDate() != null ) {
+            $query->andWhere('content.expiresAt >= :fromDate')
+                ->andWhere('content.expiresAt <= :toDate')
+                ->setParameter('fromDate',$filter->getFromDate())
+                ->setParameter('toDate',$filter->getToDate());
+        }
+
+        $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());
+
+        $result = $query->getQuery()->getResult();
+
+        return $result;
 
     }
 
@@ -136,6 +219,13 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->where('c.expiresAt < :now')
             ->setParameter('now',$now)
             ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
+    public function getContentInfo(){
+        return $this->createQueryBuilder('c')
+            ->where('c.id > :id')
+            ->setParameter('id',1)
             ->getQuery()->getResult();
     }
 

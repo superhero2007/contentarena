@@ -63,7 +63,7 @@ class SalesPackage
     private $salesMethod;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="salesPackages")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="salesPackages",fetch="EAGER")
      * @ORM\JoinTable(name="sales_package_selected_countries",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_selected_countries_id", referencedColumnName="id")}
@@ -72,7 +72,7 @@ class SalesPackage
     private $selectedCountries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="salesPackages")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="salesPackages",fetch="EAGER")
      * @ORM\JoinTable(name="sales_package_excluded_countries",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_excluded_countries_id", referencedColumnName="id")}

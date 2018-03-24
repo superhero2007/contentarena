@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,33 @@ class ContentService
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
+    }
+
+    public function getContent( Request $request){
+
+        $filterId = $request->request->get("id");
+
+        if ( isset($filterId)){
+            $filter = $this->em->getRepository('AppBundle:ContentFilter')->findOneBy(array('id' => $filterId));
+        } else {
+            $filter = $this->getFilterFromResponse( $request );
+        }
+
+        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter);
+
+        return $content;
+
+    }
+
+    public function saveFilter(Request $request, User $user)
+    {
+        $filter = $this->getFilterFromResponse( $request );
+        $filter->setUser($user);
+        $this->em->persist($filter);
+        $this->em->flush();
+
+        return true;
+
     }
 
     public function createContent(User $user, Request $request){
@@ -75,12 +103,12 @@ class ContentService
          * Create element in DB if it doesn't exist.
          */
         if ( isset($data->sports) && count($data->sports) > 0 ) {
-            $sports = $this->getSports($data);
-            $content->setSports($sports);
+
         } else if ( isset($data->sport) ) {
-            $sport = $this->getSport($data);
-            $content->setSport($sport);
+            $data->sports = array( $data->sport );
         }
+        $sports = $this->getSports($data);
+        $content->setSports($sports);
 
         /**
          * Set tournament
@@ -200,6 +228,26 @@ class ContentService
         $this->em->flush();
 
         return $content;
+
+    }
+
+    /**
+     * @param Request $request
+     * @return ContentFilter
+     */
+    private function getFilterFromResponse(Request $request){
+        $filter = new ContentFilter();
+
+        if ( $request->request->get("sports") != null ) $filter->setSports( $this->getSports( $request->request->all()  ) );
+        if ( $request->request->get("countries") != null )$filter->setCountries($this->getCountries( $request->request->get("countries")  ) );
+        if ( $request->request->get("rights") != null )$filter->setSuperRights($this->getSuperRights( $request->request->get("rights") ) );
+        if ( $request->request->get("orderBy") != null )$filter->setOrderBy($request->get("orderBy"));
+        if ( $request->request->get("sortOrder") != null )$filter->setSortOrder($request->get("sortOrder"));
+        if ( $request->request->get("fromDate") != null )$filter->setFromDate(new \DateTime($request->get("fromDate") ) );
+        if ( $request->request->get("toDate") != null )$filter->setToDate(new \DateTime($request->get("toDate") ) );
+        if ( $request->request->get("name") != null )$filter->setName($request->get("name"));
+
+        return $filter;
 
     }
 
@@ -325,7 +373,25 @@ class ContentService
         return $country;
     }
 
+    private function getCountries($countryIds){
+
+        $countries =  $this->em
+            ->getRepository('AppBundle:Country')
+            ->findBy(array('id' => $countryIds));
+
+        return $countries;
+    }
+
+    private function getSuperRights($ids){
+
+        return $this->em
+            ->getRepository('AppBundle:RightsPackage')
+            ->findBy(array('id' => $ids));
+    }
+
     private function sport($sportData){
+
+        if ( is_array($sportData) ) $sportData = (object) $sportData;
 
         if( isset ($sportData->externalId ) ){
             $sport = $this->em
@@ -353,6 +419,9 @@ class ContentService
     }
 
     private function getSports($data){
+
+        if ( is_array($data) ) $data = (object) $data;
+
         $sports = array();
         forEach ( $data->sports as $sport ){
             $sports[] = $this->sport($sport);

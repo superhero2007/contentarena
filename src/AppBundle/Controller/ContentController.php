@@ -18,20 +18,20 @@ class ContentController extends Controller
     /**
      * @Route("/content/get_data", name="get_content_data")
      */
+    public function getContentData(Request $request)
+    {
+        if (!empty(json_decode($request->request->get('content-data')))) {
 
-    public function getContentData(Request $request){
-        if(!empty(json_decode($request->request->get('content-data')))){
-
-           $manager = $this->getDoctrine()->getManager();
+            $manager = $this->getDoctrine()->getManager();
 
             $data = json_decode($request->get('content-data'));
             $company = $this->getUser()->getCompany();
             $user = $this->getUser();
-            foreach ($data as $item){
+            foreach ($data as $item) {
 
-                if(!is_array($item->country)){
+                if (!is_array($item->country)) {
                     $country = [$item->country];
-                }else{
+                } else {
                     $country = $item->country;
                 }
 
@@ -40,9 +40,9 @@ class ContentController extends Controller
                 $type = $this->getDoctrine()->getRepository('AppBundle:BidType')->find($item->pricingMethod);
                 $countries = $this->getDoctrine()->getRepository('AppBundle:Country')->findCountriesByIds($country);
                 $bid = new Bid();
-                if($item->pricingMethod == 3){
+                if ($item->pricingMethod == 3) {
                     $status = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->find(2);
-                }else{
+                } else {
                     $status = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->find(1);
                 }
                 $bid->setType($type);
@@ -57,76 +57,76 @@ class ContentController extends Controller
             }
 
             $manager->flush();
-            $this->addFlash('success','Tha data was saved successfully');
-            return $this->redirectToRoute('showContent',['customId'=>$request->request->get('custom-id')]);
+            $this->addFlash('success', 'Tha data was saved successfully');
+            return $this->redirectToRoute('showContent', ['customId' => $request->request->get('custom-id')]);
         }
-        return $this->redirectToRoute('showContent',['customId'=>$request->request->get('custom-id')]);
+        return $this->redirectToRoute('showContent', ['customId' => $request->request->get('custom-id')]);
 
     }
 
-  /**
-   * @Route("/content/{customId}", name="showContent")
-   */
-  public function show(Request $request)
-  {
+    /**
+     * @Route("/content/{customId}", name="showContent")
+     */
+    public function show(Request $request)
+    {
 
-      $user = $this->getUser();
-      $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
-      $buyPackages =  $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
-      $countries = $this->getDoctrine()
-          ->getRepository('AppBundle:Content')
-          ->getTerritoryInfo($request->get("customId"));
+        $user = $this->getUser();
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+        $buyPackages = $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
+        $countries = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->getTerritoryInfo($request->get("customId"));
 
-      $rightsPackages = $content->getRights();
-      $distributionPackages = $content->getDistributionPackages();
+        $rightsPackages = $content->getRights();
+        $distributionPackages = $content->getDistributionPackages();
 
-      foreach ( $rightsPackages as &$rightsPackage ){
-          $rightsPackage["rights"] = $this->getRightsContent($rightsPackage["rights"]);
-      }
+        foreach ($rightsPackages as &$rightsPackage) {
+            $rightsPackage["rights"] = $this->getRightsContent($rightsPackage["rights"]);
+        }
 
-      foreach ( $distributionPackages as &$distributionPackage ){
-          $distributionPackage["production"] = $this->getRightsContent($distributionPackage["production"]);
-          $distributionPackage["technical"] = $this->getRightsContent($distributionPackage["technical"]);
-      }
+        foreach ($distributionPackages as &$distributionPackage) {
+            $distributionPackage["production"] = $this->getRightsContent($distributionPackage["production"]);
+            $distributionPackage["technical"] = $this->getRightsContent($distributionPackage["technical"]);
+        }
 
-      $content->setRights($rightsPackages);
-      $content->setDistributionPackages($distributionPackages);
-      return $this->render('content/content.html.twig', [
-          'user' => $user,
-          'content' => $content,
-          'countries'=>$countries,
-          'custom_id'=>$request->get("customId"),
-          'buyPackages'=>$buyPackages,
-      ]);
-  }
+        $content->setRights($rightsPackages);
+        $content->setDistributionPackages($distributionPackages);
+        return $this->render('content/content.html.twig', [
+            'user' => $user,
+            'content' => $content,
+            'countries' => $countries,
+            'custom_id' => $request->get("customId"),
+            'buyPackages' => $buyPackages,
+        ]);
+    }
+
+    private function getRightsContent($rights)
+    {
+
+        $rightsRepository = $this->getDoctrine()->getRepository('AppBundle:Rights');
+        $rightsItemsRepository = $this->getDoctrine()->getRepository('AppBundle:RightsItemContent');
 
 
-    private function getRightsContent( $rights ){
+        foreach ($rights as &$right) {
+            if (isset ($right["id"])) {
+                $dbRight = $rightsRepository->findOneBy(['id' => $right["id"]]);
+            }
 
-      $rightsRepository = $this->getDoctrine()->getRepository('AppBundle:Rights');
-      $rightsItemsRepository = $this->getDoctrine()->getRepository('AppBundle:RightsItemContent');
+            if ($dbRight) {
 
+                $right["name"] = $dbRight->getName();
 
-      foreach ( $rights as &$right ){
-          if ( isset ( $right["id"]) ){
-              $dbRight = $rightsRepository->findOneBy(['id' => $right["id"]]);
-          }
+                foreach ($right["rightItems"] as &$rightItem) {
 
-          if ( $dbRight ) {
+                    if (isset ($rightItem["id"])) {
+                        $dbRightItem = $rightsItemsRepository->findOneBy(['id' => $rightItem["id"]]);
+                        $rightItem["name"] = $dbRightItem->getFormContent();
+                    }
+                }
+            }
+        }
 
-              $right["name"] = $dbRight->getName();
-
-              foreach ($right["rightItems"] as &$rightItem) {
-
-                  if (isset ($rightItem["id"])) {
-                      $dbRightItem = $rightsItemsRepository->findOneBy(['id' => $rightItem["id"]]);
-                      $rightItem["name"] = $dbRightItem->getFormContent();
-                  }
-              }
-          }
-      }
-
-      return $rights;
-  }
+        return $rights;
+    }
 
 }

@@ -105,7 +105,7 @@ class Content
 
     /**
      * Many Content have Many Sales Packages.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SalesPackage",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SalesPackage",cascade={"persist"},fetch="EAGER")
      * @ORM\JoinTable(name="content_sales_package",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
@@ -141,12 +141,6 @@ class Content
     private $company;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sport", inversedBy="content")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $sport;
-
-    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport", inversedBy="content")
      * @ORM\JoinTable(name="content_sports",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
@@ -154,7 +148,6 @@ class Content
      *      )
      */
     private $sports;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory", inversedBy="content")
@@ -204,7 +197,7 @@ class Content
 
     /**
      * Many Content have Many RightsPackage.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", fetch="EAGER")
      * @ORM\JoinTable(name="content_rights_package",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
@@ -383,22 +376,6 @@ class Content
     public function setWebsite($website)
     {
         $this->website = $website;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSport()
-    {
-        return $this->sport;
-    }
-
-    /**
-     * @param mixed $sport
-     */
-    public function setSport($sport)
-    {
-        $this->sport = $sport;
     }
 
     /**

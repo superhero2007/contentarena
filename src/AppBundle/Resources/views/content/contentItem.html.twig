@@ -8,8 +8,8 @@
         {% endif  %}
 
         <div class="buy-content-sport">
-            {% if content.sport  %}
-                {{ content.sport.name | default("") }}
+            {% if content.sports | length == 1  %}
+                {{ content.sports[0].name | default("") }}
             {% else  %}
                 MULTIPLE SPORTS
             {% endif  %}

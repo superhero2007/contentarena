@@ -14,6 +14,7 @@ $(function () {
         sortByLabel (a, b) {
             return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0)
         },
+
         prepareList ( list, categoryId ) {
 
             let _this = this;
@@ -33,6 +34,50 @@ $(function () {
             });
 
             return list;
+        },
+
+        getContent ( filter) {
+            var deferred = jQuery.Deferred(),
+                _this = this;
+
+            $.ajax({
+                url: envhosturl + "buy/search",
+                type: "POST",
+                data : filter,
+                success: function (response) {
+                    deferred.resolve(response);
+                },
+                error : function (data, status) {
+                    deferred.reject({
+                        data: data,
+                        status: status
+                    });
+                }
+            });
+
+            return deferred.promise();
+        },
+
+        saveFilter ( filter) {
+            var deferred = jQuery.Deferred(),
+                _this = this;
+
+            $.ajax({
+                url: envhosturl + "buy/filter/save",
+                type: "POST",
+                data : filter,
+                success: function (response) {
+                    deferred.resolve(response);
+                },
+                error : function (data, status) {
+                    deferred.reject({
+                        data: data,
+                        status: status
+                    });
+                }
+            });
+
+            return deferred.promise();
         },
 
         getSports () {
