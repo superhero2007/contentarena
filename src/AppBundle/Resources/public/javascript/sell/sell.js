@@ -99,7 +99,7 @@ $(function () {
 
         var rights = {};
 
-        container.find("input:checked").each(function (k, el) {
+        container.find("input:checked:visible").each(function (k, el) {
             var rightId = $(el).attr("right-id"),
                 rightItemId = $(el).attr("right-item-id");
 
