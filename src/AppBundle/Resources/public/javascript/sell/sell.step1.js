@@ -18,7 +18,6 @@ $(function () {
             endYear = (hasSeason) ? ( seasonYear.search("/") !== -1 ) ? Number(seasonYear.split("/")[1]) + seasonNumber : null : seasonYear ,
             seasonName = (hasSeason) ? labels.join(" ") : "",
             template = $.templates("#season-template"),
-            fixtureTemplate = $.templates("#custom-fixture-template"),
             seasonData = {
                 id : seasonNumber,
                 name : seasonName,
@@ -32,23 +31,5 @@ $(function () {
         $(".remove-season", seasonElement ).on("click", function () {
             seasonElement.remove();
         });
-
-        $(".add-fixture", seasonElement ).on("click", function () {
-            var fixtureContainer = $(".custom-fixtures", seasonElement),
-                fixture = $(fixtureTemplate.render({
-                    id : fixtureContainer.children().length + 1,
-                    seasonId: seasonData.id
-                }) );
-
-            fixtureContainer.append( fixture );
-
-            $(".fixture-date", fixture ).datepicker();
-
-        });
-
-        $(".fixture-date").datepicker();
-
     };
-
-
 });
