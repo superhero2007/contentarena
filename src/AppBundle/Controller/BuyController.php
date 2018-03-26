@@ -76,7 +76,7 @@ class BuyController extends Controller
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
 
-        return $this->render('@App/content/contentItemlist.html.twig', [
+        return $this->render('@App/content/contentItemList.html.twig', [
             'contents' => $contents,
         ]);
 
