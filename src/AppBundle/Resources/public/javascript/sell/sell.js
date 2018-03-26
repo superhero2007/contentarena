@@ -99,7 +99,10 @@ $(function () {
 
         var rights = {};
 
-        container.find("input:checked").each(function (k, el) {
+        container.find("input:checked, .not-optional").each(function (k, el) {
+
+            if ( !$(this).parent().parent().parent().is(":visible") ) return false;
+
             var rightId = $(el).attr("right-id"),
                 rightItemId = $(el).attr("right-item-id");
 
@@ -892,7 +895,7 @@ $(function () {
             rightItems = [],
             selectedPackages = getFullSelectedPackages();
 
-        $("input[type=checkbox]:checked:visible", ".seller-box-content-rights").each(function(k, el){
+        /*$("input[type=checkbox]:checked:visible", ".seller-box-content-rights").each(function(k, el){
 
             var rightId = $(el).attr("right-id"),
                 rightItemId = $(el).attr("right-item-id"),
@@ -913,7 +916,7 @@ $(function () {
                 values : values,
                 right : rightId
             })
-        });
+        });*/
 
 
         $(".installment-percent").each(function(){
@@ -938,7 +941,7 @@ $(function () {
 
         eventData.rights = packagesInfo.rightPackages;
         eventData.distributionPackages = packagesInfo.distributionPackages;
-        eventData.rightItems = rightItems;
+        //eventData.rightItems = rightItems;
         eventData.packages = selectedPackages.selectedIds;
 
         if ( $("#expiration-date").val() === "" ){
