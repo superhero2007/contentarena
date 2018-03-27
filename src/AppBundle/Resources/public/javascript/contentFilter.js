@@ -33,6 +33,10 @@ $(function () {
                 $(".filter-territories-count")
                     .html( "(" + _this.countries.length + ")" );
                 $(".select-territories").toggleClass("selected", true);
+            } else if (_this.territories.length > 0) {
+                $(".filter-territories-count")
+                    .html( "(" + _this.territories.length + ")" );
+                $(".select-territories").toggleClass("selected", true);
             } else {
                 $(".filter-territories-count").html("");
                 $(".select-territories").toggleClass("selected", false);
@@ -100,6 +104,13 @@ $(function () {
         ContentArena.Filter.sports = sports;
     }
 
+    function applyFilter(){
+        $(".content-list-container").html("<i class=\"fa fa-cog fa-spin\"></i>");
+        ContentArena.Api.getContent(ContentArena.Filter).done(function (response) {
+            $(".content-list-container").html(response);
+        });
+    }
+
     $(".filter").on('click', function () {
         $($(this).attr('ref')).dialog({
             modal : true,
@@ -144,11 +155,7 @@ $(function () {
         ContentArena.Filter.fromDate = $("#startDate").val();
         ContentArena.Filter.toDate = $("#endDate").val();
 
-        $(".content-list-container").html("<i class=\"fa fa-cog fa-spin\"></i>");
-
-        ContentArena.Api.getContent(ContentArena.Filter).done(function (response) {
-            $(".content-list-container").html(response);
-        });
+        applyFilter();
 
     });
 
@@ -167,6 +174,12 @@ $(function () {
        $(this).hide();
     });
 
+    $("#clear-filter").on("click", function () {
+        $(".selected", ".subfilter-container").removeClass("selected");
+        updateFilter();
+        applyFilter();
+    });
+
     $("#save-filter").on("click", function () {
         ContentArena.Filter.name = $("#filter-name").val();
         ContentArena.Api.saveFilter(ContentArena.Filter).always(function () {
@@ -177,12 +190,9 @@ $(function () {
     });
 
     $("#apply-saved-filter").on("click", function () {
-        var filter = new Filter();
-        filter.id = $("#saved-filters").val();
-        $(".content-list-container").html("<i class=\"fa fa-cog fa-spin\"></i>");
-        ContentArena.Api.getContent(filter).done(function (response) {
-            $(".content-list-container").html(response);
-        });
+        window.ContentArena.Filter = new Filter();
+        ContentArena.Filter.id = $("#saved-filters").val();
+        applyFilter();
     });
 
 });
