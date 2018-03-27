@@ -1,5 +1,5 @@
 <div class="right uk-margin-small-top">
-    <form action="{{ path('get_content_data') }}" method="post">
+    <form action="{{ path('content_place_bid') }}" method="post">
         <input type="hidden" name="content-id" value="{{ content.id }}">
         <input type="hidden" name="content-data" value="" id="content-data">
         <input type="hidden" name="custom-id" value="{{ custom_id }}">
@@ -7,8 +7,11 @@
     </form>
 </div>
 
-{% for msg in app.session.flashBag.get('success') %}
-    <div class="alert alert-success">
-        {{ msg }}
-    </div>
-{% endfor %}
+<div class="right uk-margin-small-top">
+    {% for msg in app.flashes('success') %}
+        <div class="uk-alert uk-alert-success flash-message">
+            {{ msg }}
+        </div>
+    {% endfor %}
+</div>
+

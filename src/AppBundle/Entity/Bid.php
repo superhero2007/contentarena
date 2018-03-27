@@ -24,6 +24,13 @@ class Bid
     /**
      * @var int
      *
+     * @ORM\Column(name="custom_id", type="string")
+     */
+    private $customId;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="amount", type="bigint")
      */
     private $amount;
@@ -219,6 +226,22 @@ class Bid
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomId()
+    {
+        return $this->customId;
+    }
+
+    /**
+     * @param int $customId
+     */
+    public function setCustomId($customId)
+    {
+        $this->customId = $customId;
     }
 
 }
