@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * Content
@@ -681,6 +682,22 @@ class Content
     public function setSalesPackages($salesPackages)
     {
         $this->salesPackages = $salesPackages;
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isOwner(User $user)
+    {
+        return $this->company->getId() == $user->getCompany()->getId();
+    }
+
+    public function isExpired(\DateTime $now = null)
+    {
+
+        if ( $now == null ) $now = new Date();
+        return $this->expiresAt > $now;
     }
 
 
