@@ -693,11 +693,14 @@ class Content
         return $this->company->getId() == $user->getCompany()->getId();
     }
 
+    /**
+     * @param \DateTime|null $now
+     * @return bool
+     */
     public function isExpired(\DateTime $now = null)
     {
-
-        if ( $now == null ) $now = new Date();
-        return $this->expiresAt > $now;
+        if ( $now == null ) $now = new \DateTime();
+        return $this->expiresAt < $now;
     }
 
 

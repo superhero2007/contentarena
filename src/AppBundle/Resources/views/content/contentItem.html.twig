@@ -55,7 +55,7 @@
             </div>
         {% endif %}
 
-        {%  if not content.isExpired() %}
+        {%  if content.isExpired() %}
             <div class="content-expires">
                 Expired on: {{ content.expiresAt|date("m/d/Y") }}
             </div>
