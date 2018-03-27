@@ -53,6 +53,15 @@ class ContentFilter
     private $countries;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Territory", inversedBy="contentFilter",fetch="EAGER")
+     * @ORM\JoinTable(name="content_filter_territories",
+     *      joinColumns={@ORM\JoinColumn(name="content_filter_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="content_filter_territory_id", referencedColumnName="id")}
+     *      )
+     */
+    private $territories;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", inversedBy="contentFilter",fetch="EAGER")
      * @ORM\JoinTable(name="content_filter_super_rights",
      *      joinColumns={@ORM\JoinColumn(name="content_filter_id", referencedColumnName="id")},
@@ -256,6 +265,24 @@ class ContentFilter
     {
         $this->toDate = $toDate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTerritories()
+    {
+        return $this->territories;
+    }
+
+    /**
+     * @param mixed $territories
+     */
+    public function setTerritories($territories)
+    {
+        $this->territories = $territories;
+    }
+
+
 
 
 }

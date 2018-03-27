@@ -45,7 +45,13 @@ class ContentService
             $filter = $this->em->getRepository('AppBundle:ContentFilter')->findOneBy(array('id' => $filterId));
         } else {
             $filter = $this->getFilterFromResponse( $request );
+            if ( count( $filter->getTerritories() ) > 0 && count( $filter->getCountries() ) == 0 ) {
+                $countries = $this->em->getRepository('AppBundle:Country')->findBy(array('territory' => $filter->getTerritories()));
+                $filter->setCountries($countries);
+            }
         }
+
+
 
         $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter);
 
@@ -240,6 +246,7 @@ class ContentService
 
         if ( $request->request->get("sports") != null ) $filter->setSports( $this->getSports( $request->request->all()  ) );
         if ( $request->request->get("countries") != null )$filter->setCountries($this->getCountries( $request->request->get("countries")  ) );
+        if ( $request->request->get("territories") != null )$filter->setTerritories($this->getTerritories( $request->request->get("territories")  ) );
         if ( $request->request->get("rights") != null )$filter->setSuperRights($this->getSuperRights( $request->request->get("rights") ) );
         if ( $request->request->get("orderBy") != null )$filter->setOrderBy($request->get("orderBy"));
         if ( $request->request->get("sortOrder") != null )$filter->setSortOrder($request->get("sortOrder"));
@@ -380,6 +387,15 @@ class ContentService
             ->findBy(array('id' => $countryIds));
 
         return $countries;
+    }
+
+    private function getTerritories($territoryIds){
+
+        $territories =  $this->em
+            ->getRepository('AppBundle:Territory')
+            ->findBy(array('id' => $territoryIds));
+
+        return $territories;
     }
 
     private function getSuperRights($ids){
