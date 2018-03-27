@@ -106,6 +106,50 @@ $(function () {
             return deferred.promise();
         },
 
+        getContentData( info) {
+            var deferred = jQuery.Deferred(),
+                _this = this;
+
+            $.ajax({
+                url: envhosturl + "sell/content/data",
+                type: "POST",
+                data:info,
+                success: function (response) {
+                    deferred.resolve(response);
+                },
+                error : function (data, status) {
+                    deferred.reject({
+                        data: data,
+                        status: status
+                    });
+                }
+            });
+
+            return deferred.promise();
+        },
+
+        getActiveListings( ) {
+            var deferred = jQuery.Deferred(),
+                _this = this;
+
+            $.ajax({
+                url: envhosturl + "sell/active/listings",
+                type: "POST",
+                data: {id:1},
+                success: function (response) {
+                    deferred.resolve(response);
+                },
+                error : function (data, status) {
+                    deferred.reject({
+                        data: data,
+                        status: status
+                    });
+                }
+            });
+
+            return deferred.promise();
+        },
+
         getCategories ( sportId ) {
             var deferred = jQuery.Deferred(),
                 _this = this,

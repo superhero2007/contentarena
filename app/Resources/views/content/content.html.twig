@@ -1,33 +1,45 @@
-{% extends "layout.html.twig" %}
 
-{% block stylesheets %}
+{% if test is not defined %}
+    {% extends "layout.html.twig" %}
 
-    {{ parent() }}
-    <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
+    {% block stylesheets %}
 
-{% endblock %}
+        {{ parent() }}
+        <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
+
+    {% endblock %}
+{% endif %}
 
 {% block main_content %}
 
 	{{ include('content/contentInformation.html.twig', { 'content' : content }) }}
 
 	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
-
-    {{ include('content/find_territories.html.twig') }}
+    {% if test is not defined %}
+         {{ include('content/find_territories.html.twig') }}
+    {% endif %}
 
     {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
 
-    {{  include('content/cartFixedFee.html.twig') }}
+    {% if test is not defined %}
+        {{  include('content/cartFixedFee.html.twig') }}
 
-    {{  include('content/cartBid.html.twig') }}
+        {{  include('content/cartBid.html.twig') }}
+    {% endif %}
 
     {{  include('content/saveContent.html.twig') }}
 
-
+    {% if test is defined %}
+        <button class="uk-button uk-button-primary to-active-listings">Back</button>
+    {% endif %}
 {% endblock main_content %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
+{% if test is not defined %}
 
-{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
+
+    {% endblock %}
+
+{% endif %}
