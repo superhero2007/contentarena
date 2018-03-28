@@ -147,6 +147,9 @@ $(document).ready(function(){
     $(document).on('click','.add-to-cart',function(){
         $('.license-btn').css({'display':'block'});
         var countId = $(this).data('country');
+        if(!Array.isArray(countId)){
+            countId = [countId];
+        }
         var currencyId = $(this).data('currency');
         var pricingId = $(this).data('pricing-type');
         var amount = $(this).data('amount');
@@ -286,6 +289,9 @@ $(document).ready(function(){
         $.each(rows, function (index, item) {
              var countryName = $(item).find('.country-name').text().trim();
              var countryId = $(item).find('.add-to-cart').data('country');
+             if(!Array.isArray(countryId)){
+                countryId = [countryId];
+             }
              var pricingMethod = $(item).find('.pricing-method').text().trim();
              var currency = $(item).find('.sales-currency').text().trim();
             var btn = $(item).find('.add-to-cart');

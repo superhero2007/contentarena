@@ -49,8 +49,23 @@
     {# COMPANY #}
     <div class="content-column content-column-company">
         <div class="content-custom-id">(#{{ content.customId }})</div>
-        <div><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</div>
-        <div class="content-expires">Offer deadline: {{ date( content.expiresAt|date ).diff( date("now") ).days }} days</div>
+
+        {%  if not content.isOwner(user) %}
+            <div><i class="fa fa-money"></i>
+                {{ content.company.displayName | default("") }}
+            </div>
+        {% endif %}
+
+        {%  if content.isExpired() %}
+            <div class="content-expires">
+                Expired on: {{ content.expiresAt|date("m/d/Y") }}
+            </div>
+        {% else %}
+            <div class="content-expires">
+                Offer deadline: {{ date( content.expiresAt|date ).diff( date("now") ).days }} days
+            </div>
+        {% endif %}
+
         {% if content.customId %}
         <button class="link-action standard-button standard-button-active" href="{{ path('showContent', { customId : content.customId }) }}" >
             More Info
