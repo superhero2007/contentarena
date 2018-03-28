@@ -119,16 +119,15 @@ class SellController extends Controller
             'countries'=>$countries,
             'buyPackages'=>$buyPackages,
             'custom_id' => $request->get("id"),
-            'test'=>11
         ]);
     }
 
 
     /**
-     * @Route("/sell/active/listings", name="get_active_listings")
+     * @Route("/sell/backto/template", name="get_active_listings")
      */
 
-    public function sellAllActiveListingsAction(Request $request){
+    public function sellBacktoTemplateAction(Request $request){
 
         //fetch active contents and paginate them
         $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy(['approved'=>true], ['createdAt' => 'DESC']);

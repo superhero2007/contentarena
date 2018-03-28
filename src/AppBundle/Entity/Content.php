@@ -703,6 +703,12 @@ class Content
         return $this->expiresAt < $now;
     }
 
+    /**
+     * @return bool
+     */
+    public function isActive(){
+        return $this->approved;
+    }
 
 
 }

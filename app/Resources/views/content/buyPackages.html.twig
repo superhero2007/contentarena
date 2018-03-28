@@ -64,7 +64,7 @@
                         <div class="uk-width-1-2">
                             <input type="hidden" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
                         </div>
-                        {% if test is not defined %}
+                        {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
                             <div class="uk-width-1-2">
                                 <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}" data-country="{{ ids|json_encode }}" data-amount="{{ buyPackage.salesPackage.amount }}" data-pricing-type="{{ buyPackage.salesPackage.salesMethod.id }}" data-type="buy-puckages" data-id="{{ loop.index }}" data-currency="{{ buyPackage.salesPackage.currency.id }}">Add to cart</button>
                             </div>
@@ -75,7 +75,7 @@
                         <div class="uk-width-1-2">
                             <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.amount }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
                         </div>
-                        {% if test is not defined %}
+                        {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
                             <div class="uk-width-1-2">
                                 <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}" data-country="{{ ids|json_encode }}" data-amount="{{ buyPackage.salesPackage.amount }}" data-pricing-type="{{ buyPackage.salesPackage.salesMethod.id }}" data-type="buy-puckages" data-id="{{ loop.index }}" data-currency="{{ buyPackage.salesPackage.currency.id }}">Add to cart</button>
                             </div>

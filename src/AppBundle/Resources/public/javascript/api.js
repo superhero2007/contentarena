@@ -133,9 +133,8 @@ $(function () {
                 _this = this;
 
             $.ajax({
-                url: envhosturl + "sell/active/listings",
+                url: envhosturl + "sell/backto/template",
                 type: "POST",
-                data: {id:1},
                 success: function (response) {
                     deferred.resolve(response);
                 },
