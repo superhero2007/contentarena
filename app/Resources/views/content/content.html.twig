@@ -1,33 +1,44 @@
-{% extends "layout.html.twig" %}
 
-{% block stylesheets %}
+{% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
+    {% extends "layout.html.twig" %}
 
-    {{ parent() }}
-    <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
+    {% block stylesheets %}
 
-{% endblock %}
+        {{ parent() }}
+        <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
+
+    {% endblock %}
+{% endif %}
 
 {% block main_content %}
 
 	{{ include('content/contentInformation.html.twig', { 'content' : content }) }}
 
 	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
-
-    {{ include('content/find_territories.html.twig') }}
+    {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
+         {{ include('content/find_territories.html.twig') }}
+    {% endif %}
 
     {{  include('content/buyPackages.html.twig', {'buyPackages' : buyPackages}) }}
 
-    {{  include('content/cartFixedFee.html.twig') }}
+    {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
+        {{  include('content/cartFixedFee.html.twig') }}
 
-    {{  include('content/cartBid.html.twig') }}
+        {{  include('content/cartBid.html.twig') }}
+    {% endif %}
 
     {{  include('content/saveContent.html.twig') }}
 
-
+    {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
+        <button class="uk-button uk-button-primary to-active-listings">Back</button>
+    {% endif %}
 {% endblock main_content %}
+    {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
 
-{% endblock %}
+    {% endblock %}
+
+{% endif %}

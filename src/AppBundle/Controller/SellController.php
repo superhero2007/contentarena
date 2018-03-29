@@ -100,6 +100,48 @@ class SellController extends Controller
     }
 
     /**
+     * @Route("/sell/content/data", name="get_content_data")
+     */
+
+    public function sellContentDataAction(Request $request){
+
+        //get info by requested custom_id
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId'=>$request->request->get('id')]);
+        $user = $this->getUser();
+        $countries = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->getTerritoryInfo($request->request->get('id'));
+        $buyPackages = $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
+
+        return $this->render('content/content.html.twig', [
+            'content' => $content,
+            'user'=>$user,
+            'countries'=>$countries,
+            'buyPackages'=>$buyPackages,
+            'custom_id' => $request->get("id"),
+        ]);
+    }
+
+
+    /**
+     * @Route("/sell/backto/template", name="get_active_listings")
+     */
+
+    public function sellBacktoTemplateAction(Request $request){
+
+        //fetch active contents and paginate them
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy(['approved'=>true], ['createdAt' => 'DESC']);
+        $paginator  = $this->get('knp_paginator');
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+        $user = $this->getUser();
+
+        return $this->render('@App/sell/sell.listings.active.html.twig', [
+            'user' => $user,
+            'contents' => $contents
+        ]);
+    }
+
+    /**
      * @Route("/sell/listings/active", name="sellListingsActive")
      */
     public function sellListingsActiveAction(Request $request)

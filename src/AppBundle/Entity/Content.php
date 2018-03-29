@@ -713,6 +713,12 @@ class Content
     /**
      * @return bool
      */
+    public function isActive(){
+        return $this->approved;
+    }
+    /**
+     * @return bool
+     */
     public function isDraft()
     {
         return $this->draft;
