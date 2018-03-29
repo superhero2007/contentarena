@@ -84,6 +84,13 @@ class Content
     protected $approved = false;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="draft", type="boolean")
+     */
+    protected $draft = false;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="availability", type="date", nullable=true)
@@ -701,6 +708,22 @@ class Content
     {
         if ( $now == null ) $now = new \DateTime();
         return $this->expiresAt < $now;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDraft()
+    {
+        return $this->draft;
+    }
+
+    /**
+     * @param bool $draft
+     */
+    public function setDraft($draft)
+    {
+        $this->draft = $draft;
     }
 
 

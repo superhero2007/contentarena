@@ -21,7 +21,7 @@ class BuyController extends Controller
     {
 
         $user = $this->getUser();
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy([], ['createdAt' => 'DESC']);
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy(['draft'=>false], ['createdAt' => 'DESC']);
         $territories = $this->getDoctrine()->getRepository('AppBundle:Territory')->findAll();
         $countries = $this->getDoctrine()->getRepository('AppBundle:Country')->findAll();
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
@@ -71,13 +71,14 @@ class BuyController extends Controller
      */
     public function buySearchAction(Request $request, ContentService $contentService)
     {
-
+        $user = $this->getUser();
         $contents = $contentService->getContent($request);
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
 
         return $this->render('@App/content/contentItemList.html.twig', [
             'contents' => $contents,
+            'user' => $user
         ]);
 
     }

@@ -75,7 +75,7 @@ $(function() {
 
     });
 
-    $(".link-action").click(function () {
+    $(document).on("click", ".link-action", function () {
         var url = $(this).attr("href");
 
         window.location.href = url;

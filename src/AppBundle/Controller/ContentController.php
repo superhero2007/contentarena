@@ -2,20 +2,17 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Bid;
-use AppBundle\Entity\Content;
-use AppBundle\Entity\Country;
 use AppBundle\Service\BidService;
+use AppBundle\Service\ContentService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 
 class ContentController extends Controller
 {
+
 
     /**
      * @Route("/content/place_bid", name="content_place_bid")
@@ -74,6 +71,20 @@ class ContentController extends Controller
             'custom_id' => $request->get("customId"),
             'buyPackages' => $buyPackages,
         ]);
+    }
+
+    /**
+     * @Route("/content/draft/save", name="saveContentAsDraft")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsDraft(Request $request, ContentService $contentService  )
+    {
+        $user = $this->getUser();
+        $content = $contentService->saveContentAsDraft($user, $request);
+        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId()));
     }
 
     private function getRightsContent($rights)

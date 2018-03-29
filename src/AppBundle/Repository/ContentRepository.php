@@ -121,6 +121,9 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('toDate',$filter->getToDate());
         }
 
+        $query->andWhere('content.draft = :isDraft')->setParameter('isDraft',false);
+        //TODO : filter by approved
+
         $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());
 
         $result = $query->getQuery()->getResult();

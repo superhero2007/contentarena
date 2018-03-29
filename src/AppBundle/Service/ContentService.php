@@ -70,17 +70,52 @@ class ContentService
 
     }
 
-    public function createContent(User $user, Request $request){
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return Content
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsDraft(User $user, Request $request)
+    {
+        $data = json_decode($request->getContent());
+        $content = $this->newContent($user, $data);
+        $content->setDraft(true);
+        $this->em->persist($content);
+        $this->em->flush();
 
-        /**
-         * Instance new content object
-         */
-        $content = new Content();
+        return $content;
+    }
+
+    public function createContent(User $user, Request $request){
 
         /**
          * Get json from form data
          */
         $data = json_decode($request->get("json"));
+
+        $content = $this->newContent($user, $data);
+
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
+
+        $this->em->persist($content);
+        $this->em->flush();
+
+        return $content;
+
+    }
+
+    private function newContent($user, $data){
+
+
+        if ( isset ( $data->id) ){
+            $content = $this->em->getRepository("AppBundle:Content")->find($data->id);
+        } else {
+            $content = new Content();
+        }
 
         /**
          * Set creation date
@@ -224,17 +259,7 @@ class ContentService
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
         }
 
-
-        /**
-         * Save files
-         */
-        $content = $this->saveFiles($request, $content);
-
-        $this->em->persist($content);
-        $this->em->flush();
-
         return $content;
-
     }
 
     /**

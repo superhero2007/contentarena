@@ -25,7 +25,7 @@ class DefaultController extends Controller
            ));
 
        }
-        return $this->redirectToRoute('mycontent', array(
+        return $this->redirectToRoute('myContent', array(
         ));
     }
 
