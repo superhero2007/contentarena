@@ -1,20 +1,18 @@
+{% extends "layout.html.twig" %}
 
-{% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
-    {% extends "layout.html.twig" %}
+{% block stylesheets %}
 
-    {% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
 
-        {{ parent() }}
-        <link href="{{ asset('bundles/app/css/content.css') }}" type="text/css" rel="stylesheet" />
-
-    {% endblock %}
-{% endif %}
+{% endblock %}
 
 {% block main_content %}
 
 	{{ include('content/contentInformation.html.twig', { 'content' : content }) }}
 
 	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
+
     {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
          {{ include('content/find_territories.html.twig') }}
     {% endif %}
@@ -29,16 +27,10 @@
 
     {{  include('content/saveContent.html.twig') }}
 
-    {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
-        <button class="uk-button uk-button-primary to-active-listings">Back</button>
-    {% endif %}
 {% endblock main_content %}
-    {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
 
-    {% block javascripts %}
-        {{ parent() }}
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
 
-    {% endblock %}
-
-{% endif %}
+{% endblock %}

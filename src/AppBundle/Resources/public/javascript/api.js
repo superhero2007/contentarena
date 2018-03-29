@@ -106,35 +106,14 @@ $(function () {
             return deferred.promise();
         },
 
-        getContentData( info) {
+        getContentDetails( id ) {
             var deferred = jQuery.Deferred(),
                 _this = this;
 
             $.ajax({
-                url: envhosturl + "sell/content/data",
+                url: envhosturl + "content/details/",
                 type: "POST",
-                data:info,
-                success: function (response) {
-                    deferred.resolve(response);
-                },
-                error : function (data, status) {
-                    deferred.reject({
-                        data: data,
-                        status: status
-                    });
-                }
-            });
-
-            return deferred.promise();
-        },
-
-        getActiveListings( ) {
-            var deferred = jQuery.Deferred(),
-                _this = this;
-
-            $.ajax({
-                url: envhosturl + "sell/backto/template",
-                type: "POST",
+                data: {id : id},
                 success: function (response) {
                     deferred.resolve(response);
                 },

@@ -638,8 +638,12 @@ div#content-details-mask {
 .content-column-company button {
     font-size: 90%;
     max-height: 30px;
-    margin: 0;
+    margin: 0 0 5px;
     padding: 0 15px;
+}
+
+a.uk-button {
+    font-size: 12px;
 }
 
 .disabled{
@@ -679,3 +683,5 @@ div#content-details-mask {
 .content-expires{
     font-size: 75%;
 }
+
+

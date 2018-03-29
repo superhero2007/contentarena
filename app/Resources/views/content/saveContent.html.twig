@@ -1,8 +1,8 @@
 <div class="right uk-margin-small-top">
-    <form action="{{ path('content_place_bid') }}" method="post">
+    <form action="{{ path('contentPlaceBid') }}" method="post">
         <input type="hidden" name="content-id" value="{{ content.id }}">
         <input type="hidden" name="content-data" value="" id="content-data">
-        <input type="hidden" name="custom-id" value="{{ custom_id }}">
+        <input type="hidden" name="custom-id" value="{{ content.customId }}">
         <button class="uk-width-1-1 uk-button uk-button-primary license-btn">Continue with license agreement</button>
     </form>
 </div>

@@ -2,20 +2,17 @@ $(document).ready(function(){
 
     //Get Content details
     $(document).on('click','.more-info-listings',function(e){
-        e.preventDefault();
         var id = $(this).data('id');
-        data = {id:id};
-        ContentArena.Api.getContentData(data).done(function(response){
-            $('.main-content').html(response)
+
+        e.preventDefault();
+
+        $(".content-details").hide();
+
+        $('#content-details-' + id ).html("<i class=\"fa fa-cog fa-spin\">").show();
+        ContentArena.Api.getContentDetails(id).done(function(response){
+
+            $('#content-details-' + id ).html(response);
         })
     });
-
-
-    //Return back to active listings page
-    $(document).on('click','.to-active-listings',function(){
-        ContentArena.Api.getActiveListings().done(function(response){
-            $('.main-content').html(response)
-        })
-    })
 
 });

@@ -95,7 +95,7 @@ class ContentService
         $data = json_decode($request->get("json"));
 
         $content = $this->newContent($user, $data);
-
+        $content->setDraft(false);
         /**
          * Save files
          */

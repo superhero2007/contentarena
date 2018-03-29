@@ -469,6 +469,7 @@ $(function () {
         var data = JSON.stringify(ContentArena.Content);
 
         $('<input type="hidden" name="json"/>').val(data).appendTo('#myform');
+        window.onbeforeunload = function () {};
         form.submit();
     }
 
@@ -582,9 +583,7 @@ $(function () {
             if ( response.success !== undefined && response.contentId !== undefined ){
                 ContentArena.Content.id = response.contentId;
                 el.html("Saved as Draft").attr("disabled", null);
-                window.onbeforeunload = function () {
-                    // blank function do nothing
-                }
+                window.onbeforeunload = function () {}
             }
         });
     });

@@ -15,9 +15,9 @@ class ContentController extends Controller
 
 
     /**
-     * @Route("/content/place_bid", name="content_place_bid")
+     * @Route("/content/place_bid", name="contentPlaceBid")
      */
-    public function getContentData(Request $request, BidService $bidService)
+    public function contentPlaceBid(Request $request, BidService $bidService)
     {
         if (!empty(json_decode($request->request->get('content-data')))) {
 
@@ -72,6 +72,43 @@ class ContentController extends Controller
             'buyPackages' => $buyPackages,
         ]);
     }
+
+    /**
+     * @Route("/content/details/", name="getContentDetails")
+     */
+
+    public function getContentDetails(Request $request){
+
+        //get info by requested custom_id
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['id'=>$request->request->get('id')]);
+        $user = $this->getUser();
+        $countries = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->getTerritoryInfo($content->getCustomId());
+        $buyPackages = $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
+        $rightsPackages = $content->getRights();
+        $distributionPackages = $content->getDistributionPackages();
+
+        foreach ($rightsPackages as &$rightsPackage) {
+            $rightsPackage["rights"] = $this->getRightsContent($rightsPackage["rights"]);
+        }
+
+        foreach ($distributionPackages as &$distributionPackage) {
+            $distributionPackage["production"] = $this->getRightsContent($distributionPackage["production"]);
+            $distributionPackage["technical"] = $this->getRightsContent($distributionPackage["technical"]);
+        }
+
+        $content->setRights($rightsPackages);
+        $content->setDistributionPackages($distributionPackages);
+
+        return $this->render('@App/content/contentDetails.html.twig', [
+            'content' => $content,
+            'user'=>$user,
+            'countries'=>$countries,
+            'buyPackages'=>$buyPackages,
+        ]);
+    }
+
 
     /**
      * @Route("/content/draft/save", name="saveContentAsDraft")

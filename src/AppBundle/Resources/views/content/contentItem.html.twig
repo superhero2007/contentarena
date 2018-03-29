@@ -66,24 +66,35 @@
             </div>
         {% endif %}
 
-        {% if content.customId %}
+        {% if content.customId and not content.isOwner(user) %}
         <button class="link-action standard-button standard-button-active" href="{{ path('showContent', { customId : content.customId }) }}" >
             More Info
         </button>
         {% endif %}
 
-        {#{% for package in content.salesPackages %}
-            {{ package.salesMethod }}
-        {% endfor %}#}
+        {% if content.isOwner(user) and content.isDraft() %}
+            <button class="link-action standard-button standard-button-active" href="{{ path('showContent', { customId : content.customId }) }}" >
+                Continue
+            </button>
+
+            <button class="link-action standard-button standard-button-active" href="{{ path('showContent', { customId : content.customId }) }}" >
+                Archive
+            </button>
+        {% endif %}
+
 
     </div>
 
     {% if content.isOwner(user) and content.isActive() and not content.isExpired() %}
         <div class="uk-width-1-1 uk-grid">
-            <a class="uk-button uk-button-primary uk-width-1-4 more-info-listings" data-id="{{ content.customId  }}">More Info</a>
+            <a class="uk-button uk-button-primary uk-width-1-4 more-info-listings" data-id="{{ content.id }}">More Info</a>
             <a class="uk-button uk-button-primary uk-width-1-4">Pending Bids</a>
             <a class="uk-button uk-button-primary uk-width-1-4">Closed Bids</a>
             <a class="uk-button uk-button-primary uk-width-1-4">Schedule/Technical Data</a>
         </div>
     {% endif %}
+</div>
+
+<div id="content-details-{{ content.id }}" class="content-details is-hidden">
+
 </div>
