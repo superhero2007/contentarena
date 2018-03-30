@@ -1,0 +1,15 @@
+.bid-approve{
+    color:green;
+}
+
+.bid-approve:hover{
+    color:green;
+}
+
+.bid-reject{
+    color:red;
+}
+
+.bid-reject:hover{
+    color:red;
+}
