@@ -12,6 +12,7 @@ namespace AppBundle\Service;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Bid;
 use AppBundle\Doctrine\RandomIdGenerator;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class BidService
 {
@@ -51,6 +52,7 @@ class BidService
             }
 
             $customId = $this->idGenerator->generate($content);
+            $createdAt = new \DateTime();
 
             $bid->setType($type);
             $bid->setStatus($status);
@@ -61,6 +63,7 @@ class BidService
             $bid->setCompany($company);
             $bid->setCountries($countries);
             $bid->setCustomId($customId);
+            $bid->setCreatedAt($createdAt);
             $this->em->persist($bid);
         }
 

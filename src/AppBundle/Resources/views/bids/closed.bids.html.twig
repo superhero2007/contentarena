@@ -21,7 +21,7 @@
                             <td>{{ item.customId }}</td>
                             <td>{{ country.name }}</td>
                             <td>{{ item.buyerUser.company.displayName }}</td>
-                            <td>Date</td>
+                            <td>{{ item.createdAt|date('Y-m-d H:i:s') }}</td>
                             <td>{{ item.amount }} {{ item.currency.code }}</td>
                             <td>
                                 <a href="" class="bid-approve" title="Approve">

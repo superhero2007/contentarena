@@ -15,4 +15,18 @@ $(document).ready(function(){
         })
     });
 
+    $(document).on('click','.pending-listings',function(e){
+        var id = $(this).data('id');
+
+        e.preventDefault();
+
+        $(".content-details").hide();
+
+        $('#content-details-' + id ).html("<i class=\"fa fa-cog fa-spin\">").show();
+        ContentArena.Api.getPendingListings(id).done(function(response){
+
+            $('#content-details-' + id ).html(response);
+        })
+    });
+
 });
