@@ -178,30 +178,6 @@ class Content
      */
     private $seasons;
 
-    /**
-     * Many Content have Many RightsItemContent.
-     * @ORM\ManyToMany(targetEntity="RightsItemContent")
-     * @ORM\JoinTable(name="content_rights_items",
-     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="right_items_content_id", referencedColumnName="id")}
-     *      )
-     */
-    private $rightsItems;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="rights", type="json_array", nullable=true)
-     */
-    private $rights;
-
-    /**
-     *
-     * @var array
-     *
-     * @ORM\Column(name="distribution_packages", type="json_array", nullable=true)
-     */
-    private $distributionPackages;
 
     /**
      * Many Content have Many RightsPackage.
@@ -214,14 +190,25 @@ class Content
     private $rightsPackage;
 
     /**
+     * Many Content have Many ContentSelectedRights.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ContentSelectedRight",cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinTable(name="content_selected_rights",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="content_selected_right_id", referencedColumnName="id")}
+     *      )
+     */
+    private $selectedRights;
+
+
+    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
     private $createdAt;
 
     public function __construct() {
-        $this->rightsItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->rightsPackage = new \Doctrine\Common\Collections\ArrayCollection();
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->selectedRights = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -387,22 +374,6 @@ class Content
     }
 
     /**
-     * @return Collection|RightsItemContent[]
-     */
-    public function getRightsItems()
-    {
-        return $this->rightsItems;
-    }
-
-    /**
-     * @param mixed $rightsItems
-     */
-    public function setRightsItems($rightsItems)
-    {
-        $this->rightsItems = $rightsItems;
-    }
-
-    /**
      * @return mixed
      */
     public function getTournament()
@@ -530,7 +501,6 @@ class Content
         $this->expiresAt = $expiresAt;
     }
 
-
     /**
      * @return string
      */
@@ -628,38 +598,6 @@ class Content
     }
 
     /**
-     * @return array
-     */
-    public function getRights()
-    {
-        return $this->rights;
-    }
-
-    /**
-     * @param array $rights
-     */
-    public function setRights($rights)
-    {
-        $this->rights = $rights;
-    }
-
-    /**
-     * @return array
-     */
-    public function getDistributionPackages()
-    {
-        return $this->distributionPackages;
-    }
-
-    /**
-     * @param array $distributionPackages
-     */
-    public function setDistributionPackages($distributionPackages)
-    {
-        $this->distributionPackages = $distributionPackages;
-    }
-
-    /**
      * @return mixed
      */
     public function getSports()
@@ -730,6 +668,22 @@ class Content
     public function setDraft($draft)
     {
         $this->draft = $draft;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSelectedRights()
+    {
+        return $this->selectedRights;
+    }
+
+    /**
+     * @param mixed $selectedRights
+     */
+    public function setSelectedRights($selectedRights)
+    {
+        $this->selectedRights = $selectedRights;
     }
 
 

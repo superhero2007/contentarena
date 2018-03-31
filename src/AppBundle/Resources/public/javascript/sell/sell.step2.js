@@ -54,84 +54,59 @@ $(function () {
         return response;
     }
 
-    function collectRights (container){
+    function collectSelectedRightItems (container){
 
-        var rights = {};
+        var list = [];
 
         container.find("input:checked, .not-optional").each(function (k, el) {
 
-            if ( !$(this).parent().parent().parent().is(":visible") ) return false;
+            if ( !$(this).parent().parent().parent().is(":visible") ) return true;
 
-            var rightId = $(el).attr("right-id"),
-                rightItemId = $(el).attr("right-item-id");
+            if ( $(el).attr("all") !== undefined  ) return true;
 
-            if ( !rights[rightId] ){
-                rights[rightId] = new ContentArena.Model.Right();
-                rights[rightId].id = rightId;
-            }
+            var selectedRight = new ContentArena.Model.SelectedRight();
 
-            if ( !rights[rightId].rightItems[rightItemId] ){
-                rights[rightId].rightItems[rightItemId]= new ContentArena.Model.RightItem();
-                rights[rightId].rightItems[rightItemId].id = rightItemId;
-            }
+            selectedRight.right = $(el).attr("right-id");
+            selectedRight.rightItem = $(el).attr("right-item-id");
+            selectedRight.group = $(el).data("group");
 
             $(el).parent().parent().find("input:not([type='checkbox']):not(.chosen-search-input), textarea, select").each(function (key, element) {
-                rights[rightId].rightItems[rightItemId].inputs.push( $(element).val() );
+                selectedRight.inputs.push( $(element).val() );
+            });
 
-            })
+            list.push(selectedRight);
 
         });
 
-        return rights;
+        return list;
     }
 
-    function collectPackages (){
-
-        var packages = {
-                distributionPackages : [],
-                rightPackages : []
-            },
+    function collectSelectedRights(){
+        var selectedRights= [],
             selectedPackages = getSelectedFullPackages(),
             multiple = $("#main-multiple-package"),
             single = $("#main-single-package");
 
         if ( multiple.is(":visible") ){
-            packages.rightPackages.push( collectRightPackages(multiple, "Collectively") );
+            selectedRights = selectedRights.concat( collectSelectedRightItems(multiple) );
         }
 
         if ( single.is(":visible") ){
-            packages.rightPackages.push( collectRightPackages(single, "Main Information") );
+            selectedRights = selectedRights.concat( collectSelectedRightItems(single) );
         }
 
         if ( selectedPackages.length > 1 ){
             selectedPackages.forEach(function (pack) {
-                packages.rightPackages.push( collectRightPackages( $("#sell-box-package-" + pack.id ), pack.name ) );
+                selectedRights = selectedRights.concat( collectSelectedRightItems( $("#sell-box-package-" + pack.id )) );
             })
         }
 
         $(".production-standards:visible").each(function(k, el){
-            var name = $(el).attr("id").replace("distribution-package-", "");
-            packages.distributionPackages.push( collectDistributionPackages( $(el), name ) )
+            selectedRights = selectedRights.concat( collectSelectedRightItems( $(el) ) );
         });
 
-        return packages;
-    }
+        return selectedRights;
 
-    function collectRightPackages(container, name){
-
-        var rightsPackage = new ContentArena.Model.RightPackage();
-        rightsPackage.name = name;
-        rightsPackage.rights = collectRights(container);
-        return rightsPackage;
-    }
-
-    function collectDistributionPackages(container, name){
-
-        var distributionPackage = new ContentArena.Model.DistributionPackage();
-        distributionPackage.name = name;
-        distributionPackage.production = collectRights(container);
-        distributionPackage.technical = collectRights($("#technical-delivery-" + name));
-        return distributionPackage;
     }
 
     function validateSalesPackages(){
@@ -166,7 +141,7 @@ $(function () {
         var hasErrors = false,
             messages = [],
             expirationDate = $("#expiration-date"),
-            packagesInfo = collectPackages(),
+            rights = collectSelectedRights(),
             messagesContainer = $('<div title="The form is incomplete!" />'),
             total = 0,
             selectedPackages = getFullSelectedPackages();
@@ -190,8 +165,7 @@ $(function () {
             }
 
         });
-        ContentArena.Content.rights = packagesInfo.rightPackages;
-        ContentArena.Content.distributionPackages = packagesInfo.distributionPackages;
+        ContentArena.Content.rights = rights;
         ContentArena.Content.packages = selectedPackages.selectedIds;
 
         if ( expirationDate.val() === "" ){
@@ -593,7 +567,6 @@ $(function () {
     });
 
     ContentArena.Test.validateStepTwo = validateStepTwo;
-    ContentArena.Test.collectPackages = collectPackages;
     ContentArena.Test.getFullSelectedPackages = getFullSelectedPackages;
 
     /**

@@ -66,7 +66,7 @@
             </div>
         {% endif %}
 
-        {% if content.customId and not content.isOwner(user) %}
+        {% if content.customId and ( not content.isOwner(user) or showMoreInfo is defined ) %}
         <button class="link-action standard-button standard-button-active" href="{{ path('showContent', { customId : content.customId }) }}" >
             More Info
         </button>

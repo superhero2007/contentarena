@@ -106,10 +106,9 @@ class SellController extends Controller
     {
 
         $user = $this->getUser();
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy(['approved'=>true, 'draft'=>false], ['createdAt' => 'DESC']);
+        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->getActiveContent();
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
-
         return $this->render('@App/sell/sell.listings.active.html.twig', [
             'user' => $user,
             'contents' => $contents

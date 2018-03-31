@@ -62,6 +62,7 @@ class BuyController extends Controller
             'countries' =>  $countries,
             'rights'=>$rights,
             'lists'=>$searchList,
+            'showMoreInfo' => true
         ]);
 
     }
@@ -78,7 +79,8 @@ class BuyController extends Controller
 
         return $this->render('@App/content/contentItemList.html.twig', [
             'contents' => $contents,
-            'user' => $user
+            'user' => $user,
+            'showMoreInfo' => true
         ]);
 
     }

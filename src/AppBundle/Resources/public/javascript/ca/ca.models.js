@@ -33,6 +33,14 @@ $(function () {
         this.inputs = [];
     };
 
+    ContentArena.Model.SelectedRight = function(){
+        this.right = null;
+        this.rightItem = null;
+        this.distributionPackage = null;
+        this.group = null;
+        this.inputs = [];
+    };
+
     ContentArena.Model.SalesPackage = function(){
 
         this.salesMethod =  null;

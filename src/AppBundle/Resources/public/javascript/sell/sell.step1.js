@@ -726,7 +726,6 @@ $(function () {
     $(".step1-container").show();
 
     ContentArena.Test.validateStepOne = validateStepOne;
-    ContentArena.Test.logEventData = function(){ console.log( ContentArena.Content ); return ContentArena.Content};
 
     $(document).on("change", ".unselect-others", function(){
 
@@ -737,6 +736,24 @@ $(function () {
             if ( _this !== item ) {
                 input.attr("checked", false);
             } else {
+            }
+
+        });
+    });
+
+    $(document).on("change", ".select-all", function(){
+
+        var _this = this;
+
+        $.each($(this).parent().parent().siblings(), function (k, item) {
+            var input = $(item).find("input[type=checkbox]");
+            if ( _this === item ) return;
+
+            if ( _this.checked ){
+                input.prop("checked", true);
+                input.attr("disabled", "disabled");
+            } else {
+                input.attr("disabled", false);
             }
 
         });

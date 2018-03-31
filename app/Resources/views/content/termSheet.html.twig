@@ -1,62 +1,92 @@
-<div class="box">
-    <div class="box-title">
-        Term sheet
-    </div>
-    <div class="box-content">
-
-        {% if content.rights %}
-            {% for  rightPackage in content.rights%}
-
-                <div class="right-package-name">
-                    {{ rightPackage.name }}
-                </div>
-
-                {% for  right in rightPackage.rights%}
-                    {{ include('content/contentRight.html.twig', {'right': right}) }}
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-    </div>
-</div>
-
-{% if content.distributionPackages %}
-    {% for distributionPackage in content.distributionPackages %}
-
-        <div class="box">
-            <div class="box-title">
-                Distribution Package {{ loop.index }} - {{ distributionPackage.name }}
-            </div>
-            <div class="box-content">
-                {% if distributionPackage.production | length > 0 %}
-                    <div class="right-package-name">
-                        Production Standards
-                    </div>
-
-                    {% for  right in distributionPackage.production %}
-                        {{ include('content/contentRight.html.twig', {'right': right}) }}
-                    {% endfor %}
+{% if content.selectedRights %}
+    <div class="box">
+        <div class="box-title">
+            Term sheet
+        </div>
+        <div class="box-content">
+            {% for selectedRight in content.selectedRights%}
+                {% if (selectedRight.group.name == "Main Information") %}
+                    {{ include('content/contentRight.html.twig', {'selectedRight': selectedRight}) }}
                 {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 
-                {% if distributionPackage.technical | length > 0 %}
-                    <div class="right-package-name uk-margin-small-top">
-                        Technical delivery
-                    </div>
+    <div class="box">
+        <div class="box-title">
+            Distribution Package - Production Standards
+        </div>
+        <div class="box-content">
+            {% for selectedRight in content.selectedRights%}
+                {% if (selectedRight.group.name == "Production standards") %}
+                    {{ include('content/contentRight.html.twig', {'selectedRight': selectedRight}) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 
-                    {% set method = distributionPackage.technical|first.rightItems|first.name %}
 
-                    {% if method == 'IP' %}
-                        {{ include('content/technicalDeliveryIp.html.twig' ) }}
-                    {% else %}
-                        {% for  right in distributionPackage.technical %}
-                            {{ include('content/technicalDelivery.html.twig', {'right': right }) }}
+    <div class="box">
+        <div class="box-title">
+            Technical delivery
+        </div>
+        <div class="box-content">
+
+            {% if content.selectedRights|first.right.name == 'IP' %}
+                {{ include('content/technicalDeliveryIp.html.twig' ) }}
+            {% else %}
+                {% for selectedRight in content.selectedRights%}
+                    {% if (selectedRight.group.name == "Technical delivery") %}
+                        {{ include('content/contentRight.html.twig', {'selectedRight': selectedRight}) }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    {#{% if content.distributionPackages %}
+        {% for distributionPackage in content.distributionPackages %}
+
+            <div class="box">
+                <div class="box-title">
+                    Distribution Package {{ loop.index }} - {{ distributionPackage.name }}
+                </div>
+                <div class="box-content">
+                    {% if distributionPackage.production | length > 0 %}
+                        <div class="right-package-name">
+                            Production Standards
+                        </div>
+
+                        {% for  right in distributionPackage.production %}
+                            {{ include('content/contentRight.html.twig', {'right': right}) }}
                         {% endfor %}
                     {% endif %}
-                {% endif %}
+
+                    {% if distributionPackage.technical | length > 0 %}
+                        <div class="right-package-name uk-margin-small-top">
+                            Technical delivery
+                        </div>
+
+                        {% set method = distributionPackage.technical|first.rightItems|first.name %}
+
+                        {% if method == 'IP' %}
+                            {{ include('content/technicalDeliveryIp.html.twig' ) }}
+                        {% else %}
+                            {% for  right in distributionPackage.technical %}
+                                {{ include('content/technicalDelivery.html.twig', {'right': right }) }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+
 
             </div>
 
+        {% endfor %}
+    {% endif %}#}
 
-        </div>
-
-    {% endfor %}
 {% endif %}
+

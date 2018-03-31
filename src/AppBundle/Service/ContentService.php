@@ -9,6 +9,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\ContentFilter;
+use AppBundle\Entity\ContentSelectedRight;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
@@ -182,13 +183,8 @@ class ContentService
             $content->setSeason($seasons);
         }
 
-        if ( isset($data->duration) ) $content->setDuration($data->duration->value);
         if ( isset($data->description) ) $content->setDescription($data->description->value);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
-        if ( isset($data->year) ) $content->setReleaseYear($data->year->value);
-        if ( isset($data->programType) ) $content->setProgramType($data->programType->value);
-        if ( isset($data->programName) ) $content->setProgramName($data->programName->value);
-        if ( isset($data->seriesType) ) $content->setSeriesType($data->seriesType);
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->salesPackages) ) {
 
@@ -235,10 +231,7 @@ class ContentService
 
 
         }
-
-        if ( isset($data->rights) ) $content->setRights($data->rights);
-        if ( isset($data->distributionPackages) ) $content->setDistributionPackages($data->distributionPackages);
-
+        if ( isset($data->rights) ) $content->setSelectedRights( $this->getSelectedRights($data->rights) );
         if ( isset($data->packages) ){
 
             $packages = array();
@@ -254,12 +247,32 @@ class ContentService
             $content->setRightsPackage($packages);
 
         }
-
         if ( isset($data->availability) ){
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
         }
 
         return $content;
+    }
+
+    private function getSelectedRights($data){
+
+        $selectedRights = array();
+        if ( $data != null && is_array($data)){
+            foreach ($data as $right){
+
+                $selectedRight = new ContentSelectedRight();
+                $selectedRight->setRight($this->em->getReference('AppBundle:Rights', $right->right));
+                $selectedRight->setRightItem($this->em->getReference('AppBundle:RightsItemContent', $right->rightItem));
+                $selectedRight->setGroup($this->em->getReference('AppBundle:RightsGroup', $right->group));
+                if ($right->distributionPackage) $selectedRight->setDistributionPackage($this->em->getReference('AppBundle:DistributionPackage', $right->distributionPackage));
+                $selectedRight->setInputs($right->inputs);
+                $selectedRights[] = $selectedRight;
+
+            }
+        }
+
+        return $selectedRights;
+
     }
 
     /**

@@ -1,18 +1,16 @@
 <div class="right">
     <div class="right-name">
-        {%  if right.name is defined %}{{ right.name }}{% endif %}
+        {%  if selectedRight.right.name is defined %}{{ selectedRight.right.name }}{% endif %}
     </div>
     <div class="right-items">
 
-        {% for rightItem in right.rightItems %}
 
-            {%  if rightItem.name is defined %}
-                {%  if rightItem.inputs|length > 0 %}
-                    {{ rightItem.name|rightItemParse(rightItem.inputs, right.rightItems|first.name)}}
+            {%  if selectedRight.rightItem.name is defined %}
+                {%  if selectedRight.inputs|length > 0 %}
+                    {{ selectedRight.rightItem.formContent|rightItemParse(selectedRight.inputs, selectedRight.rightItem.formContent)}}
                 {% else %}
-                    {{ rightItem.name }}
+                    {{ selectedRight.rightItem.formContent }}
                 {%  endif %}
             {%  endif %}
-        {% endfor %}
     </div>
 </div>

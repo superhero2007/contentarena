@@ -11,7 +11,8 @@
                 <input type="checkbox"
                        right-id="all-{{ right.id }}"
                        id="all-{{ right.id }}"
-                       class="unselect-others">
+                       all
+                       class="select-all">
                 <label for="all-{{ right.id }}"></label>
             </div>
             <div class="select-box-item-label">
@@ -26,6 +27,7 @@
                 <input
                         right-id="{{ right.id }}"
                         right-item-id="{{ item.id }}"
+                        data-group="{{ right.group.id }}"
                         right-name="{{ item.name | kebab }}"
                         id="right-item-{{ item.id }}"
                         type="checkbox"

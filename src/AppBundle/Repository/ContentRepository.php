@@ -225,6 +225,21 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->getResult();
     }
 
+    public function getActiveContent(){
+
+        $now = date('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('c')
+            ->where('c.expiresAt > :now')
+            ->setParameter('now',$now)
+            ->andWhere('c.draft = :isDraft')
+            ->setParameter('isDraft',false)
+            ->andWhere('c.approved = :isApproved')
+            ->setParameter('isApproved',true)
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
     public function getContentInfo(){
         return $this->createQueryBuilder('c')
             ->where('c.id > :id')

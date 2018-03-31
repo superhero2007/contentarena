@@ -52,14 +52,14 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="company_legal_name", type="string", length=255)
+     * @ORM\Column(name="company_legal_name", type="string", length=255, nullable=true)
      */
     protected $companyLegalName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="company_website", type="string", length=255)
+     * @ORM\Column(name="company_website", type="string", length=255, nullable=true)
      */
     protected $companyWebsite;
 

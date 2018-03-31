@@ -14,7 +14,13 @@
                 {% else  %}
                     <img src="{{ asset('bundles/app/images/no-image.png') }}"/>
                 {% endif  %}
-                <div class="buy-content-sport">{{ content.sport.name | default("") }}</div>
+                <div class="buy-content-sport">
+                    {% if content.sports | length == 1  %}
+                        {{ content.sports[0].name | default("") }}
+                    {% else  %}
+                        MULTIPLE SPORTS
+                    {% endif  %}
+                </div>
             </div>
             <div class="content-column content-column-details">
                 <div class="buy-content-detail">

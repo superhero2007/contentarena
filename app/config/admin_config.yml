@@ -13,6 +13,7 @@ easy_admin:
                 form:
                     fields:
                         - 'email'
+                        - 'username'
                         - 'firstName'
                         - 'lastName'
                         - 'profile'
@@ -44,7 +45,7 @@ easy_admin:
                     fields:
                         - { property: 'customId' }
                         - { property: 'company' }
-                        - { property: 'sport' }
+                        - { property: 'sports' }
                         - { property: 'createdAt' }
                         - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
                         - { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }

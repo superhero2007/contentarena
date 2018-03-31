@@ -10,9 +10,10 @@ $(document).ready(function(){
 
         $('#content-details-' + id ).html("<i class=\"fa fa-cog fa-spin\">").show();
         ContentArena.Api.getContentDetails(id).done(function(response){
-
             $('#content-details-' + id ).html(response);
-        })
+        }).fail(function () {
+            $('#content-details-' + id ).html("").hide();
+        });
     });
 
 });
