@@ -1,5 +1,17 @@
 easy_admin:
     site_name: 'Content Arena'
+    design:
+            menu:
+                - Content
+                - label: 'User Information'
+                  children: ['User', 'Company', 'Status', 'Profile']
+                - label: 'Rights'
+                  children: ['Rights', 'RightsPackage', 'RightsItemContent', 'DistributionPackage']
+                - label: 'Sports'
+                  children: ['Sport', 'SportCategory', 'Tournament', 'Season']
+                - label: 'Custom Text'
+                  children: ['EmailContent']
+
     entities:
             User:
                 class: AppBundle\Entity\User
@@ -22,7 +34,6 @@ easy_admin:
                         - 'phone'
                         - 'country'
                         - 'company'
-
             Company:
                 class: AppBundle\Entity\Company
                 controller: AppBundle\Controller\Admin\CompanyController
@@ -117,6 +128,14 @@ easy_admin:
                     fields: ['slug', 'description', 'content']
             Profile:
                 class: AppBundle\Entity\Profile
+            Sport:
+                class: AppBundle\Entity\Sport
+            SportCategory:
+                class: AppBundle\Entity\SportCategory
+            Tournament:
+                class: AppBundle\Entity\Tournament
+            Season:
+                class: AppBundle\Entity\Season
 knp_paginator:
     page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
     default_options:

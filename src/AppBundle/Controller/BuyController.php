@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ContentFilter;
+use AppBundle\Service\SportRadarService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +71,7 @@ class BuyController extends Controller
     /**
      * @Route("/buy/search", name="buySearch")
      */
-    public function buySearchAction(Request $request, ContentService $contentService)
+    public function buySearchAction(Request $request, ContentService $contentService, SportRadarService $sportRadarService)
     {
         $user = $this->getUser();
         $contents = $contentService->getContent($request);

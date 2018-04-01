@@ -38,6 +38,12 @@ services:
         arguments:
             $targetDir: '%uploads_main_folder%'
             $uploadsUriPrefix: '%uploads_uri_prefix%'
+
+    AppBundle\Service\SportRadarService:
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $sportradarApiToken: '%sportradar_api_token%'
+            $sportradarApiHost: '%sportradar_api_host%'
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
@@ -76,3 +82,6 @@ services:
         calls:
             - [setContainer, ["@service_container"]]
 
+    api.feed_controller:
+        class: ApiBundle\Controller\FeedController
+        arguments: ['@AppBundle\Service\SportRadarService']

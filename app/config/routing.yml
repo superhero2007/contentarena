@@ -33,7 +33,7 @@ api_rest_utils:
 
 api_rest_feed:
     type: rest
-    resource: ApiBundle\Controller\FeedController
+    resource: api.feed_controller
     prefix:   /v1/feed
 
 api_rest_contract:

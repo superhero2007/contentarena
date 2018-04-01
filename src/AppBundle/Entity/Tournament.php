@@ -35,6 +35,18 @@ class Tournament
      */
     private $externalId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory" )
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $sportCategory;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sport" )
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $sport;
+
 
     /**
      * Get id
@@ -98,5 +110,39 @@ class Tournament
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSportCategory()
+    {
+        return $this->sportCategory;
+    }
+
+    /**
+     * @param mixed $sportCategory
+     */
+    public function setSportCategory($sportCategory)
+    {
+        $this->sportCategory = $sportCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSport()
+    {
+        return $this->sport;
+    }
+
+    /**
+     * @param mixed $sport
+     */
+    public function setSport($sport)
+    {
+        $this->sport = $sport;
+    }
+
+
 }
 

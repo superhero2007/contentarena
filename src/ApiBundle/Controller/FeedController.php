@@ -2,48 +2,25 @@
 
 namespace ApiBundle\Controller;
 
+use AppBundle\Entity\Company;
+use AppBundle\Service\SportRadarService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Intl\Intl;
 use FOS\RestBundle\Controller\FOSRestController;
 
 class FeedController extends FOSRestController
 {
     use \ApiBundle\Helper\ControllerHelper;
 
-    static $agent = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.0.3705; .NET CLR 1.1.4322)';
+    private $sportRadarService;
 
     /**
-     * Makes a request to the SportRadar API. The response is an XML to be parsed to JSON
-     *
-     * @param $url
-     * @param string $method
-     * @param array $params
-     * @return mixed
+     * FeedController constructor.
+     * @param SportRadarService $sportRadarService
      */
-    private function makeRequest($url, $method = 'GET', $params = array() )
+    public function __construct (SportRadarService $sportRadarService)
     {
-        $ch = curl_init();
-        $token = $this->getParameter('sportradar_api_token');
-        $host = $this->getParameter('sportradar_api_host');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-        if ($method == 'POST')
-        {
-            curl_setopt($ch, CURLOPT_POST, TRUE);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
-        }
-
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/xml', 'X-Access-Token: '.$token ));
-        curl_setopt($ch, CURLOPT_URL, $host.$url);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_USERAGENT, $this::$agent);
-        $api_response = curl_exec($ch);
-        curl_close($ch);
-        $simpleXml = simplexml_load_string($api_response);
-        $json = json_encode($simpleXml);
-        return json_decode($json,true);
+        $this->sportRadarService = $sportRadarService;
     }
 
     public function getTestAction()
@@ -59,6 +36,10 @@ class FeedController extends FOSRestController
     public function getCompanyAction()
     {
         $user = $this->getUser();
+
+        /**
+         * @var Company $company;
+         */
         $company = $user->getCompany();
         $view = $this->view($company->getUsers());
 
@@ -71,7 +52,7 @@ class FeedController extends FOSRestController
         $cached = $this->get('cache.app')->getItem('sports');
 
         if (!$cached->isHit()) {
-            $response = $this->makeRequest('/sports/en/sports.xml');
+            $response = $this->sportRadarService->makeRequest('/sports/en/sports.xml');
             $cached->set($response);
             $cached->expiresAfter($ttl);
             $this->get('cache.app')->save($cached);
@@ -79,6 +60,13 @@ class FeedController extends FOSRestController
             $response = $cached->get();
         }
 
+        $view = $this->view($response);
+        return $this->handleView($view);
+    }
+
+    public function getAllTournamentsAction()
+    {
+        $response = $this->sportRadarService->syncAllTournaments();
         $view = $this->view($response);
         return $this->handleView($view);
     }
@@ -98,7 +86,7 @@ class FeedController extends FOSRestController
         $cached = $this->get('cache.app')->getItem('tournaments-'.$parsedId);
 
         if (!$cached->isHit()) {
-            $response = $this->makeRequest('/sports/en/sports/'.$id.'/tournaments.xml');
+            $response = $this->sportRadarService->makeRequest('/sports/en/sports/'.$id.'/tournaments.xml');
             $cached->set($response);
             $cached->expiresAfter($ttl);
             $this->get('cache.app')->save($cached);
@@ -125,7 +113,7 @@ class FeedController extends FOSRestController
         $cachedCategories = $this->get('cache.app')->getItem('categories-'.$parsedId);
 
         if (!$cachedCategories->isHit()) {
-            $response = $this->makeRequest('/sports/en/sports/'.$id.'/categories.xml');
+            $response = $this->sportRadarService->makeRequest('/sports/en/sports/'.$id.'/categories.xml');
             $cachedCategories->set($response);
             $cachedCategories->expiresAfter($ttl);
             $this->get('cache.app')->save($cachedCategories);
@@ -152,7 +140,7 @@ class FeedController extends FOSRestController
         $cachedCategories = $this->get('cache.app')->getItem('seasons-'.$parsedId);
 
         if (!$cachedCategories->isHit()) {
-            $response = $this->makeRequest('/sports/en/tournaments/'.$id.'/seasons.xml');
+            $response = $this->sportRadarService->makeRequest('/sports/en/tournaments/'.$id.'/seasons.xml');
             $cachedCategories->set($response);
             $cachedCategories->expiresAfter($ttl);
             $this->get('cache.app')->save($cachedCategories);
@@ -179,7 +167,7 @@ class FeedController extends FOSRestController
         $cachedCategories = $this->get('cache.app')->getItem('schedule-'.$parsedId);
 
         if (!$cachedCategories->isHit()) {
-            $response = $this->makeRequest('/sports/en/tournaments/'.$id.'/schedule.xml');
+            $response = $this->sportRadarService->makeRequest('/sports/en/tournaments/'.$id.'/schedule.xml');
             $cachedCategories->set($response);
             $cachedCategories->expiresAfter($ttl);
             $this->get('cache.app')->save($cachedCategories);

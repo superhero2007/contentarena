@@ -35,6 +35,29 @@ class Season
      */
     private $externalId;
 
+    /**
+     * @ORM\Column(type="datetime", name="start_date", nullable=true)
+     */
+    private $startDate;
+
+    /**
+     * @ORM\Column(type="datetime", name="end_date", nullable=true)
+     */
+    private $endDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="year", type="string", length=255)
+     */
+    private $year;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament" )
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $tournament;
+
 
     /**
      * Get id
@@ -98,5 +121,71 @@ class Season
     {
         return $this->name;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param mixed $startDate
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param mixed $endDate
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * @param string $year
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTournament()
+    {
+        return $this->tournament;
+    }
+
+    /**
+     * @param mixed $tournament
+     */
+    public function setTournament($tournament)
+    {
+        $this->tournament = $tournament;
+    }
+
+
 }
 

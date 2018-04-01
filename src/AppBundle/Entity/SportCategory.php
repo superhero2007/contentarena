@@ -35,6 +35,13 @@ class SportCategory
      */
     private $externalId;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country_code", type="string", length=255, nullable=true)
+     */
+    private $countryCode;
+
 
     /**
      * Get id
@@ -97,5 +104,23 @@ class SportCategory
     public function __toString() {
         return $this->name;
     }
+
+    /**
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * @param string $countryCode
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+    }
+
+
 }
 
