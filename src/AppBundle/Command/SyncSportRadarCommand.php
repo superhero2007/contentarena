@@ -28,5 +28,6 @@ class SyncSportRadarCommand extends ContainerAwareCommand
 
         $sportRadarService = $this->getContainer()->get('AppBundle\Service\SportRadarService');
         $sportRadarService->syncAllTournaments();
+        $sportRadarService->syncAllSports();
     }
 }

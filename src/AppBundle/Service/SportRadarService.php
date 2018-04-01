@@ -181,4 +181,24 @@ class SportRadarService
         return;
     }
 
+    public function syncAllSports( )
+    {
+
+        $data = $this->makeRequest('/sports/en/sports.xml');
+
+        foreach ( $data["sport"] as $sportData ){
+            $sport = $sportData["@attributes"];
+            $dbSport = $this->em->getRepository("AppBundle:Sport")->findOneBy(array ( "externalId"=> $sport['id']));
+            if ( $dbSport == null ){
+                $dbSport = new Sport();
+                $dbSport->setName($sport["name"]);
+                $dbSport->setExternalId($sport["id"]);
+                $this->em->persist($dbSport);
+                $this->em->flush();
+            }
+        }
+
+        return;
+    }
+
 }
