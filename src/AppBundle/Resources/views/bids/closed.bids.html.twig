@@ -1,0 +1,44 @@
+<div class="box closed-bids-box">
+    <div class="box-title">Pending Closed Bids</div>
+    <div class="box-content">
+        <table class="uk-table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Territory</th>
+                <th>Buyer</th>
+                <th>Date</th>
+                <th>Fixed Fee</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in bids %}
+                {% if item.type.name == 'CLOSED' %}
+                    {% for country in item.countries %}
+                        <tr>
+                            <td>{{ item.customId }}</td>
+                            <td>{{ country.name }}</td>
+                            <td>{{ item.buyerUser.company.displayName }}</td>
+                            <td>{{ item.createdAt|date('Y-m-d H:i:s') }}</td>
+                            <td>{{ item.amount }} {{ item.currency.code }}</td>
+                            <td>
+                                <a href="" class="bid-approve" title="Approve">
+                                    <i class="fa fa-2x fa-check"></i>
+                                </a>
+                                <a href="" class="bid-reject" title="Reject">
+                                    <i class="fa fa-2x fa-times"></i>
+                                </a>
+                                <a href="" class="bid-comment" title="Comment">
+                                    <i class="fa fa-2x fa-comment"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

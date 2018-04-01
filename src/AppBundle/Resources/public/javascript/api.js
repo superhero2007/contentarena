@@ -128,6 +128,28 @@ $(function () {
             return deferred.promise();
         },
 
+        getPendingListings( id ) {
+            var deferred = jQuery.Deferred(),
+                _this = this;
+
+            $.ajax({
+                url: envhosturl + "content/pending-listings/",
+                type: "POST",
+                data: {id : id},
+                success: function (response) {
+                    deferred.resolve(response);
+                },
+                error : function (data, status) {
+                    deferred.reject({
+                        data: data,
+                        status: status
+                    });
+                }
+            });
+
+            return deferred.promise();
+        },
+
         getCategories ( sportId ) {
             var deferred = jQuery.Deferred(),
                 _this = this,

@@ -82,6 +82,12 @@ class Bid
      */
     private $countries;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
 
     public function __construct() {
         $this->countries = new \Doctrine\Common\Collections\ArrayCollection();
@@ -243,6 +249,23 @@ class Bid
     {
         $this->customId = $customId;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
 
 }
 
