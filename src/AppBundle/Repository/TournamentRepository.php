@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class TournamentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getSearchResultsByName($name){
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('t')
+            ->from($this->_entityName, 't')
+            ->where( 't.name like :name')
+            ->setMaxResults(60)
+            ->setParameter('name', $name );
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
