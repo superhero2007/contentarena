@@ -153,6 +153,8 @@ $(function () {
         if ( total !== 100 ) {
             hasErrors = true;
             messages.push( $('<div class="popup-error-message" />').html('Total installments must sum 100%!') );
+        }else{
+            ContentArena.Content.installments = collectInstallments();
         }
 
         ContentArena.Content.salesPackages = validateSalesPackages();
@@ -434,6 +436,25 @@ $(function () {
         $(".installment-percent").off().mask('000%', {reverse: true});
     }
 
+    function collectInstallments(){
+
+        var installments = [];
+
+        $(".installment").each(function(k, packageContainer){
+
+            var installment = {};
+
+            installment.percent = $(".installment-percent", packageContainer).val().replace("%", "");
+            installment.date = $(".installment-date", packageContainer).val();
+            installment.signing_day = $(".installment-days", packageContainer).val();
+            installment.granted_day = $(".granted-days").val();
+
+            installments.push(installment);
+        });
+
+        return installments;
+    }
+
     function submitform() {
         var url = envhosturl + 'sell/published',
             form = $('#myform');
@@ -479,6 +500,10 @@ $(function () {
 
     $("#add-installment").on('click', function () {
 
+        if($(".installment:first input.installment-percent").val()=='100%'){
+            $(".installment:first input.installment-percent").val('');
+        }
+
         var pos = $(".installment").length + 1,
             item = $(".installment:last").clone();
 
@@ -487,12 +512,12 @@ $(function () {
         item.find("input").val("");
         item.insertAfter(".installment:last");
 
-        item.find("input:last")
+        item.find("input.hasDatepicker")
             .attr("id", null)
             .removeClass("hasDatepicker")
             .datepicker("destroy").off().datepicker();
 
-        setupInstallment()
+        //setupInstallment()
 
     });
 
