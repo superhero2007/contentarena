@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class SportCategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getSearchResultsByName($name){
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('sc')
+            ->from($this->_entityName, 'sc')
+            ->where( 'sc.name like :name')
+            ->setMaxResults(60)
+            ->setParameter('name', $name );
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
