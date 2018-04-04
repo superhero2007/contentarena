@@ -81,4 +81,60 @@ $(function() {
         window.location.href = url;
     });
 
+
+    /*** FORM SEARCH ***/
+    /*** TAKE THE SEARCH INPUT OBJ AND RESULT BOX DIV ***/
+    $searchInput = $('#search-sport');
+    var availableTags = [];
+
+    /*** MAIN FUNCTIONS ***/
+    var sent = false;
+    $searchInput.keyup(function () {
+        var searchInputVal = $(this).val(); //take the input value
+        availableTags = []
+        if(searchInputVal.length > 2 && sent == false) {
+            $.ajax({
+                url: envhosturl + 'sell-new-listing-search',
+                data: {
+                    "content": searchInputVal
+                },
+                traditional: true,
+                type: "POST",
+                dataType: "json",
+                success: function (res) {
+                    sent = true;
+                    var len = res['seasons'].length;
+                    for (i = 0 ; i < len ; i++){
+                        availableTags.push(res['seasons'][i]['name']);
+                    }
+                    len = res['sports'].length;
+                    for (i = 0 ; i < len ; i++){
+                        availableTags.push(res['sports'][i]['name']);
+                    }
+                    len = res['sportCategories'].length;
+                    for (i = 0 ; i < len ; i++){
+                        availableTags.push(res['sportCategories'][i]['name']);
+                    }
+                    len = res['tournaments'].length;
+                    for (i = 0 ; i < len ; i++){
+                        availableTags.push(res['tournaments'][i]['name']);
+                    }
+                    $( "#search-sport" ).autocomplete({
+                        source: availableTags,
+                    }).bind('keyup', function(){
+                            if(sent == true) {
+                                $(this).autocomplete("search");
+                                availableTags = []
+                            }
+                        }
+                    );
+                }
+            });
+        }else{
+            sent = false;
+            availableTags = []
+        }
+    })
+    /*** FORM SEARCH END***/
+
 });
