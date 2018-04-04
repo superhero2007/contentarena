@@ -172,13 +172,47 @@ $(function () {
                     });
                 }
             });
-
             return deferred.promise();
+        },
+
+        getSearchResultInNewListing(searchInputVal) {
+            var sent = false;
+            if (searchInputVal.length > 2 && sent == false) {
+                var availableTags = []
+                $.ajax({
+                    url: '/sell-new-listing-search',
+                    data: {
+                        "content": searchInputVal
+                    },
+                    traditional: true,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (res) {
+                        sent = true;
+                        var len = res['seasons'].length;
+                        for (i = 0; i < len; i++) {
+                            availableTags.push(res['seasons'][i]['name']+"*season");
+                        }
+                        len = res['sports'].length;
+                        for (i = 0; i < len; i++) {
+                            availableTags.push(res['sports'][i]['name']+"*sport");
+                        }
+                        len = res['sportCategories'].length;
+                        for (i = 0; i < len; i++) {
+                            availableTags.push(res['sportCategories'][i]['name']+"*sprot category");
+                        }
+                        len = res['tournaments'].length;
+                        for (i = 0; i < len; i++) {
+                            availableTags.push(res['tournaments'][i]['name']+"*tournament");
+                        }
+                        return availableTags;
+                    },
+                });
+            }else{
+                sent = false;
+            }
         }
-
     };
-
-
 });
 
 

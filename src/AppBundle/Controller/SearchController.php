@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Name
- * Date: 4/2/2018
- * Time: 2:06 PM
- */
-
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
