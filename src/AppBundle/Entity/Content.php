@@ -205,6 +205,16 @@ class Content
      */
     private $createdAt;
 
+    /**
+     * Many Content have Many Installments.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Installments",cascade={"persist"},fetch="EAGER")
+     * @ORM\JoinTable(name="content_installments",
+     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="content_installments_id", referencedColumnName="id")}
+     *      )
+     */
+    private $installments;
+
     public function __construct() {
         $this->rightsPackage = new \Doctrine\Common\Collections\ArrayCollection();
         $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
@@ -635,7 +645,10 @@ class Content
      */
     public function isOwner(User $user)
     {
-        return $this->company->getId() == $user->getCompany()->getId();
+        if(!is_null($this->company)){
+            return $this->company->getId() == $user->getCompany()->getId();
+        }
+        return false;
     }
 
     /**
@@ -686,6 +699,19 @@ class Content
         $this->selectedRights = $selectedRights;
     }
 
+
+    public function getInstallments()
+    {
+        return $this->installments;
+    }
+
+    /**
+     * @param mixed $installments
+     */
+    public function setInstallments($installments)
+    {
+        $this->installments = $installments;
+    }
 
 
 }

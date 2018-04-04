@@ -95,6 +95,7 @@ $(function () {
         this.category = null;
         this.eventType = "database";
         this.salesPackages = {};
+        this.installments = {};
 
         this.getTitle = () => {
 

@@ -10,6 +10,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ContentSelectedRight;
+use AppBundle\Entity\Installments;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
@@ -181,6 +182,21 @@ class ContentService
             }
 
             $content->setSeason($seasons);
+        }
+
+        /**
+         * Set installments
+         */
+        if ( isset($data->installments) ) {
+
+            $installments = array();
+
+            foreach ($data->installments as $installment){
+                $installment = $this->getInstallment($installment);
+                $installments[] = $installment;
+            }
+
+            $content->setInstallments($installments);
         }
 
         if ( isset($data->description) ) $content->setDescription($data->description->value);
@@ -481,5 +497,22 @@ class ContentService
             $sports[] = $this->sport($sport);
         }
         return $sports;
+    }
+
+    private function getInstallment($installmentData){
+
+        if ( $installmentData ){
+            $installment = new Installments();
+            $installment->setPercentage($installmentData->percent);
+            $installment->setDueDate($installmentData->date?date_create_from_format('d/m/Y', $installmentData->date):null);
+            $installment->setSigningDays($installmentData->signing_day?$installmentData->signing_day:null);
+            $installment->setGrantedDays($installmentData->granted_day?$installmentData->granted_day:null);
+            $this->em->persist($installment);
+            $this->em->flush();
+        }else{
+            $installment = array();
+        }
+
+        return $installment;
     }
 }
