@@ -4,7 +4,6 @@
 
 $(document).ready(function(){
 
-
     $("#view-seller").on("click", function () {
         $("#seller-dialog").dialog({
             width: 800
@@ -353,5 +352,6 @@ $(document).ready(function(){
             $(this).parents('tr').attr('data-checked','false');
         }
     })
+
 
 });

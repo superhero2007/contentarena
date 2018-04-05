@@ -81,60 +81,44 @@ $(function() {
         window.location.href = url;
     });
 
-
-    /*** FORM SEARCH ***/
-    /*** TAKE THE SEARCH INPUT OBJ AND RESULT BOX DIV ***/
+    /*** TAKE THE SEARCH INPUT OBJ ***/
     $searchInput = $('#search-sport');
-    var availableTags = [];
 
-    /*** MAIN FUNCTIONS ***/
-    var sent = false;
-    $searchInput.keyup(function () {
-        var searchInputVal = $(this).val(); //take the input value
-        availableTags = []
-        if(searchInputVal.length > 2 && sent == false) {
-            $.ajax({
-                url: envhosturl + 'sell-new-listing-search',
-                data: {
-                    "content": searchInputVal
-                },
-                traditional: true,
-                type: "POST",
-                dataType: "json",
-                success: function (res) {
-                    sent = true;
-                    var len = res['seasons'].length;
-                    for (i = 0 ; i < len ; i++){
-                        availableTags.push(res['seasons'][i]['name']);
-                    }
-                    len = res['sports'].length;
-                    for (i = 0 ; i < len ; i++){
-                        availableTags.push(res['sports'][i]['name']);
-                    }
-                    len = res['sportCategories'].length;
-                    for (i = 0 ; i < len ; i++){
-                        availableTags.push(res['sportCategories'][i]['name']);
-                    }
-                    len = res['tournaments'].length;
-                    for (i = 0 ; i < len ; i++){
-                        availableTags.push(res['tournaments'][i]['name']);
-                    }
-                    $( "#search-sport" ).autocomplete({
-                        source: availableTags,
-                    }).bind('keyup', function(){
-                            if(sent == true) {
-                                $(this).autocomplete("search");
-                                availableTags = []
-                            }
-                        }
-                    );
+    /*** FORM SEARCH END***/
+    $searchInput.keyup(function (e) {
+
+        if(e.keyCode != 40 && e.keyCode != 38) {
+            var first = true;
+            var searchInputVal = $('#search-sport').val(); //take the input value
+
+            var returnedArrayOfNames = ContentArena.Api.getSearchResultInNewListing(searchInputVal)
+
+            $("#search-sport").autocomplete({
+                source: returnedArrayOfNames,
+            }).bind('keyup', function (e) {
+                if(e.keyCode != 40 && e.keyCode != 38) {
+                    $(this).autocomplete({
+                        source: returnedArrayOfNames,
+                    })
                 }
-            });
-        }else{
-            sent = false;
-            availableTags = []
+            }).data('ui-autocomplete')._renderItem = function(ul,item){
+
+
+                var name = item.value;
+                var array = name.split("*");
+
+                var appending = "<div>"+array[0]+"</div><div class='search-result-category'>"+array[1]+"</div>"
+
+                item.value = array[0]
+
+                if(first == true){
+                    $("#search-sport").val(array[0])
+                    first = false;
+                }
+
+                return $("<li class = 'custom-autocomplete-item'>").append(appending).appendTo(ul);
+            };
         }
     })
-    /*** FORM SEARCH END***/
-
 });
+
