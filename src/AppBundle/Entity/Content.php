@@ -713,6 +713,15 @@ class Content
         $this->installments = $installments;
     }
 
+    public function getListingName(){
+        $name = '';
+        $seasons = $this->getSeasons();
+        foreach($seasons as $season){
+            $name = $name.' '.$season->getTournament()->getName().' '.$season->getName();
+        }
+        return $name;
+    }
+
 
 }
 
