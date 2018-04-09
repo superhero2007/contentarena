@@ -7,10 +7,7 @@ const content = (state = {
         selectorItems: [],
         popularItems: []
     },
-    sports : [{
-        external_id : "sr:sport:3",
-        name: "Baseball"
-    }]
+    sports : []
 }, action) => {
 
     switch (action.type) {

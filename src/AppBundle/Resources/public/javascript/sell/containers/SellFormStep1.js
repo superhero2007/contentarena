@@ -14,6 +14,14 @@ class SellFormStep1 extends React.Component {
 
         if ( this.props.step !== 1) return (null);
 
+        const inputProps = {
+            sports: {
+                value : ""
+            }
+        };
+
+        if ( this.props.sports.length > 0 ) inputProps.sports.value = this.props.sports[0].name;
+
         return (
             <div className="step-content">
                 <div className="step-title">
@@ -31,7 +39,7 @@ class SellFormStep1 extends React.Component {
                         Please select the sport(s) and competition(s) covered by your content listing:
                     </div>
                     <input type="text"
-                           value={this.props.sports[0].name}
+                           {...inputProps.sports}
                            readOnly={true}
                            onClick={this.props.openSportSelector}
                            placeholder={"Sport"}  />
