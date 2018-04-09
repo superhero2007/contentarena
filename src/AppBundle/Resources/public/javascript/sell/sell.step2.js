@@ -209,7 +209,7 @@ $(function () {
 
     }
 
-    function addDistributionPackages( name ){
+    /*function addDistributionPackages( name ){
 
         var distributionPackage = $(".production-standards", "#box-templates").clone(),
             technicalDelivery = $(".technical-delivery", "#box-templates").clone(),
@@ -270,10 +270,10 @@ $(function () {
                     $('#content-details-mask').html("");
 
                     reader.readAsText(file);
-                    /**
+                    /!**
                      *
                      * @param {{ target:{} }} event
-                     */
+                     *!/
                     reader.onload = function(event){
                         var csv = event.target.result;
                         var data = $.csv.toArrays(csv);
@@ -297,9 +297,9 @@ $(function () {
 
         return distributionPackage;
 
-    }
+    }*/
 
-    function addExtraDistributionPackage( distributionPackage){
+    /*function addExtraDistributionPackage( distributionPackage){
 
         var selectors = [],
             packages = getFullSelectedPackages(),
@@ -328,9 +328,9 @@ $(function () {
             addDistributionPackages( values.join("-") );
         })
 
-    }
+    }*/
 
-    function checkSelectedPackages() {
+    /*function checkSelectedPackages() {
 
         var fullPackagesData = getFullSelectedPackages(),
             packages = fullPackagesData.selectedIds,
@@ -430,7 +430,7 @@ $(function () {
         });
         mainTarget.find(".optional").hide();
 
-    }
+    }*/
 
     function setupInstallment(){
         $(".installment-percent").off().mask('000%', {reverse: true});
@@ -521,7 +521,7 @@ $(function () {
 
     });
 
-    $(".package-selector").on('change', function () {
+    /*$(".package-selector").on('change', function () {
 
         var id = $(this).attr("id").split("-")[1],
             name = $(this).attr("name").split("-")[1];
@@ -553,7 +553,7 @@ $(function () {
         mainPackage = name;
         selectorCounter++;
 
-    });
+    });*/
 
     $("#reset-packages").on('click', function () {
         $.each($(".package-selector"), function (i, pack) {
@@ -572,7 +572,7 @@ $(function () {
         });
     });
 
-    $("#draft-listing").on('click', function () {
+    /*$("#draft-listing").on('click', function () {
 
         var el = $(this);
 
@@ -585,7 +585,7 @@ $(function () {
                 window.onbeforeunload = function () {}
             }
         });
-    });
+    });*/
 
     $(document).on('click',".add-sales-package", function () {
         addSalesPackage()

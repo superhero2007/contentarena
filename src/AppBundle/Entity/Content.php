@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Content
@@ -84,6 +85,13 @@ class Content
     protected $approved = false;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="step", type="integer")
+     */
+    protected $step = 1;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="draft", type="boolean")
@@ -113,7 +121,7 @@ class Content
 
     /**
      * Many Content have Many Sales Packages.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SalesPackage",cascade={"persist"},fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\SalesPackage",cascade={"persist"},fetch="LAZY")
      * @ORM\JoinTable(name="content_sales_package",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
@@ -149,7 +157,7 @@ class Content
     private $company;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport", inversedBy="content")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport")
      * @ORM\JoinTable(name="content_sports",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sport_id", referencedColumnName="id")}
@@ -158,13 +166,13 @@ class Content
     private $sports;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory")
      * @ORM\JoinColumn(nullable=true)
      */
     private $sportCategory;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
      * @ORM\JoinColumn(nullable=true)
      */
     private $tournament;
@@ -181,7 +189,7 @@ class Content
 
     /**
      * Many Content have Many RightsPackage.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", fetch="LAZY")
      * @ORM\JoinTable(name="content_rights_package",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
@@ -191,7 +199,7 @@ class Content
 
     /**
      * Many Content have Many ContentSelectedRights.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ContentSelectedRight",cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ContentSelectedRight",cascade={"persist"}, fetch="LAZY")
      * @ORM\JoinTable(name="content_selected_rights",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_selected_right_id", referencedColumnName="id")}
@@ -207,7 +215,7 @@ class Content
 
     /**
      * Many Content have Many Installments.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Installments",cascade={"persist"},fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Installments",cascade={"persist"},fetch="LAZY")
      * @ORM\JoinTable(name="content_installments",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_installments_id", referencedColumnName="id")}
@@ -604,7 +612,7 @@ class Content
      */
     public function setRightsPackage($rightsPackage)
     {
-        $this->rightsPackage = $rightsPackage;
+        $this->rightsPackage = new ArrayCollection($rightsPackage);
     }
 
     /**
@@ -712,6 +720,23 @@ class Content
     {
         $this->installments = $installments;
     }
+
+    /**
+     * @return int
+     */
+    public function getStep()
+    {
+        return $this->step;
+    }
+
+    /**
+     * @param int $step
+     */
+    public function setStep($step)
+    {
+        $this->step = $step;
+    }
+
 
 
 }

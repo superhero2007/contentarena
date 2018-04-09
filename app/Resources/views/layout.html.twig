@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         {% block stylesheets %}
+            <link href="{{ asset('assets/vendor.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/uikit.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/inherited.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/layout.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/jquery-ui.min.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/jquery-ui.theme.min.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/jquery-ui.structure.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/jquery-ui.theme.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/common.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
         {#<script>
@@ -109,18 +109,16 @@
         </div>
 
     {% block javascripts %}
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/jquery-ui.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('assets/manifest.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/vendor.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/common.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/ca.js') }}"></script>
+
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/libs/uikit.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/libs/jsrender.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/languages.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/watch.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/main.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/api.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/ca/ca.api.content.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/ca/ca.data.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/ca/ca.models.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('bundles/app/javascript/ca/ca.utils.js') }}"></script>
 
     {% endblock %}
 

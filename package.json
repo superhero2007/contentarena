@@ -1,0 +1,43 @@
+{
+  "name": "content-arena-api",
+  "version": "1.0.0",
+  "description": "Symfony Standard Edition\r ========================",
+  "main": "webpack.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-modal": "^3.3.2",
+    "react-popup": "^0.9.2",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "webpack-jquery-ui": "^1.0.0",
+    "webpack-preset": "^0.2.0",
+    "webpack-preset-babel": "^0.2.0",
+    "webpack-preset-babel-stage-2": "^0.2.0"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.19.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7",
+    "webpack-preset-babel-stage-2": "^0.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": ".\\node_modules\\.bin\\encore dev",
+    "webpack": ".\\node_modules\\.bin\\encore dev --watch",
+    "prod": ".\\node_modules\\.bin\\encore production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/iwantdev/content-arena-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/iwantdev/content-arena-api#readme"
+}

@@ -31,7 +31,12 @@ class AppExtension extends AbstractExtension
             new TwigFilter('idSort', array($this, 'idSortFilter')),
             new TwigFilter('kebab', array($this, 'kebabFilter')),
             new TwigFilter('rightItemParse', array($this, 'rightItemParse')),
+            new TwigFilter('json_decode', array($this, 'jsonDecode')),
         );
+    }
+
+    public function jsonDecode($str) {
+        return json_decode($str);
     }
 
     public function kebabFilter($string){

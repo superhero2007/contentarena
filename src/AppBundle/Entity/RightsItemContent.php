@@ -64,7 +64,7 @@ class RightsItemContent
     private $notOptional = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Rights", inversedBy="rights")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Rights")
      * @ORM\JoinTable(name="rights_items_children_join")
      */
     private $children;

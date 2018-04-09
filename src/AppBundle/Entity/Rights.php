@@ -33,7 +33,7 @@ class Rights
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RightsGroup", inversedBy="groups")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RightsGroup")
      * @ORM\JoinColumn(nullable=true)
      */
     private $group;

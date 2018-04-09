@@ -1,0 +1,11 @@
+{
+  "assets/app.js": "/assets/app.js",
+  "assets/buy.js": "/assets/buy.js",
+  "assets/ca.js": "/assets/ca.js",
+  "assets/common.css": "/assets/common.css",
+  "assets/common.js": "/assets/common.js",
+  "assets/manifest.js": "/assets/manifest.js",
+  "assets/sell.js": "/assets/sell.js",
+  "assets/vendor.css": "/assets/vendor.css",
+  "assets/vendor.js": "/assets/vendor.js"
+}

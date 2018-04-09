@@ -81,44 +81,16 @@ $(function() {
         window.location.href = url;
     });
 
-    /*** TAKE THE SEARCH INPUT OBJ ***/
-    $searchInput = $('#search-sport');
-
-    /*** FORM SEARCH END***/
-    $searchInput.keyup(function (e) {
-
-        if(e.keyCode != 40 && e.keyCode != 38) {
-            var first = true;
-            var searchInputVal = $('#search-sport').val(); //take the input value
-
-            var returnedArrayOfNames = ContentArena.Api.getSearchResultInNewListing(searchInputVal)
-
-            $("#search-sport").autocomplete({
-                source: returnedArrayOfNames,
-            }).bind('keyup', function (e) {
-                if(e.keyCode != 40 && e.keyCode != 38) {
-                    $(this).autocomplete({
-                        source: returnedArrayOfNames,
-                    })
-                }
-            }).data('ui-autocomplete')._renderItem = function(ul,item){
-
-
-                var name = item.value;
-                var array = name.split("*");
-
-                var appending = "<div>"+array[0]+"</div><div class='search-result-category'>"+array[1]+"</div>"
-
-                item.value = array[0]
-
-                if(first == true){
-                    $("#search-sport").val(array[0])
-                    first = false;
-                }
-
-                return $("<li class = 'custom-autocomplete-item'>").append(appending).appendTo(ul);
-            };
-        }
+    $("#search-sport").autocomplete({
+        source: ContentArena.Api.getSearchResultInNewListing,
     })
+      /*  .data('ui-autocomplete')._renderItem = function(ul,item){
+
+        var name = item.name + " - " + item.type;
+        var appending = "<div class='search-result-category'>"+name+"</div>"
+
+        return $("<li class = 'custom-autocomplete-item'>").append(appending).appendTo(ul);
+    };*/
+
 });
 

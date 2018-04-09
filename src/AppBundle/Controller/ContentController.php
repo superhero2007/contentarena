@@ -92,7 +92,7 @@ class ContentController extends Controller
     {
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
-        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId()));
+        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
     }
 
 

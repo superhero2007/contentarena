@@ -65,18 +65,16 @@
 
     <div class="rights-list is-hidden">
         {% for right in rights %}
-            {{ include('sell/right.html.twig', { 'right': right }) }}
+            {{ include('@App/sell/new/right.html.twig', { 'right': right }) }}
         {% endfor %}
     </div>
 
     {# PAYMENT TERMS #}
-    {{ include('sell/step2.paymentTerms.html.twig') }}
+    {{ include('@App/sell/new/step2.paymentTerms.html.twig') }}
 
     {# LISTING DETAILS #}
-    {{ include('sell/step2listingDetails.html.twig') }}
+    {{ include('@App/sell/new/step2listingDetails.html.twig') }}
 
-    {# BUTTONS #}
-    {{ include('sell/step2buttons.html.twig') }}
 </div>
 
 <div id="box-templates" class="is-hidden">
@@ -121,7 +119,3 @@
     </div>
 
 </div>
-
-{{ include('sell/mainForm.twig') }}
-
-{{ include('sell/templates.html.twig') }}

@@ -66,7 +66,7 @@ class Company
     private $phone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="owners")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     private $owner;
@@ -75,11 +75,6 @@ class Company
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="company", cascade={"persist","remove"})
      */
     private $users;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content", mappedBy="company", cascade={"persist","remove"})
-     */
-    private $content;
 
     /**
      * @var boolean
@@ -110,7 +105,7 @@ class Company
     private $size;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="companies")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
     private $country;
@@ -118,7 +113,7 @@ class Company
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->content = new ArrayCollection();
+        //$this->content = new ArrayCollection();
     }
 
 
@@ -352,22 +347,6 @@ class Company
     public function removeUser(User $user)
     {
         $this->users->removeElement($user);
-    }
-
-    /**
-     * @return Collection|Content[]
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param mixed $content
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
     }
 
     /**

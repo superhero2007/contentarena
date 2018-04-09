@@ -1,0 +1,99 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #fff;
+$blue-color: #1a4b63;
+$orange-color: #ffc94b;
+$font-size-medium-small: 12px;
+$font-size-medium: 14px;
+$font-size-medium-large: 16px;
+$font-size-extra-large : 26px;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  text-transform: none;
+}
+
+.main-container{
+  background-color: white;
+  margin: 20px;
+}
+
+.sell-form-container {
+  .buttons-container{
+    margin: 20px;
+    display: inline-flex;
+  }
+  .step-content{
+    color: #1a1a1a;
+    padding: 20px;
+    text-align: left;
+    .step-title{
+      font-size: $font-size-extra-large;
+    }
+    .step-item-description{
+      font-size: $font-size-medium-small;
+    }
+  }
+}
+
+.box-header{
+  display: flex;
+  flex-direction: row;
+  text-transform: none;
+  font-size: $font-size-medium-small;
+  background-color: $blue-color;
+  border-bottom: 4px solid $orange-color;
+
+  .step{
+    padding: 12px 20px 10px 70px;
+    text-align: left;
+    display: inline-block;
+    line-height: 14px;
+    position: relative;
+    .step-label{
+      text-transform: uppercase;
+    }
+    .step-title{
+
+    }
+    .step-icon{
+      position: absolute;
+      border-radius: 50%;
+      background-color: #2b5663;
+      width: 25px;
+      height: 25px;
+      top: 11px;
+      left: 20px;
+      border: 2px solid #8da9b1;
+    }
+  }
+  .step-active{
+    background-color: $orange-color;
+    .step-title{
+      color: #1a1a1a;
+    }
+  }
+}
+
+.selector{
+  .selector-content{
+    display: flex;
+    width: 700px;
+    max-height: 400px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .selector-item{
+      color: #1a1a1a;
+      font-size: 12px;
+      padding: 3px;
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+      margin: 2px;
+      width: 200px;
+    }
+    .selector-item-selected{
+      background-color: $blue-color;
+      color: white;
+    }
+  }
+}

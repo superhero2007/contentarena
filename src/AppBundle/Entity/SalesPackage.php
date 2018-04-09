@@ -51,19 +51,19 @@ class SalesPackage
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency", inversedBy="salesPackages")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
      * @ORM\JoinColumn(nullable=true)
      */
     private $currency;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="salesPackages")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType")
      * @ORM\JoinColumn(nullable=true)
      */
     private $salesMethod;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="salesPackages",fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", fetch="EAGER")
      * @ORM\JoinTable(name="sales_package_selected_countries",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_selected_countries_id", referencedColumnName="id")}
@@ -72,7 +72,7 @@ class SalesPackage
     private $selectedCountries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="salesPackages",fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", fetch="EAGER")
      * @ORM\JoinTable(name="sales_package_excluded_countries",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_excluded_countries_id", referencedColumnName="id")}

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchController extends Controller
 {
     /**
-     * @Route("/sell-new-listing-search", name="sellNewListingSearch")
+     * @Route("/search/tournament", name="searchTournament")
      */
     public function sellNewListingSearch(Request $request){
 

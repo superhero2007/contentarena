@@ -4,10 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Service\FileUploader;
+use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
+use Symfony\Component\Serializer\SerializerInterface;
+use AppBundle\Entity\Content;
 
 class SellController extends Controller
 {
@@ -78,12 +81,46 @@ class SellController extends Controller
             ->getRepository('AppBundle:Rights')
             ->findAll();
 
+        $serializer = SerializerBuilder::create()->build();
+        $content = new Content();
+
         // replace this example code with whatever you need
         return $this->render('@App/sell/sell.new.html.twig', [
+
+            'content' =>  $serializer->serialize($content, 'json'),
             'user' => $user,
-            'packages' => $packages,
-            'rights' => $rights,
-            'price' => 4
+            'packages' => $serializer->serialize($packages, 'json'),
+            'rights' => $serializer->serialize($rights, 'json')
+        ]);
+
+    }
+
+    /**
+     * @Route("/sell/edit/{customId}", name="editListing")
+     */
+    public function newEditAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+
+        $packages = $this->getDoctrine()
+            ->getRepository('AppBundle:RightsPackage')
+            ->findAll();
+
+        $rights = $this->getDoctrine()
+            ->getRepository('AppBundle:Rights')
+            ->findAll();
+
+        $serializer = SerializerBuilder::create()->build();
+        $jsonContent = $serializer->serialize($content, 'json');
+
+        // replace this example code with whatever you need
+        return $this->render('@App/sell/sell.new.html.twig', [
+            'content' =>  $jsonContent,
+            'user' => $user,
+            'packages' => $serializer->serialize($packages, 'json'),
+            'rights' => $serializer->serialize($rights, 'json')
         ]);
 
     }

@@ -1,0 +1,6 @@
+{
+  "directory": "web/assets/vendor/",
+  "strict-ssl": false,
+  "https-proxy": "",
+  "registry": "https://registry.bower.io"
+}

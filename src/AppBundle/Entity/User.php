@@ -91,13 +91,13 @@ class User extends BaseUser
     private $company;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile", inversedBy="profiles")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile")
      * @ORM\JoinColumn(nullable=true)
      */
     private $profile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserStatus", inversedBy="statuses")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserStatus")
      * @ORM\JoinColumn(nullable=true)
      */
     private $status;

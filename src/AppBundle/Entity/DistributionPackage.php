@@ -37,7 +37,7 @@ class DistributionPackage
 
     /**
      * Many Distribution Packages have Many Packages.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", inversedBy="distribution_packages")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage")
      * @ORM\JoinTable(name="distribution_packages_rights_packages")
      */
     private $rights_package;
