@@ -52,8 +52,13 @@ class MyContentController extends Controller
     {
 
         $user = $this->getUser();
+        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->findBy(['buyerUser'=>$user, 'status'=>1]);
+
+        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
         return $this->render('@App/myContent/myContent.listings.pending.html.twig', [
             'user' => $user,
+            'bids' => $bids,
+            'rights' => $rights
         ]);
 
     }

@@ -721,7 +721,16 @@ class Content
         $this->installments = $installments;
     }
 
-    /**
+    public function getListingName(){
+        $name = '';
+        $seasons = $this->getSeasons();
+        foreach($seasons as $season){
+            $name = $name.' '.$season->getTournament()->getName().' '.$season->getName();
+        }
+        return $name;
+    }
+
+ /**
      * @return int
      */
     public function getStep()
@@ -729,15 +738,12 @@ class Content
         return $this->step;
     }
 
+
     /**
      * @param int $step
      */
     public function setStep($step)
     {
         $this->step = $step;
-    }
-
-
-
-}
+    }}
 

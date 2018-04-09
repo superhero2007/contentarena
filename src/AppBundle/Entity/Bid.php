@@ -89,6 +89,13 @@ class Bid
      */
     private $createdAt;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
+
     public function __construct() {
         $this->countries = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -266,6 +273,60 @@ class Bid
         $this->createdAt = $createdAt;
     }
 
+    public function filterRights($rights){
+        $rightIds = $rights->map(function ($right) {
+           return $right->getId();
+        });
 
+        return $rightIds->toArray();
+    }
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Bid
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add country
+     *
+     * @param \AppBundle\Entity\Country $country
+     *
+     * @return Bid
+     */
+    public function addCountry(\AppBundle\Entity\Country $country)
+    {
+        $this->countries[] = $country;
+
+        return $this;
+    }
+
+    /**
+     * Remove country
+     *
+     * @param \AppBundle\Entity\Country $country
+     */
+    public function removeCountry(\AppBundle\Entity\Country $country)
+    {
+        $this->countries->removeElement($country);
+    }
 }
-
