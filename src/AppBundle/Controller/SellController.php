@@ -64,9 +64,9 @@ class SellController extends Controller
             ->getRepository('AppBundle:RightsPackage')
             ->findAll();
 
-        /*$rights = $this->getDoctrine()
+        $rights = $this->getDoctrine()
             ->getRepository('AppBundle:Rights')
-            ->findAll();*/
+            ->findAll();
 
         $serializer = SerializerBuilder::create()->build();
         $content = new Content();
@@ -78,8 +78,8 @@ class SellController extends Controller
             'user' => $user,
             //'packages' => $serializer->serialize($packages, 'json'),
             'packages' => $user,
-            'rights' => $user
-            //'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
+            //'rights' => $user
+            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
     }
