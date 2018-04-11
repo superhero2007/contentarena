@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * RightsPackage
@@ -18,6 +19,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"common"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Groups({"common"})
      */
     private $name;
 
@@ -39,6 +42,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @ORM\ManyToMany(targetEntity="RightsPackage", mappedBy="children")
      */
     private $parent;
+
 
     public function __construct() {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
