@@ -76,9 +76,7 @@ class SellController extends Controller
 
             'content' =>  $serializer->serialize($content, 'json'),
             'user' => $user,
-            //'packages' => $serializer->serialize($packages, 'json'),
-            'packages' => $user,
-            //'rights' => $user
+            'packages' => $serializer->serialize($packages, 'json'),
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
