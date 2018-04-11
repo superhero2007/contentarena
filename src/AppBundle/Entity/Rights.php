@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Rights
@@ -45,6 +46,7 @@ class Rights
      *      joinColumns={@JoinColumn(name="rights_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
+     *  @MaxDepth(1)
      */
     private $packages;
 
@@ -89,16 +91,10 @@ class Rights
      */
     private $collectively;
 
-    /**
-     * Many Rights have Many DistributionPackages.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\DistributionPackage", mappedBy="rights")
-     */
-    private $distribution_packages;
 
     public function __construct()
     {
         $this->packages = new ArrayCollection();
-        $this->distribution_packages = new ArrayCollection();
     }
 
     /**
@@ -277,21 +273,6 @@ class Rights
         $this->hidden = $hidden;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDistributionPackages()
-    {
-        return $this->distribution_packages;
-    }
-
-    /**
-     * @param mixed $distribution_packages
-     */
-    public function setDistributionPackages($distribution_packages)
-    {
-        $this->distribution_packages = $distribution_packages;
-    }
 
 
 }

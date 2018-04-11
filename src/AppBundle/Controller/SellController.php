@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
-use Symfony\Component\Serializer\SerializerInterface;
+use JMS\Serializer\SerializationContext;
 use AppBundle\Entity\Content;
 
 class SellController extends Controller
@@ -20,21 +20,8 @@ class SellController extends Controller
      */
     public function sellAction(Request $request)
     {
-        /**
-         * @var User
-         */
-        $user = $this->getUser();
-
-        $criteria = array(
-            'company' => $user->getCompany()
-        );
-
-        $contents =  $this->getDoctrine()->getRepository('AppBundle:Content')->findBy($criteria, ['createdAt' => 'DESC']);
-
-        return $this->render('sell/sell.html.twig', [
-            'user' => $user,
-            'contents' => $contents
-        ]);
+        return $this->redirectToRoute('newListing', array(
+        ));
 
     }
 
@@ -89,8 +76,8 @@ class SellController extends Controller
 
             'content' =>  $serializer->serialize($content, 'json'),
             'user' => $user,
-            'packages' => $serializer->serialize($packages, 'json'),
-            'rights' => $serializer->serialize($rights, 'json')
+            'packages' => $serializer->serialize($packages, 'json',SerializationContext::create()->setGroups(array('common'))),
+            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
     }
