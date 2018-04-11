@@ -85,6 +85,12 @@
 
     </div>
 
+    {% if watchlist is defined %}
+        <div class="content-column content-column-company uk-margin-left">
+            <button class="standard-button uk-button-danger remove_watchlist" data-id="{{ content.customId }}">Delete</button>
+        </div>
+    {% endif %}
+
     {% if content.isOwner(user) and content.isActive() and not content.isExpired() %}
         <div class="uk-width-1-1 uk-grid">
             <a class="uk-button uk-button-primary uk-width-1-4 more-info-listings" data-id="{{ content.id }}">More Info</a>

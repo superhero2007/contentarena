@@ -351,7 +351,25 @@ $(document).ready(function(){
         }else{
             $(this).parents('tr').attr('data-checked','false');
         }
-    })
+    });
+    
+    $('.add_to_watchlist, .remove_watchlist').click(function (e) {
+        e.preventDefault();
+        _this = $(this);
+        var content = $(this).data('id');
+        ContentArena.Api.watchlist(content).done(function (data) {
+            if(data.success && data.state === 1){
+                $('.add_to_watchlist').text('Saved to watchlist');
+            }else{
+                if(_this.hasClass('remove_watchlist')){
+                    _this.parents('.content-box').remove();
+                }else{
+                    $('.add_to_watchlist').text('Add to watchlist');
+                }
+            }
+
+        });
+    });
 
 
 });

@@ -53,6 +53,9 @@
                 <div><a id="view-seller" href="#"><i class="fa fa-money"></i>{{ content.company.displayName | default("") }}</a></div>
                 <div class="content-expires">Offer deadline: {{ date( content.expiresAt|date ).diff( date("now") ).days }} days</div>
                 <a href="#" id="seller-contact">Contact Seller</a>
+                <button class="standard-button standard-button-active add_to_watchlist" data-id="{{ content.customId }}">
+                    {{ watchlisted?'Saved to watchlist':'Add to watchlist' }}
+                </button>
             </div>
         </div>
 

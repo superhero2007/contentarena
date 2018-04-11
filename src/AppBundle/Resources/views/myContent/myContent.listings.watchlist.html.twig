@@ -2,6 +2,25 @@
 
 {% block listing_content %}
 
-    WATCHLIST TEMPLATE
+    <div class="content-list-container">
+        <div class="buy-box">
+            {% if watchlists| length > 0 %}
+                {% for watchlist in watchlists %}
+                    {{ include('@App/content/contentItem.html.twig', { 'content' : watchlist.content, 'watchlist' : true }) }}
+                {% endfor %}
+            {% else %}
+                <div class="content-column">
+                    <h3 class="uk-align-center">No Results</h3>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock listing_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/javascript/content.js') }}"></script>
+
+{% endblock %}

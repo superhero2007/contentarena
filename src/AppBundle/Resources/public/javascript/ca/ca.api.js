@@ -252,6 +252,28 @@ ContentArena.Api= {
                 response(data.seasons.concat(data.sports.concat(data.sportCategories.concat(data.tournaments))));
             },
         });
+    },
+
+    watchlist( id ) {
+        var deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "mycontent/watchlist/",
+            type: "POST",
+            data: {id : id},
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
     }
 };
 
