@@ -356,6 +356,7 @@ $(document).ready(function(){
     $('.add_to_watchlist, .remove_watchlist').click(function (e) {
         e.preventDefault();
         _this = $(this);
+        _this.addClass('disabled').attr('disabled', true).html("<i class=\"fa fa-cog fa-spin\">");
         var content = $(this).data('id');
         ContentArena.Api.watchlist(content).done(function (data) {
             if(data.success && data.state === 1){
@@ -367,7 +368,7 @@ $(document).ready(function(){
                     $('.add_to_watchlist').text('Add to watchlist');
                 }
             }
-
+            _this.removeClass('disabled').attr('disabled', false);
         });
     });
 
