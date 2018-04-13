@@ -24,11 +24,13 @@ const SelectorItem = ({label, selected, onClick}) => (
 
 
 class Selector extends React.Component {
+
     constructor(props) {
         super(props);
 
         this.state = {
             updated : false,
+            filterUpdated : false,
             open : props.selector,
             items : props.items || [],
             popularItems : props.popularItems || [],
@@ -39,7 +41,7 @@ class Selector extends React.Component {
                 "uz" : { type: "firstLetter", values: ["u",'v','w','x','y','z'] },
                 "popular" : { type: "origin", value: "popularItems"}
             },
-            activeFilter : props.activeFilter || "popular",
+            activeFilter : props.activeFilter || "ag",
             selectedItem : {}
         };
 
@@ -60,20 +62,30 @@ class Selector extends React.Component {
     };
 
     closeModal = () => {
-        this.setState({ updated: false });
+        this.setState({ updated: false, filterUpdated : false });
         this.props.closeSelector();
     };
 
     getActiveFilter = () => {
-      return this.state.filter[this.state.activeFilter];
+        let activeFilter = this.getActiveFilterName();
+        return this.state.filter[activeFilter];
+    };
+
+    getActiveFilterName = () => {
+        return ( this.props.activeFilter && !this.state.filterUpdated ) ? this.props.activeFilter : this.state.activeFilter;
+    };
+
+    shouldShowFilters = () =>{
+        return this.props.items && this.props.items.length > 30
     };
 
     setActiveFilter = ( filterName ) =>{
-      this.setState({ activeFilter: filterName})
+      this.setState({ activeFilter: filterName,filterUpdated : true})
     };
 
     applySelection = () => {
-        this.props.applySelection(this.props.type, this.state.selectedItem);
+        this.setState({ updated: false, filterUpdated : false });
+        this.props.applySelection(this.props.type, this.state.selectedItem, this.props.multiple);
     };
 
     selectItem = ( item ) => {
@@ -85,7 +97,12 @@ class Selector extends React.Component {
         if ( this.state.updated ){
             return this.state.selectedItem.external_id === item.external_id;
         } else {
-            return this.props.selected[0].external_id === item.external_id;
+
+            if (!this.props.selected) return false;
+
+            return this.props.selected.length > 0 &&
+                (this.props.multiple) ? this.props.selected[0].external_id === item.external_id
+                : this.props.selected.external_id === item.external_id;
         }
     };
 
@@ -97,7 +114,12 @@ class Selector extends React.Component {
     getItems = () =>{
         let filter = this.getActiveFilter();
         if ( filter.type === "origin" ) return this.props[filter.value];
-        if ( filter.type === "firstLetter") return this.props.items.filter(this.filter);
+        if ( filter.type === "firstLetter") {
+
+            if ( !this.shouldShowFilters() ) return this.props.items;
+
+            return this.props.items.filter(this.filter);
+        }
     };
 
     render() {
@@ -113,11 +135,17 @@ class Selector extends React.Component {
             >
                 {/*<h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>*/}
                 <div>
-                    <button onClick={()=>{ this.setActiveFilter("popular")}}>Popular</button>
-                    <button onClick={()=>{ this.setActiveFilter("ag")}}>A-G</button>
-                    <button onClick={()=>{ this.setActiveFilter("hn")}}>H-N</button>
-                    <button onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>
-                    <button onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>
+                    { this.props.popularItems &&
+                    <button className={"selector-filter " + (this.getActiveFilterName() === "popular" && "selector-filter-active")}
+                            onClick={()=>{ this.setActiveFilter("popular")}}>Popular</button>}
+                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "ag" && "selector-filter-active")}
+                                                          onClick={()=>{ this.setActiveFilter("ag")}}>A-G</button>}
+                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "hn" && "selector-filter-active")}
+                                                          onClick={()=>{ this.setActiveFilter("hn")}}>H-N</button>}
+                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "ot" && "selector-filter-active")}
+                                                          onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>}
+                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "uz" && "selector-filter-active")}
+                                                          onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>}
                 </div>
                 <div className="selector-content">
                     { this.getItems().map(function(item, i){
@@ -129,7 +157,7 @@ class Selector extends React.Component {
                 </div>
                 <div>
                     <button onClick={this.closeModal}>Cancel</button>
-                    <button  onClick={this.applySelection}>Apply</button>
+                    <button onClick={this.applySelection} disabled={!this.state.updated}>Apply</button>
                     <div>Can't find your sport in the list? </div>
                     <button>Add new Sport</button>
                 </div>
@@ -144,7 +172,9 @@ const mapStateToProps = ( state ) => {
         items : state.selectorInfo.selectorItems,
         popularItems: state.selectorInfo.popularItems,
         type : state.selectorInfo.selectorType,
-        selected : state[state.selectorInfo.selectorType]
+        activeFilter: state.selectorInfo.activeFilter,
+        selected : state[state.selectorInfo.selectorType],
+        multiple : state.selectorInfo.multiple
     }
 };
 
@@ -156,10 +186,11 @@ const mapDispatchToProps = dispatch => {
         closeSelector : () => dispatch({
             type : 'CLOSE_SELECTOR'
         }),
-        applySelection : (selectorType, selectedItem) => dispatch({
+        applySelection : (selectorType, selectedItem, multiple) => dispatch({
             type : 'APPLY_SELECTION',
             selectorType : selectorType,
-            selectedItem : selectedItem
+            selectedItem : selectedItem,
+            multiple : multiple
         }),
     }
 };
@@ -168,8 +199,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(Selector)
-
-
-
-
-
