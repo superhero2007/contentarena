@@ -8,7 +8,10 @@ use AppBundle\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Service\ContentService;
+use AppBundle\Entity\Watchlist;
+use AppBundle\Service\WatchlistService;
 
 class MyContentController extends Controller
 {
@@ -38,9 +41,11 @@ class MyContentController extends Controller
     public function myContentWatchlistdAction(){
 
         $user = $this->getUser();
+        $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['user'=>$user]);
 
         return $this->render('@App/myContent/myContent.listings.watchlist.html.twig', [
             'user' => $user,
+            'watchlists' => $watchlists,
         ]);
 
     }
@@ -137,5 +142,23 @@ class MyContentController extends Controller
         ]);
 
     }
+
+    /**
+     * @Route("/mycontent/watchlist/", name="watchlist")
+     * @param Request $request
+     * @param WatchlistService $watchlistService
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function watchlist(Request $request, WatchlistService $watchlistService){
+
+        $user = $this->getUser();
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId'=>$request->request->get('id')]);
+
+        $watchlist = $watchlistService->newOrRemove($user, $content);
+
+        return new JsonResponse(array("success"=>true, 'state'=>$watchlist));
+    }
+
 
 }

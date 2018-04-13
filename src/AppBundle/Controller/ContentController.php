@@ -50,12 +50,14 @@ class ContentController extends Controller
             ->getRepository('AppBundle:Content')
             ->getTerritoryInfo($request->get("customId"));
 
+        $watchlisted = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'user'=>$user]);
         return $this->render('content/content.html.twig', [
             'user' => $user,
             'content' => $content,
             'countries' => $countries,
             'custom_id' => $request->get("customId"),
             'buyPackages' => $buyPackages,
+            'watchlisted' => $watchlisted,
         ]);
     }
 
