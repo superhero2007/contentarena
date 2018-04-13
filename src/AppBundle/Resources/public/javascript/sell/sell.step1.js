@@ -38,174 +38,6 @@ $(function () {
 
     var rounds = {};
 
-    function split( val ) {
-        return val.split( /,\s*/ );
-    }
-
-    function extractLast( term ) {
-        return split( term ).pop();
-    }
-
-    function fillSports(selector, topSports, fullSports, callback){
-
-        var el = $(selector), fullSportsLoaded;
-
-        el.autocomplete({
-            source: topSports,
-            minLength: 0,
-            delay: 500,
-            search : function(event){
-                if ( !fullSportsLoaded && $(event.target).val() !== "") {
-                    $(event.target).autocomplete("option", "source", fullSports);
-                }
-                fullSportsLoaded = true;
-            },
-            select: function( event, ui ) {
-
-                var target = $(event.target),
-                    value = ui.item.value;
-
-                event.preventDefault();
-
-                if (value === "all"){
-                    target.autocomplete( "option", "source", fullSports );
-                    setTimeout(function(){
-                        target.autocomplete("search", "");
-                    }, 500);
-                    return;
-                }
-
-                if (value === "new"){
-                    addCustomTemplate(true, true, true);
-                    return;
-                }
-
-                target
-                    .val(ui.item.label)
-                    .attr("externalId", value)
-                    .trigger('blur');
-
-                if ( callback ) callback.apply(this, arguments);
-
-            }
-        }).focus(function(){
-            $(this).autocomplete("search", "");
-        });
-    }
-
-    function fillCategories(){
-
-        var el = $("#event-category-selector"),
-            sportId = $("#event-sport-selector").attr("externalId"),
-            spinner = el.parent().find("i");
-
-        spinner.show();
-        el.attr("disabled", "disabled");
-        if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
-
-        ContentArena.Api.getCategories(sportId).done(function ( categories ) {
-            el.attr("disabled", null);
-
-            if ( categories.length === 0 ){
-                addCustomTemplate( false, true, true );
-                spinner.hide();
-                return;
-            }
-
-            el.show();
-            el.autocomplete({
-                source: categories,
-                minLength : 0,
-                select: function( event, ui ) {
-
-                    event.preventDefault();
-                    if ( ui.item.value === "new" ){
-                        addCustomTemplate( false, true, true );
-                        return;
-                    }
-
-                    $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
-                    fillTournaments(true);
-                    $.each(["#event-tournament-selector", "#event-season-selector"], function(k, id){
-                        $(id).val("").removeClass("custom-input");
-                    });
-                    $("#event-schedule-subitems").html("");
-                    $(".custom-template-item").hide();
-                }
-            }).focus(function(){
-                $(this).autocomplete("search", "");
-            });
-
-            spinner.hide();
-        });
-
-    }
-
-    function fillTournaments(silent){
-
-        var sportId = $("#event-sport-selector").attr('externalId'),
-            categoryId = $("#event-category-selector").attr('externalId'),
-            el = $("#event-tournament-selector"),
-            spinner = el.parent().find("i");
-
-        spinner.show();
-
-        el.attr("disabled", "disabled");
-        if ( el.data('autocomplete') ) el.autocomplete('destroy').off();
-
-        ContentArena.Api.getTournaments( sportId, categoryId ).done(( tournaments ) => {
-
-            if ( sportId === "sr:sport:5"){
-
-                tournaments = tournaments.filter(function(tournament){
-                    return (tournament.label.search("Double") === -1);
-                });
-
-                tournaments = tournaments.map(function (tournament) {
-                    tournament.label = tournament.label.replace(" Singles", "");
-                    return tournament;
-                });
-            }
-
-            if ( !silent ) fillCategories();
-
-            el.attr("disabled", null);
-
-            if ( tournaments.length === 0 ){
-                addCustomTemplate( false, true, true );
-                spinner.hide();
-                return;
-            }
-
-            el.autocomplete({
-                source: function(request, response) {
-                    var results = $.ui.autocomplete.filter(tournaments, request.term);
-
-                    response(results.slice(0, 300));
-                },
-                minLength : 0,
-                select: function( event, ui ) {
-                    event.preventDefault();
-
-                    if ( ui.item.value === "new" ){
-                        addCustomTemplate( false, false, true );
-                        return;
-                    }
-
-                    $(event.target).val(ui.item.label).attr("externalId", ui.item.value).blur();
-                    fillSeasons();
-                    $("#event-season-selector").val("").removeClass("custom-input");
-                    $("#event-schedule-subitems").html("");
-                    $(".custom-template-item").children().hide();
-                }
-            }).focus(function(){
-                $(this).autocomplete("search", "");
-            });
-
-            spinner.hide();
-        });
-    }
-
     function fillSeasons(){
         var options = {
             selector : "#event-season-selector",
@@ -563,7 +395,6 @@ $(function () {
         resetSelector(["category", "tournament", "season"]);
 
         ContentArena.Content.eventType = "custom";
-        fillSports( "#"+id, ContentArena.Data.TopSports, ContentArena.Data.FullSports);
 
     }
 
@@ -585,40 +416,11 @@ $(function () {
         console.log("current : " + currentQuantity, "Goal: " + quantity, "Start: " + start);
     }
 
-    function onSelectAutocompleteTag(event, ui ){
-        var terms = split( this.value );
-        // remove the current input
-        terms.pop();
-        // add the selected item
-        if ( terms.indexOf(ui.item.label) === -1 ) terms.push( ui.item.label );
-        // add placeholder to get the comma-and-space at the end
-        terms.push( "" );
-        this.value = terms.join( ", " );
-
-        $(event.target).blur();
-
-        return false;
-    }
-
     function resetSelector(selectors){
         selectors.forEach( (selector) => $("#event-"+selector+"-selector").val("").attr('externalId', null));
     }
 
     $("#add-sport-layer").on("click", addSportLayer);
-
-    $(".go-to-rights").on("click", function(){
-
-        if ( !validateStepOne() ) return;
-
-        $("#step2").show();
-        $("#step1").hide();
-
-        window.onbeforeunload = confirmExit;
-        function confirmExit() {
-            console.log("leaving page");
-            return "You have attempted to leave this page. Are you sure?";
-        }
-    });
 
     $("#event-customEnd-selector, #event-customStart-selector, #event-availability-selector, #expiration-date, .installment-date").datepicker();
 
@@ -627,12 +429,6 @@ $(function () {
         $(this).blur();
         $( targetId ).trigger("click");
         e.preventDefault();
-    });
-
-    $('#event-website-selector').mask("A", {
-        translation: {
-            "A": { pattern: /[\w/\-.+]/, recursive: true }
-        }
     });
 
     $('#license-file-selector-hidden').checkFileType({
@@ -671,61 +467,6 @@ $(function () {
             $('<div />').html('File type not allowed').dialog();
         }
     });
-
-    /**
-     * Fills the sport selector
-     */
-    ContentArena.Api.getSports().done( (sports ) => {
-        ContentArena.Data.FullSports = sports;
-        fillSports( "#event-sport-selector", ContentArena.Data.TopSports, ContentArena.Data.FullSports, function( event, ui){
-            ContentArena.Content.sport = {
-                value : ui.item.label,
-                externalId :ui.item.value
-            };
-
-            if ( ContentArena.Content.eventType === "custom") return;
-
-            $("#event-schedule-subitems").html("");
-
-            resetSelector(["category", "tournament", "season"]);
-            fillTournaments();
-        });
-    });
-
-    /**
-     * Fills company users tagging tool
-     */
-    $.ajax({
-        url: envhosturl + "v1/feed/company",
-        type: "GET",
-
-        success: function (response) {
-            /**
-             * @param {{email:string}} item
-             */
-            var source = $.map(response, function (item) {
-                return {label: item.email, value: item.id}
-            });
-
-            $(  "#tag-members" ).autocomplete({
-                source: function( request, response ) {
-                    // delegate back to autocomplete, but extract the last term
-                    response( $.ui.autocomplete.filter(
-                        source, extractLast( request.term ) ) );
-                },
-                minLength: 0,
-                select: onSelectAutocompleteTag
-            }).focus(function(){
-                $(this).autocomplete("search", "");
-            });
-        }
-    });
-
-    $(".package-ready-button").hide();
-    $(".custom-template-item").hide();
-    $(".step1-container").show();
-
-    ContentArena.Test.validateStepOne = validateStepOne;
 
     $(document).on("change", ".unselect-others", function(){
 
