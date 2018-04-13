@@ -30,9 +30,14 @@ body {
     .step-title{
       font-size: $font-size-extra-large;
     }
-    .step-item-description{
-      font-size: $font-size-medium-small;
+    .step-content-container {
+      display: flex;
+      flex-direction: column;
+      .step-item-description{
+        font-size: $font-size-medium-small;
+      }
     }
+
   }
 }
 
@@ -76,6 +81,17 @@ body {
 }
 
 .selector{
+  .selector-filter {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    color: #1a1a1a;
+    background-color: $orange-color;
+  }
+  .selector-filter-active {
+    background-color: $blue-color;
+    color: white;
+  }
   .selector-content{
     display: flex;
     width: 700px;

@@ -7,6 +7,7 @@ const content = (state = {
         selectorItems: [],
         popularItems: []
     },
+    category : null,
     sports : []
 }, action) => {
 
@@ -22,13 +23,21 @@ const content = (state = {
                 step: state.step - 1
             });
 
+        case 'UPDATE_CONTENT_VALUE':
+            let newState = {};
+            newState[action.key] = action.value;
+            return Object.assign({}, state, newState);
+
+
         case 'OPEN_SELECTOR':
             return Object.assign({}, state, {
                 selectorInfo: {
                     selectorType: action.selectorType,
                     open : true,
                     selectorItems: action.selectorItems,
-                    popularItems: action.popularItems
+                    popularItems: action.popularItems,
+                    activeFilter : action.activeFilter,
+                    multiple : action.multiple
                 }
             });
         case 'CLOSE_SELECTOR':
@@ -52,7 +61,7 @@ const content = (state = {
                 }
             };
 
-            selection[action.selectorType] = [action.selectedItem];
+            selection[action.selectorType] = (action.multiple ) ? [action.selectedItem] : action.selectedItem;
 
             return Object.assign({}, state, selection);
 

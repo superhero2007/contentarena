@@ -172,7 +172,7 @@ class ContentService
         /**
          * Set category
          */
-        if ( isset($data->category) ) {
+        if ( isset($data->sport_category) ) {
             $category = $this->getCategory($data);
             $content->setSportCategory($category);
         }
@@ -207,7 +207,7 @@ class ContentService
             $content->setInstallments($installments);
         }
 
-        if ( isset($data->description) ) $content->setDescription($data->description->value);
+        if ( isset($data->description) ) $content->setDescription($data->description);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
@@ -391,22 +391,22 @@ class ContentService
     }
 
     private function getCategory($data){
-        if ( isset($data->category->external_id) ) {
+        if ( isset($data->sport_category->external_id) ) {
 
             $category = $this->em
                 ->getRepository('AppBundle:SportCategory')
-                ->findOneBy(array('externalId' => $data->category->external_id));
+                ->findOneBy(array('externalId' => $data->sport_category->external_id));
 
-        } else if (isset($data->category->name) ){
+        } else if (isset($data->sport_category->name) ){
             $category = $this->em
                 ->getRepository('AppBundle:SportCategory')
-                ->findOneBy(array('name' => $data->category->name));
+                ->findOneBy(array('name' => $data->sport_category->name));
         }
 
         if (!$category) {
             $category = new SportCategory();
-            if ( isset($data->category->external_id) ) $category->setExternalId($data->category->external_id);
-            $category->setName($data->category->name);
+            if ( isset($data->sport_category->external_id) ) $category->setExternalId($data->sport_category->external_id);
+            $category->setName($data->sport_category->name);
             $this->em->persist($category);
             $this->em->flush();
         }

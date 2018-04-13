@@ -70,27 +70,24 @@ $(function() {
     $("form").not("#myform").submit(function(e){
 
         var result = checkValues();
-
         return result.upper && result.match && result.special && result.digit && result.length;
 
     });
 
     $(document).on("click", ".link-action", function () {
         var url = $(this).attr("href");
-
         window.location.href = url;
     });
 
     $("#search-sport").autocomplete({
         source: ContentArena.Api.getSearchResultInNewListing,
-    })
-      /*  .data('ui-autocomplete')._renderItem = function(ul,item){
+    });
 
-        var name = item.name + " - " + item.type;
-        var appending = "<div class='search-result-category'>"+name+"</div>"
-
-        return $("<li class = 'custom-autocomplete-item'>").append(appending).appendTo(ul);
-    };*/
+    $('.website').mask("A", {
+        translation: {
+            "A": { pattern: /[\w/\-.+]/, recursive: true }
+        }
+    });
 
 });
 
