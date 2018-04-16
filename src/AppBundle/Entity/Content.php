@@ -146,6 +146,20 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(name="custom_tournament", type="string", length=255, nullable=true)
+     */
+    private $custom_tournament;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="custom_sport", type="string", length=255, nullable=true)
+     */
+    private $custom_sport;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="brochure", type="string", length=255, nullable=true)
      */
     private $brochure;
@@ -745,5 +759,42 @@ class Content
     public function setStep($step)
     {
         $this->step = $step;
-    }}
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomTournament()
+    {
+        return $this->custom_tournament;
+    }
+
+    /**
+     * @param string $custom_tournament
+     */
+    public function setCustomTournament($custom_tournament)
+    {
+        $this->custom_tournament = $custom_tournament;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomSport()
+    {
+        return $this->custom_sport;
+    }
+
+    /**
+     * @param string $custom_sport
+     */
+    public function setCustomSport($custom_sport)
+    {
+        $this->custom_sport = $custom_sport;
+    }
+
+
+
+}
+
 

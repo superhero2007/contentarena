@@ -211,6 +211,8 @@ class ContentService
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
+        if ( isset($data->custom_tournament) ) $content->setCustomTournament($data->custom_tournament);
+        if ( isset($data->custom_sport) ) $content->setCustomSport($data->custom_sport);
         if ( isset($data->salesPackages) ) {
 
             $salesPackages = array();

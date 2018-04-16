@@ -20,26 +20,13 @@ class SearchController extends Controller
         $content = "%".$content."%";
 
         //Take Repositories
-        $seasonRepo         = $this->getDoctrine()->getRepository("AppBundle:Season");
-        $sportRepo          = $this->getDoctrine()->getRepository("AppBundle:Sport");
-        $sportCategoryRepo  = $this->getDoctrine()->getRepository("AppBundle:SportCategory");
         $tournamentRepo     = $this->getDoctrine()->getRepository("AppBundle:Tournament");
 
         //Get results
-        $seasons         = $seasonRepo        ->getSearchResultsByName($content);
-        $sports          = $sportRepo         ->getSearchResultsByName($content);
-        $sportCategories = $sportCategoryRepo ->getSearchResultsByName($content);
         $tournaments     = $tournamentRepo    ->getSearchResultsByName($content);
 
 
-        //Create array with parameters
-        $parameters = array(
-            'seasons'         => $seasons,
-            'sports'          => $sports,
-            'sportCategories' => $sportCategories,
-            'tournaments'     => $tournaments,
-        );
 
-        return new JsonResponse($parameters);
+        return new JsonResponse($tournaments);
     }
 }

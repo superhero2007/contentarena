@@ -79,10 +79,6 @@ $(function() {
         window.location.href = url;
     });
 
-    $("#search-sport").autocomplete({
-        source: ContentArena.Api.getSearchResultInNewListing,
-    });
-
     $('.website').mask("A", {
         translation: {
             "A": { pattern: /[\w/\-.+]/, recursive: true }

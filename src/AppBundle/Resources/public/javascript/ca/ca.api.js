@@ -213,45 +213,141 @@ ContentArena.Api= {
         return deferred.promise();
     },
 
-    getSearchResultInNewListing(request, response) {
-        var availableTags = [];
+    getSeasons ( tournamentId ) {
+        var deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: hosturl + "v1/feed/seasons",
+            type: "POST",
+            data : { id : tournamentId },
+            /**
+             * @param {{tournaments:{tournament:Array}}} response
+             */
+            success: function (response) {
+
+                var list;
+
+                if ( response.seasons === undefined || response.seasons.season === undefined ) return false;
+
+                if ( $.isArray(response.seasons.season) ){
+                    list = $.map(response.seasons.season, function (item) {
+                        return {
+                            name: item['@attributes'].name,
+                            external_id: item['@attributes'].id,
+                            end_date: item['@attributes'].end_date,
+                            start_date: item['@attributes'].start_date,
+                            tournament_id: item['@attributes'].tournament_id,
+                            year: item['@attributes'].year,
+                        }
+                    }).reverse();
+                } else {
+                    list = [{
+                        name: response.seasons.season['@attributes'].name,
+                        external_id: response.seasons.season['@attributes'].id,
+                        end_date: response.seasons.season['@attributes'].end_date,
+                        start_date: response.seasons.season['@attributes'].start_date,
+                        tournament_id: response.seasons.season['@attributes'].tournament_id,
+                        year: response.seasons.season['@attributes'].year,
+                    }]
+                }
+
+               /* list.push({
+                    name : "Add new",
+                    external_id : 0
+                });*/
+
+                deferred.resolve(list);
+            },
+            error : function (data, status ) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+        return deferred.promise();
+    },
+
+    getSchedule ( seasonId ) {
+        var deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: hosturl + "v1/feed/schedules",
+            type: "POST",
+            data : { id : seasonId },
+            /**
+             * @param {{tournaments:{tournament:Array}}} response
+             */
+            success: function (response) {
+
+                console.log(response);
+
+                let list = {};
+
+                if ( response.sport_events === undefined || response.sport_events.sport_event === undefined ) return false;
+
+                response.sport_events.sport_event.forEach( (item) => {
+
+                    let round  = (item.tournament_round) ? item.tournament_round['@attributes'] : null;
+
+                    if (!round) return;
+
+                    let name = round.number || round.name;
+
+                    if ( !list[name] ) list[name] = [];
+
+                    list[name].push({
+                        scheduled: item['@attributes'].scheduled,
+                        external_id: item['@attributes'].id,
+                        status: item['@attributes'].status,
+                        tournament_round : round,
+                        competitors : (item.competitors) ? item.competitors.competitor.map(( competitor)=>{ return competitor['@attributes']  })  : null
+                    });
+
+                });
+
+                /*list.push({
+                    name : "Add new",
+                    external_id : 0
+                });*/
+
+                deferred.resolve(list);
+            },
+            error : function (data, status ) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+        return deferred.promise();
+    },
+
+    searchCompetition(request) {
+
+        let deferred = jQuery.Deferred();
+
         $.ajax({
             url: envhosturl + 'search/tournament',
             data: {
-                "content": request.term
+                "content": request
             },
             traditional: true,
             type: "POST",
             dataType: "json",
             success: function (data) {
-
-                data.seasons.map(function (item) {
-                    item.type = "Season";
-                    item.value = item.name;
-                    item.label = item.name + " - " + item.type;
-                });
-
-                data.sports.map(function (item) {
-                    item.type = "Sport";
-                    item.value = item.name;
-                    item.label = item.name + " - " + item.type;
-                });
-
-                data.sportCategories.map(function (item) {
-                    item.type = "Country/Category";
-                    item.value = item.name;
-                    item.label = item.name + " - " + item.type;
-                });
-
-                data.tournaments.map(function (item) {
-                    item.type = "Tournament";
-                    item.value = item.name;
-                    item.label = item.name + " - " + item.type;
-                });
-
-                response(data.seasons.concat(data.sports.concat(data.sportCategories.concat(data.tournaments))));
+                deferred.resolve(data);
             },
+            error : function (data, status ) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
         });
+        return deferred.promise();
     },
 
     watchlist( id ) {
