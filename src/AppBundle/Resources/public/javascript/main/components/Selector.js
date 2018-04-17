@@ -118,7 +118,12 @@ class Selector extends React.Component {
 
     applySelection = () => {
         this.setState({ updated: false, filterUpdated : false });
-        this.props.applySelection(this.props.selectorType, this.state.selectedItem, this.props.multiple, this.props.index);
+        this.props.applySelection(
+            this.props.selectorType,
+            this.state.selectedItem,
+            this.props.multiple,
+            this.props.index,
+            this.props.clean);
     };
 
     addNewSport = () => {
@@ -130,6 +135,12 @@ class Selector extends React.Component {
     addNewTournament = () => {
         this.setState({ updated: false, filterUpdated : false });
         this.props.addNewTournament();
+        this.props.closeSelector();
+    };
+
+    addNewSeason = () => {
+        this.setState({ updated: false, filterUpdated : false });
+        this.props.addNewSeason();
         this.props.closeSelector();
     };
 
@@ -156,7 +167,6 @@ class Selector extends React.Component {
         if (this.state.disabled.length === 0) return false;
         return this.state.disabled.indexOf(item.externalId) !== -1;
     };
-
 
     filterLetter = (item) =>{
         let filter = this.getActiveFilter();
@@ -225,6 +235,7 @@ class Selector extends React.Component {
                     <div>Can't find your sport in the list? </div>
                     {this.props.showNewSport && <button onClick={this.addNewSport} >Add new Sport</button>}
                     {this.props.showNewTournament && <button onClick={this.addNewTournament} >Add new Tournament</button>}
+                    {this.props.showNewSeason && <button onClick={this.addNewSeason} >Add new Season</button>}
                 </div>
             </Modal>
         );
@@ -243,12 +254,13 @@ const mapDispatchToProps = dispatch => {
         closeSelector : () => dispatch({
             type : 'CLOSE_SELECTOR'
         }),
-        applySelection : (selectorType, selectedItem, multiple, index) => dispatch({
+        applySelection : (selectorType, selectedItem, multiple, index, clean) => dispatch({
             type : 'APPLY_SELECTION',
             selectorType : selectorType,
             selectedItem : selectedItem,
             multiple : multiple,
-            index : index
+            index : index,
+            clean : clean
         }),
         addNewSport : () => dispatch({
             type : 'ADD_NEW_SPORT',
@@ -256,6 +268,9 @@ const mapDispatchToProps = dispatch => {
         addNewTournament : () => dispatch({
             type : 'ADD_NEW_TOURNAMENT',
         }),
+        addNewSeason : () => dispatch({
+            type: 'ADD_NEW_SEASON'
+        })
     }
 };
 

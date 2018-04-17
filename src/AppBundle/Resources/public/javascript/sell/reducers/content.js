@@ -52,10 +52,20 @@ const content = (state = {
                 tournament : null
             }) });
 
+        case 'ADD_NEW_SEASON':
+            return Object.assign({}, state, {listingInfo: Object.assign({}, state.listingInfo,{
+                newSeason: true
+            }) });
+
         case 'REMOVE_NEW_TOURNAMENT':
             return Object.assign({}, state, {listingInfo: Object.assign({}, state.listingInfo,{
                 newTournament: false, customTournament: null
             }) });
+
+        case "REMOVE_NEW_SEASON":
+            return Object.assign({}, state, {listingInfo: Object.assign({}, state.listingInfo,{
+                    newSeason: false, customSeason: null
+                }) });
 
         case 'UPDATE_CONTENT_VALUE':
             listingInfo = {};
@@ -87,7 +97,9 @@ const content = (state = {
                     showNewSport : action.showNewSport,
                     index : action.index,
                     showNewTournament : action.showNewTournament,
-                    selected : state.listingInfo[action.selectorType]
+                    showNewSeason : action.showNewSeason,
+                    selected : state.listingInfo[action.selectorType],
+                    clean : action.clean
                 }
             });
 
@@ -113,6 +125,11 @@ const content = (state = {
                 listingInfo[action.selectorType] = action.selectedItem;
             }
 
+            if ( action.clean ){
+                action.clean.forEach((selectorType)=>{
+                    listingInfo[selectorType] = $.isArray(state.listingInfo[selectorType]) ? [] : null;
+                });
+            }
 
             return Object.assign({}, state, {
                 listingInfo: Object.assign({}, state.listingInfo, listingInfo),

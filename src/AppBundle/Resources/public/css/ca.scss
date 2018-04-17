@@ -19,10 +19,17 @@ body {
 }
 
 .sell-form-container {
-  .buttons-container{
-    margin: 20px;
-    display: inline-flex;
+  .buttons{
+    .buttons-container{
+      margin: 20px;
+      display: inline-flex;
+      .step{
+        
+      }
+
+    }
   }
+
   .step-content{
     color: #1a1a1a;
     padding: 20px;

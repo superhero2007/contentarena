@@ -1,6 +1,6 @@
 import React from 'react';
 import PackageSelector from "../containers/PackageSelector";
-import SellButtons from "../containers/buttons";
+import SellButtons from "../containers/SellButtons";
 import SellFormSteps from "../containers/SellFormSteps";
 import SellFormStep1 from "../containers/SellFormStep1";
 import Selector from "../../main/components/Selector";
