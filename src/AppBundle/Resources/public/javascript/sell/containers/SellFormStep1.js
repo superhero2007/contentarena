@@ -61,32 +61,51 @@ const Schedules = ({schedules}) => (
 );
 
 class Round extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             round : props.round,
             schedule : props.schedule,
-            selected : false
+            selected : false,
+            matches : false
         };
+
+        this.child = [];
     }
 
-    toggle = () => {
-        this.setState((prevState, props) => ({
+    toggle = (e) => {
+        e.stopPropagation();
+        this.setState((prevState) => ({
             selected: !prevState.selected
+        }));
+
+        this.child.forEach( (item) => item.update( !this.state.selected) );
+    };
+
+    toggleMatches = () => {
+        this.setState((prevState) => ({
+            matches: !prevState.matches
         }));
     };
 
     render(){
-
         return (
             <div>
-                <div onClick={this.toggle}>
-                    Round {this.state.round}
-                    {this.state.selected && <span>Unselect</span>}
-                    </div>
-                {this.state.selected && <div>
+                <div className={"matchday " + ( (this.state.selected) ? "selected" : "" )} onClick={this.toggleMatches}>
+                    Matchday {this.state.round}
+                    {!this.state.selected && <span onClick={this.toggle}>Select matchday</span>}
+                    {this.state.selected && <span onClick={this.toggle}>Unselect</span>}
+                </div>
+                {this.state.matches && <div>
                     {this.state.schedule.length > 0 && this.state.schedule.map((item, i) => {
-                        return <Match match={item} key={i}/>
+                        return <Match match={item} key={i} selected={this.state.selected} onRef={ref => {
+                            if ( ref ) {
+                                this.child.push(ref)
+                            } else {
+                                this.child = [];
+                            }
+                        }}/>
                     })}
                 </div>}
             </div>
@@ -99,24 +118,35 @@ class Match extends React.Component {
         super(props);
         this.state = {
             match : props.match,
-            selected : false
+            selected : props.selected || false
         };
+    }
+    componentDidMount() {
+        this.props.onRef(this)
+    }
+    componentWillUnmount() {
+        this.props.onRef(undefined)
     }
 
     toggle = () => {
-        this.setState((prevState, props) => ({
+        this.setState((prevState) => ({
             selected: !prevState.selected
         }));
+    };
+
+    update = (selected) => {
+        this.setState({selected: selected});
     };
 
     render(){
         const competitorsLen = this.props.match.competitors.length;
         return (
-            <div onClick={this.toggle}>
+            <div className={"match " + ( (this.state.selected) ? "selected" : "" )} onClick={this.toggle}>
                 {this.props.match.competitors.map(( competitor, i)=>{
                     return <span key={i}>{competitor.name} {(competitorsLen !== i + 1) && " vs " }</span>
                 })}
-                {this.state.selected && <span>Unselect</span>}
+                {this.state.selected && <span className={"select"}>Unselect</span>}
+                {!this.state.selected && <span className={"select"}>Select match</span>}
             </div>
         )
     }
@@ -131,7 +161,7 @@ class SeasonSelector extends React.Component {
     }
 
     toggle = () => {
-        this.setState((prevState, props) => ({
+        this.setState((prevState) => ({
             showSchedule: !prevState.showSchedule
         }));
     };
@@ -146,22 +176,52 @@ class SeasonSelector extends React.Component {
                            disabled={this.props.loading}
                            onClick={this.props.openSelector}
                            placeholder={"Season"}  />
-                    { this.props.loading && <i className="fa fa-cog fa-spin"></i>}
+                    { this.props.loading && <i className="fa fa-cog fa-spin"/>}
                 </div>
                 {this.props.schedules && <div>
-                    <div onClick={this.toggle}>Show schedule</div>
+                    <button onClick={this.toggle}>Event list</button>
                 </div>}
                 {this.state.showSchedule && <div>
                     <Schedules schedules={this.props.schedules}/>
                 </div>}
                 {this.props.showAddNew && <div>
-                    <div onClick={this.props.addSeason}>Add new season</div>
+                    <button onClick={this.props.addSeason}>Add new season</button>
                 </div>}
             </div>
         )
     }
 }
 
+class SportSelector extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    toggle = () => {
+        this.setState((prevState) => ({
+            showSchedule: !prevState.showSchedule
+        }));
+    };
+
+    render(){
+        return (
+            <div>
+                <input type="text"
+                       {...this.props.inputProps}
+                       readOnly={true}
+                       onClick={this.props.onClick}
+                       placeholder={"Sport"}  />
+                {this.props.showClose && <i onClick={this.props.remove} className="fa fa-close"/>}
+                {this.props.showAddNew && <div>
+                    <button onClick={this.props.addNewSport}>Add new sport</button>
+                </div>}
+
+            </div>
+        )
+    }
+}
 
 class SellFormStep1 extends React.Component {
 
@@ -176,6 +236,7 @@ class SellFormStep1 extends React.Component {
             loadingTournaments : false,
             loadingSeasons: false,
             seasonSelectors : [1],
+            sportSelectors : [1],
             seasons: [],
             schedules: {},
             showSearch : true
@@ -190,7 +251,7 @@ class SellFormStep1 extends React.Component {
 
     loadCategories (nextProps) {
 
-        let sportId = nextProps.listingInfo.sports[0].external_id;
+        let sportId = nextProps.listingInfo.sports[0].externalId;
 
         if ( sportId === this.state.lastSportId ) return;
 
@@ -203,8 +264,8 @@ class SellFormStep1 extends React.Component {
 
     loadTournaments (nextProps) {
 
-        let sportId = nextProps.listingInfo.sports[0].external_id;
-        let categoryId = ( nextProps.listingInfo.sport_category ) ? nextProps.listingInfo.sport_category.external_id : null;
+        let sportId = nextProps.listingInfo.sports[0].externalId;
+        let categoryId = ( nextProps.listingInfo.sportCategory ) ? nextProps.listingInfo.sportCategory.externalId : null;
 
         if ( sportId === this.state.lastSportId && categoryId === this.state.lastCategoryId ) return;
 
@@ -221,7 +282,7 @@ class SellFormStep1 extends React.Component {
 
     loadSeasons (nextProps) {
 
-        let tournamentId = ( nextProps.listingInfo.tournament ) ? nextProps.listingInfo.tournament.external_id : null;
+        let tournamentId = ( nextProps.listingInfo.tournament ) ? nextProps.listingInfo.tournament.externalId : null;
 
         if ( tournamentId === this.state.lastTournamentId ) return;
 
@@ -241,14 +302,14 @@ class SellFormStep1 extends React.Component {
         let _this = this;
 
         nextProps.listingInfo.seasons.forEach(( season ) =>{
-            if ( !_this.state.schedules[season.external_id] ){
+            if ( !_this.state.schedules[season.externalId] ){
                 _this.setState({ loadingSchedule : true });
-                ContentArena.Api.getSchedule(season.external_id).done( (schedules ) => {
+                ContentArena.Api.getSchedule(season.externalId).done( (schedules ) => {
                     /*ContentArena.Data.Seasons = seasons;*/
                     console.log(schedules);
                     _this.setState(function(prevState, props) {
                         let prevSchedules = prevState.schedules;
-                        prevSchedules[season.external_id] = schedules;
+                        prevSchedules[season.externalId] = schedules;
                         return {
                             loadingSchedule : false,
                             schedules: prevSchedules
@@ -261,14 +322,20 @@ class SellFormStep1 extends React.Component {
 
     getSchedules(index){
 
-        if (!this.props.listingInfo.seasons || !this.props.listingInfo.seasons[index] ) return [];
+        if (!this.props.listingInfo.seasons || !this.props.listingInfo.seasons[index] ) return false;
 
-        return this.state.schedules[this.props.listingInfo.seasons[index].external_id];
+        return this.state.schedules[this.props.listingInfo.seasons[index].externalId];
     }
 
     componentWillReceiveProps(nextProps){
-        if ( nextProps.listingInfo.sports.length > 0 ) this.loadCategories(nextProps);
-        if ( nextProps.listingInfo.sports.length > 0 || nextProps.listingInfo.category ) this.loadTournaments(nextProps);
+        if ( nextProps.listingInfo.sports.length === 1 ){
+            this.loadCategories(nextProps);
+            this.setState((prevState) => ({
+                showSearch: false
+            }));
+        }
+
+        if ( nextProps.listingInfo.sports.length === 1 || nextProps.listingInfo.category ) this.loadTournaments(nextProps);
         if ( nextProps.listingInfo.tournament ){
             this.loadSeasons(nextProps);
         }
@@ -281,17 +348,34 @@ class SellFormStep1 extends React.Component {
 
     hasCustomTournament = () => {
         return this.props.listingInfo.newSport || this.props.listingInfo.newTournament
-            || this.props.listingInfo.custom_tournament;
+            || this.props.listingInfo.customTournament;
     };
 
-    addNewSeason = () => {
-        this.setState((prevState, props)=> ({
+    addSeason = () => {
+        this.setState((prevState)=> ({
             seasonSelectors : [...prevState.seasonSelectors, 1]
         }))
     };
 
+    addSport = () => {
+        this.setState((prevState)=> ({
+            sportSelectors : [...prevState.sportSelectors, 1]
+        }))
+    };
+
+    removeSport = (i) => {
+        this.setState((prevState)=> {
+            prevState.sportSelectors.splice(i,1);
+            return {
+                sportSelectors : prevState.sportSelectors
+            }
+        });
+
+        this.props.removeFromMultiple(i, "sports");
+    };
+
     toggleSearch = () => {
-        this.setState((prevState, props) => ({
+        this.setState((prevState) => ({
             showSearch: !prevState.showSearch
         }));
     };
@@ -302,19 +386,20 @@ class SellFormStep1 extends React.Component {
     };
 
     render() {
-        let _this = this;
-
         if ( this.props.listingInfo.step !== 1) return (null);
 
         const inputProps = {
-            sports: { value : "" },
-            sport_category : { value : "" },
+            sports: [{ value : "" }],
+            sportCategory : { value : "" },
             tournament : { value : "" },
             seasons : [{ value : ""}]
         };
 
         if ( this.props.listingInfo.sports.length > 0 ) {
-            inputProps.sports.value = this.props.listingInfo.sports[0].name;
+            inputProps.sports = [];
+            this.props.listingInfo.sports.forEach(( sport )=>{
+                inputProps.sports.push({value: sport.name})
+            });
         }
         if ( this.props.listingInfo.seasons.length > 0 ) {
             inputProps.seasons = [];
@@ -322,7 +407,7 @@ class SellFormStep1 extends React.Component {
                 inputProps.seasons.push({value: season.name})
             });
         }
-        if ( this.props.listingInfo.sport_category ) inputProps.sport_category.value = this.props.listingInfo.sport_category.name;
+        if ( this.props.listingInfo.sportCategory ) inputProps.sportCategory.value = this.props.listingInfo.sportCategory.name;
         if ( this.props.listingInfo.tournament ) inputProps.tournament.value = this.props.listingInfo.tournament.name;
 
         return (
@@ -336,46 +421,63 @@ class SellFormStep1 extends React.Component {
                     <div className="step-item-description">
                         Please select the sport(s) and competition(s) covered by your content listing:
                     </div>
+
+                    {!this.props.listingInfo.newSport &&
+                        this.state.sportSelectors.map((item, i)=>{
+                            return <SportSelector key={i}
+                                                  remove={() => this.removeSport(i) }
+                                                  showAddNew={this.state.sportSelectors.length > 1 && this.state.sportSelectors.length === i + 1}
+                                                  showClose={i > 0}
+                                                  addNewSport={this.addSport}
+                                                  onClick={() => { this.props.openSportSelector(i) } }
+                                                  inputProps={inputProps.sports[i]}  />
+                        })
+                    }
+
                     <div>
-                        {!this.props.listingInfo.newSport && <input type="text"
-                               {...inputProps.sports}
-                               readOnly={true}
-                               onClick={this.props.openSportSelector}
-                               placeholder={"Sport"}  />}
-                        {this.props.listingInfo.newSport && <NewSport onClick={this.props.removeNewSport } />}
+                        {this.props.listingInfo.newSport &&
+                            <NewSport onClick={this.props.removeNewSport } />}
                     </div>
-                    <div>
+                    { this.state.sportSelectors.length === 1 && <div>
+                        Your content covers multiple sports? <button onClick={this.addSport}>Please click here</button>
+                    </div>}
+
+
+                    {this.state.sportSelectors.length === 1 && <div>
                         {!this.props.listingInfo.newSport && <input type="text"
-                               {...inputProps.sport_category}
+                               {...inputProps.sportCategory}
                                readOnly={true}
                                disabled={this.state.loadingCategories}
                                onClick={this.props.openCategorySelector}
                                placeholder={"Country/Category"}  />}
                         {this.props.listingInfo.newSport && <NewCategory />}
-                        { this.state.loadingCategories && <i className="fa fa-cog fa-spin"></i>}
-                    </div>
-                    <div>
+                        { this.state.loadingCategories && <i className="fa fa-cog fa-spin"/>}
+                    </div>}
+                    {this.state.sportSelectors.length === 1 && <div>
                         {!this.hasCustomTournament() && <input type="text"
                                {...inputProps.tournament}
                                readOnly={true}
                                disabled={this.state.loadingTournaments}
-                               onClick={this.props.openTournamentSelector}
+                               onClick={() => {
+                                   this.props.removeNewTournament();
+                                   this.props.openTournamentSelector();
+                               }}
                                placeholder={"Tournament"}  />}
                         { ( this.hasCustomTournament() )
-                        && <NewTournament showClose={this.props.listingInfo.newTournament || this.props.listingInfo.custom_tournament}
-                                          value={this.props.listingInfo.custom_tournament}
-                                          onBlur={ (e) => this.updateContentValue(e, "custom_tournament")}
+                        && <NewTournament showClose={this.props.listingInfo.newTournament || this.props.listingInfo.customTournament}
+                                          value={this.props.listingInfo.customTournament}
+                                          onBlur={ (e) => this.updateContentValue(e, "customTournament")}
                                           onClick={this.props.removeNewTournament} />}
 
-                        { this.state.loadingTournaments && <i className="fa fa-cog fa-spin"></i>}
-                    </div>
+                        { this.state.loadingTournaments && <i className="fa fa-cog fa-spin"/>}
+                    </div>}
 
                     {  this.state.seasons.length > 0 && this.state.seasonSelectors.length >0 &&
                     this.state.seasonSelectors.map( (season, i) => {
                         return <SeasonSelector
                             key={i}
                             season={season}
-                            addSeason={this.addNewSeason}
+                            addSeason={this.addSeason}
                             inputProps={inputProps.seasons[i]}
                             schedules={this.getSchedules(i)}
                             loading={this.state.loadingSeasons}
@@ -400,7 +502,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        openSportSelector : () => dispatch({
+        openSportSelector : (index) => dispatch({
             type : 'OPEN_SELECTOR',
             selectorItems : ContentArena.Data.FullSports,
             popularItems : ContentArena.Data.TopSports,
@@ -408,12 +510,12 @@ const mapDispatchToProps = dispatch => {
             activeFilter : "popular",
             multiple : true,
             showNewSport : true,
-            index : 0
+            index : index
         }),
         openCategorySelector : () => dispatch({
             type: 'OPEN_SELECTOR',
             selectorItems: ContentArena.Data.Categories,
-            selectorType: "sport_category",
+            selectorType: "sportCategory",
             activeFilter : "ag"
         }),
         openTournamentSelector : () => dispatch({
@@ -428,6 +530,11 @@ const mapDispatchToProps = dispatch => {
             selectorItems: ContentArena.Data.Seasons,
             selectorType: "seasons",
             multiple: true,
+            index: index
+        }),
+        removeFromMultiple : (index, selectorType) => dispatch({
+            type: 'REMOVE_FROM_MULTIPLE',
+            selectorType: selectorType,
             index: index
         }),
         updateContentValue : (key, value) => dispatch({

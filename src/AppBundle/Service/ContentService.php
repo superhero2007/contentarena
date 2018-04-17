@@ -172,7 +172,7 @@ class ContentService
         /**
          * Set category
          */
-        if ( isset($data->sport_category) ) {
+        if ( isset($data->sportCategory) ) {
             $category = $this->getCategory($data);
             $content->setSportCategory($category);
         }
@@ -185,7 +185,7 @@ class ContentService
             $seasons = array();
 
             foreach ($data->seasons as $season){
-                $season = $this->getSeason($season);
+                $season = $this->getSeason($season, $tournament);
                 $seasons[] = $season;
             }
 
@@ -211,8 +211,7 @@ class ContentService
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
-        if ( isset($data->custom_tournament) ) $content->setCustomTournament($data->custom_tournament);
-        if ( isset($data->custom_sport) ) $content->setCustomSport($data->custom_sport);
+        if ( isset($data->customSport) ) $content->setCustomSport($data->customSport);
         if ( isset($data->salesPackages) ) {
 
             $salesPackages = array();
@@ -259,10 +258,10 @@ class ContentService
 
         }
         if ( isset($data->rights) ) $content->setSelectedRights( $this->getSelectedRights($data->rights) );
-        if ( isset($data->rights_package) ){
+        if ( isset($data->rightsPackage) ){
 
             $packages = array();
-            foreach ( $data->rights_package as $package ){
+            foreach ( $data->rightsPackage as $package ){
                 $packages[$package->id] = $this->em->getReference('AppBundle:RightsPackage', $package->id );
             }
             $content->setRightsPackage($packages);
@@ -271,6 +270,8 @@ class ContentService
         if ( isset($data->availability) ){
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
         }
+
+        $content->setCustomTournament($data->customTournament || null);
 
         return $content;
     }
@@ -345,11 +346,11 @@ class ContentService
         return $content;
     }
 
-    private function getSeason($seasonData){
-        if ( isset($seasonData->external_id) ) {
+    private function getSeason($seasonData, $tournament){
+        if ( isset($seasonData->externalId) ) {
             $season = $this->em
                 ->getRepository('AppBundle:Season')
-                ->findOneBy(array('externalId' => $seasonData->external_id));
+                ->findOneBy(array('externalId' => $seasonData->externalId));
 
         } else if ( isset($seasonData->name)  ){
             $season = $this->em
@@ -359,7 +360,15 @@ class ContentService
 
         if (!$season) {
             $season = new Season();
-            if ( isset($seasonData->external_id) ) $season->setExternalId($seasonData->external_id);
+
+            if ( isset( $tournament) ) {
+                $season->setTournament($tournament);
+            }
+
+            if ( isset($seasonData->externalId) ) $season->setExternalId($seasonData->externalId);
+            if ( isset($seasonData->endDate) ) $season->setEndDate(new \DateTime($seasonData->endDate));
+            if ( isset($seasonData->startDate) ) $season->setStartDate(new \DateTime($seasonData->startDate));
+            if ( isset($seasonData->year) ) $season->setYear($seasonData->year);
             $season->setName($seasonData->name);
             $this->em->persist($season);
             $this->em->flush();
@@ -369,11 +378,11 @@ class ContentService
     }
 
     private function getTournament($data){
-        if ( isset($data->tournament->external_id) ) {
+        if ( isset($data->tournament->externalId) ) {
 
             $tournament = $this->em
                 ->getRepository('AppBundle:Tournament')
-                ->findOneBy(array('externalId' => $data->tournament->external_id));
+                ->findOneBy(array('externalId' => $data->tournament->externalId));
 
         } else if (isset($data->tournament->name) ){
             $tournament = $this->em
@@ -383,7 +392,7 @@ class ContentService
 
         if (!$tournament) {
             $tournament = new Tournament();
-            if ( isset($data->tournament->external_id) ) $tournament->setExternalId($data->tournament->external_id);
+            if ( isset($data->tournament->externalId) ) $tournament->setExternalId($data->tournament->externalId);
             $tournament->setName($data->tournament->name);
             $this->em->persist($tournament);
             $this->em->flush();
@@ -393,22 +402,22 @@ class ContentService
     }
 
     private function getCategory($data){
-        if ( isset($data->sport_category->external_id) ) {
+        if ( isset($data->sportCategory->externalId) ) {
 
             $category = $this->em
                 ->getRepository('AppBundle:SportCategory')
-                ->findOneBy(array('externalId' => $data->sport_category->external_id));
+                ->findOneBy(array('externalId' => $data->sportCategory->externalId));
 
-        } else if (isset($data->sport_category->name) ){
+        } else if (isset($data->sportCategory->name) ){
             $category = $this->em
                 ->getRepository('AppBundle:SportCategory')
-                ->findOneBy(array('name' => $data->sport_category->name));
+                ->findOneBy(array('name' => $data->sportCategory->name));
         }
 
         if (!$category) {
             $category = new SportCategory();
-            if ( isset($data->sport_category->external_id) ) $category->setExternalId($data->sport_category->external_id);
-            $category->setName($data->sport_category->name);
+            if ( isset($data->sportCategory->externalId) ) $category->setExternalId($data->sportCategory->externalId);
+            $category->setName($data->sportCategory->name);
             $this->em->persist($category);
             $this->em->flush();
         }
@@ -434,7 +443,7 @@ class ContentService
 
         $country =  $this->em
             ->getRepository('AppBundle:Country')
-            ->findOneBy(array('country_code' => $country));
+            ->findOneBy(array('countryCode' => $country));
 
         return $country;
     }
@@ -468,15 +477,15 @@ class ContentService
 
         if ( is_array($sportData) ) $sportData = (object) $sportData;
 
-        if( isset ($sportData->external_id ) ){
+        if( isset ($sportData->externalId ) ){
             $sport = $this->em
                 ->getRepository('AppBundle:Sport')
-                ->findOneBy(array( 'externalId'=> $sportData->external_id));
+                ->findOneBy(array( 'externalId'=> $sportData->externalId));
         }
-        else if( isset ($sportData->external_id ) ){
+        else if( isset ($sportData->externalId ) ){
             $sport = $this->em
                 ->getRepository('AppBundle:Sport')
-                ->findOneBy(array( 'externalId'=> $sportData->external_id));
+                ->findOneBy(array( 'externalId'=> $sportData->externalId));
         }
         else if( isset ($sportData->name ) ){
             $sport = $this->em
@@ -486,7 +495,7 @@ class ContentService
 
         if ( !$sport ){
             $sport = new Sport();
-            if( isset ($sportData->external_id ) ) $sport->setExternalId($sportData->external_id);
+            if( isset ($sportData->externalId ) ) $sport->setExternalId($sportData->externalId);
             $sport->setName($sportData->name);
             $this->em->persist($sport);
             $this->em->flush();
@@ -516,8 +525,8 @@ class ContentService
             $installment = new Installments();
             $installment->setPercentage($installmentData->percent);
             $installment->setDueDate($installmentData->date?date_create_from_format('d/m/Y', $installmentData->date):null);
-            $installment->setSigningDays($installmentData->signing_day?$installmentData->signing_day:null);
-            $installment->setGrantedDays($installmentData->granted_day?$installmentData->granted_day:null);
+            $installment->setSigningDays($installmentData->signingDay?$installmentData->signingDay:null);
+            $installment->setGrantedDays($installmentData->grantedDay?$installmentData->grantedDay:null);
             $this->em->persist($installment);
             $this->em->flush();
         }else{

@@ -36,6 +36,32 @@ body {
       .step-item-description{
         font-size: $font-size-medium-small;
       }
+      .schedule{
+        font-size: 14px;
+        .matchday{
+          padding: 5px;
+          border: 1px solid black;
+          width: 50%;
+          span {
+            display: block;
+            float: right;
+          }
+        }
+        .match{
+          padding: 5px;
+          border: 1px solid black;
+          margin-left: 30px;
+          width: 50%;
+          .select {
+            display: block;
+            float: right;
+          }
+        }
+        .selected{
+          background-color: $blue-color;
+          color: white;
+        }
+      }
     }
 
   }
@@ -109,6 +135,10 @@ body {
     }
     .selector-item-selected{
       background-color: $blue-color;
+      color: white;
+    }
+    .selector-item-disabled{
+      background-color: #888;
       color: white;
     }
   }

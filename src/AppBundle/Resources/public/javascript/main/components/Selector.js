@@ -16,8 +16,8 @@ const customStyles = {
 
 Modal.setAppElement('#sell-form-container');
 
-const SelectorItem = ({label, selected, onClick}) => (
-    <div className={"selector-item " + (selected && "selector-item-selected")} onClick={onClick}>
+const SelectorItem = ({label, selected, onClick, disabled}) => (
+    <div className={"selector-item " + ((selected) ?"selector-item-selected ": "") + (disabled && "selector-item-disabled") } onClick={!disabled && onClick}>
         {label}
     </div>
 );
@@ -39,10 +39,12 @@ class Selector extends React.Component {
                 "hn" : { type: "firstLetter", values: ["h",'i','j','k','l','k','n'] },
                 "ot" : { type: "firstLetter", values: ["o",'p','q','r','s','t'] },
                 "uz" : { type: "firstLetter", values: ["u",'v','w','x','y','z'] },
-                "popular" : { type: "origin", value: "popularItems"}
+                "popular" : { type: "origin", value: "popularItems"},
+                "international" : { type: "international", value: "international"},
             },
             activeFilter : props.activeFilter || "ag",
-            selectedItem : {}
+            selectedItem : {},
+            disabled : []
         };
 
         store.subscribe((a) => {
@@ -51,6 +53,24 @@ class Selector extends React.Component {
 
     componentDidMount = () =>{
     };
+
+    componentWillReceiveProps(nextProps){
+
+        let disabled;
+
+        if ( nextProps.multiple && nextProps.index > 0 ){
+
+            disabled = nextProps.selected.filter((item,i)=>{
+                return i !== nextProps.index
+            }).map((item)=>{
+                return item.externalId
+            });
+
+            this.setState({ disabled : disabled});
+        } else {
+            this.setState({ disabled : []});
+        }
+    }
 
     openModal = () => {
         this.props.openSelector();
@@ -77,6 +97,19 @@ class Selector extends React.Component {
 
     shouldShowFilters = () =>{
         return this.props.selectorItems && this.props.selectorItems.length > 30
+    };
+
+    shouldShowInternationalFilter = () => {
+
+        let show = false;
+
+        this.props.selectorItems.some( ( item) => {
+            show = item.name.match(/international/gi) !== null;
+            return show;
+        });
+
+        return show;
+
     };
 
     setActiveFilter = ( filterName ) =>{
@@ -107,30 +140,44 @@ class Selector extends React.Component {
     isItemSelected = ( item ) => {
 
         if ( this.state.updated ){
-            return this.state.selectedItem.external_id === item.external_id;
+            return this.state.selectedItem.externalId === item.externalId;
         } else {
 
             if (!this.props.selected) return false;
 
             return this.props.selected.length > 0 &&
-                (this.props.multiple && this.props.selected[this.props.index]) ? this.props.selected[this.props.index].external_id === item.external_id
-                : this.props.selected.external_id === item.external_id;
+                (this.props.multiple && this.props.selected[this.props.index]) ? this.props.selected[this.props.index].externalId === item.externalId
+                : this.props.selected.externalId === item.externalId;
         }
     };
 
-    filter = (item) =>{
+    isItemDisabled = ( item ) => {
+
+        if (this.state.disabled.length === 0) return false;
+        return this.state.disabled.indexOf(item.externalId) !== -1;
+    };
+
+
+    filterLetter = (item) =>{
         let filter = this.getActiveFilter();
         return filter.values.indexOf(item.name[0].toLowerCase()) !== -1
+    };
+
+    filterInternational = (item) =>{
+        return item.name.match(/international/gi) !== null
     };
 
     getItems = () =>{
         let filter = this.getActiveFilter();
         if ( filter.type === "origin" ) return this.props[filter.value];
+
+        if ( filter.type === "international" ) return this.props.selectorItems.filter(this.filterInternational);
+
         if ( filter.type === "firstLetter") {
 
             if ( !this.shouldShowFilters() ) return this.props.selectorItems;
 
-            return this.props.selectorItems.filter(this.filter);
+            return this.props.selectorItems.filter(this.filterLetter);
         }
     };
 
@@ -158,13 +205,18 @@ class Selector extends React.Component {
                                                           onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>}
                     { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "uz" && "selector-filter-active")}
                                                           onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>}
+                    {  this.shouldShowInternationalFilter() &&
+                    <button className={"selector-filter " + (this.getActiveFilterName() === "international" && "selector-filter-active")}
+                            onClick={()=>{ this.setActiveFilter("international")}}>International</button>}
                 </div>
                 <div className="selector-content">
                     { this.getItems().map(function(item, i){
                         return <SelectorItem key={i}
                                              label={item.name}
                                              onClick={ () => _this.selectItem(item)}
-                                             selected={ _this.isItemSelected(item) }/>;
+                                             selected={ _this.isItemSelected(item) }
+                                             disabled={ _this.isItemDisabled(item) }
+                        />;
                     })}
                 </div>
                 <div>

@@ -1,7 +1,7 @@
 const content = (state = {
     listingInfo : {
         step: 1,
-        rights_package : [],
+        rightsPackage : [],
         category : null,
         sports : [],
         seasons: []
@@ -54,7 +54,7 @@ const content = (state = {
 
         case 'REMOVE_NEW_TOURNAMENT':
             return Object.assign({}, state, {listingInfo: Object.assign({}, state.listingInfo,{
-                newTournament: false, custom_tournament: null
+                newTournament: false, customTournament: null
             }) });
 
         case 'UPDATE_CONTENT_VALUE':
@@ -69,7 +69,7 @@ const content = (state = {
             listingInfo = {};
             listingInfo.tournament = action.tournament;
             listingInfo.sports = (action.tournament.sport ) ? [action.tournament.sport] : [];
-            listingInfo.sport_category = action.tournament.sportCategory;
+            listingInfo.sportCategory = action.tournament.sportCategory;
 
             return Object.assign({}, state, {
                 listingInfo: Object.assign({}, state.listingInfo, listingInfo)
@@ -90,6 +90,7 @@ const content = (state = {
                     selected : state.listingInfo[action.selectorType]
                 }
             });
+
         case 'CLOSE_SELECTOR':
             return Object.assign({}, state, {
                 selectorInfo: {
@@ -106,7 +107,8 @@ const content = (state = {
             listingInfo[action.selectorType] = (action.multiple ) ? [action.selectedItem] : action.selectedItem;
 
             if ( action.multiple ){
-                listingInfo[action.selectorType] = [...state.listingInfo[action.selectorType], action.selectedItem];
+                listingInfo[action.selectorType] = [...state.listingInfo[action.selectorType]];
+                listingInfo[action.selectorType][action.index] = action.selectedItem;
             } else {
                 listingInfo[action.selectorType] = action.selectedItem;
             }
@@ -122,18 +124,27 @@ const content = (state = {
                 }
             });
 
+        case 'REMOVE_FROM_MULTIPLE':
+
+            listingInfo = {};
+            listingInfo[action.selectorType] = [...state.listingInfo[action.selectorType]];
+            listingInfo[action.selectorType].splice(action.index,1);
+            return Object.assign({}, state, {
+                listingInfo: Object.assign({}, state.listingInfo, listingInfo)
+            });
+
         case 'SUPER_RIGHTS_UPDATED':
 
 
-            let rights_package = state.listingInfo.rights_package;
-            let index = ContentArena.Utils.getIndex(action.rights_package.id, rights_package, "id");
+            let rightsPackage = state.listingInfo.rightsPackage;
+            let index = ContentArena.Utils.getIndex(action.rightsPackage.id, rightsPackage, "id");
             if (  index === -1 ){
-                rights_package.push(action.rights_package)
+                rightsPackage.push(action.rightsPackage)
             } else {
-                rights_package.splice(index, 1)
+                rightsPackage.splice(index, 1)
             }
 
-            listingInfo.rights_package = rights_package;
+            listingInfo.rightsPackage = rightsPackage;
 
             return Object.assign({}, state, {
                 listingInfo : Object.assign({}, state.listingInfo, listingInfo)

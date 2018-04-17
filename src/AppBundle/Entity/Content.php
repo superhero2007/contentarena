@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * Content
@@ -34,6 +35,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="eventType", type="string", length=255)
+     * @SerializedName("eventType");
      */
     private $eventType;
 
@@ -148,14 +150,14 @@ class Content
      *
      * @ORM\Column(name="custom_tournament", type="string", length=255, nullable=true)
      */
-    private $custom_tournament;
+    private $customTournament;
 
     /**
      * @var string
      *
      * @ORM\Column(name="custom_sport", type="string", length=255, nullable=true)
      */
-    private $custom_sport;
+    private $customSport;
 
     /**
      * @var string
@@ -766,15 +768,15 @@ class Content
      */
     public function getCustomTournament()
     {
-        return $this->custom_tournament;
+        return $this->customTournament;
     }
 
     /**
-     * @param string $custom_tournament
+     * @param string $customTournament
      */
-    public function setCustomTournament($custom_tournament)
+    public function setCustomTournament($customTournament)
     {
-        $this->custom_tournament = $custom_tournament;
+        $this->customTournament = $customTournament;
     }
 
     /**
@@ -782,16 +784,17 @@ class Content
      */
     public function getCustomSport()
     {
-        return $this->custom_sport;
+        return $this->customSport;
     }
 
     /**
-     * @param string $custom_sport
+     * @param string $customSport
      */
-    public function setCustomSport($custom_sport)
+    public function setCustomSport($customSport)
     {
-        $this->custom_sport = $custom_sport;
+        $this->customSport = $customSport;
     }
+
 
 
 

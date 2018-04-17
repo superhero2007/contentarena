@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
 use JMS\Serializer\SerializationContext;
 use AppBundle\Entity\Content;
+use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
 class SellController extends Controller
 {
@@ -68,7 +69,13 @@ class SellController extends Controller
             ->getRepository('AppBundle:Rights')
             ->findAll();
 
-        $serializer = SerializerBuilder::create()->build();
+        /**
+         * Strategy to keep camel case on property names
+         */
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+
+
         $content = new Content();
 
         // replace this example code with whatever you need
@@ -99,7 +106,15 @@ class SellController extends Controller
             ->getRepository('AppBundle:Rights')
             ->findAll();
 
-        $serializer = SerializerBuilder::create()->build();
+        /**
+         * Strategy to keep camel case on property names
+         */
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+
+        /**
+         * Serialization
+         */
         $jsonContent = $serializer->serialize($content, 'json');
 
         // replace this example code with whatever you need

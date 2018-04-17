@@ -10,7 +10,7 @@ window.ContentArena = window.ContentArena || {};
 
 ContentArena.Api= {
     sortByLabel (a, b) {
-        return (a.label > b.label) ? 1 : ((b.label > a.label) ? -1 : 0)
+        return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
     },
 
     prepareList ( list, categoryId ) {
@@ -22,7 +22,7 @@ ContentArena.Api= {
             // Filter by category
             if ( categoryId && item.category['@attributes'].id != categoryId) return null;
 
-            return {name: item['@attributes'].name, external_id: item['@attributes'].id}
+            return {name: item['@attributes'].name, externalId: item['@attributes'].id}
         });
 
         list.sort(_this.sortByLabel);
@@ -234,28 +234,23 @@ ContentArena.Api= {
                     list = $.map(response.seasons.season, function (item) {
                         return {
                             name: item['@attributes'].name,
-                            external_id: item['@attributes'].id,
-                            end_date: item['@attributes'].end_date,
-                            start_date: item['@attributes'].start_date,
-                            tournament_id: item['@attributes'].tournament_id,
+                            externalId: item['@attributes'].id,
+                            endDate: item['@attributes'].end_date,
+                            startDate: item['@attributes'].start_date,
+                            tournamentId: item['@attributes'].tournament_id,
                             year: item['@attributes'].year,
                         }
                     }).reverse();
                 } else {
                     list = [{
                         name: response.seasons.season['@attributes'].name,
-                        external_id: response.seasons.season['@attributes'].id,
-                        end_date: response.seasons.season['@attributes'].end_date,
-                        start_date: response.seasons.season['@attributes'].start_date,
-                        tournament_id: response.seasons.season['@attributes'].tournament_id,
+                        externalId: response.seasons.season['@attributes'].id,
+                        endDate: response.seasons.season['@attributes'].end_date,
+                        startDate: response.seasons.season['@attributes'].start_date,
+                        tournamentId: response.seasons.season['@attributes'].tournament_id,
                         year: response.seasons.season['@attributes'].year,
                     }]
                 }
-
-               /* list.push({
-                    name : "Add new",
-                    external_id : 0
-                });*/
 
                 deferred.resolve(list);
             },
@@ -300,9 +295,9 @@ ContentArena.Api= {
 
                     list[name].push({
                         scheduled: item['@attributes'].scheduled,
-                        external_id: item['@attributes'].id,
+                        externalId: item['@attributes'].id,
                         status: item['@attributes'].status,
-                        tournament_round : round,
+                        tournamentRound : round,
                         competitors : (item.competitors) ? item.competitors.competitor.map(( competitor)=>{ return competitor['@attributes']  })  : null
                     });
 
