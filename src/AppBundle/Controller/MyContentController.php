@@ -55,11 +55,10 @@ class MyContentController extends Controller
      */
     public function myContentPendingAction(Request $request)
     {
-
         $user = $this->getUser();
-        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->findBy(['buyerUser'=>$user, 'status'=>1]);
-
+        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getPendingBids($user);
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
+
         return $this->render('@App/myContent/myContent.listings.pending.html.twig', [
             'user' => $user,
             'bids' => $bids,
@@ -74,8 +73,13 @@ class MyContentController extends Controller
     public function myContentAcquiredAction(Request $request)
     {
         $user = $this->getUser();
+        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getClosedBids($user);
+        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
+
         return $this->render('@App/myContent/myContent.listings.acquired.html.twig', [
             'user' => $user,
+            'bids' => $bids,
+            'rights' => $rights
         ]);
 
     }

@@ -2,6 +2,42 @@
 
 {% block listing_content %}
 
-    ACQUIRED TEMPLATE
+    <table class="uk-table table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Seller</th>
+            <th>Right Name</th>
+            <th>LT</th>
+            <th>LB</th>
+            <th>DT</th>
+            <th>A</th>
+            <th>HL</th>
+            <th>NA</th>
+            <th>C</th>
+            <th>P</th>
+            <th>Territory</th>
+            <th>Date</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody class="territory-table-body">
+        {% for bid in bids %}
+            {% for country in bid.countries %}
+                <tr class="country-row">
+                    <td>{{ bid.customId }}</td>
+                    <td>{{ bid.company }}</td>
+                    <td>{{ bid.content.getListingName }}</td>
+                    {% for right in rights %}
+                        <td>{% if right.id in bid.filterRights(bid.content.rightsPackage) %} X {% else %} - {% endif %}</td>
+                    {% endfor %}
+                    <td>{{ country.name }}</td>
+                    <td>{{ bid.updatedAt|date("m/d/Y") }}</td>
+                    <td>{{ bid.amount }} {{ bid.currency }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock listing_content %}

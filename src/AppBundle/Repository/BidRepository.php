@@ -10,4 +10,27 @@ namespace AppBundle\Repository;
  */
 class BidRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPendingBids($user){
+        $query = $this->createQueryBuilder('b')
+            ->join('b.content', 'c')
+            ->where('b.buyerUser = :user')
+            ->andWhere('b.status = 1')
+            ->andWhere('b.type <> 3')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getClosedBids($user){
+        $query = $this->createQueryBuilder('b')
+            ->join('b.content', 'c')
+            ->where('b.buyerUser = :user')
+            ->andWhere('b.type = 3')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
 }
