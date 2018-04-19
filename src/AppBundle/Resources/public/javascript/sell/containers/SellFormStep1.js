@@ -317,7 +317,7 @@ class SellFormStep1 extends React.Component {
 
     loadCategories (nextProps) {
 
-        let sportId = nextProps.listingInfo.sports[0].externalId;
+        let sportId = nextProps.sports[0].externalId;
 
         if ( sportId === this.state.lastSportId ) return;
 
@@ -330,8 +330,8 @@ class SellFormStep1 extends React.Component {
 
     loadTournaments (nextProps) {
 
-        let sportId = nextProps.listingInfo.sports[0].externalId;
-        let categoryId = ( nextProps.listingInfo.sportCategory ) ? nextProps.listingInfo.sportCategory.externalId : null;
+        let sportId = nextProps.sports[0].externalId;
+        let categoryId = ( nextProps.sportCategory ) ? nextProps.sportCategory.externalId : null;
 
         if ( sportId === this.state.lastSportId && categoryId === this.state.lastCategoryId ) return;
 
@@ -348,7 +348,7 @@ class SellFormStep1 extends React.Component {
 
     loadSeasons (nextProps) {
 
-        let tournamentId = ( nextProps.listingInfo.tournament ) ? nextProps.listingInfo.tournament.externalId : null;
+        let tournamentId = ( nextProps.tournament ) ? nextProps.tournament.externalId : null;
 
         if ( tournamentId === this.state.lastTournamentId ) return;
 
@@ -367,7 +367,7 @@ class SellFormStep1 extends React.Component {
 
         let _this = this;
 
-        nextProps.listingInfo.seasons.forEach(( season ) =>{
+        nextProps.seasons.forEach(( season ) =>{
             if ( !_this.state.schedules[season.externalId] ){
                 _this.setState({ loadingSchedule : true });
                 ContentArena.Api.getSchedule(season.externalId).done( (schedules ) => {
@@ -386,24 +386,24 @@ class SellFormStep1 extends React.Component {
 
     getSchedules(index){
 
-        if (!this.props.listingInfo.seasons || !this.props.listingInfo.seasons[index] ) return false;
+        if (!this.props.seasons || !this.props.seasons[index] ) return false;
 
-        return this.state.schedules[this.props.listingInfo.seasons[index].externalId];
+        return this.state.schedules[this.props.seasons[index].externalId];
     }
 
     componentWillReceiveProps(nextProps){
-        if ( nextProps.listingInfo.sports.length === 1 ){
+        if ( nextProps.sports.length === 1 ){
             this.loadCategories(nextProps);
             this.setState((prevState) => ({
                 showSearch: false
             }));
         }
 
-        if ( nextProps.listingInfo.sports.length === 1 || nextProps.listingInfo.category ) this.loadTournaments(nextProps);
-        if ( nextProps.listingInfo.tournament ){
+        if ( nextProps.sports.length === 1 || nextProps.category ) this.loadTournaments(nextProps);
+        if ( nextProps.tournament ){
             this.loadSeasons(nextProps);
         }
-        if ( nextProps.listingInfo.seasons.length > 0 ) this.loadSchedule(nextProps);
+        if ( nextProps.seasons.length > 0 ) this.loadSchedule(nextProps);
     }
 
     updateContentValue = ( event, key ) =>{
@@ -411,16 +411,16 @@ class SellFormStep1 extends React.Component {
     };
 
     hasCustomTournament = () => {
-        return this.props.listingInfo.newSport
-            || this.props.listingInfo.newTournament
-            || this.props.listingInfo.customTournament;
+        return this.props.newSport
+            || this.props.newTournament
+            || this.props.customTournament;
     };
 
     hasCustomSeason = () => {
-        return this.props.listingInfo.newSport
-            || this.props.listingInfo.newTournament
-            || this.props.listingInfo.customTournament
-            || this.props.listingInfo.newSeason;
+        return this.props.newSport
+            || this.props.newTournament
+            || this.props.customTournament
+            || this.props.newSeason;
     };
 
     addSeason = () => {
@@ -469,7 +469,7 @@ class SellFormStep1 extends React.Component {
     };
 
     render() {
-        if ( this.props.listingInfo.step !== 1) return (null);
+        if ( this.props.step !== 1) return (null);
 
         const inputProps = {
             sports: [{ value : "" }],
@@ -478,20 +478,20 @@ class SellFormStep1 extends React.Component {
             seasons : [{ value : ""}]
         };
 
-        if ( this.props.listingInfo.sports.length > 0 ) {
+        if ( this.props.sports.length > 0 ) {
             inputProps.sports = [];
-            this.props.listingInfo.sports.forEach(( sport )=>{
+            this.props.sports.forEach(( sport )=>{
                 inputProps.sports.push({value: sport.name})
             });
         }
-        if ( this.props.listingInfo.seasons.length > 0 ) {
+        if ( this.props.seasons.length > 0 ) {
             inputProps.seasons = [];
-            this.props.listingInfo.seasons.forEach(( season )=>{
+            this.props.seasons.forEach(( season )=>{
                 inputProps.seasons.push({value: season.name})
             });
         }
-        if ( this.props.listingInfo.sportCategory ) inputProps.sportCategory.value = this.props.listingInfo.sportCategory.name;
-        if ( this.props.listingInfo.tournament ) inputProps.tournament.value = this.props.listingInfo.tournament.name;
+        if ( this.props.sportCategory ) inputProps.sportCategory.value = this.props.sportCategory.name;
+        if ( this.props.tournament ) inputProps.tournament.value = this.props.tournament.name;
 
         return (
             <div className="step-content">
@@ -505,7 +505,7 @@ class SellFormStep1 extends React.Component {
                         Please select the sport(s) and competition(s) covered by your content listing:
                     </div>
 
-                    {!this.props.listingInfo.newSport &&
+                    {!this.props.newSport &&
                         this.state.sportSelectors.map((item, i)=>{
                             return <SportSelector key={i}
                                                   remove={() => this.removeSport(i) }
@@ -518,7 +518,7 @@ class SellFormStep1 extends React.Component {
                     }
 
                     <div>
-                        {this.props.listingInfo.newSport &&
+                        {this.props.newSport &&
                             <NewSport onClick={this.props.removeNewSport } />}
                     </div>
                     { this.state.sportSelectors.length === 1 && <div>
@@ -527,13 +527,13 @@ class SellFormStep1 extends React.Component {
 
 
                     {this.state.sportSelectors.length === 1 && <div>
-                        {!this.props.listingInfo.newSport && <input type="text"
+                        {!this.props.newSport && <input type="text"
                                {...inputProps.sportCategory}
                                readOnly={true}
                                disabled={this.state.loadingCategories}
                                onClick={this.props.openCategorySelector}
                                placeholder={"Country/Category"}  />}
-                        {this.props.listingInfo.newSport && <NewCategory />}
+                        {this.props.newSport && <NewCategory />}
                         { this.state.loadingCategories && <i className="fa fa-cog fa-spin"/>}
                     </div>}
                     {this.state.sportSelectors.length === 1 && <div>
@@ -547,8 +547,8 @@ class SellFormStep1 extends React.Component {
                                }}
                                placeholder={"Tournament"}  />}
                         { ( this.hasCustomTournament() )
-                        && <NewTournament showClose={this.props.listingInfo.newTournament || this.props.listingInfo.customTournament}
-                                          value={this.props.listingInfo.customTournament}
+                        && <NewTournament showClose={this.props.newTournament || this.props.customTournament}
+                                          value={this.props.customTournament}
                                           onBlur={ (e) => this.updateContentValue(e, "customTournament")}
                                           onClick={this.props.removeNewTournament} />}
 
@@ -569,15 +569,15 @@ class SellFormStep1 extends React.Component {
                     })}
 
                     { ( this.hasCustomSeason() )
-                    && <NewSeason showClose={this.props.listingInfo.newSeason || this.props.listingInfo.customSeason}
-                                      value={this.props.listingInfo.customSeason}
+                    && <NewSeason showClose={this.props.newSeason || this.props.customSeason}
+                                      value={this.props.customSeason}
                                       onBlur={ (e) => this.updateContentValue(e, "customSeason")}
                                       onClick={this.props.removeNewSeason} />}
 
                     { this.state.loadingSeasons && <i className="fa fa-cog fa-spin"/>}
 
-                    <Description value={this.props.listingInfo.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
-                    <Website value={this.props.listingInfo.website} onBlur={ (e) => this.updateContentValue(e, "website")} />
+                    <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
+                    <Website value={this.props.website} onBlur={ (e) => this.updateContentValue(e, "website")} />
                     <FileSelector target={"brochure"}/>
                 </div>}
             </div>
@@ -586,9 +586,7 @@ class SellFormStep1 extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        listingInfo : state.listingInfo,
-    }
+    return state.content
 };
 
 const mapDispatchToProps = dispatch => {

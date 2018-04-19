@@ -41,7 +41,7 @@ class SellFormSteps extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        step : state.listingInfo.step,
+        step : state.content.step,
     }
 };
 

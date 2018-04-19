@@ -16,7 +16,7 @@ class SellButtons extends React.Component {
     saveAsDraft = () => {
         let _this = this;
         _this.setState({ saving : true });
-        ContentArena.ContentApi.saveContentAsDraft(store.getState().listingInfo).done(function ( response ) {
+        ContentArena.ContentApi.saveContentAsDraft(store.getState().content).done(function ( response ) {
             _this.setState({ saving : false, savingSuccess: true });
         }).fail(function () {
             _this.setState({ saving : false, savingSuccess: false });
@@ -64,7 +64,7 @@ class SellButtons extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        step : state.listingInfo.step
+        step : state.content.step
     }
 };
 

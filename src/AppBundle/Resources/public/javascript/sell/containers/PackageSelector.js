@@ -30,7 +30,7 @@ class PackageSelector extends React.Component {
         let _this = this;
         return (
             <div>
-                {this.props.listingInfo.step === 2 && <div className="box">
+                {this.props.step === 2 && <div className="box">
                     <div className="box-title">
                         Pick rights
                     </div>
@@ -39,7 +39,7 @@ class PackageSelector extends React.Component {
                             return <SuperRight
                                 key={superRight.id}
                                 superRight={superRight}
-                                checked={ ContentArena.Utils.getIndex( superRight.id, _this.props.listingInfo.rights_package, "id") !== -1 }
+                                checked={ ContentArena.Utils.getIndex( superRight.id, _this.props.rightsPackage, "id") !== -1 }
                                 onChange={ _this.props.superRightsUpdated }
                             />;
                         })}
@@ -51,9 +51,7 @@ class PackageSelector extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        listingInfo : state.listingInfo
-    }
+    return state.content;
 };
 
 const mapDispatchToProps = dispatch => {

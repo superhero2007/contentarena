@@ -243,7 +243,7 @@ class Selector extends React.Component {
 }
 
 const mapStateToProps = ( state ) => {
-    return state.selectorInfo
+    return state.selector
 };
 
 const mapDispatchToProps = dispatch => {

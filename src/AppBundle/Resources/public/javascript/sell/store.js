@@ -5,5 +5,6 @@
 import React from 'react';
 import { createStore } from 'redux';
 import content from "./reducers/content";
+import reducers from "./reducers";
 
-export default createStore(content);
+export default createStore(reducers);

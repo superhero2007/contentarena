@@ -12,6 +12,17 @@ ContentArena.Api= {
     sortByLabel (a, b) {
         return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
     },
+    sortBySport (a, b) {
+
+        if (a.sport.name > b.sport.name) return 1;
+        if (a.sport.name < b.sport.name) return -1;
+        if (a.sportCategory.name > b.sportCategory.name) return 1;
+        if (a.sportCategory.name < b.sportCategory.name) return -1;
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
+        return 0;
+
+    },
 
     prepareList ( list, categoryId ) {
 
@@ -31,8 +42,7 @@ ContentArena.Api= {
     },
 
     getContent ( filter) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+        let deferred = jQuery.Deferred();
 
         $.ajax({
             url: envhosturl + "buy/search",
@@ -51,10 +61,8 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     saveFilter ( filter) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+        let deferred = jQuery.Deferred();
 
         $.ajax({
             url: envhosturl + "buy/filter/save",
@@ -73,11 +81,9 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     getSports () {
-        var deferred = jQuery.Deferred(),
-            _this = this;
-
+        let deferred = jQuery.Deferred();
+        let _this = this;
         $.ajax({
             url: hosturl + "v1/feed/sports",
             type: "GET",
@@ -99,7 +105,6 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     getContentDetails( id ) {
         var deferred = jQuery.Deferred(),
             _this = this;
@@ -121,7 +126,6 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     getPendingListings( id ) {
         var deferred = jQuery.Deferred(),
             _this = this;
@@ -143,7 +147,6 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     getCategories ( sportId ) {
         var deferred = jQuery.Deferred(),
             _this = this,
@@ -175,7 +178,6 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     getTournaments ( sportId, categoryId ) {
         var deferred = jQuery.Deferred(),
             _this = this;
@@ -212,7 +214,6 @@ ContentArena.Api= {
         });
         return deferred.promise();
     },
-
     getSeasons ( tournamentId ) {
         var deferred = jQuery.Deferred(),
             _this = this;
@@ -263,7 +264,6 @@ ContentArena.Api= {
         });
         return deferred.promise();
     },
-
     getSchedule ( seasonId ) {
         var deferred = jQuery.Deferred(),
             _this = this;
@@ -319,10 +319,10 @@ ContentArena.Api= {
         });
         return deferred.promise();
     },
-
     searchCompetition(request) {
 
         let deferred = jQuery.Deferred();
+        let _this = this;
 
         $.ajax({
             url: envhosturl + 'search/tournament',
@@ -333,6 +333,9 @@ ContentArena.Api= {
             type: "POST",
             dataType: "json",
             success: function (data) {
+
+                data.sort(_this.sortBySport);
+
                 deferred.resolve(data);
             },
             error : function (data, status ) {
