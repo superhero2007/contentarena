@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTable from 'react-table';
 
 class SearchCompetition extends  React.Component {
     constructor(props){
@@ -57,26 +58,25 @@ class SearchCompetition extends  React.Component {
                 {this.state.searching && <i className="fa fa-cog fa-spin"></i>}
 
                 {this.state.results.length > 0 && <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Competition</th>
-                                <th>Country/Category</th>
-                                <th>Sport</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.results.map( ( result, index ) => {
-                                return <tr key={index}>
-                                        <td>{result.name}</td>
-                                        <td>{result.sportCategory.name}</td>
-                                        <td>{result.sport.name}</td>
-                                        <td><button onClick={ () => { this.props.select(result) } }>Select</button></td>
-                                    </tr>
-                            })}
-                        </tbody>
-                    </table>
+                    <ReactTable
+                        defaultPageSize={20}
+                        showPageSizeOptions={false}
+                        data={this.state.results}
+                        select={this.props.select}
+                        columns={[{
+                            Header: 'Competition',
+                            accessor: 'name' // String-based value accessors!
+                        }, {
+                            Header: 'Country/Category',
+                            accessor: 'sportCategory.name',
+                        }, {
+                            accessor: 'sport.name', // Required because our accessor is not a string
+                            Header: 'Sport',
+                        }, {
+                            Header: '', // Custom header components!
+                            Cell: props => <button onClick={() =>{ this.props.select(props.original) }}>Select</button>
+                        }]}
+                    />
                 </div>}
 
                 {this.state.searchDone && this.state.results.length === 0 && <div>

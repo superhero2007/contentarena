@@ -2,6 +2,8 @@
  * Created by JuanCruz on 4/1/2018.
  */
 
+import 'react-table/react-table.css';
+
 $(function() {
 
 
