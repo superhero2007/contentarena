@@ -6,7 +6,7 @@ class SearchCompetition extends  React.Component {
         super(props);
 
         this.state = {
-            pageSize :2,
+            pageSize :20,
             input: "",
             valid : false,
             searching : false,
