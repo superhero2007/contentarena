@@ -6,11 +6,13 @@ class SearchCompetition extends  React.Component {
         super(props);
 
         this.state = {
+            pageSize :2,
             input: "",
             valid : false,
             searching : false,
             searchDone : false,
-            results: []
+            results: [],
+            resultMessage : ""
         }
     }
 
@@ -25,7 +27,10 @@ class SearchCompetition extends  React.Component {
             _this.setState({
                 results : results,
                 searching : false,
-                searchDone : true
+                searchDone : true,
+            });
+            _this.setState({
+                resultMessage : _this.getResultMessage(0)
             });
         });
 
@@ -39,6 +44,24 @@ class SearchCompetition extends  React.Component {
             valid : input.length > 2,
             input : input,
             searchDone : ( input.length > 0 ) ? prevState.searchDone : false
+        }));
+    };
+
+    getResultMessage = (page) => {
+        page++;
+        let total = this.state.results.length;
+        let pageTotal = this.state.pageSize * page;
+        let pageQuantity = (page === 1) ? 1 : (this.state.pageSize * (page  - 1)) + 1;
+
+        if ( pageTotal > total ) pageTotal = total;
+
+        return pageQuantity + "-"+pageTotal+" of "+ total +" results for '"+this.state.input+"'";
+    };
+
+    onPageChange = (page) => {
+        let resultMessage = this.getResultMessage(page);
+        this.setState((prevState) =>({
+            resultMessage : resultMessage
         }));
     };
 
@@ -57,10 +80,15 @@ class SearchCompetition extends  React.Component {
 
                 {this.state.searching && <i className="fa fa-cog fa-spin"></i>}
 
+                {this.state.searchDone && this.state.results.length > 0 && <div>
+                    {this.state.resultMessage}
+                </div>}
+
                 {this.state.results.length > 0 && <div>
                     <ReactTable
-                        defaultPageSize={20}
+                        defaultPageSize={this.state.pageSize}
                         showPageSizeOptions={false}
+                        onPageChange={this.onPageChange}
                         data={this.state.results}
                         select={this.props.select}
                         columns={[{
@@ -95,3 +123,4 @@ class SearchCompetition extends  React.Component {
 }
 
 export default SearchCompetition;
+
