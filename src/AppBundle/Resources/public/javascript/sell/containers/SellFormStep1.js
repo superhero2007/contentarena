@@ -34,7 +34,7 @@ class SeasonSelector extends React.Component {
                     {!this.props.isCustom &&
                         <input
                             type="text"
-                            value={this.props.inputProps.value || ""}
+                            value={this.props.value || ""}
                             readOnly={true}
                             disabled={this.props.loading}
                             onClick={this.props.openSelector}
@@ -423,11 +423,11 @@ class SellFormStep1 extends React.Component {
                             season={season}
                             addSeason={this.addSeason}
                             removeSeason={()=>this.removeSeason(i)}
-                            inputProps={inputProps.seasons[i]}
+                            value={ (inputProps.seasons[i] ) ? inputProps.seasons[i].value : ""}
                             schedules={this.getSchedules(i)}
                             loading={this.state.loadingSeasons}
                             showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
-                            isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.hasCustomSeason() : false}
+                            isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : false}
                             showAddNew={this.state.seasonSelectors.length === i + 1}
                             openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
                     })}
