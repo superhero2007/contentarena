@@ -23,7 +23,6 @@ ContentArena.Api= {
         return 0;
 
     },
-
     prepareList ( list, categoryId ) {
 
         let _this = this;
@@ -40,7 +39,6 @@ ContentArena.Api= {
 
         return list;
     },
-
     getContent ( filter) {
         let deferred = jQuery.Deferred();
 
@@ -69,6 +67,29 @@ ContentArena.Api= {
             type: "POST",
             data : filter,
             success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    getCountries () {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "search/countries/all",
+            type: "GET",
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
+                response.sort(_this.sortByLabel);
                 deferred.resolve(response);
             },
             error : function (data, status) {
@@ -347,7 +368,6 @@ ContentArena.Api= {
         });
         return deferred.promise();
     },
-
     watchlist( id ) {
         var deferred = jQuery.Deferred(),
             _this = this;

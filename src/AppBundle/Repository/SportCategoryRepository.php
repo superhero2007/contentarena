@@ -21,4 +21,13 @@ class SportCategoryRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    public function getCountries(){
+        return $this->createQueryBuilder('sc')
+            ->where('sc.countryCode IS NOT NULL')
+            ->andWhere('sc.countryCode != :identifier')
+            ->setParameter('identifier', "")
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

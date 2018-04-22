@@ -1,14 +1,11 @@
+import {selectorType} from "./selector";
 
 export const contentType= {
     CONTENT_INIT:'CONTENT_INIT',
     GO_TO_NEXT_STEP: 'GO_TO_NEXT_STEP',
     GO_TO_PREVIOUS_STEP: 'GO_TO_PREVIOUS_STEP',
-    ADD_NEW_SPORT : 'ADD_NEW_SPORT',
-    REMOVE_NEW_SPORT : 'REMOVE_NEW_SPORT',
-    ADD_NEW_TOURNAMENT : 'ADD_NEW_TOURNAMENT',
-    ADD_NEW_SEASON : 'ADD_NEW_SEASON',
-    REMOVE_NEW_TOURNAMENT : 'REMOVE_NEW_TOURNAMENT',
-    REMOVE_NEW_SEASON : 'REMOVE_NEW_SEASON',
+    ADD_NEW : 'ADD_NEW',
+    REMOVE_NEW : 'REMOVE_NEW',
     SUPER_RIGHTS_UPDATED: 'SUPER_RIGHTS_UPDATED',
     UPDATE_CONTENT_VALUE : 'UPDATE_CONTENT_VALUE',
     SELECT_TOURNAMENT : 'SELECT_TOURNAMENT',
@@ -19,7 +16,8 @@ export const contentType= {
 export const content = (state = {
     step: 1,
     rightsPackage : [],
-    category : null,
+    tournament : [],
+    sportCategory : [],
     sports : [],
     seasons: []
 }, action) => {
@@ -37,52 +35,19 @@ export const content = (state = {
             return Object.assign({}, state, {
                 step: state.step -1
             });
-        case contentType.ADD_NEW_SPORT:
-            return Object.assign({}, state, { newSport: true } );
-        case contentType.REMOVE_NEW_SPORT:
-            return Object.assign({}, state, { newSport: false });
-        case contentType.ADD_NEW_TOURNAMENT:
-            return Object.assign({}, state, {
-                newTournament: true,
-                tournament : null
-            });
-        case contentType.ADD_NEW_SEASON:
-            return Object.assign({}, state, {
-                newSeason: true
-            });
-        case contentType.REMOVE_NEW_TOURNAMENT:
-            return Object.assign({}, state, {
-                newTournament: false,
-                customTournament: null
-            });
-        case contentType.REMOVE_NEW_SEASON:
-            return Object.assign({}, state, {
-                newSeason: false,
-                customSeason: null
-            });
-        case contentType.UPDATE_CONTENT_VALUE:
+        case contentType.REMOVE_NEW:
             newState = {};
-            newState[action.key] = action.value;
+            newState[action.selectorType] = [...state[action.selectorType]];
+            newState[action.selectorType].splice(action.index, 1);
 
             return Object.assign({}, state, newState);
-        case contentType.SELECT_TOURNAMENT:
+        case contentType.ADD_NEW:
             newState = {};
-            newState.tournament = action.tournament;
-            newState.sports = (action.tournament.sport ) ? [action.tournament.sport] : [];
-            newState.sportCategory = action.tournament.sportCategory;
-
-            return Object.assign({}, state, newState);
-        case contentType.APPLY_SELECTION:
-
-            newState = {};
-            newState[action.selectorType] = (action.multiple ) ? [action.selectedItem] : action.selectedItem;
-
-            if ( action.multiple ){
-                newState[action.selectorType] = [...state[action.selectorType]];
-                newState[action.selectorType][action.index] = action.selectedItem;
-            } else {
-                newState[action.selectorType] = action.selectedItem;
-            }
+            newState[action.selectorType] = [...state[action.selectorType]];
+            newState[action.selectorType][action.index] = {
+                custom : true,
+                name: ""
+            };
 
             if ( action.clean ){
                 action.clean.forEach((selectorType)=>{
@@ -92,12 +57,44 @@ export const content = (state = {
 
             return Object.assign({}, state, newState);
 
+        case contentType.UPDATE_CONTENT_VALUE:
+            newState = {};
+            newState[action.key] = action.value;
+
+            return Object.assign({}, state, newState);
+        case contentType.SELECT_TOURNAMENT:
+            newState = {};
+            newState.tournament = [action.tournament];
+            newState.sports = (action.tournament.sport ) ? [action.tournament.sport] : [];
+            newState.sportCategory = [action.tournament.sportCategory];
+
+            return Object.assign({}, state, newState);
+        case contentType.APPLY_SELECTION:
+
+            newState = {};
+
+            let selectedItems = Array.from( action.selectedItems.values() );
+
+            newState[action.selectorType] = [...state[action.selectorType]];
+
+            if ( action.multiple ){
+                newState[action.selectorType] = selectedItems;
+            } else {
+                newState[action.selectorType][action.index] = selectedItems[0];
+            }
+
+            if ( action.clean ){
+                action.clean.forEach((selectorType)=>{
+                    newState[selectorType] = $.isArray(state[selectorType]) ? [] : null;
+                });
+            }
+
+            return Object.assign({}, state, newState);
         case contentType.REMOVE_FROM_MULTIPLE:
             newState = {};
             newState[action.selectorType] = [...state[action.selectorType]];
             newState[action.selectorType].splice(action.index,1);
             return Object.assign({}, state, newState);
-
         case contentType.SUPER_RIGHTS_UPDATED:
 
             let rightsPackage = state.rightsPackage;

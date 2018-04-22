@@ -60,7 +60,7 @@ class SearchCompetition extends  React.Component {
 
     onPageChange = (page) => {
         let resultMessage = this.getResultMessage(page);
-        this.setState((prevState) =>({
+        this.setState(() =>({
             resultMessage : resultMessage
         }));
     };

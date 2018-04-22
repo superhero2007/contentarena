@@ -29,4 +29,18 @@ class SearchController extends Controller
 
         return new JsonResponse($tournaments);
     }
+
+    /**
+     * @Route("/search/countries/all", name="searchAllCountries")
+     */
+    public function searchAllCountries(Request $request){
+
+        //Take Repositories
+        $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:SportCategory");
+
+        //Get results
+        $countries = $sportCategoryRepository->getCountries();
+
+        return new JsonResponse($countries);
+    }
 }

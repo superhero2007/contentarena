@@ -17,7 +17,7 @@ const customStyles = {
 Modal.setAppElement('#sell-form-container');
 
 const SelectorItem = ({label, selected, onClick, disabled}) => (
-    <div className={"selector-item " + ((selected) ?"selector-item-selected ": "") + (disabled && "selector-item-disabled") } onClick={!disabled && onClick}>
+    <div className={"selector-item " + ((selected) ?"selector-item-selected ": "") + (disabled && "selector-item-disabled") } onClick={(!disabled) ? onClick : undefined}>
         {label}
     </div>
 );
@@ -43,8 +43,8 @@ class Selector extends React.Component {
                 "international" : { type: "international", value: "international"},
             },
             activeFilter : props.activeFilter || "ag",
-            selectedItem : {},
-            disabled : []
+            selectedItems : new Map(),
+            disabled : new Map(),
         };
 
         store.subscribe((a) => {
@@ -56,20 +56,20 @@ class Selector extends React.Component {
 
     componentWillReceiveProps(nextProps){
 
-        let disabled;
+        let disabled = new Map(), selectedItems = new Map();
 
-        if ( nextProps.multiple && nextProps.index > 0 ){
-
-            disabled = nextProps.selected.filter((item,i)=>{
-                return i !== nextProps.index
-            }).map((item)=>{
-                return item.externalId
+        if ( nextProps.disabled ) disabled = nextProps.disabled;
+        if ( nextProps.selectedItems ) {
+            nextProps.selectedItems.forEach(function(v, k) {
+                selectedItems.set(v.externalId, v);
             });
-
-            this.setState({ disabled : disabled});
-        } else {
-            this.setState({ disabled : []});
         }
+
+        this.setState({
+            disabled : disabled,
+            selectedItems : selectedItems,
+            selectorItems : nextProps.selectorItems
+        });
     }
 
     openModal = () => {
@@ -77,8 +77,6 @@ class Selector extends React.Component {
     };
 
     afterOpenModal = () => {
-        // references are now sync'd and can be accessed.
-        //this.subtitle.style.color = '#f00';
     };
 
     closeModal = () => {
@@ -96,14 +94,14 @@ class Selector extends React.Component {
     };
 
     shouldShowFilters = () =>{
-        return this.props.selectorItems && this.props.selectorItems.length > 30
+        return this.state.selectorItems && this.state.selectorItems.length > 30
     };
 
     shouldShowInternationalFilter = () => {
 
         let show = false;
 
-        this.props.selectorItems.some( ( item) => {
+        this.state.selectorItems.some( ( item) => {
             show = item.name.match(/international/gi) !== null;
             return show;
         });
@@ -117,55 +115,85 @@ class Selector extends React.Component {
     };
 
     applySelection = () => {
+
         this.setState({ updated: false, filterUpdated : false });
         this.props.applySelection(
             this.props.selectorType,
-            this.state.selectedItem,
+            this.state.selectedItems,
             this.props.multiple,
             this.props.index,
             this.props.clean);
     };
 
-    addNewSport = () => {
+    addNewSport = (index) => {
         this.setState({ updated: false, filterUpdated : false });
-        this.props.addNewSport();
+        this.props.addNewSport(index,this.props.clean);
         this.props.closeSelector();
     };
 
-    addNewTournament = () => {
+    addNewTournament = (index) => {
         this.setState({ updated: false, filterUpdated : false });
-        this.props.addNewTournament();
+        this.props.addNewTournament(index,this.props.clean);
         this.props.closeSelector();
     };
 
-    addNewSeason = () => {
+    addNewSeason = (index) => {
         this.setState({ updated: false, filterUpdated : false });
-        this.props.addNewSeason();
+        this.props.addNewSeason(index,this.props.clean);
+        this.props.closeSelector();
+    };
+
+    addNewCategory = (index) => {
+        this.setState({ updated: false, filterUpdated : false });
+        this.props.addNewCategory(index,this.props.clean);
         this.props.closeSelector();
     };
 
     selectItem = ( item ) => {
-        this.setState({ selectedItem : item, updated: true });
+
+        var _this = this;
+
+        this.setState((prevState) => {
+
+            if ( prevState.selectedItems.has(item.externalId)){
+                if ( _this.props.multiple ) {
+                    prevState.selectedItems.delete(item.externalId);
+                }
+
+            } else {
+
+                if (  !_this.props.multiple ) {
+                    prevState.selectedItems.clear();
+                }
+
+                prevState.selectedItems.set(item.externalId, item);
+
+            }
+
+            return {
+                selectedItems : prevState.selectedItems,
+                updated: true
+            }
+        });
     };
 
     isItemSelected = ( item ) => {
-
-        if ( this.state.updated ){
-            return this.state.selectedItem.externalId === item.externalId;
-        } else {
-
-            if (!this.props.selected) return false;
-
-            return this.props.selected.length > 0 &&
-                (this.props.multiple && this.props.selected[this.props.index]) ? this.props.selected[this.props.index].externalId === item.externalId
-                : this.props.selected.externalId === item.externalId;
-        }
+        return this.state.selectedItems.has(item.externalId);
     };
 
     isItemDisabled = ( item ) => {
 
-        if (this.state.disabled.length === 0) return false;
-        return this.state.disabled.indexOf(item.externalId) !== -1;
+        return this.state.disabled.has(item.externalId);
+    };
+
+    showAllCountries = () => {
+
+        if ( !ContentArena.Data.Countries || ContentArena.Data.Countries.length ===0 ) return;
+
+        this.setState({
+            selectorItems : ContentArena.Data.Countries
+        });
+
     };
 
     filterLetter = (item) =>{
@@ -181,13 +209,13 @@ class Selector extends React.Component {
         let filter = this.getActiveFilter();
         if ( filter.type === "origin" ) return this.props[filter.value];
 
-        if ( filter.type === "international" ) return this.props.selectorItems.filter(this.filterInternational);
+        if ( filter.type === "international" ) return this.state.selectorItems.filter(this.filterInternational);
 
         if ( filter.type === "firstLetter") {
 
-            if ( !this.shouldShowFilters() ) return this.props.selectorItems;
+            if ( !this.shouldShowFilters() ) return this.state.selectorItems;
 
-            return this.props.selectorItems.filter(this.filterLetter);
+            return this.state.selectorItems.filter(this.filterLetter);
         }
     };
 
@@ -233,9 +261,11 @@ class Selector extends React.Component {
                     <button onClick={this.closeModal}>Cancel</button>
                     <button onClick={this.applySelection} disabled={!this.state.updated}>Apply</button>
                     <div>Can't find your sport in the list? </div>
-                    {this.props.showNewSport && <button onClick={this.addNewSport} >Add new Sport</button>}
-                    {this.props.showNewTournament && <button onClick={this.addNewTournament} >Add new Tournament</button>}
-                    {this.props.showNewSeason && <button onClick={this.addNewSeason} >Add new Season</button>}
+                    {this.props.showNewSport && <button onClick={() => { this.addNewSport(this.props.index) } } >Add new Sport</button>}
+                    {this.props.showNewTournament && <button onClick={ () => { this.addNewTournament(this.props.index ) } } >Add new Tournament</button>}
+                    {this.props.showNewSeason && <button onClick={() => { this.addNewSeason(this.props.index) } } >Add new Season</button>}
+                    {this.props.showAllCountries && <button onClick={this.showAllCountries } >Show all countries</button>}
+                    {this.props.showNewCategory && <button onClick={() => { this.addNewCategory(this.props.index) } } >Add new Category</button>}
                 </div>
             </Modal>
         );
@@ -254,22 +284,37 @@ const mapDispatchToProps = dispatch => {
         closeSelector : () => dispatch({
             type : 'CLOSE_SELECTOR'
         }),
-        applySelection : (selectorType, selectedItem, multiple, index, clean) => dispatch({
+        applySelection : (selectorType, selectedItems, multiple, index, clean) => dispatch({
             type : 'APPLY_SELECTION',
             selectorType : selectorType,
-            selectedItem : selectedItem,
+            selectedItems : selectedItems,
             multiple : multiple,
             index : index,
             clean : clean
         }),
-        addNewSport : () => dispatch({
-            type : 'ADD_NEW_SPORT',
+        addNewSport : (index,clean) => dispatch({
+            type : 'ADD_NEW',
+            index : index,
+            selectorType: "sports",
+            clean : clean
         }),
-        addNewTournament : () => dispatch({
-            type : 'ADD_NEW_TOURNAMENT',
+        addNewCategory : (index, clean) => dispatch({
+            type : 'ADD_NEW',
+            index : index,
+            selectorType: "sportCategory",
+            clean : clean
         }),
-        addNewSeason : () => dispatch({
-            type: 'ADD_NEW_SEASON'
+        addNewTournament : (index, clean) => dispatch({
+            type : 'ADD_NEW',
+            index : index,
+            selectorType: "tournament",
+            clean : clean
+        }),
+        addNewSeason : (index, clean) => dispatch({
+            type: 'ADD_NEW',
+            index : index,
+            selectorType: "seasons",
+            clean : clean
         })
     }
 };

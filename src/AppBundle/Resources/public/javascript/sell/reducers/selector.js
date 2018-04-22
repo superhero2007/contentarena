@@ -23,16 +23,19 @@ export const selector = (state = {
             return Object.assign({}, state, {
                 selectorType: action.selectorType,
                 open : true,
+                index : action.index,
                 selectorItems: action.selectorItems,
                 popularItems: action.popularItems,
                 activeFilter : action.activeFilter,
                 multiple : action.multiple,
+                disabled: action.disabled,
                 showNewSport : action.showNewSport,
-                index : action.index,
                 showNewTournament : action.showNewTournament,
+                showNewCategory : action.showNewCategory,
                 showNewSeason : action.showNewSeason,
-                selected : state[action.selectorType],
-                clean : action.clean
+                showAllCountries: action.showAllCountries,
+                clean : action.clean,
+                selectedItems: action.selectedItems
             });
         case selectorType.CLOSE_SELECTOR:
             return Object.assign({}, state, {
