@@ -2,68 +2,16 @@ import React from 'react';
 import { connect } from "react-redux";
 import FileSelector from '../../main/components/FileSelector'
 import SearchCompetition from '../../main/components/SearchCompetition'
-import NewSeason from '../../main/components/NewSeason'
+import SeasonSelector from '../../main/components/SeasonSelector'
+import TagsInput from 'react-tagsinput'
 
 import {
     Description,
-    Website,
     NewTournament,
     NewCategory,
     SportSelector,
-    Schedules
 } from "../components/SellFormItems";
 
-class SeasonSelector extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showSchedule : false
-        };
-    }
-
-    toggle = () => {
-        this.setState((prevState) => ({
-            showSchedule: !prevState.showSchedule
-        }));
-    };
-
-    render(){
-        return (
-            <div>
-                <div>
-                    {!this.props.isCustom &&
-                        <input
-                            type="text"
-                            value={this.props.value || ""}
-                            readOnly={true}
-                            disabled={this.props.loading}
-                            onClick={this.props.openSelector}
-                            placeholder={"Season"}/>
-                    }
-                    { !this.props.isCustom && this.props.showClose &&
-                    <i onClick={this.props.removeSeason} className="fa fa-close"/>}
-                    { this.props.loading && <i className="fa fa-cog fa-spin"/>}
-
-                    { this.props.isCustom
-                        && <NewSeason showClose={this.props.showClose}
-                              onBlur={ (e) => this.updateContentValue(e, "customSeason")}
-                              onRemove={this.props.removeSeason } />}
-
-                </div>
-                {this.props.schedules && <div>
-                    <button onClick={this.toggle}>Event list</button>
-                </div>}
-                {this.state.showSchedule && <div>
-                    <Schedules schedules={this.props.schedules}/>
-                </div>}
-                {this.props.showAddNew && <div>
-                    <button onClick={this.props.addSeason}>Add season</button>
-                </div>}
-
-            </div>
-        )
-    }
-}
 
 class SellFormStep1 extends React.Component {
 
@@ -81,7 +29,8 @@ class SellFormStep1 extends React.Component {
             sportSelectors : [1],
             seasons: [],
             schedules: {},
-            showSearch : true
+            showSearch : true,
+            website: []
         };
     }
 
@@ -199,6 +148,10 @@ class SellFormStep1 extends React.Component {
             this.loadSchedule(nextProps);
         }
 
+        if (nextProps.website && nextProps.website.length > 0) {
+            this.setState({ website: nextProps.website});
+        }
+
     }
 
     updateContentValue = ( event, key ) =>{
@@ -306,6 +259,11 @@ class SellFormStep1 extends React.Component {
         this.setState((prevState) => ({
             showSearch: !prevState.showSearch
         }));
+    };
+
+    websitesUpdated = (website) => {
+        this.setState({website});
+        this.props.updateContentValue("website",website);
     };
 
     selectTournament = ( tournament ) =>{
@@ -427,13 +385,14 @@ class SellFormStep1 extends React.Component {
                             schedules={this.getSchedules(i)}
                             loading={this.state.loadingSeasons}
                             showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
+                            onBlur={ (e) => this.updateContentValue(e, "customSeason")}
                             isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : false}
                             showAddNew={this.state.seasonSelectors.length === i + 1}
                             openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
                     })}
 
                     <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
-                    <Website value={this.props.website} onBlur={ (e) => this.updateContentValue(e, "website")} />
+                    <TagsInput inputProps={{placeholder: "Website"}} value={this.state.website} onChange={this.websitesUpdated} />
                     <FileSelector target={"brochure"}/>
                 </div>}
             </div>

@@ -3,6 +3,7 @@
  */
 
 import 'react-table/react-table.css';
+import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 
 $(function() {
 

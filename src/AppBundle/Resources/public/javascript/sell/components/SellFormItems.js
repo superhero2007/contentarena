@@ -10,17 +10,6 @@ export const Description = ({value, onBlur}) => (
     </div>
 );
 
-export const Website = ({value, onBlur}) => (
-    <div>
-        <input
-            className="website"
-            type="text"
-            onBlur={onBlur}
-            defaultValue={value}
-            placeholder="Website"/>
-    </div>
-);
-
 export const NewCategory = ({onClick, showClose, onBlur, value}) => (
     <div>
         <input
