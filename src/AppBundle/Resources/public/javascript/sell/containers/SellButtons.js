@@ -30,33 +30,38 @@ class SellButtons extends React.Component {
         return (
             <div className="buttons">
                 <div className="buttons-container" >
-                    { this.props.step !== 1 &&
-                    <button className="standard-button"
-                            onClick={ this.props.goToPreviousStep }>
-                        <i className="fa fa-arrow-left"/> Back
-                    </button> }
 
-                    <button className="standard-button" onClick={ this.saveAsDraft } disabled={this.state.saving}>
+                    { this.props.sports.length > 0 &&
+                    <button className="light-blue-button" onClick={ this.saveAsDraft } disabled={this.state.saving}>
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
-                    </button>
+                    </button> }
 
                     { this.props.step === this.state.lastStep &&
                     <button id="draft-listing" className="standard-button">
                         Submit Listing
                     </button> }
 
-                    { this.props.step !== this.state.lastStep &&
-                    <button id="next-step" className="standard-button" onClick={ () => this.props.goToNextStep() }>
-                        Next <i className="fa fa-arrow-right"/>
-                    </button> }
                 </div>
-                {/*<div className="buttons-container" >
+                {<div className="buttons-container" >
+                    { this.props.step !== 1 &&
+                    <button className="standard-button"
+                            onClick={ this.props.goToPreviousStep }>
+                        <i className="fa fa-arrow-left"/> Back
+                    </button> }
                     {
                         [1,2,3,4,5].map((v,k)=>(
                             <div className={"step " + ((this.props.step === v) ? "step-active" : "")} key={k}>{v}</div>
                         ))
                     }
-                </div>*/}
+                    { this.props.step !== this.state.lastStep &&
+                    <button
+                        id="next-step"
+                        className="standard-button"
+                        disabled={this.props.sports.length === 0}
+                        onClick={ () => this.props.goToNextStep() }>
+                            Next <i className="fa fa-arrow-right"/>
+                    </button> }
+                </div>}
             </div>
         );
     }
@@ -64,7 +69,8 @@ class SellButtons extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        step : state.content.step
+        step : state.content.step,
+        sports : state.content.sports
     }
 };
 

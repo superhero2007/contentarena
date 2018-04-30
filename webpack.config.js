@@ -18,7 +18,6 @@ Encore
 
     .addEntry('sell', [
         './src/AppBundle/Resources/public/javascript/sell/sell.js',
-        './src/AppBundle/Resources/public/javascript/sell/sell.step1.js',
         './src/AppBundle/Resources/public/javascript/sell/sell.step2.js',
     ])
 
@@ -29,9 +28,6 @@ Encore
         './src/AppBundle/Resources/public/javascript/ca/ca.models.js',
         './src/AppBundle/Resources/public/javascript/ca/ca.utils.js',
     ])
-
-    // allow sass/scss files to be processed
-    //.enableSassLoader()
 
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
@@ -44,7 +40,7 @@ Encore
         config.presets.push('stage-2');
     })
 
-    .createSharedEntry('vendor', ['jquery', 'webpack-jquery-ui', 'react', 'react-dom'])
+    .createSharedEntry('vendor', ['jquery', 'webpack-jquery-ui', 'react', 'react-dom', 'uikit', 'uikit/dist/css/uikit.min.css'])
 
     .enableSourceMaps(!Encore.isProduction())
 
@@ -54,8 +50,8 @@ Encore
     // show OS notifications when builds finish/fail
     //.enableBuildNotifications()
 
-// create hashed filenames (e.g. app.abc123.css)
-// .enableVersioning()
+    // create hashed filenames (e.g. app.abc123.css)
+    // .enableVersioning()
 ;
 
 // export the final configuration

@@ -3,7 +3,8 @@ import NewSeason from './NewSeason'
 import { Schedules } from "../../sell/components/SellFormItems";
 
 export const NewFixture = ({onRemove, onAdd, onBlur, value, showAdd}) => (
-    <div>
+    <div className="base-input">
+        <label>Fixture</label>
         <input
             className="new-category"
             type="text"
@@ -48,8 +49,9 @@ class SeasonSelector extends React.Component {
     render(){
         return (
             <div>
-                <div>
-                    {!this.props.isCustom &&
+                {!this.props.isCustom &&
+                <div className="base-input">
+                    <label>Season</label>
                     <input
                         type="text"
                         value={this.props.value || ""}
@@ -57,29 +59,32 @@ class SeasonSelector extends React.Component {
                         disabled={this.props.loading}
                         onClick={this.props.openSelector}
                         placeholder={"Season"}/>
+
+                    { this.props.showClose &&
+                    <button onClick={this.props.removeSeason} className={"standard-button"}>
+                        <i className="fa fa-close"/>
+                    </button>
                     }
-                    { !this.props.isCustom && this.props.showClose &&
-                    <i onClick={this.props.removeSeason} className="fa fa-close"/>}
                     { this.props.loading && <i className="fa fa-cog fa-spin"/>}
+                </div> }
+                { this.props.isCustom
+                && <NewSeason showClose={this.props.showClose}
+                              onBlur={this.props.onBlur}
+                              onRemove={this.props.removeSeason } />}
 
-                    { this.props.isCustom
-                    && <NewSeason showClose={this.props.showClose}
-                                  onBlur={this.props.onBlur}
-                                  onRemove={this.props.removeSeason } />}
 
-                </div>
                 {this.props.schedules && <div>
-                    <button onClick={this.toggle}>Event list</button>
+                    <button className="link-button" onClick={this.toggle}>Event list</button>
                 </div>}
                 {this.state.showSchedule && <div>
                     <Schedules schedules={this.props.schedules}/>
                 </div>}
                 {this.props.showAddNew && <div>
-                    <button onClick={this.props.addSeason}>Add season</button>
+                    <button className="link-button" onClick={this.props.addSeason}>Add season</button>
                 </div>}
-                {this.props.showAddNew && <div>
+                {this.props.showAddNew && <div className="step-item-description">
                     Do you wish to add fixtures individually?
-                    <button onClick={this.addFixture}>Click here</button>
+                    <button className="link-button" onClick={this.addFixture}>Click here</button>
                 </div>}
 
                 {this.state.fixtures.length > 0 && <div>

@@ -1,8 +1,10 @@
 import React from 'react';
-import PackageSelector from "../containers/PackageSelector";
+
 import SellButtons from "../containers/SellButtons";
 import SellFormSteps from "../containers/SellFormSteps";
 import SellFormStep1 from "../containers/SellFormStep1";
+import SellFormStep2 from "../containers/SellFormStep2";
+import SellFormStep3 from "../containers/SellFormStep3";
 import Selector from "../../main/components/Selector";
 import { connect } from "react-redux";
 import store from '../store';
@@ -31,7 +33,8 @@ class SellForm extends React.Component {
                 <Selector />
                 <SellFormSteps />
                 <SellFormStep1/>
-                <PackageSelector {... this.props} />
+                <SellFormStep2 packages={this.props.packages} />
+                <SellFormStep3 packages={this.props.packages} />
                 <SellButtons />
             </div>
         );

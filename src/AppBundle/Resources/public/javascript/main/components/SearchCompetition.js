@@ -67,18 +67,19 @@ class SearchCompetition extends  React.Component {
 
     render(){
         return(
-            <div>
+            <div className="step-content-container">
                 <div className="step-item-description">
                     Do you want to list competition-based content?
                 </div>
-                <div>
+                <div className={"base-input"}>
+                    <label>Competition</label>
                     <input type="text"
                            onChange={this.handleInput}
                            placeholder="Enter competition name (e.g. Bundesliga)" />
-                    <button disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
+                    <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
                 </div>
 
-                {this.state.searching && <i className="fa fa-cog fa-spin"></i>}
+                {this.state.searching && <i className="fa fa-cog fa-spin"/>}
 
                 {this.state.searchDone && this.state.results.length > 0 && <div>
                     {this.state.resultMessage}
@@ -111,11 +112,11 @@ class SearchCompetition extends  React.Component {
                     Your search "{this.state.input}" did not match any products.
                 </div>}
 
-                <div>
+                <div className="step-item-description">
                     {!this.state.searchDone && <span>Do you want to list content, which is not related to a specific competition?</span>}
                     {this.state.searchDone && this.state.results.length > 0 && <span>Can't find your competition in our list? </span>}
                     {this.state.searchDone && this.state.results.length === 0 && <span>Try another search or create content manually</span>}
-                    <button onClick={this.props.close}>Create content manually</button>
+                    <button className={"link-button"} onClick={this.props.close}>Create content manually</button>
                 </div>
             </div>
         )

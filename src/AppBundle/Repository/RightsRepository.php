@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Rights;
 
 /**
  * RightsRepository
@@ -10,4 +11,25 @@ namespace AppBundle\Repository;
  */
 class RightsRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $packages
+     * @param $group
+     * @return Rights []
+     */
+    public function getByPackagesAndGroup( $packages, $group ){
+
+        return
+            $this->createQueryBuilder('rights')
+                ->select('rights')
+                ->where( 'rights.group = :group')
+                ->leftJoin('rights.packages', 'rights_package')
+                ->andWhere( 'rights_package.id IN (:packages)')
+                ->groupBy('rights.id')
+                ->setParameter('packages', $packages )
+                ->setParameter('group', $group )
+                ->getQuery()
+                ->getResult();
+                //->getArrayResult();
+
+    }
 }

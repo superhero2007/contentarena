@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Rights
@@ -23,6 +24,7 @@ class Rights
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"common"})
      */
     private $id;
 
@@ -30,12 +32,14 @@ class Rights
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"common"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\RightsGroup")
      * @ORM\JoinColumn(nullable=true)
+     *
      */
     private $group;
 
@@ -46,7 +50,8 @@ class Rights
      *      joinColumns={@JoinColumn(name="rights_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     *  @MaxDepth(1)
+     * @MaxDepth(1)
+     * @Groups({"common"})
      */
     private $packages;
 
@@ -60,6 +65,7 @@ class Rights
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsItemContent", inversedBy="rights")
      * @JoinTable(name="rights_items_join")
+     * @Groups({"common"})
      */
     private $items;
 
@@ -67,6 +73,7 @@ class Rights
      * @var boolean
      *
      * @ORM\Column(name="multiple", type="boolean")
+     * @Groups({"common"})
      */
     private $multiple;
 
@@ -74,6 +81,7 @@ class Rights
      * @var boolean
      *
      * @ORM\Column(name="hidden", type="boolean")
+     * @Groups({"common"})
      */
     private $hidden = false;
 
@@ -81,6 +89,7 @@ class Rights
      * @var boolean
      *
      * @ORM\Column(name="$all_enabled", type="boolean")
+     * @Groups({"common"})
      */
     private $all_enabled;
 
@@ -88,6 +97,7 @@ class Rights
      * @var boolean
      *
      * @ORM\Column(name="collectively", type="boolean")
+     * @Groups({"common"})
      */
     private $collectively;
 

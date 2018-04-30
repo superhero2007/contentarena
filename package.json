@@ -16,6 +16,7 @@
     "react-table": "^6.8.2",
     "react-tagsinput": "^3.19.0",
     "redux": "^3.7.2",
+    "uikit": "^3.0.0-beta.42",
     "webpack-jquery-ui": "^1.0.0",
     "webpack-preset": "^0.2.0",
     "webpack-preset-babel": "^0.2.0",

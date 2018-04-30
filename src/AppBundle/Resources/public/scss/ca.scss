@@ -1,0 +1,279 @@
+@import "vars";
+
+html {
+  font-family: $font-stack;
+}
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  text-transform: none;
+  font-family: 'Open Sans', sans-serif;
+}
+
+button{
+  cursor: pointer;
+}
+
+.main-container{
+  background-color: white;
+  margin: 20px;
+}
+
+.sell-form-container {
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    .buttons-container{
+      margin: 0 0 20px;
+      display: inline-flex;
+      justify-content: center;
+      .step{
+        height: 50px;
+        width: 53px;
+        border: 1px solid #D4D8DE;
+        background-color: #F4F6F9;
+        color: #9DA4B0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 5px;
+      }
+      .step-active{
+        background-color: #1A4B63;
+        color: white;
+      }
+    }
+  }
+
+  .step-content{
+    color: #1a1a1a;
+    padding: 20px;
+    text-align: left;
+    .step-title{
+      font-size: $font-size-extra-large;
+      color: #4F4F4F;
+      font-weight: 600;
+      line-height: 43px;
+      margin-bottom: 20px;
+    }
+    .step-content-container {
+      display: flex;
+      flex-direction: column;
+      .react-tagsinput {
+        width: 100%;
+        height: 36px;
+        margin-left: 5px;
+        border-color: lightgray;
+        padding: 5px;
+        display: block;
+        flex-direction: row;
+        input.react-tagsinput-input {
+          height: 37px !important;
+        }
+        .react-tagsinput-tag {
+          background-color: #FFC94B;
+          color: #062E44;
+          padding: 8px;
+          border: none;
+          display: flex;
+          margin: 3px;
+        }
+      }
+      .react-tagsinput>span {
+        display: flex;
+        height: 37px;
+        padding: 0;
+      }
+      .base-input{
+        padding-bottom: 5px;
+        border-bottom: 4px solid $border-color-1;
+        display: flex;
+        margin-bottom: 20px;
+        position: relative;
+        max-width: 872px;
+        .fa-cog {
+          position: absolute;
+          right: 10px;
+          top: 10px
+        }
+        .currency-item {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 12px 0 8px;
+          font-size: 14px;
+          width: 100%;
+          flex: 1;
+          background: $light-background-color;
+          color: $font-color-1;
+          margin: 0 0 0 5px;
+          .currency-icon{
+            width: 26px;
+            height: 26px;
+            display: flex;
+            border-radius: 50%;
+            box-shadow: 0px 0px 2px #888;
+            justify-content: center;
+            margin: 0 5px 0;
+            align-items: center;
+            i {
+              font-size: 32px;
+              color: $blue-color;
+              padding: 0;
+            }
+          }
+
+        }
+        label {
+          text-transform: uppercase;
+          background-color: $blue-color;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 0 20px;
+          height: 48px;
+          font-size: 16px;
+          font-weight: 600;
+          width: 232px;
+          color: white;
+          min-width: 232px;
+          box-sizing: border-box;
+
+        }
+        input[type="text"], select{
+          width: 100%;
+          margin: 0 0 0 5px;
+          height: 44px;
+          padding: 0 8px;
+          font-size: 16px;
+        }
+      }
+      .textarea-input {
+        flex-direction: column;
+        @extend .base-input;
+        label{
+          width: 100%;
+          box-sizing: border-box;
+        }
+        textarea{
+          width: auto;
+          box-sizing: border-box;
+          font-size: 14px;
+          font-family: "Open Sans";
+          font-style: italic;
+        }
+      }
+      .step-item-description{
+        font-size: $font-size-medium-large;
+        font-style: italic;
+        font-weight: 600;
+        margin: 20px 0;
+      }
+      .schedule{
+        font-size: 14px;
+        .matchday{
+          padding: 5px;
+          border: 1px solid black;
+          width: 50%;
+          span {
+            display: block;
+            float: right;
+          }
+        }
+        .match{
+          padding: 5px;
+          border: 1px solid black;
+          margin-left: 30px;
+          width: 50%;
+          .select {
+            display: block;
+            float: right;
+          }
+        }
+        .selected{
+          background-color: $blue-color;
+          color: white;
+        }
+      }
+    }
+
+  }
+}
+
+.box-header{
+  display: flex;
+  flex-direction: row;
+  text-transform: none;
+  font-size: $font-size-medium-small;
+  background-color: $blue-color;
+  border-bottom: 4px solid $orange-color;
+
+  .step{
+    padding: 12px 20px 10px 70px;
+    text-align: left;
+    display: inline-block;
+    line-height: 14px;
+    position: relative;
+    .step-label{
+      text-transform: uppercase;
+    }
+    .step-title{
+
+    }
+    .step-icon{
+      position: absolute;
+      border-radius: 50%;
+      background-color: #2b5663;
+      width: 25px;
+      height: 25px;
+      top: 11px;
+      left: 20px;
+      border: 2px solid #8da9b1;
+    }
+  }
+  .step-active{
+    background-color: $orange-color;
+    .step-title{
+      color: #1a1a1a;
+    }
+  }
+}
+
+.selector{
+  .selector-filter {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    color: #1a1a1a;
+    background-color: $orange-color;
+  }
+  .selector-filter-active {
+    background-color: $blue-color;
+    color: white;
+  }
+  .selector-content{
+    display: flex;
+    width: 700px;
+    max-height: 400px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .selector-item{
+      color: #1a1a1a;
+      font-size: 12px;
+      padding: 3px;
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+      margin: 2px;
+      width: 200px;
+    }
+    .selector-item-selected{
+      background-color: $blue-color;
+      color: white;
+    }
+    .selector-item-disabled{
+      background-color: #888;
+      color: white;
+    }
+  }
+}

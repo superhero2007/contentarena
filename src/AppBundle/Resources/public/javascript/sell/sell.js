@@ -19,16 +19,50 @@ ReactDOM.render(
 
 $(function () {
 
+    window.ContentArena = window.ContentArena || {};
+    ContentArena.Model = ContentArena.Model || {};
+    ContentArena.Form = ContentArena.Form || {};
+    ContentArena.Test = ContentArena.Test || {};
+
+    $('#license-file-selector-hidden').checkFileType({
+        allowedExtensions: [ 'pdf', 'doc', 'docx'],
+        success: function() {
+        },
+        error: function() {
+            $('<div />').html('File type not allowed. Please upload a .pdf, .doc or .docx file').dialog();
+        }
+    });
+
+    $('#event-file-selector-hidden').checkFileType({
+        allowedExtensions: ['jpg', 'jpeg','png', 'pdf', 'doc', 'docx'],
+        success: function() {
+            var targetId = "#" + $(this).attr("ref");
+            $( targetId ).val($(this).val());
+        },
+        error: function() {
+            var targetId = "#" + $(this).attr("ref");
+            $( targetId ).attr("placeholder", "Allowed: .png, .jpg, .pdf, .doc, .docx").val("");
+            $(this).val("");
+            $('<div />').html('File type not allowed').dialog();
+        }
+    });
+
+    $(document).on('click', "#download-csv-sheet", function() {
+        window.location = envhosturl + "bundles/app/data/content-details.csv";
+    });
+
+    $('.website').mask("A", {
+        translation: {
+            "A": { pattern: /[\w/\-.+]/, recursive: true }
+        }
+    });
+
     /**
      * Renders all the tooltips
      */
     $( document ).tooltip();
 
     $(".has-datepicker").datepicker();
-
-    $("input").on('focus', function(){
-        $(this).removeClass("invalid");
-    });
 
     $(".optional").hide();
 });

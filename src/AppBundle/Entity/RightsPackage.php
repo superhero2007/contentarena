@@ -32,6 +32,14 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="short_label", type="string", length=5, unique=true)
+     * @Groups({"common"})
+     */
+    private $shortLabel;
+
+    /**
      * One Category has Many Categories.
      * @ORM\ManyToMany(targetEntity="RightsPackage", inversedBy="parent")
      */
@@ -117,6 +125,22 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
     public function setParent($parent)
     {
         $this->parent = $parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShortLabel()
+    {
+        return $this->shortLabel;
+    }
+
+    /**
+     * @param string $shortLabel
+     */
+    public function setShortLabel($shortLabel)
+    {
+        $this->shortLabel = $shortLabel;
     }
 
 

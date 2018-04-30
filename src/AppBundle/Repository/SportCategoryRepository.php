@@ -26,6 +26,7 @@ class SportCategoryRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('sc')
             ->where('sc.countryCode IS NOT NULL')
             ->andWhere('sc.countryCode != :identifier')
+            ->groupBy("sc.countryCode")
             ->setParameter('identifier', "")
             ->getQuery()
             ->getArrayResult();

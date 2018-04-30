@@ -84,12 +84,39 @@ ContentArena.Api= {
         let _this = this;
         $.ajax({
             url: envhosturl + "search/countries/all",
-            type: "GET",
+            type: "POST",
             /**
              * @param {array} response
              */
             success: function (response) {
                 response.sort(_this.sortByLabel);
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    getRights (rightsPackage, group) {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "search/rights",
+            type: "POST",
+            data : {
+                rightsPackage: rightsPackage,
+                group: group
+            },
+
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
                 deferred.resolve(response);
             },
             error : function (data, status) {

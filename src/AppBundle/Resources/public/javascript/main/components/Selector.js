@@ -32,6 +32,8 @@ class Selector extends React.Component {
             updated : false,
             filterUpdated : false,
             open : props.selector,
+            prevCountries : new Map(),
+            customCountry : false,
             selectorItems : props.selectorItems || [],
             popularItems : props.popularItems || [],
             filter : {
@@ -80,7 +82,7 @@ class Selector extends React.Component {
     };
 
     closeModal = () => {
-        this.setState({ updated: false, filterUpdated : false });
+        this.setState({ updated: false, filterUpdated : false, customCountry :false });
         this.props.closeSelector();
     };
 
@@ -116,10 +118,19 @@ class Selector extends React.Component {
 
     applySelection = () => {
 
-        this.setState({ updated: false, filterUpdated : false });
+        let selectedItems = this.state.selectedItems,
+            prevCountries = this.state.prevCountries;
+
+        if ( this.state.customCountry ){
+            selectedItems.forEach((item)=>{
+                if (!prevCountries.has(item.externalId)) item.extended = true;
+            });
+        }
+
+        this.setState({ updated: false, filterUpdated : false, customCountry : false });
         this.props.applySelection(
             this.props.selectorType,
-            this.state.selectedItems,
+            selectedItems,
             this.props.multiple,
             this.props.index,
             this.props.clean);
@@ -151,7 +162,7 @@ class Selector extends React.Component {
 
     selectItem = ( item ) => {
 
-        var _this = this;
+        let _this = this;
 
         this.setState((prevState) => {
 
@@ -190,9 +201,11 @@ class Selector extends React.Component {
 
         if ( !ContentArena.Data.Countries || ContentArena.Data.Countries.length ===0 ) return;
 
-        this.setState({
-            selectorItems : ContentArena.Data.Countries
-        });
+        this.setState((prevState) => ({
+            prevCountries : new Map(prevState.selectorItems.map(i=>[i.externalId, i])) ,
+            selectorItems : ContentArena.Data.Countries,
+            customCountry : true
+        }));
 
     };
 

@@ -40,9 +40,11 @@ class FileSelector extends Component {
     };
 
     render() {
-        return (<div>
-            <button onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload File</button>
-            <input className="is-hidden"
+        return (
+            <div className="base-input">
+                <label>Files</label>
+                <button className="standard-button" onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload</button>
+                <input className="is-hidden"
                    onChange={this.handleUploadFile}
                    accept=".png,.jpg, .pdf, .doc, .docx"
                    id={"input-" + this.props.target}
@@ -50,7 +52,7 @@ class FileSelector extends Component {
                 { this.getItems().map((item, i)=>{
                     return <FileItem key={i} item={item} onClick={ () => this.remove(item.size)} />
                 })}
-        </div>
+            </div>
         )
     }
 }

@@ -38,22 +38,28 @@ class NewSeason extends React.Component{
     render(){
         return (
             <div>
-                <div>
+                <div className="base-input">
+                    <label>Season</label>
                     <input
                         className="new-season"
                         type="text"
                         onBlur={this.props.onBlur}
                         defaultValue={this.props.value}
                         placeholder="Enter season name"/>
-                    { this.props.showClose && <i onClick={this.props.onRemove} className="fa fa-close"/>}
+                    { this.props.showClose &&
+                    <button className={"standard-button"} onClick={this.props.onRemove}>
+                        <i className="fa fa-close"/>
+                    </button>}
                 </div>
-                <div>
-                    From
+                <div className="base-input">
+                    <label>From</label>
                     <select onChange={this.setStartDate}>
                         <option/>
                         {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
                     </select>
-                    To
+                </div>
+                <div className="base-input">
+                    <label>From</label>
                     <select disabled={!this.state.startDate}>
                         {this.getEndOptions()}
                         <option value={0}>Not applicable</option>

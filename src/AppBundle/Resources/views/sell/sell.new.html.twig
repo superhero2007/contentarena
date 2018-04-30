@@ -1,4 +1,4 @@
-{% extends "@App/sell/sell.layout.html.twig" %}
+{% extends "layout.html.twig" %}
 
 {% block stylesheets %}
 
@@ -8,11 +8,7 @@
 
 {% endblock %}
 
-{% block sell_content %}
-
-    {#{{ include('@App/sell/new/step1.html.twig', { }) }}
-
-    {{ include('@App/sell/new/step2.html.twig', { 'packages' : packages, 'rights' : rights }) }}#}
+{% block main_content %}
 
     {# REACT CONTAINER#}
     <div id="sell-form-container"
@@ -23,9 +19,7 @@
     >
     </div>
 
-    {#{{ include('@App/sell/new/templates.html.twig') }}#}
-
-{% endblock sell_content %}
+{% endblock main_content %}
 
 {% block javascripts %}
     {{ parent() }}

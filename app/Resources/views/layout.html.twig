@@ -4,13 +4,11 @@
         <meta charset="UTF-8" />
         {% block stylesheets %}
             <link href="{{ asset('assets/vendor.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/uikit.min.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/inherited.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/layout.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/jquery-ui.theme.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('assets/common.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('assets/app.css') }}" type="text/css" rel="stylesheet" />
+            <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
         {% endblock %}
 
         {#<script>
@@ -25,74 +23,75 @@
     </head>
     <body class="page-home main-page-home">
 
-    <div id="mainmenuLandingpage" uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; top: 200; animation: uk-animation-slide-top" class="mainnavbar-sticky uk-sticky uk-sticky-below uk-sticky-fixed" style="position: fixed; top: 0px; width: 534px;">
-        <nav class="uk-navbar-container uk-container uk-navbar-transparent uk-navbar uk-navbar-sticky" uk-navbar="">
+        <nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
-                <div class="">
-                    <a class="uk-navbar-item uk-logo mainMenuLogo" href="{{ path('homepage') }}">
-                        <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}" alt="Content Arena  Pte Ltd. 2017" class="uk-responsive-height">
-                    </a>
-                </div>
+
+                <a class="uk-navbar-item uk-logo" href="{{ path('homepage') }}">
+                    <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}" alt="Content Arena  Pte Ltd. 2017" class="uk-responsive-height">
+                </a>
+
             </div>
             <div class="uk-navbar-right">
-                <div class="uk-visible@m">
-                    <ul class="uk-navbar-nav">
+                <ul class="uk-navbar-nav">
+                    <li class="{% if app.request.get('_route') == 'buy'%} uk-active {% endif %}">
+                        <a href="{{ path('buy') }}">
+                            Buy
+                        </a>
+                    </li>
+                    <li class="{% if app.request.get('_route') == 'sell'%} uk-active {% endif %}">
+                        <a href="{{ path('sell') }}">
+                            Sell
+                        </a>
+                    </li>
+                    <li class="{% if app.request.get('_route') == 'myContent'%} uk-active {% endif %}">
+                        <a href="{{ path('myContent') }}">
+                            My content
+                        </a>
+                    </li>
+                    <li class="{% if app.request.get('_route') == 'messages'%} uk-active {% endif %}">
+                        <a href="{{ path('myContent') }}">
+                            Messages
+                        </a>
+                    </li>
+                    <li class="{% if app.request.get('_route') == 'company'%} uk-active {% endif %}">
+                        <a href="{{ path('myContent') }}">
+                            Company
+                        </a>
+                    </li>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li>
-                            <a href="{{ path('myContent') }}" uk-scroll="offset:200">
-                                <i uk-icon="icon: triangle-down" class="uk-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
-                                </i>
-                                My content
+                            <a href="" uk-scroll="offset:200" class="uk-navbar-name">
+                                {{ app.user.firstName }}
+                            </a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        <li>
+                                            <a href="{{ path('admin') }}"  uk-scroll="offset:200">
+                                                Admin
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    <li>
+                                        <a href="{{ path('fos_user_security_logout') }}">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('fos_user_security_login') }}">
+                                Company
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ path('newListing') }}" uk-scroll="offset:200">
-                                <i uk-icon="icon: triangle-down" class="uk-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
-                                </i>
-                                Sell
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('buy') }}" uk-scroll="offset:200">
-                                <i uk-icon="icon: triangle-down" class="uk-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polygon points="5 7 15 7 10 12"></polygon></svg>
-                                </i>
-                                Buy
-                            </a>
-                        </li>
-                        <li>
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <a href="{{ path('profile') }}"  uk-scroll="offset:200">
-                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                                </a>
-                            {% endif %}
-                        </li>
-                        <li>
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <a href="{{ path('fos_user_security_logout') }}"  uk-scroll="offset:200">
-                                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                                </a>
-                            {% else %}
-                                <a href="{{ path('fos_user_security_login') }}"  uk-scroll="offset:200">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                            {% endif %}
-                        </li>
-                        {% if is_granted("ROLE_ADMIN") %}
-                            <li>
-                                <a href="{{ path('admin') }}"  uk-scroll="offset:200">
-                                    Admin
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-                <ul class="uk-navbar-nav uk-hidden@m">
-                    <li><a href="#mainMenuOffCanvas" uk-toggle=""><span class="menubuttontext uk-margin-small-right uk-text-uppercase"> Menu</span> <span uk-icon="icon: menu" class="uk-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <rect x="2" y="4" width="16" height="1"></rect> <rect x="2" y="9" width="16" height="1"></rect> <rect x="2" y="14" width="16" height="1"></rect></svg></span></a></li>
+                    {% endif %}
+
                 </ul>
             </div>
         </nav>
-    </div>
-    
+
 
         {% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashbag.all() %}

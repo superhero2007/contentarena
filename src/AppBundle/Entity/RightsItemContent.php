@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * RightsItemContent
@@ -19,6 +20,7 @@ class RightsItemContent
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"common"})
      */
     private $id;
 
@@ -26,6 +28,7 @@ class RightsItemContent
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"common"})
      */
     private $name;
 
@@ -33,6 +36,7 @@ class RightsItemContent
      * @var string
      *
      * @ORM\Column(name="form_content", type="text", nullable=true)
+     * @Groups({"common"})
      */
     private $form_content;
 
@@ -59,7 +63,8 @@ class RightsItemContent
     /**
      * @var boolean
      *
-     * @ORM\Column(name="not_optional", type="boolean", )
+     * @ORM\Column(name="not_optional", type="boolean" )
+     * @Groups({"common"})
      */
     private $notOptional = false;
 

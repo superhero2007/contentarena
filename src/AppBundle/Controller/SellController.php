@@ -4,13 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Service\FileUploader;
-use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
-use JMS\Serializer\SerializationContext;
 use AppBundle\Entity\Content;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
 class SellController extends Controller
@@ -21,7 +21,7 @@ class SellController extends Controller
      */
     public function sellAction(Request $request)
     {
-        return $this->redirectToRoute('newListing', array(
+        return $this->redirectToRoute('sellListings', array(
         ));
 
     }
@@ -78,7 +78,6 @@ class SellController extends Controller
 
         $content = new Content();
 
-        // replace this example code with whatever you need
         return $this->render('@App/sell/sell.new.html.twig', [
 
             'content' =>  $serializer->serialize($content, 'json'),

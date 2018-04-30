@@ -1,0 +1,67 @@
+@import "vars";
+
+.package-selector{
+  border-bottom: 4px solid $border-color-2;
+  margin-bottom: 20px;
+  background-color: $light-background-color;
+
+  .package-selector-title{
+    background-color: $background-2;
+    padding-left: 20px;
+    color: white;
+    height: 54px;
+    justify-content: center;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2px;
+  }
+
+  .package-selector-container{
+
+    display: flex;
+    flex-direction: row;
+
+    .package-selector-content{
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      flex: 5;
+      color: $font-color-1;
+      font-size: 16px;
+      input[type="checkbox"] + label {
+        display: inline-block;
+        width: 19px;
+        height: 19px;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        background-color: #E8EBF0;
+        position: relative;
+        margin-right: 5px;
+        margin-left: 6px;
+        border: 1px solid #A9B5C6;
+        border-radius: 4px;
+
+      }
+    }
+
+    .package-selector-buttons{
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button{
+        font-size: 16px;
+        line-height: 18px;
+        background-color: $blue-color;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        min-height: 53px;
+        margin-right: 20px;
+      }
+    }
+  }
+}
+

@@ -10,7 +10,8 @@ export const contentType= {
     UPDATE_CONTENT_VALUE : 'UPDATE_CONTENT_VALUE',
     SELECT_TOURNAMENT : 'SELECT_TOURNAMENT',
     REMOVE_FROM_MULTIPLE : 'REMOVE_FROM_MULTIPLE',
-    APPLY_SELECTION : 'APPLY_SELECTION'
+    APPLY_SELECTION : 'APPLY_SELECTION',
+    UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
 };
 
 export const content = (state = {
@@ -19,7 +20,8 @@ export const content = (state = {
     tournament : [],
     sportCategory : [],
     sports : [],
-    seasons: []
+    seasons: [],
+    programs : []
 }, action) => {
 
     let newState = {};
@@ -97,17 +99,32 @@ export const content = (state = {
             return Object.assign({}, state, newState);
         case contentType.SUPER_RIGHTS_UPDATED:
 
-            let rightsPackage = state.rightsPackage;
-            let index = ContentArena.Utils.getIndex(action.rightsPackage.id, rightsPackage, "id");
-            if (  index === -1 ){
-                rightsPackage.push(action.rightsPackage)
-            } else {
-                rightsPackage.splice(index, 1)
+            if ( action.reset ) return Object.assign({}, state, {rightsPackage : [] });
+            return Object.assign({}, state, {
+                rightsPackage : Array.from(action.rightsPackage.values())
+            });
+
+        case contentType.UPDATE_PROGRAMS:
+
+            let programs = [...state.programs];
+
+            if ( action.name === "remove" ) {
+
+                if ( programs.length > 1 ) {
+                    programs.splice(action.index,1)
+                }  else {
+                    programs[0]= {name: '', saved: false}
+                }
             }
+            if ( action.name === "add" ) programs = [...programs,action.program];
+            if ( action.name === "save" ) programs[action.index] = action.program;
+
 
             return Object.assign({}, state, {
-                rightsPackage : rightsPackage
+                programs : programs
             });
+
+
         default:
             return state;
     }

@@ -4,7 +4,12 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\RightsGroup;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
 class SearchController extends Controller
 {
@@ -42,5 +47,33 @@ class SearchController extends Controller
         $countries = $sportCategoryRepository->getCountries();
 
         return new JsonResponse($countries);
+    }
+
+    /**
+     * @Route("/search/rights", name="searchRights")
+     */
+    public function searchRights(Request $request){
+
+        $rightsPackage = $request->get('rightsPackage');
+        $groupName = $request->get('group');
+
+        //Take Repositories
+        $repository = $this->getDoctrine()->getRepository("AppBundle:Rights");
+        $groupRepository = $this->getDoctrine()->getRepository(RightsGroup::class);
+        $group = $groupRepository->findBy(array("name"=>$groupName));
+
+            //Get results
+        $rights = $repository->getByPackagesAndGroup($rightsPackage, $group);
+
+        /**
+         * Strategy to keep camel case on property names
+         */
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($rights, 'json',SerializationContext::create()->setGroups(array('common')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

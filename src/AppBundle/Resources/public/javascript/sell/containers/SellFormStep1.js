@@ -30,7 +30,10 @@ class SellFormStep1 extends React.Component {
             seasons: [],
             schedules: {},
             showSearch : true,
-            website: []
+            website: [],
+            tournaments: [],
+            sportCategories: [],
+            sportCategoryExtended : false
         };
     }
 
@@ -39,15 +42,16 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.FullSports = sports;
         });
 
-        ContentArena.Api.getCountries().done( (countries ) => {
-            ContentArena.Data.Countries = countries;
-        });
-
+        if ( ContentArena.Data.Countries.length === 0) {
+            ContentArena.Api.getCountries().done( (countries ) => {
+                ContentArena.Data.Countries = countries;
+            });
+        }
     }
 
-    loadCategories (nextProps) {
+    loadCategories (sport) {
 
-        let sportId = nextProps.sports[0].externalId;
+        let sportId = sport.externalId;
 
         if ( sportId === this.state.lastSportId ) return;
 
@@ -58,10 +62,10 @@ class SellFormStep1 extends React.Component {
         });
     }
 
-    loadTournaments (nextProps) {
+    loadTournaments (sport, category) {
 
-        let sportId = nextProps.sports[0].externalId;
-        let categoryId = ( nextProps.sportCategory.length > 0 ) ? nextProps.sportCategory[0].externalId : null;
+        let sportId = sport.externalId;
+        let categoryId = ( category ) ? category.externalId : null;
 
         if ( sportId === this.state.lastSportId && categoryId === this.state.lastCategoryId ) return;
 
@@ -76,9 +80,9 @@ class SellFormStep1 extends React.Component {
         });
     }
 
-    loadSeasons (nextProps) {
+    loadSeasons (tournaments) {
 
-        let tournamentId = ( nextProps.tournament.length > 0 ) ? nextProps.tournament[0].externalId : null;
+        let tournamentId = ( tournaments.length > 0 ) ? tournaments[0].externalId : null;
 
         if ( tournamentId === this.state.lastTournamentId ) return;
 
@@ -122,8 +126,16 @@ class SellFormStep1 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        let tournaments, seasons, sportCategories, website;
+
+        tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
+        seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
+        sportCategories =( Array.isArray(nextProps.sportCategory) ) ? nextProps.sportCategory : [nextProps.sportCategory];
+        website =( Array.isArray(nextProps.website) ) ? nextProps.website : [nextProps.website];
+
         if (nextProps.sports.length === 1) {
-            this.loadCategories(nextProps);
+            this.loadCategories(nextProps.sports[0]);
             this.setState(() => ({
                 showSearch: false
             }));
@@ -136,20 +148,28 @@ class SellFormStep1 extends React.Component {
             }));
         }
 
-        if (nextProps.sports.length === 1 || nextProps.sportCategory.length === 1) this.loadTournaments(nextProps);
-        if (nextProps.tournament.length === 1 && !nextProps.tournament[0].custom) {
-            this.loadSeasons(nextProps);
-        }
-        if (nextProps.seasons.length > 0) {
-            this.setState(() => ({
-                seasonSelectors: [...Array(nextProps.seasons.length).keys()]
-            }));
+        if (nextProps.sports.length === 1 || sportCategories.length === 1) this.loadTournaments(nextProps.sports[0], sportCategories[0]);
 
+        if (tournaments.length === 1) if (!tournaments[0].custom) this.loadSeasons(tournaments);
+
+        this.setState({
+            sportCategories: sportCategories,
+            tournaments : tournaments
+        });
+
+        if (sportCategories.length === 1 ) {
+            this.setState({sportCategoryExtended : sportCategories[0].extended});
+        }
+
+        if (seasons.length > 0) {
+            this.setState(() => ({
+                seasonSelectors: [...Array(seasons.length).keys()]
+            }));
             this.loadSchedule(nextProps);
         }
 
-        if (nextProps.website && nextProps.website.length > 0) {
-            this.setState({ website: nextProps.website});
+        if (website && website.length > 0) {
+            this.setState({ website: website});
         }
 
     }
@@ -158,7 +178,7 @@ class SellFormStep1 extends React.Component {
         this.props.updateContentValue(key,event.target.value);
     };
 
-    forceCustomTournament = () => { return this.hasCustomSport() || this.hasCustomCategory()  };
+    forceCustomTournament = () => { return this.hasCustomSport() || this.hasCustomCategory() || this.state.sportCategoryExtended  };
 
     forceCustomCategory = () => { return this.hasCustomSport()  };
 
@@ -181,21 +201,21 @@ class SellFormStep1 extends React.Component {
     hasCustomCategory = () => {
         let hasCustomCategory = false;
 
-        this.props.sportCategory.forEach( ( sportCategory ) => {
+        this.state.sportCategories.forEach( ( sportCategory ) => {
             if ( sportCategory.custom ) hasCustomCategory = true;
         });
 
-        return this.forceCustomCategory() || hasCustomCategory;
+        return this.forceCustomCategory() || hasCustomCategory ;
     };
 
     hasCustomTournament = () => {
         let hasCustomTournament = false;
 
-        this.props.tournament.forEach( ( tournament ) => {
+        this.state.tournaments.forEach( ( tournament ) => {
             if ( tournament.custom ) hasCustomTournament = true;
         });
 
-        return this.forceCustomTournament() || hasCustomTournament;
+        return this.forceCustomTournament() || hasCustomTournament || this.state.sportCategoryExtended;
     };
 
     hasCustomSeason = () => {
@@ -296,27 +316,28 @@ class SellFormStep1 extends React.Component {
                 inputProps.seasons.push({value: season.name,isCustom : season.custom})
             });
         }
-        if ( this.props.sportCategory.length > 0 ) {
+        if ( this.state.sportCategories.length > 0 ) {
             inputProps.sportCategory = {
-                value: this.props.sportCategory[0].name,
-                isCustom: this.props.sportCategory[0].isCustom
+                value: this.state.sportCategories[0].name,
+                isCustom: this.state.sportCategories[0].isCustom
             }
         }
-        if ( this.props.tournament.length > 0 ) {
+        if ( this.state.tournaments.length > 0 ) {
             inputProps.tournament = {
-                value: this.props.tournament[0].name,
-                isCustom: this.props.tournament[0].isCustom
+                value: this.state.tournaments[0].name,
+                isCustom: this.state.tournaments[0].isCustom
             }
         }
 
         return (
             <div className="step-content">
+                <div className="step-title">{this.state.title}</div>
 
                 {this.state.showSearch && <SearchCompetition close={this.toggleSearch} select={this.selectTournament} />}
-                {!this.state.showSearch && <button onClick={this.toggleSearch}>Show search function</button>}
+                {!this.state.showSearch && <button className="light-blue-button" onClick={this.toggleSearch}><i className="fa fa-search"/> Show search function</button>}
                 {!this.state.showSearch && <div className="step-content-container">
 
-                    <div className="step-item-description">
+                    <div className="step-item-description" >
                         Please select the sport(s) and competition(s) covered by your content listing:
                     </div>
 
@@ -334,45 +355,51 @@ class SellFormStep1 extends React.Component {
                         })
                     }
 
-                    {this.state.sportSelectors.length === 1 && <div>
-                        Your content covers multiple sports? <button onClick={this.addSportSelector}>Please click here</button>
+                    {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px"}}>
+                        Your content covers multiple sports? <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
                     </div>}
-                    {this.state.sportSelectors.length === 1 && <div>
-                        {!this.hasCustomCategory() && <input
+
+                    {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&
+                    <div className="base-input">
+                        <label>Country/Category</label>
+                        <input
                             type="text"
                             value={inputProps.sportCategory.value || ""}
                             readOnly={true}
                             disabled={this.props.sports.length === 0 || this.state.loadingCategories}
                             onClick={() => {
-                                this.props.openCategorySelector(this.props.sportCategory)
+                                this.props.openCategorySelector(this.state.sportCategories)
                             }}
                             placeholder={"Country/Category"}  />
-                        }
-                        { this.hasCustomCategory() && <NewCategory
-                            showClose={!this.forceCustomCategory()}
-                            value={this.props.customCategory}
-                            onBlur={ (e) => this.updateContentValue(e, "customCategory")}
-                            onClick={this.props.removeNewCategory}
-                        />}
                         { this.state.loadingCategories && <i className="fa fa-cog fa-spin"/>}
                     </div>}
-                    {this.state.sportSelectors.length === 1 && <div>
-                        {!this.hasCustomTournament() && <input type="text"
+                    {this.state.sportSelectors.length === 1 && this.hasCustomCategory() && <NewCategory
+                        showClose={!this.forceCustomCategory()}
+                        value={this.props.customCategory}
+                        onBlur={ (e) => this.updateContentValue(e, "customCategory")}
+                        onClick={this.props.removeNewCategory}
+                    />}
+                    {this.state.sportSelectors.length === 1 && !this.hasCustomTournament() &&
+                    <div className="base-input">
+                        <label>Competition</label>
+                        <input type="text"
                                value ={inputProps.tournament.value || ""}
                                readOnly={true}
                                disabled={this.props.sports.length === 0 || this.state.loadingTournaments}
                                onClick={() => {
-                                   this.props.openTournamentSelector( this.props.tournament );
+                                   this.props.openTournamentSelector( this.state.tournaments );
                                }}
-                               placeholder={"Tournament"}  />}
-                        { ( this.hasCustomTournament() )
-                        && <NewTournament showClose={!this.forceCustomTournament()}
-                                          value={this.props.customTournament}
-                                          onBlur={ (e) => this.updateContentValue(e, "customTournament")}
-                                          onClick={this.props.removeNewTournament} />}
-
+                               placeholder={"Tournament"}  />
                         { this.state.loadingTournaments && <i className="fa fa-cog fa-spin"/>}
                     </div>}
+
+                    { this.state.sportSelectors.length === 1 && this.hasCustomTournament() &&
+                    <NewTournament showClose={!this.forceCustomTournament()}
+                                      value={this.props.customTournament}
+                                      onBlur={ (e) => this.updateContentValue(e, "customTournament")}
+                                      onClick={this.props.removeNewTournament} />
+                    }
+
                     {this.state.sportSelectors.length === 1 && ( this.state.seasons.length > 0 || this.forceCustomSeason() )
                         && this.state.seasonSelectors.length > 0 &&
                     this.state.seasonSelectors.map( (season, i) => {
@@ -392,7 +419,12 @@ class SellFormStep1 extends React.Component {
                     })}
 
                     <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
-                    <TagsInput inputProps={{placeholder: "Website"}} value={this.state.website} onChange={this.websitesUpdated} />
+
+                    <div className="base-input">
+                        <label>Website</label>
+                        <TagsInput inputProps={{placeholder: "Website"}} value={this.state.website} onChange={this.websitesUpdated} />
+                    </div>
+
                     <FileSelector target={"brochure"}/>
                 </div>}
             </div>
