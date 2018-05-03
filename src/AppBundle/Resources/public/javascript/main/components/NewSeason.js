@@ -28,7 +28,7 @@ class NewSeason extends React.Component{
             )
         }
 
-        return (<option/>)
+        return (<option>Year</option>)
     };
 
     setStartDate = (e) => {
@@ -52,14 +52,14 @@ class NewSeason extends React.Component{
                     </button>}
                 </div>
                 <div className="base-input">
-                    <label>From</label>
+                    <label>Season year</label>
+                    <label className={"season-selector-label"}>From</label>
                     <select onChange={this.setStartDate}>
                         <option/>
+                        <option disabled>Year</option>
                         {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
                     </select>
-                </div>
-                <div className="base-input">
-                    <label>From</label>
+                    <label className={"season-selector-label"}>/To</label>
                     <select disabled={!this.state.startDate}>
                         {this.getEndOptions()}
                         <option value={0}>Not applicable</option>

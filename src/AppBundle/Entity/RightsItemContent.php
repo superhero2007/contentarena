@@ -69,6 +69,30 @@ class RightsItemContent
     private $notOptional = false;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="calendar", type="boolean" )
+     * @Groups({"common"})
+     */
+    private $calendar = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="textarea", type="boolean" )
+     * @Groups({"common"})
+     */
+    private $textarea = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="input_number", type="boolean" )
+     * @Groups({"common"})
+     */
+    private $inputNumber = false;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Rights")
      * @ORM\JoinTable(name="rights_items_children_join")
      */
@@ -209,6 +233,54 @@ class RightsItemContent
     public function setChildren($children)
     {
         $this->children = $children;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCalendar()
+    {
+        return $this->calendar;
+    }
+
+    /**
+     * @param bool $calendar
+     */
+    public function setCalendar($calendar)
+    {
+        $this->calendar = $calendar;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTextarea()
+    {
+        return $this->textarea;
+    }
+
+    /**
+     * @param bool $textarea
+     */
+    public function setTextarea($textarea)
+    {
+        $this->textarea = $textarea;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInputNumber()
+    {
+        return $this->inputNumber;
+    }
+
+    /**
+     * @param bool $inputNumber
+     */
+    public function setInputNumber($inputNumber)
+    {
+        $this->inputNumber = $inputNumber;
     }
 
 

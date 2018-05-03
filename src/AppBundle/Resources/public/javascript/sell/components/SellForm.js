@@ -30,7 +30,7 @@ class SellForm extends React.Component {
         let _this = this;
         return (
             <div className="main-container">
-                <Selector />
+                <Selector style={{zIndex: 100}}/>
                 <SellFormSteps />
                 <SellFormStep1/>
                 <SellFormStep2 packages={this.props.packages} />

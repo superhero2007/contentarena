@@ -10,3 +10,4 @@ require('../scss/ca.scss');
 require('../scss/right.table.scss');
 require('../scss/package.selector.scss');
 require('../scss/buttons.scss');
+require('../scss/selector.scss');

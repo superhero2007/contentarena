@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PackageSelector from "../containers/PackageSelector";
 import Right from "../components/Right";
 import CurrencySelector from "../components/CurrencySelector";
+import LicenseDateSelector from "../components/LicenseDateSelector";
 import ProgramName from "../components/ProgramName";
 
 class SellFormStep2 extends React.Component {
@@ -108,6 +109,10 @@ class SellFormStep2 extends React.Component {
                             onSave={this.saveProgram}
                             onRemove={this.removeProgram} />
                     ))}
+
+                    {this.state.packagesConfirmed &&
+                    <LicenseDateSelector onClick={this.selectCurrency} selected={this.props.currency} />}
+
                 </div>
 
                 <div>

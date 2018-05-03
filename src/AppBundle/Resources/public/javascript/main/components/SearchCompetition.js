@@ -79,7 +79,7 @@ class SearchCompetition extends  React.Component {
                     <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
                 </div>
 
-                {this.state.searching && <i className="fa fa-cog fa-spin"/>}
+                {this.state.searching && <div><i className="fa fa-cog fa-spin"/></div>}
 
                 {this.state.searchDone && this.state.results.length > 0 && <div>
                     {this.state.resultMessage}
@@ -103,20 +103,29 @@ class SearchCompetition extends  React.Component {
                             Header: 'Sport',
                         }, {
                             Header: '', // Custom header components!
-                            Cell: props => <button onClick={() =>{ this.props.select(props.original) }}>Select</button>
+                            Cell: props => <button className={"blue-button"} onClick={() =>{ this.props.select(props.original) }}>Select</button>
                         }]}
                     />
                 </div>}
 
-                {this.state.searchDone && this.state.results.length === 0 && <div>
-                    Your search "{this.state.input}" did not match any products.
-                </div>}
+                <div style={{ display: "inline-flex" }} >
+                    {this.state.searchDone && this.state.results.length === 0 && <div>
+                        Your search "{this.state.input}" did not match any products.
+                    </div>}
 
-                <div className="step-item-description">
-                    {!this.state.searchDone && <span>Do you want to list content, which is not related to a specific competition?</span>}
-                    {this.state.searchDone && this.state.results.length > 0 && <span>Can't find your competition in our list? </span>}
-                    {this.state.searchDone && this.state.results.length === 0 && <span>Try another search or create content manually</span>}
-                    <button className={"link-button"} onClick={this.props.close}>Create content manually</button>
+                    {!this.state.searchDone &&<div className="step-item-description">
+                         Do you want to list content, which is not related to a specific competition?
+                    </div>}
+
+                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description">
+                        Can't find your competition in our list?
+                    </div>}
+
+                    {this.state.searchDone && this.state.results.length === 0 && <div className="step-item-description">
+                        Try another search or create content manually
+                    </div>}
+
+                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>Create content manually</button>
                 </div>
             </div>
         )

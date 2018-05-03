@@ -10,7 +10,14 @@ const customStyles = {
         right                 : 'auto',
         bottom                : 'auto',
         marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
+        transform             : 'translate(-50%, -50%)',
+        backgroundColor       : '#F4F6F9',
+        border                : 'none',
+        borderRadius          : 0,
+        borderBottom          : '4px solid #2AAAEC',
+    },
+    overlay : {
+        zIndex                : 100
     }
 };
 
@@ -270,16 +277,38 @@ class Selector extends React.Component {
                         />;
                     })}
                 </div>
-                <div>
-                    <button onClick={this.closeModal}>Cancel</button>
-                    <button onClick={this.applySelection} disabled={!this.state.updated}>Apply</button>
-                    <div>Can't find your sport in the list? </div>
-                    {this.props.showNewSport && <button onClick={() => { this.addNewSport(this.props.index) } } >Add new Sport</button>}
-                    {this.props.showNewTournament && <button onClick={ () => { this.addNewTournament(this.props.index ) } } >Add new Tournament</button>}
-                    {this.props.showNewSeason && <button onClick={() => { this.addNewSeason(this.props.index) } } >Add new Season</button>}
-                    {this.props.showAllCountries && <button onClick={this.showAllCountries } >Show all countries</button>}
-                    {this.props.showNewCategory && <button onClick={() => { this.addNewCategory(this.props.index) } } >Add new Category</button>}
+
+                <div className={"buttons"}>
+                    <button className={"light-blue-button"} style={{backgroundColor: customStyles.content.backgroundColor}} onClick={this.closeModal}>Cancel</button>
+                    <button className={"standard-button"} onClick={this.applySelection} disabled={!this.state.updated}>Apply</button>
                 </div>
+
+
+                {this.props.showNewSport && <div className={"extras"}>
+                    <div className={"message"}>Can't find your sport in the list? </div>
+                    <button className={"link-button"} onClick={() => { this.addNewSport(this.props.index) } } >Add new Sport</button>
+                </div>}
+
+                {this.props.showNewTournament && <div className={"extras"}>
+                    <div className={"message"}>Can't find your competition in the list? </div>
+                    <button className={"link-button"} onClick={ () => { this.addNewTournament(this.props.index ) } } >Add new Tournament</button>
+                </div>}
+
+                {this.props.showNewSeason && <div className={"extras"}>
+                    <div className={"message"}>Can't find your season in the list? </div>
+                    <button className={"link-button"} onClick={() => { this.addNewSeason(this.props.index) } } >Add new Season</button>
+                </div>}
+
+                { this.props.showAllCountries&& <div className={"extras"}>
+                    <div className={"message"}>Can't find your country in the list? </div>
+                    <button className={"link-button"} onClick={this.showAllCountries } >Show all countries</button>
+                </div>}
+
+                { this.props.showNewCategory && <div className={"extras"}>
+                    <div className={"message"}>Can't find your category in the list? </div>
+                    <button className={"link-button"} onClick={() => { this.addNewCategory(this.props.index) } } >Add new Category</button>
+                </div>}
+
             </Modal>
         );
     }

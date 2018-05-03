@@ -48,7 +48,7 @@ class SeasonSelector extends React.Component {
 
     render(){
         return (
-            <div>
+            <div style={{zIndex: 1}}>
                 {!this.props.isCustom &&
                 <div className="base-input">
                     <label>Season</label>
@@ -65,16 +65,17 @@ class SeasonSelector extends React.Component {
                         <i className="fa fa-close"/>
                     </button>
                     }
-                    { this.props.loading && <i className="fa fa-cog fa-spin"/>}
                 </div> }
+
                 { this.props.isCustom
                 && <NewSeason showClose={this.props.showClose}
                               onBlur={this.props.onBlur}
                               onRemove={this.props.removeSeason } />}
 
 
-                {this.props.schedules && <div>
-                    <button className="link-button" onClick={this.toggle}>Event list</button>
+                {this.props.schedules && <div className={"base-input"}  style={{zIndex: 1}}>
+                    <label>Event</label>
+                    <input type="text" placeholder={"Select events"} onClick={this.toggle}/>
                 </div>}
                 {this.state.showSchedule && <div>
                     <Schedules schedules={this.props.schedules}/>

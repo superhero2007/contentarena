@@ -3,7 +3,7 @@
 .light-blue-button{
     border: 1px solid $border-color-2;
     color: $border-color-2;
-    height: 50px;
+    height: 48px;
     background-color: white;
     display: flex;
     justify-content: center;
@@ -20,6 +20,20 @@
     font-size: 14px;
     font-style: italic;
     text-decoration: underline;
+}
+
+.blue-button{
+    color: white;
+    font-size: 16px;
+    padding: 10px 0px;
+    margin: -7px 0;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: $blue-color;
+    min-width: 100px;
 }
 
 .standard-button {
@@ -42,6 +56,14 @@
     outline: none;
     background-color: #FFC94B;
     width: 190px;
+    height: 48px;
+
+}
+.standard-button-big{
+    @extend .standard-button;
+    width: auto;
+    margin-left: 10px;
+    padding: 7px 40px;
 }
 
 .standard-button:disabled {

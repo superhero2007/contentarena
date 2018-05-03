@@ -25,6 +25,7 @@ class SellFormStep1 extends React.Component {
             loadingCategories : false,
             loadingTournaments : false,
             loadingSeasons: false,
+            loadingSchedule: false,
             seasonSelectors : [1],
             sportSelectors : [1],
             seasons: [],
@@ -132,7 +133,7 @@ class SellFormStep1 extends React.Component {
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
         seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
         sportCategories =( Array.isArray(nextProps.sportCategory) ) ? nextProps.sportCategory : [nextProps.sportCategory];
-        website =( Array.isArray(nextProps.website) ) ? nextProps.website : [nextProps.website];
+        website =( Array.isArray(nextProps.website) ) ? nextProps.website : (nextProps.website) ? [nextProps.website]: [];
 
         if (nextProps.sports.length === 1) {
             this.loadCategories(nextProps.sports[0]);
@@ -417,6 +418,8 @@ class SellFormStep1 extends React.Component {
                             showAddNew={this.state.seasonSelectors.length === i + 1}
                             openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
                     })}
+
+                    { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
                     <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
 
