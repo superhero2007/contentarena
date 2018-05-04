@@ -1,13 +1,6 @@
 import React from 'react';
-
-const CurrencyItem = ({selected, onClick, name}) => (
-    <div className={"currency-item"} onClick={onClick}>
-        <div className={"currency-icon"}>
-            {selected && <i className="fa fa-check-circle-o"/>}
-        </div>
-        {name}
-    </div>
-);
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 class LicenseDateSelector extends React.Component {
     constructor(props) {
@@ -15,14 +8,20 @@ class LicenseDateSelector extends React.Component {
         this.state = {
         };
     }
-    componentDidMount() {
-    }
-    componentWillUnmount() {
-    }
 
+    handleStartDate = (date) => {
+        this.setState({
+            startDate: date
+        });
 
-    update = (selected) => {
-        this.setState({selected: selected});
+        this.props.onUpdate("startDate", date);
+    };
+
+    handleEndDate = (date) => {
+        this.setState({
+            endDate: date
+        });
+        this.props.onUpdate("endDate", date);
     };
 
     render(){
@@ -34,12 +33,27 @@ class LicenseDateSelector extends React.Component {
                         <div className="column right-package">All</div>
                     </div>
                     <div className="row bordered-row">
-                        <div className=" column right-item-content">Cable&amp; IPTV</div>
-                        <div className="column right-item-selection"></div>
+                        <div className=" column right-item-content">
+                            With contract conclusion
+                        </div>
+                        <div className="column right-item-selection">
+                            <div className="column right-item-selection">
+                                {<i className="fa fa-check-circle-o" />}
+                            </div>
+                        </div>
                     </div>
                     <div className="row bordered-row">
-                        <div className=" column right-item-content">Satellite</div>
-                        <div className="column right-item-selection"></div>
+                        <div className=" column right-item-content">
+                            From selected date
+                        </div>
+                        <div className="column right-item-selection">
+                            <DatePicker
+                                className={"date-picker"}
+                                selected={this.state.startDate}
+                                onChange={this.handleStartDate}
+                                placeholderText={"dd/mm/yyyy"}
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -56,8 +70,17 @@ class LicenseDateSelector extends React.Component {
                         </div>
                     </div>
                     <div className="row bordered-row">
-                        <div className=" column right-item-content">Satellite</div>
-                        <div className="column right-item-selection"></div>
+                        <div className=" column right-item-content">
+                            Until selected date
+                        </div>
+                        <div className="column right-item-selection">
+                            <DatePicker
+                                className={"date-picker"}
+                                selected={this.state.endDate}
+                                onChange={this.handleEndDate}
+                                placeholderText={"dd/mm/yyyy"}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

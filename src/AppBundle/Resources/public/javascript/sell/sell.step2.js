@@ -6,108 +6,6 @@ $(function () {
 
     ContentArena.Test = ContentArena.Test || {};
 
-    var selectorCounter = 0;
-
-    function getSelectedFullPackages() {
-        var list = [];
-
-        $(".package-selector:checked").each(function(k,v){
-
-            var pack = {
-                id : $(v).attr("id").split("-")[1],
-                name : $(v).attr("name").split("-")[1]
-            };
-
-            list.push(pack);
-        });
-
-        return list;
-    }
-
-    function getFullSelectedPackages() {
-        var response = {
-            selected : {},
-            selectedIds : [],
-            selectedNames : []
-        };
-
-        $(".package-selector:checked").each(function(k,v){
-
-            var id = $(v).attr("id").split("-")[1],
-                name = $(v).attr("name").split("-")[1];
-
-            response.selected[id] = {
-                id : id,
-                name : name
-            };
-
-            response.selectedIds.push(id);
-            response.selectedNames.push(name)
-
-        });
-
-        response.getIdByName = function( name ){
-            return this.selectedIds[this.selectedNames.indexOf(name)]
-        };
-
-        return response;
-    }
-
-    function collectSelectedRightItems (container){
-
-        var list = [];
-
-        container.find("input:checked, .not-optional").each(function (k, el) {
-
-            if ( !$(this).parent().parent().parent().is(":visible") ) return true;
-
-            if ( $(el).attr("all") !== undefined  ) return true;
-
-            var selectedRight = new ContentArena.Model.SelectedRight();
-
-            selectedRight.right = $(el).attr("right-id");
-            selectedRight.rightItem = $(el).attr("right-item-id");
-            selectedRight.group = $(el).data("group");
-
-            $(el).parent().parent().find("input:not([type='checkbox']):not(.chosen-search-input), textarea, select").each(function (key, element) {
-                selectedRight.inputs.push( $(element).val() );
-            });
-
-            list.push(selectedRight);
-
-        });
-
-        return list;
-    }
-
-    function collectSelectedRights(){
-        var selectedRights= [],
-            selectedPackages = getSelectedFullPackages(),
-            multiple = $("#main-multiple-package"),
-            single = $("#main-single-package");
-
-        if ( multiple.is(":visible") ){
-            selectedRights = selectedRights.concat( collectSelectedRightItems(multiple) );
-        }
-
-        if ( single.is(":visible") ){
-            selectedRights = selectedRights.concat( collectSelectedRightItems(single) );
-        }
-
-        if ( selectedPackages.length > 1 ){
-            selectedPackages.forEach(function (pack) {
-                selectedRights = selectedRights.concat( collectSelectedRightItems( $("#sell-box-package-" + pack.id )) );
-            })
-        }
-
-        $(".production-standards:visible").each(function(k, el){
-            selectedRights = selectedRights.concat( collectSelectedRightItems( $(el) ) );
-        });
-
-        return selectedRights;
-
-    }
-
     function validateSalesPackages(){
 
         var packages = [];
@@ -191,22 +89,6 @@ $(function () {
 
     }
 
-    function addSalesPackage(){
-        var template = $.templates("#sales-package-template"),
-            salesPackages = $(".sales-package"),
-            id = salesPackages.length + 1,
-            htmlOutput = template.render({id: id });
-
-        if ( id === 1 ){
-            $(".rights-list").last().after(htmlOutput);
-        } else {
-            salesPackages.last().after(htmlOutput);
-        }
-
-        $(".price-optional", "#sales-package-" + id).hide();
-        ContentArena.Utils.addRegionBehaviour("#sales-package-" + id + " .has-region-selector");
-
-    }
 
     function setupInstallment(){
         $(".installment-percent").off().mask('000%', {reverse: true});
@@ -248,12 +130,6 @@ $(function () {
         $('#license-file-selector-hidden').trigger("click");
     });
 
-    $("#submit-listing").on("click", function(){
-
-        if ( !validateStepTwo() ) return;
-
-        submitform();
-    });
 
     $("#view-agreement").on('click',function () {
 
@@ -297,24 +173,4 @@ $(function () {
 
     });
 
-    $("#reset-packages").on('click', function () {
-        $.each($(".package-selector"), function (i, pack) {
-
-            pack.checked = false;
-            $(pack).attr("disabled", null);
-            $(pack).parent().next().removeClass("disabled");
-            $("#main-sell-box").hide();
-            $(".select-box-item-container").hide();
-            $(".sell-items-box").hide();
-            $("#price-sell-box").hide();
-            $(".package-ready-button").hide();
-            selectorCounter = 0;
-
-
-        });
-    });
-
-    $(document).on('click',".add-sales-package", function () {
-        addSalesPackage()
-    });
 });

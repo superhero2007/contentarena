@@ -40,7 +40,24 @@ Encore
         config.presets.push('stage-2');
     })
 
-    .createSharedEntry('vendor', ['jquery', 'webpack-jquery-ui', 'react', 'react-dom', 'uikit', 'uikit/dist/css/uikit.min.css'])
+    .createSharedEntry('vendor', [
+        'jquery',
+        'webpack-jquery-ui',
+        'react',
+        'react-dom',
+        'uikit',
+        'moment',
+        'uikit/dist/css/uikit.min.css',
+        "react-datepicker",
+        "react-modal",
+        "react-popup",
+        "react-redux",
+        "react-table",
+        "react-tagsinput",
+        "redux",
+        "webpack-preset-babel",
+        "webpack-preset-babel-stage-2"
+    ])
 
     .enableSourceMaps(!Encore.isProduction())
 

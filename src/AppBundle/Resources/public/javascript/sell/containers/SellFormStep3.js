@@ -22,7 +22,9 @@ class SellFormStep3 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.loadRights(nextProps.rightsPackage, "Production Standards");
+        if ( nextProps.rightsPackage.length > 0 && this.state.rights.length === 0 && nextProps.step === 3 ) {
+            this.loadRights(nextProps.rightsPackage, "Production Standards");
+        }
     }
 
     loadRights = (rightsPackage, group) => {
@@ -40,7 +42,11 @@ class SellFormStep3 extends React.Component {
                 <div>
                     {
                         this.state.rights.length > 0 && this.state.rights.map((right)=> {
-                            return <Right key={right.id} data={right} rightPackages={this.state.rightPackages}/>
+                            return <Right
+                                key={right.id}
+                                data={right}
+                                programs={this.props.programs}
+                                rightPackages={this.state.rightPackages}/>
                         })
                     }
                 </div>

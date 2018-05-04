@@ -28,7 +28,9 @@ class SellFormStep2 extends React.Component {
         console.log("Step 2 - props", nextProps);
         let programsEnabled = false;
 
-        this.loadRights(nextProps.rightsPackage, "Main Information");
+        if ( nextProps.rightsPackage.length > 0 && this.state.rights.length === 0 ) {
+            this.loadRights(nextProps.rightsPackage, "Main Information");
+        }
 
         nextProps.rightsPackage.forEach(( rightPackage )=>{
             if ( rightPackage.shortLabel === "PR" ) programsEnabled = true ;
@@ -51,15 +53,14 @@ class SellFormStep2 extends React.Component {
 
     packagesConfirmed = (packagesConfirmed) =>{
         this.setState({packagesConfirmed});
-
-       /* ContentArena.Api.getCountries().done( (countries ) => {
-            ContentArena.Data.Countries = countries;
-        });*/
-
     };
 
     selectCurrency = ( currency ) => {
         this.props.updateContentValue('currency', currency);
+    };
+
+    selectLicenseDates = (key, value) => {
+        this.props.updateContentValue(key, value);
     };
 
     addProgram = (index) => {
@@ -111,7 +112,11 @@ class SellFormStep2 extends React.Component {
                     ))}
 
                     {this.state.packagesConfirmed &&
-                    <LicenseDateSelector onClick={this.selectCurrency} selected={this.props.currency} />}
+                    <LicenseDateSelector
+                        onUpdate={this.selectLicenseDates}
+                        startDate={this.props.startDate}
+                        endData={this.props.endDate}
+                    />}
 
                 </div>
 

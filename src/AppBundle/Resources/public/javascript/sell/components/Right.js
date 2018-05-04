@@ -1,4 +1,11 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+
+const RightItem = ({selected, onClick}) => (
+    <div onClick={onClick} className="column right-item-selection">
+        {selected && <i className="fa fa-check-circle-o" />}
+    </div>
+);
 
 class Right extends React.Component {
     constructor(props) {
@@ -14,9 +21,6 @@ class Right extends React.Component {
             all : false
         };
     }
-    componentDidMount() {}
-
-    componentWillUnmount() {}
 
     componentWillReceiveProps(props){
         console.log("Right - props",props);
@@ -81,6 +85,23 @@ class Right extends React.Component {
         return this.props.programs.filter(program =>(program.saved)).map(program => (program.name));
     };
 
+    showProgramColumns = (rightPackage) => {
+        return (rightPackage.shortLabel!=="PR"|| ( rightPackage.shortLabel==="PR" && this.getProgramsName().length === 0 ));
+    };
+
+    packageIsActive = ( id ) => {
+        return this.state.activePackages.has( id );
+    };
+
+    setDate = (date, rightItem, rightPackage) => {
+        let selection = this.state.selection;
+
+        if ( !this.state.activePackages.has(rightPackage)) return false;
+
+        selection.get(rightItem).set(rightPackage, date);
+        this.setState({selection});
+    };
+
     render(){
         return (
             <div>
@@ -90,7 +111,7 @@ class Right extends React.Component {
                         {<div className={( this.props.data.all_enabled) ? "column right-package" : "column right-package disabled" }>All</div>}
                         {
                             this.props.rightPackages && Array.from( this.props.rightPackages.values() ).map((rightPackage) => {
-                                return (rightPackage.shortLabel!=="PR"|| ( rightPackage.shortLabel==="PR" && this.getProgramsName().length === 0 )) && <div className={ (this.state.activePackages.has(rightPackage.id)) ? "column right-package" : "column right-package disabled"}>
+                                return this.showProgramColumns(rightPackage) && <div className={ (this.packageIsActive(rightPackage.id)) ? "column right-package" : "column right-package disabled"}>
                                     {rightPackage.shortLabel}
                                 </div>
                             })
@@ -115,9 +136,24 @@ class Right extends React.Component {
                                 {
                                     this.props.rightPackages &&
                                     Array.from( this.props.rightPackages.values() ).map((rightPackage) => {
-                                        return (rightPackage.shortLabel!=="PR"|| ( rightPackage.shortLabel==="PR" && this.getProgramsName().length === 0 )) && <div onClick={() => { this.toggle(rightItem.id, rightPackage.id) }} className="column right-item-selection">
-                                            {this.isSelected(rightItem.id, rightPackage.id) && <i className="fa fa-check-circle-o" />}
-                                        </div>
+
+                                        if ( !this.packageIsActive(rightPackage.id) ) return <div className="column right-item-selection"/>;
+
+                                        if ( this.showProgramColumns(rightPackage) && rightItem.calendar ) return <div className="column right-item-selection">
+                                            <DatePicker
+                                                className={"date-picker"}
+                                                selected={this.state.selection.get(rightItem.id).get(rightPackage.id)}
+                                                onChange={(date) => this.setDate(date, rightItem.id, rightPackage.id)}
+                                                placeholderText={"dd/mm/yyyy"}
+                                            />
+                                        </div>;
+
+
+                                        return this.showProgramColumns(rightPackage) &&
+                                            <RightItem
+                                                selected={this.isSelected(rightItem.id, rightPackage.id)}
+                                                onClick={() => {this.toggle(rightItem.id, rightPackage.id) }}
+                                            />
                                     })
                                 }
 

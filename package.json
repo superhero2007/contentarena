@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "jquery": "^3.3.1",
+    "moment": "^2.22.1",
     "react": "^16.3.1",
+    "react-datepicker": "^1.4.1",
     "react-dom": "^16.3.1",
     "react-modal": "^3.3.2",
     "react-popup": "^0.9.2",
