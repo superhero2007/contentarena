@@ -1,0 +1,19 @@
+@import "vars";
+
+.marketplace-container{
+    display: flex;
+    flex-direction: row;
+    color: $blue-color;
+    .content-list-container{
+        flex: 1;
+    }
+    .listing-details{
+        .listing-details-buttons{
+
+        }
+        .listing-details-content{
+
+        }
+    }
+
+}

@@ -1,4 +1,3 @@
-import {selectorType} from "./selector";
 
 export const contentType= {
     CONTENT_INIT:'CONTENT_INIT',

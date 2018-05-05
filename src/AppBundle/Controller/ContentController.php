@@ -7,7 +7,11 @@ use AppBundle\Service\ContentService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
 
 class ContentController extends Controller
@@ -95,6 +99,31 @@ class ContentController extends Controller
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
         return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+    }
+
+    /**
+     * @Route("/listing/details", name="listingDetails")
+     */
+    public function searchRights(Request $request){
+
+        $customId = $request->get('customId');
+
+        //Take Repositories
+        $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
+
+        //Get results
+        $content = $repository->findOneBy(array("customId"=>$customId));
+
+        /**
+         * Strategy to keep camel case on property names
+         */
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($content, 'json',SerializationContext::create());
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 

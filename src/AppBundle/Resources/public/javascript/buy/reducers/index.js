@@ -1,10 +1,9 @@
+
 import {combineReducers} from 'redux'
-import {content} from "./content";
-import {selector} from "./selector";
+import {marketplace} from "./marketplace";
 
 const reducers = combineReducers({
-    content,
-    selector
+    marketplace
 });
 
 export default reducers

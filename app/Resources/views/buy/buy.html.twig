@@ -4,6 +4,7 @@
 
     {{ parent() }}
     <link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('assets/buy.css') }}" type="text/css" rel="stylesheet"/>
 
 {% endblock %}
 
@@ -13,15 +14,25 @@
         {{ include('buy/filters.html.twig', { 'territories' : territories, 'countries' : countries }) }}
     </div>
 
-    <div class="content-list-container">
-        {{ include('@App/content/contentItemList.html.twig', { 'contents' : contents }) }}
+
+    <div class="marketplace-container">
+        <div class="content-list-container">
+            {{ include('@App/content/contentItemList.html.twig', { 'contents' : contents }) }}
+        </div>
+
+        {# REACT CONTAINER#}
+        <div id="content-list-container"
+             class="content-list-container"
+        >
+        </div>
     </div>
+
+
 
 
 {% endblock main_content %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/buy.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/javascript/contentFilter.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/buy.js') }}"></script>
 {% endblock %}

@@ -8,6 +8,14 @@ export const Description = ({value, onBlur}) => (
     </div>
 );
 
+export const TitleBar = ({title, subtitle}) => (
+    <div className="title-bar">
+        <hr/>
+        <div className={"title"}>{title}</div>
+        <div className={"subtitle"}>{subtitle}</div>
+    </div>
+);
+
 export const NewCategory = ({onClick, showClose, onBlur, value}) => (
     <div className="base-input">
         <label>Category</label>

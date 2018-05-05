@@ -271,7 +271,9 @@ class ContentService
             $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
         }
 
-        $content->setCustomTournament($data->customTournament || null);
+        if ( isset($data->customTournament) ){
+            $content->setCustomTournament($data->customTournament || null);
+        }
 
         return $content;
     }
@@ -378,22 +380,23 @@ class ContentService
     }
 
     private function getTournament($data){
-        if ( isset($data->tournament->externalId) ) {
+        $tournamentData = $data->tournament[0];
+        if ( isset($tournamentData->externalId) ) {
 
             $tournament = $this->em
                 ->getRepository('AppBundle:Tournament')
-                ->findOneBy(array('externalId' => $data->tournament->externalId));
+                ->findOneBy(array('externalId' => $tournamentData->externalId));
 
-        } else if (isset($data->tournament->name) ){
+        } else if (isset($tournamentData->name) ){
             $tournament = $this->em
                 ->getRepository('AppBundle:Tournament')
-                ->findOneBy(array('name' => $data->tournament->name));
+                ->findOneBy(array('name' => $tournamentData->name));
         }
 
         if (!$tournament) {
             $tournament = new Tournament();
-            if ( isset($data->tournament->externalId) ) $tournament->setExternalId($data->tournament->externalId);
-            $tournament->setName($data->tournament->name);
+            if ( isset($tournamentData->externalId) ) $tournament->setExternalId($tournamentData->externalId);
+            $tournament->setName($tournamentData->name);
             $this->em->persist($tournament);
             $this->em->flush();
         }
@@ -402,22 +405,23 @@ class ContentService
     }
 
     private function getCategory($data){
-        if ( isset($data->sportCategory->externalId) ) {
+        $categoryData = $data->sportCategory[0];
+        if ( isset($categoryData->externalId) ) {
 
             $category = $this->em
                 ->getRepository('AppBundle:SportCategory')
-                ->findOneBy(array('externalId' => $data->sportCategory->externalId));
+                ->findOneBy(array('externalId' => $categoryData->externalId));
 
-        } else if (isset($data->sportCategory->name) ){
+        } else if (isset($categoryData->name) ){
             $category = $this->em
                 ->getRepository('AppBundle:SportCategory')
-                ->findOneBy(array('name' => $data->sportCategory->name));
+                ->findOneBy(array('name' => $categoryData->name));
         }
 
         if (!$category) {
             $category = new SportCategory();
-            if ( isset($data->sportCategory->externalId) ) $category->setExternalId($data->sportCategory->externalId);
-            $category->setName($data->sportCategory->name);
+            if ( isset($categoryData->externalId) ) $category->setExternalId($categoryData->externalId);
+            $category->setName($categoryData->name);
             $this->em->persist($category);
             $this->em->flush();
         }

@@ -4,10 +4,10 @@ class NewSeason extends React.Component{
     constructor(props){
         super(props);
 
-        let startYear = 1950;
+        let startYear = 2030;
         let years = [];
 
-        for (let i =0; i < 81;i++ ){ years.push(startYear+i)}
+        for (let i =0; i < 81;i++ ){ years.push(startYear-i)}
 
         this.state = {
             startDate : null,

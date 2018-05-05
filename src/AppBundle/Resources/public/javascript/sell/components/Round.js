@@ -38,7 +38,6 @@ class Round extends React.Component {
         matches.forEach(match => { match.selected = selected });
         this.setState({matches});
 
-        if (!selected) this.setState({showMatches: false});
     };
 
     onSelect = (id) => {
@@ -54,6 +53,7 @@ class Round extends React.Component {
     };
 
     render(){
+        console.log(this.getSelected(),  this.state.schedule.length, (this.getSelected() === 0));
         return (
             <div className={"matchday"}>
                 <div className="select-box-checkbox">
@@ -66,7 +66,8 @@ class Round extends React.Component {
                         {isNaN(this.state.round) && this.state.round}
                         {!isNaN(this.state.round) && "Matchday " + this.state.round}
 
-                        { (this.getSelected() === 0)  || (this.getSelected()=== this.state.schedule.length) && <span onClick={this.toggleMatches}>Select ></span>}
+                        {(this.getSelected() === 0)  && (this.getSelected()!== this.state.schedule.length) && <span onClick={this.toggleMatches}>Select ></span>}
+                        {(this.getSelected() !== 0)  && (this.getSelected()=== this.state.schedule.length) && <span onClick={this.toggleMatches}>All ></span>}
                         {(this.getSelected() !== 0) && ( this.getSelected() !== this.state.schedule.length) && <span onClick={this.toggleMatches}>{this.getSelected()} Selected ></span>}
                     </div>
                 </div>

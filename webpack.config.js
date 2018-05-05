@@ -14,7 +14,10 @@ Encore
         './src/AppBundle/Resources/public/javascript/main.js'
     ])
 
-    .addEntry('buy', './src/AppBundle/Resources/public/javascript/buy.js')
+    .addEntry('buy', [
+        './src/AppBundle/Resources/public/javascript/buy/buy.js',
+        './src/AppBundle/Resources/public/javascript/buy/contentFilter.js'
+    ])
 
     .addEntry('sell', [
         './src/AppBundle/Resources/public/javascript/sell/sell.js',
@@ -41,6 +44,7 @@ Encore
     })
 
     .createSharedEntry('vendor', [
+
         'jquery',
         'webpack-jquery-ui',
         'react',
@@ -55,8 +59,6 @@ Encore
         "react-table",
         "react-tagsinput",
         "redux",
-        "webpack-preset-babel",
-        "webpack-preset-babel-stage-2"
     ])
 
     .enableSourceMaps(!Encore.isProduction())
