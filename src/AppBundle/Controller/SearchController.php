@@ -50,6 +50,34 @@ class SearchController extends Controller
     }
 
     /**
+     * @Route("/search/countries/full", name="getCountries")
+     */
+    public function getCountries(Request $request){
+
+        //Take Repositories
+        $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:Country");
+
+        //Get results
+        $countries = $sportCategoryRepository->getAll();
+
+        return new JsonResponse($countries);
+    }
+
+    /**
+     * @Route("/search/territories", name="getTerritories")
+     */
+    public function getTerritories(Request $request){
+
+        //Take Repositories
+        $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:Territory");
+
+        //Get results
+        $countries = $sportCategoryRepository->getAll();
+
+        return new JsonResponse($countries);
+    }
+
+    /**
      * @Route("/search/rights", name="searchRights")
      */
     public function searchRights(Request $request){

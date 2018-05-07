@@ -12,7 +12,7 @@ const sellForm = document.getElementById('sell-form-container');
 
 ReactDOM.render(
     <Provider store={store}>
-        <SellForm {...sellForm.dataset } />
+        <SellForm {...sellForm.dataset } step={1} />
     </Provider>,
     sellForm
 );

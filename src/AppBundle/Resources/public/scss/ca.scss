@@ -431,4 +431,44 @@ button{
 
 }
 
+.definition {
+  border-bottom: 4px solid #D4D8DE;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  button{
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    color: #4F4F4F;
+    margin: 0px 0 10px;
+    max-width: 80px;
+  }
+  .definition-container{
+    height: 42px;
+    margin: 10px 0px;
+    background-color: $light-background-color;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    width: 100%;
+    box-sizing: border-box;
+    label{
+      font-size: 16px;
+      font-weight: 600;
+      margin-right: 40px;
+    }
+    input[type="text"]{
+      border: none;
+      background: none;
+      border-bottom: 2px solid #D4D8DE;
+      outline: none;
+      font-size: 16px;
+      color: #4F4F4F;
+      padding: 5px;
+      flex: 1;
+    }
+  }
 
+}

@@ -7,18 +7,27 @@ const RightItem = ({selected, onClick}) => (
     </div>
 );
 
+export const BigInputRightItem = ({value, label, placeholder}) => (
+    <div className="textarea-input">
+        <label>{label}</label>
+        <textarea defaultValue={value} placeholder={placeholder}/>
+    </div>
+);
+
 class Right extends React.Component {
     constructor(props) {
         super(props);
 
         let activePackages = new Map(props.data.packages.map((i) => [i.id, i]));
         let selection = new Map(props.data.items.map(i => [i.id, new Map()]));
+        let availablePackages = new Map(props.availablePackages.map((i) => [i.id, i]));
 
         this.state = {
             rightPackages: props.rightPackages || [],
             activePackages : activePackages,
             selection : selection,
-            all : false
+            all : false,
+            availablePackages : availablePackages
         };
     }
 
@@ -90,7 +99,7 @@ class Right extends React.Component {
     };
 
     packageIsActive = ( id ) => {
-        return this.state.activePackages.has( id );
+        return this.state.activePackages.has( id ) && this.state.availablePackages.has( id );
     };
 
     setDate = (date, rightItem, rightPackage) => {
@@ -103,6 +112,11 @@ class Right extends React.Component {
     };
 
     render(){
+
+        if (this.props.data.textarea){
+            return (<BigInputRightItem placeholder={""} value={""} label={this.props.data.name}/>)
+        }
+
         return (
             <div>
                 <div className="table-right">

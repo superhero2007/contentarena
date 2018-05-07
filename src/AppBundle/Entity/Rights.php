@@ -101,6 +101,14 @@ class Rights
      */
     private $collectively;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="textarea", type="boolean" )
+     * @Groups({"common"})
+     */
+    private $textarea = false;
+
 
     public function __construct()
     {
@@ -281,6 +289,22 @@ class Rights
     public function setHidden($hidden)
     {
         $this->hidden = $hidden;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTextarea()
+    {
+        return $this->textarea;
+    }
+
+    /**
+     * @param bool $textarea
+     */
+    public function setTextarea($textarea)
+    {
+        $this->textarea = $textarea;
     }
 
 

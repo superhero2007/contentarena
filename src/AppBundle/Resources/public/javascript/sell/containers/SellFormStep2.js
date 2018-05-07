@@ -5,6 +5,8 @@ import Right from "../components/Right";
 import CurrencySelector from "../components/CurrencySelector";
 import LicenseDateSelector from "../components/LicenseDateSelector";
 import ProgramName from "../components/ProgramName";
+import Definition from "../components/Definition";
+import { TitleBar } from "../components/SellFormItems";
 
 class SellFormStep2 extends React.Component {
 
@@ -127,10 +129,38 @@ class SellFormStep2 extends React.Component {
                                 key={right.id}
                                 data={right}
                                 programs={this.props.programs}
-                                rightPackages={this.state.rightPackages}/>
+                                rightPackages={this.state.rightPackages}
+                                availablePackages={this.props.rightsPackage}/>
                         })
                     }
                 </div>
+
+                { this.state.rights.length > 0 && <div className="step-content-container">
+
+                    <div className="step-item-description">
+                        To generate the license agreement automatically, a definition is created for most of the right criteria for most of the rights criteria and subcriteria stated above. As seller, you’re entitles to edit
+                        these standard definitions. as admin, you may permanently edit these definitions via the company management section.
+                    </div>
+
+                    <TitleBar title={"Show definitions"}/>
+
+                    {
+                        this.state.rights.length > 0 && this.state.rights.map((right)=> {
+                            return <Definition
+                                key={"definition" + right.id}
+                                defaultValue={right.definition}
+                                label={right.name}
+                                />
+                        })
+                    }
+
+                    <div className="step-item-description">
+                        Add additional clauses
+                    </div>
+
+                    <Definition defaultValue={""} label={"Clauses"}/>
+
+                </div>}
 
             </div>
         );

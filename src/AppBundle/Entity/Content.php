@@ -42,6 +42,13 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(name="payment_method", type="string", length=255)
+     */
+    private $paymentMethod;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
@@ -793,6 +800,22 @@ class Content
     public function setCustomSport($customSport)
     {
         $this->customSport = $customSport;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
+
+    /**
+     * @param string $paymentMethod
+     */
+    public function setPaymentMethod($paymentMethod)
+    {
+        $this->paymentMethod = $paymentMethod;
     }
 
 

@@ -10,4 +10,9 @@ namespace AppBundle\Repository;
  */
 class TerritoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAll(){
+        return $this->createQueryBuilder('t')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

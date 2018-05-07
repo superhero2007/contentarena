@@ -19,4 +19,10 @@ class CountryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAll(){
+        return $this->createQueryBuilder('t')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

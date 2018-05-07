@@ -16,8 +16,24 @@ class MarketplaceElement extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadingListing: false
+            loadingListing: false,
+            countries : [],
+            territories: []
         };
+    }
+
+    componentDidMount () {
+        let _this = this;
+        if ( this.state.countries.length === 0) {
+            ContentArena.Api.getCountriesFull().done( (countries ) => {
+                _this.setState({countries});
+            });
+        }
+        if ( this.state.territories.length === 0) {
+            ContentArena.Api.getTerritories().done( (territories ) => {
+                _this.setState({territories});
+            });
+        }
     }
 
     selectListing = (id) => {
@@ -41,6 +57,8 @@ class MarketplaceElement extends React.Component {
                 <MarketPlace
                     id={this.state.id}
                     content={this.state.content}
+                    countries={this.state.countries}
+                    territories={this.state.territories}
                     loadingListing={this.state.loadingListing} />
             </Provider>
         )

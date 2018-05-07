@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import PaymentMethod from "../components/PaymentMethod";
+import SalesPackageForm from "../components/SalesPackageForm";
 import {TitleBar} from "../components/SellFormItems";
 
 class SellFormStep4 extends React.Component {
@@ -22,6 +23,7 @@ class SellFormStep4 extends React.Component {
 
     updatePaymentMethod = ( paymentMethod ) => {
         this.props.updateContentValue('paymentMethod', paymentMethod);
+        if (this.props.salesPackages.length === 0) this.props.updateSalesPackages(0, {},"add");
     };
 
     render() {
@@ -32,13 +34,26 @@ class SellFormStep4 extends React.Component {
                 <div className="step-title">Step 4 - Pricing & Listing Details</div>
                 <div className="step-content-container">
                     <PaymentMethod paymentMethod={this.props.paymentMethod} onUpdate={this.updatePaymentMethod}/>
-                    <TitleBar title={"Sales bundles"} subtitle={"Note that you can create multiiple sales bundles."}/>
 
-                    <TitleBar title={"Listing Details"} subtitle={""}/>
+                    {this.props.paymentMethod &&
+                        <TitleBar title={"Sales bundles"} subtitle={"Note that you can create multiiple sales bundles."}/>
+                    }
 
-                    <TitleBar title={"Company Details"} subtitle={""}/>
+                    {this.props.paymentMethod && this.props.salesPackages.map((salesPackage) => {
+                        return <SalesPackageForm data={salesPackage} />
+                    })}
 
-                    <TitleBar title={"Place of Jurisdiction"} subtitle={""}/>
+                    {this.props.paymentMethod &&
+                        <TitleBar title={"Listing Details"} subtitle={""}/>
+                    }
+
+                    {this.props.paymentMethod &&
+                        <TitleBar title={"Company Details"} subtitle={""}/>
+                    }
+
+                    {this.props.paymentMethod &&
+                        <TitleBar title={"Place of Jurisdiction"} subtitle={""}/>
+                    }
 
                 </div>
             </div>
@@ -56,6 +71,12 @@ const mapDispatchToProps = dispatch => {
             type: 'UPDATE_CONTENT_VALUE',
             key: key,
             value : value
+        }),
+        updateSalesPackages : (index, salesPackage, name) => dispatch({
+            type: 'UPDATE_SALES_PACKAGES',
+            index: index,
+            salesPackage : salesPackage,
+            name: name
         }),
     }
 };

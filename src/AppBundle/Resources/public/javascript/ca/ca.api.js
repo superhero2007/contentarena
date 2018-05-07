@@ -102,6 +102,52 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
+    getCountriesFull () {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "search/countries/full",
+            type: "POST",
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
+                response.sort(_this.sortByLabel);
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    getTerritories () {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "search/territories",
+            type: "POST",
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
+                response.sort(_this.sortByLabel);
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getRights (rightsPackage, group) {
         let deferred = jQuery.Deferred();
         let _this = this;

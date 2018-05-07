@@ -46,7 +46,8 @@ class SellFormStep3 extends React.Component {
                                 key={right.id}
                                 data={right}
                                 programs={this.props.programs}
-                                rightPackages={this.state.rightPackages}/>
+                                rightPackages={this.state.rightPackages}
+                                availablePackages={this.props.rightsPackage}/>
                         })
                     }
                 </div>

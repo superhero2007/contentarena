@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
-import SalesPackages from "./SalesPackages";
 
-class CommercialTerms extends React.Component {
+class TerritorySelector extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
         };
     }
 
@@ -18,14 +16,15 @@ class CommercialTerms extends React.Component {
     componentWillReceiveProps(nextProps) {
     }
 
+    showTab = (tab) => {
+        this.setState({tab});
+    };
+
     render() {
 
         return (
-            <div>
-                <SalesPackages
-                    countries={this.props.countries}
-                    territories={this.props.territories}
-                    salesPackages={this.props.content.salesPackages}/>
+            <div className="">
+                {this.props.salesPackage.id}
 
             </div>
         );
@@ -46,4 +45,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(CommercialTerms)
+)(TerritorySelector)

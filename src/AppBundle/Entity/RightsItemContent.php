@@ -79,14 +79,6 @@ class RightsItemContent
     /**
      * @var boolean
      *
-     * @ORM\Column(name="textarea", type="boolean" )
-     * @Groups({"common"})
-     */
-    private $textarea = false;
-
-    /**
-     * @var boolean
-     *
      * @ORM\Column(name="input_number", type="boolean" )
      * @Groups({"common"})
      */
@@ -251,21 +243,6 @@ class RightsItemContent
         $this->calendar = $calendar;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTextarea()
-    {
-        return $this->textarea;
-    }
-
-    /**
-     * @param bool $textarea
-     */
-    public function setTextarea($textarea)
-    {
-        $this->textarea = $textarea;
-    }
 
     /**
      * @return bool

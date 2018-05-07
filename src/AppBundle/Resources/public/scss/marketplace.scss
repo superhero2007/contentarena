@@ -14,6 +14,41 @@
         .listing-details-content{
 
         }
+
+        .sales-packages{
+            .territories{
+                display: flex;
+                flex-direction: row;
+                .territory{
+                    padding: 5px;
+                    border: 1px solid lightgray;
+                }
+                .selected{
+                    color: white;
+                    background-color: $blue-color;
+
+                }
+                .disabled{
+                    color: white;
+                    background-color: grey;
+                }
+            }
+            .countries{
+                display: flex;
+                flex-direction: column;
+                margin: 10px 0;
+                .country-tr{
+                    display: flex;
+                    flex-direction: row;
+                    .country-th{
+                        flex: 1;
+                    }
+                    .country-td{
+                        flex: 1;
+                    }
+                }
+            }
+        }
     }
 
 }

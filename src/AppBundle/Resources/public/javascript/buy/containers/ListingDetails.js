@@ -38,9 +38,18 @@ class ListingDetails extends React.Component {
                     <button onClick={()=>this.showTab(4)}>Technical details</button>
                     <button onClick={()=>this.showTab(5)}>Seller</button>
                 </div>
+                <div>
+                    <div>Do you have any questions? <button>Contact Seller</button></div>
+                    <span>Instant payment</span>
+                </div>
                 <div className={"listing-details-content"}>
 
-                    { this.state.tab === 1 && <CommercialTerms content={this.props.content}/> }
+                    { this.state.tab === 1 &&
+                        <CommercialTerms
+                            territories={this.props.territories}
+                            content={this.props.content}
+                            countries={this.props.countries}/>
+                    }
                     { this.state.tab === 2 && <ContentInformation content={this.props.content}/> }
                     { this.state.tab === 3 && <TermSheet content={this.props.content}/> }
                     { this.state.tab === 4 && <TechnicalDetails content={this.props.content}/> }

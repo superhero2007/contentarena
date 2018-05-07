@@ -90,6 +90,7 @@ class SearchCompetition extends  React.Component {
                         defaultPageSize={this.state.pageSize}
                         showPageSizeOptions={false}
                         onPageChange={this.onPageChange}
+                        minRows={0}
                         data={this.state.results}
                         select={this.props.select}
                         columns={[{

@@ -11,7 +11,7 @@
 
 	{{ include('content/contentInformation.html.twig', { 'content' : content }) }}
 
-	{{ include('content/termSheet.html.twig', { 'content' : content }) }}
+	{#{{ include('content/termSheet.html.twig', { 'content' : content }) }}#}
 
     {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
          {{ include('content/find_territories.html.twig') }}

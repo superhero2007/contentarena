@@ -11,6 +11,8 @@ export const contentType= {
     REMOVE_FROM_MULTIPLE : 'REMOVE_FROM_MULTIPLE',
     APPLY_SELECTION : 'APPLY_SELECTION',
     UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
+    UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES'
+
 };
 
 export const content = (state = {
@@ -20,7 +22,8 @@ export const content = (state = {
     sportCategory : [],
     sports : [],
     seasons: [],
-    programs : []
+    programs : [],
+    salesPackages : []
 }, action) => {
 
     let newState = {};
@@ -57,7 +60,6 @@ export const content = (state = {
             }
 
             return Object.assign({}, state, newState);
-
         case contentType.UPDATE_CONTENT_VALUE:
             newState = {};
             newState[action.key] = action.value;
@@ -102,7 +104,6 @@ export const content = (state = {
             return Object.assign({}, state, {
                 rightsPackage : Array.from(action.rightsPackage.values())
             });
-
         case contentType.UPDATE_PROGRAMS:
 
             let programs = [...state.programs];
@@ -121,6 +122,23 @@ export const content = (state = {
 
             return Object.assign({}, state, {
                 programs : programs
+            });
+        case contentType.UPDATE_SALES_PACKAGES:
+
+            let salesPackages = [...state.salesPackages];
+
+            if ( action.name === "remove" ) {
+
+                if ( salesPackages.length > 1 ) {
+                    salesPackages.splice(action.index,1)
+                }
+            }
+            if ( action.name === "add" ) salesPackages = [...salesPackages,action.salesPackage];
+            if ( action.name === "save" ) salesPackages[action.index] = action.salesPackage;
+
+
+            return Object.assign({}, state, {
+                salesPackages : salesPackages
             });
 
 

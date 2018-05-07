@@ -57,7 +57,10 @@ class SellButtons extends React.Component {
                     <button
                         id="next-step"
                         className="standard-button"
-                        disabled={this.props.sports.length === 0}
+                        disabled={
+                            ( this.props.step===1 && this.props.sports.length === 0) ||
+                            ( this.props.step===2 && this.props.rightsPackage.length === 0)
+                        }
                         onClick={ () => this.props.goToNextStep() }>
                             Next <i className="fa fa-arrow-right"/>
                     </button> }
@@ -70,7 +73,8 @@ class SellButtons extends React.Component {
 const mapStateToProps = state => {
     return {
         step : state.content.step,
-        sports : state.content.sports
+        sports : state.content.sports,
+        rightsPackage : state.content.rightsPackage
     }
 };
 

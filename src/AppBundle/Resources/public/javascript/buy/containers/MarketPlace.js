@@ -26,7 +26,11 @@ class MarketPlace extends React.Component {
                 }
 
                 {this.props.content && !this.props.loadingListing &&
-                    <ListingDetails id={this.props.id} content={this.props.content}/>
+                    <ListingDetails
+                        id={this.props.id}
+                        countries={this.props.countries}
+                        territories={this.props.territories}
+                        content={this.props.content}/>
                 }
             </div>
         );

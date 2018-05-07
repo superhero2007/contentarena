@@ -14,8 +14,13 @@ import store from '../store';
 class SellForm extends React.Component {
     constructor(props) {
         super(props);
+
+        let content = JSON.parse(props.content);
+
+        if (props.step) content.step = props.step;
+
         this.state = {
-            content : JSON.parse(props.content)
+            content : content
         };
 
         store.subscribe((a) => {
