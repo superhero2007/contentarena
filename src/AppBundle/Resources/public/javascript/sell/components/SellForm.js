@@ -41,8 +41,6 @@ class SellForm extends React.Component {
                 <SellFormStep1/>
                 <SellFormStep2 packages={this.props.packages} />
                 <SellFormStep3 packages={this.props.packages} />
-                <SellFormStep4 packages={this.props.packages} />
-                <SellFormStep5 packages={this.props.packages} />
                 <SellButtons />
             </div>
         );

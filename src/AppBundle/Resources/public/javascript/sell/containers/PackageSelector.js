@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-
+import Toggle from 'react-toggle';
 
 class SuperRight extends React.Component {
 
@@ -32,11 +32,14 @@ class SuperRight extends React.Component {
                 <div className="select-box-item-label">
                     { this.props.superRight.name } ({ this.props.superRight.shortLabel })
                 </div>
+                <Toggle
+                    icons={false}
+                    disabled={!this.state.checked}
+                    defaultChecked={false} />
             </div>
         )
     }
 }
-
 
 class PackageSelector extends React.Component {
     constructor(props) {
@@ -51,21 +54,21 @@ class PackageSelector extends React.Component {
         this.setState({rightsPackage : new Map(nextProps.rightsPackage.map((i) => [i.id, i]))});
     }
 
+    componentDidMount(){
+
+        let _this = this;
+
+        this.state.packages.forEach( ( superRight) => {
+            if ( superRight.shortLabel === "LT" || superRight.shortLabel === "HL" ){
+                _this.updateSuperRightsList(superRight, true);
+            }
+        });
+    }
+
     updateSuperRightsList = (superRight, status) => {
         if (status && !this.state.rightsPackage.has(superRight.id)) this.state.rightsPackage.set(superRight.id, superRight);
         if (!status && this.state.rightsPackage.has(superRight.id)) this.state.rightsPackage.delete(superRight.id);
-    };
-
-    resetSuperRights = () =>{
-
-        this.setState({packages: this.state.packages});
-        this.props.resetSuperRigths();
-        this.props.onConfirm(false);
-    };
-
-    confirmSuperRights = () =>{
         this.props.superRightsUpdated(this.state.rightsPackage);
-        this.props.onConfirm(true);
     };
 
     render() {
@@ -85,10 +88,6 @@ class PackageSelector extends React.Component {
                                 checked={ _this.state.rightsPackage.has(superRight.id) }
                             />;
                         })}
-                    </div>
-                    <div className="package-selector-buttons">
-                        {this.state.rightsPackage.size === 0 &&<button onClick={this.confirmSuperRights}>Confirm </button>}
-                        {this.state.rightsPackage.size > 0 &&<button onClick={this.resetSuperRights}>Reset package selection</button>}
                     </div>
                 </div>
             </div>

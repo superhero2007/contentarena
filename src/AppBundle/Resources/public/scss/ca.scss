@@ -53,304 +53,305 @@ button{
     }
   }
 
-  .step-content{
-    color: #1a1a1a;
-    padding: 20px;
-    text-align: left;
-    .step-title{
-      font-size: $font-size-extra-large;
-      color: #4F4F4F;
-      font-weight: 600;
-      line-height: 43px;
-      margin-bottom: 20px;
-    }
-    .step-content-container {
-      display: flex;
-      flex-direction: column;
-      .license-date-container{
-        display: flex;
-        justify-content: space-between;
-        max-width: 872px;
-        input[type="number"] {
-          width: 100%;
-          border: none;
-          text-align: center;
-          font-size: 16px;
-          padding: 0 0 0 10px;
-          outline: none;
-          margin: 0;
-        }
-        input[type="number"]::placeholder {
-          font-size: 11px;
-          color: grey;
+}
 
-        }
-        .table-right{
-          width: 46%;
-        }
-      }
-      .react-tagsinput {
+.step-content{
+  color: #1a1a1a;
+  padding: 20px;
+  text-align: left;
+  .step-title{
+    font-size: $font-size-extra-large;
+    color: #4F4F4F;
+    font-weight: 600;
+    line-height: 43px;
+    margin-bottom: 20px;
+  }
+  .step-content-container {
+    display: flex;
+    flex-direction: column;
+    .license-date-container{
+      display: flex;
+      justify-content: space-between;
+      max-width: 872px;
+      input[type="number"] {
         width: 100%;
-        height: 36px;
-        margin-left: 5px;
-        border-color: lightgray;
-        padding: 5px;
-        display: block;
-        flex-direction: row;
-        input.react-tagsinput-input {
-          height: 37px !important;
-        }
-        .react-tagsinput-tag {
-          background-color: #FFC94B;
-          color: #062E44;
-          padding: 8px;
-          border: none;
+        border: none;
+        text-align: center;
+        font-size: 16px;
+        padding: 0 0 0 10px;
+        outline: none;
+        margin: 0;
+      }
+      input[type="number"]::placeholder {
+        font-size: 11px;
+        color: grey;
+
+      }
+      .table-right{
+        width: 46%;
+      }
+    }
+    .react-tagsinput {
+      width: 100%;
+      height: 36px;
+      margin-left: 5px;
+      border-color: lightgray;
+      padding: 5px;
+      display: block;
+      flex-direction: row;
+      input.react-tagsinput-input {
+        height: 37px !important;
+      }
+      .react-tagsinput-tag {
+        background-color: #FFC94B;
+        color: #062E44;
+        padding: 8px;
+        border: none;
+        display: flex;
+        margin: 3px;
+      }
+    }
+    .react-tagsinput>span {
+      display: flex;
+      height: 37px;
+      padding: 0;
+    }
+    .base-input{
+      padding-bottom: 5px;
+      border-bottom: 4px solid $border-color-1;
+      display: flex;
+      margin-bottom: 20px;
+      position: relative;
+      max-width: 872px;
+      .fa-cog {
+        position: absolute;
+        right: 10px;
+        top: 10px
+      }
+      .currency-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 12px 0 8px;
+        font-size: 14px;
+        width: 100%;
+        flex: 1;
+        background: $light-background-color;
+        color: $font-color-1;
+        margin: 0 0 0 5px;
+        .currency-icon{
+          width: 26px;
+          height: 26px;
           display: flex;
-          margin: 3px;
+          border-radius: 50%;
+          box-shadow: 0px 0px 2px #888;
+          justify-content: center;
+          margin: 0 5px 0;
+          align-items: center;
+          i {
+            font-size: 32px;
+            color: $blue-color;
+            padding: 0;
+          }
+        }
+
+      }
+      label {
+        text-transform: uppercase;
+        background-color: $blue-color;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0 20px;
+        height: 48px;
+        font-size: 16px;
+        font-weight: 600;
+        width: 232px;
+        color: white;
+        min-width: 232px;
+        box-sizing: border-box;
+
+      }
+      input, select{
+        width: 100%;
+        margin: 0 0 0 5px;
+        height: 44px;
+        padding: 0 8px;
+        font-size: 16px;
+      }
+      .season-selector-label {
+        background-color: white !important;
+        color: black !important;
+        width: 90px !important;
+        min-width: 90px !important;
+        font-size: 15px !important;
+      }
+    }
+    .textarea-input {
+      flex-direction: column;
+      @extend .base-input;
+      label{
+        width: 100%;
+        box-sizing: border-box;
+      }
+      textarea{
+        width: auto;
+        box-sizing: border-box;
+        font-size: 14px;
+        font-family: "Open Sans";
+        font-style: italic;
+      }
+    }
+    .base-full-input {
+      flex-direction: column;
+      max-width: none;
+      @extend .base-input;
+      label{
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .content {
+        display: flex;
+        flex-direction: row;
+        .item{
+          background-color: $light-background-color;
+          margin: 5px 2px 0;
+          padding: 15px 20px 25px 50px;
+          position: relative;
+          flex: 1;
+          i {
+            font-size: 26px;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: lightgray;
+          }
+          .fa-check-circle-o{
+            color: $blue-color;
+          }
+          .title{
+            font-weight: 600;
+            font-size: 16px;
+            color: $font-color-1;
+
+          }
+          .description{
+            font-size: 16px;
+            color: $font-color-1;
+            font-style: italic;
+            line-height: 22px;
+            padding-top: 10px;
+          }
         }
       }
-      .react-tagsinput>span {
-        display: flex;
-        height: 37px;
+    }
+    .title-bar{
+      background-color: #D4D8DE;
+      display: flex;
+      width: 100%;
+      height: 58px;
+      align-items: center;
+      flex-direction: row;
+      margin-bottom: 20px;
+      hr {
+        width: 20px;
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 2px solid #B2B9C4;
+        margin: 1em;
         padding: 0;
       }
-      .base-input{
-        padding-bottom: 5px;
-        border-bottom: 4px solid $border-color-1;
-        display: flex;
-        margin-bottom: 20px;
-        position: relative;
-        max-width: 872px;
-        .fa-cog {
-          position: absolute;
-          right: 10px;
-          top: 10px
-        }
-        .currency-item {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 0 12px 0 8px;
-          font-size: 14px;
-          width: 100%;
-          flex: 1;
-          background: $light-background-color;
-          color: $font-color-1;
-          margin: 0 0 0 5px;
-          .currency-icon{
-            width: 26px;
-            height: 26px;
-            display: flex;
-            border-radius: 50%;
-            box-shadow: 0px 0px 2px #888;
-            justify-content: center;
-            margin: 0 5px 0;
-            align-items: center;
-            i {
-              font-size: 32px;
-              color: $blue-color;
-              padding: 0;
-            }
-          }
-
-        }
-        label {
-          text-transform: uppercase;
-          background-color: $blue-color;
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          padding: 0 20px;
-          height: 48px;
-          font-size: 16px;
-          font-weight: 600;
-          width: 232px;
-          color: white;
-          min-width: 232px;
-          box-sizing: border-box;
-
-        }
-        input[type="text"], select{
-          width: 100%;
-          margin: 0 0 0 5px;
-          height: 44px;
-          padding: 0 8px;
-          font-size: 16px;
-        }
-        .season-selector-label {
-          background-color: white !important;
-          color: black !important;
-          width: 90px !important;
-          min-width: 90px !important;
-          font-size: 15px !important;
-        }
-      }
-      .textarea-input {
-        flex-direction: column;
-        @extend .base-input;
-        label{
-          width: 100%;
-          box-sizing: border-box;
-        }
-        textarea{
-          width: auto;
-          box-sizing: border-box;
-          font-size: 14px;
-          font-family: "Open Sans";
-          font-style: italic;
-        }
-      }
-      .base-full-input {
-        flex-direction: column;
-        max-width: none;
-        @extend .base-input;
-        label{
-          width: 100%;
-          box-sizing: border-box;
-        }
-        .content {
-          display: flex;
-          flex-direction: row;
-          .item{
-            background-color: $light-background-color;
-            margin: 5px 2px 0;
-            padding: 15px 20px 25px 50px;
-            position: relative;
-            flex: 1;
-            i {
-              font-size: 26px;
-              position: absolute;
-              left: 10px;
-              top: 10px;
-              color: lightgray;
-            }
-            .fa-check-circle-o{
-              color: $blue-color;
-            }
-            .title{
-              font-weight: 600;
-              font-size: 16px;
-              color: $font-color-1;
-
-            }
-            .description{
-              font-size: 16px;
-              color: $font-color-1;
-              font-style: italic;
-              line-height: 22px;
-              padding-top: 10px;
-            }
-          }
-        }
-      }
-      .title-bar{
-        background-color: #D4D8DE;
-        display: flex;
-        width: 100%;
-        height: 58px;
-        align-items: center;
-        flex-direction: row;
-        margin-bottom: 20px;
-        hr {
-          width: 20px;
-          display: block;
-          height: 1px;
-          border: 0;
-          border-top: 2px solid #B2B9C4;
-          margin: 1em;
-          padding: 0;
-        }
-        .title{
-          color: $font-color-1;
-          font-size: 22px;
-          font-weight: 600;
-          padding-right: 20px;
-
-        }
-        .subtitle{
-          color: $font-color-1;
-          font-size: 16px;
-          font-style: italic;
-          padding-top: 4px;
-        }
-      }
-      .step-item-description{
-        font-size: $font-size-medium-large;
-        font-style: italic;
+      .title{
+        color: $font-color-1;
+        font-size: 22px;
         font-weight: 600;
-        margin: 20px 0;
+        padding-right: 20px;
+
       }
-      .schedule{
-        font-size: 14px;
-        margin-top: -30px;
-        background-color: #F4F6F9;
-        z-index: 100;
-        position: relative;
-        padding: 20px;
-        column-count: 3;
-        .matchday{
-          padding: 10px;
-          border: 1px solid lightgray;
-          margin: 5px;
-          font-weight: 600;
-          color: black;
-          width: 90%;
-          display: inline-block;
-          font-size: 16px;
-          input[type="checkbox"] + label {
-            display: inline-block;
-            width: 21px;
-            height: 19px;
-            vertical-align: middle;
-            cursor: pointer;
-            background-image: none;
-            background-color: #E8EBF0;
-            position: relative;
-            margin-right: 4px;
-            margin-left: 0px;
-            border: 1px solid #A9B5C6;
-            border-radius: 4px;
-
-          }
-          span {
-            display: block;
-            float: right;
-            color: grey;
-            cursor: pointer;
-          }
-          .match-group{
-            border-top: 1px solid lightgray;
-            padding: 5px 0;
-            margin: 10px 0 0;
-            max-height: 400px;
-            overflow: auto;
-            .match{
-              padding: 1px;
-              font-size: 12px;
-              line-height: 12px;
-              cursor: pointer;
-              span {
-                display: contents;
-                float: none;
-                color: #4F4F4F;
-              }
-              .select {
-                display: block;
-                float: right;
-              }
-            }
-          }
-
-        }
-
-        .selected{
-          background-color: $blue-color;
-          color: white;
-        }
+      .subtitle{
+        color: $font-color-1;
+        font-size: 16px;
+        font-style: italic;
+        padding-top: 4px;
       }
     }
+    .step-item-description{
+      font-size: $font-size-medium-large;
+      font-style: italic;
+      font-weight: 600;
+      margin: 20px 0;
+    }
+    .schedule{
+      font-size: 14px;
+      margin-top: -30px;
+      background-color: #F4F6F9;
+      z-index: 100;
+      position: relative;
+      padding: 20px;
+      column-count: 3;
+      .matchday{
+        padding: 10px;
+        border: 1px solid lightgray;
+        margin: 5px;
+        font-weight: 600;
+        color: black;
+        width: 90%;
+        display: inline-block;
+        font-size: 16px;
+        input[type="checkbox"] + label {
+          display: inline-block;
+          width: 21px;
+          height: 19px;
+          vertical-align: middle;
+          cursor: pointer;
+          background-image: none;
+          background-color: #E8EBF0;
+          position: relative;
+          margin-right: 4px;
+          margin-left: 0px;
+          border: 1px solid #A9B5C6;
+          border-radius: 4px;
 
+        }
+        span {
+          display: block;
+          float: right;
+          color: grey;
+          cursor: pointer;
+        }
+        .match-group{
+          border-top: 1px solid lightgray;
+          padding: 5px 0;
+          margin: 10px 0 0;
+          max-height: 400px;
+          overflow: auto;
+          .match{
+            padding: 1px;
+            font-size: 12px;
+            line-height: 12px;
+            cursor: pointer;
+            span {
+              display: contents;
+              float: none;
+              color: #4F4F4F;
+            }
+            .select {
+              display: block;
+              float: right;
+            }
+          }
+        }
+
+      }
+
+      .selected{
+        background-color: $blue-color;
+        color: white;
+      }
+    }
   }
+
 }
 
 .box-header{
@@ -431,6 +432,10 @@ button{
 
 }
 
+.react-toggle {
+  margin-left: 10px;
+}
+
 .definition {
   border-bottom: 4px solid #D4D8DE;
   display: flex;
@@ -471,4 +476,41 @@ button{
     }
   }
 
+}
+
+.Select {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  margin-left: 5px;
+  .Select-control{
+    border-radius: 0px;
+    border: 1px solid lightgrey;
+    height: 45px;
+    .Select-placeholder{
+      line-height: 45px;
+    }
+  }
+}
+
+.base-input-small {
+  @extend .base-input;
+  margin-bottom: 10px !important;
+  label {
+    font-size: 12px !important;
+    height: 40px !important;
+    line-height: 14px;
+  }
+  input {
+    height: 36px !important;
+  }
+  .Select {
+    height: 40px !important;
+    .Select-control{
+      height: 40px !important;
+      .Select-placeholder{
+        line-height: 40px !important;
+      }
+    }
+  }
 }

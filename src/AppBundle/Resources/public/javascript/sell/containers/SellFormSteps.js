@@ -20,9 +20,9 @@ class SellFormSteps extends React.Component {
             steps: [
                 {step: 1, title: "Event selection"},
                 {step: 2, title: "Configure rights"},
-                {step: 3, title: "Distribution style"},
-                {step: 4, title: "Price, payment and listing details"},
-                {step: 5, title: "Confirm"}
+                {step: 3, title: "Pricing & listing details"},
+/*                {step: 4, title: "Price, payment and listing details"},
+                {step: 5, title: "Confirm"}*/
             ]
         };
     }

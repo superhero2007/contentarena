@@ -5,6 +5,8 @@
 import 'react-table/react-table.css';
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 import 'react-datepicker/dist/react-datepicker.css';
+import "react-toggle/style.css";
+import 'react-select/dist/react-select.css';
 
 $(function() {
 

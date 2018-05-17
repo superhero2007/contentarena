@@ -2,11 +2,9 @@ import React from 'react';
 import { connect } from "react-redux";
 import PackageSelector from "../containers/PackageSelector";
 import Right from "../components/Right";
-import CurrencySelector from "../components/CurrencySelector";
+import Program from "../components/Program";
 import LicenseDateSelector from "../components/LicenseDateSelector";
-import ProgramName from "../components/ProgramName";
-import Definition from "../components/Definition";
-import { TitleBar } from "../components/SellFormItems";
+
 
 class SellFormStep2 extends React.Component {
 
@@ -19,6 +17,7 @@ class SellFormStep2 extends React.Component {
             title : "Step 2 - Configure Rights",
             packagesConfirmed : false,
             programsEnabled: false,
+            programsShown: false,
             rights : [],
             rightPackages : new Map(packages.map((i) => [i.id, i]))
         };
@@ -28,6 +27,8 @@ class SellFormStep2 extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("Step 2 - props", nextProps);
+
+        const { programsShown } = this.state;
         let programsEnabled = false;
 
         if ( nextProps.rightsPackage.length > 0 && this.state.rights.length === 0 ) {
@@ -35,12 +36,15 @@ class SellFormStep2 extends React.Component {
         }
 
         nextProps.rightsPackage.forEach(( rightPackage )=>{
-            if ( rightPackage.shortLabel === "PR" ) programsEnabled = true ;
+            if ( rightPackage.shortLabel === "PR" && !programsShown ) programsEnabled = true ;
         });
 
-        this.setState({
-            programsEnabled : programsEnabled
-        });
+        if ( programsEnabled ){
+            this.setState({
+                programsEnabled : programsEnabled,
+                programsShown : true
+            });
+        }
 
         if ( programsEnabled && nextProps.programs.length === 0) this.props.updateProgram(0, {name: "", saved : false}, "save");
 
@@ -55,6 +59,10 @@ class SellFormStep2 extends React.Component {
 
     packagesConfirmed = (packagesConfirmed) =>{
         this.setState({packagesConfirmed});
+    };
+
+    closeProgramsPopup = () => {
+        this.setState({programsEnabled:false}) ;
     };
 
     selectCurrency = ( currency ) => {
@@ -90,39 +98,20 @@ class SellFormStep2 extends React.Component {
                     packages={this.props.packages}
                     packagesConfirmed={this.state.packagesConfirmed}
                     onConfirm={this.packagesConfirmed} />
-                {
-                    this.state.packagesConfirmed && this.state.rights.length === 0 && <i className="fa fa-cog fa-spin"/>
-                }
 
                 <div className="step-content-container">
-                    {this.state.packagesConfirmed &&
-                        <CurrencySelector onClick={this.selectCurrency} selected={this.props.currency} />}
 
-                    {this.state.packagesConfirmed && this.state.programsEnabled && this.props.programs.map((v,i, l)=>(
-                        <ProgramName
-                            key={i}
-                            index={i}
-                            name={v.name}
-                            showAdd={v.saved && i === l.length - 1}
-                            showEdit={v.saved}
-                            showSave={!v.saved}
-                            showRemove={v.saved || i > 0}
-                            onAdd={this.addProgram}
-                            onEdit={this.editProgram}
-                            onSave={this.saveProgram}
-                            onRemove={this.removeProgram} />
-                    ))}
-
-                    {this.state.packagesConfirmed &&
-                    <LicenseDateSelector
+                    {/*<LicenseDateSelector
                         onUpdate={this.selectLicenseDates}
                         startDate={this.props.startDate}
                         endData={this.props.endDate}
-                    />}
+                    />*/}
+
+                    <Program isOpen={this.state.programsEnabled} onClose={this.closeProgramsPopup}/>
 
                 </div>
 
-                <div>
+                {/*<div>
                     {
                         this.state.rights.length > 0 && this.state.rights.map((right)=> {
                             return <Right
@@ -133,34 +122,7 @@ class SellFormStep2 extends React.Component {
                                 availablePackages={this.props.rightsPackage}/>
                         })
                     }
-                </div>
-
-                { this.state.rights.length > 0 && <div className="step-content-container">
-
-                    <div className="step-item-description">
-                        To generate the license agreement automatically, a definition is created for most of the right criteria for most of the rights criteria and subcriteria stated above. As seller, you’re entitles to edit
-                        these standard definitions. as admin, you may permanently edit these definitions via the company management section.
-                    </div>
-
-                    <TitleBar title={"Show definitions"}/>
-
-                    {
-                        this.state.rights.length > 0 && this.state.rights.map((right)=> {
-                            return <Definition
-                                key={"definition" + right.id}
-                                defaultValue={right.definition}
-                                label={right.name}
-                                />
-                        })
-                    }
-
-                    <div className="step-item-description">
-                        Add additional clauses
-                    </div>
-
-                    <Definition defaultValue={""} label={"Clauses"}/>
-
-                </div>}
+                </div>*/}
 
             </div>
         );

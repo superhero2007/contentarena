@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import PackageSelector from "../containers/PackageSelector";
+import CurrencySelector from "../components/CurrencySelector";
 import Right from "../components/Right";
 
 class SellFormStep3 extends React.Component {
@@ -39,6 +39,9 @@ class SellFormStep3 extends React.Component {
 
         return (
             <div className="step-content">
+
+                <CurrencySelector onClick={this.selectCurrency} selected={this.props.currency} />
+
                 <div>
                     {
                         this.state.rights.length > 0 && this.state.rights.map((right)=> {
