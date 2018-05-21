@@ -40,9 +40,12 @@ class FileSelector extends Component {
     };
 
     render() {
+
+        const {label} = this.props;
+
         return (
             <div className="base-input">
-                <label>Files</label>
+                <label>{(label)?label:"Files"}</label>
                 <button className="standard-button" onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload</button>
                 <input className="is-hidden"
                    onChange={this.handleUploadFile}

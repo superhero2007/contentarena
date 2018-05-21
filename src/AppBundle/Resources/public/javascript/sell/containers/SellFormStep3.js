@@ -1,20 +1,16 @@
 import React from 'react';
 import { connect } from "react-redux";
 import CurrencySelector from "../components/CurrencySelector";
-import Right from "../components/Right";
+import FileSelector from '../../main/components/FileSelector';
 
 class SellFormStep3 extends React.Component {
 
     constructor(props) {
         super(props);
 
-        let packages = JSON.parse(this.props.packages);
-
         this.state = {
             title : "Step 3",
-            packagesConfirmed : false,
-            rights : [],
-            rightPackages : new Map(packages.map((i) => [i.id, i]))
+            name : ""
         };
     }
 
@@ -22,39 +18,37 @@ class SellFormStep3 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if ( nextProps.rightsPackage.length > 0 && this.state.rights.length === 0 && nextProps.step === 3 ) {
-            this.loadRights(nextProps.rightsPackage, "Production Standards");
-        }
     }
 
-    loadRights = (rightsPackage, group) => {
-        let _this = this;
-        ContentArena.Api.getRights(rightsPackage.map((p)=> (p.id)), group).done((rights)=>{
-            _this.setState({rights});
-        });
+    selectCurrency = ( currency ) => {
+        this.props.updateContentValue("currency", currency);
     };
 
+    updateName = ( e ) => {
+        this.props.updateContentValue("name", e.target.value);
+    };
     render() {
-        if ( this.props.step !== 3) return (null);
+        const {step, name} = this.props;
+
+        if ( step !== 3) return (null);
 
         return (
             <div className="step-content">
+                <div className="step-content-container">
+                    <div className="base-input">
 
-                <CurrencySelector onClick={this.selectCurrency} selected={this.props.currency} />
+                        <label>Listing name</label>
+                        <input
+                            type="text"
+                            defaultValue={name}
+                            onBlur={this.updateName}
+                            placeholder=""/>
+                    </div>
 
-                <div>
-                    {
-                        this.state.rights.length > 0 && this.state.rights.map((right)=> {
-                            return <Right
-                                key={right.id}
-                                data={right}
-                                programs={this.props.programs}
-                                rightPackages={this.state.rightPackages}
-                                availablePackages={this.props.rightsPackage}/>
-                        })
-                    }
+                    <CurrencySelector onClick={this.selectCurrency} selected={this.props.currency} />
+
+                    <FileSelector label={"Listing image (opt.)"} target={"image"}/>
                 </div>
-
             </div>
         );
     }
@@ -66,10 +60,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeNewSport : (index) => dispatch({
-            type: 'REMOVE_NEW',
-            index : index,
-            selectorType : "sports",
+        updateContentValue : (key, value) => dispatch({
+            type: 'UPDATE_CONTENT_VALUE',
+            key: key,
+            value : value
         }),
     }
 };
