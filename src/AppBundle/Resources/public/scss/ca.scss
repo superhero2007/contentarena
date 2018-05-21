@@ -69,6 +69,12 @@ button{
   .step-content-container {
     display: flex;
     flex-direction: column;
+    .rights-container{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
     .license-date-container{
       display: flex;
       justify-content: space-between;
@@ -88,7 +94,7 @@ button{
 
       }
       .table-right{
-        width: 46%;
+
       }
     }
     .react-tagsinput {
@@ -123,6 +129,13 @@ button{
       margin-bottom: 20px;
       position: relative;
       max-width: 872px;
+      .fa-edit {
+        position: absolute;
+        right: 3px;
+        top: 7px;
+        color: lightgrey;
+        font-size: 26px;
+      }
       .fa-cog {
         position: absolute;
         right: 10px;
@@ -155,6 +168,11 @@ button{
           }
         }
 
+      }
+      .custom{
+        font-size: 16px;
+        font-weight: bold;
+        color: red;
       }
       label {
         text-transform: uppercase;
@@ -432,8 +450,13 @@ button{
 
 }
 
+.ReactModal__Content {
+  padding: 0 !important;
+}
+
 .react-toggle {
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .definition {
@@ -493,17 +516,158 @@ button{
   }
 }
 
-.base-input-small {
-  @extend .base-input;
-  margin-bottom: 10px !important;
+.modal-title{
+  height: 48px;
+  background-color: #48C0FE;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 17px;
+  color : #fff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  i {
+    position: absolute;
+    font-size: 26px;
+    right: 10px;
+    top: 6px;
+  }
+}
+
+.modal-table {
+  display: flex;
+  flex-direction: column;
+  .row{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 800px;
+    border-bottom: 1px solid lightgray;
+    align-items: center;
+    height: 40px;
+  }
+  .row-header{
+    height: 55px;
+    background-color: #D4D8DE;
+    color: #4F4F4F;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+  }
+  .column{
+    display: flex;
+    flex: 2;
+    box-sizing: border-box;
+    justify-content: center;
+    text-align: center;
+    input.text-field {
+      margin: 3px 0 0;
+      height: 24px;
+      padding: 2px;
+    }
+    input[type="checkbox"], input[type="radio"]{
+      width: 50px;
+    }
+    .Select{
+      height: 31px;
+      .Select-control{
+        height: 31px;
+        .Select-placeholder{
+          line-height: 30px;
+          padding-left: 0;
+        }
+        .Select-input {
+          height: 31px;
+        }
+      }
+
+    }
+  }
+}
+
+.modal-input
+{
+  display: flex;
+  margin-bottom: 10px;
+  position: relative;
+  max-width: 872px;
+  .fa-cog {
+    position: absolute;
+    right: 10px;
+    top: 10px
+  }
+  .column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 4px 0;
+    .small-label{
+      font-size: 13px;
+      width: 150px;
+      padding: 0 10px;
+      line-height: 14px;
+    }
+  }
   label {
-    font-size: 12px !important;
-    height: 40px !important;
-    line-height: 14px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    height: 48px;
+    font-size: 16px;
+    width: 232px;
+    color: #4F4F4F;
+    min-width: 232px;
+    box-sizing: border-box;
+
   }
-  input {
-    height: 36px !important;
+  input, select{
+    width: 200px;
+    margin: 0px;
+    height: 40px;
+    padding: 0 8px;
+    font-size: 16px;
+    border: 1px solid lightgrey;
   }
+  input::placeholder{
+    color: lightgray;
+  }
+
+  input[type="checkbox"] + label {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    min-width: 19px;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid lightgray;
+    position: relative;
+    margin-right: 20px;
+    background-image: none;
+  }
+
+  input[type="checkbox"]:checked + label {
+    border: 1px solid #48C0FE;
+  }
+
+  input[type="checkbox"] + label:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    border: none;
+    background: #48C0FE;
+    opacity: 0;
+    transform: none;
+    border-radius: 50%;
+  }
+
   .Select {
     height: 40px !important;
     .Select-control{

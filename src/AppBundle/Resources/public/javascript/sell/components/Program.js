@@ -64,9 +64,14 @@ class Program extends React.Component{
                 contentLabel="Example Modal"
             >
 
+                <div className="modal-title">
+                    Program details
+                    <i className="fa fa-times-circle-o" onClick={onClose}/>
+                </div>
+
                 <div className="step-content">
                     <div className="step-content-container">
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Enter program name</label>
                             <input
                                 type="text"
@@ -74,7 +79,7 @@ class Program extends React.Component{
                                 onChange={this.handleChangeName}
                                 placeholder="Program name"/>
                         </div>
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Enter program type</label>
                             <input
                                 type="text"
@@ -83,7 +88,7 @@ class Program extends React.Component{
                                 placeholder="Program type"/>
                         </div>
 
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Number of episodes</label>
                             <input
                                 type="number"
@@ -91,7 +96,7 @@ class Program extends React.Component{
                                 />
                         </div>
 
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Average episode duration in minutes</label>
                             <input
                                 type="number"
@@ -99,17 +104,17 @@ class Program extends React.Component{
                             />
                         </div>
 
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Program language</label>
                             <LanguageSelector value={this.state.language} onChange={this.handleLanguageChange}/>
                         </div>
 
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Subtitles (if available)</label>
                             <LanguageSelector value={this.state.subtitles} onChange={this.handleSubtitlesChange}/>
                         </div>
 
-                        <div className="base-input-small">
+                        <div className="modal-input">
                             <label>Script (if available)</label>
                             <LanguageSelector value={this.state.script} onChange={this.handleScriptChange}/>
                         </div>
@@ -119,13 +124,8 @@ class Program extends React.Component{
 
                 <div className={"buttons"}>
                     <button
-                        className={"light-blue-button"}
-                        style={{backgroundColor: customStyles.content.backgroundColor}}
-                        onClick={onClose}>
-                        Cancel
-                    </button>
-
-                    <button className={"standard-button"} onClick={this.applySelection} disabled={!this.state.updated}>Apply</button>
+                        className={"standard-button"}
+                        onClick={this.applySelection}>Ok</button>
                 </div>
             </Modal>
         )

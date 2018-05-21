@@ -1,25 +1,98 @@
 import React from 'react';
 import { connect } from "react-redux";
 import PackageSelector from "../containers/PackageSelector";
-import Right from "../components/Right";
+import PopupRight from "../components/PopupRight";
 import Program from "../components/Program";
 import LicenseDateSelector from "../components/LicenseDateSelector";
+import {TitleBar} from "../components/SellFormItems";
+import Moment from "moment";
+import {RightDefinitions} from "../components/RightDefinitions";
 
+const licenseStyles = {
+    fontSize: "12px",
+    lineHeight: "14px",
+    padding: 0,
+    textAlign : "center",
+    justifyContent: "center"
+};
 
 class SellFormStep2 extends React.Component {
 
     constructor(props) {
         super(props);
 
-        let packages = JSON.parse(this.props.packages);
-
         this.state = {
             title : "Step 2 - Configure Rights",
             packagesConfirmed : false,
             programsEnabled: false,
             programsShown: false,
-            rights : [],
-            rightPackages : new Map(packages.map((i) => [i.id, i]))
+            licensePopup : false,
+            rights : RightDefinitions,
+            productionStandards : [
+                {
+                    name: "Video Standard",
+                    key: "VIDEO_STANDARD",
+                    superRights: [],
+                    options : [
+                        "VIDEO_STANDARD_HD",
+                        "VIDEO_STANDARD_SD",
+                        "VIDEO_STANDARD_UHD",
+                        "VIDEO_STANDARD_VR",
+                    ],
+                    multiple : false
+                },
+                {
+                    name: "Aspect ratio",
+                    key: "ASPECT_RATIO",
+                    superRights: [],
+                    options : [
+                        "ASPECT_RATIO_16_9",
+                        "ASPECT_RATIO_4_3",
+                        "ASPECT_RATIO_CUSTOM"
+                    ],
+                    multiple : false
+                },
+                {
+                    name: "Graphics",
+                    key: "GRAPHICS",
+                    superRights: [],
+                    options : [
+                        "GRAPHICS_NO",
+                        "GRAPHICS_YES",
+                    ],
+                    multiple : false
+                },
+                {
+                    name: "Commentary",
+                    key: "COMMENTARY",
+                    superRights: [],
+                    options : [
+                        "COMMENTARY_NO",
+                        "COMMENTARY_YES",
+                    ],
+                    multiple : false
+                },
+                {
+                    name: "Camera standards",
+                    key: "CAMERA",
+                    superRights: [],
+                    options : [
+                        "CAMERA_MINIMUM",
+                        "CAMERA_TEXT",
+                    ],
+                    multiple : false
+                },
+                {
+                    name: "Content production",
+                    key: "CONTENT",
+                    superRights: [],
+                    options : [
+                        "CONTENT_ALL",
+                        "CONTENT_TEXT",
+                    ],
+                    multiple : false
+                }
+            ]
         };
     }
 
@@ -30,10 +103,6 @@ class SellFormStep2 extends React.Component {
 
         const { programsShown } = this.state;
         let programsEnabled = false;
-
-        if ( nextProps.rightsPackage.length > 0 && this.state.rights.length === 0 ) {
-            this.loadRights(nextProps.rightsPackage, "Main Information");
-        }
 
         nextProps.rightsPackage.forEach(( rightPackage )=>{
             if ( rightPackage.shortLabel === "PR" && !programsShown ) programsEnabled = true ;
@@ -63,6 +132,10 @@ class SellFormStep2 extends React.Component {
 
     closeProgramsPopup = () => {
         this.setState({programsEnabled:false}) ;
+    };
+
+    closeLicensePopup = () => {
+        this.setState({licensePopup:false}) ;
     };
 
     selectCurrency = ( currency ) => {
@@ -101,28 +174,79 @@ class SellFormStep2 extends React.Component {
 
                 <div className="step-content-container">
 
-                    {/*<LicenseDateSelector
+                    <LicenseDateSelector
+                        isOpen={this.state.licensePopup}
                         onUpdate={this.selectLicenseDates}
                         startDate={this.props.startDate}
-                        endData={this.props.endDate}
-                    />*/}
+                        endDateLimit={this.props.endDateLimit}
+                        endDate={this.props.endDate}
+                        onClose={this.closeLicensePopup}
+                    />
 
-                    <Program isOpen={this.state.programsEnabled} onClose={this.closeProgramsPopup}/>
+                    <TitleBar title={"License period"}/>
+
+                    <div className={"license-date-container"}>
+                        <div className="table-right">
+                            <div className="row">
+                                <div className="column right-name">Start</div>
+                                <div className="column right-item-content" style={licenseStyles}>
+                                    { !this.props.startDate  && "With contract conclusion"}
+                                    { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
+                                </div>
+                                <div className="column right-name">End</div>
+                                <div className="column right-item-content"  style={licenseStyles}>
+                                    { !this.props.endDate  && this.props.endDateLimit + " days from contract conclusion"}
+                                    { this.props.endDate  && Moment(this.props.endDate).format('DD/MM/YYYY')}
+                                </div>
+                                <div className="column right-item-content edit-item" onClick={()=>this.setState({licensePopup: true})}>
+                                    <i className="fa fa-edit"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <TitleBar title={"Configure Rights"}/>
+
+                    <Program
+                        isOpen={this.state.programsEnabled}
+                        onClose={this.closeProgramsPopup}/>
+
+                    <div className="rights-container">
+                        {
+                            this.state.rights.length > 0 && this.state.rights.map((right, i)=> {
+                                return <PopupRight
+                                    key={right.key}
+                                    id={right.key}
+                                    selected={this.props[right.key]}
+                                    name={right.name}
+                                    options={right.options}
+                                    multiple={right.multiple}
+                                    superRights={right.superRights}
+                                    rightsPackage={this.props.rightsPackage}/>
+                            })
+                        }
+                    </div>
+
+                    <TitleBar title={"Configure Production Standards"}/>
+
+                    <div className="rights-container">
+                        {
+                            this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i)=> {
+                                return <PopupRight
+                                    key={right.key}
+                                    id={right.key}
+                                    name={right.name}
+                                    selected={this.props[right.key]}
+                                    options={right.options}
+                                    multiple={right.multiple}
+                                    superRights={right.superRights}
+                                    rightsPackage={this.props.rightsPackage}/>
+                            })
+                        }
+                    </div>
 
                 </div>
 
-                {/*<div>
-                    {
-                        this.state.rights.length > 0 && this.state.rights.map((right)=> {
-                            return <Right
-                                key={right.id}
-                                data={right}
-                                programs={this.props.programs}
-                                rightPackages={this.state.rightPackages}
-                                availablePackages={this.props.rightsPackage}/>
-                        })
-                    }
-                </div>*/}
 
             </div>
         );

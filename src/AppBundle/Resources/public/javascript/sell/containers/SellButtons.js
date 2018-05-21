@@ -49,7 +49,7 @@ class SellButtons extends React.Component {
                         <i className="fa fa-arrow-left"/> Back
                     </button> }
                     {
-                        [1,2,3,4,5].map((v,k)=>(
+                        [1,2,3].map((v,k)=>(
                             <div className={"step " + ((this.props.step === v) ? "step-active" : "")} key={k}>{v}</div>
                         ))
                     }
