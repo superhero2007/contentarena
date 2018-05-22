@@ -57,15 +57,6 @@ class SellFormStep3 extends React.Component {
             <div className="step-content">
                 <div className="step-content-container">
 
-                    <div className="base-input">
-                        <label>Listing name</label>
-                        <input
-                            type="text"
-                            defaultValue={name}
-                            onBlur={this.updateName}
-                            placeholder=""/>
-                    </div>
-
                     <CurrencySelector onClick={this.selectCurrency} selected={currency} />
 
                     <FileSelector label={"Listing image (opt.)"} target={"image"}/>
