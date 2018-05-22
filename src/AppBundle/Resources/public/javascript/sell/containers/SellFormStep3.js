@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import CurrencySelector from "../components/CurrencySelector";
+import VatSelector from "../components/VatSelector";
 import FileSelector from '../../main/components/FileSelector';
+import SalesPackageForm from "../components/SalesPackageForm";
 
 class SellFormStep3 extends React.Component {
 
@@ -10,7 +12,8 @@ class SellFormStep3 extends React.Component {
 
         this.state = {
             title : "Step 3",
-            name : ""
+            name : "",
+            salesPackages : []
         };
     }
 
@@ -24,19 +27,37 @@ class SellFormStep3 extends React.Component {
         this.props.updateContentValue("currency", currency);
     };
 
+    selectVat = ( vat ) => {
+        this.props.updateContentValue("vat", vat);
+    };
+
     updateName = ( e ) => {
         this.props.updateContentValue("name", e.target.value);
     };
+
+    addSalesPackage = ( salesPackage ) => {
+        this.props.updateSalesPackages("add", salesPackage);
+    };
+
+    updateSalesPackage = ( salesPackage, index ) => {
+        this.props.updateSalesPackages("save", salesPackage, index);
+    };
+
+    removeSalesPackage = ( index ) => {
+        this.props.updateSalesPackages("remove", null, index);
+    };
+
     render() {
-        const {step, name} = this.props;
+        const {step, name, salesPackages, currency, vat} = this.props;
 
         if ( step !== 3) return (null);
 
         return (
+
             <div className="step-content">
                 <div className="step-content-container">
-                    <div className="base-input">
 
+                    <div className="base-input">
                         <label>Listing name</label>
                         <input
                             type="text"
@@ -45,9 +66,18 @@ class SellFormStep3 extends React.Component {
                             placeholder=""/>
                     </div>
 
-                    <CurrencySelector onClick={this.selectCurrency} selected={this.props.currency} />
+                    <CurrencySelector onClick={this.selectCurrency} selected={currency} />
 
                     <FileSelector label={"Listing image (opt.)"} target={"image"}/>
+
+                    <SalesPackageForm
+                        salesPackages={salesPackages}
+                        onAdd={this.addSalesPackage}
+                        onUpdate={this.updateSalesPackage}
+                        onRemove={this.removeSalesPackage} />
+
+                    <VatSelector onClick={this.selectVat} selected={vat}/>
+
                 </div>
             </div>
         );
@@ -64,6 +94,12 @@ const mapDispatchToProps = dispatch => {
             type: 'UPDATE_CONTENT_VALUE',
             key: key,
             value : value
+        }),
+        updateSalesPackages : (name, salesPackage, index) => dispatch({
+            type: 'UPDATE_SALES_PACKAGES',
+            index: index,
+            salesPackage : salesPackage,
+            name: name
         }),
     }
 };

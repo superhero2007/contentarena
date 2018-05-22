@@ -220,9 +220,19 @@ button{
         font-style: italic;
       }
     }
+    .small-select{
+      margin: 0 0 5px;
+      height: 40px;
+      .Select-control {
+        height: 34px;
+        .Select-placeholder {
+          line-height: 34px;
+        }
+      }
+    }
     .base-full-input {
       flex-direction: column;
-      max-width: none;
+      margin-bottom: 5px;
       @extend .base-input;
       label{
         width: 100%;
@@ -231,17 +241,51 @@ button{
       .content {
         display: flex;
         flex-direction: row;
+        .sales-package-container{
+          display: flex;
+          flex-direction: row;
+          i {
+            position: relative;
+            font-size: 25px;
+            flex: 0.5;
+            color: grey;
+            top: 13px;
+            padding: 0;
+          }
+          .sales-package{
+            display: flex;
+            flex-direction: row;
+            border: 1px solid lightgray;
+            height: 40px;
+            align-items: center;
+            padding: 0 15px;
+            margin: 4px 5px 0 0;
+            flex: 9;
+          }
+        }
+
         .item{
           background-color: $light-background-color;
           margin: 5px 2px 0;
-          padding: 15px 20px 25px 50px;
+          padding: 5px 20px 10px 50px;
           position: relative;
           flex: 1;
+          display: flex;
+          align-items: center;
+          Select {
+            margin: 0;
+          }
+          span{
+            display: flex;
+            font-size: 13px;
+            width: 90px;
+            font-weight: 600;
+            justify-content: flex-end;
+          }
           i {
             font-size: 26px;
             position: absolute;
             left: 10px;
-            top: 10px;
             color: lightgray;
           }
           .fa-check-circle-o{
@@ -249,7 +293,7 @@ button{
           }
           .title{
             font-weight: 600;
-            font-size: 16px;
+            font-size: 13px;
             color: $font-color-1;
 
           }
@@ -367,6 +411,12 @@ button{
         background-color: $blue-color;
         color: white;
       }
+    }
+    .add-item{
+      color: #2AAAEC;
+      font-size: 18px;
+      cursor: pointer;
+      margin-bottom: 20px;
     }
   }
 

@@ -149,7 +149,6 @@ export const content = (state = {
             if ( action.name === "add" ) salesPackages = [...salesPackages,action.salesPackage];
             if ( action.name === "save" ) salesPackages[action.index] = action.salesPackage;
 
-
             return Object.assign({}, state, {
                 salesPackages : salesPackages
             });
