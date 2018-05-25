@@ -129,7 +129,7 @@ class SellFormStep1 extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-        let tournaments, seasons, sportCategories, website;
+        let tournaments, seasons, sportCategories, website, name = nextProps.name;
 
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
         seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
@@ -149,6 +149,8 @@ class SellFormStep1 extends React.Component {
                 schedules: []
             }));
         }
+
+        if ( !name && tournaments.length > 0) this.props.updateContentValue("name",tournaments[0].name);
 
         if (nextProps.sports.length === 1 || sportCategories.length === 1) this.loadTournaments(nextProps.sports[0], sportCategories[0]);
 
@@ -176,6 +178,11 @@ class SellFormStep1 extends React.Component {
 
     }
 
+    /**
+     *
+     * @param event
+     * @param key
+     */
     updateContentValue = ( event, key ) =>{
         this.props.updateContentValue(key,event.target.value);
     };

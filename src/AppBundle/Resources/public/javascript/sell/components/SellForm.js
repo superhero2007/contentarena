@@ -16,8 +16,10 @@ class SellForm extends React.Component {
         super(props);
 
         let content = JSON.parse(props.content);
+        //let user = JSON.parse(props.user);
 
         if (props.step) content.step = props.step;
+        //content.company = user.company;
 
         this.state = {
             content : content

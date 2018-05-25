@@ -222,7 +222,7 @@ button{
     }
     .small-select{
       margin: 0 0 5px;
-      height: 40px;
+      height: auto;
       .Select-control {
         height: 34px;
         .Select-placeholder {
@@ -502,6 +502,11 @@ button{
 
 .ReactModal__Content {
   padding: 0 !important;
+}
+
+.ReactModal__Selector{
+  padding: 20px !important;
+  position: absolute;
 }
 
 .react-toggle {

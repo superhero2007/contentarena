@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import store from '../../sell/store';
 import Modal from 'react-modal';
-import { customStyles } from "../styles/custom";
+import { SelectorModalStyle } from "../styles/custom";
 
 Modal.setAppElement('#sell-form-container');
 
@@ -230,7 +230,8 @@ class Selector extends React.Component {
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
                 bodyOpenClassName={"selector"}
-                style={customStyles}
+                style={SelectorModalStyle}
+                className="ReactModal__Selector"
                 contentLabel="Example Modal"
             >
                 {/*<h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>*/}
@@ -262,7 +263,7 @@ class Selector extends React.Component {
                 </div>
 
                 <div className={"buttons"}>
-                    <button className={"light-blue-button"} style={{backgroundColor: customStyles.content.backgroundColor}} onClick={this.closeModal}>Cancel</button>
+                    <button className={"light-blue-button"} style={{backgroundColor: SelectorModalStyle.content.backgroundColor}} onClick={this.closeModal}>Cancel</button>
                     <button className={"standard-button"} onClick={this.applySelection} disabled={!this.state.updated}>Apply</button>
                 </div>
 

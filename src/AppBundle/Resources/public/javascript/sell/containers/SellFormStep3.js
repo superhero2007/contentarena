@@ -4,6 +4,10 @@ import CurrencySelector from "../components/CurrencySelector";
 import VatSelector from "../components/VatSelector";
 import FileSelector from '../../main/components/FileSelector';
 import SalesPackageForm from "../components/SalesPackageForm";
+import ExpirationDateSelector from "../components/ExpirationDateSelector";
+import JurisdictionSelector from "../components/JurisdictionSelector";
+import CompanyInformation from "../components/CompanyInformation";
+import {CountrySelector} from "../../main/components/CountrySelector";
 
 class SellFormStep3 extends React.Component {
 
@@ -61,11 +65,17 @@ class SellFormStep3 extends React.Component {
 
                     <FileSelector label={"Listing image (opt.)"} target={"image"}/>
 
+                    <ExpirationDateSelector/>
+
                     <SalesPackageForm
                         salesPackages={salesPackages}
                         onAdd={this.addSalesPackage}
                         onUpdate={this.updateSalesPackage}
                         onRemove={this.removeSalesPackage} />
+
+                    <CompanyInformation/>
+
+                    <JurisdictionSelector/>
 
                     <VatSelector onClick={this.selectVat} selected={vat}/>
 

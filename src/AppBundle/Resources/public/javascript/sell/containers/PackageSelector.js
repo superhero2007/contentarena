@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Toggle from 'react-toggle';
+import {RightDefaults} from "../components/RightDefaults";
 
 class SuperRight extends React.Component {
 
@@ -45,7 +46,7 @@ class PackageSelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            packages : JSON.parse(props.packages),
+            packages : JSON.parse(props.packages).map( (p) => { p.selectedRights = Object.assign({},RightDefaults); return p }),
             rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i])),
         };
     }

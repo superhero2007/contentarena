@@ -15,6 +15,7 @@ class SalesPackageForm extends React.Component {
         this.selectedTerritories = "SELECTED_TERRITORIES";
         this.fixed = "FIXED";
         this.bidding = "BIDDING";
+        this.limit = 3;
 
         this.state = {
             isOpen : props.isOpen,
@@ -40,10 +41,19 @@ class SalesPackageForm extends React.Component {
 
     setBundleMethod = (bundleMethod) => {
         this.setState({bundleMethod});
+        this.fillTerritories(this.state.territoriesMethod, bundleMethod);
     };
 
     setTerritoriesMethod = (territoriesMethod) => {
         this.setState({territoriesMethod});
+        this.fillTerritories(territoriesMethod, this.state.bundleMethod);
+    };
+
+    fillTerritories = (territoriesMethod, bundleMethod) => {
+        if ( territoriesMethod === this.worldwide &&
+            bundleMethod === this.individually ) {
+            this.setState({ territories : Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }))})
+        }
     };
 
     setSalesMethod = (salesMethod) => {
@@ -190,6 +200,12 @@ class SalesPackageForm extends React.Component {
         </Modal>
     };
 
+    showTerritories = (salesPackage) => {
+        return ( salesPackage.bundleMethod === this.individually &&
+        salesPackage.territoriesMethod === this.worldwide ) ||
+            salesPackage.territoriesMethod !== this.worldwide;
+    };
+
     render(){
         const { salesPackages, onRemove } = this.props;
         return (
@@ -202,11 +218,16 @@ class SalesPackageForm extends React.Component {
                             return <div className="sales-package-container">
                                 <div className="sales-package" key={"sales-package-"+ i}>
                                     <div style={{flex : 5}}>
-                                        {salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
-                                        {salesPackage.territoriesMethod !== this.worldwide
-                                            && salesPackage.territories.map( ( territory, i )=>{
+                                        {salesPackage.bundleMethod === this.asBundle &&
+                                        salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
+
+                                        {this.showTerritories(salesPackage) &&
+                                        salesPackage.territories.slice(0, this.limit).map( ( territory, i )=>{
                                             return <span key={i}>{!!i && ", "} {territory.label}</span>
                                         })}
+
+                                        { this.showTerritories(salesPackage) && salesPackage.territories.length > this.limit &&
+                                        <span> +{salesPackage.territories.length - this.limit}</span>}
                                     </div>
                                     <div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
                                         $ {salesPackage.fee}

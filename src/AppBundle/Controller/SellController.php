@@ -77,6 +77,7 @@ class SellController extends Controller
 
 
         $content = new Content();
+        $content->setCompany($user->getCompany());
 
         return $this->render('@App/sell/sell.new.html.twig', [
 

@@ -1,30 +1,28 @@
 import React from 'react';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-class ListingName extends React.Component {
-
+class CompanyInformation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isOpen : false
         };
     }
 
-    updateName = ( e ) => {
-        this.props.updateContentValue("name", e.target.value);
-    };
+    componentWillReceiveProps(nextProps) {
+    }
 
-    render() {
-        const {name} = this.props;
+    render(){
+        const { company } = this.props;
         return (
             <div className="base-input">
-                <label>Listing name</label>
+                <label>Company address</label>
                 <input
                     type="text"
-                    value={name}
-                    onBlur={this.updateName}
+                    value={company.address}
                     placeholder=""/>
             </div>
-        );
+        )
     }
 }
 
@@ -45,4 +43,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ListingName)
+)(CompanyInformation)

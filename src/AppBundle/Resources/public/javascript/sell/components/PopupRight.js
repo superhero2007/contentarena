@@ -9,17 +9,17 @@ class PopupRight extends React.Component {
         super(props);
 
         this.state = {
-            rightPackages: props.rightPackages || [],
+            rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i])),
             isOpen : false,
             selected : props.selected,
-            custom : false
+            custom : false,
         };
     }
 
     componentWillReceiveProps(props){
         console.log("PopupRight - props",props);
         this.setState({
-            rightPackages: props.rightPackages
+            rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i]))
         });
     }
 
@@ -101,13 +101,41 @@ class PopupRight extends React.Component {
         this.setState({isOpen});
     };
 
-    updateSelection = () => {
-      this.setState({custom: true})
+    updateSelection = (val, id,rightPackage) => {
+
+        const rightsPackage = this.state.rightsPackage;
+        rightPackage.selectedRights[id] = val;
+        rightsPackage.set(rightPackage.id, rightPackage);
+
+        this.props.onUpdate(rightsPackage);
+
+    };
+
+    getSelection = (id,  superRights) =>{
+
+        let custom = false, selected;
+
+        superRights.forEach( ( superRight ) => {
+            let current = superRight.selectedRights[id];
+
+            if ( selected === undefined ){
+                selected = current;
+                return false;
+            }
+
+            if ( current !== selected ){
+                custom = true;
+                return true;
+            }
+
+
+        });
+        return custom;
+
     };
 
     renderModal = () => {
         const {name, multiple, options, id,  superRights} = this.props;
-        const {selected} = this.state;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -143,17 +171,17 @@ class PopupRight extends React.Component {
                                 {options.map((option)=> {
                                     return <div className="column">
                                         {multiple &&
-                                            <input defaultChecked={selected === option}
-                                                   onChange={this.updateSelection}
+                                            <input defaultChecked={rightPackage.selectedRights[id] === option}
+                                                   onChange={(e) => { this.updateSelection(option, id,rightPackage)} }
                                                     type="checkbox"
                                                     id={rightPackage.shortLabel + "_" + option}/>}
                                         {multiple &&
                                             <label htmlFor={rightPackage.shortLabel + "_" + option}/>}
                                         {!multiple &&
                                         <input
-                                            defaultChecked={selected === option}
+                                            defaultChecked={rightPackage.selectedRights[id] === option}
                                             type="radio"
-                                            onChange={this.updateSelection}
+                                            onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
                                             name={rightPackage.shortLabel + "_" + id} value={option}/>}
 
                                         {RightItemsDefinitions[option].language && <LanguageSelector/>}
@@ -177,15 +205,16 @@ class PopupRight extends React.Component {
 
     render(){
 
-        const {name, selected} = this.props;
-        const {custom} = this.state;
+        const {name, id,  rightsPackage} = this.props;
+        const custom = this.getSelection(id,  rightsPackage);
+        const selected = (rightsPackage.length > 0 ) ? RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label: "" ;
         return (
             <div className="base-input" style={{width: "49%"}}>
                 <label>{name}</label>
                 <input
                     type="text"
                     readOnly={true}
-                    value={(custom) ? "Custom!" : RightItemsDefinitions[selected].label }
+                    value={(custom) ? "Custom!" : selected }
                     className={(custom) ? "custom" : undefined}
                     placeholder={"Select"}  />
                 <i className="fa fa-edit" onClick={this.togglePopup} />

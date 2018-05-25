@@ -162,6 +162,10 @@ class SellFormStep2 extends React.Component {
         this.props.updateProgram(index, null, "remove")
     };
 
+    updateRight = (rightsPackage) => {
+        this.props.superRightsUpdated(rightsPackage);
+    };
+
     render() {
         if ( this.props.step !== 2) return (null);
 
@@ -217,11 +221,11 @@ class SellFormStep2 extends React.Component {
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
-                                    selected={this.props[right.key]}
                                     name={right.name}
                                     options={right.options}
                                     multiple={right.multiple}
                                     superRights={right.superRights}
+                                    onUpdate={this.updateRight}
                                     rightsPackage={this.props.rightsPackage}/>
                             })
                         }
@@ -240,6 +244,7 @@ class SellFormStep2 extends React.Component {
                                     options={right.options}
                                     multiple={right.multiple}
                                     superRights={right.superRights}
+                                    onUpdate={this.updateRight}
                                     rightsPackage={this.props.rightsPackage}/>
                             })
                         }
@@ -259,6 +264,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        superRightsUpdated : (rightsPackage) => dispatch({
+            type : 'SUPER_RIGHTS_UPDATED',
+            rightsPackage: rightsPackage
+        }),
         removeNewSport : (index) => dispatch({
             type: 'REMOVE_NEW',
             index : index,
