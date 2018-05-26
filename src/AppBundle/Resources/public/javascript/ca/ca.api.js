@@ -175,6 +175,33 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
+    getRightsPackage (rightsPackage, group) {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "search/rights-package",
+            type: "POST",
+            data : {
+                rightsPackage: rightsPackage,
+                group: group
+            },
+
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getSports () {
         let deferred = jQuery.Deferred();
         let _this = this;

@@ -38,10 +38,19 @@
                 {% if content.programName %}- {{ content.programName }}{% endif %}
             </div>
         {% endif  %}
+    </div>
 
+    <div class="content-column content-column-details">
         {% if content.rightsPackage|length > 0  %}
             <div class="buy-content-detail">
-                <i class="fa fa-gavel"></i>{{ content.rightsPackage|join(", ") }}
+                {% for rightsPackage in content.rightsPackage %}
+                    <p>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i> {{ rightsPackage }}
+                        {% if rightsPackage == 'Live transmission' %}
+                            <span>exclusive</span>
+                        {% endif %}
+                    </p>
+                {% endfor %}
             </div>
         {% endif %}
     </div>

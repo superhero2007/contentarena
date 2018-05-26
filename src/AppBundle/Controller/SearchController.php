@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\RightsPackage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -103,5 +104,19 @@ class SearchController extends Controller
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+    /**
+     * @Route("/search/rights-package", name="searchRightsPackage")
+     */
+    public function getRightsPackage(Request $request){
+
+        //Take Repositories
+        $rightsPackageRepository = $this->getDoctrine()->getRepository("AppBundle:RightsPackage");
+
+        //Get results
+        $packageRepositories = $rightsPackageRepository->getAll();
+
+        return new JsonResponse($packageRepositories);
     }
 }

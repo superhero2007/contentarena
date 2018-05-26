@@ -74,7 +74,13 @@ class BuyController extends Controller
     public function buySearchAction(Request $request, ContentService $contentService, SportRadarService $sportRadarService)
     {
         $user = $this->getUser();
-        $contents = $contentService->getContent($request);
+        if($request->get('event')!="" && $request->get('event')!=null) {
+            $contents = $this->getDoctrine()
+                ->getRepository(Content::class)
+                ->getSearchContent($request->get('event'), null);
+        }else{
+            $contents = $contentService->getContent($request);
+        }
         $paginator  = $this->get('knp_paginator');
         $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
 

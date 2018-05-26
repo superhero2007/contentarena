@@ -10,7 +10,7 @@ import MarketPlace from './containers/MarketPlace';
 
 require('../../scss/marketplace.scss');
 
-const marketplaceContainer = document.getElementById('content-list-container');
+const marketplaceContainer = document.getElementById('marketplace-wrapper');
 
 class MarketplaceElement extends React.Component {
     constructor(props) {
@@ -75,7 +75,7 @@ $(function () {
 
     ContentArena.Test = ContentArena.Test || {};
 
-    $(".content-box").on("click", function(){
+    $(document).on("click",".content-box", function(){
         let id = $(this).data("contentId");
 
         MarketplaceApp.selectListing(id);
@@ -92,14 +92,38 @@ $(function () {
     ContentArena.Api.getSports().done((sports) => {
         ContentArena.Data.FullSports = sports;
 
-        var container = $("#filter-sports")
-            .find(".subfilter-container")
-            .first();
+        var select = $("#sports-event");
 
         ContentArena.Data.TopSports.forEach(function (sport) {
-            container.append("<div class=\"sport subfilter\" name=\""+sport.label+"\" id=\"sport-"+sport.value+"\" toggle>"+sport.label+"</div>")
+            select.append("<option class=\"sport subfilter\" id=\"sport-"+sport.externalId+"\" name="+sport.externalId+" value='"+sport.externalId+"' toggle>"+sport.name+"</option>")
         });
-
     });
 
+    ContentArena.Api.getTerritories().done((territories) => {
+        ContentArena.Data.AllTerritories = territories;
+
+        var select = $("#territories-rights");
+
+        ContentArena.Data.AllTerritories.forEach(function (territory) {
+            select.append("<option class=\"territory subfilter\" value='"+territory.id+"' id='territory-"+ territory.id+"' toggle>"+territory.name+"</option>")
+        });
+    });
+
+    ContentArena.Api.getRightsPackage().done((rightsPackages) => {
+        ContentArena.Data.AllRightsPackages = rightsPackages;
+
+        var container = $("#rights-packages");
+
+        ContentArena.Data.AllRightsPackages.forEach(function (rightsPackage) {
+            container.append("<p><input class='right_package subfilter' type='checkbox' id='"+rightsPackage.id+"'> "+rightsPackage.name+"</p>")
+        });
+    });
+
+    ContentArena.Api.getContent().done((contents) => {
+        ContentArena.Data.AllContents = contents;
+
+        var contents = $("#content-list-container");
+
+        contents.append(ContentArena.Data.AllContents);
+    });
 });

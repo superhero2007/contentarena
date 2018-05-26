@@ -14,4 +14,10 @@ class RightsPackageRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->findBy(array(), array('id' => 'ASC'));
     }
+
+    public function getAll(){
+        return $this->createQueryBuilder('t')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }
