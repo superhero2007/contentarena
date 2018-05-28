@@ -53,9 +53,12 @@ class ContentService
             }
         }
 
+        $term = null;
+        if($request->request->get("event")){
+            $term = $request->request->get("event");
+        }
 
-
-        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter);
+        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term);
 
         return $content;
 

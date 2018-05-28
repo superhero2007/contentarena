@@ -36,7 +36,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->orWhere('c.programName LIKE :value')
                 ->orWhere('c.programType LIKE :value')
                 ->orWhere('c.seriesType LIKE :value')
-                ->orWhere('c.salesPackages LIKE :value')
                 ->orWhere('c.distributionPackages LIKE :value')
                 ->orWhere('com.legalName LIKE :value')
                 ->orWhere('s.name LIKE :value')
@@ -82,14 +81,32 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    public function getFilteredContent( ContentFilter $filter ){
+    public function getFilteredContent( ContentFilter $filter, $term = null ){
 
         $query = $this->createQueryBuilder('content');
 
+        if($term){
+            $query
+                ->leftJoin('content.company', 'com')
+                ->leftJoin('content.tournament', 't')
+                ->where('content.eventType LIKE :value')
+                ->orWhere('content.description LIKE :value')
+                ->orWhere('content.releaseYear LIKE :value')
+                ->orWhere('content.ownLicense LIKE :value')
+                ->orWhere('content.brochure LIKE :value')
+                ->orWhere('content.programName LIKE :value')
+                ->orWhere('content.programType LIKE :value')
+                ->orWhere('content.seriesType LIKE :value')
+                ->orWhere('content.distributionPackages LIKE :value')
+                ->orWhere('com.legalName LIKE :value')
+                ->orWhere('t.name LIKE :value')
+                ->setParameter('value', '%'.$term.'%');
+        }
+
         if ( count( $filter->getSports() ) > 0 ) {
             $query
-                ->innerJoin('content.sports', 'sports')
-                ->where("sports IN(:sportList)")
+                ->leftJoin('content.sports', 'sports')
+                ->andWhere("sports IN(:sportList)")
                 //->andWhere("content.approved = true")
                 ->setParameter('sportList', $filter->getSports());
         }

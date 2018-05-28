@@ -174,6 +174,13 @@ class Content
     private $brochure;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="distribution_packages", type="text", nullable=true)
+     */
+    private $distributionPackages;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -818,9 +825,191 @@ class Content
         $this->paymentMethod = $paymentMethod;
     }
 
+    /**
+     * Get approved
+     *
+     * @return boolean
+     */
+    public function getApproved()
+    {
+        return $this->approved;
+    }
 
+    /**
+     * Get draft
+     *
+     * @return boolean
+     */
+    public function getDraft()
+    {
+        return $this->draft;
+    }
 
+    /**
+     * Set distributionPackages
+     *
+     * @param string $distributionPackages
+     *
+     * @return Content
+     */
+    public function setDistributionPackages($distributionPackages)
+    {
+        $this->distributionPackages = $distributionPackages;
 
+        return $this;
+    }
+
+    /**
+     * Get distributionPackages
+     *
+     * @return string
+     */
+    public function getDistributionPackages()
+    {
+        return $this->distributionPackages;
+    }
+
+    /**
+     * Add salesPackage
+     *
+     * @param \AppBundle\Entity\SalesPackage $salesPackage
+     *
+     * @return Content
+     */
+    public function addSalesPackage(\AppBundle\Entity\SalesPackage $salesPackage)
+    {
+        $this->salesPackages[] = $salesPackage;
+
+        return $this;
+    }
+
+    /**
+     * Remove salesPackage
+     *
+     * @param \AppBundle\Entity\SalesPackage $salesPackage
+     */
+    public function removeSalesPackage(\AppBundle\Entity\SalesPackage $salesPackage)
+    {
+        $this->salesPackages->removeElement($salesPackage);
+    }
+
+    /**
+     * Add sport
+     *
+     * @param \AppBundle\Entity\Sport $sport
+     *
+     * @return Content
+     */
+    public function addSport(\AppBundle\Entity\Sport $sport)
+    {
+        $this->sports[] = $sport;
+
+        return $this;
+    }
+
+    /**
+     * Remove sport
+     *
+     * @param \AppBundle\Entity\Sport $sport
+     */
+    public function removeSport(\AppBundle\Entity\Sport $sport)
+    {
+        $this->sports->removeElement($sport);
+    }
+
+    /**
+     * Add season
+     *
+     * @param \AppBundle\Entity\Season $season
+     *
+     * @return Content
+     */
+    public function addSeason(\AppBundle\Entity\Season $season)
+    {
+        $this->seasons[] = $season;
+
+        return $this;
+    }
+
+    /**
+     * Remove season
+     *
+     * @param \AppBundle\Entity\Season $season
+     */
+    public function removeSeason(\AppBundle\Entity\Season $season)
+    {
+        $this->seasons->removeElement($season);
+    }
+
+    /**
+     * Add rightsPackage
+     *
+     * @param \AppBundle\Entity\RightsPackage $rightsPackage
+     *
+     * @return Content
+     */
+    public function addRightsPackage(\AppBundle\Entity\RightsPackage $rightsPackage)
+    {
+        $this->rightsPackage[] = $rightsPackage;
+
+        return $this;
+    }
+
+    /**
+     * Remove rightsPackage
+     *
+     * @param \AppBundle\Entity\RightsPackage $rightsPackage
+     */
+    public function removeRightsPackage(\AppBundle\Entity\RightsPackage $rightsPackage)
+    {
+        $this->rightsPackage->removeElement($rightsPackage);
+    }
+
+    /**
+     * Add selectedRight
+     *
+     * @param \AppBundle\Entity\ContentSelectedRight $selectedRight
+     *
+     * @return Content
+     */
+    public function addSelectedRight(\AppBundle\Entity\ContentSelectedRight $selectedRight)
+    {
+        $this->selectedRights[] = $selectedRight;
+
+        return $this;
+    }
+
+    /**
+     * Remove selectedRight
+     *
+     * @param \AppBundle\Entity\ContentSelectedRight $selectedRight
+     */
+    public function removeSelectedRight(\AppBundle\Entity\ContentSelectedRight $selectedRight)
+    {
+        $this->selectedRights->removeElement($selectedRight);
+    }
+
+    /**
+     * Add installment
+     *
+     * @param \AppBundle\Entity\Installments $installment
+     *
+     * @return Content
+     */
+    public function addInstallment(\AppBundle\Entity\Installments $installment)
+    {
+        $this->installments[] = $installment;
+
+        return $this;
+    }
+
+    /**
+     * Remove installment
+     *
+     * @param \AppBundle\Entity\Installments $installment
+     */
+    public function removeInstallment(\AppBundle\Entity\Installments $installment)
+    {
+        $this->installments->removeElement($installment);
+    }
 }
-
-
