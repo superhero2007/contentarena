@@ -1,4 +1,12 @@
 export const RightItemsDefinitions = {
+    "BROADCASTING_YES" : {
+        "parent" : "Broadcasting obligation",
+        "label" : "Yes"
+    },
+    "BROADCASTING_NO" : {
+        "parent" : "Broadcasting obligation",
+        "label" : "No"
+    },
     "SUBLICENSE_YES" : {
         "parent" : "Right to sublicense",
         "label" : "Yes, free sublicensing"
@@ -129,7 +137,8 @@ export const RightItemsDefinitions = {
     "GRAPHICS_YES": {
         "parent" : "Graphics",
         "label" : "Yes",
-        language : true
+        language : true,
+        languages: []
     },
     "COMMENTARY_NO": {
         "parent" : "Commentary",
@@ -138,7 +147,8 @@ export const RightItemsDefinitions = {
     "COMMENTARY_YES": {
         "parent" : "Commentary",
         "label" : "Yes",
-        language : true
+        language : true,
+        languages: []
     },
     "CAMERA_MINIMUM": {
         "parent" : "Camera standards",

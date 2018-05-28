@@ -24,6 +24,7 @@ export const content = (state = {
     programs : [],
     salesPackages : [],
     endDateLimit : 30,
+    counter : 0
 }, action) => {
 
     let newState = {};

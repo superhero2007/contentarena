@@ -148,11 +148,15 @@ class SellFormStep1 extends React.Component {
                 seasons: [],
                 schedules: []
             }));
+            sportCategories = [];
+            tournaments= [];
+
+            this.props.updateContentValue("name",null);
         }
 
         if ( !name && tournaments.length > 0) this.props.updateContentValue("name",tournaments[0].name);
 
-        if (nextProps.sports.length === 1 || sportCategories.length === 1) this.loadTournaments(nextProps.sports[0], sportCategories[0]);
+        if (nextProps.sports.length === 1 ) this.loadTournaments(nextProps.sports[0], sportCategories[0]);
 
         if (tournaments.length === 1) if (!tournaments[0].custom) this.loadSeasons(tournaments);
 
@@ -300,6 +304,10 @@ class SellFormStep1 extends React.Component {
         this.props.selectTournament(tournament);
     };
 
+    clear = () => {
+        this.removeSport(0)
+    };
+
     render() {
         if ( this.props.step !== 1) return (null);
 
@@ -343,7 +351,19 @@ class SellFormStep1 extends React.Component {
                 <div className="step-title">{this.state.title}</div>
 
                 {this.state.showSearch && <SearchCompetition close={this.toggleSearch} select={this.selectTournament} />}
-                {!this.state.showSearch && <button className="light-blue-button" onClick={this.toggleSearch}><i className="fa fa-search"/> Show search function</button>}
+                {!this.state.showSearch &&
+                <div className="buttons">
+                    <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
+                        <button className="light-blue-button" style={{ marginRight: '20px'}} onClick={this.toggleSearch}>
+                            <i className="fa fa-search"/> Show search function
+                        </button>
+
+                        <button className="light-blue-button" onClick={this.clear}>
+                            <i className="fa fa-close"/> Clear
+                        </button>
+                    </div>
+                </div>}
+
                 {!this.state.showSearch && <div className="step-content-container">
 
                     <div className="step-item-description" >

@@ -295,6 +295,10 @@ button{
             font-weight: 600;
             font-size: 13px;
             color: $font-color-1;
+            .small-datepicker{
+              width: 90px;
+              height: 26px;
+            }
 
           }
           .description{
@@ -732,4 +736,42 @@ button{
       }
     }
   }
+}
+
+.listing-list-view{
+  display: flex;
+  margin-bottom: 20px;
+  .left {
+    flex: 1;
+    .image{
+      width: 25vmin;
+      height: 25vmin;
+      display: flex;
+      background-color: lightgray;
+      margin-bottom: 5px;
+    }
+    .date {
+      font-size: 16px;
+      color: #4F4F4F;
+      margin-top: 2px;
+      span {
+        font-weight: 600;
+      }
+    }
+  }
+  .right{
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    .name{
+      color: #2DA7E6;
+      font-size: 25px;
+      font-weight: 600;
+      line-height: 36px;
+      text-decoration: underline;
+    }
+
+  }
+
 }

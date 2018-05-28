@@ -134,8 +134,20 @@ class PopupRight extends React.Component {
 
     };
 
+    hasSelection = (id, value, superRights) =>{
+
+        let has = false;
+
+        superRights.forEach( ( superRight ) => {
+            if ( superRight.selectedRights[id] === value ) has = true;
+        });
+
+        return has;
+
+    };
+
     renderModal = () => {
-        const {name, multiple, options, id,  superRights} = this.props;
+        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage} = this.props;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -184,12 +196,19 @@ class PopupRight extends React.Component {
                                             onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
                                             name={rightPackage.shortLabel + "_" + id} value={option}/>}
 
-                                        {RightItemsDefinitions[option].language && <LanguageSelector/>}
+                                        {RightItemsDefinitions[option].language &&
+                                            <LanguageSelector
+                                                onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
+                                                value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
                                         {RightItemsDefinitions[option].textField && <input className="text-field" type="text"/>}
                                     </div>
                                 })}
                             </div>
                         })}
+
+                        {showTextArea && this.hasSelection(id, showTextArea, rightsPackage) && <textarea></textarea>}
+
+
                     </div>
                 </div>
             </div>

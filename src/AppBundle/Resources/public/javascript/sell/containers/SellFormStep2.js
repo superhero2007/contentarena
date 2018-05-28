@@ -166,6 +166,14 @@ class SellFormStep2 extends React.Component {
         this.props.superRightsUpdated(rightsPackage);
     };
 
+    superRightsEnabled = ( superRights ) => {
+
+        var selected = this.props.rightsPackage.map(a => a.shortLabel);
+
+        return superRights.filter(r => selected.indexOf(r) !== -1).length > 0;
+
+    };
+
     render() {
         if ( this.props.step !== 2) return (null);
 
@@ -218,6 +226,10 @@ class SellFormStep2 extends React.Component {
                     <div className="rights-container">
                         {
                             this.state.rights.length > 0 && this.state.rights.map((right, i)=> {
+
+                                if ( right.superRights.length > 0
+                                    && !this.superRightsEnabled(right.superRights)) return;
+
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
@@ -225,6 +237,7 @@ class SellFormStep2 extends React.Component {
                                     options={right.options}
                                     multiple={right.multiple}
                                     superRights={right.superRights}
+                                    showTextArea={right.showTextArea}
                                     onUpdate={this.updateRight}
                                     rightsPackage={this.props.rightsPackage}/>
                             })

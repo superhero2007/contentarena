@@ -7,7 +7,7 @@ class SellButtons extends React.Component {
         super(props);
         this.state = {
             date: new Date(),
-            lastStep : props.lastStep || 5,
+            lastStep : props.lastStep || 4,
             saving : false,
             savingSuccess: false
         };
@@ -36,13 +36,18 @@ class SellButtons extends React.Component {
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
                     </button> }
 
+                    { this.props.step === 3 &&
+                    <button id="draft-listing" className="standard-button" onClick={this.props.goToNextStep }>
+                        Review and sign
+                    </button> }
+
                     { this.props.step === this.state.lastStep &&
                     <button id="draft-listing" className="standard-button">
                         Submit Listing
                     </button> }
 
                 </div>
-                {<div className="buttons-container" >
+                { this.props.step < 4 && <div className="buttons-container" >
                     { this.props.step !== 1 &&
                     <button className="standard-button"
                             onClick={ this.props.goToPreviousStep }>
@@ -53,7 +58,7 @@ class SellButtons extends React.Component {
                             <div className={"step " + ((this.props.step === v) ? "step-active" : "")} key={k}>{v}</div>
                         ))
                     }
-                    { this.props.step !== this.state.lastStep &&
+                    { this.props.step !== this.state.lastStep -1 &&
                     <button
                         id="next-step"
                         className="standard-button"

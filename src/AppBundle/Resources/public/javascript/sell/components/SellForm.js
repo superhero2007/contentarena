@@ -17,6 +17,10 @@ class SellForm extends React.Component {
 
         let content = JSON.parse(props.content);
         //let user = JSON.parse(props.user);
+        content.jurisdiction = {
+            label: content.company.country.name,
+            value: content.company.country.name
+        };
 
         if (props.step) content.step = props.step;
         //content.company = user.company;
@@ -43,6 +47,7 @@ class SellForm extends React.Component {
                 <SellFormStep1/>
                 <SellFormStep2 packages={this.props.packages} />
                 <SellFormStep3 packages={this.props.packages} />
+                <SellFormStep4/>
                 <SellButtons />
             </div>
         );

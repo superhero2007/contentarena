@@ -18,6 +18,17 @@ export const RightDefinitions = [
             "CUT_AVAILABLE_YES",
             "CUT_AVAILABLE_NO",
         ],
+        multiple : false,
+        showTextArea : "CUT_AVAILABLE_YES"
+    },
+    {
+        name : "Broadcasting obligation",
+        key: "BROADCASTING",
+        superRights: [],
+        options : [
+            "BROADCASTING_YES",
+            "BROADCASTING_NO",
+        ],
         multiple : false
     },
     {
@@ -66,7 +77,8 @@ export const RightDefinitions = [
             "EXPLOITATION_WINDOW_UNLIMITED",
             "EXPLOITATION_WINDOW_LIMITED",
         ],
-        multiple : false
+        multiple : false,
+        showTextArea:"EXPLOITATION_WINDOW_LIMITED"
     },
     {
         name : "Reserved rights",

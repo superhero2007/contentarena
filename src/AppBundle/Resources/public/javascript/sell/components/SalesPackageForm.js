@@ -2,8 +2,10 @@ import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import {CountrySelector} from "../../main/components/CountrySelector";
+import DatePicker from 'react-datepicker';
 
 const labelStyle = { height: "30px", fontSize: "12px"};
+const installmentIconStyle = { margin: "0 10px", position: "relative"};
 
 class SalesPackageForm extends React.Component {
     constructor(props) {
@@ -23,6 +25,7 @@ class SalesPackageForm extends React.Component {
             territoriesMethod : this.worldwide,
             salesMethod : this.fixed,
             territories : [],
+            installments : [{ value : 100,  type : "DAY", days: 30}],
             fee : 0,
             isNew : true
         };
@@ -76,6 +79,42 @@ class SalesPackageForm extends React.Component {
 
     selectTerritories = (territories) => {
         this.setState({ territories });
+    };
+
+    setInstallmentType = ( type, i ) => {
+        let installments = this.state.installments;
+        installments[i].type = type;
+        this.setState({installments});
+    };
+
+    setInstallmentDate = ( date, i ) => {
+        let installments = this.state.installments;
+        installments[i].date = date;
+        this.setState({installments});
+    };
+
+    setInstallmentDays = ( days, i ) => {
+        let installments = this.state.installments;
+        installments[i].days = days;
+        this.setState({installments});
+    };
+
+    setInstallmentValue = ( value, i ) => {
+        let installments = this.state.installments;
+        installments[i].value = value;
+        this.setState({installments});
+    };
+
+    addInstallment = ( ) => {
+        let installments = this.state.installments;
+        installments.push({ value : 100,  type : "DAY", days: 30});
+        this.setState({installments});
+    };
+
+    removeInstallment = ( i ) => {
+        let installments = this.state.installments;
+        installments.splice(i, 1);
+        this.setState({installments});
     };
 
     updateFee = (e) => {
@@ -189,6 +228,45 @@ class SalesPackageForm extends React.Component {
                         </div>
                     </div>
 
+                    <div className="base-full-input">
+                        <label style={labelStyle}>Payment details</label>
+
+                        { this.state.installments.map( (installment, i, list) => {
+                            return <div className={"content"}>
+                                <div className={"item"} style={{ paddingLeft: 0 }}>
+                                    <div className={"title"} >
+                                        {i+1} Instalment <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "50px" }} type="number" max={100} value={installment.value}/> % of payment
+                                    </div>
+                                    {installment.type !== "DATE" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DATE",i)}}  />}
+                                    { installment.type === "DATE" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
+                                    <div className={"title"}>
+                                        <DatePicker
+                                            disabled={installment.type !== "DATE"}
+                                            selected={installment.date}
+                                            placeholderText={"dd/mm/yyyy"}
+                                            onChange={(date) => {this.setInstallmentDate(date,i)}}
+                                            className="small-datepicker"/>
+                                    </div>
+                                    { installment.type !== "DAY" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DAY",i)} }/>}
+                                    { installment.type === "DAY" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
+                                    <div className={"title"} >
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        onChange={(e) => {this.setInstallmentDays(e.target.value,i)}}
+                                        disabled={installment.type !== "DAY"}
+                                        value={installment.days}
+                                        style={{ height: "26px", width: "40px" }}/> days after contract conclusion
+                                    </div>
+                                    { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
+                                    { i === list.length - 1 && <i style={{margin: 0, position: "relative"}} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
+                                </div>
+                            </div>
+                        }) }
+
+
+                    </div>
+
                 </div>
             </div>
 
@@ -216,26 +294,26 @@ class SalesPackageForm extends React.Component {
                     <div className={"content"} style={{flexDirection: "column"}}>
                         { salesPackages.map( (salesPackage, i) => {
                             return <div className="sales-package-container">
-                                <div className="sales-package" key={"sales-package-"+ i}>
-                                    <div style={{flex : 5}}>
-                                        {salesPackage.bundleMethod === this.asBundle &&
-                                        salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
+                                        <div className="sales-package" key={"sales-package-"+ i}>
+                                            <div style={{flex : 5}}>
+                                                {salesPackage.bundleMethod === this.asBundle &&
+                                                salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
 
-                                        {this.showTerritories(salesPackage) &&
-                                        salesPackage.territories.slice(0, this.limit).map( ( territory, i )=>{
-                                            return <span key={i}>{!!i && ", "} {territory.label}</span>
-                                        })}
+                                                {this.showTerritories(salesPackage) &&
+                                                salesPackage.territories.slice(0, this.limit).map( ( territory, i )=>{
+                                                    return <span key={i}>{!!i && ", "} {territory.label}</span>
+                                                })}
 
-                                        { this.showTerritories(salesPackage) && salesPackage.territories.length > this.limit &&
-                                        <span> +{salesPackage.territories.length - this.limit}</span>}
+                                                { this.showTerritories(salesPackage) && salesPackage.territories.length > this.limit &&
+                                                <span> +{salesPackage.territories.length - this.limit}</span>}
+                                            </div>
+                                            <div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
+                                                $ {salesPackage.fee}
+                                            </div>
+                                        </div>
+                                        <i className="fa fa-remove" onClick={() => { onRemove(i) }} />
+                                        <i className="fa fa-edit" onClick={() => { this.editSalesPackage(salesPackage, i) }} />
                                     </div>
-                                    <div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                        $ {salesPackage.fee}
-                                    </div>
-                                </div>
-                                <i className="fa fa-remove" onClick={() => { onRemove(i) }} />
-                                <i className="fa fa-edit" onClick={() => { this.editSalesPackage(salesPackage, i) }} />
-                            </div>
                         })}
 
                     </div>
