@@ -4,6 +4,8 @@ import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
 
+const numberFieldStyle = { width: '30px', paddingLeft: '10px'};
+
 class PopupRight extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ class PopupRight extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        console.log("PopupRight - props",props);
+        //console.log("PopupRight - props",props);
         this.setState({
             rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i]))
         });
@@ -166,7 +168,7 @@ class PopupRight extends React.Component {
                         <div className="row row-header">
                             <div className="column" style={{justifyContent:"flex-start", flex: 3}}/>
                             {options.map((option)=> {
-                                return <div className="column">
+                                return <div className="column" style={{ flex: (superRights.length > 2 ) ? 2 : 3 }}>
                                     {RightItemsDefinitions[option].label && RightItemsDefinitions[option].label}
                                 </div>
                             })}
@@ -181,7 +183,7 @@ class PopupRight extends React.Component {
                                     {rightPackage.name}
                                 </div>
                                 {options.map((option)=> {
-                                    return <div className="column">
+                                    return <div className="column" style={{ flex: (superRights.length > 2 ) ? 2 : 3 }}>
                                         {multiple &&
                                             <input defaultChecked={rightPackage.selectedRights[id] === option}
                                                    onChange={(e) => { this.updateSelection(option, id,rightPackage)} }
@@ -201,6 +203,8 @@ class PopupRight extends React.Component {
                                                 onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
                                                 value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
                                         {RightItemsDefinitions[option].textField && <input className="text-field" type="text"/>}
+                                        {RightItemsDefinitions[option].numberField && <input className="text-field" style={numberFieldStyle} type="number" min={0}/>}
+                                        {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}} ></textarea>}
                                     </div>
                                 })}
                             </div>
@@ -224,9 +228,9 @@ class PopupRight extends React.Component {
 
     render(){
 
-        const {name, id,  rightsPackage} = this.props;
+        const {name, id,  rightsPackage,programs} = this.props;
         const custom = this.getSelection(id,  rightsPackage);
-        const selected = (rightsPackage.length > 0 ) ? RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label: "" ;
+        const selected = (rightsPackage.length > 0 ) ? (id !== "PROGRAM") ? RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label : (programs.length > 0) ? programs[0].name : "" : "" ;
         return (
             <div className="base-input" style={{width: "49%"}}>
                 <label>{name}</label>

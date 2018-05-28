@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PackageSelector from "../containers/PackageSelector";
 import PopupRight from "../components/PopupRight";
 import Program from "../components/Program";
+import Comments from "../components/Comments";
 import LicenseDateSelector from "../components/LicenseDateSelector";
 import {TitleBar} from "../components/SellFormItems";
 import Moment from "moment";
@@ -90,6 +91,15 @@ class SellFormStep2 extends React.Component {
                         "CONTENT_ALL",
                         "CONTENT_TEXT",
                     ],
+                    showTextArea:"CONTENT_TEXT",
+                    multiple : false
+                },
+                {
+                    name: "Program Details",
+                    key: "PROGRAM",
+                    superRights: ['PR'],
+                    options : [
+                    ],
                     multiple : false
                 }
             ]
@@ -114,9 +124,6 @@ class SellFormStep2 extends React.Component {
                 programsShown : true
             });
         }
-
-        if ( programsEnabled && nextProps.programs.length === 0) this.props.updateProgram(0, {name: "", saved : false}, "save");
-
     }
 
     loadRights = (rightsPackage, group) => {
@@ -175,7 +182,10 @@ class SellFormStep2 extends React.Component {
     };
 
     render() {
-        if ( this.props.step !== 2) return (null);
+
+        const {step, programs } = this.props;
+
+        if ( step !== 2) return (null);
 
         return (
             <div className="step-content">
@@ -220,6 +230,7 @@ class SellFormStep2 extends React.Component {
                     <TitleBar title={"Configure Rights"}/>
 
                     <Program
+                        programs={programs}
                         isOpen={this.state.programsEnabled}
                         onClose={this.closeProgramsPopup}/>
 
@@ -249,6 +260,10 @@ class SellFormStep2 extends React.Component {
                     <div className="rights-container">
                         {
                             this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i)=> {
+
+                                if ( right.superRights.length > 0
+                                    && !this.superRightsEnabled(right.superRights)) return;
+
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
@@ -256,12 +271,15 @@ class SellFormStep2 extends React.Component {
                                     selected={this.props[right.key]}
                                     options={right.options}
                                     multiple={right.multiple}
+                                    programs={programs}
                                     superRights={right.superRights}
                                     onUpdate={this.updateRight}
                                     rightsPackage={this.props.rightsPackage}/>
                             })
                         }
                     </div>
+
+                    <Comments/>
 
                 </div>
 

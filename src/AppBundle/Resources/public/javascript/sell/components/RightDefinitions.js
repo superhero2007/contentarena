@@ -86,7 +86,7 @@ export const RightDefinitions = [
         superRights: [],
         options : [
             "RESERVED_RIGHTS_NO",
-            "RESERVED_RIGHTS_TEXT",
+            "RESERVED_RIGHTS_YES",
         ],
         multiple : false
     },

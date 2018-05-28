@@ -81,7 +81,8 @@ export const RightItemsDefinitions = {
     },
     "RUNS_LIMITED" : {
         "parent" : "Number of runs",
-        "label" : "Limited"
+        "label" : "Limited",
+        numberField : true
     },
     "EXPLOITATION_WINDOW_UNLIMITED" : {
         "parent" : "Exploitation window",
@@ -112,10 +113,11 @@ export const RightItemsDefinitions = {
         "parent" : "Reserved rights",
         "label" : "No"
     },
-    "RESERVED_RIGHTS_TEXT": {
+    "RESERVED_RIGHTS_YES": {
         "parent" : "Reserved rights",
-        "label" : "",
-        textField : true
+        "label" : "Yes",
+        bigTextField : true,
+
     },
     "ASPECT_RATIO_16_9": {
         "parent" : "Aspect ratio",
@@ -166,7 +168,7 @@ export const RightItemsDefinitions = {
     },
     "CONTENT_TEXT": {
         "parent" : "Content production",
-        "label" : "",
+        "label" : "Content partially produced",
         textField : true
     },
 

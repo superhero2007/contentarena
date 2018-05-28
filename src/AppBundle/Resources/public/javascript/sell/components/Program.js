@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import LanugageSelector, {LanguageSelector} from "../../main/components/LanguageSelector";
+import {connect} from "react-redux";
 
 class Program extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             isOpen : props.isOpen,
-            name: props.name || '',
+            name: ( props.programs.length > 0 ) ? props.programs[0].name : "" ,
             language : null
         }
     }
@@ -41,6 +42,18 @@ class Program extends React.Component{
         this.setState({subtitles: value});
     };
 
+    addProgram = ( program ) => {
+        this.props.updateProgram("add", program);
+    };
+
+    updateProgram = ( program, index ) => {
+        this.props.updateProgram("save", program, index);
+    };
+
+    removeProgram = ( index ) => {
+        this.props.updateProgram("remove", null, index);
+    };
+
     componentWillReceiveProps(nextProps) {
         this.setState({isOpen: nextProps.isOpen});
     }
@@ -49,6 +62,13 @@ class Program extends React.Component{
 
     closeModal = () => {
         this.setState({ isOpen: false});
+    };
+
+    applySelection  = () => {
+        const { onClose } = this.props;
+        this.setState({ isOpen: false});
+        this.addProgram(this.state);
+        onClose();
     };
 
     render(){
@@ -83,7 +103,7 @@ class Program extends React.Component{
                             <label>Enter program type</label>
                             <input
                                 type="text"
-                                value={this.state.name}
+                                value={this.state.type}
                                 onChange={this.handleChangeType}
                                 placeholder="Program type"/>
                         </div>
@@ -92,6 +112,7 @@ class Program extends React.Component{
                             <label>Number of episodes</label>
                             <input
                                 type="number"
+                                min={0}
                                 onChange={this.handleChangeEpisodes}
                                 />
                         </div>
@@ -100,6 +121,7 @@ class Program extends React.Component{
                             <label>Average episode duration in minutes</label>
                             <input
                                 type="number"
+                                min={0}
                                 onChange={this.handleChangeDuration}
                             />
                         </div>
@@ -132,4 +154,27 @@ class Program extends React.Component{
     }
 }
 
-export default Program;
+const mapStateToProps = state => {
+    return state.content
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateContentValue : (key, value) => dispatch({
+            type: 'UPDATE_CONTENT_VALUE',
+            key: key,
+            value : value
+        }),
+        updateProgram : (name, program, index) => dispatch({
+            type: 'UPDATE_PROGRAMS',
+            index: index,
+            program : program,
+            name: name
+        }),
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Program)

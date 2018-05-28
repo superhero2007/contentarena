@@ -233,6 +233,10 @@ button{
     .base-full-input {
       flex-direction: column;
       margin-bottom: 5px;
+      .big-textarea{
+        width: 500px !important;
+        min-height: 170px;
+      }
       @extend .base-input;
       label{
         width: 100%;
@@ -605,7 +609,7 @@ button{
     min-width: 800px;
     border-bottom: 1px solid lightgray;
     align-items: center;
-    height: 40px;
+    min-height: 40px;
   }
   .row-header{
     height: 55px;
@@ -621,6 +625,7 @@ button{
     box-sizing: border-box;
     justify-content: center;
     text-align: center;
+    align-items: center;
     input.text-field {
       margin: 3px 0 0;
       height: 24px;
