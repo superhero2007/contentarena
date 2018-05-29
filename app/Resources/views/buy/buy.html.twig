@@ -11,19 +11,65 @@
 {% block main_content %}
 
     <div class="row">
-        {{ include('buy/filters.html.twig', { 'territories' : territories, 'countries' : countries }) }}
+        {#{{ include('buy/filters.html.twig', { 'territories' : territories, 'countries' : countries }) }}#}
+    </div>
+
+    <div class="row marketplace-container">
+        <div class="buy-content">
+            <div class="buy-container-left">
+                <fieldset>
+                    <legend>Event</legend>
+                    <div>
+                        <input type="text" id="inputSearch" name="event" placeholder="Search"/>
+                    </div>
+                    <div>
+                        <select name="sports_events" id="sports-event" multiple>
+                            <option value="">All sports</option>
+                        </select>
+                        <p>Selected <span class="filter-sports-count"></span></p>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Rights</legend>
+                        <div>
+                            <select name="territories_rights" id="territories-rights" multiple>
+                                <option value="">All territories</option>
+                            </select>
+                            <button class="filter" type="button" ref="#filter-territories">
+                                <i class="fa fa-sliders" aria-hidden="true"></i>
+                            </button>
+                            <p>Selected <span class="filter-territories-count"></span></p>
+                        </div>
+                        <div id="rights-packages"></div>
+                        <hr>
+                        <div>
+                            <input type="checkbox"> Contains exclusive rights
+                        </div>
+                        <div>
+                            <input class="apply" type="button" value="Apply">
+                        </div>
+
+                </fieldset>
+            </div>
+            <div class="buy-container-right" id="content-list-container"></div>
+            <div id="marketplace-wrapper"></div>
+        </div>
     </div>
 
 
-    <div class="marketplace-container">
-        <div class="content-list-container">
-            {{ include('@App/content/contentItemList.html.twig', { 'contents' : contents }) }}
+    <div id="filter-territories" class="is-hidden">
+
+        <div class="subfilter-container country-list">
+            {% for country in countries %}
+                <div class="country subfilter territory-{{ country.territory.id }} is-hidden" id="country-{{ country.id }}">
+                    {{ country.name }}
+                </div>
+            {% endfor %}
         </div>
 
-        {# REACT CONTAINER#}
-        <div id="content-list-container"
-             class="content-list-container"
-        >
+        <div class="subfilter-container">
+            <button class="action close" ref="#filter-territories" clear=".territory, .country">Clear</button>
+            <button class="action close" data-type="territory" ref="#filter-territories">OK</button>
         </div>
     </div>
 
