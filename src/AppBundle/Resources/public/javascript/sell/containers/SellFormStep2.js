@@ -8,6 +8,7 @@ import LicenseDateSelector from "../components/LicenseDateSelector";
 import {TitleBar} from "../components/SellFormItems";
 import Moment from "moment";
 import {RightDefinitions} from "../components/RightDefinitions";
+import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 
 const licenseStyles = {
     fontSize: "12px",
@@ -29,80 +30,7 @@ class SellFormStep2 extends React.Component {
             programsShown: false,
             licensePopup : false,
             rights : RightDefinitions,
-            productionStandards : [
-                {
-                    name: "Video Standard",
-                    key: "VIDEO_STANDARD",
-                    superRights: [],
-                    options : [
-                        "VIDEO_STANDARD_HD",
-                        "VIDEO_STANDARD_SD",
-                        "VIDEO_STANDARD_UHD",
-                        "VIDEO_STANDARD_VR",
-                    ],
-                    multiple : false
-                },
-                {
-                    name: "Aspect ratio",
-                    key: "ASPECT_RATIO",
-                    superRights: [],
-                    options : [
-                        "ASPECT_RATIO_16_9",
-                        "ASPECT_RATIO_4_3",
-                        "ASPECT_RATIO_CUSTOM"
-                    ],
-                    multiple : false
-                },
-                {
-                    name: "Graphics",
-                    key: "GRAPHICS",
-                    superRights: [],
-                    options : [
-                        "GRAPHICS_NO",
-                        "GRAPHICS_YES",
-                    ],
-                    multiple : false
-                },
-                {
-                    name: "Commentary",
-                    key: "COMMENTARY",
-                    superRights: [],
-                    options : [
-                        "COMMENTARY_NO",
-                        "COMMENTARY_YES",
-                    ],
-                    multiple : false
-                },
-                {
-                    name: "Camera standards",
-                    key: "CAMERA",
-                    superRights: [],
-                    options : [
-                        "CAMERA_MINIMUM",
-                        "CAMERA_TEXT",
-                    ],
-                    multiple : false
-                },
-                {
-                    name: "Content production",
-                    key: "CONTENT",
-                    superRights: [],
-                    options : [
-                        "CONTENT_ALL",
-                        "CONTENT_TEXT",
-                    ],
-                    showTextArea:"CONTENT_TEXT",
-                    multiple : false
-                },
-                {
-                    name: "Program Details",
-                    key: "PROGRAM",
-                    superRights: ['PR'],
-                    options : [
-                    ],
-                    multiple : false
-                }
-            ]
+            productionStandards : ProductionStandardsDefinitions
         };
     }
 
@@ -272,7 +200,13 @@ class SellFormStep2 extends React.Component {
                                     options={right.options}
                                     multiple={right.multiple}
                                     programs={programs}
+                                    onProgram={() => {
+                                        this.setState({
+                                            programsEnabled : true,
+                                        });
+                                    }}
                                     superRights={right.superRights}
+                                    showTextArea={right.showTextArea}
                                     onUpdate={this.updateRight}
                                     rightsPackage={this.props.rightsPackage}/>
                             })

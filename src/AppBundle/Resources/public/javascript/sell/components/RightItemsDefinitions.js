@@ -109,6 +109,10 @@ export const RightItemsDefinitions = {
         "parent" : "Video standard",
         "label" : "VR"
     },
+    "VIDEO_STANDARD_NOT_AVAILABLE" : {
+        "parent" : "Video standard",
+        "label" : "Info not available yet"
+    },
     "RESERVED_RIGHTS_NO": {
         "parent" : "Reserved rights",
         "label" : "No"
@@ -116,7 +120,6 @@ export const RightItemsDefinitions = {
     "RESERVED_RIGHTS_YES": {
         "parent" : "Reserved rights",
         "label" : "Yes",
-        bigTextField : true,
 
     },
     "ASPECT_RATIO_16_9": {
@@ -132,6 +135,10 @@ export const RightItemsDefinitions = {
         "label" : "",
         textField : true
     },
+    "ASPECT_RATIO_NOT_AVAILABLE" : {
+        "parent" : "Aspect ratio",
+        "label" : "Info not available yet"
+    },
     "GRAPHICS_NO": {
         "parent" : "Graphics",
         "label" : "No"
@@ -141,6 +148,10 @@ export const RightItemsDefinitions = {
         "label" : "Yes",
         language : true,
         languages: []
+    },
+    "GRAPHICS_NOT_AVAILABLE" : {
+        "parent" : "Graphics",
+        "label" : "Info not available yet"
     },
     "COMMENTARY_NO": {
         "parent" : "Commentary",
@@ -152,6 +163,10 @@ export const RightItemsDefinitions = {
         language : true,
         languages: []
     },
+    "COMMENTARY_NOT_AVAILABLE": {
+        "parent" : "Commentary",
+        "label" : "Info not available yet"
+    },
     "CAMERA_MINIMUM": {
         "parent" : "Camera standards",
         "label" : "Minimum 4 Cameras"
@@ -161,7 +176,10 @@ export const RightItemsDefinitions = {
         "label" : "",
         textField : true
     },
-
+    "CAMERA_NOT_AVAILABLE" : {
+        "parent" : "Camera standards",
+        "label" : "Info not available yet"
+    },
     "CONTENT_ALL": {
         "parent" : "Content production",
         "label" : "All content produced"
@@ -169,7 +187,27 @@ export const RightItemsDefinitions = {
     "CONTENT_TEXT": {
         "parent" : "Content production",
         "label" : "Content partially produced",
-        textField : true
     },
+
+    "TECHNICAL_DELIVERY_SATELLITE": {
+        "parent" : "Technical delivery",
+        "label" : "Satellite"
+    },
+
+    "TECHNICAL_DELIVERY_IP": {
+        "parent" : "Technical delivery",
+        "label" : "IP"
+    },
+
+    "TECHNICAL_DELIVERY_FTP": {
+        "parent" : "Technical delivery",
+        "label" : "FTP-server"
+    },
+
+    "TECHNICAL_DELIVERY_FIBER": {
+        "parent" : "Technical delivery",
+        "label" : "Fiber"
+    },
+
 
 };

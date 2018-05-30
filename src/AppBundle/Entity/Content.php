@@ -174,13 +174,6 @@ class Content
     private $brochure;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="distribution_packages", type="text", nullable=true)
-     */
-    private $distributionPackages;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -845,29 +838,6 @@ class Content
         return $this->draft;
     }
 
-    /**
-     * Set distributionPackages
-     *
-     * @param string $distributionPackages
-     *
-     * @return Content
-     */
-    public function setDistributionPackages($distributionPackages)
-    {
-        $this->distributionPackages = $distributionPackages;
-
-        return $this;
-    }
-
-    /**
-     * Get distributionPackages
-     *
-     * @return string
-     */
-    public function getDistributionPackages()
-    {
-        return $this->distributionPackages;
-    }
 
     /**
      * Add salesPackage

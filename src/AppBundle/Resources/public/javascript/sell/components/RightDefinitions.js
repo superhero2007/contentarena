@@ -88,6 +88,8 @@ export const RightDefinitions = [
             "RESERVED_RIGHTS_NO",
             "RESERVED_RIGHTS_YES",
         ],
-        multiple : false
+        multiple : false,
+        showTextArea:"RESERVED_RIGHTS_YES"
+
     },
 ];

@@ -99,6 +99,16 @@ class PopupRight extends React.Component {
     };
 
     togglePopup = () => {
+
+        const {onProgram, id} = this.props;
+
+        if ( id === "PROGRAM") {
+            onProgram();
+            return;
+        }
+
+
+
         let isOpen = !this.state.isOpen;
         this.setState({isOpen});
     };
@@ -109,6 +119,16 @@ class PopupRight extends React.Component {
         rightPackage.selectedRights[id] = val;
         rightsPackage.set(rightPackage.id, rightPackage);
 
+        this.props.onUpdate(rightsPackage);
+
+    };
+
+    updateSelectionInAllPackages = (val, id) => {
+
+        const rightsPackage = this.state.rightsPackage;
+        rightsPackage.forEach((rightPackage )=>{
+            rightPackage.selectedRights[id] = val;
+        });
         this.props.onUpdate(rightsPackage);
 
     };
@@ -209,8 +229,17 @@ class PopupRight extends React.Component {
                                 })}
                             </div>
                         })}
+                        {showTextArea && ( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage)) &&
+                        <textarea
+                            onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, id+ "_TEXTAREA")}}
+                            value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
-                        {showTextArea && this.hasSelection(id, showTextArea, rightsPackage) && <textarea></textarea>}
+                        {showTextArea && showTextArea === "FURTHER_DETAILS" &&
+                            <div>
+                                <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Further details</div>
+                                <textarea/>
+                            </div>
+                        }
 
 
                     </div>
@@ -246,5 +275,6 @@ class PopupRight extends React.Component {
         )
     }
 }
+
 
 export default PopupRight;
