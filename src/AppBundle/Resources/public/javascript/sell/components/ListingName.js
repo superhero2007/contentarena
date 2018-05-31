@@ -21,7 +21,7 @@ class ListingName extends React.Component {
                 <input
                     type="text"
                     value={name}
-                    onBlur={this.updateName}
+                    onChange={this.updateName}
                     placeholder=""/>
             </div>
         );

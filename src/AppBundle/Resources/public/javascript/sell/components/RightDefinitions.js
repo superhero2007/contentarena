@@ -26,9 +26,10 @@ export const RightDefinitions = [
         key: "BROADCASTING",
         superRights: [],
         options : [
-            "BROADCASTING_YES",
             "BROADCASTING_NO",
+            "BROADCASTING_YES"
         ],
+        showTextArea:"BROADCASTING_YES",
         multiple : false
     },
     {

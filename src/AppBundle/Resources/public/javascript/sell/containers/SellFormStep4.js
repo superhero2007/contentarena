@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from "react-redux";
-import PaymentMethod from "../components/PaymentMethod";
-import SalesPackageForm from "../components/SalesPackageForm";
 import {TitleBar} from "../components/SellFormItems";
 import Moment from "moment/moment";
+import {goToPreviousStep} from "../actions/contentActions";
 
 class SellFormStep4 extends React.Component {
 
@@ -35,9 +34,25 @@ class SellFormStep4 extends React.Component {
 
     render() {
         if ( this.props.step !== 4) return (null);
-        const { salesPackages, name, expirationDate, rightsPackage,sportCategory, tournament } = this.props;
+        const {
+            salesPackages,
+            name,
+            expirationDate,
+            rightsPackage,
+            sportCategory,
+            tournament,
+            goToPreviousStep
+        } = this.props;
+
         return (
             <div className="step-content">
+                <div className="buttons">
+                    <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
+                        <button className="light-blue-button" onClick={goToPreviousStep}>
+                            <i className="fa fa-chevron-left"/> Edit
+                        </button>
+                    </div>
+                </div>
                 <div className="step-title">Review & Sign</div>
                 <div className="step-content-container">
 
@@ -126,6 +141,7 @@ const mapDispatchToProps = dispatch => {
             salesPackage : salesPackage,
             name: name
         }),
+        goToPreviousStep : () => dispatch(goToPreviousStep())
     }
 };
 

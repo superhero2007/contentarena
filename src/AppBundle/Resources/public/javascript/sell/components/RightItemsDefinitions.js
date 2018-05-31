@@ -132,7 +132,7 @@ export const RightItemsDefinitions = {
     },
     "ASPECT_RATIO_CUSTOM": {
         "parent" : "Aspect ratio",
-        "label" : "",
+        "label" : "Other",
         textField : true
     },
     "ASPECT_RATIO_NOT_AVAILABLE" : {
@@ -169,7 +169,9 @@ export const RightItemsDefinitions = {
     },
     "CAMERA_MINIMUM": {
         "parent" : "Camera standards",
-        "label" : "Minimum 4 Cameras"
+        "label" : "Minimum cameras",
+        numberField : true,
+        numberFieldValue : "CAMERAS"
     },
     "CAMERA_TEXT": {
         "parent" : "Camera standards",

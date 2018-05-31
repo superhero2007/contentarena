@@ -101,17 +101,21 @@ class Program extends React.Component{
                         </div>
                         <div className="modal-input">
                             <label>Enter program type</label>
-                            <input
-                                type="text"
-                                value={this.state.type}
-                                onChange={this.handleChangeType}
-                                placeholder="Program type"/>
+                            <select onChange={this.handleChangeType} value={this.state.type} style={{ width: '100%' }}>
+                                <option value="HIGHLIGHT_SHOW">Highlight show</option>
+                                <option value="DOCUMENTARY">Documentary</option>
+                                <option value="PREVIEW">Preview</option>
+                                <option value="TALK_SHOW">Talk show</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+
                         </div>
 
                         <div className="modal-input">
                             <label>Number of episodes</label>
                             <input
                                 type="number"
+                                value={this.state.episodes}
                                 min={0}
                                 onChange={this.handleChangeEpisodes}
                                 />
@@ -121,6 +125,7 @@ class Program extends React.Component{
                             <label>Average episode duration in minutes</label>
                             <input
                                 type="number"
+                                value={this.state.duration}
                                 min={0}
                                 onChange={this.handleChangeDuration}
                             />

@@ -635,12 +635,20 @@ button{
       width: 50px;
     }
     .Select{
-      height: 31px;
+      min-height: 31px;
+      height: auto;
       .Select-control{
-        height: 31px;
+        min-height: 31px;
+        height: auto;
+        .Select-value{
+          margin-top: 2px;
+        }
+        .Select-multi-value-wrapper {
+          text-align: left;
+          width: 100%;
+        }
         .Select-placeholder{
           line-height: 30px;
-          padding-left: 0;
         }
         .Select-input {
           height: 31px;

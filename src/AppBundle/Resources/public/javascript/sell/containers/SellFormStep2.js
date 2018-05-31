@@ -207,6 +207,7 @@ class SellFormStep2 extends React.Component {
                                     }}
                                     superRights={right.superRights}
                                     showTextArea={right.showTextArea}
+                                    technicalFee={right.technicalFee}
                                     onUpdate={this.updateRight}
                                     rightsPackage={this.props.rightsPackage}/>
                             })

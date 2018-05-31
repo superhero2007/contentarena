@@ -56,6 +56,8 @@ class SalesPackageForm extends React.Component {
         if ( territoriesMethod === this.worldwide &&
             bundleMethod === this.individually ) {
             this.setState({ territories : Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }))})
+        } else {
+            this.setState({ territories : []})
         }
     };
 
@@ -70,8 +72,27 @@ class SalesPackageForm extends React.Component {
     applySelection  = () => {
         this.setState({ isOpen: false});
 
+        const { bundleMethod, territoriesMethod, territories, fee, salesMethod } = this.state;
+        let salesPackage = {}, salesPackagesList = [];
+
         if ( this.state.isNew ) {
-            this.props.onAdd(this.state);
+
+            if ( bundleMethod === "SELL_INDIVIDUALLY" ){
+
+                salesPackagesList = territories.map((territory)=>{
+                    return {
+                        name : territory.label,
+                        territories : [territory],
+                        fee : fee,
+                        salesMethod : salesMethod
+                    }
+                });
+
+                this.props.onAdd(salesPackagesList);
+            } else {
+            }
+
+
         } else {
             this.props.onUpdate(this.state, this.state.index);
         }
@@ -216,7 +237,7 @@ class SalesPackageForm extends React.Component {
                             <div className={"item"} style={{ paddingLeft: 0, paddingRight: 0 }}>
                                 <span>
                                     {this.state.salesMethod === this.fixed && "Fixed fee"}
-                                    {this.state.salesMethod !== this.fixed && "Minimum bid"}
+                                    {this.state.salesMethod !== this.fixed && "Minimum bid (optional)"}
                                 </span>
                                 <input
                                     type="number"
@@ -296,7 +317,7 @@ class SalesPackageForm extends React.Component {
                             return <div className="sales-package-container">
                                         <div className="sales-package" key={"sales-package-"+ i}>
                                             <div style={{flex : 5}}>
-                                                {salesPackage.bundleMethod === this.asBundle &&
+                                   {/*             {salesPackage.bundleMethod === this.asBundle &&
                                                 salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
 
                                                 {this.showTerritories(salesPackage) &&
@@ -305,7 +326,8 @@ class SalesPackageForm extends React.Component {
                                                 })}
 
                                                 { this.showTerritories(salesPackage) && salesPackage.territories.length > this.limit &&
-                                                <span> +{salesPackage.territories.length - this.limit}</span>}
+                                                <span> +{salesPackage.territories.length - this.limit}</span>}*/}
+                                                {salesPackage.name}
                                             </div>
                                             <div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
                                                 $ {salesPackage.fee}

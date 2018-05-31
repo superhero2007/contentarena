@@ -39,8 +39,8 @@ class SellFormStep3 extends React.Component {
         this.props.updateContentValue("name", e.target.value);
     };
 
-    addSalesPackage = ( salesPackage ) => {
-        this.props.updateSalesPackages("add", salesPackage);
+    addSalesPackage = ( salesPackages ) => {
+        this.props.addSalesPackages(salesPackages);
     };
 
     updateSalesPackage = ( salesPackage, index ) => {
@@ -101,6 +101,10 @@ const mapDispatchToProps = dispatch => {
             index: index,
             salesPackage : salesPackage,
             name: name
+        }),
+        addSalesPackages : (salesPackages) => dispatch({
+            type: 'ADD_SALES_PACKAGES',
+            salesPackages : salesPackages,
         }),
     }
 };

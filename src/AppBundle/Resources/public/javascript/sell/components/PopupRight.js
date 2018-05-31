@@ -169,7 +169,7 @@ class PopupRight extends React.Component {
     };
 
     renderModal = () => {
-        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage} = this.props;
+        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee} = this.props;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -187,8 +187,10 @@ class PopupRight extends React.Component {
                     <div className="modal-table">
                         <div className="row row-header">
                             <div className="column" style={{justifyContent:"flex-start", flex: 3}}/>
-                            {options.map((option)=> {
-                                return <div className="column" style={{ flex: (superRights.length > 2 ) ? 2 : 3 }}>
+                            {options.map((option, i , list)=> {
+                                let flex = (list.length > 2 ) ? 2 : 3;
+                                if (RightItemsDefinitions[option].language) flex = flex+ 2;
+                                return <div className="column" style={{ flex: flex }}>
                                     {RightItemsDefinitions[option].label && RightItemsDefinitions[option].label}
                                 </div>
                             })}
@@ -202,8 +204,12 @@ class PopupRight extends React.Component {
                                 <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                                     {rightPackage.name}
                                 </div>
-                                {options.map((option)=> {
-                                    return <div className="column" style={{ flex: (superRights.length > 2 ) ? 2 : 3 }}>
+                                {options.map((option, i ,list)=> {
+
+                                    let flex = (list.length > 2 ) ? 2 : 3;
+                                    if (RightItemsDefinitions[option].language) flex = flex+ 2;
+
+                                    return <div className="column" style={{ flex: flex }}>
                                         {multiple &&
                                             <input defaultChecked={rightPackage.selectedRights[id] === option}
                                                    onChange={(e) => { this.updateSelection(option, id,rightPackage)} }
@@ -223,8 +229,17 @@ class PopupRight extends React.Component {
                                                 onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
                                                 value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
                                         {RightItemsDefinitions[option].textField && <input className="text-field" type="text"/>}
-                                        {RightItemsDefinitions[option].numberField && <input className="text-field" style={numberFieldStyle} type="number" min={0}/>}
-                                        {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}} ></textarea>}
+                                        {
+                                            RightItemsDefinitions[option].numberField &&
+                                            <input
+                                                className="text-field"
+                                                style={numberFieldStyle}
+                                                type="number"
+                                                onChange={(e) => { this.updateSelection(e.target.value,RightItemsDefinitions[option].numberFieldValue,rightPackage)}}
+                                                value={rightPackage.selectedRights[RightItemsDefinitions[option].numberFieldValue]}
+                                                min={0}/>
+                                        }
+                                        {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}
                                     </div>
                                 })}
                             </div>
@@ -234,12 +249,46 @@ class PopupRight extends React.Component {
                             onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, id+ "_TEXTAREA")}}
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
-                        {showTextArea && showTextArea === "FURTHER_DETAILS" &&
+                        {showTextArea && showTextArea === "FURTHER_DETAILS" && rightsPackage && rightsPackage.length > 0 &&
                             <div>
                                 <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Further details</div>
-                                <textarea/>
+                                <textarea
+                                    onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_DETAILS")}}
+                                    value={rightsPackage[0].selectedRights["TECHNICAL_FEE_DETAILS"]}/>
                             </div>
                         }
+
+                        {technicalFee && this.hasSelection(id, technicalFee, rightsPackage) && <div>
+                            <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Technical fee</div>
+                            <div>
+                                <input
+                                    style={{ width: '20px'}}
+                                    defaultChecked={rightsPackage[0].selectedRights["TECHNICAL_FEE"]=== "INCLUDED"}
+                                    type="radio"
+                                    value={"INCLUDED"}
+                                    onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
+                                    name="TECHNICAL_FEE"/> Technical fee included in license fee
+                            </div>
+                            <div>
+                                <input
+                                    style={{ width: '20px'}}
+                                    defaultChecked={rightsPackage[0].selectedRights["TECHNICAL_FEE"] === "ON_TOP"}
+                                    type="radio"
+                                    value={"ON_TOP"}
+                                    onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
+                                    name="TECHNICAL_FEE"/>
+                                Technical fee charged on top of license fee
+                                <input
+                                    style={{ width: '40px', margin: '1px 10px'}}
+                                    onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_PERCENTAGE")} }
+                                    value={ rightsPackage[0].selectedRights["TECHNICAL_FEE_PERCENTAGE"] }
+                                    type="number"
+                                    max={100}
+                                    min={0}
+                                    disabled={rightsPackage[0].selectedRights["TECHNICAL_FEE"] !== "ON_TOP"}/>
+                                % technical fee
+                            </div>
+                        </div>}
 
 
                     </div>
@@ -258,8 +307,22 @@ class PopupRight extends React.Component {
     render(){
 
         const {name, id,  rightsPackage,programs} = this.props;
-        const custom = this.getSelection(id,  rightsPackage);
-        const selected = (rightsPackage.length > 0 ) ? (id !== "PROGRAM") ? RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label : (programs.length > 0) ? programs[0].name : "" : "" ;
+        let custom = this.getSelection(id,  rightsPackage);
+        let selected =  "";
+
+        if (rightsPackage.length > 0 ){
+            if (id === "PROGRAM") {
+                if (programs.length > 0) {
+                    selected = programs[0].name;
+                }
+            } else if (id === "CAMERA"){
+                custom = custom || this.getSelection("CAMERAS",  rightsPackage);
+                if (!custom) selected = "Minimum cameras: " + rightsPackage[0].selectedRights["CAMERAS"]
+            }else {
+                selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label
+            }
+        }
+
         return (
             <div className="base-input" style={{width: "49%"}}>
                 <label>{name}</label>

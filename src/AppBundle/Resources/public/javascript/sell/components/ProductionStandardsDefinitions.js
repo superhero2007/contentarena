@@ -52,7 +52,6 @@ export const ProductionStandardsDefinitions = [
         superRights: [],
         options : [
             "CAMERA_MINIMUM",
-            "CAMERA_TEXT",
             "CAMERA_NOT_AVAILABLE"
         ],
         multiple : false
@@ -68,7 +67,8 @@ export const ProductionStandardsDefinitions = [
             "TECHNICAL_DELIVERY_FIBER",
         ],
         multiple : false,
-        showTextArea:"FURTHER_DETAILS"
+        showTextArea:"FURTHER_DETAILS",
+        technicalFee : "TECHNICAL_DELIVERY_SATELLITE"
     },
     {
         name: "Content production",

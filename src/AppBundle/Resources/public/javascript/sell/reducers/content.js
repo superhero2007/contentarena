@@ -10,7 +10,8 @@ export const contentType= {
     REMOVE_FROM_MULTIPLE : 'REMOVE_FROM_MULTIPLE',
     APPLY_SELECTION : 'APPLY_SELECTION',
     UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
-    UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES'
+    UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
+    ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES'
 
 };
 
@@ -134,13 +135,16 @@ export const content = (state = {
                     salesPackages.splice(action.index,1)
                 }
             }
-            if ( action.name === "add" ) salesPackages = [...salesPackages,action.salesPackage];
             if ( action.name === "save" ) salesPackages[action.index] = action.salesPackage;
 
             return Object.assign({}, state, {
                 salesPackages : salesPackages
             });
 
+        case contentType.ADD_SALES_PACKAGES:
+            return Object.assign({}, state, {
+                salesPackages : [...state.salesPackages,...action.salesPackages]
+            });
 
         default:
             return state;

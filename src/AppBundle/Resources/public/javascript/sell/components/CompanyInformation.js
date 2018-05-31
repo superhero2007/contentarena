@@ -2,9 +2,10 @@ import React from 'react';
 import {connect} from "react-redux";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
+import {CountrySelector} from "../../main/components/CountrySelector";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
-const inputStyle = { width: '380px', margin: 0};
+const inputStyle = { width: '380px', margin: 0, height: "30px"};
 
 class CompanyInformation extends React.Component {
     constructor(props) {
@@ -28,6 +29,16 @@ class CompanyInformation extends React.Component {
         const { counter } = this.props;
 
         company[name] = e.target.value;
+
+        this.props.updateContentValue("company", company);
+        this.props.updateContentValue("counter", counter + 1);
+    };
+
+    updateCountry = (value) => {
+        const { company } = this.state;
+        const { counter } = this.props;
+
+        company.country.name = value.label;
 
         this.props.updateContentValue("company", company);
         this.props.updateContentValue("counter", counter + 1);
@@ -60,8 +71,18 @@ class CompanyInformation extends React.Component {
                         <input
                             type={"text"}
                             style={inputStyle}
-                            disabled={true}
                             value={company.legalName}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Registration number
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => { this.updateContent(e, "registrationNumber")}}
+                            value={company.registrationNumber}/>
                     </div>
 
                     <div className="base-full-input">
@@ -95,6 +116,27 @@ class CompanyInformation extends React.Component {
                             type={"text"}
                             onChange={(e) => { this.updateContent(e, "city")}}
                             value={company.city}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            ZIP code
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => { this.updateContent(e, "zip")}}
+                            value={company.zip}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Country
+                        </label>
+                        <CountrySelector
+                            multi={false}
+                            onChange={(val) => { this.updateCountry(val)}}
+                            value={{value: company.country.name, label: company.country.name}}/>
                     </div>
 
 
