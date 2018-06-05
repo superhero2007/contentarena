@@ -95,7 +95,7 @@ $(function () {
         var select = $("#sports-event");
 
         ContentArena.Data.TopSports.forEach(function (sport) {
-            select.append("<option class=\"sport subfilter\" id=\"sport-"+sport.externalId+"\" name="+sport.externalId+" value='"+sport.externalId+"' toggle>"+sport.name+"</option>")
+            select.append("<div class=\"sport subfilter\" id=\"sport-"+sport.externalId+"\" name="+sport.externalId+" value='"+sport.externalId+"' toggle>"+sport.name+"</div>")
         });
     });
 
@@ -105,7 +105,7 @@ $(function () {
         var select = $("#territories-rights");
 
         ContentArena.Data.AllTerritories.forEach(function (territory) {
-            select.append("<option class=\"territory subfilter\" value='"+territory.id+"' id='territory-"+ territory.id+"' toggle>"+territory.name+"</option>")
+            select.append("<div class=\"territory subfilter\" value='"+territory.id+"' id='territory-"+ territory.id+"' toggle>"+territory.name+"</div>")
         });
     });
 

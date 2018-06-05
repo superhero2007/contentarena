@@ -57,14 +57,14 @@ class SalesPackages extends React.Component {
             <div className="sales-packages">
 
                 <div className="territories">
-                    <div className={(this.state.selectedTerritory === 0) ? "territory selected" : "territory" }
+                    <div className={(this.state.selectedTerritory === 0) ? "territory-td selected" : "territory-td" }
                          onClick={() =>{this.setState({selectedTerritory: 0})}}>
                         All
                     </div>
                     {this.props.territories &&
                         this.props.territories.map((territory) =>(
                             <div
-                                className={"territory " + (this.state.selectedTerritory === territory.id ? "selected " : "" ) + (!this.state.availableTerritories.has(territory.id) ? "disabled" : "" ) }
+                                className={"territory-td " + (this.state.selectedTerritory === territory.id ? "selected " : "" ) + (!this.state.availableTerritories.has(territory.id) ? "disabled" : "" ) }
                                 onClick={() =>{this.setState({selectedTerritory: territory.id})}}>
                                 {territory.name}
                             </div>

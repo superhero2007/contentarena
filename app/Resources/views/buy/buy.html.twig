@@ -23,22 +23,22 @@
                         <input type="text" id="inputSearch" name="event" placeholder="Search"/>
                     </div>
                     <div>
-                        <select name="sports_events" id="sports-event" multiple>
-                            <option value="">All sports</option>
-                        </select>
-                        <p>Selected <span class="filter-sports-count"></span></p>
+                        <div class="custom-dropdown">
+                            <button class="uk-button uk-button-default dropdown-button" type="button">Sports &nbsp;<span class="filter-sports-count"></span></button>
+                            <div id="sports-event" uk-dropdown="mode: click"></div>
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend>Rights</legend>
                         <div>
-                            <select name="territories_rights" id="territories-rights" multiple>
-                                <option value="">All territories</option>
-                            </select>
+                            <div class="custom-dropdown uk-display-inline-block">
+                                <button class="uk-button uk-button-default dropdown-button" type="button">Territories &nbsp;<span class="filter-territories-count"></span></button>
+                                <div id="territories-rights" uk-dropdown="mode: click"></div>
+                            </div>
                             <button class="filter" type="button" ref="#filter-territories">
                                 <i class="fa fa-sliders" aria-hidden="true"></i>
                             </button>
-                            <p>Selected <span class="filter-territories-count"></span></p>
                         </div>
                         <div id="rights-packages"></div>
                         <hr>

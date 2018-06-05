@@ -81,6 +81,7 @@ $(function () {
     }
 
     function applyFilter(){
+        $("#marketplace-wrapper .listing-details").html('');
         $("#content-list-container").html("<i class=\"fa fa-cog fa-spin\"></i>");
         ContentArena.Api.getContent(ContentArena.Filter).done(function (response) {
             $("#content-list-container").html(response);
