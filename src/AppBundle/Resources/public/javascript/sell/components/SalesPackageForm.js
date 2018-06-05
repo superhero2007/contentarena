@@ -1,11 +1,19 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
-import {CountrySelector} from "../../main/components/CountrySelector";
+import CountrySelector from "../../main/components/CountrySelector";
 import DatePicker from 'react-datepicker';
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
+const smallContainerStyle = {
+    display: 'inline-block',
+    overflowY: 'overlay',
+    maxHeight: '200px'
+};
+const containerStyle = {
+    display: 'inline-block'
+};
 
 class SalesPackageForm extends React.Component {
     constructor(props) {
@@ -18,17 +26,18 @@ class SalesPackageForm extends React.Component {
         this.fixed = "FIXED";
         this.bidding = "BIDDING";
         this.limit = 3;
-
         this.state = {
             isOpen : props.isOpen,
             bundleMethod : this.asBundle,
             territoriesMethod : this.worldwide,
             salesMethod : this.fixed,
             territories : [],
+            filterTerritories : [],
             installments : [{ value : 100,  type : "DAY", days: 30}],
             fee : 0,
             isNew : true
         };
+        this.bidIcon = assetsBaseDir + "app/images/auction.svg";
     }
 
     editSalesPackage = ( salesPackage, index ) => {
@@ -61,6 +70,20 @@ class SalesPackageForm extends React.Component {
         }
     };
 
+    getFilterTerritories = () => {
+
+        const {salesPackages} = this.props;
+        let filter = [];
+
+        salesPackages.forEach((salesPackage) => {
+            if ( salesPackage.bundleMethod === this.individually){
+                filter = [...filter, ...salesPackage.territories.map(t => t.value)]
+            }
+        });
+
+        return filter
+    };
+
     setSalesMethod = (salesMethod) => {
         this.setState({salesMethod});
     };
@@ -73,29 +96,71 @@ class SalesPackageForm extends React.Component {
         this.setState({ isOpen: false});
 
         const { bundleMethod, territoriesMethod, territories, fee, salesMethod } = this.state;
-        let salesPackage = {}, salesPackagesList = [];
+        let salesPackagesList = [], name= "";
+
+        let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
+        let territoriesByLabel = territories.map(t => t.label);
 
         if ( this.state.isNew ) {
 
-            if ( bundleMethod === "SELL_INDIVIDUALLY" ){
+            if ( bundleMethod === this.individually ){
 
-                salesPackagesList = territories.map((territory)=>{
-                    return {
-                        name : territory.label,
-                        territories : [territory],
-                        fee : fee,
-                        salesMethod : salesMethod
-                    }
-                });
-
-                this.props.onAdd(salesPackagesList);
+                if ( territoriesMethod === this.worldwideExcluding ){
+                    salesPackagesList = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1).map((territory)=>{
+                        return {
+                            name : territory.label,
+                            territories : [territory],
+                            fee : fee,
+                            salesMethod : salesMethod,
+                            bundleMethod : bundleMethod
+                        }
+                    });
+                } else {
+                    salesPackagesList = territories.map((territory)=>{
+                        return {
+                            name : territory.label,
+                            territories : [territory],
+                            fee : fee,
+                            salesMethod : salesMethod,
+                            bundleMethod : bundleMethod
+                        }
+                    });
+                }
             } else {
+
+                if ( territoriesMethod === this.worldwide ){
+                    name = "Worldwide";
+                } else if ( territoriesMethod === this.selectedTerritories ) {
+                    name = territories.slice(0, 3).map( ( territory, i )=>{
+                        return territory.label
+                    }).join(", ");
+                    if (territories.length > 3 ) name += " +" + (territories.length - 3);
+                } else if ( territoriesMethod === this.worldwideExcluding ) {
+                    name = "Worldwide excluding " + territories.slice(0, 3).map( ( territory, i )=>{
+                        return territory.label
+                    }).join(", ");
+
+                    if (territories.length > 3 ) name += " +" + (territories.length - 3);
+
+                }
+
+
+                salesPackagesList = [{
+                    name : name,
+                    territories : territories,
+                    fee : fee,
+                    salesMethod : salesMethod
+                }]
+
             }
 
+            this.props.onAdd(salesPackagesList);
 
         } else {
             this.props.onUpdate(this.state, this.state.index);
         }
+
+        this.setState({territories: []});
     };
 
     selectTerritories = (territories) => {
@@ -213,7 +278,11 @@ class SalesPackageForm extends React.Component {
                     </div>
 
                     {   this.state.territoriesMethod !== this.worldwide &&
-                        <CountrySelector className={"small-select"} value={this.state.territories} onChange={this.selectTerritories} />
+                        <CountrySelector
+                            className={"small-select"}
+                            value={this.state.territories}
+                            onChange={this.selectTerritories}
+                            filter={this.getFilterTerritories()} />
                     }
 
 
@@ -306,32 +375,29 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { salesPackages, onRemove } = this.props;
+        const { salesPackages, onRemove, hideButtons } = this.props;
         return (
             <div className={"sales-package-form"}>
                 { this.renderModal() }
                 <div className="base-full-input">
                     <label>Sales bundles</label>
-                    <div className={"content"} style={{flexDirection: "column"}}>
+                    <div className={"content"} style={(hideButtons) ? containerStyle: smallContainerStyle}>
                         { salesPackages.map( (salesPackage, i) => {
                             return <div className="sales-package-container">
                                         <div className="sales-package" key={"sales-package-"+ i}>
                                             <div style={{flex : 5}}>
-                                   {/*             {salesPackage.bundleMethod === this.asBundle &&
-                                                salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
-
-                                                {this.showTerritories(salesPackage) &&
-                                                salesPackage.territories.slice(0, this.limit).map( ( territory, i )=>{
-                                                    return <span key={i}>{!!i && ", "} {territory.label}</span>
-                                                })}
-
-                                                { this.showTerritories(salesPackage) && salesPackage.territories.length > this.limit &&
-                                                <span> +{salesPackage.territories.length - this.limit}</span>}*/}
                                                 {salesPackage.name}
                                             </div>
-                                            <div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                                $ {salesPackage.fee}
-                                            </div>
+                                            {salesPackage.salesMethod === "BIDDING" &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
+                                                <img style={{width: 30}} src={this.bidIcon}/>
+                                            </div>}
+
+                                            {
+                                                ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
+                                                &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
+                                                    $ {salesPackage.fee}
+                                                </div>
+                                            }
                                         </div>
                                         <i className="fa fa-remove" onClick={() => { onRemove(i) }} />
                                         <i className="fa fa-edit" onClick={() => { this.editSalesPackage(salesPackage, i) }} />
@@ -340,9 +406,15 @@ class SalesPackageForm extends React.Component {
 
                     </div>
                 </div>
-                <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
-                    <i className="fa fa-plus-circle"/> Add sales bundle
-                </div>
+
+                {!hideButtons && <div style={{display : "flex"}}>
+                    <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
+                        <i className="fa fa-plus-circle"/> Add sales bundle
+                    </div>
+                    {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll} style={{marginLeft: 20}}>
+                        <i className="fa fa-minus-circle"/> Remove all
+                    </div>}
+                </div>}
 
             </div>
         )

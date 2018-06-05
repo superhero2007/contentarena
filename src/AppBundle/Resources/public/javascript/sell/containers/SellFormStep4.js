@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {TitleBar} from "../components/SellFormItems";
 import Moment from "moment/moment";
+import SalesPackageForm from "../components/SalesPackageForm";
 import {goToPreviousStep} from "../actions/contentActions";
+import {TitleBar} from "../components/SellFormItems";
+
 
 class SellFormStep4 extends React.Component {
 
@@ -34,6 +36,7 @@ class SellFormStep4 extends React.Component {
 
     render() {
         if ( this.props.step !== 4) return (null);
+        window.scrollTo(0, 0);
         const {
             salesPackages,
             name,
@@ -41,6 +44,7 @@ class SellFormStep4 extends React.Component {
             rightsPackage,
             sportCategory,
             tournament,
+            image,
             goToPreviousStep
         } = this.props;
 
@@ -58,7 +62,9 @@ class SellFormStep4 extends React.Component {
 
                     <div className={"listing-list-view"} >
                         <div className={"left"}  >
-                            <div className={"image"}></div>
+                            <div className={"image"}>
+                                <img src={image}/>
+                            </div>
                             <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
                             <div className={"date"}>Expires <span>{Moment(expirationDate).format('DD/MM/YYYY')}</span></div>
                         </div>
@@ -69,10 +75,12 @@ class SellFormStep4 extends React.Component {
                                     {sportCategory.length > 0 && <div>{sportCategory[0].name}</div>}
                                     {tournament.length > 0 && <div>{tournament[0].name}</div>}
                                 </div>
-                                <div style={{flex: 2, flexDirection: "column"}}>
+                                <div style={{flex: 2, flexDirection: "column",  }}>
                                     {
                                         rightsPackage.map(( sr )=>{
-                                            return <div><i className="fa fa-check-circle-o"/> {sr.name}</div>
+                                            return <div  style={{paddingBottom: 10}}>
+                                                <i style={{color: '#2DA7E6'}} className="fa fa-check-circle-o"/> {sr.name}
+                                                </div>
                                         })
                                     }
                                 </div>
@@ -81,41 +89,33 @@ class SellFormStep4 extends React.Component {
 
                     </div>
 
-                    <TitleBar title={"Sales bundles"} />
-
-                    <div className={"sales-package-form"}>
-                        <div className="base-full-input">
-                            <div className={"content"} style={{flexDirection: "column"}}>
-                                { salesPackages.map( (salesPackage, i) => {
-                                    return <div className="sales-package-container">
-                                        <div className="sales-package" key={"sales-package-"+ i}>
-                                            <div style={{flex : 5}}>
-                                                {salesPackage.bundleMethod === this.asBundle &&
-                                                salesPackage.territoriesMethod === this.worldwide && "Worldwide"}
-
-                                                {this.showTerritories(salesPackage) &&
-                                                salesPackage.territories.slice(0, this.limit).map( ( territory, i )=>{
-                                                    return <span key={i}>{!!i && ", "} {territory.label}</span>
-                                                })}
-
-                                                { this.showTerritories(salesPackage) && salesPackage.territories.length > this.limit &&
-                                                <span> +{salesPackage.territories.length - this.limit}</span>}
-                                            </div>
-                                            <div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                                $ {salesPackage.fee}
-                                            </div>
-                                        </div>
-                                    </div>
-                                })}
-
-                            </div>
-                        </div>
-                    </div>
+                    <SalesPackageForm
+                        hideButtons
+                        salesPackages={salesPackages}
+                        onAdd={this.addSalesPackage}
+                        onUpdate={this.updateSalesPackage}
+                        onRemove={this.removeSalesPackage}
+                        onRemoveAll={this.removeAllSalesPackage}/>
 
                     <div className="buttons-container" >
                         <button id="draft-listing" className="standard-button" style={{ width: '250px'}}>
                             View License Agreement
                         </button>
+                    </div>
+
+                    <div className={"terms-confirm"}>
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <input type="checkbox" name="terms"/>
+                            <label htmlFor="terms"></label>
+                            I confirm that I have verified the terms stated above. They are correct and ready to be
+                            published.
+                        </div>
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <input type="checkbox" name="terms_arena"/>
+                            <label htmlFor="terms_arena"></label>
+                            I confirm that I have verified the terms and conditions that have been outlined by
+                            Content Arena Pte. Ltd.
+                        </div>
                     </div>
 
                 </div>

@@ -135,6 +135,11 @@ export const content = (state = {
                     salesPackages.splice(action.index,1)
                 }
             }
+
+            if ( action.name === "removeAll" ) {
+                salesPackages = [];
+            }
+
             if ( action.name === "save" ) salesPackages[action.index] = action.salesPackage;
 
             return Object.assign({}, state, {

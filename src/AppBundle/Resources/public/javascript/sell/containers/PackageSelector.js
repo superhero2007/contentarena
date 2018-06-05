@@ -80,6 +80,12 @@ class PackageSelector extends React.Component {
                     Pick rights
                 </div>
                 <div className="package-selector-container">
+                    <div className="package-exclusive">
+                        <div className="package-exclusive-item">Exclusive</div>
+                        <div className="package-exclusive-item">Exclusive</div>
+                        <div className="package-exclusive-item">Exclusive</div>
+                        <div className="package-exclusive-item">Exclusive</div>
+                    </div>
                     <div className="package-selector-content" >
                         { this.state.packages.map(function(superRight){
                             return <SuperRight

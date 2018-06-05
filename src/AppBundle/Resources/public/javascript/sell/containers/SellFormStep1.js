@@ -152,7 +152,7 @@ class SellFormStep1 extends React.Component {
             sportCategories = [];
             tournaments= [];
 
-            this.props.updateContentValue("name",null);
+            this.props.updateContentValue("name","");
         }
 
         if ( !name && tournaments.length > 0 && !this.state.nameFromCompetition) {
@@ -309,11 +309,14 @@ class SellFormStep1 extends React.Component {
     };
 
     clear = () => {
-        this.removeSport(0)
+        this.removeSport(0);
+        this.props.updateContentValue("name", "");
     };
 
     render() {
         if ( this.props.step !== 1) return (null);
+
+        window.scrollTo(0, 0);
 
         const inputProps = {
             sports: [{ value : "", custom : false }],

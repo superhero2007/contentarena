@@ -16,14 +16,24 @@ class FileSelector extends Component {
     };
 
     handleUploadFile = (event) => {
+        const {isImage, onSelect} = this.props;
+        let _this = this;
+
         this.state.form.append(event.target.files[0].size, event.target.files[0]);
         this.setState({
             form : this.state.form
-        })
-        // '/files' is your node.js route that triggers our middleware
-        /* axios.post('/files', data).then((response) => {
-             console.log(response); // do something with the response
-         });*/
+        });
+
+
+        if ( isImage ) {
+            this.getBase64(event.target.files[0], (response) => {
+                _this.setState({
+                    image : response
+                });
+
+                if( onSelect ) onSelect("image", response);
+            })
+        }
     };
 
     getItems = () => {
@@ -39,22 +49,41 @@ class FileSelector extends Component {
         this.setState({form:this.state.form});
     };
 
+    getBase64 = (file, cb) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            cb(reader.result)
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    };
+
     render() {
 
-        const {label} = this.props;
+        const {label, isImage} = this.props;
+        const {image} = this.state;
 
         return (
             <div className="base-input">
                 <label>{(label)?label:"Files"}</label>
                 <button className="standard-button" onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload</button>
-                <input className="is-hidden"
-                   onChange={this.handleUploadFile}
-                   accept=".png,.jpg, .pdf, .doc, .docx"
-                   id={"input-" + this.props.target}
-                   type="file"  name={this.props.target + "[]"} />
-                { this.getItems().map((item, i)=>{
+                <input
+                    className="is-hidden"
+                    onChange={this.handleUploadFile}
+                    accept=".png,.jpg, .pdf, .doc, .docx"
+                    id={"input-" + this.props.target}
+                    type="file"
+                    name={this.props.target + "[]"} />
+                { !isImage && this.getItems().map((item, i)=>{
                     return <FileItem key={i} item={item} onClick={ () => this.remove(item.size)} />
                 })}
+
+                {
+                    isImage && image &&
+                        <img src={image} style={{width: 80, maxHeight: 48, marginLeft: 5}}/>
+                }
             </div>
         )
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
-import {CountrySelector} from "../../main/components/CountrySelector";
+import CountrySelector from "../../main/components/CountrySelector";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};

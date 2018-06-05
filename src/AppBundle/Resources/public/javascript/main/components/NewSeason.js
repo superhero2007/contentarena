@@ -38,7 +38,7 @@ class NewSeason extends React.Component{
     render(){
         return (
             <div>
-                <div className="base-input">
+                {/*<div className="base-input">
                     <label>Season</label>
                     <input
                         className="new-season"
@@ -46,11 +46,8 @@ class NewSeason extends React.Component{
                         onBlur={this.props.onBlur}
                         defaultValue={this.props.value}
                         placeholder="Enter season name"/>
-                    { this.props.showClose &&
-                    <button className={"standard-button"} onClick={this.props.onRemove}>
-                        <i className="fa fa-close"/>
-                    </button>}
-                </div>
+
+                </div>*/}
                 <div className="base-input">
                     <label>Season year</label>
                     <label className={"season-selector-label"}>From</label>
@@ -64,6 +61,10 @@ class NewSeason extends React.Component{
                         {this.getEndOptions()}
                         <option value={0}>Not applicable</option>
                     </select>
+                    { this.props.showClose &&
+                    <button className={"standard-button"} onClick={this.props.onRemove}>
+                        <i className="fa fa-close"/>
+                    </button>}
                 </div>
             </div>
         )

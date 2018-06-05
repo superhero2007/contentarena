@@ -51,11 +51,15 @@ class SellFormStep3 extends React.Component {
         this.props.updateSalesPackages("remove", null, index);
     };
 
+    removeAllSalesPackage= () => {
+        this.props.updateSalesPackages("removeAll");
+    };
+
     render() {
-        const {step, name, salesPackages, currency, vat} = this.props;
+        const {step, name, salesPackages, currency, vat, updateContentValue} = this.props;
 
         if ( step !== 3) return (null);
-
+        window.scrollTo(0, 0);
         return (
 
             <div className="step-content">
@@ -63,7 +67,11 @@ class SellFormStep3 extends React.Component {
 
                     <CurrencySelector onClick={this.selectCurrency} selected={currency} />
 
-                    <FileSelector label={"Listing image (opt.)"} target={"image"}/>
+                    <FileSelector
+                        label={"Listing image (opt.)"}
+                        isImage={true}
+                        onSelect={updateContentValue}
+                        target={"image"}/>
 
                     <ExpirationDateSelector/>
 
@@ -71,7 +79,8 @@ class SellFormStep3 extends React.Component {
                         salesPackages={salesPackages}
                         onAdd={this.addSalesPackage}
                         onUpdate={this.updateSalesPackage}
-                        onRemove={this.removeSalesPackage} />
+                        onRemove={this.removeSalesPackage}
+                        onRemoveAll={this.removeAllSalesPackage}/>
 
                     <CompanyInformation/>
 

@@ -754,11 +754,14 @@ button{
 .listing-list-view{
   display: flex;
   margin-bottom: 20px;
+  border: 1px solid lightgray;
+  border-top: 6px solid #1A4B63;
+  padding: 25px;
   .left {
     flex: 1;
     .image{
-      width: 25vmin;
-      height: 25vmin;
+      width: 30vmin;
+      height: 30vmin;
       display: flex;
       background-color: lightgray;
       margin-bottom: 5px;
@@ -781,8 +784,9 @@ button{
       color: #2DA7E6;
       font-size: 25px;
       font-weight: 600;
-      line-height: 36px;
       text-decoration: underline;
+      line-height: 14px;
+      padding-bottom: 20px;
     }
 
   }

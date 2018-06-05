@@ -34,7 +34,9 @@ class SellFormStep2 extends React.Component {
         };
     }
 
-    componentDidMount () {}
+    componentDidMount() {
+
+    }
 
     componentWillReceiveProps(nextProps) {
         console.log("Step 2 - props", nextProps);
@@ -114,6 +116,8 @@ class SellFormStep2 extends React.Component {
         const {step, programs } = this.props;
 
         if ( step !== 2) return (null);
+
+        window.scrollTo(0, 0);
 
         return (
             <div className="step-content">

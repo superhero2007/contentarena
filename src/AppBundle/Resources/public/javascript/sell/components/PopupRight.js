@@ -228,7 +228,13 @@ class PopupRight extends React.Component {
                                             <LanguageSelector
                                                 onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
                                                 value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
-                                        {RightItemsDefinitions[option].textField && <input className="text-field" type="text"/>}
+                                        {RightItemsDefinitions[option].textField &&
+                                            <input
+                                                onChange={(e) => { this.updateSelection(e.target.value, id+ "_TEXT",rightPackage)}}
+                                                value={rightPackage.selectedRights[id+ "_TEXT"]}
+                                                className="text-field"
+                                                type="text"/>
+                                        }
                                         {
                                             RightItemsDefinitions[option].numberField &&
                                             <input

@@ -18,11 +18,11 @@ export const TitleBar = ({title, subtitle}) => (
 
 export const NewCategory = ({onClick, showClose, onBlur, value}) => (
     <div className="base-input">
-        <label>Category</label>
+        <label>Country/Category</label>
         <input
             className="new-category"
             type="text"
-            placeholder="Enter category"
+            placeholder="Enter Country/Category"
             onBlur={onBlur}
             defaultValue={value}/>
         { showClose && <button onClick={onClick} className={"standard-button"}><i className="fa fa-close"/></button>}

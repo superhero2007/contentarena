@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {CountrySelector} from "../../main/components/CountrySelector";
+import CountrySelector from "../../main/components/CountrySelector";
 
 class JurisdictionSelector extends React.Component {
     constructor(props) {
