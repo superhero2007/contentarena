@@ -81,7 +81,7 @@ $(function () {
         MarketplaceApp.selectListing(id);
     });
 
-    MarketplaceApp.selectListing($(".content-box").first().data("contentId"));
+    //MarketplaceApp.selectListing($(".content-box").first().data("contentId"));
 
 
 
