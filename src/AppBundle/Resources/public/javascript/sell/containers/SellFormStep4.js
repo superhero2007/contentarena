@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import Moment from "moment/moment";
 import SalesPackageForm from "../components/SalesPackageForm";
+import ContentListing from "../../main/components/ContentListing";
 import {goToPreviousStep} from "../actions/contentActions";
 import {TitleBar} from "../components/SellFormItems";
 
@@ -39,12 +40,6 @@ class SellFormStep4 extends React.Component {
         window.scrollTo(0, 0);
         const {
             salesPackages,
-            name,
-            expirationDate,
-            rightsPackage,
-            sportCategory,
-            tournament,
-            image,
             goToPreviousStep
         } = this.props;
 
@@ -60,34 +55,7 @@ class SellFormStep4 extends React.Component {
                 <div className="step-title">Review & Sign</div>
                 <div className="step-content-container">
 
-                    <div className={"listing-list-view"} >
-                        <div className={"left"}  >
-                            <div className={"image"}>
-                                <img src={image}/>
-                            </div>
-                            <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                            <div className={"date"}>Expires <span>{Moment(expirationDate).format('DD/MM/YYYY')}</span></div>
-                        </div>
-                        <div className={"right"} >
-                            <div className={"name"}>{name}</div>
-                            <div style={{display: "flex"}}>
-                                <div style={{flex: 1}}>
-                                    {sportCategory.length > 0 && <div>{sportCategory[0].name}</div>}
-                                    {tournament.length > 0 && <div>{tournament[0].name}</div>}
-                                </div>
-                                <div style={{flex: 2, flexDirection: "column",  }}>
-                                    {
-                                        rightsPackage.map(( sr )=>{
-                                            return <div  style={{paddingBottom: 10}}>
-                                                <i style={{color: '#2DA7E6'}} className="fa fa-check-circle-o"/> {sr.name}
-                                                </div>
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                    <ContentListing {...this.props} />
 
                     <SalesPackageForm
                         hideButtons

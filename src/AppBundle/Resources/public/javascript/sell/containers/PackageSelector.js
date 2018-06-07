@@ -16,6 +16,9 @@ class SuperRight extends React.Component {
     }
 
     render(){
+
+        const {onExclusive} = this.props;
+
         return (
             <div className="select-box-item" >
                 <div className="select-box-checkbox">
@@ -30,13 +33,18 @@ class SuperRight extends React.Component {
                            className="package-selector" />
                     <label htmlFor={"super-right-" + this.props.superRight.id}/>
                 </div>
-                <div className="select-box-item-label">
+                <div className="select-box-item-label" style={{flex:8}}>
                     { this.props.superRight.name } ({ this.props.superRight.shortLabel })
                 </div>
                 <Toggle
                     icons={false}
+                    checked={this.props.exclusive}
                     disabled={!this.state.checked}
-                    defaultChecked={false} />
+                    onChange={(e) => {
+                        this.setState({exclusive: e.target.checked});
+                        onExclusive(this.props.superRight ,e.target.checked );
+                    }}
+                />
             </div>
         )
     }
@@ -72,6 +80,14 @@ class PackageSelector extends React.Component {
         this.props.superRightsUpdated(this.state.rightsPackage);
     };
 
+    onExclusive = (superRight, status) => {
+
+        let rightPackage = this.state.rightsPackage.get(superRight.id);
+        rightPackage.exclusive = status;
+        this.state.rightsPackage.set(superRight.id, rightPackage);
+        this.props.superRightsUpdated(this.state.rightsPackage);
+    };
+
     render() {
         let _this = this;
         return (
@@ -90,9 +106,11 @@ class PackageSelector extends React.Component {
                         { this.state.packages.map(function(superRight){
                             return <SuperRight
                                 key={superRight.id}
+                                onExclusive={_this.onExclusive}
                                 superRight={superRight}
                                 onChange={_this.updateSuperRightsList}
                                 checked={ _this.state.rightsPackage.has(superRight.id) }
+                                exclusive={ (_this.state.rightsPackage.has(superRight.id)) ? _this.state.rightsPackage.get(superRight.id).exclusive: false }
                             />;
                         })}
                     </div>

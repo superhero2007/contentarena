@@ -6,7 +6,6 @@ import SellFormStep1 from "../containers/SellFormStep1";
 import SellFormStep2 from "../containers/SellFormStep2";
 import SellFormStep3 from "../containers/SellFormStep3";
 import SellFormStep4 from "../containers/SellFormStep4";
-import SellFormStep5 from "../containers/SellFormStep5";
 import Selector from "../../main/components/Selector";
 import { connect } from "react-redux";
 import store from '../store';
@@ -16,7 +15,6 @@ class SellForm extends React.Component {
         super(props);
 
         let content = JSON.parse(props.content);
-        //let user = JSON.parse(props.user);
         content.jurisdiction = {
             label: content.company.country.name,
             value: content.company.country.name
