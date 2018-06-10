@@ -8,6 +8,7 @@ import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
 import CompanyInformation from "../components/CompanyInformation";
 import {CountrySelector} from "../../main/components/CountrySelector";
+import {stepChangeReset} from "../actions/contentActions";
 
 class SellFormStep3 extends React.Component {
 
@@ -55,11 +56,31 @@ class SellFormStep3 extends React.Component {
         this.props.updateSalesPackages("removeAll");
     };
 
+    /**
+     *
+     * @returns {boolean}
+     */
+    exclusivity = () => {
+        const {rightsPackage} = this.props;
+        return rightsPackage.filter(rp => rp.exclusive).length > 0;
+    };
+
+    scroll = () => {
+
+        const {stepChange, stepChangeReset } = this.props;
+
+        if ( stepChange ) {
+            window.scrollTo(0, 0);
+            stepChangeReset();
+        }
+
+    };
+
     render() {
-        const {step, name, salesPackages, currency, vat, updateContentValue} = this.props;
+        const {step, rightsPackage, salesPackages, currency, vat, updateContentValue, image} = this.props;
 
         if ( step !== 3) return (null);
-        window.scrollTo(0, 0);
+        this.scroll();
         return (
 
             <div className="step-content">
@@ -71,11 +92,14 @@ class SellFormStep3 extends React.Component {
                         label={"Listing image (opt.)"}
                         isImage={true}
                         onSelect={updateContentValue}
-                        target={"image"}/>
+                        previousImage={image}
+                        target={"imageBase64"}/>
 
                     <ExpirationDateSelector/>
 
                     <SalesPackageForm
+                        currency={currency}
+                        exclusivity={this.exclusivity()}
                         salesPackages={salesPackages}
                         onAdd={this.addSalesPackage}
                         onUpdate={this.updateSalesPackage}
@@ -115,6 +139,7 @@ const mapDispatchToProps = dispatch => {
             type: 'ADD_SALES_PACKAGES',
             salesPackages : salesPackages,
         }),
+        stepChangeReset : () => dispatch(stepChangeReset())
     }
 };
 

@@ -32,12 +32,6 @@
 
         <div class="buy-content-detail"><i class="fa fa-calendar"></i>{{ "10/02/2018" | default("") }}</div>
 
-        {% if ( content.programName or content.programType )  %}
-            <div class="buy-content-detail">
-                {% if content.programType %}<i class="fa fa-arrow-circle-right"></i>{{ content.programType }}{% endif %}
-                {% if content.programName %}- {{ content.programName }}{% endif %}
-            </div>
-        {% endif  %}
     </div>
 
     <div class="content-column content-column-details">

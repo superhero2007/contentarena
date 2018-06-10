@@ -9,6 +9,7 @@ class ContentListing extends React.Component{
         }
 
         this.bidIcon = assetsBaseDir + "app/images/auction.svg";
+        this.noImage = assetsBaseDir + "app/images/no-image.png";
     }
 
     getFee = (salesPackage) => {
@@ -29,10 +30,12 @@ class ContentListing extends React.Component{
             tournament,
             seasons,
             salesPackages,
-            image,
+            imageBase64,
+            image
         } = this.props;
 
         let seasonName =  seasons.map(season => (season.name)).join(", ");
+        let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
         return (
 
@@ -40,7 +43,7 @@ class ContentListing extends React.Component{
             <div className="listing-list-view" >
                 <div className={"left"}  >
                     <div className={"image"}>
-                        <img src={image}/>
+                        <img src={listingImage}/>
                     </div>
                     <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
                     <div className={"date"}>Expires <span>{Moment(expirationDate).format('DD/MM/YYYY')}</span></div>
@@ -48,18 +51,18 @@ class ContentListing extends React.Component{
                 <div className={"right"} >
                     <div className={"name"}>{name}</div>
                     <div style={{display: "flex"}}>
-                        <div style={{flex: 1}}>
-                            {sportCategory.length > 0 && <div>{sportCategory[0].name}</div>}
-                            {tournament.length > 0 && <div>{tournament[0].name}</div>}
+                        <div style={{flex: 1, fontWeight: 600, lineHeight: "30px"}}>
+                            {sportCategory && sportCategory.length > 0 && <div>{sportCategory[0].name}</div>}
+                            {tournament && tournament.length > 0 && <div>{tournament[0].name}</div>}
                             {
-                                seasons.length > 0 && <div>{seasonName}</div>
+                                seasons && seasons.length > 0 && <div>{seasonName}</div>
 
                             }
                         </div>
                         <div style={{flex: 2, flexDirection: "column" }}>
                             {
-                                rightsPackage.map(( sr )=>{
-                                    return <div  style={{paddingBottom: 10, flexDirection: 'row', display: 'flex'}}>
+                                rightsPackage.map(( sr,i )=>{
+                                    return <div key={i}  style={{paddingBottom: 10, flexDirection: 'row', display: 'flex'}}>
                                         <i style={{color: '#2DA7E6'}} className="fa fa-check-circle-o"/>
                                         <div style={{display: 'flex', flexDirection: "column"  }}>
                                             {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}

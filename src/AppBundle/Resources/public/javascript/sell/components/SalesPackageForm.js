@@ -72,13 +72,13 @@ class SalesPackageForm extends React.Component {
 
     getFilterTerritories = () => {
 
-        const {salesPackages} = this.props;
+        const { exclusivity, salesPackages} = this.props;
         let filter = [];
 
+        if ( !exclusivity ) return filter;
+
         salesPackages.forEach((salesPackage) => {
-            if ( salesPackage.bundleMethod === this.individually){
-                filter = [...filter, ...salesPackage.territories.map(t => t.value)]
-            }
+            filter = [...filter, ...salesPackage.territories.map(t => t.value)]
         });
 
         return filter
@@ -112,7 +112,8 @@ class SalesPackageForm extends React.Component {
                             territories : [territory],
                             fee : fee,
                             salesMethod : salesMethod,
-                            bundleMethod : bundleMethod
+                            bundleMethod : bundleMethod,
+                            territoriesMethod: territoriesMethod
                         }
                     });
                 } else {
@@ -122,7 +123,8 @@ class SalesPackageForm extends React.Component {
                             territories : [territory],
                             fee : fee,
                             salesMethod : salesMethod,
-                            bundleMethod : bundleMethod
+                            bundleMethod : bundleMethod,
+                            territoriesMethod: territoriesMethod
                         }
                     });
                 }
@@ -144,12 +146,13 @@ class SalesPackageForm extends React.Component {
 
                 }
 
-
                 salesPackagesList = [{
                     name : name,
                     territories : territories,
                     fee : fee,
-                    salesMethod : salesMethod
+                    salesMethod : salesMethod,
+                    bundleMethod : bundleMethod,
+                    territoriesMethod: territoriesMethod
                 }]
 
             }
@@ -208,9 +211,23 @@ class SalesPackageForm extends React.Component {
         this.setState({fee})
     };
 
+    addBundlesAvailable = () => {
+        const { exclusivity, salesPackages} = this.props;
+
+        if ( exclusivity ){
+            if ( salesPackages.filter(sp => {
+                return sp.territoriesMethod === "WORLDWIDE" && sp.bundleMethod === this.asBundle
+            }).length > 0 ){
+                return false
+            }
+        }
+
+        return true;
+    };
+
     renderModal = () => {
 
-        const {onClose} = this.props;
+        const {onClose, exclusivity, salesPackages} = this.props;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -253,13 +270,13 @@ class SalesPackageForm extends React.Component {
                     <div className="base-full-input">
                         <label style={labelStyle}>Select territories</label>
                         <div className={"content"}>
-                            <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwide) } }>
+                            { (!exclusivity || (exclusivity && salesPackages.length === 0)) && <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwide) } }>
                                 {this.state.territoriesMethod !== this.worldwide && <i className="fa fa-circle-thin"/>}
                                 {this.state.territoriesMethod === this.worldwide && <i className="fa fa-check-circle-o"/>}
                                 <div className={"title"}>
                                     Worldwide
                                 </div>
-                            </div>
+                            </div> }
                             <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.selectedTerritories) } }>
                                 {this.state.territoriesMethod !== this.selectedTerritories && <i className="fa fa-circle-thin"/>}
                                 {this.state.territoriesMethod === this.selectedTerritories && <i className="fa fa-check-circle-o"/>}
@@ -362,7 +379,11 @@ class SalesPackageForm extends React.Component {
 
             <div className={"buttons"}>
                 <button
-                    className={"standard-button"}
+                    className="standard-button"
+                    disabled={
+                        ( this.state.salesMethod === this.fixed && Number( this.state.fee ) === 0 ) ||
+                        ( this.state.territoriesMethod !== this.worldwide && this.state.territories.length === 0 )
+                    }
                     onClick={this.applySelection}>Ok</button>
             </div>
         </Modal>
@@ -374,8 +395,17 @@ class SalesPackageForm extends React.Component {
             salesPackage.territoriesMethod !== this.worldwide;
     };
 
+    getFee = (salesPackage) => {
+
+        const {currency} = this.props;
+
+        let currencySymbol = (currency === "EUR" ? "€" : "$");
+
+        return salesPackage.fee + " " + currencySymbol ;
+    };
+
     render(){
-        const { salesPackages, onRemove, hideButtons } = this.props;
+        const { salesPackages, onRemove, hideButtons, currency } = this.props;
         return (
             <div className={"sales-package-form"}>
                 { this.renderModal() }
@@ -395,7 +425,7 @@ class SalesPackageForm extends React.Component {
                                             {
                                                 ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
                                                 &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                                    $ {salesPackage.fee}
+                                                    {this.getFee(salesPackage)}
                                                 </div>
                                             }
                                         </div>
@@ -408,9 +438,9 @@ class SalesPackageForm extends React.Component {
                 </div>
 
                 {!hideButtons && <div style={{display : "flex"}}>
-                    <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
+                    {this.addBundlesAvailable() && <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
                         <i className="fa fa-plus-circle"/> Add sales bundle
-                    </div>
+                    </div>}
                     {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll} style={{marginLeft: 20}}>
                         <i className="fa fa-minus-circle"/> Remove all
                     </div>}

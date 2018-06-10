@@ -28,7 +28,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('c.sport', 's')
                 ->leftJoin('c.tournament', 't')
                 ->leftJoin('c.sportCategory', 'cat')
-                ->where('c.eventType LIKE :value')
                 ->orWhere('c.description LIKE :value')
                 ->orWhere('c.releaseYear LIKE :value')
                 ->orWhere('c.ownLicense LIKE :value')
@@ -89,7 +88,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             $query
                 ->leftJoin('content.company', 'com')
                 ->leftJoin('content.tournament', 't')
-                ->where('content.eventType LIKE :value')
                 ->orWhere('content.description LIKE :value')
                 ->orWhere('content.releaseYear LIKE :value')
                 ->orWhere('content.ownLicense LIKE :value')
@@ -114,12 +112,13 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         if ( count( $filter->getCountries() ) > 0 ) {
             $query
                 ->leftJoin('content.salesPackages', 'salesPackages')
-                ->leftJoin('salesPackages.selectedCountries', 'selectedCountries')
+                ->leftJoin('salesPackages.territories', 'territories')
                 ->andWhere($query->expr()->orX(
-                    $query->expr()->eq('salesPackages.worldwide', '1'),
-                    $query->expr()->in('selectedCountries', ':countries')
+                    $query->expr()->eq('salesPackages.territoriesMethod', ':worldwide'),
+                    $query->expr()->in('territories', ':countries')
                 ))
-                ->setParameter('countries', $filter->getCountries());
+                ->setParameter('countries', $filter->getCountries())
+                ->setParameter('worldwide', 'WORLDWIDE');
         }
 
         if ( count( $filter->getSuperRights() ) > 0 ) {
@@ -138,7 +137,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('toDate',$filter->getToDate());
         }
 
-        $query->andWhere('content.draft = :isDraft')->setParameter('isDraft',false);
+        //$query->andWhere('content.draft = :isDraft')->setParameter('isDraft',false);
         //TODO : filter by approved
 
         $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());

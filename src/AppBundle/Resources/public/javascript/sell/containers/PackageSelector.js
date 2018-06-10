@@ -55,7 +55,11 @@ class PackageSelector extends React.Component {
         super(props);
         this.state = {
             packages : JSON.parse(props.packages).map( (p) => { p.selectedRights = Object.assign({},RightDefaults); return p }),
-            rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i])),
+            rightsPackage : new Map(props.rightsPackage.map((i) => {
+
+                if (!i.selectedRights) i.selectedRights = Object.assign({},RightDefaults) ;
+                return[i.id, i]
+            })),
         };
     }
 

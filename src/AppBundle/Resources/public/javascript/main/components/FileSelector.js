@@ -16,7 +16,7 @@ class FileSelector extends Component {
     };
 
     handleUploadFile = (event) => {
-        const {isImage, onSelect} = this.props;
+        const {isImage, onSelect, target} = this.props;
         let _this = this;
 
         this.state.form.append(event.target.files[0].size, event.target.files[0]);
@@ -31,7 +31,11 @@ class FileSelector extends Component {
                     image : response
                 });
 
-                if( onSelect ) onSelect("image", response);
+                if( onSelect ) {
+                    onSelect(target, response);
+                    onSelect("image", null);
+                }
+
             })
         }
     };
@@ -62,7 +66,7 @@ class FileSelector extends Component {
 
     render() {
 
-        const {label, isImage} = this.props;
+        const {label, isImage, previousImage} = this.props;
         const {image} = this.state;
 
         return (
@@ -83,6 +87,11 @@ class FileSelector extends Component {
                 {
                     isImage && image &&
                         <img src={image} style={{width: 80, maxHeight: 48, marginLeft: 5}}/>
+                }
+
+                {
+                    previousImage &&
+                    <img src={assetsBaseDir + "../"  + previousImage} style={{width: 80, maxHeight: 48, marginLeft: 5}}/>
                 }
             </div>
         )

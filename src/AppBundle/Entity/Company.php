@@ -113,7 +113,6 @@ class Company
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        //$this->content = new ArrayCollection();
     }
 
 

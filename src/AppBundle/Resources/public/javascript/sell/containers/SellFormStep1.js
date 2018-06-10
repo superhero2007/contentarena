@@ -5,6 +5,7 @@ import SearchCompetition from '../../main/components/SearchCompetition'
 import SeasonSelector from '../../main/components/SeasonSelector'
 import ListingName from "../components/ListingName";
 import TagsInput from 'react-tagsinput'
+import {stepChangeReset} from "../actions/contentActions";
 
 import {
     Description,
@@ -313,10 +314,22 @@ class SellFormStep1 extends React.Component {
         this.props.updateContentValue("name", "");
     };
 
+    scroll = () => {
+
+        const {stepChange, stepChangeReset } = this.props;
+
+        if ( stepChange ) {
+            window.scrollTo(0, 0);
+            stepChangeReset();
+        }
+
+    };
+
+
     render() {
         if ( this.props.step !== 1) return (null);
 
-        window.scrollTo(0, 0);
+        this.scroll();
 
         const inputProps = {
             sports: [{ value : "", custom : false }],
@@ -381,8 +394,10 @@ class SellFormStep1 extends React.Component {
                         this.state.sportSelectors.map((item, i, list)=>{
                             return <SportSelector
                                 key={i}
+                                index={i}
                                 remove={() => this.removeSport(i) }
                                 showAddNew={list.length > 1 && list.length === i + 1}
+                                onEditNew={(a)=>{ console.log(a)}}
                                 showClose={ i > 0 }
                                 isCustom={(inputProps.sports[i]) ? inputProps.sports[i].isCustom : false}
                                 addSportSelector={this.addSportSelector}
@@ -550,7 +565,9 @@ const mapDispatchToProps = dispatch => {
             index : index,
             selectorType : "seasons",
         }),
-        selectTournament : (tournament) => dispatch({ type: 'SELECT_TOURNAMENT', tournament: tournament })
+        selectTournament : (tournament) => dispatch({ type: 'SELECT_TOURNAMENT', tournament: tournament }),
+        stepChangeReset : () => dispatch(stepChangeReset())
+
     }
 };
 

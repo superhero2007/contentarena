@@ -93,7 +93,6 @@ $(function () {
         this.sports = [];
         this.tournament = null;
         this.category = null;
-        this.eventType = "database";
         this.salesPackages = {};
         this.installments = {};
 
@@ -110,15 +109,10 @@ $(function () {
                 });
             }
 
-            if ( this.eventType === "custom" ){
 
-            }
-
-            if ( this.eventType === "database" ){
-                if ( this.sport !== null ) title += this.sport.value;
-                if ( this.category !== null ) title += " - " + this.category.value;
-                if ( this.tournament !== null ) title += " - " + this.tournament.value;
-            }
+            if ( this.sport !== null ) title += this.sport.value;
+            if ( this.category !== null ) title += " - " + this.category.value;
+            if ( this.tournament !== null ) title += " - " + this.tournament.value;
 
             if ( this.seasons && this.seasons.length > 0){
                 title += " " + this.seasons.map( ( season ) => {
@@ -134,9 +128,6 @@ $(function () {
             console.log("Updating sports", arguments);
         });
 
-        watch(this, "eventType", function(){
-            console.log("Updating eventType", arguments);
-        });
 
     };
 

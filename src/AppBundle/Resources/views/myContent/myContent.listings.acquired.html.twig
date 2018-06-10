@@ -27,7 +27,6 @@
                 <tr class="country-row">
                     <td>{{ bid.customId }}</td>
                     <td>{{ bid.company }}</td>
-                    <td>{{ bid.content.getListingName }}</td>
                     {% for right in rights %}
                         <td>{% if right.id in bid.filterRights(bid.content.rightsPackage) %} X {% else %} - {% endif %}</td>
                     {% endfor %}

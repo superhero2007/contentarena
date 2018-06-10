@@ -4,9 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints\Date;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Content
@@ -22,69 +25,30 @@ class Content
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"listing"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
+     * @Groups({"listing"})
      */
     protected $customId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="eventType", type="string", length=255)
-     * @SerializedName("eventType");
-     */
-    private $eventType;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="payment_method", type="string", length=255)
-     */
-    private $paymentMethod;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Groups({"listing"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
+     * @Groups({"listing"})
      */
     private $expiresAt;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="programName", type="string", length=255, nullable=true)
-     */
-    private $programName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="programType", type="string", length=255, nullable=true)
-     */
-    private $programType;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="seriesType", type="string", length=255, nullable=true)
-     */
-    private $seriesType;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="releaseYear", type="smallint", nullable=true)
-     */
-    private $releaseYear;
 
     /**
      * @var boolean
@@ -108,23 +72,10 @@ class Content
     protected $draft = false;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="availability", type="date", nullable=true)
-     */
-    private $availability;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="duration", type="string", length=255, nullable=true)
-     */
-    private $duration;
-
-    /**
      * @var array
      *
      * @ORM\Column(name="website", type="array", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $website;
 
@@ -135,20 +86,15 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
     private $salesPackages;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="own_license", type="string", length=255, nullable=true)
-     */
-    private $ownLicense;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $image;
 
@@ -156,6 +102,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="custom_tournament", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $customTournament;
 
@@ -163,8 +110,17 @@ class Content
      * @var string
      *
      * @ORM\Column(name="custom_sport", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $customSport;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
+     */
+    private $name;
 
     /**
      * @var string
@@ -176,6 +132,7 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"listing"})
      */
     private $company;
 
@@ -185,18 +142,21 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sport_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
     private $sports;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"listing"})
      */
     private $sportCategory;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"listing"})
      */
     private $tournament;
 
@@ -206,6 +166,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
     private $seasons;
 
@@ -217,22 +178,21 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
     private $rightsPackage;
 
     /**
-     * Many Content have Many ContentSelectedRights.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\ContentSelectedRight",cascade={"persist"}, fetch="LAZY")
-     * @ORM\JoinTable(name="content_selected_rights",
-     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="content_selected_right_id", referencedColumnName="id")}
-     *      )
+     * @var object
+     * @ORM\Column(name="selected_rights_by_super_right", type="object", nullable=true)
+     * @Groups({"listing"})
      */
-    private $selectedRights;
+    private $selectedRightsBySuperRight;
 
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
+     * @Groups({"listing"})
      */
     private $createdAt;
 
@@ -243,13 +203,14 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_installments_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
     private $installments;
 
     public function __construct() {
-        $this->rightsPackage = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->seasons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->selectedRights = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->rightsPackage = new ArrayCollection();
+        $this->seasons = new ArrayCollection();
+        $this->selectedRights = new ArrayCollection();
     }
 
     /**
@@ -260,30 +221,6 @@ class Content
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set eventType
-     *
-     * @param string $eventType
-     *
-     * @return Content
-     */
-    public function setEventType($eventType)
-    {
-        $this->eventType = $eventType;
-
-        return $this;
-    }
-
-    /**
-     * Get eventType
-     *
-     * @return string
-     */
-    public function getEventType()
-    {
-        return $this->eventType;
     }
 
     /**
@@ -310,77 +247,6 @@ class Content
         return $this->description;
     }
 
-    /**
-     * Set releaseYear
-     *
-     * @param integer $releaseYear
-     *
-     * @return Content
-     */
-    public function setReleaseYear($releaseYear)
-    {
-        $this->releaseYear = $releaseYear;
-
-        return $this;
-    }
-
-    /**
-     * Get releaseYear
-     *
-     * @return int
-     */
-    public function getReleaseYear()
-    {
-        return $this->releaseYear;
-    }
-
-    /**
-     * Set availability
-     *
-     * @param \DateTime $availability
-     *
-     * @return Content
-     */
-    public function setAvailability($availability)
-    {
-        $this->availability = $availability;
-
-        return $this;
-    }
-
-    /**
-     * Get availability
-     *
-     * @return \DateTime
-     */
-    public function getAvailability()
-    {
-        return $this->availability;
-    }
-
-    /**
-     * Set duration
-     *
-     * @param string $duration
-     *
-     * @return Content
-     */
-    public function setDuration($duration)
-    {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    /**
-     * Get duration
-     *
-     * @return string
-     */
-    public function getDuration()
-    {
-        return $this->duration;
-    }
 
     /**
      * @return mixed
@@ -471,7 +337,7 @@ class Content
     }
 
     /**
-     * @param mixed $createAt
+     * @param mixed $createdAt
      */
     public function setCreatedAt($createdAt)
     {
@@ -492,22 +358,6 @@ class Content
     public function setApproved($approved)
     {
         $this->approved = $approved;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOwnLicense()
-    {
-        return $this->ownLicense;
-    }
-
-    /**
-     * @param string $ownLicense
-     */
-    public function setOwnLicense($ownLicense)
-    {
-        $this->ownLicense = $ownLicense;
     }
 
     /**
@@ -559,54 +409,6 @@ class Content
     }
 
     /**
-     * @return string
-     */
-    public function getProgramName()
-    {
-        return $this->programName;
-    }
-
-    /**
-     * @param string $programName
-     */
-    public function setProgramName($programName)
-    {
-        $this->programName = $programName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProgramType()
-    {
-        return $this->programType;
-    }
-
-    /**
-     * @param string $programType
-     */
-    public function setProgramType($programType)
-    {
-        $this->programType = $programType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSeriesType()
-    {
-        return $this->seriesType;
-    }
-
-    /**
-     * @param string $seriesType
-     */
-    public function setSeriesType($seriesType)
-    {
-        $this->seriesType = $seriesType;
-    }
-
-    /**
      * @return mixed
      */
     public function getSportCategory()
@@ -636,6 +438,22 @@ class Content
     public function setRightsPackage($rightsPackage)
     {
         $this->rightsPackage = new ArrayCollection($rightsPackage);
+    }
+
+    /**
+     * @return object
+     */
+    public function getSelectedRightsBySuperRight()
+    {
+        return $this->selectedRightsBySuperRight;
+    }
+
+    /**
+     * @param object $selectedRightsBySuperRight
+     */
+    public function setSelectedRightsBySuperRight($selectedRightsBySuperRight)
+    {
+        $this->selectedRightsBySuperRight = $selectedRightsBySuperRight;
     }
 
     /**
@@ -730,7 +548,6 @@ class Content
         $this->selectedRights = $selectedRights;
     }
 
-
     public function getInstallments()
     {
         return $this->installments;
@@ -744,15 +561,6 @@ class Content
         $this->installments = $installments;
     }
 
-    public function getListingName(){
-        $name = '';
-        $seasons = $this->getSeasons();
-        foreach($seasons as $season){
-            $name = $name.' '.$season->getTournament()->getName().' '.$season->getName();
-        }
-        return $name;
-    }
-
  /**
      * @return int
      */
@@ -760,7 +568,6 @@ class Content
     {
         return $this->step;
     }
-
 
     /**
      * @param int $step
@@ -803,22 +610,6 @@ class Content
     }
 
     /**
-     * @return string
-     */
-    public function getPaymentMethod()
-    {
-        return $this->paymentMethod;
-    }
-
-    /**
-     * @param string $paymentMethod
-     */
-    public function setPaymentMethod($paymentMethod)
-    {
-        $this->paymentMethod = $paymentMethod;
-    }
-
-    /**
      * Get approved
      *
      * @return boolean
@@ -846,19 +637,21 @@ class Content
      *
      * @return Content
      */
-    public function addSalesPackage(\AppBundle\Entity\SalesPackage $salesPackage)
+    public function addSalesPackage(SalesPackage $salesPackage)
     {
         $this->salesPackages[] = $salesPackage;
 
         return $this;
     }
 
+
+
     /**
      * Remove salesPackage
      *
      * @param \AppBundle\Entity\SalesPackage $salesPackage
      */
-    public function removeSalesPackage(\AppBundle\Entity\SalesPackage $salesPackage)
+    public function removeSalesPackage(SalesPackage $salesPackage)
     {
         $this->salesPackages->removeElement($salesPackage);
     }
@@ -870,7 +663,7 @@ class Content
      *
      * @return Content
      */
-    public function addSport(\AppBundle\Entity\Sport $sport)
+    public function addSport(Sport $sport)
     {
         $this->sports[] = $sport;
 
@@ -882,7 +675,7 @@ class Content
      *
      * @param \AppBundle\Entity\Sport $sport
      */
-    public function removeSport(\AppBundle\Entity\Sport $sport)
+    public function removeSport(Sport $sport)
     {
         $this->sports->removeElement($sport);
     }
@@ -894,7 +687,7 @@ class Content
      *
      * @return Content
      */
-    public function addSeason(\AppBundle\Entity\Season $season)
+    public function addSeason(Season $season)
     {
         $this->seasons[] = $season;
 
@@ -906,7 +699,7 @@ class Content
      *
      * @param \AppBundle\Entity\Season $season
      */
-    public function removeSeason(\AppBundle\Entity\Season $season)
+    public function removeSeason(Season $season)
     {
         $this->seasons->removeElement($season);
     }
@@ -918,7 +711,7 @@ class Content
      *
      * @return Content
      */
-    public function addRightsPackage(\AppBundle\Entity\RightsPackage $rightsPackage)
+    public function addRightsPackage(RightsPackage $rightsPackage)
     {
         $this->rightsPackage[] = $rightsPackage;
 
@@ -930,33 +723,9 @@ class Content
      *
      * @param \AppBundle\Entity\RightsPackage $rightsPackage
      */
-    public function removeRightsPackage(\AppBundle\Entity\RightsPackage $rightsPackage)
+    public function removeRightsPackage(RightsPackage $rightsPackage)
     {
         $this->rightsPackage->removeElement($rightsPackage);
-    }
-
-    /**
-     * Add selectedRight
-     *
-     * @param \AppBundle\Entity\ContentSelectedRight $selectedRight
-     *
-     * @return Content
-     */
-    public function addSelectedRight(\AppBundle\Entity\ContentSelectedRight $selectedRight)
-    {
-        $this->selectedRights[] = $selectedRight;
-
-        return $this;
-    }
-
-    /**
-     * Remove selectedRight
-     *
-     * @param \AppBundle\Entity\ContentSelectedRight $selectedRight
-     */
-    public function removeSelectedRight(\AppBundle\Entity\ContentSelectedRight $selectedRight)
-    {
-        $this->selectedRights->removeElement($selectedRight);
     }
 
     /**
@@ -966,7 +735,7 @@ class Content
      *
      * @return Content
      */
-    public function addInstallment(\AppBundle\Entity\Installments $installment)
+    public function addInstallment(Installments $installment)
     {
         $this->installments[] = $installment;
 
@@ -978,8 +747,26 @@ class Content
      *
      * @param \AppBundle\Entity\Installments $installment
      */
-    public function removeInstallment(\AppBundle\Entity\Installments $installment)
+    public function removeInstallment(Installments $installment)
     {
         $this->installments->removeElement($installment);
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
 }

@@ -20,8 +20,9 @@ class SellForm extends React.Component {
             value: content.company.country.name
         };
 
+        content = ContentArena.Utils.contentParserFromServer(content);
+
         if (props.step) content.step = props.step;
-        //content.company = user.company;
 
         this.state = {
             content : content

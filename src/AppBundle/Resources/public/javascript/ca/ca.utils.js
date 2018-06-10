@@ -3,8 +3,23 @@
  */
 
 window.ContentArena = window.ContentArena || {};
-
 ContentArena.Utils = {
+
+    contentParserFromServer(content) {
+
+        content.tournament = (content.tournament) ? Array.isArray(content.tournament)? content.tournament : [content.tournament] : [];
+        content.sportCategory = (content.sportCategory) ? Array.isArray(content.sportCategory)? content.sportCategory : [content.sportCategory] : [];
+
+        if (content.selectedRightsBySuperRight){
+            content.rightsPackage.forEach( (rp) => {
+                rp.selectedRights = content.selectedRightsBySuperRight[rp.id]['items'];
+                rp.exclusive = content.selectedRightsBySuperRight[rp.id]['exclusive'];
+            });
+        }
+
+        return content;
+    },
+
     addRegionBehaviour(selector) {
 
         $.ajax({

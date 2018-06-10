@@ -86,6 +86,10 @@ class ContentService
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
         $content->setDraft(true);
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
         $this->em->persist($content);
         $this->em->flush();
 
@@ -144,15 +148,6 @@ class ContentService
 
 
         /**
-         * Set event type
-         */
-        if ( isset($data->eventType) ) {
-            $content->setEventType($data->eventType);
-        } else {
-            $content->setEventType("database");
-        }
-
-        /**
          * Set sport
          * Create element in DB if it doesn't exist.
          */
@@ -167,7 +162,7 @@ class ContentService
         /**
          * Set tournament
          */
-        if ( isset($data->tournament) ) {
+        if ( isset($data->tournament) && count($data->tournament) > 0 ) {
             $tournament = $this->getTournament($data);
             $content->setTournament($tournament);
         }
@@ -175,7 +170,7 @@ class ContentService
         /**
          * Set category
          */
-        if ( isset($data->sportCategory) ) {
+        if ( isset($data->sportCategory) && count($data->sportCategory) > 0  ) {
             $category = $this->getCategory($data);
             $content->setSportCategory($category);
         }
@@ -183,7 +178,7 @@ class ContentService
         /**
          * Set season
          */
-        if ( isset($data->seasons) ) {
+        if ( isset($data->seasons) && count($data->seasons) > 0  ) {
 
             $seasons = array();
 
@@ -210,12 +205,14 @@ class ContentService
             $content->setInstallments($installments);
         }
 
+        $selectedRights = array();
+
         if ( isset($data->description) ) $content->setDescription($data->description);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
-        if ( isset($data->paymentMethod) ) $content->setPaymentMethod($data->paymentMethod);
         if ( isset($data->customSport) ) $content->setCustomSport($data->customSport);
+        if ( isset($data->name) ) $content->setName($data->name);
         if ( isset($data->salesPackages) ) {
 
             $salesPackages = array();
@@ -225,82 +222,48 @@ class ContentService
                 foreach ( $data->salesPackages as $salesPackage){
                     $package = new SalesPackage();
                     $package->setName($salesPackage->name);
-                    $package->setCurrency($this->getCurrency($salesPackage->currency));
+                    $package->setCurrency($this->getCurrency($data->currency));
                     $package->setSalesMethod($this->getSalesMethod($salesPackage->salesMethod));
-                    $package->setAmount($salesPackage->fee);
-                    $package->setSellAsPackage($salesPackage->territoryAsPackage);
+                    $package->setBundleMethod($this->getSalesMethod($salesPackage->bundleMethod));
+                    $package->setTerritoriesMethod($this->getSalesMethod($salesPackage->territoriesMethod));
+                    $package->setFee($salesPackage->fee);
 
-                    if ( is_array($salesPackage->selectedTerritories) && count( $salesPackage->selectedTerritories) > 0  )
+                    if ( is_array($salesPackage->territories) && count( $salesPackage->territories) > 0  )
                     {
                         $countries = array();
-                        foreach ( $salesPackage->selectedTerritories as $country ){
-                            $country = $this->getCountry($country);
+                        foreach ( $salesPackage->territories as $country ){
+                            $country = $this->getCountry($country->value);
                             if ( $country != null ) $countries[] = $country;
                         }
-                        $package->setSelectedCountries($countries);
+                        $package->setTerritories($countries);
                     }
-
-                    if ( is_array($salesPackage->excludedTerritories) && count( $salesPackage->excludedTerritories) > 0  )
-                    {
-                        $countries = array();
-                        foreach ( $salesPackage->excludedTerritories as $country ){
-                            $country = $this->getCountry($country);
-                            if ( $country != null ) $countries[] = $country;
-                        }
-                        $package->setExcludedCountries($countries);
-                    }
-
-                    if ( $salesPackage->territories == "worldwide" ) $package->setWorldwide(true);
-
                     $salesPackages[] = $package;
                 }
 
                 $content->setSalesPackages($salesPackages);
-
             }
-
-
         }
-        if ( isset($data->rights) ) $content->setSelectedRights( $this->getSelectedRights($data->rights) );
         if ( isset($data->rightsPackage) ){
 
             $packages = array();
             foreach ( $data->rightsPackage as $package ){
                 $packages[$package->id] = $this->em->getReference('AppBundle:RightsPackage', $package->id );
+                $selectedRightsItems = array("items"=> array(), "exclusive" => (isset($package->exclusive)) ? $package->exclusive : false  );
+                foreach ( $package->selectedRights as $key => $value ){
+                    $selectedRightsItems["items"][$key] = $value;
+                }
+                $selectedRights[$package->id] = $selectedRightsItems;
             }
+
+            $content->setSelectedRightsBySuperRight($selectedRights);
             $content->setRightsPackage($packages);
 
         }
-        if ( isset($data->availability) ){
-            $content->setAvailability(date_create_from_format('d/m/Y', $data->availability->value));
-        }
-
         if ( isset($data->customTournament) ){
             $content->setCustomTournament($data->customTournament || null);
         }
 
         return $content;
-    }
-
-    private function getSelectedRights($data){
-
-        $selectedRights = array();
-        if ( $data != null && is_array($data)){
-            foreach ($data as $right){
-
-                $selectedRight = new ContentSelectedRight();
-                $selectedRight->setRight($this->em->getReference('AppBundle:Rights', $right->right));
-                $selectedRight->setRightItem($this->em->getReference('AppBundle:RightsItemContent', $right->rightItem));
-                $selectedRight->setGroup($this->em->getReference('AppBundle:RightsGroup', $right->group));
-                if ($right->distributionPackage) $selectedRight->setDistributionPackage($this->em->getReference('AppBundle:DistributionPackage', $right->distributionPackage));
-                $selectedRight->setInputs($right->inputs);
-                $selectedRights[] = $selectedRight;
-
-            }
-        }
-
-        return $selectedRights;
-
     }
 
     /**
@@ -311,7 +274,7 @@ class ContentService
         $filter = new ContentFilter();
 
         if ( $request->request->get("sports") != null ) $filter->setSports( $this->getSports( $request->request->all()  ) );
-        if ( $request->request->get("countries") != null )$filter->setCountries($this->getCountries( $request->request->get("countries")  ) );
+        if ( $request->request->get("countries") != null )$filter->setCountries($this->getCountriesByName( $request->request->get("countries")  ) );
         if ( $request->request->get("territories") != null )$filter->setTerritories($this->getTerritories( $request->request->get("territories")  ) );
         if ( $request->request->get("rights") != null )$filter->setSuperRights($this->getSuperRights( $request->request->get("rights") ) );
         if ( $request->request->get("orderBy") != null )$filter->setOrderBy($request->get("orderBy"));
@@ -332,11 +295,12 @@ class ContentService
     private function saveFiles( Request $request, Content $content ){
         $license = $request->files->get("license");
         $brochure = $request->files->get("brochure");
-        $image = $request->files->get("image");
+        $data = json_decode($request->getContent());
 
-        if ( count( $image ) > 0 ) {
-            $imageFileName = $this->fileUploader->upload($image[0]);
-            $content->setImage($imageFileName);
+        if ( isset( $data->imageBase64 ) ) {
+            $fileName = "listing_image_".md5(uniqid()).'.jpg';
+            $savedImage = $this->fileUploader->saveImage($data->imageBase64, $fileName );
+            $content->setImage($savedImage);
         }
 
         if ( count( $license ) > 0 ) {
@@ -451,7 +415,7 @@ class ContentService
 
         $country =  $this->em
             ->getRepository('AppBundle:Country')
-            ->findOneBy(array('countryCode' => $country));
+            ->findOneBy(array('name' => $country));
 
         return $country;
     }
@@ -461,6 +425,15 @@ class ContentService
         $countries =  $this->em
             ->getRepository('AppBundle:Country')
             ->findBy(array('id' => $countryIds));
+
+        return $countries;
+    }
+
+    private function getCountriesByName($countriesName){
+
+        $countries =  $this->em
+            ->getRepository('AppBundle:Country')
+            ->findBy(array('name' => $countriesName));
 
         return $countries;
     }

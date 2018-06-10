@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Moment from "moment/moment";
 import SalesPackageForm from "../components/SalesPackageForm";
 import ContentListing from "../../main/components/ContentListing";
-import {goToPreviousStep} from "../actions/contentActions";
+import {goToPreviousStep, goToNextStep, stepChangeReset} from "../actions/contentActions";
 import {TitleBar} from "../components/SellFormItems";
 
 
@@ -20,6 +20,8 @@ class SellFormStep4 extends React.Component {
         this.bidding = "BIDDING";
         this.limit = 3;
         this.state = {
+            terms : false,
+            terms_arena : false,
         };
     }
 
@@ -34,10 +36,20 @@ class SellFormStep4 extends React.Component {
             salesPackage.territoriesMethod !== this.worldwide;
     };
 
+    scroll = () => {
+
+        const {stepChange, stepChangeReset } = this.props;
+
+        if ( stepChange ) {
+            window.scrollTo(0, 0);
+            stepChangeReset();
+        }
+
+    };
 
     render() {
         if ( this.props.step !== 4) return (null);
-        window.scrollTo(0, 0);
+        this.scroll();
         const {
             salesPackages,
             goToPreviousStep
@@ -73,13 +85,25 @@ class SellFormStep4 extends React.Component {
 
                     <div className={"terms-confirm"}>
                         <div style={{display: 'flex', marginBottom: 10}}>
-                            <input type="checkbox" name="terms"/>
+                            <input
+                                type="checkbox"
+                                value={this.state.terms}
+                                onChange={(e)=>{
+                                    this.setState({terms: e.target.checked})
+                                }}
+                                id="terms"/>
                             <label htmlFor="terms"></label>
                             I confirm that I have verified the terms stated above. They are correct and ready to be
                             published.
                         </div>
                         <div style={{display: 'flex', marginBottom: 10}}>
-                            <input type="checkbox" name="terms_arena"/>
+                            <input
+                                type="checkbox"
+                                value={this.state.terms_arena}
+                                onChange={(e)=>{
+                                    this.setState({terms_arena: e.target.checked})
+                                }}
+                                id="terms_arena"/>
                             <label htmlFor="terms_arena"></label>
                             I confirm that I have verified the terms and conditions that have been outlined by
                             Content Arena Pte. Ltd.
@@ -109,7 +133,8 @@ const mapDispatchToProps = dispatch => {
             salesPackage : salesPackage,
             name: name
         }),
-        goToPreviousStep : () => dispatch(goToPreviousStep())
+        goToPreviousStep : () => dispatch(goToPreviousStep()),
+        stepChangeReset : () => dispatch(stepChangeReset())
     }
 };
 

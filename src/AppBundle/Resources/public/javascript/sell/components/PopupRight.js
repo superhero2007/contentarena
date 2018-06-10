@@ -138,6 +138,9 @@ class PopupRight extends React.Component {
         let custom = false, selected;
 
         superRights.forEach( ( superRight ) => {
+
+            if ( !superRight.selectedRights) return false;
+
             let current = superRight.selectedRights[id];
 
             if ( selected === undefined ){
@@ -278,7 +281,7 @@ class PopupRight extends React.Component {
                             <div>
                                 <input
                                     style={{ width: '20px'}}
-                                    defaultChecked={rightsPackage[0].selectedRights["TECHNICAL_FEE"] === "ON_TOP"}
+                                    checked={rightsPackage[0].selectedRights["TECHNICAL_FEE"] === "ON_TOP"}
                                     type="radio"
                                     value={"ON_TOP"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
@@ -291,7 +294,7 @@ class PopupRight extends React.Component {
                                     type="number"
                                     max={100}
                                     min={0}
-                                    disabled={rightsPackage[0].selectedRights["TECHNICAL_FEE"] !== "ON_TOP"}/>
+                                    onFocus={(e) => { this.updateSelectionInAllPackages("ON_TOP", "TECHNICAL_FEE")} }/>
                                 % technical fee
                             </div>
                         </div>}
@@ -325,7 +328,9 @@ class PopupRight extends React.Component {
                 custom = custom || this.getSelection("CAMERAS",  rightsPackage);
                 if (!custom) selected = "Minimum cameras: " + rightsPackage[0].selectedRights["CAMERAS"]
             }else {
-                selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label
+                if (rightsPackage[0].selectedRights) {
+                    selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label
+                }
             }
         }
 

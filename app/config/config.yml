@@ -127,3 +127,10 @@ knp_paginator:
         pagination: '@KnpPaginator/Pagination/sliding.html.twig'     # sliding pagination controls template
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+
+jms_serializer:
+    metadata:
+        directories:
+            KnpPaginatorBundle:
+                namespace_prefix:  "Knp\\Bundle\\PaginatorBundle"
+                path: '%kernel.root_dir%/Resources/serializer/Knp'

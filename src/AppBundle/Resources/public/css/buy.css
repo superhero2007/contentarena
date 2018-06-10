@@ -5,6 +5,7 @@ html{
 .main-content{
     min-height: 100%;
     margin: 0 auto;
+    background-color: white;
 }
 
 .main-page-home .footer {
@@ -87,26 +88,6 @@ html{
     z-index: 10002;
 }
 
-.buy-content {
-    display: flex;
-    padding: 20px;
-}
-
-.buy-content fieldset {
-    color: #000;
-}
-
-.buy-container-left {
-    flex: 1;
-    border: 1px solid #000;
-    padding: 20px 20px 0;
-}
-
-.buy-container-right {
-    flex: 3;
-    border: 1px solid #000;
-    margin-left: 20px;
-}
 
 .content-column-details {
     flex: 1;
@@ -123,24 +104,18 @@ html{
     margin-top: -10px;
 }
 .dropdown-button {
-    height: 35px;
-    line-height: 16px;
     margin: 10px 0;
-    padding: 8px;
-    font-size: 80%;
-    width: 200px;
+    padding: 13px;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
     -webkit-appearance: menulist;
     box-sizing: border-box;
-    align-items: center;
     white-space: pre;
     -webkit-rtl-ordering: logical;
-    color: black;
+    border: 1px solid lightgrey;
     background-color: white;
-    cursor: default;
-    border-width: 1px;
-    border-style: solid;
-    border-color: initial;
-    border-image: initial;
+    text-transform: none;
 }
 .custom-dropdown{
     position: relative;

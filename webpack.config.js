@@ -16,7 +16,6 @@ Encore
 
     .addEntry('buy', [
         './src/AppBundle/Resources/public/javascript/buy/buy.js',
-        './src/AppBundle/Resources/public/javascript/buy/contentFilterNew.js'
     ])
 
     .addEntry('sell', [

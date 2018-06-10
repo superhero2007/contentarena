@@ -85,11 +85,6 @@ $(function() {
         window.location.href = url;
     });
 
-    $('.website').mask("A", {
-        translation: {
-            "A": { pattern: /[\w/\-.+]/, recursive: true }
-        }
-    });
 
 });
 

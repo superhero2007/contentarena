@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * SalesPackage
@@ -25,51 +26,56 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $name;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="amount", type="bigint")
+     * @ORM\Column(name="fee", type="bigint")
+     * @Groups({"listing"})
      */
-    private $amount;
+    private $fee;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="sellAsPackage", type="boolean")
+     * @ORM\Column(name="territories_method", type="string", length=255, nullable=true)
      */
-    private $sellAsPackage = false;
+    private $territoriesMethod = false;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="worldwide", type="boolean")
+     * @ORM\Column(name="bundle_method", type="string", length=255, nullable=true)
      */
-    private $worldwide = false;
+    private $bundleMethod = false;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"listing"})
      */
     private $currency;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"listing"})
      */
     private $salesMethod;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", fetch="EAGER")
-     * @ORM\JoinTable(name="sales_package_selected_countries",
+     * @ORM\JoinTable(name="sales_package_territories",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_selected_countries_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_sales_package_territory_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
-    private $selectedCountries;
+    private $territories;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", fetch="EAGER")
@@ -77,6 +83,7 @@ class SalesPackage
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_excluded_countries_id", referencedColumnName="id")}
      *      )
+     * @Groups({"listing"})
      */
     private $excludedCountries;
 
@@ -125,69 +132,52 @@ class SalesPackage
     }
 
     /**
-     * Set amount
-     *
-     * @param integer $amount
-     *
-     * @return SalesPackage
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
-     * Get amount
-     *
      * @return int
      */
-    public function getAmount()
+    public function getFee()
     {
-        return $this->amount;
+        return $this->fee;
     }
 
     /**
-     * Set sellAsPackage
-     *
-     * @param boolean $sellAsPackage
-     *
-     * @return SalesPackage
+     * @param int $fee
      */
-    public function setSellAsPackage($sellAsPackage)
+    public function setFee($fee)
     {
-        $this->sellAsPackage = $sellAsPackage;
-
-        return $this;
+        $this->fee = $fee;
     }
 
     /**
-     * Get sellAsPackage
-     *
-     * @return bool
+     * @return string
      */
-    public function getSellAsPackage()
+    public function getTerritoriesMethod()
     {
-        return $this->sellAsPackage;
+        return $this->territoriesMethod;
     }
 
     /**
-     * @return bool
+     * @param string $territoriesMethod
      */
-    public function isWorldwide()
+    public function setTerritoriesMethod($territoriesMethod)
     {
-        return $this->worldwide;
+        $this->territoriesMethod = $territoriesMethod;
     }
 
     /**
-     * @param bool $worldwide
+     * @return string
      */
-    public function setWorldwide($worldwide)
+    public function getBundleMethod()
     {
-        $this->worldwide = $worldwide;
+        return $this->bundleMethod;
     }
 
+    /**
+     * @param string $bundleMethod
+     */
+    public function setBundleMethod($bundleMethod)
+    {
+        $this->bundleMethod = $bundleMethod;
+    }
 
     /**
      * @return mixed
@@ -224,17 +214,17 @@ class SalesPackage
     /**
      * @return mixed
      */
-    public function getSelectedCountries()
+    public function getTerritories()
     {
-        return $this->selectedCountries;
+        return $this->territories;
     }
 
     /**
-     * @param mixed $selectedCountries
+     * @param mixed $territories
      */
-    public function setSelectedCountries($selectedCountries)
+    public function setTerritories($territories)
     {
-        $this->selectedCountries = $selectedCountries;
+        $this->territories = $territories;
     }
 
     /**
@@ -253,7 +243,4 @@ class SalesPackage
         $this->excludedCountries = $excludedCountries;
     }
 
-
-
 }
-

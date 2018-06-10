@@ -10,70 +10,11 @@
 
 {% block main_content %}
 
-    <div class="row">
-        {#{{ include('buy/filters.html.twig', { 'territories' : territories, 'countries' : countries }) }}#}
+    {# REACT CONTAINER#}
+    <div class="row marketplace-container"
+         data-rights="{{ rights }}"
+         id="marketplace-wrapper">
     </div>
-
-    <div class="row marketplace-container">
-        <div class="buy-content">
-            <div class="buy-container-left">
-                <fieldset>
-                    <legend>Event</legend>
-                    <div>
-                        <input type="text" id="inputSearch" name="event" placeholder="Search"/>
-                    </div>
-                    <div>
-                        <div class="custom-dropdown">
-                            <button class="uk-button uk-button-default dropdown-button" type="button">Sports &nbsp;<span class="filter-sports-count"></span></button>
-                            <div id="sports-event" uk-dropdown="mode: click"></div>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Rights</legend>
-                        <div>
-                            <div class="custom-dropdown uk-display-inline-block">
-                                <button class="uk-button uk-button-default dropdown-button" type="button">Territories &nbsp;<span class="filter-territories-count"></span></button>
-                                <div id="territories-rights" uk-dropdown="mode: click"></div>
-                            </div>
-                            <button class="filter" type="button" ref="#filter-territories">
-                                <i class="fa fa-sliders" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div id="rights-packages"></div>
-                        <hr>
-                        <div>
-                            <input type="checkbox"> Contains exclusive rights
-                        </div>
-                        <div>
-                            <input class="apply" type="button" value="Apply">
-                        </div>
-
-                </fieldset>
-            </div>
-            <div class="buy-container-right" id="content-list-container"></div>
-            <div id="marketplace-wrapper"></div>
-        </div>
-    </div>
-
-
-    <div id="filter-territories" class="is-hidden">
-
-        <div class="subfilter-container country-list">
-            {% for country in countries %}
-                <div class="country subfilter territory-{{ country.territory.id }} is-hidden" id="country-{{ country.id }}">
-                    {{ country.name }}
-                </div>
-            {% endfor %}
-        </div>
-
-        <div class="subfilter-container">
-            <button class="action close" ref="#filter-territories" clear=".territory, .country">Clear</button>
-            <button class="action close" data-type="territory" ref="#filter-territories">OK</button>
-        </div>
-    </div>
-
-
 
 
 {% endblock main_content %}

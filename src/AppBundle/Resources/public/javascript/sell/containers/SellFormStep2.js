@@ -9,6 +9,7 @@ import {TitleBar} from "../components/SellFormItems";
 import Moment from "moment";
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
+import {stepChangeReset} from "../actions/contentActions";
 
 const licenseStyles = {
     fontSize: "12px",
@@ -111,13 +112,25 @@ class SellFormStep2 extends React.Component {
 
     };
 
+    scroll = () => {
+
+        const {stepChange, stepChangeReset } = this.props;
+
+        if ( stepChange ) {
+            window.scrollTo(0, 0);
+            stepChangeReset();
+        }
+
+    };
+
+
     render() {
 
         const {step, programs } = this.props;
 
         if ( step !== 2) return (null);
 
-        window.scrollTo(0, 0);
+       this.scroll();
 
         return (
             <div className="step-content">
@@ -254,6 +267,7 @@ const mapDispatchToProps = dispatch => {
             program : program,
             name: name
         }),
+        stepChangeReset : () => dispatch(stepChangeReset())
     }
 };
 

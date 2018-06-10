@@ -24,6 +24,14 @@ class FileUploader
         $this->uploadsUriPrefix = $uploadsUriPrefix;
     }
 
+    public function saveImage( $image, $filepath ){
+        $base_to_php = explode(',', $image);
+        $data = base64_decode($base_to_php[1]);
+        file_put_contents($this->getTargetDir() . "/". $filepath,$data);
+
+        return $this->getUploadsUriPrefix(). "/" . $filepath;
+    }
+
     public function upload(UploadedFile $file)
     {
         $extension = $file->guessExtension();

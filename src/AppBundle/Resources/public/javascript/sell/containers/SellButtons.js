@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import store from '../store';
+import {goToPreviousStep, goToNextStep, updateContentValue} from "../actions/contentActions";
 
 class SellButtons extends React.Component {
     constructor(props) {
@@ -17,6 +18,11 @@ class SellButtons extends React.Component {
         let _this = this;
         _this.setState({ saving : true });
         ContentArena.ContentApi.saveContentAsDraft(store.getState().content).done(function ( response ) {
+
+            if ( response.success && response.contentId ){
+                _this.props.updateContentValue("id", response.contentId);
+            }
+
             _this.setState({ saving : false, savingSuccess: true });
         }).fail(function () {
             _this.setState({ saving : false, savingSuccess: false });
@@ -85,13 +91,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        goToNextStep : () => dispatch({
-            type : 'GO_TO_NEXT_STEP'
-        }),
-
-        goToPreviousStep : () => dispatch({
-            type : 'GO_TO_PREVIOUS_STEP'
-        })
+        goToPreviousStep : () => dispatch(goToPreviousStep()),
+        goToNextStep : () => dispatch(goToNextStep()),
+        updateContentValue : (key,value) => dispatch(updateContentValue(key,value))
     }
 };
 

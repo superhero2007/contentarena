@@ -1,5 +1,6 @@
 export const contentType= {
     CONTENT_INIT:'CONTENT_INIT',
+    STEP_CHANGE_RESET : 'STEP_CHANGE_RESET',
     GO_TO_NEXT_STEP: 'GO_TO_NEXT_STEP',
     GO_TO_PREVIOUS_STEP: 'GO_TO_PREVIOUS_STEP',
     ADD_NEW : 'ADD_NEW',
@@ -25,7 +26,9 @@ export const content = (state = {
     programs : [],
     salesPackages : [],
     endDateLimit : 30,
-    counter : 0
+    counter : 0,
+    currency : "EUR",
+    stepChange : false
 }, action) => {
 
     let newState = {};
@@ -35,11 +38,17 @@ export const content = (state = {
             return Object.assign({}, state, action.content);
         case contentType.GO_TO_NEXT_STEP:
             return Object.assign({}, state, {
-                step:state.step + 1
+                step:state.step + 1,
+                stepChange : true
+            });
+        case contentType.STEP_CHANGE_RESET:
+            return Object.assign({}, state, {
+                stepChange : false
             });
         case contentType.GO_TO_PREVIOUS_STEP:
             return Object.assign({}, state, {
-                step: state.step -1
+                step: state.step -1,
+                stepChange : true
             });
         case contentType.REMOVE_NEW:
             newState = {};
@@ -112,7 +121,7 @@ export const content = (state = {
 
             if ( action.name === "remove" ) {
 
-                if ( programs.length > 1 ) {
+                if ( programs.length >= 1 ) {
                     programs.splice(action.index,1)
                 }  else {
                     programs[0]= {name: '', saved: false}
@@ -131,7 +140,7 @@ export const content = (state = {
 
             if ( action.name === "remove" ) {
 
-                if ( salesPackages.length > 1 ) {
+                if ( salesPackages.length >= 1 ) {
                     salesPackages.splice(action.index,1)
                 }
             }

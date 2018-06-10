@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import ListingDetails from './ListingDetails';
 
-class MarketPlace extends React.Component {
+class MarketplaceElement extends React.Component {
 
     constructor(props) {
         super(props);
@@ -54,4 +54,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MarketPlace)
+)(MarketplaceElement)

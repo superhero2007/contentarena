@@ -378,11 +378,8 @@ input.chosen-search-input {
 }
 
 .subfilter {
-    border: 1px solid grey;
-    border-radius: 5px;
     margin: 5px;
     flex: 1;
-    padding: 2px 15px;
     min-width: 80px !important;
     cursor: pointer;
 }
@@ -408,12 +405,11 @@ input.chosen-search-input {
     flex-wrap: wrap;
 }
 
-input#inputSearch {
-    margin: 0 0 0 30px;
-    color: black;
-    font-size: 74%;
-    padding: 5px;
-    border: none;
+input {
+    margin: 0;
+    padding: 15px;
+    border: 1px solid lightgray;
+    font-size: 16px;
 }
 
 .buttons-container {

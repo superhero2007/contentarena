@@ -59,6 +59,28 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
+
+    getJsonContent ( filter) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "listings/marketplace",
+            type: "POST",
+            data : filter,
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+
     saveFilter ( filter) {
         let deferred = jQuery.Deferred();
 
