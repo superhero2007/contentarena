@@ -19,14 +19,11 @@ class CommercialTerms extends React.Component {
     }
 
     render() {
-
+        const {content} = this.props;
         return (
             <div>
                 <SalesPackages
-                    countries={this.props.countries}
-                    territories={this.props.territories}
-                    salesPackages={this.props.content.salesPackages}/>
-
+                    salesPackages={content.salesPackages}/>
             </div>
         );
     }

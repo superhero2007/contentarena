@@ -430,6 +430,46 @@ button{
 
 }
 
+.full-item-box{
+  padding-bottom: 5px;
+  border-bottom: 4px solid $border-color-1;
+  display: flex;
+  margin-bottom: 20px;
+  position: relative;
+  flex-direction: column;
+  .fa-edit {
+    position: absolute;
+    right: 3px;
+    top: 7px;
+    color: lightgrey;
+    font-size: 26px;
+  }
+  .fa-cog {
+    position: absolute;
+    right: 10px;
+    top: 10px
+  }
+  label {
+    text-transform: uppercase;
+    background-color: $blue-color;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 20px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    color: white;
+    min-width: 232px;
+    box-sizing: border-box;
+  }
+  .full-item-content{
+    padding: 5px 10px 20px;
+    font-size: 14px;
+  }
+}
+
 .box-header{
   display: flex;
   flex-direction: row;
@@ -804,4 +844,13 @@ button{
 
   }
 
+}
+
+.big-spinner {
+  font-size: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

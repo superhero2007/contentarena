@@ -224,8 +224,8 @@ class ContentService
                     $package->setName($salesPackage->name);
                     $package->setCurrency($this->getCurrency($data->currency));
                     $package->setSalesMethod($this->getSalesMethod($salesPackage->salesMethod));
-                    $package->setBundleMethod($this->getSalesMethod($salesPackage->bundleMethod));
-                    $package->setTerritoriesMethod($this->getSalesMethod($salesPackage->territoriesMethod));
+                    $package->setBundleMethod($salesPackage->bundleMethod);
+                    $package->setTerritoriesMethod($salesPackage->territoriesMethod);
                     $package->setFee($salesPackage->fee);
 
                     if ( is_array($salesPackage->territories) && count( $salesPackage->territories) > 0  )

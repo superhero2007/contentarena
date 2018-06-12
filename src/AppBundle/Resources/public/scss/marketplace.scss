@@ -8,6 +8,7 @@
         display: flex;
         padding: 20px;
         width: 100%;
+        min-height: 500px;
         fieldset {
             color: #000;
         }
@@ -36,14 +37,6 @@
 
         .buy-container-right {
             flex: 3;
-            .big-spinner {
-                font-size: 80px;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-            }
             .no-results{
                 font-size: 25px;
                 text-align: center;
@@ -61,11 +54,129 @@
         min-width: 0 !important;
     }
     .listing-details{
-        .listing-details-buttons{
+        width: 100%;
+        .listing-details-header{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            .name{
+                color: #2DA7E6;
+                font-size: 25px;
+                font-weight: 600;
+                text-decoration: underline;
+                line-height: 14px;
+                padding-left: 20px;
+                flex: 4;
+            }
+            .custom-id{
+                background-color: lightgrey;
+                padding: 5px 10px;
+                color: #4F4F4F;
+                font-size: 16px;
+                flex: 1;
+            }
+        }
 
+        .listing-details-buttons{
+            border-bottom: 3px solid #1A4B63;
+            button {
+                background-color: #F4F6F9;
+                border: none;
+                padding: 12px 15px;
+                margin-right: 5px;
+                font-size: 18px;
+                color: #9DA4B0;
+            }
+            .active{
+                background-color: #1A4B63;
+                color: white;
+            }
         }
         .listing-details-content{
+            display: flex;
+            flex-direction: row;
+            .left {
+                flex: 1;
+                .image{
+                    width: 300px;
+                    height: 300px;
+                    display: flex;
+                    background-color: lightgray;
+                    margin-bottom: 5px;
+                }
+                .date {
+                    font-size: 16px;
+                    color: #4F4F4F;
+                    margin-top: 2px;
+                    span {
+                        font-weight: 600;
+                    }
+                }
+            }
+            .right{
+                flex: 4;
+                display: flex;
+                flex-direction: column;
+                padding: 0 0 0 20px;
+                .listing-details-tab{
+                    .sales-packages {
+                        display: flex;
+                        flex-direction: column;
+                        .sales-package-container {
+                            display: flex;
+                            border: 1px solid lightgray;
+                            margin: 7px 0 0;
+                            padding: 8px;
+                            align-items: center;
+                            .standard-button{
+                                height: 42px;
+                                width: auto;
+                                padding: 0px 20px;
+                                margin-left: 20px;
+                            }
+                        }
+                    }
+                    .term-sheet{
+                        .term-sheet-items{
+                            .row{
+                                display: flex;
+                                border-bottom: 1px solid #EEF3F6;
+                                .right-name{
+                                    background-color: #A5BBC6;
+                                    padding: 5px;
+                                    color: white;
+                                    font-size: 15px;
+                                    text-transform: uppercase;
+                                    max-width: 150px;
+                                    margin: 3px 0 3px;
+                                }
+                                .right-definition {
+                                    border-right: 1px solid #EEF3F6;
+                                    flex: 1;
+                                    margin: 3px 0 3px;
+                                    justify-content: center;
+                                    align-items: center;
+                                    display: flex;
+                                }
 
+                            }
+                        }
+                    }
+                }
+                .sales-bundles {
+                    display: flex;
+                    margin-top: 20px;
+                    .sales-package {
+                        display: flex;
+                        border: 1px solid lightgrey;
+                        margin-right: 5px;
+                        align-items: center;
+                        padding: 0 0px 0 10px;
+                        height: 40px;
+                    }
+                }
+            }
         }
 
         .sales-packages{

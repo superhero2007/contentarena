@@ -42,6 +42,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="territories_method", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $territoriesMethod = false;
 
@@ -49,9 +50,9 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="bundle_method", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
      */
     private $bundleMethod = false;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
@@ -242,5 +243,7 @@ class SalesPackage
     {
         $this->excludedCountries = $excludedCountries;
     }
+
+
 
 }

@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
+import {
+    Description,
+} from "../../sell/components/SellFormItems";
 
 class ContentInformation extends React.Component {
 
@@ -10,16 +13,20 @@ class ContentInformation extends React.Component {
         };
     }
 
-    componentDidMount () {
-    }
+    componentDidMount () {}
 
-    componentWillReceiveProps(nextProps) {
-    }
+    componentWillReceiveProps(nextProps) {}
 
     render() {
-
+        const {content}= this.props;
         return (
-            <div>
+            <div style={{marginTop: 20}}>
+                <div className="full-item-box">
+                    <label>EVENT DESCRIPTION</label>
+                    <div className="full-item-content">
+                        {content.description}
+                    </div>
+                </div>
 
             </div>
         );

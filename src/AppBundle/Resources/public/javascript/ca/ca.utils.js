@@ -17,6 +17,12 @@ ContentArena.Utils = {
             });
         }
 
+        if ( content.salesPackages ) {
+            content.salesPackages.forEach((sp) => {
+                sp.salesMethod = sp.salesMethod.name;
+            });
+        }
+
         return content;
     },
 

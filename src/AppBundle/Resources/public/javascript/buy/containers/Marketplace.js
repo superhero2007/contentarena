@@ -4,6 +4,7 @@ import { test } from "../actions";
 import EventFilter from '../components/EventFilter';
 import RightsFilter from '../components/RightsFilter';
 import ContentListing from '../../main/components/ContentListing';
+import ListingDetails from './ListingDetails';
 
 class Marketplace extends React.Component {
     constructor(props) {
@@ -11,6 +12,8 @@ class Marketplace extends React.Component {
         this.state = {
             rightsPackage : JSON.parse(props.rights),
             loadingListing: false,
+            loadingListingDetails : false,
+            showDetails : false,
             listings : [],
             countries : [],
             territories: []
@@ -29,16 +32,27 @@ class Marketplace extends React.Component {
     }
 
     selectListing = (id) => {
+
         let _this = this;
+
+        if ( id === _this.state.id ){
+            _this.setState({
+                showDetails : true
+            });
+
+            return;
+        }
+
         _this.setState({
             id : id,
-            loadingListing : true
+            loadingListingDetails : true,
+            showDetails : true
         });
 
         ContentArena.ContentApi.getByCustomId(id).done((content) => {
             _this.setState({
                 content : content,
-                loadingListing : false
+                loadingListingDetails : false
             })
         });
     };
@@ -56,20 +70,24 @@ class Marketplace extends React.Component {
     };
 
     render () {
-        const {listings, loadingListing} = this.state;
+        const {listings, loadingListing, loadingListingDetails, showDetails, content} = this.state;
         return (
             <div className="buy-content">
-                <div className="buy-container-left">
+                {!showDetails && <div className="buy-container-left">
                     <EventFilter/>
                     <RightsFilter
                         onFilter={this.filter}
                         rightsPackage={this.state.rightsPackage}/>
 
-                </div>
-                <div className="buy-container-right">
+                </div>}
+
+                {!showDetails && <div className="buy-container-right">
                     {
                         listings.length > 0 && listings.map((listing) => {
-                            return <ContentListing {...listing} key={listing.customId}/>
+                            return <ContentListing
+                                onSelect={this.selectListing}
+                                key={listing.customId}
+                                {...listing} />
                         })
                     }
 
@@ -82,7 +100,23 @@ class Marketplace extends React.Component {
                     {
                         listings.length === 0 && !loadingListing && <span className={"no-results"}>Sorry, no results. Try changing the filter settings!</span>
                     }
-                </div>
+                </div>}
+
+                {
+                    loadingListingDetails && <div className={"big-spinner"}>
+                        <i className="fa fa-cog fa-spin"/>
+                    </div>
+                }
+
+                {
+                    showDetails && !loadingListingDetails && <ListingDetails
+                        onBack={() => {
+                            this.setState({showDetails: false})
+                        }}
+                        content={content}/>
+                }
+
+
             </div>
         )
     }

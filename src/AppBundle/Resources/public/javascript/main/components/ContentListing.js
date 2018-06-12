@@ -5,9 +5,7 @@ class ContentListing extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {
-        }
-
+        this.state = {};
         this.bidIcon = assetsBaseDir + "app/images/auction.svg";
         this.noImage = assetsBaseDir + "app/images/no-image.png";
     }
@@ -15,10 +13,15 @@ class ContentListing extends React.Component{
     getFee = (salesPackage) => {
 
         const {currency} = this.props;
-
         let currencySymbol = (currency === "EUR" ? "€" : "$");
-
         return salesPackage.fee + " " + currencySymbol ;
+    };
+
+    onSelect = () => {
+      const {onSelect, customId} = this.props;
+
+      if ( onSelect ) onSelect(customId);
+
     };
 
     render(){
@@ -38,9 +41,7 @@ class ContentListing extends React.Component{
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
         return (
-
-
-            <div className="listing-list-view" >
+            <div className="listing-list-view" onClick={this.onSelect}>
                 <div className={"left"}  >
                     <div className={"image"}>
                         <img src={listingImage}/>
@@ -56,7 +57,6 @@ class ContentListing extends React.Component{
                             {tournament && tournament.length > 0 && <div>{tournament[0].name}</div>}
                             {
                                 seasons && seasons.length > 0 && <div>{seasonName}</div>
-
                             }
                         </div>
                         <div style={{flex: 2, flexDirection: "column" }}>
@@ -68,7 +68,6 @@ class ContentListing extends React.Component{
                                             {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}
                                             {sr.name}
                                         </div>
-
                                     </div>
                                 })
                             }
