@@ -161,7 +161,8 @@ export const RightItemsDefinitions = {
         "parent" : "Commentary",
         "label" : "Yes",
         language : true,
-        languages: []
+        languages: [],
+        validate: true
     },
     "COMMENTARY_NOT_AVAILABLE": {
         "parent" : "Commentary",

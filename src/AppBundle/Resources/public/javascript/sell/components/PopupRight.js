@@ -255,6 +255,7 @@ class PopupRight extends React.Component {
                         })}
                         {showTextArea && ( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage)) &&
                         <textarea
+                            placeholder={"Enter text to proceed"}
                             onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, id+ "_TEXTAREA")}}
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
@@ -262,6 +263,7 @@ class PopupRight extends React.Component {
                             <div>
                                 <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Further details</div>
                                 <textarea
+
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_DETAILS")}}
                                     value={rightsPackage[0].selectedRights["TECHNICAL_FEE_DETAILS"]}/>
                             </div>
@@ -304,13 +306,54 @@ class PopupRight extends React.Component {
                 </div>
             </div>
 
+
+
             <div className={"buttons"}>
-                <button
+                {this.showOkButton() && <button
                     className={"standard-button"}
-                    onClick={this.togglePopup}>Ok</button>
+                    onClick={this.togglePopup}>Ok</button>}
+                {!this.showOkButton() && <button
+                    className={"standard-button"}
+                    disabled>Ok</button>}
             </div>
 
         </Modal>
+    };
+
+    showOkButton=()=>{
+        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee} = this.props;
+
+        let response = true;
+
+        if ( showTextArea ){
+            if (( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage))){
+                if (!rightsPackage[0].selectedRights[id+ "_TEXTAREA"] || rightsPackage[0].selectedRights[id+ "_TEXTAREA"] === "" ) return false;
+            }
+        }
+
+        if (rightsPackage && rightsPackage[0] && rightsPackage[0].selectedRights){
+            rightsPackage.forEach(right => {
+                if(RightItemsDefinitions[right.selectedRights[id]] &&
+                    RightItemsDefinitions[right.selectedRights[id]].language ){
+                    if  ( !right.selectedRights[id+ '_LANGUAGES']
+                        || right.selectedRights[id+ '_LANGUAGES'].length === 0 ) {
+                        response = false;
+                    }
+                }
+            });
+
+            rightsPackage.forEach(right => {
+                if(RightItemsDefinitions[right.selectedRights[id]] &&
+                    RightItemsDefinitions[right.selectedRights[id]].textField ){
+                    if  ( !right.selectedRights[id+ '_TEXT']
+                        || right.selectedRights[id+ '_TEXT'].length === 0 ) {
+                        response = false;
+                    }
+                }
+            });
+
+        }
+        return response;
     };
 
     render(){
@@ -325,8 +368,15 @@ class PopupRight extends React.Component {
                     selected = programs[0].name;
                 }
             } else if (id === "CAMERA"){
-                custom = custom || this.getSelection("CAMERAS",  rightsPackage);
-                if (!custom) selected = "Minimum cameras: " + rightsPackage[0].selectedRights["CAMERAS"]
+                custom = custom || this.getSelection("CAMERA",  rightsPackage);
+                if (!custom) {
+
+                    if ( rightsPackage[0].selectedRights[id] === "CAMERA_MINIMUM"){
+                        selected = "Minimum cameras: " + rightsPackage[0].selectedRights["CAMERAS"];
+                    } else {
+                        selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label;
+                    }
+                }
             }else {
                 if (rightsPackage[0].selectedRights) {
                     selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label

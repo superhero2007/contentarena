@@ -64,7 +64,7 @@ class ListingDetails extends React.Component {
                         </div>
 
                         <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                        <div className={"date"}>Expires <span>{Moment(content.expirationDate).format('DD/MM/YYYY')}</span></div>
+                        <div className={"date"}>Expires <span>{Moment(content.expiresAt).format('DD/MM/YYYY')}</span></div>
                     </div>
                     <div className={"right"} >
                         <div className={"listing-details-buttons"}>

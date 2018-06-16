@@ -129,12 +129,14 @@ class Selector extends React.Component {
     addNewSport = (index) => {
         this.setState({ updated: false, filterUpdated : false });
         this.props.addNewSport(index,this.props.clean);
+        if (index===0) this.props.addNewSeason(index,[]);
         this.props.closeSelector();
     };
 
     addNewTournament = (index) => {
         this.setState({ updated: false, filterUpdated : false });
         this.props.addNewTournament(index,this.props.clean);
+        this.props.addNewSeason(index,[]);
         this.props.closeSelector();
     };
 

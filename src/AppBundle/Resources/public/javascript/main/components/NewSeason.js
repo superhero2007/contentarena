@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {stepChangeReset} from "../../sell/actions/contentActions";
+import {connect} from "react-redux";
 
 class NewSeason extends React.Component{
     constructor(props){
@@ -17,47 +19,44 @@ class NewSeason extends React.Component{
     }
 
     getEndOptions = () => {
-        let value;
+        let values = [];
+        const {index, seasons} = this.props;
+        if ( seasons[index].from ){
+            values.push(Number(seasons[index].from));
+            values.push(Number(seasons[index].from)+1);
 
-        if ( this.state.startDate ){
-
-            value = Number(this.state.startDate)+1;
-
-            return (
-                <option value={value}>{value}</option>
-            )
+            return values.map(value => {
+                return<option selected={Number(seasons[index].from) === value} value={value}>{value}</option>
+            });
         }
 
         return (<option>Year</option>)
     };
 
-    setStartDate = (e) => {
-        this.setState({ startDate : e.target.value});
+    setDate = (key, value) => {
+        const {index} = this.props;
+        this.props.updateFromMultiple(index, key, value)
     };
 
     render(){
+        const {index, seasons} = this.props;
         return (
             <div>
-                {/*<div className="base-input">
-                    <label>Season</label>
-                    <input
-                        className="new-season"
-                        type="text"
-                        onBlur={this.props.onBlur}
-                        defaultValue={this.props.value}
-                        placeholder="Enter season name"/>
-
-                </div>*/}
                 <div className="base-input">
                     <label>Season year</label>
                     <label className={"season-selector-label"}>From</label>
-                    <select onChange={this.setStartDate}>
+                    <select
+                        value={seasons[index].from}
+                        onChange={(e) => { this.setDate('from', e.target.value) }}>
                         <option/>
                         <option disabled>Year</option>
                         {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
                     </select>
                     <label className={"season-selector-label"}>/To</label>
-                    <select disabled={!this.state.startDate}>
+                    <select
+                        value={seasons[index].to}
+                        onChange={(e) => { this.setDate('to', e.target.value) }}
+                        disabled={!seasons[index].from}>
                         {this.getEndOptions()}
                         <option value={0}>Not applicable</option>
                     </select>
@@ -71,4 +70,24 @@ class NewSeason extends React.Component{
     }
 }
 
-export default NewSeason;
+const mapStateToProps = state => {
+    return state.content
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateFromMultiple : (index, key, value) => dispatch({
+            type: 'UPDATE_FROM_MULTIPLE',
+            selectorType: 'seasons',
+            index: index,
+            key: key,
+            value: value
+        }),
+
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NewSeason)

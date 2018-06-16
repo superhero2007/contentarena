@@ -13,18 +13,19 @@ class ExpirationDateSelector extends React.Component {
     }
 
     handleStartDate = (date) => {
-        this.props.updateContentValue("expirationDate", date);
+        this.props.updateContentValue("expiresAt", date);
     };
 
     render(){
-        const { expirationDate } = this.props;
-        return (
+        const { expiresAt } = this.props;
 
+        console.log(moment)
+        return (
             <div className="base-input">
                 <label>Listing expiry</label>
                 <DatePicker
                     className={"date-picker"}
-                    selected={expirationDate}
+                    selected={(expiresAt)? moment(expiresAt): undefined}
                     onChange={this.handleStartDate}
                     placeholderText={"dd/mm/yyyy"}
                 />

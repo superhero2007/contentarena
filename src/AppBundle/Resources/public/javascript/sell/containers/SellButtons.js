@@ -17,7 +17,23 @@ class SellButtons extends React.Component {
     saveAsDraft = () => {
         let _this = this;
         _this.setState({ saving : true });
-        ContentArena.ContentApi.saveContentAsDraft(store.getState().content).done(function ( response ) {
+
+        let content = store.getState().content;
+
+        content.seasons.forEach((season)=>{
+            season.selectedSchedules = {};
+            Object.entries( season.schedules).filter((round) =>{  return round[1].selected} ).map((round)=>{
+                if (!season.selectedSchedules[round[0]]) season.selectedSchedules[round[0]] = {matches:[]};
+                if(round[1].selected){
+                    Array.from(round[1].matches.values()).filter(match => match.selected).forEach((match)=>{
+                        season.selectedSchedules[round[0]].matches.push(match)
+
+                    })
+                }
+            })
+        });
+
+        ContentArena.ContentApi.saveContentAsDraft(content).done(function ( response ) {
 
             if ( response.success && response.contentId ){
                 _this.props.updateContentValue("id", response.contentId);
@@ -29,9 +45,36 @@ class SellButtons extends React.Component {
         });
     };
 
+    /**
+     * if currency selected, listing image inserted, expiry date selected, sales bundles added,
+     * company address complete, place of jurisdiction selected and if vat = yes, percentage is inserted
+     * @returns {boolean}
+     */
+    reviewAndSignEnabled = () =>{
+
+        const {expiresAt, vat, vatPercentage, salesPackages} = this.props;
+
+        return expiresAt
+            && ( vat === "no" || (vatPercentage && vatPercentage != 0 && vatPercentage !== "") )
+            && salesPackages.length > 0;
+
+    };
+
+    step2Enabled = () => {
+        const {endDateMode} = this.props;
+        return endDateMode !== undefined;
+    };
+
+    step1Enabled = () => {
+        const {sports, name} = this.props;
+        return sports.length > 0 && name !== undefined && name !== "";
+    };
+
     render() {
 
         let saveAsDraftText = (this.state.saving) ? "Saving.." : (this.state.savingSuccess) ? "Saved as Draft" : "Save as Draft";
+
+        const {terms, terms_arena} = this.props;
 
         return (
             <div className="buttons">
@@ -42,12 +85,17 @@ class SellButtons extends React.Component {
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
                     </button> }
 
-                    { this.props.step === 3 &&
+                    { this.props.step === 3 && this.reviewAndSignEnabled() &&
                     <button id="draft-listing" className="standard-button" onClick={this.props.goToNextStep }>
                         Review and sign
                     </button> }
 
-                    { this.props.step === this.state.lastStep &&
+                    { this.props.step === 3 && !this.reviewAndSignEnabled() &&
+                    <button id="draft-listing" className="standard-button" disabled>
+                        Review and sign
+                    </button> }
+
+                    { this.props.step === this.state.lastStep && terms && terms_arena &&
                     <button id="draft-listing" className="standard-button">
                         Submit Listing
                     </button> }
@@ -69,8 +117,8 @@ class SellButtons extends React.Component {
                         id="next-step"
                         className="standard-button"
                         disabled={
-                            ( this.props.step===1 && this.props.sports.length === 0) ||
-                            ( this.props.step===2 && this.props.rightsPackage.length === 0)
+                            ( this.props.step===1 && !this.step1Enabled()) ||
+                            ( this.props.step===2 && !this.step2Enabled())
                         }
                         onClick={ () => this.props.goToNextStep() }>
                             Next <i className="fa fa-arrow-right"/>
@@ -82,11 +130,7 @@ class SellButtons extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        step : state.content.step,
-        sports : state.content.sports,
-        rightsPackage : state.content.rightsPackage
-    }
+    return state.content
 };
 
 const mapDispatchToProps = dispatch => {

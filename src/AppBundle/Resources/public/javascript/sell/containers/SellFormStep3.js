@@ -4,6 +4,7 @@ import CurrencySelector from "../components/CurrencySelector";
 import VatSelector from "../components/VatSelector";
 import FileSelector from '../../main/components/FileSelector';
 import SalesPackageForm from "../components/SalesPackageForm";
+import SalesPackageEdit from "../components/SalesPackageEdit";
 import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
 import CompanyInformation from "../components/CompanyInformation";
@@ -38,6 +39,13 @@ class SellFormStep3 extends React.Component {
 
     updateName = ( e ) => {
         this.props.updateContentValue("name", e.target.value);
+    };
+
+    editSalesPackage = ( index ) => {
+        this.setState({
+            salesPackageToEdit : index,
+            editOpen: true
+        });
     };
 
     addSalesPackage = ( salesPackages ) => {
@@ -77,7 +85,7 @@ class SellFormStep3 extends React.Component {
     };
 
     render() {
-        const {step, rightsPackage, salesPackages, currency, vat, updateContentValue, image} = this.props;
+        const {step, rightsPackage, salesPackages, currency, vat, updateContentValue, image, vatPercentage} = this.props;
 
         if ( step !== 3) return (null);
         this.scroll();
@@ -104,13 +112,30 @@ class SellFormStep3 extends React.Component {
                         onAdd={this.addSalesPackage}
                         onUpdate={this.updateSalesPackage}
                         onRemove={this.removeSalesPackage}
+                        onEdit={this.editSalesPackage}
                         onRemoveAll={this.removeAllSalesPackage}/>
+
+                    {this.state.editOpen && <SalesPackageEdit
+                        isOpen={this.state.editOpen}
+                        onClose={()=>{
+                            this.setState({
+                                editOpen : false
+                            })
+                        }}
+                        onUpdate={this.updateSalesPackage}
+                        salesPackageId={this.state.salesPackageToEdit}
+                        salesPackages={salesPackages}
+                        />}
 
                     <CompanyInformation/>
 
                     <JurisdictionSelector/>
 
-                    <VatSelector onClick={this.selectVat} selected={vat}/>
+                    <VatSelector
+                        vatPercentage={vatPercentage}
+                        onUpdate={updateContentValue}
+                        onClick={this.selectVat}
+                        selected={vat}/>
 
                 </div>
             </div>

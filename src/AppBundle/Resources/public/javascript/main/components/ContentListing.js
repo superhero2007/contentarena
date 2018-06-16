@@ -6,8 +6,10 @@ class ContentListing extends React.Component{
         super(props);
 
         this.state = {};
-        this.bidIcon = assetsBaseDir + "app/images/auction.svg";
         this.noImage = assetsBaseDir + "app/images/no-image.png";
+        this.bidIcon = assetsBaseDir + "app/images/hammer.png";
+        this.fixedIcon = assetsBaseDir + "app/images/bid.png";
+        this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
     }
 
     getFee = (salesPackage) => {
@@ -27,7 +29,7 @@ class ContentListing extends React.Component{
     render(){
         const {
             name,
-            expirationDate,
+            expiresAt,
             rightsPackage,
             sportCategory,
             tournament,
@@ -47,7 +49,7 @@ class ContentListing extends React.Component{
                         <img src={listingImage}/>
                     </div>
                     <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                    <div className={"date"}>Expires <span>{Moment(expirationDate).format('DD/MM/YYYY')}</span></div>
+                    <div className={"date"}>Expires <span>{Moment(expiresAt).format('DD/MM/YYYY')}</span></div>
                 </div>
                 <div className={"right"} >
                     <div className={"name"}>{name}</div>
@@ -62,8 +64,13 @@ class ContentListing extends React.Component{
                         <div style={{flex: 2, flexDirection: "column" }}>
                             {
                                 rightsPackage.map(( sr,i )=>{
-                                    return <div key={i}  style={{paddingBottom: 10, flexDirection: 'row', display: 'flex'}}>
-                                        <i style={{color: '#2DA7E6'}} className="fa fa-check-circle-o"/>
+                                    return <div key={i}  style={{
+                                        minHeight: 46,
+                                        flexDirection: 'row',
+                                        display: 'flex',
+                                        alignItems: 'center'
+                                    }}>
+                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>
                                         <div style={{display: 'flex', flexDirection: "column"  }}>
                                             {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}
                                             {sr.name}
@@ -80,16 +87,23 @@ class ContentListing extends React.Component{
                                     <div style={{}}>
                                         {salesPackage.name}
                                     </div>
-                                    {salesPackage.salesMethod === "BIDDING" &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                        <img style={{width: 30}} src={this.bidIcon}/>
-                                    </div>}
-
                                     {
                                         ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
                                         &&<div style={{margin: '0 10px', display: "flex", flex: '1 0 auto'}}>
                                             {this.getFee(salesPackage)}
                                         </div>
                                     }
+
+                                    {salesPackage.salesMethod === "BIDDING"
+                                    &&<div style={{ margin: '0 10px 0 5px'}}>
+                                        <img style={{width: 23, height: 23}} src={this.bidIcon}/>
+                                    </div>}
+
+                                    {salesPackage.salesMethod === "FIXED"
+                                    &&<div style={{ margin: '0 10px 0 5px'}}>
+                                        <img style={{width: 26, height: 23}} src={this.fixedIcon}/>
+                                    </div>}
+
                                 </div>
                             })
                         }

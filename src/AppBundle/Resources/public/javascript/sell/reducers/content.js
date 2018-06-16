@@ -1,6 +1,7 @@
 export const contentType= {
     CONTENT_INIT:'CONTENT_INIT',
     STEP_CHANGE_RESET : 'STEP_CHANGE_RESET',
+    GO_TO_STEP: 'GO_TO_STEP',
     GO_TO_NEXT_STEP: 'GO_TO_NEXT_STEP',
     GO_TO_PREVIOUS_STEP: 'GO_TO_PREVIOUS_STEP',
     ADD_NEW : 'ADD_NEW',
@@ -9,6 +10,7 @@ export const contentType= {
     UPDATE_CONTENT_VALUE : 'UPDATE_CONTENT_VALUE',
     SELECT_TOURNAMENT : 'SELECT_TOURNAMENT',
     REMOVE_FROM_MULTIPLE : 'REMOVE_FROM_MULTIPLE',
+    UPDATE_FROM_MULTIPLE : 'UPDATE_FROM_MULTIPLE',
     APPLY_SELECTION : 'APPLY_SELECTION',
     UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
     UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
@@ -28,7 +30,9 @@ export const content = (state = {
     endDateLimit : 30,
     counter : 0,
     currency : "EUR",
-    stepChange : false
+    startDateMode : "LICENSE",
+    stepChange : false,
+    vat : "no"
 }, action) => {
 
     let newState = {};
@@ -39,6 +43,11 @@ export const content = (state = {
         case contentType.GO_TO_NEXT_STEP:
             return Object.assign({}, state, {
                 step:state.step + 1,
+                stepChange : true
+            });
+        case contentType.GO_TO_STEP:
+            return Object.assign({}, state, {
+                step: action.step,
                 stepChange : true
             });
         case contentType.STEP_CHANGE_RESET:
@@ -108,6 +117,11 @@ export const content = (state = {
             newState = {};
             newState[action.selectorType] = [...state[action.selectorType]];
             newState[action.selectorType].splice(action.index,1);
+            return Object.assign({}, state, newState);
+        case contentType.UPDATE_FROM_MULTIPLE:
+            newState = {};
+            newState[action.selectorType] = [...state[action.selectorType]];
+            newState[action.selectorType][action.index][action.key] = action.value;
             return Object.assign({}, state, newState);
         case contentType.SUPER_RIGHTS_UPDATED:
 

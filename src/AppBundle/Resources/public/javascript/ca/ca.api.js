@@ -420,8 +420,6 @@ ContentArena.Api= {
              */
             success: function (response) {
 
-                console.log(response);
-
                 let list = {};
 
                 if ( response.sport_events === undefined || response.sport_events.sport_event === undefined ) return false;
@@ -432,11 +430,13 @@ ContentArena.Api= {
 
                     if (!round) return;
 
-                    let name = round.number || round.name;
+                    let name = (round.number) ? "round_" + round.number : round.name;
 
-                    if ( !list[name] ) list[name] = [];
+                    if ( !list[name] ) list[name] = {};
 
-                    list[name].push({
+                    if ( !list[name].matches ) list[name].matches = new Map();
+
+                    list[name].matches.set(item['@attributes'].id,{
                         scheduled: item['@attributes'].scheduled,
                         externalId: item['@attributes'].id,
                         status: item['@attributes'].status,
@@ -445,11 +445,6 @@ ContentArena.Api= {
                     });
 
                 });
-
-                /*list.push({
-                    name : "Add new",
-                    external_id : 0
-                });*/
 
                 deferred.resolve(list);
             },

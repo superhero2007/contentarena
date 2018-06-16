@@ -181,11 +181,14 @@ class ContentService
         if ( isset($data->seasons) && count($data->seasons) > 0  ) {
 
             $seasons = array();
-
-            foreach ($data->seasons as $season){
-                $season = $this->getSeason($season, $tournament);
+            $schedules = [];
+            foreach ($data->seasons as $key => $seasonData){
+                $season = $this->getSeason($seasonData, $tournament);
                 $seasons[] = $season;
+                $schedules[] = $seasonData->selectedSchedules;
             }
+
+            $content->setSchedulesBySeason($schedules);
 
             $content->setSeason($seasons);
         }
@@ -208,11 +211,21 @@ class ContentService
         $selectedRights = array();
 
         if ( isset($data->description) ) $content->setDescription($data->description);
-        if ( isset($data->expiresAt) ) $content->setExpiresAt(date_create_from_format('m/d/Y', $data->expiresAt));
+        if ( isset($data->expiresAt) ) $content->setExpiresAt(new \DateTime($data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
         if ( isset($data->customSport) ) $content->setCustomSport($data->customSport);
         if ( isset($data->name) ) $content->setName($data->name);
+
+        if ( isset($data->vat) ) $content->setVat($data->vat);
+        if ( isset($data->vatPercentage) ) $content->setVatPercentage($data->vatPercentage);
+        if ( isset($data->startDate) ) $content->setStartDate(new \DateTime($data->startDate));
+        if ( isset($data->endDate) ) $content->setEndDate(new \DateTime($data->endDate));
+        if ( isset($data->startDateMode) ) $content->setStartDateMode($data->startDateMode);
+        if ( isset($data->endDateMode) ) $content->setEndDateMode($data->endDateMode);
+        if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
+        if ( isset($data->programs) ) $content->setPrograms($data->programs);
+
         if ( isset($data->salesPackages) ) {
 
             $salesPackages = array();
@@ -227,12 +240,13 @@ class ContentService
                     $package->setBundleMethod($salesPackage->bundleMethod);
                     $package->setTerritoriesMethod($salesPackage->territoriesMethod);
                     $package->setFee($salesPackage->fee);
+                    $package->setInstallments($salesPackage->installments);
 
                     if ( is_array($salesPackage->territories) && count( $salesPackage->territories) > 0  )
                     {
                         $countries = array();
                         foreach ( $salesPackage->territories as $country ){
-                            $country = $this->getCountry($country->value);
+                            $country = (isset($country->id)) ? $this->getCountryById($country->id) : $this->getCountry($country->value);
                             if ( $country != null ) $countries[] = $country;
                         }
                         $package->setTerritories($countries);
@@ -339,9 +353,29 @@ class ContentService
             if ( isset($seasonData->endDate) ) $season->setEndDate(new \DateTime($seasonData->endDate));
             if ( isset($seasonData->startDate) ) $season->setStartDate(new \DateTime($seasonData->startDate));
             if ( isset($seasonData->year) ) $season->setYear($seasonData->year);
+
+            if ( isset($seasonData->from) && !isset($seasonData->to) ){
+                $season->setYear($seasonData->from);
+            }
+
+            if ( isset($seasonData->from) && isset($seasonData->to) ){
+                $season->setYear( substr($seasonData->from, -2)."/".substr($seasonData->to, -2) );
+            }
+
             $season->setName($seasonData->name);
             $this->em->persist($season);
             $this->em->flush();
+
+            if ($seasonData->custom) {
+                $season->setExternalId("ca:season:".$season->getId());
+                if ( isset( $tournament) ) {
+                    $season->setName($tournament->getName(). " ". $season->getYear());
+                }
+                $this->em->flush();
+            }
+
+
+
         }
 
         return $season;
@@ -420,6 +454,15 @@ class ContentService
         return $country;
     }
 
+    private function getCountryById($countryId){
+
+        $country =  $this->em
+            ->getRepository('AppBundle:Country')
+            ->findOneBy(array('id' => $countryId));
+
+        return $country;
+    }
+
     private function getCountries($countryIds){
 
         $countries =  $this->em
@@ -477,9 +520,17 @@ class ContentService
         if ( !$sport ){
             $sport = new Sport();
             if( isset ($sportData->externalId ) ) $sport->setExternalId($sportData->externalId);
-            $sport->setName($sportData->name);
+
+            $name = ( isset($sportData->name) && $sportData->name != "" ) ? $sportData->name : $sportData->value;
+            $sport->setName($name);
             $this->em->persist($sport);
             $this->em->flush();
+
+            if ($sportData->custom) {
+                $sport->setExternalId("ca:sport:".$sport->getId());
+                $this->em->flush();
+            }
+
         }
 
         return $sport;

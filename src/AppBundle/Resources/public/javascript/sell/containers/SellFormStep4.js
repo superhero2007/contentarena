@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from "react-redux";
 import Moment from "moment/moment";
 import SalesPackageForm from "../components/SalesPackageForm";
+import SalesPackageEdit from "../components/SalesPackageEdit";
 import ContentListing from "../../main/components/ContentListing";
 import {goToPreviousStep, goToNextStep, stepChangeReset} from "../actions/contentActions";
 import {TitleBar} from "../components/SellFormItems";
-
 
 class SellFormStep4 extends React.Component {
 
@@ -20,14 +20,7 @@ class SellFormStep4 extends React.Component {
         this.bidding = "BIDDING";
         this.limit = 3;
         this.state = {
-            terms : false,
-            terms_arena : false,
         };
-    }
-
-    componentDidMount () { }
-
-    componentWillReceiveProps(nextProps) {
     }
 
     showTerritories = (salesPackage) => {
@@ -47,12 +40,30 @@ class SellFormStep4 extends React.Component {
 
     };
 
+    updateSalesPackage = ( salesPackage, index ) => {
+        this.props.updateSalesPackages("save", salesPackage, index);
+    };
+
+    removeSalesPackage = ( index ) => {
+        this.props.updateSalesPackages("remove", null, index);
+    };
+
+    editSalesPackage = ( index ) => {
+        this.setState({
+            salesPackageToEdit : index,
+            editOpen: true
+        });
+    };
+
     render() {
         if ( this.props.step !== 4) return (null);
         this.scroll();
         const {
             salesPackages,
-            goToPreviousStep
+            goToPreviousStep,
+            updateContentValue,
+            terms_arena,
+            terms
         } = this.props;
 
         return (
@@ -71,11 +82,23 @@ class SellFormStep4 extends React.Component {
 
                     <SalesPackageForm
                         hideButtons
+                        fullSize={true}
                         salesPackages={salesPackages}
-                        onAdd={this.addSalesPackage}
+                        onEdit={this.editSalesPackage}
                         onUpdate={this.updateSalesPackage}
-                        onRemove={this.removeSalesPackage}
-                        onRemoveAll={this.removeAllSalesPackage}/>
+                        onRemove={this.removeSalesPackage}/>
+
+                    {this.state.editOpen && <SalesPackageEdit
+                        isOpen={this.state.editOpen}
+                        onClose={()=>{
+                            this.setState({
+                                editOpen : false
+                            })
+                        }}
+                        onUpdate={this.updateSalesPackage}
+                        salesPackageId={this.state.salesPackageToEdit}
+                        salesPackages={salesPackages}
+                    />}
 
                     <div className="buttons-container" >
                         <button id="draft-listing" className="standard-button" style={{ width: '250px'}}>
@@ -87,9 +110,9 @@ class SellFormStep4 extends React.Component {
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
                                 type="checkbox"
-                                value={this.state.terms}
+                                value={terms}
                                 onChange={(e)=>{
-                                    this.setState({terms: e.target.checked})
+                                    updateContentValue('terms',e.target.checked)
                                 }}
                                 id="terms"/>
                             <label htmlFor="terms"></label>
@@ -99,9 +122,9 @@ class SellFormStep4 extends React.Component {
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
                                 type="checkbox"
-                                value={this.state.terms_arena}
+                                value={terms_arena}
                                 onChange={(e)=>{
-                                    this.setState({terms_arena: e.target.checked})
+                                    updateContentValue('terms_arena',e.target.checked)
                                 }}
                                 id="terms_arena"/>
                             <label htmlFor="terms_arena"></label>
@@ -109,6 +132,11 @@ class SellFormStep4 extends React.Component {
                             Content Arena Pte. Ltd.
                         </div>
                     </div>
+
+                    { (!terms || !terms_arena) &&
+                    <div>
+                        Please, accept the terms above
+                    </div> }
 
                 </div>
             </div>
@@ -127,7 +155,7 @@ const mapDispatchToProps = dispatch => {
             key: key,
             value : value
         }),
-        updateSalesPackages : (index, salesPackage, name) => dispatch({
+        updateSalesPackages : (name, salesPackage, index) => dispatch({
             type: 'UPDATE_SALES_PACKAGES',
             index: index,
             salesPackage : salesPackage,

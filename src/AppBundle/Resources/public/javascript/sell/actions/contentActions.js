@@ -12,6 +12,13 @@ export const goToNextStep = () =>{
     }
 };
 
+export const goToStep = ( step) =>{
+    return{
+        type: contentType.GO_TO_STEP,
+        step
+    }
+};
+
 export const stepChangeReset = () =>{
     return{
         type: contentType.STEP_CHANGE_RESET,

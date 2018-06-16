@@ -10,6 +10,8 @@ ContentArena.Utils = {
         content.tournament = (content.tournament) ? Array.isArray(content.tournament)? content.tournament : [content.tournament] : [];
         content.sportCategory = (content.sportCategory) ? Array.isArray(content.sportCategory)? content.sportCategory : [content.sportCategory] : [];
 
+        //if ( content.expiresAt ) content.expiresAt = new Date(content.expiresAt);
+
         if (content.selectedRightsBySuperRight){
             content.rightsPackage.forEach( (rp) => {
                 rp.selectedRights = content.selectedRightsBySuperRight[rp.id]['items'];
@@ -19,7 +21,8 @@ ContentArena.Utils = {
 
         if ( content.salesPackages ) {
             content.salesPackages.forEach((sp) => {
-                sp.salesMethod = sp.salesMethod.name;
+                if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
+                sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
             });
         }
 

@@ -104,29 +104,34 @@ class SellFormStep1 extends React.Component {
     loadSchedule (nextProps) {
 
         let _this = this;
+        const { updateFromMultiple } = this.props;
+        const { seasons, schedulesBySeason } = nextProps;
 
-        nextProps.seasons.forEach(( season ) =>{
-            if ( !_this.state.schedules[season.externalId] ){
+        seasons.forEach(( season, index ) =>{
+            if ( !season.schedules && !season.custom ){
                 _this.setState({ loadingSchedule : true });
                 ContentArena.Api.getSchedule(season.externalId).done( (schedules ) => {
-                    _this.setState(function(prevState) {
-                        let prevSchedules = prevState.schedules;
-                        prevSchedules[season.externalId] = schedules;
-                        return {
-                            loadingSchedule : false,
-                            schedules: prevSchedules
-                        };
-                    });
+                    _this.setState({ loadingSchedule : false });
+                    let keys = [];
+                    if (schedulesBySeason){
+                        keys = Object.keys(schedulesBySeason[index]);
+                        keys.forEach((k)=>{
+                            schedulesBySeason[index][k].matches.forEach((m)=>{
+                                if (m.selected) {
+                                    schedules[k].matches.get(m.externalId).selected = true;
+
+                                }
+                            });
+                            schedules[k].selected = true;
+                        });
+                    }
+
+                    updateFromMultiple("seasons", index, "schedules", schedules);
+                    if( keys.length> 0) updateFromMultiple("seasons", index, "showSchedule", true);
+
                 });
             }
         });
-    }
-
-    getSchedules(index){
-
-        if (!this.props.seasons || !this.props.seasons[index] ) return false;
-
-        return this.state.schedules[this.props.seasons[index].externalId];
     }
 
     componentWillReceiveProps(nextProps) {
@@ -395,9 +400,10 @@ class SellFormStep1 extends React.Component {
                             return <SportSelector
                                 key={i}
                                 index={i}
+                                sports={this.props.sports}
                                 remove={() => this.removeSport(i) }
                                 showAddNew={list.length > 1 && list.length === i + 1}
-                                onEditNew={(a)=>{ console.log(a)}}
+                                onUpdateNew={(name) => { this.props.updateFromMultiple("sports", i, "value", name) }}
                                 showClose={ i > 0 }
                                 isCustom={(inputProps.sports[i]) ? inputProps.sports[i].isCustom : false}
                                 addSportSelector={this.addSportSelector}
@@ -457,10 +463,10 @@ class SellFormStep1 extends React.Component {
                         return <SeasonSelector
                             key={i}
                             season={season}
+                            index={i}
                             addSeason={this.addSeason}
                             removeSeason={()=>this.removeSeason(i)}
                             value={ (inputProps.seasons[i] ) ? inputProps.seasons[i].value : ""}
-                            schedules={this.getSchedules(i)}
                             loading={this.state.loadingSeasons}
                             showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
                             onBlur={ (e) => this.updateContentValue(e, "customSeason")}
@@ -493,6 +499,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        updateFromMultiple : (type, index, key, value) => dispatch({
+            type: 'UPDATE_FROM_MULTIPLE',
+            selectorType: type,
+            index: index,
+            key: key,
+            value: value
+        }),
         openSportSelector : (index, selectedItems) => dispatch({
             type : 'OPEN_SELECTOR',
             selectorItems : ContentArena.Data.FullSports,

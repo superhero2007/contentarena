@@ -1,16 +1,18 @@
 import React from 'react';
 import NewSeason from './NewSeason'
 import { Schedules } from "../../sell/components/SellFormItems";
+import {connect} from "react-redux";
+import {stepChangeReset} from "../../sell/actions/contentActions";
 
-export const NewFixture = ({onRemove, onAdd, onBlur, value, showAdd}) => (
+export const NewFixture = ({onRemove, onAdd, onChange, value, showAdd}) => (
     <div className="base-input">
         <label>Fixture</label>
         <input
             className="new-category"
             type="text"
             placeholder="Enter fixture"
-            onBlur={onBlur}
-            defaultValue={value}/>
+            onChange={onChange}
+            value={value}/>
         <i onClick={onRemove} className="fa fa-close"/>
         {showAdd && <i onClick={onAdd} className="fa fa-plus"/>}
     </div>
@@ -20,33 +22,40 @@ class SeasonSelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showSchedule : false,
-            fixtures : []
         };
     }
 
     toggle = () => {
-        this.setState((prevState) => ({
-            showSchedule: !prevState.showSchedule
-        }));
+        const {updateFromMultiple, seasons, index} = this.props;
+        updateFromMultiple("seasons", index, "showSchedule", !seasons[index].showSchedule );
     };
 
     addFixture = () => {
-        this.setState((prevState)=>({
-            fixtures : [...prevState.fixtures,1]
-        }));
+        const {updateFromMultiple, seasons, index} = this.props;
+        let fixtures = seasons[index].fixtures || [];
+        updateFromMultiple("seasons", index, "fixtures", [...fixtures,{name : ""}] );
+
+    };
+
+    onChangeFixture = (i, value ) => {
+        const {updateFromMultiple, seasons, index} = this.props;
+        let fixtures = seasons[index].fixtures;
+
+        fixtures[i].name = value;
+        updateFromMultiple("seasons", index, "fixtures", fixtures );
+
     };
 
     removeFixture = (i) => {
-        this.setState((prevState)=>{
-            prevState.fixtures.splice(i,1);
-            return {
-                fixtures: prevState.fixtures
-            }
-        });
+        const {updateFromMultiple, seasons, index} = this.props;
+        let fixtures = seasons[index].fixtures || [];
+        fixtures.splice(i,1);
+        updateFromMultiple("seasons", index, "fixtures", fixtures );
     };
 
     render(){
+        const {index, season, seasons} = this.props;
+        let activeSeason = seasons[season];
         return (
             <div style={{zIndex: 1}}>
                 {!this.props.isCustom &&
@@ -67,18 +76,19 @@ class SeasonSelector extends React.Component {
                     }
                 </div> }
 
-                { this.props.isCustom
+                { this.props.isCustom && activeSeason
                 && <NewSeason showClose={this.props.showClose}
                               onBlur={this.props.onBlur}
+                              index={index}
                               onRemove={this.props.removeSeason } />}
 
 
-                {this.props.schedules && <div className={"base-input"}  style={{zIndex: 1}}>
+                {activeSeason && activeSeason.schedules && <div className={"base-input"}  style={{zIndex: 1}}>
                     <label>Event</label>
                     <input type="text" placeholder={"Select events"} onClick={this.toggle}/>
                 </div>}
-                {this.state.showSchedule && <div>
-                    <Schedules schedules={this.props.schedules}/>
+                {activeSeason && activeSeason.showSchedule && <div>
+                    <Schedules season={season} seasons={seasons}/>
                 </div>}
                 {this.props.showAddNew && <div>
                     <button className="link-button" onClick={this.props.addSeason}>Add season</button>
@@ -88,22 +98,50 @@ class SeasonSelector extends React.Component {
                     <button className="link-button" onClick={this.addFixture}>Click here</button>
                 </div>}
 
-                {this.state.fixtures.length > 0 && <div>
+                {activeSeason && activeSeason.fixtures && activeSeason.fixtures.length > 0 && <div>
                     {
-                        this.state.fixtures.map( (fixture, i, list) => {
+                        activeSeason.fixtures.map( (fixture, i, list) => {
                             return <NewFixture
                                 key={i}
                                 onAdd={this.addFixture}
+                                value={fixture.name}
+                                onChange={(e) => this.onChangeFixture(i, e.target.value)}
                                 onRemove={() => this.removeFixture(i)}
                                 showAdd={i === list.length - 1}
                             />
                         })
                     }
                 </div>}
-
             </div>
         )
     }
 }
 
-export default SeasonSelector;
+
+const mapStateToProps = state => {
+    return state.content
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateFromMultiple : (type, index, key, value) => dispatch({
+            type: 'UPDATE_FROM_MULTIPLE',
+            selectorType: type,
+            index: index,
+            key: key,
+            value: value
+        }),
+        updateContentValue : (key, value) => dispatch({
+            type: 'UPDATE_CONTENT_VALUE',
+            key: key,
+            value : value
+        }),
+
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SeasonSelector)
+

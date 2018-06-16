@@ -72,9 +72,9 @@ class Content
     protected $draft = false;
 
     /**
-     * @var array
+     * @var object
      *
-     * @ORM\Column(name="website", type="array", length=255, nullable=true)
+     * @ORM\Column(name="website", type="object", nullable=true)
      * @Groups({"listing"})
      */
     private $website;
@@ -97,6 +97,67 @@ class Content
      * @Groups({"listing"})
      */
     private $image;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="start_date_mode", type="string", length=50, nullable=true)
+     * @Groups({"listing"})
+     */
+    private $startDateMode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="end_date_mode", type="string", length=50, nullable=true)
+     * @Groups({"listing"})
+     */
+    private $endDateMode;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="end_date_limit", type="integer", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $endDateLimit;
+
+    /**
+     * @ORM\Column(type="datetime", name="end_date", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $endDate;
+
+    /**
+     * @ORM\Column(type="datetime", name="start_date", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $startDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vat", type="string", length=5, nullable=true)
+     * @Groups({"listing"})
+     */
+    private $vat;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="vat_percentage", type="integer", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $vatPercentage;
+
+    /**
+     * @var object
+     * @ORM\Column(name="programs", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $programs;
+
+
 
     /**
      * @var string
@@ -128,6 +189,12 @@ class Content
      * @ORM\Column(name="brochure", type="string", length=255, nullable=true)
      */
     private $brochure;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
+     * @ORM\JoinColumn(name="jurisdiction", referencedColumnName="id")
+     */
+    private $jurisdiction;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
@@ -189,6 +256,20 @@ class Content
      */
     private $selectedRightsBySuperRight;
 
+    /**
+     * @var object
+     * @ORM\Column(name="schedules_by_season", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $schedulesBySeason;
+
+    /**
+     * @var object
+     * @ORM\Column(name="fixtures_by_season", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $fixturesBySeason;
+
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
@@ -246,7 +327,6 @@ class Content
     {
         return $this->description;
     }
-
 
     /**
      * @return mixed
@@ -644,8 +724,6 @@ class Content
         return $this;
     }
 
-
-
     /**
      * Remove salesPackage
      *
@@ -767,6 +845,183 @@ class Content
     {
         $this->name = $name;
     }
+
+    /**
+     * @return object
+     */
+    public function getSchedulesBySeason()
+    {
+        return $this->schedulesBySeason;
+    }
+
+    /**
+     * @param object $schedulesBySeason
+     */
+    public function setSchedulesBySeason($schedulesBySeason)
+    {
+        $this->schedulesBySeason = $schedulesBySeason;
+    }
+
+    /**
+     * @return object
+     */
+    public function getFixturesBySeason()
+    {
+        return $this->fixturesBySeason;
+    }
+
+    /**
+     * @param object $fixturesBySeason
+     */
+    public function setFixturesBySeason($fixturesBySeason)
+    {
+        $this->fixturesBySeason = $fixturesBySeason;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStartDateMode()
+    {
+        return $this->startDateMode;
+    }
+
+    /**
+     * @param string $startDateMode
+     */
+    public function setStartDateMode($startDateMode)
+    {
+        $this->startDateMode = $startDateMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndDateMode()
+    {
+        return $this->endDateMode;
+    }
+
+    /**
+     * @param string $endDateMode
+     */
+    public function setEndDateMode($endDateMode)
+    {
+        $this->endDateMode = $endDateMode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param mixed $endDate
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param mixed $startDate
+     */
+    public function setStartDate($startDate)
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @param string $vat
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVatPercentage()
+    {
+        return $this->vatPercentage;
+    }
+
+    /**
+     * @param int $vatPercentage
+     */
+    public function setVatPercentage($vatPercentage)
+    {
+        $this->vatPercentage = $vatPercentage;
+    }
+
+    /**
+     * @return object
+     */
+    public function getPrograms()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param object $programs
+     */
+    public function setPrograms($programs)
+    {
+        $this->programs = $programs;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEndDateLimit()
+    {
+        return $this->endDateLimit;
+    }
+
+    /**
+     * @param int $endDateLimit
+     */
+    public function setEndDateLimit($endDateLimit)
+    {
+        $this->endDateLimit = $endDateLimit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJurisdiction()
+    {
+        return $this->jurisdiction;
+    }
+
+    /**
+     * @param mixed $jurisdiction
+     */
+    public function setJurisdiction($jurisdiction)
+    {
+        $this->jurisdiction = $jurisdiction;
+    }
+
 
 
 }

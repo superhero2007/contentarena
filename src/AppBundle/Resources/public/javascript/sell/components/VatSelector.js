@@ -16,16 +16,24 @@ class VatSelector extends React.Component {
         };
     }
 
-    update = (selected) => {
-        this.setState({selected: selected});
-    };
-
     render(){
+        const {onClick, selected,onUpdate,vatPercentage} = this.props;
         return (
             <div className={"base-input"}>
                 <label style={{flex: 7 }}>do you seek to apply VAT to buyers in company's place of jurisdiction?</label>
-                <VatItem name={"yes"} onClick={()=>this.props.onClick("yes") } selected={this.props.selected === "yes"}/>
-                <VatItem name={"no"} onClick={()=>this.props.onClick("no") } selected={this.props.selected === "no"}/>
+
+                <VatItem name={"yes"} onClick={()=>onClick("yes") } selected={selected === "yes"}/>
+                {selected === "yes" && <div className={"currency-item"} >
+                    <input
+                        style={{textAlign: 'center', marginRight: 5}}
+                        value={vatPercentage}
+                        type="number"
+                        min={0}
+                        onChange={(e)=>{
+                            onUpdate("vatPercentage", e.target.value)
+                        }}/> %
+                </div>}
+                <VatItem name={"no"} onClick={()=>onClick("no") } selected={selected === "no"}/>
             </div>
         )
     }

@@ -123,16 +123,14 @@ class SellFormStep2 extends React.Component {
 
     };
 
-
     render() {
 
-        const {step, programs } = this.props;
-
+        const {step, programs, startDateMode, endDateMode, endDate } = this.props;
         if ( step !== 2) return (null);
-
-       this.scroll();
+        this.scroll();
 
         return (
+
             <div className="step-content">
                 <PackageSelector
                     packages={this.props.packages}
@@ -146,7 +144,9 @@ class SellFormStep2 extends React.Component {
                         onUpdate={this.selectLicenseDates}
                         startDate={this.props.startDate}
                         endDateLimit={this.props.endDateLimit}
-                        endDate={this.props.endDate}
+                        endDateMode={endDateMode}
+                        startDateMode={startDateMode}
+                        endDate={endDate}
                         onClose={this.closeLicensePopup}
                     />
 
@@ -162,8 +162,10 @@ class SellFormStep2 extends React.Component {
                                 </div>
                                 <div className="column right-name">End</div>
                                 <div className="column right-item-content"  style={licenseStyles}>
-                                    { !this.props.endDate  && this.props.endDateLimit + " days from contract conclusion"}
-                                    { this.props.endDate  && Moment(this.props.endDate).format('DD/MM/YYYY')}
+                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
+                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
+                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
+                                    { !endDateMode && "Please select"}
                                 </div>
                                 <div className="column right-item-content edit-item" onClick={()=>this.setState({licensePopup: true})}>
                                     <i className="fa fa-edit"/>

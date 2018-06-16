@@ -1,81 +1,100 @@
 import React from 'react';
 import Match from './Match';
+import {connect} from "react-redux";
 
 class Round extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            round : props.round,
-            schedule : props.schedule,
-            selected : false,
-            showMatches : false,
-            matches : new Map(props.schedule.map((i) => [i.externalId, i]))
         };
-
     }
 
     toggle = (e) => {
-
+        const { seasons, season, round, updateFromMultiple } = this.props;
         let selected = e.target.checked;
-        this.setState({selected});
-        e.stopPropagation();
+        let schedules = seasons[season].schedules;
+        let activeRound = schedules[round];
+        activeRound.selected = selected;
 
+        updateFromMultiple("seasons", season, "schedules", schedules);
+
+        e.stopPropagation();
         this.selectAll(selected);
     };
 
     toggleMatches = (e) => {
-        this.setState((prevState) => ({
-            showMatches: !prevState.showMatches
-        }));
+        const { seasons, season, round, updateFromMultiple } = this.props;
+
+        let schedules = seasons[season].schedules;
+        let activeRound = schedules[round];
+        activeRound.showMatches = !activeRound.showMatches;
+        updateFromMultiple("seasons", season, "schedules", schedules);
 
         e.stopPropagation();
     };
 
     selectAll = (selected) => {
+        const { seasons, season, round, updateFromMultiple } = this.props;
 
-        let matches = this.state.matches;
-        matches.forEach(match => { match.selected = selected });
-        this.setState({matches});
+        let schedules = seasons[season].schedules;
+        let activeRound = schedules[round];
+        activeRound.matches.forEach(match => { match.selected = selected });
+        updateFromMultiple("seasons", season, "schedules", schedules);
 
     };
 
     onSelect = (id) => {
+        const { seasons, season, round , updateFromMultiple} = this.props;
 
-        let matches = this.state.matches;
-        matches.get(id).selected = !matches.get(id).selected;
-        this.setState({matches});
+        let schedules = seasons[season].schedules;
+        let activeRound = schedules[round];
+        activeRound.matches.get(id).selected = !activeRound.matches.get(id).selected;
+
+        if (activeRound.matches.get(id).selected) activeRound.selected = true;
+
+        updateFromMultiple("seasons", season, "schedules", schedules);
     };
 
     getSelected = () => {
+        const { seasons, season, round } = this.props;
 
-        return Array.from( this.state.matches.values() ).filter(m =>(m.selected)).length
+        let schedule = seasons[season].schedules;
+        let activeRound = schedule[round];
+        return Array.from( activeRound.matches.values() ).filter(m =>(m.selected)).length
     };
 
     render(){
-        console.log(this.getSelected(),  this.state.schedule.length, (this.getSelected() === 0));
+
+        const { seasons, season, round } = this.props;
+
+        let schedule = seasons[season].schedules;
+        let activeRound = schedule[round];
+
+        console.log(this.getSelected(),  schedule.length, (this.getSelected() === 0));
         return (
             <div className={"matchday"}>
                 <div className="select-box-checkbox">
                     <input type="checkbox"
+                           checked={activeRound.selected}
                            onChange={this.toggle}
-                           id={"round-" + this.props.round}/>
-                    <label htmlFor={"round-" + this.props.round}/>
+                           id={"round-" + round}/>
+                    <label htmlFor={"round-" + round}/>
 
                     <div style={{width: '100%'}}>
-                        {isNaN(this.state.round) && this.state.round}
-                        {!isNaN(this.state.round) && "Matchday " + this.state.round}
+                        {isNaN(round) && round}
+                        {!isNaN(round) && "Matchday " + round}
 
-                        {(this.getSelected() === 0)  && (this.getSelected()!== this.state.schedule.length) && <span onClick={this.toggleMatches}>Select ></span>}
-                        {(this.getSelected() !== 0)  && (this.getSelected()=== this.state.schedule.length) && <span onClick={this.toggleMatches}>All ></span>}
-                        {(this.getSelected() !== 0) && ( this.getSelected() !== this.state.schedule.length) && <span onClick={this.toggleMatches}>{this.getSelected()} Selected ></span>}
+                        {(this.getSelected() === 0)  && (this.getSelected()!== activeRound.matches.size) && <span onClick={this.toggleMatches}>Select ></span>}
+                        {(this.getSelected() !== 0)  && (this.getSelected()=== activeRound.matches.size) && <span onClick={this.toggleMatches}>All ></span>}
+                        {(this.getSelected() !== 0) && ( this.getSelected() !== activeRound.matches.size) && <span onClick={this.toggleMatches}>{this.getSelected()} Selected ></span>}
                     </div>
                 </div>
 
 
 
-                {this.state.showMatches && <div className={"match-group"}>
-                    {this.state.matches.size > 0 && Array.from ( this.state.matches.values()).map((item, i) => {
+                {activeRound.showMatches && <div className={"match-group"}>
+                    {activeRound.matches.size > 0 && Array.from ( activeRound.matches.values()).map((item, i) => {
                         return <Match match={item}
                                       key={item.externalId}
                                       onSelect={this.onSelect}/>
@@ -86,4 +105,28 @@ class Round extends React.Component {
     }
 }
 
-export default Round;
+const mapStateToProps = state => {
+    return state.content
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateFromMultiple : (type, index, key, value) => dispatch({
+            type: 'UPDATE_FROM_MULTIPLE',
+            selectorType: type,
+            index: index,
+            key: key,
+            value: value
+        }),
+        updateContentValue : (key, value) => dispatch({
+            type: 'UPDATE_CONTENT_VALUE',
+            key: key,
+            value : value
+        }),
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Round);

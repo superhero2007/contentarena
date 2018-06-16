@@ -27,8 +27,12 @@ class CountrySelector extends React.Component {
     }
 
     getOptions = () => {
-        const {filter = []} = this.props;
+        const {filter = [], available} = this.props;
+
         let countries = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
+
+        if (available && available.length > 0 ) countries = available.map((i,k)=>({value : i , label : i }));
+
         countries = countries.filter(country => filter.indexOf(country.value) === -1);
 
         return countries;

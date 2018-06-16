@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from "react-redux";
 import Toggle from 'react-toggle';
 import {RightDefaults} from "../components/RightDefaults";
+import {updateContentValue} from "../actions/contentActions";
 
 class SuperRight extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            checked:props.checked
         };
     }
 
@@ -60,6 +62,7 @@ class PackageSelector extends React.Component {
                 if (!i.selectedRights) i.selectedRights = Object.assign({},RightDefaults) ;
                 return[i.id, i]
             })),
+            defaultRights : false
         };
     }
 
@@ -71,11 +74,14 @@ class PackageSelector extends React.Component {
 
         let _this = this;
 
-        this.state.packages.forEach( ( superRight) => {
-            if ( superRight.shortLabel === "LT" || superRight.shortLabel === "HL" ){
-                _this.updateSuperRightsList(superRight, true);
-            }
-        });
+        if ( !this.props.defaultRights ){
+            this.state.packages.forEach( ( superRight) => {
+                if ( superRight.shortLabel === "LT" || superRight.shortLabel === "HL" ){
+                    _this.updateSuperRightsList(superRight, true);
+                }
+            });
+        }
+        this.props.updateContentValue("defaultRights", true);
     }
 
     updateSuperRightsList = (superRight, status) => {
@@ -138,6 +144,7 @@ const mapDispatchToProps = dispatch => {
             type : 'SUPER_RIGHTS_UPDATED',
             reset: true
         }),
+        updateContentValue : (k, v) => dispatch(updateContentValue(k, v))
     }
 };
 

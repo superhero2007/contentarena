@@ -55,6 +55,13 @@ class SalesPackage
     private $bundleMethod = false;
 
     /**
+     * @var object
+     * @ORM\Column(name="installments", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $installments;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"listing"})
@@ -242,6 +249,22 @@ class SalesPackage
     public function setExcludedCountries($excludedCountries)
     {
         $this->excludedCountries = $excludedCountries;
+    }
+
+    /**
+     * @return object
+     */
+    public function getInstallments()
+    {
+        return $this->installments;
+    }
+
+    /**
+     * @param object $installments
+     */
+    public function setInstallments($installments)
+    {
+        $this->installments = $installments;
     }
 
 

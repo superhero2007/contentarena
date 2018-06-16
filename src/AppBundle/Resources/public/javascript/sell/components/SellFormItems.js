@@ -42,10 +42,10 @@ export const NewTournament = ({onClick, showClose, onBlur, value}) => (
     </div>
 );
 
-export const Schedules = ({schedules}) => (
+export const Schedules = ({season, seasons}) => (
     <div className="schedule">
-        { schedules && Object.keys(schedules).map(( number, i ) => {
-            return <Round key={i} round={number} schedule={schedules[number]} />
+        { seasons && seasons[season] && seasons[season].schedules && Object.keys(seasons[season].schedules).map(( number, i ) => {
+            return <Round key={i} round={number} season={season} />
         }) }
     </div>
 );
@@ -57,7 +57,14 @@ export class SportSelector extends React.Component {
         };
     }
 
+    handle = (e) => {
+        const {onUpdateNew} = this.props;
+
+        if (onUpdateNew) onUpdateNew(e.target.value);
+    };
+
     render(){
+        const {sports, index} = this.props;
         return (
             <div>
                 <div className="base-input">
@@ -76,6 +83,8 @@ export class SportSelector extends React.Component {
                         <input
                             className="new-sport"
                             type="text"
+                            value={sports[index].value}
+                            onChange={this.handle}
                             placeholder="Enter sport"/>
                     }
 

@@ -26,7 +26,7 @@ class LicenseDateSelector extends React.Component {
     };
 
     render(){
-        const { startDate,onClose, endDate, onUpdate,endDateLimit } = this.props;
+        const { startDateMode, startDate, onClose, endDate, onUpdate,endDateLimit, endDateMode } = this.props;
         return (
             <Modal
                 isOpen={this.state.isOpen}
@@ -46,31 +46,31 @@ class LicenseDateSelector extends React.Component {
                             <div className="row">
                                 <div className="column">
                                     <input type="checkbox"
-                                           checked={!startDate}
-                                           defaultChecked={!startDate}
-                                           onChange={ (e) => {
-                                               onUpdate("startDate", null);
-                                           }}
-                                           id={"license-start-contract"}
-                                           className="package-selector"
+                                        checked={startDateMode === "LICENSE"}
+                                        onChange={ (e) => {
+                                           onUpdate("startDateMode", "LICENSE");
+                                        }}
+                                        id={"license-start-contract"}
+                                        className="package-selector"
                                     />
                                     <label htmlFor={"license-start-contract"}/>
                                     With contract conclusion
                                 </div>
                                 <div className="column">
                                     <input type="checkbox"
-                                           checked={startDate}
-                                           onChange={ (e) =>{
-                                               onUpdate("startDate", moment());
-                                           }}
-                                           id={"license-start"}
-                                           className="package-selector"
+                                        checked={startDateMode === "DATE"}
+                                        onChange={ (e) =>{
+                                           onUpdate("startDateMode", "DATE");
+                                        }}
+                                        id={"license-start"}
+                                        className="package-selector"
                                     />
                                     <label htmlFor={"license-start"}/>
 
                                     <DatePicker
                                         className={"date-picker"}
-                                        selected={startDate}
+                                        selected={(startDate)? moment(startDate): undefined}
+                                        disabled={startDateMode!=="DATE"}
                                         onChange={this.handleStartDate}
                                         placeholderText={"dd/mm/yyyy"}
                                     />
@@ -82,22 +82,26 @@ class LicenseDateSelector extends React.Component {
                             <div className="row">
                                 <div className="column">
                                     <input type="checkbox"
-                                           checked={!endDate}
+                                           checked={endDateMode==="LIMITED"}
                                            onChange={ (e) =>{
-                                               onUpdate("endDate", null);
+                                               onUpdate("endDateMode", "LIMITED");
                                            }}
                                            id={"license-end-input"}
                                            className="package-selector"
                                     />
                                     <label htmlFor={"license-end-input"}/>
-                                    <input type={"number"} value={endDateLimit} placeholder={"Enter number"}/>
+                                    <input
+                                        type={"number"}
+                                        disabled={endDateMode!=="LIMITED"}
+                                        value={endDateLimit}
+                                        placeholder={"Enter number"}/>
                                     <span className={"small-label"}>days from contract conclusion</span>
                                 </div>
                                 <div className="column">
                                     <input type="checkbox"
-                                           checked={endDate}
+                                           checked={endDateMode==="DATE"}
                                            onChange={ (e) =>{
-                                               onUpdate("endDate", moment());
+                                               onUpdate("endDateMode", "DATE");
                                            }}
                                            id={"license-end"}
                                            className="package-selector"
@@ -105,10 +109,23 @@ class LicenseDateSelector extends React.Component {
                                     <label htmlFor={"license-end"}/>
                                     <DatePicker
                                         className={"date-picker"}
-                                        selected={endDate}
+                                        selected={(endDate)? moment(endDate): undefined}
+                                        disabled={endDateMode!=="DATE"}
                                         onChange={this.handleEndDate}
                                         placeholderText={"dd/mm/yyyy"}
                                     />
+                                </div>
+                                <div className="column">
+                                    <input type="checkbox"
+                                           checked={endDateMode==="UNLIMITED"}
+                                           onChange={ (e) =>{
+                                               onUpdate("endDateMode", "UNLIMITED");
+                                           }}
+                                           id={"license-end-unlimited"}
+                                           className="package-selector"
+                                    />
+                                    <label htmlFor={"license-end-unlimited"}/>
+                                    <span style={{padding: '12px 0'}}>Unlimited</span>
                                 </div>
                             </div>
                         </div>

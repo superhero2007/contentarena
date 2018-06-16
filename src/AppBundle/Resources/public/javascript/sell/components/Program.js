@@ -7,10 +7,24 @@ import {connect} from "react-redux";
 class Program extends React.Component{
     constructor(props){
         super(props);
+
+        let startYear = 2030;
+        let years = [];
+
+        for (let i =0; i < 81;i++ ){ years.push(startYear-i)}
+        let program = props.programs[0] || {};
+
         this.state = {
+            years : years,
             isOpen : props.isOpen,
             name: ( props.programs.length > 0 ) ? props.programs[0].name : "" ,
-            language : null
+            duration : program.duration,
+            episodes : program.episodes,
+            language : program.language,
+            releaseYear : program.releaseYear,
+            script : program.script,
+            subtitles : program.subtitles,
+            type : program.type
         }
     }
 
@@ -20,6 +34,10 @@ class Program extends React.Component{
 
     handleChangeType = (event) => {
         this.setState({type: event.target.value});
+    };
+
+    handleChangeReleaseYear = (event) => {
+        this.setState({releaseYear: event.target.value});
     };
 
     handleChangeEpisodes = (event) => {
@@ -43,7 +61,17 @@ class Program extends React.Component{
     };
 
     addProgram = ( program ) => {
-        this.props.updateProgram("add", program);
+        this.props.updateProgram("add", {
+            duration : program.duration,
+            episodes : program.episodes,
+            isOpen : false,
+            language : program.language,
+            name : program.name,
+            releaseYear : program.releaseYear,
+            script : program.script,
+            subtitles : program.subtitles,
+            type : program.type
+        });
     };
 
     updateProgram = ( program, index ) => {
@@ -109,6 +137,15 @@ class Program extends React.Component{
                                 <option value="OTHER">Other</option>
                             </select>
 
+                        </div>
+
+                        <div className={"modal-input"}>
+                            <label>Release year</label>
+                            <select onChange={this.handleChangeReleaseYear} value={this.state.releaseYear} style={{ width: '100%' }}>
+                                <option/>
+                                <option disabled>Year</option>
+                                {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
+                            </select>
                         </div>
 
                         <div className="modal-input">

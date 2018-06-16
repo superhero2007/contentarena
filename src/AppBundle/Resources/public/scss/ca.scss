@@ -747,8 +747,11 @@ button{
   input::placeholder{
     color: lightgray;
   }
+  input[type="radio"]{
+    display: none;
+  }
 
-  input[type="checkbox"] + label {
+  input[type="checkbox"] + label, input[type="radio"] + label  {
     display: inline-block;
     width: 26px;
     height: 26px;
@@ -762,12 +765,20 @@ button{
     margin-right: 20px;
     background-image: none;
   }
-
-  input[type="checkbox"]:checked + label {
-    border: 1px solid #48C0FE;
+  input[type="checkbox"]:checked + label:after, input[type="radio"]:checked + label:after {
+    opacity: 1;
   }
 
-  input[type="checkbox"] + label:after {
+  input[type="checkbox"]:checked + label, input[type="radio"]:checked + label {
+    border: 1px solid #48C0FE;
+  }
+  input[type="radio"]:checked + label {
+    margin-left: 5px;
+  }
+
+
+
+  input[type="checkbox"] + label:after, input[type="radio"] + label:after {
     content: '';
     width: 20px;
     height: 20px;
