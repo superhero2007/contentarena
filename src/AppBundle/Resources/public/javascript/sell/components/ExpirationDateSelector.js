@@ -19,7 +19,6 @@ class ExpirationDateSelector extends React.Component {
     render(){
         const { expiresAt } = this.props;
 
-        console.log(moment)
         return (
             <div className="base-input">
                 <label>Listing expiry</label>

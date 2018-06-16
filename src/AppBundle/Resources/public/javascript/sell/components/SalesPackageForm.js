@@ -35,6 +35,7 @@ class SalesPackageForm extends React.Component {
             salesMethod : this.fixed,
             territories : [],
             filterTerritories : [],
+            territoriesList: [],
             installments : [{ value : 100,  type : "DAY", days: 30}],
             fee : 0,
             isNew : true
@@ -151,6 +152,10 @@ class SalesPackageForm extends React.Component {
         this.setState({ isOpen: false});
     };
 
+    closeTerritoiesModal = () => {
+        this.setState({ showAllTerritories: false});
+    };
+
     applySelection  = () => {
         this.setState({ isOpen: false});
 
@@ -197,7 +202,7 @@ class SalesPackageForm extends React.Component {
                     name = territories.slice(0, 3).map( ( territory, i )=>{
                         return territory.label
                     }).join(", ");
-                    if (territories.length > 3 ) name += " +" + (territories.length - 3);
+
                 } else if ( territoriesMethod === this.worldwideExcluding ) {
                     name = "Worldwide excluding " + territories.slice(0, 3).map( ( territory, i )=>{
                         return territory.label
@@ -477,6 +482,34 @@ class SalesPackageForm extends React.Component {
         </Modal>
     };
 
+    showAllTerritories = (salesPackage) => {
+        this.setState({
+            showAllTerritories : true,
+            territoriesList : salesPackage.territories
+        })
+    };
+
+    allTerritories = () => {
+
+        return <Modal
+            isOpen={this.state.showAllTerritories}
+            onRequestClose={this.closeTerritoiesModal}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+        >
+
+            <div style={{
+                color: 'grey',
+                padding: 20
+            }}>
+                {
+                    this.state.territoriesList.map(territory =>territory.label).join(", ")
+                }
+            </div>
+
+        </Modal>
+    };
+
     showTerritories = (salesPackage) => {
         return ( salesPackage.bundleMethod === this.individually &&
         salesPackage.territoriesMethod === this.worldwide ) ||
@@ -511,6 +544,7 @@ class SalesPackageForm extends React.Component {
         return (
             <div className="sales-package-form">
                 { this.renderModal() }
+                { this.allTerritories() }
                 <div className="base-full-input" style={inputStyle}>
                     <label>Sales bundles</label>
                     <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
@@ -519,6 +553,17 @@ class SalesPackageForm extends React.Component {
                                 <div className="sales-package" key={"sales-package-"+ i}>
                                     <div style={{flex : 5, cursor: 'default'}}>
                                         {salesPackage.name}
+                                        {
+                                            salesPackage.territories.length > 3 && <span
+                                                style={{
+                                                    color: '#2DA7E6',
+                                                    textDecoration: 'underline',
+                                                    marginLeft : 5
+                                                }}
+                                                onClick={() => {this.showAllTerritories(salesPackage)}}>
+                                                {"+" + (salesPackage.territories.length - 3)}
+                                            </span>
+                                        }
                                     </div>
                                     {salesPackage.salesMethod === "BIDDING" &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
                                         <img style={{width: 23, height: 23}} src={this.bidIcon}/>

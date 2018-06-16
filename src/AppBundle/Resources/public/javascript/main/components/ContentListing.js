@@ -109,7 +109,7 @@ class ContentListing extends React.Component{
                         }
                         {
                             salesPackages.length > 4 && <div className="sales-package">
-                                <div style={{color: '#2DA7E6'}}>
+                                <div style={{color: '#2DA7E6', padding: '0 15px 0 0px'}}>
                                    + {salesPackages.length - 4}
                                 </div>
                             </div>
