@@ -133,11 +133,6 @@ class SellFormStep4 extends React.Component {
                         </div>
                     </div>
 
-                    { (!terms || !terms_arena) &&
-                    <div>
-                        Please, accept the terms above
-                    </div> }
-
                 </div>
             </div>
         );
