@@ -85,7 +85,13 @@ class SeasonSelector extends React.Component {
 
                 {activeSeason && activeSeason.schedules && <div className={"base-input"}  style={{zIndex: 1}}>
                     <label>Event</label>
-                    <input type="text" placeholder={"Select events"} onClick={this.toggle}/>
+                    <input type="text"
+                           disabled
+                           style={{
+                               backgroundColor: 'white'
+                           }}
+                           placeholder={"Select events"}
+                           onClick={this.toggle}/>
                 </div>}
                 {activeSeason && activeSeason.showSchedule && <div>
                     <Schedules season={season} seasons={seasons}/>

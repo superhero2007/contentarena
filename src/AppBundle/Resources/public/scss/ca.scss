@@ -45,6 +45,7 @@ button{
         justify-content: center;
         align-items: center;
         margin: 0 5px;
+        cursor: pointer;
       }
       .step-active{
         background-color: #1A4B63;
@@ -864,4 +865,9 @@ button{
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.digital-signature{
+
+
 }

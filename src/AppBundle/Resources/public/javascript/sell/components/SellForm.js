@@ -9,6 +9,7 @@ import SellFormStep4 from "../containers/SellFormStep4";
 import Selector from "../../main/components/Selector";
 import { connect } from "react-redux";
 import store from '../store';
+import ReactTooltip from 'react-tooltip';
 
 class SellForm extends React.Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class SellForm extends React.Component {
                 <SellFormStep3 packages={this.props.packages} />
                 <SellFormStep4/>
                 <SellButtons />
+                <ReactTooltip html={true} />
             </div>
         );
     }

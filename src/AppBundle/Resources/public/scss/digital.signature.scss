@@ -1,0 +1,46 @@
+@import "vars";
+
+.digital-signature{
+  flex-shrink: 0;
+  flex-direction: column;
+  display: flex;
+  .digital-signature-placeholder{
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .m-signature-pad{
+    .m-signature-pad--body{
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+      min-width: 400px;
+      min-height: 150px;
+      canvas{
+        width: 400px;
+        height: 150px;
+      }
+    }
+    .m-signature-pad--footer{
+      button{
+        color: $border-color-2;
+        border: none;
+        background: none;
+        font-size: 14px;
+        font-style: italic;
+        text-decoration: underline;
+      }
+    }
+  }
+  .buttons{
+    display: flex;
+    flex-direction: row;
+    button{
+      color: $border-color-2;
+      border: none;
+      background: none;
+      font-size: 14px;
+      font-style: italic;
+      text-decoration: underline;
+    }
+  }
+
+}

@@ -9,7 +9,8 @@ const installmentIconStyle = { margin: "0 10px", position: "relative"};
 const smallContainerStyle = {
     display: 'inline-block',
     overflowY: 'overlay',
-    maxHeight: '200px'
+    maxHeight: '200px',
+    paddingRight: 20
 };
 const containerStyle = {
     display: 'inline-block',

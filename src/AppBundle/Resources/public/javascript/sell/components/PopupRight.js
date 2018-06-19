@@ -368,7 +368,7 @@ class PopupRight extends React.Component {
                     selected = programs[0].name;
                 }
             } else if (id === "CAMERA"){
-                custom = custom || this.getSelection("CAMERA",  rightsPackage);
+                custom = custom || this.getSelection("CAMERAS",  rightsPackage);
                 if (!custom) {
 
                     if ( rightsPackage[0].selectedRights[id] === "CAMERA_MINIMUM"){

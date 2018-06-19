@@ -84,7 +84,7 @@ class ContentListing extends React.Component{
                         {
                             salesPackages.slice(0, 4).map( ( salesPackage, i) => {
                                 return  <div className="sales-package" key={"sales-package-"+ i}>
-                                    <div style={{}}>
+                                    <div style={{cursor: 'default'}}>
                                         {salesPackage.name}
                                     </div>
                                     {

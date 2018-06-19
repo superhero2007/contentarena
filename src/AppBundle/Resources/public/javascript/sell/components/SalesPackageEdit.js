@@ -277,15 +277,23 @@ class SalesPackageEdit extends React.Component {
                         </label>
                     </div>
 
-                    { (this.state.bundleMethod === this.asBundle ) && <CountrySelector
+                    { (this.state.bundleMethod === this.asBundle ) && ( this.state.territoriesMethod !== this.worldwide )
+                    && <CountrySelector
                         className={"small-select"}
                         value={this.state.territories}
                         onChange={this.selectTerritories}
                         available={this.getAvailableTerritories()}
                         filter={this.getFilterTerritories()} />}
 
-                    { (this.state.bundleMethod === this.individually ) && <div style={{ padding: '10px 5px 20px'}}>
+                    { (this.state.bundleMethod === this.individually )
+                    && <div style={{ padding: '10px 5px 20px'}}>
                         { salesPackage.name}
+                    </div> }
+
+                    { (this.state.bundleMethod === this.asBundle )
+                    && ( this.state.territoriesMethod === this.worldwide )
+                    && <div style={{ padding: '10px 5px 20px'}}>
+                        Worldwide
                     </div> }
 
                     <div className="base-full-input">

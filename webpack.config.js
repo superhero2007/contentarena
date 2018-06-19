@@ -56,6 +56,8 @@ Encore
         "react-popup",
         "react-redux",
         "react-table",
+        "react-tooltip",
+        "react-signature-pad",
         "react-tagsinput",
         "redux",
     ])

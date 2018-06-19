@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
+import {companyIsValid} from "../actions/validationActions";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -144,9 +145,14 @@ class CompanyInformation extends React.Component {
             </div>
 
             <div className={"buttons"}>
-                <button
+                { companyIsValid(company) &&<button
                     className={"standard-button"}
-                    onClick={this.closeModal}>Ok</button>
+                    onClick={this.closeModal}>Ok</button>}
+
+                { !companyIsValid(company) &&<button
+                    className={"standard-button"}
+                    disabled
+                    >Ok</button>}
             </div>
         </Modal>
     };
