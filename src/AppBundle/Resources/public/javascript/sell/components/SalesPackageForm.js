@@ -144,7 +144,6 @@ class SalesPackageForm extends React.Component {
 
     };
 
-
     setSalesMethod = (salesMethod) => {
         this.setState({salesMethod});
     };
@@ -208,9 +207,6 @@ class SalesPackageForm extends React.Component {
                     name = "Worldwide excluding " + territories.slice(0, 3).map( ( territory, i )=>{
                         return territory.label
                     }).join(", ");
-
-                    if (territories.length > 3 ) name += " +" + (territories.length - 3);
-
                 }
 
                 salesPackagesList = [{
@@ -475,12 +471,24 @@ class SalesPackageForm extends React.Component {
                     className="standard-button"
                     disabled={
                         ( this.state.salesMethod === this.fixed && Number( this.state.fee ) === 0 ) ||
-                        ( this.state.territoriesMethod !== this.worldwide && this.state.territories.length === 0 ) ||
+                        this.territoriesIncomplete() ||
                         this.installmentsIncomplete()
                     }
                     onClick={this.applySelection}>Ok</button>
             </div>
         </Modal>
+    };
+
+    territoriesIncomplete = () => {
+
+        const {territoriesMethod, territories} = this.state;
+
+        if ( territoriesMethod === this.selectedTerritories && territories.length === 0 ) return true;
+
+        if ( territoriesMethod === this.worldwideExcluding
+            && territories.length === 0
+            && this.getExcludedTerritories().length === 0 ) return true;
+
     };
 
     showAllTerritories = (salesPackage) => {

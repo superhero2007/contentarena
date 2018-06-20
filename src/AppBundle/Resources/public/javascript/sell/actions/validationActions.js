@@ -7,8 +7,6 @@ export const companyIsValid = ( company ) =>{
         && company.zip !== ""
         && company.address !== undefined
         && company.address !== ""
-        && company.registrationNumber !== undefined
-        && company.registrationNumber !== ""
         && company.city !== undefined
         && company.city !== ""
         && company.country !== undefined;

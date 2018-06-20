@@ -83,7 +83,9 @@ class SeasonSelector extends React.Component {
                               onRemove={this.props.removeSeason } />}
 
 
-                {activeSeason && activeSeason.schedules && <div className={"base-input"}  style={{zIndex: 1}}>
+                {activeSeason && activeSeason.schedules && <div className={"base-input"}
+                                                                onClick={this.toggle}
+                                                                style={{zIndex: 1}}>
                     <label>Event</label>
                     <input type="text"
                            disabled
@@ -91,7 +93,7 @@ class SeasonSelector extends React.Component {
                                backgroundColor: 'white'
                            }}
                            placeholder={"Select events"}
-                           onClick={this.toggle}/>
+                           />
                 </div>}
                 {activeSeason && activeSeason.showSchedule && <div>
                     <Schedules season={season} seasons={seasons}/>

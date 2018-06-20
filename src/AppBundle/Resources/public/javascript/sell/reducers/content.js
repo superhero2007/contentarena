@@ -141,7 +141,8 @@ export const content = (state = {
                     programs[0]= {name: '', saved: false}
                 }
             }
-            if ( action.name === "add" ) programs = [...programs,action.program];
+            //if ( action.name === "add" ) programs = [...programs,action.program];
+            if ( action.name === "add" ) programs = [action.program];
             if ( action.name === "save" ) programs[action.index] = action.program;
 
 

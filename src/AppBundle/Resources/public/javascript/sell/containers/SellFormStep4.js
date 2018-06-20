@@ -108,47 +108,42 @@ class SellFormStep4 extends React.Component {
 
                     <div className={"terms-confirm"}
                          style={{
-                             display: 'flex',
+                             padding: '40px 0px',
+                             width: '50%',
+                             margin: '0 auto'
                          }}>
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-around',
-                            padding: '50px 50px 50px 0'
-                        }}>
-                            <div style={{display: 'flex', marginBottom: 10}}>
-                                <input
-                                    type="checkbox"
-                                    value={terms}
-                                    onChange={(e)=>{
-                                        updateContentValue('terms',e.target.checked)
-                                    }}
-                                    id="terms"/>
-                                <label htmlFor="terms"/>
-                                I confirm that I have verified the terms stated above. They are correct and ready to be
-                                published.
-                            </div>
-                            <div style={{display: 'flex', marginBottom: 10}}>
-                                <input
-                                    type="checkbox"
-                                    value={terms_arena}
-                                    onChange={(e)=>{
-                                        updateContentValue('terms_arena',e.target.checked)
-                                    }}
-                                    id="terms_arena"/>
-                                <label htmlFor="terms_arena"></label>
-                                I confirm that I have verified the terms and conditions that have been outlined by
-                                Content Arena Pte. Ltd.
-                            </div>
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <input
+                                type="checkbox"
+                                value={terms}
+                                onChange={(e)=>{
+                                    updateContentValue('terms',e.target.checked)
+                                }}
+                                id="terms"/>
+                            <label htmlFor="terms"/>
+                            I confirm that I have verified the terms stated above. They are correct and ready to be
+                            published.
                         </div>
-                        <DigitalSignature
-                            onReady={(signature) => {
-                                updateContentValue("signature", signature);
-                            }}
-                            signature={signature}
-                            />
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <input
+                                type="checkbox"
+                                value={terms_arena}
+                                onChange={(e)=>{
+                                    updateContentValue('terms_arena',e.target.checked)
+                                }}
+                                id="terms_arena"/>
+                            <label htmlFor="terms_arena"></label>
+                            I confirm that I have verified the terms and conditions that have been outlined by
+                            Content Arena Pte. Ltd.
+                        </div>
                     </div>
 
+                    <DigitalSignature
+                        onReady={(signature) => {
+                            updateContentValue("signature", signature);
+                        }}
+                        signature={signature}
+                    />
                 </div>
             </div>
         );

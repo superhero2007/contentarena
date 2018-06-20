@@ -113,7 +113,7 @@ class SellFormStep1 extends React.Component {
                 ContentArena.Api.getSchedule(season.externalId).done( (schedules ) => {
                     _this.setState({ loadingSchedule : false });
                     let keys = [];
-                    if (schedulesBySeason){
+                    if (schedulesBySeason && schedulesBySeason[index]){
                         keys = Object.keys(schedulesBySeason[index]);
                         keys.forEach((k)=>{
                             schedulesBySeason[index][k].matches.forEach((m)=>{

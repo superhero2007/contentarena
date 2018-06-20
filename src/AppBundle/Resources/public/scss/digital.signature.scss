@@ -12,11 +12,12 @@
     .m-signature-pad--body{
       border: 1px solid lightgrey;
       border-radius: 5px;
-      min-width: 400px;
-      min-height: 150px;
+      width: 800px;
+      height: 300px;
+      margin: 0 auto;
       canvas{
-        width: 400px;
-        height: 150px;
+        width: 800px;
+        height: 300px;
       }
     }
     .m-signature-pad--footer{
@@ -33,6 +34,7 @@
   .buttons{
     display: flex;
     flex-direction: row;
+    justify-content: center;
     button{
       color: $border-color-2;
       border: none;

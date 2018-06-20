@@ -10,15 +10,27 @@ class DigitalSignature extends React.Component{
         }
     }
 
+    componentDidMount () {
+        this.setState({blank:this.refs.signature.toDataURL()});
+    }
+
     clear = () => {
         this.refs.signature.clear();
     };
 
     done = () => {
+        const { blank } = this.state;
         const { onReady } = this.props;
         const { signature } = this.refs;
+
+        let data = signature.toDataURL();
+
+        console.log("EQUAL", data === blank);
+
+        if ( data === blank ) return;
+
         this.setState({ready:true});
-        if (onReady) onReady(signature.toDataURL());
+        if (onReady) onReady(data);
     };
 
     edit = () => {
@@ -32,12 +44,12 @@ class DigitalSignature extends React.Component{
         const { ready } = this.state;
 
         return (
-            <div className={"digital-signature"}>
+            <div className="digital-signature">
                 <div className={"digital-signature-placeholder"}>
                     Digital Signature
                 </div>
                 {signature && ready &&
-                    <img style={{width: 400, height: 150}} src={signature} />
+                    <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
                 }
 
                 {!ready && <SignaturePad ref="signature" />}

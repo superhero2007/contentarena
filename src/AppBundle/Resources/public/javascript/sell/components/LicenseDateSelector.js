@@ -25,6 +25,10 @@ class LicenseDateSelector extends React.Component {
         this.props.onUpdate("endDate", date);
     };
 
+    handleEndDateLimit = (e) => {
+        this.props.onUpdate("endDateLimit", e.target.value);
+    };
+
     render(){
         const { startDateMode, startDate, onClose, endDate, onUpdate,endDateLimit, endDateMode } = this.props;
         return (
@@ -94,6 +98,7 @@ class LicenseDateSelector extends React.Component {
                                         type={"number"}
                                         disabled={endDateMode!=="LIMITED"}
                                         value={endDateLimit}
+                                        onChange={this.handleEndDateLimit}
                                         placeholder={"Enter number"}/>
                                     <span className={"small-label"}>days from contract conclusion</span>
                                 </div>
