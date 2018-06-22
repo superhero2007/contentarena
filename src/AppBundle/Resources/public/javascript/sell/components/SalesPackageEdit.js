@@ -35,7 +35,7 @@ class SalesPackageEdit extends React.Component {
             bundleMethod : salesPackage.bundleMethod,
             territoriesMethod : salesPackage.territoriesMethod,
             salesMethod : salesPackage.salesMethod,
-            territories : salesPackage.territories,
+            territories : (salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? salesPackage.excludedTerritories : salesPackage.territories,
             filterTerritories : [],
             installments : salesPackage.installments || [],
             fee : salesPackage.fee,
@@ -71,15 +71,13 @@ class SalesPackageEdit extends React.Component {
 
     getFilterTerritories = () => {
 
-        const { exclusivity, salesPackages} = this.props;
+        const { exclusivity, salesPackages, salesPackageId} = this.props;
         let filter = [];
 
         if ( !exclusivity ) return filter;
 
-        salesPackages.forEach((salesPackage) => {
-
-            if ( salesPackage.territoriesMethod === this.worldwideExcluding ) return;
-            filter = [...filter, ...salesPackage.territories.map(t => t.value)]
+        salesPackages.forEach((salesPackage, id) => {
+            if (salesPackageId !== id) filter = [...filter, ...salesPackage.territories.map(t => t.value)]
         });
 
         return filter
@@ -87,18 +85,9 @@ class SalesPackageEdit extends React.Component {
 
     getExcludedTerritories = () => {
 
-        const { exclusivity, salesPackages} = this.props;
         const {territories} = this.state;
-        let filter = [];
 
-        if ( !exclusivity ) return filter;
-
-        salesPackages.forEach((salesPackage) => {
-
-            if ( salesPackage.territoriesMethod !== this.selectedTerritories ) return;
-            filter = [...filter, ...salesPackage.territories.map(t=>t.value)];
-
-        });
+        let filter = this.getFilterTerritories();
 
         let selected = territories.map(t => t.value);
         filter = [...filter, ...selected];
@@ -107,28 +96,6 @@ class SalesPackageEdit extends React.Component {
         return filter.filter(function(item, pos, self) {
             return self.indexOf(item) == pos;
         }).map(t=>{return {value: t, label: t}})
-    };
-
-    getAvailableTerritories = () => {
-
-        const { exclusivity, salesPackages} = this.props;
-        let filter = [];
-
-        if ( !exclusivity ) return filter;
-
-        salesPackages.forEach((salesPackage) => {
-
-            if ( salesPackage.territoriesMethod === this.worldwideExcluding ) {
-                filter = [...filter, ...salesPackage.territories.map(t => t.value)]
-            }
-        });
-
-        return filter
-    };
-
-    worldwideAvailable = () => {
-        const { salesPackages} = this.props;
-        return salesPackages.filter(salesPackage => salesPackage.territoriesMethod === this.worldwideExcluding).length === 0;
     };
 
     preselectedExcluded = () => {
@@ -147,7 +114,10 @@ class SalesPackageEdit extends React.Component {
 
     getName = () => {
 
-        const {territoriesMethod, territories} = this.state
+        const { exclusivity} = this.props;
+        const {territoriesMethod} = this.state;
+        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
+        let territories = this.state.territories;
 
         let name = "";
 
@@ -157,14 +127,12 @@ class SalesPackageEdit extends React.Component {
             name = territories.slice(0, 3).map( ( territory, i )=>{
                 return territory.label
             }).join(", ");
-            if (territories.length > 3 ) name += " +" + (territories.length - 3);
+
         } else if ( territoriesMethod === this.worldwideExcluding ) {
-            name = "Worldwide excluding " + territories.slice(0, 3).map( ( territory, i )=>{
+
+            name = "Worldwide excluding " + excludedTerritories.slice(0, 3).map( ( territory, i )=>{
                 return territory.label
             }).join(", ");
-
-            if (territories.length > 3 ) name += " +" + (territories.length - 3);
-
         }
 
         return name;
@@ -172,22 +140,23 @@ class SalesPackageEdit extends React.Component {
     };
 
     applySelection  = () => {
-        const { territories, fee, bundleMethod, territoriesMethod, salesMethod, installments } = this.state;
-        const { salesPackageId } = this.props;
-
+        const {  fee, bundleMethod, territoriesMethod, salesMethod, installments } = this.state;
+        const { salesPackageId , exclusivity} = this.props;
+        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
+        let territories = this.state.territories;
+        let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
+        let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
+        if ( territoriesMethod === this.worldwideExcluding ) territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
         this.props.onUpdate({
             name : this.getName(),
             territories : territories,
+            excludedTerritories : (territoriesMethod === this.worldwideExcluding) ? excludedTerritories : [],
             fee : fee,
             salesMethod : salesMethod,
             territoriesMethod : territoriesMethod,
             bundleMethod : bundleMethod,
             installments : installments
         }, salesPackageId);
-        this.setState({
-            territories: [],
-            fee: 0,
-            territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories });
         this.closeModal();
     };
 
@@ -236,20 +205,6 @@ class SalesPackageEdit extends React.Component {
         this.setState({fee})
     };
 
-    addBundlesAvailable = () => {
-        const { exclusivity, salesPackages} = this.props;
-
-        if ( exclusivity ){
-            if ( salesPackages.filter(sp => {
-                return sp.territoriesMethod === "WORLDWIDE" && sp.bundleMethod === this.asBundle
-            }).length > 0 ){
-                return false
-            }
-        }
-
-        return true;
-    };
-
     render = () => {
 
         const {salesPackages, salesPackageId} = this.props;
@@ -277,13 +232,20 @@ class SalesPackageEdit extends React.Component {
                         </label>
                     </div>
 
-                    { (this.state.bundleMethod === this.asBundle ) && ( this.state.territoriesMethod !== this.worldwide )
+                    { (this.state.bundleMethod === this.asBundle ) && ( this.state.territoriesMethod === this.selectedTerritories )
                     && <CountrySelector
                         className={"small-select"}
                         value={this.state.territories}
                         onChange={this.selectTerritories}
-                        available={this.getAvailableTerritories()}
                         filter={this.getFilterTerritories()} />}
+
+                    { (this.state.bundleMethod === this.asBundle ) && ( this.state.territoriesMethod === this.worldwideExcluding )
+                    &&
+                    <CountrySelector
+                        className={"small-select"}
+                        value={this.getExcludedTerritories()}
+                        onChange={this.selectTerritories} />
+                    }
 
                     { (this.state.bundleMethod === this.individually )
                     && <div style={{ padding: '10px 5px 20px'}}>

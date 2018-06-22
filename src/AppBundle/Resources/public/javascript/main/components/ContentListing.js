@@ -15,7 +15,8 @@ class ContentListing extends React.Component{
     getFee = (salesPackage) => {
 
         const {currency} = this.props;
-        let currencySymbol = (currency === "EUR" ? "€" : "$");
+        let currencyCode = currency || salesPackage.currency.code;
+        let currencySymbol = (currencyCode === "EUR" ? "€" : "$");
         return salesPackage.fee + " " + currencySymbol ;
     };
 
@@ -39,20 +40,35 @@ class ContentListing extends React.Component{
 
     };
 
-    getRounds = () => {
+    getSchedules = () => {
 
         const { seasons , schedulesBySeason} = this.props;
-        let schedules = [];
+        let schedules = {
+            rounds : [],
+            matches : []
+        };
         seasons.forEach(s => {
             if (s.schedules) Object.entries(s.schedules).forEach((sh) =>{
-                if (sh[1].selected ) schedules.push(sh[0])
+                if (sh[1].selected && schedules.rounds.indexOf(sh[0]) === -1){
+                    schedules.rounds.push(sh[0]);
+                    sh[1].matches.forEach(m => {
+                        if(m.selected) schedules.matches.push(m)
+                    });
+                }
             })
         });
 
         if ( schedulesBySeason ){
             schedulesBySeason.forEach(s => {
                 if (s && Object.entries(s)) Object.entries(s).forEach((sh) =>{
-                    schedules.push(sh[0])
+                    if (schedules.rounds.indexOf(sh[0]) === -1){
+                        schedules.rounds.push(sh[0]);
+                        sh[1].matches.forEach(m => {
+                            if(m.selected) schedules.matches.push(m)
+                        });
+                    }
+
+
                 })
             });
         }
@@ -77,6 +93,10 @@ class ContentListing extends React.Component{
 
     };
 
+    sortByTerritories (a, b) {
+        return (a.territories.length > b.territories.length) ? 1 : ((b.territories.length > a.territories.length) ? -1 : 0)
+    }
+
     render(){
         const {
             name,
@@ -92,14 +112,15 @@ class ContentListing extends React.Component{
             image
         } = this.props;
 
-        let rounds = this.getRounds();
+        let schedules = this.getSchedules();
+        let rounds = schedules.rounds;
+        let matches = schedules.matches;
         let seasonTitle = ( seasons.length > 1 ) ? "Seasons: " : "Season: ";
         let seasonName =  seasonTitle + seasons.map(season => (season.year)).join(", ");
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
-
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
-
+        salesPackages.sort(this.sortByTerritories).reverse();
         return (
             <div className="listing-list-view" onClick={this.onSelect}>
                 <div className={"left"}  >
@@ -114,20 +135,16 @@ class ContentListing extends React.Component{
                     <div style={{display: "flex"}}>
                         <div style={{flex: 1, fontWeight: 600, lineHeight: "30px"}}>
 
-
-
                             <div>
                                 {sports && sports.length === 1 && <span>{sports[0].name}</span>}
                                 {sports && sports.length > 1 && <span>Multiple Sports</span>}
                                 {sportCategory && sportCategory.length > 0 && <span> {sportCategory[0].name}</span> }
                             </div>
 
-
                             {tournament && tournament.length > 0 && <div>{tournament[0].name}</div>}
                             {tournament && tournament.length === 0 && <div>General content</div>}
                             {seasons && seasons.length > 0 && <div>{seasonName}</div>}
-                            {this.showProgramInfo() && programs[0].name &&
-                                <div>Program: {programs[0].name}</div>}
+
                             {this.showProgramInfo() && programs[0].releaseYear &&
                                 <div>Release year: {programs[0].releaseYear}</div>}
 
@@ -139,7 +156,12 @@ class ContentListing extends React.Component{
                             {this.getFixtures().length === 1 &&
                                 <div>{this.getFixtures()[0].name}</div>}
 
-                            {this.getRounds().length > 0 && <div>{roundsName}</div>}
+                            {rounds.length > 0 && <div>{roundsName}</div>}
+                            {matches.length === 1 && <div>
+                                ({matches[0].competitors.map(( competitor, i, list)=>{
+                                return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
+                            })})
+                            </div>}
 
                         </div>
                         <div style={{flex: 2, flexDirection: "column" }}>
@@ -154,7 +176,10 @@ class ContentListing extends React.Component{
                                         <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>
                                         <div style={{display: 'flex', flexDirection: "column"  }}>
                                             {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}
-                                            {sr.name}
+                                            {sr.shortLabel !== "PR" && sr.name}
+                                            {sr.shortLabel === "PR" && programs[0].name &&
+                                                "Program: " + programs[0].name
+                                            }
                                         </div>
                                     </div>
                                 })

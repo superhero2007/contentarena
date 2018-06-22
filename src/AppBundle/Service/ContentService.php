@@ -58,7 +58,12 @@ class ContentService
             $term = $request->request->get("event");
         }
 
-        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term);
+        $exclusive = null;
+        if($request->request->get("exclusive")){
+            $exclusive = $request->request->get("exclusive");
+        }
+
+        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term, $exclusive);
 
         return $content;
 
@@ -251,6 +256,16 @@ class ContentService
                         }
                         $package->setTerritories($countries);
                     }
+                    if ( is_array($salesPackage->excludedTerritories) && count( $salesPackage->excludedTerritories) > 0  )
+                    {
+                        $countries = array();
+                        foreach ( $salesPackage->excludedTerritories as $country ){
+                            $country = (isset($country->id)) ? $this->getCountryById($country->id) : $this->getCountry($country->value);
+                            if ( $country != null ) $countries[] = $country;
+                        }
+                        $package->setExcludedCountries($countries);
+                    }
+
                     $salesPackages[] = $package;
                 }
 

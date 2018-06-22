@@ -26,7 +26,7 @@ class RightsFilter extends React.Component {
             <div className="box">
                 <div className="title">Rights</div>
                 <div className="content">
-                    <div>
+                    <div style={{display: 'flex'}}>
                         <CountrySelector
                             className={"base-input-select"}
                             value={countries}
@@ -65,13 +65,11 @@ class RightsFilter extends React.Component {
                                 this.props.updateExclusive(e.target.checked)
                             }} /> Contains exclusive rights
                     </div>
-                    <div>
-                        <button className="standard-button" onClick={()=>{
-                            onFilter({
-                                rights: rights,
-                                countries: countries.map(country => country.label)
-                            })
-                        }}>Apply</button>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center'
+                    }}>
+                        <button className="standard-button" onClick={onFilter}>Apply</button>
                     </div>
 
                 </div>

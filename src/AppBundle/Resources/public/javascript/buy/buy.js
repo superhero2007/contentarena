@@ -28,14 +28,4 @@ $(function () {
         MarketplaceApp.test(id)
     };
 
-    ContentArena.Api.getSports().done((sports) => {
-        ContentArena.Data.FullSports = sports;
-
-        var select = $("#sports-event");
-
-        ContentArena.Data.TopSports.forEach(function (sport) {
-            select.append("<div class=\"sport subfilter\" id=\"sport-"+sport.externalId+"\" name="+sport.externalId+" value='"+sport.externalId+"' toggle>"+sport.name+"</div>")
-        });
-    });
-
 });

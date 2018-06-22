@@ -35,6 +35,7 @@ class SalesPackageForm extends React.Component {
             territoriesMethod : this.worldwide,
             salesMethod : this.fixed,
             territories : [],
+            excludedTerritories : [],
             filterTerritories : [],
             territoriesList: [],
             installments : [{ value : 100,  type : "DAY", days: 30}],
@@ -84,8 +85,6 @@ class SalesPackageForm extends React.Component {
         if ( !exclusivity ) return filter;
 
         salesPackages.forEach((salesPackage) => {
-
-            if ( salesPackage.territoriesMethod === this.worldwideExcluding ) return;
             filter = [...filter, ...salesPackage.territories.map(t => t.value)]
         });
 
@@ -94,18 +93,9 @@ class SalesPackageForm extends React.Component {
 
     getExcludedTerritories = () => {
 
-        const { exclusivity, salesPackages} = this.props;
         const {territories} = this.state;
-        let filter = [];
 
-        if ( !exclusivity ) return filter;
-
-        salesPackages.forEach((salesPackage) => {
-
-            if ( salesPackage.territoriesMethod !== this.selectedTerritories ) return;
-            filter = [...filter, ...salesPackage.territories.map(t=>t.value)];
-
-        });
+        let filter = this.getFilterTerritories();
 
         let selected = territories.map(t => t.value);
         filter = [...filter, ...selected];
@@ -116,32 +106,12 @@ class SalesPackageForm extends React.Component {
         }).map(t=>{return {value: t, label: t}})
     };
 
-    getAvailableTerritories = () => {
-
-        const { exclusivity, salesPackages} = this.props;
-        let filter = [];
-
-        if ( !exclusivity ) return filter;
-
-        salesPackages.forEach((salesPackage) => {
-
-            if ( salesPackage.territoriesMethod === this.worldwideExcluding ) {
-                filter = [...filter, ...salesPackage.territories.map(t => t.value)]
-            }
-        });
-
-        return filter
-    };
-
     worldwideAvailable = () => {
-        const { salesPackages} = this.props;
+        const { salesPackages, exclusivity} = this.props;
+
+        if (!exclusivity) return true;
+
         return salesPackages.filter(salesPackage => salesPackage.territoriesMethod === this.worldwideExcluding).length === 0;
-    };
-
-    preselectedExcluded = () => {
-        const { salesPackages} = this.props;
-        return salesPackages.filter(salesPackage => salesPackage.territoriesMethod === this.selectedTerritories).length === 0;
-
     };
 
     setSalesMethod = (salesMethod) => {
@@ -159,11 +129,14 @@ class SalesPackageForm extends React.Component {
     applySelection  = () => {
         this.setState({ isOpen: false});
 
-        const { bundleMethod, territoriesMethod, territories, fee, salesMethod, installments } = this.state;
-        let salesPackagesList = [], name= "";
+        const { bundleMethod, territoriesMethod, fee, salesMethod, installments } = this.state;
+        const {exclusivity} = this.props;
 
+        let salesPackagesList = [], name= "";
+        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
+        let territories = this.state.territories;
         let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
-        let territoriesByLabel = territories.map(t => t.label);
+        let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
 
         if ( this.state.isNew ) {
 
@@ -204,7 +177,8 @@ class SalesPackageForm extends React.Component {
                     }).join(", ");
 
                 } else if ( territoriesMethod === this.worldwideExcluding ) {
-                    name = "Worldwide excluding " + territories.slice(0, 3).map( ( territory, i )=>{
+                    territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
+                    name = "Worldwide excluding " + excludedTerritories.slice(0, 3).map( ( territory, i )=>{
                         return territory.label
                     }).join(", ");
                 }
@@ -212,6 +186,7 @@ class SalesPackageForm extends React.Component {
                 salesPackagesList = [{
                     name : name,
                     territories : territories,
+                    excludedTerritories : excludedTerritories,
                     fee : fee,
                     salesMethod : salesMethod,
                     bundleMethod : bundleMethod,
@@ -279,16 +254,16 @@ class SalesPackageForm extends React.Component {
 
     addBundlesAvailable = () => {
         const { exclusivity, salesPackages} = this.props;
+        let territories = [], worldwide =false;
 
         if ( exclusivity ){
-            if ( salesPackages.filter(sp => {
-                return sp.territoriesMethod === "WORLDWIDE" && sp.bundleMethod === this.asBundle
-            }).length > 0 ){
-                return false
-            }
+            salesPackages.map(sp => {
+                if ( sp.territoriesMethod === "WORLDWIDE" && sp.bundleMethod === this.asBundle) worldwide = true;
+                territories = [...territories, ...sp.territories];
+            })
         }
 
-        return true;
+        return !worldwide && territories.length !== Object.values(ContentArena.Data.Countries).length;
     };
 
     renderModal = () => {
@@ -366,7 +341,6 @@ class SalesPackageForm extends React.Component {
                             className={"small-select"}
                             value={this.state.territories}
                             onChange={this.selectTerritories}
-                            available={this.getAvailableTerritories()}
                             filter={this.getFilterTerritories()} />
                     }
 
@@ -375,12 +349,8 @@ class SalesPackageForm extends React.Component {
                     <CountrySelector
                         className={"small-select"}
                         value={this.getExcludedTerritories()}
-                        onChange={this.selectTerritories}
-                        available={this.getAvailableTerritories()}
-                        filter={this.getFilterTerritories()} />
+                        onChange={this.selectTerritories} />
                     }
-
-
 
                     <div className="base-full-input">
                         <label style={labelStyle}>Sales method</label>
@@ -491,10 +461,10 @@ class SalesPackageForm extends React.Component {
 
     };
 
-    showAllTerritories = (salesPackage) => {
+    showAllTerritories = (extraTerritories) => {
         this.setState({
             showAllTerritories : true,
-            territoriesList : salesPackage.territories
+            territoriesList : extraTerritories
         })
     };
 
@@ -558,43 +528,48 @@ class SalesPackageForm extends React.Component {
                     <label>Sales bundles</label>
                     <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
                         { salesPackages.map( (salesPackage, i) => {
+
+                            let extraTerritories = ( salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
+
                             return <div className="sales-package-container" key={i}>
                                 <div className="sales-package" key={"sales-package-"+ i}>
                                     <div style={{flex : 5, cursor: 'default'}}>
                                         {salesPackage.name}
                                         {
-                                            salesPackage.territories.length > 3 && <span
+                                            extraTerritories && extraTerritories.length > 3 && <span
                                                 style={{
                                                     color: '#2DA7E6',
                                                     textDecoration: 'underline',
                                                     marginLeft : 5
                                                 }}
-                                                onClick={() => {this.showAllTerritories(salesPackage)}}>
-                                                {"+" + (salesPackage.territories.length - 3)}
+                                                onClick={() => {this.showAllTerritories(extraTerritories)}}>
+                                                {"+" + (extraTerritories.length - 3)}
                                             </span>
                                         }
                                     </div>
-                                    {salesPackage.salesMethod === "BIDDING" &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                        <img style={{width: 23, height: 23}} src={this.bidIcon}/>
+
+
+                                    {salesPackage.bundleMethod === "SELL_AS_BUNDLE" &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
+                                        <img style={{    marginTop: '2px',width: 26, height: 23}} src={this.fixedIcon}/>
                                     </div>}
 
-                                    {salesPackage.salesMethod === "FIXED" &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex"}}>
-                                        <img style={{    marginTop: '2px',width: 26, height: 23}} src={this.fixedIcon}/>
+                                    {salesPackage.salesMethod === "BIDDING" &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
+                                        <img style={{width: 23, height: 23}} src={this.bidIcon}/>
                                     </div>}
 
                                     {
                                         ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
-                                        &&<div style={{flex : 1, justifyContent: "flex-end", display: "flex", cursor: 'default'}}>
+                                        &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex", cursor: 'default'}}>
                                             {this.getFee(salesPackage)}
                                         </div>
                                     }
                                 </div>
-                                <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px'}}
+                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px'}}
                                      src={this.cancelIcon}
-                                     onClick={() => { onRemove(i) }}/>
-                                <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px'}}
+                                     onClick={() => { onRemove(i) }}/>}
+                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px', color: 'grey'}}
                                      src={this.draftIcon}
-                                     onClick={() => { this.editSalesPackage(salesPackage, i) }}/>
+                                     onClick={() => { this.editSalesPackage(salesPackage, i) }}/>}
 
                             </div>
                         })}

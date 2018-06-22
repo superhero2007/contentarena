@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * BidType
@@ -25,6 +26,7 @@ class BidType
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"listing"})
      */
     private $name;
 

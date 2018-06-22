@@ -31,6 +31,16 @@
                 }
                 .content{
                     padding: 20px;
+                    .base-input-select{
+                        display: inline-table;
+                    }
+                    .sport-input-filter {
+                        margin: 10px 0;
+                        .Select-value {
+                            line-height: 43px;
+                        }
+                    }
+
                 }
             }
         }

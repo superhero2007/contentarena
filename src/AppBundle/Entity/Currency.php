@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation\Groups;
 /**
  * Currency
  *
@@ -25,6 +25,7 @@ class Currency
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"listing"})
      */
     private $name;
 
@@ -32,6 +33,7 @@ class Currency
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=3, unique=true)
+     * @Groups({"listing"})
      */
     private $code;
 

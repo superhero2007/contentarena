@@ -3,13 +3,20 @@ export const filterTypes= {
     ADD_RIGHT:'ADD_RIGHT',
     REMOVE_RIGHT : 'REMOVE_RIGHT',
     UPDATE_COUNTRIES : 'UPDATE_COUNTRIES',
-    UPDATE_EXCLUSIVE : 'UPDATE_EXCLUSIVE'
+    UPDATE_EXCLUSIVE : 'UPDATE_EXCLUSIVE',
+    UPDATE_SPORT : 'UPDATE_SPORT',
+    UPDATE_EVENT : 'UPDATE_EVENT',
 };
 
 export const filter = (state = {
     rights: [],
     countries: [],
-    exclusive : false
+    exclusive : false,
+    sport: {
+        value : null,
+        label : "All sports"
+    },
+    event : null
 
 }, action) => {
 
@@ -32,6 +39,14 @@ export const filter = (state = {
         case filterTypes.UPDATE_EXCLUSIVE:
             return Object.assign({}, state, {
                 exclusive: action.exclusive
+            });
+        case filterTypes.UPDATE_SPORT:
+            return Object.assign({}, state, {
+                sport: action.sport
+            });
+        case filterTypes.UPDATE_EVENT:
+            return Object.assign({}, state, {
+                event: action.event
             });
         default:
             return state;

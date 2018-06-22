@@ -122,6 +122,7 @@ class SellFormStep3 extends React.Component {
                                 editOpen : false
                             })
                         }}
+                        exclusivity={this.exclusivity()}
                         onUpdate={this.updateSalesPackage}
                         salesPackageId={this.state.salesPackageToEdit}
                         salesPackages={salesPackages}

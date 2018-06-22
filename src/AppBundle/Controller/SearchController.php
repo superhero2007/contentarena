@@ -42,10 +42,10 @@ class SearchController extends Controller
     public function searchAllCountries(Request $request){
 
         //Take Repositories
-        $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:SportCategory");
+        $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:Country");
 
         //Get results
-        $countries = $sportCategoryRepository->getCountries();
+        $countries = $sportCategoryRepository->getAll();
 
         return new JsonResponse($countries);
     }

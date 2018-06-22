@@ -19,3 +19,13 @@ export const updateExclusive = exclusive => ({
     type: filterTypes.UPDATE_EXCLUSIVE,
     exclusive,
 });
+
+export const updateSport = sport => ({
+    type: filterTypes.UPDATE_SPORT,
+    sport
+});
+
+export const updateEvent = event => ({
+    type: filterTypes.UPDATE_EVENT,
+    event
+});

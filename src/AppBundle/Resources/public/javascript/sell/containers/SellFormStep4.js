@@ -62,6 +62,7 @@ class SellFormStep4 extends React.Component {
             goToPreviousStep,
             updateContentValue,
             signature,
+            currency,
             terms_arena,
             terms
         } = this.props;
@@ -84,6 +85,7 @@ class SellFormStep4 extends React.Component {
                         hideButtons
                         fullSize={true}
                         salesPackages={salesPackages}
+                        currency={currency}
                         onEdit={this.editSalesPackage}
                         onUpdate={this.updateSalesPackage}
                         onRemove={this.removeSalesPackage}/>

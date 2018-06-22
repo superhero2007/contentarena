@@ -57,11 +57,21 @@ class Marketplace extends React.Component {
         });
     };
 
-    filter = (filter) => {
+    filter = () => {
+
+        const { filter } = this.props;
+
+        let parsedFilter = {
+            rights: filter.rights,
+            countries: filter.countries.map(country => country.label),
+            sports : (filter.sport && filter.sport.value) ? [{name: filter.sport.label}] : [],
+            event : filter.event,
+            exclusive : (filter.exclusive) ? true : null
+        }
 
         let _this = this;
         _this.setState({loadingListing : true, listings: []});
-        ContentArena.Api.getJsonContent(filter).done((listings) => {
+        ContentArena.Api.getJsonContent(parsedFilter).done((listings) => {
 
             listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
             _this.setState({listings: listings, loadingListing : false});
@@ -74,7 +84,8 @@ class Marketplace extends React.Component {
         return (
             <div className="buy-content">
                 {!showDetails && <div className="buy-container-left">
-                    <EventFilter/>
+                    <EventFilter
+                        onFilter={this.filter}/>
                     <RightsFilter
                         onFilter={this.filter}
                         rightsPackage={this.state.rightsPackage}/>
@@ -123,7 +134,7 @@ class Marketplace extends React.Component {
 }
 
 const mapStateToProps = ( state, ownProps) => {
-    return ownProps;
+    return state;
 };
 
 const mapDispatchToProps = dispatch => {

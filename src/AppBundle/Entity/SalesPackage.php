@@ -76,7 +76,7 @@ class SalesPackage
     private $salesMethod;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinTable(name="sales_package_territories",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_sales_package_territory_id", referencedColumnName="id")}
@@ -86,7 +86,7 @@ class SalesPackage
     private $territories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinTable(name="sales_package_excluded_countries",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_excluded_countries_id", referencedColumnName="id")}
@@ -96,7 +96,6 @@ class SalesPackage
     private $excludedCountries;
 
     public function __construct() {
-        $this->selectedCountries = new \Doctrine\Common\Collections\ArrayCollection();
         $this->excludedCountries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

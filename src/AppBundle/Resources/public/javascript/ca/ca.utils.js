@@ -22,11 +22,17 @@ ContentArena.Utils = {
         if ( content.salesPackages ) {
             content.salesPackages.forEach((sp) => {
                 if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
+                sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
                 sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
             });
+            content.salesPackages.sort(this.sortByTerritories).reverse();
         }
 
         return content;
+    },
+
+    sortByTerritories (a, b) {
+        return (a.territories.length > b.territories.length) ? 1 : ((b.territories.length > a.territories.length) ? -1 : 0)
     },
 
     addRegionBehaviour(selector) {

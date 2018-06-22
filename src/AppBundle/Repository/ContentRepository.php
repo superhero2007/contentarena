@@ -80,7 +80,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    public function getFilteredContent( ContentFilter $filter, $term = null ){
+    public function getFilteredContent( ContentFilter $filter, $term = null, $exclusive = null ){
 
         $query = $this->createQueryBuilder('content');
 
@@ -89,16 +89,17 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('content.company', 'com')
                 ->leftJoin('content.tournament', 't')
                 ->orWhere('content.description LIKE :value')
-                ->orWhere('content.releaseYear LIKE :value')
-                ->orWhere('content.ownLicense LIKE :value')
-                ->orWhere('content.brochure LIKE :value')
-                ->orWhere('content.programName LIKE :value')
-                ->orWhere('content.programType LIKE :value')
-                ->orWhere('content.seriesType LIKE :value')
-                ->orWhere('content.distributionPackages LIKE :value')
+                ->orWhere('content.selectedRightsBySuperRight LIKE :value')
+                ->orWhere('content.name LIKE :value')
                 ->orWhere('com.legalName LIKE :value')
                 ->orWhere('t.name LIKE :value')
                 ->setParameter('value', '%'.$term.'%');
+        }
+
+        if($exclusive == true){
+            $query
+                ->orWhere('content.selectedRightsBySuperRight LIKE :value')
+                ->setParameter('value', '%exclusive%');
         }
 
         if ( count( $filter->getSports() ) > 0 ) {

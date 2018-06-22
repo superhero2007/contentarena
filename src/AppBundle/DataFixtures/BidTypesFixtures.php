@@ -20,7 +20,8 @@ class BidTypesFixtures extends Fixture
         $content = array(
             'OPEN',
             'CLOSED',
-            'FIXED'
+            'FIXED',
+            'BIDDING'
         );
 
         for ($i = 0; $i < count($content); $i++) {
