@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Company
@@ -33,7 +34,32 @@ class Company
     /**
      * @var string
      *
+     * @ORM\Column(name="vat", type="string", length=255, nullable=true)
+     * @Groups({"details"})
+     */
+    private $vat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="registration_number", type="string", length=255, nullable=true)
+     * @Groups({"details"})
+     */
+    private $registrationNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     * @Groups({"details"})
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="display_name", type="string", length=255, nullable=true)
+     * @Groups({"details"})
      */
     private $displayName;
 
@@ -41,6 +67,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     * @Groups({"details"})
      */
     private $website;
 
@@ -48,6 +75,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     * @Groups({"details"})
      */
     private $address;
 
@@ -55,6 +83,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="zip", type="string", length=255, nullable=true)
+     * @Groups({"details"})
      */
     private $zip;
 
@@ -87,6 +116,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Groups({"details"})
      */
     private $description;
 
@@ -107,6 +137,7 @@ class Company
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * @Groups({"details"})
      */
     private $country;
 
@@ -477,5 +508,56 @@ class Company
     {
         return $this->country;
     }
+
+    /**
+     * @return string
+     */
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @param string $vat
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRegistrationNumber()
+    {
+        return $this->registrationNumber;
+    }
+
+    /**
+     * @param string $registrationNumber
+     */
+    public function setRegistrationNumber($registrationNumber)
+    {
+        $this->registrationNumber = $registrationNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+
+
 }
 

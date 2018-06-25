@@ -8,12 +8,22 @@ class EventFilter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            sports:[]
         };
 
         this.searchIcon = assetsBaseDir + "app/images/search.png";
     }
 
     componentDidMount () {
+        let _this = this;
+        if ( ContentArena.Data.Countries.length === 0) {
+            ContentArena.Api.getActiveSports().done( (sports ) => {
+                ContentArena.Data.ActiveSports = sports;
+                _this.setState({sports});
+            });
+        } else {
+            _this.setState({sports: ContentArena.Data.ActiveSports});
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -21,8 +31,9 @@ class EventFilter extends React.Component {
 
     getOptions = () => {
         const {filter = [], available} = this.props;
+        const {sports} = this.state;
 
-        let countries = Object.values(ContentArena.Data.TopSports).map((i,k)=>({value : i.name , label : i.name }));
+        let countries = sports.filter(s=>s.name).map((i,k)=>({value : i.name , label : i.name }));
 
         return [...[{value: null, label: 'All sports'}], ...countries];
     };

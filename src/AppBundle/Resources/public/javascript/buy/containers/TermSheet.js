@@ -37,6 +37,9 @@ class TermSheet extends React.Component {
                             {
                                 RightItemsDefinitions[selectedRights[rp.id].items[right.key]].label
                             }
+
+                            {right.key === 'CAMERA'
+                                && <span style={{marginLeft: 5}}>{selectedRights[rp.id].items["CAMERAS"]}</span>}
                         </div>
                     })
                 }
@@ -78,7 +81,42 @@ class TermSheet extends React.Component {
         const {selectedRights, rightsPackage} = this.props;
         return (
             <div className="term-sheet">
+
+                <div className="term-sheet-rights">
+                    <div className="super-right">Live transmission - LT</div>
+                    <div className="super-right">Delayed transmission - DT</div>
+                    <div className="super-right">Live betting - LB</div>
+                    <div className="super-right">News access - NA</div>
+                    <div className="super-right">Highlights - HL</div>
+                    <div className="super-right">Clips - CL</div>
+                    <div className="super-right">Program - PR</div>
+                    <div className="super-right">Archive - AR</div>
+                </div>
                 <div className="term-sheet-items">
+                    <div className="row" style={{
+                        border: 'none'
+                    }}>
+                        <div className="right-name"
+                            style={{
+                                backgroundColor: '#1A4B63',
+                                padding: 10,
+                                maxWidth: 140,
+                                fontWeight: 600
+
+                            }}>Right criteria</div>
+                        {
+                            rightsPackage.map((rp, i)=>{
+                                return <div key={"rp-" + i }  style={{
+                                    border: 'none',
+                                    backgroundColor: '#F4F6F9'
+                                }} className="right-definition">
+                                    {
+                                        rp.shortLabel
+                                    }
+                                </div>
+                            })
+                        }
+                    </div>
                     { this.renderList(RightDefinitions) }
                     { this.renderList(ProductionStandardsDefinitions) }
                 </div>

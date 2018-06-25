@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Moment from "moment/moment";
+import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 
 class ContentListing extends React.Component{
     constructor(props){
@@ -27,73 +28,7 @@ class ContentListing extends React.Component{
 
     };
 
-    getFixtures = () => {
-        const {seasons} = this.props;
-
-        let fixtures = [];
-
-        seasons.forEach( s => {
-            if ( s.fixtures ) fixtures = [...fixtures, ...s.fixtures]
-        });
-
-        return fixtures;
-
-    };
-
-    getSchedules = () => {
-
-        const { seasons , schedulesBySeason} = this.props;
-        let schedules = {
-            rounds : [],
-            matches : []
-        };
-        seasons.forEach(s => {
-            if (s.schedules) Object.entries(s.schedules).forEach((sh) =>{
-                if (sh[1].selected && schedules.rounds.indexOf(sh[0]) === -1){
-                    schedules.rounds.push(sh[0]);
-                    sh[1].matches.forEach(m => {
-                        if(m.selected) schedules.matches.push(m)
-                    });
-                }
-            })
-        });
-
-        if ( schedulesBySeason ){
-            schedulesBySeason.forEach(s => {
-                if (s && Object.entries(s)) Object.entries(s).forEach((sh) =>{
-                    if (schedules.rounds.indexOf(sh[0]) === -1){
-                        schedules.rounds.push(sh[0]);
-                        sh[1].matches.forEach(m => {
-                            if(m.selected) schedules.matches.push(m)
-                        });
-                    }
-
-
-                })
-            });
-        }
-
-        return schedules
-    };
-
-    showProgramInfo = () => {
-
-        const {rightsPackage, programs} = this.props;
-
-        let show = false;
-
-        if (rightsPackage.length > 1) return show;
-
-        rightsPackage.forEach(rp => {
-            if ( rp.shortLabel === "PR" ) show = true;
-        });
-
-
-        return show && programs && programs.length > 0;
-
-    };
-
-    sortByTerritories (a, b) {
+    static sortByTerritories (a, b) {
         return (a.territories.length > b.territories.length) ? 1 : ((b.territories.length > a.territories.length) ? -1 : 0)
     }
 
@@ -101,24 +36,13 @@ class ContentListing extends React.Component{
         const {
             name,
             expiresAt,
-            rightsPackage,
-            sports,
-            sportCategory,
-            tournament,
-            seasons,
-            programs,
             salesPackages,
+            programs,
+            rightsPackage,
             imageBase64,
             image
         } = this.props;
 
-        let schedules = this.getSchedules();
-        let rounds = schedules.rounds;
-        let matches = schedules.matches;
-        let seasonTitle = ( seasons.length > 1 ) ? "Seasons: " : "Season: ";
-        let seasonName =  seasonTitle + seasons.map(season => (season.year)).join(", ");
-        let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
-        let roundsName =  roundsTitle + rounds.join(", ");
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         salesPackages.sort(this.sortByTerritories).reverse();
         return (
@@ -132,38 +56,9 @@ class ContentListing extends React.Component{
                 </div>
                 <div className={"right"} >
                     <div className={"name"}>{name}</div>
+
                     <div style={{display: "flex"}}>
-                        <div style={{flex: 1, fontWeight: 600, lineHeight: "30px"}}>
-
-                            <div>
-                                {sports && sports.length === 1 && <span>{sports[0].name}</span>}
-                                {sports && sports.length > 1 && <span>Multiple Sports</span>}
-                                {sportCategory && sportCategory.length > 0 && <span> {sportCategory[0].name}</span> }
-                            </div>
-
-                            {tournament && tournament.length > 0 && <div>{tournament[0].name}</div>}
-                            {tournament && tournament.length === 0 && <div>General content</div>}
-                            {seasons && seasons.length > 0 && <div>{seasonName}</div>}
-
-                            {this.showProgramInfo() && programs[0].releaseYear &&
-                                <div>Release year: {programs[0].releaseYear}</div>}
-
-                            {this.showProgramInfo() && programs[0].episodes &&
-                                <div>Episodes: {programs[0].episodes}</div>}
-
-                            {this.getFixtures().length > 1 &&
-                                <div>{this.getFixtures().length} fixtures</div>}
-                            {this.getFixtures().length === 1 &&
-                                <div>{this.getFixtures()[0].name}</div>}
-
-                            {rounds.length > 0 && <div>{roundsName}</div>}
-                            {matches.length === 1 && <div>
-                                ({matches[0].competitors.map(( competitor, i, list)=>{
-                                return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
-                            })})
-                            </div>}
-
-                        </div>
+                        <ContentListingEventDetails {...this.props}/>
                         <div style={{flex: 2, flexDirection: "column" }}>
                             {
                                 rightsPackage.map(( sr,i )=>{
@@ -178,7 +73,7 @@ class ContentListing extends React.Component{
                                             {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}
                                             {sr.shortLabel !== "PR" && sr.name}
                                             {sr.shortLabel === "PR" && programs[0].name &&
-                                                "Program: " + programs[0].name
+                                            "Program: " + programs[0].name
                                             }
                                         </div>
                                     </div>
@@ -186,6 +81,7 @@ class ContentListing extends React.Component{
                             }
                         </div>
                     </div>
+
                     <div className={"sales-bundles"}>
                         {
                             salesPackages.slice(0, 4).map( ( salesPackage, i) => {

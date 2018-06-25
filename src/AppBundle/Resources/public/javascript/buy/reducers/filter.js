@@ -16,7 +16,7 @@ export const filter = (state = {
         value : null,
         label : "All sports"
     },
-    event : null
+    event : undefined
 
 }, action) => {
 

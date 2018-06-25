@@ -2,6 +2,31 @@ import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
 
+const rowStyle = {
+    borderBottom: '1px solid #EEF3F6',
+    borderRight: '1px solid #EEF3F6',
+    display: 'flex'
+};
+
+const titleStyle = {
+    backgroundColor: '#F4F6F9',
+    color: '#4F4F4F',
+    fontSize: 14,
+    fontWeight: 600,
+    margin: '3px 0',
+    padding: 10,
+    width: '50%'
+};
+
+const valueStyle = {
+    color: '#4F4F4F',
+    fontSize: 14,
+    fontWeight: 600,
+    margin: '3px 0',
+    padding: 10,
+    width: '50%'
+};
+
 class Seller extends React.Component {
 
     constructor(props) {
@@ -10,48 +35,58 @@ class Seller extends React.Component {
         };
     }
 
-    componentDidMount () {
-    }
-
-    componentWillReceiveProps(nextProps) {
-    }
-
     render() {
-
+        const { company } = this.props;
         return (
-            <div>
-                <div></div>
-                <div>
-                    {this.props.content.company.displayName}
+            <div style={{ padding:'20px 0'}}>
+                <div style={{marginBottom: 20}}>
+                    <div style={{
+                        color: '#1A4B63',
+                        fontSize: 20,
+                        fontWeight: 600
+                    }}>
+                        {company.displayName}
+                    </div>
+                    {company.website && <div style={{
+                        color: '#4F4F4F',
+                        fontSize: 14,
+                    }}>
+                        {company.website}
+                    </div>}
+
                 </div>
-                <h4>Company details</h4>
-
-                <h5>Legal company name</h5>
-                <p>{this.props.content.company.legalName}</p>
-
-                <h5>Website Url</h5>
-                <p>{this.props.content.company.website}</p>
-
-                <h5>Company Registration Number</h5>
-                <p>{this.props.content.company.registrationNumber}</p>
-
-                <h5>VAT ID number</h5>
-                <p>{this.props.content.company.vat}</p>
-
-                <h5>Address</h5>
-                <p>{this.props.content.company.address}</p>
-
-                <h5>Phone</h5>
-                <p>{this.props.content.company.phone}</p>
-
-                <h5>ZIP</h5>
-                <p>{this.props.content.company.zip}</p>
-
-                <h5>Country</h5>
-                <p>{this.props.content.company.country.name}</p>
-
-                <h4>Company information</h4>
-
+                <div className="full-item-box" style={{width: '50%'}}>
+                    <label>{company.displayName} DETAILS</label>
+                    <div >
+                        <div style={rowStyle}>
+                            <div style={titleStyle}>
+                                Company address
+                            </div>
+                            <div style={valueStyle}>
+                                {company.address}
+                                {company.city && " " + company.city}
+                                {company.zip && " " + company.zip}
+                                {company.country && " " + company.country.name}
+                            </div>
+                        </div>
+                        {company.registrationNumber && <div style={rowStyle}>
+                            <div style={titleStyle}>
+                                Company registration number
+                            </div>
+                            <div style={valueStyle}>
+                                {company.registrationNumber}
+                            </div>
+                        </div>}
+                        <div style={rowStyle}>
+                            <div style={titleStyle}>
+                                VAT ID number
+                            </div>
+                            <div style={valueStyle}>
+                                {company.vat}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

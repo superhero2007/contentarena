@@ -41,6 +41,28 @@ class BuyController extends Controller
     }
 
     /**
+     * @Route("/marketplace/listing/{customId}", name="marketplaceListing")
+     */
+    public function marketplaceListingAction(Request $request)
+    {
+
+        $user = $this->getUser();
+        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
+        /**
+         * Strategy to keep camel case on property names
+         */
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+
+        return $this->render('@App/marketplace/content.listing.html.twig', [
+            'user' => $user,
+            'customId' => $request->get('customId'),
+            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
+        ]);
+
+    }
+
+    /**
      * @Route("/buy/search", name="buySearch")
      */
     public function buySearchAction(Request $request, ContentService $contentService, SportRadarService $sportRadarService)

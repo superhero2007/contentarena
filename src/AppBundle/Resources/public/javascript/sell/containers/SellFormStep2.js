@@ -159,7 +159,7 @@ class SellFormStep2 extends React.Component {
                             <div className="row">
                                 <div className="column right-name">Start</div>
                                 <div className="column right-item-content" style={licenseStyles}>
-                                    { !this.props.startDate  && "With contract conclusion"}
+                                    { !this.props.startDate  && " contract conclusion"}
                                     { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
                                 </div>
                                 <div className="column right-name">End</div>

@@ -35,6 +35,7 @@ class Season
      * @var string
      *
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
+     * @Groups({"listing"})
      */
     private $externalId;
 

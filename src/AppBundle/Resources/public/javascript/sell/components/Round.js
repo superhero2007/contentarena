@@ -71,7 +71,6 @@ class Round extends React.Component {
         let schedule = seasons[season].schedules;
         let activeRound = schedule[round];
 
-        console.log(this.getSelected(),  schedule.length, (this.getSelected() === 0));
         return (
             <div className={"matchday"}>
                 <div className="select-box-checkbox">

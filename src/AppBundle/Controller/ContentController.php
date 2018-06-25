@@ -119,7 +119,7 @@ class ContentController extends Controller
          */
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($content, 'json',SerializationContext::create());
+        $data = $serializer->serialize($content, 'json',SerializationContext::create()->setGroups(array('listing', 'details')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');

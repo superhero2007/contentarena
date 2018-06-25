@@ -1,5 +1,6 @@
 import React from 'react';
 import Round from '../components/Round';
+import StaticRound from '../components/StaticRound';
 
 export const Description = ({value, onBlur}) => (
     <div className="textarea-input">
@@ -45,10 +46,20 @@ export const NewTournament = ({onClick, showClose, onBlur, value}) => (
 export const Schedules = ({season, seasons}) => (
     <div className="schedule">
         { seasons && seasons[season] && seasons[season].schedules && Object.keys(seasons[season].schedules).map(( number, i ) => {
-            return <Round key={i} round={number} season={season} />
+            return <Round seasons={seasons} key={i} round={number} season={season} />
         }) }
     </div>
 );
+
+
+export const StaticSchedules = ({season, seasons}) => (
+    <div className="schedule">
+        { seasons && seasons[season] && seasons[season].schedules && Object.keys(seasons[season].schedules).map(( number, i ) => {
+            return <StaticRound seasons={seasons} key={i} round={number} season={season} />
+        }) }
+    </div>
+);
+
 
 export class SportSelector extends React.Component {
     constructor(props) {

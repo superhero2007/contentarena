@@ -20,6 +20,9 @@ class CommercialTerms extends React.Component {
 
     render() {
         const {content} = this.props;
+
+
+
         return (
             <div>
                 <SalesPackages

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Installments
@@ -25,6 +26,7 @@ class Installments
      * @var float
      *
      * @ORM\Column(name="percentage", type="float")
+     * @Groups({"details"})
      */
     private $percentage;
 
@@ -32,6 +34,7 @@ class Installments
      * @var \DateTime
      *
      * @ORM\Column(name="due_date", type="datetime")
+     * @Groups({"details"})
      */
     private $dueDate;
 
@@ -39,6 +42,7 @@ class Installments
      * @var int
      *
      * @ORM\Column(name="signing_days", type="integer")
+     * @Groups({"details"})
      */
     private $signingDays;
 
@@ -46,6 +50,7 @@ class Installments
      * @var int
      *
      * @ORM\Column(name="granted_days", type="integer")
+     * @Groups({"details"})
      */
     private $grantedDays;
 

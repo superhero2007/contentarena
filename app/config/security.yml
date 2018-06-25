@@ -33,5 +33,6 @@ security:
         - { path: ^/contract, role: ROLE_USER }
         - { path: ^/mycontent, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
+        - { path: ^/marketplace, role: ROLE_USER }
         - { path: ^/buy, role: ROLE_USER }
         - { path: ^/content/draft, role: ROLE_USER }

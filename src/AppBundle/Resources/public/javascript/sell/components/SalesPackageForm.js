@@ -479,10 +479,16 @@ class SalesPackageForm extends React.Component {
 
             <div style={{
                 color: 'grey',
-                padding: 20
+                padding: 20,
+                display: 'flex',
+                flexWrap: 'wrap',
             }}>
                 {
-                    this.state.territoriesList.map(territory =>territory.label).join(", ")
+                    this.state.territoriesList.map(territory =>{
+                        return <div className="country-modal">
+                            {territory.label}
+                        </div>
+                    })
                 }
             </div>
 

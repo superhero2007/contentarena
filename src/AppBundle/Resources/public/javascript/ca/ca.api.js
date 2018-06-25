@@ -124,6 +124,28 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
+    getActiveSports () {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "search/sports/active",
+            type: "POST",
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getCountriesFull () {
         let deferred = jQuery.Deferred();
         let _this = this;

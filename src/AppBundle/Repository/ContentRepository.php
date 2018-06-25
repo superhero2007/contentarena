@@ -88,11 +88,15 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             $query
                 ->leftJoin('content.company', 'com')
                 ->leftJoin('content.tournament', 't')
+                ->leftJoin('content.sports', 'sport')
+                ->leftJoin('content.seasons', 'season')
                 ->orWhere('content.description LIKE :value')
                 ->orWhere('content.selectedRightsBySuperRight LIKE :value')
                 ->orWhere('content.name LIKE :value')
                 ->orWhere('com.legalName LIKE :value')
                 ->orWhere('t.name LIKE :value')
+                ->orWhere('sport.name LIKE :value')
+                ->orWhere('season.name LIKE :value')
                 ->setParameter('value', '%'.$term.'%');
         }
 
@@ -142,6 +146,22 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         //TODO : filter by approved
 
         $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());
+
+        $result = $query->getQuery()->getResult();
+
+        return $result;
+
+    }
+
+    public function getActiveSports(  ){
+
+        $query = $this->createQueryBuilder('content');
+
+        $query
+            ->select('sports.name')
+            ->leftJoin('content.sports', 'sports');
+
+        $query->groupBy("sports.name");
 
         $result = $query->getQuery()->getResult();
 

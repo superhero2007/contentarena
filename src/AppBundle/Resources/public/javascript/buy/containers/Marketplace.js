@@ -21,7 +21,15 @@ class Marketplace extends React.Component {
     }
 
     componentDidMount () {
+        const {customId} = this.props;
         let _this = this;
+
+
+        if ( customId ) {
+            this.selectListing(customId);
+            return;
+        }
+
         _this.setState({loadingListing : true});
         ContentArena.Api.getJsonContent().done((listings) => {
 
@@ -50,6 +58,7 @@ class Marketplace extends React.Component {
         });
 
         ContentArena.ContentApi.getByCustomId(id).done((content) => {
+            console.log(content);
             _this.setState({
                 content : content,
                 loadingListingDetails : false

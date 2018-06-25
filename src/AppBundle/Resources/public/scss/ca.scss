@@ -134,7 +134,7 @@ button{
         position: absolute;
         right: 3px;
         top: 7px;
-        color: lightgrey;
+        color: grey;
         font-size: 26px;
       }
       .fa-cog {
@@ -430,7 +430,73 @@ button{
   }
 
 }
+.schedule{
+  font-size: 14px;
+  background-color: #F4F6F9;
+  z-index: 100;
+  position: relative;
+  padding: 20px;
+  column-count: 3;
+  .matchday{
+    padding: 10px;
+    border: 1px solid lightgray;
+    margin: 5px;
+    font-weight: 600;
+    color: black;
+    width: 90%;
+    display: inline-block;
+    font-size: 16px;
+    input[type="checkbox"] + label {
+      display: inline-block;
+      width: 21px;
+      height: 19px;
+      vertical-align: middle;
+      cursor: pointer;
+      background-image: none;
+      background-color: #E8EBF0;
+      position: relative;
+      margin-right: 4px;
+      margin-left: 0px;
+      border: 1px solid #A9B5C6;
+      border-radius: 4px;
 
+    }
+    span {
+      display: block;
+      float: right;
+      color: grey;
+      cursor: pointer;
+    }
+    .match-group{
+      border-top: 1px solid lightgray;
+      padding: 5px 0;
+      margin: 10px 0 0;
+      max-height: 400px;
+      overflow: auto;
+      .match{
+        padding: 1px;
+        font-size: 12px;
+        line-height: 12px;
+        cursor: pointer;
+        span {
+          display: contents;
+          float: none;
+          color: #4F4F4F;
+        }
+        .select {
+          display: block;
+          float: right;
+        }
+      }
+    }
+
+  }
+
+  .selected{
+    background-color: $blue-color;
+    color: white;
+  }
+}
 .full-item-box{
   padding-bottom: 5px;
   border-bottom: 4px solid $border-color-1;
@@ -873,4 +939,13 @@ button{
 .digital-signature{
 
 
+}
+
+.country-modal{
+  padding: 12px;
+  border: 1px solid #DDE1E7;
+  background-color: #FAFBFC;
+  flex: 0 0 24%;
+  margin: 5px;
+  box-sizing: border-box;
 }
