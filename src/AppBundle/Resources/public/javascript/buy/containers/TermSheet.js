@@ -35,7 +35,12 @@ class TermSheet extends React.Component {
                     rightsPackage.map((rp)=>{
                         return <div  className="right-definition">
                             {
-                                RightItemsDefinitions[selectedRights[rp.id].items[right.key]].label
+                                !right.multiple && RightItemsDefinitions[selectedRights[rp.id].items[right.key]].label
+                            }
+
+                            {
+                                right.multiple &&
+                                selectedRights[rp.id].items[right.key].map(item => RightItemsDefinitions[item].label).join(", ")
                             }
 
                             {right.key === 'CAMERA'
