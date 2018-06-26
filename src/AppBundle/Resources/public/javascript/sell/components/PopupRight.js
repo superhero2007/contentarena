@@ -123,6 +123,39 @@ class PopupRight extends React.Component {
 
     };
 
+    updateMultipleSelection = (val, id,rightPackage) => {
+
+        const rightsPackage = this.state.rightsPackage;
+        let index = rightPackage.selectedRights[id].indexOf(val);
+        let all = RightItemsDefinitions[val].all;
+        let alls = RightItemsDefinitions
+
+        if ( index === -1 ){
+
+            if ( all ){
+                rightPackage.selectedRights[id] = [val];
+            } else {
+                rightPackage.selectedRights[id] = [...rightPackage.selectedRights[id], val];
+
+                rightPackage.selectedRights[id].forEach(function(item, index, object) {
+                    let m = item.match(/_ALL/g);
+                    if (m) {
+                        object.splice(index, 1);
+                    }
+                });
+
+            }
+
+        } else {
+            if (rightPackage.selectedRights[id].length > 1) rightPackage.selectedRights[id].splice(index, 1);
+        }
+
+        rightsPackage.set(rightPackage.id, rightPackage);
+
+        this.props.onUpdate(rightsPackage);
+
+    };
+
     updateSelectionInAllPackages = (val, id) => {
 
         const rightsPackage = this.state.rightsPackage;
@@ -173,7 +206,6 @@ class PopupRight extends React.Component {
 
     renderModal = () => {
         const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee} = this.props;
-
         return <Modal
             isOpen={this.state.isOpen}
             bodyOpenClassName={"selector"}
@@ -200,9 +232,7 @@ class PopupRight extends React.Component {
                         </div>
 
                         {this.props.rightsPackage.map((rightPackage)=>{
-
                             if ( superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1 ) return;
-
                             return <div className="row">
                                 <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                                     {rightPackage.name}
@@ -214,8 +244,8 @@ class PopupRight extends React.Component {
 
                                     return <div className="column" style={{ flex: flex }}>
                                         {multiple &&
-                                            <input defaultChecked={rightPackage.selectedRights[id] === option}
-                                                   onChange={(e) => { this.updateSelection(option, id,rightPackage)} }
+                                            <input checked={rightPackage.selectedRights[id].indexOf(option) !== -1 }
+                                                   onChange={(e) => { this.updateMultipleSelection(option, id,rightPackage)} }
                                                     type="checkbox"
                                                     id={rightPackage.shortLabel + "_" + option}/>}
                                         {multiple &&
@@ -377,6 +407,14 @@ class PopupRight extends React.Component {
                         selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label;
                     }
                 }
+            } else if (id === "EXPLOITATION_FORM" || id === "TRANSMISSION_MEANS"){
+
+                if ( rightsPackage[0].selectedRights[id].length > 1 ) {
+                    custom = true;
+                } else {
+                    selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id][0]].label
+                }
+
             }else {
                 if (rightsPackage[0].selectedRights) {
                     selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label

@@ -90,20 +90,22 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('content.tournament', 't')
                 ->leftJoin('content.sports', 'sport')
                 ->leftJoin('content.seasons', 'season')
+                ->leftJoin('content.rightsPackage', 'rights')
                 ->orWhere('content.description LIKE :value')
                 ->orWhere('content.selectedRightsBySuperRight LIKE :value')
                 ->orWhere('content.name LIKE :value')
                 ->orWhere('com.legalName LIKE :value')
+                ->orWhere('rights.name LIKE :value')
                 ->orWhere('t.name LIKE :value')
                 ->orWhere('sport.name LIKE :value')
                 ->orWhere('season.name LIKE :value')
-                ->setParameter('value', '%'.$term.'%');
+                ->setParameter('value', '%'.trim($term).'%');
         }
 
         if($exclusive == true){
             $query
-                ->orWhere('content.selectedRightsBySuperRight LIKE :value')
-                ->setParameter('value', '%exclusive%');
+                ->andWhere('content.selectedRightsBySuperRight LIKE :value')
+                ->setParameter('value', '%"exclusive";b:1%');
         }
 
         if ( count( $filter->getSports() ) > 0 ) {

@@ -82,16 +82,6 @@ class TermSheet extends React.Component {
         return (
             <div className="term-sheet">
 
-                <div className="term-sheet-rights">
-                    <div className="super-right">Live transmission - LT</div>
-                    <div className="super-right">Delayed transmission - DT</div>
-                    <div className="super-right">Live betting - LB</div>
-                    <div className="super-right">News access - NA</div>
-                    <div className="super-right">Highlights - HL</div>
-                    <div className="super-right">Clips - CL</div>
-                    <div className="super-right">Program - PR</div>
-                    <div className="super-right">Archive - AR</div>
-                </div>
                 <div className="term-sheet-items">
                     <div className="row" style={{
                         border: 'none'
@@ -111,7 +101,7 @@ class TermSheet extends React.Component {
                                     backgroundColor: '#F4F6F9'
                                 }} className="right-definition">
                                     {
-                                        rp.shortLabel
+                                        rp.name
                                     }
                                 </div>
                             })

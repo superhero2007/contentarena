@@ -72,7 +72,7 @@ class PackageSelector extends React.Component {
 
     componentDidMount(){
 
-        let _this = this;
+        /*let _this = this;
 
         if ( !this.props.defaultRights ){
             this.state.packages.forEach( ( superRight) => {
@@ -81,7 +81,7 @@ class PackageSelector extends React.Component {
                 }
             });
         }
-        this.props.updateContentValue("defaultRights", true);
+        this.props.updateContentValue("defaultRights", true);*/
     }
 
     updateSuperRightsList = (superRight, status) => {

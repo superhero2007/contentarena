@@ -77,10 +77,6 @@ class ContentListingEventDetails extends React.Component {
 
     };
 
-    sortByTerritories (a, b) {
-        return (a.territories.length > b.territories.length) ? 1 : ((b.territories.length > a.territories.length) ? -1 : 0)
-    }
-
     render() {
         const {
             sports,

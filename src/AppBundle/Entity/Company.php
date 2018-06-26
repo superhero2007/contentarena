@@ -28,6 +28,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="legal_name", type="string", length=255, unique=true)
+     * @Groups({"details"})
      */
     private $legalName;
 

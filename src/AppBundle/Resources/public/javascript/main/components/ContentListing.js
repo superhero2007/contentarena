@@ -28,9 +28,13 @@ class ContentListing extends React.Component{
 
     };
 
-    static sortByTerritories (a, b) {
-        return (a.territories.length > b.territories.length) ? 1 : ((b.territories.length > a.territories.length) ? -1 : 0)
-    }
+    sortSalesPackages = (a, b) => {
+        return this.compareProperty(a.territories.length, b.territories.length) || this.compareProperty(a.fee, b.fee) || this.compareProperty(b.name, a.name);
+    };
+
+    compareProperty = (a, b) =>  {
+        return (a > b) ? 1 : ((b > a) ? -1 : 0)
+    };
 
     render(){
         const {
@@ -44,7 +48,7 @@ class ContentListing extends React.Component{
         } = this.props;
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
-        salesPackages.sort(this.sortByTerritories).reverse();
+        salesPackages.sort(this.sortSalesPackages).reverse();
         return (
             <div className="listing-list-view" onClick={this.onSelect}>
                 <div className={"left"}  >
@@ -72,7 +76,7 @@ class ContentListing extends React.Component{
                                         <div style={{display: 'flex', flexDirection: "column"  }}>
                                             {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}
                                             {sr.shortLabel !== "PR" && sr.name}
-                                            {sr.shortLabel === "PR" && programs[0].name &&
+                                            {sr.shortLabel === "PR" && programs[0] && programs[0].name &&
                                             "Program: " + programs[0].name
                                             }
                                         </div>

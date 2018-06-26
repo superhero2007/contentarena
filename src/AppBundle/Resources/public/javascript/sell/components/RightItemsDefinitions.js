@@ -29,7 +29,8 @@ export const RightItemsDefinitions = {
     },
     "TRANSMISSION_MEANS_ALL" : {
         "parent" : "Transmission means",
-        "label" : "All"
+        "label" : "All",
+        all : true
     },
     "TRANSMISSION_MEANS_CABLE" : {
         "parent" : "Transmission means",
@@ -57,7 +58,8 @@ export const RightItemsDefinitions = {
     },
     "EXPLOITATION_FORM_ALL" : {
         "parent" : "Exploitation form",
-        "label" : "All"
+        "label" : "All",
+        all : true
     },
     "EXPLOITATION_FORM_FREE" : {
         "parent" : "Exploitation form",

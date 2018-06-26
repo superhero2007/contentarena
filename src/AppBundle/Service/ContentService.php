@@ -201,7 +201,7 @@ class ContentService
         /**
          * Set installments
          */
-        if ( isset($data->installments) ) {
+     /*   if ( isset($data->installments) ) {
 
             $installments = array();
 
@@ -211,7 +211,7 @@ class ContentService
             }
 
             $content->setInstallments($installments);
-        }
+        }*/
 
         $selectedRights = array();
 
@@ -230,6 +230,7 @@ class ContentService
         if ( isset($data->endDateMode) ) $content->setEndDateMode($data->endDateMode);
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
+
 
         if ( isset($data->salesPackages) ) {
 
@@ -256,7 +257,7 @@ class ContentService
                         }
                         $package->setTerritories($countries);
                     }
-                    if ( is_array($salesPackage->excludedTerritories) && count( $salesPackage->excludedTerritories) > 0  )
+                    if ( isset($salesPackage->excludedTerritories) && is_array($salesPackage->excludedTerritories) && count( $salesPackage->excludedTerritories) > 0  )
                     {
                         $countries = array();
                         foreach ( $salesPackage->excludedTerritories as $country ){
@@ -291,8 +292,32 @@ class ContentService
         if ( isset($data->customTournament) ){
             $content->setCustomTournament($data->customTournament || null);
         }
-
+        if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
+    }
+
+    private function saveCompany($data){
+        if ( isset($data->id) ) {
+
+            $company = $this->em
+                ->getRepository('AppBundle:Company')
+                ->findOneBy(array('id' => $data->id));
+
+
+            if ( isset($data->vat) ) $company->setVat($data->vat);
+            if ( isset($data->zip) ) $company->setZip($data->vat);
+            if ( isset($data->registrationNumber) ) $company->setRegistrationNumber($data->registrationNumber);
+            if ( isset($data->address) ) $company->setAddress($data->address);
+            if ( isset($data->city) ) $company->setCity($data->city);
+            if ( isset($data->legalName) ) $company->setLegalName($data->legalName);
+            if ( isset($data->country) ) $company->setCountry($this->getCountry($data->country->name));
+
+            $this->em->persist($company);
+            $this->em->flush();
+        }
+
+
+        return $company;
     }
 
     /**

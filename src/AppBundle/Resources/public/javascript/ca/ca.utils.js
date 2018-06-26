@@ -7,6 +7,8 @@ ContentArena.Utils = {
 
     contentParserFromServer(content) {
 
+        if ( content.parsed ) return content;
+
         content.tournament = (content.tournament) ? Array.isArray(content.tournament)? content.tournament : [content.tournament] : [];
         content.sportCategory = (content.sportCategory) ? Array.isArray(content.sportCategory)? content.sportCategory : [content.sportCategory] : [];
 
@@ -25,15 +27,23 @@ ContentArena.Utils = {
                 sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
                 sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
             });
-            content.salesPackages.sort(this.sortByTerritories).reverse();
+            content.salesPackages.sort(this.sortSalesPackages).reverse();
         }
+
+        content.parsed = true;
 
         return content;
     },
 
-    sortByTerritories (a, b) {
-        return (a.territories.length > b.territories.length) ? 1 : ((b.territories.length > a.territories.length) ? -1 : 0)
+    sortSalesPackages (a, b){
+        let c = (a, b) => {
+            return (a > b) ? 1 : ((b > a) ? -1 : 0)
+        };
+
+        return c(a.territories.length, b.territories.length) || c(a.fee, b.fee) || c(b.name, a.name);
     },
+
+
 
     addRegionBehaviour(selector) {
 

@@ -170,14 +170,16 @@
                             }
                         }
                         .term-sheet-items{
+                            font-size: 14px;
                             .row{
                                 display: flex;
                                 border-bottom: 1px solid #EEF3F6;
+                                font-size: 14px;
                                 .right-name{
                                     background-color: #A5BBC6;
                                     padding: 5px;
                                     color: white;
-                                    font-size: 15px;
+                                    font-size: 14px;
                                     text-transform: uppercase;
                                     max-width: 150px;
                                     margin: 3px 0 3px;
@@ -190,6 +192,7 @@
                                     align-items: center;
                                     display: flex;
                                     text-align: center;
+                                    padding: 0px 5px;
                                 }
 
                             }

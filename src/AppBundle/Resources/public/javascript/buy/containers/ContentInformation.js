@@ -10,6 +10,7 @@ class ContentInformation extends React.Component {
         this.state = {
             seasons : props.seasons
         };
+        this.noInfoText = "No information available";
     }
 
     componentDidMount() {
@@ -60,24 +61,25 @@ class ContentInformation extends React.Component {
         const {seasons }= this.state;
         return (
             <div style={{marginTop: 20}}>
-                {description && <div className="full-item-box">
+                <div className="full-item-box">
                     <label>EVENT DESCRIPTION</label>
                     <div className="full-item-content">
-                        {description}
+                        {description && description}
+                        {!description && this.noInfoText}
                     </div>
-                </div>}
+                </div>
 
-                {website &&
                 <div className="full-item-box"
                      style={{
                          flexDirection : 'row',
-                         width : '50%'
+                         width : '70%'
                      }}>
                     <label>CONTENT WEBSITE</label>
-                    <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3}}>
-                        {website}
+                    <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
+                        {website && website}
+                        {!website && this.noInfoText}
                     </div>
-                </div>}
+                </div>
 
                 {
                     seasons && seasons.length > 0 && seasons.map((season, key)  => {
