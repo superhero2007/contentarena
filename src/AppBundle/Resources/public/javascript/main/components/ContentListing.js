@@ -6,7 +6,9 @@ class ContentListing extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {};
+        this.state = {
+            buyingMode : false
+        };
         this.noImage = assetsBaseDir + "app/images/no-image.png";
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
@@ -29,7 +31,7 @@ class ContentListing extends React.Component{
     };
 
     sortSalesPackages = (a, b) => {
-        return this.compareProperty(a.territories.length, b.territories.length) || this.compareProperty(a.fee, b.fee) || this.compareProperty(b.name, a.name);
+        return this.compareProperty(a.territories.length, b.territories.length) || this.compareProperty(b.name, a.name);
     };
 
     compareProperty = (a, b) =>  {
@@ -125,7 +127,6 @@ class ContentListing extends React.Component{
 
                     </div>
                 </div>
-
             </div>
         )
     }

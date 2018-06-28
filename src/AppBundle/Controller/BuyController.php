@@ -35,6 +35,7 @@ class BuyController extends Controller
 
         return $this->render('buy/buy.html.twig', [
             'user' => $user,
+            'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
@@ -56,6 +57,7 @@ class BuyController extends Controller
 
         return $this->render('@App/marketplace/content.listing.html.twig', [
             'user' => $user,
+            'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
             'customId' => $request->get('customId'),
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);

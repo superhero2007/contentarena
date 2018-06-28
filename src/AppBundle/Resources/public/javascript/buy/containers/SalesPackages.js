@@ -143,7 +143,7 @@ class SalesPackages extends React.Component {
     };
 
     render() {
-        const {salesPackages} = this.props;
+        const {salesPackages, onSelectPackage} = this.props;
 
         return (
             <div className="sales-packages">
@@ -172,7 +172,8 @@ class SalesPackages extends React.Component {
                                         style={{
                                             color: '#2DA7E6',
                                             textDecoration: 'underline',
-                                            marginLeft : 5
+                                            marginLeft : 5,
+                                            cursor: 'pointer'
                                         }}
                                         onClick={() => {this.showAllTerritories(extraTerritories)}}>
                                                 {"+" + (extraTerritories.length - 3)}
@@ -181,7 +182,7 @@ class SalesPackages extends React.Component {
                             </div>
                         </div>
 
-                        <div style={{flex : 1, display: 'flex', justifyContent: 'center'}}
+                        <div style={{flex : 1, display: 'flex', justifyContent: 'center', cursor: 'pointer'}}
                              onClick={() => {this.showInstallments(salesPackage.installments)}}>
                             <img style={{width: 23, height: 23}} src={this.infoIcon}/>
                         </div>
@@ -196,13 +197,17 @@ class SalesPackages extends React.Component {
                         </div>
 
                         { salesPackage.salesMethod === "FIXED" &&
-                            <button className="standard-button">
+                            <button className="standard-button"
+                                    style={{width: 130}}
+                                    onClick={() => {onSelectPackage(salesPackage) }}>
                                 Buy now
                             </button>
                         }
 
                         { salesPackage.salesMethod === "BIDDING" &&
-                            <button className="standard-button">
+                            <button className="standard-button"
+                                    style={{width: 130}}
+                                    onClick={() => {onSelectPackage(salesPackage) }}>
                                 Place bid
                             </button>
                         }

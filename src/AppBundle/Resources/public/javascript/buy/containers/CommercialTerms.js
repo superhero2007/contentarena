@@ -19,13 +19,11 @@ class CommercialTerms extends React.Component {
     }
 
     render() {
-        const {content} = this.props;
-
-
-
+        const {content, onSelectPackage} = this.props;
         return (
             <div>
                 <SalesPackages
+                    onSelectPackage={onSelectPackage}
                     salesPackages={content.salesPackages}/>
             </div>
         );

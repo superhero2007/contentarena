@@ -25,8 +25,6 @@ class DigitalSignature extends React.Component{
 
         let data = signature.toDataURL();
 
-        console.log("EQUAL", data === blank);
-
         if ( data === blank ) return;
 
         this.setState({ready:true});

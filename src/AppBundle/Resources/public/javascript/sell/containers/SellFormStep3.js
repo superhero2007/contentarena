@@ -23,12 +23,6 @@ class SellFormStep3 extends React.Component {
         };
     }
 
-    componentDidMount () {
-    }
-
-    componentWillReceiveProps(nextProps) {
-    }
-
     selectCurrency = ( currency ) => {
         this.props.updateContentValue("currency", currency);
     };

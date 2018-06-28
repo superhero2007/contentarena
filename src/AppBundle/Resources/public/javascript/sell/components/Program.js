@@ -3,6 +3,7 @@ import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import LanugageSelector, {LanguageSelector} from "../../main/components/LanguageSelector";
 import {connect} from "react-redux";
+import {programIsValid} from "../actions/validationActions";
 
 class Program extends React.Component{
     constructor(props){
@@ -89,7 +90,7 @@ class Program extends React.Component{
     afterOpenModal = () => {};
 
     closeModal = () => {
-        this.setState({ isOpen: false});
+        this.applySelection();
     };
 
     applySelection  = () => {
@@ -189,6 +190,7 @@ class Program extends React.Component{
                 <div className={"buttons"}>
                     <button
                         className={"standard-button"}
+                        disabled={!programIsValid(this.state)}
                         onClick={this.applySelection}>Ok</button>
                 </div>
             </Modal>

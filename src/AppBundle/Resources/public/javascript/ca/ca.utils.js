@@ -40,7 +40,7 @@ ContentArena.Utils = {
             return (a > b) ? 1 : ((b > a) ? -1 : 0)
         };
 
-        return c(a.territories.length, b.territories.length) || c(a.fee, b.fee) || c(b.name, a.name);
+        return c(a.territories.length, b.territories.length) || c(b.name, a.name);
     },
 
 

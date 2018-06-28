@@ -11,6 +11,7 @@ class Marketplace extends React.Component {
         super(props);
         this.state = {
             rightsPackage : JSON.parse(props.rights),
+            company : JSON.parse(props.company),
             loadingListing: false,
             loadingListingDetails : false,
             showDetails : false,
@@ -89,7 +90,7 @@ class Marketplace extends React.Component {
     };
 
     render () {
-        const {listings, loadingListing, loadingListingDetails, showDetails, content} = this.state;
+        const {listings, loadingListing, loadingListingDetails, showDetails, content, company} = this.state;
         return (
             <div className="buy-content">
                 {!showDetails && <div className="buy-container-left">
@@ -133,6 +134,7 @@ class Marketplace extends React.Component {
                         onBack={() => {
                             this.setState({showDetails: false})
                         }}
+                        company={company}
                         content={content}/>
                 }
 

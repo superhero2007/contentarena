@@ -88,6 +88,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             $query
                 ->leftJoin('content.company', 'com')
                 ->leftJoin('content.tournament', 't')
+                ->leftJoin('content.sportCategory', 'cat')
                 ->leftJoin('content.sports', 'sport')
                 ->leftJoin('content.seasons', 'season')
                 ->leftJoin('content.rightsPackage', 'rights')
@@ -97,6 +98,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->orWhere('com.legalName LIKE :value')
                 ->orWhere('rights.name LIKE :value')
                 ->orWhere('t.name LIKE :value')
+                ->orWhere('cat.name LIKE :value')
                 ->orWhere('sport.name LIKE :value')
                 ->orWhere('season.name LIKE :value')
                 ->setParameter('value', '%'.trim($term).'%');

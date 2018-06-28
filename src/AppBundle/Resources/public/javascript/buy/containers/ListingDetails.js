@@ -4,11 +4,22 @@ import { test } from "../actions";
 import CommercialTerms from "./CommercialTerms";
 import ContentInformation from "./ContentInformation";
 import TermSheet from "./TermSheet";
-import TechnicalDetails from "./TechnicalDetails";
 import ProgramDetails from "./ProgramDetails";
 import Seller from "./Seller";
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
+import DigitalSignature from "../../main/components/DigitalSignature";
+import {getCurrencySymbol} from "../../main/actions/utils";
+import CompanyInformation from "../../sell/components/CompanyInformation";
+import {customStyles} from "../../main/styles/custom";
+import {companyIsValid} from "../../sell/actions/validationActions";
+import Modal from 'react-modal';
+import CountrySelector from "../../main/components/CountrySelector";
+
+const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
+const inputStyle = { width: '380px', margin: 0, height: "30px"};
+const bidButtonStyle = { height: 36, width: 100, padding: 5, marginLeft: 30 };
+
 
 class ListingDetails extends React.Component {
 
@@ -16,12 +27,22 @@ class ListingDetails extends React.Component {
         super(props);
         this.state = {
             content : ContentArena.Utils.contentParserFromServer(props.content) || {},
-            tab : 1
+            company: props.company,
+            tab : 1,
+            selectedPackage : {},
+            territoriesList: [],
+            editCompanyOpen : false,
+            bidUpdated : false
         };
         this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
         this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
         this.contactIcon = assetsBaseDir + "app/images/envelope.png";
         this.watchlistIcon = assetsBaseDir + "app/images/watchlist.png";
+        this.bidIcon = assetsBaseDir + "app/images/hammer.png";
+        this.packageIcon = assetsBaseDir + "app/images/bid.png";
+        this.infoIcon = assetsBaseDir + "app/images/info.png";
+        this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
+        this.draftIcon = assetsBaseDir + "app/images/draft.png";
     }
 
     componentWillReceiveProps(nextProps) {
@@ -31,62 +52,355 @@ class ListingDetails extends React.Component {
         });
     }
 
+    toggleBuyingMode = () => {
+        this.setState({buyingMode: !this.state.buyingMode});
+    };
+
+    selectPackage = ( selectedPackage ) => {
+        this.setState({
+            selectedPackage: selectedPackage,
+            buyingMode : true,
+            bid: selectedPackage.fee
+        })
+    };
+
+    ordinal_suffix_of = (i) => {
+        let j = i % 10,
+            k = i % 100;
+        if (j === 1 && k !== 11) {
+            return i + "st";
+        }
+        if (j === 2 && k !== 12) {
+            return i + "nd";
+        }
+        if (j === 3 && k !== 13) {
+            return i + "rd";
+        }
+        return i + "th";
+    };
+
     showTab = (tab) => {
         this.setState({tab});
+    };
+
+    closeModal = () => {
+        this.setState({ editCompanyOpen: false});
+    };
+
+    closeTerritoriesModal = () => {
+        this.setState({ showAllTerritories: false});
+    };
+
+    closeSuccessScreen = () => {
+        this.setState({
+            showSuccessScreen: false,
+            buyingMode: false,
+            bid : null,
+            signature : null,
+            terms : false
+        });
+    };
+
+    editCompany = () => {
+
+        const { company } = this.state;
+
+        return <Modal
+            isOpen={this.state.editCompanyOpen}
+            onRequestClose={this.closeModal}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+            contentLabel="Example Modal"
+        >
+
+            <div className="modal-title">
+                Company Information
+                <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
+            </div>
+
+            <div className="step-content">
+                <div className="step-content-container">
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Legal name
+                        </label>
+                        <input
+                            type={"text"}
+                            style={inputStyle}
+                            value={company.legalName}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Registration number
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => {
+                                company.reregistrationNumber = e.target.value;
+                                this.setState({company});
+                            }}
+                            value={company.registrationNumber}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            VAT ID number
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => {
+                                company.vat = e.target.value;
+                                this.setState({company});
+                            }}
+                            value={company.vat}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Address
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => {
+                                company.address = e.target.value;
+                                this.setState({company});
+                            }}
+                            value={company.address}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            City
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => {
+                                company.city = e.target.value;
+                                this.setState({company});
+                            }}
+                            value={company.city}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            ZIP code
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => {
+                                company.zip = e.target.value;
+                                this.setState({company});
+                            }}
+                            value={company.zip}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Country
+                        </label>
+                        <CountrySelector
+                            multi={false}
+                            onChange={(value) => {
+                                company.country.name = value.label;
+                                this.setState({company});
+                            }}
+                            value={{value: company.country.name, label: company.country.name}}/>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div className={"buttons"}>
+                { companyIsValid(company) &&<button
+                    className={"standard-button"}
+                    onClick={this.closeModal}>Ok</button>}
+
+                { !companyIsValid(company) &&<button
+                    className={"standard-button"}
+                    disabled
+                >Ok</button>}
+            </div>
+        </Modal>
+    };
+
+    showAllTerritories = (extraTerritories) => {
+        this.setState({
+            showAllTerritories : true,
+            territoriesList : extraTerritories
+        })
+    };
+
+    allTerritories = () => {
+
+        return <Modal
+            isOpen={this.state.showAllTerritories}
+            onRequestClose={this.closeTerritoriesModal}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+        >
+
+            <div style={{
+                color: 'grey',
+                padding: 20,
+                display: 'flex',
+                flexWrap: 'wrap',
+            }}>
+                {
+                    this.state.territoriesList.map(territory =>{
+                        return <div className="country-modal">
+                            {territory.label}
+                        </div>
+                    })
+                }
+            </div>
+
+        </Modal>
+    };
+
+    successScreen = () => {
+        const { selectedPackage } = this.state;
+
+        return <Modal
+            isOpen={this.state.showSuccessScreen}
+            onRequestClose={this.closeSuccessScreen}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+        >
+
+            <div style={{
+                color: 'grey',
+                padding: 20,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
+                <div style={{
+                    fontSize: 30,
+                    width : 600,
+                    textAlign : 'center',
+                    fontWeight: 600
+                }}>
+                    Congratulations!
+                </div>
+                {selectedPackage.salesMethod === "FIXED" && <div style={{
+                    fontSize: 20,
+                    width : 600,
+                    margin : 40,
+                    textAlign : 'center'
+                }}>
+                    You have successfully acquired the package!
+                </div>}
+                {selectedPackage.salesMethod === "BIDDING" && <div style={{
+                    fontSize: 20,
+                    width : 600,
+                    margin : 40,
+                    textAlign : 'center'
+                }}>
+                    Your bid was placed successfully!
+                </div>}
+
+                <div>
+                    <button className="standard-button" onClick={this.closeSuccessScreen} >Continue</button>
+                </div>
+            </div>
+
+        </Modal>
+    };
+
+    getTechnicalFee = () => {
+        const {content} = this.state;
+
+        let response = {
+            TECHNICAL_FEE :"",
+            TECHNICAL_FEE_PERCENTAGE : 0
+        };
+
+        let selected = (content.rightsPackage && content.rightsPackage[0] && content.rightsPackage[0].selectedRights) ? content.rightsPackage[0].selectedRights : null;
+
+        if ( selected ){
+            response["TECHNICAL_FEE"] = selected["TECHNICAL_FEE"];
+            response["TECHNICAL_FEE_PERCENTAGE"] = selected["TECHNICAL_FEE_PERCENTAGE"];
+        }
+
+        return selected;
+
+    };
+
+    getTotalFee = () => {
+        const {selectedPackage } = this.state;
+        let technicalFee = this.getTechnicalFee();
+        let total = Number(selectedPackage.fee);
+
+        if ( technicalFee.TECHNICAL_FEE === "ON_TOP" ){
+            total  = total + (total/100)*Number(technicalFee.TECHNICAL_FEE_PERCENTAGE)
+        }
+        return total;
+    };
+
+    setBid = () => {
+        const {selectedPackage, bid } = this.state;
+
+        selectedPackage.fee = bid;
+
+        this.setState({
+            selectedPackage,
+            bidUpdated : true
+        })
+    };
+
+    editBid = () => {
+        this.setState({
+            bidUpdated : false
+        })
+    };
+
+    invalidPackage = () => {
+        const {signature, selectedPackage, bidUpdated, terms} = this.state;
+        return !signature || (selectedPackage.salesMethod === 'BIDDING' && !bidUpdated ) || !terms;
     };
 
     render() {
 
         const {onBack } = this.props;
-        const {tab, content} = this.state;
+        const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated} = this.state;
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
-
+        let technicalFee = this.getTechnicalFee();
+        let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
         return (
             <div className="listing-details">
-                <div className="listing-details-header">
-                    <button onClick={onBack} className="light-blue-button">
-                        <i className="fa fa-chevron-left"/> Back to results
-                    </button>
-                    <div className="name">{content.name}</div>
-                    <div className="publisher" style={{
-                        flex:1,
-                        fontSize: 18,
-                        fontWeight: 600
-                    }}>{"Juan Cruz Talco"}</div>
-
-                    <div style={{margin: '0 10px', display: 'flex'}}>
-                        <img style={{width: 22, height: 18, marginBottom: 5}} src={this.contactIcon}/>
-                        <div style={{
-                            flex:1,
-                            color: '#4F4F4F',
-                            fontSize: 16,
-                            margin: '0 10px'
-                        }}>Contact Seller</div>
-                    </div>
-
-                    <div style={{margin: '0 10px', display: 'flex'}}>
-                        <img style={{width: 22, height: 15, marginTop: 3}} src={this.watchlistIcon}/>
-                        <div style={{
-                            flex:1,
-                            color: '#2DA7E6',
-                            fontSize: 16,
-                            textDecoration: 'underline',
-                            margin: '0 10px'
-
-                        }}>Watchlist</div>
-                    </div>
-
-                    <div className="custom-id">#{content.customId}</div>
-                </div>
-
+                { this.editCompany() }
+                { this.allTerritories() }
+                { this.successScreen() }
                 <div className="listing-details-content">
                     <div className={"left"}  >
+
+                        <div className={"header"}>
+                            {!buyingMode && <button onClick={onBack} className="light-blue-button">
+                                <i className="fa fa-chevron-left"/> Back to results
+                            </button>}
+
+                            {buyingMode && <button onClick={this.toggleBuyingMode} className="light-blue-button">
+                                <i className="fa fa-chevron-left"/> Back
+                            </button>}
+
+                        </div>
+
+                        {/*IMAGE*/}
                         <div className={"image"}>
                             <img src={listingImage}/>
                         </div>
 
                         <ContentListingEventDetails {...this.props.content}/>
 
+                        {/* RIGHTS*/}
                         <div style={{flex: 2, flexDirection: "column", margin: '20px 0' }}>
                             {
                                 content.rightsPackage.map(( sr,i )=>{
@@ -132,7 +446,43 @@ class ListingDetails extends React.Component {
                         <div className={"date"}>Publishing date <span>{Moment().format('DD/MM/YYYY')}</span></div>
                         <div className={"date"}>Expiry <span>{Moment(content.expiresAt).format('DD/MM/YYYY')}</span></div>
                     </div>
-                    <div className={"right"} >
+                    {!buyingMode && <div className={"right"} >
+                        <div className={"header"}>
+                            <div className={"content"}>
+                                <div className="name">{content.name}</div>
+                                <div className="publisher" style={{
+                                    flex:1,
+                                    fontSize: 18,
+                                    fontWeight: 600
+                                }}>{"Juan Cruz Talco"}</div>
+
+                                <div style={{margin: '0 10px', display: 'flex'}}>
+                                    <img style={{width: 22, height: 18, marginBottom: 5}} src={this.contactIcon}/>
+                                    <div style={{
+                                        flex:1,
+                                        color: '#4F4F4F',
+                                        fontSize: 16,
+                                        margin: '0 10px'
+                                    }}>Contact Seller</div>
+                                </div>
+
+                                <div style={{margin: '0 10px', display: 'flex'}}>
+                                    <img style={{width: 22, height: 15, marginTop: 3}} src={this.watchlistIcon}/>
+                                    <div style={{
+                                        flex:1,
+                                        color: '#2DA7E6',
+                                        fontSize: 16,
+                                        textDecoration: 'underline',
+                                        margin: '0 10px'
+
+                                    }}>Watchlist</div>
+                                </div>
+
+                                {/*CUSTOM ID*/}
+                                <div className="custom-id">#{content.customId}</div>
+                            </div>
+                        </div>
+
                         <div className={"listing-details-buttons"}>
                             <button className={(tab ===1)?"active": ""} onClick={()=>this.showTab(1)}>Commercial terms</button>
                             <button className={(tab ===2)?"active": ""} onClick={()=>this.showTab(2)}>Content information</button>
@@ -144,7 +494,9 @@ class ListingDetails extends React.Component {
                         <div className={"listing-details-tab"}>
 
                             { this.state.tab === 1 &&
-                                <CommercialTerms content={content}/>
+                                <CommercialTerms
+                                    onSelectPackage={this.selectPackage}
+                                    content={content}/>
                             }
                             { this.state.tab === 2 &&
                                 <ContentInformation {...content}/> }
@@ -158,8 +510,200 @@ class ListingDetails extends React.Component {
 
 
                         </div>
-                    </div>
+                    </div>}
+
+                    {buyingMode && <div className={"right"} style={{padding:'0 20px'}} >
+
+                        {/*NAME*/}
+                        <div className={"header"}>
+                            <div className={"content"}>
+                                <div className="name">
+                                    {selectedPackage && selectedPackage.salesMethod === "FIXED" && "Buy now"}
+                                    {selectedPackage && selectedPackage.salesMethod === "BIDDING" && "Bid"}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/*TERRITORIES*/}
+                        <div style={{ display: 'flex',margin: '0px 40px'}}>
+
+                            {selectedPackage.bundleMethod === "SELL_AS_BUNDLE"
+                            && selectedPackage.territories.length > 1
+                            && <div style={{  }}>
+                                <img style={{ width: 26, height: 23}} src={this.packageIcon}/>
+                            </div>
+                            }
+
+                            {selectedPackage.territories.length > 1 && <div style={{margin: '0 15px', fontWeight: 600}}>
+                                {selectedPackage.territories.length}
+                            </div>}
+
+                            <div>
+                                {selectedPackage.name}
+                                {
+                                    extraTerritories && extraTerritories.length > 3 && <span
+                                        style={{
+                                            color: '#2DA7E6',
+                                            textDecoration: 'underline',
+                                            marginLeft : 5,
+                                            cursor : 'pointer'
+                                        }}
+                                        onClick={() => {this.showAllTerritories(extraTerritories)}}>
+                                                {"+" + (extraTerritories.length - 3)}
+                                            </span>
+                                }
+                            </div>
+                        </div>
+
+                        {/*FEE*/}
+                        <div style={{ margin: '20px 40px'}}>
+                            {selectedPackage.salesMethod === "FIXED" &&
+                            <div>
+                                License fee: {selectedPackage.fee + getCurrencySymbol(selectedPackage.currency.code)}
+                            </div>}
+
+                            {selectedPackage.salesMethod === "BIDDING" &&
+                            <div style={{ display : 'flex', alignItems: 'center'}}>
+                                Bid:
+                                {!bidUpdated &&
+                                <input
+                                    style={{
+                                        padding: '8px 10px',
+                                        width: 100,
+                                        marginLeft: 50,
+                                        marginRight: 10,
+                                        textAlign: 'right'
+                                    }}
+                                    type="number"
+                                    value={bid}
+                                    onChange={e=>{ this.setState({bid:e.target.value})}}
+                                    min={selectedPackage.fee}/>}
+                                {bidUpdated && " " +selectedPackage.fee}
+                                {getCurrencySymbol(selectedPackage.currency.code)}
+                                {!bidUpdated && <button className="standard-button" style={bidButtonStyle} onClick={this.setBid}>Apply</button>}
+                                {bidUpdated && <button className="link-button" onClick={this.editBid}>Raise</button>}
+                            </div>}
+
+                            <div style={{
+                                margin: '5px 0'
+                            }}>
+                                Technical fee: {technicalFee.TECHNICAL_FEE === "ON_TOP" && technicalFee.TECHNICAL_FEE_PERCENTAGE + "%"}
+                                {technicalFee.TECHNICAL_FEE !== "ON_TOP" && "Included"}
+                            </div>
+
+                            <div style={{
+                                fontSize: 18,
+                                fontWeight: 600,
+                                margin: '5px 0'
+                            }}>
+                                Total {this.getTotalFee() + getCurrencySymbol(selectedPackage.currency.code)}
+                            </div>
+
+                        </div>
+
+                        {/*PAYMENT DETAILS*/}
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <div style={{
+                                flex: 1,
+                                paddingLeft: 40,
+                                paddingTop: 5,
+                                fontWeight: 600,
+
+                            }}>Payment details</div>
+                            <div style={{
+                                flex: 2,
+                            }}>
+                                {
+                                    selectedPackage.installments && selectedPackage.installments.map((installment, index) => {
+                                        return <div key={"installment-"+ index} style={{
+                                            padding: 12,
+                                            border: '1px solid #DDE1E7',
+                                            backgroundColor: '#FAFBFC',
+                                            margin: 5,
+                                            boxSizing: 'border-box',
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            color: 'grey'
+                                        }}>
+                                            <div style={{
+                                                margin: '0 10px',
+                                                fontWeight: 600
+                                            }}>{this.ordinal_suffix_of(index + 1)} installment
+                                            </div>
+                                            <div style={{margin: '0 30px'}}>{installment.value}%</div>
+                                            <div style={{margin: '0 10px'}}>
+                                                {installment.type === "DAY" && installment.days + " days after contract closure"}
+                                                {installment.type === "DATE" && " " + Moment(installment.date).format('DD/MM/YYYY')}
+                                            </div>
+                                        </div>
+                                    })
+                                }
+                            </div>
+                        </div>
+
+                        {/*COMPANY*/}
+                        <div style={{display: 'flex', margin: '20px 0', alignItems: 'center'}}>
+                            <div style={{
+                                flex: 1,
+                                paddingLeft: 40,
+                                paddingTop: 5,
+                                fontWeight: 600,
+                            }}>Company Address</div>
+                            <div style={{
+                                flex: 2,
+                            }}>
+                                {
+                                    [company.legalName, company.address, company.zip, company.country.name].join(", ")
+                                }
+                            </div>
+                            <img src={this.draftIcon}
+                                 onClick={e => {this.setState({editCompanyOpen: true})}}
+                                 style={{cursor: 'pointer'}} />
+                        </div>
+
+
+                        {/*LICENSE*/}
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            textDecoration: 'underline',
+                            color: '#48C0FE',
+                            fontSize: 16,
+                            margin: 10
+                        }}>
+                            <img style={{marginRight: 10}} src={this.pdfIcon}/>
+                            License agreement
+                        </div>
+
+                        {/*SIGNATURE*/}
+                        <div>
+                            <DigitalSignature signature={signature} onReady={signature => { this.setState({signature}) }} />
+                            <div style={{
+                                width: 800,
+                                margin: '0 auto'
+                            }}> <input type="checkbox"
+                                       id="terms-buy"
+                                       style={{display : "none"}}
+                                       onChange={e =>{ this.setState({terms: e.target.checked}) }}
+                                       checked={this.state.terms}/> <label htmlFor={"terms-buy"} />Accept terms conditions</div>
+                        </div>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            marginTop: 20,
+                            marginBottom: 40
+                        }}>
+                            <button className="standard-button"
+                                    onClick={e => {this.setState({showSuccessScreen : true})}}
+                                    disabled={this.invalidPackage()}>Buy</button>
+                        </div>
+
+                    </div>}
                 </div>
+
+                {/*{buyingMode && <div>
+                    {selectedPackage.name}
+                </div>}*/}
             </div>
 
         );

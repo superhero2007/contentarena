@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import store from '../store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
-import {companyIsValid} from "../actions/validationActions";
+import {companyIsValid, programIsValid, programsEnabled} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
 
 class SellButtons extends React.Component {
@@ -81,14 +81,19 @@ class SellButtons extends React.Component {
         if ( salesPackages.length === 0 ) message += "<br/>- Select at least one sales bundle.\n";
         if ( !expiresAt ) message += "<br/>- Select listing expiry.";
         if ( !companyIsValid(company) ) message += "<br/>- Enter company information.";
+
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
 
         return message;
     };
 
     step2Enabled = () => {
-        const {endDateMode, rightsPackage} = this.props;
-        return endDateMode !== undefined && rightsPackage.length > 0;
+        const {endDateMode, rightsPackage, programs} = this.props;
+
+        let program = true;
+        if ( programsEnabled(rightsPackage) ) program = programIsValid(programs[0]);
+
+        return endDateMode !== undefined && rightsPackage.length > 0 && program;
 
     };
 
@@ -108,11 +113,14 @@ class SellButtons extends React.Component {
     };
 
     step2GetMessages = () => {
-        const {endDateMode, rightsPackage} = this.props;
+        const {endDateMode, rightsPackage, programs} = this.props;
         let message = "Please complete missing information\n";
+        let program = true;
+        if ( programsEnabled(rightsPackage) ) program = programIsValid(programs[0]);
 
         if ( rightsPackage.length === 0 ) message += "<br/>- Select at least one right.\n";
         if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
+        if ( !program ) message += "<br/>- Enter program information.";
 
         return message;
     };
