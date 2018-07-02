@@ -5,6 +5,7 @@ import EventFilter from '../components/EventFilter';
 import RightsFilter from '../components/RightsFilter';
 import ContentListing from '../../main/components/ContentListing';
 import ListingDetails from './ListingDetails';
+import {clearUpdateFilter} from "../actions/filterActions";
 
 class Marketplace extends React.Component {
     constructor(props) {
@@ -22,22 +23,25 @@ class Marketplace extends React.Component {
     }
 
     componentDidMount () {
-        const {customId} = this.props;
-        let _this = this;
-
+        const {customId, clearUpdateFilter} = this.props;
 
         if ( customId ) {
             this.selectListing(customId);
             return;
         }
 
-        _this.setState({loadingListing : true});
-        ContentArena.Api.getJsonContent().done((listings) => {
+        this.filter();
+        clearUpdateFilter();
+    }
 
-            listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
-            _this.setState({listings: listings, loadingListing : false});
-            console.log(listings)
-        });
+    componentWillReceiveProps ( props ) {
+        const {filter,clearUpdateFilter} = props;
+
+        this.setState({sortSalesPackages : false});
+        if ( filter.forceUpdate ) {
+            this.getContent(this.parseFilter(filter));
+            clearUpdateFilter();
+        }
     }
 
     selectListing = (id) => {
@@ -67,30 +71,43 @@ class Marketplace extends React.Component {
         });
     };
 
-    filter = () => {
-
-        const { filter } = this.props;
-
-        let parsedFilter = {
+    parseFilter = (filter) =>{
+        return {
             rights: filter.rights,
             countries: filter.countries.map(country => country.label),
             sports : (filter.sport && filter.sport.value) ? [{name: filter.sport.label}] : [],
             event : filter.event,
             exclusive : (filter.exclusive) ? true : null
-        }
+        };
+    };
 
+    getContent = ( filter ) => {
         let _this = this;
-        _this.setState({loadingListing : true, listings: []});
-        ContentArena.Api.getJsonContent(parsedFilter).done((listings) => {
+
+        _this.setState({
+            loadingListing : true,
+            listings: []
+        });
+
+        ContentArena.Api.getJsonContent(filter).done((listings) => {
 
             listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
-            _this.setState({listings: listings, loadingListing : false});
+            _this.setState({listings: listings, loadingListing : false, sortSalesPackages : true});
             console.log(listings)
         });
     };
 
+    filter = () => {
+
+        const { filter } = this.props;
+        let parsedFilter = this.parseFilter(filter);
+        this.getContent(parsedFilter);
+
+    };
+
     render () {
-        const {listings, loadingListing, loadingListingDetails, showDetails, content, company} = this.state;
+        const { filter } = this.props;
+        const {listings, loadingListing, loadingListingDetails, showDetails, content, company, sortSalesPackages} = this.state;
         return (
             <div className="buy-content">
                 {!showDetails && <div className="buy-container-left">
@@ -106,9 +123,11 @@ class Marketplace extends React.Component {
                     {
                         listings.length > 0 && listings.map((listing) => {
                             return <ContentListing
-                                onSelect={this.selectListing}
-                                key={listing.customId}
-                                {...listing} />
+                                        onSelect={this.selectListing}
+                                        key={listing.customId}
+                                        filter={filter}
+                                        sortSalesPackages={sortSalesPackages}
+                                        {...listing} />
                         })
                     }
 
@@ -150,7 +169,8 @@ const mapStateToProps = ( state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onClick: id => dispatch(test(id))
+        onClick: id => dispatch(test(id)),
+        clearUpdateFilter : () => dispatch(clearUpdateFilter())
     }
 };
 

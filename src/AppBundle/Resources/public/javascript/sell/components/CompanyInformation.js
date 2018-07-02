@@ -99,7 +99,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Address
+                            Street Name / Number
                         </label>
                         <input
                             style={inputStyle}

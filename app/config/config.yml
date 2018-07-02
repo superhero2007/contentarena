@@ -15,7 +15,9 @@ parameters:
     sportradar_api_host: https://api.betradar.com/v1
     sportradar_api_cache_ttl : 432000
     uploads_main_folder: '%kernel.project_dir%/web/uploads'
+    uploads_tmp_folder: '%kernel.project_dir%/web/tmpUploads'
     uploads_uri_prefix: 'uploads'
+    uploads_tmp_uri_prefix: 'tmpUploads'
     admin_uploads_uri: ''
 
 framework:

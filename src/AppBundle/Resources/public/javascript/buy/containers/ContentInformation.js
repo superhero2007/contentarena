@@ -11,6 +11,8 @@ class ContentInformation extends React.Component {
             seasons : props.seasons
         };
         this.noInfoText = "No information available";
+        this.baseDir = assetsBaseDir + "../";
+        this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
     }
 
     componentDidMount() {
@@ -57,7 +59,7 @@ class ContentInformation extends React.Component {
     }
 
     render() {
-        const {description, website }= this.props;
+        const {description, website, attachments }= this.props;
         const {seasons }= this.state;
         return (
             <div style={{marginTop: 20}}>
@@ -76,9 +78,38 @@ class ContentInformation extends React.Component {
                      }}>
                     <label>CONTENT WEBSITE</label>
                     <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
-                        {website && website}
+                        {website && <a target="_blank" href={website}>{website}</a>}
                         {!website && this.noInfoText}
                     </div>
+                </div>
+
+                <div className="full-item-box"
+                     style={{
+                         flexDirection : 'row',
+                         width : '70%'
+                     }}>
+                    <label style={{
+                        height: 'auto'
+                    }}>ATTACHMENTS</label>
+                    {attachments && <div style={{
+                        display : "flex",
+                        flexDirection: 'column'
+                    }}>{attachments.map(a=>{
+                        return <div onClick={()=>{}} style={{
+                            padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200,
+                            display: 'flex'
+                        }}>
+                            <a download={a.name} target="_blank" href={this.baseDir + a.file} style={{
+                                display: 'inline-flex',
+                                paddingRight: 30
+                            }}>
+                                <img style={{ margin: '-2px 5px 0 0'}} src={this.pdfIcon}/>  {a.name}
+                            </a>
+                        </div>
+                    })}</div>}
+                    {!attachments && <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
+                        "No attachments available"
+                    </div>}
                 </div>
 
                 {
@@ -93,39 +124,14 @@ class ContentInformation extends React.Component {
                             }}>
                                 {season.name}
                             </div>
-                            <StaticSchedules season={key} seasons={seasons}/>
-                            {/*<div className="schedule">
-                                { schedulesBySeason[key]
-                                    && Object.keys(schedulesBySeason[key]).length > 0
-                                    && Object.entries(schedulesBySeason[key]).map(( entry, i ) => {
-
-                                        let round = entry[0];
-                                        let matches = entry[1].matches;
-
-                                        console.log("ROUNDS", round);
-                                    return <div className={"matchday"} key={"round-"+ i}>
-                                        <div className="select-box-checkbox">
-                                            <div style={{width: '100%'}}>
-                                                {isNaN(round) && round}
-                                                {!isNaN(round) && "Matchday " + round}
-                                                {<span onClick={()=> {}}>All ></span>}
-                                            </div>
-                                        </div>
-
-                                        <div className={"match-group"}>
-                                            {matches && Array.from (matches.values()).map((item, mi, list) => {
-                                                return <div className={"match "} key={"match" + mi}>
-                                                    {item.competitors.map(( competitor, ci)=>{
-                                                        return <span key={"competitor-" + ci}>
-                                                            {competitor.name} {(list.length !== ci + 1) && " vs " }
-                                                        </span>
-                                                    })}
-                                                </div>
-                                            })}
-                                        </div>
-                                    </div>
-                                }) }
-                            </div>*/}
+                            {( !season.fixtures || season.fixtures.length === 0) && <StaticSchedules season={key} seasons={seasons}/>}
+                            { season.fixtures && season.fixtures.length > 0 &&
+                            <div className="schedule">
+                                {season.fixtures.map(fixture => {
+                                return <div className={"matchday"}>
+                                    {fixture.name}
+                                </div>})}
+                            </div>}
                         </div>
                     })
                 }

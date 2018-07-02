@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
+import ListingDetails from './../../buy/containers/ListingDetails';
 import ContentListing from "../../main/components/ContentListing";
 import {goToPreviousStep, stepChangeReset} from "../actions/contentActions";
 import DigitalSignature from "../../main/components/DigitalSignature";
@@ -54,6 +55,10 @@ class SellFormStep4 extends React.Component {
         });
     };
 
+    toggleDetails = () => {
+        this.setState({showDetails: !this.state.showDetails});
+    };
+
     render() {
         if ( this.props.step !== 4) return (null);
         this.scroll();
@@ -63,9 +68,12 @@ class SellFormStep4 extends React.Component {
             updateContentValue,
             signature,
             currency,
+            company,
             terms_arena,
             terms
         } = this.props;
+
+        const {showDetails} = this.state;
 
         return (
             <div className="step-content">
@@ -76,10 +84,22 @@ class SellFormStep4 extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div className="step-title">Review & Sign</div>
-                <div className="step-content-container">
+                {!showDetails && <div className="step-title">Review & Sign</div>}
+                {showDetails && <div className="step-title">Marketplace Preview</div>}
 
-                    <ContentListing {...this.props} />
+                {
+                    showDetails &&
+                    <div>
+                        <ListingDetails
+                        onBack={this.toggleDetails}
+                        company={company}
+                        content={this.props}/>
+                    </div>
+                }
+
+                {!showDetails && <div className="step-content-container">
+
+                    <ContentListing {...this.props} onSelectName={this.toggleDetails} />
 
                     <SalesPackageForm
                         hideButtons
@@ -146,7 +166,7 @@ class SellFormStep4 extends React.Component {
                         }}
                         signature={signature}
                     />
-                </div>
+                </div>}
             </div>
         );
     }

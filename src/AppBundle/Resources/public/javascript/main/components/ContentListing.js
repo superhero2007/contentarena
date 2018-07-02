@@ -34,6 +34,34 @@ class ContentListing extends React.Component{
         return this.compareProperty(a.territories.length, b.territories.length) || this.compareProperty(b.name, a.name);
     };
 
+    sortByFilter = (a, b) => {
+
+        const { filter } = this.props;
+
+        let territories = filter.countries.map(c => c.value);
+        let aTerritories = a.territories.map(c => c.value);
+        let bTerritories = b.territories.map(c => c.value);
+        let aExcludedTerritories = a.excludedTerritories.map(c => c.value);
+        let bExcludedTerritories = b.excludedTerritories.map(c => c.value);
+        let aTotal = 0;
+        let bTotal = 0;
+
+        territories.forEach(t => {
+            if ( aTerritories.indexOf(t) !== -1
+                || a.territoriesMethod === "WORLDWIDE"
+                || (a.territoriesMethod === "WORLDWIDE_EXCLUDING" && aExcludedTerritories.indexOf(t) === -1 )) aTotal++;
+            if ( bTerritories.indexOf(t) !== -1
+                || b.territoriesMethod === "WORLDWIDE"
+                || (b.territoriesMethod === "WORLDWIDE_EXCLUDING" && bExcludedTerritories.indexOf(t) === -1 )) bTotal++;
+
+        });
+
+
+        return this.compareProperty(bTotal, aTotal);
+
+
+    };
+
     compareProperty = (a, b) =>  {
         return (a > b) ? 1 : ((b > a) ? -1 : 0)
     };
@@ -45,12 +73,20 @@ class ContentListing extends React.Component{
             salesPackages,
             programs,
             rightsPackage,
+            onSelectName,
             imageBase64,
-            image
+            image,
+            filter,
+            sortSalesPackages
         } = this.props;
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         salesPackages.sort(this.sortSalesPackages).reverse();
+
+        if ( filter && filter.countries.length > 0 && sortSalesPackages) {
+            salesPackages.sort(this.sortByFilter);
+        }
+
         return (
             <div className="listing-list-view" onClick={this.onSelect}>
                 <div className={"left"}  >
@@ -61,7 +97,7 @@ class ContentListing extends React.Component{
                     <div className={"date"}>Expires <span>{Moment(expiresAt).format('DD/MM/YYYY')}</span></div>
                 </div>
                 <div className={"right"} >
-                    <div className={"name"}>{name}</div>
+                    <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
 
                     <div style={{display: "flex"}}>
                         <ContentListingEventDetails {...this.props}/>

@@ -33,3 +33,7 @@ export const updateEvent = event => ({
 export const clearFilter = () => ({
     type: filterTypes.CLEAR
 });
+
+export const clearUpdateFilter = () => ({
+    type: filterTypes.CLEAR_UPDATE
+});

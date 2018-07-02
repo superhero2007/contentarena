@@ -35,6 +35,7 @@ class ListingDetails extends React.Component {
             bidUpdated : false
         };
         this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
+        this.checkIcon = assetsBaseDir + "app/images/check.png";
         this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
         this.contactIcon = assetsBaseDir + "app/images/envelope.png";
         this.watchlistIcon = assetsBaseDir + "app/images/watchlist.png";
@@ -43,6 +44,7 @@ class ListingDetails extends React.Component {
         this.infoIcon = assetsBaseDir + "app/images/info.png";
         this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
+        this.baseDir = assetsBaseDir + "../";
     }
 
     componentWillReceiveProps(nextProps) {
@@ -161,7 +163,7 @@ class ListingDetails extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Address
+                            Street Name / Number
                         </label>
                         <input
                             style={inputStyle}
@@ -367,6 +369,22 @@ class ListingDetails extends React.Component {
         return !signature || (selectedPackage.salesMethod === 'BIDDING' && !bidUpdated ) || !terms;
     };
 
+    watchlist = () => {
+        let content = this.state.content;
+        let _this = this;
+
+        content.watchlist = !content.watchlist;
+        _this.setState({content});
+
+        ContentArena.Api.watchlist(content.customId).then(response => {
+            if ( response && response.success === true ) {
+                content.watchlist = !!response.state;
+                _this.setState({content});
+            }
+        });
+
+    };
+
     render() {
 
         const {onBack } = this.props;
@@ -384,7 +402,7 @@ class ListingDetails extends React.Component {
 
                         <div className={"header"}>
                             {!buyingMode && <button onClick={onBack} className="light-blue-button">
-                                <i className="fa fa-chevron-left"/> Back to results
+                                <i className="fa fa-chevron-left"/> Back
                             </button>}
 
                             {buyingMode && <button onClick={this.toggleBuyingMode} className="light-blue-button">
@@ -466,14 +484,18 @@ class ListingDetails extends React.Component {
                                     }}>Contact Seller</div>
                                 </div>
 
-                                <div style={{margin: '0 10px', display: 'flex'}}>
-                                    <img style={{width: 22, height: 15, marginTop: 3}} src={this.watchlistIcon}/>
+                                <div style={{margin: '0 10px', display: 'flex', cursor : 'pointer'}}
+                                     onClick={this.watchlist}>
+                                    {!content.watchlist &&
+                                        <img style={{width: 22, height: 15, marginTop: 3}} src={this.watchlistIcon}/>}
+                                    {content.watchlist &&
+                                    <img style={{width: 18, height: 18, marginTop: 2}} src={this.checkIcon}/>}
                                     <div style={{
                                         flex:1,
                                         color: '#2DA7E6',
                                         fontSize: 16,
-                                        textDecoration: 'underline',
-                                        margin: '0 10px'
+                                        textDecoration: (content.watchlist) ? '' : 'underline',
+                                        margin: '0 10px 0 5px'
 
                                     }}>Watchlist</div>
                                 </div>
@@ -697,13 +719,8 @@ class ListingDetails extends React.Component {
                                     onClick={e => {this.setState({showSuccessScreen : true})}}
                                     disabled={this.invalidPackage()}>Buy</button>
                         </div>
-
                     </div>}
                 </div>
-
-                {/*{buyingMode && <div>
-                    {selectedPackage.name}
-                </div>}*/}
             </div>
 
         );

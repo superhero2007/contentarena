@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
 
 const FileItem = ({item, onClick}) => (
-    <div>
-        {item.name} <i onClick={onClick} className="fa fa-close"></i>
+    <div style={{
+        border: '1px solid lightgray',
+        padding: 10,
+        marginTop: 5,
+        cursor : 'normal'
+    }}>
+        {item.name} <img style={{ right: 10, position: 'absolute', cursor: 'pointer'}} src={assetsBaseDir + "app/images/cancel.png"} onClick={onClick}/>
     </div>
 );
+
+const imageStyle = {
+    maxHeight: 250,
+    marginBottom: 5,
+    marginTop: 10
+};
 
 class FileSelector extends Component {
 
     constructor (props) {
         super(props);
+
+        let form = new FormData();
+
         this.state = {
-            form : new FormData()
+            form : form,
+            uploading : false
         }
     };
 
     handleUploadFile = (event) => {
-        const {isImage, onSelect, target} = this.props;
+        const {isImage, onSelect, target, tmp} = this.props;
         let _this = this;
 
         this.state.form.append(event.target.files[0].size, event.target.files[0]);
@@ -24,6 +39,15 @@ class FileSelector extends Component {
             form : this.state.form
         });
 
+        if ( tmp ) {
+            this.setState({ uploading : true});
+
+            ContentArena.ContentApi.saveTmpFile(event.target.files).then((response)=>{
+                if( onSelect ) onSelect( response  );
+                this.setState({ uploading : false});
+            });
+
+        }
 
         if ( isImage ) {
             this.getBase64(event.target.files[0], (response) => {
@@ -66,33 +90,48 @@ class FileSelector extends Component {
 
     render() {
 
-        const {label, isImage, previousImage} = this.props;
-        const {image} = this.state;
+        const {label, isImage, previousImage, selected, onRemove} = this.props;
+        const {image, uploading} = this.state;
 
         return (
-            <div className="base-input">
-                <label>{(label)?label:"Files"}</label>
-                <button className="standard-button" onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload</button>
-                <input
-                    className="is-hidden"
-                    onChange={this.handleUploadFile}
-                    accept=".png,.jpg, .pdf, .doc, .docx"
-                    id={"input-" + this.props.target}
-                    type="file"
-                    name={this.props.target + "[]"} />
-                { !isImage && this.getItems().map((item, i)=>{
-                    return <FileItem key={i} item={item} onClick={ () => this.remove(item.size)} />
-                })}
+            <div className="base-input" style={{flexDirection: 'column'}}>
+                <div style={{display: 'flex'}}>
+                    <label>{(label)?label:"Files"}</label>
+                    <button
+                        className="standard-button"
+                        disabled={uploading}
+                        onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload</button>
+                    <input
+                        className="is-hidden"
+                        onChange={this.handleUploadFile}
+                        accept=".png,.jpg, .pdf, .doc, .docx"
+                        id={"input-" + this.props.target}
+                        type="file"
+                        name={this.props.target + "[]"} />
+                    {uploading && <i className="fa fa-cog fa-spin"/>}
+                </div>
+                <div>
+                    {/*{ !isImage && this.getItems().map((item, i)=>{
+                        return <FileItem key={i} item={item} onClick={ () => this.remove(item.size)} />
+                    })}*/}
 
-                {
-                    isImage && image &&
-                        <img src={image} style={{width: 80, maxHeight: 48, marginLeft: 5}}/>
-                }
+                    {
+                        selected && selected.length > 0 && selected.map((s, i ) => {
+                            return <FileItem key={"key-" + i} item={{name: s.name}} onClick={onRemove} />
+                        })
+                    }
 
-                {
-                    previousImage &&
-                    <img src={assetsBaseDir + "../"  + previousImage} style={{width: 80, maxHeight: 48, marginLeft: 5}}/>
-                }
+                    {
+                        isImage && image &&
+                        <img src={image} style={imageStyle}/>
+                    }
+
+                    {
+                        previousImage &&
+                        <img src={assetsBaseDir + "../"  + previousImage}
+                             style={imageStyle}/>
+                    }
+                </div>
             </div>
         )
     }

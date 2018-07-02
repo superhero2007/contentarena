@@ -12,12 +12,16 @@ ContentArena.Utils = {
         content.tournament = (content.tournament) ? Array.isArray(content.tournament)? content.tournament : [content.tournament] : [];
         content.sportCategory = (content.sportCategory) ? Array.isArray(content.sportCategory)? content.sportCategory : [content.sportCategory] : [];
 
-        //if ( content.expiresAt ) content.expiresAt = new Date(content.expiresAt);
-
         if (content.selectedRightsBySuperRight){
             content.rightsPackage.forEach( (rp) => {
                 rp.selectedRights = content.selectedRightsBySuperRight[rp.id]['items'];
                 rp.exclusive = content.selectedRightsBySuperRight[rp.id]['exclusive'];
+            });
+        }
+
+        if (content.fixturesBySeason){
+            content.seasons.forEach( (s, i) => {
+                s.fixtures = content.fixturesBySeason[i]
             });
         }
 
@@ -39,11 +43,8 @@ ContentArena.Utils = {
         let c = (a, b) => {
             return (a > b) ? 1 : ((b > a) ? -1 : 0)
         };
-
         return c(a.territories.length, b.territories.length) || c(b.name, a.name);
     },
-
-
 
     addRegionBehaviour(selector) {
 

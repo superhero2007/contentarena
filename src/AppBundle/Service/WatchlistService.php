@@ -40,4 +40,9 @@ class WatchlistService
         }
     }
 
+    public function isInWatchlist($user, $content){
+        $watchlist = $this->em->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'user'=>$user]);
+        return !!$watchlist;
+    }
+
 }

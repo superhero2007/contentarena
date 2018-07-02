@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Service\BidService;
 use AppBundle\Service\ContentService;
+use AppBundle\Service\WatchlistService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,6 +89,15 @@ class ContentController extends Controller
     }
 
     /**
+     * @Route("/content/save/file", name="saveTmpFile")
+     */
+    public function saveTmpFile(Request $request, ContentService $contentService  )
+    {
+        $file = $contentService->saveTmpFiles( $request );
+        return new JsonResponse(array("success"=>true, "file"=> $file, 'name' => $request->files->get("file")->getClientOriginalName()));
+    }
+
+    /**
      * @Route("/content/draft/save", name="saveContentAsDraft")
      * @param Request $request
      * @param ContentService $contentService
@@ -104,10 +114,10 @@ class ContentController extends Controller
     /**
      * @Route("/listing/details", name="listingDetails")
      */
-    public function searchRights(Request $request){
+    public function searchRights(Request $request, WatchlistService $watchlistService){
 
         $customId = $request->get('customId');
-
+        $user = $this->getUser();
         //Take Repositories
         $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
 
@@ -119,8 +129,9 @@ class ContentController extends Controller
          */
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $watchlist = $watchlistService->isInWatchlist( $user, $content );
+        $content->setWatchlist($watchlist);
         $data = $serializer->serialize($content, 'json',SerializationContext::create()->setGroups(array('listing', 'details')));
-
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

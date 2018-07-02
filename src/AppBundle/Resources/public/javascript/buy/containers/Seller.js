@@ -69,13 +69,10 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Company address
+                                Street Name / Number
                             </div>
                             <div style={valueStyle}>
                                 {company.address}
-                                {company.city && " " + company.city}
-                                {company.zip && " " + company.zip}
-                                {company.country && " " + company.country.name}
                             </div>
                         </div>
                         <div style={rowStyle}>

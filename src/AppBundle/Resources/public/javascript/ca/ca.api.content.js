@@ -32,6 +32,32 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    saveTmpFile ( files ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        const data = new FormData();
+        data.append('file', files[0]);
+
+        $.ajax({
+            url: envhosturl + "content/save/file",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getByCustomId ( customId ) {
         var deferred = jQuery.Deferred(),
             _this = this;

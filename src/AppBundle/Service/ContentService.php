@@ -191,27 +191,14 @@ class ContentService
                 $season = $this->getSeason($seasonData, $tournament);
                 $seasons[] = $season;
                 $schedules[] = $seasonData->selectedSchedules;
+                if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
             }
 
             $content->setSchedulesBySeason($schedules);
-
+            if ( isset($fixtures) ) $content->setFixturesBySeason($fixtures);
             $content->setSeason($seasons);
         }
 
-        /**
-         * Set installments
-         */
-     /*   if ( isset($data->installments) ) {
-
-            $installments = array();
-
-            foreach ($data->installments as $installment){
-                $installment = $this->getInstallment($installment);
-                $installments[] = $installment;
-            }
-
-            $content->setInstallments($installments);
-        }*/
 
         $selectedRights = array();
 
@@ -230,6 +217,7 @@ class ContentService
         if ( isset($data->endDateMode) ) $content->setEndDateMode($data->endDateMode);
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
+        if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
 
 
         if ( isset($data->salesPackages) ) {
@@ -368,6 +356,17 @@ class ContentService
         }
 
         return $content;
+    }
+
+    public function saveTmpFiles( Request $request ){
+        $files = $request->files->get("file");
+
+        if ( count( $files ) > 0 ) {
+            $fileName = $this->fileUploader->tmpUpload($files);
+        }
+
+        return $fileName;
+
     }
 
     private function getSeason($seasonData, $tournament){

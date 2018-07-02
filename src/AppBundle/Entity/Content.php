@@ -72,6 +72,13 @@ class Content
     protected $draft = false;
 
     /**
+     * @var boolean
+     * @Groups({"listing"})
+     *
+     */
+    protected $watchlist = false;
+
+    /**
      * @var object
      *
      * @ORM\Column(name="website", type="object", nullable=true)
@@ -156,6 +163,13 @@ class Content
      * @Groups({"listing"})
      */
     private $programs;
+
+    /**
+     * @var object
+     * @ORM\Column(name="attachments", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $attachments;
 
 
 
@@ -1021,6 +1035,39 @@ class Content
     {
         $this->jurisdiction = $jurisdiction;
     }
+
+    /**
+     * @return object
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param object $attachments
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWatchlist()
+    {
+        return $this->watchlist;
+    }
+
+    /**
+     * @param bool $watchlist
+     */
+    public function setWatchlist($watchlist)
+    {
+        $this->watchlist = $watchlist;
+    }
+
 
 
 

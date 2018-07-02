@@ -14,6 +14,7 @@ export const contentType= {
     APPLY_SELECTION : 'APPLY_SELECTION',
     UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
     UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
+    UPDATE_ATTACHMENTS : 'UPDATE_ATTACHMENTS',
     ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES'
 
 };
@@ -27,6 +28,7 @@ export const content = (state = {
     seasons: [],
     programs : [],
     salesPackages : [],
+    attachments : [],
     endDateLimit : 30,
     counter : 0,
     currency : "EUR",
@@ -168,6 +170,27 @@ export const content = (state = {
 
             return Object.assign({}, state, {
                 salesPackages : salesPackages
+            });
+
+        case contentType.UPDATE_ATTACHMENTS:
+
+            let attachments = [...state.attachments];
+
+            if ( action.name === "remove" ) {
+
+                if ( attachments.length >= 1 ) {
+                    attachments.splice(action.index,1)
+                }
+            }
+
+            if ( action.name === "removeAll" ) {
+                attachments = [];
+            }
+
+            if ( action.name === "save" ) attachments[action.index] = action.value;
+
+            return Object.assign({}, state, {
+                attachments : attachments
             });
 
         case contentType.ADD_SALES_PACKAGES:

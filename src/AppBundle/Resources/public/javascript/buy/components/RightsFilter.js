@@ -19,12 +19,6 @@ class RightsFilter extends React.Component {
         this.props.updateCountries(value);
     };
 
-    clearFilter = () => {
-        this.props.clearFilter();
-        this.props.onFilter();
-    };
-
-
     render() {
         const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter} = this.props;
         return (
@@ -52,7 +46,6 @@ class RightsFilter extends React.Component {
                                             } else {
                                                 this.props.removeRight(right.id)
                                             }
-
                                         }}
                                         id={right.id}
                                     /> {right.name}
@@ -75,7 +68,7 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="standard-button" style={{margin:5}} onClick={this.clearFilter}>Clear</button>
+                        <button className="standard-button" style={{margin:5}} onClick={clearFilter}>Clear</button>
                         <button className="standard-button" style={{margin:5}} onClick={onFilter}>Apply</button>
                     </div>
 

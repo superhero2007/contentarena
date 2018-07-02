@@ -117,11 +117,12 @@ class ContentListingEventDetails extends React.Component {
                 {this.getFixtures().length === 1 &&
                 <div>{this.getFixtures()[0].name}</div>}
 
-                {rounds.length > 0 && <div>{roundsName}</div>}
+                {rounds.length === 1 && <div>{roundsName}</div>}
+                {rounds.length > 1 && <div>Multiple rounds</div>}
                 {matches.length === 1 && <div>
-                    ({matches[0].competitors.map(( competitor, i, list)=>{
+                    {matches[0].competitors.map(( competitor, i, list)=>{
                     return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
-                })})
+                })}
                 </div>}
 
             </div>

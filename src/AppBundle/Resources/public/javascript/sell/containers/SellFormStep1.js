@@ -330,6 +330,15 @@ class SellFormStep1 extends React.Component {
 
     };
 
+    addFile = (response) => {
+        const {attachments} = this.props;
+        let index = attachments.length ;
+        this.props.updateAttachments("save", index, {file: response.file, name : response.name } );
+    };
+
+    removeFile = ( index ) => {
+        this.props.updateAttachments("remove", index, null);
+    };
 
     render() {
         if ( this.props.step !== 1) return (null);
@@ -486,7 +495,12 @@ class SellFormStep1 extends React.Component {
                         <TagsInput inputProps={{placeholder: "Website"}} value={this.state.website} onChange={this.websitesUpdated} />
                     </div>
 
-                    <FileSelector target={"brochure"}/>
+                    <FileSelector
+                        target={"attachments"}
+                        selected={this.props.attachments}
+                        onSelect={this.addFile}
+                        onRemove={this.removeFile}
+                        tmp={true}/>
                 </div>}
             </div>
         );
@@ -504,6 +518,12 @@ const mapDispatchToProps = dispatch => {
             selectorType: type,
             index: index,
             key: key,
+            value: value
+        }),
+        updateAttachments : (name, index, value) => dispatch({
+            type: 'UPDATE_ATTACHMENTS',
+            name: name,
+            index: index,
             value: value
         }),
         openSportSelector : (index, selectedItems) => dispatch({

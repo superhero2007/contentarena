@@ -15,13 +15,16 @@ class FileUploader
 {
 
     private $targetDir;
-
+    private $tmpTargetDir;
     private $uploadsUriPrefix;
+    private $uploadsTmpUriPrefix;
 
-    public function __construct($targetDir, $uploadsUriPrefix)
+    public function __construct($targetDir, $tmpTargetDir, $uploadsUriPrefix, $uploadsTmpUriPrefix)
     {
         $this->targetDir = $targetDir;
+        $this->tmpTargetDir = $tmpTargetDir;
         $this->uploadsUriPrefix = $uploadsUriPrefix;
+        $this->uploadsTmpUriPrefix = $uploadsTmpUriPrefix;
     }
 
     public function saveImage( $image, $filepath ){
@@ -40,6 +43,16 @@ class FileUploader
         $file->move($this->getTargetDir() . "/" . $extension , $fileName);
 
         return $this->getUploadsUriPrefix(). "/" . $extension . "/" . $fileName;
+    }
+
+    public function tmpUpload(UploadedFile $file)
+    {
+        $extension = $file->guessExtension();
+        $fileName = md5(uniqid()).'.'.$extension;
+
+        $file->move($this->tmpTargetDir . "/" . $extension , $fileName);
+
+        return $this->uploadsTmpUriPrefix. "/" . $extension . "/" . $fileName;
     }
 
     public function getTargetDir()
