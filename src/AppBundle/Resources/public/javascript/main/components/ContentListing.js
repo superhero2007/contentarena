@@ -54,29 +54,21 @@ class ContentListing extends React.Component{
         return this.compareProperty(a.territories.length, b.territories.length) || this.compareProperty(b.name, a.name);
     };
 
-    sortByFilter = (a, b) => {
+    sortByFilter = (salesPackages) => {
 
         const { filter } = this.props;
 
+        let temp = [] ;
         let territories = filter.countries.map(c => c.value);
-        let aTerritories = a.territories.map(c => c.value);
-        let bTerritories = b.territories.map(c => c.value);
-        let aExcludedTerritories = a.excludedTerritories.map(c => c.value);
-        let bExcludedTerritories = b.excludedTerritories.map(c => c.value);
-        let aTotal = 0;
-        let bTotal = 0;
 
-        territories.forEach(t => {
-            if ( aTerritories.indexOf(t) !== -1
-                //|| a.territoriesMethod === "WORLDWIDE"
-                || (a.territoriesMethod === "WORLDWIDE_EXCLUDING" && aExcludedTerritories.indexOf(t) === -1 )) aTotal++;
-            if ( bTerritories.indexOf(t) !== -1
-                //|| b.territoriesMethod === "WORLDWIDE"
-                || (b.territoriesMethod === "WORLDWIDE_EXCLUDING" && bExcludedTerritories.indexOf(t) === -1 )) bTotal++;
-
+        salesPackages.forEach((e,i,l)=>{
+            if ( territories.indexOf(e.name) !== -1 ) {
+                temp.push(e);
+                l.splice(i, 1)
+            }
         });
 
-        return this.compareProperty(bTotal, aTotal);
+        return [...temp,...salesPackages];
     };
 
     compareProperty = (a, b) =>  {
@@ -87,7 +79,6 @@ class ContentListing extends React.Component{
         const {
             name,
             expiresAt,
-            salesPackages,
             programs,
             rightsPackage,
             onSelectName,
@@ -100,11 +91,12 @@ class ContentListing extends React.Component{
 
         const {confirmWatchlistRemove} = this.state;
 
+        let salesPackages = this.props.salesPackages;
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         salesPackages.sort(this.sortSalesPackages).reverse();
 
         if ( filter && filter.countries.length > 0 && sortSalesPackages) {
-            salesPackages.sort(this.sortByFilter);
+            salesPackages = this.sortByFilter(salesPackages);
         }
 
         return (
