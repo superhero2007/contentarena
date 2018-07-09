@@ -26,7 +26,8 @@ class FileSelector extends Component {
 
         this.state = {
             form : form,
-            uploading : false
+            uploading : false,
+            accept : props.accept || [".png", ".jpg"]
         }
     };
 
@@ -104,7 +105,7 @@ class FileSelector extends Component {
                     <input
                         className="is-hidden"
                         onChange={this.handleUploadFile}
-                        accept=".png,.jpg, .pdf, .doc, .docx"
+                        accept={this.state.accept.join(", ")}
                         id={"input-" + this.props.target}
                         type="file"
                         name={this.props.target + "[]"} />

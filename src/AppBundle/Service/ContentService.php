@@ -293,7 +293,7 @@ class ContentService
 
 
             if ( isset($data->vat) ) $company->setVat($data->vat);
-            if ( isset($data->zip) ) $company->setZip($data->vat);
+            if ( isset($data->zip) ) $company->setZip($data->zip);
             if ( isset($data->registrationNumber) ) $company->setRegistrationNumber($data->registrationNumber);
             if ( isset($data->address) ) $company->setAddress($data->address);
             if ( isset($data->city) ) $company->setCity($data->city);
@@ -412,9 +412,6 @@ class ContentService
                 }
                 $this->em->flush();
             }
-
-
-
         }
 
         return $season;
