@@ -2,15 +2,10 @@
 
 namespace AppBundle\Controller;
 
-
-use AppBundle\Entity\User;
-use AppBundle\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AppBundle\Service\ContentService;
-use AppBundle\Entity\Watchlist;
 use AppBundle\Service\WatchlistService;
 
 class MyContentController extends Controller
@@ -42,6 +37,14 @@ class MyContentController extends Controller
 
         $user = $this->getUser();
         $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['user'=>$user]);
+
+
+        $content = [];
+
+        foreach ($watchlists as $watchlist){
+            $content[] = $watchlist->getContent();
+        }
+
 
         return $this->render('@App/myContent/myContent.listings.watchlist.html.twig', [
             'user' => $user,

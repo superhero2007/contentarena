@@ -29,12 +29,6 @@ class DefaultController extends Controller
         ));
     }
 
-    /**
-     * @Route("/genus/feed", name="genus_feed")
-     */
-    public function feedAction(Request $request)
-    {
-    }
 
     /**
      * @Route("/contract/preview", name="contractPreview")
@@ -65,17 +59,4 @@ class DefaultController extends Controller
         );*/
     }
 
-    /**
-     * @Route("/profile", name="profile")
-     */
-    public function profileAction(Request $request)
-    {
-
-        $user = $this->getUser();
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'user' => $user
-        ]);
-
-    }
 }

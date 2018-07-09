@@ -22,9 +22,9 @@
         </script>
 
     </head>
-    <body class="page-home main-page-home">
+    <body class="page-home">
 
-        <nav class="uk-navbar-container" uk-navbar>
+        {#<nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
 
                 <a class="uk-navbar-item uk-logo" href="{{ path('homepage') }}">
@@ -34,19 +34,19 @@
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
-                    <li class="{% if app.request.get('_route') == 'buy'%} uk-active {% endif %}">
-                        <a href="{{ path('buy') }}">
+                    <li class="{% if app.request.get('_route') == 'marketplace'%} uk-active {% endif %}">
+                        <a href="{{ path('marketplace') }}">
                             Marketplace
                         </a>
                     </li>
                     <li class="{% if app.request.get('_route') == 'sell'%} uk-active {% endif %}">
                         <a href="{{ path('sell') }}">
-                            Sell
+                            My listings
                         </a>
                     </li>
                     <li class="{% if app.request.get('_route') == 'myContent'%} uk-active {% endif %}">
                         <a href="{{ path('myContent') }}">
-                            My content
+                            My acquisitions
                         </a>
                     </li>
                     <li class="{% if app.request.get('_route') == 'messages'%} uk-active {% endif %}">
@@ -91,7 +91,7 @@
 
                 </ul>
             </div>
-        </nav>
+        </nav>#}
 
 
         {% if app.request.hasPreviousSession %}
@@ -123,7 +123,7 @@
 
     {% endblock %}
 
-        <div class="footer">
+        {#<div class="footer">
             <div class="logo">
                 <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}">
             </div>
@@ -140,7 +140,7 @@
                     <li><a href="mailto:info@contentarena.com" class="emo_email uk-icon-button uk-icon" uk-icon="icon: mail"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polyline fill="none" stroke="#000" points="1.4,6.5 10,11 18.6,6.5"></polyline> <path d="M 1,4 1,16 19,16 19,4 1,4 Z M 18,15 2,15 2,5 18,5 18,15 Z"></path></svg></a></li>
                 </ul>
             </div>
-        </div>
+        </div>#}
 
     </body>
 </html>

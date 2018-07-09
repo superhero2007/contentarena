@@ -19,6 +19,7 @@ class SalesPackage
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"listing"})
      */
     private $id;
 
@@ -42,7 +43,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="territories_method", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing","closed"})
      */
     private $territoriesMethod = false;
 
@@ -57,14 +58,14 @@ class SalesPackage
     /**
      * @var object
      * @ORM\Column(name="installments", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $installments;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $currency;
 
@@ -81,7 +82,7 @@ class SalesPackage
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_sales_package_territory_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $territories;
 

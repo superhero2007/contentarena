@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Bid
@@ -18,6 +19,7 @@ class Bid
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"closed"})
      */
     private $id;
 
@@ -25,67 +27,75 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="custom_id", type="string")
+     * @Groups({"closed"})
      */
     private $customId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="amount", type="bigint")
+     * @ORM\Column(name="amount", type="decimal")
+     * @Groups({"closed"})
      */
     private $amount;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="total_fee", type="decimal")
+     * @Groups({"closed"})
+     */
+    private $totalFee;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"closed"})
      */
     private $content;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency", inversedBy="bid")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $currency;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="bid")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $company;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"closed"})
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"closed"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"closed"})
      */
     private $buyerUser;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="bid")
-     * @ORM\JoinTable(name="bid_countries",
-     *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="bid_countries_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage", inversedBy="bid")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"closed"})
      */
-    private $countries;
+    private $salesPackage;
+
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="signature", type="string")
+     */
+    private $signature;
+
 
     /**
      * @var mixed
      *
      * @ORM\Column(name="created_at", type="datetime")
+     * @Groups({"closed"})
      */
     private $createdAt;
 
@@ -93,11 +103,11 @@ class Bid
      * @var mixed
      *
      * @ORM\Column(name="updated_at", type="datetime")
+     * @Groups({"closed"})
      */
     private $updatedAt;
 
     public function __construct() {
-        $this->countries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -131,38 +141,6 @@ class Bid
     /**
      * @return mixed
      */
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-
-    /**
-     * @param mixed $currency
-     */
-    public function setCurrency($currency)
-    {
-        $this->currency = $currency;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCompany()
-    {
-        return $this->company;
-    }
-
-    /**
-     * @param mixed $company
-     */
-    public function setCompany($company)
-    {
-        $this->company = $company;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBuyerUser()
     {
         return $this->buyerUser;
@@ -174,22 +152,6 @@ class Bid
     public function setBuyerUser($buyerUser)
     {
         $this->buyerUser = $buyerUser;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCountries()
-    {
-        return $this->countries;
-    }
-
-    /**
-     * @param mixed $countries
-     */
-    public function setCountries($countries)
-    {
-        $this->countries = $countries;
     }
 
     /**
@@ -329,4 +291,55 @@ class Bid
     {
         $this->countries->removeElement($country);
     }
+
+    /**
+     * @return int
+     */
+    public function getTotalFee()
+    {
+        return $this->totalFee;
+    }
+
+    /**
+     * @param int $totalFee
+     */
+    public function setTotalFee($totalFee)
+    {
+        $this->totalFee = $totalFee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSalesPackage()
+    {
+        return $this->salesPackage;
+    }
+
+    /**
+     * @param mixed $salesPackage
+     */
+    public function setSalesPackage($salesPackage)
+    {
+        $this->salesPackage = $salesPackage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @param mixed $signature
+     */
+    public function setSignature($signature)
+    {
+        $this->signature = $signature;
+    }
+
+
+
 }

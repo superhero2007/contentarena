@@ -33,6 +33,14 @@ security:
         - { path: ^/contract, role: ROLE_USER }
         - { path: ^/mycontent, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
+        - { path: ^/listing, role: ROLE_USER }
+        - { path: ^/settings, role: ROLE_USER }
+        - { path: ^/messages, role: ROLE_USER }
         - { path: ^/marketplace, role: ROLE_USER }
+        - { path: ^/managelistings, role: ROLE_USER }
+        - { path: ^/commercialactivity, role: ROLE_USER }
+        - { path: ^/watchlist, role: ROLE_USER }
         - { path: ^/buy, role: ROLE_USER }
+        - { path: ^/api, role: ROLE_USER }
+        - { path: ^/closeddeals, role: ROLE_USER }
         - { path: ^/content/draft, role: ROLE_USER }

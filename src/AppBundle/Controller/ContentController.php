@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Service\BidService;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\WatchlistService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,29 +17,6 @@ use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 class ContentController extends Controller
 {
 
-
-    /**
-     * @Route("/content/place_bid", name="contentPlaceBid")
-     */
-    public function contentPlaceBid(Request $request, BidService $bidService)
-    {
-        if (!empty(json_decode($request->request->get('content-data')))) {
-
-            $user = $this->getUser();
-
-            /**
-             * saving data into Bid entity by using bidService class
-             */
-
-            if($bidService->saveBidsData($request,$user)){
-                $this->addFlash('success', 'Data was saved successfully');
-            }
-
-            return $this->redirectToRoute('showContent', ['customId' => $request->request->get('custom-id')]);
-        }
-        return $this->redirectToRoute('showContent', ['customId' => $request->request->get('custom-id')]);
-
-    }
 
     /**
      * @Route("/content/{customId}", name="showContent")
@@ -136,7 +112,6 @@ class ContentController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-
 
     /**
      * @Route("/content/pending-listings/", name="pendingListings")

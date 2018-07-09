@@ -25,14 +25,14 @@ class Content
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     protected $customId;
 
@@ -171,8 +171,6 @@ class Content
      */
     private $attachments;
 
-
-
     /**
      * @var string
      *
@@ -193,7 +191,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $name;
 
@@ -213,7 +211,7 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $company;
 
@@ -259,7 +257,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $rightsPackage;
 

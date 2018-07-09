@@ -26,32 +26,6 @@ class SellController extends Controller
 
     }
 
-    /**
-     * @Route("/sell/published", name="sellPublished")
-     */
-    public function sellPublishedAction(Request $request, ContentService $contentService, FileUploader $fileUploader)
-    {
-        $user = $this->getUser();
-        $contentService->createContent($user, $request);
-
-        return $this->render('@App/sell/contentUploaded.html.twig', [
-            'user' => $user,
-        ]);
-
-    }
-
-    /**
-     * @Route("/test/sell/published", name="testSellPublished")
-     */
-    public function testSellPublishedAction(){
-
-        $user = $this->getUser();
-
-        return $this->render('sell/contentUploaded.html.twig', [
-            'user' => $user,
-        ]);
-
-    }
 
     /**
      * @Route("/sell/new", name="newListing")
@@ -267,17 +241,5 @@ class SellController extends Controller
 
     }
 
-    /**
-     * @Route("/sell/schedule", name="sellSchedule")
-     */
-    public function sellScheduleAction(Request $request)
-    {
-
-        $user = $this->getUser();
-        return $this->render('@App/sell/sell.schedule.html.twig', [
-            'user' => $user,
-        ]);
-
-    }
 
 }

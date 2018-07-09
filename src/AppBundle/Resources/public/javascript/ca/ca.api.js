@@ -59,7 +59,6 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     getJsonContent ( filter) {
         let deferred = jQuery.Deferred();
 
@@ -80,7 +79,6 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-
     saveFilter ( filter) {
         let deferred = jQuery.Deferred();
 

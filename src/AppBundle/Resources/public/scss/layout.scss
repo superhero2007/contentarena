@@ -6,8 +6,9 @@
 }
 
 .main-content {
-    background-color: $container-background-color;
-    padding: 1px 0;
+    background-color: white;
+    color: #1a4b63;
+    height: 100%;
 }
 
 /* MENU */
@@ -335,20 +336,6 @@ textarea {
 
 }
 
-.chosen-container {
-    margin-left: 5px;
-    height: 26px;
-    min-width: 50%;
-}
-
-.chosen-container-multi .chosen-choices li.search-choice {
-    margin: 2px 5px 2px 0 !important;
-}
-
-input.chosen-search-input {
-    height: 24px !important;
-    margin: 0 !important;
-}
 
 .close-box {
     position: absolute;

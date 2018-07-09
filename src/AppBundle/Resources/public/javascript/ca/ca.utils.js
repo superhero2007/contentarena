@@ -46,69 +46,8 @@ ContentArena.Utils = {
         return c(a.territories.length, b.territories.length) || c(b.name, a.name);
     },
 
-    addRegionBehaviour(selector) {
 
-        $.ajax({
-            url: hosturl + "v1/feed/test",
-            type: "GET",
-            success: function (response) {
 
-                response.sort(function (a, b) {
-                    return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0);
-                });
-
-                $(selector).html("");
-
-                /**
-                 * @param {{ country_code: string }} v
-                 */
-                $.each(response, function (k, v) {
-
-                    var option = '<option value=' + v.country_code + '>' + v.name + '</option>';
-
-                    $(selector).each(function (key, select) {
-                        $(select).append(option);
-                    });
-
-                });
-
-                $(selector).chosen({width: "50%"});
-
-            }
-        });
-    },
-    addLanguageBehaviour( selector ){
-
-        $(selector).each(function () {
-
-            var _this = $(this);
-
-            if (_this.data("chosen") !== undefined ) return;
-
-            $.each(ContentArena.Languages.Short, function(k, v){
-
-                var option = '<option value=' + k + '>' + v + '</option>';
-                _this.append(option);
-            });
-
-            _this.chosen();
-
-            _this.chosen().change(function (e, opt) {
-                if (opt.selected && opt.selected === "all"){
-
-                    _this.html("");
-                    $.each(ContentArena.Languages.Long, function(k, v){
-
-                        var option = '<option value=' + k + '>' + v + '</option>';
-                        _this.append(option);
-                    });
-
-                    _this.trigger("chosen:updated");
-                }
-            });
-
-        })
-    },
     isAPIAvailable() {
         // Check for the various File API support.
         if (window.File && window.FileReader && window.FileList && window.Blob) {

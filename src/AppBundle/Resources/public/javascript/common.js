@@ -12,3 +12,4 @@ require('../scss/package.selector.scss');
 require('../scss/buttons.scss');
 require('../scss/selector.scss');
 require('../scss/digital.signature.scss');
+require('../scss/manage.scss');

@@ -7,6 +7,7 @@ import SellFormStep2 from "../containers/SellFormStep2";
 import SellFormStep3 from "../containers/SellFormStep3";
 import SellFormStep4 from "../containers/SellFormStep4";
 import Selector from "../../main/components/Selector";
+import HeaderBar from "../../main/components/HeaderBar";
 import { connect } from "react-redux";
 import store from '../store';
 import ReactTooltip from 'react-tooltip';
@@ -39,17 +40,19 @@ class SellForm extends React.Component {
     } ;
 
     render() {
-        let _this = this;
         return (
-            <div className="main-container">
-                <Selector style={{zIndex: 100}}/>
-                <SellFormSteps />
-                <SellFormStep1/>
-                <SellFormStep2 packages={this.props.packages} />
-                <SellFormStep3 packages={this.props.packages} />
-                <SellFormStep4/>
-                <SellButtons />
-                <ReactTooltip html={true} />
+            <div className={"manager-container"}>
+                <HeaderBar tab={"MANAGE_LISTINGS"} profile={"SELLER"}/>
+                <div className="manager-content">
+                    <Selector style={{zIndex: 100}}/>
+                    <SellFormSteps />
+                    <SellFormStep1/>
+                    <SellFormStep2 packages={this.props.packages} />
+                    <SellFormStep3 packages={this.props.packages} />
+                    <SellFormStep4/>
+                    <SellButtons />
+                    <ReactTooltip html={true} />
+                </div>
             </div>
         );
     }

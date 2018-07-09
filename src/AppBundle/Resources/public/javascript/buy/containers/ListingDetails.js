@@ -15,11 +15,17 @@ import {customStyles} from "../../main/styles/custom";
 import {companyIsValid} from "../../sell/actions/validationActions";
 import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
+import {content} from "../../sell/reducers/content";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
-const bidButtonStyle = { height: 36, width: 100, padding: 5, marginLeft: 30 };
-
+const bidButtonStyle = { height: 34, width: 75, padding: 5, marginLeft: 10, fontSize: 14, marginRight: 10 };
+const bidTextBoxStyle = {
+    backgroundColor: "#fff",
+    padding: '5px 10px',
+    border: '1px solid lightgrey',
+    marginLeft: 5
+};
 
 class ListingDetails extends React.Component {
 
@@ -45,6 +51,20 @@ class ListingDetails extends React.Component {
         this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
         this.baseDir = assetsBaseDir + "../";
+    }
+
+    componentDidMount (){
+        const {salesPackage} = this.props;
+        const {content} = this.state;
+
+        let selectedPackage;
+
+        if (salesPackage){
+            selectedPackage = content.salesPackages.filter(p=>{return Number(p.id)===Number(salesPackage)})[0];
+
+            this.selectPackage(selectedPackage);
+        }
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -364,6 +384,25 @@ class ListingDetails extends React.Component {
         })
     };
 
+    placeBid = () => {
+        const {bid, selectedPackage, signature, content } = this.state;
+
+        let bidObj = {
+            amount : bid,
+            salesPackage : selectedPackage.id,
+            signature : signature,
+            totalFee : this.getTotalFee(),
+            content : content.id,
+            salesMethod : selectedPackage.salesMethod
+        };
+
+        this.setState({showSuccessScreen : true});
+        ContentArena.ContentApi.placeBid(bidObj).then(r =>{
+            console.log(r)
+        });
+
+    };
+
     invalidPackage = () => {
         const {signature, selectedPackage, bidUpdated, terms} = this.state;
         return !signature || (selectedPackage.salesMethod === 'BIDDING' && !bidUpdated ) || !terms;
@@ -456,7 +495,7 @@ class ListingDetails extends React.Component {
                         <div className={"date"}>
                             End of license period
                             <span>
-                            { content.endDateMode === "LIMITED"  && content.endDateLimit + " days from contract conclusion"}
+                            { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + " days from contract conclusion"}
                             { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
                             { content.endDateMode === "UNLIMITED"  && " Unlimited"}
                             </span>
@@ -547,93 +586,150 @@ class ListingDetails extends React.Component {
                         </div>
 
                         {/*TERRITORIES*/}
-                        <div style={{ display: 'flex',margin: '0px 40px'}}>
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <div style={{
+                                flex: 1,
+                                paddingLeft: 30,
+                                paddingTop: 5,
+                                fontWeight: 600,
+                                display: 'flex',
+                                alignItems: 'center'
 
-                            {selectedPackage.bundleMethod === "SELL_AS_BUNDLE"
-                            && selectedPackage.territories.length > 1
-                            && <div style={{  }}>
-                                <img style={{ width: 26, height: 23}} src={this.packageIcon}/>
-                            </div>
-                            }
+                            }}>Sales bundle</div>
+                            <div style={{
+                                flex: '2.5 1 0%',
+                            }}>
+                                <div style={{
+                                    padding: 12,
+                                    border: '1px solid #DDE1E7',
+                                    backgroundColor: '#FAFBFC',
+                                    margin: 5,
+                                    boxSizing: 'border-box',
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    color: 'grey',
+                                    maxWidth: 750
+                                }}>
 
-                            {selectedPackage.territories.length > 1 && <div style={{margin: '0 15px', fontWeight: 600}}>
-                                {selectedPackage.territories.length}
-                            </div>}
+                                    {selectedPackage.bundleMethod === "SELL_AS_BUNDLE"
+                                    && selectedPackage.territories.length > 1
+                                    && <div style={{  }}>
+                                        <img style={{ width: 26, height: 23}} src={this.packageIcon}/>
+                                    </div>
+                                    }
 
-                            <div>
-                                {selectedPackage.name}
-                                {
-                                    extraTerritories && extraTerritories.length > 3 && <span
-                                        style={{
-                                            color: '#2DA7E6',
-                                            textDecoration: 'underline',
-                                            marginLeft : 5,
-                                            cursor : 'pointer'
-                                        }}
-                                        onClick={() => {this.showAllTerritories(extraTerritories)}}>
+                                    {selectedPackage.territories.length > 1 && <div style={{margin: '0 15px', fontWeight: 600}}>
+                                        {selectedPackage.territories.length}
+                                    </div>}
+
+                                    <div>
+                                        {selectedPackage.name}
+                                        {
+                                            extraTerritories && extraTerritories.length > 3 && <span
+                                                style={{
+                                                    color: '#2DA7E6',
+                                                    textDecoration: 'underline',
+                                                    marginLeft : 5,
+                                                    cursor : 'pointer'
+                                                }}
+                                                onClick={() => {this.showAllTerritories(extraTerritories)}}>
                                                 {"+" + (extraTerritories.length - 3)}
                                             </span>
-                                }
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         {/*FEE*/}
-                        <div style={{ margin: '20px 40px'}}>
-                            {selectedPackage.salesMethod === "FIXED" &&
-                            <div>
-                                License fee: {selectedPackage.fee + getCurrencySymbol(selectedPackage.currency.code)}
-                            </div>}
-
-                            {selectedPackage.salesMethod === "BIDDING" &&
-                            <div style={{ display : 'flex', alignItems: 'center'}}>
-                                Bid:
-                                {!bidUpdated &&
-                                <input
-                                    style={{
-                                        padding: '8px 10px',
-                                        width: 100,
-                                        marginLeft: 50,
-                                        marginRight: 10,
-                                        textAlign: 'right'
-                                    }}
-                                    type="number"
-                                    value={bid}
-                                    onChange={e=>{ this.setState({bid:e.target.value})}}
-                                    min={selectedPackage.fee}/>}
-                                {bidUpdated && " " +selectedPackage.fee}
-                                {getCurrencySymbol(selectedPackage.currency.code)}
-                                {!bidUpdated && <button className="standard-button" style={bidButtonStyle} onClick={this.setBid}>Apply</button>}
-                                {bidUpdated && <button className="link-button" onClick={this.editBid}>Raise</button>}
-                            </div>}
-
+                        <div style={{display: 'flex', marginBottom: 10}}>
                             <div style={{
-                                margin: '5px 0'
-                            }}>
-                                Technical fee: {technicalFee.TECHNICAL_FEE === "ON_TOP" && technicalFee.TECHNICAL_FEE_PERCENTAGE + "%"}
-                                {technicalFee.TECHNICAL_FEE !== "ON_TOP" && "Included"}
-                            </div>
-
-                            <div style={{
-                                fontSize: 18,
+                                flex: 1,
+                                paddingLeft: 30,
+                                paddingTop: 5,
                                 fontWeight: 600,
-                                margin: '5px 0'
-                            }}>
-                                Total {this.getTotalFee() + getCurrencySymbol(selectedPackage.currency.code)}
-                            </div>
+                                display: 'flex',
+                                alignItems: 'center'
 
+                            }}>Commercial information</div>
+                            <div style={{
+                                flex: '2.5 1 0%',
+                            }}>
+                                <div style={{
+                                    padding: '8px 12px',
+                                    border: '1px solid #DDE1E7',
+                                    backgroundColor: '#FAFBFC',
+                                    margin: 5,
+                                    boxSizing: 'border-box',
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    color: 'grey',
+                                    maxWidth: 750
+                                }}>
+                                    {selectedPackage.salesMethod === "FIXED" &&
+                                    <div style={{ display : 'flex', alignItems: 'center'}}>
+                                        License fee: <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>
+                                    </div>}
+
+                                    {selectedPackage.salesMethod === "BIDDING" &&
+                                    <div style={{ display : 'flex', alignItems: 'center'}}>
+                                        Bid:
+                                        {!bidUpdated &&
+                                        <input
+                                            style={{
+                                                padding: '6px 10px',
+                                                width: 100,
+                                                marginLeft: 10,
+                                                marginRight: 10,
+                                                textAlign: 'right'
+                                            }}
+                                            type="number"
+                                            value={bid}
+                                            onChange={e=>{ this.setState({bid:e.target.value})}}
+                                            min={selectedPackage.fee}/>}
+                                        {bidUpdated && <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>}
+                                        {!bidUpdated && getCurrencySymbol(selectedPackage.currency.code)}
+                                        {!bidUpdated && <button className="standard-button" style={bidButtonStyle} onClick={this.setBid}>Apply</button>}
+                                        {bidUpdated && <button className="link-button" onClick={this.editBid}>Raise</button>}
+                                    </div>}
+
+                                    <div style={{
+                                        margin: '5px 10px'
+                                    }}>
+                                        Technical fee:
+                                        <span style={bidTextBoxStyle}>
+                                            {technicalFee.TECHNICAL_FEE === "ON_TOP" && technicalFee.TECHNICAL_FEE_PERCENTAGE + "%"}
+                                            {technicalFee.TECHNICAL_FEE !== "ON_TOP" && "Included"}
+                                        </span>
+                                    </div>
+
+                                    <div style={{
+                                        margin: '5px 10px'
+                                    }}>
+                                        Total:
+                                        <span style={bidTextBoxStyle}>
+                                            {this.getTotalFee() + getCurrencySymbol(selectedPackage.currency.code)}
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
+
 
                         {/*PAYMENT DETAILS*/}
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <div style={{
                                 flex: 1,
-                                paddingLeft: 40,
+                                paddingLeft: 30,
                                 paddingTop: 5,
                                 fontWeight: 600,
+                                display: 'flex',
+                                alignItems: 'center'
 
                             }}>Payment details</div>
                             <div style={{
-                                flex: 2,
+                                flex: '2.5 1 0%',
                             }}>
                                 {
                                     selectedPackage.installments && selectedPackage.installments.map((installment, index) => {
@@ -645,10 +741,11 @@ class ListingDetails extends React.Component {
                                             boxSizing: 'border-box',
                                             display: 'flex',
                                             flexDirection: 'row',
-                                            color: 'grey'
+                                            color: 'grey',
+                                            maxWidth: 750
                                         }}>
                                             <div style={{
-                                                margin: '0 10px',
+                                                margin: '0 10px 0 0',
                                                 fontWeight: 600
                                             }}>{this.ordinal_suffix_of(index + 1)} installment
                                             </div>
@@ -664,23 +761,38 @@ class ListingDetails extends React.Component {
                         </div>
 
                         {/*COMPANY*/}
-                        <div style={{display: 'flex', margin: '20px 0', alignItems: 'center'}}>
+                        <div style={{display: 'flex', marginBottom: 10}}>
                             <div style={{
                                 flex: 1,
-                                paddingLeft: 40,
+                                paddingLeft: 30,
                                 paddingTop: 5,
                                 fontWeight: 600,
-                            }}>Company Address</div>
+                                display: 'flex',
+                                alignItems: 'center'
+
+                            }}>Company address</div>
                             <div style={{
-                                flex: 2,
+                                flex: '2.5 1 0%',
                             }}>
-                                {
-                                    [company.legalName, company.address, company.zip, company.country.name].join(", ")
-                                }
+                                <div style={{
+                                    padding: 12,
+                                    border: '1px solid #DDE1E7',
+                                    backgroundColor: '#FAFBFC',
+                                    margin: 5,
+                                    boxSizing: 'border-box',
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    color: 'grey',
+                                    maxWidth: 750
+                                }}>
+                                    {
+                                        [company.legalName, company.address, company.zip, company.country.name].join(", ")
+                                    }
+                                    <img src={this.draftIcon}
+                                         onClick={e => {this.setState({editCompanyOpen: true})}}
+                                         style={{cursor: 'pointer', margin: '-2px 10px'}} />
+                                </div>
                             </div>
-                            <img src={this.draftIcon}
-                                 onClick={e => {this.setState({editCompanyOpen: true})}}
-                                 style={{cursor: 'pointer'}} />
                         </div>
 
 
@@ -716,7 +828,7 @@ class ListingDetails extends React.Component {
                             marginBottom: 40
                         }}>
                             <button className="standard-button"
-                                    onClick={e => {this.setState({showSuccessScreen : true})}}
+                                    onClick={this.placeBid}
                                     disabled={this.invalidPackage()}>Buy</button>
                         </div>
                     </div>}

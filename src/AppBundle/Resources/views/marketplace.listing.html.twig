@@ -3,7 +3,6 @@
 {% block stylesheets %}
 
     {{ parent() }}
-    <link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet"/>
     <link href="{{ asset('assets/buy.css') }}" type="text/css" rel="stylesheet"/>
 
 {% endblock %}
@@ -15,9 +14,9 @@
          data-rights="{{ rights }}"
          data-company="{{ company }}"
          data-custom-id="{{ customId }}"
+         data-sales-package="{{ salesPackage }}"
          id="marketplace-wrapper">
     </div>
-
 
 {% endblock main_content %}
 

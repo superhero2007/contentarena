@@ -13,6 +13,8 @@ class ContentListing extends React.Component{
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
         this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
+        this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
+        this.bucketicon = assetsBaseDir + "app/images/bucket.png";
     }
 
     getFee = (salesPackage) => {
@@ -28,6 +30,24 @@ class ContentListing extends React.Component{
 
       if ( onSelect ) onSelect(customId);
 
+    };
+
+    confirmRemoveFromWatchlist = (e) =>{
+        this.setState({confirmWatchlistRemove : true});
+        e.stopPropagation();
+    };
+
+    cancelRemoveFromWatchlist = (e) =>{
+        this.setState({confirmWatchlistRemove : false});
+        e.stopPropagation();
+    };
+
+    removeFromWatchlist = (e) => {
+        const {customId, onWatchlistRemove} = this.props;
+        ContentArena.Api.watchlist(customId);
+
+        if ( onWatchlistRemove ) onWatchlistRemove(customId);
+        e.stopPropagation();
     };
 
     sortSalesPackages = (a, b) => {
@@ -56,10 +76,7 @@ class ContentListing extends React.Component{
 
         });
 
-
         return this.compareProperty(bTotal, aTotal);
-
-
     };
 
     compareProperty = (a, b) =>  {
@@ -77,8 +94,11 @@ class ContentListing extends React.Component{
             imageBase64,
             image,
             filter,
-            sortSalesPackages
+            sortSalesPackages,
+            watchlistRemove
         } = this.props;
+
+        const {confirmWatchlistRemove} = this.state;
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         salesPackages.sort(this.sortSalesPackages).reverse();
@@ -101,22 +121,70 @@ class ContentListing extends React.Component{
 
                     <div style={{display: "flex"}}>
                         <ContentListingEventDetails {...this.props}/>
-                        <div style={{flex: 2, flexDirection: "column" }}>
+
+                        {watchlistRemove && !confirmWatchlistRemove &&
+                        <img style={{
+                            cursor : 'pointer',
+                            position: 'absolute',
+                            right: 0,
+                            top : 0,
+                            margin: '0 5px'
+
+                        }} src={this.bucketicon} onClick={this.confirmRemoveFromWatchlist}/>}
+
+                        {confirmWatchlistRemove && <div style={{
+                            position: 'absolute',
+                            right: 0,
+                            top : 0,
+                            margin: '0 5px',
+                            border : '1px solid lightgrey',
+                            padding : 5,
+                            fontSize: 13
+                        }}>
+                            <span>Remove from Watchlist?</span>
+                            <span onClick={this.removeFromWatchlist} style={{
+                                cursor : 'pointer',
+                                margin: '0 15px',
+                                color : 'red'
+                            }}>
+                                Yes
+                            </span>
+                            <span onClick={this.cancelRemoveFromWatchlist} style={{
+                                cursor : 'pointer',
+                                color : 'green'
+                            }}>
+                                Cancel
+                            </span>
+                        </div>}
+
+                        <div style={{
+                            flex: 2,
+                            flexDirection: "column",
+                            flexWrap: 'wrap',
+                            maxHeight: 200,
+                            display: 'flex'
+                        }}>
                             {
                                 rightsPackage.map(( sr,i )=>{
                                     return <div key={i}  style={{
                                         minHeight: 46,
                                         flexDirection: 'row',
                                         display: 'flex',
-                                        alignItems: 'center'
+                                        alignItems: 'center',
+                                        flex: '1 1 40px'
                                     }}>
-                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>
-                                        <div style={{display: 'flex', flexDirection: "column"  }}>
-                                            {sr.exclusive && <span style={{fontSize: 10}}>EXCLUSIVE</span>}
-                                            {sr.shortLabel !== "PR" && sr.name}
-                                            {sr.shortLabel === "PR" && programs[0] && programs[0].name &&
+                                        {!sr.exclusive &&
+                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
+
+                                        {sr.exclusive &&
+                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
+
+                                        <div style={{display: 'flex', flexDirection: "row"  }}>
+                                            { sr.shortLabel !== "PR" && sr.name }
+                                            { sr.shortLabel === "PR" && programs[0] && programs[0].name &&
                                             "Program: " + programs[0].name
                                             }
+                                            {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                                         </div>
                                     </div>
                                 })

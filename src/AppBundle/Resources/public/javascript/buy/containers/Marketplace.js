@@ -4,6 +4,7 @@ import { test } from "../actions";
 import EventFilter from '../components/EventFilter';
 import RightsFilter from '../components/RightsFilter';
 import ContentListing from '../../main/components/ContentListing';
+import HeaderBar from '../../main/components/HeaderBar';
 import ListingDetails from './ListingDetails';
 import {clearUpdateFilter} from "../actions/filterActions";
 
@@ -25,6 +26,7 @@ class Marketplace extends React.Component {
     componentDidMount () {
         const {customId, clearUpdateFilter} = this.props;
 
+        window.onpopstate = this.onBackButtonEvent;
         if ( customId ) {
             this.selectListing(customId);
             return;
@@ -44,6 +46,11 @@ class Marketplace extends React.Component {
         }
     }
 
+    onBackButtonEvent = (e) => {
+        e.preventDefault()
+        this.setState({showDetails: false});
+    };
+
     selectListing = (id) => {
 
         let _this = this;
@@ -62,8 +69,11 @@ class Marketplace extends React.Component {
             showDetails : true
         });
 
+        window.history.pushState("test", "Content Arena", envhosturl + "listing/" + id);
+
         ContentArena.ContentApi.getByCustomId(id).done((content) => {
             console.log(content);
+
             _this.setState({
                 content : content,
                 loadingListingDetails : false
@@ -106,57 +116,61 @@ class Marketplace extends React.Component {
     };
 
     render () {
-        const { filter } = this.props;
+        const { filter, salesPackage } = this.props;
         const {listings, loadingListing, loadingListingDetails, showDetails, content, company, sortSalesPackages} = this.state;
         return (
-            <div className="buy-content">
-                {!showDetails && <div className="buy-container-left">
-                    <EventFilter
-                        onFilter={this.filter}/>
-                    <RightsFilter
-                        onFilter={this.filter}
-                        rightsPackage={this.state.rightsPackage}/>
+            <div className="manager-container">
+                <HeaderBar tab={"MARKETPLACE"} profile={"BUYER"}/>
 
-                </div>}
+                <div className="manager-content" style={{flexDirection: 'row'}}>
+                    {!showDetails && <div className="buy-container-left">
+                        <EventFilter
+                            onFilter={this.filter}/>
+                        <RightsFilter
+                            onFilter={this.filter}
+                            rightsPackage={this.state.rightsPackage}/>
 
-                {!showDetails && <div className="buy-container-right">
+                    </div>}
+
+                    {!showDetails && <div className="buy-container-right">
+                        {
+                            listings.length > 0 && listings.map((listing) => {
+                                return <ContentListing
+                                            onSelect={this.selectListing}
+                                            key={listing.customId}
+                                            filter={filter}
+                                            sortSalesPackages={sortSalesPackages}
+                                            {...listing} />
+                            })
+                        }
+
+                        {
+                            listings.length === 0 && loadingListing && <div className={"big-spinner"}>
+                                <i className="fa fa-cog fa-spin"/>
+                            </div>
+                        }
+
+                        {
+                            listings.length === 0 && !loadingListing && <span className={"no-results"}>Sorry, no results. Try changing the filter settings!</span>
+                        }
+                    </div>}
+
                     {
-                        listings.length > 0 && listings.map((listing) => {
-                            return <ContentListing
-                                        onSelect={this.selectListing}
-                                        key={listing.customId}
-                                        filter={filter}
-                                        sortSalesPackages={sortSalesPackages}
-                                        {...listing} />
-                        })
-                    }
-
-                    {
-                        listings.length === 0 && loadingListing && <div className={"big-spinner"}>
+                        loadingListingDetails && <div className={"big-spinner"}>
                             <i className="fa fa-cog fa-spin"/>
                         </div>
                     }
 
                     {
-                        listings.length === 0 && !loadingListing && <span className={"no-results"}>Sorry, no results. Try changing the filter settings!</span>
+                        showDetails && !loadingListingDetails && <ListingDetails
+                            onBack={() => {
+                                this.setState({showDetails: false})
+                            }}
+                            salesPackage={salesPackage}
+                            company={company}
+                            content={content}/>
                     }
-                </div>}
-
-                {
-                    loadingListingDetails && <div className={"big-spinner"}>
-                        <i className="fa fa-cog fa-spin"/>
-                    </div>
-                }
-
-                {
-                    showDetails && !loadingListingDetails && <ListingDetails
-                        onBack={() => {
-                            this.setState({showDetails: false})
-                        }}
-                        company={company}
-                        content={content}/>
-                }
-
+                </div>
 
             </div>
         )

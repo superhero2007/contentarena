@@ -13,9 +13,29 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
     public function getPendingBids($user){
         $query = $this->createQueryBuilder('b')
             ->join('b.content', 'c')
+            ->join('b.status', 'status')
+            ->join('b.type', 'type')
             ->where('b.buyerUser = :user')
-            ->andWhere('b.status = 1')
-            ->andWhere('b.type <> 3')
+            ->andWhere('status.name = :pending')
+            ->andWhere('type.name = :type')
+            ->setParameter('pending', 'PENDING')
+            ->setParameter('type', 'BIDDING')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getRejectedBids($user){
+        $query = $this->createQueryBuilder('b')
+            ->join('b.content', 'c')
+            ->join('b.status', 'status')
+            ->join('b.type', 'type')
+            ->where('b.buyerUser = :user')
+            ->andWhere('status.name = :rejected')
+            ->andWhere('type.name = :type')
+            ->setParameter('rejected', 'REJECTED')
+            ->setParameter('type', 'BIDDING')
             ->setParameter('user', $user)
             ->getQuery();
 
@@ -24,9 +44,12 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getClosedBids($user){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt")
             ->join('b.content', 'c')
+            ->join('b.status', 'status')
             ->where('b.buyerUser = :user')
-            ->andWhere('b.type = 3')
+            ->andWhere('status.name = :approved')
+            ->setParameter('approved', 'APPROVED')
             ->setParameter('user', $user)
             ->getQuery();
 

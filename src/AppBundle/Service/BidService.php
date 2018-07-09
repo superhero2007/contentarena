@@ -21,51 +21,63 @@ class BidService
 
     private $idGenerator;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator){
+    private $fileUploader;
+
+    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
+        $this->fileUploader = $fileUploader;
+    }
+
+    public function getClosedDeals($request){
+
     }
 
     public function saveBidsData($request,$user){
 
-        $data = json_decode($request->request->get('content-data'));
-        $company = $user->getCompany();
 
+        $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
+        $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$request->get('salesMethod')));
+        $signature = $request->get('signature');
+        $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($request->get('salesPackage'));
+        if ($request->get('salesMethod') == "FIXED" ) {
+            $status = $this->em->getRepository('AppBundle:BidStatus')->find(2);
+        } else {
+            $status = $this->em->getRepository('AppBundle:BidStatus')->find(1);
+        }
 
-        /**
-         * Saving new data into Bid entity
-         */
+        $bid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
+            "content" =>$content,
+            "salesPackage" => $salesPackage
+        ));
 
-        foreach ($data as $item) {
-
+        if ( $bid == null ) {
             $bid = new Bid();
-
-            $content = $this->em->getRepository('AppBundle:Content')->find($request->request->get('content-id'));
-
-            $currency = $this->em->getRepository('AppBundle:Currency')->find($item->currency);
-            $type = $this->em->getRepository('AppBundle:BidType')->find($item->pricingMethod);
-            $countries = $this->em->getRepository('AppBundle:Country')->findCountriesByIds($item->country);
-            if ($item->pricingMethod == 3) {
-                $status = $this->em->getRepository('AppBundle:BidStatus')->find(2);
-            } else {
-                $status = $this->em->getRepository('AppBundle:BidStatus')->find(1);
-            }
-
             $customId = $this->idGenerator->generate($content);
             $createdAt = new \DateTime();
-
-            $bid->setType($type);
-            $bid->setStatus($status);
-            $bid->setContent($content);
-            $bid->setCurrency($currency);
-            $bid->setBuyerUser($user);
-            $bid->setAmount($item->amount);
-            $bid->setCompany($company);
-            $bid->setCountries($countries);
             $bid->setCustomId($customId);
             $bid->setCreatedAt($createdAt);
-            $this->em->persist($bid);
         }
+
+
+
+        if ( isset( $signature ) ) {
+            $fileName = "signature_".md5(uniqid()).'.jpg';
+            $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
+            $bid->setSignature($savedSignature);
+        }
+
+        $updatedAt = new \DateTime();
+
+        $bid->setType($type);
+        $bid->setStatus($status);
+        $bid->setContent($content);
+        $bid->setSalesPackage($salesPackage);
+        $bid->setBuyerUser($user);
+        $bid->setAmount($request->get('amount'));
+        $bid->setTotalFee($request->get('totalFee'));
+        $bid->setUpdatedAt($updatedAt);
+        $this->em->persist($bid);
 
         $this->em->flush();
         return true;

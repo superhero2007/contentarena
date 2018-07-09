@@ -1,64 +1,61 @@
 @import "vars";
 
-.marketplace-container{
+.buy-content {
     display: flex;
-    flex-direction: row;
-    color: $blue-color;
-    .buy-content {
+    padding: 20px;
+    width: 100%;
+    min-height: 500px;
+    flex-direction: column;
+    fieldset {
+        color: #000;
+    }
+}
+
+.buy-container-left {
+    flex: 1;
+    margin-right: 20px;
+    .box{
+        background-color: #F4F6F9;
+        margin: 0 0 20px;
+        border-bottom: 4px solid #2AAAEC;
+        .title{
+            color: #FFFFFF;
+            font-size: 22px;
+            line-height: 50px;
+            background-color: #1A4B63;
+            width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .content{
+            padding: 20px;
+            .base-input-select{
+                display: inline-table;
+            }
+            .sport-input-filter {
+                margin: 10px 0;
+                .Select-value {
+                    line-height: 43px;
+                }
+            }
+
+        }
+    }
+}
+
+.buy-container-right {
+    flex: 3;
+    .no-results{
+        font-size: 25px;
+        text-align: center;
         display: flex;
-        padding: 20px;
-        width: 100%;
-        min-height: 500px;
-        fieldset {
-            color: #000;
-        }
-
-        .buy-container-left {
-            flex: 1;
-            margin-right: 20px;
-            .box{
-                background-color: #F4F6F9;
-                margin: 0 0 20px;
-                border-bottom: 4px solid #2AAAEC;
-                .title{
-                    color: #FFFFFF;
-                    font-size: 22px;
-                    line-height: 50px;
-                    background-color: #1A4B63;
-                    width: 100%;
-                    padding: 0 20px;
-                    box-sizing: border-box;
-                }
-                .content{
-                    padding: 20px;
-                    .base-input-select{
-                        display: inline-table;
-                    }
-                    .sport-input-filter {
-                        margin: 10px 0;
-                        .Select-value {
-                            line-height: 43px;
-                        }
-                    }
-
-                }
-            }
-        }
-
-        .buy-container-right {
-            flex: 3;
-            .no-results{
-                font-size: 25px;
-                text-align: center;
-                display: flex;
-                margin: 250px 100px;
-            }
-        }
+        margin: 250px 100px;
     }
-    .content-list-container{
-        flex: 1;
-    }
-    .right_package{
-        min-width: 0 !important;
-    }
+}
+
+.content-list-container{
+    flex: 1;
+}
+.right_package{
+    min-width: 0 !important;
 }

@@ -3,8 +3,6 @@
 {% block stylesheets %}
 
     {{ parent() }}
-    <link href="{{ asset('bundles/app/css/buy.css') }}" type="text/css" rel="stylesheet"/>
-    <link href="{{ asset('assets/buy.css') }}" type="text/css" rel="stylesheet"/>
 
 {% endblock %}
 
@@ -12,10 +10,11 @@
 
     {# REACT CONTAINER#}
     <div class="row marketplace-container"
-         data-rights="{{ rights }}"
          data-user="{{ user }}"
          data-company="{{ company }}"
-         id="marketplace-wrapper">
+         data-profile="{{ profile }}"
+         data-tab="{{ tab }}"
+         id="manage-wrapper">
     </div>
 
 
@@ -23,5 +22,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('assets/buy.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/manage.js') }}"></script>
 {% endblock %}

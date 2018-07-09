@@ -14,13 +14,16 @@ Encore
         './src/AppBundle/Resources/public/javascript/main.js'
     ])
 
+    .addEntry('manage', [
+        './src/AppBundle/Resources/public/javascript/manage/manage.js',
+    ])
+
     .addEntry('buy', [
         './src/AppBundle/Resources/public/javascript/buy/buy.js',
     ])
 
     .addEntry('sell', [
         './src/AppBundle/Resources/public/javascript/sell/sell.js',
-        './src/AppBundle/Resources/public/javascript/sell/sell.step2.js',
     ])
 
     .addEntry('ca', [
