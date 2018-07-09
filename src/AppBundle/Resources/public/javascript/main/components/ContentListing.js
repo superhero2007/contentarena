@@ -68,10 +68,10 @@ class ContentListing extends React.Component{
 
         territories.forEach(t => {
             if ( aTerritories.indexOf(t) !== -1
-                || a.territoriesMethod === "WORLDWIDE"
+                //|| a.territoriesMethod === "WORLDWIDE"
                 || (a.territoriesMethod === "WORLDWIDE_EXCLUDING" && aExcludedTerritories.indexOf(t) === -1 )) aTotal++;
             if ( bTerritories.indexOf(t) !== -1
-                || b.territoriesMethod === "WORLDWIDE"
+                //|| b.territoriesMethod === "WORLDWIDE"
                 || (b.territoriesMethod === "WORLDWIDE_EXCLUDING" && bExcludedTerritories.indexOf(t) === -1 )) bTotal++;
 
         });
