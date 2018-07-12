@@ -55,7 +55,7 @@ easy_admin:
                 form:
                     fields:
                         - { property: 'name' }
-                        - { property: 'sport' }
+                        - { property: 'sports' }
                         - { property: 'tournament' }
                         - { property: 'status' }
                 list:
