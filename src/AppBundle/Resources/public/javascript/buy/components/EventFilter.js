@@ -54,7 +54,7 @@ class EventFilter extends React.Component {
         const {sport, event} = this.props;
         return (
             <div className="box">
-                <div className="title">Event dedjjl;jp</div>
+                <div className="title">Event</div>
                 <div className="content">
 
                     <div style={{
