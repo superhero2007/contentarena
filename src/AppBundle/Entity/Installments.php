@@ -65,6 +65,11 @@ class Installments
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return "Installment";
+    }
+
     /**
      * Set percentage
      *
