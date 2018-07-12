@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation\Groups;
 
 /**
- * BidStatus
+ * ListingStatus
  *
- * @ORM\Table(name="bid_status")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BidStatusRepository")
+ * @ORM\Table(name="listing_status")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ListingStatusRepository")
  */
-class BidStatus
+class ListingStatus
 {
     /**
      * @var int
@@ -26,7 +25,6 @@ class BidStatus
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"closed"})
      */
     private $name;
 
@@ -46,7 +44,7 @@ class BidStatus
      *
      * @param string $name
      *
-     * @return BidStatus
+     * @return ListingStatus
      */
     public function setName($name)
     {

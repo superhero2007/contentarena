@@ -33,7 +33,7 @@ ContentArena.Utils = {
             });
             content.salesPackages.sort(this.sortSalesPackages).reverse();
         }
-
+        content.step = Number(content.step);
         content.parsed = true;
 
         return content;

@@ -8,6 +8,7 @@ use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Sport;
 use AppBundle\Entity\Territory;
 use AppBundle\Entity\ContentFilter;
+use AppBundle\Entity\User;
 
 
 /**
@@ -281,6 +282,72 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()->getResult();
     }
 
+    public function getDrafts($user){
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->andWhere('c.company = :company')
+            ->andWhere('status.name = :statusName')
+            ->setParameter('statusName',"DRAFT")
+            ->setParameter('company',$user->getCompany())
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
+    public function getInactive($user){
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->andWhere('c.company = :company')
+            ->andWhere('status.name = :inactiveStatusName OR status.name = :rejectedStatusName OR status = :isNull')
+            ->setParameter('inactiveStatusName',"INACTIVE")
+            ->setParameter('rejectedStatusName',"REJECTED")
+            ->setParameter('isNull',null)
+            ->setParameter('company',$user->getCompany())
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getActive($user){
+
+        $now = date('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->where('c.expiresAt > :now')
+            ->andWhere('c.company = :company')
+            ->andWhere('status.name = :pendingStatusName OR status.name = :approvedStatusName')
+            ->setParameter('now',$now)
+            ->setParameter('pendingStatusName',"PENDING")
+            ->setParameter('approvedStatusName',"APPROVED")
+            ->setParameter('company',$user->getCompany())
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function getExpired($user){
+
+        $now = date('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->where('c.company = :company')
+            ->andWhere(':now > c.expiresAt OR status.name = :statusName')
+            ->setParameter('now',$now)
+            ->setParameter('statusName',"SOLD_OUT")
+            ->setParameter('company',$user->getCompany())
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
     public function getContentInfo(){
         return $this->createQueryBuilder('c')
             ->where('c.id > :id')
@@ -289,6 +356,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
     }
 
 }
+
 
 
 

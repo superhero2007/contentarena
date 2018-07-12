@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Service\ContentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,11 +13,37 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
-
-
-
-class ApiController extends Controller
+class ApiController extends BaseController
 {
+
+    /**
+     * @Route("/api/listing/save", name="saveListingAsInactive")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveListingAsInactive(Request $request, ContentService $contentService  )
+    {
+        $user = $this->getUser();
+        $content = $contentService->saveContentAsInactive($user, $request);
+        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+    }
+
+    /**
+     * @Route("/api/listing/publish", name="saveContentAsActive")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsActive(Request $request, ContentService $contentService  )
+    {
+        $user = $this->getUser();
+        $content = $contentService->saveContentAsActive($user, $request);
+        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+    }
+
     /**
      * @Route("/api/listings/watchlist", name="apiListingsWatchlist")
      */
@@ -34,7 +61,7 @@ class ApiController extends Controller
 
 
         $paginator  = $this->get('knp_paginator');
-        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),10);
+        $contents = $paginator->paginate($contents,$request->query->getInt('page',1),50);
 
         /**
          * Strategy to keep camel case on property names
@@ -47,6 +74,131 @@ class ApiController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
 
+
+    }
+
+    /**
+     * @Route("/api/listings/remove", name="apiListingsRemove")
+     */
+    public function apiListingsRemove(Request $request, ContentService $contentService){
+
+        $response = $contentService->removeListing($request->get('customId'));
+        return new JsonResponse(array("success"=>$response));
+    }
+
+    /**
+     * @Route("/listings/marketplace", name="marketplaceListings")
+     */
+    public function marketplaceListings(Request $request, ContentService $contentService)
+    {
+        $contents = $contentService->getContent($request);
+        $paginate = $this->get('knp_paginator');
+        $contents = $paginate->paginate($contents,$request->query->getInt('page',1),50);
+        $context = SerializationContext::create()->setGroups(array('listing'));
+
+        $data = $this->serialize($contents->getItems(),$context);
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/draft", name="listingsDrafts")
+     */
+    public function listingsDrafts(Request $request, ContentService $contentService)
+    {
+        $user = $this->getUser();
+        $listings = $contentService->getDrafts($user);
+        $context = SerializationContext::create()->setGroups(array('board'));
+
+        $data = $this->serialize($listings,$context);
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/inactive", name="listingsInactive")
+     */
+    public function listingsInactive(Request $request, ContentService $contentService)
+    {
+        $user = $this->getUser();
+        $listings = $contentService->getInactive($user);
+        $context = SerializationContext::create()->setGroups(array('board'));
+
+        $data = $this->serialize($listings,$context);
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/active", name="listingsActive")
+     */
+    public function listingsActive(Request $request, ContentService $contentService)
+    {
+        $user = $this->getUser();
+        $listings = $contentService->getActive($user);
+        $context = SerializationContext::create()->setGroups(array('board'));
+
+        $data = $this->serialize($listings,$context);
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/expired", name="listingsExpired")
+     */
+    public function listingsExpired(Request $request, ContentService $contentService)
+    {
+        $user = $this->getUser();
+        $listings = $contentService->getExpired($user);
+        $context = SerializationContext::create()->setGroups(array('board'));
+
+        $data = $this->serialize($listings,$context);
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/duplicate", name="apiListingsDuplicate")
+     */
+    public function apiListingsDuplicate(Request $request, ContentService $contentService){
+
+        $listing = $contentService->duplicateListing($request->get('customId'));
+        $context = SerializationContext::create()->setGroups(array('listing'));
+        $data = array('success'=>true, 'listing' => $listing);
+        $serialized = $this->serialize($data,$context);
+        $response = new Response($serialized);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/deactivate", name="apiListingsDeactivate")
+     */
+    public function apiListingsDeactivate(Request $request, ContentService $contentService){
+
+        $listing = $contentService->deactivateListing($request->get('customId'));
+        $context = SerializationContext::create()->setGroups(array('listing'));
+        $data = array('success'=>true, 'listing' => $listing);
+        $serialized = $this->serialize($data,$context);
+        $response = new Response($serialized);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
 
     }
 

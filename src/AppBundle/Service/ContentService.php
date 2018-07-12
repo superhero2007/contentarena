@@ -69,6 +69,120 @@ class ContentService
 
     }
 
+    public function getDrafts($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getDrafts($user);
+        return $content;
+    }
+
+    public function getInactive($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getInactive($user);
+        return $content;
+    }
+
+    public function getActive($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getActive($user);
+        return $content;
+    }
+
+    public function getExpired($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getExpired($user);
+        return $content;
+    }
+
+    public function removeListing($customId){
+
+        if ($customId == null) return false;
+
+        $content = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        if ($customId != null){
+            $this->em->remove($content);
+            $this->em->flush();
+            return true;
+        }
+
+        return false;
+
+
+    }
+
+    public function duplicateListing($customId){
+
+        if ($customId == null) return false;
+
+        $modelListing = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        if ($modelListing != null){
+
+            $content = new Content();
+            $content->setCreatedAt(new \DateTime());
+            $content->setCompany($modelListing->getCompany());
+
+            $newCustomId = $this->idGenerator->generate($content);
+            $content->setCustomId($newCustomId);
+            $content->setName($modelListing->getName());
+            $content->setSports($modelListing->getSports());
+            $content->setSportCategory($modelListing->getSportCategory());
+            $content->setTournament($modelListing->getTournament());
+            $content->setSeason($modelListing->getSeasons());
+            $content->setFixturesBySeason($modelListing->getFixturesBySeason());
+            $content->setSchedulesBySeason($modelListing->getSchedulesBySeason());
+            $content->setDescription($modelListing->getDescription());
+            $content->setVat($modelListing->getVat());
+            $content->setVatPercentage($modelListing->getVatPercentage());
+            $content->setPrograms($modelListing->getPrograms());
+            $content->setAttachments($modelListing->getAttachments());
+            $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
+
+            $rights = [];
+            $salesBundles = [];
+
+
+            foreach ($modelListing->getSalesPackages() as $item){
+                $salesBundle = new SalesPackage();
+                $salesBundle->setName($item->getName());
+                $salesBundle->setExcludedCountries($item->getExcludedCountries());
+                $salesBundle->setInstallments($item->getInstallments());
+                $salesBundle->setTerritoriesMethod($item->getTerritoriesMethod());
+                $salesBundle->setBundleMethod($item->getBundleMethod());
+                $salesBundle->setTerritories($item->getTerritories());
+                $salesBundle->setSalesMethod($item->getSalesMethod());
+                $salesBundle->setCurrency($item->getCurrency());
+                $salesBundle->setFee($item->getFee());
+                $salesBundles[]=$salesBundle;
+            }
+
+            foreach ($modelListing->getRightsPackage() as $item){
+                $rights[]=$item;
+            }
+            $content->setRightsPackage($rights);
+            $content->setSalesPackages($salesBundles);
+            $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
+            $this->em->persist($content);
+            $this->em->flush();
+            return $content;
+        }
+        return false;
+    }
+
+    public function deactivateListing($customId){
+
+        if ($customId == null) return false;
+
+        $content = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        $this->em->persist($content);
+        $this->em->flush();
+        return $content;
+    }
+
     public function saveFilter(Request $request, User $user)
     {
         $filter = $this->getFilterFromResponse( $request );
@@ -90,7 +204,49 @@ class ContentService
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
-        $content->setDraft(true);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
+        $this->em->persist($content);
+        $this->em->flush();
+
+        return $content;
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return Content
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsInactive(User $user, Request $request)
+    {
+        $data = json_decode($request->getContent());
+        $content = $this->newContent($user, $data);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
+        $this->em->persist($content);
+        $this->em->flush();
+
+        return $content;
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return Content
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsActive(User $user, Request $request)
+    {
+        $data = json_decode($request->getContent());
+        $content = $this->newContent($user, $data);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"PENDING")));
         /**
          * Save files
          */
@@ -109,7 +265,7 @@ class ContentService
         $data = json_decode($request->get("json"));
 
         $content = $this->newContent($user, $data);
-        $content->setDraft(false);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"PENDING")));
         /**
          * Save files
          */

@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from "react-redux";
+import store from '../store';
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
 import ListingDetails from './../../buy/containers/ListingDetails';
 import ContentListing from "../../main/components/ContentListing";
 import {goToPreviousStep, stepChangeReset} from "../actions/contentActions";
 import DigitalSignature from "../../main/components/DigitalSignature";
+import {goTo, parseSeasons} from "../../main/actions/utils";
+import {customStyles} from "../../main/styles/custom";
+import Modal from 'react-modal';
 
 class SellFormStep4 extends React.Component {
 
@@ -23,6 +27,9 @@ class SellFormStep4 extends React.Component {
         };
     }
 
+    componentDidMount (){
+    }
+
     showTerritories = (salesPackage) => {
         return ( salesPackage.bundleMethod === this.individually &&
             salesPackage.territoriesMethod === this.worldwide ) ||
@@ -38,6 +45,65 @@ class SellFormStep4 extends React.Component {
             stepChangeReset();
         }
 
+    };
+
+    submit = () => {
+        const {updateContentValue} = this.props;
+        let content = store.getState().content;
+        let _this = this;
+        content = parseSeasons(content);
+        this.setState({showSubmitting: true})
+        ContentArena.ContentApi.saveContentAsActive(content).done(function ( response ) {
+
+            if ( response.success && response.contentId ){
+                updateContentValue("id", response.contentId);
+                _this.setState({showSuccessScreen: true,showSubmitting: false})
+            }
+        });
+    };
+
+    closeSuccessScreen = () => {
+        this.setState({showSuccessScreen: false});
+        goTo("managelistings")
+    };
+
+    successScreen = () => {
+        return <Modal
+            isOpen={this.state.showSuccessScreen}
+            onRequestClose={this.closeSuccessScreen}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+        >
+
+            <div style={{
+                color: 'grey',
+                padding: 20,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+            }}>
+                <div style={{
+                    fontSize: 30,
+                    width : 600,
+                    textAlign : 'center',
+                    fontWeight: 600
+                }}>
+                    Congratulations!
+                </div>
+                <div style={{
+                    fontSize: 20,
+                    width : 600,
+                    margin : 40,
+                    textAlign : 'center'
+                }}>
+                    The listing was submitted successfully!
+                </div>
+                <div>
+                    <button className="standard-button" onClick={this.closeSuccessScreen} >Continue</button>
+                </div>
+            </div>
+
+        </Modal>
     };
 
     updateSalesPackage = ( salesPackage, index ) => {
@@ -73,10 +139,11 @@ class SellFormStep4 extends React.Component {
             terms
         } = this.props;
 
-        const {showDetails} = this.state;
+        const {showDetails, showSubmitting} = this.state;
 
         return (
             <div className="step-content">
+                { this.successScreen() }
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
                         <button className="light-blue-button" onClick={goToPreviousStep}>
@@ -166,6 +233,16 @@ class SellFormStep4 extends React.Component {
                         }}
                         signature={signature}
                     />
+
+                    { terms && terms_arena && signature &&
+                    <div className="buttons" style={{marginTop: 20}}>
+                        <div className="buttons-container"  >
+                            {!showSubmitting && <button id="draft-listing" className="standard-button" onClick={this.submit}>
+                                Submit Listing
+                            </button>}
+                            {showSubmitting && <i className="fa fa-cog fa-spin" />}
+                        </div>
+                    </div>}
                 </div>}
             </div>
         );

@@ -56,12 +56,10 @@ easy_admin:
                     fields:
                         - { property: 'customId' }
                         - { property: 'company' }
-                        - { property: 'sports' }
                         - { property: 'createdAt' }
                         - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
                         - { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
-                        - { property: 'brochure', template: ':easy_admin:brochure.list.html.twig', base_path: '%admin_uploads_uri%' }
-                        - { property: 'approved' }
+                        - { property: 'status' }
                     actions:
                         - { name: 'show', icon: 'eye', label: '' }
                         - { name: 'edit', icon: 'pencil', label: '' }

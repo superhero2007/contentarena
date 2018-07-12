@@ -4,6 +4,7 @@ import HeaderBar from '../../main/components/HeaderBar';
 import Watchlist from './Watchlist';
 import ClosedDeals from './ClosedDeals';
 import PendingDeals from './PendingDeals';
+import ManageListings from './ManageListings';
 
 class Manager extends React.Component {
     constructor(props) {
@@ -31,6 +32,7 @@ class Manager extends React.Component {
                     {tab === 'WATCHLIST' && <Watchlist company={company} />}
                     {tab === 'CLOSED_DEALS' && <ClosedDeals />}
                     {tab === 'BIDS' && <PendingDeals />}
+                    {tab === 'MANAGE_LISTINGS' && <ManageListings />}
                     {tab === 'SETTINGS' && "SETTINGS"}
                 </div>
             </div>

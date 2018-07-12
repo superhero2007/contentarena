@@ -19,7 +19,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"common", "listing"})
+     * @Groups({"common", "listing", "board"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Groups({"common", "listing", "closed"})
+     * @Groups({"common", "listing", "closed", "board"})
      */
     private $name;
 
@@ -35,7 +35,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @var string
      *
      * @ORM\Column(name="short_label", type="string", length=5, unique=true)
-     * @Groups({"common", "listing", "closed"})
+     * @Groups({"common", "listing", "closed", "board"})
      */
     private $shortLabel;
 

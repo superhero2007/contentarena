@@ -24,7 +24,7 @@ class SellForm extends React.Component {
 
         content = ContentArena.Utils.contentParserFromServer(content);
 
-        if (props.step) content.step = props.step;
+        //if (props.step) content.step = props.step;
 
         this.state = {
             content : content
@@ -42,7 +42,7 @@ class SellForm extends React.Component {
     render() {
         return (
             <div className={"manager-container"}>
-                <HeaderBar tab={"MANAGE_LISTINGS"} profile={"SELLER"}/>
+                <HeaderBar tab={"NEW_LISTING"} profile={"SELLER"}/>
                 <div className="manager-content">
                     <Selector style={{zIndex: 100}}/>
                     <SellFormSteps />

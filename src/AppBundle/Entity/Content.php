@@ -25,14 +25,21 @@ class Content
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "board"})
      */
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"listing", "board"})
+     */
+    private $status;
+
+    /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "board"})
      */
     protected $customId;
 
@@ -46,7 +53,7 @@ class Content
 
     /**
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $expiresAt;
 
@@ -93,7 +100,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $salesPackages;
 
@@ -160,7 +167,7 @@ class Content
     /**
      * @var object
      * @ORM\Column(name="programs", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $programs;
 
@@ -191,7 +198,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "board"})
      */
     private $name;
 
@@ -235,7 +242,7 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $tournament;
 
@@ -245,7 +252,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $seasons;
 
@@ -257,7 +264,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "board"})
      */
     private $rightsPackage;
 
@@ -1066,7 +1073,20 @@ class Content
         $this->watchlist = $watchlist;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
 
-
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 
 }

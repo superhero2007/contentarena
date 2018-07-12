@@ -4,6 +4,7 @@ import store from '../store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid, programIsValid, programsEnabled} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
+import {parseSeasons} from "../../main/actions/utils";
 
 class SellButtons extends React.Component {
     constructor(props) {
@@ -32,20 +33,7 @@ class SellButtons extends React.Component {
         _this.setState({ saving : true });
 
         let content = store.getState().content;
-
-        content.seasons.forEach((season)=>{
-            season.selectedSchedules = {};
-            Object.entries( season.schedules).filter((round) =>{  return round[1].selected} ).map((round)=>{
-                if (!season.selectedSchedules[round[0]]) season.selectedSchedules[round[0]] = {matches:[]};
-                if(round[1].selected){
-                    Array.from(round[1].matches.values()).filter(match => match.selected).forEach((match)=>{
-                        season.selectedSchedules[round[0]].matches.push(match)
-
-                    })
-                }
-            })
-        });
-
+        content = parseSeasons(content);
         ContentArena.ContentApi.saveContentAsDraft(content).done(function ( response ) {
 
             if ( response.success && response.contentId ){
@@ -145,6 +133,19 @@ class SellButtons extends React.Component {
 
     };
 
+    goToReviewAndSign = () => {
+        const {updateContentValue} = this.props;
+        let content = store.getState().content;
+        content = parseSeasons(content);
+        ContentArena.ContentApi.saveContentAsInactive(content).done(function ( response ) {
+
+            if ( response.success && response.contentId ){
+                updateContentValue("id", response.contentId);
+            }
+        });
+        this.props.goToNextStep();
+    };
+
     render() {
 
         let saveAsDraftText = (this.state.saving) ? "Saving.." : (this.state.savingSuccess) ? "Saved as Draft" : "Save as Draft";
@@ -155,13 +156,13 @@ class SellButtons extends React.Component {
             <div className="buttons">
                 <div className="buttons-container"  >
 
-                    { this.props.sports.length > 0 &&
+                    { this.props.sports.length > 0 && step !== 4 &&
                     <button className="light-blue-button" onClick={ this.saveAsDraft } disabled={this.state.saving}>
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
                     </button> }
 
-                    { this.props.step === 3 && this.reviewAndSignEnabled() &&
-                    <button id="draft-listing" className="standard-button" onClick={this.props.goToNextStep }>
+                    { step === 3 && this.reviewAndSignEnabled() &&
+                    <button id="draft-listing" className="standard-button" onClick={this.goToReviewAndSign  }>
                         Review and sign
                     </button> }
 
@@ -172,10 +173,6 @@ class SellButtons extends React.Component {
                             </button>
                         </div>}
 
-                    { this.props.step === this.state.lastStep && terms && terms_arena && signature &&
-                    <button id="draft-listing" className="standard-button">
-                        Submit Listing
-                    </button> }
                 </div>
                 { this.props.step < 4 && <div className="buttons-container" >
                     { this.props.step !== 1 &&
