@@ -52,6 +52,12 @@ easy_admin:
                         - 'country'
             Content:
                 class: AppBundle\Entity\Content
+                form:
+                    fields:
+                        - { property: 'name' }
+                        - { property: 'sport' }
+                        - { property: 'tournament' }
+                        - { property: 'status' }
                 list:
                     fields:
                         - { property: 'customId' }
