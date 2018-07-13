@@ -18,7 +18,6 @@ class Version20180713043923 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE content_installments DROP FOREIGN KEY FK_F0312AF8B196EE6E');
         $this->addSql('DROP TABLE content_installments');
         $this->addSql('DROP TABLE installments');
         $this->addSql('ALTER TABLE content ADD last_action_id INT DEFAULT NULL, ADD last_action_user_id INT DEFAULT NULL, ADD last_action_date DATETIME DEFAULT NULL, DROP approved, DROP draft');
