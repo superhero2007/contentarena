@@ -188,6 +188,15 @@ class ClosedDeals extends React.Component {
                                 </div>
 
                             }, {
+                                Header: 'Name',
+                                headerClassName : 'table-header-big',
+                                className : 'table-header-big',
+                                accessor: 'buyerUser',
+                                Cell: props => <div>
+                                    {props.value.firstName + " " + props.value.lastName}
+                                </div>
+
+                            },{
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 Header: 'Actions', // Custom header components!

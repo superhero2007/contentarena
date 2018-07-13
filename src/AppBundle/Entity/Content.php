@@ -58,25 +58,11 @@ class Content
     private $expiresAt;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="approved", type="boolean")
-     */
-    protected $approved = false;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="step", type="integer")
      */
     protected $step = 1;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="draft", type="boolean")
-     */
-    protected $draft = false;
 
     /**
      * @var boolean
@@ -256,7 +242,6 @@ class Content
      */
     private $seasons;
 
-
     /**
      * Many Content have Many RightsPackage.
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", fetch="LAZY")
@@ -289,7 +274,6 @@ class Content
      */
     private $fixturesBySeason;
 
-
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      * @Groups({"listing"})
@@ -297,15 +281,32 @@ class Content
     private $createdAt;
 
     /**
-     * Many Content have Many Installments.
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Installments",cascade={"persist"},fetch="LAZY")
-     * @ORM\JoinTable(name="content_installments",
-     *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="content_installments_id", referencedColumnName="id")}
-     *      )
-     * @Groups({"listing"})
+     * @ORM\Column(type="datetime", name="last_action_date", nullable=true)
+     * @Groups({"board"})
      */
-    private $installments;
+    private $lastActionDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingLastAction", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"board"})
+     */
+    private $lastAction;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"board"})
+     */
+    private $lastActionUser;
+
+
+
+    /**
+     * @var boolean;
+     * @Groups({"board"})
+     */
+    private $editable = true;
 
     public function __construct() {
         $this->rightsPackage = new ArrayCollection();
@@ -441,22 +442,6 @@ class Content
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isApproved()
-    {
-        return $this->approved;
-    }
-
-    /**
-     * @param bool $approved
-     */
-    public function setApproved($approved)
-    {
-        $this->approved = $approved;
     }
 
     /**
@@ -613,22 +598,7 @@ class Content
      * @return bool
      */
     public function isActive(){
-        return $this->approved;
-    }
-    /**
-     * @return bool
-     */
-    public function isDraft()
-    {
-        return $this->draft;
-    }
-
-    /**
-     * @param bool $draft
-     */
-    public function setDraft($draft)
-    {
-        $this->draft = $draft;
+        return true;
     }
 
     /**
@@ -647,20 +617,7 @@ class Content
         $this->selectedRights = $selectedRights;
     }
 
-    public function getInstallments()
-    {
-        return $this->installments;
-    }
-
     /**
-     * @param mixed $installments
-     */
-    public function setInstallments($installments)
-    {
-        $this->installments = $installments;
-    }
-
- /**
      * @return int
      */
     public function getStep()
@@ -706,26 +663,6 @@ class Content
     public function setCustomSport($customSport)
     {
         $this->customSport = $customSport;
-    }
-
-    /**
-     * Get approved
-     *
-     * @return boolean
-     */
-    public function getApproved()
-    {
-        return $this->approved;
-    }
-
-    /**
-     * Get draft
-     *
-     * @return boolean
-     */
-    public function getDraft()
-    {
-        return $this->draft;
     }
 
 
@@ -823,30 +760,6 @@ class Content
     public function removeRightsPackage(RightsPackage $rightsPackage)
     {
         $this->rightsPackage->removeElement($rightsPackage);
-    }
-
-    /**
-     * Add installment
-     *
-     * @param \AppBundle\Entity\Installments $installment
-     *
-     * @return Content
-     */
-    public function addInstallment(Installments $installment)
-    {
-        $this->installments[] = $installment;
-
-        return $this;
-    }
-
-    /**
-     * Remove installment
-     *
-     * @param \AppBundle\Entity\Installments $installment
-     */
-    public function removeInstallment(Installments $installment)
-    {
-        $this->installments->removeElement($installment);
     }
 
     /**
@@ -1088,5 +1001,73 @@ class Content
     {
         $this->status = $status;
     }
+
+    /**
+     * @return bool
+     */
+    public function isEditable()
+    {
+        return $this->editable;
+    }
+
+    /**
+     * @param bool $editable
+     */
+    public function setEditable($editable)
+    {
+        $this->editable = $editable;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastActionDate()
+    {
+        return $this->lastActionDate;
+    }
+
+    /**
+     * @param mixed $lastActionDate
+     */
+    public function setLastActionDate($lastActionDate)
+    {
+        $this->lastActionDate = $lastActionDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastAction()
+    {
+        return $this->lastAction;
+    }
+
+    /**
+     * @param mixed $lastAction
+     */
+    public function setLastAction($lastAction)
+    {
+        $this->lastAction = $lastAction;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastActionUser()
+    {
+        return $this->lastActionUser;
+    }
+
+    /**
+     * @param mixed $lastActionUser
+     */
+    public function setLastActionUser($lastActionUser)
+    {
+        $this->lastActionUser = $lastActionUser;
+    }
+
+
+
+
 
 }

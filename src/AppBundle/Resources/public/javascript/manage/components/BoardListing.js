@@ -36,8 +36,39 @@ class BoardListing extends React.Component{
         e.stopPropagation();
     };
 
+    edit = () => {
+        const { customId } = this.props;
+        goTo("managelistings/edit/" + customId)
+    };
+
+    submit = () => {
+        const { customId } = this.props;
+        goTo("managelistings/edit/" + customId + "/4")
+    };
+
+    view = () => {
+        const { customId } = this.props;
+        goTo("listing/" + customId)
+    };
+
     hideOptions = (e) => {
+        const {defaultAction} = this.props;
+        const {showOptions} = this.state;
         this.setState({showOptions: false});
+        if ( defaultAction && !showOptions ){
+            if ( defaultAction === "EDIT"){
+                this.edit()
+            }
+
+            if ( defaultAction === "VIEW"){
+                this.view()
+            }
+
+            if ( defaultAction === "SUBMIT"){
+                this.submit()
+            }
+        }
+
         e.stopPropagation();
     };
 
@@ -61,6 +92,9 @@ class BoardListing extends React.Component{
             onRemove,
             onDuplicate,
             onDeactivate,
+            lastAction,
+            lastActionDate,
+            lastActionUser,
             onSubmit,
             style
         } = this.props;
@@ -70,14 +104,10 @@ class BoardListing extends React.Component{
         return (
             <div className={className} style={style} onClick={this.hideOptions}>
                 {showOptions && <div className="options-tooltip">
-                    {showSubmit && <div className={"option"} onClick={()=>{
-                        goTo("managelistings/edit/" + customId + "/4")
-                    }}>
+                    {showSubmit && <div className={"option"} onClick={this.submit}>
                         <img src={this.submitIcon} /> Submit
                     </div>}
-                    {showEdit && <div className={"option"} onClick={()=>{
-                        goTo("managelistings/edit/" + customId)
-                    }}>
+                    {showEdit && <div className={"option"} onClick={this.edit}>
                         <img src={this.editIcon} /> Edit
                     </div>}
                     {showDuplicate && <div className={"option"} onClick={()=>{
@@ -86,9 +116,7 @@ class BoardListing extends React.Component{
                     }}>
                         <img src={this.duplicateIcon} /> Duplicate
                     </div>}
-                    {showView && <div className={"option"} onClick={()=>{
-                        goTo("listing/" + customId)
-                    }}>
+                    {showView && <div className={"option"} onClick={this.view}>
                         <img src={this.viewIcon} /> View
                     </div>}
                     {showRemove && <div className={"option"} onClick={()=>{
@@ -100,6 +128,10 @@ class BoardListing extends React.Component{
                         this.setState({showDeactivateConfirm: true});
                     }}>
                         <img src={this.deactivateIcon} style={{width: 16}} /> Deactivate
+                    </div>}
+
+                    {lastAction && <div className="last-action">
+                        Last action: {lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
                     </div>}
                 </div>}
 

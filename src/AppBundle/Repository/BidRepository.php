@@ -26,6 +26,21 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getPendingBidsByContent($content){
+        $query = $this->createQueryBuilder('b')
+            ->join('b.status', 'status')
+            ->join('b.type', 'type')
+            ->where('b.content = :content')
+            ->andWhere('status.name = :pending')
+            ->andWhere('type.name = :type')
+            ->setParameter('pending', 'PENDING')
+            ->setParameter('type', 'BIDDING')
+            ->setParameter('content', $content)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getRejectedBids($user){
         $query = $this->createQueryBuilder('b')
             ->join('b.content', 'c')

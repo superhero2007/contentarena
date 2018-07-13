@@ -58,6 +58,7 @@ easy_admin:
                         - { property: 'sports' }
                         - { property: 'tournament' }
                         - { property: 'status' }
+                        - { property: 'expiresAt' }
                 list:
                     fields:
                         - { property: 'customId' }

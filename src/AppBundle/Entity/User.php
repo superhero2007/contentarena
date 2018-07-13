@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping\AttributeOverrides;
 use Doctrine\ORM\Mapping\AttributeOverride;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * User
@@ -39,6 +40,8 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
+     * @Groups({"board","closed"})
+     *
      */
     protected $firstName;
 
@@ -46,6 +49,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
+     * @Groups({"board","closed"})
      */
     protected $lastName;
 

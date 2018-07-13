@@ -141,10 +141,18 @@ class ApiController extends BaseController
     /**
      * @Route("/api/listings/active", name="listingsActive")
      */
-    public function listingsActive(Request $request, ContentService $contentService)
+    public function listingsActive(Request $request, ContentService $contentService, BidService $bidService)
     {
         $user = $this->getUser();
         $listings = $contentService->getActive($user);
+
+        foreach ( $listings as $listing ) {
+            $bids = $bidService->getPendingBidsByContent($listing);
+
+            if ( $bids != null ) $listing->setEditable(false);
+        }
+
+
         $context = SerializationContext::create()->setGroups(array('board'));
 
         $data = $this->serialize($listings,$context);
@@ -177,8 +185,9 @@ class ApiController extends BaseController
      */
     public function apiListingsDuplicate(Request $request, ContentService $contentService){
 
-        $listing = $contentService->duplicateListing($request->get('customId'));
-        $context = SerializationContext::create()->setGroups(array('listing'));
+        $user = $this->getUser();
+        $listing = $contentService->duplicateListing($request->get('customId'), $user);
+        $context = SerializationContext::create()->setGroups(array('board'));
         $data = array('success'=>true, 'listing' => $listing);
         $serialized = $this->serialize($data,$context);
         $response = new Response($serialized);
@@ -192,8 +201,9 @@ class ApiController extends BaseController
      */
     public function apiListingsDeactivate(Request $request, ContentService $contentService){
 
-        $listing = $contentService->deactivateListing($request->get('customId'));
-        $context = SerializationContext::create()->setGroups(array('listing'));
+        $user = $this->getUser();
+        $listing = $contentService->deactivateListing($request->get('customId'), $user);
+        $context = SerializationContext::create()->setGroups(array('board'));
         $data = array('success'=>true, 'listing' => $listing);
         $serialized = $this->serialize($data,$context);
         $response = new Response($serialized);

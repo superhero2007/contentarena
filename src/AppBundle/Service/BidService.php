@@ -33,6 +33,10 @@ class BidService
 
     }
 
+    public function getPendingBidsByContent($listing){
+        return $this->em->getRepository('AppBundle:Bid')->getPendingBidsByContent($listing);
+    }
+
     public function saveBidsData($request,$user){
 
 

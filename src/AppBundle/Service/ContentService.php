@@ -9,13 +9,10 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\ContentFilter;
-use AppBundle\Entity\ContentSelectedRight;
-use AppBundle\Entity\Installments;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
-use AppBundle\Service\FileUploader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Season;
@@ -108,7 +105,7 @@ class ContentService
 
     }
 
-    public function duplicateListing($customId){
+    public function duplicateListing($customId, $user){
 
         if ($customId == null) return false;
 
@@ -162,6 +159,9 @@ class ContentService
             $content->setRightsPackage($rights);
             $content->setSalesPackages($salesBundles);
             $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
+            $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DUPLICATED")));
+            $content->setLastActionUser($user);
+            $content->setLastActionDate(new \DateTime());
             $this->em->persist($content);
             $this->em->flush();
             return $content;
@@ -169,7 +169,7 @@ class ContentService
         return false;
     }
 
-    public function deactivateListing($customId){
+    public function deactivateListing($customId, $user){
 
         if ($customId == null) return false;
 
@@ -178,6 +178,9 @@ class ContentService
         ));
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
         $this->em->persist($content);
         $this->em->flush();
         return $content;
@@ -205,6 +208,9 @@ class ContentService
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DRAFT")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
         /**
          * Save files
          */
@@ -226,6 +232,9 @@ class ContentService
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
         /**
          * Save files
          */
@@ -247,6 +256,9 @@ class ContentService
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"PENDING")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"SUBMITTED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
         /**
          * Save files
          */
@@ -743,20 +755,4 @@ class ContentService
         return $sports;
     }
 
-    private function getInstallment($installmentData){
-
-        if ( $installmentData ){
-            $installment = new Installments();
-            $installment->setPercentage($installmentData->percent);
-            $installment->setDueDate($installmentData->date?date_create_from_format('d/m/Y', $installmentData->date):null);
-            $installment->setSigningDays($installmentData->signingDay?$installmentData->signingDay:null);
-            $installment->setGrantedDays($installmentData->grantedDay?$installmentData->grantedDay:null);
-            $this->em->persist($installment);
-            $this->em->flush();
-        }else{
-            $installment = array();
-        }
-
-        return $installment;
-    }
 }

@@ -55,7 +55,7 @@ class ManageListings extends React.Component {
         this.setState({loadingDraft : true});
         ContentArena.ContentApi.duplicateListing(customId).done(response => {
             if ( response.success ) {
-                draft.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+                draft.unshift(response.listing);
                 this.setState({draft : draft, loadingDraft : false});
             }
         });
@@ -66,7 +66,8 @@ class ManageListings extends React.Component {
         this.setState({loadingInactive : true});
         ContentArena.ContentApi.deactivateListing(customId).done(response => {
             if ( response.success ) {
-                inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+                //inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+                inactive.unshift(response.listing);
                 this.setState({inactive : inactive, loadingInactive : false});
             }
         });
@@ -126,6 +127,7 @@ class ManageListings extends React.Component {
                                     style={{
                                         zIndex : list.length - i
                                     }}
+                                    defaultAction={"EDIT"}
                                     showEdit={true}
                                     showRemove={true}
                                     showDuplicate={true}
@@ -154,6 +156,7 @@ class ManageListings extends React.Component {
                                     style={{
                                         zIndex : list.length - i
                                     }}
+                                    defaultAction={"SUBMIT"}
                                     showEdit={true}
                                     showRemove={true}
                                     showDuplicate={true}
@@ -183,11 +186,12 @@ class ManageListings extends React.Component {
                                     style={{
                                         zIndex : list.length - i
                                     }}
-                                    showEdit={true}
-                                    showRemove={true}
-                                    showDeactivate={true}
+                                    showEdit={listing.editable}
+                                    showRemove={listing.editable}
+                                    showDeactivate={listing.editable}
                                     showDuplicate={true}
                                     showView={true}
+                                    defaultAction={"VIEW"}
                                     onDeactivate={()=>{
                                         list.splice(i,1);
                                         this.setState({active: list});
