@@ -86,8 +86,8 @@ class SellButtons extends React.Component {
     };
 
     step1Enabled = () => {
-        const {sports, name} = this.props;
-        return sports.length > 0 && name !== undefined && name !== "";
+        const {sports} = this.props;
+        return sports.length > 0;
     };
 
     step1GetMessages = () => {
