@@ -43,7 +43,7 @@ class BoardListing extends React.Component{
 
     submit = () => {
         const { customId } = this.props;
-        goTo("managelistings/edit/" + customId + "/4")
+        goTo("managelistings/edit/" + customId + "/5")
     };
 
     view = () => {
@@ -140,14 +140,16 @@ class BoardListing extends React.Component{
                     <div className={"option"}>
                         Are you sure you want to deactivate the listing?
                     </div>
-                    <div className={"option"} onClick={()=>{
+                    <div className={"option"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
                         onDeactivate();
+                        e.stopPropagation();
                     }}>
                         Yes
                     </div>
-                    <div className={"option"} onClick={()=>{
+                    <div className={"option"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
+                        e.stopPropagation();
                     }}>
                         Cancel
                     </div>
@@ -159,14 +161,16 @@ class BoardListing extends React.Component{
                     <div className={"option"}>
                         Are you sure you want to remove the listing?
                     </div>
-                    <div className={"option"} onClick={()=>{
+                    <div className={"option"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         onRemove();
+                        e.stopPropagation();
                     }}>
                         Yes
                     </div>
-                    <div className={"option"} onClick={()=>{
+                    <div className={"option"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
+                        e.stopPropagation();
                     }}>
                         Cancel
                     </div>

@@ -20,8 +20,9 @@ class SellFormSteps extends React.Component {
         this.state = {
             steps: [
                 {step: 1, title: "Event selection"},
-                {step: 2, title: "Configure rights"},
-                {step: 3, title: "Pricing & listing details"}
+                {step: 2, title: "Program & Rights Selection"},
+                {step: 3, title: "Grant of Rights & Production Details"},
+                {step: 4, title: "Commercial Details"}
             ],
             visited : [1]
         };

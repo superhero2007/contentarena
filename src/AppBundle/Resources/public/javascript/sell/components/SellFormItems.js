@@ -2,10 +2,10 @@ import React from 'react';
 import Round from '../components/Round';
 import StaticRound from '../components/StaticRound';
 
-export const Description = ({value, onBlur}) => (
+export const Description = ({value, onBlur, title= "Enter a description", placeholder="Provide a short description of your content listing"}) => (
     <div className="textarea-input">
-        <label>Enter a description</label>
-        <textarea onBlur={onBlur} defaultValue={value} placeholder={"Provide a short description of your content listing"}/>
+        <label>{title}</label>
+        <textarea onBlur={onBlur} defaultValue={value} placeholder={placeholder}/>
     </div>
 );
 

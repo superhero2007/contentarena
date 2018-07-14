@@ -95,7 +95,7 @@ class SellButtons extends React.Component {
         let message = "Please complete missing information\n";
 
         if ( sports.length === 0 ) message += "<br/>- Select a sport.\n";
-        if ( name === undefined || name === "" ) message += "<br/>- Enter a name for the listing.";
+        //if ( name === undefined || name === "" ) message += "<br/>- Enter a name for the listing.";
 
         return message;
     };
@@ -118,13 +118,13 @@ class SellButtons extends React.Component {
 
         if ( step === 1 && !this.step1Enabled()) return this.step1GetMessages();
         if ( step === 2 && !this.step2Enabled()) return this.step2GetMessages();
-        if ( step === 3 && !this.reviewAndSignEnabled()) return this.reviewAndSignGetMessages();
+        if ( step === 4 && !this.reviewAndSignEnabled()) return this.reviewAndSignGetMessages();
     };
 
     getReviewButtonTooltipMessages = () => {
         const {step} = this.props;
 
-        if ( step === 3 && !this.reviewAndSignEnabled()) return this.reviewAndSignGetMessages();
+        if ( step === 4 && !this.reviewAndSignEnabled()) return this.reviewAndSignGetMessages();
     };
 
     onClickStep = (stepSelected) => {
@@ -161,12 +161,12 @@ class SellButtons extends React.Component {
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
                     </button> }
 
-                    { step === 3 && this.reviewAndSignEnabled() &&
+                    { step === 4 && this.reviewAndSignEnabled() &&
                     <button id="draft-listing" className="standard-button" onClick={this.goToReviewAndSign  }>
                         Review and sign
                     </button> }
 
-                    { this.props.step === 3 && !this.reviewAndSignEnabled() &&
+                    { this.props.step === 4 && !this.reviewAndSignEnabled() &&
                         <div data-tip={this.getReviewButtonTooltipMessages()}>
                             <button id="draft-listing" className="standard-button" disabled>
                                 Review and sign
@@ -181,7 +181,7 @@ class SellButtons extends React.Component {
                         <i className="fa fa-arrow-left"/> Back
                     </button> }
                     {
-                        [1,2,3].map((v,k)=>(
+                        [1,2,3,4].map((v,k)=>(
                             <div className={"step " + ((this.props.step === v) ? "step-active" : "")}
                                  onClick={() => {this.onClickStep(v)}}
                                  key={k}>{v}</div>

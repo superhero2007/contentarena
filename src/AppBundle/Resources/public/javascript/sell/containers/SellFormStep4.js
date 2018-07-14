@@ -1,39 +1,72 @@
 import React from 'react';
 import { connect } from "react-redux";
-import store from '../store';
+import CurrencySelector from "../components/CurrencySelector";
+import VatSelector from "../components/VatSelector";
+import FileSelector from '../../main/components/FileSelector';
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
-import ListingDetails from './../../buy/containers/ListingDetails';
-import ContentListing from "../../main/components/ContentListing";
-import {goToPreviousStep, stepChangeReset} from "../actions/contentActions";
-import DigitalSignature from "../../main/components/DigitalSignature";
-import {goTo, parseSeasons} from "../../main/actions/utils";
-import {customStyles} from "../../main/styles/custom";
-import Modal from 'react-modal';
+import ExpirationDateSelector from "../components/ExpirationDateSelector";
+import JurisdictionSelector from "../components/JurisdictionSelector";
+import CompanyInformation from "../components/CompanyInformation";
+import {CountrySelector} from "../../main/components/CountrySelector";
+import {stepChangeReset} from "../actions/contentActions";
 
 class SellFormStep4 extends React.Component {
 
     constructor(props) {
         super(props);
-        this.asBundle = "SELL_AS_BUNDLE";
-        this.individually = "SELL_INDIVIDUALLY";
-        this.worldwide = "WORLDWIDE";
-        this.worldwideExcluding = "WORLDWIDE_EXCLUDING";
-        this.selectedTerritories = "SELECTED_TERRITORIES";
-        this.fixed = "FIXED";
-        this.bidding = "BIDDING";
-        this.limit = 3;
+
         this.state = {
+            title : "Step 4",
+            name : "",
+            salesPackages : []
         };
     }
 
-    componentDidMount (){
-    }
+    selectCurrency = ( currency ) => {
+        this.props.updateContentValue("currency", currency);
+    };
 
-    showTerritories = (salesPackage) => {
-        return ( salesPackage.bundleMethod === this.individually &&
-            salesPackage.territoriesMethod === this.worldwide ) ||
-            salesPackage.territoriesMethod !== this.worldwide;
+    selectVat = ( vat ) => {
+        this.props.updateContentValue("vat", vat);
+    };
+
+    updateName = ( e ) => {
+        this.props.updateContentValue("name", e.target.value);
+    };
+
+    editSalesPackage = ( index ) => {
+        this.setState({
+            salesPackageToEdit : index,
+            editOpen: true
+        });
+    };
+
+    addSalesPackage = ( salesPackages ) => {
+        const {currency} = this.props;
+        salesPackages.forEach(sp => sp.currency = {code:currency});
+        this.props.addSalesPackages(salesPackages);
+    };
+
+    updateSalesPackage = ( salesPackage, index ) => {
+        this.props.updateSalesPackages("save", salesPackage, index);
+    };
+
+    removeSalesPackage = ( index ) => {
+        this.props.updateSalesPackages("remove", null, index);
+    };
+
+    removeAllSalesPackage= () => {
+        this.props.updateSalesPackages("removeAll");
+    };
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    exclusivity = () => {
+        const {rightsPackage} = this.props;
+        return rightsPackage.filter(rp => rp.exclusive).length > 0;
     };
 
     scroll = () => {
@@ -47,135 +80,36 @@ class SellFormStep4 extends React.Component {
 
     };
 
-    submit = () => {
-        const {updateContentValue} = this.props;
-        let content = store.getState().content;
-        let _this = this;
-        content = parseSeasons(content);
-        this.setState({showSubmitting: true})
-        ContentArena.ContentApi.saveContentAsActive(content).done(function ( response ) {
-
-            if ( response.success && response.contentId ){
-                updateContentValue("id", response.contentId);
-                _this.setState({showSuccessScreen: true,showSubmitting: false})
-            }
-        });
-    };
-
-    closeSuccessScreen = () => {
-        this.setState({showSuccessScreen: false});
-        goTo("managelistings")
-    };
-
-    successScreen = () => {
-        return <Modal
-            isOpen={this.state.showSuccessScreen}
-            onRequestClose={this.closeSuccessScreen}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
-        >
-
-            <div style={{
-                color: 'grey',
-                padding: 20,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-            }}>
-                <div style={{
-                    fontSize: 30,
-                    width : 600,
-                    textAlign : 'center',
-                    fontWeight: 600
-                }}>
-                    Congratulations!
-                </div>
-                <div style={{
-                    fontSize: 20,
-                    width : 600,
-                    margin : 40,
-                    textAlign : 'center'
-                }}>
-                    The listing was submitted successfully!
-                </div>
-                <div>
-                    <button className="standard-button" onClick={this.closeSuccessScreen} >Continue</button>
-                </div>
-            </div>
-
-        </Modal>
-    };
-
-    updateSalesPackage = ( salesPackage, index ) => {
-        this.props.updateSalesPackages("save", salesPackage, index);
-    };
-
-    removeSalesPackage = ( index ) => {
-        this.props.updateSalesPackages("remove", null, index);
-    };
-
-    editSalesPackage = ( index ) => {
-        this.setState({
-            salesPackageToEdit : index,
-            editOpen: true
-        });
-    };
-
-    toggleDetails = () => {
-        this.setState({showDetails: !this.state.showDetails});
-    };
-
     render() {
-        if ( this.props.step !== 4) return (null);
+        const {step, rightsPackage, salesPackages, currency, vat, updateContentValue, image, vatPercentage} = this.props;
+
+        if ( step !== 4) return (null);
         this.scroll();
-        const {
-            salesPackages,
-            goToPreviousStep,
-            updateContentValue,
-            signature,
-            currency,
-            company,
-            terms_arena,
-            terms
-        } = this.props;
-
-        const {showDetails, showSubmitting} = this.state;
-
         return (
+
             <div className="step-content">
-                { this.successScreen() }
-                <div className="buttons">
-                    <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
-                        <button className="light-blue-button" onClick={goToPreviousStep}>
-                            <i className="fa fa-chevron-left"/> Edit
-                        </button>
-                    </div>
-                </div>
-                {!showDetails && <div className="step-title">Review & Sign</div>}
-                {showDetails && <div className="step-title">Marketplace Preview</div>}
+                <div className="step-content-container">
 
-                {
-                    showDetails &&
-                    <div>
-                        <ListingDetails
-                        onBack={this.toggleDetails}
-                        company={company}
-                        content={this.props}/>
-                    </div>
-                }
+                    <CurrencySelector onClick={this.selectCurrency} selected={currency} />
 
-                {!showDetails && <div className="step-content-container">
+                    <FileSelector
+                        label={"Listing image (opt.)"}
+                        isImage={true}
+                        onSelect={updateContentValue}
+                        previousImage={image}
+                        target={"imageBase64"}/>
 
-                    <ContentListing {...this.props} onSelectName={this.toggleDetails} />
+                    <ExpirationDateSelector/>
 
                     <SalesPackageForm
-                        hideButtons
-                        fullSize={true}
-                        salesPackages={salesPackages}
                         currency={currency}
-                        onEdit={this.editSalesPackage}
+                        exclusivity={this.exclusivity()}
+                        salesPackages={salesPackages}
+                        onAdd={this.addSalesPackage}
                         onUpdate={this.updateSalesPackage}
-                        onRemove={this.removeSalesPackage}/>
+                        onRemove={this.removeSalesPackage}
+                        onEdit={this.editSalesPackage}
+                        onRemoveAll={this.removeAllSalesPackage}/>
 
                     {this.state.editOpen && <SalesPackageEdit
                         isOpen={this.state.editOpen}
@@ -184,66 +118,23 @@ class SellFormStep4 extends React.Component {
                                 editOpen : false
                             })
                         }}
+                        exclusivity={this.exclusivity()}
                         onUpdate={this.updateSalesPackage}
                         salesPackageId={this.state.salesPackageToEdit}
                         salesPackages={salesPackages}
                     />}
 
-                    <div className="buttons-container" >
-                        <button id="draft-listing" className="standard-button" style={{ width: '250px'}}>
-                            View License Agreement
-                        </button>
-                    </div>
+                    <CompanyInformation/>
 
-                    <div className={"terms-confirm"}
-                         style={{
-                             padding: '40px 0px',
-                             width: '50%',
-                             margin: '0 auto'
-                         }}>
-                        <div style={{display: 'flex', marginBottom: 10}}>
-                            <input
-                                type="checkbox"
-                                value={terms}
-                                onChange={(e)=>{
-                                    updateContentValue('terms',e.target.checked)
-                                }}
-                                id="terms"/>
-                            <label htmlFor="terms"/>
-                            I confirm that I have verified the terms stated above. They are correct and ready to be
-                            published.
-                        </div>
-                        <div style={{display: 'flex', marginBottom: 10}}>
-                            <input
-                                type="checkbox"
-                                value={terms_arena}
-                                onChange={(e)=>{
-                                    updateContentValue('terms_arena',e.target.checked)
-                                }}
-                                id="terms_arena"/>
-                            <label htmlFor="terms_arena"></label>
-                            I confirm that I have verified the terms and conditions that have been outlined by
-                            Content Arena Pte. Ltd.
-                        </div>
-                    </div>
+                    <JurisdictionSelector/>
 
-                    <DigitalSignature
-                        onReady={(signature) => {
-                            updateContentValue("signature", signature);
-                        }}
-                        signature={signature}
-                    />
+                    <VatSelector
+                        vatPercentage={vatPercentage}
+                        onUpdate={updateContentValue}
+                        onClick={this.selectVat}
+                        selected={vat}/>
 
-                    { terms && terms_arena && signature &&
-                    <div className="buttons" style={{marginTop: 20}}>
-                        <div className="buttons-container"  >
-                            {!showSubmitting && <button id="draft-listing" className="standard-button" onClick={this.submit}>
-                                Submit Listing
-                            </button>}
-                            {showSubmitting && <i className="fa fa-cog fa-spin" />}
-                        </div>
-                    </div>}
-                </div>}
+                </div>
             </div>
         );
     }
@@ -266,7 +157,10 @@ const mapDispatchToProps = dispatch => {
             salesPackage : salesPackage,
             name: name
         }),
-        goToPreviousStep : () => dispatch(goToPreviousStep()),
+        addSalesPackages : (salesPackages) => dispatch({
+            type: 'ADD_SALES_PACKAGES',
+            salesPackages : salesPackages,
+        }),
         stepChangeReset : () => dispatch(stepChangeReset())
     }
 };

@@ -72,16 +72,6 @@ class PackageSelector extends React.Component {
 
     componentDidMount(){
 
-        /*let _this = this;
-
-        if ( !this.props.defaultRights ){
-            this.state.packages.forEach( ( superRight) => {
-                if ( superRight.shortLabel === "LT" || superRight.shortLabel === "HL" ){
-                    _this.updateSuperRightsList(superRight, true);
-                }
-            });
-        }
-        this.props.updateContentValue("defaultRights", true);*/
     }
 
     updateSuperRightsList = (superRight, status) => {
@@ -103,7 +93,7 @@ class PackageSelector extends React.Component {
         return (
             <div className="package-selector">
                 <div className="package-selector-title">
-                    Pick rights
+                    Rights selection & definiton
                 </div>
                 <div className="package-selector-container">
                     <div className="package-exclusive">

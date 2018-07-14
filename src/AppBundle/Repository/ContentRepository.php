@@ -36,7 +36,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->orWhere('c.programName LIKE :value')
                 ->orWhere('c.programType LIKE :value')
                 ->orWhere('c.seriesType LIKE :value')
-                ->orWhere('c.distributionPackages LIKE :value')
                 ->orWhere('com.legalName LIKE :value')
                 ->orWhere('s.name LIKE :value')
                 ->orWhere('t.name LIKE :value')

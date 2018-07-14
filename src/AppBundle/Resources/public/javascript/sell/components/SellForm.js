@@ -6,6 +6,7 @@ import SellFormStep1 from "../containers/SellFormStep1";
 import SellFormStep2 from "../containers/SellFormStep2";
 import SellFormStep3 from "../containers/SellFormStep3";
 import SellFormStep4 from "../containers/SellFormStep4";
+import ReviewAndSign from "../containers/ReviewAndSign";
 import Selector from "../../main/components/Selector";
 import HeaderBar from "../../main/components/HeaderBar";
 import { connect } from "react-redux";
@@ -49,7 +50,8 @@ class SellForm extends React.Component {
                     <SellFormStep1/>
                     <SellFormStep2 packages={this.props.packages} />
                     <SellFormStep3 packages={this.props.packages} />
-                    <SellFormStep4/>
+                    <SellFormStep4 packages={this.props.packages} />
+                    <ReviewAndSign />
                     <SellButtons />
                     <ReactTooltip html={true} />
                 </div>

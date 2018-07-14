@@ -10,6 +10,7 @@ import Moment from "moment";
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 import {stepChangeReset} from "../actions/contentActions";
+import {Description} from "../components/SellFormItems";
 
 const licenseStyles = {
     fontSize: "12px",
@@ -41,22 +42,7 @@ class SellFormStep2 extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log("Step 2 - props", nextProps);
-
         window.content = nextProps;
-
-        const { programsShown } = this.state;
-        let programsEnabled = false;
-
-        nextProps.rightsPackage.forEach(( rightPackage )=>{
-            if ( rightPackage.shortLabel === "PR" && !programsShown ) programsEnabled = true ;
-        });
-
-        if ( programsEnabled ){
-            this.setState({
-                programsEnabled : programsEnabled,
-                programsShown : true
-            });
-        }
     }
 
     loadRights = (rightsPackage, group) => {
@@ -127,119 +113,38 @@ class SellFormStep2 extends React.Component {
 
     render() {
 
-        const {step, programs, startDateMode, endDateMode, endDate } = this.props;
+        const {
+            programDescription,
+            updateContentValue,
+            step, programs, startDateMode, endDateMode, endDate } = this.props;
         if ( step !== 2) return (null);
         this.scroll();
 
         return (
 
             <div className="step-content">
-                <PackageSelector
-                    packages={this.props.packages}
-                    packagesConfirmed={this.state.packagesConfirmed}
-                    onConfirm={this.packagesConfirmed} />
+                <div className="step-title">{this.state.title}</div>
 
                 <div className="step-content-container">
-
-                    <LicenseDateSelector
-                        isOpen={this.state.licensePopup}
-                        onUpdate={this.selectLicenseDates}
-                        startDate={this.props.startDate}
-                        endDateLimit={this.props.endDateLimit}
-                        endDateMode={endDateMode}
-                        startDateMode={startDateMode}
-                        endDate={endDate}
-                        onClose={this.closeLicensePopup}
-                    />
-
-                    <TitleBar title={"License period"}/>
-
-                    <div className={"license-date-container"}>
-                        <div className="table-right">
-                            <div className="row">
-                                <div className="column right-name">Start</div>
-                                <div className="column right-item-content" style={licenseStyles}>
-                                    { !this.props.startDate  && " contract conclusion"}
-                                    { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
-                                </div>
-                                <div className="column right-name">End</div>
-                                <div className="column right-item-content"  style={licenseStyles}>
-                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
-                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
-                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
-                                    { !endDateMode && "Please select"}
-                                </div>
-                                <div className="column right-item-content edit-item" onClick={()=>this.setState({licensePopup: true})}>
-                                    <i className="fa fa-edit"/>
-                                </div>
-                            </div>
+                    <div className="textarea-input">
+                        <label>Program/Content Description</label>
+                        <div>
+                            Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.
                         </div>
+                        <textarea
+                            onBlur={ (e) => updateContentValue("programDescription", e.target.value)}
+                            defaultValue={programDescription}
+                            placeholder={"Please enter the program description. The program description represents the core of the license agreement. All rights picked later on refer to this program description. You may enter all information you consider relevant (e.g. which events you seek to grant rights to or which events you will produce and deliver to the buyer). \n"}/>
                     </div>
-
-                    <TitleBar title={"Configure Rights"}/>
-
-                    <Program
-                        programs={programs}
-                        isOpen={this.state.programsEnabled}
-                        onClose={this.closeProgramsPopup}/>
-
-                    <div className="rights-container">
-                        {
-                            this.state.rights.length > 0 && this.state.rights.map((right, i)=> {
-
-                                if ( right.superRights.length > 0
-                                    && !this.superRightsEnabled(right.superRights)) return;
-
-                                return <PopupRight
-                                    key={right.key}
-                                    id={right.key}
-                                    name={right.name}
-                                    options={right.options}
-                                    multiple={right.multiple}
-                                    superRights={right.superRights}
-                                    showTextArea={right.showTextArea}
-                                    onUpdate={this.updateRight}
-                                    rightsPackage={this.props.rightsPackage}/>
-                            })
-                        }
-                    </div>
-
-                    <TitleBar title={"Configure Production Standards"}/>
-
-                    <div className="rights-container">
-                        {
-                            this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i)=> {
-
-                                if ( right.superRights.length > 0
-                                    && !this.superRightsEnabled(right.superRights)) return;
-
-                                return <PopupRight
-                                    key={right.key}
-                                    id={right.key}
-                                    name={right.name}
-                                    selected={this.props[right.key]}
-                                    options={right.options}
-                                    multiple={right.multiple}
-                                    programs={programs}
-                                    onProgram={() => {
-                                        this.setState({
-                                            programsEnabled : true,
-                                        });
-                                    }}
-                                    superRights={right.superRights}
-                                    showTextArea={right.showTextArea}
-                                    technicalFee={right.technicalFee}
-                                    onUpdate={this.updateRight}
-                                    rightsPackage={this.props.rightsPackage}/>
-                            })
-                        }
-                    </div>
-
-                    <Comments/>
 
                 </div>
 
 
+
+                <PackageSelector
+                    packages={this.props.packages}
+                    packagesConfirmed={this.state.packagesConfirmed}
+                    onConfirm={this.packagesConfirmed} />
             </div>
         );
     }

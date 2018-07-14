@@ -317,6 +317,7 @@ class SellFormStep1 extends React.Component {
     clear = () => {
         this.removeSport(0);
         this.props.updateContentValue("name", "");
+        this.toggleSearch();
     };
 
     scroll = () => {
@@ -388,12 +389,12 @@ class SellFormStep1 extends React.Component {
                 {!this.state.showSearch &&
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
-                        <button className="light-blue-button" style={{ marginRight: '20px'}} onClick={this.toggleSearch}>
+                        {/*<button className="light-blue-button" style={{ marginRight: '20px'}} onClick={this.toggleSearch}>
                             <i className="fa fa-search"/> Show search function
-                        </button>
+                        </button>*/}
 
                         <button className="light-blue-button" onClick={this.clear}>
-                            <i className="fa fa-close"/> Clear
+                            Start over
                         </button>
                     </div>
                 </div>}
@@ -401,7 +402,7 @@ class SellFormStep1 extends React.Component {
                 {!this.state.showSearch && <div className="step-content-container">
 
                     <div className="step-item-description" >
-                        Please select the sport(s) and competition(s) covered by your content listing:
+                        Please fill in the information fields below. Note that, apart from 'Sport', you may skip all information fields.
                     </div>
 
                     {
@@ -486,9 +487,13 @@ class SellFormStep1 extends React.Component {
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                    <ListingName/>
+                    {/*<ListingName/>*/}
 
                     <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
+
+                    <div className="step-item-description" style={{}}>
+                        Additional information
+                    </div>
 
                     <div className="base-input">
                         <label>Website</label>

@@ -6,7 +6,7 @@ easy_admin:
                 - label: 'User Information'
                   children: ['User', 'Company', 'Status', 'Profile']
                 - label: 'Rights'
-                  children: ['Rights', 'RightsPackage', 'RightsItemContent', 'DistributionPackage']
+                  children: ['RightsPackage']
                 - label: 'Sports'
                   children: ['Sport', 'SportCategory', 'Tournament', 'Season']
                 - label: 'Custom Text'
@@ -57,10 +57,12 @@ easy_admin:
                         - { property: 'name' }
                         - { property: 'sports' }
                         - { property: 'tournament' }
+                        - { property: 'rightsPackage' }
                         - { property: 'status' }
                         - { property: 'expiresAt' }
                 list:
                     fields:
+                        - { property: 'id' }
                         - { property: 'customId' }
                         - { property: 'company' }
                         - { property: 'createdAt' }
@@ -73,11 +75,6 @@ easy_admin:
                         - { name: 'delete', icon: 'times', label: '' }
             Status:
                 class: AppBundle\Entity\UserStatus
-            DistributionPackage:
-                class: AppBundle\Entity\DistributionPackage
-                label: 'Distribution Packages'
-                list:
-                    title: 'Distribution Packages'
             RightsPackage:
                 class: AppBundle\Entity\RightsPackage
                 label: 'Super Rights'
@@ -85,7 +82,6 @@ easy_admin:
                     title: 'Super Rights'
                     fields:
                         - 'name'
-                        - 'children'
                         - 'shortLabel'
                     actions:
                         - { name: 'show', icon: 'eye', label: '' }
@@ -95,7 +91,6 @@ easy_admin:
                     title: 'Super Rights'
                     fields:
                         - 'name'
-                        - 'children'
                         - 'shortLabel'
             Rights:
                 class: AppBundle\Entity\Rights

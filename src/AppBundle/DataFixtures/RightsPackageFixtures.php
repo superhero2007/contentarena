@@ -21,7 +21,6 @@ class RightsPackageFixtures extends Fixture
             'Live transmission',
             'Delayed transmission',
             'Live betting',
-            'Archive',
             'News access',
             'Highlights',
             'Clips',

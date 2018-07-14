@@ -300,8 +300,6 @@ class Content
      */
     private $lastActionUser;
 
-
-
     /**
      * @var boolean;
      * @Groups({"board"})
