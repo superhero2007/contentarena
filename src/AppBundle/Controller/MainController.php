@@ -80,7 +80,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings", name="manageListings")
+     * @Route("/managelistings{trailingSlash}", name="manageListings", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
      */
     public function manageListings(Request $request)
     {
