@@ -111,7 +111,7 @@ class ContentListing extends React.Component{
                 <div className={"right"} >
                     <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
 
-                    <div style={{display: "flex"}}>
+                    <div className="info">
                         <ContentListingEventDetails {...this.props}/>
 
                         {watchlistRemove && !confirmWatchlistRemove &&
@@ -149,22 +149,10 @@ class ContentListing extends React.Component{
                             </span>
                         </div>}
 
-                        <div style={{
-                            flex: 2,
-                            flexDirection: "column",
-                            flexWrap: 'wrap',
-                            maxHeight: 200,
-                            display: 'flex'
-                        }}>
+                        <div className="listing-event-packages">
                             {
                                 rightsPackage.map(( sr,i )=>{
-                                    return <div key={i}  style={{
-                                        minHeight: 46,
-                                        flexDirection: 'row',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        flex: '1 1 40px'
-                                    }}>
+                                    return <div className="pack" key={i}>
                                         {!sr.exclusive &&
                                         <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
 
