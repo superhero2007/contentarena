@@ -10,12 +10,8 @@
 namespace AppBundle\DataFixtures;
 
 use AppBundle\Entity\Rights;
-use AppBundle\Entity\RightsItemContent;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\DataFixtures\RightsItemContentFixtures;
-use AppBundle\DataFixtures\RightsGroupFixtures;
-use AppBundle\DataFixtures\RightsPackageFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class RightsFixtures extends Fixture implements DependentFixtureInterface
@@ -236,8 +232,6 @@ class RightsFixtures extends Fixture implements DependentFixtureInterface
     {
         return array(
             RightsItemContentFixtures::class,
-            RightsPackageFixtures::class,
-            RightsGroupFixtures::class
         );
     }
 }
