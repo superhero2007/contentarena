@@ -756,8 +756,9 @@ button{
     flex: 2;
     box-sizing: border-box;
     justify-content: center;
-    text-align: center;
+    margin-left: 10px;
     align-items: center;
+    text-align: left;
     input.text-field {
       margin: 3px 0 0;
       height: 24px;

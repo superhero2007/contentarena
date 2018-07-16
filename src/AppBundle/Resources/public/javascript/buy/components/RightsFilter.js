@@ -32,10 +32,10 @@ class RightsFilter extends React.Component {
                             onChange={this.selectTerritory}/>
                     </div>
 
-                    <div id="rights-packages" style={{marginTop: 20}}>
+                    <div id="rights-packages" className={"filter-rights"} style={{marginTop: 20}}>
                         {
                             rightsPackage && rightsPackage.map(right => {
-                                return <p key={right.id}>
+                                return <div key={right.id} className="filter-right">
                                     <input
                                         className='right_package subfilter'
                                         type='checkbox'
@@ -49,7 +49,7 @@ class RightsFilter extends React.Component {
                                         }}
                                         id={right.id}
                                     /> {right.name}
-                                </p>
+                                </div>
                             })
                         }
 
@@ -59,6 +59,7 @@ class RightsFilter extends React.Component {
                         <input
                             type="checkbox"
                             checked={exclusive}
+                            style={{display: 'block'}}
                             onChange={(e) => {
                                 this.props.updateExclusive(e.target.checked)
                             }} /> Contains exclusive rights
