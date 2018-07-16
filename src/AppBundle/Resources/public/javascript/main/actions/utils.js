@@ -13,6 +13,10 @@ export const limitText = (txt, limit = 25) => {
     return (txt.length > limit) ? txt.substring(0,limit) + "..." : txt
 };
 
+export const editedProgramSelected = (rights) => {
+    return rights.filter(r=>r.shortLabel === 'PR').length === 1
+};
+
 export const parseSeasons = (content) => {
     content.seasons.forEach((season)=>{
         season.selectedSchedules = {};

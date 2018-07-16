@@ -52,6 +52,14 @@ class Content
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="program_description", type="text", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $programDescription;
+
+    /**
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
      * @Groups({"listing", "board"})
      */
@@ -273,6 +281,13 @@ class Content
      * @Groups({"listing"})
      */
     private $fixturesBySeason;
+
+    /**
+     * @var object
+     * @ORM\Column(name="extra_data", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $extraData;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
@@ -1062,6 +1077,38 @@ class Content
     public function setLastActionUser($lastActionUser)
     {
         $this->lastActionUser = $lastActionUser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProgramDescription()
+    {
+        return $this->programDescription;
+    }
+
+    /**
+     * @param string $programDescription
+     */
+    public function setProgramDescription($programDescription)
+    {
+        $this->programDescription = $programDescription;
+    }
+
+    /**
+     * @return object
+     */
+    public function getExtraData()
+    {
+        return $this->extraData;
+    }
+
+    /**
+     * @param object $extraData
+     */
+    public function setExtraData($extraData)
+    {
+        $this->extraData = $extraData;
     }
 
 

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import FileSelector from '../../main/components/FileSelector'
 import SearchCompetition from '../../main/components/SearchCompetition'
 import SeasonSelector from '../../main/components/SeasonSelector'
-import ListingName from "../components/ListingName";
 import TagsInput from 'react-tagsinput'
 import {stepChangeReset} from "../actions/contentActions";
 
@@ -486,8 +485,6 @@ class SellFormStep1 extends React.Component {
                     })}
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
-
-                    {/*<ListingName/>*/}
 
                     <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
 

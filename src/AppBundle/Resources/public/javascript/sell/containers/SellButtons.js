@@ -2,16 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 import store from '../store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
-import {companyIsValid, programIsValid, programsEnabled} from "../actions/validationActions";
+import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
-import {parseSeasons} from "../../main/actions/utils";
+import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
 
 class SellButtons extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             date: new Date(),
-            lastStep : props.lastStep || 4,
+            lastStep : props.lastStep || 5,
             saving : false,
             savingSuccess: false,
             visited : [1]
@@ -53,36 +53,72 @@ class SellButtons extends React.Component {
      */
     reviewAndSignEnabled = () =>{
 
-        const {expiresAt, vat, vatPercentage, salesPackages, company} = this.props;
+        const {expiresAt, vat, vatPercentage, salesPackages, company, name} = this.props;
 
         return expiresAt
             && ( vat === "no" || (vatPercentage && vatPercentage != 0 && vatPercentage !== "") )
             && salesPackages.length > 0
+            && name
+            && name !== ""
             && companyIsValid(company);
 
     };
 
     reviewAndSignGetMessages = () => {
-        const {expiresAt, vat, vatPercentage, salesPackages, company} = this.props;
+        const {expiresAt, vat, vatPercentage, salesPackages, company, name} = this.props;
         let message = "Please complete missing information\n";
 
         if ( salesPackages.length === 0 ) message += "<br/>- Select at least one sales bundle.\n";
         if ( !expiresAt ) message += "<br/>- Select listing expiry.";
         if ( !companyIsValid(company) ) message += "<br/>- Enter company information.";
+        if ( !name || name === "") message += "<br/>- Enter a name for the listing.";
 
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
 
         return message;
     };
 
+    programIsValid = () => {
+        const {
+            rightsPackage,
+            PROGRAM_NAME,
+            PROGRAM_EPISODES,
+            PROGRAM_DURATION,
+            PROGRAM_DESCRIPTION
+        } = this.props;
+
+        let program = editedProgramSelected(rightsPackage);
+
+        if (!program) return true;
+
+        return PROGRAM_NAME && PROGRAM_NAME !== "" &&
+            PROGRAM_EPISODES && PROGRAM_EPISODES !== "" &&
+            PROGRAM_DURATION && PROGRAM_DURATION !== "" &&
+            PROGRAM_DESCRIPTION && PROGRAM_DESCRIPTION !== "";
+
+    };
+
     step2Enabled = () => {
-        const {endDateMode, rightsPackage, programs} = this.props;
+        const {rightsPackage, programDescription} = this.props;
 
-        let program = true;
-        if ( programsEnabled(rightsPackage) ) program = programIsValid(programs[0]);
+        let program = this.programIsValid();
 
-        return endDateMode !== undefined && rightsPackage.length > 0 && program;
+        return rightsPackage.length > 0 && program && programDescription && programDescription.length >= 15;
 
+    };
+
+    step3Enabled = () => {
+        const {endDateMode} = this.props;
+        return endDateMode !== undefined;
+    };
+
+    step3GetMessages = () => {
+
+        const {endDateMode} = this.props;
+        let message = "Please complete missing information\n";
+        if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
+
+        return message;
     };
 
     step1Enabled = () => {
@@ -101,13 +137,11 @@ class SellButtons extends React.Component {
     };
 
     step2GetMessages = () => {
-        const {endDateMode, rightsPackage, programs} = this.props;
+        const {programDescription, rightsPackage} = this.props;
         let message = "Please complete missing information\n";
-        let program = true;
-        if ( programsEnabled(rightsPackage) ) program = programIsValid(programs[0]);
-
+        let program = this.programIsValid();;
         if ( rightsPackage.length === 0 ) message += "<br/>- Select at least one right.\n";
-        if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
+        if ( !programDescription || programDescription.length < 15 ) message += "<br/>- Program/content description must be at least 15 characters length";
         if ( !program ) message += "<br/>- Enter program information.";
 
         return message;
@@ -118,6 +152,7 @@ class SellButtons extends React.Component {
 
         if ( step === 1 && !this.step1Enabled()) return this.step1GetMessages();
         if ( step === 2 && !this.step2Enabled()) return this.step2GetMessages();
+        if ( step === 3 && !this.step3Enabled()) return this.step3GetMessages();
         if ( step === 4 && !this.reviewAndSignEnabled()) return this.reviewAndSignGetMessages();
     };
 
@@ -151,12 +186,13 @@ class SellButtons extends React.Component {
         let saveAsDraftText = (this.state.saving) ? "Saving.." : (this.state.savingSuccess) ? "Saved as Draft" : "Save as Draft";
 
         const {terms, terms_arena, signature, step} = this.props;
+        const { lastStep } = this.state;
 
         return (
             <div className="buttons">
                 <div className="buttons-container"  >
 
-                    { this.props.sports.length > 0 && step !== 4 &&
+                    { this.props.sports.length > 0 && step !== lastStep &&
                     <button className="light-blue-button" onClick={ this.saveAsDraft } disabled={this.state.saving}>
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
                     </button> }
@@ -174,7 +210,7 @@ class SellButtons extends React.Component {
                         </div>}
 
                 </div>
-                { this.props.step < 4 && <div className="buttons-container" >
+                { this.props.step < lastStep && <div className="buttons-container" >
                     { this.props.step !== 1 &&
                     <button className="standard-button"
                             onClick={ this.props.goToPreviousStep }>
@@ -194,7 +230,8 @@ class SellButtons extends React.Component {
                                 className="standard-button"
                                 disabled={
                                     ( step===1 && !this.step1Enabled()) ||
-                                    ( step===2 && !this.step2Enabled())
+                                    ( step===2 && !this.step2Enabled()) ||
+                                    ( step===3 && !this.step3Enabled())
                                 }
                                 onClick={ () => this.props.goToNextStep() }>
                                     Next <i className="fa fa-arrow-right"/>

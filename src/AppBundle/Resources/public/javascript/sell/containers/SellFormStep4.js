@@ -8,8 +8,10 @@ import SalesPackageEdit from "../components/SalesPackageEdit";
 import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
 import CompanyInformation from "../components/CompanyInformation";
+import ListingName from "../components/ListingName";
 import {CountrySelector} from "../../main/components/CountrySelector";
 import {stepChangeReset} from "../actions/contentActions";
+import {TitleBar} from "../components/SellFormItems";
 
 class SellFormStep4 extends React.Component {
 
@@ -92,15 +94,6 @@ class SellFormStep4 extends React.Component {
 
                     <CurrencySelector onClick={this.selectCurrency} selected={currency} />
 
-                    <FileSelector
-                        label={"Listing image (opt.)"}
-                        isImage={true}
-                        onSelect={updateContentValue}
-                        previousImage={image}
-                        target={"imageBase64"}/>
-
-                    <ExpirationDateSelector/>
-
                     <SalesPackageForm
                         currency={currency}
                         exclusivity={this.exclusivity()}
@@ -124,6 +117,8 @@ class SellFormStep4 extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
+                    <TitleBar title={"Further information"}/>
+
                     <CompanyInformation/>
 
                     <JurisdictionSelector/>
@@ -133,6 +128,23 @@ class SellFormStep4 extends React.Component {
                         onUpdate={updateContentValue}
                         onClick={this.selectVat}
                         selected={vat}/>
+
+                    <TitleBar title={"Listing details"}/>
+
+                    <div className="step-item-description" style={{marginTop: 0}} >
+                        Please define listing details below. This determines how your listing is shown to potential buyers.
+                    </div>
+
+                    <ListingName/>
+
+                    <FileSelector
+                        label={"Listing image (opt.)"}
+                        isImage={true}
+                        onSelect={updateContentValue}
+                        previousImage={image}
+                        target={"imageBase64"}/>
+
+                    <ExpirationDateSelector/>
 
                 </div>
             </div>

@@ -12,7 +12,6 @@ export const contentType= {
     REMOVE_FROM_MULTIPLE : 'REMOVE_FROM_MULTIPLE',
     UPDATE_FROM_MULTIPLE : 'UPDATE_FROM_MULTIPLE',
     APPLY_SELECTION : 'APPLY_SELECTION',
-    UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
     UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
     UPDATE_ATTACHMENTS : 'UPDATE_ATTACHMENTS',
     ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES'
@@ -26,7 +25,6 @@ export const content = (state = {
     sportCategory : [],
     sports : [],
     seasons: [],
-    programs : [],
     salesPackages : [],
     attachments : [],
     endDateLimit : 30,
@@ -34,7 +32,11 @@ export const content = (state = {
     currency : "EUR",
     startDateMode : "LICENSE",
     stepChange : false,
-    vat : "no"
+    vat : "no",
+    NA_INPUT : 5,
+    HL_INPUT : 90,
+    LICENSED_LANGUAGES : [],
+    DISTRIBUTION_METHOD_LIVE : "TECHNICAL_DELIVERY_SATELLITE",
 }, action) => {
 
     let newState = {};

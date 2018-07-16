@@ -58,10 +58,18 @@ button{
 
 }
 
+
 .step-content{
   color: #1a1a1a;
   padding: 20px;
   text-align: left;
+
+  .listing-summary{
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+  }
   .step-title{
     font-size: $font-size-extra-large;
     color: #4F4F4F;
@@ -72,6 +80,20 @@ button{
   .step-content-container {
     display: flex;
     flex-direction: column;
+    .rights-box{
+      display: flex;
+      flex-direction: row;
+      margin: 0 0 20px 0;
+      flex-wrap: wrap;
+      .rights-box-item{
+        min-height: 40px;
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 33%;
+      }
+    }
     .rights-container{
       display: flex;
       flex-direction: row;

@@ -371,12 +371,12 @@ class ContentService
         $selectedRights = array();
 
         if ( isset($data->description) ) $content->setDescription($data->description);
+        if ( isset($data->programDescription) ) $content->setProgramDescription($data->programDescription);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(new \DateTime($data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
         if ( isset($data->customSport) ) $content->setCustomSport($data->customSport);
         if ( isset($data->name) ) $content->setName($data->name);
-
         if ( isset($data->vat) ) $content->setVat($data->vat);
         if ( isset($data->vatPercentage) ) $content->setVatPercentage($data->vatPercentage);
         if ( isset($data->startDate) ) $content->setStartDate(new \DateTime($data->startDate));
@@ -386,7 +386,6 @@ class ContentService
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
-
 
         if ( isset($data->salesPackages) ) {
 
@@ -445,11 +444,50 @@ class ContentService
             $content->setRightsPackage($packages);
 
         }
+
+        $content = $this->saveExtraData($content, $data);
+
         if ( isset($data->customTournament) ){
             $content->setCustomTournament($data->customTournament || null);
         }
         if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
+    }
+
+    /**
+     * @param Content $content
+     * @param $data
+     * @return mixed
+     */
+    private function saveExtraData($content, $data){
+        $keys = array(
+            "DISTRIBUTION_METHOD_LIVE",
+            "TECHNICAL_DELIVERY_SATELLITE",
+            "HL_INPUT",
+            "LICENSED_LANGUAGES",
+            "NA_INPUT",
+            "PROGRAM_NAME",
+            "PROGRAM_SUBTITLES",
+            "PROGRAM_SCRIPT",
+            "PROGRAM_LANGUAGE",
+            "PROGRAM_YEAR",
+            "PROGRAM_EPISODES",
+            "PROGRAM_DURATION",
+            "PROGRAM_DESCRIPTION",
+        );
+
+        $extraData = array();
+
+        foreach ($keys as $key){
+            if ( property_exists($data, $key)){
+                $extraData[$key] = $data->{$key};
+            }
+        }
+
+        $content->setExtraData($extraData);
+
+        return $content;
+
     }
 
     private function saveCompany($data){

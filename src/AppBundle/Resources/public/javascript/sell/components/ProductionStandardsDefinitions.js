@@ -1,8 +1,20 @@
 export const ProductionStandardsDefinitions = [
     {
+        name: "Content Delivery",
+        key: "CONTENT_DELIVERY",
+        superRights: ["LT","HL", "LB", "NA","DT"],
+        options : [
+            "CONTENT_DELIVERY_LIVE",
+            "CONTENT_DELIVERY_DEDICATED",
+            "CONTENT_DELIVERY_NON_DEDICATED"
+        ],
+        multiple : false
+    },
+    {
         name: "Video Standard",
         key: "VIDEO_STANDARD",
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
+        productionLabel : true,
         options : [
             "VIDEO_STANDARD_HD",
             "VIDEO_STANDARD_SD",
@@ -15,7 +27,8 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Aspect ratio",
         key: "ASPECT_RATIO",
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
+        productionLabel : true,
         options : [
             "ASPECT_RATIO_16_9",
             "ASPECT_RATIO_4_3",
@@ -27,7 +40,8 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Graphics",
         key: "GRAPHICS",
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
+        productionLabel : true,
         options : [
             "GRAPHICS_NO",
             "GRAPHICS_YES",
@@ -38,7 +52,8 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Commentary",
         key: "COMMENTARY",
-        superRights: [],
+        productionLabel : true,
+        superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
             "COMMENTARY_NO",
             "COMMENTARY_YES",
@@ -49,7 +64,8 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Camera standards",
         key: "CAMERA",
-        superRights: [],
+        productionLabel : true,
+        superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
             "CAMERA_MINIMUM",
             "CAMERA_NOT_AVAILABLE"
@@ -57,8 +73,9 @@ export const ProductionStandardsDefinitions = [
         multiple : false
     },
     {
-        name: "Technical delivery",
+        name: "Distribution Method",
         key: "TECHNICAL_DELIVERY",
+        productionLabel : true,
         superRights: [],
         options : [
             "TECHNICAL_DELIVERY_SATELLITE",
@@ -73,7 +90,7 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Content production",
         key: "CONTENT",
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
             "CONTENT_ALL",
             "CONTENT_TEXT",
@@ -89,4 +106,5 @@ export const ProductionStandardsDefinitions = [
         ],
         multiple : false
     }
+
 ];

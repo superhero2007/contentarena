@@ -115,7 +115,7 @@ class ContentListingPendingBid extends ContentListing {
                         padding: 10,
                         margin: '0 20px'
                     }}>
-                        <div>{bid.salesPackage.name} {bid.salesPackage.fee} {getCurrencySymbol(bid.salesPackage.currency.code)}</div>
+                        <div>{bid.salesPackage.name}</div>
                     </div>
                     <div style={{
                         color: '#2DA7E6',

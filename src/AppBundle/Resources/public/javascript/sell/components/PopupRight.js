@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
+import {SuperRightProductionDetailsLabels} from "./SuperRightDefinitions";
 
 const numberFieldStyle = { width: '30px', paddingLeft: '10px'};
 
@@ -15,6 +16,7 @@ class PopupRight extends React.Component {
             isOpen : false,
             selected : props.selected,
             custom : false,
+            productionLabels : SuperRightProductionDetailsLabels
         };
     }
 
@@ -77,13 +79,6 @@ class PopupRight extends React.Component {
         return selection.get(rightItem).has(rightPackage);
     };
 
-    getProgramsName = () => {
-        return this.props.programs.filter(program =>(program.saved)).map(program => (program.name));
-    };
-
-    showProgramColumns = (rightPackage) => {
-        return (rightPackage.shortLabel!=="PR"|| ( rightPackage.shortLabel==="PR" && this.getProgramsName().length === 0 ));
-    };
 
     packageIsActive = ( id ) => {
         return this.state.activePackages.has( id ) && this.state.availablePackages.has( id );
@@ -106,8 +101,6 @@ class PopupRight extends React.Component {
             onProgram();
             return;
         }
-
-
 
         let isOpen = !this.state.isOpen;
         this.setState({isOpen});
@@ -205,7 +198,19 @@ class PopupRight extends React.Component {
     };
 
     renderModal = () => {
-        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee} = this.props;
+        const {
+            name,
+            multiple,
+            options, id,  superRights, showTextArea, rightsPackage, technicalFee,
+            distributionMethod,
+            global,
+            language,
+            languages,
+            productionLabel,
+            onUpdateListing
+        } = this.props;
+        const { productionLabels } = this.state;
+        let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
         return <Modal
             isOpen={this.state.isOpen}
             bodyOpenClassName={"selector"}
@@ -214,34 +219,70 @@ class PopupRight extends React.Component {
 
             <div className="modal-title">
                 Edit {name}
-                <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>
+                {this.showOkButton() && <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>}
             </div>
 
             <div className="step-content">
                 <div className="step-content-container">
                     <div className="modal-table">
                         <div className="row row-header">
-                            <div className="column" style={{justifyContent:"flex-start", flex: 3}}/>
+                            {!global && <div className="column" style={{justifyContent:"flex-start", flex: 3}}/>}
+                            {global && language && <div className="column" style={{ flex: 3 }}>Licensed languages</div>}
                             {options.map((option, i , list)=> {
                                 let flex = (list.length > 2 ) ? 2 : 3;
-                                if (RightItemsDefinitions[option].language) flex = flex+ 2;
+
+                                let definition = RightItemsDefinitions[option];
+                                if (definition.language) flex = flex+ 2;
+                                let label = definition.label;
+
+                                if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
+
                                 return <div className="column" style={{ flex: flex }}>
-                                    {RightItemsDefinitions[option].label && RightItemsDefinitions[option].label}
+                                    {label && label}
+
                                 </div>
                             })}
                         </div>
+                        {global && language &&
+                        <LanguageSelector
+                            onChange={(value) => { onUpdateListing("LICENSED_LANGUAGES", value) }}
+                            value={languages}/>}
 
-                        {this.props.rightsPackage.map((rightPackage)=>{
+                        {id === "TECHNICAL_DELIVERY"
+                        && (packagesAvailable.length > 1 || packagesAvailable.indexOf("PR") === -1)
+                        && <div className="row">
+                            <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
+                                Live Transmission
+                            </div>
+                            {options.map((option, i ,list)=> {
+                                let flex = (list.length > 2 ) ? 2 : 3;
+                                return <div className="column" style={{ flex: flex }}>
+                                    <input
+                                        defaultChecked={distributionMethod === option}
+                                        type="radio"
+                                        onChange={(e) => { onUpdateListing("DISTRIBUTION_METHOD_LIVE", e.target.value) }}
+                                        name={ "distribution_method_live_"}
+                                        value={option}/>
+
+                                </div>
+                            })}
+                            </div>}
+
+                        {!global && rightsPackage.map((rightPackage)=>{
                             if ( superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1 ) return;
                             return <div className="row">
                                 <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
-                                    {rightPackage.name}
+                                    {!productionLabel && rightPackage.name}
+                                    {productionLabel && productionLabels[rightPackage.shortLabel]}
                                 </div>
                                 {options.map((option, i ,list)=> {
 
                                     let flex = (list.length > 2 ) ? 2 : 3;
+                                    let disabled = false;
+                                    let definition = RightItemsDefinitions[option];
                                     if (RightItemsDefinitions[option].language) flex = flex+ 2;
-
+                                    if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
+                                    if (definition.disabledIf && definition.disabledIf.indexOf(rightPackage.shortLabel) !== -1 ) disabled = true;
                                     return <div className="column" style={{ flex: flex }}>
                                         {multiple &&
                                             <input checked={rightPackage.selectedRights[id].indexOf(option) !== -1 }
@@ -254,6 +295,7 @@ class PopupRight extends React.Component {
                                         <input
                                             defaultChecked={rightPackage.selectedRights[id] === option}
                                             type="radio"
+                                            disabled={disabled}
                                             onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
                                             name={rightPackage.shortLabel + "_" + id} value={option}/>}
 
@@ -336,8 +378,6 @@ class PopupRight extends React.Component {
                 </div>
             </div>
 
-
-
             <div className={"buttons"}>
                 {this.showOkButton() && <button
                     className={"standard-button"}
@@ -354,11 +394,20 @@ class PopupRight extends React.Component {
         const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee} = this.props;
 
         let response = true;
+        let contentDevliveryCounter = 0;
 
         if ( showTextArea ){
             if (( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage))){
                 if (!rightsPackage[0].selectedRights[id+ "_TEXTAREA"] || rightsPackage[0].selectedRights[id+ "_TEXTAREA"] === "" ) return false;
             }
+        }
+
+        if ( id === "CONTENT_DELIVERY"){
+            rightsPackage.forEach(rp => {
+                if ( rp.selectedRights[id] === "CONTENT_DELIVERY_NON_DEDICATED" ) contentDevliveryCounter++;
+            })
+            if ( rightsPackage.length === contentDevliveryCounter ) response = false;
+
         }
 
         if (rightsPackage && rightsPackage[0] && rightsPackage[0].selectedRights){
@@ -388,14 +437,14 @@ class PopupRight extends React.Component {
 
     render(){
 
-        const {name, id,  rightsPackage,programs} = this.props;
+        const {name, id,  rightsPackage,programName, global, languages, distributionMethod} = this.props;
         let custom = this.getSelection(id,  rightsPackage);
         let selected =  "";
-
+        let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
         if (rightsPackage.length > 0 ){
             if (id === "PROGRAM") {
-                if (programs.length > 0) {
-                    selected = programs[0].name;
+                if (programName) {
+                    selected = programName;
                 }
             } else if (id === "CAMERA"){
                 custom = custom || this.getSelection("CAMERAS",  rightsPackage);
@@ -415,8 +464,41 @@ class PopupRight extends React.Component {
                     selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id][0]].label
                 }
 
+            }
+            else if (id === "TECHNICAL_DELIVERY"){
+
+                let programPackage = rightsPackage.filter(rp=>rp.shortLabel === "PR")[0];
+
+                if ( rightsPackage.length > 1 ) {
+
+                    if ( packagesAvailable.indexOf("PR") !== -1 ) {
+                        if ( distributionMethod !== programPackage.selectedRights[id]){
+                            custom = true;
+                        } else {
+                            selected = RightItemsDefinitions[distributionMethod].label
+                        }
+                    } else {
+                        selected = RightItemsDefinitions[distributionMethod].label
+                    }
+                } else {
+                    if ( packagesAvailable.indexOf("PR") !== -1 ) {
+                        selected = RightItemsDefinitions[programPackage.selectedRights[id]].label
+                    } else {
+                        selected = RightItemsDefinitions[distributionMethod].label
+                    }
+
+                }
+
+            }
+            else if (global){
+
+                if ( languages.length > 0 ) {
+                    custom = true;
+                } else {
+                }
+
             }else {
-                if (rightsPackage[0].selectedRights) {
+                if (rightsPackage[0].selectedRights && RightItemsDefinitions[rightsPackage[0].selectedRights[id]]) {
                     selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label
                 }
             }

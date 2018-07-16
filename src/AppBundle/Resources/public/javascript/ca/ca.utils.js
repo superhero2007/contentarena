@@ -9,6 +9,12 @@ ContentArena.Utils = {
 
         if ( content.parsed ) return content;
 
+        if ( content.extraData){
+            Object.entries(content.extraData).forEach(
+                ([key, value]) => content[key] = value
+            );
+        }
+
         content.tournament = (content.tournament) ? Array.isArray(content.tournament)? content.tournament : [content.tournament] : [];
         content.sportCategory = (content.sportCategory) ? Array.isArray(content.sportCategory)? content.sportCategory : [content.sportCategory] : [];
 

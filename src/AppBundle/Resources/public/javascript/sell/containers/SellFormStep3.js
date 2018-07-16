@@ -1,15 +1,20 @@
 import React from 'react';
 import { connect } from "react-redux";
+import Modal from 'react-modal';
+import Moment from "moment";
+
 import PackageSelector from "../containers/PackageSelector";
 import PopupRight from "../components/PopupRight";
-import Program from "../components/Program";
 import Comments from "../components/Comments";
 import LicenseDateSelector from "../components/LicenseDateSelector";
-import {TitleBar} from "../components/SellFormItems";
-import Moment from "moment";
+
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
+import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {stepChangeReset} from "../actions/contentActions";
+import {LanguageSelector} from "../../main/components/LanguageSelector";
+
+import {customStyles} from "../../main/styles/custom";
 
 const licenseStyles = {
     fontSize: "12px",
@@ -25,33 +30,14 @@ class SellFormStep3 extends React.Component {
         super(props);
 
         this.state = {
-            title : "Step 3 - Configure Rights",
-            packagesConfirmed : false,
-            programsEnabled: false,
-            programsShown: false,
+            programPopupActive: false,
             licensePopup : false,
             rights : RightDefinitions,
             productionStandards : ProductionStandardsDefinitions
         };
-    }
+        this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
+        this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
 
-    componentDidMount() {
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        window.content = nextProps;
-
-        const { programsShown } = this.state;
-        let programsEnabled = false;
-
-        nextProps.rightsPackage.forEach(( rightPackage )=>{
-            if ( rightPackage.shortLabel === "PR" && !programsShown ) programsEnabled = true ;
-        });
-
-        if ( programsEnabled ){
-        }
     }
 
     loadRights = (rightsPackage, group) => {
@@ -61,12 +47,8 @@ class SellFormStep3 extends React.Component {
         });
     };
 
-    packagesConfirmed = (packagesConfirmed) =>{
-        this.setState({packagesConfirmed});
-    };
-
     closeProgramsPopup = () => {
-        this.setState({programsEnabled:false}) ;
+        this.setState({programPopupActive:false}) ;
     };
 
     closeLicensePopup = () => {
@@ -81,22 +63,6 @@ class SellFormStep3 extends React.Component {
         this.props.updateContentValue(key, value);
     };
 
-    addProgram = (index) => {
-        this.props.updateProgram(index, {name: name}, "add")
-    };
-
-    saveProgram = (index,name) => {
-        this.props.updateProgram(index, {name: name, saved: true}, "save")
-    };
-
-    editProgram = (index,name) => {
-        this.props.updateProgram(index, {name: name, saved: false}, "save")
-    };
-
-    removeProgram = (index) => {
-        this.props.updateProgram(index, null, "remove")
-    };
-
     updateRight = (rightsPackage) => {
         this.props.superRightsUpdated(rightsPackage);
     };
@@ -106,6 +72,20 @@ class SellFormStep3 extends React.Component {
         var selected = this.props.rightsPackage.map(a => a.shortLabel);
 
         return superRights.filter(r => selected.indexOf(r) !== -1).length > 0;
+
+    };
+
+    skipContentDelivery = (right) => {
+
+        const {rightsPackage} = this.props;
+
+        let selected = rightsPackage.map(a => a.shortLabel);
+
+        return right.key === "CONTENT_DELIVERY"
+            && selected.indexOf("NA") === -1
+            && selected.indexOf("LB") === -1
+            && selected.indexOf("HL") === -1
+            && selected.indexOf("DT") === -1;
 
     };
 
@@ -120,21 +100,111 @@ class SellFormStep3 extends React.Component {
 
     };
 
+    renderProgramPopup(){
+
+        const {
+            onClose,
+            updateContentValue,
+            PROGRAM_NAME,
+            PROGRAM_SUBTITLES,
+            PROGRAM_SCRIPT,
+            PROGRAM_LANGUAGE
+        } = this.props;
+        return (
+            <Modal
+                isOpen={this.state.programPopupActive}
+                onRequestClose={this.closeProgramsPopup}
+                bodyOpenClassName={"selector"}
+                style={customStyles}
+                contentLabel="Example Modal"
+            >
+
+                <div className="modal-title">
+                    Program details
+                    <i className="fa fa-times-circle-o" onClick={onClose}/>
+                </div>
+
+                <div className="step-content">
+                    <div className="step-content-container" style={{minWidth:500}}>
+                        <div className="modal-input">
+                            <label>{PROGRAM_NAME}</label>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Program language</label>
+                            <LanguageSelector
+                                value={PROGRAM_LANGUAGE}
+                                onChange={(value)=>{updateContentValue('PROGRAM_LANGUAGE', value)}}/>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Subtitles (if available)</label>
+                            <LanguageSelector
+                                value={PROGRAM_SUBTITLES}
+                                onChange={(value)=>{updateContentValue('PROGRAM_SUBTITLES', value)}}/>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Script (if available)</label>
+                            <LanguageSelector
+                                value={PROGRAM_SCRIPT}
+                                onChange={(value)=>{updateContentValue('PROGRAM_SCRIPT', value)}}/>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className={"buttons"}>
+                    <button
+                        className={"standard-button"}
+                        onClick={this.closeProgramsPopup}>Ok</button>
+                </div>
+            </Modal>
+        )
+    }
+
     render() {
 
-        const {step, programs, startDateMode, endDateMode, endDate } = this.props;
+        const {step, rightsPackage, startDateMode, endDateMode, endDate,
+            updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES, DISTRIBUTION_METHOD_LIVE
+        } = this.props;
         if ( step !== 3) return (null);
         this.scroll();
 
         return (
 
             <div className="step-content">
-                <PackageSelector
-                    packages={this.props.packages}
-                    packagesConfirmed={this.state.packagesConfirmed}
-                    onConfirm={this.packagesConfirmed} />
+                { this.renderProgramPopup() }
+
+                {/*SUMMARY*/}
+                <div className="listing-summary">
+                    <SummaryText {...this.props}/>
+                </div>
 
                 <div className="step-content-container">
+
+                    {/* RIGHTS*/}
+                    <div className={"rights-box"}>
+                        {
+                            rightsPackage.map(( sr,i )=>{
+                                return <div key={i}  className={"rights-box-item"}>
+                                    {!sr.exclusive &&
+                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
+
+                                    {sr.exclusive &&
+                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
+
+                                    <div style={{display: 'flex', flexDirection: "row"  }}>
+                                        { sr.shortLabel !== "PR" && sr.name }
+                                        { sr.shortLabel === "PR" && content.PROGRAM_NAME &&
+                                        "Program: " + content.PROGRAM_NAME
+                                        }
+                                        {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
+                                    </div>
+                                </div>
+                            })
+                        }
+                    </div>
 
                     <LicenseDateSelector
                         isOpen={this.state.licensePopup}
@@ -171,12 +241,7 @@ class SellFormStep3 extends React.Component {
                         </div>
                     </div>
 
-                    <TitleBar title={"Configure Rights"}/>
-
-                    <Program
-                        programs={programs}
-                        isOpen={this.state.programsEnabled}
-                        onClose={this.closeProgramsPopup}/>
+                    <TitleBar title={"Grant of Rights"}/>
 
                     <div className="rights-container">
                         {
@@ -189,11 +254,15 @@ class SellFormStep3 extends React.Component {
                                     key={right.key}
                                     id={right.key}
                                     name={right.name}
+                                    global={right.global}
+                                    language={right.language}
+                                    languages={LICENSED_LANGUAGES}
                                     options={right.options}
                                     multiple={right.multiple}
                                     superRights={right.superRights}
                                     showTextArea={right.showTextArea}
                                     onUpdate={this.updateRight}
+                                    onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
                                     rightsPackage={this.props.rightsPackage}/>
                             })
                         }
@@ -205,8 +274,17 @@ class SellFormStep3 extends React.Component {
                         {
                             this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i)=> {
 
+                                let superRights = right.superRights;
+
+                                if ( right.key === "TECHNICAL_DELIVERY"
+                                    && rightsPackage.map(rp =>rp.shortLabel).indexOf("PR") !== -1 ){
+                                    superRights = ["PR"];
+                                }
+
                                 if ( right.superRights.length > 0
                                     && !this.superRightsEnabled(right.superRights)) return;
+
+                                if ( this.skipContentDelivery(right) ) return;
 
                                 return <PopupRight
                                     key={right.key}
@@ -215,16 +293,19 @@ class SellFormStep3 extends React.Component {
                                     selected={this.props[right.key]}
                                     options={right.options}
                                     multiple={right.multiple}
-                                    programs={programs}
+                                    productionLabel={right.productionLabel}
+                                    programName={PROGRAM_NAME}
+                                    distributionMethod={DISTRIBUTION_METHOD_LIVE}
                                     onProgram={() => {
                                         this.setState({
-                                            programsEnabled : true,
+                                            programPopupActive : true,
                                         });
                                     }}
-                                    superRights={right.superRights}
+                                    superRights={superRights}
                                     showTextArea={right.showTextArea}
                                     technicalFee={right.technicalFee}
                                     onUpdate={this.updateRight}
+                                    onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
                                     rightsPackage={this.props.rightsPackage}/>
                             })
                         }
@@ -233,8 +314,6 @@ class SellFormStep3 extends React.Component {
                     <Comments/>
 
                 </div>
-
-
             </div>
         );
     }

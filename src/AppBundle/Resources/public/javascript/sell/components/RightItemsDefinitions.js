@@ -170,6 +170,11 @@ export const RightItemsDefinitions = {
         "parent" : "Commentary",
         "label" : "Info not available yet"
     },
+    "LICENSED_LANGUAGES_YES" : {
+        label : '',
+        language : true,
+        languages: [],
+    },
     "CAMERA_MINIMUM": {
         "parent" : "Camera standards",
         "label" : "Minimum cameras",
@@ -212,6 +217,24 @@ export const RightItemsDefinitions = {
     "TECHNICAL_DELIVERY_FIBER": {
         "parent" : "Technical delivery",
         "label" : "Fiber"
+    },
+
+    "CONTENT_DELIVERY_LIVE": {
+        "parent" : "Content Delivery",
+        "label" : "Delivered via live feed",
+        hideIf : ["LT", "PR"]
+
+    },
+
+    "CONTENT_DELIVERY_DEDICATED": {
+        "parent" : "Content Delivery",
+        "label" : "Dedicated content delivery"
+    },
+
+    "CONTENT_DELIVERY_NON_DEDICATED": {
+        "parent" : "Content Delivery",
+        "label" : "No dedicated content delivery",
+        disabledIf : ["LT", "PR"]
     },
 
 

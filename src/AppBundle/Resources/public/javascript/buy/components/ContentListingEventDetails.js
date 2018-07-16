@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
+import {editedProgramSelected} from "../../main/actions/utils";
 
 class ContentListingEventDetails extends React.Component {
 
@@ -62,18 +63,12 @@ class ContentListingEventDetails extends React.Component {
 
     showProgramInfo = () => {
 
-        const {rightsPackage, programs} = this.props;
-
+        const {rightsPackage, PROGRAM_NAME} = this.props;
         let show = false;
 
         if (rightsPackage.length > 1) return show;
-
-        rightsPackage.forEach(rp => {
-            if ( rp.shortLabel === "PR" ) show = true;
-        });
-
-
-        return show && programs && programs.length > 0;
+        show = editedProgramSelected(rightsPackage);
+        return show && PROGRAM_NAME;
 
     };
 
@@ -83,7 +78,8 @@ class ContentListingEventDetails extends React.Component {
             sportCategory,
             tournament,
             seasons,
-            programs,
+            PROGRAM_YEAR,
+            PROGRAM_EPISODES
         } = this.props;
 
         let schedules = this.getSchedules();
@@ -106,11 +102,11 @@ class ContentListingEventDetails extends React.Component {
                 {tournament && tournament.length === 0 && <div>General content</div>}
                 {seasons && seasons.length > 0 && <div>{seasonName}</div>}
 
-                {this.showProgramInfo() && programs[0].releaseYear &&
-                <div>Release year: {programs[0].releaseYear}</div>}
+                {this.showProgramInfo() && PROGRAM_YEAR &&
+                <div>Release year: {PROGRAM_YEAR}</div>}
 
-                {this.showProgramInfo() && programs[0].episodes &&
-                <div>Episodes: {programs[0].episodes}</div>}
+                {this.showProgramInfo() && PROGRAM_EPISODES &&
+                <div>Episodes: {PROGRAM_EPISODES}</div>}
 
                 {this.getFixtures().length > 1 &&
                 <div>{this.getFixtures().length} fixtures</div>}
