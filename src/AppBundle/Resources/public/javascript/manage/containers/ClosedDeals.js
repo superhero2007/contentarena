@@ -161,13 +161,14 @@ class ClosedDeals extends React.Component {
                                 id: "territories",
                                 accessor: d => {return{
                                     size : d.salesPackage.territories.length,
-                                    worldwide : d.salesPackage.territoriesMethod === "WORLDWIDE"
+                                    worldwide : d.salesPackage.territoriesMethod === "WORLDWIDE",
+                                    asBundle : d.salesPackage.bundleMethod === "SELL_AS_BUNDLE"
                                 }},
                                 Cell: props => <div className={"blue"}>
-                                    {!props.value.worldwide && props.value.size + " "}
-                                    {!props.value.worldwide && props.value.size > 1 && "territories" }
-                                    {!props.value.worldwide && props.value.size === 1 && "territory" }
-                                    {props.value.worldwide && "Worldwide" }
+                                    { (!props.value.worldwide || !props.value.asBundle) && props.value.size + " "}
+                                    {(!props.value.worldwide || !props.value.asBundle) && props.value.size > 1 && "territories" }
+                                    {(!props.value.worldwide || !props.value.asBundle) && props.value.size === 1 && "territory" }
+                                    {props.value.worldwide && props.value.asBundle && "Worldwide" }
                                 </div>
                             }, {
                                 Header: 'Price',
@@ -188,6 +189,15 @@ class ClosedDeals extends React.Component {
                                 </div>
 
                             }, {
+                                Header: 'Name',
+                                headerClassName : 'table-header-big',
+                                className : 'table-header-big',
+                                accessor: 'buyerUser',
+                                Cell: props => <div>
+                                    {props.value.firstName + " " + props.value.lastName}
+                                </div>
+
+                            },{
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 Header: 'Actions', // Custom header components!

@@ -1,0 +1,79 @@
+@import "vars";
+
+.board{
+  display: flex;
+  flex-direction: row;
+  padding: 0 0 20px;
+  .column{
+    margin-right: 5px;
+    padding: 12px;
+    flex: 1;
+    background: #F4F6F9;
+    border: 1px solid #DADADA;
+    .listing{
+      border: 1px solid #DADADA;
+      padding: 18px 12px;
+      background-color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      .options-tooltip {
+        position: absolute;
+        z-index: 20;
+        background: white;
+        border: 1px solid lightgray;
+        top: 35px;
+        right: -1px;
+        padding: 20px 15px 5px;
+        min-width: 150px;
+        .last-action{
+          font-size: 10px;
+          line-height: 10px;
+          margin-bottom: 10px;
+        }
+        .option{
+          font-size: 12px;
+          margin: 0 0 15px 0;
+          display: flex;
+          align-items: center;
+          img {
+            margin-right: 5px;
+          }
+        }
+      }
+      .menu-icon{
+        position: absolute;
+        top: 5px;
+        right: 0;
+        cursor: pointer;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        width: 45px;
+        justify-content: center;
+      }
+      .name{
+        margin-bottom: 20px;
+      }
+      .tournament{
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .rights{
+        font-size: 14px;
+        font-weight: normal;
+        margin-bottom: 10px;
+      }
+      .expiry{
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+      }
+    }
+  }
+}

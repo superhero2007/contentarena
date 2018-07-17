@@ -2,10 +2,10 @@ import React from 'react';
 import Round from '../components/Round';
 import StaticRound from '../components/StaticRound';
 
-export const Description = ({value, onBlur}) => (
+export const Description = ({value, onBlur, title= "Enter a description", placeholder="Provide a short description of your content listing"}) => (
     <div className="textarea-input">
-        <label>Enter a description</label>
-        <textarea onBlur={onBlur} defaultValue={value} placeholder={"Provide a short description of your content listing"}/>
+        <label>{title}</label>
+        <textarea onBlur={onBlur} defaultValue={value} placeholder={placeholder}/>
     </div>
 );
 
@@ -16,6 +16,42 @@ export const TitleBar = ({title, subtitle}) => (
         <div className={"subtitle"}>{subtitle}</div>
     </div>
 );
+
+export const SummaryText = ({sports, sportCategory, tournament, seasons}) => {
+
+    let summary = "", rounds = [], fixtures = [], matches = [];
+
+    if (sportCategory.length === 0 && tournament.length === 0) return null;
+    if (sports.length > 1 ) return <span>Multiple sports</span>;
+
+    summary += sports[0].name;
+    if ( sportCategory.length > 0 )  summary += " - " + sportCategory[0].name;
+    if ( tournament.length > 0 )  summary += " - " + tournament[0].name;
+    if ( seasons.length > 0 ){
+        seasons.forEach(s => {
+            if (s.schedules) Object.entries(s.schedules).forEach((sh) =>{
+                if (sh[1].selected && rounds.indexOf(sh[0]) === -1){
+                    rounds.push(sh[0]);
+                    sh[1].matches.forEach(m => {
+                        if(m.selected) matches.push(m)
+                    });
+                }
+            })
+            if ( s.fixtures ) fixtures = [...fixtures, ...s.fixtures];
+        });
+    }
+
+    if ( rounds.length <= 1 && fixtures.length === 1 )  summary += " - " + fixtures[0].name;
+    if ( rounds.length <= 1 && fixtures.length > 1 )  summary += " - " + fixtures.length + " fixtures";
+    if ( rounds.length <= 1 && matches.length === 1 )  summary += " - " + matches[0].competitors.map(function (competitor) {
+        return competitor.name ;
+    }).join(" vs ");
+    if ( rounds.length === 1 && matches.length !== 1 )  summary += " - " + rounds[0];
+    if ( rounds.length > 1) summary += " - Multiple rounds";
+
+
+    return <span>{summary}</span>;
+};
 
 export const NewCategory = ({onClick, showClose, onBlur, value}) => (
     <div className="base-input">

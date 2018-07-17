@@ -115,7 +115,7 @@ class SearchCompetition extends  React.Component {
                     </div>}
 
                     {!this.state.searchDone &&<div className="step-item-description">
-                         Do you want to list content, which is not related to a specific competition?
+                        Did you not find your competition in the database or not selling a competition?
                     </div>}
 
                     {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description">
@@ -123,10 +123,10 @@ class SearchCompetition extends  React.Component {
                     </div>}
 
                     {this.state.searchDone && this.state.results.length === 0 && <div className="step-item-description">
-                        Try another search or create content manually
+                        Try another search or enter content manually
                     </div>}
 
-                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>Create content manually</button>
+                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>Enter content manually</button>
                 </div>
             </div>
         )

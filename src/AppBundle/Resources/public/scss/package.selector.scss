@@ -23,13 +23,12 @@
     flex-direction: column;
     .package-exclusive {
       display: flex;
-      margin: 20px 20px 0;
+      margin: 0 20px 0;
       .package-exclusive-item {
-        width: 25%;
-        justify-content: flex-end;
+        justify-content: center;
         display: flex;
-        padding-right: 10px;
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 600;
       }
     }
 
@@ -40,8 +39,10 @@
       flex: 5;
       color: $font-color-1;
       font-size: 16px;
+      flex-direction: column;
       .select-box-item{
-        width: 25%;
+        flex: 1;
+        margin: 5px 0;
       }
       input[type="checkbox"] + label {
         display: inline-block;

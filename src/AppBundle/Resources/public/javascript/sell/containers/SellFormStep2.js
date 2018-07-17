@@ -1,62 +1,34 @@
 import React from 'react';
 import { connect } from "react-redux";
 import PackageSelector from "../containers/PackageSelector";
-import PopupRight from "../components/PopupRight";
-import Program from "../components/Program";
-import Comments from "../components/Comments";
-import LicenseDateSelector from "../components/LicenseDateSelector";
-import {TitleBar} from "../components/SellFormItems";
-import Moment from "moment";
+import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 import {stepChangeReset} from "../actions/contentActions";
-
-const licenseStyles = {
-    fontSize: "12px",
-    lineHeight: "14px",
-    padding: 0,
-    textAlign : "center",
-    justifyContent: "center"
-};
+import {editedProgramSelected} from "../../main/actions/utils";
 
 class SellFormStep2 extends React.Component {
 
     constructor(props) {
         super(props);
 
+        let startYear = 2030;
+        let years = [];
+
+        for (let i =0; i < 81;i++ ){ years.push(startYear-i)}
+
         this.state = {
+            years : years,
             title : "Step 2 - Configure Rights",
-            packagesConfirmed : false,
-            programsEnabled: false,
-            programsShown: false,
             licensePopup : false,
             rights : RightDefinitions,
             productionStandards : ProductionStandardsDefinitions
         };
     }
 
-    componentDidMount() {
-
-    }
-
     componentWillReceiveProps(nextProps) {
         console.log("Step 2 - props", nextProps);
-
         window.content = nextProps;
-
-        const { programsShown } = this.state;
-        let programsEnabled = false;
-
-        nextProps.rightsPackage.forEach(( rightPackage )=>{
-            if ( rightPackage.shortLabel === "PR" && !programsShown ) programsEnabled = true ;
-        });
-
-        if ( programsEnabled ){
-            this.setState({
-                programsEnabled : programsEnabled,
-                programsShown : true
-            });
-        }
     }
 
     loadRights = (rightsPackage, group) => {
@@ -64,42 +36,6 @@ class SellFormStep2 extends React.Component {
         ContentArena.Api.getRights(rightsPackage.map((p)=> (p.id)), group).done((rights)=>{
             _this.setState({rights});
         });
-    };
-
-    packagesConfirmed = (packagesConfirmed) =>{
-        this.setState({packagesConfirmed});
-    };
-
-    closeProgramsPopup = () => {
-        this.setState({programsEnabled:false}) ;
-    };
-
-    closeLicensePopup = () => {
-        this.setState({licensePopup:false}) ;
-    };
-
-    selectCurrency = ( currency ) => {
-        this.props.updateContentValue('currency', currency);
-    };
-
-    selectLicenseDates = (key, value) => {
-        this.props.updateContentValue(key, value);
-    };
-
-    addProgram = (index) => {
-        this.props.updateProgram(index, {name: name}, "add")
-    };
-
-    saveProgram = (index,name) => {
-        this.props.updateProgram(index, {name: name, saved: true}, "save")
-    };
-
-    editProgram = (index,name) => {
-        this.props.updateProgram(index, {name: name, saved: false}, "save")
-    };
-
-    removeProgram = (index) => {
-        this.props.updateProgram(index, null, "remove")
     };
 
     updateRight = (rightsPackage) => {
@@ -114,6 +50,8 @@ class SellFormStep2 extends React.Component {
 
     };
 
+
+
     scroll = () => {
 
         const {stepChange, stepChangeReset } = this.props;
@@ -127,119 +65,118 @@ class SellFormStep2 extends React.Component {
 
     render() {
 
-        const {step, programs, startDateMode, endDateMode, endDate } = this.props;
+        const {
+            programDescription,
+            updateContentValue,
+            PROGRAM_NAME,
+            PROGRAM_EPISODES,
+            PROGRAM_YEAR,
+            PROGRAM_TYPE,
+            PROGRAM_DURATION,
+            PROGRAM_DESCRIPTION,
+            rightsPackage,
+            step,
+        } = this.props;
         if ( step !== 2) return (null);
-        this.scroll();
 
+        let editedProgram = editedProgramSelected(rightsPackage);
+
+        this.scroll();
         return (
 
             <div className="step-content">
-                <PackageSelector
-                    packages={this.props.packages}
-                    packagesConfirmed={this.state.packagesConfirmed}
-                    onConfirm={this.packagesConfirmed} />
 
-                <div className="step-content-container">
-
-                    <LicenseDateSelector
-                        isOpen={this.state.licensePopup}
-                        onUpdate={this.selectLicenseDates}
-                        startDate={this.props.startDate}
-                        endDateLimit={this.props.endDateLimit}
-                        endDateMode={endDateMode}
-                        startDateMode={startDateMode}
-                        endDate={endDate}
-                        onClose={this.closeLicensePopup}
-                    />
-
-                    <TitleBar title={"License period"}/>
-
-                    <div className={"license-date-container"}>
-                        <div className="table-right">
-                            <div className="row">
-                                <div className="column right-name">Start</div>
-                                <div className="column right-item-content" style={licenseStyles}>
-                                    { !this.props.startDate  && " contract conclusion"}
-                                    { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
-                                </div>
-                                <div className="column right-name">End</div>
-                                <div className="column right-item-content"  style={licenseStyles}>
-                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
-                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
-                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
-                                    { !endDateMode && "Please select"}
-                                </div>
-                                <div className="column right-item-content edit-item" onClick={()=>this.setState({licensePopup: true})}>
-                                    <i className="fa fa-edit"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <TitleBar title={"Configure Rights"}/>
-
-                    <Program
-                        programs={programs}
-                        isOpen={this.state.programsEnabled}
-                        onClose={this.closeProgramsPopup}/>
-
-                    <div className="rights-container">
-                        {
-                            this.state.rights.length > 0 && this.state.rights.map((right, i)=> {
-
-                                if ( right.superRights.length > 0
-                                    && !this.superRightsEnabled(right.superRights)) return;
-
-                                return <PopupRight
-                                    key={right.key}
-                                    id={right.key}
-                                    name={right.name}
-                                    options={right.options}
-                                    multiple={right.multiple}
-                                    superRights={right.superRights}
-                                    showTextArea={right.showTextArea}
-                                    onUpdate={this.updateRight}
-                                    rightsPackage={this.props.rightsPackage}/>
-                            })
-                        }
-                    </div>
-
-                    <TitleBar title={"Configure Production Standards"}/>
-
-                    <div className="rights-container">
-                        {
-                            this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i)=> {
-
-                                if ( right.superRights.length > 0
-                                    && !this.superRightsEnabled(right.superRights)) return;
-
-                                return <PopupRight
-                                    key={right.key}
-                                    id={right.key}
-                                    name={right.name}
-                                    selected={this.props[right.key]}
-                                    options={right.options}
-                                    multiple={right.multiple}
-                                    programs={programs}
-                                    onProgram={() => {
-                                        this.setState({
-                                            programsEnabled : true,
-                                        });
-                                    }}
-                                    superRights={right.superRights}
-                                    showTextArea={right.showTextArea}
-                                    technicalFee={right.technicalFee}
-                                    onUpdate={this.updateRight}
-                                    rightsPackage={this.props.rightsPackage}/>
-                            })
-                        }
-                    </div>
-
-                    <Comments/>
-
+                {/*SUMMARY*/}
+                <div className="listing-summary">
+                    <SummaryText {...this.props}/>
                 </div>
 
+                {/*PROGRAM DESCRIPTION*/}
+                <div className="step-content-container">
+                    <div className="textarea-input">
+                        <label>Program/Content Description</label>
+                        <div style={{margin: 10}}>
+                            Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.
+                        </div>
+                        <textarea
+                            onChange={ (e) => updateContentValue("programDescription", e.target.value)}
+                            defaultValue={programDescription}
+                            placeholder={"Please enter the program description. The program description represents the core of the license agreement. All rights picked later on refer to this program description. You may enter all information you consider relevant (e.g. which events you seek to grant rights to or which events you will produce and deliver to the buyer). \n"}/>
+                    </div>
+                </div>
 
+                {/*SUPER RIGHTS*/}
+                <PackageSelector packages={this.props.packages}/>
+
+                {/* PROGRAM DETAILS*/}
+                {editedProgram && <div>
+
+                    <div className="modal-input">
+                        <label>Enter program name</label>
+                        <input
+                            type="text"
+                            value={PROGRAM_NAME}
+                            onChange={(e)=>{updateContentValue("PROGRAM_NAME", e.target.value)}}
+                            placeholder="Program name"/>
+                    </div>
+
+                    <div className="modal-input">
+                        <label>Number of episodes</label>
+                        <input
+                            type="number"
+                            value={PROGRAM_EPISODES}
+                            onChange={(e)=>{updateContentValue("PROGRAM_EPISODES", Number(e.target.value))}}
+                            min={0}
+                        />
+                    </div>
+
+                    <div className="modal-input">
+                        <label>Average episode duration in minutes</label>
+                        <input
+                            type="number"
+                            value={PROGRAM_DURATION}
+                            onChange={(e)=>{updateContentValue("PROGRAM_DURATION", Number(e.target.value))}}
+                            min={0}
+                        />
+                    </div>
+
+                    <div className="modal-input">
+                        <label>Enter program type</label>
+                        <select
+                            value={PROGRAM_TYPE}
+                            onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}
+                            style={{ width: '100%' }}>
+                            <option value="HIGHLIGHT_SHOW">Highlight show</option>
+                            <option value="DOCUMENTARY">Documentary</option>
+                            <option value="PREVIEW">Preview</option>
+                            <option value="TALK_SHOW">Talk show</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+
+                    </div>
+
+                    <div className={"modal-input"}>
+                        <label>Release year (optional)</label>
+                        <select
+                            value={PROGRAM_YEAR}
+                            onChange={(e)=>{updateContentValue("PROGRAM_YEAR", e.target.value)}}
+                            style={{ width: '100%' }}>
+                            <option/>
+                            <option disabled>Year</option>
+                            {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
+                        </select>
+                    </div>
+
+                    <div className="modal-input">
+                        <label>Edited Program Description</label>
+                        <textarea
+                            onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
+                        >
+                            {PROGRAM_DESCRIPTION}
+                        </textarea>
+                    </div>
+
+                </div>}
             </div>
         );
     }
@@ -255,21 +192,10 @@ const mapDispatchToProps = dispatch => {
             type : 'SUPER_RIGHTS_UPDATED',
             rightsPackage: rightsPackage
         }),
-        removeNewSport : (index) => dispatch({
-            type: 'REMOVE_NEW',
-            index : index,
-            selectorType : "sports",
-        }),
         updateContentValue : (key, value) => dispatch({
             type: 'UPDATE_CONTENT_VALUE',
             key: key,
             value : value
-        }),
-        updateProgram : (index, program, name) => dispatch({
-            type: 'UPDATE_PROGRAMS',
-            index: index,
-            program : program,
-            name: name
         }),
         stepChangeReset : () => dispatch(stepChangeReset())
     }

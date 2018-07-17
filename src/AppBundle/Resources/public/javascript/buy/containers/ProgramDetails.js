@@ -36,19 +36,28 @@ class ProgramDetails extends React.Component {
     }
 
     render() {
-        const {programs} = this.props;
-        let program = programs[0];
+        const {
+            PROGRAM_NAME,
+            PROGRAM_YEAR,
+            PROGRAM_DESCRIPTION,
+            PROGRAM_DURATION,
+            PROGRAM_EPISODES,
+            PROGRAM_TYPE,
+            PROGRAM_LANGUAGE,
+            PROGRAM_SCRIPTS,
+            PROGRAM_SUBTITLES
+        } = this.props;
         return (
             <div style={{ padding:'20px 0'}}>
                 <div className="full-item-box" style={{width: '50%'}}>
-                    <label>PROGRAM {program.name}</label>
+                    <label>PROGRAM {PROGRAM_NAME}</label>
                     <div >
                         <div style={rowStyle}>
                             <div style={titleStyle}>
                                 Program type
                             </div>
                             <div style={valueStyle}>
-                                {program.type}
+                                {PROGRAM_TYPE}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -56,7 +65,7 @@ class ProgramDetails extends React.Component {
                                 Number of episodes
                             </div>
                             <div style={valueStyle}>
-                                {program.episodes}
+                                {PROGRAM_EPISODES}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -64,7 +73,7 @@ class ProgramDetails extends React.Component {
                                 Average episode duration (min)
                             </div>
                             <div style={valueStyle}>
-                                {program.duration}
+                                {PROGRAM_DURATION}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -72,7 +81,7 @@ class ProgramDetails extends React.Component {
                                 Year of program release
                             </div>
                             <div style={valueStyle}>
-                                {program.releaseYear}
+                                {PROGRAM_YEAR}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -80,8 +89,8 @@ class ProgramDetails extends React.Component {
                                 Program language
                             </div>
                             <div style={valueStyle}>
-                                {program.language.length === 0 && "Not available"}
-                                {program.language.length > 0 && program.language.map(l=>l.label).join(', ')}
+                                {PROGRAM_LANGUAGE === 0 && "Not available"}
+                                {PROGRAM_LANGUAGE.length > 0 && PROGRAM_LANGUAGE.map(l=>l.label).join(', ')}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -89,8 +98,8 @@ class ProgramDetails extends React.Component {
                                 Subtitles
                             </div>
                             <div style={valueStyle}>
-                                {program.subtitles.length === 0 && "Not available"}
-                                {program.subtitles.length > 0 && program.subtitles.map(l=>l.label).join(', ')}
+                                {PROGRAM_SUBTITLES.length === 0 && "Not available"}
+                                {PROGRAM_SUBTITLES.length > 0 && PROGRAM_SUBTITLES.map(l=>l.label).join(', ')}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -98,8 +107,17 @@ class ProgramDetails extends React.Component {
                                 Script
                             </div>
                             <div style={valueStyle}>
-                                {program.script.length === 0 && "Not available"}
-                                {program.script.length > 0 && program.script.map(l=>l.label).join(', ')}
+                                {PROGRAM_SCRIPTS.length === 0 && "Not available"}
+                                {PROGRAM_SCRIPTS.length > 0 && PROGRAM_SCRIPTS.map(l=>l.label).join(', ')}
+                            </div>
+                        </div>
+                        <div style={rowStyle}>
+                            <div style={titleStyle}>
+                                Description
+                            </div>
+                            <div style={valueStyle}>
+                                {PROGRAM_DESCRIPTION && PROGRAM_DESCRIPTION}
+                                {!PROGRAM_DESCRIPTION && "Information not available"}
                             </div>
                         </div>
                     </div>

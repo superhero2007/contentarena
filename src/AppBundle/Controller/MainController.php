@@ -11,7 +11,6 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
-
 class MainController extends BaseController
 {
 
@@ -81,7 +80,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings", name="manageListings")
+     * @Route("/managelistings{trailingSlash}", name="manageListings", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
      */
     public function manageListings(Request $request)
     {
@@ -150,25 +149,6 @@ class MainController extends BaseController
             'profile' => "BUYER",
             'tab' => "BIDS"
         ]);
-
-    }
-
-
-    /**
-     * @Route("/listings/marketplace", name="marketplaceListings")
-     */
-    public function marketplaceListings(Request $request, ContentService $contentService)
-    {
-        $contents = $contentService->getContent($request);
-        $paginate = $this->get('knp_paginator');
-        $contents = $paginate->paginate($contents,$request->query->getInt('page',1),10);
-        $context = SerializationContext::create()->setGroups(array('listing'));
-
-        $data = $this->serialize($contents->getItems(),$context);
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
 
     }
 
@@ -258,6 +238,46 @@ class MainController extends BaseController
          */
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+
+        /**
+         * Serialization
+         */
+        $jsonContent = $serializer->serialize($content, 'json');
+
+        // replace this example code with whatever you need
+        return $this->render('@App/sell/sell.new.html.twig', [
+            'content' =>  $jsonContent,
+            'user' => $user,
+            'packages' => $serializer->serialize($packages, 'json'),
+            'rights' => $serializer->serialize($rights, 'json')
+        ]);
+
+    }
+
+    /**
+     * @Route("/managelistings/edit/{customId}/{step}", name="manageEditListingStep")
+     */
+    public function manageEditListingStep(Request $request)
+    {
+
+        $user = $this->getUser();
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
+
+        $packages = $this->getDoctrine()
+            ->getRepository('AppBundle:RightsPackage')
+            ->findAll();
+
+        $rights = $this->getDoctrine()
+            ->getRepository('AppBundle:Rights')
+            ->findAll();
+
+        /**
+         * Strategy to keep camel case on property names
+         */
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+
+        $content->setStep($request->get('step'));
 
         /**
          * Serialization

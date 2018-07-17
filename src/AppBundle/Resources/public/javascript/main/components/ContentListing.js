@@ -79,7 +79,7 @@ class ContentListing extends React.Component{
         const {
             name,
             expiresAt,
-            programs,
+            PROGRAM_NAME,
             onSelectName,
             imageBase64,
             image,
@@ -161,8 +161,8 @@ class ContentListing extends React.Component{
 
                                         <div style={{display: 'flex', flexDirection: "row"  }}>
                                             { sr.shortLabel !== "PR" && sr.name }
-                                            { sr.shortLabel === "PR" && programs[0] && programs[0].name &&
-                                            "Program: " + programs[0].name
+                                            { sr.shortLabel === "PR" && PROGRAM_NAME &&
+                                            "Program: " + PROGRAM_NAME
                                             }
                                             {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                                         </div>

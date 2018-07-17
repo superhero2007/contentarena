@@ -32,6 +32,7 @@ class ContentListingPendingBid extends ContentListing {
             company,
             customId,
             bid,
+            PROGRAM_NAME
         } = this.props;
 
 
@@ -75,8 +76,8 @@ class ContentListingPendingBid extends ContentListing {
 
                                         <div style={{display: 'flex', flexDirection: "row"  }}>
                                             { sr.shortLabel !== "PR" && sr.name }
-                                            { sr.shortLabel === "PR" && programs[0] && programs[0].name &&
-                                            "Program: " + programs[0].name
+                                            { sr.shortLabel === "PR" && PROGRAM_NAME &&
+                                            "Program: " + PROGRAM_NAME
                                             }
                                             {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                                         </div>
@@ -113,7 +114,7 @@ class ContentListingPendingBid extends ContentListing {
                         padding: 10,
                         margin: '0 20px'
                     }}>
-                        <div>{bid.salesPackage.name} {bid.salesPackage.fee} {getCurrencySymbol(bid.salesPackage.currency.code)}</div>
+                        <div>{bid.salesPackage.name}</div>
                     </div>
                     <div style={{
                         color: '#2DA7E6',

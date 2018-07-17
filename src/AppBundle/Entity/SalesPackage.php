@@ -51,7 +51,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="bundle_method", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $bundleMethod = false;
 

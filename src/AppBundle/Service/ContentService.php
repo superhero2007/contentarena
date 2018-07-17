@@ -9,13 +9,10 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\ContentFilter;
-use AppBundle\Entity\ContentSelectedRight;
-use AppBundle\Entity\Installments;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
-use AppBundle\Service\FileUploader;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Season;
@@ -69,6 +66,126 @@ class ContentService
 
     }
 
+    public function getDrafts($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getDrafts($user);
+        return $content;
+    }
+
+    public function getInactive($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getInactive($user);
+        return $content;
+    }
+
+    public function getActive($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getActive($user);
+        return $content;
+    }
+
+    public function getExpired($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getExpired($user);
+        return $content;
+    }
+
+    public function removeListing($customId){
+
+        if ($customId == null) return false;
+
+        $content = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        if ($customId != null){
+            $this->em->remove($content);
+            $this->em->flush();
+            return true;
+        }
+
+        return false;
+
+
+    }
+
+    public function duplicateListing($customId, $user){
+
+        if ($customId == null) return false;
+
+        $modelListing = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        if ($modelListing != null){
+
+            $content = new Content();
+            $content->setCreatedAt(new \DateTime());
+            $content->setCompany($modelListing->getCompany());
+
+            $newCustomId = $this->idGenerator->generate($content);
+            $content->setCustomId($newCustomId);
+            $content->setName($modelListing->getName());
+            $content->setSports($modelListing->getSports());
+            $content->setSportCategory($modelListing->getSportCategory());
+            $content->setTournament($modelListing->getTournament());
+            $content->setSeason($modelListing->getSeasons());
+            $content->setFixturesBySeason($modelListing->getFixturesBySeason());
+            $content->setSchedulesBySeason($modelListing->getSchedulesBySeason());
+            $content->setDescription($modelListing->getDescription());
+            $content->setVat($modelListing->getVat());
+            $content->setVatPercentage($modelListing->getVatPercentage());
+            $content->setPrograms($modelListing->getPrograms());
+            $content->setAttachments($modelListing->getAttachments());
+            $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
+
+            $rights = [];
+            $salesBundles = [];
+
+
+            foreach ($modelListing->getSalesPackages() as $item){
+                $salesBundle = new SalesPackage();
+                $salesBundle->setName($item->getName());
+                $salesBundle->setExcludedCountries($item->getExcludedCountries());
+                $salesBundle->setInstallments($item->getInstallments());
+                $salesBundle->setTerritoriesMethod($item->getTerritoriesMethod());
+                $salesBundle->setBundleMethod($item->getBundleMethod());
+                $salesBundle->setTerritories($item->getTerritories());
+                $salesBundle->setSalesMethod($item->getSalesMethod());
+                $salesBundle->setCurrency($item->getCurrency());
+                $salesBundle->setFee($item->getFee());
+                $salesBundles[]=$salesBundle;
+            }
+
+            foreach ($modelListing->getRightsPackage() as $item){
+                $rights[]=$item;
+            }
+            $content->setRightsPackage($rights);
+            $content->setSalesPackages($salesBundles);
+            $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
+            $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DUPLICATED")));
+            $content->setLastActionUser($user);
+            $content->setLastActionDate(new \DateTime());
+            $this->em->persist($content);
+            $this->em->flush();
+            return $content;
+        }
+        return false;
+    }
+
+    public function deactivateListing($customId, $user){
+
+        if ($customId == null) return false;
+
+        $content = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
+        $this->em->persist($content);
+        $this->em->flush();
+        return $content;
+    }
+
     public function saveFilter(Request $request, User $user)
     {
         $filter = $this->getFilterFromResponse( $request );
@@ -90,7 +207,58 @@ class ContentService
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
-        $content->setDraft(true);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DRAFT")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
+        $this->em->persist($content);
+        $this->em->flush();
+
+        return $content;
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return Content
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsInactive(User $user, Request $request)
+    {
+        $data = json_decode($request->getContent());
+        $content = $this->newContent($user, $data);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
+        /**
+         * Save files
+         */
+        $content = $this->saveFiles($request, $content);
+        $this->em->persist($content);
+        $this->em->flush();
+
+        return $content;
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     * @return Content
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function saveContentAsActive(User $user, Request $request)
+    {
+        $data = json_decode($request->getContent());
+        $content = $this->newContent($user, $data);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"PENDING")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"SUBMITTED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
         /**
          * Save files
          */
@@ -109,7 +277,7 @@ class ContentService
         $data = json_decode($request->get("json"));
 
         $content = $this->newContent($user, $data);
-        $content->setDraft(false);
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"PENDING")));
         /**
          * Save files
          */
@@ -203,12 +371,12 @@ class ContentService
         $selectedRights = array();
 
         if ( isset($data->description) ) $content->setDescription($data->description);
+        if ( isset($data->programDescription) ) $content->setProgramDescription($data->programDescription);
         if ( isset($data->expiresAt) ) $content->setExpiresAt(new \DateTime($data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
         if ( isset($data->customSport) ) $content->setCustomSport($data->customSport);
         if ( isset($data->name) ) $content->setName($data->name);
-
         if ( isset($data->vat) ) $content->setVat($data->vat);
         if ( isset($data->vatPercentage) ) $content->setVatPercentage($data->vatPercentage);
         if ( isset($data->startDate) ) $content->setStartDate(new \DateTime($data->startDate));
@@ -218,7 +386,6 @@ class ContentService
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
-
 
         if ( isset($data->salesPackages) ) {
 
@@ -277,11 +444,50 @@ class ContentService
             $content->setRightsPackage($packages);
 
         }
+
+        $content = $this->saveExtraData($content, $data);
+
         if ( isset($data->customTournament) ){
             $content->setCustomTournament($data->customTournament || null);
         }
         if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
+    }
+
+    /**
+     * @param Content $content
+     * @param $data
+     * @return mixed
+     */
+    private function saveExtraData($content, $data){
+        $keys = array(
+            "DISTRIBUTION_METHOD_LIVE",
+            "TECHNICAL_DELIVERY_SATELLITE",
+            "HL_INPUT",
+            "LICENSED_LANGUAGES",
+            "NA_INPUT",
+            "PROGRAM_NAME",
+            "PROGRAM_SUBTITLES",
+            "PROGRAM_SCRIPT",
+            "PROGRAM_LANGUAGE",
+            "PROGRAM_YEAR",
+            "PROGRAM_EPISODES",
+            "PROGRAM_DURATION",
+            "PROGRAM_DESCRIPTION",
+        );
+
+        $extraData = array();
+
+        foreach ($keys as $key){
+            if ( property_exists($data, $key)){
+                $extraData[$key] = $data->{$key};
+            }
+        }
+
+        $content->setExtraData($extraData);
+
+        return $content;
+
     }
 
     private function saveCompany($data){
@@ -587,20 +793,4 @@ class ContentService
         return $sports;
     }
 
-    private function getInstallment($installmentData){
-
-        if ( $installmentData ){
-            $installment = new Installments();
-            $installment->setPercentage($installmentData->percent);
-            $installment->setDueDate($installmentData->date?date_create_from_format('d/m/Y', $installmentData->date):null);
-            $installment->setSigningDays($installmentData->signingDay?$installmentData->signingDay:null);
-            $installment->setGrantedDays($installmentData->grantedDay?$installmentData->grantedDay:null);
-            $this->em->persist($installment);
-            $this->em->flush();
-        }else{
-            $installment = array();
-        }
-
-        return $installment;
-    }
 }

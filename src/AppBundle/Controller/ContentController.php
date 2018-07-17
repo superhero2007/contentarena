@@ -43,28 +43,6 @@ class ContentController extends Controller
     }
 
     /**
-     * @Route("/content/details/", name="getContentDetails")
-     */
-
-    public function getContentDetails(Request $request){
-
-        //get info by requested custom_id
-        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['id'=>$request->request->get('id')]);
-        $user = $this->getUser();
-        $countries = $this->getDoctrine()
-            ->getRepository('AppBundle:Content')
-            ->getTerritoryInfo($content->getCustomId());
-        $buyPackages = $this->getDoctrine()->getRepository('AppBundle:Content')->getBuyPackages($content->getSalesPackages());
-
-        return $this->render('@App/content/contentDetails.html.twig', [
-            'content' => $content,
-            'user'=>$user,
-            'countries'=>$countries,
-            'buyPackages'=>$buyPackages,
-        ]);
-    }
-
-    /**
      * @Route("/content/save/file", name="saveTmpFile")
      */
     public function saveTmpFile(Request $request, ContentService $contentService  )

@@ -25,7 +25,7 @@ class DefaultController extends Controller
            ));
 
        }
-        return $this->redirectToRoute('myContent', array(
+        return $this->redirectToRoute('marketplace', array(
         ));
     }
 

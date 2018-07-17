@@ -1,15 +1,28 @@
 import React from 'react';
 import { connect } from "react-redux";
-import CurrencySelector from "../components/CurrencySelector";
-import VatSelector from "../components/VatSelector";
-import FileSelector from '../../main/components/FileSelector';
-import SalesPackageForm from "../components/SalesPackageForm";
-import SalesPackageEdit from "../components/SalesPackageEdit";
-import ExpirationDateSelector from "../components/ExpirationDateSelector";
-import JurisdictionSelector from "../components/JurisdictionSelector";
-import CompanyInformation from "../components/CompanyInformation";
-import {CountrySelector} from "../../main/components/CountrySelector";
+import Modal from 'react-modal';
+import Moment from "moment";
+
+import PackageSelector from "../containers/PackageSelector";
+import PopupRight from "../components/PopupRight";
+import Comments from "../components/Comments";
+import LicenseDateSelector from "../components/LicenseDateSelector";
+
+import {RightDefinitions} from "../components/RightDefinitions";
+import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
+import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {stepChangeReset} from "../actions/contentActions";
+import {LanguageSelector} from "../../main/components/LanguageSelector";
+
+import {customStyles} from "../../main/styles/custom";
+
+const licenseStyles = {
+    fontSize: "12px",
+    lineHeight: "14px",
+    padding: 0,
+    textAlign : "center",
+    justifyContent: "center"
+};
 
 class SellFormStep3 extends React.Component {
 
@@ -17,54 +30,63 @@ class SellFormStep3 extends React.Component {
         super(props);
 
         this.state = {
-            title : "Step 3",
-            name : "",
-            salesPackages : []
+            programPopupActive: false,
+            licensePopup : false,
+            rights : RightDefinitions,
+            productionStandards : ProductionStandardsDefinitions
         };
+        this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
+        this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
+
     }
 
-    selectCurrency = ( currency ) => {
-        this.props.updateContentValue("currency", currency);
-    };
-
-    selectVat = ( vat ) => {
-        this.props.updateContentValue("vat", vat);
-    };
-
-    updateName = ( e ) => {
-        this.props.updateContentValue("name", e.target.value);
-    };
-
-    editSalesPackage = ( index ) => {
-        this.setState({
-            salesPackageToEdit : index,
-            editOpen: true
+    loadRights = (rightsPackage, group) => {
+        let _this = this;
+        ContentArena.Api.getRights(rightsPackage.map((p)=> (p.id)), group).done((rights)=>{
+            _this.setState({rights});
         });
     };
 
-    addSalesPackage = ( salesPackages ) => {
-        this.props.addSalesPackages(salesPackages);
+    closeProgramsPopup = () => {
+        this.setState({programPopupActive:false}) ;
     };
 
-    updateSalesPackage = ( salesPackage, index ) => {
-        this.props.updateSalesPackages("save", salesPackage, index);
+    closeLicensePopup = () => {
+        this.setState({licensePopup:false}) ;
     };
 
-    removeSalesPackage = ( index ) => {
-        this.props.updateSalesPackages("remove", null, index);
+    selectCurrency = ( currency ) => {
+        this.props.updateContentValue('currency', currency);
     };
 
-    removeAllSalesPackage= () => {
-        this.props.updateSalesPackages("removeAll");
+    selectLicenseDates = (key, value) => {
+        this.props.updateContentValue(key, value);
     };
 
-    /**
-     *
-     * @returns {boolean}
-     */
-    exclusivity = () => {
+    updateRight = (rightsPackage) => {
+        this.props.superRightsUpdated(rightsPackage);
+    };
+
+    superRightsEnabled = ( superRights ) => {
+
+        var selected = this.props.rightsPackage.map(a => a.shortLabel);
+
+        return superRights.filter(r => selected.indexOf(r) !== -1).length > 0;
+
+    };
+
+    skipContentDelivery = (right) => {
+
         const {rightsPackage} = this.props;
-        return rightsPackage.filter(rp => rp.exclusive).length > 0;
+
+        let selected = rightsPackage.map(a => a.shortLabel);
+
+        return right.key === "CONTENT_DELIVERY"
+            && selected.indexOf("NA") === -1
+            && selected.indexOf("LB") === -1
+            && selected.indexOf("HL") === -1
+            && selected.indexOf("DT") === -1;
+
     };
 
     scroll = () => {
@@ -78,59 +100,218 @@ class SellFormStep3 extends React.Component {
 
     };
 
-    render() {
-        const {step, rightsPackage, salesPackages, currency, vat, updateContentValue, image, vatPercentage} = this.props;
+    renderProgramPopup(){
 
+        const {
+            onClose,
+            updateContentValue,
+            PROGRAM_NAME,
+            PROGRAM_SUBTITLES,
+            PROGRAM_SCRIPT,
+            PROGRAM_LANGUAGE
+        } = this.props;
+        return (
+            <Modal
+                isOpen={this.state.programPopupActive}
+                onRequestClose={this.closeProgramsPopup}
+                bodyOpenClassName={"selector"}
+                style={customStyles}
+                contentLabel="Example Modal"
+            >
+
+                <div className="modal-title">
+                    Program details
+                    <i className="fa fa-times-circle-o" onClick={onClose}/>
+                </div>
+
+                <div className="step-content">
+                    <div className="step-content-container" style={{minWidth:500}}>
+                        <div className="modal-input">
+                            <label>{PROGRAM_NAME}</label>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Program language</label>
+                            <LanguageSelector
+                                value={PROGRAM_LANGUAGE}
+                                onChange={(value)=>{updateContentValue('PROGRAM_LANGUAGE', value)}}/>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Subtitles (if available)</label>
+                            <LanguageSelector
+                                value={PROGRAM_SUBTITLES}
+                                onChange={(value)=>{updateContentValue('PROGRAM_SUBTITLES', value)}}/>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Script (if available)</label>
+                            <LanguageSelector
+                                value={PROGRAM_SCRIPT}
+                                onChange={(value)=>{updateContentValue('PROGRAM_SCRIPT', value)}}/>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className={"buttons"}>
+                    <button
+                        className={"standard-button"}
+                        onClick={this.closeProgramsPopup}>Ok</button>
+                </div>
+            </Modal>
+        )
+    }
+
+    render() {
+
+        const {step, rightsPackage, startDateMode, endDateMode, endDate,
+            updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES, DISTRIBUTION_METHOD_LIVE
+        } = this.props;
         if ( step !== 3) return (null);
         this.scroll();
+
         return (
 
             <div className="step-content">
+                { this.renderProgramPopup() }
+
+                {/*SUMMARY*/}
+                <div className="listing-summary">
+                    <SummaryText {...this.props}/>
+                </div>
+
                 <div className="step-content-container">
 
-                    <CurrencySelector onClick={this.selectCurrency} selected={currency} />
+                    {/* RIGHTS*/}
+                    <div className={"rights-box"}>
+                        {
+                            rightsPackage.map(( sr,i )=>{
+                                return <div key={i}  className={"rights-box-item"}>
+                                    {!sr.exclusive &&
+                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
 
-                    <FileSelector
-                        label={"Listing image (opt.)"}
-                        isImage={true}
-                        onSelect={updateContentValue}
-                        previousImage={image}
-                        target={"imageBase64"}/>
+                                    {sr.exclusive &&
+                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
 
-                    <ExpirationDateSelector/>
-
-                    <SalesPackageForm
-                        currency={currency}
-                        exclusivity={this.exclusivity()}
-                        salesPackages={salesPackages}
-                        onAdd={this.addSalesPackage}
-                        onUpdate={this.updateSalesPackage}
-                        onRemove={this.removeSalesPackage}
-                        onEdit={this.editSalesPackage}
-                        onRemoveAll={this.removeAllSalesPackage}/>
-
-                    {this.state.editOpen && <SalesPackageEdit
-                        isOpen={this.state.editOpen}
-                        onClose={()=>{
-                            this.setState({
-                                editOpen : false
+                                    <div style={{display: 'flex', flexDirection: "row"  }}>
+                                        { sr.shortLabel !== "PR" && sr.name }
+                                        { sr.shortLabel === "PR" && content.PROGRAM_NAME &&
+                                        "Program: " + content.PROGRAM_NAME
+                                        }
+                                        {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
+                                    </div>
+                                </div>
                             })
-                        }}
-                        exclusivity={this.exclusivity()}
-                        onUpdate={this.updateSalesPackage}
-                        salesPackageId={this.state.salesPackageToEdit}
-                        salesPackages={salesPackages}
-                        />}
+                        }
+                    </div>
 
-                    <CompanyInformation/>
+                    <LicenseDateSelector
+                        isOpen={this.state.licensePopup}
+                        onUpdate={this.selectLicenseDates}
+                        startDate={this.props.startDate}
+                        endDateLimit={this.props.endDateLimit}
+                        endDateMode={endDateMode}
+                        startDateMode={startDateMode}
+                        endDate={endDate}
+                        onClose={this.closeLicensePopup}
+                    />
 
-                    <JurisdictionSelector/>
+                    <TitleBar title={"License period"}/>
 
-                    <VatSelector
-                        vatPercentage={vatPercentage}
-                        onUpdate={updateContentValue}
-                        onClick={this.selectVat}
-                        selected={vat}/>
+                    <div className={"license-date-container"}>
+                        <div className="table-right">
+                            <div className="row">
+                                <div className="column right-name">Start</div>
+                                <div className="column right-item-content" style={licenseStyles}>
+                                    { !this.props.startDate  && " contract conclusion"}
+                                    { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
+                                </div>
+                                <div className="column right-name">End</div>
+                                <div className="column right-item-content"  style={licenseStyles}>
+                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
+                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
+                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
+                                    { !endDateMode && "Please select"}
+                                </div>
+                                <div className="column right-item-content edit-item" onClick={()=>this.setState({licensePopup: true})}>
+                                    <i className="fa fa-edit"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <TitleBar title={"Grant of Rights"}/>
+
+                    <div className="rights-container">
+                        {
+                            this.state.rights.length > 0 && this.state.rights.map((right, i)=> {
+
+                                if ( right.superRights.length > 0
+                                    && !this.superRightsEnabled(right.superRights)) return;
+
+                                return <PopupRight
+                                    key={right.key}
+                                    id={right.key}
+                                    name={right.name}
+                                    global={right.global}
+                                    language={right.language}
+                                    languages={LICENSED_LANGUAGES}
+                                    options={right.options}
+                                    multiple={right.multiple}
+                                    superRights={right.superRights}
+                                    showTextArea={right.showTextArea}
+                                    onUpdate={this.updateRight}
+                                    onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
+                                    rightsPackage={this.props.rightsPackage}/>
+                            })
+                        }
+                    </div>
+
+                    <TitleBar title={"Configure Production Standards"}/>
+
+                    <div className="rights-container">
+                        {
+                            this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i)=> {
+
+                                let superRights = right.superRights;
+
+                                if ( right.key === "TECHNICAL_DELIVERY"
+                                    && rightsPackage.map(rp =>rp.shortLabel).indexOf("PR") !== -1 ){
+                                    superRights = ["PR"];
+                                }
+
+                                if ( right.superRights.length > 0
+                                    && !this.superRightsEnabled(right.superRights)) return;
+
+                                if ( this.skipContentDelivery(right) ) return;
+
+                                return <PopupRight
+                                    key={right.key}
+                                    id={right.key}
+                                    name={right.name}
+                                    selected={this.props[right.key]}
+                                    options={right.options}
+                                    multiple={right.multiple}
+                                    productionLabel={right.productionLabel}
+                                    programName={PROGRAM_NAME}
+                                    distributionMethod={DISTRIBUTION_METHOD_LIVE}
+                                    onProgram={() => {
+                                        this.setState({
+                                            programPopupActive : true,
+                                        });
+                                    }}
+                                    superRights={superRights}
+                                    showTextArea={right.showTextArea}
+                                    technicalFee={right.technicalFee}
+                                    onUpdate={this.updateRight}
+                                    onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
+                                    rightsPackage={this.props.rightsPackage}/>
+                            })
+                        }
+                    </div>
+
+                    <Comments/>
 
                 </div>
             </div>
@@ -144,20 +325,25 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        superRightsUpdated : (rightsPackage) => dispatch({
+            type : 'SUPER_RIGHTS_UPDATED',
+            rightsPackage: rightsPackage
+        }),
+        removeNewSport : (index) => dispatch({
+            type: 'REMOVE_NEW',
+            index : index,
+            selectorType : "sports",
+        }),
         updateContentValue : (key, value) => dispatch({
             type: 'UPDATE_CONTENT_VALUE',
             key: key,
             value : value
         }),
-        updateSalesPackages : (name, salesPackage, index) => dispatch({
-            type: 'UPDATE_SALES_PACKAGES',
+        updateProgram : (index, program, name) => dispatch({
+            type: 'UPDATE_PROGRAMS',
             index: index,
-            salesPackage : salesPackage,
+            program : program,
             name: name
-        }),
-        addSalesPackages : (salesPackages) => dispatch({
-            type: 'ADD_SALES_PACKAGES',
-            salesPackages : salesPackages,
         }),
         stepChangeReset : () => dispatch(stepChangeReset())
     }

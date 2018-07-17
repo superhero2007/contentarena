@@ -61,6 +61,14 @@ export const RightDefinitions = [
         multiple: true
     },
     {
+        name : "Licensed languages",
+        key : "LICENSED_LANGUAGES",
+        superRights : [],
+        options : [],
+        global : true,
+        language : true,
+    },
+    {
         name : "Number of runs",
         key: "RUNS",
         superRights: ["CL","NA","PR", "DT", "HL"],

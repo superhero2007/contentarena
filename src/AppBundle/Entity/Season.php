@@ -27,7 +27,7 @@ class Season
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $name;
 
@@ -53,7 +53,7 @@ class Season
      * @var string
      *
      * @ORM\Column(name="year", type="string", length=255)
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $year;
 

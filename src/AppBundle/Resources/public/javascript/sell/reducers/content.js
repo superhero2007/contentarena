@@ -12,7 +12,6 @@ export const contentType= {
     REMOVE_FROM_MULTIPLE : 'REMOVE_FROM_MULTIPLE',
     UPDATE_FROM_MULTIPLE : 'UPDATE_FROM_MULTIPLE',
     APPLY_SELECTION : 'APPLY_SELECTION',
-    UPDATE_PROGRAMS : 'UPDATE_PROGRAMS',
     UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
     UPDATE_ATTACHMENTS : 'UPDATE_ATTACHMENTS',
     ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES'
@@ -26,7 +25,6 @@ export const content = (state = {
     sportCategory : [],
     sports : [],
     seasons: [],
-    programs : [],
     salesPackages : [],
     attachments : [],
     endDateLimit : 30,
@@ -34,7 +32,11 @@ export const content = (state = {
     currency : "EUR",
     startDateMode : "LICENSE",
     stepChange : false,
-    vat : "no"
+    vat : "no",
+    NA_INPUT : 5,
+    HL_INPUT : 90,
+    LICENSED_LANGUAGES : [],
+    DISTRIBUTION_METHOD_LIVE : "TECHNICAL_DELIVERY_SATELLITE",
 }, action) => {
 
     let newState = {};
@@ -130,26 +132,6 @@ export const content = (state = {
             if ( action.reset ) return Object.assign({}, state, {rightsPackage : [] });
             return Object.assign({}, state, {
                 rightsPackage : Array.from(action.rightsPackage.values())
-            });
-        case contentType.UPDATE_PROGRAMS:
-
-            let programs = [...state.programs];
-
-            if ( action.name === "remove" ) {
-
-                if ( programs.length >= 1 ) {
-                    programs.splice(action.index,1)
-                }  else {
-                    programs[0]= {name: '', saved: false}
-                }
-            }
-            //if ( action.name === "add" ) programs = [...programs,action.program];
-            if ( action.name === "add" ) programs = [action.program];
-            if ( action.name === "save" ) programs[action.index] = action.program;
-
-
-            return Object.assign({}, state, {
-                programs : programs
             });
         case contentType.UPDATE_SALES_PACKAGES:
 

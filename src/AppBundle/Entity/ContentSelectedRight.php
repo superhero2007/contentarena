@@ -39,11 +39,6 @@ class ContentSelectedRight
      */
     private $rightItem;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DistributionPackage")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $distributionPackage;
 
     /**
      * @var array
@@ -110,22 +105,6 @@ class ContentSelectedRight
     public function setRightItem($rightItem)
     {
         $this->rightItem = $rightItem;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDistributionPackage()
-    {
-        return $this->distributionPackage;
-    }
-
-    /**
-     * @param mixed $distributionPackage
-     */
-    public function setDistributionPackage($distributionPackage)
-    {
-        $this->distributionPackage = $distributionPackage;
     }
 
     /**
