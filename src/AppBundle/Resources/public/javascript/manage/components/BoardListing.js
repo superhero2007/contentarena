@@ -74,6 +74,7 @@ class BoardListing extends React.Component{
 
     render(){
         const {
+            PROGRAM_NAME,
             name,
             customId,
             expiresAt,
@@ -192,8 +193,8 @@ class BoardListing extends React.Component{
                     {rightsPackage && rightsPackage.map((rp,i,l) => {
                         return <span key={"rp-"+i}>
                             {rp.name}
-                            { rp.shortLabel === "PR" && programs[0] && programs[0].name &&
-                            "Program: " + programs[0].name
+                            { rp.shortLabel === "PR" && PROGRAM_NAME &&
+                            "Program: " + PROGRAM_NAME
                             }
                             {i<l.length -1 && ", "}
                         </span>

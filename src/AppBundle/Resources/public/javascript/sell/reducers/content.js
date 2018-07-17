@@ -133,26 +133,6 @@ export const content = (state = {
             return Object.assign({}, state, {
                 rightsPackage : Array.from(action.rightsPackage.values())
             });
-        case contentType.UPDATE_PROGRAMS:
-
-            let programs = [...state.programs];
-
-            if ( action.name === "remove" ) {
-
-                if ( programs.length >= 1 ) {
-                    programs.splice(action.index,1)
-                }  else {
-                    programs[0]= {name: '', saved: false}
-                }
-            }
-            //if ( action.name === "add" ) programs = [...programs,action.program];
-            if ( action.name === "add" ) programs = [action.program];
-            if ( action.name === "save" ) programs[action.index] = action.program;
-
-
-            return Object.assign({}, state, {
-                programs : programs
-            });
         case contentType.UPDATE_SALES_PACKAGES:
 
             let salesPackages = [...state.salesPackages];

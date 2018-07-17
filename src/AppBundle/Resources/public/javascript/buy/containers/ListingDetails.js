@@ -475,8 +475,8 @@ class ListingDetails extends React.Component {
 
                                         <div style={{display: 'flex', flexDirection: "row"  }}>
                                             { sr.shortLabel !== "PR" && sr.name }
-                                            { sr.shortLabel === "PR" && content.programs[0].name &&
-                                            "Program: " + content.programs[0].name
+                                            { sr.shortLabel === "PR" && content.PROGRAM_NAME &&
+                                            "Program: " + content.PROGRAM_NAME
                                             }
                                             {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                                         </div>
