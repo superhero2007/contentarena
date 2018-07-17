@@ -46,9 +46,21 @@ class EventFilter extends React.Component {
         this.props.selectSport(e);
     };
 
+    handleFilter = () => {
+        this.updateEvent();
+        const {onFilter} = this.props;
+        onFilter();
+    }
+
     updateEvent = (e) => {
         this.props.updateEvent(this.refs.search_field.value);
     };
+
+    handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.handleFilter()
+        }
+    }
 
     render() {
         const {sport, event} = this.props;
@@ -69,7 +81,7 @@ class EventFilter extends React.Component {
                             margin: '15px 15px'
                         }}
                          src={this.searchIcon}
-                         onClick={this.updateEvent}
+                         onClick={this.handleFilter}
                         />
                         <input
                             style={{
@@ -77,6 +89,7 @@ class EventFilter extends React.Component {
                                 flex: 1
                             }}
                             defaultValue={event}
+                            onKeyPress={this.handleKeyPress}
                             ref="search_field"
                             type="text" id="inputSearch" name="event" placeholder="Search"/>
                     </div>

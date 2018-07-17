@@ -885,11 +885,12 @@ button {
   .left {
     flex: 1;
     .image {
-      width: 30vmin;
-      height: 30vmin;
-      display: flex;
       background-color: lightgray;
       margin-bottom: 5px;
+      height: 100%;
+      img {
+        object-fit: cover;
+      }
     }
     .date {
       font-size: 16px;
@@ -912,29 +913,28 @@ button {
       font-size: 20px;
       font-weight: 600;
       text-decoration: underline;
-      padding-bottom: 20px;
+      padding-bottom: 10px;
       cursor: pointer;
     }
     .info {
       display: flex;
-      .listing-event-details {
-        flex: 1 1 0%;
-        font-weight: 600;
-        line-height: 30px;
-      }
-      .listing-event-packages {
-        flex: 2 1 0%;
+      .listing-col {
         flex-flow: column wrap;
         max-height: 120px;
         display: flex;
         overflow: auto;
-        .pack {
-          //min-height: 46px;
-          flex-direction: row;
-          display: flex;
-          align-items: center;
-          flex: 1 1 40px;
-        }
+      }
+      .listing-event-details {
+        flex: 1 0 0;
+        font-weight: 600;
+      }
+      .listing-event-packages {
+        flex: 2 0 0;
+      }
+      .listing-item {
+        display: flex;
+        align-items: center;
+        min-height: 40px;
       }
     }
     .sales-bundles {
