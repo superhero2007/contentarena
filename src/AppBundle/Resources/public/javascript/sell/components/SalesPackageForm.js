@@ -514,7 +514,8 @@ class SalesPackageForm extends React.Component {
     };
 
     getFee = (salesPackage) => {
-        return salesPackage.fee + " " + this.getCurrencySymbol();
+        const feeNumber = parseFloat(salesPackage.fee);
+        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol();
     };
 
     getCurrencySymbol = () => {
