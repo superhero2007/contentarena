@@ -15,14 +15,13 @@ class EventFilter extends React.Component {
     }
 
     componentDidMount () {
-        let _this = this;
         if ( ContentArena.Data.Countries.length === 0) {
             ContentArena.Api.getActiveSports().done( (sports ) => {
                 ContentArena.Data.ActiveSports = sports;
-                _this.setState({sports});
+                this.setState({sports});
             });
         } else {
-            _this.setState({sports: ContentArena.Data.ActiveSports});
+            this.setState({sports: ContentArena.Data.ActiveSports});
         }
     }
 
@@ -47,10 +46,21 @@ class EventFilter extends React.Component {
         this.props.selectSport(e);
     };
 
-    updateEvent = (e) => {
+    handleFilter = () => {
+        this.updateEvent();
+        const {onFilter} = this.props;
+        onFilter();
+    }
 
-        this.props.updateEvent(e.target.value);
+    updateEvent = (e) => {
+        this.props.updateEvent(this.refs.search_field.value);
     };
+
+    handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.handleFilter()
+        }
+    }
 
     render() {
         const {sport, event} = this.props;
@@ -67,15 +77,20 @@ class EventFilter extends React.Component {
                             position: 'absolute',
                             width: 20,
                             height: 20,
-                            cursor: 'pointer', margin: '15px 15px'}}
-                             src={this.searchIcon}/>
+                            cursor: 'pointer',
+                            margin: '15px 15px'
+                        }}
+                         src={this.searchIcon}
+                         onClick={this.handleFilter}
+                        />
                         <input
                             style={{
                                 padding: '15px 15px 15px 40px',
                                 flex: 1
                             }}
-                            value={event}
-                            onChange={this.updateEvent}
+                            defaultValue={event}
+                            onKeyPress={this.handleKeyPress}
+                            ref="search_field"
                             type="text" id="inputSearch" name="event" placeholder="Search"/>
                     </div>
 

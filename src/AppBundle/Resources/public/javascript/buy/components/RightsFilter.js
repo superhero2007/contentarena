@@ -69,8 +69,8 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="standard-button" style={{margin:5}} onClick={clearFilter}>Clear</button>
                         <button className="standard-button" style={{margin:5}} onClick={onFilter}>Apply</button>
+                        <button className="standard-button" style={{margin:5}} onClick={clearFilter}>Clear</button>
                     </div>
 
                 </div>

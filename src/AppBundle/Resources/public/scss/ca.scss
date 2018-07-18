@@ -820,8 +820,7 @@ a:hover{
   }
 }
 
-.modal-input
-{
+.modal-input {
   display: flex;
   margin-bottom: 10px;
   position: relative;
@@ -896,8 +895,6 @@ a:hover{
     margin-left: 5px;
   }
 
-
-
   input[type="checkbox"] + label:after, input[type="radio"] + label:after {
     content: '';
     width: 20px;
@@ -935,12 +932,13 @@ a:hover{
   }
   .left {
     flex: 1;
-    .image{
-      width: 30vmin;
-      height: 30vmin;
-      display: flex;
+    .image {
       background-color: lightgray;
       margin-bottom: 5px;
+      height: 100%;
+      img {
+        object-fit: cover;
+      }
     }
     .date {
       font-size: 16px;
@@ -957,14 +955,35 @@ a:hover{
     flex-direction: column;
     padding-left: 20px;
     position: relative;
-    .name{
+    font-size: 14px;
+    .name {
       color: #2DA7E6;
-      font-size: 25px;
+      font-size: 20px;
       font-weight: 600;
       text-decoration: underline;
-      line-height: 28px;
-      padding-bottom: 20px;
+      padding-bottom: 10px;
       cursor: pointer;
+    }
+    .info {
+      display: flex;
+      .listing-col {
+        flex-flow: column wrap;
+        max-height: 120px;
+        display: flex;
+        overflow: auto;
+      }
+      .listing-event-details {
+        flex: 1 0 0;
+        font-weight: 600;
+      }
+      .listing-event-packages {
+        flex: 2 0 0;
+      }
+      .listing-item {
+        display: flex;
+        align-items: center;
+        min-height: 40px;
+      }
     }
     .sales-bundles {
       display: flex;
@@ -974,11 +993,11 @@ a:hover{
         display: flex;
         border: 1px solid lightgrey;
         margin-right: 5px;
-        align-items: center;
-        padding: 0 0px 0 10px;
-        height: 40px;
-        flex-shrink: 0;
         margin-bottom: 5px;
+        align-items: center;
+        padding: 0 0 0 10px;
+        height: 36px;
+        flex-shrink: 0;
       }
     }
 
@@ -1004,8 +1023,7 @@ a:hover{
   height: 100%;
 }
 
-.digital-signature{
-
+.digital-signature {
 
 }
 
@@ -1040,10 +1058,10 @@ input[type="checkbox"]:checked + label:after, input[type="radio"]:checked + labe
 
 input[type="checkbox"]:checked + label, input[type="radio"]:checked + label {
 }
+
 input[type="radio"]:checked + label {
   margin-left: 5px;
 }
-
 
 input[type="checkbox"] + label:after {
   content: '';

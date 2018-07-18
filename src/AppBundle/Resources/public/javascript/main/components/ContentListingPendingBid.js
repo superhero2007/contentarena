@@ -44,8 +44,6 @@ class ContentListingPendingBid extends ContentListing {
                     <div className={"image"}>
                         <img src={listingImage}/>
                     </div>
-                    <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                    <div className={"date"}>Expires <span>{Moment(expiresAt).format('DD/MM/YYYY')}</span></div>
                 </div>
                 <div className={"right"}  style={{padding:'25px 0'}}>
                     <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
