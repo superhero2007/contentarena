@@ -197,20 +197,86 @@ class PopupRight extends React.Component {
 
     };
 
-    renderModal = () => {
+    renderModalRow = (rightPackage) => {
         const {
-            name,
             multiple,
-            options, id,  superRights, showTextArea, rightsPackage, technicalFee,
-            distributionMethod,
-            global,
-            language,
-            languages,
+            options,
+            id,
             productionLabel,
-            onUpdateListing
+            rightsPackage
         } = this.props;
         const { productionLabels } = this.state;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+        return <div className="row">
+            <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
+                {!productionLabel && rightPackage.name}
+                {productionLabel && productionLabels[rightPackage.shortLabel]}
+            </div>
+            {options.map((option, i ,list)=> {
+
+                let flex = (list.length > 2 ) ? 2 : 3;
+                let disabled = false;
+                let definition = RightItemsDefinitions[option];
+                if (RightItemsDefinitions[option].language) flex = flex+ 2;
+                if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
+                if (definition.disabledIf && definition.disabledIf.indexOf(rightPackage.shortLabel) !== -1 ) disabled = true;
+                return <div className="column" style={{ flex: flex }}>
+                    {multiple &&
+                    <input checked={rightPackage.selectedRights[id].indexOf(option) !== -1 }
+                           onChange={(e) => { this.updateMultipleSelection(option, id,rightPackage)} }
+                           type="checkbox"
+                           id={rightPackage.shortLabel + "_" + option}/>}
+                    {multiple &&
+                    <label htmlFor={rightPackage.shortLabel + "_" + option}/>}
+                    {!multiple &&
+                    <input
+                        defaultChecked={rightPackage.selectedRights[id] === option}
+                        type="radio"
+                        disabled={disabled}
+                        onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
+                        name={rightPackage.shortLabel + "_" + id} value={option}/>}
+
+                    {RightItemsDefinitions[option].language &&
+                    <LanguageSelector
+                        onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
+                        value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
+                    {RightItemsDefinitions[option].textField &&
+                    <input
+                        onChange={(e) => { this.updateSelection(e.target.value, id+ "_TEXT",rightPackage)}}
+                        value={rightPackage.selectedRights[id+ "_TEXT"]}
+                        className="text-field"
+                        type="text"/>
+                    }
+                    {
+                        RightItemsDefinitions[option].numberField &&
+                        <input
+                            className="text-field"
+                            style={numberFieldStyle}
+                            type="number"
+                            onChange={(e) => { this.updateSelection(e.target.value,RightItemsDefinitions[option].numberFieldValue,rightPackage)}}
+                            value={rightPackage.selectedRights[RightItemsDefinitions[option].numberFieldValue]}
+                            min={0}/>
+                    }
+                    {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}
+                </div>
+            })}
+        </div>
+    };
+
+    renderModal = () => {
+        const {
+            name,
+            options, id,  superRights, showTextArea, rightsPackage, technicalFee,
+            checkContentDelivery,
+            global,
+            language,
+            languages,
+            onUpdateListing
+        } = this.props;
+
+        let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+        let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+
         return <Modal
             isOpen={this.state.isOpen}
             bodyOpenClassName={"selector"}
@@ -239,7 +305,6 @@ class PopupRight extends React.Component {
 
                                 return <div className="column" style={{ flex: flex }}>
                                     {label && label}
-
                                 </div>
                             })}
                         </div>
@@ -248,82 +313,64 @@ class PopupRight extends React.Component {
                             onChange={(value) => { onUpdateListing("LICENSED_LANGUAGES", value) }}
                             value={languages}/>}
 
-                        {id === "TECHNICAL_DELIVERY"
-                        && (packagesAvailable.length > 1 || packagesAvailable.indexOf("PR") === -1)
+                        {deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery
                         && <div className="row">
                             <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                                 Live Transmission
                             </div>
                             {options.map((option, i ,list)=> {
                                 let flex = (list.length > 2 ) ? 2 : 3;
+                                let disabled = false;
+                                let definition = RightItemsDefinitions[option];
+                                if (definition.language) flex = flex+ 2;
+                                if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
+
+                                let customId = "LIVE_FEED_" + id;
+                                let customProp = rightsPackage[0].selectedRights[customId];
                                 return <div className="column" style={{ flex: flex }}>
                                     <input
-                                        defaultChecked={distributionMethod === option}
+                                        defaultChecked={customProp === option}
                                         type="radio"
-                                        onChange={(e) => { onUpdateListing("DISTRIBUTION_METHOD_LIVE", e.target.value) }}
-                                        name={ "distribution_method_live_"}
-                                        value={option}/>
+                                        disabled={disabled}
+                                        onChange={(e) => { this.updateSelection(e.target.value, customId,rightsPackage[0])} }
+                                        name={customId + "_" + id} value={option}/>
 
+                                    {definition.language &&
+                                    <LanguageSelector
+                                        onChange={(value) => { this.updateSelection(value, customId+ "_LANGUAGES",rightsPackage[0])} }
+                                        value={rightsPackage[0].selectedRights[customId+ "_LANGUAGES"]}/>}
+                                    {definition.textField &&
+                                    <input
+                                        onChange={(e) => { this.updateSelection(e.target.value, customId+ "_TEXT",rightsPackage[0])} }
+                                        value={rightsPackage[0].selectedRights[customId+ "_TEXT"]}
+                                        className="text-field"
+                                        type="text"/>
+                                    }
+                                    {
+                                        definition.numberField &&
+                                        <input
+                                            className="text-field"
+                                            style={numberFieldStyle}
+                                            type="number"
+                                            onChange={(e) => { this.updateSelection(e.target.value, customId+ "_NUMBER",rightsPackage[0])} }
+                                            value={rightsPackage[0].selectedRights[customId+ "_NUMBER"]}
+                                            min={0}/>
+                                    }
                                 </div>
                             })}
                             </div>}
 
                         {!global && rightsPackage.map((rightPackage)=>{
                             if ( superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1 ) return;
-                            return <div className="row">
-                                <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
-                                    {!productionLabel && rightPackage.name}
-                                    {productionLabel && productionLabels[rightPackage.shortLabel]}
-                                </div>
-                                {options.map((option, i ,list)=> {
 
-                                    let flex = (list.length > 2 ) ? 2 : 3;
-                                    let disabled = false;
-                                    let definition = RightItemsDefinitions[option];
-                                    if (RightItemsDefinitions[option].language) flex = flex+ 2;
-                                    if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
-                                    if (definition.disabledIf && definition.disabledIf.indexOf(rightPackage.shortLabel) !== -1 ) disabled = true;
-                                    return <div className="column" style={{ flex: flex }}>
-                                        {multiple &&
-                                            <input checked={rightPackage.selectedRights[id].indexOf(option) !== -1 }
-                                                   onChange={(e) => { this.updateMultipleSelection(option, id,rightPackage)} }
-                                                    type="checkbox"
-                                                    id={rightPackage.shortLabel + "_" + option}/>}
-                                        {multiple &&
-                                            <label htmlFor={rightPackage.shortLabel + "_" + option}/>}
-                                        {!multiple &&
-                                        <input
-                                            defaultChecked={rightPackage.selectedRights[id] === option}
-                                            type="radio"
-                                            disabled={disabled}
-                                            onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
-                                            name={rightPackage.shortLabel + "_" + id} value={option}/>}
-
-                                        {RightItemsDefinitions[option].language &&
-                                            <LanguageSelector
-                                                onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
-                                                value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
-                                        {RightItemsDefinitions[option].textField &&
-                                            <input
-                                                onChange={(e) => { this.updateSelection(e.target.value, id+ "_TEXT",rightPackage)}}
-                                                value={rightPackage.selectedRights[id+ "_TEXT"]}
-                                                className="text-field"
-                                                type="text"/>
-                                        }
-                                        {
-                                            RightItemsDefinitions[option].numberField &&
-                                            <input
-                                                className="text-field"
-                                                style={numberFieldStyle}
-                                                type="number"
-                                                onChange={(e) => { this.updateSelection(e.target.value,RightItemsDefinitions[option].numberFieldValue,rightPackage)}}
-                                                value={rightPackage.selectedRights[RightItemsDefinitions[option].numberFieldValue]}
-                                                min={0}/>
-                                        }
-                                        {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}
-                                    </div>
-                                })}
-                            </div>
+                            if (checkContentDelivery
+                                    && id !== "CONTENT_DELIVERY"
+                                    && ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_NON_DEDICATED" ||
+                                    rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" )
+                            ){
+                                return;
+                            }
+                            return this.renderModalRow(rightPackage)
                         })}
                         {showTextArea && ( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage)) &&
                         <textarea
@@ -391,10 +438,16 @@ class PopupRight extends React.Component {
     };
 
     showOkButton=()=>{
-        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee} = this.props;
+        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee, global,
+            language,
+            languages} = this.props;
 
         let response = true;
-        let contentDevliveryCounter = 0;
+        let contentDeliveryCounter = 0;
+
+        if ( global && language ){
+            return languages.length > 0
+        }
 
         if ( showTextArea ){
             if (( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage))){
@@ -404,9 +457,9 @@ class PopupRight extends React.Component {
 
         if ( id === "CONTENT_DELIVERY"){
             rightsPackage.forEach(rp => {
-                if ( rp.selectedRights[id] === "CONTENT_DELIVERY_NON_DEDICATED" ) contentDevliveryCounter++;
+                if ( rp.selectedRights[id] === "CONTENT_DELIVERY_NON_DEDICATED" ) contentDeliveryCounter++;
             })
-            if ( rightsPackage.length === contentDevliveryCounter ) response = false;
+            if ( rightsPackage.length === contentDeliveryCounter ) response = false;
 
         }
 
@@ -437,10 +490,15 @@ class PopupRight extends React.Component {
 
     render(){
 
-        const {name, id,  rightsPackage,programName, global, languages, distributionMethod} = this.props;
+        const {name, rightsPackage,programName, global, languages, checkContentDelivery} = this.props;
+        let id = this.props.id;
         let custom = this.getSelection(id,  rightsPackage);
         let selected =  "";
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+        let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+
+        if ( deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery ) id = "LIVE_FEED_" + id;
+
         if (rightsPackage.length > 0 ){
             if (id === "PROGRAM") {
                 if (programName) {
@@ -465,7 +523,7 @@ class PopupRight extends React.Component {
                 }
 
             }
-            else if (id === "TECHNICAL_DELIVERY"){
+            /*else if (id === "TECHNICAL_DELIVERY"){
 
                 let programPackage = rightsPackage.filter(rp=>rp.shortLabel === "PR")[0];
 
@@ -489,7 +547,7 @@ class PopupRight extends React.Component {
 
                 }
 
-            }
+            }*/
             else if (global){
 
                 if ( languages.length > 0 ) {

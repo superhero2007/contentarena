@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {goTo, limitText} from "../../main/actions/utils";
+import {clockRoundIcon, exclamationRoundIcon, playIcon} from "../../main/components/Icons";
 
 class BoardListing extends React.Component{
     constructor(props){
@@ -79,7 +80,6 @@ class BoardListing extends React.Component{
             customId,
             expiresAt,
             salesPackages,
-            programs,
             rightsPackage,
             tournament,
             seasons,
@@ -96,11 +96,12 @@ class BoardListing extends React.Component{
             lastAction,
             lastActionDate,
             lastActionUser,
+            status,
             onSubmit,
             style
         } = this.props;
 
-        const {showOptions, showRemoveConfirm, showDeactivateConfirm} = this.state;
+        const {showOptions, showRemoveConfirm, showDeactivateConfirm, showStatusInfo} = this.state;
 
         return (
             <div className={className} style={style} onClick={this.hideOptions}>
@@ -177,7 +178,26 @@ class BoardListing extends React.Component{
                     </div>
                 </div>}
 
-                <div  className={"menu-icon"} onClick={this.toggleOptions}>
+                {/*STATUS INFO*/}
+                {showStatusInfo && <div className="status-tooltip">
+                    <div className={"option"}>
+                        {status.name === 'PENDING' && "Listing under review. Not visible in the marketplace yet."}
+                        {status.name === 'INACTIVE' && "Listing is deactivated."}
+                        {status.name === 'REJECTED' && "Listing rejected. Please edit or contact support."}
+                    </div>
+                </div>}
+
+                { (status.name === 'REJECTED' || status.name === 'INACTIVE' || status.name === 'PENDING' ) &&
+                <div
+                    className={"status-icon"}
+                    onMouseOver={() => {this.setState({showStatusInfo : true})}}
+                    onMouseLeave={() => {this.setState({showStatusInfo : false})}}>
+                    {status.name === 'PENDING' && <img src={clockRoundIcon} />}
+                    {status.name === 'INACTIVE' &&<img src={playIcon} />}
+                    {status.name === 'REJECTED' && <img src={exclamationRoundIcon} />}
+                </div>}
+
+                <div  className="menu-icon" onClick={this.toggleOptions}>
                     <img src={this.dotsIcon} />
                 </div>
                 <div className={"name"}>

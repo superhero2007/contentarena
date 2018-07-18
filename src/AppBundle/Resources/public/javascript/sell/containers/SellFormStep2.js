@@ -50,8 +50,6 @@ class SellFormStep2 extends React.Component {
 
     };
 
-
-
     scroll = () => {
 
         const {stepChange, stepChangeReset } = this.props;
@@ -146,6 +144,7 @@ class SellFormStep2 extends React.Component {
                             value={PROGRAM_TYPE}
                             onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}
                             style={{ width: '100%' }}>
+                            <option>Select</option>
                             <option value="HIGHLIGHT_SHOW">Highlight show</option>
                             <option value="DOCUMENTARY">Documentary</option>
                             <option value="PREVIEW">Preview</option>

@@ -38,11 +38,9 @@ class ContentListingPendingBid extends ContentListing {
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
-        console.log(bid)
-
         return (
             <div className="listing-list-view" onClick={this.onSelect} style={{padding: 0}}>
-                <div className={"left"} style={{padding: '25px 0 25px 25px'}} >
+                <div className={"left"} style={{padding: 25}} >
                     <div className={"image"}>
                         <img src={listingImage}/>
                     </div>

@@ -545,19 +545,30 @@ class ListingDetails extends React.Component {
                         </div>
 
                         <div className={"listing-details-buttons"}>
-                            <button className={(tab ===1)?"active": ""} onClick={()=>this.showTab(1)}>Commercial terms</button>
-                            <button className={(tab ===2)?"active": ""} onClick={()=>this.showTab(2)}>Content information</button>
-                            <button className={(tab ===3)?"active": ""} onClick={()=>this.showTab(3)}>Term Sheet</button>
-                            {content.programs && content.programs.length > 0 &&
-                                <button className={(tab ===4)?"active": ""} onClick={()=>this.showTab(4)}>Program Details</button>}
-                            <button className={(tab ===5)?"active": ""} onClick={()=>this.showTab(5)}>Seller</button>
+                            <button className={(tab ===1)?"active": ""} onClick={()=>this.showTab(1)}>
+                                Program & Sales Bundles
+                            </button>
+                            <button className={(tab ===2)?"active": ""} onClick={()=>this.showTab(2)}>
+                                Event
+                            </button>
+                            <button className={(tab ===3)?"active": ""} onClick={()=>this.showTab(3)}>
+                                Grant of Rights & Production
+                            </button>
+                            {content.PROGRAM_NAME &&
+                                <button className={(tab ===4)?"active": ""} onClick={()=>this.showTab(4)}>
+                                    Edited Program
+                                </button>
+                            }
+                            <button className={(tab ===5)?"active": ""} onClick={()=>this.showTab(5)}>
+                                Seller Information
+                            </button>
                         </div>
                         <div className={"listing-details-tab"}>
 
                             { this.state.tab === 1 &&
                                 <CommercialTerms
                                     onSelectPackage={this.selectPackage}
-                                    content={content}/>
+                                    {...content}/>
                             }
                             { this.state.tab === 2 &&
                                 <ContentInformation {...content}/> }

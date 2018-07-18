@@ -64,10 +64,12 @@ easy_admin:
                     fields:
                         - { property: 'id' }
                         - { property: 'customId' }
-                        - { property: 'company' }
+                        #- { property: 'company' }
+                        - { property: 'name' }
                         - { property: 'createdAt' }
+                        - { property: 'expiresAt' }
                         - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
-                        - { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
+                        #- { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'status' }
                     actions:
                         - { name: 'show', icon: 'eye', label: '' }

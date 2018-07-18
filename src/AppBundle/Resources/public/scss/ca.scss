@@ -17,6 +17,17 @@ button{
   cursor: pointer;
 }
 
+a {
+  color: $border-color-2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover{
+  color: $blue-color;
+  text-decoration: none;
+}
+
 .main-container{
   background-color: white;
   margin: 20px;
@@ -456,20 +467,21 @@ button{
 }
 .schedule{
   font-size: 14px;
-  background-color: #F4F6F9;
   z-index: 100;
   position: relative;
-  padding: 20px;
-  column-count: 3;
+  padding: 5px 0;
+  column-count: 2;
   .matchday{
+    background-color: #FAFBFC;
     padding: 10px;
     border: 1px solid lightgray;
-    margin: 5px;
+    margin: 2px 0;
     font-weight: 600;
     color: black;
-    width: 90%;
+    width: 100%;
     display: inline-block;
     font-size: 16px;
+    box-sizing: border-box;
     input[type="checkbox"] + label {
       display: inline-block;
       width: 21px;
@@ -521,6 +533,19 @@ button{
     color: white;
   }
 }
+
+.season-details{
+  margin-bottom: 20px;
+  .season-name{
+    background-color: $blue-color;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: 600
+  }
+
+}
+
 .full-item-box{
   padding-bottom: 5px;
   border-bottom: 4px solid $border-color-1;
@@ -556,8 +581,10 @@ button{
     box-sizing: border-box;
   }
   .full-item-content{
-    padding: 5px 10px 20px;
+    padding: 15px 10px 30px;
     font-size: 14px;
+    color: #4F4F4F;
+    line-height: 21px;
   }
 }
 
@@ -1127,6 +1154,7 @@ input[type="checkbox"] + label:after {
           }
         }
         .term-sheet{
+          margin-top: 20px;
           .term-sheet-rights{
             display: flex;
             flex-direction: row;
@@ -1154,25 +1182,31 @@ input[type="checkbox"] + label:after {
               border-bottom: 1px solid #EEF3F6;
               font-size: 14px;
               .right-name{
-                background-color: #A5BBC6;
-                padding: 5px;
-                color: white;
-                font-size: 14px;
-                text-transform: uppercase;
-                max-width: 150px;
-                margin: 3px 0 3px;
+                border-left: 1px solid #EEF3F6;
               }
               .right-definition {
                 border-right: 1px solid #EEF3F6;
                 flex: 1;
-                margin: 3px 0 3px;
                 justify-content: center;
                 align-items: center;
                 display: flex;
                 text-align: center;
-                padding: 0px 5px;
+                padding: 10px 5px;
+              }
+              .right-definition-title{
+                background-color: #1A4B63;
+                color: white;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                padding: 5px;
+                border: none;
+                min-height: 30px;
               }
 
+            }
+            .odd-row{
+              background-color: #FAFBFC;
             }
           }
         }

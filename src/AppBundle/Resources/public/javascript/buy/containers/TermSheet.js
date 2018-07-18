@@ -4,6 +4,7 @@ import { test } from "../actions";
 import {RightDefinitions} from "../../sell/components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../../sell/components/ProductionStandardsDefinitions";
 import {RightItemsDefinitions} from "../../sell/components/RightItemsDefinitions";
+import {SuperRightProductionDetailsLabels} from "../../sell/components/SuperRightDefinitions";
 
 class TermSheet extends React.Component {
 
@@ -25,17 +26,18 @@ class TermSheet extends React.Component {
 
     renderList = (definitions) => {
         const {selectedRights, rightsPackage} = this.props;
-        return definitions.map( (right) => {
+        return definitions.map( (right, i) => {
 
             if (right.key === 'PROGRAM') return;
 
-            return <div className="row">
-                <div className="right-name">{right.name}</div>
+            return <div className={'row '+(i%2 ? 'odd-row':'')}>
+                <div className="right-name right-definition">{right.name}</div>
                 {
                     rightsPackage.map((rp)=>{
+                        let definition = selectedRights[rp.id].items[right.key];
                         return <div  className="right-definition">
                             {
-                                !right.multiple && RightItemsDefinitions[selectedRights[rp.id].items[right.key]].label
+                                !right.multiple && definition && RightItemsDefinitions[definition].label
                             }
 
                             {
@@ -90,21 +92,11 @@ class TermSheet extends React.Component {
                 <div className="term-sheet-items">
                     <div className="row" style={{
                         border: 'none'
-                    }}>
-                        <div className="right-name"
-                            style={{
-                                backgroundColor: '#1A4B63',
-                                padding: 10,
-                                maxWidth: 140,
-                                fontWeight: 600
-
-                            }}>Right criteria</div>
+                    }} >
+                        <div className="right-definition right-definition-title">Grant of Rights</div>
                         {
                             rightsPackage.map((rp, i)=>{
-                                return <div key={"rp-" + i }  style={{
-                                    border: 'none',
-                                    backgroundColor: '#F4F6F9'
-                                }} className="right-definition">
+                                return <div key={"rp-" + i } className="right-definition right-definition-title">
                                     {
                                         rp.name
                                     }
@@ -113,7 +105,6 @@ class TermSheet extends React.Component {
                         }
                     </div>
                     { this.renderList(RightDefinitions) }
-                    { this.renderList(ProductionStandardsDefinitions) }
                 </div>
 
                 <div style={{marginTop: 20}}>
@@ -133,6 +124,25 @@ class TermSheet extends React.Component {
                     }
 
                 </div>
+
+                <div className="term-sheet-items">
+                    <div className="row" style={{
+                        border: 'none'
+                    }}>
+                        <div className="right-definition right-definition-title">Production details</div>
+                        {
+                            rightsPackage.map((rp, i)=>{
+                                return <div key={"rp-" + i }className="right-definition right-definition-title">
+                                    {
+                                        SuperRightProductionDetailsLabels[rp.shortLabel]
+                                    }
+                                </div>
+                            })
+                        }
+                    </div>
+                    { this.renderList(ProductionStandardsDefinitions) }
+                </div>
+
 
 
             </div>

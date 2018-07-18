@@ -166,7 +166,7 @@ class SellFormStep3 extends React.Component {
     render() {
 
         const {step, rightsPackage, startDateMode, endDateMode, endDate,
-            updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES, DISTRIBUTION_METHOD_LIVE
+            updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES
         } = this.props;
         if ( step !== 3) return (null);
         this.scroll();
@@ -294,19 +294,21 @@ class SellFormStep3 extends React.Component {
                                     options={right.options}
                                     multiple={right.multiple}
                                     productionLabel={right.productionLabel}
+                                    checkContentDelivery={true}
                                     programName={PROGRAM_NAME}
-                                    distributionMethod={DISTRIBUTION_METHOD_LIVE}
                                     onProgram={() => {
                                         this.setState({
                                             programPopupActive : true,
                                         });
                                     }}
+                                    content={this.props}
                                     superRights={superRights}
                                     showTextArea={right.showTextArea}
                                     technicalFee={right.technicalFee}
                                     onUpdate={this.updateRight}
                                     onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
-                                    rightsPackage={this.props.rightsPackage}/>
+                                    rightsPackage={this.props.rightsPackage}
+                                />
                             })
                         }
                     </div>

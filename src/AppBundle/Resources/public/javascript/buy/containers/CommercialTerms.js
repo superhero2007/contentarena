@@ -10,6 +10,7 @@ class CommercialTerms extends React.Component {
         this.state = {
 
         };
+        this.noInfoText = "No information available";
     }
 
     componentDidMount () {
@@ -19,12 +20,21 @@ class CommercialTerms extends React.Component {
     }
 
     render() {
-        const {content, onSelectPackage} = this.props;
+        const {salesPackages, onSelectPackage, programDescription} = this.props;
         return (
-            <div>
+            <div style={{ marginTop: 25 }}>
+
+                <div className="full-item-box">
+                    <label>PROGRAMS DESCRIPTION</label>
+                    <div className="full-item-content">
+                        {programDescription && programDescription}
+                        {!programDescription && this.noInfoText}
+                    </div>
+                </div>
+
                 <SalesPackages
                     onSelectPackage={onSelectPackage}
-                    salesPackages={content.salesPackages}/>
+                    salesPackages={salesPackages}/>
             </div>
         );
     }

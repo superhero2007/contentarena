@@ -471,6 +471,7 @@ class ContentService
             "PROGRAM_SCRIPT",
             "PROGRAM_LANGUAGE",
             "PROGRAM_YEAR",
+            "PROGRAM_TYPE",
             "PROGRAM_EPISODES",
             "PROGRAM_DURATION",
             "PROGRAM_DESCRIPTION",

@@ -131,7 +131,7 @@ class ManageListings extends React.Component {
                                     showEdit={true}
                                     showRemove={true}
                                     showDuplicate={true}
-                                    showView={true}
+                                    showView={false}
                                     onRemove={()=>{
                                         list.splice(i,1);
                                         this.setState({draft: list});
@@ -221,7 +221,7 @@ class ManageListings extends React.Component {
                                     style={{
                                         zIndex : list.length - i
                                     }}
-                                    showRemove={true}
+                                    showRemove={listing.editable}
                                     showDuplicate={true}
                                     showView={true}
                                     onRemove={()=>{
