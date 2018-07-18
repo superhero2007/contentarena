@@ -335,9 +335,13 @@ textarea {
     width: 100% !important;
     min-height: 100px;
     padding: 7px;
-    color: grey;
     font-size: 100%;
+    color: #4F4F4F;
 
+    &::placeholder {
+        color: #878787;
+        font-style: italic;
+    }
 }
 
 

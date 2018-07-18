@@ -47,6 +47,13 @@ class SearchCompetition extends  React.Component {
         }));
     };
 
+    handleKeyPress = (e) => {
+        const { searching, valid } = this.state;
+        if (e.key === 'Enter' && !searching && valid) {
+            this.search();
+        }
+    };
+
     getResultMessage = (page) => {
         page++;
         let total = this.state.results.length;
@@ -74,6 +81,7 @@ class SearchCompetition extends  React.Component {
                 <div className={"base-input"}>
                     <label>Competition</label>
                     <input type="text"
+                           onKeyPress={this.handleKeyPress}
                            onChange={this.handleInput}
                            placeholder="Enter competition name (e.g. Bundesliga)" />
                     <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>

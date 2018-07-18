@@ -21,8 +21,9 @@ class SuperRight extends React.Component {
     render(){
 
         const {onExclusive, superRight, exclusive, onChangeInput, inputValues} = this.props;
+        const defByLabel = SuperRightDefinitions[superRight.shortLabel] || [];
 
-        let inputData = SuperRightDefinitions[superRight.shortLabel][1];
+        let inputData = defByLabel[1];
 
         return (
             <div className="select-box-item" >
@@ -51,7 +52,7 @@ class SuperRight extends React.Component {
                     />
                 </div>
                 <div style={{flex:6,fontSize: 13}}>
-                    { SuperRightDefinitions[superRight.shortLabel][0] }
+                    { defByLabel[0] }
                     { inputData &&
                     <input
                         type={"number"}
@@ -64,7 +65,7 @@ class SuperRight extends React.Component {
                             width: 40,
                             fontSize : 12
                         }}/>}
-                    { SuperRightDefinitions[superRight.shortLabel][2] && SuperRightDefinitions[superRight.shortLabel][2]}
+                    { defByLabel[2] && defByLabel[2]}
                 </div>
 
             </div>

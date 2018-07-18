@@ -9,7 +9,7 @@ export const RightItemsDefinitions = {
     },
     "SUBLICENSE_YES" : {
         "parent" : "Right to sublicense",
-        "label" : "Yes, free sublicensing"
+        "label" : "Yes"
     },
     "SUBLICENSE_YES_APPROVAL" : {
         "parent" : "Right to sublicense",
@@ -17,7 +17,7 @@ export const RightItemsDefinitions = {
     },
     "SUBLICENSE_NO" : {
         "parent" : "Right to sublicense",
-        "label" : "No sublicensing"
+        "label" : "No"
     },
     "CUT_AVAILABLE_YES" : {
         "parent" : "Cut available",
