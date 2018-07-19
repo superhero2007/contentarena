@@ -5,6 +5,7 @@ import Watchlist from './Watchlist';
 import ClosedDeals from './ClosedDeals';
 import PendingDeals from './PendingDeals';
 import ManageListings from './ManageListings';
+import CommercialActivity from './CommercialActivity';
 
 class Manager extends React.Component {
     constructor(props) {
@@ -13,13 +14,6 @@ class Manager extends React.Component {
             profile : props.profile,
             tab : props.tab
         };
-    }
-
-    componentDidMount () {
-
-    }
-
-    componentWillReceiveProps ( props ) {
     }
 
     render () {
@@ -33,6 +27,7 @@ class Manager extends React.Component {
                     {tab === 'CLOSED_DEALS' && <ClosedDeals />}
                     {tab === 'BIDS' && <PendingDeals />}
                     {tab === 'MANAGE_LISTINGS' && <ManageListings />}
+                    {tab === 'COMMERCIAL_ACTIVITY' && <CommercialActivity/>}
                     {tab === 'SETTINGS' && "SETTINGS"}
                 </div>
             </div>

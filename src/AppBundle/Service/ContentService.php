@@ -9,6 +9,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\ContentFilter;
+use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use Symfony\Component\HttpFoundation\Request;
@@ -255,9 +256,22 @@ class ContentService
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
-        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"PENDING")));
-        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"SUBMITTED")));
+        /**
+         * @var ListingStatus currentStatus
+         */
+        $currentStatus = $content->getStatus();
+        $newStatus = "PENDING";
+        $lastAction = "SUBMITTED";
+
+        if ( $currentStatus != null && $currentStatus->getName() === 'APPROVED'){
+            $newStatus = "EDITED";
+            $lastAction = "EDITED";
+        }
+
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$newStatus)));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
         $content->setLastActionUser($user);
+        $content->setOwner($user);
         $content->setLastActionDate(new \DateTime());
         /**
          * Save files
@@ -471,6 +485,7 @@ class ContentService
             "PROGRAM_SCRIPT",
             "PROGRAM_LANGUAGE",
             "PROGRAM_YEAR",
+            "PROGRAM_TYPE",
             "PROGRAM_EPISODES",
             "PROGRAM_DURATION",
             "PROGRAM_DESCRIPTION",

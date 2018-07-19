@@ -33,10 +33,12 @@ export const content = (state = {
     startDateMode : "LICENSE",
     stepChange : false,
     vat : "no",
-    NA_INPUT : 5,
-    HL_INPUT : 90,
+    NA_INPUT : 90,
+    HL_INPUT : 5,
     LICENSED_LANGUAGES : [],
-    DISTRIBUTION_METHOD_LIVE : "TECHNICAL_DELIVERY_SATELLITE",
+    PROGRAM_LANGUAGE : [],
+    PROGRAM_SUBTITLES : [],
+    PROGRAM_SCRIPT : []
 }, action) => {
 
     let newState = {};

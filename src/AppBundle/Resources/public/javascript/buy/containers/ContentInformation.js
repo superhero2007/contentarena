@@ -63,6 +63,27 @@ class ContentInformation extends React.Component {
         const {seasons }= this.state;
         return (
             <div style={{marginTop: 20}}>
+
+                {/*SEASON/FIXTURES*/}
+                {
+                    seasons && seasons.length > 0 && seasons.map((season, key)  => {
+                        return <div key={"season-" + key} className="season-details">
+                            <div className="season-name">
+                                Season : {season.name}
+                            </div>
+                            {( !season.fixtures || season.fixtures.length === 0) && <StaticSchedules season={key} seasons={seasons}/>}
+                            { season.fixtures && season.fixtures.length > 0 &&
+                            <div className="schedule">
+                                {season.fixtures.map(fixture => {
+                                    return <div className="matchday">
+                                        {fixture.name}
+                                    </div>})}
+                            </div>}
+                        </div>
+                    })
+                }
+
+                {/*DESCRIPTIONS*/}
                 <div className="full-item-box">
                     <label>EVENT DESCRIPTION</label>
                     <div className="full-item-content">
@@ -71,6 +92,7 @@ class ContentInformation extends React.Component {
                     </div>
                 </div>
 
+                {/*WEBSITE*/}
                 <div className="full-item-box"
                      style={{
                          flexDirection : 'row',
@@ -83,6 +105,7 @@ class ContentInformation extends React.Component {
                     </div>
                 </div>
 
+                {/*ATTACHMENTS*/}
                 <div className="full-item-box"
                      style={{
                          flexDirection : 'row',
@@ -112,29 +135,7 @@ class ContentInformation extends React.Component {
                     </div>}
                 </div>
 
-                {
-                    seasons && seasons.length > 0 && seasons.map((season, key)  => {
-                        return <div key={"season-" + key}>
-                            <div style={{
-                                backgroundColor: '#32A9E7',
-                                color: 'white',
-                                padding: 12,
-                                fontSize: 18,
-                                fontWeight: 600
-                            }}>
-                                {season.name}
-                            </div>
-                            {( !season.fixtures || season.fixtures.length === 0) && <StaticSchedules season={key} seasons={seasons}/>}
-                            { season.fixtures && season.fixtures.length > 0 &&
-                            <div className="schedule">
-                                {season.fixtures.map(fixture => {
-                                return <div className={"matchday"}>
-                                    {fixture.name}
-                                </div>})}
-                            </div>}
-                        </div>
-                    })
-                }
+
             </div>
         );
     }

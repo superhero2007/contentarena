@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import ContentListing from '../../main/components/ContentListing';
-import {getCurrencySymbol, goTo} from "../../main/actions/utils";
+import {getCurrencySymbol, goTo, limitText} from "../../main/actions/utils";
 import Moment from "moment/moment";
 
 const rightImageStyle = {
@@ -57,7 +57,7 @@ class ClosedDeals extends React.Component {
                             data={bids}
                             select={this.props.select}
                             columns={[{
-                                Header: 'ID',
+                                Header: 'Deal ID',
                                 headerClassName : 'table-header',
                                 className : 'table-header table-header-left',
                                 accessor: 'customId',
@@ -68,7 +68,14 @@ class ClosedDeals extends React.Component {
                                 Header: 'Listing name',
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
-                                accessor: 'content.name',
+                                id: 'name',
+                                accessor: d => {return{
+                                    name : d.content.name,
+                                    customId : d.content.customId,
+                                }},
+                                Cell: props => <div>
+                                    <a href={"listing/" + props.value.customId}>{limitText(props.value.name)}</a>
+                                </div>
                             }, {
                                 accessor: 'content.company.legalName', // Required because our accessor is not a string
                                 Header: 'Seller',

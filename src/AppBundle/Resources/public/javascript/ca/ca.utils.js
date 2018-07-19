@@ -9,6 +9,8 @@ ContentArena.Utils = {
 
         if ( content.parsed ) return content;
 
+        let sort = true;
+
         if ( content.extraData){
             Object.entries(content.extraData).forEach(
                 ([key, value]) => content[key] = value
@@ -34,10 +36,11 @@ ContentArena.Utils = {
         if ( content.salesPackages ) {
             content.salesPackages.forEach((sp) => {
                 if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
-                sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
-                sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
+                if (sp.excludedCountries) sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
+                if (sp.territories) sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
+                if (!sp.territories) sort = false
             });
-            content.salesPackages.sort(this.sortSalesPackages).reverse();
+            if (sort) content.salesPackages.sort(this.sortSalesPackages).reverse();
         }
         content.step = Number(content.step);
         content.parsed = true;

@@ -264,7 +264,7 @@ class Content
     /**
      * @var object
      * @ORM\Column(name="selected_rights_by_super_right", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "board"})
      */
     private $selectedRightsBySuperRight;
 
@@ -314,6 +314,13 @@ class Content
      * @Groups({"board"})
      */
     private $lastActionUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"board"})
+     */
+    private $owner;
 
     /**
      * @var boolean;
@@ -1109,6 +1116,22 @@ class Content
     public function setExtraData($extraData)
     {
         $this->extraData = $extraData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
     }
 
 

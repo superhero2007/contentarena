@@ -34,7 +34,7 @@ class Bid
     /**
      * @var int
      *
-     * @ORM\Column(name="amount", type="decimal")
+     * @ORM\Column(name="amount", type="decimal", precision=12, scale=2)
      * @Groups({"closed"})
      */
     private $amount;
@@ -42,7 +42,7 @@ class Bid
     /**
      * @var int
      *
-     * @ORM\Column(name="total_fee", type="decimal")
+     * @ORM\Column(name="total_fee", type="decimal", precision=12, scale=2)
      * @Groups({"closed"})
      */
     private $totalFee;

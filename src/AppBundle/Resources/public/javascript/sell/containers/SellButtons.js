@@ -182,24 +182,22 @@ class SellButtons extends React.Component {
     };
 
     render() {
-
-        let saveAsDraftText = (this.state.saving) ? "Saving.." : (this.state.savingSuccess) ? "Saved as Draft" : "Save as Draft";
-
-        const {terms, terms_arena, signature, step} = this.props;
-        const { lastStep } = this.state;
+        const {step} = this.props;
+        const { lastStep, saving, savingSuccess } = this.state;
+        let saveAsDraftText = (saving) ? "Saving.." : (savingSuccess) ? "Saved as Draft" : "Save as Draft";
 
         return (
             <div className="buttons">
                 <div className="buttons-container"  >
 
                     { this.props.sports.length > 0 && step !== lastStep &&
-                    <button className="light-blue-button" onClick={ this.saveAsDraft } disabled={this.state.saving}>
+                    <button className="light-blue-button" onClick={ this.saveAsDraft } disabled={saving}>
                         { saveAsDraftText }{ this.state.saving && <i className="fa fa-cog fa-spin"/>}
                     </button> }
 
                     { step === 4 && this.reviewAndSignEnabled() &&
                     <button id="draft-listing" className="standard-button" onClick={this.goToReviewAndSign  }>
-                        Review and sign
+                        Review and Sign
                     </button> }
 
                     { this.props.step === 4 && !this.reviewAndSignEnabled() &&

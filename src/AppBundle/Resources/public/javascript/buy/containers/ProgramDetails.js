@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
+import {ProgramTypesDefinitions} from "../../main/components/ProgramTypesDefinitions";
 
 const rowStyle = {
     borderBottom: '1px solid #EEF3F6',
@@ -44,7 +45,7 @@ class ProgramDetails extends React.Component {
             PROGRAM_EPISODES,
             PROGRAM_TYPE,
             PROGRAM_LANGUAGE,
-            PROGRAM_SCRIPTS,
+            PROGRAM_SCRIPT,
             PROGRAM_SUBTITLES
         } = this.props;
         return (
@@ -57,7 +58,7 @@ class ProgramDetails extends React.Component {
                                 Program type
                             </div>
                             <div style={valueStyle}>
-                                {PROGRAM_TYPE}
+                                {ProgramTypesDefinitions[PROGRAM_TYPE]}
                             </div>
                         </div>
                         <div style={rowStyle}>
@@ -89,7 +90,7 @@ class ProgramDetails extends React.Component {
                                 Program language
                             </div>
                             <div style={valueStyle}>
-                                {PROGRAM_LANGUAGE === 0 && "Not available"}
+                                {PROGRAM_LANGUAGE.length === 0 && "Not available"}
                                 {PROGRAM_LANGUAGE.length > 0 && PROGRAM_LANGUAGE.map(l=>l.label).join(', ')}
                             </div>
                         </div>
@@ -107,8 +108,8 @@ class ProgramDetails extends React.Component {
                                 Script
                             </div>
                             <div style={valueStyle}>
-                                {PROGRAM_SCRIPTS.length === 0 && "Not available"}
-                                {PROGRAM_SCRIPTS.length > 0 && PROGRAM_SCRIPTS.map(l=>l.label).join(', ')}
+                                {PROGRAM_SCRIPT.length === 0 && "Not available"}
+                                {PROGRAM_SCRIPT.length > 0 && PROGRAM_SCRIPT.map(l=>l.label).join(', ')}
                             </div>
                         </div>
                         <div style={rowStyle}>

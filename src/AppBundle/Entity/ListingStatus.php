@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * ListingStatus
@@ -25,6 +26,7 @@ class ListingStatus
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"board"})
      */
     private $name;
 

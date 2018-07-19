@@ -88,17 +88,6 @@ export const ProductionStandardsDefinitions = [
         technicalFee : "TECHNICAL_DELIVERY_SATELLITE"
     },
     {
-        name: "Content production",
-        key: "CONTENT",
-        superRights: ["LT","HL", "LB", "NA","DT"],
-        options : [
-            "CONTENT_ALL",
-            "CONTENT_TEXT",
-        ],
-        showTextArea:"CONTENT_TEXT",
-        multiple : false
-    },
-    {
         name: "Program Details",
         key: "PROGRAM",
         superRights: ['PR'],

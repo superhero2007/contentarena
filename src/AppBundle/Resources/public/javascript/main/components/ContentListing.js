@@ -80,7 +80,6 @@ class ContentListing extends React.Component{
             name,
             expiresAt,
             PROGRAM_NAME,
-            rightsPackage,
             onSelectName,
             imageBase64,
             image,
@@ -88,6 +87,9 @@ class ContentListing extends React.Component{
             sortSalesPackages,
             watchlistRemove
         } = this.props;
+
+        let {rightsPackage} = this.props;
+        rightsPackage = rightsPackage.slice(-6);
 
         const {confirmWatchlistRemove} = this.state;
 
@@ -105,13 +107,11 @@ class ContentListing extends React.Component{
                     <div className={"image"}>
                         <img src={listingImage}/>
                     </div>
-                    <div className={"date"}>Published <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                    <div className={"date"}>Expires <span>{Moment(expiresAt).format('DD/MM/YYYY')}</span></div>
                 </div>
                 <div className={"right"} >
                     <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
 
-                    <div style={{display: "flex"}}>
+                    <div className="info">
                         <ContentListingEventDetails {...this.props}/>
 
                         {watchlistRemove && !confirmWatchlistRemove &&
@@ -149,22 +149,10 @@ class ContentListing extends React.Component{
                             </span>
                         </div>}
 
-                        <div style={{
-                            flex: 2,
-                            flexDirection: "column",
-                            flexWrap: 'wrap',
-                            maxHeight: 200,
-                            display: 'flex'
-                        }}>
+                        <div className="listing-event-packages listing-col">
                             {
                                 rightsPackage.map(( sr,i )=>{
-                                    return <div key={i}  style={{
-                                        minHeight: 46,
-                                        flexDirection: 'row',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        flex: '1 1 40px'
-                                    }}>
+                                    return <div className="listing-item" key={i}>
                                         {!sr.exclusive &&
                                         <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
 

@@ -33,6 +33,7 @@
           font-size: 10px;
           line-height: 10px;
           margin-bottom: 10px;
+          max-width: 150px;
         }
         .option{
           font-size: 12px;
@@ -42,6 +43,42 @@
           img {
             margin-right: 5px;
           }
+        }
+      }
+      .status-tooltip{
+        @extend .options-tooltip;
+        top: 40px;
+        border: 2px solid $border-color-2;
+        color: $border-color-2;
+        font-size: 14px;
+        font-weight: 600;
+        max-width: 250px;
+      }
+      .confirmation-tooltip{
+        @extend .options-tooltip;
+        border: 2px solid #FFC94B;
+        color: #4F4F4F;
+        font-size: 14px;
+        font-weight: 600;
+        max-width: 250px;
+        .confirmation-text{
+          text-align: center;
+          font-size: 14px;
+        }
+        .button{
+          border: 1px solid lightgrey;
+          font-weight: normal;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: white;
+          min-width: 100px;
+          margin: 10px auto;
+
+        }
+        .button-confirm{
+          background-color: #FFC94B;
         }
       }
       .menu-icon{
@@ -55,8 +92,24 @@
         width: 45px;
         justify-content: center;
       }
+      .status-icon{
+        position: absolute;
+        top: 5px;
+        right: 35px;
+        cursor: pointer;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        width: 45px;
+        justify-content: center;
+        img{
+          width: 25px;
+          height: 25px;
+        }
+      }
       .name{
         margin-bottom: 20px;
+        max-width: 80%;
       }
       .tournament{
         display: flex;
@@ -68,6 +121,21 @@
         font-size: 14px;
         font-weight: normal;
         margin-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        span{
+          margin-right: 5px;
+          display: flex;
+          align-items: center;
+          width: auto;
+          margin-bottom: 4px;
+        }
+        img {
+          width: 18px;
+          height: 18px;
+          margin: 0 4px 0 0;
+        }
       }
       .expiry{
         display: flex;

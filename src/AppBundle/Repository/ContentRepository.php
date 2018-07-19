@@ -9,6 +9,7 @@ use AppBundle\Entity\Sport;
 use AppBundle\Entity\Territory;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\User;
+use Symfony\Component\Validator\Constraints\Date;
 
 
 /**
@@ -139,15 +140,21 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('rightsPackages', $filter->getSuperRights());
         }
 
-        if ( $filter->getFromDate() != null && $filter->getToDate() != null ) {
-            $query->andWhere('content.expiresAt >= :fromDate')
-                ->andWhere('content.expiresAt <= :toDate')
-                ->setParameter('fromDate',$filter->getFromDate())
-                ->setParameter('toDate',$filter->getToDate());
-        }
+        $now = date('Y-m-d H:i:s');
 
-        //$query->andWhere('content.draft = :isDraft')->setParameter('isDraft',false);
-        //TODO : filter by approved
+        /**
+         * Filter expired listings
+         */
+        $query->andWhere('content.expiresAt >= :fromDate')->setParameter('fromDate',$now);
+
+        /**
+         * Include only APPROVED or EDITED listings
+         */
+        $query
+            ->leftJoin('content.status', 'status')
+            ->andWhere('status.name = :isApproved or status.name = :isEdited')
+            ->setParameter('isApproved','APPROVED')
+            ->setParameter('isEdited','EDITED');
 
         $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());
 
@@ -319,10 +326,11 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin("c.status", "status")
             ->where('c.expiresAt > :now')
             ->andWhere('c.company = :company')
-            ->andWhere('status.name = :pendingStatusName OR status.name = :approvedStatusName')
+            ->andWhere('status.name = :pending OR status.name = :approved OR status.name = :edited')
             ->setParameter('now',$now)
-            ->setParameter('pendingStatusName',"PENDING")
-            ->setParameter('approvedStatusName',"APPROVED")
+            ->setParameter('pending',"PENDING")
+            ->setParameter('approved',"APPROVED")
+            ->setParameter('edited',"EDITED")
             ->setParameter('company',$user->getCompany())
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();

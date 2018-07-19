@@ -153,6 +153,21 @@ class MainController extends BaseController
     }
 
     /**
+     * @Route("/commercialactivity", name="commercialActivity")
+     */
+    public function commercialActivity(Request $request)
+    {
+        $user = $this->getUser();
+        return $this->render('@App/manage.html.twig', [
+            'user' => $user,
+            'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
+            'profile' => "SELLER",
+            'tab' => "COMMERCIAL_ACTIVITY"
+        ]);
+
+    }
+
+    /**
      * @Route("/settings", name="settings")
      */
     public function settings(Request $request)

@@ -84,7 +84,7 @@ class StaticRound extends React.Component {
                         {!isNaN(round) && "Matchday " + round}
 
                         { (complete || selected === activeRound.matches.size) && <span onClick={this.toggleMatches}>All ></span>}
-                        { !complete && <span onClick={this.toggleMatches}>{selected} Selected ></span>}
+                        { !complete && selected !== activeRound.matches.size && <span onClick={this.toggleMatches}>{selected} Selected ></span>}
                     </div>
                 </div>
 
