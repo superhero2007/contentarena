@@ -122,7 +122,7 @@ class PackageSelector extends React.Component {
                     <div className="package-exclusive">
                         <div className="package-exclusive-item" style={{flex:3}}/>
                         <div className="package-exclusive-item" style={{flex:1}}>Exclusive</div>
-                        <div className="package-exclusive-item" style={{flex:6}}>Definition</div>
+                        <div className="package-exclusive-item" style={{flex:6}}></div>
                     </div>
                     <div className="package-selector-content" >
                         { this.state.packages.map(function(superRight){

@@ -53,13 +53,13 @@ class DigitalSignature extends React.Component{
                 {!ready && <SignaturePad ref="signature" />}
 
                 <div className={"buttons"}>
-                    {!ready && <button onClick={this.clear} >
+                    {!ready && <button onClick={this.clear} className="standard-button">
                         Clear
                     </button>}
-                    {!ready && <button onClick={this.done} >
+                    {!ready && <button onClick={this.done} className="standard-button">
                         Done
                     </button>}
-                    {ready && <button onClick={this.edit} >
+                    {ready && <button onClick={this.edit} className="standard-button">
                         New
                     </button>}
                 </div>

@@ -34,7 +34,7 @@ export const RightItemsDefinitions = {
     },
     "TRANSMISSION_MEANS_CABLE" : {
         "parent" : "Transmission means",
-        "label" : "Cable & iptv"
+        "label" : "Cable & IPTV"
     },
     "TRANSMISSION_MEANS_SATELLITE" : {
         "parent" : "Transmission means",
@@ -42,7 +42,7 @@ export const RightItemsDefinitions = {
     },
     "TRANSMISSION_MEANS_DIGITAL" : {
         "parent" : "Transmission means",
-        "label" : "Digital terrestrial"
+        "label" : "Digital Terrestrial"
     },
     "TRANSMISSION_MEANS_OTT" : {
         "parent" : "Transmission means",
@@ -67,15 +67,15 @@ export const RightItemsDefinitions = {
     },
     "EXPLOITATION_FORM_PAY" : {
         "parent" : "Exploitation form",
-        "label" : "Pay only"
+        "label" : "Pay Only"
     },
     "EXPLOITATION_FORM_IN-SHIP" : {
         "parent" : "Exploitation form",
-        "label" : "In-ship and in-flight"
+        "label" : "In-Ship & In-Flight"
     },
     "EXPLOITATION_FORM_CLOSED" : {
         "parent" : "Exploitation form",
-        "label" : "Closed circuit"
+        "label" : "Closed Circuit"
     },
     "RUNS_UNLIMITED" : {
         "parent" : "Number of runs",
