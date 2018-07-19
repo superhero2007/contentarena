@@ -570,7 +570,9 @@ class PopupRight extends React.Component {
                     readOnly={true}
                     value={(custom) ? "Custom!" : selected }
                     className={(custom) ? "custom" : undefined}
-                    placeholder={"Select"}  />
+                    placeholder={"Select"}
+                    onClick={this.togglePopup}
+                />
                 <i className="fa fa-edit" onClick={this.togglePopup} />
                 { this.renderModal() }
             </div>

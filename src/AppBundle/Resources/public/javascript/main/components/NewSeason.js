@@ -43,7 +43,7 @@ class NewSeason extends React.Component{
         return (
             <div>
                 <div className="base-input">
-                    <label>Season year</label>
+                    <label>Season(s)</label>
                     <label className={"season-selector-label"}>From</label>
                     <select
                         value={seasons[index].from}
