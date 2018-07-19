@@ -31,6 +31,10 @@ class HeaderBar extends  React.Component {
         return(
             <div className="manager-header">
 
+                <div className="logo">
+                    <img src={assetsBaseDir + "app/images/logo.png"} alt=""/>
+                </div>
+
                 { profile === "BUYER" && <HeaderBarTab
                     tabName={"MARKETPLACE"}
                     route={"marketplace"}
@@ -73,26 +77,39 @@ class HeaderBar extends  React.Component {
                     Commercial activity
                 </HeaderBarTab> }
 
+                <div className="spacer" />
+
                 { profile === "BUYER" &&
                 <HistoryButton
-                    className="yellow-tab"
+                    className="tab"
                     onClick={()=>{goTo("managelistings")}}
                     path="managelistings">
                     Enter selling mode
                 </HistoryButton> }
 
                 { profile === "SELLER" &&
-                <HistoryButton className="yellow-tab" onClick={()=>{goTo("marketplace")}} path="marketplace">
+                <HistoryButton className="tab" onClick={()=>{goTo("marketplace")}} path="marketplace">
                     Enter buying mode
                 </HistoryButton> }
 
-                <HistoryButton className="white-tab" onClick={()=>{goTo("settings?profile=" + profile)}} path="settings">
-                    <i className="fa fa-gear" /> Settings
-                </HistoryButton>
-
-                <HistoryButton className="blue-tab" onClick={()=>{ goTo("messages?profile=" + profile)}} path="messages">
+                <HistoryButton className="tab" onClick={()=>{ goTo("messages?profile=" + profile)}} path="messages">
                     <i className="fa fa-envelope" /> Messages
                 </HistoryButton>
+
+                <div className="settings">
+                    <i className="fa fa-2x fa-gear" />
+
+                    <div className="popup">
+                        <div className="wrap">
+                            <HistoryButton className="tab" onClick={()=>{goTo("settings?profile=" + profile)}} path="settings">
+                                Settings
+                            </HistoryButton>
+                            <a href="http://contentarena.com" className="tab">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

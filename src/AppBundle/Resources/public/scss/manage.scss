@@ -9,64 +9,81 @@
 }
 
 .manager-header{
+  $barHeight: 65px;
   display: flex;
-  flex-direction: row;
-  border-bottom: 4px solid #1A4B63;
+  align-items: center;
+  padding: 0 15px;
+  min-height: $barHeight;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  .logo {
+    max-width: 150px;
+    margin-right: 40px;
+  }
+
+  button.tab,
   .tab{
-    background-color: #F4F6F9;
-    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: $barHeight;
     padding: 0 20px;
+    font: inherit;
     font-size: 18px;
     font-weight: 600;
-    color: #9DA4B0;
+    color: #1A4B63;
     margin-bottom: 3px;
     margin-right: 3px;
     cursor: pointer;
-  }
-  .active-tab{
-    background-color: #1A4B63;
-    color: white;
-  }
-  .yellow-tab{
-    background-color: #FFC94B;
-    border: none;
-    color: black;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 0 20px;
-    margin-bottom: 3px;
-    margin-left: auto;
-  }
-  .white-tab{
-    background-color: #FFF;
-    color: #4F4F4F;
-    font-size: 16px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    border: 2px solid #F4F6F9;
-    min-width: 155px;
-    margin: 0 3px 3px;
-    i{
-      font-size: 25px;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    outline: none;
+    text-decoration: none;
+    &:hover {
+      opacity: .7;
     }
   }
-  .blue-tab{
-    background-color: #2AAAEC;
-    color: white;
-    border: none;
-    font-size: 16px;
-    padding: 0 20px;
-    min-width: 155px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 3px;
-    i{
-      font-size: 20px;
-      padding-top: 2px;
+  .spacer {
+    margin-right: auto;
+  }
+  .active-tab{
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      border-bottom: 4px solid #296380;
+      bottom: -4px;
+    }
+  }
+  .settings {
+    position: relative;
+    cursor: pointer;
+    .popup {
+      display: none;
+      z-index: 99;
+      padding-top: 20px;
+      position: absolute;
+      right: -15px;
+    }
+    &:hover .popup {
+      display: block;
+      .wrap {
+        min-width: 125px;
+        text-align: center;
+        background-color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        color: #1A4B63;
+        .tab {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          &:first-child {
+            border-bottom: 1px solid #cccccc;
+          }
+        }
+      }
     }
   }
 
