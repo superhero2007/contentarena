@@ -29,20 +29,24 @@ class ManageListings extends React.Component {
             loadingExpired: true
         });
 
-        ContentArena.ContentApi.getDraftListings().done((content) => {
-            _this.setState({draft: content, loadingDraft : false});
+        ContentArena.ContentApi.getDraftListings().done((listings) => {
+            listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
+            _this.setState({draft: listings, loadingDraft : false});
         });
 
-        ContentArena.ContentApi.getInactiveListings().done((content) => {
-            _this.setState({inactive: content, loadingInactive : false});
+        ContentArena.ContentApi.getInactiveListings().done((listings) => {
+            listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
+            _this.setState({inactive: listings, loadingInactive : false});
         });
 
-        ContentArena.ContentApi.getActiveListings().done((content) => {
-            _this.setState({active: content, loadingActive : false});
+        ContentArena.ContentApi.getActiveListings().done((listings) => {
+            listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
+            _this.setState({active: listings, loadingActive : false});
         });
 
-        ContentArena.ContentApi.getExpiredListings().done((content) => {
-            _this.setState({expired: content, loadingExpired : false});
+        ContentArena.ContentApi.getExpiredListings().done((listings) => {
+            listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
+            _this.setState({expired: listings, loadingExpired : false});
         });
     }
 

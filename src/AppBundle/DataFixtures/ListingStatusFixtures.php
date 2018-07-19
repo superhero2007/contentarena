@@ -24,6 +24,7 @@ class ListingStatusFixtures extends Fixture
             'PENDING',
             'APPROVED',
             'REJECTED',
+            'EDITED',
             'SOLD_OUT'
         );
 

@@ -136,7 +136,8 @@ class ReviewAndSign extends React.Component {
             currency,
             company,
             terms_arena,
-            terms
+            terms,
+            status
         } = this.props;
 
         const {showDetails, showSubmitting} = this.state;
@@ -238,7 +239,8 @@ class ReviewAndSign extends React.Component {
                     <div className="buttons" style={{marginTop: 20}}>
                         <div className="buttons-container"  >
                             {!showSubmitting && <button id="draft-listing" className="standard-button" onClick={this.submit}>
-                                Submit Listing
+                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" ) && "Submit Listing"}
+                                {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && "Save"}
                             </button>}
                             {showSubmitting && <i className="fa fa-cog fa-spin" />}
                         </div>

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {goTo, limitText} from "../../main/actions/utils";
-import {clockRoundIcon, exclamationRoundIcon, playIcon} from "../../main/components/Icons";
+import {
+    blueCheckIcon, clockRoundIcon, exclamationRoundIcon, playIcon,
+    yellowCheckIcon
+} from "../../main/components/Icons";
+import {SuperRightBoardLabels} from "../../sell/components/SuperRightDefinitions";
 
 class BoardListing extends React.Component{
     constructor(props){
@@ -96,6 +100,7 @@ class BoardListing extends React.Component{
             lastAction,
             lastActionDate,
             lastActionUser,
+            owner,
             status,
             onSubmit,
             style
@@ -135,47 +140,51 @@ class BoardListing extends React.Component{
                     {lastAction && <div className="last-action">
                         Last action: {lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
                     </div>}
+
+                    {owner && <div className="last-action">
+                        Listing Owner: {owner.firstName + " " + owner.lastName }
+                    </div>}
                 </div>}
 
                 {/*CONFIRM DEACTIVATE*/}
-                {showDeactivateConfirm && <div className="options-tooltip">
-                    <div className={"option"}>
+                {showDeactivateConfirm && <div className="confirmation-tooltip">
+                    <div className={"confirmation-text"}>
                         Are you sure you want to deactivate the listing?
                     </div>
-                    <div className={"option"} onClick={(e)=>{
+                    <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
                         onDeactivate();
                         e.stopPropagation();
                     }}>
-                        Yes
-                    </div>
-                    <div className={"option"} onClick={(e)=>{
+                        Deactivate
+                    </button>
+                    <button className={"button"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
                         e.stopPropagation();
                     }}>
                         Cancel
-                    </div>
+                    </button>
                 </div>}
 
 
                 {/*CONFIRM REMOVE*/}
-                {showRemoveConfirm && <div className="options-tooltip">
-                    <div className={"option"}>
+                {showRemoveConfirm && <div className="confirmation-tooltip">
+                    <div className={"confirmation-text"}>
                         Are you sure you want to remove the listing?
                     </div>
-                    <div className={"option"} onClick={(e)=>{
+                    <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         onRemove();
                         e.stopPropagation();
                     }}>
-                        Yes
-                    </div>
-                    <div className={"option"} onClick={(e)=>{
+                        Remove
+                    </button>
+                    <button className={"button"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         e.stopPropagation();
                     }}>
                         Cancel
-                    </div>
+                    </button>
                 </div>}
 
                 {/*STATUS INFO*/}
@@ -201,7 +210,7 @@ class BoardListing extends React.Component{
                     <img src={this.dotsIcon} />
                 </div>
                 <div className={"name"}>
-                    { limitText(name) }
+                    { name }
                 </div>
                 <div className={"tournament"}>
                     {tournament && <div>{tournament.name}</div>}
@@ -212,11 +221,16 @@ class BoardListing extends React.Component{
                 <div className={"rights"}>
                     {rightsPackage && rightsPackage.map((rp,i,l) => {
                         return <span key={"rp-"+i}>
-                            {rp.name}
+                            {!rp.exclusive &&
+                            <img src={blueCheckIcon}/>}
+
+                            {rp.exclusive &&
+                            <img src={yellowCheckIcon}/>}
+
+                            {SuperRightBoardLabels[rp.shortLabel]}
                             { rp.shortLabel === "PR" && PROGRAM_NAME &&
                             "Program: " + PROGRAM_NAME
                             }
-                            {i<l.length -1 && ", "}
                         </span>
                     })}
                 </div>

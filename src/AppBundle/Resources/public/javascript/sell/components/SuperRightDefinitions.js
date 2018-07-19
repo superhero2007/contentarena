@@ -27,5 +27,14 @@ export const SuperRightProductionDetailsLabels = {
     "LB" : "Live Betting Transmission",
     "HL" : "Highlights & Clips",
     "NA" : "News Footage",
-    "PR" : " Edited Program",
+    "PR" : "Edited Program",
+};
+
+export const SuperRightBoardLabels = {
+    "LT" : "Live",
+    "DT" : "Delayed&Archive",
+    "LB" : "Betting",
+    "HL" : "Highlights&Clips",
+    "NA" : "News",
+    "PR" : "Program",
 };

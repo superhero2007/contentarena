@@ -141,15 +141,20 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $now = date('Y-m-d H:i:s');
+
+        /**
+         * Filter expired listings
+         */
         $query->andWhere('content.expiresAt >= :fromDate')->setParameter('fromDate',$now);
 
         /**
-         * Include only APPROVED listings
+         * Include only APPROVED or EDITED listings
          */
         $query
             ->leftJoin('content.status', 'status')
-            ->andWhere('status.name = :isApproved')
-            ->setParameter('isApproved','APPROVED');
+            ->andWhere('status.name = :isApproved or status.name = :isEdited')
+            ->setParameter('isApproved','APPROVED')
+            ->setParameter('isEdited','EDITED');
 
         $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());
 
@@ -321,10 +326,11 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin("c.status", "status")
             ->where('c.expiresAt > :now')
             ->andWhere('c.company = :company')
-            ->andWhere('status.name = :pendingStatusName OR status.name = :approvedStatusName')
+            ->andWhere('status.name = :pending OR status.name = :approved OR status.name = :edited')
             ->setParameter('now',$now)
-            ->setParameter('pendingStatusName',"PENDING")
-            ->setParameter('approvedStatusName',"APPROVED")
+            ->setParameter('pending',"PENDING")
+            ->setParameter('approved',"APPROVED")
+            ->setParameter('edited',"EDITED")
             ->setParameter('company',$user->getCompany())
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();
