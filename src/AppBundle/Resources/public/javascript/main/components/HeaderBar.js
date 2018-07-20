@@ -104,7 +104,7 @@ class HeaderBar extends  React.Component {
                             <HistoryButton className="tab" onClick={()=>{goTo("settings?profile=" + profile)}} path="settings">
                                 Settings
                             </HistoryButton>
-                            <a href="http://contentarena.com" className="tab">
+                            <a href="/logout" className="tab">
                                 Logout
                             </a>
                         </div>
