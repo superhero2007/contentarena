@@ -114,7 +114,7 @@ class ContentInformation extends React.Component {
                     <label style={{
                         height: 'auto'
                     }}>ATTACHMENTS</label>
-                    {attachments && <div style={{
+                    {attachments && attachments.length > 0 && <div style={{
                         display : "flex",
                         flexDirection: 'column'
                     }}>{attachments.map(a=>{
@@ -130,8 +130,8 @@ class ContentInformation extends React.Component {
                             </a>
                         </div>
                     })}</div>}
-                    {!attachments && <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
-                        "No attachments available"
+                    {( !attachments || attachments.length === 0)&& <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
+                        No attachments available
                     </div>}
                 </div>
 

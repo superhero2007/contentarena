@@ -167,7 +167,7 @@ class SellFormStep2 extends React.Component {
                     </div>
 
                     <div className="modal-input">
-                        <label>Edited Program Description</label>
+                        <label>Edited Program Description (optional)</label>
                         <textarea
                             onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
                         >

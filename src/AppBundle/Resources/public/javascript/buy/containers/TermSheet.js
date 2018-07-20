@@ -14,39 +14,65 @@ class TermSheet extends React.Component {
         };
     }
 
-    componentDidMount () {
-    }
+    renderProgramInfo = (values, name, i) => {
+        const { rightsPackage } = this.props;
+        return <div className={'row '+(i%2 ? 'odd-row':'')}>
+                <div className="right-name right-definition">{name}</div>
+                {
+                    rightsPackage.map((rp)=>{
+                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
+                        if ( rp.shortLabel !== 'PR' ) return <div className="right-definition"/>;
 
-    componentWillReceiveProps(nextProps) {
-    }
-
-    hasTextarea = () => {
-
+                        return <div  className="right-definition">
+                            { values && values.length === 0 && "No" }
+                            { values && values.length > 0 && values.map(l=>l.label).join(", ") }
+                        </div>
+                    })
+                }
+            </div>
     };
 
-    renderList = (definitions) => {
-        const {selectedRights, rightsPackage} = this.props;
+    renderList = (definitions, checkContentDelivery) => {
+        const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
         return definitions.map( (right, i) => {
 
+            if (right.key === 'CONTENT_DELIVERY') return;
             if (right.key === 'PROGRAM') return;
+
+            if ( right.key === "LICENSED_LANGUAGES") {
+                if (!LICENSED_LANGUAGES || LICENSED_LANGUAGES.length === 0) return false;
+            }
 
             return <div className={'row '+(i%2 ? 'odd-row':'')}>
                 <div className="right-name right-definition">{right.name}</div>
                 {
                     rightsPackage.map((rp)=>{
-                        let definition = selectedRights[rp.id].items[right.key];
+                        if ( checkContentDelivery && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
+
+                        if ( checkContentDelivery &&
+                            rp.shortLabel === "PR"
+                            && right.key !== 'TECHNICAL_DELIVERY' ) return <div className="right-definition">
+                            -
+                        </div>;
+
+                        if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
+                            {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
+                        </div>;
+
+
+                        let definition = selectedRightsBySuperRight[rp.id].items[right.key];
+
                         return <div  className="right-definition">
                             {
                                 !right.multiple && definition && RightItemsDefinitions[definition].label
                             }
-
                             {
                                 right.multiple &&
-                                selectedRights[rp.id].items[right.key].map(item => RightItemsDefinitions[item].label).join(", ")
+                                selectedRightsBySuperRight[rp.id].items[right.key].map(item => RightItemsDefinitions[item].label).join(", ")
                             }
 
                             {right.key === 'CAMERA'
-                                && <span style={{marginLeft: 5}}>{selectedRights[rp.id].items["CAMERAS"]}</span>}
+                                && <span style={{marginLeft: 5}}>{selectedRightsBySuperRight[rp.id].items["CAMERAS"]}</span>}
                         </div>
                     })
                 }
@@ -55,14 +81,14 @@ class TermSheet extends React.Component {
     };
 
     renderTextarea = (definitions) => {
-        const {selectedRights, rightsPackage} = this.props;
+        const {selectedRightsBySuperRight, rightsPackage} = this.props;
         return definitions.map( (right) => {
-            if (right.key === 'PROGRAM' || !selectedRights[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
+            if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
             return <div className="full-item-box">
                 <label>{right.name}</label>
                 <div  className="full-item-content">
                     {
-                        selectedRights[rightsPackage[0].id].items[right.key+"_TEXTAREA"]
+                        selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]
                     }
                 </div>
             </div>
@@ -70,14 +96,14 @@ class TermSheet extends React.Component {
     };
 
     renderDetails= (definitions) => {
-        const {selectedRights, rightsPackage} = this.props;
+        const {selectedRightsBySuperRight, rightsPackage} = this.props;
         return definitions.map( (right) => {
-            if (right.key === 'PROGRAM' || !selectedRights[rightsPackage[0].id].items[right.key+"_DETAILS"]) return;
+            if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_DETAILS"]) return;
             return <div className="full-item-box">
                 <label>{right.name}</label>
                 <div  className="full-item-content">
                     {
-                        selectedRights[rightsPackage[0].id].items[right.key+"_DETAILS"]
+                        selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_DETAILS"]
                     }
                 </div>
             </div>
@@ -85,7 +111,9 @@ class TermSheet extends React.Component {
     };
 
     render() {
-        const {selectedRights, rightsPackage} = this.props;
+        const {selectedRightsBySuperRight, rightsPackage, PROGRAM_SCRIPT, PROGRAM_SUBTITLES, PROGRAM_LANGUAGE} = this.props;
+        let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+
         return (
             <div className="term-sheet">
 
@@ -104,7 +132,7 @@ class TermSheet extends React.Component {
                             })
                         }
                     </div>
-                    { this.renderList(RightDefinitions) }
+                    { this.renderList(RightDefinitions, false) }
                 </div>
 
                 <div style={{marginTop: 20}}>
@@ -112,12 +140,12 @@ class TermSheet extends React.Component {
                     { this.renderTextarea(ProductionStandardsDefinitions) }
 
                     {
-                        selectedRights[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
+                        selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
                         <div className="full-item-box">
                             <label>Technical Fee Details</label>
                             <div  className="full-item-content">
                                 {
-                                    selectedRights[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]
+                                    selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]
                                 }
                             </div>
                         </div>
@@ -132,15 +160,23 @@ class TermSheet extends React.Component {
                         <div className="right-definition right-definition-title">Production details</div>
                         {
                             rightsPackage.map((rp, i)=>{
+                                if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
+                                let viaLiveFeed = rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE";
+
                                 return <div key={"rp-" + i }className="right-definition right-definition-title">
                                     {
                                         SuperRightProductionDetailsLabels[rp.shortLabel]
                                     }
+                                    {viaLiveFeed && " (via live feed)"}
                                 </div>
                             })
                         }
                     </div>
-                    { this.renderList(ProductionStandardsDefinitions) }
+                    { this.renderList(ProductionStandardsDefinitions, true) }
+
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages") }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles") }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
                 </div>
 
 

@@ -367,6 +367,7 @@ class PopupRight extends React.Component {
                                     && id !== "CONTENT_DELIVERY"
                                     && ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_NON_DEDICATED" ||
                                     rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" )
+                                    && packagesAvailable.indexOf("LT") === -1
                             ){
                                 return;
                             }

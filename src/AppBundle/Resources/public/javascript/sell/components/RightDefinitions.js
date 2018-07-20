@@ -11,17 +11,6 @@ export const RightDefinitions = [
         multiple : false
     },
     {
-        name : "Cut available",
-        key: "CUTS",
-        superRights: ["HL","CL","NA"],
-        options : [
-            "CUT_AVAILABLE_YES",
-            "CUT_AVAILABLE_NO",
-        ],
-        multiple : false,
-        showTextArea : "CUT_AVAILABLE_YES"
-    },
-    {
         name : "Broadcasting obligation",
         key: "BROADCASTING",
         superRights: [],

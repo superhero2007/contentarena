@@ -276,11 +276,6 @@ class SellFormStep3 extends React.Component {
 
                                 let superRights = right.superRights;
 
-                                if ( right.key === "TECHNICAL_DELIVERY"
-                                    && rightsPackage.map(rp =>rp.shortLabel).indexOf("PR") !== -1 ){
-                                    superRights = ["PR"];
-                                }
-
                                 if ( right.superRights.length > 0
                                     && !this.superRightsEnabled(right.superRights)) return;
 

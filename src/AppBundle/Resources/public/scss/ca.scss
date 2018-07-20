@@ -1204,11 +1204,11 @@ input[type="checkbox"] + label:after {
               .right-definition {
                 border-right: 1px solid #EEF3F6;
                 flex: 1;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
                 display: flex;
-                text-align: center;
-                padding: 10px 5px;
+                text-align: left;
+                padding: 10px 10px;
               }
               .right-definition-title{
                 background-color: #1A4B63;
@@ -1216,7 +1216,7 @@ input[type="checkbox"] + label:after {
                 font-size: 12px;
                 font-weight: 600;
                 text-transform: uppercase;
-                padding: 5px;
+                padding: 5px 10px;
                 border: none;
                 min-height: 30px;
               }

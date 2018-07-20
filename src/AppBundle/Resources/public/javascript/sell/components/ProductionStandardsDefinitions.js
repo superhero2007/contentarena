@@ -2,7 +2,7 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Content Delivery",
         key: "CONTENT_DELIVERY",
-        superRights: ["LT","HL", "LB", "NA","DT"],
+        superRights: [],
         options : [
             "CONTENT_DELIVERY_LIVE",
             "CONTENT_DELIVERY_DEDICATED",

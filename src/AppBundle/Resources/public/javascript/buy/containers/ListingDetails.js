@@ -61,10 +61,8 @@ class ListingDetails extends React.Component {
 
         if (salesPackage){
             selectedPackage = content.salesPackages.filter(p=>{return Number(p.id)===Number(salesPackage)})[0];
-
             this.selectPackage(selectedPackage);
         }
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -574,8 +572,7 @@ class ListingDetails extends React.Component {
                                 <ContentInformation {...content}/> }
                             { this.state.tab === 3 &&
                                 <TermSheet
-                                    selectedRights={content.selectedRightsBySuperRight}
-                                    rightsPackage={content.rightsPackage}/>
+                                    {...content}/>
                             }
                             { this.state.tab === 4 && <ProgramDetails {...content}/> }
                             { this.state.tab === 5 && <Seller {...content}/> }

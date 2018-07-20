@@ -51,7 +51,13 @@ class ContentListing extends React.Component{
     };
 
     sortSalesPackages = (a, b) => {
-        return this.compareProperty(a.territories.length, b.territories.length) || this.compareProperty(b.name, a.name);
+        return this.compareProperty(a.territories.length, b.territories.length)
+            || this.compareProperty(b.name, a.name);
+    };
+
+    sortAfterFilter = (a, b) => {
+        return this.compareProperty(a.territories.length, b.territories.length)
+            || this.compareProperty(a.name, b.name);
     };
 
     sortByFilter = (salesPackages) => {
@@ -62,13 +68,25 @@ class ContentListing extends React.Component{
         let territories = filter.countries.map(c => c.value);
 
         salesPackages.forEach((e,i,l)=>{
-            if ( territories.indexOf(e.name) !== -1 ) {
+
+            let t = e.territories.map(t=>t.value);
+            let et = (e.territoriesMethod === "WORLDWIDE_EXCLUDING") ? e.excludedTerritories.map(t=>t.value) : [];
+            let all = [...t,...et];
+            let include = false;
+
+            territories.forEach(t =>{
+                if ( all.indexOf(t) !== -1 ) include = true;
+            });
+
+            if ( e.salesMethod === "SELL_AS_BUNDLE" && e.territoriesMethod === "WORLDWIDE") include = true;
+
+            if ( include) {
                 temp.push(e);
-                l.splice(i, 1)
             }
         });
 
-        return [...temp,...salesPackages];
+        //return [...temp,...salesPackages];
+        return [...temp];
     };
 
     compareProperty = (a, b) =>  {
@@ -95,11 +113,15 @@ class ContentListing extends React.Component{
 
         let salesPackages = this.props.salesPackages;
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
-        salesPackages.sort(this.sortSalesPackages).reverse();
 
         if ( filter && filter.countries.length > 0 && sortSalesPackages) {
             salesPackages = this.sortByFilter(salesPackages);
+            salesPackages.sort(this.sortAfterFilter);
+        } else {
+            salesPackages.sort(this.sortSalesPackages).reverse();
         }
+
+
 
         return (
             <div className="listing-list-view" onClick={this.onSelect}>

@@ -85,7 +85,7 @@ class ProgramDetails extends React.Component {
                                 {PROGRAM_YEAR}
                             </div>
                         </div>
-                        <div style={rowStyle}>
+                       {/* <div style={rowStyle}>
                             <div style={titleStyle}>
                                 Program language
                             </div>
@@ -111,7 +111,7 @@ class ProgramDetails extends React.Component {
                                 {PROGRAM_SCRIPT.length === 0 && "Not available"}
                                 {PROGRAM_SCRIPT.length > 0 && PROGRAM_SCRIPT.map(l=>l.label).join(', ')}
                             </div>
-                        </div>
+                        </div>*/}
                         <div style={rowStyle}>
                             <div style={titleStyle}>
                                 Description
