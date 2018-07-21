@@ -46,15 +46,18 @@ class EventFilter extends React.Component {
         this.props.selectSport(e);
     };
 
+    updateEvent = (e) => {
+        this.props.updateEvent(this.refs.search_field.value);
+    };
+
     handleFilter = () => {
+        if (!this.refs.search_field.value) {
+            return;
+        }
         this.updateEvent();
         const {onFilter} = this.props;
         onFilter();
     }
-
-    updateEvent = (e) => {
-        this.props.updateEvent(this.refs.search_field.value);
-    };
 
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
