@@ -12,8 +12,13 @@
 }
 
 .buy-container-left {
+    max-width: 260px;
     flex: 1;
     margin-right: 20px;
+    font-size: 14px;
+    input {
+      font-size: 14px;
+    }
     .box{
         background-color: #F4F6F9;
         margin: 0 0 20px;
@@ -34,20 +39,23 @@
             }
             .sport-input-filter {
                 margin: 10px 0;
-                .Select-value {
-                    line-height: 43px;
-                }
+            }
+            .checkbox-item {
+                margin-right: 10px;
+            }
+            .standard-button {
+              width: 115px;
             }
             .filter-rights{
                 .filter-right{
                     margin: 10px 0;
                     display: flex;
                     align-items: center;
-                    input[type="checkbox"] {
-                        display: flex;
-                        margin: 0;
-                        max-width: 25px !important;
-                    }
+                    //input[type="checkbox"] {
+                    //    display: flex;
+                    //    margin: 0;
+                    //    max-width: 25px !important;
+                    //}
                 }
 
             }
@@ -69,6 +77,6 @@
 .content-list-container{
     flex: 1;
 }
-.right_package{
-    min-width: 0 !important;
-}
+//.right_package{
+//    min-width: 0 !important;
+//}

@@ -37,7 +37,7 @@ class RightsFilter extends React.Component {
                             rightsPackage && rightsPackage.map(right => {
                                 return <div key={right.id} className="filter-right">
                                     <input
-                                        className='right_package subfilter'
+                                        className='checkbox-item'
                                         type='checkbox'
                                         checked={rights.indexOf(right.id) !== -1}
                                         onChange={(e) => {
@@ -55,14 +55,19 @@ class RightsFilter extends React.Component {
 
                     </div>
                     <hr />
-                    <div style={{marginBottom: 20}}>
+                    <div style={{
+                        display:'flex',
+                        marginBottom: 20
+                    }}>
                         <input
                             type="checkbox"
                             checked={exclusive}
-                            style={{display: 'block'}}
+                            className="checkbox-item"
                             onChange={(e) => {
                                 this.props.updateExclusive(e.target.checked)
-                            }} /> Contains exclusive rights
+                            }}
+                        />
+                        Contains exclusive rights
                     </div>
                     <div style={{
                         display: 'flex',
@@ -70,7 +75,7 @@ class RightsFilter extends React.Component {
                         flexDirection: 'column'
                     }}>
                         <button className="standard-button" style={{margin:5}} onClick={onFilter}>Apply</button>
-                        <button className="standard-button" style={{margin:5}} onClick={clearFilter}>Clear</button>
+                        <button className="standard-button transparent" style={{margin:5}} onClick={clearFilter}>Clear</button>
                     </div>
 
                 </div>

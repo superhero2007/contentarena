@@ -56,7 +56,12 @@
     outline: none;
     background-color: #FFC94B;
     width: 190px;
-    height: 48px;
+    height: 38px;
+
+    &.transparent {
+      background-color: transparent;
+      border: 1px solid #1a4b63;
+    }
 
 }
 .standard-button-big{
