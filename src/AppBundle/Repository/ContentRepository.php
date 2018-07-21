@@ -340,6 +340,25 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
      * @param User $user
      * @return array
      */
+    public function getActiveAndExpired($user){
+
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->andWhere('c.company = :company')
+            ->andWhere('status.name = :sold OR status.name = :approved OR status.name = :edited')
+            ->setParameter('sold',"SOLD_OUT")
+            ->setParameter('approved',"APPROVED")
+            ->setParameter('edited',"EDITED")
+            ->setParameter('company',$user->getCompany())
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
     public function getExpired($user){
 
         $now = date('Y-m-d H:i:s');

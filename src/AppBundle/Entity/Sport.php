@@ -27,7 +27,7 @@ class Sport
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $name;
 

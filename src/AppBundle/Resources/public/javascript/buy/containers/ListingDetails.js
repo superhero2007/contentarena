@@ -9,7 +9,7 @@ import Seller from "./Seller";
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import DigitalSignature from "../../main/components/DigitalSignature";
-import {getCurrencySymbol} from "../../main/actions/utils";
+import {getCurrencySymbol, goTo, goToClosedDeals, goToListing, goToMarketplace} from "../../main/actions/utils";
 import CompanyInformation from "../../sell/components/CompanyInformation";
 import {customStyles} from "../../main/styles/custom";
 import {companyIsValid} from "../../sell/actions/validationActions";
@@ -34,7 +34,9 @@ class ListingDetails extends React.Component {
         this.state = {
             content : ContentArena.Utils.contentParserFromServer(props.content) || {},
             company: props.company,
+            spinner : false,
             tab : 1,
+            soldOut  : false,
             selectedPackage : {},
             territoriesList: [],
             editCompanyOpen : false,
@@ -112,13 +114,15 @@ class ListingDetails extends React.Component {
     };
 
     closeSuccessScreen = () => {
-        this.setState({
-            showSuccessScreen: false,
-            buyingMode: false,
-            bid : null,
-            signature : null,
-            terms : false
-        });
+
+        const {content} = this.props;
+        const {soldOut} = this.state;
+
+        if (soldOut) {
+            goToMarketplace()
+        } else {
+            goToListing(content.customId);
+        }
     };
 
     editCompany = () => {
@@ -328,7 +332,8 @@ class ListingDetails extends React.Component {
                 </div>}
 
                 <div>
-                    <button className="standard-button" onClick={this.closeSuccessScreen} >Continue</button>
+                    <button className="standard-button" onClick={() => {goToClosedDeals()}} >Show closed deals</button>
+                    <button className="standard-button" onClick={this.closeSuccessScreen} >Return to Marketplace</button>
                 </div>
             </div>
 
@@ -384,7 +389,7 @@ class ListingDetails extends React.Component {
 
     placeBid = () => {
         const {bid, selectedPackage, signature, content } = this.state;
-
+        this.setState({spinner : true});
         let bidObj = {
             amount : bid,
             salesPackage : selectedPackage.id,
@@ -394,9 +399,8 @@ class ListingDetails extends React.Component {
             salesMethod : selectedPackage.salesMethod
         };
 
-        this.setState({showSuccessScreen : true});
         ContentArena.ContentApi.placeBid(bidObj).then(r =>{
-            console.log(r)
+            this.setState({showSuccessScreen : true, soldOut : r.soldOut, spinner : false});
         });
 
     };
@@ -425,7 +429,7 @@ class ListingDetails extends React.Component {
     render() {
 
         const {onBack } = this.props;
-        const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated} = this.state;
+        const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner} = this.state;
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
         let technicalFee = this.getTechnicalFee();
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
@@ -724,7 +728,6 @@ class ListingDetails extends React.Component {
                             </div>
                         </div>
 
-
                         {/*PAYMENT DETAILS*/}
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <div style={{
@@ -803,7 +806,6 @@ class ListingDetails extends React.Component {
                             </div>
                         </div>
 
-
                         {/*LICENSE*/}
                         <div style={{
                             display: 'flex',
@@ -835,9 +837,10 @@ class ListingDetails extends React.Component {
                             marginTop: 20,
                             marginBottom: 40
                         }}>
-                            <button className="standard-button"
+                            { !spinner && <button className="standard-button"
                                     onClick={this.placeBid}
-                                    disabled={this.invalidPackage()}>Buy</button>
+                                    disabled={this.invalidPackage()}>Buy</button>}
+                            { spinner && <i className="fa fa-cog fa-spin"/>}
                         </div>
                     </div>}
                 </div>

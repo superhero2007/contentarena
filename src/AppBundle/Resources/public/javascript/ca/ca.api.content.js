@@ -315,6 +315,27 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    getAllDeals (  ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/bid/all",
+            type: "POST",
+            data: {
+            },
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getPendingDeals (  ) {
         let deferred = jQuery.Deferred();
 

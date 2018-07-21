@@ -19,7 +19,7 @@ class Bid
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="custom_id", type="string")
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $customId;
 
@@ -35,7 +35,7 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="amount", type="decimal", precision=12, scale=2)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $amount;
 
@@ -43,14 +43,14 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="total_fee", type="decimal", precision=12, scale=2)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $totalFee;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", cascade={"remove"}, inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $content;
 
@@ -58,28 +58,28 @@ class Bid
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $buyerUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $salesPackage;
 
@@ -95,7 +95,7 @@ class Bid
      * @var mixed
      *
      * @ORM\Column(name="created_at", type="datetime")
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $createdAt;
 
@@ -103,7 +103,7 @@ class Bid
      * @var mixed
      *
      * @ORM\Column(name="updated_at", type="datetime")
-     * @Groups({"closed"})
+     * @Groups({"closed", "commercial"})
      */
     private $updatedAt;
 

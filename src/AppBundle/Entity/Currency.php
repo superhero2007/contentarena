@@ -33,7 +33,7 @@ class Currency
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=3, unique=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $code;
 

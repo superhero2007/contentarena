@@ -150,6 +150,9 @@ class SalesPackages extends React.Component {
                 { this.allTerritories() }
                 { this.installmentsModal() }
                 { salesPackages.map( (salesPackage, i) => {
+
+                    if (salesPackage.sold ) return;
+
                     let extraTerritories = ( salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? salesPackage.excludedTerritories : salesPackage.territories;
                     return <div className="sales-package-container" key={"sales-package-"+ i}>
 

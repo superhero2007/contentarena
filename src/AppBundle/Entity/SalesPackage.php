@@ -19,7 +19,7 @@ class SalesPackage
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $name;
 
@@ -35,7 +35,7 @@ class SalesPackage
      * @var int
      *
      * @ORM\Column(name="fee", type="bigint")
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $fee;
 
@@ -43,7 +43,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="territories_method", type="string", length=255, nullable=true)
-     * @Groups({"listing","closed"})
+     * @Groups({"listing","closed", "commercial"})
      */
     private $territoriesMethod = false;
 
@@ -51,21 +51,21 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="bundle_method", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $bundleMethod = false;
 
     /**
      * @var object
      * @ORM\Column(name="installments", type="object", nullable=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $installments;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $currency;
 
@@ -82,7 +82,7 @@ class SalesPackage
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_sales_package_territory_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $territories;
 
@@ -95,6 +95,14 @@ class SalesPackage
      * @Groups({"listing"})
      */
     private $excludedCountries;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="sold", type="boolean")
+     * @Groups({"listing", "closed", "commercial"})
+     */
+    private $sold = false;
 
     public function __construct() {
         $this->excludedCountries = new \Doctrine\Common\Collections\ArrayCollection();
@@ -265,6 +273,22 @@ class SalesPackage
     public function setInstallments($installments)
     {
         $this->installments = $installments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSold()
+    {
+        return $this->sold;
+    }
+
+    /**
+     * @param bool $sold
+     */
+    public function setSold($sold)
+    {
+        $this->sold = $sold;
     }
 
 

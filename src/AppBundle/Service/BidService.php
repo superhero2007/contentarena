@@ -37,6 +37,10 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getPendingBidsByContent($listing);
     }
 
+    public function getAllBidsByContent($listing){
+        return $this->em->getRepository('AppBundle:Bid')->getAllBidsByContent($listing);
+    }
+
     public function saveBidsData($request,$user){
 
 
@@ -50,20 +54,26 @@ class BidService
             $status = $this->em->getRepository('AppBundle:BidStatus')->find(1);
         }
 
+        $exclusive = false;
+        foreach ($content->getSelectedRightsBySuperRight() as $val)
+        {
+            if( $val['exclusive'] ) {
+                $exclusive = true;
+            }
+        }
+
         $bid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
             "content" =>$content,
             "salesPackage" => $salesPackage
         ));
 
-        if ( $bid == null ) {
+        if ( $bid == null || $bid->getStatus() != $status) {
             $bid = new Bid();
             $customId = $this->idGenerator->generate($content);
             $createdAt = new \DateTime();
             $bid->setCustomId($customId);
             $bid->setCreatedAt($createdAt);
         }
-
-
 
         if ( isset( $signature ) ) {
             $fileName = "signature_".md5(uniqid()).'.jpg';
@@ -82,7 +92,10 @@ class BidService
         $bid->setTotalFee($request->get('totalFee'));
         $bid->setUpdatedAt($updatedAt);
         $this->em->persist($bid);
-
+        if ($exclusive && $status->getName() == "APPROVED"){
+            $salesPackage->setSold(true);
+            $this->em->persist($salesPackage);
+        }
         $this->em->flush();
         return true;
     }

@@ -186,3 +186,33 @@
   text-decoration: none;
   color: white;
 }
+
+.manager-filter-container{
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin-top: -20px;
+  height: 60px;
+  .listing-filter{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .status-filter{
+    display: flex;
+    justify-content: flex-end;
+    color: #4F4F4F;
+    font-size: 14px;
+    font-weight: 600;
+    flex: 2;
+    align-items: center;
+    .status-filter-item{
+      margin: 0 20px;
+      cursor: pointer;
+      img {
+        margin: 0 10px 3px;
+      }
+    }
+  }
+}

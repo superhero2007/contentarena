@@ -41,6 +41,15 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getAllBidsByContent($content){
+        $query = $this->createQueryBuilder('b')
+            ->where('b.content = :content')
+            ->setParameter('content', $content)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getRejectedBids($user){
         $query = $this->createQueryBuilder('b')
             ->join('b.content', 'c')
@@ -51,6 +60,18 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('type.name = :type')
             ->setParameter('rejected', 'REJECTED')
             ->setParameter('type', 'BIDDING')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getAllBids($user){
+        $query = $this->createQueryBuilder('b')
+            ->join('b.content', 'c')
+            ->join('b.status', 'status')
+            ->join('b.type', 'type')
+            ->where('b.buyerUser = :user')
             ->setParameter('user', $user)
             ->getQuery();
 

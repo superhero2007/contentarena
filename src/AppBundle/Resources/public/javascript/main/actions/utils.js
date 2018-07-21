@@ -1,12 +1,21 @@
-import {content} from "../../sell/reducers/content";
-
 export const getCurrencySymbol = code => {
     return (code === "EUR") ? "€" : "$";
 };
 
-
 export const goTo = route => {
     window.location.href = envhosturl + route
+};
+
+export const goToListing = id => {
+    goTo("listing/"+ id)
+};
+
+export const goToMarketplace = () => {
+    goTo("marketplace")
+};
+
+export const goToClosedDeals = () => {
+    goTo("closeddeals")
 };
 
 export const limitText = (txt, limit = 25) => {

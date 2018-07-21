@@ -84,7 +84,7 @@ class SellButtons extends React.Component {
             PROGRAM_NAME,
             PROGRAM_EPISODES,
             PROGRAM_DURATION,
-            PROGRAM_DESCRIPTION
+            PROGRAM_TYPE
         } = this.props;
 
         let program = editedProgramSelected(rightsPackage);
@@ -94,7 +94,7 @@ class SellButtons extends React.Component {
         return PROGRAM_NAME && PROGRAM_NAME !== "" &&
             PROGRAM_EPISODES && PROGRAM_EPISODES !== "" &&
             PROGRAM_DURATION && PROGRAM_DURATION !== "" &&
-            PROGRAM_DESCRIPTION && PROGRAM_DESCRIPTION !== "";
+            PROGRAM_TYPE !== "SELECT"
 
     };
 

@@ -25,21 +25,21 @@ class Content
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "closed", "board"})
+     * @Groups({"listing", "closed", "board", "commercial"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "commercial"})
      */
     private $status;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing", "closed", "board"})
+     * @Groups({"listing", "closed", "board", "commercial"})
      */
     protected $customId;
 
@@ -94,7 +94,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "commercial"})
      */
     private $salesPackages;
 
@@ -102,7 +102,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $image;
 
@@ -192,7 +192,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board"})
+     * @Groups({"listing", "closed", "board", "commercial"})
      */
     private $name;
 
@@ -212,7 +212,7 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $company;
 
@@ -222,21 +222,21 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sport_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $sports;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $sportCategory;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "commercial"})
      */
     private $tournament;
 
@@ -246,7 +246,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "commercial"})
      */
     private $seasons;
 
@@ -257,7 +257,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed", "board"})
+     * @Groups({"listing", "closed", "board", "commercial"})
      */
     private $rightsPackage;
 
@@ -271,27 +271,27 @@ class Content
     /**
      * @var object
      * @ORM\Column(name="schedules_by_season", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $schedulesBySeason;
 
     /**
      * @var object
      * @ORM\Column(name="fixtures_by_season", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $fixturesBySeason;
 
     /**
      * @var object
      * @ORM\Column(name="extra_data", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $extraData;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $createdAt;
 
@@ -321,6 +321,11 @@ class Content
      * @Groups({"board"})
      */
     private $owner;
+
+    /**
+     * @Groups({"commercial"})
+     */
+    private $bids;
 
     /**
      * @var boolean;
@@ -1132,6 +1137,22 @@ class Content
     public function setOwner($owner)
     {
         $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBids()
+    {
+        return $this->bids;
+    }
+
+    /**
+     * @param mixed $bids
+     */
+    public function setBids($bids)
+    {
+        $this->bids = $bids;
     }
 
 

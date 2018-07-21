@@ -82,9 +82,39 @@ class ContentService
         return $content;
     }
 
+    public function getActiveAndExpired($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getActiveAndExpired($user);
+        return $content;
+    }
+
     public function getExpired($user) {
         $content = $this->em->getRepository('AppBundle:Content')->getExpired($user);
         return $content;
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function checkIfSoldOut (Request $request){
+        $soldOut = true;
+        $listing = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
+
+        foreach ( $listing->getSalesPackages() as $bundle ){
+            /* @var $bundle SalesPackage */
+            if ( !$bundle->isSold() ) $soldOut = false;
+
+        }
+
+        if ( $soldOut ){
+            $listing->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"SOLD_OUT")));
+            $this->em->persist($listing);
+            $this->em->flush();
+        }
+
+        return $soldOut;
+
     }
 
     public function removeListing($customId){

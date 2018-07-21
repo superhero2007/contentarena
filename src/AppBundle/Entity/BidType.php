@@ -26,7 +26,7 @@ class BidType
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "closed"})
+     * @Groups({"listing", "closed", "commercial"})
      */
     private $name;
 

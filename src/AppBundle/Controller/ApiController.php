@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Content;
 use AppBundle\Service\ContentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -214,12 +215,23 @@ class ApiController extends BaseController
 
     /**
      * @Route("/api/bid/place", name="apiPlaceBid")
+     * @param Request $request
+     * @param BidService $bidService
+     * @param ContentService $contentService
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function contentPlaceBid(Request $request, BidService $bidService)
+    public function contentPlaceBid(Request $request, BidService $bidService, ContentService $contentService)
     {
         $user = $this->getUser();
         $success = $bidService->saveBidsData($request,$user);
-        return new JsonResponse(array("success"=>$success));
+        $soldOut = false;
+
+        if ($success){
+            $soldOut = $contentService->checkIfSoldOut($request);
+        }
+
+        return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
     }
 
     /**
@@ -269,6 +281,32 @@ class ApiController extends BaseController
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($bids, 'json',SerializationContext::create()->setGroups(array('closed', 'listing')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/bid/all", name="apiBids")
+     */
+    public function apiBids(Request $request, BidService $bidService, ContentService $contentService)
+    {
+        $user = $this->getUser();
+
+        $listings = $contentService->getActiveAndExpired($user);
+
+        foreach ( $listings as $listing ){
+            $bids = $bidService->getAllBidsByContent($listing);
+            $listing->setBids($bids);
+        }
+
+
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($listings, 'json',SerializationContext::create()->setGroups(array('commercial')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
