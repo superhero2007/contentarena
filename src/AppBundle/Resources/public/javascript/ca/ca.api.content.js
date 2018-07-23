@@ -98,6 +98,75 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    acceptBid ( bid, signature ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        bid.signature = signature;
+
+        $.ajax({
+            url: envhosturl + "api/bid/accept",
+            type: "POST",
+            data: JSON.stringify(bid),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    rejectBid ( bid ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/bid/reject",
+            type: "POST",
+            data: JSON.stringify(bid),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    removeBid ( bid ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/bid/remove",
+            type: "POST",
+            data: JSON.stringify(bid),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+
     saveTmpFile ( files ) {
         let deferred = jQuery.Deferred(),
             _this = this;

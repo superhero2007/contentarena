@@ -19,6 +19,14 @@ class PendingDeals extends React.Component {
     }
 
     componentDidMount () {
+        this.update();
+    }
+
+    selectListing = (id) => {
+        goTo("listing/" + id);
+    };
+
+    update = () => {
         let _this = this;
         this.setState({loading:true, loadingDeclined : true});
         ContentArena.ContentApi.getPendingDeals().done((bids) => {
@@ -28,10 +36,12 @@ class PendingDeals extends React.Component {
         ContentArena.ContentApi.getRejectedDeals().done((declinedBids) => {
             _this.setState({declinedBids: declinedBids, loadingDeclined : false});
         });
-    }
+    };
 
-    selectListing = (id) => {
-        goTo("listing/" + id);
+    deleteBid = (id) => {
+        ContentArena.ContentApi.removeBid({id:id}).done((r)=>{
+            this.update();
+        });
     };
 
     remove = ( customId) => {
@@ -74,6 +84,7 @@ class PendingDeals extends React.Component {
                     active && bids.length > 0 && bids.map((bid, i) => {
                         return <ContentListingPendingBid
                             onSelect={this.selectListing}
+                            onDelete={this.deleteBid}
                             key={i + "-" + bid.content.customId}
                             bid={bid}
                             {...bid.content}
@@ -85,6 +96,7 @@ class PendingDeals extends React.Component {
                     !active && declinedBids.length > 0 && declinedBids.map((bid, i) => {
                         return <ContentListingPendingBid
                             onSelect={this.selectListing}
+                            onDelete={this.deleteBid}
                             key={i + "-" + bid.content.customId}
                             bid={bid}
                             {...bid.content}

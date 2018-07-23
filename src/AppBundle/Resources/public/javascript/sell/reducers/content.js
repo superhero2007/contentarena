@@ -14,11 +14,12 @@ export const contentType= {
     APPLY_SELECTION : 'APPLY_SELECTION',
     UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
     UPDATE_ATTACHMENTS : 'UPDATE_ATTACHMENTS',
-    ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES'
+    ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES',
+    RESET : 'RESET'
 
 };
 
-export const content = (state = {
+export const EmptyListing = {
     step: 1,
     rightsPackage : [],
     tournament : [],
@@ -39,11 +40,15 @@ export const content = (state = {
     PROGRAM_LANGUAGE : [],
     PROGRAM_SUBTITLES : [],
     PROGRAM_SCRIPT : []
-}, action) => {
+};
+
+export const content = (state = EmptyListing, action) => {
 
     let newState = {};
 
     switch (action.type) {
+        case contentType.RESET:
+            return Object.assign({}, state, EmptyListing);
         case contentType.CONTENT_INIT:
             return Object.assign({}, state, action.content);
         case contentType.GO_TO_NEXT_STEP:

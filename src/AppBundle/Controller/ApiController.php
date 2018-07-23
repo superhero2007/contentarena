@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -298,11 +299,14 @@ class ApiController extends BaseController
         $listings = $contentService->getActiveAndExpired($user);
 
         foreach ( $listings as $listing ){
-            $bids = $bidService->getAllBidsByContent($listing);
-            $listing->setBids($bids);
+
+            /* @var $listing Content */
+            foreach ($listing->getSalesPackages() as $salesBundle){
+
+                /* @var $salesBundle SalesPackage */
+                $salesBundle->setBids($bidService->getAllBidsBySalesBundle($salesBundle));
+            }
         }
-
-
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
@@ -311,6 +315,51 @@ class ApiController extends BaseController
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+
+    }
+
+    /**
+     * @Route("/api/bid/accept", name="acceptBids")
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function acceptBids(Request $request, BidService $bidService, ContentService $contentService)
+    {
+        $user = $this->getUser();
+
+        $success = $bidService->acceptBid($request);
+        $soldOut = false;
+
+        if ($success){
+            $soldOut = $contentService->checkIfSoldOut($request);
+        }
+
+        return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
+
+    }
+
+    /**
+     * @Route("/api/bid/reject", name="rejectBid")
+     */
+    public function rejectBid(Request $request, BidService $bidService)
+    {
+        $user = $this->getUser();
+
+        $success = $bidService->rejectBid($request);
+
+        return new JsonResponse(array("success"=>$success));
+
+    }
+
+    /**
+     * @Route("/api/bid/remove", name="removeBid")
+     */
+    public function removeBid(Request $request, BidService $bidService)
+    {
+        $user = $this->getUser();
+
+        $success = $bidService->removeBid($request, $user);
+
+        return new JsonResponse(array("success"=>$success));
 
     }
 

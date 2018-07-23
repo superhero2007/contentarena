@@ -3,6 +3,7 @@ import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListing from "./ContentListing";
 import {getCurrencySymbol} from "../actions/utils";
+import {blueEnvelopeIcon, bucketIcon, infoIcon} from "./Icons";
 
 class ContentListingPendingBid extends ContentListing {
     constructor(props){
@@ -25,6 +26,7 @@ class ContentListingPendingBid extends ContentListing {
             name,
             expiresAt,
             programs,
+            onDelete,
             rightsPackage,
             onSelectName,
             imageBase64,
@@ -35,6 +37,7 @@ class ContentListingPendingBid extends ContentListing {
             PROGRAM_NAME
         } = this.props;
 
+        const {showMessage, showEdited} = this.state;
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
@@ -46,10 +49,27 @@ class ContentListingPendingBid extends ContentListing {
                     </div>
                 </div>
                 <div className={"right"}  style={{padding:'25px 0'}}>
+
+                    {/*NAME*/}
                     <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
 
+                    {/*COMPANY*/}
+                    <div className={"company"}>
+                        {company.legalName} <img style={{marginLeft: 5}} src={this.envelopeIcon}/>
+                    </div>
+
                     <div style={{display: "flex"}}>
+
+                        {/*DETAILS*/}
                         <ContentListingEventDetails {...this.props}/>
+
+                        {/*DETAILS 2*/}
+                        <div>
+                            <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
+                            <div className="custom-id">#{customId}</div>
+                        </div>
+
+                        {/*RIGHTS*/}
                         <div style={{
                             flex: 2,
                             flexDirection: "column",
@@ -93,7 +113,10 @@ class ContentListingPendingBid extends ContentListing {
                     alignItems: 'center',
                     display: 'flex',
                     flexDirection: 'column',
-                    paddingRop: 15
+                    paddingRop: 15,
+                    justifyContent: 'space-evenly',
+                    padding: '20px 0',
+                    position : 'relative'
                 }}>
                     <div style={{
                         display:'flex',
@@ -101,10 +124,8 @@ class ContentListingPendingBid extends ContentListing {
                         flexDirection: 'row',
                         alignItems: 'center',
                         width: '100%',
-                        margin: 20
                     }}>
                         <div>{Moment(bid.createdAt).format('DD/MM/YYYY')}</div>
-                        <div className="custom-id">#{customId}</div>
                     </div>
                     <div style={{
                         backgroundColor: '#fff',
@@ -114,20 +135,7 @@ class ContentListingPendingBid extends ContentListing {
                     }}>
                         <div>{bid.salesPackage.name}</div>
                     </div>
-                    <div style={{
-                        color: '#2DA7E6',
-                        display: 'flex',
-                        margin: '10px 0',
-                        textTransform: 'uppercase',
-                        fontWeight: 600,
-                        fontSize: 14,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        cursor: 'pointer',
-                        textDecoration: 'underline'
-                    }}>
-                        {company.legalName} <img style={{marginLeft: 5}} src={this.envelopeIcon}/>
-                    </div>
+
                     <div style={{
                         fontSize: 24,
                         fontWeight: 600,
@@ -138,15 +146,88 @@ class ContentListingPendingBid extends ContentListing {
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        position: 'relative'
                     }}>
-                        <img src={this.exclamationIcon} style={{height: 28}}/>
+                        {bid.status.name === "EDITED"
+                        && <img src={infoIcon}
+                                style={{
+                                    marginRight: 5,
+                                    cursor: 'pointer'
+                                }}
+                                onMouseOver={() => {this.setState({showEdited : true})}}
+                                onMouseLeave={() => {this.setState({showEdited : false})}} />}
                         <a className="standard-button" style={{
                             height: 36,
                             fontSize: 16,
                             width: 150
                         }} href={envhosturl+ "listing/" +customId+"/buy/" + bid.salesPackage.id}>Increase bid</a>
+                        {bid.message && bid.message !== ""
+                        && <img src={blueEnvelopeIcon}
+                                style={{
+                                    marginLeft: 5,
+                                    cursor: 'pointer'
+                                }}
+                                onMouseOver={() => {this.setState({showMessage : true})}}
+                                onMouseLeave={() => {this.setState({showMessage : false})}}/>}
+
+                        {/*MESSAGE*/}
+                        {showMessage && <div className="status-tooltip">
+                            <div className={"option"}>
+                                {bid.message}
+                            </div>
+                        </div>}
+
+                        {/*EDITED TOOLTIP*/}
+                        {showEdited && <div className="status-tooltip">
+                            <div className={"option"}>
+                                Listing edited after last bid. Please review term sheet.
+                            </div>
+                        </div>}
+
+
+
                     </div>
+                    <div style={{
+                        fontSize: 12,
+                        fontWeight: 600,
+                    }}>
+                        <div>
+                            <span style={{fontWeight: 400,fontStyle: 'italic'}}>Placed by:</span>
+                            {" " +bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</div>
+                    </div>
+                    <div style={{
+                        position: 'absolute',
+                        cursor : 'pointer',
+                        top : 20,
+                        right : 20
+                    }} onClick={(e)=>{
+                        this.setState({showRemoveConfirm: true});
+                        e.stopPropagation();
+                    }}>
+                        <img src={bucketIcon}/>
+                    </div>
+
+                    {/*CONFIRM REMOVE*/}
+                    {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
+                        <div className={"confirmation-text"}>
+                            Are you sure you want to remove this bid?
+                        </div>
+                        <button className={"button button-confirm"} onClick={(e)=>{
+                            this.setState({showRemoveConfirm: false});
+                            onDelete(bid.id);
+                            e.stopPropagation();
+                        }}>
+                            Remove
+                        </button>
+                        <button className={"button"} onClick={(e)=>{
+                            this.setState({showRemoveConfirm: false});
+                            e.stopPropagation();
+                        }}>
+                            Cancel
+                        </button>
+                    </div>}
+
                 </div>
             </div>
         )

@@ -48,7 +48,7 @@ class Bid
     private $totalFee;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", cascade={"remove"}, inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial"})
      */
@@ -90,6 +90,13 @@ class Bid
      */
     private $signature;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="seller_signature", type="string", nullable=true)
+     */
+    private $sellerSignature;
+
 
     /**
      * @var mixed
@@ -98,6 +105,14 @@ class Bid
      * @Groups({"closed", "commercial"})
      */
     private $createdAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="message", type="text", nullable=true)
+     * @Groups({"closed", "commercial"})
+     */
+    private $message;
 
     /**
      * @var mixed
@@ -339,6 +354,39 @@ class Bid
     {
         $this->signature = $signature;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSellerSignature()
+    {
+        return $this->sellerSignature;
+    }
+
+    /**
+     * @param mixed $sellerSignature
+     */
+    public function setSellerSignature($sellerSignature)
+    {
+        $this->sellerSignature = $sellerSignature;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
 
 
 

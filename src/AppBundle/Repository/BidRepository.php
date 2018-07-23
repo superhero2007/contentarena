@@ -50,6 +50,15 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getAllBidsBySalesBundle($salesBundle){
+        $query = $this->createQueryBuilder('b')
+            ->where('b.salesPackage = :salesBundle')
+            ->setParameter('salesBundle', $salesBundle)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getRejectedBids($user){
         $query = $this->createQueryBuilder('b')
             ->join('b.content', 'c')

@@ -72,7 +72,7 @@ class SalesPackage
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      */
     private $salesMethod;
 
@@ -95,6 +95,11 @@ class SalesPackage
      * @Groups({"listing"})
      */
     private $excludedCountries;
+
+    /**
+     * @Groups({"commercial"})
+     */
+    private $bids;
 
     /**
      * @var bool
@@ -291,6 +296,20 @@ class SalesPackage
         $this->sold = $sold;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBids()
+    {
+        return $this->bids;
+    }
 
+    /**
+     * @param mixed $bids
+     */
+    public function setBids($bids)
+    {
+        $this->bids = $bids;
+    }
 
 }

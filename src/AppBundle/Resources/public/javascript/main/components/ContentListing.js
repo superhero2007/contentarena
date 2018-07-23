@@ -56,6 +56,12 @@ class ContentListing extends React.Component{
     };
 
     sortAfterFilter = (a, b) => {
+
+        if (b.territoriesMethod ==="WORLDWIDE") {
+            return this.compareProperty(b.territories.length, a.territories.length)
+                || this.compareProperty(a.name, b.name);
+        }
+
         return this.compareProperty(a.territories.length, b.territories.length)
             || this.compareProperty(a.name, b.name);
     };
@@ -78,14 +84,15 @@ class ContentListing extends React.Component{
                 if ( all.indexOf(t) !== -1 ) include = true;
             });
 
-            if ( e.salesMethod === "SELL_AS_BUNDLE" && e.territoriesMethod === "WORLDWIDE") include = true;
+            if ( e.bundleMethod === "SELL_AS_BUNDLE" && e.territoriesMethod === "WORLDWIDE") {
+                include = true;
+            }
 
             if ( include) {
                 temp.push(e);
             }
         });
 
-        //return [...temp,...salesPackages];
         return [...temp];
     };
 
@@ -239,3 +246,4 @@ class ContentListing extends React.Component{
 }
 
 export default ContentListing;
+

@@ -18,6 +18,11 @@ export const goToClosedDeals = () => {
     goTo("closeddeals")
 };
 
+export const getFee = (salesPackage) => {
+    const feeNumber = parseFloat(salesPackage.fee);
+    return feeNumber.toLocaleString() +" " + getCurrencySymbol(salesPackage.currency.code);
+};
+
 export const limitText = (txt, limit = 25) => {
     return (txt.length > limit) ? txt.substring(0,limit) + "..." : txt
 };

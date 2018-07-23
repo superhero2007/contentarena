@@ -78,6 +78,7 @@ class ContentListingEventDetails extends React.Component {
             sportCategory,
             tournament,
             seasons,
+            showCustomId,
             PROGRAM_YEAR,
             PROGRAM_EPISODES
         } = this.props;

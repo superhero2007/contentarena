@@ -1026,6 +1026,21 @@ $selectHeight: 50px;
     padding-left: 20px;
     position: relative;
     font-size: 14px;
+    .company{
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      color: #2DA7E6;
+      display: flex;
+      margin: 10px 0;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 14px;
+      flex-direction: row;
+      align-items: center;
+      cursor: pointer;
+      text-decoration: underline;
+    }
     .name {
       color: #2DA7E6;
       font-size: 20px;
@@ -1363,6 +1378,48 @@ input[type="checkbox"] + label:after {
   padding: 5px 10px;
   color: #4F4F4F;
   font-size: 16px;
+}
+
+.generic-modal-container{
+  color: #4F4F4F;
+  padding: 40px;
+  .title{
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    textarea{
+      display: flex;
+      box-sizing: border-box;
+      margin: 5px 0;
+      width: auto !important;
+      flex: 1;
+      border: 1px solid lightgray;
+    }
+  }
+  .buttons{
+    display: flex;
+    justify-content: center;
+    button{
+      margin: 20px;
+      height: 45px;
+      width: 105px;
+      border: 1px solid lightgrey;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+    }
+    .confirm{
+      background-color: #48C0FE;
+      color: white;
+      border: 1px solid #48C0FE;
+    }
+  }
 }
 
 

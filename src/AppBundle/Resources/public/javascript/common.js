@@ -14,3 +14,4 @@ require('../scss/selector.scss');
 require('../scss/digital.signature.scss');
 require('../scss/manage.scss');
 require('../scss/board.scss');
+require('../scss/commercial.scss');

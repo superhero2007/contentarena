@@ -5,8 +5,8 @@ easy_admin:
                 - Content
                 - label: 'User Information'
                   children: ['User', 'Company', 'Status', 'Profile']
-                - label: 'Rights'
-                  children: ['RightsPackage']
+                - Deals
+                - RightsPackage
                 - label: 'Sports'
                   children: ['Sport', 'SportCategory', 'Tournament', 'Season']
                 - label: 'Custom Text'
@@ -75,6 +75,8 @@ easy_admin:
                         - { name: 'show', icon: 'eye', label: '' }
                         - { name: 'edit', icon: 'pencil', label: '' }
                         - { name: 'delete', icon: 'times', label: '' }
+            Deals:
+                class: AppBundle\Entity\Bid
             Status:
                 class: AppBundle\Entity\UserStatus
             RightsPackage:

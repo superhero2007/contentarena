@@ -1,0 +1,65 @@
+@import "vars";
+
+.commercial-sales-bundles{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgrey;
+  border-top: 0;
+  .commercial-sales-bundles-container{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    align-items: center;
+    .sales-bundle-item{
+      border: 1px solid lightgray;
+      height: 35px;
+      padding: 0 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 15px;
+    }
+    .sales-bundle-item-right{
+      @extend .sales-bundle-item;
+      margin-left: 0;
+      margin-right: 15px;
+    }
+    .sales-bundle-show-bids{
+      @extend .sales-bundle-item-right;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.bid-listing-details{
+  flex: 1.5 1 0;
+  background-color: #FAFBFC;
+  border-left: 1px solid #E6E6E6;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  justify-content: space-evenly;
+  .item{
+    background-color: #fff;
+    border: 1px solid lightgrey;
+    padding: 5px 10px;
+    min-width: 150px;
+    text-align: center;
+  }
+  .show-bundle{
+    cursor: pointer;
+    color: #48C0FE;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    img{
+      width: 17px;
+      height: 17px;
+      margin-left: 5px;
+    }
+  }
+}

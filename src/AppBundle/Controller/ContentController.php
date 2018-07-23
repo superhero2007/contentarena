@@ -91,19 +91,6 @@ class ContentController extends Controller
         return $response;
     }
 
-    /**
-     * @Route("/content/pending-listings/", name="pendingListings")
-     */
-    public function pendingListingsAction(Request $request){
-        //get info by requested custom_id
-        $content = $this->getDoctrine()->getRepository('AppBundle:Bid')->findBy(['content'=>$request->request->get('id')]);
-        $user = $this->getUser();
-
-        return $this->render('@App/sell/sell.pending.fees.html.twig', [
-            'bids' => $content,
-            'user'=>$user
-        ]);
-    }
 
 
 }

@@ -14,7 +14,9 @@ class CommercialActivity extends React.Component {
             loading : false,
             listings : [],
             selectedListings: [],
-            filter: 'ALL'
+            filter: 'ALL',
+            bundlesOpen: false,
+            bidsOpen : false
 
         };
         this.bulletIcon = assetsBaseDir + "app/images/bullet.png";
@@ -22,6 +24,16 @@ class CommercialActivity extends React.Component {
     }
 
     componentDidMount () {
+        this.update();
+    }
+
+    deleteBid = (id) => {
+        ContentArena.ContentApi.removeBid({id:id}).done((r)=>{
+            this.update();
+        });
+    };
+
+    update = ()=> {
         let _this = this;
         this.setState({loading:true});
 
@@ -29,25 +41,37 @@ class CommercialActivity extends React.Component {
             listings.forEach(l=>ContentArena.Utils.contentParserFromServer(l));
             _this.setState({listings: listings, loading : false});
         });
-    }
+    };
 
     filterByListing = (selected) => {
         this.setState({
-            filter : "LISTING",
-            selectedListings : [selected.value]
+            selectedListings : (selected) ? [selected.value] : [],
+            bidsOpen : true
         })
     };
 
     filtered = () => {
-        const { listings,  filter , selectedListings} = this.state;
+        const { filter , selectedListings} = this.state;
+
+        let listings = this.state.listings;
+
+        if ( selectedListings.length > 0 ){
+            listings = listings.filter(b => selectedListings.indexOf(b.id) !== -1);
+        }
 
         switch (filter) {
             case "CLOSED" :
-                return listings.filter(b => b.status.name === "APPROVED");
+                return listings.filter(b => {
+                    return b.salesPackages.filter((sp)=>{
+                        return sp.bids.filter(b=>b.status.name === "APPROVED").length > 0
+                        }).length > 0
+                    });
             case "OPEN" :
-                return listings.filter(b => b.status.name === "PENDING");
-            case "LISTING" :
-                return listings.filter(b => selectedListings.indexOf(b.id) !== -1);
+                return listings.filter(b => {
+                    return b.salesPackages.filter((sp)=>{
+                        return sp.bids.filter(b=>b.status.name === "PENDING").length > 0
+                    }).length > 0
+                });
             default :
                 return listings;
 
@@ -75,7 +99,7 @@ class CommercialActivity extends React.Component {
                             placeholder="All listings"
                             onChange={this.filterByListing}
                             multi={false}
-                            value={selectedListings}
+                            value={selectedListings[0]}
                             options={allListings.map((b)=>({value : b.id , label : b.name }))}
                         />
                     </div>
@@ -109,8 +133,12 @@ class CommercialActivity extends React.Component {
                 </div>
 
                 {
-                    listings.length > 0 && listings.map((listing, i) => {
+                    listings.length > 0 && listings.map((listing, i, list) => {
                         return <ContentListingCommercialActivity
+                            onDelete={this.deleteBid}
+                            bidsOpen={list.length === 1}
+                            bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
+                            hideWithoutBids={this.state.filter === "ACTIVITY"}
                             onSelect={id => goToListing(id)}
                             key={i + "-" + listing.customId}
                             {...listing}

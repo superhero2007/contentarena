@@ -264,7 +264,7 @@ class Content
     /**
      * @var object
      * @ORM\Column(name="selected_rights_by_super_right", type="object", nullable=true)
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "commercial"})
      */
     private $selectedRightsBySuperRight;
 
@@ -323,11 +323,6 @@ class Content
     private $owner;
 
     /**
-     * @Groups({"commercial"})
-     */
-    private $bids;
-
-    /**
      * @var boolean;
      * @Groups({"board"})
      */
@@ -337,6 +332,11 @@ class Content
         $this->rightsPackage = new ArrayCollection();
         $this->seasons = new ArrayCollection();
         $this->selectedRights = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     /**
@@ -1138,25 +1138,5 @@ class Content
     {
         $this->owner = $owner;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getBids()
-    {
-        return $this->bids;
-    }
-
-    /**
-     * @param mixed $bids
-     */
-    public function setBids($bids)
-    {
-        $this->bids = $bids;
-    }
-
-
-
-
 
 }

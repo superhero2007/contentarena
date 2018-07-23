@@ -98,6 +98,12 @@ class SellFormStep1 extends React.Component {
         this.setState({ loadingSeasons : true });
         ContentArena.Api.getSeasons(tournamentId).done( (seasons ) => {
             ContentArena.Data.Seasons = seasons;
+
+            if (tournaments.length === 0 ) {
+                this.props.addNewCategory();
+                return;
+            }
+
             this.setState({
                 lastTournamentId : tournamentId,
                 loadingSeasons : false,
@@ -320,10 +326,7 @@ class SellFormStep1 extends React.Component {
     };
 
     clear = () => {
-        this.removeSport(0);
-        this.props.updateContentValue("name", "");
-        this.props.updateContentValue("description", null);
-        this.props.updateContentValue("attachments", []);
+        this.props.reset();
         this.toggleSearch();
     };
 
@@ -614,11 +617,20 @@ const mapDispatchToProps = dispatch => {
             index : index,
             selectorType : "seasons",
         }),
+        addNewSeason : (index, clean) => dispatch({
+            type: 'ADD_NEW',
+            index : 0,
+            selectorType: "seasons",
+            clean : []
+        }),
         addNewCategory : () => dispatch({
             type : 'ADD_NEW',
             index : 0,
             selectorType: "sportCategory",
             clean : ["tournament", "seasons"]
+        }),
+        reset : () => dispatch({
+            type : 'RESET'
         }),
         selectTournament : (tournament) => dispatch({ type: 'SELECT_TOURNAMENT', tournament: tournament }),
         stepChangeReset : () => dispatch(stepChangeReset())
