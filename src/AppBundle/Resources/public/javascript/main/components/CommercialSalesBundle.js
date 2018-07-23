@@ -198,7 +198,7 @@ class CommercialSalesBundle extends React.Component{
                 {showBids && salesBundle.bids.length > 0 &&
                 <div>
                     <ReactTable
-                        className={"closed-deals-table"}
+                        className={"ca-table"}
                         defaultPageSize={30}
                         showPageSizeOptions={false}
                         showPagination={false}

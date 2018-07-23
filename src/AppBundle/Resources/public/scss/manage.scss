@@ -103,67 +103,56 @@
   display: flex;
 }
 
-.closed-deals-table{
+.ReactTable.ca-table {
   font-size: 14px;
   font-weight: 600;
-  color: black;
-  .table-header-big{
-    width: auto !important;
-    flex: 1.5 0 150px !important;
-    margin: 0 !important;
-    padding: 0 10px !important;
-    display: flex;
+
+  .table-header-small {
+    flex: 40px 0 1 !important;
+    width: 40px !important;
   }
-  .table-header-small{
-    width: auto !important;
-    flex: 0.3 0 30px !important;
-    margin: 0 !important;
-    display: flex;
-  }
-  .table-header{
-    width: auto !important;
-    flex: 1 0 100px !important;
-    margin: 0 !important;
-    display: flex;
-    padding: 0 10px !important;
-  }
-  .table-header-left{
-    justify-content: flex-start;
-  }
-  .rt-tbody{
-    min-width: auto !important;
-  }
+
   .rt-thead {
-    box-shadow: none;
-    margin-bottom: 0;
     min-width: auto !important;
-  }
-  .-header{
-    box-shadow: none !important;
-    margin-bottom: 5px;
-  }
-  .rt-td {
-    border-right: none !important;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  .rt-tr-group {
-    border: 1px solid lightgray !important;
-  }
-  .rt-th {
-    background-color: #D4D8DE !important;
-    color: #9DA4B0;
-    font-weight: 600;
-    font-size: 15px;
-    text-transform: none;
-    height: auto;
-    box-shadow: none !important;
-    width: auto !important;
-    padding: 8px 0 !important;
-    justify-content: center;
-    :last-child{
-      text-align: center;
+    .rt-th {
+      background-color: #D4D8DE;
+      box-shadow: none;
+      padding: 10px 5px;
+      color: #9DA4B0;
+      font-size: 16px;
+      .fa {
+        padding: 0 0 0 5px;
+      }
     }
+    .rt-tr {
+      text-align: left;
+    }
+    .rt-th.-sort-asc,
+    .rt-td.-sort-asc {
+      box-shadow: none;
+    }
+    &.-header {
+      box-shadow: none;
+    }
+  }
+
+  .rt-tbody {
+    min-width: auto !important;
+    .rt-tr-group {
+      border-color: #EEF3F6;;
+    }
+    .rt-tr  {
+     &.-even {
+       background-color: #F4F6F9;
+     }
+    }
+    .rt-td {
+      color: black;
+    }
+  }
+
+  .rt-tr {
+    text-align: left;
   }
 }
 

@@ -18,6 +18,7 @@ class ClosedDeals extends React.Component {
             bids : [],
         };
         this.cancelIcon = assetsBaseDir + "app/images/cancel.png";
+        this.checkIcon = assetsBaseDir + "app/images/blue_check.png";
         this.docIcon = assetsBaseDir + "app/images/doc.png";
         this.blueEnvelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
     }
@@ -36,7 +37,10 @@ class ClosedDeals extends React.Component {
     };
 
     render () {
-        const { loading, bids } = this.state;
+        const { loading } = this.state;
+        let { bids } = this.state;
+        bids = bids.reverse();
+
         return (
             <div style={{
                 display: 'flex',
@@ -45,9 +49,10 @@ class ClosedDeals extends React.Component {
             }}>
 
                 {
-                    bids.length > 0 && <div>
+                    bids.length > 0 &&
+                    <div>
                         <ReactTable
-                            className={"closed-deals-table"}
+                            className={"ca-table"}
                             defaultPageSize={30}
                             showPageSizeOptions={false}
                             showPagination={false}
@@ -65,9 +70,13 @@ class ClosedDeals extends React.Component {
                                     {"#"+props.value}
                                 </div>
                             }, {
-                                Header: 'Listing name',
+                                Header: () => (
+                                    <span>
+                                        Listing name <i className="fa fa-sort" />
+                                    </span>
+                                ),
                                 headerClassName : 'table-header-big',
-                                className : 'table-header-big',
+                                className : 'table-header-big sorting',
                                 id: 'name',
                                 accessor: d => {return{
                                     name : d.content.name,
@@ -78,7 +87,11 @@ class ClosedDeals extends React.Component {
                                 </div>
                             }, {
                                 accessor: 'content.company.legalName', // Required because our accessor is not a string
-                                Header: 'Seller',
+                                Header: () => (
+                                    <span>
+                                        Seller <i className="fa fa-sort" />
+                                    </span>
+                                ),
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
                             }, {
@@ -88,8 +101,8 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("LT") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
+                                    {props.value.map(r=>r.shortLabel).indexOf("LT") === -1 &&
+                                    <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
                                 Header: 'LB',
@@ -98,8 +111,8 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("HL") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
+                                    {props.value.map(r=>r.shortLabel).indexOf("HL") === -1 &&
+                                    <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
                                 Header: 'DT',
@@ -108,8 +121,8 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("DT") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
+                                    {props.value.map(r=>r.shortLabel).indexOf("DT") === -1 &&
+                                    <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
                                 Header: 'HL',
@@ -118,18 +131,8 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("HL") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
-                                </div>
-                            },{
-                                Header: 'CL',
-                                accessor: 'content.rightsPackage',
-                                headerClassName : 'table-header-small',
-                                className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("CL") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
+                                    {props.value.map(r=>r.shortLabel).indexOf("HL") === -1 &&
+                                    <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
                                 Header: 'NA',
@@ -138,18 +141,8 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("NA") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
-                                </div>
-                            },{
-                                Header: 'AR',
-                                accessor: 'content.rightsPackage',
-                                headerClassName : 'table-header-small',
-                                className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("AR") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
+                                    {props.value.map(r=>r.shortLabel).indexOf("NA") === -1 &&
+                                    <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
                                 Header: 'PR',
@@ -158,11 +151,15 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("PR") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
+                                    {props.value.map(r=>r.shortLabel).indexOf("PR") === -1 &&
+                                    <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             }, {
-                                Header: 'Territories',
+                                Header: () => (
+                                    <span>
+                                        Territories <i className="fa fa-sort" />
+                                    </span>
+                                ),
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 id: "territories",
@@ -178,7 +175,11 @@ class ClosedDeals extends React.Component {
                                     {props.value.worldwide && props.value.asBundle && "Worldwide" }
                                 </div>
                             }, {
-                                Header: 'Price',
+                                Header: () => (
+                                    <span>
+                                        Price <i className="fa fa-sort" />
+                                    </span>
+                                ),
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 id: "price",
@@ -187,7 +188,11 @@ class ClosedDeals extends React.Component {
                                     {props.value.fee + " " + getCurrencySymbol(props.value.currency)}
                                 </div>
                             }, {
-                                Header: 'Date of sale',
+                                Header: () => (
+                                    <span>
+                                        Date of sale <i className="fa fa-sort" />
+                                    </span>
+                                ),
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 accessor: 'createdAt',
@@ -196,7 +201,11 @@ class ClosedDeals extends React.Component {
                                 </div>
 
                             }, {
-                                Header: 'Name',
+                                Header: () => (
+                                    <span>
+                                        Buyer name <i className="fa fa-sort" />
+                                    </span>
+                                ),
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
                                 accessor: 'buyerUser',
