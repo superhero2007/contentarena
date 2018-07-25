@@ -285,7 +285,7 @@ class PopupRight extends React.Component {
 
             <div className="modal-title">
                 Edit {name}
-                {this.showOkButton() && <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>}
+                <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>
             </div>
 
             <div className="step-content">

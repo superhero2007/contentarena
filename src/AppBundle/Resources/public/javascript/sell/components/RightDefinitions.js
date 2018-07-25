@@ -11,7 +11,7 @@ export const RightDefinitions = [
         multiple : false
     },
     {
-        name : "Broadcasting obligation",
+        name : "Transmission Obligation",
         key: "BROADCASTING",
         superRights: [],
         options : [
@@ -37,7 +37,7 @@ export const RightDefinitions = [
         multiple : true
     },
     {
-        name: "Exploitation form",
+        name: "Transmission Form",
         key : "EXPLOITATION_FORM",
         superRights : [],
         options: [
