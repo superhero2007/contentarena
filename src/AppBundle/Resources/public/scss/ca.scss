@@ -609,6 +609,11 @@ a:hover{
     line-height: 14px;
     position: relative;
     width: 20%;
+
+    &.visited {
+      cursor: pointer;
+    }
+
     .step-label{
       text-transform: uppercase;
     }
