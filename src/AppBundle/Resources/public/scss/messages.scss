@@ -1,0 +1,83 @@
+@import "vars";
+
+.messages-container{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  .threads{
+    width: 300px;
+    border: 1px solid #C1C1C1;
+    background-color: #F4F6F9;
+    .thread{
+      background-color: white;
+      margin: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 25px;
+      padding: 5px 20px 20px;
+      border: 1px solid lightgrey;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      .date{
+        margin-left: auto;
+      }
+      .last-message{
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+    .thread-selected{
+      background-color: lightgrey;
+    }
+  }
+  .thread-content{
+    flex: 5;
+    margin: 0 30px;
+    .thread-title{
+      color: #48C0FE;
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .messages{
+      display: flex;
+      flex-direction: column;
+      .message{
+        color: #4F4F4F;
+        font-size: 16px;
+        line-height: 30px;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        .message-sender {
+          font-weight: 600;
+        }
+        .message-content {
+          border: 1px solid lightgray;
+          padding: 5px 15px;
+        }
+        .message-date{
+          font-size: 14px;
+          margin-left: auto;
+        }
+      }
+      .own-message{
+        margin-left: auto;
+      }
+    }
+    .message-input{
+      .message-content{
+        display: flex;
+        margin: 10px 0;
+        box-sizing: border-box;
+      }
+      .standard-button{
+        margin-left: auto;
+        margin-right: 0;
+      }
+    }
+  }
+}

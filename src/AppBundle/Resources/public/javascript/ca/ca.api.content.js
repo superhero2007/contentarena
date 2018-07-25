@@ -76,6 +76,71 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    sendMessage ( message ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/messages/send",
+            type: "POST",
+            data: JSON.stringify(message),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    getThread ( customId ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/messages/thread",
+            type: "POST",
+            data: JSON.stringify({customId: customId}),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    getThreads (  ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/messages/threads",
+            type: "POST",
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     placeBid ( bid ) {
         let deferred = jQuery.Deferred(),
             _this = this;

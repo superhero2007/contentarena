@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Content;
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\WatchlistService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -75,8 +77,27 @@ class ContentController extends Controller
         //Take Repositories
         $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
 
-        //Get results
+        /* @var Content $content */
         $content = $repository->findOneBy(array("customId"=>$customId));
+
+        $pendingStatus = $this->getDoctrine()->getRepository("AppBundle:BidStatus")->findOneBy(array("name"=>"PENDING"));
+
+        foreach ($content->getSalesPackages() as $salesBundle){
+            /**
+             * @var SalesPackage $salesBundle
+             * @var Bid $bid
+             */
+            $bid = $this->getDoctrine()->getRepository("AppBundle:Bid")->findOneBy(array(
+                "status" => $pendingStatus,
+                "salesPackage"=> $salesBundle,
+                "buyerUser" => $user
+            ));
+
+            if ( $bid != null){
+                $salesBundle->setFee($bid->getAmount());
+            }
+
+        }
 
         /**
          * Strategy to keep camel case on property names

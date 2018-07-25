@@ -182,7 +182,14 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/messages", name="messages")
+     * @Route("/messages", name="allMessages")
+     */
+    public function allMessages(){
+        return $this->redirectToRoute("messages", array("customId"=>"ALL"));
+    }
+
+    /**
+     * @Route("/messages/{customId}", name="messages", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
      */
     public function messages(Request $request)
     {

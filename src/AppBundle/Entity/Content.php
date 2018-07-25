@@ -318,7 +318,7 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"board"})
+     * @Groups({"listing","board"})
      */
     private $owner;
 
