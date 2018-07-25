@@ -89,7 +89,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getClosedBids($user){
         $query = $this->createQueryBuilder('b')
-            ->orderBy("b.createdAt")
+            ->orderBy("b.createdAt", "DESC")
             ->join('b.content', 'c')
             ->join('b.status', 'status')
             ->where('b.buyerUser = :user')

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import ContentListing from '../../main/components/ContentListing';
+import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol, goTo, limitText} from "../../main/actions/utils";
 import Moment from "moment/moment";
 
@@ -37,18 +38,22 @@ class ClosedDeals extends React.Component {
     };
 
     render () {
-        const { loading } = this.state;
-        let { bids } = this.state;
-        bids = bids.reverse();
-
+        const { loading, bids } = this.state;
         return (
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 flex: 1
             }}>
-
                 {
+                    bids.length > 0 && bids.map((b,i) => {
+                        return <SendMessage key={i}
+                                            ref={"messagePopup" + b.id }
+                                            listingId={b.content.id}
+                                            recipient={b.content.company}/>
+                    })
+                }
+                    {
                     bids.length > 0 &&
                     <div>
                         <ReactTable
@@ -217,9 +222,12 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 Header: 'Actions', // Custom header components!
+                                accessor: 'id',
                                 Cell: props => <div className={""}>
                                     <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={this.docIcon}/>
-                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={this.blueEnvelopeIcon}/>
+                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                        this.refs["messagePopup"+props.value].open();
+                                    }} src={this.blueEnvelopeIcon}/>
                                 </div>
                             }
 

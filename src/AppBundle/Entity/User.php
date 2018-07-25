@@ -40,7 +40,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
-     * @Groups({"board","closed", "commercial"})
+     * @Groups({"listing","board","closed", "commercial"})
      *
      */
     protected $firstName;
@@ -49,7 +49,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
-     * @Groups({"board","closed", "commercial"})
+     * @Groups({"listing","board","closed", "commercial"})
      */
     protected $lastName;
 
@@ -91,6 +91,7 @@ class User extends BaseUser
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"commercial", "closed"})
      */
     private $company;
 

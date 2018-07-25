@@ -6,18 +6,20 @@ import ClosedDeals from './ClosedDeals';
 import PendingDeals from './PendingDeals';
 import ManageListings from './ManageListings';
 import CommercialActivity from './CommercialActivity';
+import Messages from './Messages';
 
 class Manager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             profile : props.profile,
-            tab : props.tab
+            tab : props.tab,
+            user : props.user
         };
     }
 
     render () {
-        const { profile, tab } = this.state;
+        const { profile, tab, user } = this.state;
         const { company } = this.props;
         return (
             <div className={"manager-container"}>
@@ -28,6 +30,7 @@ class Manager extends React.Component {
                     {tab === 'BIDS' && <PendingDeals />}
                     {tab === 'MANAGE_LISTINGS' && <ManageListings />}
                     {tab === 'COMMERCIAL_ACTIVITY' && <CommercialActivity/>}
+                    {tab === 'MESSAGES' && <Messages user={user}/>}
                     {tab === 'SETTINGS' && "SETTINGS"}
                 </div>
             </div>

@@ -7,6 +7,7 @@ import DigitalSignature from "../../main/components/DigitalSignature";
 import {getCurrencySymbol, getFee, limitText} from "../actions/utils";
 import {addIcon, bidIcon, blueCheckIcon, blueEnvelopeIcon, bucketIcon, cancelIcon, docIcon, fixedIcon} from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
+import SendMessage from "../../main/components/SendMessage";
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -154,10 +155,11 @@ class CommercialSalesBundle extends React.Component{
     };
 
     render(){
-        const { salesBundle, company, onDelete } = this.props;
+        const { salesBundle, company, onDelete, contentId } = this.props;
         const { showBids } = this.state;
 
         let totalFee = (salesBundle.bids.length > 0) ? salesBundle.bids.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
+        let _this = this;
 
         return (
             <div className="commercial-sales-bundles">
@@ -197,6 +199,10 @@ class CommercialSalesBundle extends React.Component{
                 </div>
                 {showBids && salesBundle.bids.length > 0 &&
                 <div>
+                    {salesBundle.bids.map((b)=>{
+                        return <SendMessage ref={"messagePopup" + b.id } listingId={contentId} recipient={b.buyerUser.company}/>
+                    })}
+
                     <ReactTable
                         className={"ca-table"}
                         defaultPageSize={30}
@@ -277,7 +283,11 @@ class CommercialSalesBundle extends React.Component{
                                 {props.value.status === "APPROVED"
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={docIcon}/>}
                                 {props.value.status === "APPROVED"
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={blueEnvelopeIcon}/>}
+                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                    _this.refs["messagePopup" + props.value.bid.id].open();
+                                }} src={blueEnvelopeIcon}/>}
+
+
                                 {/*CONFIRM REMOVE*/}
                                 {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                     <div className={"confirmation-text"} style={{ whiteSpace: 'normal'}}>

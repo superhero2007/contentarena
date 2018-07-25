@@ -9,7 +9,11 @@ import Seller from "./Seller";
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import DigitalSignature from "../../main/components/DigitalSignature";
-import {getCurrencySymbol, goTo, goToClosedDeals, goToListing, goToMarketplace} from "../../main/actions/utils";
+import SendMessage from "../../main/components/SendMessage";
+import {
+    getCurrencySymbol, getFullName, goTo, goToClosedDeals, goToListing,
+    goToMarketplace
+} from "../../main/actions/utils";
 import CompanyInformation from "../../sell/components/CompanyInformation";
 import {customStyles} from "../../main/styles/custom";
 import {companyIsValid} from "../../sell/actions/validationActions";
@@ -435,6 +439,7 @@ class ListingDetails extends React.Component {
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
         return (
             <div className="listing-details">
+                <SendMessage ref="messagePopup" listingId={content.id} recipient={content.company}/>
                 { this.editCompany() }
                 { this.allTerritories() }
                 { this.successScreen() }
@@ -513,9 +518,12 @@ class ListingDetails extends React.Component {
                                     flex:1,
                                     fontSize: 18,
                                     fontWeight: 600
-                                }}>{"Juan Cruz Talco"}</div>
+                                }}>{getFullName(content.owner)}</div>
 
-                                <div style={{margin: '0 10px', display: 'flex'}}>
+                                <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
+                                     onClick={()=>{
+                                         this.refs.messagePopup.open()
+                                     }}>
                                     <img style={{width: 22, height: 18, marginBottom: 5}} src={this.contactIcon}/>
                                     <div style={{
                                         flex:1,

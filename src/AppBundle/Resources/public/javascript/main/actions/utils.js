@@ -23,6 +23,10 @@ export const getFee = (salesPackage) => {
     return feeNumber.toLocaleString() +" " + getCurrencySymbol(salesPackage.currency.code);
 };
 
+export const getFullName = (user) => {
+    return user.firstName + " " + user.lastName;
+};
+
 export const limitText = (txt, limit = 25) => {
     return (txt.length > limit) ? txt.substring(0,limit) + "..." : txt
 };

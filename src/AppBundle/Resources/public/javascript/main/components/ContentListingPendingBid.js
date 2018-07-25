@@ -2,6 +2,7 @@ import React from 'react';
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListing from "./ContentListing";
+import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol} from "../actions/utils";
 import {blueEnvelopeIcon, bucketIcon, infoIcon} from "./Icons";
 
@@ -31,6 +32,7 @@ class ContentListingPendingBid extends ContentListing {
             onSelectName,
             imageBase64,
             image,
+            id,
             company,
             customId,
             bid,
@@ -43,6 +45,9 @@ class ContentListingPendingBid extends ContentListing {
 
         return (
             <div className="listing-list-view" onClick={this.onSelect} style={{padding: 0}}>
+                <SendMessage ref={"messagePopup" + id }
+                             listingId={id}
+                             recipient={company}/>
                 <div className={"left"} style={{padding: 25}} >
                     <div className={"image"}>
                         <img src={listingImage}/>
@@ -54,7 +59,10 @@ class ContentListingPendingBid extends ContentListing {
                     <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
 
                     {/*COMPANY*/}
-                    <div className={"company"}>
+                    <div className={"company"} onClick={(e)=>{
+                        this.refs["messagePopup" + id].open();
+                        e.stopPropagation();
+                    }}>
                         {company.legalName} <img style={{marginLeft: 5}} src={this.envelopeIcon}/>
                     </div>
 
