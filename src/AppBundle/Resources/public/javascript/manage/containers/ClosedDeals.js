@@ -37,6 +37,22 @@ class ClosedDeals extends React.Component {
         goTo("listing/" + id);
     };
 
+    showTerritory = (props) => {
+        if (!props.value.worldwide || !props.value.asBundle) {
+            if (props.value.size > 1) {
+                return props.value.size + " territories"
+            }
+
+            if (props.value.size === 1) {
+                return  props.value.territories[0].name
+            }
+        }
+
+        if  (props.value.worldwide && props.value.asBundle) {
+            return "Worldwide"
+        }
+    }
+
     render () {
         const { loading, bids } = this.state;
         return (
@@ -169,15 +185,13 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header',
                                 id: "territories",
                                 accessor: d => {return{
+                                    territories: d.salesPackage.territories,
                                     size : d.salesPackage.territories.length,
                                     worldwide : d.salesPackage.territoriesMethod === "WORLDWIDE",
                                     asBundle : d.salesPackage.bundleMethod === "SELL_AS_BUNDLE"
                                 }},
                                 Cell: props => <div className={"blue"}>
-                                    { (!props.value.worldwide || !props.value.asBundle) && props.value.size + " "}
-                                    {(!props.value.worldwide || !props.value.asBundle) && props.value.size > 1 && "territories" }
-                                    {(!props.value.worldwide || !props.value.asBundle) && props.value.size === 1 && "territory" }
-                                    {props.value.worldwide && props.value.asBundle && "Worldwide" }
+                                    {this.showTerritory(props)}
                                 </div>
                             }, {
                                 Header: () => (
