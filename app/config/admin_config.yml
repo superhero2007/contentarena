@@ -28,7 +28,6 @@ easy_admin:
                         - 'username'
                         - 'firstName'
                         - 'lastName'
-                        - 'profile'
                         - 'status'
                         - 'title'
                         - 'phone'
@@ -37,19 +36,6 @@ easy_admin:
             Company:
                 class: AppBundle\Entity\Company
                 controller: AppBundle\Controller\Admin\CompanyController
-                form:
-                    fields:
-                        - 'legalName'
-                        - 'displayName'
-                        - 'website'
-                        - 'address'
-                        - 'owner'
-                        - 'zip'
-                        - 'phone'
-                        - 'description'
-                        - 'year'
-                        - 'size'
-                        - 'country'
             Content:
                 class: AppBundle\Entity\Content
                 form:

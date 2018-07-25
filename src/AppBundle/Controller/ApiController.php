@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
+use AppBundle\Service\MessageService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -360,6 +361,57 @@ class ApiController extends BaseController
         $success = $bidService->removeBid($request, $user);
 
         return new JsonResponse(array("success"=>$success));
+
+    }
+
+    /**
+     * @Route("/api/messages/threads", name="getThreads")
+     */
+    public function getThreads(Request $request, MessageService $messageService)
+    {
+        $user = $this->getUser();
+
+        $threads = $messageService->getAllThreads($request, $user);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($threads, 'json',SerializationContext::create());
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/messages/thread", name="getThread")
+     */
+    public function getThread(Request $request, MessageService $messageService)
+    {
+        $threads = $messageService->getThread($request);
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($threads, 'json',SerializationContext::create());
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/messages/send", name="sendMessage")
+     */
+    public function sendMessage(Request $request, MessageService $messageService)
+    {
+        $user = $this->getUser();
+
+        $message = $messageService->sendMessage($request, $user);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($message, 'json',SerializationContext::create());
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
 
     }
 
