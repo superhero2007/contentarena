@@ -1,77 +1,80 @@
 @import "vars";
 
-.light-blue-button{
-    border: 1px solid $border-color-2;
-    color: $border-color-2;
-    height: 48px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    min-width: 170px;
-    padding: 0 25px;
+.light-blue-button {
+  border: 1px solid $border-color-2;
+  color: $border-color-2;
+  height: 48px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  min-width: 130px;
+  padding: 0 25px;
 }
 
-.link-button{
-    color: $border-color-2;
-    border: none;
-    background: none;
-    font-size: 14px;
-    font-style: italic;
-    text-decoration: underline;
+.link-button {
+  color: $border-color-2;
+  border: none;
+  background: none;
+  font-size: 16px;
+  text-decoration: underline;
 }
 
-.blue-button{
-    color: white;
-    font-size: 16px;
-    padding: 10px 0px;
-    margin: -7px 0;
-    border: none;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background-color: $blue-color;
-    min-width: 100px;
+.blue-button {
+  color: white;
+  font-size: 16px;
+  padding: 10px 0px;
+  margin: -7px 0;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: $blue-color;
+  min-width: 100px;
+}
+
+#next-step {
+  padding: 9px 38px;
+  margin-left: 40px;
 }
 
 .standard-button {
-    color: #062E44;
-    margin: 0 0 0 5px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    line-height: 1.3;
-    padding: 6.5px 10px;
-    border: 0;
-    overflow: visible;
-    font: inherit;
-    text-transform: none;
-    box-sizing: border-box;
-    vertical-align: middle;
-    font-size: 18px;
-    text-decoration: none;
-    cursor: pointer;
-    outline: none;
-    background-color: #FFC94B;
-    width: 190px;
-    height: 38px;
+  color: #062E44;
+  margin: 0 0 0 5px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  line-height: 1.3;
+  padding: 4px 47px;
+  border: 0;
+  overflow: visible;
+  font: inherit;
+  text-transform: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  background-color: #FFC94B;
 
-    &.transparent {
-      background-color: transparent;
-      border: 1px solid #1a4b63;
-    }
+  &.transparent {
+    background-color: transparent;
+    border: 1px solid #1a4b63;
+  }
 
 }
-.standard-button-big{
-    @extend .standard-button;
-    width: auto;
-    margin-left: 10px;
-    padding: 7px 40px;
+
+.standard-button-big {
+  @extend .standard-button;
+  width: auto;
+  margin-left: 10px;
+  padding: 7px 40px;
 }
 
 .standard-button:disabled {
-    background-color: lightgray;
-    cursor: default;
+  background-color: lightgray;
+  cursor: default;
 }
