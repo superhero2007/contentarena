@@ -64,9 +64,17 @@
     }
 
 }
+
 .standard-button-big{
     @extend .standard-button;
     width: auto;
+    margin-left: 10px;
+    padding: 7px 40px;
+}
+
+.standard-button-small{
+    @extend .standard-button;
+    width: 140px;
     margin-left: 10px;
     padding: 7px 40px;
 }

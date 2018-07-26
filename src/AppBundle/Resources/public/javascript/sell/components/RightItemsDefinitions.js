@@ -1,10 +1,10 @@
 export const RightItemsDefinitions = {
     "BROADCASTING_YES" : {
-        "parent" : "Broadcasting obligation",
+        "parent" : "Transmission Obligation",
         "label" : "Yes"
     },
     "BROADCASTING_NO" : {
-        "parent" : "Broadcasting obligation",
+        "parent" : "Transmission Obligation",
         "label" : "No"
     },
     "SUBLICENSE_YES" : {
@@ -57,7 +57,7 @@ export const RightItemsDefinitions = {
         "label" : "Mobile"
     },
     "EXPLOITATION_FORM_ALL" : {
-        "parent" : "Exploitation form",
+        "parent" : "Transmission Form",
         "label" : "All",
         all : true
     },

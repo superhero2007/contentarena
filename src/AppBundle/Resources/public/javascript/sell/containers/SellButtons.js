@@ -141,7 +141,7 @@ class SellButtons extends React.Component {
         let message = "Please complete missing information\n";
         let program = this.programIsValid();;
         if ( rightsPackage.length === 0 ) message += "<br/>- Select at least one right.\n";
-        if ( !programDescription || programDescription.length < 15 ) message += "<br/>- Program/content description must be at least 15 characters length";
+        if ( !programDescription || programDescription.length < 15 ) message += "<br/>- Program description must be at least 15 characters length";
         if ( !program ) message += "<br/>- Enter program information.";
 
         return message;
@@ -185,6 +185,7 @@ class SellButtons extends React.Component {
         const {step} = this.props;
         const { lastStep, saving, savingSuccess } = this.state;
         let saveAsDraftText = (saving) ? "Saving.." : (savingSuccess) ? "Saved as Draft" : "Save as Draft";
+        const buttonText = "Review and sign";
 
         return (
             <div className="buttons">
@@ -197,13 +198,13 @@ class SellButtons extends React.Component {
 
                     { step === 4 && this.reviewAndSignEnabled() &&
                     <button id="draft-listing" className="standard-button" onClick={this.goToReviewAndSign  }>
-                        Review and Sign
+                        {buttonText}
                     </button> }
 
                     { this.props.step === 4 && !this.reviewAndSignEnabled() &&
                         <div data-tip={this.getReviewButtonTooltipMessages()}>
                             <button id="draft-listing" className="standard-button" disabled>
-                                Review and sign
+                                {buttonText}
                             </button>
                         </div>}
 
