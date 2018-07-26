@@ -1,4 +1,4 @@
-
+import React from 'react';
 import Round from '../components/Round';
 import StaticRound from '../components/StaticRound';
 
