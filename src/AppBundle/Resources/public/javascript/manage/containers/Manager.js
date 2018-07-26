@@ -7,6 +7,7 @@ import PendingDeals from './PendingDeals';
 import ManageListings from './ManageListings';
 import CommercialActivity from './CommercialActivity';
 import Messages from './Messages';
+import Settings from './Settings';
 
 class Manager extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class Manager extends React.Component {
                     {tab === 'MANAGE_LISTINGS' && <ManageListings />}
                     {tab === 'COMMERCIAL_ACTIVITY' && <CommercialActivity/>}
                     {tab === 'MESSAGES' && <Messages user={user}/>}
-                    {tab === 'SETTINGS' && "SETTINGS"}
+                    {tab === 'SETTINGS' && <Settings/>}
                 </div>
             </div>
         )

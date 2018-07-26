@@ -33,14 +33,20 @@ class User extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"settings"})
      */
     protected $id;
+
+    /**
+     * @Groups({"settings"})
+     */
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial"})
+     * @Groups({"listing","board","closed", "commercial", "settings"})
      *
      */
     protected $firstName;
@@ -49,7 +55,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial"})
+     * @Groups({"listing","board","closed", "commercial", "settings"})
      */
     protected $lastName;
 
@@ -71,6 +77,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255)
+     * @Groups({"settings"})
      */
     protected $phone;
 
@@ -78,6 +85,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Groups({"settings"})
      */
     protected $title;
 
@@ -91,7 +99,7 @@ class User extends BaseUser
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"commercial", "closed"})
+     * @Groups({"commercial", "closed", "settings"})
      */
     private $company;
 

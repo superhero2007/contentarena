@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,7 @@ class MainController extends BaseController
     {
 
         $user = $this->getUser();
+        $this->get('session')->set('profile',"BUYER");
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
 
         return $this->render('@App/marketplace.html.twig', [
@@ -85,6 +87,7 @@ class MainController extends BaseController
     public function manageListings(Request $request)
     {
         $user = $this->getUser();
+        $this->get('session')->set('profile',"SELLER");
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'profile' => "SELLER",
@@ -113,6 +116,7 @@ class MainController extends BaseController
     public function manageWatchlist(Request $request)
     {
         $user = $this->getUser();
+        $this->get('session')->set('profile',"BUYER");
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'company' => $this->serialize($user->getCompany()),
@@ -128,6 +132,7 @@ class MainController extends BaseController
     public function manageClosedDeals(Request $request)
     {
         $user = $this->getUser();
+        $this->get('session')->set('profile',"BUYER");
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
@@ -143,6 +148,7 @@ class MainController extends BaseController
     public function manageActiveBids(Request $request)
     {
         $user = $this->getUser();
+        $this->get('session')->set('profile',"BUYER");
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
@@ -158,6 +164,7 @@ class MainController extends BaseController
     public function commercialActivity(Request $request)
     {
         $user = $this->getUser();
+        $this->get('session')->set('profile',"SELLER");
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
@@ -172,19 +179,22 @@ class MainController extends BaseController
      */
     public function settings(Request $request)
     {
+        /* @var User $user */
         $user = $this->getUser();
+        $profile = $this->get('session')->get('profile');
+
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'tab' => "SETTINGS",
             'company' => null,
-            'profile' => $request->get("profile")
+            'profile' => $profile
         ]);
     }
 
     /**
      * @Route("/messages", name="allMessages")
      */
-    public function allMessages(){
+    public function allMessages(Request $request){
         return $this->redirectToRoute("messages", array("customId"=>"ALL"));
     }
 
@@ -194,11 +204,12 @@ class MainController extends BaseController
     public function messages(Request $request)
     {
         $user = $this->getUser();
+        $profile = $this->get('session')->get('profile');
         return $this->render('@App/manage.html.twig', [
             'user' => $user,
             'tab' => "MESSAGES",
             'company' => null,
-            'profile' => $request->get("profile")
+            'profile' => $profile
         ]);
     }
 

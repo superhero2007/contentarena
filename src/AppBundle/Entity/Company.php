@@ -21,7 +21,7 @@ class Company
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"details", "closed", "commercial"})
+     * @Groups({"details", "closed", "commercial", "settings"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="legal_name", type="string", length=255, unique=true)
-     * @Groups({"details", "closed", "commercial"})
+     * @Groups({"details", "closed", "commercial", "settings"})
      */
     private $legalName;
 
@@ -37,7 +37,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="vat", type="string", length=255, nullable=true)
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $vat;
 
@@ -45,7 +45,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="registration_number", type="string", length=255, nullable=true)
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $registrationNumber;
 
@@ -53,7 +53,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $city;
 
@@ -77,7 +77,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $address;
 
@@ -85,7 +85,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="zip", type="string", length=255, nullable=true)
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $zip;
 
@@ -104,6 +104,7 @@ class Company
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="company", cascade={"persist","remove"})
+     * @Groups({"settings"})
      */
     private $users;
 
@@ -118,7 +119,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $description;
 
@@ -139,7 +140,7 @@ class Company
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
-     * @Groups({"details"})
+     * @Groups({"details", "settings"})
      */
     private $country;
 
