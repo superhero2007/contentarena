@@ -25,13 +25,8 @@ class HeaderBar extends  React.Component {
 
     render(){
         const {tab, profile} = this.props;
-        let logoUrl = '';
-        if (tab === 'MANAGE_LISTINGS') {
-            logoUrl = 'managelistings'
-        }
-        if (tab === 'MARKETPLACE') {
-            logoUrl = 'marketplace'
-        }
+        const logoUrl = this.getLogoUrl(tab);
+
         return(
             <div className="manager-header">
 
@@ -81,6 +76,13 @@ class HeaderBar extends  React.Component {
                     Commercial activity
                 </HeaderBarTab> }
 
+                { profile === "SELLER" && <HeaderBarTab
+                    tabName={"NEW_LISTING"}
+                    route={"managelistings/new"}
+                    activeTab={tab} >
+                    Create Listing
+                </HeaderBarTab> }
+
                 <div className="spacer" />
 
                 { profile === "BUYER" &&
@@ -116,6 +118,17 @@ class HeaderBar extends  React.Component {
                 </div>
             </div>
         )
+    }
+
+    getLogoUrl = (tab) => {
+        let logoUrl = '';
+        if (tab === 'MANAGE_LISTINGS') {
+            logoUrl = 'managelistings'
+        }
+        if (tab === 'MARKETPLACE') {
+            logoUrl = 'marketplace'
+        }
+        return logoUrl;
     }
 }
 
