@@ -125,7 +125,8 @@ ul.uk-subnav {
     color: #ffffff;
 }
 
-input, select {
+input:not([class='ca-checkbox']):not([class='ca-radio']),
+select {
     margin: 10px 0;
     padding: 8px;
     font-size: 80%;
@@ -325,11 +326,11 @@ h7 {
     display: flex;
 }
 
-input[type="checkbox"] {
-    width: auto;
-    margin: 0 10px;
-    display: none;
-}
+//input[type="checkbox"] {
+//    width: auto;
+//    margin: 0 10px;
+//    display: none;
+//}
 
 textarea {
     width: 100% !important;
@@ -400,7 +401,7 @@ textarea {
     flex-wrap: wrap;
 }
 
-input {
+input:not([class='ca-checkbox']):not([class='ca-radio']){
     margin: 0;
     padding: 15px;
     border: 1px solid lightgray;

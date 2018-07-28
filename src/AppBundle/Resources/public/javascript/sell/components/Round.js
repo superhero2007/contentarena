@@ -73,7 +73,7 @@ class Round extends React.Component {
 
         return (
             <div className={"matchday"}>
-                <div className="select-box-checkbox">
+                <div className="ca-checkbox select-box-checkbox">
                     <input type="checkbox"
                            checked={activeRound.selected}
                            onChange={this.toggle}
