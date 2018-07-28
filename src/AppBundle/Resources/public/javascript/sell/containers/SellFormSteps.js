@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
+import cn from "classnames";
 import {goToPreviousStep, goToStep} from "../actions/contentActions";
 
-const SellFormStep = ({step, active, title, onClick}) => (
-    <div  className={"step " + (active && "step-active") } onClick={() => {onClick(step)}}>
+const SellFormStep = ({step, active, title, onClick, stepVisited}) => (
+    <div  className={cn("step", {"step-active" : active, "visited": stepVisited})} onClick={() => {onClick(step)}}>
         <div className="step-label">
             Step { step }
         </div>
@@ -48,8 +49,11 @@ class SellFormSteps extends React.Component {
         return (
             <div className="box-header">
                 { this.state.steps.map((step, i)=>{
+                    const stepVisited = this.state.visited.indexOf(step.step) !== -1;
+
                     return <SellFormStep
                         key={i}
+                        stepVisited={stepVisited}
                         onClick={this.onClick}
                         step={step.step}
                         title={step.title} active={_this.props.step === step.step}/>

@@ -103,7 +103,6 @@ class ManageListings extends React.Component {
                 }}>
                     <div style={{margin:'0 20px' , flex: 1,display: 'flex', alignItems: 'center'}}>
                         Draft ({draft.length})
-                        <a className={"new-listing-button"} href={envhosturl + "managelistings/new"} >Add new Listing</a>
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
                         Inactive listings ({inactive.length})

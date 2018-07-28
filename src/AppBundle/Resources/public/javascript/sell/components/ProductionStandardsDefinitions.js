@@ -73,7 +73,7 @@ export const ProductionStandardsDefinitions = [
         multiple : false
     },
     {
-        name: "Distribution Method",
+        name: "Delivery Method",
         key: "TECHNICAL_DELIVERY",
         productionLabel : true,
         superRights: [],

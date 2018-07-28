@@ -447,7 +447,7 @@ class SellFormStep1 extends React.Component {
                             onClick={() => {
                                 this.props.openCategorySelector(this.state.sportCategories)
                             }}
-                            placeholder={"Country/Category"}  />
+                            placeholder={"e.g. Germany"}  />
                         { this.state.loadingCategories && <i className="fa fa-cog fa-spin"/>}
                     </div>}
                     {this.state.sportSelectors.length === 1 && this.hasCustomCategory() && <NewCategory
@@ -466,7 +466,7 @@ class SellFormStep1 extends React.Component {
                                onClick={() => {
                                    this.props.openTournamentSelector( this.state.tournaments );
                                }}
-                               placeholder={"Tournament"}  />
+                               placeholder={"e.g. Bundesliga"}  />
                         { this.state.loadingTournaments && <i className="fa fa-cog fa-spin"/>}
                     </div>}
 
@@ -505,7 +505,7 @@ class SellFormStep1 extends React.Component {
 
                     <div className="base-input">
                         <label>Website</label>
-                        <TagsInput inputProps={{placeholder: "Website"}} value={this.state.website} onChange={this.websitesUpdated} />
+                        <TagsInput inputProps={{placeholder: "e.g. bundesliga.de"}} value={this.state.website} onChange={this.websitesUpdated} />
                     </div>
 
                     <FileSelector
