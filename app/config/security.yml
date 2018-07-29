@@ -33,6 +33,7 @@ security:
         - { path: ^/mycontent, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
         - { path: ^/listing, role: ROLE_USER }
+        - { path: ^/license, role: ROLE_USER }
         - { path: ^/settings, role: ROLE_USER }
         - { path: ^/messages, role: ROLE_USER }
         - { path: ^/marketplace, role: ROLE_USER }

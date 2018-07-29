@@ -10,6 +10,14 @@ export const goToListing = id => {
     goTo("listing/"+ id)
 };
 
+export const viewLicense = id => {
+    goTo("license/preview/"+ id)
+};
+
+export const viewLicenseBid = id => {
+    goTo("license/bid/"+ id)
+};
+
 export const goToMarketplace = () => {
     goTo("marketplace")
 };

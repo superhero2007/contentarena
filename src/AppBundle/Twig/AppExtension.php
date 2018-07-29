@@ -30,8 +30,9 @@ class AppExtension extends AbstractExtension
             new TwigFilter('rightItem', array($this, 'rightItemFilter')),
             new TwigFilter('idSort', array($this, 'idSortFilter')),
             new TwigFilter('kebab', array($this, 'kebabFilter')),
-            new TwigFilter('rightItemParse', array($this, 'rightItemParse')),
             new TwigFilter('json_decode', array($this, 'jsonDecode')),
+            new TwigFilter('right_definitions_label', array($this, 'rightDefinitionsLabel')),
+            new TwigFilter('cast_to_array', array($this, 'castToArray'))
         );
     }
 
@@ -59,35 +60,6 @@ class AppExtension extends AbstractExtension
         });
 
         return $item;
-    }
-
-    public function rightItemParse($content, $inputs, $name)
-    {
-        if(strpos($content,'language')){
-            if(count($inputs)>0){
-                $lng = '';
-                foreach ( $inputs[0] as $input ){
-                    $lng = $lng.$this->container->getParameter($input).', ';
-                }
-
-                $temp = $this->get_string_between($content, "{{", "}}");
-                $content = str_replace("{{".$temp."}}", rtrim($lng, ', '), $content);
-            }
-
-        }else {
-
-            foreach ($inputs as $input) {
-                if (is_array($input) && count($input) > 0) {
-                    $input = join(",", $input);
-                }
-
-                $temp = $this->get_string_between($content, "{{", "}}");
-                $content = str_replace("{{" . $temp . "}}", $input, $content);
-            }
-        }
-
-        return $content;
-
     }
 
     public function rightItemFilter($content, $id)
@@ -196,4 +168,71 @@ class AppExtension extends AbstractExtension
 
         return $price;
     }
+
+    public function castToArray($stdClassObject) {
+        $response = array();
+        foreach ($stdClassObject as $key => $value) {
+            $response[] = array($key, $value);
+        }
+        return $response;
+    }
+
+    public function rightDefinitionsLabel ($right){
+        $definitions = array(
+            "EXPLOITATION_FORM_ALL" => "All",
+            "EXPLOITATION_FORM_FREE" => "Free Only",
+            "EXPLOITATION_FORM_PAY" => "Pay Only",
+            "EXPLOITATION_FORM_IN-SHIP" => "In-Ship & In-Flight",
+            "EXPLOITATION_FORM_CLOSED" => "Closed Circuit",
+            "TRANSMISSION_MEANS_ALL" => "All",
+            "TRANSMISSION_MEANS_CABLE" => "Cable & IPTV",
+            "TRANSMISSION_MEANS_SATELLITE" => "Satellite",
+            "TRANSMISSION_MEANS_DIGITAL" => "Digital Terrestrial",
+            "TRANSMISSION_MEANS_OTT" => "OTT",
+            "TRANSMISSION_MEANS_INTERNET" => "Internet",
+            "TRANSMISSION_MEANS_MOBILE" => "Mobile",
+            "EXPLOITATION_WINDOW_UNLIMITED" => "Unlimited",
+            "EXPLOITATION_WINDOW_LIMITED" => "Limited",
+            "RESERVED_RIGHTS_NO" => "No",
+            "RESERVED_RIGHTS_YES" => "Yes",
+            "SUBLICENSE_YES" => "Yes",
+            "SUBLICENSE_YES_APPROVAL" => "Yes, but remains subject to seller's approval",
+            "SUBLICENSE_NO" => "No",
+            "RUNS_UNLIMITED" => "Unlimited",
+            "RUNS_LIMITED" => "Limited",
+            "GRAPHICS_NO" => "No",
+            "GRAPHICS_YES" => "Yes",
+            "GRAPHICS_NOT_AVAILABLE" => "Info not available yet",
+            "COMMENTARY_NO" => "No",
+            "COMMENTARY_YES" => "Yes",
+            "COMMENTARY_NOT_AVAILABLE" => "Info not available yet",
+            "CAMERA_MINIMUM" => "Minimum cameras",
+            "CAMERA_TEXT" => "",
+            "CAMERA_NOT_AVAILABLE" => "Info not available yet",
+            "CONTENT_ALL" => "All content produced",
+            "CONTENT_TEXT" => "Content partially produced",
+            "TECHNICAL_DELIVERY_SATELLITE" => "Satellite",
+            "TECHNICAL_DELIVERY_IP" => "IP",
+            "TECHNICAL_DELIVERY_FTP" => "FTP-server",
+            "TECHNICAL_DELIVERY_FIBER" => "Fiber",
+            "CONTENT_DELIVERY_LIVE" => "Delivered via live feed",
+            "CONTENT_DELIVERY_DEDICATED" => "Dedicated content delivery",
+            "CONTENT_DELIVERY_NON_DEDICATED" => "No dedicated content delivery",
+            "VIDEO_STANDARD_HD" => "HD",
+            "VIDEO_STANDARD_SD" => "SD",
+            "VIDEO_STANDARD_UHD" => "UHD",
+            "VIDEO_STANDARD_VR" => "VR",
+            "VIDEO_STANDARD_NOT_AVAILABLE" => "Info not available yet",
+            "ASPECT_RATIO_16_9" => "16:9",
+            "ASPECT_RATIO_4_3" => "4:3",
+            "ASPECT_RATIO_CUSTOM" => "Other",
+            "ASPECT_RATIO_NOT_AVAILABLE" => "Info not available yet"
+        );
+
+        if (isset($definitions[$right])) return $definitions[$right];
+
+        return "";
+
+    }
+
 }

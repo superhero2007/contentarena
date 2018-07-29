@@ -4,7 +4,7 @@ import ReactTable from "react-table";
 import Modal from 'react-modal';
 
 import DigitalSignature from "../../main/components/DigitalSignature";
-import {getCurrencySymbol, getFee, limitText} from "../actions/utils";
+import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/utils";
 import {addIcon, bidIcon, blueCheckIcon, blueEnvelopeIcon, bucketIcon, cancelIcon, docIcon, fixedIcon} from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "../../main/components/SendMessage";
@@ -281,7 +281,9 @@ class CommercialSalesBundle extends React.Component{
                                     this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
                                 }} src={cancelIcon}/>}
                                 {props.value.status === "APPROVED"
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={docIcon}/>}
+                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                        viewLicenseBid(props.value.bid.customId)
+                                }} src={docIcon}/>}
                                 {props.value.status === "APPROVED"
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
                                     _this.refs["messagePopup" + props.value.bid.id].open();

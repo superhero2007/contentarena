@@ -253,8 +253,8 @@ class PopupRight extends React.Component {
                             className="text-field"
                             style={numberFieldStyle}
                             type="number"
-                            onChange={(e) => { this.updateSelection(e.target.value,RightItemsDefinitions[option].numberFieldValue,rightPackage)}}
-                            value={rightPackage.selectedRights[RightItemsDefinitions[option].numberFieldValue]}
+                            onChange={(e) => { this.updateSelection(e.target.value,id + "_NUMBER",rightPackage)}}
+                            value={rightPackage.selectedRights[id + "_NUMBER"]}
                             min={0}/>
                     }
                     {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}

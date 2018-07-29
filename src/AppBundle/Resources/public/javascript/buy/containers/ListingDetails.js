@@ -12,7 +12,7 @@ import DigitalSignature from "../../main/components/DigitalSignature";
 import SendMessage from "../../main/components/SendMessage";
 import {
     getCurrencySymbol, getFullName, goTo, goToClosedDeals, goToListing,
-    goToMarketplace
+    goToMarketplace, viewLicense
 } from "../../main/actions/utils";
 import CompanyInformation from "../../sell/components/CompanyInformation";
 import {customStyles} from "../../main/styles/custom";
@@ -819,9 +819,12 @@ class ListingDetails extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                             textDecoration: 'underline',
+                            cursor : 'pointer',
                             color: '#48C0FE',
                             fontSize: 16,
                             margin: 10
+                        }} onClick={()=>{
+                            viewLicense(content.customId);
                         }}>
                             <img style={{marginRight: 10}} src={this.pdfIcon}/>
                             License agreement

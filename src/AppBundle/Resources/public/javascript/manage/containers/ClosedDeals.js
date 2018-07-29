@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import ContentListing from '../../main/components/ContentListing';
 import SendMessage from "../../main/components/SendMessage";
-import {getCurrencySymbol, goTo, limitText} from "../../main/actions/utils";
+import {getCurrencySymbol, goTo, limitText, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
 
 const rightImageStyle = {
@@ -216,11 +216,17 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 Header: 'Actions', // Custom header components!
-                                accessor: 'id',
+                                id: 'header',
+                                accessor: d => {return{
+                                    id : d.id,
+                                    customId : d.customId
+                                }},
                                 Cell: props => <div className={""}>
-                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={this.docIcon}/>
                                     <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                        this.refs["messagePopup"+props.value].open();
+                                        viewLicenseBid(props.value.customId)
+                                    }} src={this.docIcon}/>
+                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                        this.refs["messagePopup"+props.value.id].open();
                                     }} src={this.blueEnvelopeIcon}/>
                                 </div>
                             }

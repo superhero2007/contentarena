@@ -431,6 +431,13 @@ class ContentService
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
 
+        if ( isset($data->signature) && $data->signature != "" ) {
+            $signature = $data->signature;
+            $fileName = "signature_".md5(uniqid()).'.jpg';
+            $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
+            $content->setSignature($savedSignature);
+        }
+
         if ( isset($data->salesPackages) ) {
 
             $salesPackages = array();
