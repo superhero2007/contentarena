@@ -179,7 +179,6 @@ class PopupRight extends React.Component {
                 return true;
             }
 
-
         });
         return custom;
 
@@ -528,31 +527,6 @@ class PopupRight extends React.Component {
                 }
 
             }
-            /*else if (id === "TECHNICAL_DELIVERY"){
-
-                let programPackage = rightsPackage.filter(rp=>rp.shortLabel === "PR")[0];
-
-                if ( rightsPackage.length > 1 ) {
-
-                    if ( packagesAvailable.indexOf("PR") !== -1 ) {
-                        if ( distributionMethod !== programPackage.selectedRights[id]){
-                            custom = true;
-                        } else {
-                            selected = RightItemsDefinitions[distributionMethod].label
-                        }
-                    } else {
-                        selected = RightItemsDefinitions[distributionMethod].label
-                    }
-                } else {
-                    if ( packagesAvailable.indexOf("PR") !== -1 ) {
-                        selected = RightItemsDefinitions[programPackage.selectedRights[id]].label
-                    } else {
-                        selected = RightItemsDefinitions[distributionMethod].label
-                    }
-
-                }
-
-            }*/
             else if (global){
 
                 if ( languages.length > 0 ) {
