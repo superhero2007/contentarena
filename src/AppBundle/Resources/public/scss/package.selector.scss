@@ -2,7 +2,7 @@
 
 .package-selector{
   border-bottom: 4px solid $border-color-2;
-  margin-bottom: 20px;
+  margin: 0;
   background-color: $light-background-color;
 
   .package-selector-title{
@@ -44,21 +44,24 @@
         flex: 1;
         margin: 5px 0;
       }
-      input[type="checkbox"] + label {
-        display: inline-block;
-        width: 19px;
-        height: 19px;
-        vertical-align: middle;
-        cursor: pointer;
-        background-image: none;
-        background-color: #E8EBF0;
-        position: relative;
-        margin-right: 5px;
-        margin-left: 6px;
-        border: 1px solid #A9B5C6;
-        border-radius: 4px;
-
+      input[type="checkbox"] {
+        margin-right: 10px;
       }
+      //input[type="checkbox"] + label {
+      //  display: inline-block;
+      //  width: 19px;
+      //  height: 19px;
+      //  vertical-align: middle;
+      //  cursor: pointer;
+      //  background-image: none;
+      //  background-color: #E8EBF0;
+      //  position: relative;
+      //  margin-right: 5px;
+      //  margin-left: 6px;
+      //  border: 1px solid #A9B5C6;
+      //  border-radius: 4px;
+      //
+      //}
     }
 
     .package-selector-buttons{

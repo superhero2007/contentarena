@@ -37,7 +37,7 @@ class RightsFilter extends React.Component {
                             rightsPackage && rightsPackage.map(right => {
                                 return <div key={right.id} className="filter-right">
                                     <input
-                                        className='checkbox-item'
+                                        className='ca-checkbox checkbox-item'
                                         type='checkbox'
                                         checked={rights.indexOf(right.id) !== -1}
                                         onChange={(e) => {
@@ -62,7 +62,7 @@ class RightsFilter extends React.Component {
                         <input
                             type="checkbox"
                             checked={exclusive}
-                            className="checkbox-item"
+                            className="ca-checkbox checkbox-item"
                             onChange={(e) => {
                                 this.props.updateExclusive(e.target.checked)
                             }}

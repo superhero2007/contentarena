@@ -232,6 +232,7 @@ class PopupRight extends React.Component {
                     <input
                         defaultChecked={rightPackage.selectedRights[id] === option}
                         type="radio"
+                        className="ca-radio"
                         disabled={disabled}
                         onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
                         name={rightPackage.shortLabel + "_" + id} value={option}/>}
@@ -331,6 +332,7 @@ class PopupRight extends React.Component {
                                     <input
                                         defaultChecked={customProp === option}
                                         type="radio"
+                                        className="ca-radio"
                                         disabled={disabled}
                                         onChange={(e) => { this.updateSelection(e.target.value, customId,rightsPackage[0])} }
                                         name={customId + "_" + id} value={option}/>
@@ -396,6 +398,7 @@ class PopupRight extends React.Component {
                                     style={{ width: '20px'}}
                                     defaultChecked={rightsPackage[0].selectedRights["TECHNICAL_FEE"]=== "INCLUDED"}
                                     type="radio"
+                                    className="ca-radio"
                                     value={"INCLUDED"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
                                     name="TECHNICAL_FEE"/> Technical fee included in license fee
@@ -405,6 +408,7 @@ class PopupRight extends React.Component {
                                     style={{ width: '20px'}}
                                     checked={rightsPackage[0].selectedRights["TECHNICAL_FEE"] === "ON_TOP"}
                                     type="radio"
+                                    className="ca-radio"
                                     value={"ON_TOP"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
                                     name="TECHNICAL_FEE"/>

@@ -210,6 +210,7 @@ class ReviewAndSign extends React.Component {
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
                                 type="checkbox"
+                                className="ca-checkbox"
                                 value={terms}
                                 onChange={(e)=>{
                                     updateContentValue('terms',e.target.checked)
@@ -222,6 +223,7 @@ class ReviewAndSign extends React.Component {
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
                                 type="checkbox"
+                                className="ca-checkbox"
                                 value={terms_arena}
                                 onChange={(e)=>{
                                     updateContentValue('terms_arena',e.target.checked)

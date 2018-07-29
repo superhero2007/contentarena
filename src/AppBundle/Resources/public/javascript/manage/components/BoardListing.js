@@ -213,7 +213,7 @@ class BoardListing extends React.Component{
                     { name }
                 </div>
                 <div className={"tournament"}>
-                    {tournament && <div>{tournament.name}</div>}
+                    {tournament && tournament.length === 1 && <div>{tournament[0].name}</div>}
                     {tournament && tournament.length === 0 && <div>General content</div>}
                     {seasons && seasons.length > 1 && <div>Multiple seasons</div>}
                     {seasons && seasons.length === 1 && <div>Season: {seasons[0].year}</div>}
