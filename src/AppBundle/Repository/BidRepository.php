@@ -12,6 +12,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getPendingBids($user){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
             ->join('b.content', 'c')
             ->join('b.status', 'status')
             ->join('b.type', 'type')
@@ -61,6 +62,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getRejectedBids($user){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.updatedAt", "DESC")
             ->join('b.content', 'c')
             ->join('b.status', 'status')
             ->join('b.type', 'type')
