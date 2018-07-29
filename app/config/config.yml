@@ -113,7 +113,7 @@ knp_snappy:
     temporary_folder: "%kernel.cache_dir%/snappy"
     pdf:
         enabled:    true
-        binary:     wkhtmltopdf
+        binary:     /usr/local/bin/wkhtmltopdf
         options:
             - { name: 'viewport-size', value: '1024x768' }
             - { name: 'page-size', value: 'A4' }
