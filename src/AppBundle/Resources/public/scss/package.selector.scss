@@ -1,9 +1,9 @@
 @import "vars";
 
 .package-selector{
-  border-bottom: 4px solid #D5D9DF;
-  margin-bottom: 20px;
-  background-color: $primary-color;
+  border-bottom: 4px solid $border-color-2;
+  margin: 0;
+  background-color: $light-background-color;
 
   .package-selector-title{
     background-color: $background-2;
@@ -31,7 +31,7 @@
         font-weight: 600;
         color: $border-color-2;
         text-transform: lowercase;
-        margin-left: 245px;
+        margin-left: 125px;
       }
     }
 

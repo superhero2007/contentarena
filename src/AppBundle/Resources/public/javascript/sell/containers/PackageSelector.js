@@ -108,7 +108,7 @@ class PackageSelector extends React.Component {
         let _this = this;
         const {HL_INPUT, NA_INPUT} = this.props;
         return (
-            <div className="package-selector">
+            <div className="package-selector table">
                 <div className="package-selector-title">
                     Rights selection & definition
                 </div>
