@@ -27,7 +27,7 @@ class SuperRight extends React.Component {
 
         return (
             <div className="select-box-item" >
-                <div style={{flex:3, display: 'inline-flex'}}>
+                <div className="select-box-item-child">
                     <input type="checkbox"
                            defaultChecked={this.props.checked}
                            checked={this.state.checked}
@@ -37,10 +37,9 @@ class SuperRight extends React.Component {
                            }}
                            id={"super-right-" + this.props.superRight.id}
                            className="package-selector" />
-                    <label htmlFor={"super-right-" + this.props.superRight.id}/>
-                    { superRight.name }
+                           { superRight.name }
                 </div>
-                <div style={{flex:1, textAlign: 'center'}}>
+                <div className="select-box-item-child">
                     <Toggle
                         icons={false}
                         checked={exclusive}
@@ -51,7 +50,7 @@ class SuperRight extends React.Component {
                         }}
                     />
                 </div>
-                <div style={{flex:6,fontSize: 13}}>
+                <div className="select-box-item-child">
                     { defByLabel[0] }
                     { inputData &&
                     <input
@@ -120,9 +119,9 @@ class PackageSelector extends React.Component {
                     </div>
 
                     <div className="package-exclusive">
-                        <div className="package-exclusive-item" style={{flex:3}}/>
-                        <div className="package-exclusive-item" style={{flex:1}}>Exclusive</div>
-                        <div className="package-exclusive-item" style={{flex:6}}></div>
+                        <div className="package-exclusive-item" />
+                        <div className="package-exclusive-item">Exclusive</div>
+                        <div className="package-exclusive-item" />
                     </div>
                     <div className="package-selector-content" >
                         { this.state.packages.map(function(superRight){

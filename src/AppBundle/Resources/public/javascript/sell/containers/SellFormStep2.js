@@ -82,7 +82,7 @@ class SellFormStep2 extends React.Component {
         this.scroll();
         return (
 
-            <div className="step-content">
+            <div className="step-content step-2">
 
                 {/*SUMMARY*/}
                 <div className="listing-summary">
@@ -91,6 +91,19 @@ class SellFormStep2 extends React.Component {
 
                 {/*PROGRAM DESCRIPTION*/}
                 <div className="step-content-container">
+
+                    <div className="base-input">
+                        <label>event</label>
+                        {
+                            !this.props.isCustom &&
+                            <input type="text"
+                                   value={this.props.value}
+                                   readOnly={false}
+                                   onClick={this.props.onClick}
+                                   placeholder={"Soccer-Germany-Bundesliga-2018/19 "}  />
+                        }
+                    </div>
+
                     <div className="textarea-input">
                         <label>PROGRAM DESCRIPTION</label>
                         <div style={{margin: 10}}>
@@ -109,13 +122,14 @@ class SellFormStep2 extends React.Component {
                 {/* PROGRAM DETAILS*/}
                 {editedProgram && <div>
 
+                <div className="left">
                     <div className="modal-input">
                         <label>Enter program name</label>
                         <input
                             type="text"
                             value={PROGRAM_NAME}
                             onChange={(e)=>{updateContentValue("PROGRAM_NAME", e.target.value)}}
-                            placeholder="Program name"/>
+                            placeholder="Tennis Preview Show"/>
                     </div>
 
                     <div className="modal-input">
@@ -125,7 +139,7 @@ class SellFormStep2 extends React.Component {
                             value={PROGRAM_EPISODES}
                             onChange={(e)=>{updateContentValue("PROGRAM_EPISODES", Number(e.target.value))}}
                             min={0}
-                        />
+                            placeholder="1"/>
                     </div>
 
                     <div className="modal-input">
@@ -135,15 +149,14 @@ class SellFormStep2 extends React.Component {
                             value={PROGRAM_DURATION}
                             onChange={(e)=>{updateContentValue("PROGRAM_DURATION", Number(e.target.value))}}
                             min={0}
-                        />
+                            placeholder="123"/>
                     </div>
 
                     <div className="modal-input">
                         <label>Enter program type</label>
                         <select
                             value={PROGRAM_TYPE}
-                            onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}
-                            style={{ width: '100%' }}>
+                            onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}>
                             <option value="SELECT">Select</option>
                             <option value="HIGHLIGHT_SHOW">Highlight show</option>
                             <option value="DOCUMENTARY">Documentary</option>
@@ -158,23 +171,22 @@ class SellFormStep2 extends React.Component {
                         <label>Release year (optional)</label>
                         <select
                             value={PROGRAM_YEAR}
-                            onChange={(e)=>{updateContentValue("PROGRAM_YEAR", e.target.value)}}
-                            style={{ width: '100%' }}>
-                            <option/>
-                            <option disabled>Year</option>
+                            onChange={(e)=>{updateContentValue("PROGRAM_YEAR", e.target.value)}}>
+                            <option value="Year">Year</option>
                             {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
                         </select>
                     </div>
-
+                </div>
+                <div className='right'>
                     <div className="modal-input">
                         <label>Edited Program Description (optional)</label>
                         <textarea
                             onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
-                        >
+                            placeholder="Provide a description of your content listing">
                             {PROGRAM_DESCRIPTION}
                         </textarea>
                     </div>
-
+                </div>
                 </div>}
             </div>
         );
