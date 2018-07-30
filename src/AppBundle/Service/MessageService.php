@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Message;
 use AppBundle\Entity\Thread;
@@ -34,18 +35,24 @@ class MessageService
     }
 
     public function getAllThreads(Request $request, User $user){
-        $threads = $this->em->getRepository('AppBundle:Thread')->getAllThreads($user->getCompany());
+        /* @var Company $ownCompany */
+        $ownCompany = $user->getCompany();
+        $threads = $this->em->getRepository('AppBundle:Thread')->getAllThreads($ownCompany);
 
         foreach ($threads as $thread){
             /* @var Thread $thread */
             /* @var Message[]  $lastMessage */
             $lastMessage = $this->em->getRepository('AppBundle:Message')->getThreadLastMessage($thread);
 
+            $oppositeParty = ($ownCompany->getId() == $thread->getBuyerCompany()->getId()) ? $thread->getOwnerCompany() :$thread->getBuyerCompany();
+            $thread->setOppositeParty($oppositeParty);
+
+
             if ( $lastMessage != null && count($lastMessage) > 0 ){
                 $thread->setLastMessageContent($lastMessage[0]->getContent());
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
+                $thread->setLastMessageUser($lastMessage[0]->getSender());
             }
-
         }
 
         return $threads;
@@ -56,13 +63,26 @@ class MessageService
         return $this->em->getRepository('AppBundle:Message')->getThreadMessages($thread);
     }
 
-    public function getThreadByListingAndUser(Content $content, User $user){
-        return $this->em->getRepository('AppBundle:Thread')->findOneBy(array("listing" => $content, "buyerCompany" => $user->getCompany()));
+    public function getThreadByListingAndSeller(Content $content, User $user, Company $company){
+        return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
+            "listing" => $content,
+            "ownerCompany" => $user->getCompany(),
+            "buyerCompany" => $company
+        ));
+    }
+
+    public function getThreadByListingAndBuyer(Content $content, User $user, Company $company){
+        return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
+            "listing" => $content,
+            "buyerCompany" => $user->getCompany(),
+            "ownerCompany" => $company
+        ));
     }
 
     public function sendMessage($request, User $user){
 
         $recipient = $request->get('recipient');
+        $role = $request->get('role');
 
         if( isset( $recipient )){
             $company = $this->em->getRepository('AppBundle:Company')->find($recipient);
@@ -73,7 +93,12 @@ class MessageService
         if ( isset($threadId) ) {
             $thread = $this->em->getRepository('AppBundle:Thread')->find($threadId);
         } else{
-            $thread = $this->getThreadByListingAndUser($content, $user);
+
+            if ( $role && $role == "SELLER"){
+                $thread = $this->getThreadByListingAndSeller($content, $user, $company);
+            } else {
+                $thread = $this->getThreadByListingAndBuyer($content, $user, $company);
+            }
         }
         if ( $thread == null ){
             $thread = new Thread();
@@ -85,6 +110,7 @@ class MessageService
 
             $customId = $this->idGenerator->generate($content);
             $thread->setCustomId($customId);
+
             $thread->setBuyerCompany($company);
             $thread->setOwnerCompany($ownerCompany);
             $thread->setUser($user);
@@ -105,141 +131,5 @@ class MessageService
         return $message;
     }
 
-    public function asdsaveBidsData($request,$user){
-
-
-        $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
-        $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$request->get('salesMethod')));
-        $signature = $request->get('signature');
-        $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($request->get('salesPackage'));
-        if ($request->get('salesMethod') == "FIXED" ) {
-            $status = $this->em->getRepository('AppBundle:BidStatus')->find(2);
-        } else {
-            $status = $this->em->getRepository('AppBundle:BidStatus')->find(1);
-        }
-
-        $exclusive = false;
-        foreach ($content->getSelectedRightsBySuperRight() as $val)
-        {
-            if( $val['exclusive'] ) {
-                $exclusive = true;
-            }
-        }
-
-        $bid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
-            "content" =>$content,
-            "salesPackage" => $salesPackage
-        ));
-
-        if ( $bid == null || $bid->getStatus() != $status) {
-            $bid = new Bid();
-            $customId = $this->idGenerator->generate($content);
-            $createdAt = new \DateTime();
-            $bid->setCustomId($customId);
-            $bid->setCreatedAt($createdAt);
-        }
-
-        if ( isset( $signature ) ) {
-            $fileName = "signature_".md5(uniqid()).'.jpg';
-            $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
-            $bid->setSignature($savedSignature);
-        }
-
-        $updatedAt = new \DateTime();
-
-        $bid->setType($type);
-        $bid->setStatus($status);
-        $bid->setContent($content);
-        $bid->setSalesPackage($salesPackage);
-        $bid->setBuyerUser($user);
-        $bid->setAmount($request->get('amount'));
-        $bid->setTotalFee($request->get('totalFee'));
-        $bid->setUpdatedAt($updatedAt);
-        $this->em->persist($bid);
-        if ($exclusive && $status->getName() == "APPROVED"){
-            $salesPackage->setSold(true);
-            $this->em->persist($salesPackage);
-        }
-        $this->em->flush();
-        return true;
-    }
-
-    public function asdacceptBid($request){
-
-        /**
-         * @var $bid Bid
-         */
-        $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
-        $signature = $request->get('signature');
-        $salesPackageId = $bid->getSalesPackage()->getId();
-        $listingId = $bid->getContent()->getId();
-        $listing = $this->em->getRepository('AppBundle:Content')->find($listingId);
-        $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($salesPackageId);
-        //$listing = $bid->getContent();
-
-        $exclusive = false;
-        foreach ($listing->getSelectedRightsBySuperRight() as $val)
-        {
-            if( $val['exclusive'] ) {
-                $exclusive = true;
-            }
-        }
-
-        if ( isset( $signature ) ) {
-            $fileName = "signature_".md5(uniqid()).'.jpg';
-            $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
-            $bid->setSellerSignature($savedSignature);
-        }
-
-        $updatedAt = new \DateTime();
-
-        $bid->setStatus($this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"APPROVED")));
-        $bid->setUpdatedAt($updatedAt);
-        $this->em->persist($bid);
-        if ($exclusive){
-            $salesPackage->setSold(true);
-            $this->em->persist($salesPackage);
-        }
-        $this->em->flush();
-        return true;
-    }
-
-    public function rejectBid($request){
-
-        /**
-         * @var $bid Bid
-         */
-        $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
-        $message = $request->get('message');
-        $updatedAt = new \DateTime();
-
-        if ( isset($message) ) {
-            $bid->setMessage($message);
-        }
-
-        $bid->setStatus($this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"REJECTED")));
-        $bid->setUpdatedAt($updatedAt);
-        $this->em->persist($bid);
-        $this->em->flush();
-        return true;
-    }
-
-    public function removeBid($request, User $user){
-
-        /**
-         * @var $bid Bid
-         */
-        $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
-
-        /* @var $buyerUser User */
-        $buyerUser = $bid->getBuyerUser();
-        if ( $buyerUser->getId() == $user->getId()  ){
-            $this->em->remove($bid);
-            $this->em->flush();
-            return true;
-        }
-
-        return false;
-    }
 
 }

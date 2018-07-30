@@ -88,8 +88,20 @@ class ContentService
     }
 
     public function getExpired($user) {
-        $content = $this->em->getRepository('AppBundle:Content')->getExpired($user);
-        return $content;
+        $listings = $this->em->getRepository('AppBundle:Content')->getExpired($user);
+        $expiredStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'EXPIRED'));
+        $soldStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'SOLD_OUT'));
+
+        foreach ( $listings as $listing ){
+            /* @var Content $listing*/
+            if ( $listing->getStatus()->getId() != $expiredStatus->getId() && $listing->getStatus()->getId() != $soldStatus->getId()) {
+                $listing->setStatus($expiredStatus);
+                $this->em->persist($listing);
+                $this->em->flush();
+            }
+        }
+
+        return $listings;
     }
 
     /**
@@ -526,6 +538,8 @@ class ContentService
             "PROGRAM_EPISODES",
             "PROGRAM_DURATION",
             "PROGRAM_DESCRIPTION",
+            "COMMENTS_RIGHTS",
+            "COMMENTS_PRODUCTION"
         );
 
         $extraData = array();

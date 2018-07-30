@@ -847,7 +847,6 @@ class ListingDetails extends React.Component {
                                 margin: '0 auto'
                             }}> <input type="checkbox"
                                        id="terms-buy"
-                                       style={{display : "none"}}
                                        onChange={e =>{ this.setState({terms: e.target.checked}) }}
                                        checked={this.state.terms}/> <label htmlFor={"terms-buy"} />Accept terms conditions</div>
                         </div>

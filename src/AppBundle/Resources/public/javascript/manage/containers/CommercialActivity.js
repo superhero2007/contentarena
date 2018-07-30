@@ -135,10 +135,13 @@ class CommercialActivity extends React.Component {
                 {
                     listings.length > 0 && listings.map((listing, i, list) => {
                         return <ContentListingCommercialActivity
+                            onUpdate={this.update}
                             onDelete={this.deleteBid}
                             bidsOpen={list.length === 1}
                             bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
                             hideWithoutBids={this.state.filter === "ACTIVITY"}
+                            filterByOpenBids={this.state.filter === "OPEN"}
+                            filterByClosedDeals={this.state.filter === "CLOSED"}
                             onSelect={id => goToListing(id)}
                             key={i + "-" + listing.customId}
                             {...listing}

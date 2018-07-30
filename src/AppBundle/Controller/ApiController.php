@@ -346,9 +346,9 @@ class ApiController extends BaseController
     {
         $user = $this->getUser();
 
-        $success = $bidService->rejectBid($request);
+        $bundle = $bidService->rejectBid($request);
 
-        return new JsonResponse(array("success"=>$success));
+        return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
 
     }
 

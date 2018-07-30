@@ -44,6 +44,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getAllBidsByContent($content){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
             ->where('b.content = :content')
             ->setParameter('content', $content)
             ->getQuery();
@@ -53,6 +54,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getAllBidsBySalesBundle($salesBundle){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
             ->where('b.salesPackage = :salesBundle')
             ->setParameter('salesBundle', $salesBundle)
             ->getQuery();

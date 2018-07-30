@@ -22,6 +22,10 @@ class CommercialSalesBundle extends React.Component{
         }
     }
 
+    componentWillReceiveProps (){
+        this.setState({removeModalIsOpen : false, saving : false});
+    }
+
     acceptBid = () => {
         const {signature} = this.state;
         const {contentId} = this.props;
@@ -29,7 +33,8 @@ class CommercialSalesBundle extends React.Component{
         selectedBid.content = contentId;
         this.setState({saving : true});
         ContentArena.ContentApi.acceptBid(selectedBid, signature).done(response=>{
-            this.setState({approveModalIsOpen : false, saving : false})
+            this.setState({approveModalIsOpen : false, saving : false});
+            this.props.onUpdate();
         });
 
     };
@@ -38,7 +43,8 @@ class CommercialSalesBundle extends React.Component{
         let selectedBid = this.state.selectedBid;
         this.setState({saving : true});
         ContentArena.ContentApi.removeBid(selectedBid).done(response=>{
-            this.setState({removeModalIsOpen : false, saving : false})
+            //this.setState({removeModalIsOpen : false, saving : false})
+            this.props.onUpdate();
         });
 
     };
@@ -48,7 +54,8 @@ class CommercialSalesBundle extends React.Component{
         selectedBid.message = this.state.message;
         this.setState({saving : true});
         ContentArena.ContentApi.rejectBid(selectedBid).always(response=>{
-            this.setState({rejectModalIsOpen : false, saving : false})
+            this.setState({rejectModalIsOpen : false, saving : false});
+            this.props.onUpdate();
         });
 
     };
@@ -158,7 +165,8 @@ class CommercialSalesBundle extends React.Component{
         const { salesBundle, company, onDelete, contentId } = this.props;
         const { showBids } = this.state;
 
-        let totalFee = (salesBundle.bids.length > 0) ? salesBundle.bids.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
+        let closedDeals = salesBundle.bids.filter(b=>b.status.name === "APPROVED");
+        let totalFee = (closedDeals.length > 0) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
         let _this = this;
 
         return (
@@ -179,7 +187,7 @@ class CommercialSalesBundle extends React.Component{
                     </div>
 
                     <div className="sales-bundle-item-right" style={{marginLeft: 'auto'}}>
-                        {salesBundle.bids.filter(b=>b.status.name === "APPROVED").length} closed Deals
+                        {closedDeals.length} closed Deals
                     </div>
 
                     <div className="sales-bundle-item-right">
@@ -200,7 +208,9 @@ class CommercialSalesBundle extends React.Component{
                 {showBids && salesBundle.bids.length > 0 &&
                 <div>
                     {salesBundle.bids.map((b)=>{
-                        return <SendMessage ref={"messagePopup" + b.id } listingId={contentId} recipient={b.buyerUser.company}/>
+                        return <SendMessage role={'SELLER'}
+                                            ref={"messagePopup" + b.id }
+                                            listingId={contentId} recipient={b.buyerUser.company}/>
                     })}
 
                     <ReactTable
@@ -214,7 +224,7 @@ class CommercialSalesBundle extends React.Component{
                         data={salesBundle.bids}
                         select={this.props.select}
                         columns={[{
-                            accessor: d => {return company.legalName},
+                            accessor: d => {return d.buyerUser.company.legalName},
                             Cell: props => <div>
                                 {props.value}
                             </div>,
