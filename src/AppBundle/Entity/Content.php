@@ -44,6 +44,13 @@ class Content
     protected $customId;
 
     /**
+     * @var mixed
+     *
+     * @ORM\Column(name="signature", type="string")
+     */
+    private $signature;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -1138,5 +1145,22 @@ class Content
     {
         $this->owner = $owner;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @param mixed $signature
+     */
+    public function setSignature($signature)
+    {
+        $this->signature = $signature;
+    }
+
 
 }

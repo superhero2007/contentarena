@@ -14,6 +14,8 @@ export const docIcon = assetsBaseDir + "app/images/doc.png";
 export const editIcon = assetsBaseDir + "app/images/edit.png";
 export const blueEnvelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
 export const infoIcon = assetsBaseDir + "app/images/info_blue.png";
+export const soldIcon = assetsBaseDir + "app/images/sold.png";
+export const expiredIcon = assetsBaseDir + "app/images/expired.png";
 
 export const Spinner = ({test}) => (
     <div><i className="fa fa-cog fa-spin"/></div>

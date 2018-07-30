@@ -12,6 +12,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getPendingBids($user){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
             ->join('b.content', 'c')
             ->join('b.status', 'status')
             ->join('b.type', 'type')
@@ -43,6 +44,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getAllBidsByContent($content){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
             ->where('b.content = :content')
             ->setParameter('content', $content)
             ->getQuery();
@@ -52,6 +54,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getAllBidsBySalesBundle($salesBundle){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
             ->where('b.salesPackage = :salesBundle')
             ->setParameter('salesBundle', $salesBundle)
             ->getQuery();
@@ -61,6 +64,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
 
     public function getRejectedBids($user){
         $query = $this->createQueryBuilder('b')
+            ->orderBy("b.updatedAt", "DESC")
             ->join('b.content', 'c')
             ->join('b.status', 'status')
             ->join('b.type', 'type')

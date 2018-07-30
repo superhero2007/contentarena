@@ -161,7 +161,8 @@ class BidService
         $bid->setUpdatedAt($updatedAt);
         $this->em->persist($bid);
         $this->em->flush();
-        return true;
+        $salesBundle = $bid->getSalesPackage();
+        return $salesBundle;
     }
 
     public function removeBid($request, User $user){

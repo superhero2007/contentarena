@@ -24,12 +24,13 @@ class SendMessage extends React.Component{
     };
 
     send = () => {
-        const { listingId, recipient } = this.props;
+        const { listingId, recipient, role } = this.props;
 
         let message = {
             content : this.state.message,
             listing : listingId,
-            recipient : recipient.id
+            recipient : recipient.id,
+            role : role || "BUYER"
         };
 
         this.setState({saving : true});

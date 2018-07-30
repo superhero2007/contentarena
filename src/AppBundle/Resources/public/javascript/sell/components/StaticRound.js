@@ -78,7 +78,7 @@ class StaticRound extends React.Component {
 
         return (
             <div className={"matchday"}>
-                <div className="select-box-checkbox">
+                <div className="ca-checkbox select-box-checkbox">
                     <div style={{width: '100%'}}>
                         {isNaN(round) && round}
                         {!isNaN(round) && "Matchday " + round}

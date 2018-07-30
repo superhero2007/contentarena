@@ -49,25 +49,25 @@ class LicenseDateSelector extends React.Component {
                             <label>Start of license period</label>
                             <div className="row">
                                 <div className="column">
-                                    <input type="checkbox"
+                                    <input type="radio"
                                         checked={startDateMode === "LICENSE"}
                                         onChange={ (e) => {
                                            onUpdate("startDateMode", "LICENSE");
                                         }}
                                         id={"license-start-contract"}
-                                        className="package-selector"
+                                        className="ca-radio package-selector"
                                     />
                                     <label htmlFor={"license-start-contract"}/>
                                     With contract conclusion
                                 </div>
                                 <div className="column">
-                                    <input type="checkbox"
+                                    <input type="radio"
                                         checked={startDateMode === "DATE"}
                                         onChange={ (e) =>{
                                            onUpdate("startDateMode", "DATE");
                                         }}
                                         id={"license-start"}
-                                        className="package-selector"
+                                        className="ca-radio package-selector"
                                     />
                                     <label htmlFor={"license-start"}/>
 
@@ -85,13 +85,13 @@ class LicenseDateSelector extends React.Component {
                             <label>End of license period</label>
                             <div className="row">
                                 <div className="column">
-                                    <input type="checkbox"
+                                    <input type="radio"
                                            checked={endDateMode==="LIMITED"}
                                            onChange={ (e) =>{
                                                onUpdate("endDateMode", "LIMITED");
                                            }}
                                            id={"license-end-input"}
-                                           className="package-selector"
+                                           className="ca-radio package-selector"
                                     />
                                     <label htmlFor={"license-end-input"}/>
                                     <input
@@ -103,13 +103,13 @@ class LicenseDateSelector extends React.Component {
                                     <span className={"small-label"}>days from contract conclusion</span>
                                 </div>
                                 <div className="column">
-                                    <input type="checkbox"
+                                    <input type="radio"
                                            checked={endDateMode==="DATE"}
                                            onChange={ (e) =>{
                                                onUpdate("endDateMode", "DATE");
                                            }}
                                            id={"license-end"}
-                                           className="package-selector"
+                                           className="ca-radio package-selector"
                                     />
                                     <label htmlFor={"license-end"}/>
                                     <DatePicker
@@ -121,13 +121,13 @@ class LicenseDateSelector extends React.Component {
                                     />
                                 </div>
                                 <div className="column">
-                                    <input type="checkbox"
+                                    <input type="radio"
                                            checked={endDateMode==="UNLIMITED"}
                                            onChange={ (e) =>{
                                                onUpdate("endDateMode", "UNLIMITED");
                                            }}
                                            id={"license-end-unlimited"}
-                                           className="package-selector"
+                                           className="ca-radio package-selector"
                                     />
                                     <label htmlFor={"license-end-unlimited"}/>
                                     <span style={{padding: '12px 0'}}>Unlimited</span>

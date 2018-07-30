@@ -165,7 +165,7 @@ class SellFormStep3 extends React.Component {
 
     render() {
 
-        const {step, rightsPackage, startDateMode, endDateMode, endDate,
+        const {step, rightsPackage, startDateMode, endDateMode, endDate, COMMENTS_RIGHTS, COMMENTS_PRODUCTION,
             updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES
         } = this.props;
         if ( step !== 3) return (null);
@@ -268,6 +268,8 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
+                    <Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>
+
                     <TitleBar title={"Configure Production Standards"}/>
 
                     <div className="rights-container">
@@ -308,7 +310,7 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
-                    <Comments/>
+                    <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
 
                 </div>
             </div>

@@ -88,8 +88,20 @@ class ContentService
     }
 
     public function getExpired($user) {
-        $content = $this->em->getRepository('AppBundle:Content')->getExpired($user);
-        return $content;
+        $listings = $this->em->getRepository('AppBundle:Content')->getExpired($user);
+        $expiredStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'EXPIRED'));
+        $soldStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'SOLD_OUT'));
+
+        foreach ( $listings as $listing ){
+            /* @var Content $listing*/
+            if ( $listing->getStatus()->getId() != $expiredStatus->getId() && $listing->getStatus()->getId() != $soldStatus->getId()) {
+                $listing->setStatus($expiredStatus);
+                $this->em->persist($listing);
+                $this->em->flush();
+            }
+        }
+
+        return $listings;
     }
 
     /**
@@ -431,6 +443,13 @@ class ContentService
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
 
+        if ( isset($data->signature) && $data->signature != "" ) {
+            $signature = $data->signature;
+            $fileName = "signature_".md5(uniqid()).'.jpg';
+            $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
+            $content->setSignature($savedSignature);
+        }
+
         if ( isset($data->salesPackages) ) {
 
             $salesPackages = array();
@@ -519,6 +538,8 @@ class ContentService
             "PROGRAM_EPISODES",
             "PROGRAM_DURATION",
             "PROGRAM_DESCRIPTION",
+            "COMMENTS_RIGHTS",
+            "COMMENTS_PRODUCTION"
         );
 
         $extraData = array();

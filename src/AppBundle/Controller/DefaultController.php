@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 
 class DefaultController extends Controller
 {
@@ -27,36 +28,6 @@ class DefaultController extends Controller
        }
         return $this->redirectToRoute('marketplace', array(
         ));
-    }
-
-
-    /**
-     * @Route("/contract/preview", name="contractPreview")
-     */
-    public function contractPreviewAction(Request $request){
-
-        $user = $this->getUser();
-        $time = new \DateTime();
-        $content = $this->getDoctrine()
-            ->getRepository('AppBundle:Content')
-            ->findOneBy(['id' => $request->get("id")]);
-
-
-        $html = $this->render('contract/layout.html.twig', [
-            'user' => $user,
-            'content' => $content
-        ]);
-
-        return $html;
-
-        /*$html = $this->renderView('contract/layout.html.twig', [
-            'user' => $user,
-            'content' => $content
-        ]);
-        return new PdfResponse(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
-        );*/
     }
 
 }

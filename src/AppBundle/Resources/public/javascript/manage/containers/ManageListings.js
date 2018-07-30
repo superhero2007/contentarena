@@ -16,7 +16,6 @@ class ManageListings extends React.Component {
             active : [],
             inactive : [],
             expired : [],
-
         };
     }
 

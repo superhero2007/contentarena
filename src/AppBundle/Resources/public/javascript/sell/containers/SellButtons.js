@@ -176,6 +176,8 @@ class SellButtons extends React.Component {
 
             if ( response.success && response.contentId ){
                 updateContentValue("id", response.contentId);
+                updateContentValue("customId", response.customId);
+
             }
         });
         this.props.goToNextStep();

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import ContentListing from '../../main/components/ContentListing';
 import SendMessage from "../../main/components/SendMessage";
-import {getCurrencySymbol, goTo, limitText} from "../../main/actions/utils";
+import {getCurrencySymbol, goTo, limitText, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
 
 const rightImageStyle = {
@@ -130,16 +130,6 @@ class ClosedDeals extends React.Component {
                                     <img style={rightImageStyle} src={this.cancelIcon}/>}
                                 </div>
                             },{
-                                Header: 'CL',
-                                accessor: 'content.rightsPackage',
-                                headerClassName : 'table-header-small',
-                                className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("CL") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
-                                </div>
-                            },{
                                 Header: 'NA',
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
@@ -147,16 +137,6 @@ class ClosedDeals extends React.Component {
                                 Cell: props => <div
                                     className={"blue"}>
                                     {props.value.map(r=>r.shortLabel).indexOf("NA") !== -1 &&
-                                    <img style={rightImageStyle} src={this.cancelIcon}/>}
-                                </div>
-                            },{
-                                Header: 'AR',
-                                accessor: 'content.rightsPackage',
-                                headerClassName : 'table-header-small',
-                                className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("AR") !== -1 &&
                                     <img style={rightImageStyle} src={this.cancelIcon}/>}
                                 </div>
                             },{
@@ -176,15 +156,20 @@ class ClosedDeals extends React.Component {
                                 id: "territories",
                                 accessor: d => {return{
                                     size : d.salesPackage.territories.length,
-                                    worldwide : d.salesPackage.territoriesMethod === "WORLDWIDE",
-                                    asBundle : d.salesPackage.bundleMethod === "SELL_AS_BUNDLE"
+                                    territories : d.salesPackage.territories,
+                                    worldwide : d.salesPackage.territoriesMethod === "WORLDWIDE" && d.salesPackage.bundleMethod === "SELL_AS_BUNDLE",
+                                    excluding : d.salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING" && d.salesPackage.bundleMethod === "SELL_AS_BUNDLE" && d.salesPackage.territories.length === 1,
                                 }},
-                                Cell: props => <div className={"blue"}>
-                                    { (!props.value.worldwide || !props.value.asBundle) && props.value.size + " "}
-                                    {(!props.value.worldwide || !props.value.asBundle) && props.value.size > 1 && "territories" }
-                                    {(!props.value.worldwide || !props.value.asBundle) && props.value.size === 1 && "territory" }
-                                    {props.value.worldwide && props.value.asBundle && "Worldwide" }
-                                </div>
+                                Cell: props => {
+
+                                    const { size, territories, worldwide, excluding} = props.value;
+
+                                    return <div className={"blue"}>
+                                    {!worldwide && !excluding && size > 1 && size + " territories" }
+                                    {!worldwide && !excluding && size === 1 && territories[0].name}
+                                    {excluding && "Worldwide excluding " + territories[0].name }
+                                    {worldwide && "Worldwide" }
+                                </div>}
                             }, {
                                 Header: 'Price',
                                 headerClassName : 'table-header',
@@ -216,11 +201,17 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 Header: 'Actions', // Custom header components!
-                                accessor: 'id',
+                                id: 'header',
+                                accessor: d => {return{
+                                    id : d.id,
+                                    customId : d.customId
+                                }},
                                 Cell: props => <div className={""}>
-                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{}} src={this.docIcon}/>
                                     <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                        this.refs["messagePopup"+props.value].open();
+                                        viewLicenseBid(props.value.customId)
+                                    }} src={this.docIcon}/>
+                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                        this.refs["messagePopup"+props.value.id].open();
                                     }} src={this.blueEnvelopeIcon}/>
                                 </div>
                             }
