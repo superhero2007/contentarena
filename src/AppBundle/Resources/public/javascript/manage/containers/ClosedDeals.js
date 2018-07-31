@@ -37,22 +37,6 @@ class ClosedDeals extends React.Component {
         goTo("listing/" + id);
     };
 
-    showTerritory = (props) => {
-        if (!props.value.worldwide || !props.value.asBundle) {
-            if (props.value.size > 1) {
-                return props.value.size + " territories"
-            }
-
-            if (props.value.size === 1) {
-                return  props.value.territories[0].name
-            }
-        }
-
-        if  (props.value.worldwide && props.value.asBundle) {
-            return "Worldwide"
-        }
-    }
-
     render () {
         const { loading, bids } = this.state;
         return (
@@ -199,7 +183,6 @@ class ClosedDeals extends React.Component {
                                     {!worldwide && !excluding && size === 1 && territories[0].name}
                                     {excluding && "Worldwide excluding " + territories[0].name }
                                     {worldwide && "Worldwide" }
-                                        {/*{this.showTerritory(props)}*/}
                                 </div>}
                             }, {
                                 Header: () => (
