@@ -4,6 +4,23 @@ import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {editedProgramSelected} from "../../main/actions/utils";
 
+function Wrapper(props) {
+    if (props.isFragment) {
+        return (
+            <React.Fragment>
+                {props.children}
+            </React.Fragment>
+        );
+    } else {
+        return (
+            <div className={"listing-wrapper"}>
+                {props.children}
+            </div>
+        );
+    }
+
+}
+
 class ContentListingEventDetails extends React.Component {
 
     constructor(props) {
@@ -80,7 +97,8 @@ class ContentListingEventDetails extends React.Component {
             seasons,
             showCustomId,
             PROGRAM_YEAR,
-            PROGRAM_EPISODES
+            PROGRAM_EPISODES,
+            isFragment
         } = this.props;
 
         let schedules = this.getSchedules();
@@ -91,7 +109,7 @@ class ContentListingEventDetails extends React.Component {
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
         return (
-            <div className="listing-event-details listing-col">
+            <Wrapper isFragment={isFragment}>
 
                 <div className="listing-item">
                     {sports && sports.length === 1 && <span>{sports[0].name}</span>}
@@ -133,7 +151,7 @@ class ContentListingEventDetails extends React.Component {
                 })}
                 </div>}
 
-            </div>
+            </Wrapper>
         );
     }
 }
