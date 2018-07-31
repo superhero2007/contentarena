@@ -41,6 +41,12 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
+      .listing-name{
+        cursor: pointer;
+      }
+      .company-name{
+        color: black;
+      }
     }
     .messages{
       display: flex;

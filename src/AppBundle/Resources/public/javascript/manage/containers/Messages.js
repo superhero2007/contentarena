@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {getFullName, goTo, limitText} from "../../main/actions/utils";
+import {getFullName, goTo, goToListing, limitText} from "../../main/actions/utils";
 import BoardListing from '../components/BoardListing';
 import Moment from "moment/moment";
 
@@ -128,13 +128,13 @@ class Messages extends React.Component {
                     })}
                 </div>
 
-                {selectedThread && <div className={"thread-content"}>
+                {selectedThread && <div className="thread-content">
                     <div className={"thread-title"}>
-                        <div className={"listing-name"}>
+                        <div className={"listing-name"} onClick={()=>{goToListing(selectedThread.listing.customId, true)}}>
                             {selectedThread.listing.name}
                         </div>
-                        <div className={"company-name"}>
-                            {selectedThread.listing.company.legalName}
+                        <div className="company-name">
+                            {selectedThread.oppositeParty.legalName}
                         </div>
                     </div>
                     <div className={"messages"}>

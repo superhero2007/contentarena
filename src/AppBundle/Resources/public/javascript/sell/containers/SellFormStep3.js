@@ -268,7 +268,7 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
-                    <Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>
+                    <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
 
                     <TitleBar title={"Configure Production Standards"}/>
 
@@ -310,7 +310,7 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
-                    <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
+                    <Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>
 
                 </div>
             </div>

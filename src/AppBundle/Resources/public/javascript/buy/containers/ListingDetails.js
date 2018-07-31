@@ -336,7 +336,7 @@ class ListingDetails extends React.Component {
                     Your bid was placed successfully!
                 </div>}
 
-                <div>
+                <div style={{display: 'flex'}}>
                     <button className="standard-button" onClick={() => {goToClosedDeals()}} >Show closed deals</button>
                     <button className="standard-button" onClick={this.closeSuccessScreen} >Return to Marketplace</button>
                 </div>
@@ -433,7 +433,7 @@ class ListingDetails extends React.Component {
 
     render() {
 
-        const {onBack } = this.props;
+        const {onBack, profile } = this.props;
         const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner, minimumBid} = this.state;
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
         let technicalFee = this.getTechnicalFee();
@@ -446,8 +446,7 @@ class ListingDetails extends React.Component {
                 { this.successScreen() }
                 <div className="listing-details-content">
                     <div className={"left"}  >
-
-                        <div className={"header"}>
+                        {/*{profile === "BUYER" && <div className={"header"}>
                             {!buyingMode && <button onClick={onBack} className="light-blue-button">
                                 <i className="fa fa-chevron-left"/> Back
                             </button>}
@@ -456,7 +455,7 @@ class ListingDetails extends React.Component {
                                 <i className="fa fa-chevron-left"/> Back
                             </button>}
 
-                        </div>
+                        </div>}*/}
 
                         {/*IMAGE*/}
                         <div className={"image"}>
@@ -515,13 +514,13 @@ class ListingDetails extends React.Component {
                         <div className={"header"}>
                             <div className={"content"}>
                                 <div className="name">{content.name}</div>
-                                <div className="publisher" style={{
+                                {profile === "BUYER" && <div className="publisher" style={{
                                     flex:1,
                                     fontSize: 18,
                                     fontWeight: 600
-                                }}>{getFullName(content.owner)}</div>
+                                }}>{getFullName(content.owner)}</div>}
 
-                                <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
+                                {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
                                      onClick={()=>{
                                          this.refs.messagePopup.open()
                                      }}>
@@ -532,9 +531,9 @@ class ListingDetails extends React.Component {
                                         fontSize: 16,
                                         margin: '0 10px'
                                     }}>Contact Seller</div>
-                                </div>
+                                </div>}
 
-                                <div style={{margin: '0 10px', display: 'flex', cursor : 'pointer'}}
+                                {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor : 'pointer'}}
                                      onClick={this.watchlist}>
                                     {!content.watchlist &&
                                         <img style={{width: 22, height: 15, marginTop: 3}} src={this.watchlistIcon}/>}
@@ -548,13 +547,14 @@ class ListingDetails extends React.Component {
                                         margin: '0 10px 0 5px'
 
                                     }}>Watchlist</div>
-                                </div>
+                                </div>}
 
                                 {/*CUSTOM ID*/}
                                 <div className="custom-id">#{content.customId}</div>
                             </div>
                         </div>
 
+                        {/*TABS*/}
                         <div className={"listing-details-buttons"}>
                             <button className={(tab ===1)?"active": ""} onClick={()=>this.showTab(1)}>
                                 Program & Sales Bundles
@@ -574,10 +574,13 @@ class ListingDetails extends React.Component {
                                 Seller Information
                             </button>
                         </div>
+
+                        {/*TAB CONTENT*/}
                         <div className={"listing-details-tab"}>
 
                             { this.state.tab === 1 &&
                                 <CommercialTerms
+                                    profile={profile}
                                     onSelectPackage={this.selectPackage}
                                     {...content}/>
                             }
@@ -709,7 +712,7 @@ class ListingDetails extends React.Component {
                                             onChange={e=>{
                                                 let value = e.target.value;
                                                 if (value<minimumBid) {
-                                                    this.setState({bid:minimumBids})
+                                                    this.setState({bid:minimumBid})
                                                 } else {
                                                     this.setState({bid:value})
                                                 }

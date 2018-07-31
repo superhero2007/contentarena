@@ -157,17 +157,18 @@ class ClosedDeals extends React.Component {
                                 accessor: d => {return{
                                     size : d.salesPackage.territories.length,
                                     territories : d.salesPackage.territories,
+                                    excludedCountries : d.salesPackage.excludedCountries,
                                     worldwide : d.salesPackage.territoriesMethod === "WORLDWIDE" && d.salesPackage.bundleMethod === "SELL_AS_BUNDLE",
-                                    excluding : d.salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING" && d.salesPackage.bundleMethod === "SELL_AS_BUNDLE" && d.salesPackage.territories.length === 1,
+                                    excluding : d.salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING" && d.salesPackage.bundleMethod === "SELL_AS_BUNDLE" && d.salesPackage.excludedCountries.length === 1,
                                 }},
                                 Cell: props => {
 
-                                    const { size, territories, worldwide, excluding} = props.value;
+                                    const { size, territories, worldwide, excluding, excludedCountries} = props.value;
 
                                     return <div className={"blue"}>
                                     {!worldwide && !excluding && size > 1 && size + " territories" }
                                     {!worldwide && !excluding && size === 1 && territories[0].name}
-                                    {excluding && "Worldwide excluding " + territories[0].name }
+                                    {excluding && "Worldwide excluding " + excludedCountries[0].name }
                                     {worldwide && "Worldwide" }
                                 </div>}
                             }, {

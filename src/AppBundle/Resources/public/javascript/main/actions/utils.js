@@ -2,12 +2,17 @@ export const getCurrencySymbol = code => {
     return (code === "EUR") ? "€" : "$";
 };
 
-export const goTo = route => {
-    window.location.href = envhosturl + route
+export const goTo = (route, openNew) => {
+
+    if (openNew) {
+        window.open(envhosturl + route, "_blank");
+    } else {
+        window.location.href = envhosturl + route
+    }
 };
 
-export const goToListing = id => {
-    goTo("listing/"+ id)
+export const goToListing = (id, openNew) => {
+    goTo("listing/"+ id, openNew)
 };
 
 export const viewLicense = id => {

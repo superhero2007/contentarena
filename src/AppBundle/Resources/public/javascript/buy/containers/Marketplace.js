@@ -7,6 +7,7 @@ import ContentListing from '../../main/components/ContentListing';
 import HeaderBar from '../../main/components/HeaderBar';
 import ListingDetails from './ListingDetails';
 import {clearUpdateFilter} from "../actions/filterActions";
+import {goToListing} from "../../main/actions/utils";
 
 class Marketplace extends React.Component {
     constructor(props) {
@@ -19,14 +20,15 @@ class Marketplace extends React.Component {
             showDetails : false,
             listings : [],
             countries : [],
-            territories: []
+            territories: [],
+            profile : props.profile,
         };
     }
 
     componentDidMount () {
         const {customId, clearUpdateFilter} = this.props;
 
-        window.onpopstate = this.onBackButtonEvent;
+        //window.onpopstate = this.onBackButtonEvent;
         if ( customId ) {
             this.selectListing(customId);
             return;
@@ -46,10 +48,10 @@ class Marketplace extends React.Component {
         }
     }
 
-    onBackButtonEvent = (e) => {
+    /*onBackButtonEvent = (e) => {
         e.preventDefault()
         this.setState({showDetails: false});
-    };
+    };*/
 
     selectListing = (id) => {
 
@@ -69,7 +71,7 @@ class Marketplace extends React.Component {
             showDetails : true
         });
 
-        window.history.pushState("test", "Content Arena", envhosturl + "listing/" + id);
+        //window.history.pushState("test", "Content Arena", envhosturl + "listing/" + id);
 
         ContentArena.ContentApi.getByCustomId(id).done((content) => {
             console.log(content);
@@ -117,10 +119,10 @@ class Marketplace extends React.Component {
 
     render () {
         const { filter, salesPackage } = this.props;
-        const {listings, loadingListing, loadingListingDetails, showDetails, content, company, sortSalesPackages} = this.state;
+        const {listings, loadingListing, loadingListingDetails, showDetails, content, company, sortSalesPackages, profile} = this.state;
         return (
             <div className="manager-container">
-                <HeaderBar tab={"MARKETPLACE"} profile={"BUYER"}/>
+                <HeaderBar tab={"MARKETPLACE"} profile={profile}/>
 
                 <div className="manager-content" style={{flexDirection: 'row'}}>
                     {!showDetails && <div className="buy-container-left">
@@ -136,7 +138,7 @@ class Marketplace extends React.Component {
                         {
                             listings.length > 0 && listings.map((listing) => {
                                 return <ContentListing
-                                            onSelect={this.selectListing}
+                                            onSelect={()=>goToListing(listing.customId, true)}
                                             key={listing.customId}
                                             filter={filter}
                                             sortSalesPackages={sortSalesPackages}
@@ -168,6 +170,7 @@ class Marketplace extends React.Component {
                             }}
                             salesPackage={salesPackage}
                             company={company}
+                            profile={profile}
                             content={content}/>
                     }
                 </div>

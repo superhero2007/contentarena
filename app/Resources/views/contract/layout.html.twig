@@ -466,6 +466,18 @@
                 </div>
             {% endif %}
 
+            {# AMMENDMENTS#}
+            {% if content.extraData.COMMENTS_RIGHTS %}
+                <div class="license-item">
+                    <div class="license-item-content">
+                        <label>
+                            Amendment(s) to the Grant of Rights / Special Conditions:
+                        </label>
+                        {{ content.extraData.COMMENTS_RIGHTS }}
+                    </div>
+                </div>
+            {% endif %}
+
             <div class="license-item">
                 All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
             </div>
@@ -708,6 +720,18 @@
                     </tr>
                 </table>
             </div>
+
+            {# CONTENT DELIVERY AMMENDMENTS#}
+            {% if content.extraData.COMMENTS_PRODUCTION %}
+                <div class="license-item">
+                    <div class="license-item-content">
+                        <label>
+                            Amendment(s) to the Content Delivery / Special Conditions:
+                        </label>
+                        {{ content.extraData.COMMENTS_PRODUCTION }}
+                    </div>
+                </div>
+            {% endif %}
 
             {# TRANSMISSION TITLE#}
             <div class="license-item-title">9. Transmission Obligation:</div>

@@ -53,7 +53,7 @@ class BoardListing extends React.Component{
 
     view = () => {
         const { customId } = this.props;
-        goTo("listing/" + customId)
+        goTo("listing/" + customId, true);
     };
 
     hideOptions = (e) => {

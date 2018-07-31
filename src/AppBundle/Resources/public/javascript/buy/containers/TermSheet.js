@@ -84,7 +84,7 @@ class TermSheet extends React.Component {
         const {selectedRightsBySuperRight, rightsPackage} = this.props;
         return definitions.map( (right) => {
             if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
-            return <div className="full-item-box">
+            return <div className="term-sheet-full-item-box">
                 <label>{right.name}</label>
                 <div  className="full-item-content">
                     {
@@ -111,7 +111,8 @@ class TermSheet extends React.Component {
     };
 
     render() {
-        const {selectedRightsBySuperRight, rightsPackage, PROGRAM_SCRIPT, PROGRAM_SUBTITLES, PROGRAM_LANGUAGE} = this.props;
+        const {selectedRightsBySuperRight, rightsPackage, PROGRAM_SCRIPT, PROGRAM_SUBTITLES, PROGRAM_LANGUAGE,
+            COMMENTS_RIGHTS, COMMENTS_PRODUCTION} = this.props;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
 
         return (
@@ -135,13 +136,13 @@ class TermSheet extends React.Component {
                     { this.renderList(RightDefinitions, false) }
                 </div>
 
-                <div style={{marginTop: 20}}>
+                <div>
                     { this.renderTextarea(RightDefinitions) }
                     { this.renderTextarea(ProductionStandardsDefinitions) }
 
                     {
                         selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
-                        <div className="full-item-box">
+                        <div className="term-sheet-full-item-box">
                             <label>Technical Fee Details</label>
                             <div  className="full-item-content">
                                 {
@@ -152,6 +153,15 @@ class TermSheet extends React.Component {
                     }
 
                 </div>
+
+                { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">
+                    <label>Amendment(s) to the Grant of Rights / Special Conditions</label>
+                    <div  className="full-item-content">
+                        {
+                            COMMENTS_RIGHTS
+                        }
+                    </div>
+                </div>}
 
                 <div className="term-sheet-items">
                     <div className="row" style={{
@@ -179,7 +189,14 @@ class TermSheet extends React.Component {
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
                 </div>
 
-
+                { COMMENTS_PRODUCTION && <div className="term-sheet-full-item-box">
+                    <label>Amendment(s) to the Content Delivery / Special Conditions</label>
+                    <div  className="full-item-content">
+                        {
+                            COMMENTS_PRODUCTION
+                        }
+                    </div>
+                </div>}
 
             </div>
         );

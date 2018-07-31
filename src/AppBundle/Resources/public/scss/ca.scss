@@ -743,6 +743,17 @@ input[type="checkbox"].ca-checkbox {
   }
 }
 
+.term-sheet-full-item-box{
+  @extend .full-item-box;
+  label{
+    margin-top: 20px;
+    padding: 0 10px;
+    font-size: 12px;
+    height: 30px;
+  }
+
+}
+
 .box-header {
   display: flex;
   flex-direction: row;

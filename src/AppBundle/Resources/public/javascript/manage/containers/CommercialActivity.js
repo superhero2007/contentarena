@@ -142,7 +142,7 @@ class CommercialActivity extends React.Component {
                             hideWithoutBids={this.state.filter === "ACTIVITY"}
                             filterByOpenBids={this.state.filter === "OPEN"}
                             filterByClosedDeals={this.state.filter === "CLOSED"}
-                            onSelect={id => goToListing(id)}
+                            onSelect={id => goToListing(id, true)}
                             key={i + "-" + listing.customId}
                             {...listing}
                         />

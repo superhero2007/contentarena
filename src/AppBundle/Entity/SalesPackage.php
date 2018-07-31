@@ -92,7 +92,7 @@ class SalesPackage
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_excluded_countries_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing"})
+     * @Groups({"listing", "closed"})
      */
     private $excludedCountries;
 

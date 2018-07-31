@@ -26,9 +26,10 @@ class MainController extends BaseController
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
 
         return $this->render('@App/marketplace.html.twig', [
-            'user' => $user,
-            'company' => $this->serialize($user->getCompany()),
-            'rights' => $this->serialize($rights)
+            'user'      => $user,
+            'company'   => $this->serialize($user->getCompany()),
+            'rights'    => $this->serialize($rights),
+            'profile'   => "BUYER"
         ]);
 
     }
@@ -46,12 +47,14 @@ class MainController extends BaseController
          */
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $profile = $this->get('session')->get('profile');
 
         return $this->render('@App/marketplace.listing.html.twig', [
             'user' => $user,
             'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
             'customId' => $request->get('customId'),
             'salesPackage' => null,
+            'profile' => $profile,
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
@@ -76,6 +79,7 @@ class MainController extends BaseController
             'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
             'customId' => $request->get('customId'),
             'salesPackage' => $request->get('salesPackage'),
+            'profile'   => "BUYER",
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
