@@ -23,15 +23,37 @@ class ContentListingCommercialActivity extends ContentListing {
         this.envelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
     }
 
+    sortSalesPackages = (a, b) => {
+
+        let aOpen = a.bids.filter(bid=>bid.status.name=== "PENDING").length > 0;
+        let bOpen = b.bids.filter(bid=>bid.status.name=== "PENDING").length > 0;
+        let aClosed = a.bids.filter(bid=>bid.status.name=== "APPROVED").length > 0;
+        let bClosed = b.bids.filter(bid=>bid.status.name=== "APPROVED").length > 0;
+        let aWorldwide = a.territoriesMethod ==="WORLDWIDE";
+        let bWorldwide = b.territoriesMethod ==="WORLDWIDE";
+
+        let open = ( !aOpen && bOpen ) ? 1 : ((!bOpen && aOpen) ? -1 : 0);
+        let closed = ( !aClosed && bClosed ) ? 1 : ((!bClosed && aClosed) ? -1 : 0);
+        let worldwide = ( !aWorldwide && bWorldwide ) ? 1 : ((!bWorldwide && aWorldwide) ? -1 : 0);
+
+        return open || closed || worldwide ||this.compareProperty(b.territories.length, a.territories.length)
+            || this.compareProperty(b.name, a.name);
+    };
+
+    compareProperty = (a, b) =>  {
+        return (a > b) ? 1 : ((b > a) ? -1 : 0)
+    };
+
     render(){
         const {
             name,
-            expiresAt,
             onDelete,
+            onUpdate,
             hideWithoutBids,
+            filterByOpenBids,
+            filterByClosedDeals,
             bidsOpen,
             rightsPackage,
-            salesPackages,
             imageBase64,
             image,
             company,
@@ -41,8 +63,13 @@ class ContentListingCommercialActivity extends ContentListing {
 
         const {showSalesPackage} = this.state;
 
+        let salesPackages = this.props.salesPackages;
+        salesPackages.sort(this.sortSalesPackages);
+
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         let bids = salesPackages.reduce((t, sp)=>t.concat(sp.bids),[]);
+        let closedDeals = bids.filter(b=>b.status.name === "APPROVED");
+        let openBids = bids.filter(b=>b.status.name === "PENDING");
         return (
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
                 <div className="listing-list-view" style={{padding: 0, marginBottom: 0 }}>
@@ -94,14 +121,14 @@ class ContentListingCommercialActivity extends ContentListing {
                     {/*BID DETAILS*/}
                     <div  className={"bid-listing-details"}>
                         <div className={"item"}>
-                            <div>{bids.filter(b=>b.status.name === "APPROVED").length} closed Deals</div>
+                            <div>{closedDeals.length} closed Deals</div>
                         </div>
                         <div className={"item"}>
-                            <div>{bids.filter(b=>b.status.name === "PENDING").length} open bids</div>
+                            <div>{openBids.length} open bids</div>
                         </div>
                         {bids.length > 0 && <div className={"item"} style={{fontWeight:600}}>
                             <div>
-                                {"Total: " + bids.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n).toLocaleString("en", { maximumFractionDigits: 2 })
+                                {"Total: " + closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n).toLocaleString("en", { maximumFractionDigits: 2 })
                                 + " "}
 
                                 {getCurrencySymbol(salesPackages[0].currency.code)}
@@ -118,9 +145,15 @@ class ContentListingCommercialActivity extends ContentListing {
                 </div>
                 {showSalesPackage && salesPackages.map((sb, i )=>{
 
+                    let closed= sb.bids.filter(b=>b.status.name === "APPROVED");
+                    let open = sb.bids.filter(b=>b.status.name === "PENDING");
+
                     if (hideWithoutBids && sb.bids.length === 0 ) return;
+                    if (filterByOpenBids && open.length === 0 ) return;
+                    if (filterByClosedDeals && closed.length === 0 ) return;
 
                     return <CommercialSalesBundle
+                        onUpdate={onUpdate}
                         onDelete={onDelete}
                         salesBundle={sb}
                         bidsOpen={bidsOpen}

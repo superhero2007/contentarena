@@ -62,8 +62,6 @@ class Messages extends React.Component {
                 messages : r
             });
         });
-
-
     };
 
     send = () => {
@@ -118,10 +116,10 @@ class Messages extends React.Component {
                                 {t.listing.name}
                             </div>
                             <div className={"company"}>
-                                {t.listing.company.legalName}
+                                {t.oppositeParty.legalName}
                             </div>
                             <div className={"user"}>
-                                {getFullName(t.user) }
+                                {getFullName(t.lastMessageUser) }
                             </div>
                             <div className={"last-message"}>
                                 {t.lastMessageContent && limitText(t.lastMessageContent)}

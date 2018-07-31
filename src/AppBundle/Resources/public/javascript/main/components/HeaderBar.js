@@ -6,7 +6,7 @@ const HeaderBarTab = ({tabName, activeTab, children, route}) => {
     return (
         <div className={(tabName === activeTab) ? "tab active-tab" : "tab"}
                  onClick={()=>{
-                     if ( tabName !== activeTab && route ) {
+                     if ( route ) {
                          goTo(route);
                      };
                  }}>
@@ -23,15 +23,14 @@ class HeaderBar extends  React.Component {
         }
     }
 
-    goTo = () => {
-    };
-
     render(){
         const {tab, profile} = this.props;
+        const logoUrl = this.getLogoUrl(tab);
+
         return(
             <div className="manager-header">
 
-                <div className="logo">
+                <div className="logo" onClick={()=>goTo(logoUrl)}>
                     <img src={assetsBaseDir + "app/images/logo.png"} alt=""/>
                 </div>
 
@@ -77,6 +76,13 @@ class HeaderBar extends  React.Component {
                     Commercial activity
                 </HeaderBarTab> }
 
+                { profile === "SELLER" && <HeaderBarTab
+                    tabName={"NEW_LISTING"}
+                    route={"managelistings/new"}
+                    activeTab={tab} >
+                    Create Listing
+                </HeaderBarTab> }
+
                 <div className="spacer" />
 
                 { profile === "BUYER" &&
@@ -112,6 +118,17 @@ class HeaderBar extends  React.Component {
                 </div>
             </div>
         )
+    }
+
+    getLogoUrl = (tab) => {
+        let logoUrl = '';
+        if (tab === 'MANAGE_LISTINGS') {
+            logoUrl = 'managelistings'
+        }
+        if (tab === 'MARKETPLACE') {
+            logoUrl = 'marketplace'
+        }
+        return logoUrl;
     }
 }
 

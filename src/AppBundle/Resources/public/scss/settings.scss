@@ -1,0 +1,58 @@
+@import "vars";
+
+.settings-container{
+  .edit-button{
+    cursor: pointer;
+    color: $border-color-2;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 75px;
+  }
+  .title{
+    display: flex;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+  .subtitle{
+    margin-bottom: 20px;
+  }
+  textarea {
+    display: flex;
+    box-sizing: border-box;
+  }
+  .setting{
+    .password {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 250px;
+        height: 30px;
+        padding: 5px;
+        line-height: 20px;
+        font-size: 16px;
+        margin: 5px 0 10px;
+      }
+    }
+    .password-validation{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .row{
+      display: flex;
+      margin-bottom: 20px;
+      .item{
+        width: 240px;
+        box-sizing: border-box;
+        margin: 0 20px 0 0;
+        input{
+          width: auto;
+          padding: 10px;
+        }
+      }
+    }
+  }
+}

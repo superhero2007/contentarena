@@ -122,7 +122,7 @@ export class SportSelector extends React.Component {
                                value={this.props.value}
                                readOnly={true}
                                onClick={this.props.onClick}
-                               placeholder={"Sport"}  />
+                               placeholder={"e.g. Soccer"}  />
                     }
 
                     {

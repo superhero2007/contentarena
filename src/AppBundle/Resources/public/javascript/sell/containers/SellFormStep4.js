@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from "react-redux";
 import CurrencySelector from "../components/CurrencySelector";
-import VatSelector from "../components/VatSelector";
 import FileSelector from '../../main/components/FileSelector';
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
 import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
+import ApplicableLawSelector from "../components/ApplicableLawSelector";
 import CompanyInformation from "../components/CompanyInformation";
 import ListingName from "../components/ListingName";
 import {CountrySelector} from "../../main/components/CountrySelector";
@@ -119,15 +119,11 @@ class SellFormStep4 extends React.Component {
 
                     <TitleBar title={"Further information"}/>
 
-                    <CompanyInformation/>
+                    <CompanyInformation />
 
-                    <JurisdictionSelector/>
+                    <JurisdictionSelector />
 
-                    <VatSelector
-                        vatPercentage={vatPercentage}
-                        onUpdate={updateContentValue}
-                        onClick={this.selectVat}
-                        selected={vat}/>
+                    <ApplicableLawSelector />
 
                     <TitleBar title={"Listing details"}/>
 

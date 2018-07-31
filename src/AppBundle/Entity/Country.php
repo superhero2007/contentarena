@@ -25,7 +25,7 @@ class Country
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Groups({"listing", "closed", "commercial"})
+     * @Groups({"listing", "closed", "commercial", "settings"})
      */
     private $name;
 

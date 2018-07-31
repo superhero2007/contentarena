@@ -52,6 +52,16 @@ class Thread
     private $user;
 
     /**
+     * @var User
+     */
+    private $oppositeParty;
+
+    /**
+     * @var User
+     */
+    private $lastMessageUser;
+
+    /**
      * @var mixed
      */
     private $lastMessageDate;
@@ -184,6 +194,38 @@ class Thread
     public function setLastMessageContent($lastMessageContent)
     {
         $this->lastMessageContent = $lastMessageContent;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOppositeParty()
+    {
+        return $this->oppositeParty;
+    }
+
+    /**
+     * @param User $oppositeParty
+     */
+    public function setOppositeParty($oppositeParty)
+    {
+        $this->oppositeParty = $oppositeParty;
+    }
+
+    /**
+     * @return User
+     */
+    public function getLastMessageUser()
+    {
+        return $this->lastMessageUser;
+    }
+
+    /**
+     * @param User $lastMessageUser
+     */
+    public function setLastMessageUser($lastMessageUser)
+    {
+        $this->lastMessageUser = $lastMessageUser;
     }
 
 

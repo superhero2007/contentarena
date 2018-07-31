@@ -3,7 +3,7 @@ import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {goTo, limitText} from "../../main/actions/utils";
 import {
-    blueCheckIcon, clockRoundIcon, exclamationRoundIcon, playIcon,
+    blueCheckIcon, clockRoundIcon, exclamationRoundIcon, expiredIcon, playIcon, soldIcon,
     yellowCheckIcon
 } from "../../main/components/Icons";
 import {SuperRightBoardLabels} from "../../sell/components/SuperRightDefinitions";
@@ -193,10 +193,12 @@ class BoardListing extends React.Component{
                         {status.name === 'PENDING' && "Listing under review. Not visible in the marketplace yet."}
                         {status.name === 'INACTIVE' && "Listing is deactivated."}
                         {status.name === 'REJECTED' && "Listing rejected. Please edit or contact support."}
+                        {status.name === 'EXPIRED' && "This listing has expired."}
+                        {status.name === 'SOLD_OUT' && "All sales bundle of this listing were sold."}
                     </div>
                 </div>}
 
-                { (status.name === 'REJECTED' || status.name === 'INACTIVE' || status.name === 'PENDING' ) &&
+                { (status.name !== 'DRAFT' && status.name !== 'APPROVED' && status.name !== 'EDITED' ) &&
                 <div
                     className={"status-icon"}
                     onMouseOver={() => {this.setState({showStatusInfo : true})}}
@@ -204,6 +206,8 @@ class BoardListing extends React.Component{
                     {status.name === 'PENDING' && <img src={clockRoundIcon} />}
                     {status.name === 'INACTIVE' &&<img src={playIcon} />}
                     {status.name === 'REJECTED' && <img src={exclamationRoundIcon} />}
+                    {status.name === 'EXPIRED' && <img src={expiredIcon} />}
+                    {status.name === 'SOLD_OUT' && <img src={soldIcon} />}
                 </div>}
 
                 <div  className="menu-icon" onClick={this.toggleOptions}>
@@ -213,7 +217,7 @@ class BoardListing extends React.Component{
                     { name }
                 </div>
                 <div className={"tournament"}>
-                    {tournament && <div>{tournament.name}</div>}
+                    {tournament && tournament.length === 1 && <div>{tournament[0].name}</div>}
                     {tournament && tournament.length === 0 && <div>General content</div>}
                     {seasons && seasons.length > 1 && <div>Multiple seasons</div>}
                     {seasons && seasons.length === 1 && <div>Season: {seasons[0].year}</div>}

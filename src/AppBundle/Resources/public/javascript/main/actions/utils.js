@@ -10,6 +10,14 @@ export const goToListing = id => {
     goTo("listing/"+ id)
 };
 
+export const viewLicense = id => {
+    goTo("license/preview/"+ id)
+};
+
+export const viewLicenseBid = id => {
+    goTo("license/bid/"+ id)
+};
+
 export const goToMarketplace = () => {
     goTo("marketplace")
 };
@@ -36,14 +44,20 @@ export const editedProgramSelected = (rights) => {
 };
 
 export const parseSeasons = (content) => {
+    if (content.seasons === undefined) return content;
     content.seasons.forEach((season)=>{
         season.selectedSchedules = {};
-        Object.entries( season.schedules).filter((round) =>{  return round[1].selected} ).map((round)=>{
+
+        if (season.schedules === undefined ) return;
+
+        Object.entries( season.schedules).filter((round) =>{
+            if ( !round || round.length <= 1 ) return false;
+            return round[1].selected
+        }).map((round)=>{
             if (!season.selectedSchedules[round[0]]) season.selectedSchedules[round[0]] = {matches:[]};
             if(round[1].selected){
                 Array.from(round[1].matches.values()).filter(match => match.selected).forEach((match)=>{
                     season.selectedSchedules[round[0]].matches.push(match)
-
                 })
             }
         })

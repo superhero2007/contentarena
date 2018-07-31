@@ -7,7 +7,7 @@ import ListingDetails from './../../buy/containers/ListingDetails';
 import ContentListing from "../../main/components/ContentListing";
 import {goToPreviousStep, stepChangeReset} from "../actions/contentActions";
 import DigitalSignature from "../../main/components/DigitalSignature";
-import {goTo, parseSeasons} from "../../main/actions/utils";
+import {goTo, parseSeasons, viewLicense} from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 
@@ -137,6 +137,7 @@ class ReviewAndSign extends React.Component {
             company,
             terms_arena,
             terms,
+            customId,
             status
         } = this.props;
 
@@ -190,8 +191,12 @@ class ReviewAndSign extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
-                    <div className="buttons-container" >
-                        <button id="draft-listing" className="standard-button" style={{ width: '250px'}}>
+                    <div className="buttons-container"  >
+                        <button id="draft-listing"
+                                onClick={()=>{
+                                    viewLicense(customId);
+                                }}
+                                className="standard-button" style={{ width: '250px'}}>
                             View License Agreement
                         </button>
                     </div>
@@ -205,6 +210,7 @@ class ReviewAndSign extends React.Component {
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
                                 type="checkbox"
+                                className="ca-checkbox"
                                 value={terms}
                                 onChange={(e)=>{
                                     updateContentValue('terms',e.target.checked)
@@ -217,6 +223,7 @@ class ReviewAndSign extends React.Component {
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
                                 type="checkbox"
+                                className="ca-checkbox"
                                 value={terms_arena}
                                 onChange={(e)=>{
                                     updateContentValue('terms_arena',e.target.checked)

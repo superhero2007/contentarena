@@ -12,7 +12,7 @@ import DigitalSignature from "../../main/components/DigitalSignature";
 import SendMessage from "../../main/components/SendMessage";
 import {
     getCurrencySymbol, getFullName, goTo, goToClosedDeals, goToListing,
-    goToMarketplace
+    goToMarketplace, viewLicense
 } from "../../main/actions/utils";
 import CompanyInformation from "../../sell/components/CompanyInformation";
 import {customStyles} from "../../main/styles/custom";
@@ -86,7 +86,8 @@ class ListingDetails extends React.Component {
         this.setState({
             selectedPackage: selectedPackage,
             buyingMode : true,
-            bid: selectedPackage.fee
+            bid: selectedPackage.fee,
+            minimumBid : selectedPackage.fee
         })
     };
 
@@ -433,7 +434,7 @@ class ListingDetails extends React.Component {
     render() {
 
         const {onBack } = this.props;
-        const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner} = this.state;
+        const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner, minimumBid} = this.state;
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
         let technicalFee = this.getTechnicalFee();
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
@@ -705,7 +706,15 @@ class ListingDetails extends React.Component {
                                             }}
                                             type="number"
                                             value={bid}
-                                            onChange={e=>{ this.setState({bid:e.target.value})}}
+                                            onChange={e=>{
+                                                let value = e.target.value;
+                                                if (value<minimumBid) {
+                                                    this.setState({bid:minimumBids})
+                                                } else {
+                                                    this.setState({bid:value})
+                                                }
+
+                                            }}
                                             min={selectedPackage.fee}/>}
                                         {bidUpdated && <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>}
                                         {!bidUpdated && getCurrencySymbol(selectedPackage.currency.code)}
@@ -819,9 +828,12 @@ class ListingDetails extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                             textDecoration: 'underline',
+                            cursor : 'pointer',
                             color: '#48C0FE',
                             fontSize: 16,
                             margin: 10
+                        }} onClick={()=>{
+                            viewLicense(content.customId);
                         }}>
                             <img style={{marginRight: 10}} src={this.pdfIcon}/>
                             License agreement
@@ -835,7 +847,6 @@ class ListingDetails extends React.Component {
                                 margin: '0 auto'
                             }}> <input type="checkbox"
                                        id="terms-buy"
-                                       style={{display : "none"}}
                                        onChange={e =>{ this.setState({terms: e.target.checked}) }}
                                        checked={this.state.terms}/> <label htmlFor={"terms-buy"} />Accept terms conditions</div>
                         </div>

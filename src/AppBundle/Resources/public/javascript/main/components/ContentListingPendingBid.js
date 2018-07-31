@@ -17,7 +17,6 @@ class ContentListingPendingBid extends ContentListing {
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
         this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
         this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
-        this.bucketicon = assetsBaseDir + "app/images/bucket.png";
         this.exclamationIcon = assetsBaseDir + "app/images/Exclamation.png";
         this.envelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
     }
@@ -26,7 +25,6 @@ class ContentListingPendingBid extends ContentListing {
         const {
             name,
             expiresAt,
-            programs,
             onDelete,
             rightsPackage,
             onSelectName,
@@ -204,7 +202,7 @@ class ContentListingPendingBid extends ContentListing {
                             <span style={{fontWeight: 400,fontStyle: 'italic'}}>Placed by:</span>
                             {" " +bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</div>
                     </div>
-                    <div style={{
+                    {bid.status.name === "REJECTED" && <div style={{
                         position: 'absolute',
                         cursor : 'pointer',
                         top : 20,
@@ -214,7 +212,7 @@ class ContentListingPendingBid extends ContentListing {
                         e.stopPropagation();
                     }}>
                         <img src={bucketIcon}/>
-                    </div>
+                    </div>}
 
                     {/*CONFIRM REMOVE*/}
                     {this.state.showRemoveConfirm && <div className="confirmation-tooltip">

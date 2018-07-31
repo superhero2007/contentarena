@@ -6,6 +6,7 @@ use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\MessageService;
+use AppBundle\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -345,9 +346,9 @@ class ApiController extends BaseController
     {
         $user = $this->getUser();
 
-        $success = $bidService->rejectBid($request);
+        $bundle = $bidService->rejectBid($request);
 
-        return new JsonResponse(array("success"=>$success));
+        return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
 
     }
 
@@ -409,6 +410,97 @@ class ApiController extends BaseController
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($message, 'json',SerializationContext::create());
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/user/info", name="getUserInfo")
+     */
+    public function getUserInfo(Request $request)
+    {
+        $user = $this->getUser();
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/company/users", name="getCompanyUsers")
+     */
+    public function getCompanyUsers(Request $request)
+    {
+        $user = $this->getUser();
+        $users = $user->getCompany()->getUsers();
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($users, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/user/update", name="updateUser")
+     */
+    public function updateUser(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+        $userData = $request->get("user");
+
+        if ($userData['id'] !== $user->getId()) return false;
+
+        $user = $userService->updateUser($userData);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/user/password", name="updatePassword")
+     */
+    public function updatePassword(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        if ($request->get("id") !== $user->getId()) return false;
+
+        $user = $userService->updatePassword($request);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/company/update", name="updateCompany")
+     */
+    public function updateCompany(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+
+        $company = $userService->updateCompany($request->get("company"), $user);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($company, 'json',SerializationContext::create()->setGroups(array('settings')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

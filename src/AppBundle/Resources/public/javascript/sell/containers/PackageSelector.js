@@ -4,6 +4,7 @@ import Toggle from 'react-toggle';
 import {RightDefaults} from "../components/RightDefaults";
 import {updateContentValue} from "../actions/contentActions";
 import {SuperRightDefinitions} from "../components/SuperRightDefinitions";
+import {RightDefaultsBySuperRight} from "../components/RightDefaultsBySuperRight";
 
 class SuperRight extends React.Component {
 
@@ -77,9 +78,15 @@ class PackageSelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            packages : JSON.parse(props.packages).map( (p) => { p.selectedRights = Object.assign({},RightDefaults); return p }),
-            rightsPackage : new Map(props.rightsPackage.map((i) => {
+            packages : JSON.parse(props.packages).map( (p) => {
+                p.selectedRights = Object.assign({},RightDefaults);
+                if (RightDefaultsBySuperRight[p.shortLabel] !== undefined) {
+                    p.selectedRights = Object.assign({},p.selectedRights, RightDefaultsBySuperRight[p.shortLabel]);
+                }
 
+                return p
+            }),
+            rightsPackage : new Map(props.rightsPackage.map((i) => {
                 if (!i.selectedRights) i.selectedRights = Object.assign({},RightDefaults) ;
                 return[i.id, i]
             })),

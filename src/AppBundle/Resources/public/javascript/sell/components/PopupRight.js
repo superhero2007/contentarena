@@ -179,7 +179,6 @@ class PopupRight extends React.Component {
                 return true;
             }
 
-
         });
         return custom;
 
@@ -232,6 +231,7 @@ class PopupRight extends React.Component {
                     <input
                         defaultChecked={rightPackage.selectedRights[id] === option}
                         type="radio"
+                        className="ca-radio"
                         disabled={disabled}
                         onChange={(e) => { this.updateSelection(e.target.value, id,rightPackage)} }
                         name={rightPackage.shortLabel + "_" + id} value={option}/>}
@@ -253,8 +253,8 @@ class PopupRight extends React.Component {
                             className="text-field"
                             style={numberFieldStyle}
                             type="number"
-                            onChange={(e) => { this.updateSelection(e.target.value,RightItemsDefinitions[option].numberFieldValue,rightPackage)}}
-                            value={rightPackage.selectedRights[RightItemsDefinitions[option].numberFieldValue]}
+                            onChange={(e) => { this.updateSelection(e.target.value,id + "_NUMBER",rightPackage)}}
+                            value={rightPackage.selectedRights[id + "_NUMBER"]}
                             min={0}/>
                     }
                     {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}
@@ -285,7 +285,7 @@ class PopupRight extends React.Component {
 
             <div className="modal-title">
                 Edit {name}
-                {this.showOkButton() && <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>}
+                <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>
             </div>
 
             <div className="step-content">
@@ -331,6 +331,7 @@ class PopupRight extends React.Component {
                                     <input
                                         defaultChecked={customProp === option}
                                         type="radio"
+                                        className="ca-radio"
                                         disabled={disabled}
                                         onChange={(e) => { this.updateSelection(e.target.value, customId,rightsPackage[0])} }
                                         name={customId + "_" + id} value={option}/>
@@ -396,6 +397,7 @@ class PopupRight extends React.Component {
                                     style={{ width: '20px'}}
                                     defaultChecked={rightsPackage[0].selectedRights["TECHNICAL_FEE"]=== "INCLUDED"}
                                     type="radio"
+                                    className="ca-radio"
                                     value={"INCLUDED"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
                                     name="TECHNICAL_FEE"/> Technical fee included in license fee
@@ -405,6 +407,7 @@ class PopupRight extends React.Component {
                                     style={{ width: '20px'}}
                                     checked={rightsPackage[0].selectedRights["TECHNICAL_FEE"] === "ON_TOP"}
                                     type="radio"
+                                    className="ca-radio"
                                     value={"ON_TOP"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
                                     name="TECHNICAL_FEE"/>
@@ -524,31 +527,6 @@ class PopupRight extends React.Component {
                 }
 
             }
-            /*else if (id === "TECHNICAL_DELIVERY"){
-
-                let programPackage = rightsPackage.filter(rp=>rp.shortLabel === "PR")[0];
-
-                if ( rightsPackage.length > 1 ) {
-
-                    if ( packagesAvailable.indexOf("PR") !== -1 ) {
-                        if ( distributionMethod !== programPackage.selectedRights[id]){
-                            custom = true;
-                        } else {
-                            selected = RightItemsDefinitions[distributionMethod].label
-                        }
-                    } else {
-                        selected = RightItemsDefinitions[distributionMethod].label
-                    }
-                } else {
-                    if ( packagesAvailable.indexOf("PR") !== -1 ) {
-                        selected = RightItemsDefinitions[programPackage.selectedRights[id]].label
-                    } else {
-                        selected = RightItemsDefinitions[distributionMethod].label
-                    }
-
-                }
-
-            }*/
             else if (global){
 
                 if ( languages.length > 0 ) {

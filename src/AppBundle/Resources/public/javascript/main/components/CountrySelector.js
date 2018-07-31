@@ -39,12 +39,13 @@ class CountrySelector extends React.Component {
     };
 
     render(){
-        const {value, onChange, className, multi = true} = this.props;
+        const {value, onChange, className, multi = true, disabled = false} = this.props;
         return (
             <Select
                 className={className }
                 name="form-field-name"
                 onChange={onChange}
+                disabled={disabled}
                 value={value}
                 multi={multi}
                 options={this.getOptions()}

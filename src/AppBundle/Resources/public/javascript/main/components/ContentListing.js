@@ -51,6 +51,7 @@ class ContentListing extends React.Component{
     };
 
     sortSalesPackages = (a, b) => {
+        if (b.territoriesMethod ==="WORLDWIDE") return -1;
         return this.compareProperty(a.territories.length, b.territories.length)
             || this.compareProperty(b.name, a.name);
     };

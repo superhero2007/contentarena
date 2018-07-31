@@ -20,7 +20,9 @@ class Comments extends React.Component {
 
     updateContent = (e) => {
 
-        this.props.updateContentValue("comments", e.target.value);
+        const {propName} = this.props;
+
+        this.props.updateContentValue(propName, e.target.value);
     };
 
     addComments = () =>{
@@ -65,7 +67,7 @@ class Comments extends React.Component {
 
     render(){
         return (
-            <div >
+            <div style={{marginBottom: 20}}>
                 { this.renderModal() }
                 <button className={"link-button"} onClick={this.addComments}>Add further comments</button>
             </div>

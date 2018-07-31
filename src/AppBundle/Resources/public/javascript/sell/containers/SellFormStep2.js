@@ -92,7 +92,7 @@ class SellFormStep2 extends React.Component {
                 {/*PROGRAM DESCRIPTION*/}
                 <div className="step-content-container">
                     <div className="textarea-input">
-                        <label>Program/Content Description</label>
+                        <label>PROGRAM DESCRIPTION</label>
                         <div style={{margin: 10}}>
                             Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.
                         </div>

@@ -165,7 +165,7 @@ class SellFormStep3 extends React.Component {
 
     render() {
 
-        const {step, rightsPackage, startDateMode, endDateMode, endDate,
+        const {step, rightsPackage, startDateMode, endDateMode, endDate, COMMENTS_RIGHTS, COMMENTS_PRODUCTION,
             updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES
         } = this.props;
         if ( step !== 3) return (null);
@@ -223,18 +223,18 @@ class SellFormStep3 extends React.Component {
                         <div className="table-right">
                             <div className="row">
                                 <div className="column right-name">Start</div>
-                                <div className="column right-item-content" style={licenseStyles}>
+                                <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
                                     { !this.props.startDate  && " contract conclusion"}
                                     { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
                                 </div>
                                 <div className="column right-name">End</div>
-                                <div className="column right-item-content"  style={licenseStyles}>
+                                <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
                                     { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
                                     { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
                                     { endDateMode === "UNLIMITED"  && "Unlimited"}
                                     { !endDateMode && "Please select"}
                                 </div>
-                                <div className="column right-item-content edit-item" onClick={()=>this.setState({licensePopup: true})}>
+                                <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
                                     <i className="fa fa-edit"/>
                                 </div>
                             </div>
@@ -267,6 +267,8 @@ class SellFormStep3 extends React.Component {
                             })
                         }
                     </div>
+
+                    <Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>
 
                     <TitleBar title={"Configure Production Standards"}/>
 
@@ -308,11 +310,17 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
-                    <Comments/>
+                    <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
 
                 </div>
             </div>
         );
+    }
+
+    showLicensePopup = () => {
+        this.setState({
+            licensePopup: true
+        });
     }
 }
 
