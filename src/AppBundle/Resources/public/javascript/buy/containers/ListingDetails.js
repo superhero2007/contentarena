@@ -718,7 +718,12 @@ class ListingDetails extends React.Component {
                                             min={selectedPackage.fee}/>}
                                         {bidUpdated && <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>}
                                         {!bidUpdated && getCurrencySymbol(selectedPackage.currency.code)}
-                                        {!bidUpdated && <button className="standard-button" style={bidButtonStyle} onClick={this.setBid}>Apply</button>}
+                                        {!bidUpdated &&
+                                            <button className="standard-button"
+                                                    style={bidButtonStyle}
+                                                    disabled={bid<minimumBid}
+                                                    onClick={this.setBid}>Apply</button>}
+
                                         {bidUpdated && <button className="link-button" onClick={this.editBid}>Raise</button>}
                                     </div>}
 

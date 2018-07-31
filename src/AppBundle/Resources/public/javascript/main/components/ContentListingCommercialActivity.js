@@ -70,6 +70,7 @@ class ContentListingCommercialActivity extends ContentListing {
         let bids = salesPackages.reduce((t, sp)=>t.concat(sp.bids),[]);
         let closedDeals = bids.filter(b=>b.status.name === "APPROVED");
         let openBids = bids.filter(b=>b.status.name === "PENDING");
+        let total = (closedDeals.length > 0 ) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : 0;
         return (
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
                 <div className="listing-list-view" style={{padding: 0, marginBottom: 0 }}>
@@ -128,7 +129,7 @@ class ContentListingCommercialActivity extends ContentListing {
                         </div>
                         {bids.length > 0 && <div className={"item"} style={{fontWeight:600}}>
                             <div>
-                                {"Total: " + closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>{if (!n) return 0; return t+n}).toLocaleString("en", { maximumFractionDigits: 2 })
+                                {"Total: " + total.toLocaleString("en", { maximumFractionDigits: 2 })
                                 + " "}
 
                                 {getCurrencySymbol(salesPackages[0].currency.code)}
