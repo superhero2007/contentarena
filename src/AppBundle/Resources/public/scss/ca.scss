@@ -124,6 +124,10 @@ input[type="checkbox"].ca-checkbox {
       margin: 0 0 8px;
       display: inline-flex;
       justify-content: center;
+      .light-blue-button {
+        min-width: 212px;
+        margin-right: 5px;
+      }
       .step {
         height: 43px;
         width: 46px;
@@ -141,8 +145,26 @@ input[type="checkbox"].ca-checkbox {
         color: white;
       }
     }
+    .step-1 {
+      .step {
+        height: 46px;
+      }
+    }
+    .step-2 {
+      .standard-button {
+        margin-left: inherit;
+      }
+      .prev{
+        background-color: #1DA9EF;
+        color: #fff;
+      }
+      .step {
+        &:first-of-type {
+          margin-left: 35px;
+        }
+      }
+    }
   }
-
 }
 
 .step-content {
@@ -308,7 +330,6 @@ input[type="checkbox"].ca-checkbox {
         color: white;
         min-width: 232px;
         box-sizing: border-box;
-
       }
       input, select {
         width: 100%;
@@ -551,6 +572,52 @@ input[type="checkbox"].ca-checkbox {
     }
   }
 
+}
+
+.step-2 {
+  .step-content-container {
+    .textarea-input {
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  .table {
+    border-bottom: 4px solid #D5D9DF;
+    background-color: inherit;
+  }
+  .left {
+    float: left;
+    .modal-input {
+      margin-bottom: 5px;
+    }
+  }
+  .right {
+    padding: inherit;
+    float: right;
+    width: 60%;
+    .modal-input {
+      border-bottom: 4px solid #D4D8DE;
+      margin-bottom: inherit;
+      display: block;
+      width: 100%;
+      label {
+        text-transform: uppercase;
+        background-color: #1a4b63;
+        padding: 0 20px;
+        color: white;
+        width: 100%;
+        height: 35px;
+      }
+      textarea {
+        outline: none;
+        border: 1px solid #DADADA;
+        font-family: 'Open Sans', sans-serif;
+        resize: none;
+        font-size: 14px;
+        min-height: 156px;
+      }
+    }
+  }
 }
 
 .schedule {
@@ -994,24 +1061,28 @@ $selectHeight: 50px;
     justify-content: flex-start;
     align-items: center;
     padding: 0;
-    height: 48px;
-    font-size: 16px;
-    width: 232px;
-    color: #4F4F4F;
     min-width: 232px;
     box-sizing: border-box;
+    width: 325px;
+    color: #060606;
+   	font-size: 16px;
+    font-weight: 600;
 
   }
   input, select {
-    width: 200px;
-    margin: 0px;
-    height: 40px;
+    width: 215px;
+    margin: 0;
+    height: 36px;
     padding: 0 8px;
     font-size: 16px;
     border: 1px solid lightgrey;
   }
+  select, input[type=number] {
+    text-align: right;
+    text-align-last: right;
+  }
   input::placeholder {
-    color: lightgray;
+    color: #000;
   }
   //input[type="radio"]{
   //  display: none;

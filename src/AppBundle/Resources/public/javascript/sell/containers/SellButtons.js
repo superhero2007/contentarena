@@ -211,9 +211,9 @@ class SellButtons extends React.Component {
                         </div>}
 
                 </div>
-                { this.props.step < lastStep && <div className="buttons-container" >
+                { this.props.step < lastStep && <div className="buttons-container step-1 step-2" >
                     { this.props.step !== 1 &&
-                    <button className="standard-button"
+                    <button className="standard-button prev"
                             onClick={ this.props.goToPreviousStep }>
                         <i className="fa fa-arrow-left"/> Back
                     </button> }
