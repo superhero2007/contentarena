@@ -353,7 +353,7 @@ class Company
     }
 
     public function __toString() {
-        return $this->displayName;
+        return $this->legalName;
     }
 
     /**
