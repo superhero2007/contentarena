@@ -128,7 +128,7 @@ class ContentListingCommercialActivity extends ContentListing {
                         </div>
                         {bids.length > 0 && <div className={"item"} style={{fontWeight:600}}>
                             <div>
-                                {"Total: " + closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n).toLocaleString("en", { maximumFractionDigits: 2 })
+                                {"Total: " + closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>{if (!n) return 0; return t+n}).toLocaleString("en", { maximumFractionDigits: 2 })
                                 + " "}
 
                                 {getCurrencySymbol(salesPackages[0].currency.code)}
