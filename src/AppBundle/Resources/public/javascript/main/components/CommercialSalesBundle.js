@@ -214,7 +214,7 @@ class CommercialSalesBundle extends React.Component{
                     })}
 
                     <ReactTable
-                        className={"closed-deals-table"}
+                        className={"ca-table"}
                         defaultPageSize={30}
                         showPageSizeOptions={false}
                         showPagination={false}
