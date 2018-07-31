@@ -1101,30 +1101,41 @@ $selectHeight: 50px;
       padding-bottom: 10px;
       cursor: pointer;
     }
+
+    .container-overflow {
+      overflow: auto;
+    }
+
     .listing-wrapper {
-      flex-flow: column wrap;
-      max-height: 120px;
       display: flex;
 
-      .divider {
-        height: 100%;
+      .listing-row {
+        display: flex;
+        flex-flow: column wrap;
+        max-height: 120px;
+
+        .listing-item {
+          display: flex;
+          align-items: center;
+          min-height: 40px;
+          margin-right: 75px;
+          &.event {
+            font-weight: 600;
+          }
+          span {
+            margin-right: 5px;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+
+        .divider {
+          height: 100%;
+        }
       }
     }
 
-    .listing-event-details {
-      font-weight: 600;
-      margin-right: 20px;
-    }
-
-    .listing-item {
-      display: flex;
-      align-items: center;
-      min-height: 40px;
-      margin-right: 75px;
-    }
-    .info {
-      display: flex;
-    }
     .sales-bundles {
       display: flex;
       margin-top: 20px;

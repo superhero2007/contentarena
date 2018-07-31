@@ -178,10 +178,13 @@ class ContentListing extends React.Component{
                             </span>
                     </div>}
 
-                    <div className="info">
-                        <div className="listing-wrapper">
+                    <div className="listing-wrapper">
+                        <div className="listing-row">
+
                             <ContentListingEventDetails {...this.props} isFragment={true}/>
+
                             <div className="divider" />
+
                             {
                                 rightsPackage.map(( sr,i )=>{
                                     return <div className="listing-item" key={i}>
