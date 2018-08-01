@@ -30,7 +30,6 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/contract, role: ROLE_USER }
-        - { path: ^/mycontent, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
         - { path: ^/listing, role: ROLE_USER }
         - { path: ^/license, role: ROLE_USER }
@@ -40,7 +39,7 @@ security:
         - { path: ^/managelistings, role: ROLE_USER }
         - { path: ^/commercialactivity, role: ROLE_USER }
         - { path: ^/watchlist, role: ROLE_USER }
-        - { path: ^/buy, role: ROLE_USER }
         - { path: ^/api, role: ROLE_USER }
+        - { path: ^/bids, role: ROLE_USER }
         - { path: ^/closeddeals, role: ROLE_USER }
         - { path: ^/content/draft, role: ROLE_USER }

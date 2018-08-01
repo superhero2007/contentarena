@@ -11,7 +11,7 @@ class PendingDeals extends React.Component {
             loadingDeclined : false,
             bids : [],
             declinedBids: [],
-            active : true
+            active : props.mode === "ACTIVE"
 
         };
         this.bulletIcon = assetsBaseDir + "app/images/bullet.png";
@@ -23,7 +23,7 @@ class PendingDeals extends React.Component {
     }
 
     selectListing = (id) => {
-        goTo("listing/" + id);
+        goTo("listing/" + id, true);
     };
 
     update = () => {
@@ -67,13 +67,13 @@ class PendingDeals extends React.Component {
                 }}>
                     <div style={{margin:'0 20px'}}>Bids</div>
                     <div style={{margin:'0 20px' , cursor: 'pointer'}}
-                         onClick={()=>{this.setState({active: true})}}>
+                         onClick={()=>{goTo("bids/activebids")}}>
                         {active && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {!active && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
                         Active
                     </div>
                     <div style={{margin:'0 20px', cursor: 'pointer'}}
-                         onClick={()=>{this.setState({active: false})}}>
+                         onClick={()=>{goTo("bids/declinedbids")}}>
                         {!active && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {active && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
                         Declined

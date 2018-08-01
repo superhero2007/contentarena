@@ -47,7 +47,6 @@ class BidService
 
     public function saveBidsData($request,$user){
 
-
         $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
         $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$request->get('salesMethod')));
         $signature = $request->get('signature');
@@ -68,7 +67,8 @@ class BidService
 
         $bid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
             "content" =>$content,
-            "salesPackage" => $salesPackage
+            "salesPackage" => $salesPackage,
+            "buyerUser" => $user
         ));
 
         if ( $bid == null || $bid->getStatus() != $status) {

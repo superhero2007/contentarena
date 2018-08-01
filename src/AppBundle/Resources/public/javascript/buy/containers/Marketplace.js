@@ -28,7 +28,6 @@ class Marketplace extends React.Component {
     componentDidMount () {
         const {customId, clearUpdateFilter} = this.props;
 
-        //window.onpopstate = this.onBackButtonEvent;
         if ( customId ) {
             this.selectListing(customId);
             return;
@@ -48,11 +47,6 @@ class Marketplace extends React.Component {
         }
     }
 
-    /*onBackButtonEvent = (e) => {
-        e.preventDefault()
-        this.setState({showDetails: false});
-    };*/
-
     selectListing = (id) => {
 
         let _this = this;
@@ -70,8 +64,6 @@ class Marketplace extends React.Component {
             loadingListingDetails : true,
             showDetails : true
         });
-
-        //window.history.pushState("test", "Content Arena", envhosturl + "listing/" + id);
 
         ContentArena.ContentApi.getByCustomId(id).done((content) => {
             console.log(content);
@@ -118,7 +110,7 @@ class Marketplace extends React.Component {
     };
 
     render () {
-        const { filter, salesPackage } = this.props;
+        const { filter, salesPackage, tab } = this.props;
         const {listings, loadingListing, loadingListingDetails, showDetails, content, company, sortSalesPackages, profile} = this.state;
         return (
             <div className="manager-container">
@@ -165,6 +157,7 @@ class Marketplace extends React.Component {
 
                     {
                         showDetails && !loadingListingDetails && <ListingDetails
+                            tab={tab}
                             onBack={() => {
                                 this.setState({showDetails: false})
                             }}

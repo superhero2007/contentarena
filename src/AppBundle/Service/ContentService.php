@@ -302,7 +302,7 @@ class ContentService
          * @var ListingStatus currentStatus
          */
         $currentStatus = $content->getStatus();
-        $newStatus = "PENDING";
+        $newStatus = ($user->isAutoPublish()) ? "APPROVED": "PENDING";
         $lastAction = "SUBMITTED";
 
         if ( $currentStatus != null && $currentStatus->getName() === 'APPROVED'){

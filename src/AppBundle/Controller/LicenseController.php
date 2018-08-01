@@ -65,7 +65,7 @@ class LicenseController extends Controller
     /**
      * @Route("/license/bid/{customId}", name="contractBid")
      */
-    public function contractBid(Request $request){
+    public function contractBid(Request $request, ContentService $contentService){
 
         $user = $this->getUser();
         $time = new \DateTime();
@@ -82,7 +82,8 @@ class LicenseController extends Controller
             'bid' => $bid,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
-            'exclusiveRights' => $exclusiveRights
+            'exclusiveRights' => $exclusiveRights,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
 
@@ -112,7 +113,8 @@ class LicenseController extends Controller
             'user' => $user,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
-            'exclusiveRights' => $exclusiveRights
+            'exclusiveRights' => $exclusiveRights,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
 

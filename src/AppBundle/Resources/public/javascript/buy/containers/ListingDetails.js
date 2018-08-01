@@ -39,7 +39,7 @@ class ListingDetails extends React.Component {
             content : ContentArena.Utils.contentParserFromServer(props.content) || {},
             company: props.company,
             spinner : false,
-            tab : 1,
+            tab : props.tab,
             soldOut  : false,
             selectedPackage : {},
             territoriesList: [],
@@ -446,17 +446,6 @@ class ListingDetails extends React.Component {
                 { this.successScreen() }
                 <div className="listing-details-content">
                     <div className={"left"}  >
-                        {/*{profile === "BUYER" && <div className={"header"}>
-                            {!buyingMode && <button onClick={onBack} className="light-blue-button">
-                                <i className="fa fa-chevron-left"/> Back
-                            </button>}
-
-                            {buyingMode && <button onClick={this.toggleBuyingMode} className="light-blue-button">
-                                <i className="fa fa-chevron-left"/> Back
-                            </button>}
-
-                        </div>}*/}
-
                         {/*IMAGE*/}
                         <div className={"image"}>
                             <img src={listingImage}/>
@@ -518,7 +507,7 @@ class ListingDetails extends React.Component {
                                     flex:1,
                                     fontSize: 18,
                                     fontWeight: 600
-                                }}>{getFullName(content.owner)}</div>}
+                                }}>{content.company.legalName}</div>}
 
                                 {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
                                      onClick={()=>{
@@ -556,10 +545,10 @@ class ListingDetails extends React.Component {
 
                         {/*TABS*/}
                         <div className={"listing-details-buttons"}>
-                            <button className={(tab ===1)?"active": ""} onClick={()=>this.showTab(1)}>
+                            <button className={(tab ==="bundles")?"active": ""} onClick={()=>this.showTab(1)}>
                                 Program & Sales Bundles
                             </button>
-                            <button className={(tab ===2)?"active": ""} onClick={()=>this.showTab(2)}>
+                            <button className={(tab ==="event")?"active": ""} onClick={()=>this.showTab(2)}>
                                 Event
                             </button>
                             <button className={(tab ===3)?"active": ""} onClick={()=>this.showTab(3)}>
@@ -578,13 +567,13 @@ class ListingDetails extends React.Component {
                         {/*TAB CONTENT*/}
                         <div className={"listing-details-tab"}>
 
-                            { this.state.tab === 1 &&
+                            { this.state.tab === "bundles" &&
                                 <CommercialTerms
                                     profile={profile}
                                     onSelectPackage={this.selectPackage}
                                     {...content}/>
                             }
-                            { this.state.tab === 2 &&
+                            { this.state.tab === "event" &&
                                 <ContentInformation {...content}/> }
                             { this.state.tab === 3 &&
                                 <TermSheet

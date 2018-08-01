@@ -20,11 +20,9 @@ class MainController extends BaseController
      */
     public function buyAction(Request $request)
     {
-
         $user = $this->getUser();
         $this->get('session')->set('profile',"BUYER");
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
-
         return $this->render('@App/marketplace.html.twig', [
             'user'      => $user,
             'company'   => $this->serialize($user->getCompany()),
@@ -39,12 +37,8 @@ class MainController extends BaseController
      */
     public function marketplaceListingAction(Request $request)
     {
-
         $user = $this->getUser();
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
-        /**
-         * Strategy to keep camel case on property names
-         */
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $profile = $this->get('session')->get('profile');
@@ -54,10 +48,33 @@ class MainController extends BaseController
             'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
             'customId' => $request->get('customId'),
             'salesPackage' => null,
+            'tab'=> "bundles",
             'profile' => $profile,
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 
+    }
+
+    /**
+     * @Route("/listing/{customId}/{tab}", name="listingTab")
+     */
+    public function listingTab(Request $request)
+    {
+        $user = $this->getUser();
+        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $profile = $this->get('session')->get('profile');
+
+        return $this->render('@App/marketplace.listing.html.twig', [
+            'user' => $user,
+            'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
+            'customId' => $request->get('customId'),
+            'salesPackage' => null,
+            'tab'=> $request->get("tab"),
+            'profile' => $profile,
+            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
+        ]);
     }
 
     /**
@@ -147,17 +164,35 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/activebids", name="manageActiveBids")
+     * @Route("/bids/activebids", name="manageActiveBids")
      */
     public function manageActiveBids(Request $request)
     {
         $user = $this->getUser();
         $this->get('session')->set('profile',"BUYER");
         return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'profile' => "BUYER",
-            'tab' => "BIDS"
+            'user'      => $user,
+            'company'   => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
+            'profile'   => "BUYER",
+            'tab'       => "BIDS",
+            'mode'      => "ACTIVE"
+        ]);
+
+    }
+
+    /**
+     * @Route("/bids/declinedbids", name="manageDeclinedBids")
+     */
+    public function manageDeclinedBids(Request $request)
+    {
+        $user = $this->getUser();
+        $this->get('session')->set('profile',"BUYER");
+        return $this->render('@App/manage.html.twig', [
+            'user'      => $user,
+            'company'   => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
+            'profile'   => "BUYER",
+            'tab'       => "BIDS",
+            'mode'      => "DECLINED"
         ]);
 
     }

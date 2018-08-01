@@ -50,7 +50,7 @@ class HeaderBar extends  React.Component {
 
                 { profile === "BUYER" && <HeaderBarTab
                     tabName={"BIDS"}
-                    route={"activebids"}
+                    route={"bids/activebids"}
                     activeTab={tab} >
                     Bids
                 </HeaderBarTab> }

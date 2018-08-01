@@ -129,6 +129,13 @@ class User extends BaseUser
      */
     protected $approved = false;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="autoPublish", type="boolean")
+     */
+    protected $autoPublish = false;
+
 
     /**
      * @ORM\Column(name="registered_at", type="datetime", nullable=true)
@@ -405,6 +412,22 @@ class User extends BaseUser
     public function setCompany($company)
     {
         $this->company = $company;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoPublish()
+    {
+        return $this->autoPublish;
+    }
+
+    /**
+     * @param bool $autoPublish
+     */
+    public function setAutoPublish($autoPublish)
+    {
+        $this->autoPublish = $autoPublish;
     }
 
 

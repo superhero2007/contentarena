@@ -15,12 +15,13 @@ class Manager extends React.Component {
         this.state = {
             profile : props.profile,
             tab : props.tab,
-            user : props.user
+            user : props.user,
+            mode : props.mode
         };
     }
 
     render () {
-        const { profile, tab, user } = this.state;
+        const { profile, tab, user, mode } = this.state;
         const { company } = this.props;
         return (
             <div className={"manager-container"}>
@@ -28,7 +29,7 @@ class Manager extends React.Component {
                 <div className="manager-content">
                     {tab === 'WATCHLIST' && <Watchlist company={company} />}
                     {tab === 'CLOSED_DEALS' && <ClosedDeals />}
-                    {tab === 'BIDS' && <PendingDeals />}
+                    {tab === 'BIDS' && <PendingDeals mode={mode} />}
                     {tab === 'MANAGE_LISTINGS' && <ManageListings />}
                     {tab === 'COMMERCIAL_ACTIVITY' && <CommercialActivity/>}
                     {tab === 'MESSAGES' && <Messages user={user}/>}

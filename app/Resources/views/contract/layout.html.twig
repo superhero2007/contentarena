@@ -467,7 +467,7 @@
             {% endif %}
 
             {# AMMENDMENTS#}
-            {% if content.extraData.COMMENTS_RIGHTS %}
+            {% if content.extraData.COMMENTS_RIGHTS is defined %}
                 <div class="license-item">
                     <div class="license-item-content">
                         <label>
@@ -722,7 +722,7 @@
             </div>
 
             {# CONTENT DELIVERY AMMENDMENTS#}
-            {% if content.extraData.COMMENTS_PRODUCTION %}
+            {% if content.extraData.COMMENTS_PRODUCTION is defined%}
                 <div class="license-item">
                     <div class="license-item-content">
                         <label>
@@ -831,16 +831,16 @@
                     <tr>
                         <td>
                             {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
-                                <img class="license-signature" src="{{ asset(bid.sellerSignature) }}" />
+                                <img class="license-signature" src="{{ hostUrl }}{{ bid.sellerSignature }}" />
                             {% elseif content.signature is defined  %}
-                                <img class="license-signature" src="{{ asset(content.signature) }}" />
+                                <img class="license-signature" src="{{ hostUrl }}{{ content.signature }}" />
                             {% else %}
                                 Not available
                             {% endif %}
                         </td>
                         <td>
                             {% if bid is defined %}
-                                <img class="license-signature" src="{{ asset(bid.signature) }}" />
+                                <img class="license-signature" src="{{ hostUrl }}{{ bid.signature }}" />
                             {% else %}
                                 Not available
                             {% endif %}
