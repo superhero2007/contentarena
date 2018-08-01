@@ -217,10 +217,10 @@ class BoardListing extends React.Component{
                     { name }
                 </div>
                 <div className={"tournament"}>
-                    {tournament && tournament.length === 1 && <div>{tournament[0].name}</div>}
-                    {tournament && tournament.length === 0 && <div>General content</div>}
-                    {seasons && seasons.length > 1 && <div>Multiple seasons</div>}
-                    {seasons && seasons.length === 1 && <div>Season: {seasons[0].year}</div>}
+                    {tournament && tournament.length === 1 && <div className="item">{tournament[0].name}</div>}
+                    {tournament && tournament.length === 0 && <div className="item">General content</div>}
+                    {seasons && seasons.length > 1 && <div className="item">Season: Multiple seasons</div>}
+                    {seasons && seasons.length === 1 && <div className="item">Season: {seasons[0].year}</div>}
                 </div>
                 <div className={"rights"}>
                     {rightsPackage && rightsPackage.map((rp,i,l) => {

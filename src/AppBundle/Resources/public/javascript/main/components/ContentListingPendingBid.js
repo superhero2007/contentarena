@@ -64,177 +64,167 @@ class ContentListingPendingBid extends ContentListing {
                         {company.legalName} <img style={{marginLeft: 5}} src={this.envelopeIcon}/>
                     </div>
 
-                    <div style={{display: "flex"}}>
+                    <div style={{display: 'flex'}}>
+                        <div className="listing-wrapper" style={{flex:'1 0 0',overflow: 'auto'}}>
+                            <div className="listing-row">
 
-                        {/*DETAILS*/}
-                        <ContentListingEventDetails {...this.props}/>
+                                {/*DETAILS*/}
+                                <ContentListingEventDetails {...this.props} isFragment={true}/>
 
-                        {/*DETAILS 2*/}
-                        <div>
-                            <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
-                            <div className="custom-id">#{customId}</div>
-                        </div>
+                                {/*DETAILS 2*/}
+                                <div className="listing-item">
+                                    <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
+                                    <div className="custom-id">#{customId}</div>
+                                </div>
 
-                        {/*RIGHTS*/}
-                        <div style={{
-                            flex: 2,
-                            flexDirection: "column",
-                            flexWrap: 'wrap',
-                            maxHeight: 200,
-                            display: 'flex'
-                        }}>
-                            {
-                                rightsPackage.map(( sr,i )=>{
-                                    return <div key={i}  style={{
-                                        minHeight: 46,
-                                        flexDirection: 'row',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        flex: '1 1 40px'
-                                    }}>
-                                        {!sr.exclusive &&
-                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
+                                <div className="divider" />
 
-                                        {sr.exclusive &&
-                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
+                                {/*RIGHTS*/}
+                                {
+                                    rightsPackage.map(( sr,i )=>{
+                                        return <div key={i} className="listing-item">
+                                            {!sr.exclusive &&
+                                            <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
 
-                                        <div style={{display: 'flex', flexDirection: "row"  }}>
-                                            { sr.shortLabel !== "PR" && sr.name }
-                                            { sr.shortLabel === "PR" && PROGRAM_NAME &&
-                                            "Program: " + PROGRAM_NAME
-                                            }
-                                            {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
+                                            {sr.exclusive &&
+                                            <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
+
+                                            <div style={{display: 'flex', flexDirection: "row"  }}>
+                                                { sr.shortLabel !== "PR" && sr.name }
+                                                { sr.shortLabel === "PR" && PROGRAM_NAME &&
+                                                "Program: " + PROGRAM_NAME
+                                                }
+                                                {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
+                                            </div>
                                         </div>
+                                    })
+                                }
+                            </div>
+                        </div>
+                        {/*BID OPTIONS*/}
+                        <div style={{
+                            flex: '240px 0 0',
+                            backgroundColor: '#FAFBFC',
+                            borderLeft: '1px solid #E6E6E6',
+                            alignItems: 'center',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            paddingRop: 15,
+                            justifyContent: 'space-evenly',
+                            padding: '20px 0',
+                            position : 'relative'
+                        }}>
+                            <div style={{
+                                display:'flex',
+                                justifyContent: 'space-evenly',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                width: '100%',
+                            }}>
+                                <div>{Moment(bid.createdAt).format('DD/MM/YYYY')}</div>
+                            </div>
+                            <div style={{
+                                backgroundColor: '#fff',
+                                border: '1px solid lightgrey',
+                                padding: 10,
+                                margin: '0 20px'
+                            }}>
+                                <div>{bid.salesPackage.name}</div>
+                            </div>
+
+                            <div style={{
+                                fontSize: 24,
+                                fontWeight: 600,
+                                marginBottom: 10
+                            }}>
+                                <div>{bid.amount} {getCurrencySymbol(bid.salesPackage.currency.code)}</div>
+                            </div>
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                position: 'relative'
+                            }}>
+                                {bid.status.name === "EDITED"
+                                && <img src={infoIcon}
+                                        style={{
+                                            marginRight: 5,
+                                            cursor: 'pointer'
+                                        }}
+                                        onMouseOver={() => {this.setState({showEdited : true})}}
+                                        onMouseLeave={() => {this.setState({showEdited : false})}} />}
+                                <a className="standard-button" style={{
+                                    height: 36,
+                                    fontSize: 16,
+                                    marginBottom: 10
+                                }} href={envhosturl+ "listing/" +customId+"/buy/" + bid.salesPackage.id}>Increase bid</a>
+                                {bid.message && bid.message !== ""
+                                && <img src={blueEnvelopeIcon}
+                                        style={{
+                                            marginLeft: 5,
+                                            cursor: 'pointer'
+                                        }}
+                                        onMouseOver={() => {this.setState({showMessage : true})}}
+                                        onMouseLeave={() => {this.setState({showMessage : false})}}/>}
+
+                                {/*MESSAGE*/}
+                                {showMessage && <div className="status-tooltip">
+                                    <div className={"option"}>
+                                        {bid.message}
                                     </div>
-                                })
-                            }
+                                </div>}
+
+                                {/*EDITED TOOLTIP*/}
+                                {showEdited && <div className="status-tooltip">
+                                    <div className={"option"}>
+                                        Listing edited after last bid. Please review term sheet.
+                                    </div>
+                                </div>}
+
+                            </div>
+                            <div style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                            }}>
+                                <div>
+                                    <span style={{fontWeight: 400,fontStyle: 'italic'}}>Placed by:</span>
+                                    {" " +bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</div>
+                            </div>
+                            {bid.status.name === "REJECTED" && <div style={{
+                                position: 'absolute',
+                                cursor : 'pointer',
+                                top : 20,
+                                right : 20
+                            }} onClick={(e)=>{
+                                this.setState({showRemoveConfirm: true});
+                                e.stopPropagation();
+                            }}>
+                                <img src={bucketIcon}/>
+                            </div>}
+
+                            {/*CONFIRM REMOVE*/}
+                            {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
+                                <div className={"confirmation-text"}>
+                                    Are you sure you want to remove this bid?
+                                </div>
+                                <button className={"button button-confirm"} onClick={(e)=>{
+                                    this.setState({showRemoveConfirm: false});
+                                    onDelete(bid.id);
+                                    e.stopPropagation();
+                                }}>
+                                    Remove
+                                </button>
+                                <button className={"button"} onClick={(e)=>{
+                                    this.setState({showRemoveConfirm: false});
+                                    e.stopPropagation();
+                                }}>
+                                    Cancel
+                                </button>
+                            </div>}
                         </div>
                     </div>
                 </div>
-                {/*BID OPTIONS*/}
-                <div style={{
-                    flex: '1.5 1 0%',
-                    backgroundColor: '#FAFBFC',
-                    borderLeft: '1px solid #E6E6E6',
-                    alignItems: 'center',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    paddingRop: 15,
-                    justifyContent: 'space-evenly',
-                    padding: '20px 0',
-                    position : 'relative'
-                }}>
-                    <div style={{
-                        display:'flex',
-                        justifyContent: 'space-evenly',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: '100%',
-                    }}>
-                        <div>{Moment(bid.createdAt).format('DD/MM/YYYY')}</div>
-                    </div>
-                    <div style={{
-                        backgroundColor: '#fff',
-                        border: '1px solid lightgrey',
-                        padding: 10,
-                        margin: '0 20px'
-                    }}>
-                        <div>{bid.salesPackage.name}</div>
-                    </div>
 
-                    <div style={{
-                        fontSize: 24,
-                        fontWeight: 600,
-                        marginBottom: 10
-                    }}>
-                        <div>{bid.amount} {getCurrencySymbol(bid.salesPackage.currency.code)}</div>
-                    </div>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        position: 'relative'
-                    }}>
-                        {bid.status.name === "EDITED"
-                        && <img src={infoIcon}
-                                style={{
-                                    marginRight: 5,
-                                    cursor: 'pointer'
-                                }}
-                                onMouseOver={() => {this.setState({showEdited : true})}}
-                                onMouseLeave={() => {this.setState({showEdited : false})}} />}
-                        <a className="standard-button" style={{
-                            height: 36,
-                            fontSize: 16,
-                            width: 150
-                        }} href={envhosturl+ "listing/" +customId+"/buy/" + bid.salesPackage.id}>Increase bid</a>
-                        {bid.message && bid.message !== ""
-                        && <img src={blueEnvelopeIcon}
-                                style={{
-                                    marginLeft: 5,
-                                    cursor: 'pointer'
-                                }}
-                                onMouseOver={() => {this.setState({showMessage : true})}}
-                                onMouseLeave={() => {this.setState({showMessage : false})}}/>}
-
-                        {/*MESSAGE*/}
-                        {showMessage && <div className="status-tooltip">
-                            <div className={"option"}>
-                                {bid.message}
-                            </div>
-                        </div>}
-
-                        {/*EDITED TOOLTIP*/}
-                        {showEdited && <div className="status-tooltip">
-                            <div className={"option"}>
-                                Listing edited after last bid. Please review term sheet.
-                            </div>
-                        </div>}
-
-
-
-                    </div>
-                    <div style={{
-                        fontSize: 12,
-                        fontWeight: 600,
-                    }}>
-                        <div>
-                            <span style={{fontWeight: 400,fontStyle: 'italic'}}>Placed by:</span>
-                            {" " +bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</div>
-                    </div>
-                    {bid.status.name === "REJECTED" && <div style={{
-                        position: 'absolute',
-                        cursor : 'pointer',
-                        top : 20,
-                        right : 20
-                    }} onClick={(e)=>{
-                        this.setState({showRemoveConfirm: true});
-                        e.stopPropagation();
-                    }}>
-                        <img src={bucketIcon}/>
-                    </div>}
-
-                    {/*CONFIRM REMOVE*/}
-                    {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
-                        <div className={"confirmation-text"}>
-                            Are you sure you want to remove this bid?
-                        </div>
-                        <button className={"button button-confirm"} onClick={(e)=>{
-                            this.setState({showRemoveConfirm: false});
-                            onDelete(bid.id);
-                            e.stopPropagation();
-                        }}>
-                            Remove
-                        </button>
-                        <button className={"button"} onClick={(e)=>{
-                            this.setState({showRemoveConfirm: false});
-                            e.stopPropagation();
-                        }}>
-                            Cancel
-                        </button>
-                    </div>}
-
-                </div>
             </div>
         )
     }

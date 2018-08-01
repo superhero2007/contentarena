@@ -82,24 +82,15 @@ class ContentListingCommercialActivity extends ContentListing {
                     <div className={"right"}  style={{padding:'25px 0'}}>
                         <div className={"name"} onClick={this.onSelect}>{name}</div>
 
-                        <div style={{display: "flex"}}>
-                            <ContentListingEventDetails {...this.props}/>
-                            <div style={{
-                                flex: 2,
-                                flexDirection: "column",
-                                flexWrap: 'wrap',
-                                maxHeight: 200,
-                                display: 'flex'
-                            }}>
+                        <div className="listing-wrapper">
+                            <div className="listing-row">
+                                <ContentListingEventDetails {...this.props} isFragment={true}/>
+
+                                <div className="divider" />
+
                                 {
                                     rightsPackage.map(( sr,i )=>{
-                                        return <div key={i}  style={{
-                                            minHeight: 46,
-                                            flexDirection: 'row',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            flex: '1 1 40px'
-                                        }}>
+                                        return <div key={i} className="listing-item">
                                             {!sr.exclusive &&
                                             <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
 

@@ -141,45 +141,50 @@ class ContentListing extends React.Component{
                 <div className={"right"} >
                     <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
 
-                    <div className="info">
-                        <ContentListingEventDetails {...this.props}/>
 
-                        {watchlistRemove && !confirmWatchlistRemove &&
-                        <img style={{
+                    {watchlistRemove && !confirmWatchlistRemove &&
+                    <img style={{
+                        cursor : 'pointer',
+                        position: 'absolute',
+                        right: 0,
+                        top : 0,
+                        margin: '0 5px'
+
+                    }} src={this.bucketicon} onClick={this.confirmRemoveFromWatchlist}/>}
+
+                    {confirmWatchlistRemove &&
+                    <div style={{
+                        position: 'absolute',
+                        right: 0,
+                        top : 0,
+                        margin: '0 5px',
+                        border : '1px solid lightgrey',
+                        padding : 5,
+                        fontSize: 13
+                    }}>
+                        <span>Remove from Watchlist?</span>
+                        <span onClick={this.removeFromWatchlist} style={{
                             cursor : 'pointer',
-                            position: 'absolute',
-                            right: 0,
-                            top : 0,
-                            margin: '0 5px'
-
-                        }} src={this.bucketicon} onClick={this.confirmRemoveFromWatchlist}/>}
-
-                        {confirmWatchlistRemove && <div style={{
-                            position: 'absolute',
-                            right: 0,
-                            top : 0,
-                            margin: '0 5px',
-                            border : '1px solid lightgrey',
-                            padding : 5,
-                            fontSize: 13
+                            margin: '0 15px',
+                            color : 'red'
                         }}>
-                            <span>Remove from Watchlist?</span>
-                            <span onClick={this.removeFromWatchlist} style={{
-                                cursor : 'pointer',
-                                margin: '0 15px',
-                                color : 'red'
-                            }}>
                                 Yes
                             </span>
-                            <span onClick={this.cancelRemoveFromWatchlist} style={{
-                                cursor : 'pointer',
-                                color : 'green'
-                            }}>
+                        <span onClick={this.cancelRemoveFromWatchlist} style={{
+                            cursor : 'pointer',
+                            color : 'green'
+                        }}>
                                 Cancel
                             </span>
-                        </div>}
+                    </div>}
 
-                        <div className="listing-event-packages listing-col">
+                    <div className="listing-wrapper">
+                        <div className="listing-row">
+
+                            <ContentListingEventDetails {...this.props} isFragment={true}/>
+
+                            <div className="divider" />
+
                             {
                                 rightsPackage.map(( sr,i )=>{
                                     return <div className="listing-item" key={i}>
@@ -189,13 +194,13 @@ class ContentListing extends React.Component{
                                         {sr.exclusive &&
                                         <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
 
-                                        <div style={{display: 'flex', flexDirection: "row"  }}>
-                                            { sr.shortLabel !== "PR" && sr.name }
-                                            { sr.shortLabel === "PR" && PROGRAM_NAME &&
-                                            "Program: " + PROGRAM_NAME
-                                            }
-                                            {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
-                                        </div>
+
+                                        { sr.shortLabel !== "PR" && sr.name }
+                                        { sr.shortLabel === "PR" && PROGRAM_NAME &&
+                                        "Program: " + PROGRAM_NAME
+                                        }
+                                        {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
+
                                     </div>
                                 })
                             }

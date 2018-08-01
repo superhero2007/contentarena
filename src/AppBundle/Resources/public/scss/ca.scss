@@ -13,6 +13,17 @@ body {
   height: 100%;
 }
 
+body.page-home {
+  @media only screen and (min-width: 1920px) {
+    width: 1600px;
+    margin: 0 auto;
+  }
+  @media only screen and (max-width: 1280px) {
+    width: 1280px;
+    overflow: scroll;
+  }
+}
+
 *,
 *:before,
 *:after {
@@ -813,43 +824,7 @@ input[type="checkbox"].ca-checkbox {
   }
 }
 
-.ReactTable {
-  border: none !important;
-  margin-bottom: 20px;
-  .rt-thead {
-    box-shadow: none;
-    margin-bottom: 5px;
-  }
-  .rt-th {
-    background-color: #1A4B63;
-    border: none;
-    color: white;
-    height: 48px;
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    .rt-resizable-header-content {
-      padding: 8px 0 8px 5px;
-      text-align: left;
-    }
-  }
-  .rt-tr-group {
-    border: 1px solid lightgray;
-    margin: 0px 0 5px;
-  }
-  .rt-tr {
-    :last-child {
-      text-align: right;
-      padding-right: 0;
-    }
-  }
-  .rt-td {
-    border-right: none !important;
-    margin-left: 5px;
 
-  }
-
-}
 
 .ReactModal__Content {
   padding: 0 !important;
@@ -1181,6 +1156,7 @@ $selectHeight: 50px;
   }
   .right {
     display: block;
+    width: 100%;
     padding-left: 20px;
     position: relative;
     font-size: 14px;
@@ -1207,26 +1183,41 @@ $selectHeight: 50px;
       padding-bottom: 10px;
       cursor: pointer;
     }
-    .info {
+
+    .container-overflow {
+      overflow: auto;
+    }
+
+    .listing-wrapper {
       display: flex;
-      .listing-col {
+
+      .listing-row {
+        display: flex;
         flex-flow: column wrap;
         max-height: 120px;
-        display: flex;
-      }
-      .listing-event-details {
-        font-weight: 600;
-        margin-right: 20px;
-      }
-      .listing-event-packages {
-      }
-      .listing-item {
-        display: flex;
-        align-items: center;
-        min-height: 40px;
-        margin-right: 75px;
+
+        .listing-item {
+          display: flex;
+          align-items: center;
+          min-height: 40px;
+          margin-right: 75px;
+          &.event {
+            font-weight: 600;
+          }
+          span {
+            margin-right: 5px;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+
+        .divider {
+          height: 100%;
+        }
       }
     }
+
     .sales-bundles {
       display: flex;
       margin-top: 20px;

@@ -4,6 +4,23 @@ import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {editedProgramSelected} from "../../main/actions/utils";
 
+function Wrapper(props) {
+    if (props.isFragment) {
+        return (
+            <React.Fragment>
+                {props.children}
+            </React.Fragment>
+        );
+    } else {
+        return (
+            <div className={"listing-row"}>
+                {props.children}
+            </div>
+        );
+    }
+
+}
+
 class ContentListingEventDetails extends React.Component {
 
     constructor(props) {
@@ -80,7 +97,8 @@ class ContentListingEventDetails extends React.Component {
             seasons,
             showCustomId,
             PROGRAM_YEAR,
-            PROGRAM_EPISODES
+            PROGRAM_EPISODES,
+            isFragment
         } = this.props;
 
         let schedules = this.getSchedules();
@@ -91,49 +109,49 @@ class ContentListingEventDetails extends React.Component {
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
         return (
-            <div className="listing-event-details listing-col">
+            <Wrapper isFragment={isFragment}>
 
-                <div className="listing-item">
+                <div className="listing-item event">
                     {sports && sports.length === 1 && <span>{sports[0].name}</span>}
                     {sports && sports.length > 1 && <span>Multiple Sports</span>}
                     {sportCategory && sportCategory.length > 0 && <span> {sportCategory[0].name}</span> }
                 </div>
 
                 {tournament && tournament.length > 0 &&
-                <div className="listing-item">{tournament[0].name}</div>}
+                <div className="listing-item event">{tournament[0].name}</div>}
 
                 {tournament && tournament.length === 0 &&
-                <div className="listing-item">General content</div>}
+                <div className="listing-item event">General content</div>}
 
                 {seasons && seasons.length > 0 &&
-                <div className="listing-item">{seasonName}</div>}
+                <div className="listing-item event">{seasonName}</div>}
 
                 {this.showProgramInfo() && PROGRAM_YEAR &&
-                <div className="listing-item">Release year: {PROGRAM_YEAR}</div>}
+                <div className="listing-item event">Release year: {PROGRAM_YEAR}</div>}
 
                 {this.showProgramInfo() && PROGRAM_EPISODES &&
-                <div className="listing-item">Episodes: {PROGRAM_EPISODES}</div>}
+                <div className="listing-item event">Episodes: {PROGRAM_EPISODES}</div>}
 
                 {this.getFixtures().length > 1 &&
-                <div className="listing-item">{this.getFixtures().length} fixtures</div>}
+                <div className="listing-item event">{this.getFixtures().length} fixtures</div>}
 
                 {this.getFixtures().length === 1 &&
-                <div className="listing-item">{this.getFixtures()[0].name}</div>}
+                <div className="listing-item event">{this.getFixtures()[0].name}</div>}
 
                 {rounds.length === 1 &&
-                <div className="listing-item">{roundsName}</div>}
+                <div className="listing-item event">{roundsName}</div>}
 
                 {rounds.length > 1 &&
-                <div className="listing-item">Multiple rounds</div>}
+                <div className="listing-item event">Multiple rounds</div>}
 
                 {matches.length === 1 &&
-                <div className="listing-item">
+                <div className="listing-item event">
                     {matches[0].competitors.map(( competitor, i, list)=>{
                     return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
                 })}
                 </div>}
 
-            </div>
+            </Wrapper>
         );
     }
 }
