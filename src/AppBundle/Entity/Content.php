@@ -46,7 +46,7 @@ class Content
     /**
      * @var mixed
      *
-     * @ORM\Column(name="signature", type="string")
+     * @ORM\Column(name="signature", type="string", nullable=true)
      */
     private $signature;
 

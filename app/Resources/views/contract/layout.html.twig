@@ -14,6 +14,17 @@
             }
             table{
                 width: 100%;
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+            }
+
+            .no-border, .no-border td{
+                border: none;
+                padding: 0px;
             }
             .license-item-column{
                 flex: 1;
@@ -68,7 +79,7 @@
 
             {# COMPANY DATA#}
             <div class="license-item">
-                <table>
+                <table class="no-border">
                     <tr>
                         <td>Between:</td>
                         <td>And:</td>
@@ -750,9 +761,17 @@
                         {{ right }}{% if not loop.last %},{% endif %}
                     {% endfor %}
                 {% else %}
-                    {{ "-" }}
+                    {{ "None" }}
                 {% endif %}
             </div>
+
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] is defined%}
+                <div class="license-item">
+                    <div class="license-item-content">
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] }}
+                    </div>
+                </div>
+            {% endif %}
 
             {# FEE TITLE#}
             <div class="license-item-title">10.1 Commercial Terms:</div>
@@ -817,8 +836,19 @@
                 {% endif %}
             </div>
 
+            {# JURISDICTION TITLE#}
+            <div class="license-item-title">11. Place of Jurisdiction:</div>
+
+            {# JURISDICTION #}
+            <div class="license-item">
+                {% if content.jurisdiction is defined and content.jurisdiction is not null %}
+                {{ content.jurisdiction.name }}
+                {% endif %}
+
+            </div>
+
             {# SIGNATURE TITLE#}
-            <div class="license-item-title">11. Signature:</div>
+            <div class="license-item-title">12. Signature:</div>
 
             {# SIGNATURE#}
             <div class="license-item">

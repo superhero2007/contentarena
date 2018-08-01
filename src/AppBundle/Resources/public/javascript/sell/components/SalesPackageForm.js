@@ -523,9 +523,27 @@ class SalesPackageForm extends React.Component {
         return (currency === "EUR" ? "€" : "$");
     };
 
+    sortSalesPackages = (a, b) => {
+
+        let aWorldwide = a.territoriesMethod ==="WORLDWIDE";
+        let bWorldwide = b.territoriesMethod ==="WORLDWIDE";
+
+        let worldwide = ( aWorldwide && !bWorldwide ) ? 1 : ((bWorldwide && !aWorldwide) ? -1 : 0);
+
+        return worldwide ||this.compareProperty(a.territories.length, b.territories.length)
+            || this.compareProperty(a.name, b.name);
+    };
+
+    compareProperty = (a, b) =>  {
+        return (a > b) ? 1 : ((b > a) ? -1 : 0);
+    };
+
     render(){
-        const { salesPackages, onRemove, hideButtons, currency, fullSize } = this.props;
+        const { onRemove, hideButtons, currency, fullSize, sort } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
+        let salesPackages = this.props.salesPackages;
+
+        if (sort) salesPackages.sort(this.sortSalesPackages);
 
         return (
             <div className="sales-package-form">

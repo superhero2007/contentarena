@@ -93,6 +93,8 @@ class ContentListingEventDetails extends React.Component {
         const {
             sports,
             sportCategory,
+            customTournament,
+            customCategory,
             tournament,
             seasons,
             showCustomId,
@@ -115,12 +117,16 @@ class ContentListingEventDetails extends React.Component {
                     {sports && sports.length === 1 && <span>{sports[0].name}</span>}
                     {sports && sports.length > 1 && <span>Multiple Sports</span>}
                     {sportCategory && sportCategory.length > 0 && <span> {sportCategory[0].name}</span> }
+                    {customCategory && <span>{customCategory}</span>}
                 </div>
 
                 {tournament && tournament.length > 0 &&
                 <div className="listing-item event">{tournament[0].name}</div>}
 
-                {tournament && tournament.length === 0 &&
+                {customTournament &&
+                <div className="listing-item event">{customTournament}</div>}
+
+                {tournament && tournament.length === 0 && !customTournament &&
                 <div className="listing-item event">General content</div>}
 
                 {seasons && seasons.length > 0 &&

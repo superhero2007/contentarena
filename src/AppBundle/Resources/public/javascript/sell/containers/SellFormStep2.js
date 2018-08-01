@@ -92,7 +92,7 @@ class SellFormStep2 extends React.Component {
                 {/*PROGRAM DESCRIPTION*/}
                 <div className="step-content-container">
 
-                    <div className="base-input">
+                    {/*<div className="base-input">
                         <label>event</label>
                         {
                             !this.props.isCustom &&
@@ -102,7 +102,7 @@ class SellFormStep2 extends React.Component {
                                    onClick={this.props.onClick}
                                    placeholder={"Soccer-Germany-Bundesliga-2018/19 "}  />
                         }
-                    </div>
+                    </div>*/}
 
                     <div className="textarea-input">
                         <label>PROGRAM DESCRIPTION</label>

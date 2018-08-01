@@ -394,6 +394,8 @@ class ContentService
         if ( isset($data->tournament) && count($data->tournament) > 0 ) {
             $tournament = $this->getTournament($data);
             $content->setTournament($tournament);
+        } else {
+            $content->setTournament(null);
         }
 
         /**
@@ -402,6 +404,8 @@ class ContentService
         if ( isset($data->sportCategory) && count($data->sportCategory) > 0  ) {
             $category = $this->getCategory($data);
             $content->setSportCategory($category);
+        } else {
+            //$content->setSportCategory(null);
         }
 
         /**
@@ -421,8 +425,12 @@ class ContentService
             $content->setSchedulesBySeason($schedules);
             if ( isset($fixtures) ) $content->setFixturesBySeason($fixtures);
             $content->setSeason($seasons);
-        }
+        } else {
+            $content->setSeason(null);
+            $content->setSchedulesBySeason(null);
+            $content->setFixturesBySeason(null);
 
+        }
 
         $selectedRights = array();
 
@@ -442,6 +450,7 @@ class ContentService
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
+        if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
 
         if ( isset($data->signature) && $data->signature != "" ) {
             $signature = $data->signature;
@@ -511,8 +520,15 @@ class ContentService
         $content = $this->saveExtraData($content, $data);
 
         if ( isset($data->customTournament) ){
-            $content->setCustomTournament($data->customTournament || null);
+            $customTournament = $this->newTournament($data->customTournament);
+            $content->setTournament($customTournament);
         }
+
+        if ( isset($data->customCategory) ){
+            $customCategory = $this->newSportCategory($data->customCategory);
+            $content->setSportCategory($customCategory);
+        }
+
         if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
     }
@@ -712,6 +728,42 @@ class ContentService
         }
 
         return $tournament;
+    }
+
+    private function newTournament($customTournament){
+
+        $tournament = $this->em
+            ->getRepository('AppBundle:Tournament')
+            ->findOneBy(array('name' => $customTournament));
+
+        if (!$tournament){
+            $tournament = new Tournament();
+            $tournament->setName($customTournament);
+            $this->em->persist($tournament);
+            $this->em->flush();
+            $tournament->setExternalId("ca:tournament:".$tournament->getId());
+            $this->em->flush();
+        }
+
+
+        return $tournament;
+    }
+
+    private function newSportCategory($customSportCategory){
+
+        $sportCategory = $this->em
+            ->getRepository('AppBundle:SportCategory')
+            ->findOneBy(array('name' => $customSportCategory));
+
+        if (!$sportCategory) {
+            $sportCategory = new SportCategory();
+            $sportCategory->setName($customSportCategory);
+            $this->em->persist($sportCategory);
+            $this->em->flush();
+            $sportCategory->setExternalId("ca:sportCategory:".$sportCategory->getId());
+            $this->em->flush();
+        }
+        return $sportCategory;
     }
 
     private function getCategory($data){
