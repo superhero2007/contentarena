@@ -545,10 +545,10 @@ class ListingDetails extends React.Component {
 
                         {/*TABS*/}
                         <div className={"listing-details-buttons"}>
-                            <button className={(tab ==="bundles")?"active": ""} onClick={()=>this.showTab(1)}>
+                            <button className={(tab ==="bundles")?"active": ""} onClick={()=>this.showTab("bundles")}>
                                 Program & Sales Bundles
                             </button>
-                            <button className={(tab ==="event")?"active": ""} onClick={()=>this.showTab(2)}>
+                            <button className={(tab ==="event")?"active": ""} onClick={()=>this.showTab("event")}>
                                 Event
                             </button>
                             <button className={(tab ===3)?"active": ""} onClick={()=>this.showTab(3)}>
