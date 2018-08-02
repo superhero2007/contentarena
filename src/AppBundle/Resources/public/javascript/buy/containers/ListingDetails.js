@@ -713,7 +713,7 @@ class ListingDetails extends React.Component {
                                                 data-tip-disable={parseFloat(bid)>=parseFloat(minimumBid)}>
                                                 <button className="standard-button"
                                                         style={bidButtonStyle}
-                                                        disabled={parseFloat(bid)<parseFloat(minimumBid)}
+                                                        disabled={!bid || parseFloat(bid) === 0 || parseFloat(bid)<parseFloat(minimumBid)}
                                                         onClick={this.setBid}>Apply</button>
                                             </div>}
                                         <ReactTooltip id='apply-bid'>

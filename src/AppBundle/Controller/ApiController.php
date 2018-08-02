@@ -16,6 +16,7 @@ use AppBundle\Service\BidService;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
+use AppBundle\Service\WatchlistService;
 
 class ApiController extends BaseController
 {
@@ -505,6 +506,22 @@ class ApiController extends BaseController
         $response->headers->set('Content-Type', 'application/json');
         return $response;
 
+    }
+
+    /**
+     * @Route("/api/watchlist/add", name="addToWatchlist")
+     * @param Request $request
+     * @param WatchlistService $watchlistService
+     * @return JsonResponse
+     */
+    public function addToWatchlist(Request $request, WatchlistService $watchlistService){
+
+        $user = $this->getUser();
+        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId'=>$request->request->get('id')]);
+
+        $watchlist = $watchlistService->newOrRemove($user, $content);
+
+        return new JsonResponse(array("success"=>true, 'state'=>$watchlist));
     }
 
 }

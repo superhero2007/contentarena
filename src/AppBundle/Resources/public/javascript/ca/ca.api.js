@@ -510,7 +510,7 @@ ContentArena.Api= {
             _this = this;
 
         $.ajax({
-            url: envhosturl + "mycontent/watchlist/",
+            url: envhosturl + "api/watchlist/add",
             type: "POST",
             data: {id : id},
             success: function (response) {
