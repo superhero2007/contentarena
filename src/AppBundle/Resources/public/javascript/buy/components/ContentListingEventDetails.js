@@ -120,11 +120,12 @@ class ContentListingEventDetails extends React.Component {
                     {customCategory && <span>{customCategory}</span>}
                 </div>
 
-
-                <div className="listing-item event">
-                    {tournament && tournament.length > 0 && tournament[0].name} {' '}
-                    {seasons && seasons.length > 0 && seasonName}
-                </div>
+                {tournament || seasons ?
+                    <div className="listing-item event">
+                        {tournament && tournament.length > 0 && tournament[0].name} {' '}
+                        {seasons && seasons.length > 0 && seasonName}
+                    </div>
+                :''}
 
                 {customTournament &&
                 <div className="listing-item event">{customTournament}</div>}
