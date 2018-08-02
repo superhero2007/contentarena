@@ -225,7 +225,7 @@ class SellButtons extends React.Component {
                         ))
                     }
                     { this.props.step !== this.state.lastStep -1 &&
-                        <div data-tip={this.getTooltipMessages()}>
+                        <div data-tip={this.getTooltipMessages()} >
                             <button
                                 id="next-step"
                                 className="standard-button"

@@ -190,6 +190,14 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(name="custom_category", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
+     */
+    private $customCategory;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="custom_sport", type="string", length=255, nullable=true)
      * @Groups({"listing"})
      */
@@ -1161,6 +1169,23 @@ class Content
     {
         $this->signature = $signature;
     }
+
+    /**
+     * @return string
+     */
+    public function getCustomCategory()
+    {
+        return $this->customCategory;
+    }
+
+    /**
+     * @param string $customCategory
+     */
+    public function setCustomCategory($customCategory)
+    {
+        $this->customCategory = $customCategory;
+    }
+
 
 
 }

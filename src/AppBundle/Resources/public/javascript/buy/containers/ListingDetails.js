@@ -20,7 +20,7 @@ import {companyIsValid} from "../../sell/actions/validationActions";
 import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
 import {content} from "../../sell/reducers/content";
-
+import ReactTooltip from 'react-tooltip'
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
 const bidButtonStyle = { height: 34, width: 75, padding: 5, marginLeft: 10, fontSize: 14, marginRight: 10 };
@@ -389,7 +389,7 @@ class ListingDetails extends React.Component {
     editBid = () => {
         this.setState({
             bidUpdated : false
-        })
+        });
     };
 
     placeBid = () => {
@@ -432,7 +432,7 @@ class ListingDetails extends React.Component {
     };
 
     render() {
-
+        ReactTooltip.rebuild();
         const {onBack, profile } = this.props;
         const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner, minimumBid} = this.state;
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
@@ -700,22 +700,25 @@ class ListingDetails extends React.Component {
                                             value={bid}
                                             onChange={e=>{
                                                 let value = e.target.value;
-                                                if (value<minimumBid) {
-                                                    this.setState({bid:minimumBid})
-                                                } else {
-                                                    this.setState({bid:value})
-                                                }
-
+                                                this.setState({bid:value})
                                             }}
                                             min={selectedPackage.fee}/>}
                                         {bidUpdated && <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>}
                                         {!bidUpdated && getCurrencySymbol(selectedPackage.currency.code)}
-                                        {!bidUpdated &&
-                                            <button className="standard-button"
-                                                    style={bidButtonStyle}
-                                                    disabled={bid<minimumBid}
-                                                    onClick={this.setBid}>Apply</button>}
 
+                                        {!bidUpdated &&
+                                            <div
+                                                data-tip
+                                                data-for='apply-bid'
+                                                data-tip-disable={parseFloat(bid)>=parseFloat(minimumBid)}>
+                                                <button className="standard-button"
+                                                        style={bidButtonStyle}
+                                                        disabled={parseFloat(bid)<parseFloat(minimumBid)}
+                                                        onClick={this.setBid}>Apply</button>
+                                            </div>}
+                                        <ReactTooltip id='apply-bid'>
+                                            <span>The bid must exceed current minimum</span>
+                                        </ReactTooltip>
                                         {bidUpdated && <button className="link-button" onClick={this.editBid}>Raise</button>}
                                     </div>}
 

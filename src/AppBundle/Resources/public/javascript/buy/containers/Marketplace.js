@@ -8,6 +8,7 @@ import HeaderBar from '../../main/components/HeaderBar';
 import ListingDetails from './ListingDetails';
 import {clearUpdateFilter} from "../actions/filterActions";
 import {goToListing} from "../../main/actions/utils";
+import ReactTooltip from 'react-tooltip';
 
 class Marketplace extends React.Component {
     constructor(props) {
@@ -115,7 +116,6 @@ class Marketplace extends React.Component {
         return (
             <div className="manager-container">
                 <HeaderBar tab={"MARKETPLACE"} profile={profile}/>
-
                 <div className="manager-content" style={{flexDirection: 'row'}}>
                     {!showDetails && <div className="buy-container-left">
                         <EventFilter
@@ -167,7 +167,6 @@ class Marketplace extends React.Component {
                             content={content}/>
                     }
                 </div>
-
             </div>
         )
     }

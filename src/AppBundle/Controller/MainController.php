@@ -97,6 +97,7 @@ class MainController extends BaseController
             'customId' => $request->get('customId'),
             'salesPackage' => $request->get('salesPackage'),
             'profile'   => "BUYER",
+            'tab'=> "bundles",
             'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
         ]);
 

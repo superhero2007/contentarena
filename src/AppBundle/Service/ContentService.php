@@ -347,6 +347,7 @@ class ContentService
     }
 
     private function newContent($user, $data){
+        /* @var Content $content */
 
 
         if ( isset ( $data->id) ){
@@ -521,12 +522,15 @@ class ContentService
 
         if ( isset($data->customTournament) ){
             $customTournament = $this->newTournament($data->customTournament);
+
             $content->setTournament($customTournament);
+            $content->setCustomTournament($data->customTournament);
         }
 
         if ( isset($data->customCategory) ){
             $customCategory = $this->newSportCategory($data->customCategory);
             $content->setSportCategory($customCategory);
+            $content->setCustomCategory($data->customCategory);
         }
 
         if ( isset($data->company) ) $this->saveCompany($data->company);
