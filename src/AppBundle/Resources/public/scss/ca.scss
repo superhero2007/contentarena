@@ -184,10 +184,20 @@ input[type="checkbox"].ca-checkbox {
   text-align: left;
 
   .listing-summary {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    display: flex;
+    border-bottom: 4px solid #D4D8DE;
+    margin-bottom: 30px;
+    padding-bottom: 3px;
+    span {
+      text-transform: uppercase;
+      background-color: #1a4b63;
+      align-items: center;
+      padding: 0 20px;
+      height: 35px;
+      font-size: 16px;
+      color: #fff;
+      font-weight: 600;
+      display: flex;
+    }
   }
   .step-title {
     font-size: $font-size-extra-large;
@@ -366,13 +376,20 @@ input[type="checkbox"].ca-checkbox {
         width: 100%;
         box-sizing: border-box;
       }
+      .textarea-input-text {
+        border-left: 1px solid #D4D8DE;
+        border-right: 1px solid #D4D8DE;
+        margin: 0;
+        padding: 10px;
+      }
       textarea {
         width: auto;
         box-sizing: border-box;
         font-size: 14px;
         font-family: "Open Sans";
         outline: none;
-        border: none;
+        border: 1px solid #D4D8DE;
+        border-top: none;
       }
     }
     .small-select {
@@ -595,6 +612,18 @@ input[type="checkbox"].ca-checkbox {
   .table {
     border-bottom: 4px solid #D5D9DF;
     background-color: inherit;
+    margin-bottom: 20px;
+    .react-toggle--checked {
+      .react-toggle-track {
+        background-color: #17AAEF !important;
+        height: 26px !important;
+      }
+      .react-toggle-thumb {
+        border-color: #17AAEF !important;
+        left: 25px !important;
+        top: 2px !important;
+      }
+    }
   }
   .left {
     float: left;
@@ -625,7 +654,7 @@ input[type="checkbox"].ca-checkbox {
         font-family: 'Open Sans', sans-serif;
         resize: none;
         font-size: 14px;
-        min-height: 156px;
+        min-height: 162px;
       }
     }
   }
@@ -1056,7 +1085,7 @@ $selectHeight: 50px;
 
   }
   input, select {
-    width: 215px;
+    min-width: 215px;
     margin: 0;
     height: 36px;
     padding: 0 8px;

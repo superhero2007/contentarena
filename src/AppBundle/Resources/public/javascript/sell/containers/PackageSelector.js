@@ -38,6 +38,7 @@ class SuperRight extends React.Component {
                            }}
                            id={"super-right-" + this.props.superRight.id}
                            className="package-selector" />
+                        <div className="checkbox-custom" />
                            { superRight.name }
                 </div>
                 <div className="select-box-item-child">
