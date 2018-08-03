@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
+import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import ContentListing from "./ContentListing";
 import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol} from "../actions/utils";
@@ -54,7 +55,13 @@ class ContentListingPendingBid extends ContentListing {
                 <div className={"right"}  style={{padding:'25px 0'}}>
 
                     {/*NAME*/}
-                    <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
+                    <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
+                        {name}
+                    </div>
+                    <div style={{display: 'flex', alignItems:'center'}}>
+                        <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
+                        <div className="custom-id">#{customId}</div>
+                    </div>
 
                     {/*COMPANY*/}
                     <div className={"company"} onClick={(e)=>{
@@ -66,40 +73,10 @@ class ContentListingPendingBid extends ContentListing {
 
                     <div style={{display: 'flex'}}>
                         <div className="listing-wrapper" style={{flex:'1 0 0',overflow: 'auto'}}>
-                            <div className="listing-row">
 
-                                {/*DETAILS*/}
-                                <ContentListingEventDetails {...this.props} isFragment={true}/>
+                            <ContentListingEventDetails {...this.props} />
 
-                                {/*DETAILS 2*/}
-                                <div className="listing-item">
-                                    <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
-                                    <div className="custom-id">#{customId}</div>
-                                </div>
-
-                                <div className="divider" />
-
-                                {/*RIGHTS*/}
-                                {
-                                    rightsPackage.map(( sr,i )=>{
-                                        return <div key={i} className="listing-item">
-                                            {!sr.exclusive &&
-                                            <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
-
-                                            {sr.exclusive &&
-                                            <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
-
-                                            <div style={{display: 'flex', flexDirection: "row"  }}>
-                                                { sr.shortLabel !== "PR" && sr.name }
-                                                { sr.shortLabel === "PR" && PROGRAM_NAME &&
-                                                "Program: " + PROGRAM_NAME
-                                                }
-                                                {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
-                                            </div>
-                                        </div>
-                                    })
-                                }
-                            </div>
+                            <ContentListingRightsPackage rightsPackage={rightsPackage}/>
                         </div>
                         {/*BID OPTIONS*/}
                         <div style={{
