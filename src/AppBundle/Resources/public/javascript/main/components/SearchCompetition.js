@@ -101,6 +101,7 @@ class SearchCompetition extends  React.Component {
                         minRows={0}
                         data={this.state.results}
                         select={this.props.select}
+                        className="ca-table"
                         columns={[{
                             Header: 'Competition',
                             accessor: 'name' // String-based value accessors!

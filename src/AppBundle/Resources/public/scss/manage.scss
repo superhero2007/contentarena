@@ -113,6 +113,10 @@
     width: 40px !important;
   }
 
+  input {
+    margin: inherit;
+  }
+
   .rt-thead {
     min-width: auto !important;
     .rt-th {

@@ -37,7 +37,7 @@ class SuperRight extends React.Component {
                                this.props.onChange(this.props.superRight, e.target.checked);
                            }}
                            id={"super-right-" + this.props.superRight.id}
-                           className="package-selector" />
+                           className="ca-checkbox package-selector" />
                            { superRight.name }
                 </div>
                 <div className="select-box-item-child">
