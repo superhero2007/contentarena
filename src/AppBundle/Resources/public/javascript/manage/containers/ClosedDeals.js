@@ -5,6 +5,7 @@ import ContentListing from '../../main/components/ContentListing';
 import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol, goTo, limitText, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
+import ReactTooltip from 'react-tooltip';
 
 const rightImageStyle = {
     width: 17,
@@ -100,63 +101,87 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
                             }, {
-                                Header: 'LT',
+                                Header: () => (
+                                    <span data-tip="Live transmission">
+                                        LT
+                                    </span>
+                                ),
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("LT") === -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("LT") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
-                                Header: 'LB',
+                                Header: () => (
+                                    <span data-tip="Live betting">
+                                        LB
+                                    </span>
+                                ),
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("HL") === -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("HL") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
-                                Header: 'DT',
+                                Header: () => (
+                                    <span data-tip="Delayed transmission">
+                                        DT
+                                    </span>
+                                ),
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("DT") === -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("DT") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
-                                Header: 'HL',
+                                Header: () => (
+                                    <span data-tip="Highlights">
+                                        HL
+                                    </span>
+                                ),
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("HL") === -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("HL") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
-                                Header: 'NA',
+                                Header: () => (
+                                    <span data-tip="News access">
+                                        NA
+                                    </span>
+                                ),
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("NA") === -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("NA") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
-                                Header: 'PR',
+                                Header: () => (
+                                    <span data-tip="Program">
+                                        PR
+                                    </span>
+                                ),
                                 accessor: 'content.rightsPackage',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("PR") === -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("PR") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             }, {
@@ -245,6 +270,7 @@ class ClosedDeals extends React.Component {
 
                             ]}
                         />
+                        <ReactTooltip place="top" type="dark" effect="solid"/>
                     </div>
                 }
 
