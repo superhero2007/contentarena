@@ -95,6 +95,12 @@ export const content = (state = EmptyListing, action) => {
             newState = {};
             newState[action.key] = action.value;
 
+            if (action.listingEdited === undefined) {
+                newState.listingEdited = false
+            } else {
+                newState.listingEdited = action.listingEdited
+            }
+
             return Object.assign({}, state, newState);
         case contentType.SELECT_TOURNAMENT:
             newState = {};
