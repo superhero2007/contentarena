@@ -25,11 +25,10 @@ export const stepChangeReset = () =>{
     }
 };
 
-export const updateContentValue = (key, value, listingEdited) => {
+export const updateContentValue = (key, value) => {
     return{
         type: 'UPDATE_CONTENT_VALUE',
         key: key,
-        value : value,
-        listingEdited: listingEdited
+        value : value
     }
 };

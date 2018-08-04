@@ -172,16 +172,18 @@ class SellButtons extends React.Component {
         const {updateContentValue} = this.props;
         let content = store.getState().content;
         content = parseSeasons(content);
-        ContentArena.ContentApi.saveContentAsInactive(content).done( ( response ) => {
 
-            if ( response.success && response.contentId ){
-                updateContentValue("id", response.contentId, false);
-                updateContentValue("customId", response.customId, false);
+        if (!content.customId) { //if not in edit mode
+            ContentArena.ContentApi.saveContentAsInactive(content).done( ( response ) => {
+                if ( response.success && response.contentId ){
+                    updateContentValue("id", response.contentId);
+                    updateContentValue("customId", response.customId);
+                }
+                this.props.goToNextStep();
+            });
+        }
 
-            }
-            this.props.goToNextStep();
-        });
-
+        this.props.goToNextStep();
     };
 
     render() {
