@@ -658,7 +658,13 @@ input[type="checkbox"].ca-checkbox {
   .left {
     float: left;
     .modal-input {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      label {
+        float: left;
+      }
+      input, select {
+        width: 215px;
+      }
     }
   }
   .right {
