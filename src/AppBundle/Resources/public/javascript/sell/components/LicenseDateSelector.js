@@ -43,7 +43,7 @@ class LicenseDateSelector extends React.Component {
                     <i className="fa fa-times-circle-o" onClick={onClose}/>
                 </div>
 
-                <div className="step-content">
+                <div className="step-content step-content-custom">
                     <div className="step-content-container">
                         <div className="modal-input">
                             <label>Start of license period</label>
@@ -135,7 +135,7 @@ class LicenseDateSelector extends React.Component {
                 <div className={"buttons"}>
                     <button
                         className={"standard-button"}
-                        onClick={onClose}>Ok</button>
+                        onClick={onClose}>OK</button>
                 </div>
 
             </Modal>

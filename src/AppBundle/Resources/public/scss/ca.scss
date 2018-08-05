@@ -413,6 +413,7 @@ input[type="checkbox"].ca-checkbox {
       .big-textarea {
         width: 500px !important;
         min-height: 170px;
+        border: 1.1px solid #A9A9A9;
       }
       @extend .base-input;
       label {
@@ -605,6 +606,30 @@ input[type="checkbox"].ca-checkbox {
     }
   }
 
+}
+
+.step-content-custom {
+  .modal-input {
+    margin-bottom: 50px;
+    label {
+      float: left;
+      min-width: inherit;
+      width: inherit;
+      color: #4F4F4F;;
+    }
+    .row {
+      float: right;
+      margin-top: -10px;
+      .small-label {
+        color: #4F4F4F;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      input[type=number] {
+        width: 95px;
+      }
+    }
+  }
 }
 
 .step-2 {
@@ -1004,7 +1029,7 @@ $selectHeight: 50px;
 
 .modal-title {
   height: 48px;
-  background-color: #48C0FE;
+  background-color: #134A63;
   font-size: 16px;
   font-weight: 600;
   line-height: 17px;
