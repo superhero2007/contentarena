@@ -353,9 +353,8 @@ input[type="checkbox"].ca-checkbox {
         height: 35px;
         font-size: 16px;
         font-weight: 600;
-        width: 232px;
         color: white;
-        min-width: 232px;
+        min-width: 275px;
         box-sizing: border-box;
       }
       input, select {
@@ -497,7 +496,7 @@ input[type="checkbox"].ca-checkbox {
       background-color: #D4D8DE;
       display: flex;
       width: 100%;
-      height: 58px;
+      height: 35px;
       align-items: center;
       flex-direction: row;
       margin-bottom: 20px;
@@ -512,7 +511,7 @@ input[type="checkbox"].ca-checkbox {
       }
       .title {
         color: $font-color-1;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 600;
         padding-right: 20px;
 
@@ -661,6 +660,36 @@ input[type="checkbox"].ca-checkbox {
         resize: none;
         font-size: 14px;
         min-height: 162px;
+      }
+    }
+  }
+}
+
+.step-3 {
+  .listing-summary {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .step-content-container {
+    .rights-box {
+      background: #F4F6F9;
+      border-bottom: 4px solid #26ABED;
+      padding: 10px 15px;
+    }
+    .license-date-container {
+      .right-name {
+        flex: 1;
+        height: 35px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+      .right-item-content {
+        height: 35px;
+        &:last-of-type {
+          margin-right: 0;
+          justify-content: flex-end;
+        }
       }
     }
   }
