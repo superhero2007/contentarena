@@ -142,6 +142,9 @@ class ReviewAndSign extends React.Component {
             listingEdited
         } = this.props;
 
+        if (!listingEdited) {
+            updateContentValue('terms_arena', true)
+        }
 
         const {showDetails, showSubmitting} = this.state;
 
@@ -229,7 +232,7 @@ class ReviewAndSign extends React.Component {
                             <input
                                 type="checkbox"
                                 className="ca-checkbox"
-                                defaultChecked={!listingEdited}
+                                defaultChecked={terms_arena}
                                 value={terms_arena}
                                 onChange={(e)=>{
                                     updateContentValue('terms_arena',e.target.checked)
