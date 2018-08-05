@@ -1086,14 +1086,20 @@ $selectHeight: 50px;
 
 .modal-input {
   //display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   position: relative;
   max-width: 872px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   .fa-cog {
     position: absolute;
     right: 10px;
     top: 10px
+  }
+  .row {
+    padding-left: 20px;
   }
   .column {
     display: flex;
@@ -1105,7 +1111,8 @@ $selectHeight: 50px;
     }
     .small-label {
       font-size: 13px;
-      width: 150px;
+      width: 100px;
+      flex: 100px 0 0;
       padding: 0 10px;
       line-height: 14px;
     }
@@ -1125,7 +1132,6 @@ $selectHeight: 50px;
 
   }
   input, select {
-    min-width: 215px;
     margin: 0;
     height: 36px;
     padding: 0 8px;
