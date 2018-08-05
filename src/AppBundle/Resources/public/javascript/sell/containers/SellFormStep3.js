@@ -101,7 +101,6 @@ class SellFormStep3 extends React.Component {
     renderProgramPopup(){
 
         const {
-            onClose,
             updateContentValue,
             PROGRAM_NAME,
             PROGRAM_SUBTITLES,
@@ -119,7 +118,7 @@ class SellFormStep3 extends React.Component {
 
                 <div className="modal-title">
                     Program details
-                    <i className="fa fa-times-circle-o" onClick={onClose}/>
+                    <i className="fa fa-times-circle-o" onClick={this.closeProgramsPopup}/>
                 </div>
 
                 <div className="step-content">
