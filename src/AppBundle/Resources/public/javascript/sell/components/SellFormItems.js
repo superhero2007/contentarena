@@ -21,7 +21,7 @@ export const SummaryText = ({sports, sportCategory, tournament, seasons}) => {
 
     let summary = "", rounds = [], fixtures = [], matches = [];
 
-    if (sportCategory.length === 0 && tournament.length === 0) return null;
+    if (sports.length === 0 && sportCategory.length === 0 && tournament.length === 0) return null;
     if (sports.length > 1 ) return <span>Multiple sports</span>;
 
     summary += sports[0].name;

@@ -74,6 +74,10 @@ class SellFormStep2 extends React.Component {
             PROGRAM_DESCRIPTION,
             rightsPackage,
             step,
+            sports,
+            sportCategory,
+            tournament,
+            seasons
         } = this.props;
         if ( step !== 2) return (null);
 
@@ -83,30 +87,17 @@ class SellFormStep2 extends React.Component {
         return (
 
             <div className="step-content step-2">
-
-                {/*SUMMARY*/}
-                <div className="listing-summary">
-                    <SummaryText {...this.props}/>
-                </div>
+                {(sports.length || sportCategory.length || tournament.length ||  seasons.length) && (
+                    <div className="listing-summary">
+                        <SummaryText {...this.props}/>
+                    </div>
+                )}
 
                 {/*PROGRAM DESCRIPTION*/}
                 <div className="step-content-container">
-
-                    {/*<div className="base-input">
-                        <label>event</label>
-                        {
-                            !this.props.isCustom &&
-                            <input type="text"
-                                   value={this.props.value}
-                                   readOnly={false}
-                                   onClick={this.props.onClick}
-                                   placeholder={"Soccer-Germany-Bundesliga-2018/19 "}  />
-                        }
-                    </div>*/}
-
                     <div className="textarea-input">
                         <label>PROGRAM DESCRIPTION</label>
-                        <div style={{margin: 10}}>
+                        <div className='textarea-input-text'>
                             Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.
                         </div>
                         <textarea
@@ -128,8 +119,7 @@ class SellFormStep2 extends React.Component {
                         <input
                             type="text"
                             value={PROGRAM_NAME}
-                            onChange={(e)=>{updateContentValue("PROGRAM_NAME", e.target.value)}}
-                            placeholder="Tennis Preview Show"/>
+                            onChange={(e)=>{updateContentValue("PROGRAM_NAME", e.target.value)}}/>
                     </div>
 
                     <div className="modal-input">
@@ -137,9 +127,7 @@ class SellFormStep2 extends React.Component {
                         <input
                             type="number"
                             value={PROGRAM_EPISODES}
-                            onChange={(e)=>{updateContentValue("PROGRAM_EPISODES", Number(e.target.value))}}
-                            min={0}
-                            placeholder="1"/>
+                            onChange={(e)=>{updateContentValue("PROGRAM_EPISODES", Number(e.target.value))}}/>
                     </div>
 
                     <div className="modal-input">
@@ -147,9 +135,7 @@ class SellFormStep2 extends React.Component {
                         <input
                             type="number"
                             value={PROGRAM_DURATION}
-                            onChange={(e)=>{updateContentValue("PROGRAM_DURATION", Number(e.target.value))}}
-                            min={0}
-                            placeholder="123"/>
+                            onChange={(e)=>{updateContentValue("PROGRAM_DURATION", Number(e.target.value))}}/>
                     </div>
 
                     <div className="modal-input">
