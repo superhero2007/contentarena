@@ -66,6 +66,9 @@ input[type="radio"].ca-radio {
   //transition: background-color $input-animation, border $input-animation, background-image $input-animation;
   outline: none;
   cursor: pointer;
+  margin: inherit;
+  padding: inherit;
+  font-size: inherit;
 
   &:hover {
     border-color: #40bfff;
@@ -99,6 +102,9 @@ input[type="checkbox"].ca-checkbox {
   transition: background-color .1s linear, border .1s linear, background-image .1s linear;
   outline: none;
   cursor: pointer;
+  margin: inherit;
+  padding: inherit;
+  font-size: inherit;
 
   &:hover {
     border-color: #40bfff
@@ -295,7 +301,7 @@ input[type="checkbox"].ca-checkbox {
       .fa-edit {
         position: absolute;
         right: 3px;
-        top: 7px;
+        //top: 7px;
         color: grey;
         font-size: 26px;
       }
@@ -1050,10 +1056,11 @@ $selectHeight: 50px;
 }
 
 .modal-input {
-  display: flex;
-  margin-bottom: 10px;
+  //display: flex;
+  margin-bottom: 20px;
   position: relative;
   max-width: 872px;
+
   .fa-cog {
     position: absolute;
     right: 10px;
@@ -1064,6 +1071,9 @@ $selectHeight: 50px;
     flex-direction: row;
     align-items: center;
     margin: 4px 0;
+    .package-selector {
+      margin-right: 10px;
+    }
     .small-label {
       font-size: 13px;
       width: 150px;
@@ -1075,6 +1085,7 @@ $selectHeight: 50px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-bottom: 10px;
     padding: 0;
     min-width: 232px;
     box-sizing: border-box;

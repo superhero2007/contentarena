@@ -57,7 +57,6 @@ class LicenseDateSelector extends React.Component {
                                         id={"license-start-contract"}
                                         className="ca-radio package-selector"
                                     />
-                                    <label htmlFor={"license-start-contract"}/>
                                     With contract conclusion
                                 </div>
                                 <div className="column">
@@ -69,7 +68,6 @@ class LicenseDateSelector extends React.Component {
                                         id={"license-start"}
                                         className="ca-radio package-selector"
                                     />
-                                    <label htmlFor={"license-start"}/>
 
                                     <DatePicker
                                         className={"date-picker"}
@@ -93,7 +91,6 @@ class LicenseDateSelector extends React.Component {
                                            id={"license-end-input"}
                                            className="ca-radio package-selector"
                                     />
-                                    <label htmlFor={"license-end-input"}/>
                                     <input
                                         type={"number"}
                                         disabled={endDateMode!=="LIMITED"}
@@ -111,7 +108,6 @@ class LicenseDateSelector extends React.Component {
                                            id={"license-end"}
                                            className="ca-radio package-selector"
                                     />
-                                    <label htmlFor={"license-end"}/>
                                     <DatePicker
                                         className={"date-picker"}
                                         selected={(endDate)? moment(endDate): undefined}
@@ -129,7 +125,6 @@ class LicenseDateSelector extends React.Component {
                                            id={"license-end-unlimited"}
                                            className="ca-radio package-selector"
                                     />
-                                    <label htmlFor={"license-end-unlimited"}/>
                                     <span style={{padding: '12px 0'}}>Unlimited</span>
                                 </div>
                             </div>
