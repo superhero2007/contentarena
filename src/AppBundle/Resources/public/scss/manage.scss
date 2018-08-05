@@ -129,8 +129,10 @@
       text-align: left;
     }
     .rt-th.-sort-asc,
-    .rt-td.-sort-asc {
-      box-shadow: none;
+    .rt-td.-sort-asc,
+    .rt-th.-sort-desc,
+    .rt-td.-sort-desc {
+      box-shadow: none !important;
     }
     &.-header {
       box-shadow: none;

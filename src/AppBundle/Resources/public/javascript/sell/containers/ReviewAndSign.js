@@ -138,8 +138,10 @@ class ReviewAndSign extends React.Component {
             terms_arena,
             terms,
             customId,
-            status
+            status,
+            listingEdited
         } = this.props;
+
 
         const {showDetails, showSubmitting} = this.state;
 
@@ -216,7 +218,9 @@ class ReviewAndSign extends React.Component {
                                 onChange={(e)=>{
                                     updateContentValue('terms',e.target.checked)
                                 }}
-                                id="terms"/>
+                                id="terms"
+                                style={{marginRight: 10}}
+                            />
                             <label htmlFor="terms"/>
                             I confirm that I have verified the terms stated above. They are correct and ready to be
                             published.
@@ -225,11 +229,14 @@ class ReviewAndSign extends React.Component {
                             <input
                                 type="checkbox"
                                 className="ca-checkbox"
+                                defaultChecked={!listingEdited}
                                 value={terms_arena}
                                 onChange={(e)=>{
                                     updateContentValue('terms_arena',e.target.checked)
                                 }}
-                                id="terms_arena"/>
+                                id="terms_arena"
+                                style={{marginRight: 10}}
+                            />
                             <label htmlFor="terms_arena"></label>
                             I confirm that I have verified the terms and conditions that have been outlined by
                             Content Arena Pte. Ltd.
