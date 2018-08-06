@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContentListingRightsPackage = ({rightsPackage}) => {
+const ContentListingRightsPackage = ({rightsPackage, programName}) => {
     return (
         <div id="listing-rights" className="col">
             {rightsPackage.map((sr, i) => {
@@ -14,8 +14,8 @@ const ContentListingRightsPackage = ({rightsPackage}) => {
 
                         <div style={{display: 'flex', flexDirection: "row"}}>
                             {sr.shortLabel !== "PR" && sr.name}
-                            {sr.shortLabel === "PR" && PROGRAM_NAME &&
-                            "Program: " + PROGRAM_NAME
+                            {sr.shortLabel === "PR" && programName &&
+                            "Program: " + programName
                             }
                             {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                         </div>
