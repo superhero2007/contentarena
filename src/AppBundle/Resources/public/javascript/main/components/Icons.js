@@ -11,6 +11,7 @@ export const yellowCheckIcon = assetsBaseDir + "app/images/yellow_chech.png";
 export const bidIcon = assetsBaseDir + "app/images/hammer.png";
 export const fixedIcon = assetsBaseDir + "app/images/bid.png";
 export const docIcon = assetsBaseDir + "app/images/doc.png";
+export const pdfIcon = assetsBaseDir + "app/images/pdf.png";
 export const editIcon = assetsBaseDir + "app/images/edit.png";
 export const blueEnvelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
 export const infoIcon = assetsBaseDir + "app/images/info_blue.png";

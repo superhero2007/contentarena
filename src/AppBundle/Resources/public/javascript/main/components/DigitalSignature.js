@@ -59,7 +59,7 @@ class DigitalSignature extends React.Component{
                     {!ready && <button onClick={this.done} className="standard-button-small">
                         Done
                     </button>}
-                    {ready && <button onClick={this.edit} className="standard-button-small">
+                    {ready && <button onClick={this.edit} className="standard-button-big">
                         New Signature
                     </button>}
                 </div>

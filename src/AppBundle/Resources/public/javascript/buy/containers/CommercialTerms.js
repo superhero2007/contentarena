@@ -20,7 +20,7 @@ class CommercialTerms extends React.Component {
     }
 
     render() {
-        const {salesPackages, onSelectPackage, programDescription, profile} = this.props;
+        const {salesPackages, onSelectPackage, programDescription, profile, customId} = this.props;
         return (
             <div style={{ marginTop: 25 }}>
 
@@ -33,6 +33,7 @@ class CommercialTerms extends React.Component {
                 </div>
 
                 <SalesPackages
+                    listingId={customId}
                     profile={profile}
                     onSelectPackage={onSelectPackage}
                     salesPackages={salesPackages}/>

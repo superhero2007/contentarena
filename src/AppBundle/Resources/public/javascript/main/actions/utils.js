@@ -23,6 +23,10 @@ export const viewLicenseBid = id => {
     goTo("license/bid/"+ id)
 };
 
+export const viewLicenseBundle = (id, listingId) => {
+    goTo("license/bundle/"+ id + "/" + listingId)
+};
+
 export const goToMarketplace = () => {
     goTo("marketplace")
 };

@@ -124,13 +124,19 @@ ul.uk-subnav {
   color: #ffffff;
 }
 
-input:not([class='ca-checkbox']):not([class='ca-radio']),
+
+input {
+  margin: 0;
+  padding: 15px;
+  border: 1px solid lightgray;
+  font-size: 16px;
+}
+input,
 select {
     margin: 10px 0;
     padding: 8px;
     font-size: 80%;
     width: 100%;
-
 }
 
 input[type="submit"] {
@@ -400,13 +406,6 @@ textarea {
 
 .subfilter-container.country-list {
   flex-wrap: wrap;
-}
-
-input:not([class='ca-checkbox']):not([class='ca-radio']){
-    margin: 0;
-    padding: 15px;
-    border: 1px solid lightgray;
-    font-size: 16px;
 }
 
 .buttons-container {

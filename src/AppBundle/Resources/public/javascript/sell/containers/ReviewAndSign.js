@@ -138,8 +138,13 @@ class ReviewAndSign extends React.Component {
             terms_arena,
             terms,
             customId,
-            status
+            status,
+            listingEdited
         } = this.props;
+
+        if (!listingEdited) {
+            updateContentValue('terms_arena', true)
+        }
 
         const {showDetails, showSubmitting} = this.state;
 
@@ -216,7 +221,9 @@ class ReviewAndSign extends React.Component {
                                 onChange={(e)=>{
                                     updateContentValue('terms',e.target.checked)
                                 }}
-                                id="terms"/>
+                                id="terms"
+                                style={{marginRight: 10}}
+                            />
                             <label htmlFor="terms"/>
                             I confirm that I have verified the terms stated above. They are correct and ready to be
                             published.
@@ -225,11 +232,14 @@ class ReviewAndSign extends React.Component {
                             <input
                                 type="checkbox"
                                 className="ca-checkbox"
+                                defaultChecked={terms_arena}
                                 value={terms_arena}
                                 onChange={(e)=>{
                                     updateContentValue('terms_arena',e.target.checked)
                                 }}
-                                id="terms_arena"/>
+                                id="terms_arena"
+                                style={{marginRight: 10}}
+                            />
                             <label htmlFor="terms_arena"></label>
                             I confirm that I have verified the terms and conditions that have been outlined by
                             Content Arena Pte. Ltd.
@@ -243,10 +253,9 @@ class ReviewAndSign extends React.Component {
                         signature={signature}
                     />
 
-                    { terms && terms_arena && signature &&
-                    <div className="buttons" style={{marginTop: 20}}>
+                    {<div className="buttons" style={{marginTop: 20}}>
                         <div className="buttons-container"  >
-                            {!showSubmitting && <button id="draft-listing" className="standard-button" onClick={this.submit}>
+                            {!showSubmitting && <button disabled={!(terms && terms_arena && signature)} id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
                                 {(!status || status.name === "DRAFT" || status.name === "INACTIVE" ) && "Submit Listing"}
                                 {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && "Save"}
                             </button>}
