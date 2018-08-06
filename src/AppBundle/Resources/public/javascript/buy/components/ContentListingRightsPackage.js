@@ -2,7 +2,7 @@ import React from 'react';
 
 const ContentListingRightsPackage = ({rightsPackage}) => {
     return (
-        <div id="listing-rights" className="col">
+        <div className="listing-rights col">
             {rightsPackage.map((sr, i) => {
                 return (
                     <div key={i} className="listing-item">

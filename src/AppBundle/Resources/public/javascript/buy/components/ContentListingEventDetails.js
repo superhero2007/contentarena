@@ -94,7 +94,7 @@ class ContentListingEventDetails extends React.Component {
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
         return (
-            <div id="listing-attributes" className="col">
+            <div className="listing-attributes col">
 
                 <div className="listing-item event">
                     {/*Sport name*/}
