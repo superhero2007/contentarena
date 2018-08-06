@@ -413,7 +413,7 @@ class PopupRight extends React.Component {
                                     name="TECHNICAL_FEE"/>
                                 Technical fee charged on top of license fee
                                 <input
-                                    style={{ width: '40px', margin: '1px 10px'}}
+                                    style={{ width: '50px', margin: '1px 10px'}}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_PERCENTAGE")} }
                                     value={ rightsPackage[0].selectedRights["TECHNICAL_FEE_PERCENTAGE"] }
                                     type="number"
