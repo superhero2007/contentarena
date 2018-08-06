@@ -64,8 +64,9 @@
 }
 
 .buy-container-right {
-    flex: 3;
-    overflow: auto;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
     .no-results{
         font-size: 25px;
         text-align: center;

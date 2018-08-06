@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\RightsPackage;
+use AppBundle\Entity\SalesPackage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,10 +64,45 @@ class LicenseController extends Controller
     }
 
     /**
+     * @Route("/license/bundle/{id}/{listingId}", name="contractBundle")
+     */
+    public function contractBundle(Request $request, ContentService $contentService){
+
+        $user = $this->getUser();
+        $time = new \DateTime();
+        /* @var SalesPackage $bundle  */
+        $bundle = $this->getDoctrine()
+            ->getRepository('AppBundle:SalesPackage')
+            ->findOneBy(['id' => $request->get("id")]);
+        $content = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->findOneBy(['customId' => $request->get("listingId")]);
+        $bundle->getSalesMethod()->getName();
+        $rightDefinitions = $this->getRightDefinitions($content);
+        $exclusiveRights = $this->getExclusiveRights($content);
+
+        $viewElements = array(
+            'user' => $user,
+            'bundle' => $bundle,
+            'content' => $content,
+            'rightDefinitions' => $rightDefinitions,
+            'exclusiveRights' => $exclusiveRights,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+        //return $this->render('contract/layout.html.twig', $viewElements);
+
+        $html = $this->renderView('contract/layout.html.twig', $viewElements);
+        return new PdfResponse(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
+        );
+    }
+
+    /**
      * @Route("/license/bid/{customId}", name="contractBid")
      */
     public function contractBid(Request $request, ContentService $contentService){
-
+        /* @var SalesPackage $bundle  */
         $user = $this->getUser();
         $time = new \DateTime();
         $bid = $this->getDoctrine()
@@ -76,10 +112,13 @@ class LicenseController extends Controller
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $bid->getSalesPackage()->getCurrency()->getName();
+        $bundle = $bid->getSalesPackage();
+        $bundle->getSalesMethod()->getName();
 
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
+            'bundle' => $bundle,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,

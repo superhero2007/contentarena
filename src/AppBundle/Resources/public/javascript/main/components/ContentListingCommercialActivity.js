@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
+import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import CommercialSalesBundle from "../../main/components/CommercialSalesBundle";
 import ContentListing from "./ContentListing";
 import {getCurrencySymbol} from "../actions/utils";
@@ -83,31 +84,9 @@ class ContentListingCommercialActivity extends ContentListing {
                         <div className={"name"} onClick={this.onSelect}>{name}</div>
 
                         <div className="listing-wrapper">
-                            <div className="listing-row">
-                                <ContentListingEventDetails {...this.props} isFragment={true}/>
+                            <ContentListingEventDetails {...this.props} />
 
-                                <div className="divider" />
-
-                                {
-                                    rightsPackage.map(( sr,i )=>{
-                                        return <div key={i} className="listing-item">
-                                            {!sr.exclusive &&
-                                            <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
-
-                                            {sr.exclusive &&
-                                            <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
-
-                                            <div style={{display: 'flex', flexDirection: "row"  }}>
-                                                { sr.shortLabel !== "PR" && sr.name }
-                                                { sr.shortLabel === "PR" && PROGRAM_NAME &&
-                                                "Program: " + PROGRAM_NAME
-                                                }
-                                                {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
-                                            </div>
-                                        </div>
-                                    })
-                                }
-                            </div>
+                            <ContentListingRightsPackage rightsPackage={rightsPackage}/>
                         </div>
                     </div>
                     {/*BID DETAILS*/}

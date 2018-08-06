@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
-import SalesPackage from "../components/SalesPackage"
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import Moment from "moment/moment";
+import LicenseDownloader from '../../main/components/LicenseDownloader'
 
 class SalesPackages extends React.Component {
 
@@ -17,12 +17,6 @@ class SalesPackages extends React.Component {
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.packageIcon = assetsBaseDir + "app/images/bid.png";
         this.infoIcon = assetsBaseDir + "app/images/info.png";
-    }
-
-    componentDidMount () {
-    }
-
-    componentWillReceiveProps(nextProps) {
     }
 
     showAllTerritories = (extraTerritories) => {
@@ -143,7 +137,7 @@ class SalesPackages extends React.Component {
     };
 
     render() {
-        const {salesPackages, onSelectPackage, profile} = this.props;
+        const {salesPackages, onSelectPackage, profile, listingId} = this.props;
 
         return (
             <div className="sales-packages">
@@ -184,6 +178,12 @@ class SalesPackages extends React.Component {
                                 }
                             </div>
                         </div>
+
+                        <LicenseDownloader
+                            type={"BUNDLE"}
+                            id={salesPackage.id}
+                            listingId={listingId}
+                            style={{flex : 1, display: 'flex', justifyContent: 'center'}} />
 
                         <div style={{flex : 1, display: 'flex', justifyContent: 'center', cursor: 'pointer'}}
                              onClick={() => {this.showInstallments(salesPackage.installments)}}>

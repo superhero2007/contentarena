@@ -142,6 +142,9 @@ class ReviewAndSign extends React.Component {
             listingEdited
         } = this.props;
 
+        if (!listingEdited) {
+            updateContentValue('terms_arena', true)
+        }
 
         const {showDetails, showSubmitting} = this.state;
 
@@ -229,7 +232,7 @@ class ReviewAndSign extends React.Component {
                             <input
                                 type="checkbox"
                                 className="ca-checkbox"
-                                defaultChecked={!listingEdited}
+                                defaultChecked={terms_arena}
                                 value={terms_arena}
                                 onChange={(e)=>{
                                     updateContentValue('terms_arena',e.target.checked)
@@ -250,10 +253,9 @@ class ReviewAndSign extends React.Component {
                         signature={signature}
                     />
 
-                    { terms && terms_arena && signature &&
-                    <div className="buttons" style={{marginTop: 20}}>
+                    {<div className="buttons" style={{marginTop: 20}}>
                         <div className="buttons-container"  >
-                            {!showSubmitting && <button id="draft-listing" className="standard-button" onClick={this.submit}>
+                            {!showSubmitting && <button disabled={!(terms && terms_arena && signature)} id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
                                 {(!status || status.name === "DRAFT" || status.name === "INACTIVE" ) && "Submit Listing"}
                                 {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && "Save"}
                             </button>}
