@@ -4,23 +4,6 @@ import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {editedProgramSelected} from "../../main/actions/utils";
 
-function Wrapper(props) {
-    if (props.isFragment) {
-        return (
-            <React.Fragment>
-                {props.children}
-            </React.Fragment>
-        );
-    } else {
-        return (
-            <div className={"listing-row"}>
-                {props.children}
-            </div>
-        );
-    }
-
-}
-
 class ContentListingEventDetails extends React.Component {
 
     constructor(props) {
@@ -111,54 +94,50 @@ class ContentListingEventDetails extends React.Component {
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
         return (
-            <Wrapper isFragment={isFragment}>
+            <div id="listing-attributes" className="col">
 
                 <div className="listing-item event">
+                    {/*Sport name*/}
                     {sports && sports.length === 1 && <span>{sports[0].name}</span>}
                     {sports && sports.length > 1 && <span>Multiple Sports</span>}
-                    {sportCategory && sportCategory.length > 0 && <span> {sportCategory[0].name}</span> }
+
+                    {/*Sport category*/}
+                    {sportCategory && sportCategory.length > 0 && <span>{sportCategory[0].name}</span> }
                     {customCategory && <span>{customCategory}</span>}
                 </div>
 
-                {tournament || seasons ?
-                    <div className="listing-item event">
-                        {tournament && tournament.length > 0 && tournament[0].name} {' '}
-                        {seasons && seasons.length > 0 && seasonName}
-                    </div>
-                :''}
-
-                {customTournament &&
-                <div className="listing-item event">{customTournament}</div>}
-
-                {tournament && tournament.length === 0 && !customTournament &&
-                <div className="listing-item event">General content</div>}
-
-                {this.showProgramInfo() && PROGRAM_YEAR &&
-                <div className="listing-item event">Release year: {PROGRAM_YEAR}</div>}
-
-                {this.showProgramInfo() && PROGRAM_EPISODES &&
-                <div className="listing-item event">Episodes: {PROGRAM_EPISODES}</div>}
-
-                {this.getFixtures().length > 1 &&
-                <div className="listing-item event">{this.getFixtures().length} fixtures</div>}
-
-                {this.getFixtures().length === 1 &&
-                <div className="listing-item event">{this.getFixtures()[0].name}</div>}
-
-                {rounds.length === 1 &&
-                <div className="listing-item event">{roundsName}</div>}
-
-                {rounds.length > 1 &&
-                <div className="listing-item event">Multiple rounds</div>}
-
-                {matches.length === 1 &&
                 <div className="listing-item event">
-                    {matches[0].competitors.map(( competitor, i, list)=>{
-                    return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
-                })}
-                </div>}
+                    {/*Tournament name*/}
+                    {tournament && tournament.length > 0 && <span>{tournament[0].name}</span>}
+                    {customTournament && <span>{customTournament}</span>}
+                    {tournament && tournament.length === 0 && !customTournament && <span>General content</span>}
 
-            </Wrapper>
+                    {/*Season name*/}
+                    {seasons && seasons.length > 0 && seasonName}
+
+                    {/*Release*/}
+                    {this.showProgramInfo() && PROGRAM_YEAR && <span>{PROGRAM_YEAR}</span>}
+                </div>
+
+                <div className="listing-item event">
+                    {/*Round name*/}
+                    {rounds.length === 1 && <span>{roundsName}</span>}
+                    {rounds.length > 1 && <span>Multiple rounds</span>}
+
+                    {/*Matches*/}
+                    {matches.length === 1 &&
+                    matches[0].competitors.map(( competitor, i, list)=>{
+                        return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
+                    })}
+
+                    {/*Summarizes two types: rounds and matches*/}
+                    {this.getFixtures().length > 1 && this.getFixtures().length +' fixtures'}
+                    {this.getFixtures().length === 1 && this.getFixtures()[0].name}
+
+                    {/*Episodes*/}
+                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{PROGRAM_EPISODES}</span>}
+                </div>
+            </div>
         );
     }
 }
