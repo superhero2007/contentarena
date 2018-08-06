@@ -72,9 +72,13 @@
   width: auto;
   margin-left: 10px;
   padding: 7px 40px;
+
+  &.steps {
+    padding: 15px 47px;
+  }
 }
 
-.standard-button-small{
+.standard-button-small {
     @extend .standard-button;
     width: 140px;
     margin-left: 10px;

@@ -189,26 +189,11 @@ class SellButtons extends React.Component {
 
     render() {
         const {step} = this.props;
-        const { lastStep, saving, savingSuccess } = this.state;
-        const buttonText = "Review and sign";
+        const { lastStep, saving } = this.state;
+        const cantReviewAndSign = (step === 4 && !this.reviewAndSignEnabled());
 
         return (
             <div className="buttons">
-                <div className="buttons-container"  >
-
-                    { step === 4 && this.reviewAndSignEnabled() &&
-                    <button id="draft-listing" className="standard-button" onClick={this.goToReviewAndSign  }>
-                        {buttonText}
-                    </button> }
-
-                    { this.props.step === 4 && !this.reviewAndSignEnabled() &&
-                        <div data-tip={this.getReviewButtonTooltipMessages()}>
-                            <button id="draft-listing" className="standard-button" disabled>
-                                {buttonText}
-                            </button>
-                        </div>}
-
-                </div>
                 { this.props.step < lastStep && <div className="buttons-container step-1 step-2" >
                     { this.props.step !== 1 &&
                     <button className="standard-button prev"
@@ -222,19 +207,19 @@ class SellButtons extends React.Component {
                                  key={k}>{v}</div>
                         ))
                     }
-                    { this.props.step !== this.state.lastStep -1 &&
-                        <div data-tip={this.getTooltipMessages()} >
+                    { <div data-tip={cantReviewAndSign ? this.getReviewButtonTooltipMessages() : this.getTooltipMessages()} >
                             <button
                                 id="next-step"
                                 className="standard-button"
                                 disabled={
-                                    ( step===1 && !this.step1Enabled()) ||
-                                    ( step===2 && !this.step2Enabled()) ||
-                                    ( step===3 && !this.step3Enabled())
+                                    ( step === 1 && !this.step1Enabled()) ||
+                                    ( step === 2 && !this.step2Enabled()) ||
+                                    ( step === 3 && !this.step3Enabled()) ||
+                                    ( cantReviewAndSign )
                                 }
-                                onClick={ () => this.saveAndGoNext() }>
+                                onClick={ () => step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext()}>
                                     Next
-                                    {this.state.saving ?
+                                    {saving ?
                                         <i className="fa fa-cog fa-spin"/> :
                                         <i className="fa fa-arrow-right"/>}
                             </button>
