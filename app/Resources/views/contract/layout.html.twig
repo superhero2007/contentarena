@@ -517,22 +517,23 @@
 
             {# TERRITORY#}
             <div class="license-item">
-                {% if bid is not defined %} - {% endif %}
-                {% if bid is defined %}
-                    {% if bid.salesPackage.bundleMethod == "SELL_AS_BUNDLE" and bid.salesPackage.territoriesMethod == "WORLDWIDE" %}
+                {% if bundle is not defined %} - {% endif %}
+                {% if bundle is defined %}
+                    {% if bundle.bundleMethod == "SELL_AS_BUNDLE" and bundle.territoriesMethod == "WORLDWIDE" %}
                         Worldwide
-                    {% elseif bid.salesPackage.territoriesMethod == "WORLDWIDE_EXCLUDING" %}
+                    {% elseif bundle.territoriesMethod == "WORLDWIDE_EXCLUDING" %}
                         Worldwide excluding
-                        {% for territory in bid.salesPackage.territories %}
+                        {% for territory in bundle.territories %}
                             {{ territory.name }}{% if not loop.last %},{% endif %}
                         {% endfor %}
                     {% else %}
-                        {% for territory in bid.salesPackage.territories %}
+                        {% for territory in bundle.territories %}
                             {{ territory.name }}{% if not loop.last %},{% endif %}
                         {% endfor %}
                     {% endif %}
 
                 {% endif %}
+
             </div>
 
             {# LANGUAGE TITLE#}
@@ -778,11 +779,22 @@
 
             {# FEE #}
             <div class="license-item">
-                {% if bid is defined %}
+                {% if bundle is defined %}
                     <div class="license-item-column">
                         <div class="license-item-content">
                             <label>License Fee:</label>
-                            {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+
+                            {% if bid is defined %}
+                                {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+                            {% else %}
+                                {% if bundle.salesMethod.name == "FIXED" %}
+                                    {{ bundle.fee }} {{ bundle.currency.code }}
+                                {% else %}
+                                    Depending on bid
+                                {% endif %}
+                            {% endif %}
+
+
                         </div>
                         {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_FEE"] == "ON_TOP" %}
                             <div class="license-item-content">
@@ -792,7 +804,7 @@
                         {% endif %}
                     </div>
                 {% else %}
-                    {{  "-" }}
+                    {{  "Depending on bundle" }}
                 {% endif %}
             </div>
 
