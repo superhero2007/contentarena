@@ -729,6 +729,11 @@ input[type="checkbox"].ca-checkbox {
 .step-4 {
   .step-content-container {
     .base-input {
+      input {
+        font-weight: bold;
+        font-size: 15px;
+        color: #333;
+      }
       .Select {
         margin-left: 5px;
         .Select-control {
@@ -736,16 +741,47 @@ input[type="checkbox"].ca-checkbox {
           .Select-value {
             line-height: 34px !important;
           }
+          .Select-input {
+            height: 33.5px;
+          }
         }
       }
     }
     .sales-package-form {
-      .base-full-input  {
+      .base-full-input {
         max-width: inherit;
       }
       .add-item {
-        display: flex;
-        justify-content: flex-end;
+        margin-bottom: 0;
+        &:last-child {
+          margin-left: 10px;
+        }
+      }
+    }
+    .title-bar {
+      background: none;
+      color: #4F4F4F;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      hr {
+        display: none;
+      }
+    }
+    .row {
+      max-width: 872px;
+      .base-input {
+        float: left;
+        max-width: 435px;
+        &:nth-child(2) {
+          margin-left: 31px;
+        }
+        .react-datepicker-wrapper {
+          input {
+            border: 1px solid #CDCDCD;
+            max-width: 125px;
+          }
+        }
       }
     }
   }

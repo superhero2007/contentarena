@@ -133,14 +133,18 @@ class SellFormStep4 extends React.Component {
 
                     <ListingName/>
 
-                    <FileSelector
-                        label={"Listing image (opt.)"}
-                        isImage={true}
-                        onSelect={updateContentValue}
-                        previousImage={image}
-                        target={"imageBase64"}/>
+                    <div className='row'>
+                        <ExpirationDateSelector/>
 
-                    <ExpirationDateSelector/>
+                        <FileSelector
+                            label={"Listing image (opt.)"}
+                            isImage={true}
+                            onSelect={updateContentValue}
+                            previousImage={image}
+                            target={"imageBase64"}/>
+
+                        <div className='clearfix' />
+                    </div>
 
                 </div>
             </div>

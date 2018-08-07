@@ -168,6 +168,7 @@ class CompanyInformation extends React.Component {
                     value={company.legalName + ", " + company.address}
                     onClick={()=>{this.setState({isOpen:true})}}
                     placeholder=""/>
+                <i className="fa fa-edit" onClick={()=>{this.setState({isOpen:true})}}/>
             </div>
         )
     }

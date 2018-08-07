@@ -9,7 +9,8 @@ const installmentIconStyle = { margin: "0 10px", position: "relative"};
 const smallContainerStyle = {
     display: 'inline-block',
     overflowY: 'overlay',
-    maxHeight: '200px'
+    maxHeight: '200px',
+    paddingRight: 20
 };
 const containerStyle = {
     display: 'inline-block',
@@ -588,10 +589,10 @@ class SalesPackageForm extends React.Component {
                                         </div>
                                     }
                                 </div>
-                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px'}}
+                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0'}}
                                      src={this.cancelIcon}
                                      onClick={() => { onRemove(i) }}/>}
-                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px', color: 'grey'}}
+                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0', color: 'grey'}}
                                      src={this.draftIcon}
                                      onClick={() => { this.editSalesPackage(salesPackage, i) }}/>}
 
@@ -601,11 +602,11 @@ class SalesPackageForm extends React.Component {
                     </div>
                 </div>
 
-                {!hideButtons && <div>
+                {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
                     {this.addBundlesAvailable() && <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
                         <i className="fa fa-plus-circle"/> Add sales bundle
                     </div>}
-                    {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll} style={{marginLeft: 20}}>
+                    {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll}>
                         <i className="fa fa-minus-circle"/> Remove all
                     </div>}
                 </div>}
