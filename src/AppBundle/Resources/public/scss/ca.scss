@@ -726,6 +726,31 @@ input[type="checkbox"].ca-checkbox {
   }
 }
 
+.step-4 {
+  .step-content-container {
+    .base-input {
+      .Select {
+        margin-left: 5px;
+        .Select-control {
+          height: 35px;
+          .Select-value {
+            line-height: 34px !important;
+          }
+        }
+      }
+    }
+    .sales-package-form {
+      .base-full-input  {
+        max-width: inherit;
+      }
+      .add-item {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
 .schedule {
   font-size: 14px;
   z-index: 100;
@@ -928,7 +953,6 @@ input[type="checkbox"].ca-checkbox {
         &:first-of-type {
           div {
             float: right;
-            width: 285px;
           }
         }
         label {
@@ -940,13 +964,19 @@ input[type="checkbox"].ca-checkbox {
         div {
           &:first-of-type {
             float: right;
-            max-width: 285px;
+            max-width: 300px;
             margin-top: -5px;
           }
         }
       }
+      .base-full-input {
+        input {
+          width: inherit !important;
+        }
+      }
     }
   }
+
 }
 
 .ReactModal__Selector {

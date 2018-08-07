@@ -9,8 +9,7 @@ const installmentIconStyle = { margin: "0 10px", position: "relative"};
 const smallContainerStyle = {
     display: 'inline-block',
     overflowY: 'overlay',
-    maxHeight: '200px',
-    paddingRight: 20
+    maxHeight: '200px'
 };
 const containerStyle = {
     display: 'inline-block',
@@ -602,7 +601,7 @@ class SalesPackageForm extends React.Component {
                     </div>
                 </div>
 
-                {!hideButtons && <div style={{display : "flex"}}>
+                {!hideButtons && <div>
                     {this.addBundlesAvailable() && <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
                         <i className="fa fa-plus-circle"/> Add sales bundle
                     </div>}

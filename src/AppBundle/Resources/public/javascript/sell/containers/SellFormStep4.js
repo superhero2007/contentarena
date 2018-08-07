@@ -89,7 +89,7 @@ class SellFormStep4 extends React.Component {
         this.scroll();
         return (
 
-            <div className="step-content">
+            <div className="step-content step-4">
                 <div className="step-content-container">
 
                     <CurrencySelector onClick={this.selectCurrency} selected={currency} />

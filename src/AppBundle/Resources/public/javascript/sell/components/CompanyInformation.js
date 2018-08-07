@@ -62,7 +62,7 @@ class CompanyInformation extends React.Component {
                 <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
             </div>
 
-            <div className="step-content">
+            <div className="step-content custom">
                 <div className="step-content-container">
 
                     <div className="base-full-input">
