@@ -929,24 +929,16 @@ input[type="checkbox"].ca-checkbox {
     .step-content-container {
       .modal-input {
         margin-bottom: 15px;
-        &:first-of-type {
-          div {
-            float: right;
-            width: 285px;
-          }
-        }
         label {
           float: left;
           min-width: inherit;
           max-width: 170px;
           color: #4F4F4F;
         }
-        div {
-          &:first-of-type {
-            float: right;
-            max-width: 285px;
-            margin-top: -5px;
-          }
+        div.Select {
+          float: right;
+          max-width: 300px;
+          margin-top: -5px;
         }
       }
     }
