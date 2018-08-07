@@ -671,6 +671,9 @@ input[type="checkbox"].ca-checkbox {
     padding: inherit;
     float: right;
     width: 60%;
+    @media screen and (max-width: 1460px) {
+      float: none;
+    }
     .modal-input {
       border-bottom: 4px solid #D4D8DE;
       margin-bottom: inherit;
@@ -690,7 +693,7 @@ input[type="checkbox"].ca-checkbox {
         font-family: 'Open Sans', sans-serif;
         resize: none;
         font-size: 14px;
-        min-height: 162px;
+        min-height: 166px;
       }
     }
   }
@@ -921,6 +924,7 @@ input[type="checkbox"].ca-checkbox {
 
 .ReactModal__Content {
   padding: 0 !important;
+  overflow: visible !important;
   .custom {
     .step-content-container {
       .modal-input {
