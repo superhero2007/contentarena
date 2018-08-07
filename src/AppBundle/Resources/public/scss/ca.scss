@@ -171,7 +171,7 @@ input[type="checkbox"].ca-checkbox {
       .standard-button {
         margin-left: inherit;
       }
-      .prev{
+      .prev {
         background-color: #1DA9EF;
         color: #fff;
       }
@@ -225,7 +225,7 @@ input[type="checkbox"].ca-checkbox {
         flex-direction: row;
         display: flex;
         align-items: center;
-        flex: 1;
+        //flex: 1;
         min-width: 33%;
       }
     }
@@ -353,9 +353,8 @@ input[type="checkbox"].ca-checkbox {
         height: 35px;
         font-size: 16px;
         font-weight: 600;
-        width: 232px;
         color: white;
-        min-width: 232px;
+        min-width: 275px;
         box-sizing: border-box;
       }
       input, select {
@@ -414,6 +413,7 @@ input[type="checkbox"].ca-checkbox {
       .big-textarea {
         width: 500px !important;
         min-height: 170px;
+        border: 1.1px solid #A9A9A9;
       }
       @extend .base-input;
       label {
@@ -497,7 +497,7 @@ input[type="checkbox"].ca-checkbox {
       background-color: #D4D8DE;
       display: flex;
       width: 100%;
-      height: 58px;
+      height: 35px;
       align-items: center;
       flex-direction: row;
       margin-bottom: 20px;
@@ -512,7 +512,7 @@ input[type="checkbox"].ca-checkbox {
       }
       .title {
         color: $font-color-1;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 600;
         padding-right: 20px;
 
@@ -608,6 +608,30 @@ input[type="checkbox"].ca-checkbox {
 
 }
 
+.step-content-custom {
+  .modal-input {
+    margin-bottom: 50px;
+    label {
+      float: left;
+      min-width: inherit;
+      width: inherit;
+      color: #4F4F4F;;
+    }
+    .row {
+      float: right;
+      margin-top: -10px;
+      .small-label {
+        color: #4F4F4F;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      input[type=number] {
+        width: 95px;
+      }
+    }
+  }
+}
+
 .step-2 {
   .step-content-container {
     .textarea-input {
@@ -634,7 +658,13 @@ input[type="checkbox"].ca-checkbox {
   .left {
     float: left;
     .modal-input {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      label {
+        float: left;
+      }
+      input, select {
+        width: 215px;
+      }
     }
   }
   .right {
@@ -661,6 +691,36 @@ input[type="checkbox"].ca-checkbox {
         resize: none;
         font-size: 14px;
         min-height: 162px;
+      }
+    }
+  }
+}
+
+.step-3 {
+  .listing-summary {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .step-content-container {
+    .rights-box {
+      background: #F4F6F9;
+      border-bottom: 4px solid #26ABED;
+      padding: 10px 15px;
+    }
+    .license-date-container {
+      .right-name {
+        flex: 1;
+        height: 35px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+      .right-item-content {
+        height: 35px;
+        &:last-of-type {
+          margin-right: 0;
+          justify-content: flex-end;
+        }
       }
     }
   }
@@ -789,9 +849,9 @@ input[type="checkbox"].ca-checkbox {
   }
 }
 
-.term-sheet-full-item-box{
+.term-sheet-full-item-box {
   @extend .full-item-box;
-  label{
+  label {
     margin-top: 20px;
     padding: 0 10px;
     font-size: 12px;
@@ -859,10 +919,34 @@ input[type="checkbox"].ca-checkbox {
   }
 }
 
-
-
 .ReactModal__Content {
   padding: 0 !important;
+  .custom {
+    .step-content-container {
+      .modal-input {
+        margin-bottom: 15px;
+        &:first-of-type {
+          div {
+            float: right;
+            width: 285px;
+          }
+        }
+        label {
+          float: left;
+          min-width: inherit;
+          max-width: 170px;
+          color: #4F4F4F;
+        }
+        div {
+          &:first-of-type {
+            float: right;
+            max-width: 285px;
+            margin-top: -5px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .ReactModal__Selector {
@@ -975,7 +1059,7 @@ $selectHeight: 50px;
 
 .modal-title {
   height: 48px;
-  background-color: #48C0FE;
+  background-color: #134A63;
   font-size: 16px;
   font-weight: 600;
   line-height: 17px;
@@ -1021,15 +1105,65 @@ $selectHeight: 50px;
     margin-left: 10px;
     align-items: center;
     text-align: left;
+    position: relative;
+    font-weight: bold;
     input.text-field {
       margin: 3px 0 0;
       height: 24px;
       padding: 2px;
       width: 85px;
+      min-width: 50px;
     }
     input[type="checkbox"], input[type="radio"] {
       width: 50px;
     }
+    input[type="checkbox"] {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      opacity: 0;
+      z-index: 100;
+      margin-top: 0;
+      &:focus ~ label {
+        background: #F4F6F9;
+      }
+      &:checked ~ label {
+        background: #F4F6F9;
+        &:after {
+          display: block;
+        }
+      }
+      &:disabled ~ label {
+        background: #F4F6F9;
+        opacity: 0.6;
+        pointer-events: none;
+        &:after {
+          border-color: #7b7b7b;
+        }
+      }
+    }
+    label {
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      background: #F4F6F9;
+      border: 1px solid #bbc2cf;
+      border-radius: 4px;
+      &:after {
+        box-sizing: unset;
+        content: '';
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 1px;
+        width: 3px;
+        height: 10px;
+        border: solid #17aaef;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+      }
+    }
+
     .Select {
       min-height: 31px;
       height: auto;
@@ -1057,14 +1191,20 @@ $selectHeight: 50px;
 
 .modal-input {
   //display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   position: relative;
   max-width: 872px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   .fa-cog {
     position: absolute;
     right: 10px;
     top: 10px
+  }
+  .row {
+    padding-left: 20px;
   }
   .column {
     display: flex;
@@ -1076,7 +1216,8 @@ $selectHeight: 50px;
     }
     .small-label {
       font-size: 13px;
-      width: 150px;
+      width: 100px;
+      flex: 100px 0 0;
       padding: 0 10px;
       line-height: 14px;
     }
@@ -1091,12 +1232,10 @@ $selectHeight: 50px;
     box-sizing: border-box;
     width: 325px;
     color: #060606;
-   	font-size: 16px;
+    font-size: 16px;
     font-weight: 600;
-
   }
   input, select {
-    min-width: 215px;
     margin: 0;
     height: 36px;
     padding: 0 8px;
@@ -1312,6 +1451,7 @@ $selectHeight: 50px;
   margin: 5px;
   box-sizing: border-box;
 }
+
 //
 //input[type="checkbox"] + label {
 //  display: inline-block;

@@ -17,11 +17,9 @@ import {LanguageSelector} from "../../main/components/LanguageSelector";
 import {customStyles} from "../../main/styles/custom";
 
 const licenseStyles = {
-    fontSize: "12px",
-    lineHeight: "14px",
-    padding: 0,
-    textAlign : "center",
-    justifyContent: "center"
+    fontSize: "15px",
+    fontWeight: "100",
+    justifyContent: "left"
 };
 
 class SellFormStep3 extends React.Component {
@@ -103,9 +101,11 @@ class SellFormStep3 extends React.Component {
     renderProgramPopup(){
 
         const {
-            onClose,
             updateContentValue,
             PROGRAM_NAME,
+            PROGRAM_TYPE,
+            PROGRAM_EPISODES,
+            PROGRAM_EPISODE_DURATION,
             PROGRAM_SUBTITLES,
             PROGRAM_SCRIPT,
             PROGRAM_LANGUAGE
@@ -121,13 +121,39 @@ class SellFormStep3 extends React.Component {
 
                 <div className="modal-title">
                     Program details
-                    <i className="fa fa-times-circle-o" onClick={onClose}/>
+                    <i className="fa fa-times-circle-o" onClick={this.closeProgramsPopup}/>
                 </div>
 
-                <div className="step-content">
+                <div className="step-content custom">
                     <div className="step-content-container" style={{minWidth:500}}>
                         <div className="modal-input">
-                            <label>{PROGRAM_NAME}</label>
+                            <label>Program name</label>
+                            <div>
+                                <input
+                                    type="text"
+                                    value={PROGRAM_NAME}/>
+                            </div>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Program type</label>
+                            <LanguageSelector
+                                value={PROGRAM_TYPE}
+                                onChange={(value)=>{updateContentValue('PROGRAM_TYPE', value)}}/>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Program episodes</label>
+                            <LanguageSelector
+                                value={PROGRAM_EPISODES}
+                                onChange={(value)=>{updateContentValue('PROGRAM_EPISODES', value)}}/>
+                        </div>
+
+                        <div className="modal-input">
+                            <label>Average episode duration in minutes</label>
+                            <LanguageSelector
+                                value={PROGRAM_EPISODE_DURATION}
+                                onChange={(value)=>{updateContentValue('PROGRAM_EPISODE_DURATION', value)}}/>
                         </div>
 
                         <div className="modal-input">
@@ -173,7 +199,7 @@ class SellFormStep3 extends React.Component {
 
         return (
 
-            <div className="step-content">
+            <div className="step-content step-3">
                 { this.renderProgramPopup() }
 
                 {/*SUMMARY*/}
@@ -231,11 +257,11 @@ class SellFormStep3 extends React.Component {
                                 <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
                                     { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
                                     { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
-                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
-                                    { !endDateMode && "Please select"}
-                                </div>
-                                <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
-                                    <i className="fa fa-edit"/>
+                                    { endDateMode === "UNLIMITED"  && ""}
+                                    { !endDateMode && ""}
+                                    <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
+                                        <i className="fa fa-edit"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
