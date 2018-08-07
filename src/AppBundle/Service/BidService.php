@@ -110,6 +110,7 @@ class BidService
          * @var $bid Bid
          */
         $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
+        $rejectedStatus = $this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"REJECTED"));
         $signature = $request->get('signature');
         $salesPackageId = $bid->getSalesPackage()->getId();
         $listingId = $bid->getContent()->getId();
@@ -136,11 +137,23 @@ class BidService
         $bid->setStatus($this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"APPROVED")));
         $bid->setUpdatedAt($updatedAt);
         $this->em->persist($bid);
+        $this->em->flush();
         if ($exclusive){
             $salesPackage->setSold(true);
+            $pendingBids = $this->getPendingBidsByContent($listing);
+
+            foreach ($pendingBids as $pendingBid){
+                /* @var Bid $pendingBid*/
+                if ($pendingBid->getStatus()->getName() == "PENDING"){
+                    $pendingBid->setStatus($rejectedStatus);
+                    $this->em->persist($pendingBid);
+                }
+            }
+
             $this->em->persist($salesPackage);
+            $this->em->flush();
         }
-        $this->em->flush();
+
         return true;
     }
 

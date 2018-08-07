@@ -3,7 +3,7 @@ import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
 
 const ContentListingRightsPackage = ({rightsPackage, programName}) => {
     return (
-        <div id="listing-rights" className="col">
+        <div className="listing-rights col">
             {rightsPackage.map((sr, i) => {
                 return (
                     <div key={i} className="listing-item">

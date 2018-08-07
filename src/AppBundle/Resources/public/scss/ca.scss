@@ -1326,6 +1326,8 @@ $selectHeight: 50px;
       height: 100%;
       img {
         object-fit: cover;
+        width: 100%;
+        height: 100%;
       }
     }
     .date {
@@ -1345,6 +1347,7 @@ $selectHeight: 50px;
     font-size: 14px;
     flex: 1;
     min-width: 0;
+    overflow: auto;
     .company {
       position: absolute;
       right: 20px;
@@ -1371,15 +1374,12 @@ $selectHeight: 50px;
 
     .listing-wrapper {
       display: flex;
-      flex-wrap: wrap;
 
       .col {
-        display: flex;
+        display: inline-flex;
         flex-flow: column wrap;
         max-height: 120px;
-        flex: 0 0 50%;
         max-width: 50%;
-        width: 100%;
 
         .listing-item {
           line-height: 40px;
@@ -1399,7 +1399,7 @@ $selectHeight: 50px;
           }
         }
 
-        &#listing-rights .listing-item {
+        &.listing-rights .listing-item {
           display: flex;
           align-items: center;
         }
