@@ -17,7 +17,7 @@ class CommercialSalesBundle extends React.Component{
             approveModalIsOpen : false,
             rejectModalIsOpen : false,
             removeModalIsOpen : false,
-            showBids : props.bidsOpen || false
+            showBids : props.bidsOpen
 
         }
     }

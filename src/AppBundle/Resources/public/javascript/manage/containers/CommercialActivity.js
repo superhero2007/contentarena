@@ -137,7 +137,7 @@ class CommercialActivity extends React.Component {
                         return <ContentListingCommercialActivity
                             onUpdate={this.update}
                             onDelete={this.deleteBid}
-                            bidsOpen={list.length === 1}
+                            bidsOpen={list.length === 1 || this.state.filter !== "ALL"}
                             bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
                             hideWithoutBids={this.state.filter === "ACTIVITY"}
                             filterByOpenBids={this.state.filter === "OPEN"}
