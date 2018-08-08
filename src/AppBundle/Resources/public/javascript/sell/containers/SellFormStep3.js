@@ -126,35 +126,6 @@ class SellFormStep3 extends React.Component {
 
                 <div className="step-content custom">
                     <div className="step-content-container" style={{minWidth:500}}>
-                        <div className="modal-input">
-                            <label>Program name</label>
-                            <div>
-                                <input
-                                    type="text"
-                                    value={PROGRAM_NAME}/>
-                            </div>
-                        </div>
-
-                        <div className="modal-input">
-                            <label>Program type</label>
-                            <LanguageSelector
-                                value={PROGRAM_TYPE}
-                                onChange={(value)=>{updateContentValue('PROGRAM_TYPE', value)}}/>
-                        </div>
-
-                        <div className="modal-input">
-                            <label>Program episodes</label>
-                            <LanguageSelector
-                                value={PROGRAM_EPISODES}
-                                onChange={(value)=>{updateContentValue('PROGRAM_EPISODES', value)}}/>
-                        </div>
-
-                        <div className="modal-input">
-                            <label>Average episode duration in minutes</label>
-                            <LanguageSelector
-                                value={PROGRAM_EPISODE_DURATION}
-                                onChange={(value)=>{updateContentValue('PROGRAM_EPISODE_DURATION', value)}}/>
-                        </div>
 
                         <div className="modal-input">
                             <label>Program language</label>
