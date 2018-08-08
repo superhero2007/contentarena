@@ -18,6 +18,9 @@ class PopupRight extends React.Component {
             custom : false,
             productionLabels : SuperRightProductionDetailsLabels
         };
+
+        this.selectedRightsTemp = {};
+        this.selectedRightsForUpdate = {};
     }
 
     componentWillReceiveProps(props){
@@ -575,9 +578,6 @@ class PopupRight extends React.Component {
         this.togglePopup();
         this.props.onUpdate(this.state.rightsPackage)
     };
-
-    selectedRightsTemp = {};
-    selectedRightsForUpdate = {};
 }
 
 
