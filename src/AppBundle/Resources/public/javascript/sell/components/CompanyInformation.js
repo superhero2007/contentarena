@@ -15,6 +15,8 @@ class CompanyInformation extends React.Component {
             isOpen : false,
             company : props.company
         };
+
+        this.modalState = {};
     }
 
     componentWillReceiveProps(nextProps) {
@@ -26,23 +28,17 @@ class CompanyInformation extends React.Component {
     };
 
     updateContent = (e, name) => {
-        const { company } = this.state;
-        const { counter } = this.props;
+        const company = {...this.state.company};
 
         company[name] = e.target.value;
-
-        this.props.updateContentValue("company", company);
-        this.props.updateContentValue("counter", counter + 1);
+        this.onDataChange("company", company)
     };
 
     updateCountry = (value) => {
-        const { company } = this.state;
-        const { counter } = this.props;
+        const company = {...this.state.company};
 
         company.country.name = value.label;
-
-        this.props.updateContentValue("company", company);
-        this.props.updateContentValue("counter", counter + 1);
+        this.onDataChange("company", company)
     };
 
     renderModal = () => {
@@ -105,7 +101,7 @@ class CompanyInformation extends React.Component {
                             style={inputStyle}
                             type={"text"}
                             onChange={(e) => { this.updateContent(e, "address")}}
-                            value={company.address}/>
+                            defaultValue={company.address}/>
                     </div>
 
                     <div className="base-full-input">
@@ -147,7 +143,7 @@ class CompanyInformation extends React.Component {
             <div className={"buttons"}>
                 { companyIsValid(company) &&<button
                     className={"standard-button"}
-                    onClick={this.closeModal}>Ok</button>}
+                    onClick={this.onOKClick}>Ok</button>}
 
                 { !companyIsValid(company) &&<button
                     className={"standard-button"}
@@ -170,6 +166,21 @@ class CompanyInformation extends React.Component {
                     placeholder=""/>
             </div>
         )
+    }
+
+    onOKClick = () => {
+        const { updateContentValue, counter } = this.props;
+
+        this.setState(this.modalState);
+
+        updateContentValue("company", this.modalState.company);
+        updateContentValue("counter", counter + 1);
+
+        this.closeModal();
+    };
+
+    onDataChange(name, value) {
+        this.modalState[name] = value;
     }
 }
 
