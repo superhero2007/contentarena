@@ -173,6 +173,7 @@ class SellFormStep2 extends React.Component {
                         </textarea>
                     </div>
                 </div>
+                <div className='clearfix'/>
                 </div>}
             </div>
         );
