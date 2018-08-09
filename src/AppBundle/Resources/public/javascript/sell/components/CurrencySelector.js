@@ -1,13 +1,5 @@
-const CurrencyItem = ({selected, onClick, name}) => (
-    <div className={"currency-item"} onClick={onClick}>
-        <div className={"currency-icon"}>
-            {selected && <i className="fa fa-check-circle-o"/>}
-        </div>
-        {name}
-    </div>
-);
-
 import React from 'react';
+import cn from 'classnames';
 
 class CurrencySelector extends React.Component {
     constructor(props) {
@@ -15,24 +7,30 @@ class CurrencySelector extends React.Component {
         this.state = {
         };
     }
-    componentDidMount() {
-    }
-    componentWillUnmount() {
-    }
-
-
-    update = (selected) => {
-        this.setState({selected: selected});
-    };
 
     render(){
+        const { onClick, selected } = this.props;
+
         return (
-            <div className={"base-input"}>
-                <label style={{flex: 7 }}>In which currency would you like to sell your content?</label>
-                <CurrencyItem name={"EUR"} onClick={()=>this.props.onClick("EUR") } selected={this.props.selected === "EUR"}/>
-                <CurrencyItem name={"USD"} onClick={()=>this.props.onClick("USD") } selected={this.props.selected === "USD"}/>
+            <div className='select-currency'>
+                <div className='select-text'>Currency</div>
+                <div className='current'>{selected}</div>
+                <div className='dropdown'>
+                    <div
+                        className={cn('currency-item', { 'hidden': selected === 'USD' })}
+                        onClick={()=>onClick("USD") }
+                    >
+                        USD
+                    </div>
+                    <div
+                        className={cn('currency-item', { 'hidden': selected === 'EUR' })}
+                        onClick={()=>onClick("EUR") }
+                    >
+                        EUR
+                    </div>
+                </div>
             </div>
-        )
+        );
     }
 }
 

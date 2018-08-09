@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import CurrencySelector from "../components/CurrencySelector";
 import FileSelector from '../../main/components/FileSelector';
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
@@ -94,9 +93,6 @@ class SellFormStep4 extends React.Component {
 
             <div className="step-content step-4">
                 <div className="step-content-container">
-
-                    <CurrencySelector onClick={this.selectCurrency} selected={currency} />
-
                     <SalesPackageForm
                         currency={currency}
                         exclusivity={this.exclusivity()}
@@ -105,7 +101,9 @@ class SellFormStep4 extends React.Component {
                         onUpdate={this.updateSalesPackage}
                         onRemove={this.removeSalesPackage}
                         onEdit={this.editSalesPackage}
-                        onRemoveAll={this.removeAllSalesPackage}/>
+                        onRemoveAll={this.removeAllSalesPackage}
+                        selectCurrency={this.selectCurrency}
+                    />
 
                     {this.state.editOpen && <SalesPackageEdit
                         isOpen={this.state.editOpen}

@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
+import CurrencySelector from "../components/CurrencySelector";
 import DatePicker from 'react-datepicker';
 import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
@@ -563,7 +564,7 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { onRemove, hideButtons, currency, fullSize, sort, listingId } = this.props;
+        const { onRemove, hideButtons, currency, fullSize, sort, listingId, selectCurrency } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
 
@@ -578,13 +579,7 @@ class SalesPackageForm extends React.Component {
                         <div className='label-text'>
                             Sales bundles
                         </div>
-                        <div className='select-currency'>
-                            <div className='select-text'>Currency</div>
-                            <div className='dropdown'>
-                                <div className='currency-item show'>USD</div>
-                                <div className='currency-item hidden'>EUR</div>
-                            </div>
-                        </div>
+                        <CurrencySelector onClick={selectCurrency} selected={currency} />
                         <div className='clearfix'/>
                     </label>
                     <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
