@@ -323,22 +323,6 @@ class SalesPackageForm extends React.Component {
                                     Add multiple territory
                                 </div>
                             </div>
-                            {/*
-                            <div className={"item"} onClick={() => { this.setBundleMethod(this.asBundle) } }>
-                                {this.state.bundleMethod !== this.asBundle && <i className="fa fa-circle-thin"/>}
-                                {this.state.bundleMethod === this.asBundle && <i className="fa fa-check-circle-o"/>}
-                                <div className={"title"}>
-                                    Sell all/selected territories as bundle
-                                </div>
-                            </div>
-                            <div className={"item"} onClick={() => { this.setBundleMethod(this.individually) } }>
-                                {this.state.bundleMethod !== this.individually && <i className="fa fa-circle-thin"/>}
-                                {this.state.bundleMethod === this.individually && <i className="fa fa-check-circle-o"/>}
-                                <div className={"title"}>
-                                    Sell territories individually
-                                </div>
-                            </div>
-                            */}
                         </div>
                     </div>
 
@@ -394,24 +378,6 @@ class SalesPackageForm extends React.Component {
                             </div>
                         </div>
                     </div>
-
-                      {/*  {territoriesMethod === this.selectedTerritories &&
-                        <CountrySelector
-                            className={"small-select"}
-                            value={this.state.territories}
-                            onChange={this.selectTerritories}
-                            filter={this.getFilterTerritories()}
-                        />
-                    }*/}
-
-                     {/*    {territoriesMethod === this.worldwideExcluding &&
-                        <CountrySelector
-                            className={"small-select"}
-                            value={this.getExcludedTerritories()}
-                            onChange={this.selectTerritories}
-                        />
-                    }*/}
-
                     <div className="base-full-input">
                         <label style={labelStyle}>Sales method</label>
                         <div className={"content"}>
