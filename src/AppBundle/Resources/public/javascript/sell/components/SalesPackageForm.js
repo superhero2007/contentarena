@@ -268,11 +268,8 @@ class SalesPackageForm extends React.Component {
         return !worldwide && territories.length !== Object.values(ContentArena.Data.Countries).length;
     };
 
-    handleTerritories = (type, method) => {
+    handleTerritories = (type) => {
         this.setState({territoriesQuantity: type});
-        if (method) {
-
-        }
     }
 
     renderModal = () => {
