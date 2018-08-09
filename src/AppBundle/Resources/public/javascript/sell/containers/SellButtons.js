@@ -4,7 +4,7 @@ import store from '../store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
-import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
+import {editedProgramSelected, goTo, parseSeasons} from "../../main/actions/utils";
 
 class SellButtons extends React.Component {
     constructor(props) {
@@ -173,6 +173,7 @@ class SellButtons extends React.Component {
         const {updateContentValue} = this.props;
         let content = store.getState().content;
         content = parseSeasons(content);
+        this.setState({ saving : true });
 
         if (!content.customId) { //if not in edit mode
             ContentArena.ContentApi.saveContentAsInactive(content).done( ( response ) => {
@@ -180,10 +181,19 @@ class SellButtons extends React.Component {
                     updateContentValue("id", response.contentId);
                     updateContentValue("customId", response.customId);
                 }
-                this.props.goToNextStep();
+                this.setState({ saving : false });
+                //this.props.goToNextStep();
+                goTo("managelistings/edit/"+response.customId+"/5");
             });
         } else {
-            this.props.goToNextStep();
+            ContentArena.ContentApi.saveContentAsDraft(content).done((response)=>{
+                if ( response.success && response.contentId ){
+                    this.props.updateContentValue("id", response.contentId);
+                }
+
+                this.setState({ saving : false, savingSuccess: true });
+                goTo("managelistings/edit/"+response.customId+"/5");
+            })
         }
     };
 

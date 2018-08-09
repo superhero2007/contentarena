@@ -1,6 +1,6 @@
 import React from 'react';
 import {pdfIcon} from "./Icons";
-import {viewLicense, viewLicenseBid, viewLicenseBundle} from "../actions/utils";
+import {viewLicense, viewLicenseBid, viewLicenseBundle, viewLicenseCustom} from "../actions/utils";
 
 class LicenseDownloader extends React.Component {
 
@@ -11,13 +11,16 @@ class LicenseDownloader extends React.Component {
     }
 
     getLicense = () => {
-        const {type , id, listingId } = this.props;
+        const {type , id, listingId , bundle} = this.props;
         switch (type){
             case "BID":
                 viewLicenseBid(id);
                 break;
             case "BUNDLE":
                 viewLicenseBundle(id, listingId);
+                break;
+            case "CUSTOM":
+                viewLicenseCustom(listingId, bundle);
                 break;
             default:
                 viewLicense(id);

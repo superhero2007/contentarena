@@ -53,10 +53,10 @@ class CommercialActivity extends React.Component {
     filtered = () => {
         const { filter , selectedListings} = this.state;
 
-        let listings = this.state.listings;
+        let listings = [];
 
         if ( selectedListings.length > 0 ){
-            listings = listings.filter(b => selectedListings.indexOf(b.id) !== -1);
+            listings = this.state.listings.filter(b => selectedListings.indexOf(b.id) !== -1);
         }
 
         switch (filter) {
@@ -87,7 +87,7 @@ class CommercialActivity extends React.Component {
 
     render () {
         const { loading, filter, selectedListings } = this.state;
-        const listings = this.filtered();
+        let listings = this.filtered();
         const allListings = this.state.listings;
         return (
             <div style={{height : '100%'}}>

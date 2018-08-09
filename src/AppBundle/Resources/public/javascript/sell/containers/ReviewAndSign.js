@@ -178,6 +178,7 @@ class ReviewAndSign extends React.Component {
                     <SalesPackageForm
                         hideButtons
                         sort={true}
+                        listingId={customId}
                         fullSize={true}
                         salesPackages={salesPackages}
                         currency={currency}

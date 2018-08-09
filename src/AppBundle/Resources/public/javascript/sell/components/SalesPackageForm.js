@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
 import DatePicker from 'react-datepicker';
+import LicenseDownloader from '../../main/components/LicenseDownloader'
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -539,7 +540,7 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { onRemove, hideButtons, currency, fullSize, sort } = this.props;
+        const { onRemove, hideButtons, currency, fullSize, sort, listingId } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
 
@@ -572,6 +573,12 @@ class SalesPackageForm extends React.Component {
                                             </span>
                                         }
                                     </div>
+
+                                    {hideButtons && <LicenseDownloader
+                                        type={"BUNDLE"}
+                                        id={salesPackage.id}
+                                        listingId={listingId}
+                                        style={{flex : 1, display: 'flex', justifyContent: 'center'}} />}
 
 
                                     {salesPackage.bundleMethod === "SELL_AS_BUNDLE" &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
