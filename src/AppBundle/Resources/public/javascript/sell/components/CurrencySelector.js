@@ -1,10 +1,13 @@
 import React from 'react';
 import cn from 'classnames';
 
+const CURRENCIES = ['USD', 'EUR'];
+
 class CurrencySelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+
         };
     }
 
@@ -16,18 +19,13 @@ class CurrencySelector extends React.Component {
                 <div className='select-text'>Currency</div>
                 <div className='current'>{selected}</div>
                 <div className='dropdown'>
-                    <div
-                        className={cn('currency-item', { 'hidden': selected === 'USD' })}
-                        onClick={()=>onClick("USD") }
-                    >
-                        USD
-                    </div>
-                    <div
-                        className={cn('currency-item', { 'hidden': selected === 'EUR' })}
-                        onClick={()=>onClick("EUR") }
-                    >
-                        EUR
-                    </div>
+                    {CURRENCIES.filter(currency => currency !== selected).map((currency) => {
+                        return (
+                            <div className={cn('currency-item')} onClick={() => onClick(currency)}>
+                                {currency}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         );
