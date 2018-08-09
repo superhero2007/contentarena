@@ -964,6 +964,13 @@ input[type="checkbox"].ca-checkbox {
       top: 17px;
       border: 2px solid rgba(119, 174, 202, 0.34);
       background-color: #296380;
+      .fa {
+        display: none;
+        text-align: center;
+        margin-top: 3px;
+        font-size: 11px;
+        color: #FFCD34;
+      }
     }
   }
   .step-active {
@@ -979,6 +986,13 @@ input[type="checkbox"].ca-checkbox {
       top: 19px;
       border: 2px solid rgba(126, 95, 24, 0.34);
       background-color: #DFAB30;
+    }
+  }
+  .finished {
+    .step-icon {
+      .fa {
+        display: block;
+      }
     }
   }
 }

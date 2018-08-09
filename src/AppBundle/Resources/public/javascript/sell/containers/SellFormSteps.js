@@ -11,7 +11,9 @@ const SellFormStep = ({step, active, title, onClick, stepVisited, stepFinished})
         <div className="step-title">
             {title}
         </div>
-        <div className="step-icon"></div>
+        <div className="step-icon">
+            <i className="fa fa-check"/>
+        </div>
     </div>
 );
 
