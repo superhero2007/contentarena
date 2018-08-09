@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
 import DatePicker from 'react-datepicker';
+import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
 
 const labelStyle = { height: "30px", fontSize: "12px"};
@@ -33,7 +34,7 @@ class SalesPackageForm extends React.Component {
         this.state = {
             isOpen : props.isOpen,
             bundleMethod : this.asBundle,
-            territoriesMethod : this.worldwide,
+            territoriesMethod : this.selectedTerritories,
             salesMethod : this.fixed,
             territories : [],
             excludedTerritories : [],
@@ -41,7 +42,8 @@ class SalesPackageForm extends React.Component {
             territoriesList: [],
             installments : [{ value : 100,  type : "DAY", days: 30}],
             fee : 0,
-            isNew : true
+            isNew : true,
+            territoriesQuantity: 'single'
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
@@ -70,8 +72,7 @@ class SalesPackageForm extends React.Component {
     };
 
     fillTerritories = (territoriesMethod, bundleMethod) => {
-        if ( territoriesMethod === this.worldwide &&
-            bundleMethod === this.individually ) {
+        if ( territoriesMethod === this.worldwide && bundleMethod === this.individually ) {
             this.setState({ territories : Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }))})
         } else {
             this.setState({ territories : []})
@@ -205,7 +206,8 @@ class SalesPackageForm extends React.Component {
 
         this.setState({
             fee: 0,
-            territories: [], territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories });
+            territories: [],
+            territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories });
     };
 
     selectTerritories = (territories) => {
@@ -267,9 +269,18 @@ class SalesPackageForm extends React.Component {
         return !worldwide && territories.length !== Object.values(ContentArena.Data.Countries).length;
     };
 
+    handleTerritories = (type) => {
+        this.setState({territoriesQuantity: type});
+    }
+
     renderModal = () => {
 
         const {onClose, exclusivity, salesPackages} = this.props;
+        const {territoriesQuantity, territoriesMethod, territories} = this.state;
+
+        const isFilterEnabled = territoriesMethod === this.selectedTerritories;
+        const isMultipleEnabled = territoriesQuantity === 'multiple';
+        const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -292,67 +303,79 @@ class SalesPackageForm extends React.Component {
                             How would you like to sell your content?
                         </label>
                         <div className={"content"}>
-                            <div className={"item"} onClick={() => { this.setBundleMethod(this.asBundle) } }>
-                                {this.state.bundleMethod !== this.asBundle && <i className="fa fa-circle-thin"/>}
-                                {this.state.bundleMethod === this.asBundle && <i className="fa fa-check-circle-o"/>}
+                            <div className={"item"} onClick={()=>this.handleTerritories('single')}>
+                                {territoriesQuantity === 'single' ?
+                                    <i className="fa fa-check-circle-o"/> :
+                                    <i className="fa fa-circle-thin" />
+                                }
                                 <div className={"title"}>
-                                    Sell all/selected territories as bundle
+                                    Add single territory
                                 </div>
                             </div>
-                            <div className={"item"} onClick={() => { this.setBundleMethod(this.individually) } }>
-                                {this.state.bundleMethod !== this.individually && <i className="fa fa-circle-thin"/>}
-                                {this.state.bundleMethod === this.individually && <i className="fa fa-check-circle-o"/>}
+                            <div className={"item"} onClick={()=>this.handleTerritories('multiple')}>
+                                {territoriesQuantity === 'multiple' ?
+                                    <i className="fa fa-check-circle-o"/> :
+                                    <i className="fa fa-circle-thin" />
+                                }
                                 <div className={"title"}>
-                                    Sell territories individually
+                                    Add multiple territory
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="base-full-input">
+                    <div className="base-full-input" style={{display: 'block'}}>
                         <label style={labelStyle}>Select territories</label>
-                        <div className={"content"}>
-                            { (!exclusivity || (exclusivity && salesPackages.length === 0)) && <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwide) } }>
-                                {this.state.territoriesMethod !== this.worldwide && <i className="fa fa-circle-thin"/>}
-                                {this.state.territoriesMethod === this.worldwide && <i className="fa fa-check-circle-o"/>}
-                                <div className={"title"}>
-                                    Worldwide
+                        {territoriesQuantity === 'multiple' && (
+                            <div className={"content"}>
+                                <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.selectedTerritories) } }>
+                                    {territoriesMethod !== this.selectedTerritories && <i className="fa fa-circle-thin"/>}
+                                    {territoriesMethod === this.selectedTerritories && <i className="fa fa-check-circle-o"/>}
+                                    <div className={"title"}>
+                                        Selected territories only
+                                    </div>
                                 </div>
-                            </div> }
-                            <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.selectedTerritories) } }>
-                                {this.state.territoriesMethod !== this.selectedTerritories && <i className="fa fa-circle-thin"/>}
-                                {this.state.territoriesMethod === this.selectedTerritories && <i className="fa fa-check-circle-o"/>}
-                                <div className={"title"}>
-                                    Selected territories only
-                                </div>
+                                {(!exclusivity || (exclusivity && salesPackages.length === 0)) && (
+                                    <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwide) } }>
+                                        {territoriesMethod !== this.worldwide && <i className="fa fa-circle-thin"/>}
+                                        {territoriesMethod === this.worldwide && <i className="fa fa-check-circle-o"/>}
+                                        <div className={"title"}>
+                                            Worldwide
+                                        </div>
+                                    </div>
+                                )}
+                                {this.worldwideAvailable() && <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwideExcluding) } }>
+                                    {territoriesMethod !== this.worldwideExcluding && <i className="fa fa-circle-thin"/>}
+                                    {territoriesMethod === this.worldwideExcluding && <i className="fa fa-check-circle-o"/>}
+                                    <div className={"title"}>
+                                        Worldwide excluding
+                                    </div>
+                                </div>}
                             </div>
-                            {this.worldwideAvailable() && <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwideExcluding) } }>
-                                {this.state.territoriesMethod !== this.worldwideExcluding && <i className="fa fa-circle-thin"/>}
-                                {this.state.territoriesMethod === this.worldwideExcluding && <i className="fa fa-check-circle-o"/>}
-                                <div className={"title"}>
-                                    Worldwide excluding
-                                </div>
-                            </div>}
+                        )}
+                        <div style={{marginTop: '10px', padding: "0 15px"}}>
+                            <CountrySelector
+                                className={"small-select"}
+                                onChange={this.selectTerritories}
+                                value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
+                                filter={isFilterEnabled ? this.getFilterTerritories() : []}
+                                multi={isMultipleEnabled}
+                            />
+                            <div>
+                                <input type="checkbox"
+                                       className="ca-checkbox"
+                                       style={{width:'inherit', height: '20px'}}
+                                       defaultChecked={this.state.bundleMethod === this.asBundle}
+                                       onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
+                                />
+                                <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>Offer selected territories together as one territory package</span>
+                                <Tooltip
+                                    id="offer_info"
+                                    text="Test text"
+                                />
+                            </div>
                         </div>
                     </div>
-
-                    {   this.state.territoriesMethod === this.selectedTerritories
-                    &&
-                        <CountrySelector
-                            className={"small-select"}
-                            value={this.state.territories}
-                            onChange={this.selectTerritories}
-                            filter={this.getFilterTerritories()} />
-                    }
-
-                    {   this.state.territoriesMethod === this.worldwideExcluding
-                    &&
-                    <CountrySelector
-                        className={"small-select"}
-                        value={this.getExcludedTerritories()}
-                        onChange={this.selectTerritories} />
-                    }
-
                     <div className="base-full-input">
                         <label style={labelStyle}>Sales method</label>
                         <div className={"content"}>
