@@ -13,6 +13,7 @@ const SellFormStep = ({step, active, title, onClick, stepVisited, stepFinished})
         </div>
         <div className="step-icon">
             <i className="fa fa-check"/>
+            <i className="fa fa-ellipsis-h"/>
         </div>
     </div>
 );

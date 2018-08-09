@@ -550,7 +550,19 @@ class SalesPackageForm extends React.Component {
                 { this.renderModal() }
                 { this.allTerritories() }
                 <div className="base-full-input" style={inputStyle}>
-                    <label>Sales bundles</label>
+                    <label>
+                        <div className='label-text'>
+                            Sales bundles
+                        </div>
+                        <div className='select-currency'>
+                            <div className='select-text'>Currency</div>
+                            <div className='dropdown'>
+                                <div className='currency-item show'>USD</div>
+                                <div className='currency-item hidden'>EUR</div>
+                            </div>
+                        </div>
+                        <div className='clearfix'/>
+                    </label>
                     <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
                         { salesPackages.map( (salesPackage, i) => {
 
