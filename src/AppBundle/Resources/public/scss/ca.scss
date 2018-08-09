@@ -52,80 +52,6 @@ a:hover {
   margin: 20px;
 }
 
-input[type="radio"].ca-radio {
-  display: inline-block;
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  flex: 20px 0 0;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
-  border-radius: 50%;
-  //transition: background-color $input-animation, border $input-animation, background-image $input-animation;
-  outline: none;
-  cursor: pointer;
-  margin: inherit;
-  padding: inherit;
-  font-size: inherit;
-
-  &:hover {
-    border-color: #40bfff;
-  }
-
-  &:checked {
-    border: 5px solid #40bfff;
-    background-color: #ffffff;
-  }
-
-  &:disabled,
-  &.disabled {
-    border-color: #dcdddf;
-  }
-}
-
-input[type="checkbox"].ca-checkbox {
-  display: inline-block;
-  vertical-align: middle;
-  padding: inherit;
-  width: 20px;
-  height: 20px;
-  flex: 20px 0 0;
-  margin: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: #fff;
-  border: 1px solid #dcdddf;
-  border-radius: 5px;
-  transition: background-color .1s linear, border .1s linear, background-image .1s linear;
-  outline: none;
-  cursor: pointer;
-  margin: inherit;
-  padding: inherit;
-  font-size: inherit;
-
-  &:hover {
-    border-color: #40bfff
-  }
-
-  &:checked {
-    border: 1px solid #40bfff;
-    background-image: url("data:image/svg+xml;charset=utf8, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-color: #40bfff;
-    background-size: 70%;
-    background-position: 50%
-  }
-
-  &:disabled {
-    background-color: #caccd1;
-    border: 1px solid #dcdddf;
-    cursor: default
-  }
-}
-
 .sell-form-container {
   .date-picker {
     width: 65px;
@@ -491,6 +417,9 @@ input[type="checkbox"].ca-checkbox {
             padding-top: 10px;
           }
         }
+      }
+      .Select--single > .Select-control .Select-value {
+        line-height: 34px !important;
       }
     }
     .title-bar {
@@ -1011,52 +940,6 @@ input[type="checkbox"].ca-checkbox {
   color: #A5A5A5;
 }
 
-$selectHeight: 50px;
-.Select {
-  position: relative;
-  width: 100%;
-  .Select-value-label {
-    font-weight: bold;
-  }
-  &.is-open .Select-arrow,
-  & .Select-arrow-zone:hover > .Select-arrow {
-    border-top-color: #40bfff;
-  }
-
-  .Select-arrow {
-    border: 0;
-    padding-right: 12px;
-    &:after {
-      content: "\f107";
-      display: inline-block;
-      color: #40bfff;
-      font: normal normal normal 14px/1 FontAwesome;
-      font-size: 21px;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-  }
-  .Select-control {
-    border-radius: 0px;
-    border: 1px solid lightgrey;
-    height: $selectHeight;
-
-    .Select-placeholder {
-      line-height: $selectHeight;
-    }
-  }
-  .Select-input > input {
-    line-height: 28px;
-    padding: inherit;
-    border: 0;
-  }
-}
-
-.Select--single > .Select-control .Select-value {
-  line-height: $selectHeight !important;
-}
-
 .modal-title {
   height: 48px;
   background-color: #134A63;
@@ -1451,49 +1334,6 @@ $selectHeight: 50px;
   margin: 5px;
   box-sizing: border-box;
 }
-
-//
-//input[type="checkbox"] + label {
-//  display: inline-block;
-//  width: 19px;
-//  height: 19px;
-//  vertical-align: middle;
-//  cursor: pointer;
-//  background-image: none;
-//  background-color: #E8EBF0;
-//  position: relative;
-//  margin-right: 5px;
-//  margin-left: 6px;
-//  border: 1px solid #A9B5C6;
-//  border-radius: 4px;
-//
-//}
-
-//input[type="checkbox"]:checked + label:after, input[type="radio"]:checked + label:after {
-//  opacity: 1;
-//}
-//
-//input[type="checkbox"]:checked + label, input[type="radio"]:checked + label {
-//}
-
-//input[type="radio"]:checked + label {
-//  margin-left: 5px;
-//}
-
-//input[type="checkbox"] + label:after {
-//  content: '';
-//  width: 9px;
-//  height: 5px;
-//  position: absolute;
-//  top: 4px;
-//  left: 4px;
-//  border: 2px solid #3E5473;
-//  border-top: none;
-//  border-right: none;
-//  background: transparent;
-//  opacity: 0;
-//  transform: rotate(-45deg);
-//}
 
 .listing-details {
   width: 100%;
