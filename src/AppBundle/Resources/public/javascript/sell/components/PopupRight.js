@@ -18,6 +18,9 @@ class PopupRight extends React.Component {
             custom : false,
             productionLabels : SuperRightProductionDetailsLabels
         };
+
+        this.selectedRightsTemp = {};
+        this.selectedRightsForUpdate = {};
     }
 
     componentWillReceiveProps(props){
@@ -94,6 +97,8 @@ class PopupRight extends React.Component {
     };
 
     togglePopup = () => {
+        this.selectedRightsTemp = {};
+        this.selectedRightsForUpdate = {};
 
         const {onProgram, id} = this.props;
 
@@ -106,13 +111,12 @@ class PopupRight extends React.Component {
         this.setState({isOpen});
     };
 
-    updateSelection = (val, id,rightPackage) => {
+    updateSelection = (val, id, rightPackage) => {
 
-        const rightsPackage = this.state.rightsPackage;
-        rightPackage.selectedRights[id] = val;
+        const rightsPackage = new Map(this.state.rightsPackage);
+        this.setRightPackageForUpdate(rightPackage.selectedRights, id, val);
         rightsPackage.set(rightPackage.id, rightPackage);
-
-        this.props.onUpdate(rightsPackage);
+        this.updateRightsPackage(rightsPackage);
 
     };
 
@@ -121,14 +125,13 @@ class PopupRight extends React.Component {
         const rightsPackage = this.state.rightsPackage;
         let index = rightPackage.selectedRights[id].indexOf(val);
         let all = RightItemsDefinitions[val].all;
-        let alls = RightItemsDefinitions
 
         if ( index === -1 ){
 
             if ( all ){
-                rightPackage.selectedRights[id] = [val];
+                this.setRightPackageForUpdate(rightPackage.selectedRights, id, [val]);
             } else {
-                rightPackage.selectedRights[id] = [...rightPackage.selectedRights[id], val];
+                this.setRightPackageForUpdate(rightPackage.selectedRights, id, [...rightPackage.selectedRights[id], val]);
 
                 rightPackage.selectedRights[id].forEach(function(item, index, object) {
                     let m = item.match(/_ALL/g);
@@ -145,7 +148,7 @@ class PopupRight extends React.Component {
 
         rightsPackage.set(rightPackage.id, rightPackage);
 
-        this.props.onUpdate(rightsPackage);
+        this.updateRightsPackage(rightsPackage);
 
     };
 
@@ -153,9 +156,9 @@ class PopupRight extends React.Component {
 
         const rightsPackage = this.state.rightsPackage;
         rightsPackage.forEach((rightPackage )=>{
-            rightPackage.selectedRights[id] = val;
+            this.setRightPackageForUpdate(rightPackage.selectedRights, id, val);
         });
-        this.props.onUpdate(rightsPackage);
+        this.updateRightsPackage(rightsPackage);
 
     };
 
@@ -432,7 +435,7 @@ class PopupRight extends React.Component {
             <div className={"buttons"}>
                 {this.showOkButton() && <button
                     className={"standard-button"}
-                    onClick={this.togglePopup}>Ok</button>}
+                    onClick={this.onOKClicked}>Ok</button>}
                 {!this.showOkButton() && <button
                     className={"standard-button"}
                     disabled>Ok</button>}
@@ -557,6 +560,24 @@ class PopupRight extends React.Component {
             </div>
         )
     }
+
+    updateRightsPackage(rightsPackage) {
+        this.setState({
+            rightsPackage
+        });
+    }
+
+    setRightPackageForUpdate(selectedRights, id, value) {
+        this.selectedRightsTemp = {...selectedRights, [id]: value};
+        this.selectedRightsForUpdate = selectedRights;
+    }
+
+    onOKClicked = () => {
+        Object.assign(this.selectedRightsForUpdate, this.selectedRightsTemp);
+        
+        this.togglePopup();
+        this.props.onUpdate(this.state.rightsPackage)
+    };
 }
 
 

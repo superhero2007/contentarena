@@ -813,30 +813,41 @@
 
             {# PAYMENT #}
             <div class="license-item">
-                {% if bid is defined %}
-                    {% if bid.salesPackage.installments | length == 1 %}
+                {% if bundle is defined %}
+                    {% if bundle.installments | length == 1 %}
                         <label>Payment Due:</label>
-                        {% if bid.salesPackage.installments[0].type == "DATE" %}
-                            {{ bid.salesPackage.installments[0].date | date(("m/d/Y"))  }}
-                        {% elseif bid.salesPackage.installments[0].type == "DAY" and bid.status != "APPROVED" %}
-                            {{ bid.salesPackage.installments[0].days }} after deal closed
-                        {% elseif bid.salesPackage.installments[0].type == "DAY" and bid.status == "APPROVED" %}
-                            {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
+                        {% if bundle.installments[0].type == "DATE" %}
+                            {{ bundle.installments[0].date | date(("m/d/Y"))  }}
+                        {% elseif bundle.installments[0].type == "DAY" %}
+                            {% if bid is defined %}
+                                {% if bid.status != "APPROVED" %}
+                                    {{ bundle.installments[0].days }} days after conclusion
+                                {% elseif bid.status == "APPROVED" %}
+                                    {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
+                                {% endif %}
+                            {% else %}
+                                {{ bundle.installments[0].days }} days after conclusion
+                            {% endif %}
                         {% endif %}
-
                     {% endif %}
 
-                    {% if bid.salesPackage.installments | length > 1 %}
+                    {% if bundle.installments | length > 1 %}
                         <div class="license-item-column">
-                            {% for installment in bid.salesPackage.installments %}
+                            {% for installment in bundle.installments %}
                                 <div class="license-item-content">
                                     <label>{{ loop.index }} installment:</label>
                                     {% if installment.type == "DATE" %}
                                         {{ installment.date | date(("m/d/Y"))  }}
-                                    {% elseif installment.type == "DAY" and bid.status != "APPROVED" %}
-                                        {{ installment.days }} after deal closed
-                                    {% elseif installment.type == "DAY" and bid.status == "APPROVED" %}
-                                        {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
+                                    {% elseif installment.type == "DAY" %}
+                                        {% if bid is defined %}
+                                            {% if bid.status != "APPROVED" %}
+                                                {{ installment.days }} days after conclusion
+                                            {% elseif bid.status == "APPROVED" %}
+                                                {{ bid.createdAt|date_modify("+#{installment.days} day")| date("m/d/Y") }}
+                                            {% endif %}
+                                        {% else %}
+                                            {{ installment.days }} days after conclusion
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             {% endfor %}

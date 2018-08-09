@@ -64,7 +64,12 @@ class ContentController extends Controller
     {
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
-        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+        return new JsonResponse(array(
+            "success"=>true,
+            "contentId"=> $content->getId(),
+            "customId" => $content->getCustomId(),
+            "salesPackages" => $content->getSalesPackages()
+        ));
     }
 
     /**

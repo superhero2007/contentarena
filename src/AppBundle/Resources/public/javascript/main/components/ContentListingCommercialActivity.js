@@ -12,7 +12,7 @@ class ContentListingCommercialActivity extends ContentListing {
         super(props);
 
         this.state = {
-            showSalesPackage : props.bundlesOpen || false
+            showSalesPackage : props.bundlesOpen
         };
         this.noImage = assetsBaseDir + "app/images/no-image.png";
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";

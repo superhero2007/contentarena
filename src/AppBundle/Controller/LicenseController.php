@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\RightsPackage;
 use AppBundle\Entity\SalesPackage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\GeneratorBundle\Model\Bundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
@@ -118,6 +120,44 @@ class LicenseController extends Controller
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
+            'bundle' => $bundle,
+            'content' => $content,
+            'rightDefinitions' => $rightDefinitions,
+            'exclusiveRights' => $exclusiveRights,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+        //return $this->render('contract/layout.html.twig', $viewElements);
+
+        $html = $this->renderView('contract/layout.html.twig', $viewElements);
+        return new PdfResponse(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
+        );
+    }
+
+    /**
+     * @Route("/license/custom/{customId}", name="customLicense")
+     */
+    public function customLicense(Request $request, ContentService $contentService){
+        /* @var SalesPackage $bundle  */
+        $user = $this->getUser();
+        $time = new \DateTime();
+
+        $content = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->findOneBy(['customId' => $request->get("customId")]);
+        $rightDefinitions = $this->getRightDefinitions($content);
+        $exclusiveRights = $this->getExclusiveRights($content);
+
+        $bid = new Bid();
+        //$bundle = new SalesPackage();
+
+        $bundle = $request->query->get("bundle");
+
+
+        $viewElements = array(
+            'user' => $user,
+            //'bid' => $bid,
             'bundle' => $bundle,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
