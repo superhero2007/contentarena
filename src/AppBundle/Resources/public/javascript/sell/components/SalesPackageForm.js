@@ -374,9 +374,9 @@ class SalesPackageForm extends React.Component {
                         <div style={{marginTop: '10px', padding: "0 15px"}}>
                             <CountrySelector
                                 className={"small-select"}
-                                value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
                                 onChange={this.selectTerritories}
-                                filter={isFilterEnabled && this.getFilterTerritories()}
+                                value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
+                                filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 multi={isMultipleEnabled}
                             />
                             <div>
