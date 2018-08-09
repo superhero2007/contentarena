@@ -123,8 +123,6 @@ class SellFormStep4 extends React.Component {
 
                     <JurisdictionSelector />
 
-                    <ApplicableLawSelector />
-
                     <TitleBar title={"Listing details"}/>
 
                     <div className="step-item-description" style={{marginTop: 0}} >
