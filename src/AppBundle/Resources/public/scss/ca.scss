@@ -681,6 +681,27 @@ a:hover {
     }
     .base-full-input {
       margin-bottom: 20px;
+      max-width: 1163px;
+      flex-direction: row;
+      label {
+        max-width: 851px;
+      }
+      .column {
+        background: #F4F6F9;
+        height: 35px;
+        width: 153px;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 5px 20px 5px 10px;
+        display: flex;
+        align-items: center;
+        margin-left: 3px;
+        input[type="radio"].ca-radio {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+        }
+      }
     }
     .custom-selector {
       border-bottom: none;
@@ -689,8 +710,10 @@ a:hover {
       .base-full-input {
         max-width: inherit;
         margin-bottom: inherit;
+        flex-direction: column;
         label {
           display: inline-block;
+          max-width: inherit;
           .label-text {
             float: left;
             display: flex;
