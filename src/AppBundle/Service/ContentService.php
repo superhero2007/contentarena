@@ -452,6 +452,7 @@ class ContentService
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
         if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
+        if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
 
         if ( isset($data->signature) && $data->signature != "" ) {
             $signature = $data->signature;
