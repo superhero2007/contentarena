@@ -17,15 +17,17 @@ class CurrencySelector extends React.Component {
         return (
             <div className='select-currency'>
                 <div className='select-text'>Currency</div>
-                <div className='current'>{selected}</div>
-                <div className='dropdown'>
-                    {CURRENCIES.filter(currency => currency !== selected).map((currency) => {
-                        return (
-                            <div className={cn('currency-item')} onClick={() => onClick(currency)}>
-                                {currency}
-                            </div>
-                        );
-                    })}
+                <div className='currency-selector'>
+                    <div className='current'>{selected}</div>
+                    <div className='dropdown'>
+                        {CURRENCIES.filter(currency => currency !== selected).map((currency) => {
+                            return (
+                                <div className={cn('currency-item')} onClick={() => onClick(currency)}>
+                                    {currency}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );

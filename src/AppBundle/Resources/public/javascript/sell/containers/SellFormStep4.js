@@ -124,6 +124,24 @@ class SellFormStep4 extends React.Component {
 
                     <JurisdictionSelector />
 
+                    <div className='base-full-input'>
+                        <label>do you seek to apply VAT to buyers in company’s palce of jurisdiction?</label>
+                    </div>
+
+                    <FileSelector
+                        label={'Annex'}
+                        target={"attachments"}
+                        selected={this.props.attachments}
+                        onSelect={()=>{console.log('add file')}}
+                        onRemove={this.removeFile}
+                        accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"] }
+                        acceptType={[
+                            "image/jpeg",
+                            "image/png",
+                            "application/pdf"
+                        ]}
+                        tmp={true}/>
+
                     <TitleBar title={"Listing details"}/>
 
                     <div className="step-item-description" style={{marginTop: 0}} >

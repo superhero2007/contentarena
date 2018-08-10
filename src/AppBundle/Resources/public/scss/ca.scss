@@ -679,6 +679,12 @@ a:hover {
         }
       }
     }
+    .base-full-input {
+      margin-bottom: 20px;
+    }
+    .custom-selector {
+      border-bottom: none;
+    }
     .sales-package-form {
       .base-full-input {
         max-width: inherit;
@@ -699,24 +705,30 @@ a:hover {
               padding: 2px 15px 0 0;
               border-right: 1px solid #FFFFFF;
             }
-            .dropdown {
-              .currency-item {
-                padding: 8px 30px;
-                background: none;
-                color: #fff;
-                margin: inherit;
+            .currency-selector {
+              .current {
+                padding: 7px 30px;
+                width: 100px;
+                text-align: center;
               }
-              .hidden {
+              .dropdown {
+                right: 0;
+                position: absolute;
+                top: 35px;
                 display: none;
-                background: #FFFFFF;
-                border: 1px solid #DADADA;
-                color: #000;
-                padding: 8px 28px;
-              }
-              &:hover {
-                .hidden {
-                  display: block;
+                width: 100px;
+                .currency-item {
+                  padding: 7px 30px;
+                  background: none;
+                  color: #000;
+                  background: #FFFFFF;
+                  border: 1px solid #DADADA;
+                  margin: inherit;
+                  font-size: 16px;
                 }
+              }
+              &:hover > .dropdown {
+                display: block;
               }
             }
           }
