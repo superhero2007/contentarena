@@ -126,6 +126,14 @@ class SellFormStep4 extends React.Component {
 
                     <div className='base-full-input'>
                         <label>do you seek to apply VAT to buyers in company’s palce of jurisdiction?</label>
+                        <input type="radio"
+                               className="ca-radio package-selector"
+                        />
+                        YES
+                        <input type="radio"
+                               className="ca-radio package-selector"
+                        />
+                        NO
                     </div>
 
                     <FileSelector

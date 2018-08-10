@@ -688,6 +688,7 @@ a:hover {
     .sales-package-form {
       .base-full-input {
         max-width: inherit;
+        margin-bottom: inherit;
         label {
           display: inline-block;
           .label-text {
@@ -765,6 +766,9 @@ a:hover {
             max-width: 125px;
           }
         }
+      }
+      .custom-selector {
+        border-bottom: 4px solid #D4D8DE;
       }
     }
   }
