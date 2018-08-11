@@ -135,9 +135,10 @@ class SalesPackageForm extends React.Component {
         const { bundleMethod, territoriesMethod, fee, salesMethod, installments } = this.state;
         const {exclusivity} = this.props;
 
+        const territoriesAsArray = Array.isArray(this.state.territories) ? this.state.territories : [this.state.territories];
         let salesPackagesList = [], name= "";
-        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
-        let territories = this.state.territories;
+        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : territoriesAsArray;
+        let territories = territoriesAsArray;
         let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
         let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
 
@@ -611,7 +612,7 @@ class SalesPackageForm extends React.Component {
                                         style={{flex : 1, display: 'flex', justifyContent: 'center'}} />}
 
 
-                                    {salesPackage.bundleMethod === "SELL_AS_BUNDLE" &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
+                                    {salesPackage.territories.length !== 1 &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
                                         <img style={{    marginTop: '2px',width: 26, height: 23}} src={this.fixedIcon}/>
                                     </div>}
 
