@@ -4,7 +4,7 @@ import store from '../store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
-import {editedProgramSelected, goTo, parseSeasons} from "../../main/actions/utils";
+import {editedProgramSelected, historyGoTo, parseSeasons} from "../../main/actions/utils";
 
 class SellButtons extends React.Component {
     constructor(props) {
@@ -182,8 +182,9 @@ class SellButtons extends React.Component {
                     updateContentValue("customId", response.customId);
                 }
                 this.setState({ saving : false });
-                //this.props.goToNextStep();
-                goTo("managelistings/edit/"+response.customId+"/5");
+                historyGoTo("managelistings/edit/"+response.customId+"/5");
+                this.props.goToNextStep();
+                // goTo("managelistings/edit/"+response.customId+"/5");
             });
         } else {
             ContentArena.ContentApi.saveContentAsDraft(content).done((response)=>{
@@ -192,7 +193,9 @@ class SellButtons extends React.Component {
                 }
 
                 this.setState({ saving : false, savingSuccess: true });
-                goTo("managelistings/edit/"+response.customId+"/5");
+                historyGoTo("managelistings/edit/"+response.customId+"/5");
+                this.props.goToNextStep();
+                // goTo("managelistings/edit/"+response.customId+"/5");
             })
         }
     };

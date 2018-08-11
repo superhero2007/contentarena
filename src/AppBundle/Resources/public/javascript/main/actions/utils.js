@@ -11,6 +11,10 @@ export const goTo = (route, openNew) => {
     }
 };
 
+export const historyGoTo = (route) => {
+    window.history.pushState(null, null, envhosturl+route);
+};
+
 export const goToListing = (id, openNew) => {
     goTo("listing/"+ id, openNew)
 };
