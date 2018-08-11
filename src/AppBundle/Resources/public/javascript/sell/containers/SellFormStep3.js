@@ -221,15 +221,15 @@ class SellFormStep3 extends React.Component {
                             <div className="row">
                                 <div className="column right-name">Start</div>
                                 <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
-                                    { !this.props.startDate  && " contract conclusion"}
+                                    { !this.props.startDate  && "contract conclusion"}
                                     { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
                                 </div>
                                 <div className="column right-name">End</div>
                                 <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
                                     { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
                                     { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
-                                    { endDateMode === "UNLIMITED"  && ""}
-                                    { !endDateMode && ""}
+                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
+                                    { !endDateMode && "Please select"}
                                     <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
                                         <i className="fa fa-edit"/>
                                     </div>

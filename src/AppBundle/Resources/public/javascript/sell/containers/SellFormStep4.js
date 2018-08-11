@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import CurrencySelector from "../components/CurrencySelector";
 import FileSelector from '../../main/components/FileSelector';
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
@@ -31,6 +30,10 @@ class SellFormStep4 extends React.Component {
 
     selectVat = ( vat ) => {
         this.props.updateContentValue("vat", vat);
+    };
+
+    setApplyVatInJurisdiction = (e) => {
+        this.props.updateContentValue("applyVatInJurisdiction", e.target.value === 'yes');
     };
 
     updateName = ( e ) => {
@@ -86,17 +89,15 @@ class SellFormStep4 extends React.Component {
         const {
             step,
             rightsPackage,
-            salesPackages, currency, vat, updateContentValue, image, vatPercentage} = this.props;
+            salesPackages, currency, vat, updateContentValue, image, vatPercentage, applyVatInJurisdiction
+        } = this.props;
 
-        if ( step !== 4) return (null);
+        if (step !== 4) return (null);
         this.scroll();
         return (
 
-            <div className="step-content">
+            <div className="step-content step-4">
                 <div className="step-content-container">
-
-                    <CurrencySelector onClick={this.selectCurrency} selected={currency} />
-
                     <SalesPackageForm
                         currency={currency}
                         exclusivity={this.exclusivity()}
@@ -105,13 +106,15 @@ class SellFormStep4 extends React.Component {
                         onUpdate={this.updateSalesPackage}
                         onRemove={this.removeSalesPackage}
                         onEdit={this.editSalesPackage}
-                        onRemoveAll={this.removeAllSalesPackage}/>
+                        onRemoveAll={this.removeAllSalesPackage}
+                        selectCurrency={this.selectCurrency}
+                    />
 
                     {this.state.editOpen && <SalesPackageEdit
                         isOpen={this.state.editOpen}
-                        onClose={()=>{
+                        onClose={() => {
                             this.setState({
-                                editOpen : false
+                                editOpen: false
                             })
                         }}
                         exclusivity={this.exclusivity()}
@@ -122,28 +125,73 @@ class SellFormStep4 extends React.Component {
 
                     <TitleBar title={"Further information"}/>
 
-                    <CompanyInformation />
+                    <CompanyInformation/>
 
-                    <JurisdictionSelector />
+                    <JurisdictionSelector/>
 
-                    <ApplicableLawSelector />
+                    <div className='base-full-input'>
+                        <label>do you seek to apply VAT to buyers in company’s palce of jurisdiction?</label>
+                        <div className='column'>
+                            <input
+                                checked={applyVatInJurisdiction}
+                                onChange={this.setApplyVatInJurisdiction}
+                                type="radio"
+                                className="ca-radio package-selector"
+                                value='yes'
+                            />
+                            YES
+                        </div>
+                        <div className='column'>
+                            <input
+                                checked={!applyVatInJurisdiction}
+                                onChange={this.setApplyVatInJurisdiction}
+                                type="radio"
+                                className="ca-radio package-selector"
+                                value='no'
+                            />
+                            NO
+                        </div>
+                    </div>
+
+                    <FileSelector
+                        label={'Annex'}
+                        target={"attachments"}
+                        selected={[]}
+                        onSelect={() => {
+                            console.log('remove file')
+                        }}
+                        onRemove={() => {
+                            console.log('remove file')
+                        }}
+                        accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"]}
+                        acceptType={[
+                            "image/jpeg",
+                            "image/png",
+                            "application/pdf"
+                        ]}
+                        tmp={true}/>
 
                     <TitleBar title={"Listing details"}/>
 
-                    <div className="step-item-description" style={{marginTop: 0}} >
-                        Please define listing details below. This determines how your listing is shown to potential buyers.
+                    <div className="step-item-description" style={{marginTop: 0}}>
+                        Please define listing details below. This determines how your listing is shown to potential
+                        buyers.
                     </div>
 
                     <ListingName/>
 
-                    <FileSelector
-                        label={"Listing image (opt.)"}
-                        isImage={true}
-                        onSelect={updateContentValue}
-                        previousImage={image}
-                        target={"imageBase64"}/>
+                    <div className='row'>
+                        <ExpirationDateSelector/>
 
-                    <ExpirationDateSelector/>
+                        <FileSelector
+                            label={"Listing image (opt.)"}
+                            isImage={true}
+                            onSelect={updateContentValue}
+                            previousImage={image}
+                            target={"imageBase64"}/>
+
+                        <div className='clearfix'/>
+                    </div>
 
                 </div>
             </div>

@@ -95,7 +95,7 @@ class FileSelector extends Component {
         const {image, uploading} = this.state;
 
         return (
-            <div className="base-input" style={{flexDirection: 'column'}}>
+            <div className="base-input custom-selector" style={{flexDirection: 'column'}}>
                 <div style={{display: 'flex'}}>
                     <label>{(label)?label:"Files"}</label>
                     <button

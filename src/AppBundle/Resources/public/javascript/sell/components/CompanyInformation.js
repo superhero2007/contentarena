@@ -58,7 +58,7 @@ class CompanyInformation extends React.Component {
                 <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
             </div>
 
-            <div className="step-content">
+            <div className="step-content custom">
                 <div className="step-content-container">
 
                     <div className="base-full-input">
@@ -164,6 +164,7 @@ class CompanyInformation extends React.Component {
                     value={company.legalName + ", " + company.address}
                     onClick={()=>{this.setState({isOpen:true})}}
                     placeholder=""/>
+                <i className="fa fa-edit" onClick={()=>{this.setState({isOpen:true})}}/>
             </div>
         )
     }

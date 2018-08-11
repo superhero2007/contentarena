@@ -225,6 +225,14 @@ class Content
     private $jurisdiction;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="apply_vat_in_jurisdiction", type="boolean")
+     * @Groups({"listing"})
+     *
+     */
+    private $applyVatInJurisdiction = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"listing", "closed", "commercial"})
@@ -386,6 +394,22 @@ class Content
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApplyVatInJurisdiction()
+    {
+        return $this->applyVatInJurisdiction;
+    }
+
+    /**
+     * @param bool $applyVatInJurisdiction
+     */
+    public function setApplyVatInJurisdiction($applyVatInJurisdiction)
+    {
+        $this->applyVatInJurisdiction = $applyVatInJurisdiction;
     }
 
     /**

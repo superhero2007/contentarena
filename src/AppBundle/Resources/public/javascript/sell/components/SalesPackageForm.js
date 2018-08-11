@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
+import CurrencySelector from "../components/CurrencySelector";
 import DatePicker from 'react-datepicker';
 import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
@@ -134,9 +135,10 @@ class SalesPackageForm extends React.Component {
         const { bundleMethod, territoriesMethod, fee, salesMethod, installments } = this.state;
         const {exclusivity} = this.props;
 
+        const territoriesAsArray = Array.isArray(this.state.territories) ? this.state.territories : [this.state.territories];
         let salesPackagesList = [], name= "";
-        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
-        let territories = this.state.territories;
+        let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : territoriesAsArray;
+        let territories = territoriesAsArray;
         let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
         let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
 
@@ -563,7 +565,7 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { onRemove, hideButtons, currency, fullSize, sort, listingId } = this.props;
+        const { onRemove, hideButtons, currency, fullSize, sort, listingId, selectCurrency } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
 
@@ -574,7 +576,13 @@ class SalesPackageForm extends React.Component {
                 { this.renderModal() }
                 { this.allTerritories() }
                 <div className="base-full-input" style={inputStyle}>
-                    <label>Sales bundles</label>
+                    <label>
+                        <div className='label-text'>
+                            Sales bundles
+                        </div>
+                        <CurrencySelector onClick={selectCurrency} selected={currency} />
+                        <div className='clearfix'/>
+                    </label>
                     <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
                         { salesPackages.map( (salesPackage, i) => {
 
@@ -604,7 +612,7 @@ class SalesPackageForm extends React.Component {
                                         style={{flex : 1, display: 'flex', justifyContent: 'center'}} />}
 
 
-                                    {salesPackage.bundleMethod === "SELL_AS_BUNDLE" &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
+                                    {salesPackage.territories.length !== 1 &&<div style={{ marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
                                         <img style={{    marginTop: '2px',width: 26, height: 23}} src={this.fixedIcon}/>
                                     </div>}
 
@@ -619,10 +627,10 @@ class SalesPackageForm extends React.Component {
                                         </div>
                                     }
                                 </div>
-                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px'}}
+                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0'}}
                                      src={this.cancelIcon}
                                      onClick={() => { onRemove(i) }}/>}
-                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px', color: 'grey'}}
+                                {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0', color: 'grey'}}
                                      src={this.draftIcon}
                                      onClick={() => { this.editSalesPackage(salesPackage, i) }}/>}
 
@@ -632,11 +640,11 @@ class SalesPackageForm extends React.Component {
                     </div>
                 </div>
 
-                {!hideButtons && <div style={{display : "flex"}}>
+                {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
                     {this.addBundlesAvailable() && <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
                         <i className="fa fa-plus-circle"/> Add sales bundle
                     </div>}
-                    {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll} style={{marginLeft: 20}}>
+                    {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll}>
                         <i className="fa fa-minus-circle"/> Remove all
                     </div>}
                 </div>}

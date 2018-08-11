@@ -658,6 +658,145 @@ a:hover {
   }
 }
 
+.step-4 {
+  .step-content-container {
+    .base-input {
+      input {
+        font-weight: bold;
+        font-size: 15px;
+        color: #333;
+      }
+      .Select {
+        margin-left: 5px;
+        .Select-control {
+          height: 35px;
+          .Select-value {
+            line-height: 34px !important;
+          }
+          .Select-input {
+            height: 33.5px;
+          }
+        }
+      }
+    }
+    .base-full-input {
+      margin-bottom: 20px;
+      max-width: 1163px;
+      flex-direction: row;
+      label {
+        max-width: 851px;
+      }
+      .column {
+        background: #F4F6F9;
+        height: 35px;
+        width: 153px;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 5px 20px 5px 10px;
+        display: flex;
+        align-items: center;
+        margin-left: 3px;
+        input[type="radio"].ca-radio {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+        }
+      }
+    }
+    .custom-selector {
+      border-bottom: none;
+    }
+    .sales-package-form {
+      .base-full-input {
+        max-width: inherit;
+        margin-bottom: inherit;
+        flex-direction: column;
+        label {
+          display: inline-block;
+          max-width: inherit;
+          .label-text {
+            float: left;
+            display: flex;
+            align-items: center;
+            height: 35px;
+          }
+          .select-currency {
+            float: right;
+            display: flex;
+            align-items: baseline;
+            margin-right: -20px;
+            .select-text {
+              padding: 2px 15px 0 0;
+              border-right: 1px solid #FFFFFF;
+            }
+            .currency-selector {
+              .current {
+                padding: 7px 30px;
+                width: 100px;
+                text-align: center;
+              }
+              .dropdown {
+                right: 0;
+                position: absolute;
+                top: 35px;
+                display: none;
+                width: 100px;
+                .currency-item {
+                  padding: 7px 30px;
+                  background: none;
+                  color: #000;
+                  background: #FFFFFF;
+                  border: 1px solid #DADADA;
+                  margin: inherit;
+                  font-size: 16px;
+                }
+              }
+              &:hover > .dropdown {
+                display: block;
+              }
+            }
+          }
+        }
+      }
+      .add-item {
+        margin-bottom: 0;
+        &:last-child {
+          margin-left: 10px;
+        }
+      }
+    }
+    .title-bar {
+      background: none;
+      color: #4F4F4F;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      hr {
+        display: none;
+      }
+    }
+    .row {
+      max-width: 872px;
+      .base-input {
+        float: left;
+        max-width: 435px;
+        &:nth-child(2) {
+          margin-left: 31px;
+        }
+        .react-datepicker-wrapper {
+          input {
+            border: 1px solid #CDCDCD;
+            max-width: 125px;
+          }
+        }
+      }
+      .custom-selector {
+        border-bottom: 4px solid #D4D8DE;
+      }
+    }
+  }
+}
+
 .schedule {
   font-size: 14px;
   z-index: 100;
@@ -807,7 +946,7 @@ a:hover {
     display: inline-block;
     line-height: 14px;
     position: relative;
-    width: 20%;
+    width: 25%;
 
     &.visited {
       cursor: pointer;
@@ -832,6 +971,13 @@ a:hover {
       top: 17px;
       border: 2px solid rgba(119, 174, 202, 0.34);
       background-color: #296380;
+      .fa {
+        display: none;
+        text-align: center;
+        margin-top: 3px;
+        font-size: 11px;
+        color: #FFCD34;
+      }
     }
   }
   .step-active {
@@ -847,6 +993,24 @@ a:hover {
       top: 19px;
       border: 2px solid rgba(126, 95, 24, 0.34);
       background-color: #DFAB30;
+      .fa {
+        color: #FFFFFF;
+        margin-top: 5px;
+      }
+      .fa-ellipsis-h {
+        display: block;
+        margin-top: 6px;
+      }
+    }
+  }
+  .finished {
+    .step-icon {
+      .fa {
+        display: block;
+      }
+      .fa-ellipsis-h {
+        display: none;
+      }
     }
   }
 }
@@ -868,6 +1032,11 @@ a:hover {
           float: right;
           max-width: 300px;
           margin-top: -5px;
+        }
+      }
+      .base-full-input {
+        input {
+          width: inherit !important;
         }
       }
     }
