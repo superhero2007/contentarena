@@ -32,6 +32,10 @@ class SellFormStep4 extends React.Component {
         this.props.updateContentValue("vat", vat);
     };
 
+    setApplyVatInJurisdiction = (e) => {
+        this.props.updateContentValue("applyVatInJurisdiction", e.target.value === 'yes');
+    };
+
     updateName = ( e ) => {
         this.props.updateContentValue("name", e.target.value);
     };
@@ -85,9 +89,11 @@ class SellFormStep4 extends React.Component {
         const {
             step,
             rightsPackage,
-            salesPackages, currency, vat, updateContentValue, image, vatPercentage} = this.props;
+            salesPackages, currency, vat, updateContentValue, image, vatPercentage, applyVatInJurisdiction
+        } = this.props;
+        console.log(this.props);
 
-        if ( step !== 4) return (null);
+        if (step !== 4) return (null);
         this.scroll();
         return (
 
@@ -107,9 +113,9 @@ class SellFormStep4 extends React.Component {
 
                     {this.state.editOpen && <SalesPackageEdit
                         isOpen={this.state.editOpen}
-                        onClose={()=>{
+                        onClose={() => {
                             this.setState({
-                                editOpen : false
+                                editOpen: false
                             })
                         }}
                         exclusivity={this.exclusivity()}
@@ -120,21 +126,29 @@ class SellFormStep4 extends React.Component {
 
                     <TitleBar title={"Further information"}/>
 
-                    <CompanyInformation />
+                    <CompanyInformation/>
 
-                    <JurisdictionSelector />
+                    <JurisdictionSelector/>
 
                     <div className='base-full-input'>
                         <label>do you seek to apply VAT to buyers in company’s palce of jurisdiction?</label>
                         <div className='column'>
-                            <input type="radio"
-                                   className="ca-radio package-selector"
+                            <input
+                                checked={applyVatInJurisdiction}
+                                onChange={this.setApplyVatInJurisdiction}
+                                type="radio"
+                                className="ca-radio package-selector"
+                                value='yes'
                             />
                             YES
                         </div>
                         <div className='column'>
-                            <input type="radio"
-                                   className="ca-radio package-selector"
+                            <input
+                                checked={!applyVatInJurisdiction}
+                                onChange={this.setApplyVatInJurisdiction}
+                                type="radio"
+                                className="ca-radio package-selector"
+                                value='no'
                             />
                             NO
                         </div>
@@ -143,10 +157,14 @@ class SellFormStep4 extends React.Component {
                     <FileSelector
                         label={'Annex'}
                         target={"attachments"}
-                        selected={this.props.attachments}
-                        onSelect={()=>{console.log('add file')}}
-                        onRemove={this.removeFile}
-                        accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"] }
+                        selected={[]}
+                        onSelect={() => {
+                            console.log('remove file')
+                        }}
+                        onRemove={() => {
+                            console.log('remove file')
+                        }}
+                        accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"]}
                         acceptType={[
                             "image/jpeg",
                             "image/png",
@@ -156,8 +174,9 @@ class SellFormStep4 extends React.Component {
 
                     <TitleBar title={"Listing details"}/>
 
-                    <div className="step-item-description" style={{marginTop: 0}} >
-                        Please define listing details below. This determines how your listing is shown to potential buyers.
+                    <div className="step-item-description" style={{marginTop: 0}}>
+                        Please define listing details below. This determines how your listing is shown to potential
+                        buyers.
                     </div>
 
                     <ListingName/>
@@ -172,7 +191,7 @@ class SellFormStep4 extends React.Component {
                             previousImage={image}
                             target={"imageBase64"}/>
 
-                        <div className='clearfix' />
+                        <div className='clearfix'/>
                     </div>
 
                 </div>
