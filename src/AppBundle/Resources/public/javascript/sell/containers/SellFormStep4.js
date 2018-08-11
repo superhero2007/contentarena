@@ -91,7 +91,6 @@ class SellFormStep4 extends React.Component {
             rightsPackage,
             salesPackages, currency, vat, updateContentValue, image, vatPercentage, applyVatInJurisdiction
         } = this.props;
-        console.log(this.props);
 
         if (step !== 4) return (null);
         this.scroll();
