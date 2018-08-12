@@ -32,7 +32,10 @@ class AppExtension extends AbstractExtension
             new TwigFilter('kebab', array($this, 'kebabFilter')),
             new TwigFilter('json_decode', array($this, 'jsonDecode')),
             new TwigFilter('right_definitions_label', array($this, 'rightDefinitionsLabel')),
-            new TwigFilter('cast_to_array', array($this, 'castToArray'))
+            new TwigFilter('cast_to_array', array($this, 'castToArray')),
+            new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel'))
+
+
         );
     }
 
@@ -60,6 +63,18 @@ class AppExtension extends AbstractExtension
         });
 
         return $item;
+    }
+
+    public function contentDeliveryLabel($shortTag){
+        switch ($shortTag){
+            case "LT" : return "Live Transmission";
+            case "DT" : return "Delayed & Archive Footage";
+            case "LB" : return "Live Betting Transmission";
+            case "HL" : return "Highlights & Clips";
+            case "NA" : return "News Footage";
+            case "PR" : return "Edited Program";
+        }
+        return "";
     }
 
     public function rightItemFilter($content, $id)

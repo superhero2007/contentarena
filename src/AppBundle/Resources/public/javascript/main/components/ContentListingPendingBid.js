@@ -43,7 +43,7 @@ class ContentListingPendingBid extends ContentListing {
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
         return (
-            <div className="listing-list-view" onClick={this.onSelect} style={{padding: 0}}>
+            <div className="listing-list-view" style={{padding: 0}}>
                 <SendMessage ref={"messagePopup" + id }
                              listingId={id}
                              recipient={company}/>
@@ -55,7 +55,7 @@ class ContentListingPendingBid extends ContentListing {
                 <div className={"right"}  style={{padding:'25px 0'}}>
 
                     {/*NAME*/}
-                    <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
+                    <div className={"name"} onClick={this.onSelect}>
                         {name}
                     </div>
                     <div style={{display: 'flex', alignItems:'center'}}>

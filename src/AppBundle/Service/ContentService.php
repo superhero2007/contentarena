@@ -454,7 +454,7 @@ class ContentService
         if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
 
-        if ( isset($data->signature) && $data->signature != "" ) {
+        if ( isset($data->signature) && $data->signature != "" && substr_count($data->signature, "uploads") == 0 ) {
             $signature = $data->signature;
             $fileName = "signature_".md5(uniqid()).'.jpg';
             $savedSignature = $this->fileUploader->saveImage($signature, $fileName );

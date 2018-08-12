@@ -69,7 +69,7 @@
                     <label>
                         Effective Date:
                     </label>
-                    {% if bid is defined and bid.status == "APPROVED" %}
+                    {% if bid is defined and bid.status.name == "APPROVED" %}
                         {{ bid.updatedAt|date("m/d/Y") }}
                     {% else %}
                         -
@@ -584,35 +584,42 @@
                     <tr>
                         <td>Content Delivery</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
-                                {{ right.name }}
+                                {{ right.shortLabel | content_delivery_label }}
                             </td>
+                            {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Graphics</td>
                         {% for right in content.rightsPackage %}
-                            <td>
-                            {% if right.shortLabel == "PR" %}
-                                -
-                            {% else %}
-                                {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
-                                    {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
-                                        {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
-                                            {{ language.label }}{% if not loop.last %},{% endif %}
-                                        {% endfor %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                                <td>
+                                    {% if right.shortLabel == "PR" %}
+                                        -
+                                    {% else %}
+                                        {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
+                                            {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
+                                                {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
+                                                    {{ language.label }}{% if not loop.last %},{% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% else %}
+                                            {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
+                                        {% endif %}
                                     {% endif %}
-                                {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
-                                {% endif %}
+                                </td>
                             {% endif %}
-                            </td>
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Commentary</td>
                         {% for right in content.rightsPackage %}
-
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel == "PR" %}
                                 -
@@ -628,11 +635,14 @@
                                     {% endif %}
                                 {% endif %}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Camera Standards</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel == "PR" %}
                                 -
@@ -644,22 +654,26 @@
                                     {% endif %}
                                 {% endif %}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Aspect Ratio</td>
                         {% for right in content.rightsPackage %}
-                            <td>
-                                {% if right.shortLabel == "PR" %}
-                                -
-                                {% else %}
-                                    {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
-                                        {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                                <td>
+                                    {% if right.shortLabel == "PR" %}
+                                    -
                                     {% else %}
-                                        {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                        {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
+                                            {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                                        {% else %}
+                                            {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
-                            </td>
+                                </td>
+                            {% endif %}
                         {% endfor %}
                     </tr>
 
@@ -667,6 +681,8 @@
                     <tr>
                         <td>Edited Program Language</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -676,13 +692,19 @@
                                             {{ language.label }}{% if not loop.last %},{% endif %}
                                         {% endfor %}
                                     {% endif %}
+                                    {% if content.extraData.PROGRAM_LANGUAGE | length == 0 %}
+                                        No
+                                    {% endif %}
                                 {% endif %}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Subtitles</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -691,14 +713,20 @@
                                         {% for language in content.extraData.PROGRAM_SUBTITLES %}
                                             {{ language.label }}{% if not loop.last %},{% endif %}
                                         {% endfor %}
+                                        {% if content.extraData.PROGRAM_SUBTITLES | length == 0 %}
+                                            No
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Script</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -707,9 +735,13 @@
                                         {% for language in content.extraData.PROGRAM_SCRIPT %}
                                             {{ language.label }}{% if not loop.last %},{% endif %}
                                         {% endfor %}
+                                        {% if content.extraData.PROGRAM_SCRIPT | length == 0 %}
+                                            No
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                     {% endif %}
@@ -717,17 +749,23 @@
                     <tr>
                         <td>Video Standards</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {{ content.selectedRightsBySuperRight[right.id].items["VIDEO_STANDARD"] | right_definitions_label}}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                     <tr>
                         <td>Technical delivery method</td>
                         {% for right in content.rightsPackage %}
+                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {{ content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] | right_definitions_label}}
                             </td>
+                        {% endif %}
                         {% endfor %}
                     </tr>
                 </table>
@@ -820,9 +858,9 @@
                             {{ bundle.installments[0].date | date(("m/d/Y"))  }}
                         {% elseif bundle.installments[0].type == "DAY" %}
                             {% if bid is defined %}
-                                {% if bid.status != "APPROVED" %}
+                                {% if bid.status.name != "APPROVED" %}
                                     {{ bundle.installments[0].days }} days after conclusion
-                                {% elseif bid.status == "APPROVED" %}
+                                {% elseif bid.status.name == "APPROVED" %}
                                     {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
                                 {% endif %}
                             {% else %}
@@ -840,9 +878,9 @@
                                         {{ installment.date | date(("m/d/Y"))  }}
                                     {% elseif installment.type == "DAY" %}
                                         {% if bid is defined %}
-                                            {% if bid.status != "APPROVED" %}
+                                            {% if bid.status.name != "APPROVED" %}
                                                 {{ installment.days }} days after conclusion
-                                            {% elseif bid.status == "APPROVED" %}
+                                            {% elseif bid.status.name == "APPROVED" %}
                                                 {{ bid.createdAt|date_modify("+#{installment.days} day")| date("m/d/Y") }}
                                             {% endif %}
                                         {% else %}

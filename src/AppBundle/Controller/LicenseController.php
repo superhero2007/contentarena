@@ -136,7 +136,7 @@ class LicenseController extends Controller
     }
 
     /**
-     * @Route("/license/custom/{customId}", name="customLicense")
+     * @Route("/license/custom/{customId}/{bundleId}", name="customLicense")
      */
     public function customLicense(Request $request, ContentService $contentService){
         /* @var SalesPackage $bundle  */
@@ -146,18 +146,24 @@ class LicenseController extends Controller
         $content = $this->getDoctrine()
             ->getRepository('AppBundle:Content')
             ->findOneBy(['customId' => $request->get("customId")]);
+        $bundle = $this->getDoctrine()
+            ->getRepository('AppBundle:SalesPackage')
+            ->findOneBy(['id' => $request->get("bundleId")]);
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
+        $bidStatus = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"PENDING"));
 
         $bid = new Bid();
-        //$bundle = new SalesPackage();
 
-        $bundle = $request->query->get("bundle");
-
+        $bid->setTotalFee($request->query->get("bid"));
+        $bid->setSalesPackage($bundle);
+        $bid->setBuyerUser($user);
+        $bid->setCreatedAt($time);
+        $bid->setStatus($bidStatus);
 
         $viewElements = array(
             'user' => $user,
-            //'bid' => $bid,
+            'bid' => $bid,
             'bundle' => $bundle,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,

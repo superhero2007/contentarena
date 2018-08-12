@@ -53,7 +53,7 @@ class CommercialActivity extends React.Component {
     filtered = () => {
         const { filter , selectedListings} = this.state;
 
-        let listings = [];
+        let listings = this.state.listings || [];
 
         if ( selectedListings.length > 0 ){
             listings = this.state.listings.filter(b => selectedListings.indexOf(b.id) !== -1);

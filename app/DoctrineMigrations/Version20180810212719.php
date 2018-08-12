@@ -19,8 +19,7 @@ class Version20180810212719 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1C8FAF108EA2F0ED ON rights_package (short_label)');
-        $this->addSql('ALTER TABLE country CHANGE territory_id territory_id INT NOT NULL');
-        $this->addSql('ALTER TABLE content ADD apply_vat_in_jurisdiction TINYINT(1) NOT NULL, DROP distribution_packages');
+        $this->addSql('ALTER TABLE content ADD apply_vat_in_jurisdiction TINYINT(1) NOT NULL');
     }
 
     /**
@@ -32,7 +31,6 @@ class Version20180810212719 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE content ADD distribution_packages LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci COMMENT \'(DC2Type:json_array)\', DROP apply_vat_in_jurisdiction');
-        $this->addSql('ALTER TABLE country CHANGE territory_id territory_id INT DEFAULT NULL');
         $this->addSql('DROP INDEX UNIQ_1C8FAF108EA2F0ED ON rights_package');
     }
 }

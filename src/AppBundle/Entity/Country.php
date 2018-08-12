@@ -46,7 +46,7 @@ class Country
     /**
      * @var integer
      *
-     * @ORM\Column(name="territory_id", type="integer")
+     * @ORM\Column(name="territory_id", type="integer", nullable=true)
      */
 
     private $territoryId;
