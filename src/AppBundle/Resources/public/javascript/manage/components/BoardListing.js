@@ -241,7 +241,7 @@ class BoardListing extends React.Component{
 
                 <div className={"expiry"}>
                     <div>{ salesPackages.length } sales bundle{ salesPackages.length > 1 && "s"}</div>
-                    <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
+                    <div>Expiry: {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
                 </div>
 
             </div>

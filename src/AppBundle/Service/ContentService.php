@@ -172,6 +172,7 @@ class ContentService
             $content->setFixturesBySeason($modelListing->getFixturesBySeason());
             $content->setSchedulesBySeason($modelListing->getSchedulesBySeason());
             $content->setDescription($modelListing->getDescription());
+            $content->setProgramDescription($modelListing->getProgramDescription());
             $content->setVat($modelListing->getVat());
             $content->setVatPercentage($modelListing->getVatPercentage());
             $content->setPrograms($modelListing->getPrograms());
