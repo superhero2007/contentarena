@@ -363,19 +363,21 @@ class SalesPackageForm extends React.Component {
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 multi={isMultipleEnabled}
                             />
-                            <div>
-                                <input type="checkbox"
-                                       className="ca-checkbox"
-                                       style={{width:'inherit', height: '20px'}}
-                                       defaultChecked={this.state.bundleMethod === this.asBundle}
-                                       onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
-                                />
-                                <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>Offer selected territories together as one territory package</span>
-                                <Tooltip
-                                    id="offer_info"
-                                    text="Test text"
-                                />
-                            </div>
+                            {territoriesQuantity === 'multiple' && (
+                                <div>
+                                    <input type="checkbox"
+                                           className="ca-checkbox"
+                                           style={{width:'inherit', height: '20px'}}
+                                           defaultChecked={this.state.bundleMethod === this.asBundle}
+                                           onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
+                                    />
+                                    <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>Offer selected territories together as one territory package</span>
+                                    <Tooltip
+                                        id="offer_info"
+                                        text="Test text"
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                     <div className="base-full-input">

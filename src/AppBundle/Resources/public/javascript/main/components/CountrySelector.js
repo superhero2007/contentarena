@@ -46,7 +46,7 @@ class CountrySelector extends React.Component {
                 name="form-field-name"
                 onChange={onChange}
                 disabled={disabled}
-                value={value}
+                value={value.length > 200 ? [] : value}
                 multi={multi}
                 options={this.getOptions()}
             />
