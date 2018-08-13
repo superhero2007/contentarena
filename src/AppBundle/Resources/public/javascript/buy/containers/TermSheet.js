@@ -140,18 +140,6 @@ class TermSheet extends React.Component {
                     { this.renderTextarea(RightDefinitions) }
                     { this.renderTextarea(ProductionStandardsDefinitions) }
 
-                    {
-                        selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
-                        <div className="term-sheet-full-item-box">
-                            <label>Technical Fee Details</label>
-                            <div  className="full-item-content">
-                                {
-                                    selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]
-                                }
-                            </div>
-                        </div>
-                    }
-
                 </div>
 
                 { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">
@@ -188,6 +176,18 @@ class TermSheet extends React.Component {
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles") }
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
                 </div>
+
+                {
+                    selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
+                    <div className="term-sheet-full-item-box">
+                        <label>Technical Fee Details</label>
+                        <div  className="full-item-content">
+                            {
+                                selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]
+                            }
+                        </div>
+                    </div>
+                }
 
                 { COMMENTS_PRODUCTION && <div className="term-sheet-full-item-box">
                     <label>Amendment(s) to the Content Delivery / Special Conditions</label>

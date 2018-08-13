@@ -22,7 +22,9 @@ class ListingName extends React.Component {
                     type="text"
                     value={name}
                     onChange={this.updateName}
-                    placeholder=""/>
+                    placeholder=""
+                    maxLength={70}
+                />
             </div>
         );
     }

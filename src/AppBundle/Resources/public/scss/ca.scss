@@ -917,6 +917,7 @@ a:hover {
     font-size: 14px;
     color: #4F4F4F;
     line-height: 21px;
+    white-space: pre-line;
   }
 }
 
@@ -1623,6 +1624,7 @@ a:hover {
               font-size: 14px;
               .right-name {
                 border-left: 1px solid #EEF3F6;
+                font-weight: bold;
               }
               .right-definition {
                 border-right: 1px solid #EEF3F6;

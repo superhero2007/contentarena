@@ -6,6 +6,8 @@ import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
 import {editedProgramSelected, historyGoTo, parseSeasons} from "../../main/actions/utils";
 
+const MIN_PROGRAM_DESC_LENGTH = 30;
+
 class SellButtons extends React.Component {
     constructor(props) {
         super(props);
@@ -104,7 +106,7 @@ class SellButtons extends React.Component {
 
         let program = this.programIsValid();
 
-        return rightsPackage.length > 0 && program && programDescription && programDescription.length >= 15;
+        return rightsPackage.length > 0 && program && programDescription && programDescription.length >= MIN_PROGRAM_DESC_LENGTH;
 
     };
 
@@ -142,7 +144,7 @@ class SellButtons extends React.Component {
         let message = "Please complete missing information\n";
         let program = this.programIsValid();;
         if ( rightsPackage.length === 0 ) message += "<br/>- Select at least one right.\n";
-        if ( !programDescription || programDescription.length < 15 ) message += "<br/>- Program description must be at least 15 characters length";
+        if ( !programDescription || programDescription.length < MIN_PROGRAM_DESC_LENGTH ) message += "<br/>- Program description must be at least " + MIN_PROGRAM_DESC_LENGTH + " characters length";
         if ( !program ) message += "<br/>- Enter program information.";
 
         return message;
