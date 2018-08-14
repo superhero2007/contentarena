@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import store from '../store';
+import store from '../../main/store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
@@ -31,21 +31,26 @@ class SellButtons extends React.Component {
     }
 
     saveAndGoNext = () => {
+        const {history} = this.props;
         this.setState({ saving : true });
 
         let content = store.getState().content;
         content = parseSeasons(content);
         ContentArena.ContentApi.saveContentAsDraft(content).done((response)=>{
 
+            let nextStep = (Number(content.step) + 1);
+
             if ( response.success && response.contentId ){
                 this.props.updateContentValue("id", response.contentId);
             }
 
             this.setState({ saving : false, savingSuccess: true });
-            this.props.goToNextStep();
+
+            history.push("/contentlisting/"+ response.customId + "/" + nextStep);
+
         }).fail(() =>{
             this.setState({ saving : false, savingSuccess: false });
-            this.props.goToNextStep();
+            history.push("/contentlisting/"+ response.customId + "/" + nextStep);
         });
     };
 
@@ -166,13 +171,15 @@ class SellButtons extends React.Component {
     };
 
     onClickStep = (stepSelected) => {
-        const {goToStep, step} = this.props;
-        if ( this.state.visited.indexOf(stepSelected) !== -1 && step !== stepSelected ) goToStep(stepSelected);
+        const { step} = this.props;
+        if ( this.state.visited.indexOf(stepSelected) !== -1 && step !== stepSelected ) {
+            this.goToStep(stepSelected)
+        }
 
     };
 
     goToReviewAndSign = () => {
-        const {updateContentValue} = this.props;
+        const {updateContentValue, history} = this.props;
         let content = store.getState().content;
         content = parseSeasons(content);
         this.setState({ saving : true });
@@ -184,9 +191,7 @@ class SellButtons extends React.Component {
                     updateContentValue("customId", response.customId);
                 }
                 this.setState({ saving : false });
-                historyGoTo("managelistings/edit/"+response.customId+"/5");
-                this.props.goToNextStep();
-                // goTo("managelistings/edit/"+response.customId+"/5");
+                history.push("/contentlisting/"+ response.customId + "/sign");
             });
         } else {
             ContentArena.ContentApi.saveContentAsDraft(content).done((response)=>{
@@ -195,11 +200,27 @@ class SellButtons extends React.Component {
                 }
 
                 this.setState({ saving : false, savingSuccess: true });
-                historyGoTo("managelistings/edit/"+response.customId+"/5");
-                this.props.goToNextStep();
-                // goTo("managelistings/edit/"+response.customId+"/5");
+                history.push("/contentlisting/"+ response.customId + "/sign");
             })
         }
+    };
+
+    goToPreviousStep = () => {
+        const {history} = this.props;
+        let content = store.getState().content;
+        let prevStep = (Number(content.step) - 1);
+
+        history.push("/contentlisting/"+ content.customId + "/" + prevStep);
+    };
+
+    goToNextStep = () => {
+
+    };
+
+    goToStep = (step) => {
+        const {history} = this.props;
+        let content = store.getState().content;
+        history.push("/contentlisting/"+ content.customId + "/" + step);
     };
 
     render() {
@@ -212,7 +233,7 @@ class SellButtons extends React.Component {
                 { this.props.step < lastStep && <div className="buttons-container step-1 step-2" >
                     { this.props.step !== 1 &&
                     <button className="standard-button prev"
-                            onClick={ this.props.goToPreviousStep }>
+                            onClick={ this.goToPreviousStep }>
                         <i className="fa fa-arrow-left"/> Back
                     </button> }
                     {

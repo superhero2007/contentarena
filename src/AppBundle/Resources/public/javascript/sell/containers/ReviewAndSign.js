@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import store from '../store';
+import store from '../../main/store';
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
 import ListingDetails from './../../buy/containers/ListingDetails';
@@ -130,13 +130,13 @@ class ReviewAndSign extends React.Component {
         this.scroll();
         const {
             salesPackages,
-            goToPreviousStep,
             updateContentValue,
             signature,
             currency,
             company,
             terms_arena,
             terms,
+            history,
             customId,
             status,
             listingEdited
@@ -153,7 +153,9 @@ class ReviewAndSign extends React.Component {
                 { this.successScreen() }
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
-                        <button className="light-blue-button" onClick={goToPreviousStep}>
+                        <button className="light-blue-button" onClick={()=>{
+                            history.push("/contentlisting/"+ customId + "/4");
+                        }}>
                             <i className="fa fa-chevron-left"/> Edit
                         </button>
                     </div>
@@ -286,7 +288,6 @@ const mapDispatchToProps = dispatch => {
             salesPackage : salesPackage,
             name: name
         }),
-        goToPreviousStep : () => dispatch(goToPreviousStep()),
         stepChangeReset : () => dispatch(stepChangeReset())
     }
 };

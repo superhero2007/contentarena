@@ -7,13 +7,9 @@
             <link href="{{ asset('bundles/app/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/jquery-ui.theme.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('assets/common.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('assets/app.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/main.css') }}" type="text/css" rel="stylesheet" />
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
         {% endblock %}
-
-        {#<script>
-            var hosturl = "{{ path('homepage')|escape('js') }}";
-        </script>#}
 
         <script>
             var envhosturl = "{{ path('homepage')|escape('js') }}";
@@ -24,77 +20,7 @@
     </head>
     <body class="page-home">
 
-        {#<nav class="uk-navbar-container" uk-navbar>
-            <div class="uk-navbar-left">
-
-                <a class="uk-navbar-item uk-logo" href="{{ path('homepage') }}">
-                    <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}" alt="Content Arena  Pte Ltd. 2017" class="uk-responsive-height">
-                </a>
-
-            </div>
-            <div class="uk-navbar-right">
-                <ul class="uk-navbar-nav">
-                    <li class="{% if app.request.get('_route') == 'marketplace'%} uk-active {% endif %}">
-                        <a href="{{ path('marketplace') }}">
-                            Marketplace
-                        </a>
-                    </li>
-                    <li class="{% if app.request.get('_route') == 'sell'%} uk-active {% endif %}">
-                        <a href="{{ path('sell') }}">
-                            My listings
-                        </a>
-                    </li>
-                    <li class="{% if app.request.get('_route') == 'myContent'%} uk-active {% endif %}">
-                        <a href="{{ path('myContent') }}">
-                            My acquisitions
-                        </a>
-                    </li>
-                    <li class="{% if app.request.get('_route') == 'messages'%} uk-active {% endif %}">
-                        <a href="{{ path('myContent') }}">
-                            Messages
-                        </a>
-                    </li>
-                    <li class="{% if app.request.get('_route') == 'company'%} uk-active {% endif %}">
-                        <a href="{{ path('myContent') }}">
-                            Company
-                        </a>
-                    </li>
-                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <li>
-                            <a href="" uk-scroll="offset:200" class="uk-navbar-name">
-                                {{ app.user.firstName }}
-                            </a>
-                            <div class="uk-navbar-dropdown">
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    {% if is_granted("ROLE_ADMIN") %}
-                                        <li>
-                                            <a href="{{ path('admin') }}"  uk-scroll="offset:200">
-                                                Admin
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                    <li>
-                                        <a href="{{ path('fos_user_security_logout') }}">
-                                            Logout
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="{{ path('fos_user_security_login') }}">
-                                Company
-                            </a>
-                        </li>
-                    {% endif %}
-
-                </ul>
-            </div>
-        </nav>#}
-
-
-        {% if app.request.hasPreviousSession %}
+        {#{% if app.request.hasPreviousSession %}
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
                     <div class="flash-{{ type }}">
@@ -102,7 +28,7 @@
                     </div>
                 {% endfor %}
             {% endfor %}
-        {% endif %}
+        {% endif %}#}
 
         <div class="main-content">
             {% block main_content %}
@@ -113,7 +39,7 @@
 
         <script type="text/javascript" src="{{ asset('assets/manifest.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/vendor.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/main.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/common.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/ca.js') }}"></script>
 
@@ -122,25 +48,5 @@
         <script type="text/javascript" src="{{ asset('bundles/app/javascript/watch.js') }}"></script>
 
     {% endblock %}
-
-        {#<div class="footer">
-            <div class="logo">
-                <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}">
-            </div>
-            <div class="content">
-                <p class="footerInfo uk-margin"><span class="footerCompanyName">Content Arena  Pte Ltd. 2017</span>
-                    <span> <a href="https://contentarena.com/web/privacy-policy/">Privacy Policy</a></span>
-                    <span> <a href="https://contentarena.com/web/terms-of-use/">Terms of Use</a></span>
-                    <span> <a href="https://contentarena.com/web/cookie-policy/">Cookie Policy</a></span>
-                </p>
-            </div>
-            <div class="social">
-                <ul class="uk-list">
-                    <li><a href=" https://www.linkedin.com/company/11294986/" target="_blank" class="uk-icon-button uk-icon" uk-icon="icon: linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <path d="M5.77,17.89 L5.77,7.17 L2.21,7.17 L2.21,17.89 L5.77,17.89 L5.77,17.89 Z M3.99,5.71 C5.23,5.71 6.01,4.89 6.01,3.86 C5.99,2.8 5.24,2 4.02,2 C2.8,2 2,2.8 2,3.85 C2,4.88 2.77,5.7 3.97,5.7 L3.99,5.7 L3.99,5.71 L3.99,5.71 Z"></path> <path d="M7.75,17.89 L11.31,17.89 L11.31,11.9 C11.31,11.58 11.33,11.26 11.43,11.03 C11.69,10.39 12.27,9.73 13.26,9.73 C14.55,9.73 15.06,10.71 15.06,12.15 L15.06,17.89 L18.62,17.89 L18.62,11.74 C18.62,8.45 16.86,6.92 14.52,6.92 C12.6,6.92 11.75,7.99 11.28,8.73 L11.3,8.73 L11.3,7.17 L7.75,7.17 C7.79,8.17 7.75,17.89 7.75,17.89 L7.75,17.89 L7.75,17.89 Z"></path></svg></a></li>
-                    <li><a href="mailto:info@contentarena.com" class="emo_email uk-icon-button uk-icon" uk-icon="icon: mail"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" ratio="1"> <polyline fill="none" stroke="#000" points="1.4,6.5 10,11 18.6,6.5"></polyline> <path d="M 1,4 1,16 19,16 19,4 1,4 Z M 18,15 2,15 2,5 18,5 18,15 Z"></path></svg></a></li>
-                </ul>
-            </div>
-        </div>#}
-
     </body>
 </html>

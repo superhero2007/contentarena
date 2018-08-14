@@ -28,7 +28,7 @@ class RightsFilter extends React.Component {
                     <div style={{display: 'flex'}}>
                         <CountrySelector
                             className={"base-input-select"}
-                            value={countries}
+                            value={countries.map(c=>{return {label: c, value: c}})}
                             onChange={this.selectTerritory}/>
                     </div>
 

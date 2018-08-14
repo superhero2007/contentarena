@@ -1,11 +1,8 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Select from 'react-select';
-
 import ContentListingCommercialActivity from '../../main/components/ContentListingCommercialActivity';
-
 import {goToListing} from "../../main/actions/utils";
-import {languages} from "../../../data/languages";
 
 class CommercialActivity extends React.Component {
     constructor(props) {

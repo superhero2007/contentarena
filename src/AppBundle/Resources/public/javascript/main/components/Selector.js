@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
-import store from '../../sell/store';
+import store from '../../main/store';
 import Modal from 'react-modal';
 import { SelectorModalStyle } from "../styles/custom";
 
-Modal.setAppElement('#sell-form-container');
+Modal.setAppElement('#home-wrapper');
 
 const SelectorItem = ({label, selected, onClick, disabled}) => (
     <div className={"selector-item " + ((selected) ?"selector-item-selected ": "") + (disabled && "selector-item-disabled") } onClick={(!disabled) ? onClick : undefined}>

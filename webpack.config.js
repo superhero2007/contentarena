@@ -10,20 +10,8 @@ Encore
 
     .addEntry('common', './src/AppBundle/Resources/public/javascript/common.js')
 
-    .addEntry('app', [
-        './src/AppBundle/Resources/public/javascript/main.js'
-    ])
-
-    .addEntry('manage', [
-        './src/AppBundle/Resources/public/javascript/manage/manage.js',
-    ])
-
-    .addEntry('buy', [
-        './src/AppBundle/Resources/public/javascript/buy/buy.js',
-    ])
-
-    .addEntry('sell', [
-        './src/AppBundle/Resources/public/javascript/sell/sell.js',
+    .addEntry('main', [
+        './src/AppBundle/Resources/public/javascript/main/main.js'
     ])
 
     .addEntry('ca', [
@@ -57,6 +45,7 @@ Encore
         "react-datepicker",
         "react-modal",
         "react-popup",
+        "react-router-dom",
         "react-redux",
         "react-table",
         "react-tooltip",

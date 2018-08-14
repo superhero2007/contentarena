@@ -15,7 +15,7 @@ use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 class SearchController extends Controller
 {
     /**
-     * @Route("/search/tournament", name="searchTournament")
+     * @Route("/api/search/tournament", name="searchTournament")
      */
     public function sellNewListingSearch(Request $request){
 
@@ -37,7 +37,7 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/search/sports/active", name="searchSportsActive")
+     * @Route("/api/search/sports/active", name="searchSportsActive")
      */
     public function searchSportsActive(Request $request){
 
@@ -58,7 +58,7 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/search/countries/all", name="searchAllCountries")
+     * @Route("/api/search/countries/all", name="searchAllCountries")
      */
     public function searchAllCountries(Request $request){
 
@@ -72,7 +72,7 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/search/countries/full", name="getCountries")
+     * @Route("/api/search/countries/full", name="getCountries")
      */
     public function getCountries(Request $request){
 
@@ -86,7 +86,7 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/search/territories", name="getTerritories")
+     * @Route("/api/search/territories", name="getTerritories")
      */
     public function getTerritories(Request $request){
 
@@ -100,7 +100,7 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/search/rights", name="searchRights")
+     * @Route("/api/search/rights", name="searchRights")
      */
     public function searchRights(Request $request){
 
@@ -128,7 +128,7 @@ class SearchController extends Controller
     }
 
     /**
-     * @Route("/search/rights-package", name="searchRightsPackage")
+     * @Route("/api/search/rights-package", name="searchRightsPackage")
      */
     public function getRightsPackage(Request $request){
 

@@ -1,14 +1,10 @@
 {
-  "assets/app.css": "/assets/app.css",
-  "assets/app.js": "/assets/app.js",
-  "assets/buy.css": "/assets/buy.css",
-  "assets/buy.js": "/assets/buy.js",
   "assets/ca.js": "/assets/ca.js",
   "assets/common.css": "/assets/common.css",
   "assets/common.js": "/assets/common.js",
-  "assets/manage.js": "/assets/manage.js",
+  "assets/main.css": "/assets/main.css",
+  "assets/main.js": "/assets/main.js",
   "assets/manifest.js": "/assets/manifest.js",
-  "assets/sell.js": "/assets/sell.js",
   "assets/vendor.css": "/assets/vendor.css",
   "assets/vendor.js": "/assets/vendor.js"
 }

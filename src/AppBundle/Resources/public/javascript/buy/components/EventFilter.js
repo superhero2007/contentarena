@@ -50,20 +50,12 @@ class EventFilter extends React.Component {
         this.props.updateEvent(this.refs.search_field.value);
     };
 
-    handleFilter = () => {
-        if (!this.refs.search_field.value) {
-            return;
-        }
-        this.updateEvent();
-        const {onFilter} = this.props;
-        onFilter();
-    }
-
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            this.handleFilter()
+            const {onFilter} = this.props;
+            onFilter();
         }
-    }
+    };
 
     render() {
         const {sport, event} = this.props;
@@ -93,6 +85,7 @@ class EventFilter extends React.Component {
                             }}
                             defaultValue={event}
                             onKeyPress={this.handleKeyPress}
+                            onChange={this.updateEvent}
                             ref="search_field"
                             type="text" id="inputSearch" name="event" placeholder="Search"/>
                     </div>

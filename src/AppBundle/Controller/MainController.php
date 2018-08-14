@@ -16,7 +16,7 @@ class MainController extends BaseController
 {
 
     /**
-     * @Route("/marketplace", name="marketplace")
+     * @Route("/old/marketplace", name="oldMarketplace")
      */
     public function buyAction(Request $request)
     {
@@ -33,7 +33,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/listing/{customId}", name="listing")
+     * @Route("/old/listing/{customId}", name="listing")
      */
     public function marketplaceListingAction(Request $request)
     {
@@ -56,7 +56,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/listing/{customId}/{tab}", name="listingTab")
+     * @Route("/oldlisting/{customId}/{tab}", name="listingTab")
      */
     public function listingTab(Request $request)
     {
@@ -78,7 +78,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/listing/{customId}/buy/{salesPackage}", name="buyListing")
+     * @Route("/oldlisting/{customId}/buy/{salesPackage}", name="buyListing")
      */
     public function buyListing(Request $request)
     {
@@ -104,7 +104,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings{trailingSlash}", name="manageListings", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
+     * @Route("/oldmanagelistings{trailingSlash}", name="manageListings", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
      */
     public function manageListings(Request $request)
     {
@@ -119,7 +119,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings/buyer", name="manageListingsBuyer")
+     * @Route("/oldmanagelistings/buyer", name="manageListingsBuyer")
      */
     public function manageBuyer(Request $request)
     {
@@ -133,7 +133,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/watchlist", name="manageWatchlist")
+     * @Route("/oldwatchlist", name="manageWatchlist")
      */
     public function manageWatchlist(Request $request)
     {
@@ -149,7 +149,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/closeddeals", name="manageClosedDeals")
+     * @Route("/oldcloseddeals", name="manageClosedDeals")
      */
     public function manageClosedDeals(Request $request)
     {
@@ -165,7 +165,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/bids/activebids", name="manageActiveBids")
+     * @Route("/oldbids/activebids", name="manageActiveBids")
      */
     public function manageActiveBids(Request $request)
     {
@@ -182,7 +182,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/bids/declinedbids", name="manageDeclinedBids")
+     * @Route("/oldbids/declinedbids", name="manageDeclinedBids")
      */
     public function manageDeclinedBids(Request $request)
     {
@@ -199,7 +199,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/commercialactivity", name="commercialActivity")
+     * @Route("/oldcommercialactivity", name="commercialActivity")
      */
     public function commercialActivity(Request $request)
     {
@@ -215,7 +215,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/settings", name="settings")
+     * @Route("/oldsettings", name="settings")
      */
     public function settings(Request $request)
     {
@@ -232,14 +232,14 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/messages", name="allMessages")
+     * @Route("/oldmessages", name="allMessages")
      */
     public function allMessages(Request $request){
         return $this->redirectToRoute("messages", array("customId"=>"ALL"));
     }
 
     /**
-     * @Route("/messages/{customId}", name="messages", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
+     * @Route("/oldmessages/{customId}", name="messages", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
      */
     public function messages(Request $request)
     {
@@ -254,7 +254,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings/new", name="manageNewListing")
+     * @Route("/oldcontentlisting/new", name="manageNewListing")
      */
     public function manageNewListing(Request $request)
     {
@@ -275,7 +275,6 @@ class MainController extends BaseController
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
 
-
         $content = new Content();
         $content->setCompany($user->getCompany());
 
@@ -290,7 +289,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings/edit/{customId}", name="manageEditListing")
+     * @Route("/oldcontentlisting/edit/{customId}", name="manageEditListing")
      */
     public function manageEditListing(Request $request)
     {
@@ -328,7 +327,7 @@ class MainController extends BaseController
     }
 
     /**
-     * @Route("/managelistings/edit/{customId}/{step}", name="manageEditListingStep")
+     * @Route("/oldcontentlisting/edit/{customId}/{step}", name="manageEditListingStep")
      */
     public function manageEditListingStep(Request $request)
     {

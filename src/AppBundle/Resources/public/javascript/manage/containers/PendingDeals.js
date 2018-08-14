@@ -11,7 +11,7 @@ class PendingDeals extends React.Component {
             loadingDeclined : false,
             bids : [],
             declinedBids: [],
-            active : props.mode === "ACTIVE"
+            tab : props.match.params.tab || "activebids"
 
         };
         this.bulletIcon = assetsBaseDir + "app/images/bullet.png";
@@ -51,7 +51,8 @@ class PendingDeals extends React.Component {
     };
 
     render () {
-        const { loading, bids, active, declinedBids, loadingDeclined } = this.state;
+        const { loading, bids, tab, declinedBids, loadingDeclined } = this.state;
+        const { history } = this.props;
         return (
             <div style={{
                 display: 'flex',
@@ -67,21 +68,25 @@ class PendingDeals extends React.Component {
                 }}>
                     <div style={{margin:'0 20px'}}>Bids</div>
                     <div style={{margin:'0 20px' , cursor: 'pointer'}}
-                         onClick={()=>{goTo("bids/activebids")}}>
-                        {active && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
-                        {!active && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
+                         onClick={()=>{
+                             history.push('/bids/activebids')
+                         }}>
+                        {tab === "activebids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
+                        {tab !== "activebids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
                         Active
                     </div>
                     <div style={{margin:'0 20px', cursor: 'pointer'}}
-                         onClick={()=>{goTo("bids/declinedbids")}}>
-                        {!active && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
-                        {active && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
+                         onClick={()=>{
+                             history.push('/bids/declinedbids')
+                         }}>
+                        {tab === "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
+                        {tab !== "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
                         Declined
                     </div>
                 </div>
 
                 {
-                    active && bids.length > 0 && bids.map((bid, i) => {
+                    tab === "activebids" && bids.length > 0 && bids.map((bid, i) => {
                         return <ContentListingPendingBid
                             onSelect={this.selectListing}
                             onDelete={this.deleteBid}
@@ -93,7 +98,7 @@ class PendingDeals extends React.Component {
                 }
 
                 {
-                    !active && declinedBids.length > 0 && declinedBids.map((bid, i) => {
+                    tab === "declinedbids" && declinedBids.length > 0 && declinedBids.map((bid, i) => {
                         return <ContentListingPendingBid
                             onSelect={this.selectListing}
                             onDelete={this.deleteBid}
@@ -105,7 +110,7 @@ class PendingDeals extends React.Component {
                 }
 
                 {
-                    active && bids.length === 0 &&
+                    tab === "activebids" && bids.length === 0 &&
                     <div className="manager-content-message">
                         {
                             loading && <div className="big-spinner">
@@ -124,7 +129,7 @@ class PendingDeals extends React.Component {
                 }
 
                 {
-                    !active && declinedBids.length === 0 &&
+                    tab === "declinedbids" && declinedBids.length === 0 &&
                     <div className="manager-content-message">
                         {
                             loadingDeclined && <div className="big-spinner">

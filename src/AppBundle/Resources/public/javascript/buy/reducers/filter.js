@@ -8,6 +8,7 @@ export const filterTypes= {
     UPDATE_EVENT : 'UPDATE_EVENT',
     CLEAR : 'CLEAR',
     CLEAR_UPDATE : 'CLEAR_UPDATE',
+    UPDATE_MANY : 'UPDATE_MANY'
 };
 
 const defaultFilter = {
@@ -45,7 +46,7 @@ export const filter = (state = defaultFilter, action) => {
             });
         case filterTypes.UPDATE_COUNTRIES:
             return Object.assign({}, state, {
-                countries: action.countries
+                countries: action.countries.map(c=>c.value)
             });
         case filterTypes.UPDATE_EXCLUSIVE:
             return Object.assign({}, state, {
@@ -59,6 +60,10 @@ export const filter = (state = defaultFilter, action) => {
             return Object.assign({}, state, {
                 event: action.event
             });
+        case filterTypes.UPDATE_MANY:
+            action.filters.forceUpdate = true;
+            if (action.filters.rights) action.filters.rights = action.filters.rights.map(r=>Number(r));
+            return Object.assign({}, defaultFilter, action.filters);
         default:
             return state;
     }

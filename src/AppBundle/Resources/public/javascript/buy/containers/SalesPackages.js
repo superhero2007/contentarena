@@ -137,7 +137,7 @@ class SalesPackages extends React.Component {
     };
 
     render() {
-        const {salesPackages, onSelectPackage, profile, listingId} = this.props;
+        const {salesPackages, onSelectPackage, user, listingId} = this.props;
 
         return (
             <div className="sales-packages">
@@ -199,18 +199,18 @@ class SalesPackages extends React.Component {
                                 && <img style={{width: 23, height: 23}} src={this.bidIcon}/>}
                         </div>
 
-                        { salesPackage.salesMethod === "FIXED" && profile === "BUYER" &&
+                        { salesPackage.salesMethod === "FIXED" && user.profile === "BUYER" &&
                             <button className="standard-button"
                                     style={{width: 130}}
-                                    onClick={() => {onSelectPackage(salesPackage) }}>
+                                    onClick={() => {onSelectPackage(salesPackage, listingId) }}>
                                 Buy now
                             </button>
                         }
 
-                        { salesPackage.salesMethod === "BIDDING" && profile === "BUYER" &&
+                        { salesPackage.salesMethod === "BIDDING" && user.profile === "BUYER" &&
                             <button className="standard-button"
                                     style={{width: 130}}
-                                    onClick={() => {onSelectPackage(salesPackage) }}>
+                                    onClick={() => {onSelectPackage(salesPackage, listingId) }}>
                                 Place bid
                             </button>
                         }

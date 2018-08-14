@@ -7,6 +7,7 @@ import TermSheet from "./TermSheet";
 import ProgramDetails from "./ProgramDetails";
 import Seller from "./Seller";
 import Moment from "moment/moment";
+import {Link, Route} from 'react-router-dom';
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import DigitalSignature from "../../main/components/DigitalSignature";
 import SendMessage from "../../main/components/SendMessage";
@@ -14,12 +15,10 @@ import {
     getCurrencySymbol, getFullName, goTo, goToClosedDeals, goToListing,
     goToMarketplace, viewLicense, viewLicenseCustom
 } from "../../main/actions/utils";
-import CompanyInformation from "../../sell/components/CompanyInformation";
 import {customStyles} from "../../main/styles/custom";
 import {companyIsValid} from "../../sell/actions/validationActions";
 import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
-import {content} from "../../sell/reducers/content";
 import ReactTooltip from 'react-tooltip'
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -35,13 +34,17 @@ class ListingDetails extends React.Component {
 
     constructor(props) {
         super(props);
+
+        let listing = ContentArena.Utils.contentParserFromServer(props.listing) || {};
+
         this.state = {
-            content : ContentArena.Utils.contentParserFromServer(props.content) || {},
+            content : listing,
             company: props.company,
             spinner : false,
-            tab : props.tab,
+            tab : props.tab || "bundles",
+            buyingMode : props.tab && props.tab === "checkout",
             soldOut  : false,
-            selectedPackage : {},
+            selectedPackage : ( props.tab && props.tab === "checkout") ? listing.salesPackages.find(sp=>sp.id==props.bundle) : {},
             territoriesList: [],
             editCompanyOpen : false,
             bidUpdated : false
@@ -74,7 +77,7 @@ class ListingDetails extends React.Component {
     componentWillReceiveProps(nextProps) {
 
         this.setState({
-            content : ContentArena.Utils.contentParserFromServer(nextProps.content)
+            content : ContentArena.Utils.contentParserFromServer(nextProps.listing)
         });
     }
 
@@ -82,7 +85,10 @@ class ListingDetails extends React.Component {
         this.setState({buyingMode: !this.state.buyingMode});
     };
 
-    selectPackage = ( selectedPackage ) => {
+    selectPackage = ( selectedPackage, customId ) => {
+        const { history } = this.props;
+
+        history.push('/listing/'+customId+'/checkout/'+selectedPackage.id);
         this.setState({
             selectedPackage: selectedPackage,
             buyingMode : true,
@@ -433,7 +439,7 @@ class ListingDetails extends React.Component {
 
     render() {
         ReactTooltip.rebuild();
-        const {onBack, profile } = this.props;
+        const {onBack, profile,history } = this.props;
         const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner, minimumBid} = this.state;
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
         let technicalFee = this.getTechnicalFee();
@@ -451,7 +457,7 @@ class ListingDetails extends React.Component {
                             <img src={listingImage}/>
                         </div>
 
-                        <ContentListingEventDetails {...this.props.content}/>
+                        <ContentListingEventDetails {...this.props.listing}/>
 
                         {/* RIGHTS*/}
                         <div style={{flex: 2, flexDirection: "column", margin: '20px 0' }}>
@@ -545,21 +551,36 @@ class ListingDetails extends React.Component {
 
                         {/*TABS*/}
                         <div className={"listing-details-buttons"}>
-                            <button className={(tab ==="bundles")?"active": ""} onClick={()=>this.showTab("bundles")}>
+                            <button className={(tab ==="bundles")?"active": ""} onClick={()=>{
+                                history.push('/listing/'+content.customId+'/bundles');
+                                this.showTab("bundles")
+                            }}>
                                 Program & Sales Bundles
                             </button>
-                            <button className={(tab ==="event")?"active": ""} onClick={()=>this.showTab("event")}>
+                            <button className={(tab ==="event")?"active": ""} onClick={()=>{
+                                history.push('/listing/'+content.customId+'/event');
+                                this.showTab("event");
+                            }}>
                                 Event
                             </button>
-                            <button className={(tab ===3)?"active": ""} onClick={()=>this.showTab(3)}>
+                            <button className={(tab ==="grantofrights")?"active": ""} onClick={()=>{
+                                history.push('/listing/'+content.customId+'/grantofrights');
+                                this.showTab("grantofrights")
+                            }}>
                                 Grant of Rights & Production
                             </button>
                             {content.PROGRAM_NAME &&
-                                <button className={(tab ===4)?"active": ""} onClick={()=>this.showTab(4)}>
+                                <button className={(tab ==="editeprogram")?"active": ""} onClick={()=>{
+                                    history.push('/listing/'+content.customId+'/editedprogram');
+                                    this.showTab("editedprogram")
+                                }}>
                                     Edited Program
                                 </button>
                             }
-                            <button className={(tab ===5)?"active": ""} onClick={()=>this.showTab(5)}>
+                            <button className={(tab ==="seller")?"active": ""} onClick={()=>{
+                                history.push('/listing/'+content.customId+'/seller');
+                                this.showTab("seller")
+                            }}>
                                 Seller Information
                             </button>
                         </div>
@@ -575,12 +596,12 @@ class ListingDetails extends React.Component {
                             }
                             { this.state.tab === "event" &&
                                 <ContentInformation {...content}/> }
-                            { this.state.tab === 3 &&
+                            { this.state.tab === "grantofrights" &&
                                 <TermSheet
                                     {...content}/>
                             }
-                            { this.state.tab === 4 && <ProgramDetails {...content}/> }
-                            { this.state.tab === 5 && <Seller {...content}/> }
+                            { this.state.tab === "editedprogram" && <ProgramDetails {...content}/> }
+                            { this.state.tab === "seller" && <Seller {...content}/> }
 
 
                         </div>

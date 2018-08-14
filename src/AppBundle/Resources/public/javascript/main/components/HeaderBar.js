@@ -1,16 +1,11 @@
 import React from 'react';
-import HistoryButton from './HistoryButton'
 import {goTo} from "../actions/utils";
+import {Link} from "react-router-dom";
 
-const HeaderBarTab = ({tabName, activeTab, children, route}) => {
+const HeaderBarTab = ({match, children, route}) => {
     return (
-        <div className={(tabName === activeTab) ? "tab active-tab" : "tab"}
-                 onClick={()=>{
-                     if ( route ) {
-                         goTo(route);
-                     };
-                 }}>
-            {children}
+        <div className={(match) ? "tab active-tab" : "tab"}>
+            <Link to={route} >{children}</Link>
         </div>
     )
 };
@@ -24,7 +19,7 @@ class HeaderBar extends  React.Component {
     }
 
     render(){
-        const {tab, profile} = this.props;
+        const {tab, profile, match} = this.props;
         const logoUrl = this.getLogoUrl(tab);
 
         return(
@@ -34,82 +29,83 @@ class HeaderBar extends  React.Component {
                     <img src={assetsBaseDir + "app/images/logo.png"} alt=""/>
                 </div>
 
-                { profile === "BUYER" && <HeaderBarTab
-                    tabName={"MARKETPLACE"}
-                    route={"marketplace"}
-                    activeTab={tab} >
+                { profile === "BUYER" &&
+                <HeaderBarTab
+                    match={match.url === "/marketplace"}
+                    route={"/marketplace"}>
                     Marketplace
                 </HeaderBarTab> }
 
                 { profile === "BUYER" && <HeaderBarTab
-                    tabName={"WATCHLIST"}
-                    route={"watchlist"}
-                    activeTab={tab} >
+                    match={match.url === "/watchlist"}
+                    route={"/watchlist"}>
                     Watchlist
                 </HeaderBarTab> }
 
                 { profile === "BUYER" && <HeaderBarTab
-                    tabName={"BIDS"}
-                    route={"bids/activebids"}
-                    activeTab={tab} >
+                    match={match.url === "/bids/activebids" ||match.url === "/bids/declinedbids"  }
+                    route={"/bids/activebids"}
+                    >
                     Bids
                 </HeaderBarTab> }
 
                 { profile === "BUYER" && <HeaderBarTab
-                    tabName={"CLOSED_DEALS"}
-                    route={"closeddeals"}
-                    activeTab={tab} >
+                    match={match.url === "/closeddeals"}
+                    route={"/closeddeals"}
+                    >
                     Closed deals
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
-                    tabName={"MANAGE_LISTINGS"}
-                    route={"managelistings"}
-                    activeTab={tab} >
+                    match={match.url === "/managelistings"}
+                    route={"/managelistings"}>
                     Manage listings
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
-                    tabName={"COMMERCIAL_ACTIVITY"}
-                    route={"commercialactivity"}
-                    activeTab={tab} >
+                    match={match.url === "/commercialactivity"}
+                    route={"/commercialactivity"} >
                     Commercial activity
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
-                    tabName={"NEW_LISTING"}
-                    route={"managelistings/new"}
-                    activeTab={tab} >
+                    match={match.url === "/contentlisting/new"}
+                    route={"/contentlisting/new"}>
                     Create Listing
                 </HeaderBarTab> }
 
                 <div className="spacer" />
 
                 { profile === "BUYER" &&
-                <HistoryButton
+                <HeaderBarTab
                     className="tab"
-                    onClick={()=>{goTo("managelistings")}}
-                    path="managelistings">
+                    route="/managelistings">
                     Enter selling mode
-                </HistoryButton> }
+                </HeaderBarTab> }
 
                 { profile === "SELLER" &&
-                <HistoryButton className="tab" onClick={()=>{goTo("marketplace")}} path="marketplace">
+                <HeaderBarTab
+                    className="tab"
+                    route="/marketplace">
                     Enter buying mode
-                </HistoryButton> }
+                </HeaderBarTab> }
 
-                <HistoryButton className="tab" onClick={()=>{ goTo("messages?profile=" + profile)}} path="messages">
+                <HeaderBarTab
+                    className="tab"
+                    route="/messages">
                     <i className="fa fa-envelope" /> Messages
-                </HistoryButton>
+                </HeaderBarTab>
 
                 <div className="settings">
                     <i className="fa fa-2x fa-gear" />
 
                     <div className="popup">
                         <div className="wrap">
-                            <HistoryButton className="tab" onClick={()=>{goTo("settings?profile=" + profile)}} path="settings">
+                            <HeaderBarTab
+                                route="/settings"
+                                className="tab" >
                                 Settings
-                            </HistoryButton>
+                            </HeaderBarTab>
                             <a href="/logout" className="tab">
                                 Logout
                             </a>

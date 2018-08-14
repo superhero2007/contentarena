@@ -103,7 +103,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: envhosturl + "search/countries/all",
+            url: envhosturl + "api/search/countries/all",
             type: "POST",
             /**
              * @param {array} response
@@ -126,7 +126,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: envhosturl + "search/sports/active",
+            url: envhosturl + "api/search/sports/active",
             type: "POST",
             /**
              * @param {array} response
@@ -148,7 +148,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: envhosturl + "search/countries/full",
+            url: envhosturl + "api/search/countries/full",
             type: "POST",
             /**
              * @param {array} response
@@ -171,7 +171,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: envhosturl + "search/territories",
+            url: envhosturl + "api/search/territories",
             type: "POST",
             /**
              * @param {array} response
@@ -194,7 +194,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: envhosturl + "search/rights",
+            url: envhosturl + "api/search/rights",
             type: "POST",
             data : {
                 rightsPackage: rightsPackage,
@@ -221,7 +221,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: envhosturl + "search/rights-package",
+            url: envhosturl + "api/search/rights-package",
             type: "POST",
             data : {
                 rightsPackage: rightsPackage,
@@ -483,7 +483,7 @@ ContentArena.Api= {
         let _this = this;
 
         $.ajax({
-            url: envhosturl + 'search/tournament',
+            url: envhosturl + 'api/search/tournament',
             data: {
                 "content": request
             },

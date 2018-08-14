@@ -17,3 +17,4 @@ require('../scss/board.scss');
 require('../scss/commercial.scss');
 require('../scss/messages.scss');
 require('../scss/settings.scss');
+require('../scss/marketplace.scss');

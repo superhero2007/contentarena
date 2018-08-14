@@ -20,6 +20,11 @@ export const updateExclusive = exclusive => ({
     exclusive,
 });
 
+export const updateMany = filters => ({
+    type: filterTypes.UPDATE_MANY,
+    filters,
+});
+
 export const updateSport = sport => ({
     type: filterTypes.UPDATE_SPORT,
     sport

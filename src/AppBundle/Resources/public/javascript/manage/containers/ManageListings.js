@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import {goTo} from "../../main/actions/utils";
 import BoardListing from '../components/BoardListing';
+import {updateProfile} from "../../main/actions/userActions";
 
 class ManageListings extends React.Component {
     constructor(props) {
@@ -47,6 +48,8 @@ class ManageListings extends React.Component {
             listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
             _this.setState({expired: listings, loadingExpired : false});
         });
+
+        this.props.updateProfile("SELLER");
     }
 
     selectListing = (id) => {
@@ -249,6 +252,7 @@ const mapStateToProps = ( state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        updateProfile : profile =>dispatch(updateProfile(profile)),
     }
 };
 
