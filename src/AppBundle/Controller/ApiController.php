@@ -6,6 +6,7 @@ use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\MessageService;
+use AppBundle\Service\NotificationService;
 use AppBundle\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -521,6 +522,22 @@ class ApiController extends BaseController
         $watchlist = $watchlistService->newOrRemove($user, $content);
 
         return new JsonResponse(array("success"=>true, 'state'=>$watchlist));
+    }
+
+    /**
+     * @Route("/api/notifications/", name="getNotifications")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getNotifications(Request $request, NotificationService $notificationService){
+
+        $user = $this->getUser();
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($notificationService->getNotifications($user), 'json',SerializationContext::create()->setGroups(array('notification')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 }

@@ -28,10 +28,18 @@ class MessageService
 
     private $fileUploader;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader) {
+    private $notificationService;
+
+    public function __construct(
+        EntityManager $entityManager,
+        RandomIdGenerator $idGenerator,
+        NotificationService $notificationService,
+        FileUploader $fileUploader
+    ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
+        $this->notificationService = $notificationService;
     }
 
     public function getAllThreads(Request $request, User $user){
@@ -118,6 +126,22 @@ class MessageService
             $this->em->persist($thread);
             $this->em->flush();
         }
+
+        /**
+         * Send notification to involved users
+         */
+
+        foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
+            if ( $companyUser->getId() != $user->getId() ){
+                $this->notificationService->createNotification("MESSAGE", $thread->getId(), $companyUser, "Unread meessages" );
+            }
+        }
+        foreach ($thread->getSellerCompany()->getUsers() as $companyUser ){
+            if ( $companyUser->getId() != $user->getId() ){
+                $this->notificationService->createNotification("MESSAGE", $thread->getId(), $companyUser, "Unread meessages" );
+            }
+        }
+
 
         $message = new Message();
         $createdAt = new \DateTime();
