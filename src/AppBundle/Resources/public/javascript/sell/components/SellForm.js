@@ -24,7 +24,7 @@ class SellForm extends React.Component {
 
         content = ContentArena.Utils.contentParserFromServer(content);
 
-        if (props.match && props.match.params) {
+        if (props.match && props.match.params.step ) {
             content.step = (props.match.params.step === "sign") ? 5 : Number(props.match.params.step);
         }
 

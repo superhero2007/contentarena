@@ -352,7 +352,7 @@ class SellFormStep1 extends React.Component {
     };
 
     render() {
-        if ( this.props.step !== 1) return (null);
+        if ( this.props.step !== 1 ) return (null);
 
         this.scroll();
 
