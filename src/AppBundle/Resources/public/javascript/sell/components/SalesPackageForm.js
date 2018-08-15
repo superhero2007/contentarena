@@ -572,7 +572,6 @@ class SalesPackageForm extends React.Component {
         let salesPackages = this.props.salesPackages;
 
         if (sort) salesPackages.sort(this.sortSalesPackages);
-
         return (
             <div className="sales-package-form">
                 { this.renderModal() }
@@ -585,6 +584,13 @@ class SalesPackageForm extends React.Component {
                         <CurrencySelector onClick={selectCurrency} selected={currency} />
                         <div className='clearfix'/>
                     </label>
+
+                    {!salesPackages.length && this.addBundlesAvailable() && (
+                        <div className='sales-bundles-placeholder'>
+                            {this.renderAddSalesBundleButton()}
+                        </div>
+                    )}
+
                     <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
                         { salesPackages.map( (salesPackage, i) => {
 
@@ -630,11 +636,11 @@ class SalesPackageForm extends React.Component {
                                     }
                                 </div>
                                 {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0'}}
-                                     src={this.cancelIcon}
-                                     onClick={() => { onRemove(i) }}/>}
+                                                      src={this.cancelIcon}
+                                                      onClick={() => { onRemove(i) }}/>}
                                 {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0', color: 'grey'}}
-                                     src={this.draftIcon}
-                                     onClick={() => { this.editSalesPackage(salesPackage, i) }}/>}
+                                                      src={this.draftIcon}
+                                                      onClick={() => { this.editSalesPackage(salesPackage, i) }}/>}
 
                             </div>
                         })}
@@ -643,9 +649,7 @@ class SalesPackageForm extends React.Component {
                 </div>
 
                 {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
-                    {this.addBundlesAvailable() && <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
-                        <i className="fa fa-plus-circle"/> Add sales bundle
-                    </div>}
+                    {this.addBundlesAvailable() && this.renderAddSalesBundleButton() }
                     {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll}>
                         <i className="fa fa-minus-circle"/> Remove all
                     </div>}
@@ -653,6 +657,15 @@ class SalesPackageForm extends React.Component {
 
             </div>
         )
+
+    }
+
+    renderAddSalesBundleButton() {
+        return (
+            <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
+                <i className="fa fa-plus-circle"/> Add sales bundle
+            </div>
+        );
     }
 }
 
