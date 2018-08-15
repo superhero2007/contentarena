@@ -345,6 +345,9 @@ a:hover {
       label {
         width: 100%;
         box-sizing: border-box;
+        .select-currency {
+          display: none;
+        }
       }
       .content {
         display: flex;
