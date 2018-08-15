@@ -102,10 +102,6 @@ class SellFormStep3 extends React.Component {
 
         const {
             updateContentValue,
-            PROGRAM_NAME,
-            PROGRAM_TYPE,
-            PROGRAM_EPISODES,
-            PROGRAM_EPISODE_DURATION,
             PROGRAM_SUBTITLES,
             PROGRAM_SCRIPT,
             PROGRAM_LANGUAGE
