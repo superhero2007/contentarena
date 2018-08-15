@@ -83,7 +83,8 @@ class DefaultController extends BaseController
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
 
         return [
-            'hostUrl'              => $this->container->getParameter('local_host'),
+            'hostUrl'           => $this->container->getParameter('local_host'),
+            'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'    =>  $serializer->serialize($content, 'json'),
             'loggedUser'    => $user,
             'company'       => ($user) ? $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()): null,

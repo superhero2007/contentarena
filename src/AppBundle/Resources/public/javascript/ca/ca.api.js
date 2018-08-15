@@ -248,7 +248,7 @@ ContentArena.Api= {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
-            url: hosturl + "v1/feed/sports",
+            url: externalApiUrl + "v1/feed/sports",
             type: "GET",
             /**
              * @param {{sport:object}} response
@@ -351,7 +351,7 @@ ContentArena.Api= {
         }
 
         $.ajax({
-            url: hosturl + "v1/feed/tournaments",
+            url: externalApiUrl + "v1/feed/tournaments",
             type: "POST",
             data : { id : sportId },
             /**
@@ -382,7 +382,7 @@ ContentArena.Api= {
             _this = this;
 
         $.ajax({
-            url: hosturl + "v1/feed/seasons",
+            url: externalApiUrl + "v1/feed/seasons",
             type: "POST",
             data : { id : tournamentId },
             /**
@@ -432,7 +432,7 @@ ContentArena.Api= {
             _this = this;
 
         $.ajax({
-            url: hosturl + "v1/feed/schedules",
+            url: externalApiUrl + "v1/feed/schedules",
             type: "POST",
             data : { id : seasonId },
             /**
