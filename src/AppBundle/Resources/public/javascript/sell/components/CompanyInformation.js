@@ -15,8 +15,6 @@ class CompanyInformation extends React.Component {
             isOpen : false,
             company : props.company
         };
-
-        this.modalState = {};
     }
 
     componentWillReceiveProps(nextProps) {
@@ -24,7 +22,10 @@ class CompanyInformation extends React.Component {
     }
 
     closeModal = () => {
-        this.setState({ isOpen: false});
+        this.setState({
+            isOpen: false,
+            company: this.props.company
+        });
     };
 
     updateContent = (e, name) => {
@@ -42,7 +43,6 @@ class CompanyInformation extends React.Component {
     };
 
     renderModal = () => {
-
         const { company } = this.state;
 
         return <Modal
@@ -171,17 +171,18 @@ class CompanyInformation extends React.Component {
 
     onOKClick = () => {
         const { updateContentValue, counter } = this.props;
+        const { company } = this.state;
 
-        this.setState(this.modalState);
-
-        updateContentValue("company", this.modalState.company);
+        updateContentValue("company", company);
         updateContentValue("counter", counter + 1);
 
         this.closeModal();
     };
 
     onDataChange(name, value) {
-        this.modalState[name] = value;
+        this.setState({
+            [name]: value
+        });
     }
 }
 

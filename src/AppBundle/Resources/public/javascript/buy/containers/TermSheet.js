@@ -59,20 +59,24 @@ class TermSheet extends React.Component {
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
                         </div>;
 
+                        const defItems = selectedRightsBySuperRight[rp.id].items;
+                        let definition = defItems[right.key];
+                        let label = '';
 
-                        let definition = selectedRightsBySuperRight[rp.id].items[right.key];
+                        if (right.multiple) {
+                            label = defItems[right.key].map(item => RightItemsDefinitions[item].label).join(", ");
+                        } else {
+                            const dynKey = `${right.key}_TEXT`;
+                            if (defItems[dynKey]) {
+                                label = defItems[dynKey];
+                            } else {
+                                label = definition && RightItemsDefinitions[definition].label;
+                            }
+                        }
 
                         return <div  className="right-definition">
-                            {
-                                !right.multiple && definition && RightItemsDefinitions[definition].label
-                            }
-                            {
-                                right.multiple &&
-                                selectedRightsBySuperRight[rp.id].items[right.key].map(item => RightItemsDefinitions[item].label).join(", ")
-                            }
-
-                            {right.key === 'CAMERA'
-                                && <span style={{marginLeft: 5}}>{selectedRightsBySuperRight[rp.id].items["CAMERAS"]}</span>}
+                            {label}
+                            {right.key === 'CAMERA' && <span style={{marginLeft: 5}}>{defItems["CAMERAS"]}</span>}
                         </div>
                     })
                 }
