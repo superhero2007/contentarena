@@ -34,18 +34,18 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="marketplace|listing|bids|messages|contentlisting"},
+     *     requirements={"reactRouting"="marketplace|listing|bids|messages|contentlisting|commercialactivity"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      */
     public function indexParamsAction(Request $request)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams());
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request->get('reactParam')));
     }
 
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
-     *     requirements={"reactRouting"="marketplace|listing|contentlisting"},
+     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialactivity"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      */
     public function indexParams2Action(Request $request)
@@ -57,7 +57,7 @@ class DefaultController extends BaseController
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}/{reactParam3}",
      *     name="homepageParams3",
-     *     requirements={"reactRouting"="marketplace|listing|contentlisting"},
+     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialactivity"},
      *     defaults={"reactParam3" : null, "reactParam2" : null, "reactRouting": null, "reactParam" : null})
      */
     public function indexParams3Action(Request $request)

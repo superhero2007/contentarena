@@ -36,12 +36,14 @@ export const routes = [
     {
         path: "/commercialactivity",
         header: HeaderBar,
+        exact: true,
         main: CommercialActivity
     },
     {
         path: "/commercialactivity/filter/:filterName/:filterValue?",
         header: HeaderBar,
-        main: CommercialActivity
+        main: CommercialActivity,
+        updateByPath : true
     },
     {
         path: "/listing/:customId/:tab?/:bundle?",

@@ -43,12 +43,12 @@ class BoardListing extends React.Component{
 
     edit = () => {
         const { customId } = this.props;
-        goTo("managelistings/edit/" + customId)
+        goTo("contentlisting/" + customId)
     };
 
     submit = () => {
         const { customId } = this.props;
-        goTo("managelistings/edit/" + customId + "/5")
+        goTo("contentlisting/" + customId + "/sign")
     };
 
     view = () => {

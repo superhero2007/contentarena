@@ -18,9 +18,21 @@ class CommercialActivity extends React.Component {
         };
         this.bulletIcon = assetsBaseDir + "app/images/bullet.png";
         this.activeBulletIcon = assetsBaseDir + "app/images/active_bullet.png";
+
+
     }
 
     componentDidMount () {
+
+        const {match} = this.props;
+
+        if ( match && match.params && match.params.filterName){
+            this.setState({
+                filter : match.params.filterName
+            })
+        }
+
+
         this.update();
     }
 
@@ -57,13 +69,13 @@ class CommercialActivity extends React.Component {
         }
 
         switch (filter) {
-            case "CLOSED" :
+            case "closedeals" :
                 return listings.filter(b => {
                     return b.salesPackages.filter((sp)=>{
                         return sp.bids.filter(b=>b.status.name === "APPROVED").length > 0
                         }).length > 0
                     });
-            case "OPEN" :
+            case "openbids" :
                 return listings.filter(b => {
                     return b.salesPackages.filter((sp)=>{
                         return sp.bids.filter(b=>b.status.name === "PENDING").length > 0
@@ -84,6 +96,7 @@ class CommercialActivity extends React.Component {
 
     render () {
         const { loading, filter, selectedListings } = this.state;
+        const {history } = this.props;
         let listings = this.filtered();
         const allListings = this.state.listings;
         return (
@@ -103,27 +116,38 @@ class CommercialActivity extends React.Component {
 
                     <div className={"status-filter"}>
                         <div className={"status-filter-item"}
-                             onClick={()=>{this.setState({filter: "ALL"})}}>
+                             onClick={()=>{
+                                 //this.setState({filter: "ALL"})
+                                 history.push("/commercialactivity")
+                             }}>
                             {filter==="ALL" && <img src={this.activeBulletIcon} />}
                             {filter!=="ALL" && <img src={this.bulletIcon} />}
                             All bundles
                         </div>
                         <div className={"status-filter-item"}
-                             onClick={()=>{this.setState({filter: 'ACTIVITY'})}}>
-                            {filter==="ACTIVITY" && <img src={this.activeBulletIcon} />}
-                            {filter!=="ACTIVITY" && <img src={this.bulletIcon} />}
+                             onClick={()=>{
+                                 //this.setState({filter: 'withactivity'})
+                                 history.push("/commercialactivity/filter/withactivity")
+                             }}>
+                            {filter==="withactivity" && <img src={this.activeBulletIcon} />}
+                            {filter!=="withactivity" && <img src={this.bulletIcon} />}
                             With activity
                         </div>
                         <div className={"status-filter-item"}
-                             onClick={()=>{this.setState({filter: "OPEN"})}}>
-                            {filter==="OPEN" && <img src={this.activeBulletIcon} />}
-                            {filter!=="OPEN" && <img src={this.bulletIcon} />}
+                             onClick={()=>{
+                                 //this.setState({filter: "openbids"})
+                                 history.push("/commercialactivity/filter/openbids")
+                             }}>
+                            {filter==="openbids" && <img src={this.activeBulletIcon} />}
+                            {filter!=="openbids" && <img src={this.bulletIcon} />}
                             Open Bids
                         </div>
                         <div className={"status-filter-item"}
-                             onClick={()=>{this.setState({filter: 'CLOSED'})}}>
-                            {filter==="CLOSED" && <img src={this.activeBulletIcon} />}
-                            {filter!=="CLOSED" && <img src={this.bulletIcon} />}
+                             onClick={()=>{
+                                 history.push("/commercialactivity/filter/closedeals")
+                             }}>
+                            {filter==="closedeals" && <img src={this.activeBulletIcon} />}
+                            {filter!=="closedeals" && <img src={this.bulletIcon} />}
                             Closed deals
                         </div>
                     </div>
@@ -136,9 +160,9 @@ class CommercialActivity extends React.Component {
                             onDelete={this.deleteBid}
                             bidsOpen={list.length === 1 || this.state.filter !== "ALL"}
                             bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
-                            hideWithoutBids={this.state.filter === "ACTIVITY"}
-                            filterByOpenBids={this.state.filter === "OPEN"}
-                            filterByClosedDeals={this.state.filter === "CLOSED"}
+                            hideWithoutBids={this.state.filter === "withactivity"}
+                            filterByOpenBids={this.state.filter === "openbids"}
+                            filterByClosedDeals={this.state.filter === "closedeals"}
                             onSelect={id => goToListing(id, true)}
                             key={i + "-" + listing.customId}
                             {...listing}

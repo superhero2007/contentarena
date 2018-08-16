@@ -25,7 +25,6 @@ class Manager extends React.Component {
         const { company } = this.props;
         return (
             <div className={"manager-container"}>
-                <HeaderBar tab={tab} profile={profile}/>
                 <div className="manager-content">
                     {tab === 'WATCHLIST' && <Watchlist company={company} />}
                     {tab === 'CLOSED_DEALS' && <ClosedDeals />}
