@@ -1,6 +1,7 @@
 import React from 'react';
 import {goTo} from "../actions/utils";
 import {Link} from "react-router-dom";
+import {PropTypes} from 'prop-types';
 
 const HeaderBarTab = ({match, children, route}) => {
     return (
@@ -24,7 +25,6 @@ class HeaderBar extends  React.Component {
 
         return(
             <div className="manager-header">
-
                 <div className="logo" onClick={()=>goTo(logoUrl)}>
                     <img src={assetsBaseDir + "app/images/logo.png"} alt=""/>
                 </div>
@@ -33,45 +33,45 @@ class HeaderBar extends  React.Component {
                 <HeaderBarTab
                     match={match.url === "/marketplace"}
                     route={"/marketplace"}>
-                    Marketplace
+                    {this.context.t("Marketplace")}
                 </HeaderBarTab> }
 
                 { profile === "BUYER" && <HeaderBarTab
                     match={match.url === "/watchlist"}
                     route={"/watchlist"}>
-                    Watchlist
+                    {this.context.t("Watchlist")}
                 </HeaderBarTab> }
 
                 { profile === "BUYER" && <HeaderBarTab
                     match={match.url === "/bids/activebids" ||match.url === "/bids/declinedbids"  }
                     route={"/bids/activebids"}
                     >
-                    Bids
+                    {this.context.t("Bids")}
                 </HeaderBarTab> }
 
                 { profile === "BUYER" && <HeaderBarTab
                     match={match.url === "/closeddeals"}
                     route={"/closeddeals"}
                     >
-                    Closed deals
+                    {this.context.t("Closed deals")}
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
                     match={match.url === "/managelistings"}
                     route={"/managelistings"}>
-                    Manage listings
+                    {this.context.t("Manage listings")}
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
                     match={match.url === "/commercialactivity"}
                     route={"/commercialactivity"} >
-                    Commercial activity
+                    {this.context.t("Commercial activity")}
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
                     match={match.url === "/contentlisting/new"}
                     route={"/contentlisting/new"}>
-                    Create Listing
+                    {this.context.t("Create Listing")}
                 </HeaderBarTab> }
 
                 <div className="spacer" />
@@ -80,20 +80,21 @@ class HeaderBar extends  React.Component {
                 <HeaderBarTab
                     className="tab"
                     route="/managelistings">
-                    Enter selling mode
+                    {this.context.t("Enter selling mode")}
                 </HeaderBarTab> }
 
                 { profile === "SELLER" &&
                 <HeaderBarTab
                     className="tab"
                     route="/marketplace">
-                    Enter buying mode
+                    {this.context.t("Enter buying mode")}
                 </HeaderBarTab> }
 
                 <HeaderBarTab
                     className="tab"
                     route="/messages">
-                    <i className="fa fa-envelope" /> Messages
+                    <i className="fa fa-envelope" />
+                    {this.context.t("Messages")}
                 </HeaderBarTab>
 
                 <div className="settings">
@@ -104,10 +105,10 @@ class HeaderBar extends  React.Component {
                             <HeaderBarTab
                                 route="/settings"
                                 className="tab" >
-                                Settings
+                                {this.context.t("Settings")}
                             </HeaderBarTab>
                             <a href="/logout" className="tab">
-                                Logout
+                                {this.context.t("Logout")}
                             </a>
                         </div>
                     </div>
@@ -127,6 +128,11 @@ class HeaderBar extends  React.Component {
         return logoUrl;
     }
 }
+
+HeaderBar.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
 
 export default HeaderBar;
 

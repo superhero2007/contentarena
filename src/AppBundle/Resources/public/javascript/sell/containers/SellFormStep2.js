@@ -27,7 +27,7 @@ class SellFormStep2 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        //console.log("Step 2 - props", nextProps);
+        console.log("Step 2 - props", nextProps);
         window.content = nextProps;
     }
 

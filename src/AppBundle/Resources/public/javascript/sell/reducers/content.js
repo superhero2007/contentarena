@@ -50,6 +50,7 @@ export const content = (state = EmptyListing, action) => {
         case contentType.RESET:
             return Object.assign({}, state, EmptyListing);
         case contentType.CONTENT_INIT:
+            action.content.initialized = true;
             return Object.assign({}, state, action.content);
         case contentType.GO_TO_NEXT_STEP:
             return Object.assign({}, state, {

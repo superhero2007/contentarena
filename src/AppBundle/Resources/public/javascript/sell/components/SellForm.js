@@ -16,7 +16,7 @@ class SellForm extends React.Component {
     constructor(props) {
         super(props);
 
-        let content = JSON.parse(props.newListing);
+        let content = (props.content.initialized) ? props.content : JSON.parse(props.newListing);
         content.jurisdiction = {
             label: content.company.country.name,
             value: content.company.country.name
@@ -25,6 +25,7 @@ class SellForm extends React.Component {
         content = ContentArena.Utils.contentParserFromServer(content);
 
         if (props.match && props.match.params.step ) {
+
             content.step = (props.match.params.step === "sign") ? 5 : Number(props.match.params.step);
         }
 

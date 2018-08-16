@@ -18,7 +18,6 @@ Encore
         './src/AppBundle/Resources/public/javascript/ca/ca.api.js',
         './src/AppBundle/Resources/public/javascript/ca/ca.api.content.js',
         './src/AppBundle/Resources/public/javascript/ca/ca.data.js',
-        './src/AppBundle/Resources/public/javascript/ca/ca.models.js',
         './src/AppBundle/Resources/public/javascript/ca/ca.utils.js',
     ])
 
@@ -39,6 +38,8 @@ Encore
         'webpack-jquery-ui',
         'react',
         'react-dom',
+        'prop-types',
+        'query-string',
         'uikit',
         'moment',
         'uikit/dist/css/uikit.min.css',
@@ -47,10 +48,13 @@ Encore
         "react-popup",
         "react-router-dom",
         "react-redux",
+        "react-select",
         "react-table",
+        "react-toggle",
         "react-tooltip",
         "react-signature-pad",
         "react-tagsinput",
+        "redux-i18n",
         "redux",
     ])
 

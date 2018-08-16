@@ -1,5 +1,6 @@
 import React from "react";
 import {routes} from "./routes";
+import {PropTypes} from 'prop-types';
 
 import {
     BrowserRouter as Router,
@@ -10,6 +11,8 @@ import {
 } from "react-router-dom";
 import {connect} from "react-redux";
 import {updateProfile} from "./actions/userActions";
+import {setLanguage} from "redux-i18n";
+
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -105,6 +108,10 @@ class AuthRouter extends React.Component {
         };
     }
 
+    componentWillMount() {
+        this.props.setLanguage("en");
+    }
+
     render() {
 
         const {user} = this.props;
@@ -112,6 +119,7 @@ class AuthRouter extends React.Component {
         return (
             <Router>
                 <div className="manager-container">
+
                     <Route path="/landing" component={Login} />
                     <Route path="/logout" component={Logout} />
 
@@ -143,6 +151,10 @@ class AuthRouter extends React.Component {
     }
 }
 
+AuthRouter.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => {
     return state
 };
@@ -154,6 +166,7 @@ const mapDispatchToProps = dispatch => {
             email: email
         }),
         updateProfile : profile =>dispatch(updateProfile(profile)),
+        setLanguage: lang => dispatch(setLanguage(lang))
     }
 };
 

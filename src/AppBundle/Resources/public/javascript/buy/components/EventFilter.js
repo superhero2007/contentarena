@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
+import {PropTypes} from 'prop-types';
+import HeaderBar from "../../main/components/HeaderBar";
 
 class EventFilter extends React.Component {
 
@@ -61,7 +63,9 @@ class EventFilter extends React.Component {
         const {sport, event} = this.props;
         return (
             <div className="box">
-                <div className="title">Event</div>
+                <div className="title">
+                    {this.context.t("Event", {}, "Marketplace - Title for event filters")}
+                </div>
                 <div className="content">
 
                     <div style={{
@@ -87,7 +91,7 @@ class EventFilter extends React.Component {
                             onKeyPress={this.handleKeyPress}
                             onChange={this.updateEvent}
                             ref="search_field"
-                            type="text" id="inputSearch" name="event" placeholder="Search"/>
+                            type="text" id="inputSearch" name="event" placeholder={this.context.t("Search", {}, "Marketplace - Placeholder for Search input")}/>
                     </div>
 
                     <Select
@@ -102,6 +106,10 @@ class EventFilter extends React.Component {
         );
     }
 }
+
+EventFilter.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.filter
