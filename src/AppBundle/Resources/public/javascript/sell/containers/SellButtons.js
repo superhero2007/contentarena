@@ -5,6 +5,8 @@ import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../a
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
 import {editedProgramSelected, historyGoTo, parseSeasons} from "../../main/actions/utils";
+import {PropTypes} from 'prop-types';
+import HeaderBar from "../../main/components/HeaderBar";
 
 const MIN_PROGRAM_DESC_LENGTH = 30;
 
@@ -42,6 +44,7 @@ class SellButtons extends React.Component {
 
             if ( response.success && response.contentId ){
                 this.props.updateContentValue("id", response.contentId);
+                this.props.updateContentValue("customId", response.customId);
             }
 
             this.setState({ saving : false, savingSuccess: true });
@@ -234,7 +237,7 @@ class SellButtons extends React.Component {
                     { this.props.step !== 1 &&
                     <button className="standard-button prev"
                             onClick={ this.goToPreviousStep }>
-                        <i className="fa fa-arrow-left"/> Back
+                        <i className="fa fa-arrow-left"/> {this.context.t("Back")}
                     </button> }
                     {
                         [1,2,3,4].map((v,k)=>(
@@ -254,7 +257,7 @@ class SellButtons extends React.Component {
                                     ( cantReviewAndSign )
                                 }
                                 onClick={ () => step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext()}>
-                                    Next
+                                {this.context.t("Next")}
                                     {saving ?
                                         <i className="fa fa-cog fa-spin"/> :
                                         <i className="fa fa-arrow-right"/>}
@@ -265,6 +268,10 @@ class SellButtons extends React.Component {
         );
     }
 }
+
+SellButtons.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content
