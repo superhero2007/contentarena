@@ -81,6 +81,12 @@ class CommercialActivity extends React.Component {
                         return sp.bids.filter(b=>b.status.name === "PENDING").length > 0
                     }).length > 0
                 });
+            case "withactivity" :
+                return listings.filter(b => {
+                    return b.salesPackages.filter((sp)=>{
+                        return sp.bids.length > 0
+                    }).length > 0
+                });
             default :
                 return listings;
 
