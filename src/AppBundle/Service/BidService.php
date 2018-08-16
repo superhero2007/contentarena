@@ -187,7 +187,7 @@ class BidService
 
         /* @var $buyerUser User */
         $buyerUser = $bid->getBuyerUser();
-        if ( $buyerUser->getId() == $user->getId()  ){
+        if ( $buyerUser->getId() == $user->getId() || $bid->getContent()->isOwner($user) ){
             $this->em->remove($bid);
             $this->em->flush();
             return true;

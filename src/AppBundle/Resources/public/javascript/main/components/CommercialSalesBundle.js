@@ -279,8 +279,7 @@ class CommercialSalesBundle extends React.Component{
                             Cell: props => <div className={""}>
                                 {props.value.status === "REJECTED"
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                    //this.setState({removeModalIsOpen:true, selectedBid : props.value.bid});
-                                    this.setState({showRemoveConfirm: true});
+                                    this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
                                 }} src={bucketIcon}/>}
                                 {props.value.status === "PENDING"
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
@@ -306,14 +305,14 @@ class CommercialSalesBundle extends React.Component{
                                         Are you sure you want to remove this bid?
                                     </div>
                                     <button className={"button button-confirm"} onClick={(e)=>{
-                                        this.setState({showRemoveConfirm: false});
-                                        onDelete(props.value.bid.id);
+                                        onDelete(this.state.selectedBidForDeletion.id);
+                                        this.setState({showRemoveConfirm: false, selectedBidForDeletion: null});
                                         e.stopPropagation();
                                     }}>
                                         Remove
                                     </button>
                                     <button className={"button"} onClick={(e)=>{
-                                        this.setState({showRemoveConfirm: false});
+                                        this.setState({showRemoveConfirm: false, selectedBidForDeletion: null});
                                         e.stopPropagation();
                                     }}>
                                         Cancel
