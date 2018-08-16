@@ -152,7 +152,7 @@ class ApiController extends BaseController
         $listings = $contentService->getActive($user);
 
         foreach ( $listings as $listing ) {
-            $bids = $bidService->getPendingBidsByContent($listing);
+            $bids = $bidService->getAllBidsByContent($listing);
 
             if ( $bids != null ) $listing->setEditable(false);
         }
@@ -171,11 +171,17 @@ class ApiController extends BaseController
     /**
      * @Route("/api/listings/expired", name="listingsExpired")
      */
-    public function listingsExpired(Request $request, ContentService $contentService)
+    public function listingsExpired(Request $request, ContentService $contentService, BidService $bidService)
     {
         $user = $this->getUser();
         $listings = $contentService->getExpired($user);
         $context = SerializationContext::create()->setGroups(array('board'));
+
+        foreach ( $listings as $listing ) {
+            $bids = $bidService->getAllBidsByContent($listing);
+
+            if ( $bids != null ) $listing->setEditable(false);
+        }
 
         $data = $this->serialize($listings,$context);
 
