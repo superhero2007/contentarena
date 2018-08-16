@@ -72,7 +72,7 @@ class DefaultController extends BaseController
             ->getRepository('AppBundle:RightsPackage')
             ->findAll();
 
-        if ($listingId){
+        if ($listingId && $listingId != "new"){
             $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $listingId]);
         } else{
             $content = new Content();
