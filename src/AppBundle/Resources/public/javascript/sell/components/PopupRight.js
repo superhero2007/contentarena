@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import cloneDeep from 'lodash/cloneDeep';
 import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
@@ -18,9 +19,6 @@ class PopupRight extends React.Component {
             custom : false,
             productionLabels : SuperRightProductionDetailsLabels
         };
-
-        this.selectedRightsTemp = {};
-        this.selectedRightsForUpdate = {};
     }
 
     componentWillReceiveProps(props){
@@ -97,26 +95,45 @@ class PopupRight extends React.Component {
     };
 
     togglePopup = () => {
-        this.selectedRightsTemp = {};
-        this.selectedRightsForUpdate = {};
-
-        const {onProgram, id} = this.props;
+        const {onProgram, id, onUpdate} = this.props;
 
         if ( id === "PROGRAM") {
             onProgram();
             return;
         }
+        
+        this.setState(({isOpen, rightsPackage}) => {
+            if (!isOpen) {
+                this.prevRightsPackage = new Map();
+                rightsPackage.forEach((item) => {
+                    this.prevRightsPackage.set(item.id, cloneDeep(item));
+                });
+            }
 
-        let isOpen = !this.state.isOpen;
-        this.setState({isOpen});
+            return {
+                isOpen: !isOpen
+            }
+        });
     };
 
-    updateSelection = (val, id, rightPackage) => {
+    closePopupAndRestoreData = () => {
+        const { onUpdate } = this.props;
 
-        const rightsPackage = new Map(this.state.rightsPackage);
-        this.setRightPackageForUpdate(rightPackage.selectedRights, id, val);
+        onUpdate(this.prevRightsPackage);
+        this.prevRightsPackage = null;
+        this.togglePopup();
+    };
+
+    onOKClicked = () => {
+        this.togglePopup();
+    };
+
+    updateSelection = (val, id,rightPackage) => {
+        const rightsPackage = this.state.rightsPackage;
+        rightPackage.selectedRights[id] = val;
         rightsPackage.set(rightPackage.id, rightPackage);
-        this.updateRightsPackage(rightsPackage);
+
+        this.props.onUpdate(rightsPackage);
 
     };
 
@@ -125,13 +142,14 @@ class PopupRight extends React.Component {
         const rightsPackage = this.state.rightsPackage;
         let index = rightPackage.selectedRights[id].indexOf(val);
         let all = RightItemsDefinitions[val].all;
+        let alls = RightItemsDefinitions
 
         if ( index === -1 ){
 
             if ( all ){
-                this.setRightPackageForUpdate(rightPackage.selectedRights, id, [val]);
+                rightPackage.selectedRights[id] = [val];
             } else {
-                this.setRightPackageForUpdate(rightPackage.selectedRights, id, [...rightPackage.selectedRights[id], val]);
+                rightPackage.selectedRights[id] = [...rightPackage.selectedRights[id], val];
 
                 rightPackage.selectedRights[id].forEach(function(item, index, object) {
                     let m = item.match(/_ALL/g);
@@ -148,7 +166,7 @@ class PopupRight extends React.Component {
 
         rightsPackage.set(rightPackage.id, rightPackage);
 
-        this.updateRightsPackage(rightsPackage);
+        this.props.onUpdate(rightsPackage);
 
     };
 
@@ -156,9 +174,9 @@ class PopupRight extends React.Component {
 
         const rightsPackage = this.state.rightsPackage;
         rightsPackage.forEach((rightPackage )=>{
-            this.setRightPackageForUpdate(rightPackage.selectedRights, id, val);
+            rightPackage.selectedRights[id] = val;
         });
-        this.updateRightsPackage(rightsPackage);
+        this.props.onUpdate(rightsPackage);
 
     };
 
@@ -288,7 +306,7 @@ class PopupRight extends React.Component {
 
             <div className="modal-title">
                 Edit {name}
-                <i className="fa fa-times-circle-o" onClick={this.togglePopup}/>
+                <i className="fa fa-times-circle-o" onClick={this.closePopupAndRestoreData}/>
             </div>
 
             <div className="step-content">
@@ -362,16 +380,16 @@ class PopupRight extends React.Component {
                                     }
                                 </div>
                             })}
-                            </div>}
+                        </div>}
 
                         {!global && rightsPackage.map((rightPackage)=>{
                             if ( superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1 ) return;
 
                             if (checkContentDelivery
-                                    && id !== "CONTENT_DELIVERY"
-                                    && ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_NON_DEDICATED" ||
+                                && id !== "CONTENT_DELIVERY"
+                                && ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_NON_DEDICATED" ||
                                     rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" )
-                                    //&& packagesAvailable.indexOf("LT") === -1
+                            //&& packagesAvailable.indexOf("LT") === -1
                             ){
                                 return;
                             }
@@ -384,13 +402,13 @@ class PopupRight extends React.Component {
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
                         {showTextArea && showTextArea === "FURTHER_DETAILS" && rightsPackage && rightsPackage.length > 0 &&
-                            <div>
-                                <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Further details</div>
-                                <textarea
+                        <div>
+                            <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Further details</div>
+                            <textarea
 
-                                    onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_DETAILS")}}
-                                    value={rightsPackage[0].selectedRights["TECHNICAL_FEE_DETAILS"]}/>
-                            </div>
+                                onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_DETAILS")}}
+                                value={rightsPackage[0].selectedRights["TECHNICAL_FEE_DETAILS"]}/>
+                        </div>
                         }
 
                         {technicalFee && this.hasSelection(id, technicalFee, rightsPackage) && <div>
@@ -505,7 +523,7 @@ class PopupRight extends React.Component {
         let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
 
         if ( deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery ) id = "LIVE_FEED_" + id;
-
+        
         if (rightsPackage.length > 0 ){
             if (id === "PROGRAM") {
                 if (programName) {
@@ -521,7 +539,7 @@ class PopupRight extends React.Component {
                         selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label;
                     }
                 }
-            } else if (id === "EXPLOITATION_FORM" || id === "TRANSMISSION_MEANS"){
+            } else if (id === "EXPLOITATION_FORM" || id === "TRANSMISSION_MEANS" || id === "TECHNICAL_DELIVERY"){
 
                 if ( rightsPackage[0].selectedRights[id].length > 1 ) {
                     custom = true;
@@ -544,6 +562,8 @@ class PopupRight extends React.Component {
             }
         }
 
+        console.log(selected);
+
         return (
             <div className="base-input" style={{width: "49%"}}>
                 <label>{name}</label>
@@ -560,24 +580,6 @@ class PopupRight extends React.Component {
             </div>
         )
     }
-
-    updateRightsPackage(rightsPackage) {
-        this.setState({
-            rightsPackage
-        });
-    }
-
-    setRightPackageForUpdate(selectedRights, id, value) {
-        this.selectedRightsTemp = {...selectedRights, [id]: value};
-        this.selectedRightsForUpdate = selectedRights;
-    }
-
-    onOKClicked = () => {
-        Object.assign(this.selectedRightsForUpdate, this.selectedRightsTemp);
-        
-        this.togglePopup();
-        this.props.onUpdate(this.state.rightsPackage)
-    };
 }
 
 
