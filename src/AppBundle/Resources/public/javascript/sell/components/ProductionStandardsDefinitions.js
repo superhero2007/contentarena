@@ -83,7 +83,7 @@ export const ProductionStandardsDefinitions = [
             "TECHNICAL_DELIVERY_FTP",
             "TECHNICAL_DELIVERY_FIBER",
         ],
-        multiple : false,
+        multiple : true,
         showTextArea:"FURTHER_DETAILS",
         technicalFee : "TECHNICAL_DELIVERY_SATELLITE"
     },
