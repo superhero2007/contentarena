@@ -55,9 +55,8 @@ class ApiController extends BaseController
     public function apiListingsWatchlist(Request $request){
 
         $user = $this->getUser();
-        $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['user'=>$user]);
-
-
+        $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['user'=>$user], array('id' => 'DESC'));
+        
         $contents = [];
 
         foreach ($watchlists as $watchlist){
