@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {PropTypes} from "prop-types";
+import HeaderBar from "./HeaderBar";
 
 const FileItem = ({item, onClick}) => (
     <div style={{
@@ -101,7 +103,9 @@ class FileSelector extends Component {
                     <button
                         className="standard-button"
                         disabled={uploading}
-                        onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>Upload</button>
+                        onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>
+                        {this.context.t("Upload")}
+                    </button>
                     <input
                         className="is-hidden"
                         onChange={this.handleUploadFile}
@@ -137,5 +141,10 @@ class FileSelector extends Component {
         )
     }
 }
+
+FileSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
 
 export default FileSelector;

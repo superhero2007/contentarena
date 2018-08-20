@@ -15,6 +15,7 @@ import {stepChangeReset} from "../actions/contentActions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
 
 import {customStyles} from "../../main/styles/custom";
+import {PropTypes} from "prop-types";
 
 const licenseStyles = {
     fontSize: "15px",
@@ -116,7 +117,7 @@ class SellFormStep3 extends React.Component {
             >
 
                 <div className="modal-title">
-                    Program details
+                    {this.context.t("Program details")}
                     <i className="fa fa-times-circle-o" onClick={this.closeProgramsPopup}/>
                 </div>
 
@@ -124,21 +125,27 @@ class SellFormStep3 extends React.Component {
                     <div className="step-content-container" style={{minWidth:500}}>
 
                         <div className="modal-input">
-                            <label>Program language</label>
+                            <label>
+                                {this.context.t("Program language")}
+                            </label>
                             <LanguageSelector
                                 value={PROGRAM_LANGUAGE}
                                 onChange={(value)=>{updateContentValue('PROGRAM_LANGUAGE', value)}}/>
                         </div>
 
                         <div className="modal-input">
-                            <label>Subtitles (if available)</label>
+                            <label>
+                                {this.context.t("Subtitles (if available)")}
+                            </label>
                             <LanguageSelector
                                 value={PROGRAM_SUBTITLES}
                                 onChange={(value)=>{updateContentValue('PROGRAM_SUBTITLES', value)}}/>
                         </div>
 
                         <div className="modal-input">
-                            <label>Script (if available)</label>
+                            <label>
+                                {this.context.t("Script (if available)")}
+                            </label>
                             <LanguageSelector
                                 value={PROGRAM_SCRIPT}
                                 onChange={(value)=>{updateContentValue('PROGRAM_SCRIPT', value)}}/>
@@ -150,7 +157,9 @@ class SellFormStep3 extends React.Component {
                 <div className={"buttons"}>
                     <button
                         className={"standard-button"}
-                        onClick={this.closeProgramsPopup}>Ok</button>
+                        onClick={this.closeProgramsPopup}>
+                        {this.context.t("Ok")}
+                    </button>
                 </div>
             </Modal>
         )
@@ -215,17 +224,21 @@ class SellFormStep3 extends React.Component {
                     <div className={"license-date-container"}>
                         <div className="table-right">
                             <div className="row">
-                                <div className="column right-name">Start</div>
+                                <div className="column right-name">
+                                    {this.context.t("Start")}
+                                </div>
                                 <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
                                     { !this.props.startDate  && "contract conclusion"}
                                     { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
                                 </div>
-                                <div className="column right-name">End</div>
+                                <div className="column right-name">
+                                    {this.context.t("End")}
+                                </div>
                                 <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
                                     { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
                                     { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
-                                    { endDateMode === "UNLIMITED"  && "Unlimited"}
-                                    { !endDateMode && "Please select"}
+                                    { endDateMode === "UNLIMITED"  && this.context.t("Unlimited")}
+                                    { !endDateMode && this.context.t("Please select")}
                                     <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
                                         <i className="fa fa-edit"/>
                                     </div>
@@ -234,7 +247,7 @@ class SellFormStep3 extends React.Component {
                         </div>
                     </div>
 
-                    <TitleBar title={"Grant of Rights"}/>
+                    <TitleBar title={this.context.t("Grant of Rights")}/>
 
                     <div className="rights-container">
                         {
@@ -263,7 +276,7 @@ class SellFormStep3 extends React.Component {
 
                     <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
 
-                    <TitleBar title={"Configure Production Standards"}/>
+                    <TitleBar title={this.context.t("Configure Production Standards")}/>
 
                     <div className="rights-container">
                         {
@@ -316,6 +329,9 @@ class SellFormStep3 extends React.Component {
         });
     }
 }
+SellFormStep3.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

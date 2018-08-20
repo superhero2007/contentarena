@@ -10,10 +10,6 @@ class CountrySelector extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-
-    }
-
     componentDidMount () {
         let _this = this;
         if ( ContentArena.Data.Countries.length === 0) {

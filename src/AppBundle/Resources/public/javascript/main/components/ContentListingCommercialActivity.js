@@ -6,6 +6,7 @@ import CommercialSalesBundle from "../../main/components/CommercialSalesBundle";
 import ContentListing from "./ContentListing";
 import {getCurrencySymbol} from "../actions/utils";
 import {addIcon, cancelIcon} from "./Icons";
+import {PropTypes} from "prop-types";
 
 class ContentListingCommercialActivity extends ContentListing {
     constructor(props){
@@ -59,7 +60,6 @@ class ContentListingCommercialActivity extends ContentListing {
             image,
             company,
             id,
-            PROGRAM_NAME
         } = this.props;
 
         const {showSalesPackage} = this.state;
@@ -92,16 +92,18 @@ class ContentListingCommercialActivity extends ContentListing {
                     {/*BID DETAILS*/}
                     <div  className={"bid-listing-details"}>
                         <div className={"item"}>
-                            <div>{closedDeals.length} closed Deals</div>
+                            <div>
+                                {this.context.t(["closed deal", "closed deals", "n"], {n : closedDeals.length})}
+                            </div>
                         </div>
                         <div className={"item"}>
-                            <div>{openBids.length} open bids</div>
+                            <div>
+                                {this.context.t(["open bid","open bids", "n"], {n : openBids.length})}
+                            </div>
                         </div>
                         {bids.length > 0 && <div className={"item"} style={{fontWeight:600}}>
                             <div>
-                                {"Total: " + total.toLocaleString("en", { maximumFractionDigits: 2 })
-                                + " "}
-
+                                {this.context.t("Commercial Activity Total - {n}", {n : total.toLocaleString("en", { maximumFractionDigits: 2 })})}
                                 {getCurrencySymbol(salesPackages[0].currency.code)}
                             </div>
                         </div>}
@@ -136,5 +138,8 @@ class ContentListingCommercialActivity extends ContentListing {
         )
     }
 }
+ContentListingCommercialActivity.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default ContentListingCommercialActivity;

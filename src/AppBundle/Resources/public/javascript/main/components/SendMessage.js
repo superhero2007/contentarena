@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import {customStyles, GenericModalStyle} from "../styles/custom";
-import {companyIsValid} from "../../sell/actions/validationActions";
+import { GenericModalStyle} from "../styles/custom";
+import {PropTypes} from "prop-types";
 
 class SendMessage extends React.Component{
     constructor(props){
@@ -10,9 +10,6 @@ class SendMessage extends React.Component{
         this.state = {
             isOpen : props.isOpen
         }
-    }
-
-    componentDidMount () {
     }
 
     open = () => {
@@ -54,7 +51,7 @@ class SendMessage extends React.Component{
             >
                 <div className={"generic-modal-container"}>
                     <div className="title">
-                        Contact {recipient.legalName}
+                        {this.context.t("Contact")} {recipient.legalName}
                     </div>
 
                     <div className="container">
@@ -62,22 +59,32 @@ class SendMessage extends React.Component{
                         <textarea onChange={(e)=>{this.setState({message: e.target.value})}} value={message}/>}
                         {saving && <div><i className="fa fa-cog fa-spin" /></div>}
                         {showSuccess && <div>
-                            Message sent!
+                            {this.context.t("Message sent!")}
                         </div>}
                     </div>
 
                     <div className={"buttons"}>
 
                         {!saving && !showSuccess &&
-                        <button className={"confirm"} disabled={!message} onClick={this.send}>Send</button>}
+                        <button className={"confirm"} disabled={!message} onClick={this.send}>
+                            {this.context.t("Send")}
+                        </button>}
 
-                        {!showSuccess && <button onClick={this.close}>Cancel</button>}
-                        {showSuccess && <button  className={"confirm"} onClick={this.close}>Close</button>}
+                        {!showSuccess && <button onClick={this.close}>
+                            {this.context.t("Cancel")}
+                        </button>}
+                        {showSuccess && <button  className={"confirm"} onClick={this.close}>
+                            {this.context.t("Close")}
+                        </button>}
                     </div>
                 </div>
             </Modal>
         )
     }
 }
+
+SendMessage.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default SendMessage;

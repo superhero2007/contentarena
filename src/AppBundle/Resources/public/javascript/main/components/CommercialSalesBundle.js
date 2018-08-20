@@ -8,6 +8,7 @@ import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/u
 import {addIcon, bidIcon, blueCheckIcon, blueEnvelopeIcon, bucketIcon, cancelIcon, docIcon, fixedIcon} from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "../../main/components/SendMessage";
+import {PropTypes} from "prop-types";
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -86,6 +87,7 @@ class CommercialSalesBundle extends React.Component{
             <div className={"generic-modal-container"}>
                 <div className="title">
                     Are you sure you want to accept this bid?
+                    {this.context.t("Yes")}
                 </div>
 
                 <div className="container">
@@ -94,7 +96,10 @@ class CommercialSalesBundle extends React.Component{
 
                 <div className={"buttons"}>
                     <button onClick={this.closeApproveModal}>Cancel</button>
-                    {!saving && <button className={"confirm"} disabled={!signature} onClick={this.acceptBid}>Accept Bid</button>}
+                    {!saving && <button className={"confirm"} disabled={!signature} onClick={this.acceptBid}>
+                        Accept Bid
+                        {this.context.t("Yes")}
+                    </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
                 </div>
             </div>
@@ -115,19 +120,26 @@ class CommercialSalesBundle extends React.Component{
             <div className={"generic-modal-container"}>
                 <div className="title">
                     Are you sure you want to decline this bid?
+                    {this.context.t("Yes")}
                 </div>
 
                 <div className="container">
                     Enter Message (optional)
+                    {this.context.t("Yes")}
                     <textarea onChange={(e)=>{this.setState({message: e.target.value})}} value={message}>
                     </textarea>
                 </div>
 
                 <div className={"buttons"}>
 
-                    {!saving && <button className={"confirm"} onClick={this.rejectBid}>Confirm</button>}
+                    {!saving && <button className={"confirm"} onClick={this.rejectBid}>
+                        Confirm
+                    </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
-                    <button onClick={this.closeRejectModal}>Cancel</button>
+                    <button onClick={this.closeRejectModal}>
+                        Cancel
+                        {this.context.t("Yes")}
+                    </button>
                 </div>
             </div>
         </Modal>
@@ -146,6 +158,7 @@ class CommercialSalesBundle extends React.Component{
             <div className={"generic-modal-container"}>
                 <div className="title">
                     Are you sure you want to remove this bid?
+                    {this.context.t("Yes")}
                 </div>
 
                 <div className="container">
@@ -153,9 +166,15 @@ class CommercialSalesBundle extends React.Component{
 
                 <div className={"buttons"}>
 
-                    {!saving && <button onClick={this.removeBid} className={"confirm"}>Confirm</button>}
+                    {!saving && <button onClick={this.removeBid} className={"confirm"}>
+                        Confirm
+                        {this.context.t("Yes")}
+                    </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
-                    <button onClick={this.closeRemoveModal}>Cancel</button>
+                    <button onClick={this.closeRemoveModal}>
+                        {this.context.t("Yes")}
+                        Cancel
+                    </button>
                 </div>
             </div>
         </Modal>
@@ -187,11 +206,11 @@ class CommercialSalesBundle extends React.Component{
                     </div>
 
                     <div className="sales-bundle-item-right" style={{marginLeft: 'auto'}}>
-                        {closedDeals.length} closed Deals
+                        {this.context.t(["closed deal", "closed deals", "n"], {n : closedDeals.length})}
                     </div>
 
                     <div className="sales-bundle-item-right">
-                        {salesBundle.bids.filter(b=>b.status.name === "PENDING").length} open bids
+                        {this.context.t(["open bid","open bids", "n"], {n : salesBundle.bids.filter(b=>b.status.name === "PENDING").length})}
                     </div>
 
                     {totalFee && <div className="sales-bundle-item-right">
@@ -228,12 +247,12 @@ class CommercialSalesBundle extends React.Component{
                             Cell: props => <div>
                                 {props.value}
                             </div>,
-                            Header: 'Buyer',
+                            Header: this.context.t("Buyer"),
                             headerClassName : 'table-header-big',
                             className : 'table-header-big',
                             id : "company"
                         },  {
-                            Header: 'Fee',
+                            Header: this.context.t("Fee"),
                             headerClassName : 'table-header',
                             className : 'table-header',
                             id: "price",
@@ -242,7 +261,7 @@ class CommercialSalesBundle extends React.Component{
                                 {props.value.fee + " " + getCurrencySymbol(props.value.currency)}
                             </div>
                         }, {
-                            Header: 'User',
+                            Header: this.context.t("User"),
                             headerClassName : 'table-header-big',
                             className : 'table-header-big',
                             accessor: 'buyerUser',
@@ -251,7 +270,7 @@ class CommercialSalesBundle extends React.Component{
                             </div>
 
                         },{
-                            Header: 'Action',
+                            Header: this.context.t("Action"),
                             headerClassName : 'table-header',
                             className : 'table-header',
                             accessor: 'status.name',
@@ -262,7 +281,7 @@ class CommercialSalesBundle extends React.Component{
                             </div>
 
                         },{
-                            Header: 'Action date',
+                            Header: this.context.t("Action date"),
                             headerClassName : 'table-header',
                             className : 'table-header',
                             accessor: 'createdAt',
@@ -303,20 +322,20 @@ class CommercialSalesBundle extends React.Component{
                                 {/*CONFIRM REMOVE*/}
                                 {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                     <div className={"confirmation-text"} style={{ whiteSpace: 'normal'}}>
-                                        Are you sure you want to remove this bid?
+                                        {this.context.t("Are you sure you want to remove this bid?")}
                                     </div>
                                     <button className={"button button-confirm"} onClick={(e)=>{
                                         this.setState({showRemoveConfirm: false});
                                         onDelete(props.value.bid.id);
                                         e.stopPropagation();
                                     }}>
-                                        Remove
+                                        {this.context.t("Remove")}
                                     </button>
                                     <button className={"button"} onClick={(e)=>{
                                         this.setState({showRemoveConfirm: false});
                                         e.stopPropagation();
                                     }}>
-                                        Cancel
+                                        {this.context.t("Cancel")}
                                     </button>
                                 </div>}
                             </div>
@@ -330,5 +349,9 @@ class CommercialSalesBundle extends React.Component{
         )
     }
 }
+
+CommercialSalesBundle.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default CommercialSalesBundle;

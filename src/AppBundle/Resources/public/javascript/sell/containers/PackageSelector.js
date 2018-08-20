@@ -5,6 +5,7 @@ import {RightDefaults} from "../components/RightDefaults";
 import {updateContentValue} from "../actions/contentActions";
 import {SuperRightDefinitions} from "../components/SuperRightDefinitions";
 import {RightDefaultsBySuperRight} from "../components/RightDefaultsBySuperRight";
+import {PropTypes} from "prop-types";
 
 class SuperRight extends React.Component {
 
@@ -119,17 +120,19 @@ class PackageSelector extends React.Component {
         return (
             <div className="package-selector table">
                 <div className="package-selector-title">
-                    Rights selection & definition
+                    {this.context.t("Rights selection & definition")}
                 </div>
                 <div className="package-selector-container">
 
                     <div style={{margin: 20}}>
-                        Which rights, relating to the program defined above, do you wish to grant to the buyer?
+                        {this.context.t("Which rights, relating to the program defined above, do you wish to grant to the buyer?")}
                     </div>
 
                     <div className="package-exclusive">
                         <div className="package-exclusive-item" />
-                        <div className="package-exclusive-item">Exclusive</div>
+                        <div className="package-exclusive-item">
+                            {this.context.t("Exclusive")}
+                        </div>
                         <div className="package-exclusive-item" />
                     </div>
                     <div className="package-selector-content" >
@@ -154,6 +157,10 @@ class PackageSelector extends React.Component {
         );
     }
 }
+
+PackageSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content;

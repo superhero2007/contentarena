@@ -11,6 +11,7 @@ import ListingName from "../components/ListingName";
 import {CountrySelector} from "../../main/components/CountrySelector";
 import {stepChangeReset} from "../actions/contentActions";
 import {TitleBar} from "../components/SellFormItems";
+import {PropTypes} from "prop-types";
 
 class SellFormStep4 extends React.Component {
 
@@ -85,11 +86,25 @@ class SellFormStep4 extends React.Component {
 
     };
 
+    addFile = (response) => {
+        const {annex} = this.props;
+        let index = annex.length ;
+        this.props.updateAnnex("save", index, {file: response.file, name : response.name } );
+    };
+
+    removeFile = ( index ) => {
+        this.props.updateAnnex("remove", index, null);
+    };
+
     render() {
         const {
             step,
-            rightsPackage,
-            salesPackages, currency, vat, updateContentValue, image, vatPercentage, applyVatInJurisdiction
+            annex,
+            salesPackages,
+            currency,
+            updateContentValue,
+            image,
+            applyVatInJurisdiction
         } = this.props;
 
         if (step !== 4) return (null);
@@ -123,14 +138,16 @@ class SellFormStep4 extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
-                    <TitleBar title={"Further information"}/>
+                    <TitleBar title={this.context.t("Further information")}/>
 
                     <CompanyInformation/>
 
                     <JurisdictionSelector/>
 
                     <div className='base-full-input'>
-                        <label>do you seek to apply VAT to buyers in company’s palce of jurisdiction?</label>
+                        <label>
+                            {this.context.t("do you seek to apply VAT to buyers in company’s place of jurisdiction?")}
+                        </label>
                         <div className='column'>
                             <input
                                 checked={applyVatInJurisdiction}
@@ -139,7 +156,7 @@ class SellFormStep4 extends React.Component {
                                 className="ca-radio package-selector"
                                 value='yes'
                             />
-                            YES
+                            {this.context.t("Yes")}
                         </div>
                         <div className='column'>
                             <input
@@ -149,33 +166,26 @@ class SellFormStep4 extends React.Component {
                                 className="ca-radio package-selector"
                                 value='no'
                             />
-                            NO
+                            {this.context.t("No")}
                         </div>
                     </div>
 
                     <FileSelector
-                        label={'Annex'}
-                        target={"attachments"}
-                        selected={[]}
-                        onSelect={() => {
-                            console.log('remove file')
-                        }}
-                        onRemove={() => {
-                            console.log('remove file')
-                        }}
-                        accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"]}
+                        label={this.context.t('Annex')}
+                        target={"annex"}
+                        selected={annex}
+                        onSelect={this.addFile}
+                        onRemove={this.removeFile}
+                        accept={[ ".pdf"]}
                         acceptType={[
-                            "image/jpeg",
-                            "image/png",
                             "application/pdf"
                         ]}
                         tmp={true}/>
 
-                    <TitleBar title={"Listing details"}/>
+                    <TitleBar title={this.context.t("Listing details")}/>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
-                        Please define listing details below. This determines how your listing is shown to potential
-                        buyers.
+                        {this.context.t("Please define listing details below. This determines how your listing is shown to potential buyers.")}
                     </div>
 
                     <ListingName/>
@@ -184,7 +194,7 @@ class SellFormStep4 extends React.Component {
                         <ExpirationDateSelector/>
 
                         <FileSelector
-                            label={"Listing image (opt.)"}
+                            label={this.context.t("Listing image (opt.)")}
                             isImage={true}
                             onSelect={updateContentValue}
                             previousImage={image}
@@ -198,6 +208,10 @@ class SellFormStep4 extends React.Component {
         );
     }
 }
+
+SellFormStep4.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content
@@ -219,6 +233,12 @@ const mapDispatchToProps = dispatch => {
         addSalesPackages : (salesPackages) => dispatch({
             type: 'ADD_SALES_PACKAGES',
             salesPackages : salesPackages,
+        }),
+        updateAnnex : (name, index, value) => dispatch({
+            type: 'UPDATE_ANNEX',
+            name: name,
+            index: index,
+            value: value
         }),
         stepChangeReset : () => dispatch(stepChangeReset())
     }

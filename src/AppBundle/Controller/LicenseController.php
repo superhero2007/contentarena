@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use PDFMerger;
 
 class LicenseController extends Controller
 {
@@ -66,12 +67,46 @@ class LicenseController extends Controller
     }
 
     /**
+     * @param $content
+     * @param $viewElements
+     * @throws \exception
+     */
+    private function mergeAndSave($content, $viewElements){
+        /* @var Content $content  */
+        $time = new \DateTime();
+        $html = $this->renderView('contract/layout.html.twig', $viewElements);
+
+        $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
+
+        // Use $this->get('knp_snappy.pdf')->getOutputFromHtml($html) to generate
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $html,
+            $this->container->getParameter("uploads_main_folder") . "/" . $fileName
+        );
+
+        // Create an instance of PDFMerger
+        $pdf = new PDFMerger();
+
+        // Add 2 PDFs to the final PDF
+        $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/" . $fileName, 'all');
+
+        if ( $content->getAnnex() != null ){
+            foreach ($content->getAnnex() as $annex){
+                $pdf->addPDF($this->container->getParameter("main_folder") . "/" . $annex->file, 'all');
+            }
+        }
+
+        $pdf->merge('download', "License Agreement.pdf");
+    }
+
+    /**
      * @Route("/license/bundle/{id}/{listingId}", name="contractBundle")
+     * @throws \exception
      */
     public function contractBundle(Request $request, ContentService $contentService){
 
         $user = $this->getUser();
-        $time = new \DateTime();
         /* @var SalesPackage $bundle  */
         $bundle = $this->getDoctrine()
             ->getRepository('AppBundle:SalesPackage')
@@ -87,26 +122,32 @@ class LicenseController extends Controller
             'user' => $user,
             'bundle' => $bundle,
             'content' => $content,
+            'watermark' => true,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
 
-        $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        return new PdfResponse(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
-        );
+        $this->mergeAndSave($content,$viewElements);
+
+        //return new PdfResponse(
+        //    $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+        //    'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
+        //);
     }
 
     /**
      * @Route("/license/bid/{customId}", name="contractBid")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @throws \exception
      */
     public function contractBid(Request $request, ContentService $contentService){
         /* @var SalesPackage $bundle  */
+        /* @var Content $content  */
+
         $user = $this->getUser();
-        $time = new \DateTime();
         $bid = $this->getDoctrine()
             ->getRepository('AppBundle:Bid')
             ->findOneBy(['customId' => $request->get("customId")]);
@@ -120,6 +161,7 @@ class LicenseController extends Controller
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
+            'watermark' => $bid->getStatus()->getName() != 'APPROVED',
             'bundle' => $bundle,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
@@ -127,16 +169,13 @@ class LicenseController extends Controller
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
+        $this->mergeAndSave($content,$viewElements);
 
-        $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        return new PdfResponse(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
-        );
     }
 
     /**
      * @Route("/license/custom/{customId}/{bundleId}", name="customLicense")
+     * @throws \exception
      */
     public function customLicense(Request $request, ContentService $contentService){
         /* @var SalesPackage $bundle  */
@@ -164,6 +203,7 @@ class LicenseController extends Controller
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
+            'watermark' => true,
             'bundle' => $bundle,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
@@ -172,21 +212,17 @@ class LicenseController extends Controller
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
 
-        $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        return new PdfResponse(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
-        );
+        $this->mergeAndSave($content,$viewElements);
     }
 
 
     /**
      * @Route("/license/preview/{customId}", name="contractPreview")
+     * @throws \exception
      */
     public function contractPreviewAction(Request $request){
 
         $user = $this->getUser();
-        $time = new \DateTime();
         $content = $this->getDoctrine()
             ->getRepository('AppBundle:Content')
             ->findOneBy(['customId' => $request->get("customId")]);
@@ -197,17 +233,13 @@ class LicenseController extends Controller
         $viewElements = array(
             'user' => $user,
             'content' => $content,
+            'watermark' => true,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
-
-        $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        return new PdfResponse(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf'
-        );
+        $this->mergeAndSave($content,$viewElements);
     }
 
 }

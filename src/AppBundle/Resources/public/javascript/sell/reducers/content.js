@@ -14,6 +14,7 @@ export const contentType= {
     APPLY_SELECTION : 'APPLY_SELECTION',
     UPDATE_SALES_PACKAGES : 'UPDATE_SALES_PACKAGES',
     UPDATE_ATTACHMENTS : 'UPDATE_ATTACHMENTS',
+    UPDATE_ANNEX : 'UPDATE_ANNEX',
     ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES',
     RESET : 'RESET'
 
@@ -28,6 +29,7 @@ export const EmptyListing = {
     seasons: [],
     salesPackages : [],
     attachments : [],
+    annex : [],
     endDateLimit : 30,
     counter : 0,
     currency : "EUR",
@@ -182,6 +184,27 @@ export const content = (state = EmptyListing, action) => {
 
             return Object.assign({}, state, {
                 attachments : attachments
+            });
+
+        case contentType.UPDATE_ANNEX:
+
+            let annex = [...state.annex];
+
+            if ( action.name === "remove" ) {
+
+                if ( annex.length >= 1 ) {
+                    annex.splice(action.index,1)
+                }
+            }
+
+            if ( action.name === "removeAll" ) {
+                annex = [];
+            }
+
+            if ( action.name === "save" ) annex[action.index] = action.value;
+
+            return Object.assign({}, state, {
+                annex : annex
             });
 
         case contentType.ADD_SALES_PACKAGES:

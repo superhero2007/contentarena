@@ -7,6 +7,7 @@ import {
     yellowCheckIcon
 } from "../../main/components/Icons";
 import {SuperRightBoardLabels} from "../../sell/components/SuperRightDefinitions";
+import {PropTypes} from "prop-types";
 
 class BoardListing extends React.Component{
     constructor(props){
@@ -33,6 +34,7 @@ class BoardListing extends React.Component{
       const {onSelect, customId} = this.props;
 
       if ( onSelect ) onSelect(customId);
+
 
     };
 
@@ -162,7 +164,7 @@ class BoardListing extends React.Component{
                         this.setState({showDeactivateConfirm: false});
                         e.stopPropagation();
                     }}>
-                        Cancel
+                        {this.context.t("Cancel")}
                     </button>
                 </div>}
 
@@ -170,20 +172,20 @@ class BoardListing extends React.Component{
                 {/*CONFIRM REMOVE*/}
                 {showRemoveConfirm && <div className="confirmation-tooltip">
                     <div className={"confirmation-text"}>
-                        Are you sure you want to remove the listing?
+                        {this.context.t("Remove-listing-confirmation")}?
                     </div>
                     <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         onRemove();
                         e.stopPropagation();
                     }}>
-                        Remove
+                        {this.context.t("Remove")}
                     </button>
                     <button className={"button"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         e.stopPropagation();
                     }}>
-                        Cancel
+                        {this.context.t("Cancel")}
                     </button>
                 </div>}
 
@@ -248,5 +250,7 @@ class BoardListing extends React.Component{
         )
     }
 }
-
+BoardListing.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 export default BoardListing;

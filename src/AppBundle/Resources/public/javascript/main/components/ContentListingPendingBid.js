@@ -28,14 +28,12 @@ class ContentListingPendingBid extends ContentListing {
             expiresAt,
             onDelete,
             rightsPackage,
-            onSelectName,
             imageBase64,
             image,
             id,
             company,
             customId,
             bid,
-            PROGRAM_NAME
         } = this.props;
 
         const {showMessage, showEdited} = this.state;
@@ -134,7 +132,7 @@ class ContentListingPendingBid extends ContentListing {
                                     height: 36,
                                     fontSize: 16,
                                     marginBottom: 10
-                                }} href={envhosturl+ "listing/" +customId+"/buy/" + bid.salesPackage.id}>Increase bid</a>
+                                }} href={envhosturl+ "listing/" +customId+"/checkout/" + bid.salesPackage.id}>Increase bid</a>
                                 {bid.message && bid.message !== ""
                                 && <img src={blueEnvelopeIcon}
                                         style={{

@@ -12,6 +12,7 @@ import {
     NewCategory,
     SportSelector,
 } from "../components/SellFormItems";
+import {PropTypes} from "prop-types";
 
 
 class SellFormStep1 extends React.Component {
@@ -194,7 +195,7 @@ class SellFormStep1 extends React.Component {
             this.setState(() => ({
                 seasonSelectors: [...Array(seasons.length).keys()]
             }));
-            this.loadSchedule(nextProps);
+            //this.loadSchedule(nextProps);
         }
 
         if (website && website.length > 0) {
@@ -399,12 +400,8 @@ class SellFormStep1 extends React.Component {
                 {!this.state.showSearch &&
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
-                        {/*<button className="light-blue-button" style={{ marginRight: '20px'}} onClick={this.toggleSearch}>
-                            <i className="fa fa-search"/> Show search function
-                        </button>*/}
-
                         <button className="light-blue-button" onClick={this.clear}>
-                            Start over
+                            {this.context.t("Start over")}
                         </button>
                     </div>
                 </div>}
@@ -412,7 +409,7 @@ class SellFormStep1 extends React.Component {
                 {!this.state.showSearch && <div className="step-content-container">
 
                     <div className="step-item-description" >
-                        Please fill in the information fields below. Note that, apart from 'Sport', you may skip all information fields.
+                        {this.context.t("Please fill in the information fields below. Note that, apart from 'Sport', you may skip all information fields.")}
                     </div>
 
                     {
@@ -433,12 +430,15 @@ class SellFormStep1 extends React.Component {
                     }
 
                     {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px"}}>
-                        Your content covers multiple sports? <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
+                        {this.context.t("Your content covers multiple sports?")}
+                         <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
                     </div>}
 
                     {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&
                     <div className="base-input">
-                        <label>Country/Category</label>
+                        <label>
+
+                        </label>
                         <input
                             type="text"
                             value={inputProps.sportCategory.value || ""}
@@ -447,7 +447,7 @@ class SellFormStep1 extends React.Component {
                             onClick={() => {
                                 this.props.openCategorySelector(this.state.sportCategories)
                             }}
-                            placeholder={"e.g. Germany"}  />
+                            placeholder={this.context.t("e.g. Germany")}  />
                         { this.state.loadingCategories && <i className="fa fa-cog fa-spin"/>}
                     </div>}
                     {this.state.sportSelectors.length === 1 && this.hasCustomCategory() && <NewCategory
@@ -458,7 +458,9 @@ class SellFormStep1 extends React.Component {
                     />}
                     {this.state.sportSelectors.length === 1 && !this.hasCustomTournament() &&
                     <div className="base-input">
-                        <label>Competition</label>
+                        <label>
+                            {this.context.t("Competition")}
+                        </label>
                         <input type="text"
                                value ={inputProps.tournament.value || ""}
                                readOnly={true}
@@ -466,7 +468,7 @@ class SellFormStep1 extends React.Component {
                                onClick={() => {
                                    this.props.openTournamentSelector( this.state.tournaments );
                                }}
-                               placeholder={"e.g. Bundesliga"}  />
+                               placeholder={this.context.t("e.g. Bundesliga")}  />
                         { this.state.loadingTournaments && <i className="fa fa-cog fa-spin"/>}
                     </div>}
 
@@ -500,11 +502,13 @@ class SellFormStep1 extends React.Component {
                     <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
 
                     <div className="step-item-description" style={{}}>
-                        Additional information
+                        {this.context.t("Additional information")}
                     </div>
 
                     <div className="base-input">
-                        <label>Website</label>
+                        <label>
+                            {this.context.t("Website")}
+                        </label>
                         <TagsInput inputProps={{placeholder: "e.g. bundesliga.de"}} value={this.state.website} onChange={this.websitesUpdated} />
                     </div>
 
@@ -525,6 +529,10 @@ class SellFormStep1 extends React.Component {
         );
     }
 }
+
+SellFormStep1.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

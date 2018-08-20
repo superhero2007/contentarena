@@ -180,6 +180,13 @@ class Content
     private $attachments;
 
     /**
+     * @var object
+     * @ORM\Column(name="annex", type="object", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $annex;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="custom_tournament", type="string", length=255, nullable=true)
@@ -1209,6 +1216,23 @@ class Content
     {
         $this->customCategory = $customCategory;
     }
+
+    /**
+     * @return object
+     */
+    public function getAnnex()
+    {
+        return $this->annex;
+    }
+
+    /**
+     * @param object $annex
+     */
+    public function setAnnex($annex)
+    {
+        $this->annex = $annex;
+    }
+
 
 
 

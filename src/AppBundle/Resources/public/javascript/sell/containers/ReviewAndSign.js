@@ -10,6 +10,7 @@ import DigitalSignature from "../../main/components/DigitalSignature";
 import {goTo, parseSeasons, viewLicense} from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
+import {PropTypes} from "prop-types";
 
 class ReviewAndSign extends React.Component {
 
@@ -156,12 +157,16 @@ class ReviewAndSign extends React.Component {
                         <button className="light-blue-button" onClick={()=>{
                             history.push("/contentlisting/"+ customId + "/4");
                         }}>
-                            <i className="fa fa-chevron-left"/> Edit
+                            <i className="fa fa-chevron-left"/> {this.context.t("Edit")}
                         </button>
                     </div>
                 </div>
-                {!showDetails && <div className="step-title">Review & Sign</div>}
-                {showDetails && <div className="step-title">Marketplace Preview</div>}
+                {!showDetails && <div className="step-title">
+                    {this.context.t("Review & Sign")}
+                </div>}
+                {showDetails && <div className="step-title">
+                    {this.context.t("Marketplace Preview")}
+                </div>}
 
                 {
                     showDetails &&
@@ -206,7 +211,7 @@ class ReviewAndSign extends React.Component {
                                     viewLicense(customId);
                                 }}
                                 className="standard-button" style={{ width: '250px'}}>
-                            View License Agreement
+                            {this.context.t("View License Agreement")}
                         </button>
                     </div>
 
@@ -228,8 +233,7 @@ class ReviewAndSign extends React.Component {
                                 style={{marginRight: 10}}
                             />
                             <label htmlFor="terms"/>
-                            I confirm that I have verified the terms stated above. They are correct and ready to be
-                            published.
+                            {this.context.t("I confirm that I have verified the terms stated above. They are correct and ready to be published.")}
                         </div>
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
@@ -244,8 +248,7 @@ class ReviewAndSign extends React.Component {
                                 style={{marginRight: 10}}
                             />
                             <label htmlFor="terms_arena"></label>
-                            I confirm that I have verified the terms and conditions that have been outlined by
-                            Content Arena Pte. Ltd.
+                            {this.context.t("I confirm that I have verified the terms and conditions that have been outlined by Content Arena Pte. Ltd.")}
                         </div>
                     </div>
 
@@ -259,8 +262,8 @@ class ReviewAndSign extends React.Component {
                     {<div className="buttons" style={{marginTop: 20}}>
                         <div className="buttons-container"  >
                             {!showSubmitting && <button disabled={!(terms && terms_arena && signature)} id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
-                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" ) && "Submit Listing"}
-                                {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && "Save"}
+                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" ) && this.context.t("Submit Listing") }
+                                {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && this.context.t("Save")}
                             </button>}
                             {showSubmitting && <i className="fa fa-cog fa-spin" />}
                         </div>
@@ -270,6 +273,10 @@ class ReviewAndSign extends React.Component {
         );
     }
 }
+
+ReviewAndSign.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

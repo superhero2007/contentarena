@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
+import {PropTypes} from "prop-types";
 
 class SearchCompetition extends  React.Component {
     constructor(props){
@@ -76,14 +77,16 @@ class SearchCompetition extends  React.Component {
         return(
             <div className="step-content-container">
                 <div className="step-item-description">
-                    Do you want to list competition-based content?
+                    {this.context.t("Do you want to list competition-based content")}?
                 </div>
                 <div className={"base-input"}>
-                    <label>Competition</label>
+                    <label>
+                        {this.context.t("Competition")}
+                    </label>
                     <input type="text"
                            onKeyPress={this.handleKeyPress}
                            onChange={this.handleInput}
-                           placeholder="Enter competition name (e.g. Bundesliga)" />
+                           placeholder={this.context.t("Enter competition name (e.g. Bundesliga)")} />
                     <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
                 </div>
 
@@ -103,44 +106,51 @@ class SearchCompetition extends  React.Component {
                         select={this.props.select}
                         className="ca-table"
                         columns={[{
-                            Header: 'Competition',
+                            Header: this.context.t("Competition"),
                             accessor: 'name' // String-based value accessors!
                         }, {
-                            Header: 'Country/Category',
+                            Header: this.context.t("Country/Category"),
                             accessor: 'sportCategory.name',
                         }, {
                             accessor: 'sport.name', // Required because our accessor is not a string
-                            Header: 'Sport',
+                            Header: this.context.t("Sport"),
                         }, {
                             Header: '', // Custom header components!
-                            Cell: props => <button className={"blue-button"} onClick={() =>{ this.props.select(props.original) }}>Select</button>
+                            Cell: props => <button className={"blue-button"} onClick={() =>{ this.props.select(props.original) }}>
+                                {this.context.t("Select")}
+                            </button>
                         }]}
                     />
                 </div>}
 
                 <div style={{ display: "inline-flex" }} >
                     {this.state.searchDone && this.state.results.length === 0 && <div>
-                        Your search "{this.state.input}" did not match any products.
+                        {this.context.t('Your search "{n}" did not match any products.', {n: this.state.input })}
                     </div>}
 
                     {!this.state.searchDone &&<div className="step-item-description">
-                        Did you not find your competition in the database or not selling a competition?
+                        {this.context.t("Did you not find your competition in the database or not selling a competition")}?
                     </div>}
 
                     {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description">
-                        Can't find your competition in our list?
+                        {this.context.t("Can't find your competition in our list?")}
                     </div>}
 
                     {this.state.searchDone && this.state.results.length === 0 && <div className="step-item-description">
-                        Try another search or enter content manually
+                        {this.context.t("Try another search or enter content manually")}
                     </div>}
 
-                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>Enter content manually</button>
+                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>
+                        {this.context.t("Enter content manually")}
+                    </button>
                 </div>
             </div>
         )
     }
 }
+SearchCompetition.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default SearchCompetition;
 

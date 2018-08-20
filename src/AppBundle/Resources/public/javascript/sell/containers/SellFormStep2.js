@@ -6,6 +6,7 @@ import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 import {stepChangeReset} from "../actions/contentActions";
 import {editedProgramSelected} from "../../main/actions/utils";
+import {PropTypes} from "prop-types";
 
 class SellFormStep2 extends React.Component {
 
@@ -96,14 +97,16 @@ class SellFormStep2 extends React.Component {
                 {/*PROGRAM DESCRIPTION*/}
                 <div className="step-content-container">
                     <div className="textarea-input">
-                        <label>PROGRAM DESCRIPTION</label>
+                        <label>
+                            {this.context.t("PROGRAM DESCRIPTION")}
+                        </label>
                         <div className='textarea-input-text'>
-                            Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.
+                            {this.context.t("Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.")}
                         </div>
                         <textarea
                             onChange={ (e) => updateContentValue("programDescription", e.target.value)}
                             defaultValue={programDescription}
-                            placeholder={"Please enter the program description. The program description represents the core of the license agreement. All rights picked later on refer to this program description. You may enter all information you consider relevant (e.g. which events you seek to grant rights to or which events you will produce and deliver to the buyer). \n"}/>
+                            placeholder={this.context.t("Please enter the program description. The program description represents the core of the license agreement. All rights picked later on refer to this program description. You may enter all information you consider relevant (e.g. which events you seek to grant rights to or which events you will produce and deliver to the buyer). \n")}/>
                     </div>
                 </div>
 
@@ -115,7 +118,9 @@ class SellFormStep2 extends React.Component {
 
                 <div className="left">
                     <div className="modal-input">
-                        <label>Enter program name</label>
+                        <label>
+                            {this.context.t("Enter program name")}
+                        </label>
                         <input
                             type="text"
                             value={PROGRAM_NAME}
@@ -123,7 +128,9 @@ class SellFormStep2 extends React.Component {
                     </div>
 
                     <div className="modal-input">
-                        <label>Number of episodes</label>
+                        <label>
+                            {this.context.t("Number of episodes")}
+                        </label>
                         <input
                             type="number"
                             value={PROGRAM_EPISODES}
@@ -131,7 +138,9 @@ class SellFormStep2 extends React.Component {
                     </div>
 
                     <div className="modal-input">
-                        <label>Average episode duration in minutes</label>
+                        <label>
+                            {this.context.t("Average episode duration in minutes")}
+                        </label>
                         <input
                             type="number"
                             value={PROGRAM_DURATION}
@@ -139,7 +148,9 @@ class SellFormStep2 extends React.Component {
                     </div>
 
                     <div className="modal-input">
-                        <label>Enter program type</label>
+                        <label>
+                            {this.context.t("Enter program type")}
+                        </label>
                         <select
                             value={PROGRAM_TYPE}
                             onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}>
@@ -154,7 +165,9 @@ class SellFormStep2 extends React.Component {
                     </div>
 
                     <div className={"modal-input"}>
-                        <label>Release year (optional)</label>
+                        <label>
+                            {this.context.t("Release year (optional)")}
+                        </label>
                         <select
                             value={PROGRAM_YEAR}
                             onChange={(e)=>{updateContentValue("PROGRAM_YEAR", e.target.value)}}>
@@ -165,7 +178,9 @@ class SellFormStep2 extends React.Component {
                 </div>
                 <div className='right'>
                     <div className="modal-input">
-                        <label>Edited Program Description (optional)</label>
+                        <label>
+                            {this.context.t("Edited Program Description (optional)")}
+                        </label>
                         <textarea
                             onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
                             placeholder="Provide a description of your content listing">
@@ -179,6 +194,10 @@ class SellFormStep2 extends React.Component {
         );
     }
 }
+
+SellFormStep2.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

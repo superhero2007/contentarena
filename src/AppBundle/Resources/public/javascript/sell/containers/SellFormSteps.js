@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import cn from "classnames";
 import {goToPreviousStep, goToStep} from "../actions/contentActions";
+import {PropTypes} from "prop-types";
 
 const SellFormStep = ({step, active, title, onClick, stepVisited, stepFinished}) => (
     <div  className={cn("step", {"step-active" : active, "visited": stepVisited, "finished": stepFinished})} onClick={() => {onClick(step)}}>
@@ -23,10 +24,10 @@ class SellFormSteps extends React.Component {
         super(props);
         this.state = {
             steps: [
-                {step: 1, title: "Event selection"},
-                {step: 2, title: "Program & Rights Selection"},
-                {step: 3, title: "Grant of Rights & Production Details"},
-                {step: 4, title: "Commercial Details"}
+                {step: 1, title: this.context.t("Event selection")},
+                {step: 2, title: this.context.t("Program & Rights Selection")},
+                {step: 3, title: this.context.t("Grant of Rights & Production Details")},
+                {step: 4, title: this.context.t("Commercial Details")}
             ],
             visited : [1],
             finished: []
@@ -69,6 +70,10 @@ class SellFormSteps extends React.Component {
         );
     }
 }
+
+SellFormSteps.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return {

@@ -6,14 +6,17 @@ import {stepChangeReset} from "../../sell/actions/contentActions";
 import DatePicker from 'react-datepicker';
 import moment from "moment/moment";
 import {addIcon, cancelIcon} from "./Icons";
+import {PropTypes} from "prop-types";
 
-export const NewFixture = ({onRemove, onAdd, onChange, value, showAdd, date, handleDate}) => (
+export const NewFixture = ({onRemove, onAdd, onChange, value, showAdd, date, handleDate}, context) => (
     <div className="base-input" style={{display: 'flex', alignItems:'center'}}>
-        <label>Fixture</label>
+        <label>
+            {context.t("Fixture")}
+        </label>
         <input
             className="new-category"
             type="text"
-            placeholder="Enter fixture"
+            placeholder={context.t("Enter fixture")}
             onChange={onChange}
             value={value}/>
         <DatePicker
@@ -87,14 +90,16 @@ class SeasonSelector extends React.Component {
             <div style={{zIndex: 1}}>
                 {!this.props.isCustom &&
                 <div className="base-input">
-                    <label>Season</label>
+                    <label>
+                        {this.context.t("Season")}
+                    </label>
                     <input
                         type="text"
                         value={this.props.value || ""}
                         readOnly={true}
                         disabled={this.props.loading}
                         onClick={this.props.openSelector}
-                        placeholder={"Season"}/>
+                        placeholder={this.context.t("Season")}/>
 
                     { this.props.showClose &&
                     <button onClick={this.props.removeSeason} className={"standard-button"}>
@@ -110,7 +115,7 @@ class SeasonSelector extends React.Component {
                               onRemove={this.props.removeSeason } />}
 
 
-                {activeSeason && activeSeason.schedules && <div className={"base-input"}
+                {/*{activeSeason && activeSeason.schedules && <div className={"base-input"}
                                                                 onClick={this.toggle}
                                                                 style={{zIndex: 1}}>
                     <label>Event</label>
@@ -121,16 +126,21 @@ class SeasonSelector extends React.Component {
                            }}
                            placeholder={"Select events"}
                            />
-                </div>}
-                {activeSeason && activeSeason.showSchedule && <div>
+                </div>}*/}
+                {/*{activeSeason && activeSeason.showSchedule && <div>
                     <Schedules season={season} seasons={seasons}/>
-                </div>}
+                </div>}*/}
                 {this.props.showAddNew && <div>
-                    <button className="link-button" onClick={this.props.addSeason}>Add season</button>
+                    <button className="link-button" onClick={this.props.addSeason}>
+                        {this.context.t(" Add season")}
+                    </button>
                 </div>}
-                {this.props.showAddNew && activeSeason && <div className="step-item-description">
-                    Do you wish to add fixtures individually?
-                    <button className="link-button" onClick={this.addFixture}>Click here</button>
+                {this.props.showAddNew && activeSeason &&
+                <div className="step-item-description">
+                    {/*Do you wish to add fixtures individually?*/}
+                    <button className="link-button" onClick={this.addFixture}>
+                        {this.context.t("Click here to add fixtures")}
+                    </button>
                 </div>}
 
                 {activeSeason && activeSeason.fixtures && activeSeason.fixtures.length > 0 && <div>
@@ -153,7 +163,13 @@ class SeasonSelector extends React.Component {
         )
     }
 }
+SeasonSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
+NewFixture.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

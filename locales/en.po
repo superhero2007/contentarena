@@ -12,6 +12,53 @@ msgstr ""
 "X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# asd
+#. Marketplace - Title for event filters
+#: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
+msgid "Event"
+msgstr "Event"
+
+#. Marketplace - Placeholder for Search input
+#: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
+msgid "Search"
+msgstr "Search"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "closed deal"
+msgid_plural "closed deals"
+msgstr[0] "{n} closed deal"
+msgstr[1] "{n} closed deals"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "open bid"
+msgid_plural "open bids"
+msgstr[0] "{n} open bid"
+msgstr[1] "{n} open bids"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "Commercial Activity Total - {n}"
+msgstr "Total: {n} "
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "Digital Signature"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "Clear"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "Done"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "New Signature"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
+msgid "Upload"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Marketplace"
 msgstr "Marketplace"
@@ -26,36 +73,210 @@ msgstr "Bids"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Closed deals"
-msgstr ""
+msgstr "Closed deals"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Manage listings"
-msgstr ""
+msgstr "Manage listings"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Commercial activity"
-msgstr ""
+msgstr "Commercial activity"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Create Listing"
-msgstr ""
+msgstr "Create Listing"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Enter selling mode"
-msgstr ""
+msgstr "Enter selling mode"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Enter buying mode"
-msgstr ""
+msgstr "Enter buying mode"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Settings"
-msgstr ""
+msgstr "Settings"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Logout"
+msgstr "Logout"
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
+msgid "Year"
 msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
+msgid "To"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
+msgid "Not applicable"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Do you want to list competition-based content"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Competition"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Enter competition name (e.g. Bundesliga)"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Country/Category"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Sport"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Select"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Your search \"{n}\" did not match any products."
+msgstr "Your search \"{n}\" did not match any products."
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid ""
+"Did you not find your competition in the database or not selling a "
+"competition"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Can't find your competition in our list?"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Try another search or enter content manually"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "Enter content manually"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "Fixture"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "Enter fixture"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "Season"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid " Add season"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "Click here to add fixtures"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Popular"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "International"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Cancel"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Apply"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Can't find your sport in the list?"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Add new Sport"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Can't find your competition in the list"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Add new Tournament"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Can't find your season in the list?"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Add new Season"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Can't find your country in the list?"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Show all countries"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Can't find your category in the list?"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Add new Category"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
+msgid "Contact"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
+msgid "Message sent!"
+msgstr "Message sent!"
+
+#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
+msgid "Send"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
+msgid "Close"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Remove-listing-confirmation"
+msgstr "Are you sure you want to remove the listing"
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Remove"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellButtons.js
+msgid "Back"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellButtons.js
+msgid "Next"
+msgstr ""
+
+#~ msgid "Commercial Activity closed deals"
+#~ msgstr "{n} closed deals"
+
+#~ msgid "Commercial Activity open bids"
+#~ msgstr "{n} open bids"

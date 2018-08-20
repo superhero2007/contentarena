@@ -177,6 +177,7 @@ class ContentService
             $content->setVatPercentage($modelListing->getVatPercentage());
             $content->setPrograms($modelListing->getPrograms());
             $content->setAttachments($modelListing->getAttachments());
+            $content->setAnnex($modelListing->getAnnex());
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
 
             $rights = [];
@@ -285,6 +286,7 @@ class ContentService
         $content = $this->saveFiles($request, $content);
         $this->em->persist($content);
         $this->em->flush();
+
 
         return $content;
     }
@@ -452,6 +454,7 @@ class ContentService
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
+        if ( isset($data->annex) ) $content->setAnnex($data->annex);
         if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
 

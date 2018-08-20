@@ -136,7 +136,7 @@ class MessageService
                 $this->notificationService->createNotification("MESSAGE", $thread->getId(), $companyUser, "Unread meessages" );
             }
         }
-        foreach ($thread->getSellerCompany()->getUsers() as $companyUser ){
+        foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
                 $this->notificationService->createNotification("MESSAGE", $thread->getId(), $companyUser, "Unread meessages" );
             }

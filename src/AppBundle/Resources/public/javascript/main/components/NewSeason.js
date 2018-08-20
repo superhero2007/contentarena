@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {stepChangeReset} from "../../sell/actions/contentActions";
 import {connect} from "react-redux";
+import {PropTypes} from "prop-types";
 
 class NewSeason extends React.Component{
     constructor(props){
@@ -49,16 +50,22 @@ class NewSeason extends React.Component{
                         value={seasons[index].from}
                         onChange={(e) => { this.setDate('from', e.target.value) }}>
                         <option/>
-                        <option disabled>Year</option>
+                        <option disabled>
+                            {this.context.t("Year")}
+                        </option>
                         {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
                     </select>
-                    <label className={"season-selector-label"}>/To</label>
+                    <label className={"season-selector-label"}>
+                        /{this.context.t("To")}
+                    </label>
                     <select
                         value={seasons[index].to}
                         onChange={(e) => { this.setDate('to', e.target.value) }}
                         disabled={!seasons[index].from}>
                         {this.getEndOptions()}
-                        <option value={0}>Not applicable</option>
+                        <option value={0}>
+                            {this.context.t("Not applicable")}
+                        </option>
                     </select>
                     { this.props.showClose &&
                     <button className={"standard-button"} onClick={this.props.onRemove}>
@@ -69,6 +76,10 @@ class NewSeason extends React.Component{
         )
     }
 }
+
+NewSeason.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content
@@ -86,6 +97,8 @@ const mapDispatchToProps = dispatch => {
 
     }
 };
+
+
 
 export default connect(
     mapStateToProps,

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
+import {PropTypes} from "prop-types";
 
 class ContentListing extends React.Component{
     constructor(props){
@@ -163,19 +164,21 @@ class ContentListing extends React.Component{
                         padding : 5,
                         fontSize: 13
                     }}>
-                        <span>Remove from Watchlist?</span>
+                        <span>
+                            {this.context.t("Remove from Watchlist?")}
+                        </span>
                         <span onClick={this.removeFromWatchlist} style={{
                             cursor : 'pointer',
                             margin: '0 15px',
                             color : 'red'
                         }}>
-                                Yes
+                            {this.context.t("Yes")}
                             </span>
                         <span onClick={this.cancelRemoveFromWatchlist} style={{
                             cursor : 'pointer',
                             color : 'green'
                         }}>
-                                Cancel
+                            {this.context.t("Cancel")}
                             </span>
                     </div>}
 
@@ -228,6 +231,10 @@ class ContentListing extends React.Component{
         )
     }
 }
+
+ContentListing.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default ContentListing;
 

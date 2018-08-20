@@ -17,3 +17,5 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+    local_host: http://localhost:8200/
+    external_api_url: http://api.contentarena.com/

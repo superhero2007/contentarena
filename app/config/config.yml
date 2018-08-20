@@ -15,6 +15,7 @@ parameters:
     sportradar_api_host: https://api.betradar.com/v1
     carena_host_url : '%local_host%'
     sportradar_api_cache_ttl : 432000
+    main_folder : '%kernel.project_dir%/web'
     uploads_main_folder: '%kernel.project_dir%/web/uploads'
     uploads_tmp_folder: '%kernel.project_dir%/web/tmpUploads'
     uploads_uri_prefix: 'uploads'

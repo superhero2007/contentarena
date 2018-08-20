@@ -57,9 +57,27 @@
                 display: flex;
             }
 
+            .watermark {
+                display: block;
+                position: relative;
+            }
+
+            .watermark::after {
+                content: "";
+                background:url({{ hostUrl }}bundles/app/images/watermark.png);
+                background-size: 50%;
+                opacity: 0.1;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                position: absolute;
+                z-index: -1;
+            }
+
         </style>
     </head>
-    <body class="license">
+    <body class="license {% if watermark %}watermark{% endif %}">
         <div class="license-content">
             <div class="license-title">LICENSE AGREEMENT</div>
 
@@ -348,6 +366,13 @@
                             <label>Edited Program Name</label>
                             {{ content.extraData.PROGRAM_NAME }}
                         </div>
+
+                        {% if content.extraData.PROGRAM_DESCRIPTION is defined %}
+                        <div class="license-item-content">
+                            <label>Edited Program Description</label>
+                            {{ content.extraData.PROGRAM_DESCRIPTION }}
+                        </div>
+                        {% endif %}
 
                         <div class="license-item-content">
                             <label>Number of Episodes</label>

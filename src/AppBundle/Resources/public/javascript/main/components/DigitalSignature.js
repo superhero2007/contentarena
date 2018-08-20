@@ -1,5 +1,6 @@
 import React from 'react';
 import SignaturePad from 'react-signature-pad';
+import {PropTypes} from "prop-types";
 
 class DigitalSignature extends React.Component{
     constructor(props){
@@ -44,7 +45,7 @@ class DigitalSignature extends React.Component{
         return (
             <div className="digital-signature">
                 <div className={"digital-signature-placeholder"}>
-                    Digital Signature
+                    {this.context.t("Digital Signature")}
                 </div>
                 {signature && ready &&
                     <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
@@ -54,18 +55,20 @@ class DigitalSignature extends React.Component{
 
                 <div className={"buttons"}>
                     {!ready && <button onClick={this.clear} className="standard-button-small transparent">
-                        Clear
+                        {this.context.t("Clear")}
                     </button>}
                     {!ready && <button onClick={this.done} className="standard-button-small">
-                        Done
+                        {this.context.t("Done")}
                     </button>}
                     {ready && <button onClick={this.edit} className="standard-button-big">
-                        New Signature
+                        {this.context.t("New Signature")}
                     </button>}
                 </div>
             </div>
         )
     }
 }
-
+DigitalSignature.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 export default DigitalSignature;
