@@ -24,10 +24,10 @@ class SellFormSteps extends React.Component {
         super(props);
         this.state = {
             steps: [
-                {step: 1, title: this.context.t("Event selection")},
-                {step: 2, title: this.context.t("Program & Rights Selection")},
-                {step: 3, title: this.context.t("Grant of Rights & Production Details")},
-                {step: 4, title: this.context.t("Commercial Details")}
+                {step: 1, title: "Event selection"},
+                {step: 2, title: "Program & Rights Selection"},
+                {step: 3, title: "Grant of Rights & Production Details"},
+                {step: 4, title: "Commercial Details"}
             ],
             visited : [1],
             finished: []
