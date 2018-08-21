@@ -788,7 +788,7 @@
                             {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>{% for tech in content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] %}
                                 {{ tech | right_definitions_label}}
-                                {% endif %}
+                                {% endfor %}
                             </td>
                         {% endif %}
                         {% endfor %}
