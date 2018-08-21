@@ -124,7 +124,6 @@ class SellButtons extends React.Component {
     };
 
     step3GetMessages = () => {
-
         const {endDateMode} = this.props;
         let message = "Please complete missing information\n";
         if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
@@ -182,30 +181,26 @@ class SellButtons extends React.Component {
     };
 
     goToReviewAndSign = () => {
-        const {updateContentValue, history} = this.props;
+        const {history} = this.props;
+        let savePromise = null;
         let content = store.getState().content;
         content = parseSeasons(content);
         this.setState({ saving : true });
 
-        if (!content.customId) { //if not in edit mode
-            ContentArena.ContentApi.saveContentAsInactive(content).done( ( response ) => {
-                if ( response.success && response.contentId ){
-                    updateContentValue("id", response.contentId);
-                    updateContentValue("customId", response.customId);
-                }
-                this.setState({ saving : false });
-                history.push("/contentlisting/"+ response.customId + "/sign");
-            });
+        if (!content.status) {
+            // No status set, we are in new mode
+            savePromise = ContentArena.ContentApi.saveContentAsInactive({...content, ...{ status: 'AUTO_INACTIVE' }});
         } else {
-            ContentArena.ContentApi.saveContentAsDraft(content).done((response)=>{
-                if ( response.success && response.contentId ){
-                    this.props.updateContentValue("id", response.contentId);
-                }
+            savePromise = ContentArena.ContentApi.saveContentAsDraft(content);
+        }
 
+        savePromise.done((response)=>{
+            if ( response.success && response.contentId ){
+                this.props.updateContentValue("id", response.contentId);
                 this.setState({ saving : false, savingSuccess: true });
                 history.push("/contentlisting/"+ response.customId + "/sign");
-            })
-        }
+            }
+        });
     };
 
     goToPreviousStep = () => {

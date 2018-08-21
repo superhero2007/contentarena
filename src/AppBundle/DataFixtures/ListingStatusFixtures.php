@@ -21,6 +21,7 @@ class ListingStatusFixtures extends Fixture
         $content = array(
             'DRAFT',
             'INACTIVE',
+            'AUTO_INACTIVE',
             'PENDING',
             'APPROVED',
             'REJECTED',

@@ -276,7 +276,13 @@ class ContentService
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
-        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
+        $status = 'INACTIVE';
+
+        if (isset($data->status)) {
+            $status = $data->status;
+        }
+
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$status)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
         $content->setLastActionUser($user);
         $content->setLastActionDate(new \DateTime());
