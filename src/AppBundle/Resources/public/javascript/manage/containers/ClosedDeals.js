@@ -131,8 +131,8 @@ class ClosedDeals extends React.Component {
                                 </div>
                             },{
                                 Header: () => (
-                                    <span data-tip="Delayed transmission">
-                                        DT
+                                    <span data-tip="Delayed & Archive">
+                                        DA
                                     </span>
                                 ),
                                 accessor: 'content.rightsPackage',
