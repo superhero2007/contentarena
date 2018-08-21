@@ -23,10 +23,10 @@ class RightsPackageFixtures extends Fixture
 
         $rightsToRename = array(
             "Live Transmission Rights" => "Live Transmission",
-            "Delayed & Archive Transmission Rights" => "Delayed & Archive Transmission",
+            "Delayed & Archive Transmission Rights" => "Delayed & Archive",
             "Live Betting Rights" => "Live Betting",
             "News Access Rights" => "News Access",
-            "Highlight & Clip Rights" => "Highlight & Clip",
+            "Highlight & Clip Rights" => "Highlight & Clips",
             "Edited Program Rights" => "Edited Program"
         );
 
