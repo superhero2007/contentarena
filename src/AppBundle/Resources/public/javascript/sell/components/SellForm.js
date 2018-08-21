@@ -47,7 +47,7 @@ class SellForm extends React.Component {
         return (
             <div className="manager-content">
                 <Selector style={{zIndex: 100}}/>
-                <SellFormSteps />
+                <SellFormSteps history={history} />
                 <SellFormStep1/>
                 <SellFormStep2 packages={this.props.packages} />
                 <SellFormStep3 packages={this.props.packages} />

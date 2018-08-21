@@ -29,42 +29,46 @@ class SellFormSteps extends React.Component {
                 {step: 3, title: "Grant of Rights & Production Details"},
                 {step: 4, title: "Commercial Details"}
             ],
-            visited : [1],
-            finished: []
+            maxStep: this.props.step || 1
         };
     }
 
-    componentWillReceiveProps ( props ) {
+    componentWillReceiveProps(nextProps) {
+        const { maxStep } = this.state;
 
-        if ( this.state.visited.indexOf(props.step) === -1 ){
+        if (maxStep < nextProps.step) {
             this.setState({
-                visited : [...this.state.visited, props.step],
-                finished: [...this.state.visited, props.step - 1]
-            })
+                maxStep: nextProps.step
+            });
         }
     }
 
     onClick = (stepSelected) => {
-        const {goToStep} = this.props;
-        if ( this.state.visited.indexOf(stepSelected) !== -1 ) goToStep(stepSelected);
-
+        const { goToStep, customId, history } = this.props;
+        const { maxStep } = this.state;
+        
+        if (stepSelected <= maxStep) {
+            goToStep(stepSelected);
+            history.push(`/contentlisting/${customId}/${stepSelected}`);
+        }
     };
 
     render() {
-        let _this = this;
+        const currentStep = this.props.step;
+        const { maxStep } = this.state;
+        
         return (
             <div className="box-header">
                 { this.state.steps.map((step, i)=>{
-                    const stepVisited = this.state.visited.indexOf(step.step) !== -1;
-                    const stepFinished = this.state.finished.indexOf(step.step) !== -1;
-
                     return <SellFormStep
                         key={i}
-                        stepVisited={stepVisited}
-                        stepFinished={stepFinished}
+                        active={currentStep === step.step}
+                        stepVisited={step.step <= maxStep}
+                        stepFinished={step.step < maxStep}
                         onClick={this.onClick}
                         step={step.step}
-                        title={step.title} active={_this.props.step === step.step}/>
+                        title={step.title}
+                    />
                 })}
             </div>
         );
@@ -78,6 +82,7 @@ SellFormSteps.contextTypes = {
 const mapStateToProps = state => {
     return {
         step : state.content.step,
+        customId : state.content.customId,
     }
 };
 
