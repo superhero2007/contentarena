@@ -1,15 +1,13 @@
 import React from 'react';
 import {connect} from "react-redux";
 import CountrySelector from "../../main/components/CountrySelector";
+import {PropTypes} from "prop-types";
 
 class ApplicableLawSelector extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
         };
-    }
-
-    componentWillReceiveProps(nextProps) {
     }
 
     selectTerritory = (value) => {
@@ -22,7 +20,9 @@ class ApplicableLawSelector extends React.Component {
         
         return (
             <div className="base-input">
-                <label>Applicable Law</label>
+                <label>
+                    {this.context.t("Applicable Law")}
+                </label>
                 <CountrySelector
                     className={"base-input-select"} multi={false} value={jurisdiction}
                     onChange={this.selectTerritory} />
@@ -30,6 +30,10 @@ class ApplicableLawSelector extends React.Component {
         )
     }
 }
+
+ApplicableLawSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
 import {ProgramTypesDefinitions} from "../../main/components/ProgramTypesDefinitions";
+import {PropTypes} from "prop-types";
 
 const rowStyle = {
     borderBottom: '1px solid #EEF3F6',
@@ -44,9 +45,6 @@ class ProgramDetails extends React.Component {
             PROGRAM_DURATION,
             PROGRAM_EPISODES,
             PROGRAM_TYPE,
-            PROGRAM_LANGUAGE,
-            PROGRAM_SCRIPT,
-            PROGRAM_SUBTITLES
         } = this.props;
         return (
             <div style={{ padding:'20px 0'}}>
@@ -55,7 +53,7 @@ class ProgramDetails extends React.Component {
                     <div >
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Program type
+                                {this.context.t("Program type")}
                             </div>
                             <div style={valueStyle}>
                                 {ProgramTypesDefinitions[PROGRAM_TYPE]}
@@ -63,7 +61,7 @@ class ProgramDetails extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Number of episodes
+                                {this.context.t("Number of episodes")}
                             </div>
                             <div style={valueStyle}>
                                 {PROGRAM_EPISODES}
@@ -71,7 +69,7 @@ class ProgramDetails extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Average episode duration (min)
+                                {this.context.t("Average episode duration (min)")}
                             </div>
                             <div style={valueStyle}>
                                 {PROGRAM_DURATION}
@@ -79,46 +77,19 @@ class ProgramDetails extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Year of program release
+                                {this.context.t("Year of program release")}
                             </div>
                             <div style={valueStyle}>
                                 {PROGRAM_YEAR}
                             </div>
                         </div>
-                       {/* <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                Program language
-                            </div>
-                            <div style={valueStyle}>
-                                {PROGRAM_LANGUAGE.length === 0 && "Not available"}
-                                {PROGRAM_LANGUAGE.length > 0 && PROGRAM_LANGUAGE.map(l=>l.label).join(', ')}
-                            </div>
-                        </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Subtitles
-                            </div>
-                            <div style={valueStyle}>
-                                {PROGRAM_SUBTITLES.length === 0 && "Not available"}
-                                {PROGRAM_SUBTITLES.length > 0 && PROGRAM_SUBTITLES.map(l=>l.label).join(', ')}
-                            </div>
-                        </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                Script
-                            </div>
-                            <div style={valueStyle}>
-                                {PROGRAM_SCRIPT.length === 0 && "Not available"}
-                                {PROGRAM_SCRIPT.length > 0 && PROGRAM_SCRIPT.map(l=>l.label).join(', ')}
-                            </div>
-                        </div>*/}
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                Description
+                                {this.context.t("Description")}
                             </div>
                             <div style={valueStyle}>
                                 {PROGRAM_DESCRIPTION && PROGRAM_DESCRIPTION}
-                                {!PROGRAM_DESCRIPTION && "Information not available"}
+                                {!PROGRAM_DESCRIPTION && this.context.t("Information not available")}
                             </div>
                         </div>
                     </div>
@@ -127,5 +98,9 @@ class ProgramDetails extends React.Component {
         );
     }
 }
+
+ProgramDetails.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default ProgramDetails;

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {goTo} from "../../main/actions/utils";
 import BoardListing from '../components/BoardListing';
 import {updateProfile} from "../../main/actions/userActions";
+import {PropTypes} from "prop-types";
 
 class ManageListings extends React.Component {
     constructor(props) {
@@ -104,16 +105,16 @@ class ManageListings extends React.Component {
 
                 }}>
                     <div style={{margin:'0 20px' , flex: 1,display: 'flex', alignItems: 'center'}}>
-                        Draft ({draft.length})
+                        {this.context.t("Draft")} ({draft.length})
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
-                        Inactive listings ({inactive.length})
+                        {this.context.t("Inactive listings")} ({inactive.length})
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
-                        Active listings ({active.length})
+                        {this.context.t("Active listings")} ({active.length})
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
-                        Expired & sold listings ({expired.length})
+                        {this.context.t("Expired & sold listings")} ({expired.length})
                     </div>
                 </div>
 
@@ -245,6 +246,10 @@ class ManageListings extends React.Component {
         )
     }
 }
+
+ManageListings.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

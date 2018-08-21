@@ -10,12 +10,6 @@ class TerritorySelector extends React.Component {
         };
     }
 
-    componentDidMount () {
-    }
-
-    componentWillReceiveProps(nextProps) {
-    }
-
     showTab = (tab) => {
         this.setState({tab});
     };

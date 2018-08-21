@@ -114,51 +114,55 @@ class BoardListing extends React.Component{
             <div className={className} style={style} onClick={this.hideOptions}>
                 {showOptions && <div className="options-tooltip">
                     {showSubmit && <div className={"option"} onClick={this.submit}>
-                        <img src={this.submitIcon} /> Submit
+                        <img src={this.submitIcon} /> {this.context.t("Submit")}
                     </div>}
                     {showEdit && <div className={"option"} onClick={this.edit}>
-                        <img src={this.editIcon} /> Edit
+                        <img src={this.editIcon} /> {this.context.t("Edit")}
                     </div>}
                     {showDuplicate && <div className={"option"} onClick={()=>{
                         this.setState({showOptions: false});
                         onDuplicate(customId);
                     }}>
-                        <img src={this.duplicateIcon} /> Duplicate
+                        <img src={this.duplicateIcon} />
+                        {this.context.t("Duplicate")}
                     </div>}
                     {showView && <div className={"option"} onClick={this.view}>
-                        <img src={this.viewIcon} /> View
+                        <img src={this.viewIcon} />
+                        {this.context.t("View")}
                     </div>}
                     {showRemove && <div className={"option"} onClick={()=>{
                         this.setState({showRemoveConfirm: true});
                     }}>
-                        <img src={this.bucketIcon} /> Remove
+                        <img src={this.bucketIcon} />
+                        {this.context.t("Remove")}
                     </div>}
                     {showDeactivate && <div className={"option"} onClick={()=>{
                         this.setState({showDeactivateConfirm: true});
                     }}>
-                        <img src={this.deactivateIcon} style={{width: 16}} /> Deactivate
+                        <img src={this.deactivateIcon} style={{width: 16}} />
+                        {this.context.t("Deactivate")}
                     </div>}
 
                     {lastAction && <div className="last-action">
-                        Last action: {lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
+                        {this.context.t("Last action: ")}{lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
                     </div>}
 
                     {owner && <div className="last-action">
-                        Listing Owner: {owner.firstName + " " + owner.lastName }
+                        {this.context.t("Listing Owner: ")}{owner.firstName + " " + owner.lastName }
                     </div>}
                 </div>}
 
                 {/*CONFIRM DEACTIVATE*/}
                 {showDeactivateConfirm && <div className="confirmation-tooltip">
                     <div className={"confirmation-text"}>
-                        Are you sure you want to deactivate the listing?
+                        {this.context.t("Are you sure you want to deactivate the listing?")}
                     </div>
                     <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
                         onDeactivate();
                         e.stopPropagation();
                     }}>
-                        Deactivate
+                        {this.context.t("Deactivate")}
                     </button>
                     <button className={"button"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
@@ -220,9 +224,15 @@ class BoardListing extends React.Component{
                 </div>
                 <div className={"tournament"}>
                     {tournament && tournament.length === 1 && <div className="item">{tournament[0].name}</div>}
-                    {tournament && tournament.length === 0 && <div className="item">General content</div>}
-                    {seasons && seasons.length > 1 && <div className="item">Season: Multiple seasons</div>}
-                    {seasons && seasons.length === 1 && <div className="item">Season: {seasons[0].year}</div>}
+                    {tournament && tournament.length === 0 && <div className="item">
+                        {this.context.t("General content")}
+                    </div>}
+                    {seasons && seasons.length > 1 && <div className="item">
+                        {this.context.t("Season: Multiple seasons")}
+                    </div>}
+                    {seasons && seasons.length === 1 && <div className="item">
+                        {this.context.t("Season: ")}{seasons[0].year}
+                        </div>}
                 </div>
                 <div className={"rights"}>
                     {rightsPackage && rightsPackage.map((rp,i,l) => {
@@ -235,7 +245,7 @@ class BoardListing extends React.Component{
 
                             {SuperRightBoardLabels[rp.shortLabel]}
                             { rp.shortLabel === "PR" && PROGRAM_NAME &&
-                            "Program: " + PROGRAM_NAME
+                            this.context.t("Program: ") + PROGRAM_NAME
                             }
                         </span>
                     })}
@@ -243,7 +253,7 @@ class BoardListing extends React.Component{
 
                 <div className={"expiry"}>
                     <div>{ salesPackages.length } sales bundle{ salesPackages.length > 1 && "s"}</div>
-                    <div>Expiry: {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
+                    <div>{this.context.t("Expiry:")} {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
                 </div>
 
             </div>

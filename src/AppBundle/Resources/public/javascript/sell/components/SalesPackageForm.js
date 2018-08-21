@@ -6,6 +6,7 @@ import CurrencySelector from "../components/CurrencySelector";
 import DatePicker from 'react-datepicker';
 import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
+import {PropTypes} from "prop-types";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -579,7 +580,7 @@ class SalesPackageForm extends React.Component {
                 <div className="base-full-input" style={inputStyle}>
                     <label>
                         <div className='label-text'>
-                            Sales bundles
+                            {this.context.t("Sales bundles")}
                         </div>
                         <CurrencySelector onClick={selectCurrency} selected={currency} />
                         <div className='clearfix'/>
@@ -651,7 +652,8 @@ class SalesPackageForm extends React.Component {
                 {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
                     {this.addBundlesAvailable() && this.renderAddSalesBundleButton() }
                     {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll}>
-                        <i className="fa fa-minus-circle"/> Remove all
+                        <i className="fa fa-minus-circle"/>
+                        {this.context.t("Remove all")}
                     </div>}
                 </div>}
 
@@ -663,10 +665,15 @@ class SalesPackageForm extends React.Component {
     renderAddSalesBundleButton() {
         return (
             <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
-                <i className="fa fa-plus-circle"/> Add sales bundle
+                <i className="fa fa-plus-circle"/>
+                {this.context.t("Add sales bundle")}
             </div>
         );
     }
 }
+
+SalesPackageForm.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default SalesPackageForm;

@@ -6,6 +6,7 @@ import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol, goTo, limitText, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
+import {PropTypes} from "prop-types";
 
 const rightImageStyle = {
     width: 17,
@@ -78,7 +79,7 @@ class ClosedDeals extends React.Component {
                             }, {
                                 Header: () => (
                                     <span>
-                                        Listing name <i className="fa fa-sort" />
+                                         {this.context.t("Listing name")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header-big',
@@ -95,7 +96,7 @@ class ClosedDeals extends React.Component {
                                 accessor: 'content.company.legalName', // Required because our accessor is not a string
                                 Header: () => (
                                     <span>
-                                        Seller <i className="fa fa-sort" />
+                                        {this.context.t("Seller")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header-big',
@@ -187,7 +188,7 @@ class ClosedDeals extends React.Component {
                             }, {
                                 Header: () => (
                                     <span>
-                                        Territories <i className="fa fa-sort" />
+                                        {this.context.t("Territories")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header',
@@ -208,12 +209,12 @@ class ClosedDeals extends React.Component {
                                     {!worldwide && !excluding && size > 1 && size + " territories" }
                                     {!worldwide && !excluding && size === 1 && territories[0].name}
                                     {excluding && "Worldwide excluding " + excludedCountries[0].name }
-                                    {worldwide && "Worldwide" }
+                                    {worldwide && this.context.t("Worldwide") }
                                 </div>}
                             }, {
                                 Header: () => (
                                     <span>
-                                        Price <i className="fa fa-sort" />
+                                        {this.context.t("Price")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header',
@@ -226,7 +227,7 @@ class ClosedDeals extends React.Component {
                             }, {
                                 Header: () => (
                                     <span>
-                                        Date of sale <i className="fa fa-sort" />
+                                        {this.context.t("Date of sale")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header',
@@ -239,7 +240,7 @@ class ClosedDeals extends React.Component {
                             }, {
                                 Header: () => (
                                     <span>
-                                        Buyer name <i className="fa fa-sort" />
+                                        {this.context.t("Buyer name")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header-big',
@@ -252,7 +253,7 @@ class ClosedDeals extends React.Component {
                             },{
                                 headerClassName : 'table-header',
                                 className : 'table-header',
-                                Header: 'Actions', // Custom header components!
+                                Header: this.context.t("Actions"), // Custom header components!
                                 id: 'header',
                                 accessor: d => {return{
                                     id : d.id,
@@ -287,7 +288,7 @@ class ClosedDeals extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                You don't have closed deal yet
+                                {this.context.t("You don't have closed deal yet")}
                             </div>
                         }
                     </div>
@@ -297,6 +298,10 @@ class ClosedDeals extends React.Component {
         )
     }
 }
+
+ClosedDeals.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

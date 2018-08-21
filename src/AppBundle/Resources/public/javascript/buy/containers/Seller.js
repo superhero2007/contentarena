@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
+import {PropTypes} from "prop-types";
 
 const rowStyle = {
     borderBottom: '1px solid #EEF3F6',
@@ -57,11 +58,13 @@ class Seller extends React.Component {
 
                 </div>
                 <div className="full-item-box" style={{width: '75%'}}>
-                    <label>{company.displayName} DETAILS</label>
+                    <label>{company.displayName}
+                        {this.context.t("DETAILS")}
+                    </label>
                     <div >
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Legal name
+                                {this.context.t("Legal name")}
                             </div>
                             <div style={valueStyle}>
                                 {company.legalName}
@@ -69,7 +72,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Street Name / Number
+                                {this.context.t("Street Name / Number")}
                             </div>
                             <div style={valueStyle}>
                                 {company.address}
@@ -77,7 +80,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                City
+                                {this.context.t("City")}
                             </div>
                             <div style={valueStyle}>
                                 {company.city && company.city}
@@ -86,7 +89,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Country
+                                {this.context.t("Country")}
                             </div>
                             <div style={valueStyle}>
                                 {company.country && company.country.name}
@@ -95,7 +98,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                ZIP
+                                {this.context.t("ZIP")}
                             </div>
                             <div style={valueStyle}>
                                 {company.zip && company.zip}
@@ -104,7 +107,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                Company registration number
+                                {this.context.t("Company registration number")}
                             </div>
                             <div style={valueStyle}>
                                 {company.registrationNumber && company.registrationNumber}
@@ -113,7 +116,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                VAT ID number
+                                {this.context.t("VAT ID number")}
                             </div>
                             <div style={valueStyle}>
                                 {company.vat}
@@ -125,7 +128,9 @@ class Seller extends React.Component {
                 </div>
 
                 <div className="full-item-box">
-                    <label>DESCRIPTION</label>
+                    <label>
+                        {this.context.t("DESCRIPTION")}
+                    </label>
                     <div className="full-item-content">
                         {company.description && company.description}
                         {!company.description && this.noInfoText}
@@ -137,6 +142,10 @@ class Seller extends React.Component {
         );
     }
 }
+
+Seller.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state

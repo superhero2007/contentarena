@@ -20,6 +20,7 @@ import {companyIsValid} from "../../sell/actions/validationActions";
 import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
 import ReactTooltip from 'react-tooltip'
+import {PropTypes} from "prop-types";
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
 const bidButtonStyle = { height: 34, width: 75, padding: 5, marginLeft: 10, fontSize: 14, marginRight: 10 };
@@ -488,22 +489,26 @@ class ListingDetails extends React.Component {
                         </div>
 
                         <div className={"date"}>
-                            Start of license period
+                            {this.context.t("Start of license period")}
                             <span>
-                                { content.startDateMode !== "DATE"  && " With contract conclusion"}
+                                { content.startDateMode !== "DATE"  && this.context.t(" With contract conclusion")}
                                 { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
                             </span>
                         </div>
                         <div className={"date"}>
-                            End of license period
+                            {this.context.t("End of license period")}
                             <span>
-                            { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + " days from contract conclusion"}
+                            { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t(" days from contract conclusion")}
                             { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
-                            { content.endDateMode === "UNLIMITED"  && " Unlimited"}
+                            { content.endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
                             </span>
                         </div>
-                        <div className={"date"}>Publishing date <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                        <div className={"date"}>Expiry <span>{Moment(content.expiresAt).format('DD/MM/YYYY')}</span></div>
+                        <div className={"date"}>
+                            {this.context.t("Publishing date")}
+                            <span>{Moment().format('DD/MM/YYYY')}</span></div>
+                        <div className={"date"}>
+                            {this.context.t("Expiry")}
+                            <span>{Moment(content.expiresAt).format('DD/MM/YYYY')}</span></div>
                     </div>
                     {!buyingMode && <div className={"right"} >
                         <div className={"header"}>
@@ -525,7 +530,9 @@ class ListingDetails extends React.Component {
                                         color: '#4F4F4F',
                                         fontSize: 16,
                                         margin: '0 10px'
-                                    }}>Contact Seller</div>
+                                    }}>
+                                        {this.context.t("Contact Seller")}
+                                    </div>
                                 </div>}
 
                                 {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor : 'pointer'}}
@@ -541,7 +548,9 @@ class ListingDetails extends React.Component {
                                         textDecoration: (content.watchlist) ? '' : 'underline',
                                         margin: '0 10px 0 5px'
 
-                                    }}>Watchlist</div>
+                                    }}>
+                                        {this.context.t("Watchlist")}
+                                    </div>
                                 </div>}
 
                                 {/*CUSTOM ID*/}
@@ -555,33 +564,33 @@ class ListingDetails extends React.Component {
                                 history.push('/listing/'+content.customId+'/bundles');
                                 this.showTab("bundles")
                             }}>
-                                Program & Sales Bundles
+                                {this.context.t("Program & Sales Bundles")}
                             </button>
                             <button className={(tab ==="event")?"active": ""} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/event');
                                 this.showTab("event");
                             }}>
-                                Event
+                                {this.context.t("Event")}
                             </button>
                             <button className={(tab ==="grantofrights")?"active": ""} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/grantofrights');
                                 this.showTab("grantofrights")
                             }}>
-                                Grant of Rights & Production
+                                {this.context.t("Grant of Rights & Production")}
                             </button>
                             {content.PROGRAM_NAME &&
                                 <button className={(tab ==="editeprogram")?"active": ""} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/editedprogram');
                                     this.showTab("editedprogram")
                                 }}>
-                                    Edited Program
+                                    {this.context.t("Edited Program")}
                                 </button>
                             }
                             <button className={(tab ==="seller")?"active": ""} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/seller');
                                 this.showTab("seller")
                             }}>
-                                Seller Information
+                                {this.context.t("Seller Information")}
                             </button>
                         </div>
 
@@ -629,7 +638,9 @@ class ListingDetails extends React.Component {
                                 display: 'flex',
                                 alignItems: 'center'
 
-                            }}>Sales bundle</div>
+                            }}>
+                                {this.context.t("Sales bundle")}
+                            </div>
                             <div style={{
                                 flex: '2.5 1 0%',
                             }}>
@@ -685,7 +696,9 @@ class ListingDetails extends React.Component {
                                 display: 'flex',
                                 alignItems: 'center'
 
-                            }}>Commercial information</div>
+                            }}>
+                                {this.context.t("Commercial information")}
+                            </div>
                             <div style={{
                                 flex: '2.5 1 0%',
                             }}>
@@ -702,12 +715,14 @@ class ListingDetails extends React.Component {
                                 }}>
                                     {selectedPackage.salesMethod === "FIXED" &&
                                     <div style={{ display : 'flex', alignItems: 'center'}}>
-                                        License fee: <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>
+                                        {this.context.t("License fee:")}
+                                        <span style={bidTextBoxStyle}>{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>
                                     </div>}
 
                                     {selectedPackage.salesMethod === "BIDDING" &&
                                     <div style={{ display : 'flex', alignItems: 'center'}}>
                                         Bid:
+                                        {this.context.t("Logout")}
                                         {!bidUpdated &&
                                         <input
                                             style={{
@@ -738,15 +753,19 @@ class ListingDetails extends React.Component {
                                                         onClick={this.setBid}>Apply</button>
                                             </div>}
                                         <ReactTooltip id='apply-bid'>
-                                            <span>The bid must exceed current minimum</span>
+                                            <span>
+                                                {this.context.t("The bid must exceed current minimum")}
+                                            </span>
                                         </ReactTooltip>
-                                        {bidUpdated && <button className="link-button" onClick={this.editBid}>Raise</button>}
+                                        {bidUpdated && <button className="link-button" onClick={this.editBid}>
+                                            {this.context.t("Raise")}
+                                        </button>}
                                     </div>}
 
                                     <div style={{
                                         margin: '5px 10px'
                                     }}>
-                                        Technical fee:
+                                        {this.context.t("Technical fee:")}
                                         <span style={bidTextBoxStyle}>
                                             {technicalFee.TECHNICAL_FEE === "ON_TOP" && technicalFee.TECHNICAL_FEE_PERCENTAGE + "%"}
                                             {technicalFee.TECHNICAL_FEE !== "ON_TOP" && "Included"}
@@ -756,7 +775,7 @@ class ListingDetails extends React.Component {
                                     <div style={{
                                         margin: '5px 10px'
                                     }}>
-                                        Total:
+                                        {this.context.t("Total:")}
                                         <span style={bidTextBoxStyle}>
                                             {this.getTotalFee() + getCurrencySymbol(selectedPackage.currency.code)}
                                         </span>
@@ -776,7 +795,9 @@ class ListingDetails extends React.Component {
                                 display: 'flex',
                                 alignItems: 'center'
 
-                            }}>Payment details</div>
+                            }}>
+                                {this.context.t("Payment details")}
+                            </div>
                             <div style={{
                                 flex: '2.5 1 0%',
                             }}>
@@ -796,11 +817,11 @@ class ListingDetails extends React.Component {
                                             <div style={{
                                                 margin: '0 10px 0 0',
                                                 fontWeight: 600
-                                            }}>{this.ordinal_suffix_of(index + 1)} installment
+                                            }}>{this.ordinal_suffix_of(index + 1)} {this.context.t("installment")}
                                             </div>
                                             <div style={{margin: '0 30px'}}>{installment.value}%</div>
                                             <div style={{margin: '0 10px'}}>
-                                                {installment.type === "DAY" && installment.days + " days after contract closure"}
+                                                {installment.type === "DAY" && installment.days + this.context.t(" days after contract closure")}
                                                 {installment.type === "DATE" && " " + Moment(installment.date).format('DD/MM/YYYY')}
                                             </div>
                                         </div>
@@ -819,7 +840,9 @@ class ListingDetails extends React.Component {
                                 display: 'flex',
                                 alignItems: 'center'
 
-                            }}>Company address</div>
+                            }}>
+                                {this.context.t("Company address")}
+                            </div>
                             <div style={{
                                 flex: '2.5 1 0%',
                             }}>
@@ -857,7 +880,7 @@ class ListingDetails extends React.Component {
                             viewLicenseCustom(content.customId, selectedPackage.id, bid);
                         }}>
                             <img style={{marginRight: 10}} src={this.pdfIcon}/>
-                            License agreement
+                            {this.context.t("License agreement")}
                         </div>
 
                         {/*SIGNATURE*/}
@@ -869,7 +892,9 @@ class ListingDetails extends React.Component {
                             }}> <input type="checkbox"
                                        id="terms-buy"
                                        onChange={e =>{ this.setState({terms: e.target.checked}) }}
-                                       checked={this.state.terms}/> <label htmlFor={"terms-buy"} />Accept terms conditions</div>
+                                       checked={this.state.terms}/> <label htmlFor={"terms-buy"} />
+                                {this.context.t("Accept terms conditions")}
+                            </div>
                         </div>
                         <div style={{
                             display: 'flex',
@@ -879,7 +904,9 @@ class ListingDetails extends React.Component {
                         }}>
                             { !spinner && <button className="standard-button"
                                     onClick={this.placeBid}
-                                    disabled={this.invalidPackage()}>Buy</button>}
+                                    disabled={this.invalidPackage()}>
+                                {this.context.t("Buy")}
+                            </button>}
                             { spinner && <i className="fa fa-cog fa-spin"/>}
                         </div>
                     </div>}
@@ -889,6 +916,10 @@ class ListingDetails extends React.Component {
         );
     }
 }
+
+ListingDetails.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state

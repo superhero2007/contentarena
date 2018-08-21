@@ -5,6 +5,7 @@ import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import Moment from "moment/moment";
 import LicenseDownloader from '../../main/components/LicenseDownloader'
+import {PropTypes} from "prop-types";
 
 class SalesPackages extends React.Component {
 
@@ -203,7 +204,7 @@ class SalesPackages extends React.Component {
                             <button className="standard-button"
                                     style={{width: 130}}
                                     onClick={() => {onSelectPackage(salesPackage, listingId) }}>
-                                Buy now
+                                {this.context.t("Buy now")}
                             </button>
                         }
 
@@ -211,7 +212,7 @@ class SalesPackages extends React.Component {
                             <button className="standard-button"
                                     style={{width: 130}}
                                     onClick={() => {onSelectPackage(salesPackage, listingId) }}>
-                                Place bid
+                                {this.context.t("Place bid")}
                             </button>
                         }
 
@@ -224,6 +225,10 @@ class SalesPackages extends React.Component {
         );
     }
 }
+
+SalesPackages.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state

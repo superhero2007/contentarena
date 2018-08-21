@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Select from 'react-select';
 import ContentListingCommercialActivity from '../../main/components/ContentListingCommercialActivity';
 import {goToListing} from "../../main/actions/utils";
+import {PropTypes} from "prop-types";
 
 class CommercialActivity extends React.Component {
     constructor(props) {
@@ -128,7 +129,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="ALL" && <img src={this.activeBulletIcon} />}
                             {filter!=="ALL" && <img src={this.bulletIcon} />}
-                            All bundles
+                            {this.context.t("All bundles")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
@@ -137,7 +138,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="withactivity" && <img src={this.activeBulletIcon} />}
                             {filter!=="withactivity" && <img src={this.bulletIcon} />}
-                            With activity
+                            {this.context.t("With activity")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
@@ -146,7 +147,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="openbids" && <img src={this.activeBulletIcon} />}
                             {filter!=="openbids" && <img src={this.bulletIcon} />}
-                            Open Bids
+                            {this.context.t("Open Bids")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
@@ -154,7 +155,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="closedeals" && <img src={this.activeBulletIcon} />}
                             {filter!=="closedeals" && <img src={this.bulletIcon} />}
-                            Closed deals
+                            {this.context.t("Closed deals")}
                         </div>
                     </div>
                 </div>
@@ -189,7 +190,7 @@ class CommercialActivity extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                You have no offers yet
+                                {this.context.t("You have no offers yet")}
                             </div>
                         }
                     </div>
@@ -198,6 +199,10 @@ class CommercialActivity extends React.Component {
         )
     }
 }
+
+CommercialActivity.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

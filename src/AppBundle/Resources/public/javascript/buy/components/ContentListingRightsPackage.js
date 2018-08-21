@@ -1,7 +1,8 @@
 import React from 'react';
 import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
+import {PropTypes} from "prop-types";
 
-const ContentListingRightsPackage = ({rightsPackage, programName}) => {
+const ContentListingRightsPackage = ({rightsPackage, programName}, context) => {
     return (
         <div className="listing-rights col">
             {rightsPackage.map((sr, i) => {
@@ -16,7 +17,7 @@ const ContentListingRightsPackage = ({rightsPackage, programName}) => {
                         <div style={{display: 'flex', flexDirection: "row"}}>
                             {sr.shortLabel !== "PR" && sr.name}
                             {sr.shortLabel === "PR" && programName &&
-                            "Program: " + programName
+                            context.t("Program: ") + programName
                             }
                             {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                         </div>
@@ -25,6 +26,10 @@ const ContentListingRightsPackage = ({rightsPackage, programName}) => {
             })}
         </div>
     );
+};
+
+ContentListingRightsPackage.contextTypes = {
+    t: PropTypes.func.isRequired
 };
 
 export default ContentListingRightsPackage;

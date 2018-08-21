@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import {addRight, clearFilter, removeRight, updateCountries, updateExclusive} from "../actions/filterActions";
 import CountrySelector from "../../main/components/CountrySelector";
+import {PropTypes} from "prop-types";
 
 class RightsFilter extends React.Component {
 
@@ -23,7 +24,9 @@ class RightsFilter extends React.Component {
         const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter} = this.props;
         return (
             <div className="box">
-                <div className="title">Rights</div>
+                <div className="title">
+                    {this.context.t("Rights")}
+                </div>
                 <div className="content">
                     <div style={{display: 'flex'}}>
                         <CountrySelector
@@ -67,15 +70,19 @@ class RightsFilter extends React.Component {
                                 this.props.updateExclusive(e.target.checked)
                             }}
                         />
-                        Contains exclusive rights
+                        {this.context.t("Contains exclusive rights")}
                     </div>
                     <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="standard-button" style={{margin:5}} onClick={onFilter}>Apply</button>
-                        <button className="standard-button transparent" style={{margin:5}} onClick={clearFilter}>Clear</button>
+                        <button className="standard-button" style={{margin:5}} onClick={onFilter}>
+                            {this.context.t("Apply")}
+                        </button>
+                        <button className="standard-button transparent" style={{margin:5}} onClick={clearFilter}>
+                            {this.context.t("Clear")}
+                        </button>
                     </div>
 
                 </div>
@@ -83,6 +90,11 @@ class RightsFilter extends React.Component {
         );
     }
 }
+
+RightsFilter.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
 
 const mapStateToProps = state => {
     return state.filter

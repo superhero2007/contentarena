@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
+import {PropTypes} from "prop-types";
 
 class LicenseDateSelector extends React.Component {
     constructor(props) {
@@ -52,14 +53,16 @@ class LicenseDateSelector extends React.Component {
             >
 
                 <div className="modal-title">
-                    Edit license period
+                    {this.context.t("Edit license period")}
                     <i className="fa fa-times-circle-o" onClick={onClose}/>
                 </div>
 
                 <div className="step-content step-content-custom">
                     <div className="step-content-container">
                         <div className="modal-input">
-                            <label>Start of license period</label>
+                            <label>
+                                {this.context.t("Start of license period")}
+                            </label>
                             <div className="row">
                                 <div className="column">
                                     <input type="radio"
@@ -70,7 +73,7 @@ class LicenseDateSelector extends React.Component {
                                         id={"license-start-contract"}
                                         className="ca-radio package-selector"
                                     />
-                                    With contract conclusion
+                                    {this.context.t("With contract conclusion")}
                                 </div>
                                 <div className="column">
                                     <input type="radio"
@@ -93,7 +96,9 @@ class LicenseDateSelector extends React.Component {
                             </div>
                         </div>
                         <div className="modal-input">
-                            <label>End of license period</label>
+                            <label>
+                                {this.context.t("End of license period")}
+                            </label>
                             <div className="row">
                                 <div className="column">
                                     <input type="radio"
@@ -110,7 +115,9 @@ class LicenseDateSelector extends React.Component {
                                         value={endDateLimit}
                                         onChange={this.handleEndDateLimit}
                                         placeholder={"Enter number"}/>
-                                    <span className={"small-label"}>days from contract conclusion</span>
+                                    <span className={"small-label"}>
+                                        {this.context.t("days from contract conclusion")}
+                                    </span>
                                 </div>
                                 <div className="column">
                                     <input type="radio"
@@ -138,7 +145,9 @@ class LicenseDateSelector extends React.Component {
                                            id={"license-end-unlimited"}
                                            className="ca-radio package-selector"
                                     />
-                                    <span style={{padding: '12px 0'}}>Unlimited</span>
+                                    <span style={{padding: '12px 0'}}>
+                                        {this.context.t("Unlimited")}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +157,9 @@ class LicenseDateSelector extends React.Component {
                 <div className={"buttons"}>
                     <button
                         className={"standard-button"}
-                        onClick={this.onOKClick}>OK</button>
+                        onClick={this.onOKClick}>
+                        {this.context.t("Ok")}
+                    </button>
                 </div>
 
             </Modal>
@@ -174,5 +185,9 @@ class LicenseDateSelector extends React.Component {
         });
     }
 }
+
+LicenseDateSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default LicenseDateSelector;

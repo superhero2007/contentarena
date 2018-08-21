@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {PropTypes} from 'prop-types';
-import HeaderBar from "../../main/components/HeaderBar";
 
 class EventFilter extends React.Component {
 

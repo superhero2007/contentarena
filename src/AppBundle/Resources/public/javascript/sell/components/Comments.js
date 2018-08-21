@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
+import {PropTypes} from "prop-types";
 
 class Comments extends React.Component {
     constructor(props) {
@@ -9,9 +10,6 @@ class Comments extends React.Component {
         this.state = {
             isOpen : false,
         };
-    }
-
-    componentWillReceiveProps(nextProps) {
     }
 
     closeModal = () => {
@@ -41,7 +39,7 @@ class Comments extends React.Component {
         >
 
             <div className="modal-title">
-                Add further comments
+                {this.context.t("Add further comments")}
                 <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
             </div>
 
@@ -60,7 +58,9 @@ class Comments extends React.Component {
             <div className={"buttons"}>
                 <button
                     className={"standard-button"}
-                    onClick={this.closeModal}>Ok</button>
+                    onClick={this.closeModal}>
+                    {this.context.t("Ok")}
+                </button>
             </div>
         </Modal>
     };
@@ -69,11 +69,17 @@ class Comments extends React.Component {
         return (
             <div style={{marginBottom: 20}}>
                 { this.renderModal() }
-                <button className={"link-button"} onClick={this.addComments}>Add further comments</button>
+                <button className={"link-button"} onClick={this.addComments}>
+                    {this.context.t("Add further comments")}
+                </button>
             </div>
         )
     }
 }
+
+Comments.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

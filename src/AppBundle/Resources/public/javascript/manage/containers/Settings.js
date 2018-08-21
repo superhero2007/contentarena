@@ -5,6 +5,7 @@ import {getCurrencySymbol, getFullName, goTo, limitText} from "../../main/action
 import CountrySelector from '../../main/components/CountrySelector'
 import Moment from "moment/moment";
 import {blueCheckIcon, cancelIcon, editIcon, Spinner} from "../../main/components/Icons";
+import {PropTypes} from "prop-types";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -99,12 +100,15 @@ class Settings extends React.Component {
         return (
             <div className={"settings-container"}>
                 <div className={"title"}>
-                    Company information {!editCompanyInfo && !updatingCompany &&
+                    {this.context.t("Company information")}
+                    {!editCompanyInfo && !updatingCompany &&
                     <div className={"edit-button"} onClick={e=>{this.setState({editCompanyInfo : true})}}>
-                        <img src={editIcon}/> Edit
+                        <img src={editIcon}/>
+                        {this.context.t("Edit")}
                     </div>}
                     {editCompanyInfo && !updatingCompany && <div className={"edit-button"} onClick={this.updateCompany}>
-                        <img src={editIcon}/> Save
+                        <img src={editIcon}/>
+                        {this.context.t("Save")}
                     </div>}
                     {updatingCompany && <Spinner/>}
                 </div>
@@ -113,7 +117,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                Legal Company Name
+                                {this.context.t("Legal Company Name")}
                             </label>
                             <input value={user.company.legalName} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.legalName = e.target.value;
@@ -122,7 +126,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                Company Registration Number
+                                {this.context.t("Company Registration Number")}
                             </label>
                             <input value={user.company.registrationNumber} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.registrationNumber = e.target.value;
@@ -131,7 +135,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                VAT ID number
+                                {this.context.t("VAT ID number")}
                             </label>
                             <input value={user.company.vat} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.vat = e.target.value;
@@ -142,7 +146,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                Address
+                                {this.context.t("Address")}
                             </label>
                             <input value={user.company.address} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.address = e.target.value;
@@ -151,7 +155,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                City
+                                {this.context.t("City")}
                             </label>
                             <input value={user.company.city} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.city = e.target.value;
@@ -160,7 +164,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                ZIP code
+                                {this.context.t("ZIP code")}
                             </label>
                             <input value={user.company.zip} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.zip = e.target.value;
@@ -169,7 +173,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                Country
+                                {this.context.t("Country")}
                             </label>
                             <CountrySelector multi={false} value={country} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.country.name = e.value;
@@ -178,7 +182,9 @@ class Settings extends React.Component {
                         </div>
                     </div>
                     <div>
-                        <label>Company description</label>
+                        <label>
+                            {this.context.t("Company description")}
+                        </label>
                         <textarea value={user.company.description} disabled={!editCompanyInfo} onChange={(e)=>{
                             user.company.description = e.target.value;
                             this.setState({user});
@@ -199,27 +205,27 @@ class Settings extends React.Component {
                                 resizable={false}
                                 data={companyUsers}
                                 columns={[{
-                                    Header: 'Familiy Name',
+                                    Header: this.context.t("Familiy Name"),
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                     accessor: 'lastName',
                                 }, {
                                     accessor: 'firstName', // Required because our accessor is not a string
-                                    Header: 'First Name',
+                                    Header: this.context.t("First Name"),
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                 }, {
-                                    Header: 'Email',
+                                    Header: this.context.t("Email"),
                                     accessor: 'email',
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                 },{
-                                    Header: 'Phone Number',
+                                    Header: this.context.t("Phone Number"),
                                     accessor: 'phone',
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                 },{
-                                    Header: 'Company Position',
+                                    Header: this.context.t("Company Position"),
                                     accessor: 'title',
                                     headerClassName : 'table-header',
                                     className : 'table-header',
@@ -231,12 +237,17 @@ class Settings extends React.Component {
                     </div>
                 </div>}
                 <div className={"title"}>
-                    Personal information {!editPersonalInfo && !updatingUser &&
+                    {this.context.t("Personal information")}
+                    {!editPersonalInfo && !updatingUser &&
                     <div className={"edit-button"} onClick={e=>{this.setState({editPersonalInfo : true})}}>
-                        <img src={editIcon}/> Edit
+                        <img src={editIcon}/>
+
+                        {this.context.t("Edit")}
                     </div>}
                     {editPersonalInfo && !updatingUser && <div className={"edit-button"} onClick={this.updateUser}>
-                        <img src={editIcon}/> Save
+                        <img src={editIcon}/>
+
+                        {this.context.t("Save")}
                     </div>}
                     {updatingUser && <Spinner/>}
                 </div>
@@ -244,7 +255,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                First Name
+                                {this.context.t("First Name")}
                             </label>
                             <input value={user.firstName} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.firstName = e.target.value;
@@ -253,7 +264,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                Last Name
+                                {this.context.t("Last Name")}
                             </label>
                             <input value={user.lastName} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.lastName = e.target.value;
@@ -262,7 +273,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                Title
+                                {this.context.t("Title")}
                             </label>
                             <input value={user.title} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.title = e.target.value;
@@ -273,7 +284,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                Email address
+                                {this.context.t("Email address")}
                             </label>
                             <input value={user.email} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.email = e.target.value;
@@ -282,7 +293,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                Phone number
+                                {this.context.t("Phone number")}
                             </label>
                             <input value={user.phone} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.phone = e.target.value;
@@ -295,28 +306,34 @@ class Settings extends React.Component {
 
 
                 <div className={"title"}>
-                    Change Password
+                    {this.context.t("Change Password")}
                 </div>
                 <div className={"subtitle"}>
-                     Choose a unique password to protect your account
+                    {this.context.t("Choose a unique password to protect your account")}
                 </div>
                 <div className={"setting"} style={{display: 'flex'}}>
                     <div className={"password"}>
-                        <label>Type your current password</label>
+                        <label>
+                            {this.context.t(" Type your current password")}
+                        </label>
                         <input type={"password"} onChange={(e)=>{
                             this.setState({
                                 oldPassword : e.target.value
                             })
                         }}/>
 
-                        <label>Type your new password</label>
+                        <label>
+                            {this.context.t("Type your new password")}
+                        </label>
                         <input type={"password"} onChange={(e)=>{
                             this.setState({
                                 password : e.target.value
                             })
                         }}/>
 
-                        <label>Retype your new password</label>
+                        <label>
+                            {this.context.t("Retype your new password")}
+                        </label>
                         <input type={"password"} onChange={(e)=>{
                             this.setState({
                                 passwordCheck : e.target.value
@@ -326,37 +343,39 @@ class Settings extends React.Component {
                         {!updatingPassword && !passwordUpdated &&
                         <button onClick={this.updatePassword}
                                 disabled={this.invalidPassword()}
-                                className={"standard-button"}>Save password</button>}
+                                className={"standard-button"}>
+                            {this.context.t("Save password")}
+                        </button>}
                         {updatingPassword && <Spinner/>}
                         {passwordUpdated && <div>
-                            Password updated successfully
+                            {this.context.t("Password updated successfully")}
                         </div>}
                     </div>
                     {password && <div className={"password-validation"}>
                         <div>
                             {this.validate(password).length && <img src={blueCheckIcon}/>}
                             {!this.validate(password).length&& <img src={cancelIcon}/>}
-                            At least 8 characters long
+                            {this.context.t("At least 8 characters long")}
                         </div>
                         <div>
                             {this.validate(password).upper && <img src={blueCheckIcon}/>}
                             {!this.validate(password).upper&& <img src={cancelIcon}/>}
-                            One uppercase character
+                            {this.context.t("One uppercase character")}
                         </div>
                         <div>
                             {this.validate(password).digit && <img src={blueCheckIcon}/>}
                             {!this.validate(password).digit&& <img src={cancelIcon}/>}
-                            One number
+                            {this.context.t("One number")}
                         </div>
                         <div>
                             {this.validate(password).special && <img src={blueCheckIcon}/>}
                             {!this.validate(password).special&& <img src={cancelIcon}/>}
-                            One special character
+                            {this.context.t("One special character")}
                         </div>
                         {passwordCheck && <div>
                             {passwordCheck === password && <img src={blueCheckIcon}/>}
                             {passwordCheck !== password && <img src={cancelIcon}/>}
-                            Passwords don't match
+                            {this.context.t("Passwords don't match")}
                         </div>}
                     </div>}
 
@@ -365,6 +384,10 @@ class Settings extends React.Component {
         )
     }
 }
+
+Settings.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

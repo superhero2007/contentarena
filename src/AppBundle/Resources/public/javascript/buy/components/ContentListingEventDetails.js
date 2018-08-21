@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from "react-redux";
-import Select from 'react-select';
-import {updateEvent, updateSport} from "../actions/filterActions";
 import {editedProgramSelected} from "../../main/actions/utils";
+import {PropTypes} from "prop-types";
 
 class ContentListingEventDetails extends React.Component {
 
@@ -100,7 +98,9 @@ class ContentListingEventDetails extends React.Component {
                 <div className="listing-item event">
                     {/*Sport name*/}
                     {sports && sports.length === 1 && <span>{sports[0].name}</span>}
-                    {sports && sports.length > 1 && <span>Multiple Sports</span>}
+                    {sports && sports.length > 1 && <span>
+                        {this.context.t("Multiple Sports")}
+                    </span>}
 
                     {/*Sport category*/}
                     {sportCategory && sportCategory.length > 0 && <span>{sportCategory[0].name}</span> }
@@ -111,7 +111,9 @@ class ContentListingEventDetails extends React.Component {
                     {/*Tournament name*/}
                     {tournament && tournament.length > 0 && <span>{tournament[0].name}</span>}
                     {customTournament && !customId && <span>{customTournament}</span>}
-                    {tournament && tournament.length === 0 && !customTournament && <span>General content</span>}
+                    {tournament && tournament.length === 0 && !customTournament && <span>
+                        {this.context.t("General content")}
+                    </span>}
 
                     {/*Season name*/}
                     {seasons && seasons.length > 0 && seasonName}
@@ -123,7 +125,9 @@ class ContentListingEventDetails extends React.Component {
                 <div className="listing-item event">
                     {/*Round name*/}
                     {rounds.length === 1 && <span>{roundsName}</span>}
-                    {rounds.length > 1 && <span>Multiple rounds</span>}
+                    {rounds.length > 1 && <span>
+                        {this.context.t("Multiple rounds")}
+                    </span>}
 
                     {/*Matches*/}
                     {matches.length === 1 &&
@@ -143,6 +147,9 @@ class ContentListingEventDetails extends React.Component {
     }
 }
 
+ContentListingEventDetails.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 
 export default ContentListingEventDetails

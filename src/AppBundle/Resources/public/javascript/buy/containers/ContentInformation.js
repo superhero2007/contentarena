@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
 import { StaticSchedules } from "../../sell/components/SellFormItems";
+import {PropTypes} from "prop-types";
 
 class ContentInformation extends React.Component {
 
@@ -69,7 +70,7 @@ class ContentInformation extends React.Component {
                     seasons && seasons.length > 0 && seasons.map((season, key)  => {
                         return <div key={"season-" + key} className="season-details">
                             <div className="season-name">
-                                Season : {season.name}
+                                 {this.context.t("Season :")} {season.name}
                             </div>
                             {( !season.fixtures || season.fixtures.length === 0) && <StaticSchedules season={key} seasons={seasons}/>}
                             { season.fixtures && season.fixtures.length > 0 &&
@@ -85,7 +86,9 @@ class ContentInformation extends React.Component {
 
                 {/*DESCRIPTIONS*/}
                 <div className="full-item-box">
-                    <label>EVENT DESCRIPTION</label>
+                    <label>
+                        {this.context.t("EVENT DESCRIPTION")}
+                    </label>
                     <div className="full-item-content">
                         {description && description}
                         {!description && this.noInfoText}
@@ -98,7 +101,9 @@ class ContentInformation extends React.Component {
                          flexDirection : 'row',
                          width : '70%'
                      }}>
-                    <label>CONTENT WEBSITE</label>
+                    <label>
+                        {this.context.t("CONTENT WEBSITE")}
+                    </label>
                     <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
                         {website && <a target="_blank" href={website}>{website}</a>}
                         {!website && this.noInfoText}
@@ -113,7 +118,9 @@ class ContentInformation extends React.Component {
                      }}>
                     <label style={{
                         height: 'auto'
-                    }}>ATTACHMENTS</label>
+                    }}>
+                        {this.context.t("ATTACHMENTS")}
+                    </label>
                     {attachments && attachments.length > 0 && <div style={{
                         display : "flex",
                         flexDirection: 'column'
@@ -131,7 +138,7 @@ class ContentInformation extends React.Component {
                         </div>
                     })}</div>}
                     {( !attachments || attachments.length === 0)&& <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
-                        No attachments available
+                        {this.context.t("No attachments available")}
                     </div>}
                 </div>
 
@@ -140,6 +147,10 @@ class ContentInformation extends React.Component {
         );
     }
 }
+
+ContentInformation.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state

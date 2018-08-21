@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
 import DatePicker from 'react-datepicker';
+import {PropTypes} from "prop-types";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -219,16 +220,16 @@ class SalesPackageEdit extends React.Component {
         >
 
             <div className="modal-title">
-                Sales bundle
+                {this.context.t("Sales bundle")}
                 <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content">
                 <div className="step-content-container">
-
                     <div className="base-full-input">
                         <label style={labelStyle}>
-                            Territories {this.state.territoriesMethod === this.worldwideExcluding && ": Worldwide exluding"}
+                            {this.context.t("Territories")}
+                            {this.state.territoriesMethod === this.worldwideExcluding && ": Worldwide exluding"}
                         </label>
                     </div>
 
@@ -255,24 +256,26 @@ class SalesPackageEdit extends React.Component {
                     { (this.state.bundleMethod === this.asBundle )
                     && ( this.state.territoriesMethod === this.worldwide )
                     && <div style={{ padding: '10px 5px 20px'}}>
-                        Worldwide
+                        {this.context.t("Worldwide")}
                     </div> }
 
                     <div className="base-full-input">
-                        <label style={labelStyle}>Sales method</label>
+                        <label style={labelStyle}>
+                            {this.context.t("Sales method")}
+                        </label>
                         <div className={"content"}>
                             <div className={"item"} onClick={() => { this.setSalesMethod(this.fixed) } }>
                                 {this.state.salesMethod !== this.fixed && <i className="fa fa-circle-thin"/>}
                                 {this.state.salesMethod === this.fixed && <i className="fa fa-check-circle-o"/>}
                                 <div className={"title"}>
-                                    Fixed fee
+                                    {this.context.t("Fixed fee")}
                                 </div>
                             </div>
                             <div className={"item"} onClick={() => { this.setSalesMethod(this.bidding) } }>
                                 {this.state.salesMethod !== this.bidding && <i className="fa fa-circle-thin"/>}
                                 {this.state.salesMethod === this.bidding && <i className="fa fa-check-circle-o"/>}
                                 <div className={"title"}>
-                                    Bidding
+                                    {this.context.t("Bidding")}
                                 </div>
                             </div>
                             <div className={"item"} style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -292,7 +295,9 @@ class SalesPackageEdit extends React.Component {
                     </div>
 
                     <div className="base-full-input">
-                        <label style={labelStyle}>Payment details</label>
+                        <label style={labelStyle}>
+                            {this.context.t("Payment details")}
+                        </label>
 
                         { this.state.installments.map( (installment, i, list) => {
                             return <div className={"content"}>
@@ -319,7 +324,8 @@ class SalesPackageEdit extends React.Component {
                                         onChange={(e) => {this.setInstallmentDays(e.target.value,i)}}
                                         disabled={installment.type !== "DAY"}
                                         value={installment.days}
-                                        style={{ height: "26px", width: "40px" }}/> days after contract conclusion
+                                        style={{ height: "26px", width: "40px" }}/>
+                                        {this.context.t("days after contract conclusion")}
                                     </div>
                                     { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
                                     { i === list.length - 1 && <i style={{margin: 0, position: "relative"}} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
@@ -339,7 +345,7 @@ class SalesPackageEdit extends React.Component {
                 fontSize: '12px',
                 color: 'red'
             }}>
-                { this.installmentsIncomplete() && "the total instalment percentage must accumulate to 100%"}
+                { this.installmentsIncomplete() && this.context.t("the total instalment percentage must accumulate to 100%")}
             </div>
 
             <div className={"buttons"}>
@@ -377,5 +383,9 @@ class SalesPackageEdit extends React.Component {
     };
 
 }
+
+SalesPackageEdit.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default SalesPackageEdit;

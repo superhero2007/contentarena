@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import ContentListingPendingBid from '../../main/components/ContentListingPendingBid';
 import {goTo} from "../../main/actions/utils";
+import {PropTypes} from "prop-types";
 
 class PendingDeals extends React.Component {
     constructor(props) {
@@ -73,7 +74,7 @@ class PendingDeals extends React.Component {
                          }}>
                         {tab === "activebids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {tab !== "activebids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
-                        Active
+                        {this.context.t("Active")}
                     </div>
                     <div style={{margin:'0 20px', cursor: 'pointer'}}
                          onClick={()=>{
@@ -81,7 +82,7 @@ class PendingDeals extends React.Component {
                          }}>
                         {tab === "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {tab !== "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
-                        Declined
+                        {this.context.t("Declined")}
                     </div>
                 </div>
 
@@ -122,7 +123,7 @@ class PendingDeals extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                You haven't made any bids yet!
+                                {this.context.t("You haven't made any bids yet!")}
                             </div>
                         }
                     </div>
@@ -141,7 +142,7 @@ class PendingDeals extends React.Component {
                             !loadingDeclined && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                You haven't any declined bids yet!
+                                {this.context.t("You haven't any declined bids yet!")}
                             </div>
                         }
                     </div>
@@ -151,6 +152,10 @@ class PendingDeals extends React.Component {
         )
     }
 }
+
+PendingDeals.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

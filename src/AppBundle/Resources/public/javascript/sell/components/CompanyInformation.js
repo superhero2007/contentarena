@@ -4,6 +4,7 @@ import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
 import {companyIsValid} from "../actions/validationActions";
+import {PropTypes} from "prop-types";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -54,7 +55,7 @@ class CompanyInformation extends React.Component {
         >
 
             <div className="modal-title">
-                Company Information
+                {this.context.t("Company Information")}
                 <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
             </div>
 
@@ -63,7 +64,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Legal name
+                            {this.context.t("Legal name")}
                         </label>
                         <input
                             type={"text"}
@@ -73,7 +74,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Registration number
+                            {this.context.t("Registration number")}
                         </label>
                         <input
                             style={inputStyle}
@@ -84,7 +85,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            VAT ID number
+                            {this.context.t("VAT ID number")}
                         </label>
                         <input
                             style={inputStyle}
@@ -95,7 +96,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Street Name / Number
+                            {this.context.t("Street Name / Number")}
                         </label>
                         <input
                             style={inputStyle}
@@ -106,7 +107,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            City
+                            {this.context.t("City")}
                         </label>
                         <input
                             style={inputStyle}
@@ -117,7 +118,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            ZIP code
+                            {this.context.t("ZIP code")}
                         </label>
                         <input
                             style={inputStyle}
@@ -128,7 +129,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Country
+                            {this.context.t("Country")}
                         </label>
                         <CountrySelector
                             multi={false}
@@ -143,12 +144,16 @@ class CompanyInformation extends React.Component {
             <div className={"buttons"}>
                 { companyIsValid(company) &&<button
                     className={"standard-button"}
-                    onClick={this.onOKClick}>Ok</button>}
+                    onClick={this.onOKClick}>
+                    {this.context.t("Ok")}
+                </button>}
 
                 { !companyIsValid(company) &&<button
                     className={"standard-button"}
                     disabled
-                    >Ok</button>}
+                    >
+                    {this.context.t("Ok")}
+                </button>}
             </div>
         </Modal>
     };
@@ -158,7 +163,10 @@ class CompanyInformation extends React.Component {
         return (
             <div className="base-input">
                 { this.renderModal() }
-                <label>Company address</label>
+                <label>
+                    Company address
+                    {this.context.t("Logout")}
+                </label>
                 <input
                     type="text"
                     value={company.legalName + ", " + company.address}
@@ -185,6 +193,10 @@ class CompanyInformation extends React.Component {
         });
     }
 }
+
+CompanyInformation.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

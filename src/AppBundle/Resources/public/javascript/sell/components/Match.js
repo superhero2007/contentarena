@@ -8,10 +8,6 @@ class Match extends React.Component {
             selected : props.selected || false
         };
     }
-    componentDidMount() {
-    }
-    componentWillUnmount() {
-    }
 
     toggle = (e) => {
         this.setState((prevState) => ({

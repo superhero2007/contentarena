@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import ContentListing from '../../main/components/ContentListing';
 import {goTo} from "../../main/actions/utils";
+import {PropTypes} from "prop-types";
 
 class Watchlist extends React.Component {
     constructor(props) {
@@ -68,7 +69,7 @@ class Watchlist extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                Your watchlist is empty!
+                                {this.context.t("Your watchlist is empty!")}
                             </div>
                         }
                     </div>
@@ -78,6 +79,10 @@ class Watchlist extends React.Component {
         )
     }
 }
+
+Watchlist.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

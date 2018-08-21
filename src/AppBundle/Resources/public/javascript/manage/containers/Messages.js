@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {getFullName, goTo, goToListing, limitText} from "../../main/actions/utils";
 import BoardListing from '../components/BoardListing';
 import Moment from "moment/moment";
+import {PropTypes} from "prop-types";
 
 class Messages extends React.Component {
     constructor(props) {
@@ -103,7 +104,7 @@ class Messages extends React.Component {
                 <div className={"threads"}>
                     {loadingThreads && threads.length ===0 && <i className="fa fa-cog fa-spin" /> }
                     {!loadingThreads && threads.length ===0 && <div>
-                        No threads yet
+                        {this.context.t("No threads yet")}
                     </div> }
                     {!loadingThreads && threads.map((t,i)=>{
                         return <div className={(selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
@@ -158,7 +159,7 @@ class Messages extends React.Component {
                     </div>
                     <div className={"message-input"}>
                         <div className={"message-input-title"}>
-                            Write a message
+                            {this.context.t("Write a message")}
                         </div>
                         <textarea
                             value={inputMessage}
@@ -174,11 +175,17 @@ class Messages extends React.Component {
                     </div>
                 </div>}
 
-                {!selectedThread && <div>No thread selected</div> }
+                {!selectedThread && <div>
+                    {this.context.t("No thread selected")}
+                </div> }
             </div>
         )
     }
 }
+
+Messages.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

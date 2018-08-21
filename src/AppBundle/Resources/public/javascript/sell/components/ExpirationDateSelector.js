@@ -1,9 +1,8 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import Modal from 'react-modal';
-import {customStyles} from "../../main/styles/custom";
 import {connect} from "react-redux";
+import {PropTypes} from "prop-types";
 
 class ExpirationDateSelector extends React.Component {
     constructor(props) {
@@ -21,7 +20,9 @@ class ExpirationDateSelector extends React.Component {
 
         return (
             <div className="base-input">
-                <label>Listing expiry</label>
+                <label>
+                    {this.context.t("Listing expiry")}
+                </label>
                 <DatePicker
                     className={"date-picker"}
                     selected={(expiresAt)? moment(expiresAt): undefined}
@@ -33,6 +34,10 @@ class ExpirationDateSelector extends React.Component {
         )
     }
 }
+
+ExpirationDateSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content

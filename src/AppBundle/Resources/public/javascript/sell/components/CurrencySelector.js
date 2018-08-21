@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import {PropTypes} from "prop-types";
 
 const CURRENCIES = ['USD', 'EUR'];
 
@@ -16,7 +17,9 @@ class CurrencySelector extends React.Component {
 
         return (
             <div className='select-currency'>
-                <div className='select-text'>Currency</div>
+                <div className='select-text'>
+                    {this.context.t("Currency")}
+                </div>
                 <div className='currency-selector'>
                     <div className='current'>{selected}</div>
                     <div className='dropdown'>
@@ -33,5 +36,9 @@ class CurrencySelector extends React.Component {
         );
     }
 }
+
+CurrencySelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default CurrencySelector;

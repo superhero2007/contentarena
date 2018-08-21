@@ -5,6 +5,7 @@ import {RightDefinitions} from "../../sell/components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../../sell/components/ProductionStandardsDefinitions";
 import {RightItemsDefinitions} from "../../sell/components/RightItemsDefinitions";
 import {SuperRightProductionDetailsLabels} from "../../sell/components/SuperRightDefinitions";
+import {PropTypes} from "prop-types";
 
 class TermSheet extends React.Component {
 
@@ -126,7 +127,9 @@ class TermSheet extends React.Component {
                     <div className="row" style={{
                         border: 'none'
                     }} >
-                        <div className="right-definition right-definition-title">Grant of Rights</div>
+                        <div className="right-definition right-definition-title">
+                            {this.context.t("Grant of Rights")}
+                        </div>
                         {
                             rightsPackage.map((rp, i)=>{
                                 return <div key={"rp-" + i } className="right-definition right-definition-title">
@@ -147,7 +150,9 @@ class TermSheet extends React.Component {
                 </div>
 
                 { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">
-                    <label>Amendment(s) to the Grant of Rights / Special Conditions</label>
+                    <label>
+                        {this.context.t("Amendment(s) to the Grant of Rights / Special Conditions")}
+                    </label>
                     <div  className="full-item-content">
                         {
                             COMMENTS_RIGHTS
@@ -159,7 +164,9 @@ class TermSheet extends React.Component {
                     <div className="row" style={{
                         border: 'none'
                     }}>
-                        <div className="right-definition right-definition-title">Production details</div>
+                        <div className="right-definition right-definition-title">
+                            {this.context.t("Production details")}
+                        </div>
                         {
                             rightsPackage.map((rp, i)=>{
                                 if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
@@ -184,7 +191,9 @@ class TermSheet extends React.Component {
                 {
                     selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
                     <div className="term-sheet-full-item-box">
-                        <label>Technical Fee Details</label>
+                        <label>
+                            {this.context.t("Technical Fee Details")}
+                        </label>
                         <div  className="full-item-content">
                             {
                                 selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]
@@ -194,7 +203,9 @@ class TermSheet extends React.Component {
                 }
 
                 { COMMENTS_PRODUCTION && <div className="term-sheet-full-item-box">
-                    <label>Amendment(s) to the Content Delivery / Special Conditions</label>
+                    <label>
+                        {this.context.t("Amendment(s) to the Content Delivery / Special Conditions")}
+                    </label>
                     <div  className="full-item-content">
                         {
                             COMMENTS_PRODUCTION
@@ -206,6 +217,10 @@ class TermSheet extends React.Component {
         );
     }
 }
+
+TermSheet.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state

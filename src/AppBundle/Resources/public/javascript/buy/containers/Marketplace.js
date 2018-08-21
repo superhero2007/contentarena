@@ -12,6 +12,7 @@ import {
 import {goToListing} from "../../main/actions/utils";
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {updateProfile} from "../../main/actions/userActions";
+import {PropTypes} from "prop-types";
 const queryString = require('query-string');
 
 class Marketplace extends React.Component {
@@ -214,7 +215,9 @@ class Marketplace extends React.Component {
                     }
 
                     {
-                        listings.length === 0 && !loadingListing && <span className={"no-results"}>Sorry, no results. Try changing the filter settings!</span>
+                        listings.length === 0 && !loadingListing && <span className={"no-results"}>
+                            {this.context.t("Sorry, no results. Try changing the filter settings!")}
+                        </span>
                     }
                 </div>}
 
@@ -242,6 +245,10 @@ class Marketplace extends React.Component {
         )
     }
 }
+
+Marketplace.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = ( state, ownProps) => {
     return state;

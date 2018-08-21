@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import {PropTypes} from "prop-types";
 
 class ListingName extends React.Component {
 
@@ -17,7 +18,9 @@ class ListingName extends React.Component {
         const {name} = this.props;
         return (
             <div className="base-input">
-                <label>Listing name</label>
+                <label>
+                    {this.context.t("Listing name")}
+                </label>
                 <input
                     type="text"
                     value={name}
@@ -29,6 +32,10 @@ class ListingName extends React.Component {
         );
     }
 }
+
+ListingName.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => {
     return state.content
