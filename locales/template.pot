@@ -138,9 +138,7 @@ msgid "License fee:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Logout"
+msgid "Bid:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -173,6 +171,7 @@ msgid " days after contract closure"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company address"
 msgstr ""
 
@@ -410,6 +409,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Settings"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "Logout"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js

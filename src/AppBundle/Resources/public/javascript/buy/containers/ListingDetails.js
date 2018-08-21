@@ -721,8 +721,8 @@ class ListingDetails extends React.Component {
 
                                     {selectedPackage.salesMethod === "BIDDING" &&
                                     <div style={{ display : 'flex', alignItems: 'center'}}>
-                                        Bid:
-                                        {this.context.t("Logout")}
+
+                                        {this.context.t("Bid:")}
                                         {!bidUpdated &&
                                         <input
                                             style={{

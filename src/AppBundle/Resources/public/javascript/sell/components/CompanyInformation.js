@@ -164,8 +164,7 @@ class CompanyInformation extends React.Component {
             <div className="base-input">
                 { this.renderModal() }
                 <label>
-                    Company address
-                    {this.context.t("Logout")}
+                    {this.context.t("Company address")}
                 </label>
                 <input
                     type="text"
