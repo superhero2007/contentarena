@@ -786,8 +786,9 @@
                         {% for right in content.rightsPackage %}
                             {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                             {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                            <td>
-                                {{ content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] | right_definitions_label}}
+                            <td>{% for tech in content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] %}
+                                {{ tech | right_definitions_label}}
+                                {% endif %}
                             </td>
                         {% endif %}
                         {% endfor %}
