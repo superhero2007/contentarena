@@ -44,8 +44,9 @@ class BoardListing extends React.Component{
     };
 
     edit = () => {
-        const { customId } = this.props;
-        goTo("contentlisting/" + customId)
+        const { customId, step } = this.props;
+        const stepToShow = step + 1;
+        goTo(`contentlisting/${customId}/${step > 4 ? 'sign' : stepToShow}`);
     };
 
     submit = () => {

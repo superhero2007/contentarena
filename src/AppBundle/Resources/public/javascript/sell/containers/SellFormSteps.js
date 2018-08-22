@@ -28,24 +28,12 @@ class SellFormSteps extends React.Component {
                 {step: 2, title: "Program & Rights Selection"},
                 {step: 3, title: "Grant of Rights & Production Details"},
                 {step: 4, title: "Commercial Details"}
-            ],
-            maxStep: this.props.step || 1
+            ]
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        const { maxStep } = this.state;
-
-        if (maxStep < nextProps.step) {
-            this.setState({
-                maxStep: nextProps.step
-            });
-        }
-    }
-
     onClick = (stepSelected) => {
-        const { goToStep, customId, history } = this.props;
-        const { maxStep } = this.state;
+        const { goToStep, customId, history, maxStep } = this.props;
         
         if (stepSelected <= maxStep) {
             goToStep(stepSelected);
@@ -54,20 +42,19 @@ class SellFormSteps extends React.Component {
     };
 
     render() {
-        const currentStep = this.props.step;
-        const { maxStep } = this.state;
+        const { maxStep, step } = this.props;
         
         return (
             <div className="box-header">
-                { this.state.steps.map((step, i)=>{
+                { this.state.steps.map((stepItem, i)=>{
                     return <SellFormStep
                         key={i}
-                        active={currentStep === step.step}
-                        stepVisited={step.step <= maxStep}
-                        stepFinished={step.step < maxStep}
+                        active={step === stepItem.step}
+                        stepVisited={stepItem.step <= maxStep}
+                        stepFinished={stepItem.step < maxStep}
                         onClick={this.onClick}
-                        step={step.step}
-                        title={step.title}
+                        step={stepItem.step}
+                        title={stepItem.title}
                     />
                 })}
             </div>
@@ -82,6 +69,7 @@ SellFormSteps.contextTypes = {
 const mapStateToProps = state => {
     return {
         step : state.content.step,
+        maxStep : state.content.maxStep,
         customId : state.content.customId,
     }
 };

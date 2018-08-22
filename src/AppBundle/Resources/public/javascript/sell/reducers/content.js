@@ -1,3 +1,5 @@
+import max from 'lodash/max';
+
 export const contentType= {
     CONTENT_INIT:'CONTENT_INIT',
     STEP_CHANGE_RESET : 'STEP_CHANGE_RESET',
@@ -22,6 +24,7 @@ export const contentType= {
 
 export const EmptyListing = {
     step: 1,
+    maxStep: 1,
     rightsPackage : [],
     tournament : [],
     sportCategory : [],
@@ -53,16 +56,19 @@ export const content = (state = EmptyListing, action) => {
             return Object.assign({}, state, EmptyListing);
         case contentType.CONTENT_INIT:
             action.content.initialized = true;
-            return Object.assign({}, state, action.content);
+            return Object.assign({}, state, action.content, {maxStep: max([action.content.step, state.maxStep])});
         case contentType.GO_TO_NEXT_STEP:
+            const newStep = state.step + 1;
             return Object.assign({}, state, {
-                step:state.step + 1,
-                stepChange : true
+                step: newStep,
+                stepChange: true,
+                maxStep: max([newStep, state.maxStep])
             });
         case contentType.GO_TO_STEP:
             return Object.assign({}, state, {
                 step: action.step,
-                stepChange : true
+                stepChange : true,
+                maxStep: max([action.step, state.maxStep])
             });
         case contentType.STEP_CHANGE_RESET:
             return Object.assign({}, state, {

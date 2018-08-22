@@ -76,6 +76,7 @@ class Content
      * @var integer
      *
      * @ORM\Column(name="step", type="integer")
+     * @Groups({"board"})
      */
     protected $step = 1;
 
