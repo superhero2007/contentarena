@@ -149,7 +149,7 @@ class SellFormStep1 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-
+        const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
         let tournaments, seasons, sportCategories, websites, website, name = nextProps.name;
 
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
@@ -157,7 +157,7 @@ class SellFormStep1 extends React.Component {
         sportCategories =( Array.isArray(nextProps.sportCategory) ) ? nextProps.sportCategory : [nextProps.sportCategory];
         websites =( Array.isArray(nextProps.websites) ) ? nextProps.websites : (nextProps.websites) ? [nextProps.websites]: [];
 
-        if (nextProps.sports.length === 1) {
+        if (nextProps.sports.length === 1 && !loadingCategories) {
             this.loadCategories(nextProps.sports[0]);
             this.setState(() => ({
                 showSearch: false
@@ -180,9 +180,15 @@ class SellFormStep1 extends React.Component {
             this.props.updateContentValue("name",tournaments[0].name);
         }
 
-        if (nextProps.sports.length === 1 ) this.loadTournaments(nextProps.sports[0], sportCategories[0]);
+        if (nextProps.sports.length === 1 && !loadingTournaments) {
+            this.loadTournaments(nextProps.sports[0], sportCategories[0]);
+        }
 
-        if (tournaments.length === 1) if (!tournaments[0].custom) this.loadSeasons(tournaments);
+        if (tournaments.length === 1 && !loadingSeasons) {
+            if (!tournaments[0].custom) {
+                this.loadSeasons(tournaments);
+            }
+        }
 
         this.setState({
             sportCategories: sportCategories,
