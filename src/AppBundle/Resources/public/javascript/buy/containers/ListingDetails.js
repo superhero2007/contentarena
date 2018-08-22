@@ -574,7 +574,7 @@ class ListingDetails extends React.Component {
                                 {this.context.t("Program & Sales Bundles")}
                             </button>
 
-                            {this.isTabHasData(content, this.state.tab) &&
+                            {this.isTabHasData(content, "event") &&
                                 <button className={(tab ==="event")?"active": ""} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/event');
                                     this.showTab("event");
