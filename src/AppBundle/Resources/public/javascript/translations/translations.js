@@ -260,7 +260,7 @@ export const translations = {
     'Please select': '',
     'Configure Production Standards': '',
     'Further information': '',
-    'do you seek to apply VAT to buyers in company’s place of jurisdiction?': '',
+    'Do you seek to apply VAT block ?': '',
     'No': '',
     'Annex': '',
     'Listing details': '',

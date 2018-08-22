@@ -705,21 +705,21 @@ a:hover {
           justify-content: center;
         }
       }
-      .column {
-        background: #F4F6F9;
-        height: 35px;
-        width: 153px;
-        font-size: 14px;
-        font-weight: 600;
-        padding: 5px 20px 5px 10px;
-        display: flex;
-        align-items: center;
-        margin-left: 3px;
-        input[type="radio"].ca-radio {
-          width: 20px;
-          height: 20px;
-          margin-right: 10px;
-        }
+    }
+    .radio-tab {
+      background: #F4F6F9;
+      height: 35px;
+      width: 153px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 5px 20px 5px 10px;
+      display: flex;
+      align-items: center;
+      margin-left: 3px;
+      input[type="radio"].ca-radio {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
       }
     }
     .custom-selector {

@@ -28,6 +28,7 @@ class ExpirationDateSelector extends React.Component {
                     selected={(expiresAt)? moment(expiresAt): undefined}
                     onChange={this.handleStartDate}
                     minDate={moment()}
+                    fixedHeight={true}
                     placeholderText={"dd/mm/yyyy"}
                 />
             </div>

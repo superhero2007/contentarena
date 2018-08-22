@@ -144,11 +144,11 @@ class SellFormStep4 extends React.Component {
 
                     <JurisdictionSelector/>
 
-                    <div className='base-full-input'>
-                        <label>
-                            {this.context.t("do you seek to apply VAT to buyers in company’s place of jurisdiction?")}
+                    <div className='base-input'>
+                        <label style={{width:'100%'}}>
+                            {this.context.t("Do you seek to apply VAT block ?")}
                         </label>
-                        <div className='column'>
+                        <div className='radio-tab'>
                             <input
                                 checked={applyVatInJurisdiction}
                                 onChange={this.setApplyVatInJurisdiction}
@@ -158,7 +158,7 @@ class SellFormStep4 extends React.Component {
                             />
                             {this.context.t("Yes")}
                         </div>
-                        <div className='column'>
+                        <div className='radio-tab'>
                             <input
                                 checked={!applyVatInJurisdiction}
                                 onChange={this.setApplyVatInJurisdiction}

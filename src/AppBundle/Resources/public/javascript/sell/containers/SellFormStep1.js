@@ -515,7 +515,7 @@ class SellFormStep1 extends React.Component {
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                    <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "description")} />
+                    <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "PROGRAM_DESCRIPTION")} />
 
                     <div className="step-item-description" style={{}}>
                         {this.context.t("Additional information")}

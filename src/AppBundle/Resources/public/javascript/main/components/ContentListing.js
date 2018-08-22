@@ -183,7 +183,7 @@ class ContentListing extends React.Component{
                     </div>}
 
                     <div className="listing-wrapper">
-                        <ContentListingEventDetails {...this.props} isFragment={true}/>
+                        <ContentListingEventDetails {...this.props} />
 
                         <ContentListingRightsPackage rightsPackage={rightsPackage} programName={PROGRAM_NAME}/>
                     </div>
