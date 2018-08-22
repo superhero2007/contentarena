@@ -76,7 +76,7 @@ class EventFilter extends React.Component {
                             width: 20,
                             height: 20,
                             cursor: 'pointer',
-                            margin: '15px 15px'
+                            margin: '23px 10px'
                         }}
                          src={this.searchIcon}
                          onClick={this.handleFilter}

@@ -17,14 +17,14 @@ class TermSheet extends React.Component {
 
     renderProgramInfo = (values, name, i) => {
         const { rightsPackage } = this.props;
-        return <div className={'row '+(i%2 ? 'odd-row':'')}>
+        return <div className={'row '+(i%2 ? 'odd-row':'')} key={'program'+i}>
                 <div className="right-name right-definition">{name}</div>
                 {
                     rightsPackage.map((rp)=>{
                         if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
                         if ( rp.shortLabel !== 'PR' ) return <div className="right-definition"/>;
 
-                        return <div  className="right-definition">
+                        return <div  className="right-definition" key={"program_child"+i}>
                             { values && values.length === 0 && "No" }
                             { values && values.length > 0 && values.map(l=>l.label).join(", ") }
                         </div>
@@ -44,7 +44,7 @@ class TermSheet extends React.Component {
                 if (!LICENSED_LANGUAGES || LICENSED_LANGUAGES.length === 0) return false;
             }
 
-            return <div className={'row '+(i%2 ? 'odd-row':'')}>
+            return <div className={'row '+(i%2 ? 'odd-row':'')} key={'list'+i}>
                 <div className="right-name right-definition">{right.name}</div>
                 {
                     rightsPackage.map((rp)=>{
@@ -53,7 +53,7 @@ class TermSheet extends React.Component {
                         if ( checkContentDelivery &&
                             rp.shortLabel === "PR"
                             && right.key !== 'TECHNICAL_DELIVERY' ) return <div className="right-definition">
-                            -
+                            {/*-*/}
                         </div>;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
@@ -65,7 +65,11 @@ class TermSheet extends React.Component {
                         let label = '';
 
                         if (right.multiple) {
-                            label = defItems[right.key].map(item => RightItemsDefinitions[item].label).join(", ");
+                            if (Array.isArray(defItems[right.key])) {
+                                label = defItems[right.key].map(item => RightItemsDefinitions[item].label).join(", ");
+                            } else {
+                                label = defItems[right.key];
+                            }
                         } else {
                             const dynKey = `${right.key}_TEXT`;
                             if (defItems[dynKey]) {
@@ -75,7 +79,19 @@ class TermSheet extends React.Component {
                             }
                         }
 
-                        return <div  className="right-definition">
+                        if (right.key === 'RUNS' && defItems["RUNS_NUMBER"]) {
+                            label = defItems["RUNS_NUMBER"];
+                        }
+
+                        if (right.key === 'GRAPHICS' && defItems["GRAPHICS_LANGUAGES"]) {
+                            label = defItems["GRAPHICS_LANGUAGES"].map(l=>l.label).join(", ");
+                        }
+
+                        if (right.key === 'COMMENTARY' && defItems["COMMENTARY_LANGUAGES"]) {
+                            label = defItems["COMMENTARY_LANGUAGES"].map(l=>l.label).join(", ");
+                        }
+
+                        return <div  className="right-definition" key={'list_child'+i}>
                             {label}
                             {right.key === 'CAMERA' && <span style={{marginLeft: 5}}>{defItems["CAMERAS"]}</span>}
                         </div>
@@ -87,9 +103,9 @@ class TermSheet extends React.Component {
 
     renderTextarea = (definitions) => {
         const {selectedRightsBySuperRight, rightsPackage} = this.props;
-        return definitions.map( (right) => {
+        return definitions.map( (right,i) => {
             if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
-            return <div className="term-sheet-full-item-box">
+            return <div className="term-sheet-full-item-box" key={'textarea_'+i}>
                 <label>{right.name}</label>
                 <div  className="full-item-content">
                     {
@@ -132,7 +148,7 @@ class TermSheet extends React.Component {
                         </div>
                         {
                             rightsPackage.map((rp, i)=>{
-                                return <div key={"rp-" + i } className="right-definition right-definition-title">
+                                return <div key={"rp-grant" + i } className="right-definition right-definition-title">
                                     {
                                         rp.name
                                     }
@@ -161,9 +177,7 @@ class TermSheet extends React.Component {
                 </div>}
 
                 <div className="term-sheet-items">
-                    <div className="row" style={{
-                        border: 'none'
-                    }}>
+                    <div className="row" style={{border: 'none'}}>
                         <div className="right-definition right-definition-title">
                             {this.context.t("Production details")}
                         </div>
@@ -172,12 +186,12 @@ class TermSheet extends React.Component {
                                 if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
                                 let viaLiveFeed = rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE";
 
-                                return <div key={"rp-" + i }className="right-definition right-definition-title">
-                                    {
-                                        SuperRightProductionDetailsLabels[rp.shortLabel]
-                                    }
-                                    {viaLiveFeed && " (via live feed)"}
-                                </div>
+                                return (
+                                    <div key={"rp-prod" + i } className="right-definition right-definition-title">
+                                        {SuperRightProductionDetailsLabels[rp.shortLabel]}
+                                        {viaLiveFeed && " (via live feed)"}
+                                    </div>
+                                )
                             })
                         }
                     </div>

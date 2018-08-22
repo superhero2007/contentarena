@@ -27,7 +27,8 @@ class Marketplace extends React.Component {
             listings : [],
             countries : [],
             territories: [],
-            profile : props.profile,
+            profile : props.user.profile,
+            errorMessage: ''
         };
     }
 
@@ -93,12 +94,17 @@ class Marketplace extends React.Component {
         });
 
         ContentArena.ContentApi.getByCustomId(id).done((content) => {
-            console.log(content);
 
             _this.setState({
                 content : content,
                 loadingListingDetails : false
             })
+        }).fail(error => {
+            _this.setState({
+                errorMessage: error.data.responseJSON.message,
+                loadingListingDetails: false
+            })
+
         });
     };
 
@@ -150,7 +156,6 @@ class Marketplace extends React.Component {
 
             listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
             _this.setState({listings: listings, loadingListing : false, sortSalesPackages : true});
-            console.log(listings)
         });
     };
 
@@ -185,7 +190,22 @@ class Marketplace extends React.Component {
 
     render () {
         const { filter, salesPackage ,history, location, match } = this.props;
-        const {listings, loadingListing, listingDetailsTab, loadingListingDetails, showDetails, content, company, sortSalesPackages, profile} = this.state;
+        const {
+            listings,
+            loadingListing,
+            listingDetailsTab,
+            loadingListingDetails,
+            showDetails,
+            content,
+            company,
+            sortSalesPackages,
+            profile,
+            errorMessage
+        } = this.state;
+
+        if (errorMessage) {
+            return <h2 className="text-center">{errorMessage}</h2>
+        }
         return (
             <div className="manager-content" style={{flexDirection: 'row'}}>
                 {!showDetails && <div className="buy-container-left">

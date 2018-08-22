@@ -5,6 +5,7 @@ import SearchCompetition from '../../main/components/SearchCompetition'
 import SeasonSelector from '../../main/components/SeasonSelector'
 import TagsInput from 'react-tagsinput'
 import {stepChangeReset} from "../actions/contentActions";
+import debounce from 'lodash/debounce';
 
 import {
     Description,
@@ -33,7 +34,8 @@ class SellFormStep1 extends React.Component {
             seasons: [],
             schedules: {},
             showSearch : true,
-            website: [],
+            websites: [],
+            website: '',
             tournaments: [],
             sportCategories: [],
             sportCategoryExtended : false,
@@ -148,12 +150,12 @@ class SellFormStep1 extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-        let tournaments, seasons, sportCategories, website, name = nextProps.name;
+        let tournaments, seasons, sportCategories, websites, website, name = nextProps.name;
 
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
         seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
         sportCategories =( Array.isArray(nextProps.sportCategory) ) ? nextProps.sportCategory : [nextProps.sportCategory];
-        website =( Array.isArray(nextProps.website) ) ? nextProps.website : (nextProps.website) ? [nextProps.website]: [];
+        websites =( Array.isArray(nextProps.websites) ) ? nextProps.websites : (nextProps.websites) ? [nextProps.websites]: [];
 
         if (nextProps.sports.length === 1) {
             this.loadCategories(nextProps.sports[0]);
@@ -198,8 +200,8 @@ class SellFormStep1 extends React.Component {
             //this.loadSchedule(nextProps);
         }
 
-        if (website && website.length > 0) {
-            this.setState({ website: website});
+        if (websites && websites.length > 0) {
+            this.setState({ websites: websites});
         }
 
     }
@@ -316,10 +318,21 @@ class SellFormStep1 extends React.Component {
         }));
     };
 
-    websitesUpdated = (website) => {
-        this.setState({website});
-        this.props.updateContentValue("website",website);
+    websitesUpdated = (websites) => {
+        this.setState({websites});
+        this.props.updateContentValue("website",websites);
     };
+
+    handleWebsiteChange = website => {
+        this.setState({website});
+        this.saveWebsite(website)
+    }
+
+    saveWebsite = debounce(website=>{
+        if (website.length > 2) {
+            return this.refs.tagsinput.accept()
+        }
+    },500)
 
     selectTournament = ( tournament ) =>{
         this.toggleSearch();
@@ -354,6 +367,9 @@ class SellFormStep1 extends React.Component {
 
     render() {
         if ( this.props.step !== 1 ) return (null);
+
+        const {websites, website} = this.state;
+        const websitePlaceholder = websites.length > 0 ? '' : 'e.g. bundesliga.de';
 
         this.scroll();
 
@@ -509,7 +525,14 @@ class SellFormStep1 extends React.Component {
                         <label>
                             {this.context.t("Website")}
                         </label>
-                        <TagsInput inputProps={{placeholder: "e.g. bundesliga.de"}} value={this.state.website} onChange={this.websitesUpdated} />
+                        <TagsInput
+                            inputProps={{placeholder: websitePlaceholder}}
+                            value={websites}
+                            ref='tagsinput'
+                            onChange={this.websitesUpdated}
+                            inputValue={website}
+                            onChangeInput={this.handleWebsiteChange}
+                        />
                     </div>
 
                     <FileSelector

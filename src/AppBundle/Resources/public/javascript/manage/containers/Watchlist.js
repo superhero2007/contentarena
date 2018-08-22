@@ -17,6 +17,9 @@ class Watchlist extends React.Component {
         let _this = this;
         this.setState({loading:true});
         ContentArena.ContentApi.getWatchlistListings().done((listings) => {
+            if (!Array.isArray(listings)) {
+                listings = Object.values(listings);
+            }
 
             listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
             _this.setState({listings: listings, loading : false});

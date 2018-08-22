@@ -85,6 +85,14 @@ class ContentController extends Controller
         /* @var Content $content */
         $content = $repository->findOneBy(array("customId"=>$customId));
 
+        if (!$content) {
+            $response = new JsonResponse(
+                $data = array("success" => false, "message" => "This listing doesn't exist"),
+                $status = Response::HTTP_NOT_FOUND
+            );
+            return $response;
+        }
+
         $pendingStatus = $this->getDoctrine()->getRepository("AppBundle:BidStatus")->findOneBy(array("name"=>"PENDING"));
 
         foreach ($content->getSalesPackages() as $salesBundle){

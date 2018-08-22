@@ -34,7 +34,6 @@ class Seller extends React.Component {
         super(props);
         this.state = {
         };
-        this.noInfoText = "No information available";
     }
 
     render() {
@@ -78,42 +77,51 @@ class Seller extends React.Component {
                                 {company.address}
                             </div>
                         </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("City")}
+
+                        {company.city &&
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("City")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {company.city}
+                                </div>
                             </div>
-                            <div style={valueStyle}>
-                                {company.city && company.city}
-                                {!company.city && this.noInfoText}
+                        }
+
+                        {company.country.name &&
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("Country")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {company.country.name}
+                                </div>
                             </div>
-                        </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("Country")}
+                        }
+
+                        {company.zip &&
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("ZIP")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {company.zip}
+                                </div>
                             </div>
-                            <div style={valueStyle}>
-                                {company.country && company.country.name}
-                                {!company.country && this.noInfoText}
+                        }
+
+                        {company.registrationNumber &&
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("Company registration number")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {company.registrationNumber}
+                                </div>
                             </div>
-                        </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("ZIP")}
-                            </div>
-                            <div style={valueStyle}>
-                                {company.zip && company.zip}
-                                {!company.zip && this.noInfoText}
-                            </div>
-                        </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("Company registration number")}
-                            </div>
-                            <div style={valueStyle}>
-                                {company.registrationNumber && company.registrationNumber}
-                                {!company.registrationNumber && this.noInfoText}
-                            </div>
-                        </div>
+                        }
+
                         <div style={rowStyle}>
                             <div style={titleStyle}>
                                 {this.context.t("VAT ID number")}
@@ -122,21 +130,19 @@ class Seller extends React.Component {
                                 {company.vat}
                             </div>
                         </div>
-
-
                     </div>
                 </div>
 
-                <div className="full-item-box">
-                    <label>
-                        {this.context.t("DESCRIPTION")}
-                    </label>
-                    <div className="full-item-content">
-                        {company.description && company.description}
-                        {!company.description && this.noInfoText}
+                {company.description &&
+                    <div className="full-item-box">
+                        <label>
+                            {this.context.t("DESCRIPTION")}
+                        </label>
+                        <div className="full-item-content">
+                            {company.description}
+                        </div>
                     </div>
-                </div>
-
+                }
 
             </div>
         );

@@ -11,7 +11,6 @@ class ContentInformation extends React.Component {
         this.state = {
             seasons : props.seasons
         };
-        this.noInfoText = "No information available";
         this.baseDir = assetsBaseDir + "../";
         this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
     }
@@ -85,62 +84,64 @@ class ContentInformation extends React.Component {
                 }
 
                 {/*DESCRIPTIONS*/}
-                <div className="full-item-box">
-                    <label>
-                        {this.context.t("EVENT DESCRIPTION")}
-                    </label>
-                    <div className="full-item-content">
-                        {description && description}
-                        {!description && this.noInfoText}
+                {description && (
+                    <div className="full-item-box">
+                        <label>
+                            {this.context.t("EVENT DESCRIPTION")}
+                        </label>
+                        <div className="full-item-content">
+                            {description}
+                        </div>
                     </div>
-                </div>
+                )}
+
 
                 {/*WEBSITE*/}
-                <div className="full-item-box"
-                     style={{
-                         flexDirection : 'row',
-                         width : '70%'
-                     }}>
-                    <label>
-                        {this.context.t("CONTENT WEBSITE")}
-                    </label>
-                    <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
-                        {website && <a target="_blank" href={website}>{website}</a>}
-                        {!website && this.noInfoText}
+                {website && (
+                    <div className="full-item-box"
+                         style={{
+                             flexDirection : 'row',
+                             width : '70%'
+                         }}>
+                        <label>
+                            {this.context.t("CONTENT WEBSITE")}
+                        </label>
+                        <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 220}}>
+                            {website && website.map(website=>{
+                                return <div><a target="_blank" href={website}>{website}</a></div>
+                            })}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/*ATTACHMENTS*/}
-                <div className="full-item-box"
-                     style={{
-                         flexDirection : 'row',
-                         width : '70%'
-                     }}>
-                    <label style={{
-                        height: 'auto'
-                    }}>
-                        {this.context.t("ATTACHMENTS")}
-                    </label>
-                    {attachments && attachments.length > 0 && <div style={{
-                        display : "flex",
-                        flexDirection: 'column'
-                    }}>{attachments.map(a=>{
-                        return <div onClick={()=>{}} style={{
-                            padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200,
-                            display: 'flex'
+                {attachments && attachments.length > 0 && (
+                    <div className="full-item-box"
+                         style={{
+                             flexDirection : 'row',
+                             width : '70%'
+                         }}>
+                        <label style={{
+                            height: 'auto'
                         }}>
-                            <a download={a.name} target="_blank" href={this.baseDir + a.file} style={{
-                                display: 'inline-flex',
-                                paddingRight: 30
+                            {this.context.t("ATTACHMENTS")}
+                        </label>
+                        <div style={{display : "flex", flexDirection: 'column'}}>{attachments.map(a=>{
+                            return <div onClick={()=>{}} style={{
+                                padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 220,
+                                display: 'flex'
                             }}>
-                                <img style={{ margin: '-2px 5px 0 0'}} src={this.pdfIcon}/>  {a.name}
-                            </a>
-                        </div>
-                    })}</div>}
-                    {( !attachments || attachments.length === 0)&& <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 200}}>
-                        {this.context.t("No attachments available")}
-                    </div>}
-                </div>
+                                <a download={a.name} target="_blank" href={this.baseDir + a.file} style={{
+                                    display: 'inline-flex',
+                                    paddingRight: 30
+                                }}>
+                                    <img style={{ margin: '-2px 5px 0 0'}} src={this.pdfIcon}/>  {a.name}
+                                </a>
+                            </div>
+                        })}</div>
+                    </div>
+                )}
+
 
 
             </div>

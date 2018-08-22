@@ -66,7 +66,6 @@ class ListingDetails extends React.Component {
     componentDidMount (){
         const {salesPackage} = this.props;
         const {content} = this.state;
-
         let selectedPackage;
 
         if (salesPackage){
@@ -116,6 +115,15 @@ class ListingDetails extends React.Component {
     showTab = (tab) => {
         this.setState({tab});
     };
+
+    isTabHasData = (content, tab) => {
+        const {description, website, attachments} = content;
+
+        if (tab === "event") {
+            return !!(description || website || (attachments && attachments.length > 0));
+        }
+
+    }
 
     closeModal = () => {
         this.setState({ editCompanyOpen: false});
@@ -537,10 +545,9 @@ class ListingDetails extends React.Component {
 
                                 {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor : 'pointer'}}
                                      onClick={this.watchlist}>
-                                    {!content.watchlist &&
-                                        <img style={{width: 22, height: 15, marginTop: 3}} src={this.watchlistIcon}/>}
-                                    {content.watchlist &&
-                                    <img style={{width: 18, height: 18, marginTop: 2}} src={this.checkIcon}/>}
+                                    <img style={{width: 18, height: 18, marginTop: 2}}
+                                         src={content.watchlist ? this.checkIcon : this.watchlistIcon}
+                                    />
                                     <div style={{
                                         flex:1,
                                         color: '#2DA7E6',
@@ -549,7 +556,7 @@ class ListingDetails extends React.Component {
                                         margin: '0 10px 0 5px'
 
                                     }}>
-                                        {this.context.t("Watchlist")}
+                                        {content.watchlist ? this.context.t('Added to watchlist') : this.context.t('Watchlist')}
                                     </div>
                                 </div>}
 
@@ -566,12 +573,15 @@ class ListingDetails extends React.Component {
                             }}>
                                 {this.context.t("Program & Sales Bundles")}
                             </button>
-                            <button className={(tab ==="event")?"active": ""} onClick={()=>{
-                                history.push('/listing/'+content.customId+'/event');
-                                this.showTab("event");
-                            }}>
-                                {this.context.t("Event")}
-                            </button>
+
+                            {this.isTabHasData(content, this.state.tab) &&
+                                <button className={(tab ==="event")?"active": ""} onClick={()=>{
+                                    history.push('/listing/'+content.customId+'/event');
+                                    this.showTab("event");
+                                }}>
+                                    {this.context.t("Event")}
+                                </button>
+                            }
                             <button className={(tab ==="grantofrights")?"active": ""} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/grantofrights');
                                 this.showTab("grantofrights")
@@ -601,16 +611,21 @@ class ListingDetails extends React.Component {
                                 <CommercialTerms
                                     profile={profile}
                                     onSelectPackage={this.selectPackage}
-                                    {...content}/>
+                                    {...content}
+                                />
                             }
-                            { this.state.tab === "event" &&
-                                <ContentInformation {...content}/> }
+                            {this.state.tab === "event" && this.isTabHasData(content, "event") &&
+                                <ContentInformation {...content}/>
+                            }
                             { this.state.tab === "grantofrights" &&
-                                <TermSheet
-                                    {...content}/>
+                                <TermSheet{...content}/>
                             }
-                            { this.state.tab === "editedprogram" && <ProgramDetails {...content}/> }
-                            { this.state.tab === "seller" && <Seller {...content}/> }
+                            { this.state.tab === "editedprogram" &&
+                                <ProgramDetails {...content}/>
+                            }
+                            {this.state.tab === "seller" &&
+                                <Seller {...content}/>
+                            }
 
 
                         </div>
@@ -886,14 +901,18 @@ class ListingDetails extends React.Component {
                         {/*SIGNATURE*/}
                         <div>
                             <DigitalSignature signature={signature} onReady={signature => { this.setState({signature}) }} />
-                            <div style={{
-                                width: 800,
-                                margin: '0 auto'
-                            }}> <input type="checkbox"
+                            <div style={{textAlign:'center',padding:'20px 0 0'}}>
+                                <input type="checkbox"
                                        id="terms-buy"
+                                       className="ca-checkbox"
+                                       style={{marginRight:"5px"}}
                                        onChange={e =>{ this.setState({terms: e.target.checked}) }}
-                                       checked={this.state.terms}/> <label htmlFor={"terms-buy"} />
-                                {this.context.t("Accept terms conditions")}
+                                       checked={this.state.terms}
+                                />
+                                <label htmlFor={"terms-buy"}>
+                                    {this.context.t("Accept terms conditions")}
+                                </label>
+
                             </div>
                         </div>
                         <div style={{
@@ -905,7 +924,7 @@ class ListingDetails extends React.Component {
                             { !spinner && <button className="standard-button"
                                     onClick={this.placeBid}
                                     disabled={this.invalidPackage()}>
-                                {this.context.t("Buy")}
+                                {this.context.t("Place Bid")}
                             </button>}
                             { spinner && <i className="fa fa-cog fa-spin"/>}
                         </div>
