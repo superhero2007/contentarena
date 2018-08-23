@@ -936,7 +936,7 @@ class ListingDetails extends React.Component {
                             <button className="standard-button"
                                     onClick={this.placeBid}
                                     disabled={this.invalidPackage()}>
-                                {this.context.t("Place Bid")}
+                                {this.context.t("Buy")}
                             </button>}
 
                             { !spinner && selectedPackage.salesMethod !== "FIXED" &&
