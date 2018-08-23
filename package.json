@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "jquery": "^3.3.1",
     "lodash": "^4.17.10",

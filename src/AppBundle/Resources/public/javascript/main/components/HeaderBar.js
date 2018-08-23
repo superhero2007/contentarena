@@ -2,6 +2,7 @@ import React from 'react';
 import {goTo} from "../actions/utils";
 import {Link} from "react-router-dom";
 import {PropTypes} from 'prop-types';
+import HeaderNotifications from './HeaderNotifications';
 
 const HeaderBarTab = ({match, children, route}) => {
     return (
@@ -98,6 +99,8 @@ class HeaderBar extends  React.Component {
                     <i className="fa fa-envelope" />
                     {this.context.t("Messages")}
                 </HeaderBarTab>
+
+                <HeaderNotifications />
 
                 <div className="settings">
                     <i className="fa fa-2x fa-gear" />

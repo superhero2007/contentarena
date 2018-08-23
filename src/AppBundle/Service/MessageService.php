@@ -131,14 +131,16 @@ class MessageService
          * Send notification to involved users
          */
 
+        $notificationMessage = "New message on ".$content->getName();
+
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createNotification("MESSAGE", $thread->getId(), $companyUser, "Unread meessages" );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
             }
         }
         foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createNotification("MESSAGE", $thread->getId(), $companyUser, "Unread meessages" );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
             }
         }
 

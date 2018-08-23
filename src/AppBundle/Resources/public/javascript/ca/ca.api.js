@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * Created by JuanCruz on 4/1/2018.
  */
@@ -525,7 +527,15 @@ ContentArena.Api= {
         });
 
         return deferred.promise();
-    }
+    },
+    getNotifications() {
+        return axios.get(`${envhosturl}api/notifications/`);
+    },
+    markNotificationAsSeen(id) {
+        return axios.post(`${envhosturl}api/notifications/seen`, {
+            id
+        });
+    },
 };
 
 

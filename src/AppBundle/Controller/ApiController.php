@@ -545,4 +545,17 @@ class ApiController extends BaseController
         return $response;
     }
 
+    /**
+     * @Route("/api/notifications/seen", name="markNotificationAsSeen")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function markNotificationAsSeen(Request $request, NotificationService $notificationService){
+        $id = $request->request->get('id');
+        $notificationService->markNotificationAsSeen($id);
+        
+        return new JsonResponse(array("success"=>true));
+    }
+
+
 }

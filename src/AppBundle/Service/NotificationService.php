@@ -28,18 +28,28 @@ class NotificationService
         $this->fileUploader = $fileUploader;
     }
 
-    public function createNotification($type, $referenceId, $user, $text){
+    public function createSingleNotification($type, $referenceId, $user, $text){
 
         $notificationType = $this->em->getRepository('AppBundle:NotificationType')->findOneBy(array(
             "name" => $type,
         ));
 
-        /* @var Notification $notification*/
-        $notification = new Notification();
-        $notification->setUser($user);
-        $notification->setType($notificationType);
-        $notification->setReferenceId($referenceId);
-        $notification->setText($text);
+        $notification = $this->em->getRepository('AppBundle:Notification')->findOneBy(array(
+            "type" => $notificationType,
+            "user" => $user,
+            "referenceId" => $referenceId,
+        ));
+
+
+        if (!$notification) {
+            $notification = new Notification();
+            $notification->setUser($user);
+            $notification->setType($notificationType);
+            $notification->setReferenceId($referenceId);
+            $notification->setText($text);
+        } else {
+            $notification->setSeen(false);
+        }
 
         $this->em->persist($notification);
         $this->em->flush();
@@ -48,11 +58,19 @@ class NotificationService
 
     public function getNotifications(User $user){
         return $this->em->getRepository('AppBundle:Notification')->findBy(array(
-            "user" => $user,
-            "seen" => false
-        ));
+            "user" => $user
+        ), null, 10);
     }
 
 
+    public function markNotificationAsSeen($notificationId) {
+        $notification = $this->em->getRepository('AppBundle:Notification')->findOneBy(array(
+            "id" => $notificationId
+        ));
 
+        $notification->setSeen(true);
+
+        $this->em->persist($notification);
+        $this->em->flush();
+    }
 }
