@@ -20,11 +20,11 @@ class TermSheet extends React.Component {
         return <div className={'row '+(i%2 ? 'odd-row':'')} key={'program'+i}>
                 <div className="right-name right-definition">{name}</div>
                 {
-                    rightsPackage.map((rp)=>{
+                    rightsPackage.map((rp,k)=>{
                         if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
                         if ( rp.shortLabel !== 'PR' ) return <div className="right-definition"/>;
 
-                        return <div  className="right-definition" key={"program_child"+i}>
+                        return <div  className="right-definition" key={"program_child"+k}>
                             { values && values.length === 0 && "No" }
                             { values && values.length > 0 && values.map(l=>l.label).join(", ") }
                         </div>
@@ -47,7 +47,7 @@ class TermSheet extends React.Component {
             return <div className={'row '+(i%2 ? 'odd-row':'')} key={'list'+i}>
                 <div className="right-name right-definition">{right.name}</div>
                 {
-                    rightsPackage.map((rp)=>{
+                    rightsPackage.map((rp,k)=>{
                         if ( checkContentDelivery && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
 
                         if ( checkContentDelivery &&
@@ -91,7 +91,7 @@ class TermSheet extends React.Component {
                             label = defItems["COMMENTARY_LANGUAGES"].map(l=>l.label).join(", ");
                         }
 
-                        return <div  className="right-definition" key={'list_child'+i}>
+                        return <div  className="right-definition" key={'list_child'+k}>
                             {label}
                             {right.key === 'CAMERA' && <span style={{marginLeft: 5}}>{defItems["CAMERAS"]}</span>}
                         </div>
