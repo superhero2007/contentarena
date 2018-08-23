@@ -11,6 +11,7 @@ import Selector from "../../main/components/Selector";
 import { connect } from "react-redux";
 import store from '../../main/store';
 import ReactTooltip from 'react-tooltip';
+import {updateProfile} from "../../main/actions/userActions";
 
 class SellForm extends React.Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class SellForm extends React.Component {
 
     componentDidMount = () =>{
         this.props.contentListingInit( this.state.content );
+        this.props.updateProfile('SELLER');
     } ;
 
     render() {
@@ -71,6 +73,7 @@ const mapDispatchToProps = dispatch => {
             type : 'CONTENT_INIT',
             content: content
         }),
+        updateProfile : profile =>dispatch(updateProfile(profile)),
     }
 };
 

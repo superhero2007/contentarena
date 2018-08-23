@@ -71,7 +71,7 @@ class HeaderBar extends  React.Component {
                 </HeaderBarTab> }
 
                 { profile === "SELLER" && <HeaderBarTab
-                    match={match.url === "/contentlisting/new"}
+                    match={match.path === "/contentlisting/:customId?/:step?"}
                     route={"/contentlisting/new"}>
                     {this.context.t("Create Listing")}
                 </HeaderBarTab> }
