@@ -20,11 +20,13 @@ class ContentListing extends React.Component{
     }
 
     getFee = (salesPackage) => {
+        const feeNumber = parseFloat(salesPackage.fee);
+        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol();
+    };
 
+    getCurrencySymbol = () => {
         const {currency} = this.props;
-        let currencyCode = currency || salesPackage.currency.code;
-        let currencySymbol = (currencyCode === "EUR" ? "€" : "$");
-        return salesPackage.fee + " " + currencySymbol ;
+        return (currency === "EUR" ? "€" : "$");
     };
 
     onSelect = () => {
