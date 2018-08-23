@@ -87,12 +87,14 @@ class BidService
 
         $updatedAt = new \DateTime();
 
+        $amount = ( $request->get('amount') != null )? $request->get('amount') : $request->get('totalFee');
+
         $bid->setType($type);
         $bid->setStatus($status);
         $bid->setContent($content);
         $bid->setSalesPackage($salesPackage);
         $bid->setBuyerUser($user);
-        $bid->setAmount($request->get('amount'));
+        $bid->setAmount($amount);
         $bid->setTotalFee($request->get('totalFee'));
         $bid->setUpdatedAt($updatedAt);
         $this->em->persist($bid);

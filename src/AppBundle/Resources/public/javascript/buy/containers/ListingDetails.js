@@ -135,14 +135,8 @@ class ListingDetails extends React.Component {
 
     closeSuccessScreen = () => {
 
-        const {content} = this.props;
-        const {soldOut} = this.state;
-
-        if (soldOut) {
-            goToMarketplace()
-        } else {
-            goToListing(content.customId);
-        }
+        const {history} = this.props;
+        history.push("/marketplace");
     };
 
     editCompany = () => {
@@ -311,7 +305,7 @@ class ListingDetails extends React.Component {
 
     successScreen = () => {
         const { selectedPackage } = this.state;
-
+        const { history } = this.props;
         return <Modal
             isOpen={this.state.showSuccessScreen}
             onRequestClose={this.closeSuccessScreen}
@@ -332,7 +326,7 @@ class ListingDetails extends React.Component {
                     textAlign : 'center',
                     fontWeight: 600
                 }}>
-                    Congratulations!
+                    {this.context.t("Congratulations!")}
                 </div>
                 {selectedPackage.salesMethod === "FIXED" && <div style={{
                     fontSize: 20,
@@ -340,7 +334,7 @@ class ListingDetails extends React.Component {
                     margin : 40,
                     textAlign : 'center'
                 }}>
-                    You have successfully acquired the package!
+                    {this.context.t("You have successfully acquired the package!")}
                 </div>}
                 {selectedPackage.salesMethod === "BIDDING" && <div style={{
                     fontSize: 20,
@@ -348,12 +342,29 @@ class ListingDetails extends React.Component {
                     margin : 40,
                     textAlign : 'center'
                 }}>
-                    Your bid was placed successfully!
+                    {this.context.t("Your bid was placed successfully!")}
                 </div>}
 
                 <div style={{display: 'flex'}}>
-                    <button className="standard-button" onClick={() => {goToClosedDeals()}} >Show closed deals</button>
-                    <button className="standard-button" onClick={this.closeSuccessScreen} >Return to Marketplace</button>
+                    {selectedPackage.salesMethod === "FIXED" &&
+                        <button className="standard-button" onClick={() => {
+                            history.push("/closeddeals");
+                        }} >
+                            {this.context.t("View Closed Deals")}
+                        </button>
+                    }
+
+                    {selectedPackage.salesMethod !== "FIXED" &&
+                    <button className="standard-button" onClick={() => {
+                        history.push("/bids/activebids");
+                    }} >
+                        {this.context.t("View Bids")}
+                    </button>
+                    }
+
+                    <button className="standard-button" onClick={this.closeSuccessScreen} >
+                        {this.context.t("Return to Marketplace")}
+                    </button>
                 </div>
             </div>
 
@@ -921,11 +932,22 @@ class ListingDetails extends React.Component {
                             marginTop: 20,
                             marginBottom: 40
                         }}>
-                            { !spinner && <button className="standard-button"
+                            { !spinner && selectedPackage.salesMethod === "FIXED" &&
+                            <button className="standard-button"
                                     onClick={this.placeBid}
                                     disabled={this.invalidPackage()}>
                                 {this.context.t("Place Bid")}
                             </button>}
+
+                            { !spinner && selectedPackage.salesMethod !== "FIXED" &&
+                            <button className="standard-button"
+                                    onClick={this.placeBid}
+                                    disabled={this.invalidPackage()}>
+                                {this.context.t("Place Bid")}
+                            </button>}
+
+
+
                             { spinner && <i className="fa fa-cog fa-spin"/>}
                         </div>
                     </div>}

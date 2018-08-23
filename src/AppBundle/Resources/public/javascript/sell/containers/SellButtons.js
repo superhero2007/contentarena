@@ -4,10 +4,8 @@ import store from '../../main/store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
-import {editedProgramSelected, historyGoTo, parseSeasons} from "../../main/actions/utils";
+import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
 import {PropTypes} from 'prop-types';
-import HeaderBar from "../../main/components/HeaderBar";
-
 const MIN_PROGRAM_DESC_LENGTH = 30;
 
 class SellButtons extends React.Component {

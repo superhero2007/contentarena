@@ -11,17 +11,23 @@ namespace AppBundle\Repository;
 class BidRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getPendingBids($user){
+        $now = date('Y-m-d H:i:s');
         $query = $this->createQueryBuilder('b')
             ->orderBy("b.createdAt", "DESC")
             ->join('b.content', 'c')
+            ->join('b.salesPackage', 'bundle')
             ->join('b.status', 'status')
             ->join('b.type', 'type')
             ->where('b.buyerUser = :user')
             ->andWhere('status.name = :pending')
             ->andWhere('type.name = :type')
+            ->andWhere('bundle.sold = :isSold')
+            ->andWhere(':now < c.expiresAt')
+            ->setParameter('now',$now)
             ->setParameter('pending', 'PENDING')
             ->setParameter('type', 'BIDDING')
             ->setParameter('user', $user)
+            ->setParameter('isSold', false)
             ->getQuery();
 
         return $query->getResult();

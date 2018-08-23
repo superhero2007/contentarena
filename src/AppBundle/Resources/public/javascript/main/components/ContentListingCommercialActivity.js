@@ -108,18 +108,20 @@ class ContentListingCommercialActivity extends ContentListing {
                             </div>
                         </div>}
 
-                        <div className="show-bundle" onClick={()=>{this.setState({showSalesPackage: !showSalesPackage})}}>
+                        {bids.length > 0 && <div className="show-bundle" onClick={()=>{this.setState({showSalesPackage: !showSalesPackage})}}>
                             {!showSalesPackage && "Show sales bundle"}
                             {showSalesPackage && "Hide sales bundle"}
                             {!showSalesPackage && <img src={addIcon}/>}
                             {showSalesPackage && <img src={cancelIcon}/>}
-                        </div>
+                        </div>}
                     </div>
                 </div>
                 {showSalesPackage && salesPackages.map((sb, i )=>{
 
                     let closed= sb.bids.filter(b=>b.status.name === "APPROVED");
                     let open = sb.bids.filter(b=>b.status.name === "PENDING");
+
+
 
                     if (hideWithoutBids && sb.bids.length === 0 ) return;
                     if (filterByOpenBids && open.length === 0 ) return;

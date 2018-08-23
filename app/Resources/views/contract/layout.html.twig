@@ -848,7 +848,11 @@
                             <label>License Fee:</label>
 
                             {% if bid is defined %}
-                                {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+                                {% if bid.totalFee != 0 %}
+                                    {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+                                {% else %}
+                                    Depending on bid
+                                {% endif %}
                             {% else %}
                                 {% if bundle.salesMethod.name == "FIXED" %}
                                     {{ bundle.fee }} {{ bundle.currency.code }}

@@ -16,8 +16,8 @@ class Settings extends React.Component {
             updatingUser : false,
             updatingPassword : false,
             loadingCompanyUsers : false,
-            editPersonalInfo: false,
-            editCompanyInfo : false,
+            editPersonalInfo: props.match.params.filter === "editpersonal",
+            editCompanyInfo : props.match.params.filter === "editcompany",
             companyUsers : [],
             user : {}
         };
@@ -36,16 +36,18 @@ class Settings extends React.Component {
     }
 
     updateCompany = () => {
+        const {history} = this.props;
         this.setState({updatingCompany:true, editCompanyInfo: false});
         ContentArena.ContentApi.updateCompany(this.state.user.company).done(()=>{
-            this.setState({updatingCompany:false});
+            history.push("/settings");
         })
     };
 
     updateUser = () => {
+        const {history} = this.props;
         this.setState({updatingUser:true, editPersonalInfo: false});
         ContentArena.ContentApi.updateUser(this.state.user).done(()=>{
-            this.setState({updatingUser:false});
+            history.push("/settings");
         })
     };
 
@@ -91,6 +93,8 @@ class Settings extends React.Component {
 
     render () {
 
+        const {history} = this.props;
+
         const { loading, editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers,
             updatingCompany, updatingUser, updatingPassword, password, passwordCheck, passwordUpdated } = this.state;
         let user = this.state.user;
@@ -102,7 +106,9 @@ class Settings extends React.Component {
                 <div className={"title"}>
                     {this.context.t("Company information")}
                     {!editCompanyInfo && !updatingCompany &&
-                    <div className={"edit-button"} onClick={e=>{this.setState({editCompanyInfo : true})}}>
+                    <div className={"edit-button"} onClick={e=>{
+                        history.push("/settings/editcompany");
+                    }}>
                         <img src={editIcon}/>
                         {this.context.t("Edit")}
                     </div>}
@@ -239,7 +245,9 @@ class Settings extends React.Component {
                 <div className={"title"}>
                     {this.context.t("Personal information")}
                     {!editPersonalInfo && !updatingUser &&
-                    <div className={"edit-button"} onClick={e=>{this.setState({editPersonalInfo : true})}}>
+                    <div className={"edit-button"} onClick={e=>{
+                        history.push("/settings/editpersonal");
+                    }}>
                         <img src={editIcon}/>
 
                         {this.context.t("Edit")}

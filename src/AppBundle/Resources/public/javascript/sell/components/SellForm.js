@@ -30,7 +30,8 @@ class SellForm extends React.Component {
         }
 
         this.state = {
-            content : content
+            content : content,
+            showSearch : props.match.params.customId != 1
         };
 
         store.subscribe((a) => {
@@ -47,8 +48,8 @@ class SellForm extends React.Component {
         return (
             <div className="manager-content">
                 <Selector style={{zIndex: 100}}/>
-                <SellFormSteps history={history} />
-                <SellFormStep1/>
+                
+                <SellFormStep1 history={history} showSearch={this.state.showSearch} />
                 <SellFormStep2 packages={this.props.packages} />
                 <SellFormStep3 packages={this.props.packages} />
                 <SellFormStep4 packages={this.props.packages} />

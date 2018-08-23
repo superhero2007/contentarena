@@ -27,12 +27,29 @@ class CommercialActivity extends React.Component {
 
         const {match} = this.props;
 
-        if ( match && match.params && match.params.filterName){
-            this.setState({
-                filter : match.params.filterName
-            })
-        }
+        let params, filter, listings = [];
 
+        if ( match && match.params && match.params.filterName){
+
+            params = match.params.filterName.split("&");
+
+            if ( params.length > 1 ) {
+                listings.push(params[0]);
+                filter = params[1];
+            } else {
+                if ( params[0].length === 5){
+                    listings.push(params[0]);
+                    filter = "ALL";
+                } else {
+                    filter = params[0]
+                }
+            }
+
+            this.setState({
+                filter : filter,
+                selectedListings : listings
+            });
+        }
 
         this.update();
     }
@@ -53,24 +70,17 @@ class CommercialActivity extends React.Component {
         });
     };
 
-    filterByListing = (selected) => {
-        this.setState({
-            selectedListings : (selected) ? [selected.value] : [],
-            bidsOpen : true
-        })
-    };
-
     filtered = () => {
         const { filter , selectedListings} = this.state;
 
         let listings = this.state.listings || [];
 
         if ( selectedListings.length > 0 ){
-            listings = this.state.listings.filter(b => selectedListings.indexOf(b.id) !== -1);
+            return this.state.listings.filter(b => selectedListings.indexOf(b.customId) !== -1);
         }
 
         switch (filter) {
-            case "closedeals" :
+            case "closeddeals" :
                 return listings.filter(b => {
                     return b.salesPackages.filter((sp)=>{
                         return sp.bids.filter(b=>b.status.name === "APPROVED").length > 0
@@ -88,6 +98,8 @@ class CommercialActivity extends React.Component {
                         return sp.bids.length > 0
                     }).length > 0
                 });
+            case "ALL" :
+                return listings;
             default :
                 return listings;
 
@@ -114,18 +126,21 @@ class CommercialActivity extends React.Component {
                         <Select
                             name="form-field-name"
                             placeholder="All listings"
-                            onChange={this.filterByListing}
+                            onChange={(selected)=>{
+                                let filterString = (filter!=="ALL") ? "&" +filter : "" ;
+                                history.push("/commercialactivity/filter/"+selected.value + filterString)
+                            }}
                             multi={false}
                             value={selectedListings[0]}
-                            options={allListings.map((b)=>({value : b.id , label : b.name }))}
+                            options={allListings.map((b)=>({value : b.customId , label : b.name }))}
                         />
                     </div>
 
                     <div className={"status-filter"}>
                         <div className={"status-filter-item"}
                              onClick={()=>{
-                                 //this.setState({filter: "ALL"})
-                                 history.push("/commercialactivity")
+                                 let filterString = (selectedListings.length > 0) ? "/" + selectedListings[0]  : "" ;
+                                 history.push("/commercialactivity"+filterString)
                              }}>
                             {filter==="ALL" && <img src={this.activeBulletIcon} />}
                             {filter!=="ALL" && <img src={this.bulletIcon} />}
@@ -133,8 +148,8 @@ class CommercialActivity extends React.Component {
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
-                                 //this.setState({filter: 'withactivity'})
-                                 history.push("/commercialactivity/filter/withactivity")
+                                 let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
+                                 history.push("/commercialactivity/filter/"+filterString+"withactivity")
                              }}>
                             {filter==="withactivity" && <img src={this.activeBulletIcon} />}
                             {filter!=="withactivity" && <img src={this.bulletIcon} />}
@@ -142,19 +157,20 @@ class CommercialActivity extends React.Component {
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
-                                 //this.setState({filter: "openbids"})
-                                 history.push("/commercialactivity/filter/openbids")
+                                 let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
+                                 history.push("/commercialactivity/filter/"+filterString+"openbids")
                              }}>
                             {filter==="openbids" && <img src={this.activeBulletIcon} />}
                             {filter!=="openbids" && <img src={this.bulletIcon} />}
-                            {this.context.t("Open Bids")}
+                            {this.context.t("Open")} {this.context.t("Bids")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
-                                 history.push("/commercialactivity/filter/closedeals")
+                                 let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
+                                 history.push("/commercialactivity/filter/"+filterString+"closeddeals")
                              }}>
-                            {filter==="closedeals" && <img src={this.activeBulletIcon} />}
-                            {filter!=="closedeals" && <img src={this.bulletIcon} />}
+                            {filter==="closeddeals" && <img src={this.activeBulletIcon} />}
+                            {filter!=="closeddeals" && <img src={this.bulletIcon} />}
                             {this.context.t("Closed deals")}
                         </div>
                     </div>
@@ -169,7 +185,7 @@ class CommercialActivity extends React.Component {
                             bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
                             hideWithoutBids={this.state.filter === "withactivity"}
                             filterByOpenBids={this.state.filter === "openbids"}
-                            filterByClosedDeals={this.state.filter === "closedeals"}
+                            filterByClosedDeals={this.state.filter === "closeddeals"}
                             onSelect={id => goToListing(id, true)}
                             key={i + "-" + listing.customId}
                             {...listing}

@@ -61,9 +61,10 @@ export const routes = [
         main: ClosedDeals
     },
     {
-        path: "/settings",
+        path: "/settings/:filter?",
         header: HeaderBar,
-        main: Settings
+        main: Settings,
+        updateByPath : true
     },
     {
         path: "/messages/:customId?",

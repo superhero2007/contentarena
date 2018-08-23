@@ -34,7 +34,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="marketplace|listing|bids|messages|contentlisting|commercialactivity"},
+     *     requirements={"reactRouting"="marketplace|listing|bids|messages|contentlisting|commercialactivity|settings"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      */
     public function indexParamsAction(Request $request)
@@ -72,7 +72,7 @@ class DefaultController extends BaseController
             ->getRepository('AppBundle:RightsPackage')
             ->findAll();
 
-        if ($listingId && $listingId != "new"){
+        if ($listingId && $listingId != "new" && $listingId != "1"){
             $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $listingId]);
         } else{
             $content = new Content();

@@ -33,7 +33,7 @@ class SellFormStep1 extends React.Component {
             sportSelectors : [1],
             seasons: [],
             schedules: {},
-            showSearch : true,
+            showSearch : props.showSearch,
             websites: [],
             website: '',
             tournaments: [],
@@ -319,9 +319,8 @@ class SellFormStep1 extends React.Component {
     };
 
     toggleSearch = () => {
-        this.setState((prevState) => ({
-            showSearch: !prevState.showSearch
-        }));
+        const {history} = this.props;
+        history.push("/contentlisting/1");
     };
 
     websitesUpdated = (websites) => {
@@ -341,13 +340,14 @@ class SellFormStep1 extends React.Component {
     },500)
 
     selectTournament = ( tournament ) =>{
-        this.toggleSearch();
         this.props.selectTournament(tournament);
+        setTimeout(this.toggleSearch,2000);
     };
 
     clear = () => {
         this.props.reset();
-        this.toggleSearch();
+        const {history} = this.props;
+        history.push("/contentlisting/new");
     };
 
     scroll = () => {
@@ -401,16 +401,30 @@ class SellFormStep1 extends React.Component {
                 inputProps.seasons.push({value: season.name,isCustom : season.custom})
             });
         }
-        if ( this.state.sportCategories.length > 0 ) {
+        if ( this.state.sportCategories.length > 0 && this.props.sportCategory.length === 0) {
             inputProps.sportCategory = {
                 value: this.state.sportCategories[0].name,
                 isCustom: this.state.sportCategories[0].isCustom
             }
         }
-        if ( this.state.tournaments.length > 0 ) {
+        if ( this.state.tournaments.length > 0 && this.props.tournament.length === 0 ) {
             inputProps.tournament = {
                 value: this.state.tournaments[0].name,
                 isCustom: this.state.tournaments[0].isCustom
+            }
+        }
+
+        if (  this.props.tournament.length > 0 ) {
+            inputProps.tournament = {
+                value: this.props.tournament[0].name,
+                isCustom: this.props.tournament[0].isCustom
+            }
+        }
+
+        if (  this.props.sportCategory.length > 0 ) {
+            inputProps.sportCategory = {
+                value: this.props.sportCategory[0].name,
+                isCustom: this.props.sportCategory[0].isCustom
             }
         }
 
@@ -459,7 +473,7 @@ class SellFormStep1 extends React.Component {
                     {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&
                     <div className="base-input">
                         <label>
-
+                            {this.context.t("Country/Category")}
                         </label>
                         <input
                             type="text"

@@ -28,9 +28,6 @@ class ReviewAndSign extends React.Component {
         };
     }
 
-    componentDidMount (){
-    }
-
     showTerritories = (salesPackage) => {
         return ( salesPackage.bundleMethod === this.individually &&
             salesPackage.territoriesMethod === this.worldwide ) ||
@@ -45,7 +42,6 @@ class ReviewAndSign extends React.Component {
             window.scrollTo(0, 0);
             stepChangeReset();
         }
-
     };
 
     submit = () => {

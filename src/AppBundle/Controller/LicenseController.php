@@ -194,7 +194,10 @@ class LicenseController extends Controller
 
         $bid = new Bid();
 
-        $bid->setTotalFee($request->query->get("bid"));
+        $fee = $request->query->get("bid");
+        $fee = $fee == "undefined" ? 0 : $fee;
+
+        $bid->setTotalFee($fee);
         $bid->setSalesPackage($bundle);
         $bid->setBuyerUser($user);
         $bid->setCreatedAt($time);
@@ -210,7 +213,7 @@ class LicenseController extends Controller
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
-        //return $this->render('contract/layout.html.twig', $viewElements);
+        return $this->render('contract/layout.html.twig', $viewElements);
 
         $this->mergeAndSave($content,$viewElements);
     }
