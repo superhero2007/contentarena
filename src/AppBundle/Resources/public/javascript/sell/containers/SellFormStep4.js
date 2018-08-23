@@ -144,32 +144,6 @@ class SellFormStep4 extends React.Component {
 
                     <JurisdictionSelector/>
 
-                    <div className='base-input'>
-                        <label style={{width:'100%'}}>
-                            {this.context.t("Do you seek to apply VAT block ?")}
-                        </label>
-                        <div className='radio-tab'>
-                            <input
-                                checked={applyVatInJurisdiction}
-                                onChange={this.setApplyVatInJurisdiction}
-                                type="radio"
-                                className="ca-radio package-selector"
-                                value='yes'
-                            />
-                            {this.context.t("Yes")}
-                        </div>
-                        <div className='radio-tab'>
-                            <input
-                                checked={!applyVatInJurisdiction}
-                                onChange={this.setApplyVatInJurisdiction}
-                                type="radio"
-                                className="ca-radio package-selector"
-                                value='no'
-                            />
-                            {this.context.t("No")}
-                        </div>
-                    </div>
-
                     <FileSelector
                         label={this.context.t('Annex')}
                         target={"annex"}
