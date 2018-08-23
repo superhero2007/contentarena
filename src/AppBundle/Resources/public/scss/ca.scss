@@ -1137,11 +1137,16 @@ a:hover {
   display: flex;
   align-items: center;
   padding-left: 20px;
-  i {
+
+  .close-icon {
     position: absolute;
     font-size: 26px;
     right: 10px;
     top: 6px;
+  }
+
+  .tooltip-icon {
+    font-size: 24px;
   }
 }
 

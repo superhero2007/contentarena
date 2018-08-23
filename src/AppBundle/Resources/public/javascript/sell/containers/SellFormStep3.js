@@ -260,6 +260,7 @@ class SellFormStep3 extends React.Component {
                                     key={right.key}
                                     id={right.key}
                                     name={right.name}
+                                    description={right.description}
                                     global={right.global}
                                     language={right.language}
                                     languages={LICENSED_LANGUAGES}
@@ -293,6 +294,7 @@ class SellFormStep3 extends React.Component {
                                     key={right.key}
                                     id={right.key}
                                     name={right.name}
+                                    description={right.description}
                                     selected={this.props[right.key]}
                                     options={right.options}
                                     multiple={right.multiple}

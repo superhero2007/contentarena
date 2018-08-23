@@ -8,7 +8,8 @@ export const RightDefinitions = [
             "SUBLICENSE_YES_APPROVAL",
             "SUBLICENSE_NO"
         ],
-        multiple : false
+        multiple : false,
+        description: 'Means the right to sublicense the granted Audio-visual Rights to a third party subject to (i) Licensee being liable for the acts or omissions of each sub-licensee regarding the exploitation of Audio-visual Rights as if such acts or omissions were the acts or omissions of Licensee and (ii) Licensee remaining fully liable for all their obligations set out in this Agreement towards Licensor.'
     },
     {
         name : "Transmission Obligation",
@@ -19,7 +20,8 @@ export const RightDefinitions = [
             "BROADCASTING_YES"
         ],
         showTextArea:"BROADCASTING_YES",
-        multiple : false
+        multiple : false,
+        description: 'Means the obligation to a specific Transmission of the Program.'
     },
     {
         name : "Transmission means",
@@ -34,7 +36,8 @@ export const RightDefinitions = [
             "TRANSMISSION_MEANS_INTERNET",
             "TRANSMISSION_MEANS_MOBILE"
         ],
-        multiple : true
+        multiple : true,
+        description: 'Means the technical means on which Licensee may Transmit Program as per Rights Specification.'
     },
     {
         name: "Transmission Form",
@@ -47,7 +50,8 @@ export const RightDefinitions = [
             "EXPLOITATION_FORM_IN-SHIP",
             "EXPLOITATION_FORM_CLOSED"
         ],
-        multiple: true
+        multiple: true,
+        description: 'Means the form of exploitation for which the Audio-visual Rights to the Program is granted.'
     },
     {
         name : "Licensed languages",
@@ -56,6 +60,7 @@ export const RightDefinitions = [
         options : [],
         global : true,
         language : true,
+        description: 'Means the language in which Licensee my exploit the Granted Rights.'
     },
     {
         name : "Number of runs",
@@ -65,7 +70,8 @@ export const RightDefinitions = [
             "RUNS_UNLIMITED",
             "RUNS_LIMITED",
         ],
-        multiple : false
+        multiple : false,
+        description: 'Means the number of Transmission of the Program.'
     },
     {
         name : "Exploitation window",
@@ -76,6 +82,7 @@ export const RightDefinitions = [
             "EXPLOITATION_WINDOW_LIMITED",
         ],
         multiple : false,
+        description: 'Means the specific time frame within the License Period in which the specific right may be exploited.',
         showTextArea:"EXPLOITATION_WINDOW_LIMITED"
     },
     {
@@ -87,6 +94,7 @@ export const RightDefinitions = [
             "RESERVED_RIGHTS_YES",
         ],
         multiple : false,
+        description: 'Means the Audio-visual Rights to the Program that may be exploited by Licensor and its sublicensee irrespective of any exclusivity granted.',
         showTextArea:"RESERVED_RIGHTS_YES"
 
     },

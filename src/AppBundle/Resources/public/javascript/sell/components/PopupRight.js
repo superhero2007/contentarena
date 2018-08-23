@@ -250,7 +250,7 @@ class PopupRight extends React.Component {
                     <label htmlFor={rightPackage.shortLabel + "_" + option}/>}
                     {!multiple &&
                     <input
-                        defaultChecked={rightPackage.selectedRights[id] === option}
+                        checked={rightPackage.selectedRights[id] === option}
                         type="radio"
                         className="ca-radio"
                         disabled={disabled}
@@ -259,7 +259,10 @@ class PopupRight extends React.Component {
 
                     {RightItemsDefinitions[option].language &&
                     <LanguageSelector
-                        onChange={(value) => { this.updateSelection(value, id+ "_LANGUAGES",rightPackage)}}
+                        onChange={(value) => {
+                            this.updateSelection(value, id+ "_LANGUAGES",rightPackage);
+                            this.updateSelection(option, id, rightPackage);
+                        }}
                         value={rightPackage.selectedRights[id+ "_LANGUAGES"]}/>}
                     {RightItemsDefinitions[option].textField &&
                     <input
@@ -287,6 +290,7 @@ class PopupRight extends React.Component {
     renderModal = () => {
         const {
             name,
+            description,
             options, id,  superRights, showTextArea, rightsPackage, technicalFee,
             checkContentDelivery,
             global,
@@ -306,7 +310,8 @@ class PopupRight extends React.Component {
 
             <div className="modal-title">
                 Edit {name}
-                <i className="fa fa-times-circle-o" onClick={this.closePopupAndRestoreData}/>
+                {description && <i className="fa fa-info-circle tooltip-icon" title={description}/>}
+                <i className="fa fa-times-circle-o close-icon" onClick={this.closePopupAndRestoreData}/>
             </div>
 
             <div className="step-content">
@@ -561,8 +566,6 @@ class PopupRight extends React.Component {
                 }
             }
         }
-
-        console.log(selected);
 
         return (
             <div className="base-input" style={{width: "49%"}}>
