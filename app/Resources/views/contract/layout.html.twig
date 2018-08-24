@@ -383,10 +383,13 @@
                             {{ content.extraData.PROGRAM_DURATION }}
                         </div>
 
+                        {% if content.extraData.PROGRAM_TYPE is defined %}
                         <div class="license-item-content">
                             <label>Program Type</label>
                             {{ content.extraData.PROGRAM_TYPE }}
                         </div>
+                        {% endif %}
+
                         {% if content.extraData.PROGRAM_YEAR is defined %}
                         <div class="license-item-content">
                             <label>Release Year</label>
