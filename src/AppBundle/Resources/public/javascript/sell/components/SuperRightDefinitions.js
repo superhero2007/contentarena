@@ -22,10 +22,10 @@ export const SuperRightDefinitions = {
 
 
 export const SuperRightProductionDetailsLabels = {
-    "LT" : "Live Transmission",
-    "DT" : "Delayed & Archive Footage",
-    "LB" : "Live Betting Transmission",
-    "HL" : "Highlights & Clips",
+    "LT" : "Live Feed",
+    "DT" : "Delayed & Archive Content",
+    "LB" : "Live Betting Feed",
+    "HL" : "Highlight & Clip Footage",
     "NA" : "News Footage",
     "PR" : "Edited Program",
 };
