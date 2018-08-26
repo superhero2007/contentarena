@@ -45,12 +45,22 @@ class SalesPackageForm extends React.Component {
             installments : [{ value : 100,  type : "DAY", days: 30}],
             fee : 0,
             isNew : true,
-            territoriesQuantity: 'single'
+            territoriesQuantity: 'single',
+            countries: ContentArena.Data.Countries
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
         this.cancelIcon = assetsBaseDir + "app/images/cancel.png";
+    }
+
+    componentDidMount() {
+        if ( this.state.countries.length === 0) {
+            ContentArena.Api.getCountries().done( (countries ) => {
+                ContentArena.Data.Countries = countries;
+                this.setState({countries})
+            });
+        }
     }
 
     editSalesPackage = ( salesPackage, index ) => {
@@ -65,7 +75,6 @@ class SalesPackageForm extends React.Component {
 
     setBundleMethod = (bundleMethod) => {
         this.setState({bundleMethod});
-        this.fillTerritories(this.state.territoriesMethod, bundleMethod);
     };
 
     setTerritoriesMethod = (territoriesMethod) => {
@@ -210,7 +219,8 @@ class SalesPackageForm extends React.Component {
         this.setState({
             fee: 0,
             territories: [],
-            territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories });
+            // territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories
+        });
     };
 
     selectTerritories = (territories) => {
@@ -260,6 +270,7 @@ class SalesPackageForm extends React.Component {
 
     addBundlesAvailable = () => {
         const { exclusivity, salesPackages} = this.props;
+        const { countries } = this.state;
         let territories = [], worldwide =false;
 
         if ( exclusivity ){
@@ -269,7 +280,7 @@ class SalesPackageForm extends React.Component {
             })
         }
 
-        return !worldwide && territories.length !== Object.values(ContentArena.Data.Countries).length;
+        return !worldwide && territories.length !== Object.values(countries).length;
     };
 
     handleTerritories = (type) => {
@@ -284,6 +295,7 @@ class SalesPackageForm extends React.Component {
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
+        const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -295,7 +307,7 @@ class SalesPackageForm extends React.Component {
 
             <div className="modal-title">
                 Sales bundle
-                <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
+                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content">
@@ -363,6 +375,7 @@ class SalesPackageForm extends React.Component {
                                 value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 multi={isMultipleEnabled}
+                                disabled={isWorldwideEnabled}
                             />
                             {territoriesQuantity === 'multiple' && (
                                 <div>
@@ -372,7 +385,9 @@ class SalesPackageForm extends React.Component {
                                            defaultChecked={this.state.bundleMethod === this.asBundle}
                                            onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
                                     />
-                                    <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>Offer selected territories together as one territory package</span>
+                                    <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>
+                                        Offer selected territories together as one territory package
+                                    </span>
                                     <Tooltip
                                         id="offer_info"
                                         text="Test text"
