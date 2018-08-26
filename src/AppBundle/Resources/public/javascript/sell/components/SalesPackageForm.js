@@ -45,12 +45,22 @@ class SalesPackageForm extends React.Component {
             installments : [{ value : 100,  type : "DAY", days: 30}],
             fee : 0,
             isNew : true,
-            territoriesQuantity: 'single'
+            territoriesQuantity: 'single',
+            countries: ContentArena.Data.Countries
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
         this.cancelIcon = assetsBaseDir + "app/images/cancel.png";
+    }
+
+    componentDidMount() {
+        if ( this.state.countries.length === 0) {
+            ContentArena.Api.getCountries().done( (countries ) => {
+                ContentArena.Data.Countries = countries;
+                this.setState({countries})
+            });
+        }
     }
 
     editSalesPackage = ( salesPackage, index ) => {
@@ -260,6 +270,7 @@ class SalesPackageForm extends React.Component {
 
     addBundlesAvailable = () => {
         const { exclusivity, salesPackages} = this.props;
+        const { countries } = this.state;
         let territories = [], worldwide =false;
 
         if ( exclusivity ){
@@ -269,7 +280,10 @@ class SalesPackageForm extends React.Component {
             })
         }
 
-        return !worldwide && territories.length !== Object.values(ContentArena.Data.Countries).length;
+        console.log(territories.length);
+        console.log(Object.values(ContentArena.Data.Countries).length);
+
+        return !worldwide && territories.length !== Object.values(countries).length;
     };
 
     handleTerritories = (type) => {
@@ -285,6 +299,13 @@ class SalesPackageForm extends React.Component {
         const isMultipleEnabled = territoriesQuantity === 'multiple';
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
 
+        // console.log(isFilterEnabled);
+        // console.log(isMultipleEnabled);
+        // console.log(isExcludedTerritoriesEnabled);
+
+        console.log(!salesPackages.length);
+        console.log(this.addBundlesAvailable());
+
         return <Modal
             isOpen={this.state.isOpen}
             onRequestClose={this.closeModal}
@@ -295,7 +316,7 @@ class SalesPackageForm extends React.Component {
 
             <div className="modal-title">
                 Sales bundle
-                <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
+                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content">
