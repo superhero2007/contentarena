@@ -75,7 +75,6 @@ class SalesPackageForm extends React.Component {
 
     setBundleMethod = (bundleMethod) => {
         this.setState({bundleMethod});
-        this.fillTerritories(this.state.territoriesMethod, bundleMethod);
     };
 
     setTerritoriesMethod = (territoriesMethod) => {
@@ -84,6 +83,8 @@ class SalesPackageForm extends React.Component {
     };
 
     fillTerritories = (territoriesMethod, bundleMethod) => {
+        console.log('territory ',territoriesMethod);
+        console.log('bundle  ',bundleMethod);
         if ( territoriesMethod === this.worldwide && bundleMethod === this.individually ) {
             this.setState({ territories : Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }))})
         } else {
@@ -281,7 +282,6 @@ class SalesPackageForm extends React.Component {
             })
         }
 
-
         return !worldwide && territories.length !== Object.values(countries).length;
     };
 
@@ -297,11 +297,6 @@ class SalesPackageForm extends React.Component {
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
-
-        // console.log(isFilterEnabled);
-        // console.log(isMultipleEnabled);
-        // console.log(isExcludedTerritoriesEnabled);
-
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -390,7 +385,9 @@ class SalesPackageForm extends React.Component {
                                            defaultChecked={this.state.bundleMethod === this.asBundle}
                                            onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
                                     />
-                                    <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>Offer selected territories together as one territory package</span>
+                                    <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>
+                                        Offer selected territories together as one territory package
+                                    </span>
                                     <Tooltip
                                         id="offer_info"
                                         text="Test text"
