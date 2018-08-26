@@ -83,8 +83,6 @@ class SalesPackageForm extends React.Component {
     };
 
     fillTerritories = (territoriesMethod, bundleMethod) => {
-        console.log('territory ',territoriesMethod);
-        console.log('bundle  ',bundleMethod);
         if ( territoriesMethod === this.worldwide && bundleMethod === this.individually ) {
             this.setState({ territories : Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }))})
         } else {
@@ -297,6 +295,7 @@ class SalesPackageForm extends React.Component {
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
+        const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -376,6 +375,7 @@ class SalesPackageForm extends React.Component {
                                 value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 multi={isMultipleEnabled}
+                                disabled={isWorldwideEnabled}
                             />
                             {territoriesQuantity === 'multiple' && (
                                 <div>
