@@ -220,7 +220,8 @@ class SalesPackageForm extends React.Component {
         this.setState({
             fee: 0,
             territories: [],
-            territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories });
+            // territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories
+        });
     };
 
     selectTerritories = (territories) => {
@@ -280,8 +281,6 @@ class SalesPackageForm extends React.Component {
             })
         }
 
-        console.log(territories.length);
-        console.log(Object.values(ContentArena.Data.Countries).length);
 
         return !worldwide && territories.length !== Object.values(countries).length;
     };
@@ -303,8 +302,6 @@ class SalesPackageForm extends React.Component {
         // console.log(isMultipleEnabled);
         // console.log(isExcludedTerritoriesEnabled);
 
-        console.log(!salesPackages.length);
-        console.log(this.addBundlesAvailable());
 
         return <Modal
             isOpen={this.state.isOpen}
