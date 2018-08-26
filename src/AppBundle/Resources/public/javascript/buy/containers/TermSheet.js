@@ -152,6 +152,7 @@ class TermSheet extends React.Component {
                                     {
                                         rp.name
                                     }
+                                    {this.context.t(" Rights")}
                                 </div>
                             })
                         }
