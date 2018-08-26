@@ -600,7 +600,7 @@ class ListingDetails extends React.Component {
                                 {this.context.t("Grant of Rights & Production")}
                             </button>
                             {content.PROGRAM_NAME &&
-                                <button className={(tab ==="editeprogram")?"active": ""} onClick={()=>{
+                                <button className={(tab ==="editedprogram")?"active": ""} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/editedprogram');
                                     this.showTab("editedprogram")
                                 }}>

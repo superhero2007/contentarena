@@ -22,7 +22,8 @@ export const ProductionStandardsDefinitions = [
             "VIDEO_STANDARD_VR",
             "VIDEO_STANDARD_NOT_AVAILABLE"
         ],
-        multiple : false
+        multiple : false,
+        checkDelivery: true
     },
     {
         name: "Aspect ratio",
@@ -35,7 +36,8 @@ export const ProductionStandardsDefinitions = [
             "ASPECT_RATIO_CUSTOM",
             "ASPECT_RATIO_NOT_AVAILABLE"
         ],
-        multiple : false
+        multiple : false,
+        checkDelivery: true
     },
     {
         name: "Graphics",
@@ -47,7 +49,8 @@ export const ProductionStandardsDefinitions = [
             "GRAPHICS_YES",
             "GRAPHICS_NOT_AVAILABLE"
         ],
-        multiple : false
+        multiple : false,
+        checkDelivery: true
     },
     {
         name: "Commentary",
@@ -59,7 +62,8 @@ export const ProductionStandardsDefinitions = [
             "COMMENTARY_YES",
             "COMMENTARY_NOT_AVAILABLE"
         ],
-        multiple : false
+        multiple : false,
+        checkDelivery: true
     },
     {
         name: "Camera standards",
@@ -70,7 +74,8 @@ export const ProductionStandardsDefinitions = [
             "CAMERA_MINIMUM",
             "CAMERA_NOT_AVAILABLE"
         ],
-        multiple : false
+        multiple : false,
+        checkDelivery: true
     },
     {
         name: "Delivery Method",
@@ -85,7 +90,8 @@ export const ProductionStandardsDefinitions = [
         ],
         multiple : true,
         showTextArea:"FURTHER_DETAILS",
-        technicalFee : "TECHNICAL_DELIVERY_SATELLITE"
+        technicalFee : "TECHNICAL_DELIVERY_SATELLITE",
+        checkDelivery: true
     },
     {
         name: "Program Details",

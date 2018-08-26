@@ -1643,6 +1643,9 @@ a:hover {
           }
           .term-sheet-items {
             font-size: 14px;
+            & > div:only-child {
+              display: none; //means if only table title is rendered, and no data is rendered, we hide full block
+            }
             .row {
               display: flex;
               border-bottom: 1px solid #EEF3F6;

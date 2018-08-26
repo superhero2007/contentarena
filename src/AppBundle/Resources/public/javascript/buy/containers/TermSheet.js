@@ -35,6 +35,9 @@ class TermSheet extends React.Component {
 
     renderList = (definitions, checkContentDelivery) => {
         const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
+        if (checkContentDelivery) {
+            definitions = this.getFilteredByDelivery(definitions, rightsPackage)
+        }
         return definitions.map( (right, i) => {
 
             if (right.key === 'CONTENT_DELIVERY') return;
@@ -100,6 +103,17 @@ class TermSheet extends React.Component {
             </div>
         })
     };
+
+    getFilteredByDelivery = (definitions, rightsPackage) => {
+        //filter definitions by user chosen rightPackage which is not CONTENT_DELIVERY_NON_DEDICATED
+        return definitions.filter(d => {
+            if (d.checkDelivery) {
+                return rightsPackage.some(p => p.selectedRights['CONTENT_DELIVERY'] !== "CONTENT_DELIVERY_NON_DEDICATED")
+            } else {
+                return true
+            }
+        });
+    }
 
     renderTextarea = (definitions) => {
         const {selectedRightsBySuperRight, rightsPackage} = this.props;

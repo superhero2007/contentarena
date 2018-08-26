@@ -50,15 +50,17 @@ class ProgramDetails extends React.Component {
             <div style={{ padding:'20px 0'}}>
                 <div className="full-item-box" style={{width: '50%'}}>
                     <label>PROGRAM {PROGRAM_NAME}</label>
-                    <div >
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("Program type")}
+                    <div>
+                        {PROGRAM_TYPE && (
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("Program type")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {ProgramTypesDefinitions[PROGRAM_TYPE]}
+                                </div>
                             </div>
-                            <div style={valueStyle}>
-                                {ProgramTypesDefinitions[PROGRAM_TYPE]}
-                            </div>
-                        </div>
+                        )}
                         <div style={rowStyle}>
                             <div style={titleStyle}>
                                 {this.context.t("Number of episodes")}
@@ -75,23 +77,26 @@ class ProgramDetails extends React.Component {
                                 {PROGRAM_DURATION}
                             </div>
                         </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("Year of program release")}
+                        {PROGRAM_YEAR && (
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("Year of program release")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {PROGRAM_YEAR}
+                                </div>
                             </div>
-                            <div style={valueStyle}>
-                                {PROGRAM_YEAR}
+                        )}
+                        {PROGRAM_DESCRIPTION && (
+                            <div style={rowStyle}>
+                                <div style={titleStyle}>
+                                    {this.context.t("Description")}
+                                </div>
+                                <div style={valueStyle}>
+                                    {PROGRAM_DESCRIPTION}
+                                </div>
                             </div>
-                        </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("Description")}
-                            </div>
-                            <div style={valueStyle}>
-                                {PROGRAM_DESCRIPTION && PROGRAM_DESCRIPTION}
-                                {!PROGRAM_DESCRIPTION && this.context.t("Information not available")}
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>

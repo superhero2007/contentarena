@@ -107,10 +107,16 @@ class SalesPackageForm extends React.Component {
     getExcludedTerritories = () => {
 
         const {territories} = this.state;
+        let territoriesArray = [];
 
+        if (!Array.isArray(territories)) {
+            territoriesArray = [territories];
+        } else {
+            territoriesArray = territories;
+        }
         let filter = this.getFilterTerritories();
 
-        let selected = territories.map(t => t.value);
+        let selected = territoriesArray.map(t => t.value);
         filter = [...filter, ...selected];
 
 
