@@ -131,7 +131,7 @@ class LicenseDateSelector extends React.Component {
                                     />
                                     <DatePicker
                                         className={"date-picker"}
-                                        minDate={(startDateMode === "DATE" && startDate) ? moment(startDate) : moment()}
+                                        minDate={(startDateMode === "DATE" && startDate) ? moment(startDate) : moment().add(1, 'd')}
                                         selected={(endDate)? moment(endDate): undefined}
                                         disabled={endDateMode!=="DATE"}
                                         onChange={this.handleEndDate}
