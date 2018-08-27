@@ -290,9 +290,9 @@ class CommercialSalesBundle extends React.Component{
                             </div>
 
                         }, {
+                            Header: this.context.t("Actions"),
                             headerClassName : 'table-header',
                             className : 'table-header',
-                            Header: '',
                             id : "actions",
                             accessor: b => {return {status: b.status.name, bid: b}},
                             Cell: props => <div className={""}>
