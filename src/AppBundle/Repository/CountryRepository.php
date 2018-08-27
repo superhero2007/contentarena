@@ -21,8 +21,11 @@ class CountryRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function getAll(){
-        return $this->createQueryBuilder('t')
+        return $this->createQueryBuilder('c')
+            //->innerJoin("c.regions","regions")
+            //->where("c.country_code != :null")
+            //->setParameter("null", null)
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
     }
 }

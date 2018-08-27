@@ -26,6 +26,13 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
     "region": "Africa",
     "region_code": 2
   },
+  
+  {
+    "name": "Kosovo",
+    "country_code": "XKX",
+    "region": "Europe",
+    "region_code": 150
+  },
   {
     "name": "Angola",
     "country_code": "AGO",

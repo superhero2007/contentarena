@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
 import {PropTypes} from "prop-types";
+import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -78,7 +79,7 @@ class SalesPackageForm extends React.Component {
     };
 
     setTerritoriesMethod = (territoriesMethod) => {
-        this.setState({territoriesMethod});
+        this.setState({territoriesMethod: territoriesMethod, territories: []});
         this.fillTerritories(territoriesMethod, this.state.bundleMethod);
     };
 
@@ -375,14 +376,21 @@ class SalesPackageForm extends React.Component {
                             </div>
                         )}
                         <div style={{marginTop: '10px', padding: "0 15px"}}>
-                            <CountrySelector
+                            {!isMultipleEnabled && <CountrySelector
+                                className={"small-select"}
+                                onChange={(c) =>{this.selectTerritories([c])}}
+                                value={territories[0]}
+                                filter={isFilterEnabled ? this.getFilterTerritories() : []}
+                                multi={false}
+
+                            />}
+                            {isMultipleEnabled && <RegionCountrySelector
                                 className={"small-select"}
                                 onChange={this.selectTerritories}
                                 value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
-                                multi={isMultipleEnabled}
                                 disabled={isWorldwideEnabled}
-                            />
+                            />}
                             {territoriesQuantity === 'multiple' && (
                                 <div>
                                     <input type="checkbox"

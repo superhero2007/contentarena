@@ -11,6 +11,7 @@ easy_admin:
                   children: ['Sport', 'SportCategory', 'Tournament', 'Season']
                 - label: 'Custom Text'
                   children: ['EmailContent']
+                - Country
 
     entities:
             User:
@@ -63,6 +64,8 @@ easy_admin:
                         - { name: 'delete', icon: 'times', label: '' }
             Deals:
                 class: AppBundle\Entity\Bid
+            Country:
+                class: AppBundle\Entity\Country
             Status:
                 class: AppBundle\Entity\UserStatus
             RightsPackage:

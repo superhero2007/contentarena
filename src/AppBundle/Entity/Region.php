@@ -4,14 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
- * Territory
+ * Region
  *
- * @ORM\Table(name="territory")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TerritoryRepository")
+ * @ORM\Table(name="region")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RegionRepository")
  */
-class Territory
+class Region
 {
     /**
      * @var int
@@ -19,6 +20,7 @@ class Territory
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"countryList"})
      */
     private $id;
 
@@ -49,7 +51,7 @@ class Territory
      *
      * @param string $name
      *
-     * @return Territory
+     * @return Region
      */
     public function setName($name)
     {

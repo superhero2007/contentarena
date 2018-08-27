@@ -25,7 +25,7 @@ class Country
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Groups({"listing", "closed", "commercial", "settings"})
+     * @Groups({"listing", "closed", "commercial", "settings","countryList"})
      */
     private $name;
 
@@ -33,6 +33,7 @@ class Country
      * @var string
      *
      * @ORM\Column(name="country_code", type="string", length=3, unique=true)
+     * @Groups({"countryList"})
      */
     private $country_code;
 
@@ -47,9 +48,42 @@ class Country
      * @var integer
      *
      * @ORM\Column(name="territory_id", type="integer", nullable=true)
+     * @Groups({"countryList"})
      */
 
     private $territoryId;
+
+    /**
+     * Many Countries have Many Regions.
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Region")
+     * @ORM\JoinTable(name="country_regions",
+     *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="region_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"countryList"})
+     */
+    private $regions;
+
+    public function __construct() {
+        $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegions()
+    {
+        return $this->regions;
+    }
+
+    /**
+     * @param mixed $regions
+     */
+    public function setRegions($regions)
+    {
+        $this->regions = $regions;
+    }
+
 
     /**
      * @return mixed

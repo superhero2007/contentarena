@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Country;
 use AppBundle\Entity\RightsPackage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,7 +13,7 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
-class SearchController extends Controller
+class SearchController extends BaseController
 {
     /**
      * @Route("/api/search/tournament", name="searchTournament")
@@ -68,7 +69,16 @@ class SearchController extends Controller
         //Get results
         $countries = $sportCategoryRepository->getAll();
 
-        return new JsonResponse($countries);
+
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($countries, 'json',SerializationContext::create()->setGroups(array('countryList')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
     }
 
     /**
@@ -97,6 +107,20 @@ class SearchController extends Controller
         $countries = $sportCategoryRepository->getAll();
 
         return new JsonResponse($countries);
+    }
+
+    /**
+     * @Route("/api/search/regions", name="getRegions")
+     */
+    public function getRegions(Request $request){
+
+        //Take Repositories
+        $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:Region");
+
+        //Get results
+        $results = $sportCategoryRepository->getAll();
+
+        return new JsonResponse($results);
     }
 
     /**

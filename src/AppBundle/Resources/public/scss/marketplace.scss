@@ -32,6 +32,18 @@
             box-sizing: border-box;
         }
         .content{
+            .territories-placeholder{
+                background: white;
+                padding: 15px;
+                border: 1px solid lightgrey;
+                min-width: 165px;
+            }
+            .territories-icon{
+                cursor: pointer;
+                height: 20px;
+                width: 20px;
+                margin: 15px 5px;
+            }
             padding: 20px;
             .base-input-select{
                 display: inline-table;

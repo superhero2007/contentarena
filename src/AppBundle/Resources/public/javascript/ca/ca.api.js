@@ -112,6 +112,11 @@ ContentArena.Api= {
              */
             success: function (response) {
                 response.sort(_this.sortByLabel);
+                response = response.map(c=>{
+                    c.regions = c.regions.map(r=>r.id);
+                    return c
+
+                });
                 deferred.resolve(response);
             },
             error : function (data, status) {
@@ -174,6 +179,29 @@ ContentArena.Api= {
         let _this = this;
         $.ajax({
             url: envhosturl + "api/search/territories",
+            type: "POST",
+            /**
+             * @param {array} response
+             */
+            success: function (response) {
+                response.sort(_this.sortByLabel);
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    getRegions () {
+        let deferred = jQuery.Deferred();
+        let _this = this;
+        $.ajax({
+            url: envhosturl + "api/search/regions",
             type: "POST",
             /**
              * @param {array} response

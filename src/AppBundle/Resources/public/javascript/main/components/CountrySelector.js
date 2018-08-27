@@ -43,7 +43,7 @@ class CountrySelector extends React.Component {
                 onChange={onChange}
                 placeholder={disabled ? 'Disabled' : 'Select...'}
                 disabled={disabled}
-                value={value.length > 200 ? [] : value}
+                value={multi && value && value.length > 200 ? [] : value}
                 multi={multi}
                 options={this.getOptions()}
             />

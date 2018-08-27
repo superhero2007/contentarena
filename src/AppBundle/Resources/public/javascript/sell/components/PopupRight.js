@@ -206,11 +206,21 @@ class PopupRight extends React.Component {
     };
 
     hasSelection = (id, value, superRights) =>{
+        const {checkContentDelivery} = this.props;
 
         let has = false;
 
         superRights.forEach( ( superRight ) => {
-            if ( superRight.selectedRights[id] === value ) has = true;
+
+            if (checkContentDelivery &&
+                superRight.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_NON_DEDICATED" )
+                return false;
+
+            let selected = superRight.selectedRights[id];
+            if (Array.isArray(selected)){
+                if ( selected.indexOf(value) !== -1 ) has = true
+            }
+            else if ( selected === value ) has = true;
         });
 
         return has;

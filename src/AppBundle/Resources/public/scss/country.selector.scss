@@ -1,0 +1,23 @@
+@import "vars";
+
+.country-selector{
+  .regions{
+    display: flex;
+    .region{
+      color: #4F4F4F;
+      font-size: 15px;
+      padding: 3px;
+      border: 1px solid lightgrey;
+      margin: 2px;
+      width: 120px;
+      height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      text-align: center;
+      line-height: 16px;
+      background-color: transparent;
+    }
+  }
+}

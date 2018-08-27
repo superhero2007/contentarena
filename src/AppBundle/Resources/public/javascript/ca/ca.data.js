@@ -23,7 +23,8 @@ ContentArena.Data.TopSports = [
 
 ContentArena.Data.FullSports = [];
 ContentArena.Data.Countries = [];
-
+ContentArena.Data.Territories = [];
+ContentArena.Data.Regions = [];
 ContentArena.Languages.Short = {
     "mdr": "Mandarin",
     "es": "Spanish",

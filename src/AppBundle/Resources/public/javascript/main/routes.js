@@ -8,6 +8,7 @@ import ManageListings from "../manage/containers/ManageListings";
 import HeaderBar from "./components/HeaderBar";
 import Marketplace from "../buy/containers/Marketplace";
 import SellForm from "../sell/components/SellForm";
+import TestPage from "./containers/TestPage";
 
 export const routes = [
     {
@@ -21,6 +22,12 @@ export const routes = [
         exact: true,
         header: HeaderBar,
         main: Marketplace
+    },
+    {
+        path: "/test",
+        exact: true,
+        header: HeaderBar,
+        main: TestPage
     },
     {
         path: "/marketplace/filter/:filterName/:filterValue?",

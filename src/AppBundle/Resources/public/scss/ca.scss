@@ -1145,6 +1145,14 @@ a:hover {
     top: 6px;
   }
 
+  .close {
+    position: absolute;
+    font-size: 15px;
+    right: 15px;
+    top: 14px;
+    cursor: pointer;
+  }
+
   .tooltip-icon {
     font-size: 24px;
   }

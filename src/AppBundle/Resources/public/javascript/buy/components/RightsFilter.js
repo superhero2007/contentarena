@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import {addRight, clearFilter, removeRight, updateCountries, updateExclusive} from "../actions/filterActions";
 import CountrySelector from "../../main/components/CountrySelector";
 import {PropTypes} from "prop-types";
+import PopupCountrySelector from "../../main/components/PopupCountrySelector";
+import {cancelIcon} from "../../main/components/Icons";
 
 class RightsFilter extends React.Component {
 
@@ -16,8 +18,8 @@ class RightsFilter extends React.Component {
         console.log("RightsFilter", nextProps)
     }
 
-    selectTerritory = (value) => {
-        this.props.updateCountries(value);
+    selectTerritory = (countries) => {
+        this.props.updateCountries(countries);
     };
 
     render() {
@@ -29,10 +31,32 @@ class RightsFilter extends React.Component {
                 </div>
                 <div className="content">
                     <div style={{display: 'flex'}}>
+
+                        {countries.length <= 1 &&
                         <CountrySelector
+                            multi={false}
                             className={"base-input-select"}
-                            value={countries.map(c=>{return {label: c, value: c}})}
-                            onChange={this.selectTerritory}/>
+                            value={{label: countries[0], value: countries[0]}}
+                            onChange={(c)=>{
+                                this.selectTerritory([c])
+                            }}/>
+                        }
+
+                        {countries.length > 1 &&
+                            <div className="territories-placeholder">
+                                {countries.length} territories
+                            </div>
+                        }
+
+                        {countries.length > 1 &&
+                            <img className="territories-icon" src={cancelIcon}
+                                 onClick={()=>{
+                                this.selectTerritory([])
+                            }}/>
+                        }
+
+                        <PopupCountrySelector value={countries}  onSelect={this.selectTerritory}/>
+
                     </div>
 
                     <div id="rights-packages" className={"filter-rights"} style={{marginTop: 20}}>
