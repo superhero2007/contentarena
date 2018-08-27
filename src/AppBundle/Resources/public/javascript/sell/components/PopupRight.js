@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 import cloneDeep from 'lodash/cloneDeep';
+import toNumber from 'lodash/toNumber';
+import isFinite from 'lodash/isFinite';
 import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
@@ -287,8 +289,8 @@ class PopupRight extends React.Component {
                             className="text-field"
                             style={numberFieldStyle}
                             type="number"
-                            onChange={(e) => { this.updateSelection(e.target.value,id + "_NUMBER",rightPackage)}}
-                            value={rightPackage.selectedRights[id + "_NUMBER"]}
+                            onChange={(e) => { this.updateSelection(e.target.value, this.getNumberFieldKey(RightItemsDefinitions[option], id),rightPackage)}}
+                            value={rightPackage.selectedRights[this.getNumberFieldKey(RightItemsDefinitions[option], id)]}
                             min={0}/>
                     }
                     {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}
@@ -296,6 +298,10 @@ class PopupRight extends React.Component {
             })}
         </div>
     };
+
+    getNumberFieldKey(rightItemDefinition, id) {
+        return rightItemDefinition.numberFieldValue || (id + "_NUMBER");
+    }
 
     renderModal = () => {
         const {
@@ -389,8 +395,8 @@ class PopupRight extends React.Component {
                                             className="text-field"
                                             style={numberFieldStyle}
                                             type="number"
-                                            onChange={(e) => { this.updateSelection(e.target.value, customId+ "_NUMBER",rightsPackage[0])} }
-                                            value={rightsPackage[0].selectedRights[customId+ "_NUMBER"]}
+                                            onChange={(e) => { this.updateSelection(e.target.value, this.getNumberFieldKey(definition, customId),rightsPackage[0])} }
+                                            value={rightsPackage[0].selectedRights[this.getNumberFieldKey(definition, customId)]}
                                             min={0}/>
                                     }
                                 </div>
@@ -466,12 +472,11 @@ class PopupRight extends React.Component {
             </div>
 
             <div className={"buttons"}>
-                {this.showOkButton() && <button
+                <button
+                    disabled={!this.showOkButton()}
                     className={"standard-button"}
-                    onClick={this.onOKClicked}>Ok</button>}
-                {!this.showOkButton() && <button
-                    className={"standard-button"}
-                    disabled>Ok</button>}
+                    onClick={this.onOKClicked}>Ok
+                </button>
             </div>
 
         </Modal>
@@ -519,6 +524,19 @@ class PopupRight extends React.Component {
                     RightItemsDefinitions[right.selectedRights[id]].textField ){
                     if  ( !right.selectedRights[id+ '_TEXT']
                         || right.selectedRights[id+ '_TEXT'].length === 0 ) {
+                        response = false;
+                    }
+                }
+            });
+
+            rightsPackage.forEach(right => {
+                if(RightItemsDefinitions[right.selectedRights[id]] &&
+                    RightItemsDefinitions[right.selectedRights[id]].numberField ){
+                    const numberKey = this.getNumberFieldKey(RightItemsDefinitions[right.selectedRights[id]], id);
+                    const numberString = right.selectedRights[numberKey];
+                    const number = numberString ? toNumber(numberString): null;
+                    
+                    if (!number || !isFinite(number) || number < 0) {
                         response = false;
                     }
                 }
