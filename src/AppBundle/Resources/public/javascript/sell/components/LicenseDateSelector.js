@@ -44,6 +44,7 @@ class LicenseDateSelector extends React.Component {
     render(){
         const { onClose } = this.props;
         const { startDate, endDate, endDateLimit, startDateMode, endDateMode } = this.state;
+        const saveButtonTooltip = this.context.t(this.getSaveButtonTooltip());
 
         return (
             <Modal
@@ -54,7 +55,7 @@ class LicenseDateSelector extends React.Component {
 
                 <div className="modal-title">
                     {this.context.t("Edit license period")}
-                    <i className="fa fa-times-circle-o" onClick={onClose}/>
+                    <i className="fa fa-times-circle-o close-icon" onClick={onClose}/>
                 </div>
 
                 <div className="step-content step-content-custom">
@@ -130,6 +131,7 @@ class LicenseDateSelector extends React.Component {
                                     />
                                     <DatePicker
                                         className={"date-picker"}
+                                        minDate={(startDateMode === "DATE" && startDate) ? moment(startDate) : moment()}
                                         selected={(endDate)? moment(endDate): undefined}
                                         disabled={endDateMode!=="DATE"}
                                         onChange={this.handleEndDate}
@@ -156,6 +158,8 @@ class LicenseDateSelector extends React.Component {
 
                 <div className={"buttons"}>
                     <button
+                        title={saveButtonTooltip}
+                        disabled={!!saveButtonTooltip}
                         className={"standard-button"}
                         onClick={this.onOKClick}>
                         {this.context.t("Ok")}
@@ -164,6 +168,26 @@ class LicenseDateSelector extends React.Component {
 
             </Modal>
         )
+    }
+
+    getSaveButtonTooltip() {
+        const { startDate, endDate, endDateLimit, startDateMode, endDateMode } = this.state;
+
+        if (startDateMode === 'DATE' && (!startDate || !moment(startDate).isValid())) {
+            return 'Please specify correct date for Start of license period';
+        }
+
+        if (endDateMode === 'DATE' && ((!endDate || !moment(endDate).isValid()) || endDate.isBefore(startDate)) ) {
+            return 'Please specify correct date for End of license period';
+        }
+
+        if (endDateMode === 'LIMITED' && (!endDateLimit || isNaN(endDateLimit) || endDateLimit < 1) ) {
+            return 'Please specify correct days limit for End of license period';
+        }
+
+        if (!endDateMode) {
+            return 'Please specify End of license period';
+        }
     }
 
     onOKClick = () => {
