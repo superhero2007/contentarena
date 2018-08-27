@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 import cloneDeep from 'lodash/cloneDeep';
+import toNumber from 'lodash/toNumber';
+import isFinite from 'lodash/isFinite';
 import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
@@ -470,12 +472,11 @@ class PopupRight extends React.Component {
             </div>
 
             <div className={"buttons"}>
-                {this.showOkButton() && <button
+                <button
+                    disabled={!this.showOkButton()}
                     className={"standard-button"}
-                    onClick={this.onOKClicked}>Ok</button>}
-                {!this.showOkButton() && <button
-                    className={"standard-button"}
-                    disabled>Ok</button>}
+                    onClick={this.onOKClicked}>Ok
+                </button>
             </div>
 
         </Modal>
@@ -523,6 +524,19 @@ class PopupRight extends React.Component {
                     RightItemsDefinitions[right.selectedRights[id]].textField ){
                     if  ( !right.selectedRights[id+ '_TEXT']
                         || right.selectedRights[id+ '_TEXT'].length === 0 ) {
+                        response = false;
+                    }
+                }
+            });
+
+            rightsPackage.forEach(right => {
+                if(RightItemsDefinitions[right.selectedRights[id]] &&
+                    RightItemsDefinitions[right.selectedRights[id]].numberField ){
+                    const numberKey = this.getNumberFieldKey(RightItemsDefinitions[right.selectedRights[id]], id);
+                    const numberString = right.selectedRights[numberKey];
+                    const number = numberString ? toNumber(numberString): null;
+                    
+                    if (!number || !isFinite(number) || number < 0) {
                         response = false;
                     }
                 }
