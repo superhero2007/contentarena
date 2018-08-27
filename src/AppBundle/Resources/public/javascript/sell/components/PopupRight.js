@@ -287,8 +287,8 @@ class PopupRight extends React.Component {
                             className="text-field"
                             style={numberFieldStyle}
                             type="number"
-                            onChange={(e) => { this.updateSelection(e.target.value,id + "_NUMBER",rightPackage)}}
-                            value={rightPackage.selectedRights[id + "_NUMBER"]}
+                            onChange={(e) => { this.updateSelection(e.target.value, this.getNumberFieldKey(RightItemsDefinitions[option], id),rightPackage)}}
+                            value={rightPackage.selectedRights[this.getNumberFieldKey(RightItemsDefinitions[option], id)]}
                             min={0}/>
                     }
                     {RightItemsDefinitions[option].bigTextField && <textarea style={{minHeight: "50px", margin: "5px 0px"}}/>}
@@ -296,6 +296,10 @@ class PopupRight extends React.Component {
             })}
         </div>
     };
+
+    getNumberFieldKey(rightItemDefinition, id) {
+        return rightItemDefinition.numberFieldValue || (id + "_NUMBER");
+    }
 
     renderModal = () => {
         const {
@@ -389,8 +393,8 @@ class PopupRight extends React.Component {
                                             className="text-field"
                                             style={numberFieldStyle}
                                             type="number"
-                                            onChange={(e) => { this.updateSelection(e.target.value, customId+ "_NUMBER",rightsPackage[0])} }
-                                            value={rightsPackage[0].selectedRights[customId+ "_NUMBER"]}
+                                            onChange={(e) => { this.updateSelection(e.target.value, this.getNumberFieldKey(definition, customId),rightsPackage[0])} }
+                                            value={rightsPackage[0].selectedRights[this.getNumberFieldKey(definition, customId)]}
                                             min={0}/>
                                     }
                                 </div>
