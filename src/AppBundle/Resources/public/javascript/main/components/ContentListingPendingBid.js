@@ -30,6 +30,7 @@ class ContentListingPendingBid extends ContentListing {
             rightsPackage,
             imageBase64,
             image,
+            declined,
             id,
             company,
             customId,
@@ -126,21 +127,34 @@ class ContentListingPendingBid extends ContentListing {
                                             marginRight: 5,
                                             cursor: 'pointer'
                                         }}
-                                        onMouseOver={() => {this.setState({showEdited : true})}}
-                                        onMouseLeave={() => {this.setState({showEdited : false})}} />}
-                                <a className="standard-button" style={{
+                                        onMouseOver={() => {
+                                            this.setState({showEdited: true})
+                                        }}
+                                        onMouseLeave={() => {
+                                            this.setState({showEdited: false})
+                                        }}/>}
+
+                                { (!declined || (declined && bid.status.name === "REJECTED" ))
+                                && <a className="standard-button" style={{
                                     height: 36,
                                     fontSize: 16,
                                     marginBottom: 10
-                                }} href={envhosturl+ "listing/" +customId+"/checkout/" + bid.salesPackage.id}>Increase bid</a>
+                                }} href={envhosturl + "listing/" + customId + "/checkout/" + bid.salesPackage.id}>Increase
+                                    bid</a>}
+
+
                                 {bid.message && bid.message !== ""
                                 && <img src={blueEnvelopeIcon}
                                         style={{
                                             marginLeft: 5,
                                             cursor: 'pointer'
                                         }}
-                                        onMouseOver={() => {this.setState({showMessage : true})}}
-                                        onMouseLeave={() => {this.setState({showMessage : false})}}/>}
+                                        onMouseOver={() => {
+                                            this.setState({showMessage: true})
+                                        }}
+                                        onMouseLeave={() => {
+                                            this.setState({showMessage: false})
+                                        }}/>}
 
                                 {/*MESSAGE*/}
                                 {showMessage && <div className="status-tooltip">

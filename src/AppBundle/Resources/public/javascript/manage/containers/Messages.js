@@ -19,10 +19,15 @@ class Messages extends React.Component {
     }
 
     componentDidMount () {
+
         this.setState({
             loadingThreads :true
         });
+
+
         ContentArena.ContentApi.getThreads().done(r=>{
+
+            let selectedThread;
 
             r.sort((a, b) => {
                 let aDate = Moment(a.lastMessageDate);
@@ -30,21 +35,27 @@ class Messages extends React.Component {
                 return (aDate > bDate) ? 1 : ((bDate > a.bDate) ? -1 : 0)
             }).reverse();
 
+            if (this.props.match.params.customId){
+                selectedThread = r.filter(t=>t.customId === this.props.match.params.customId)[0];
+            } else if (r.length > 0) {
+                selectedThread =  r[0] ;
+            }
+
+
             this.setState({
                 threads : r,
-                selectedThread : (this.state.selectedThread) ? this.state.selectedThread : (r.length > 0) ? r[0] : null,
+                selectedThread : selectedThread,
                 loadingThreads :false
             });
             this.updateMessages();
         });
     }
 
-    selectThread = (thread) => {
-        this.setState({
-            selectedThread :thread
-        });
+    selectThread = (selectedThread) => {
+        const {history} = this.props;
 
-        this.updateMessages(thread);
+        history.push("/messages/" + selectedThread.customId);
+
     };
 
     updateMessages = (thread) => {

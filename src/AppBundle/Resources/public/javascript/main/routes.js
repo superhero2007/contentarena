@@ -76,7 +76,8 @@ export const routes = [
     {
         path: "/messages/:customId?",
         header: HeaderBar,
-        main: Messages
+        main: Messages,
+        updateByPath : true
     },
     {
         path: "/managelistings",

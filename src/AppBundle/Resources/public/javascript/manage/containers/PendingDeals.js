@@ -102,6 +102,7 @@ class PendingDeals extends React.Component {
                     tab === "declinedbids" && declinedBids.length > 0 && declinedBids.map((bid, i) => {
                         return <ContentListingPendingBid
                             onSelect={this.selectListing}
+                            declined={true}
                             onDelete={this.deleteBid}
                             key={i + "-" + bid.content.customId}
                             bid={bid}

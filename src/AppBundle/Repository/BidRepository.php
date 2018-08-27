@@ -33,6 +33,29 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getRejectedBids($user){
+        $now = date('Y-m-d H:i:s');
+        $query = $this->createQueryBuilder('b')
+            ->orderBy("b.updatedAt", "DESC")
+            ->join('b.content', 'c')
+            ->join('b.salesPackage', 'bundle')
+            ->join('b.status', 'status')
+            ->join('b.type', 'type')
+            ->where('b.buyerUser = :user')
+            ->andWhere('status.name = :rejected or :now > c.expiresAt or bundle.sold = :isSold')
+            ->andWhere('type.name = :type')
+            ->andWhere('status.name != :approved')
+            ->setParameter('now',$now)
+            ->setParameter('rejected', 'REJECTED')
+            ->setParameter('approved', 'APPROVED')
+            ->setParameter('type', 'BIDDING')
+            ->setParameter('user', $user)
+            ->setParameter('isSold', true)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getPendingBidsByContent($content){
         $query = $this->createQueryBuilder('b')
             ->join('b.status', 'status')
@@ -63,23 +86,6 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy("b.createdAt", "DESC")
             ->where('b.salesPackage = :salesBundle')
             ->setParameter('salesBundle', $salesBundle)
-            ->getQuery();
-
-        return $query->getResult();
-    }
-
-    public function getRejectedBids($user){
-        $query = $this->createQueryBuilder('b')
-            ->orderBy("b.updatedAt", "DESC")
-            ->join('b.content', 'c')
-            ->join('b.status', 'status')
-            ->join('b.type', 'type')
-            ->where('b.buyerUser = :user')
-            ->andWhere('status.name = :rejected')
-            ->andWhere('type.name = :type')
-            ->setParameter('rejected', 'REJECTED')
-            ->setParameter('type', 'BIDDING')
-            ->setParameter('user', $user)
             ->getQuery();
 
         return $query->getResult();
