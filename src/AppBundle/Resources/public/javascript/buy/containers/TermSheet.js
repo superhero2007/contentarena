@@ -36,7 +36,7 @@ class TermSheet extends React.Component {
     renderList = (definitions, checkContentDelivery) => {
         const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
         if (checkContentDelivery) {
-            definitions = this.getFilteredByDelivery(definitions, rightsPackage)
+            definitions = this.getFilteredByDelivery(definitions, rightsPackage);
         }
         return definitions.map( (right, i) => {
 
@@ -51,13 +51,6 @@ class TermSheet extends React.Component {
                 <div className="right-name right-definition">{right.name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
-                        if ( checkContentDelivery && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
-
-                        if ( checkContentDelivery &&
-                            rp.shortLabel === "PR"
-                            && right.key !== 'TECHNICAL_DELIVERY' ) return <div className="right-definition">
-                            {/*-*/}
-                        </div>;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
@@ -105,10 +98,13 @@ class TermSheet extends React.Component {
     };
 
     getFilteredByDelivery = (definitions, rightsPackage) => {
-        //filter definitions by user chosen rightPackage which is not CONTENT_DELIVERY_NON_DEDICATED
+        //filter definitions by user chosen rightPackage
         return definitions.filter(d => {
             if (d.checkDelivery) {
-                return rightsPackage.some(p => p.selectedRights['CONTENT_DELIVERY'] !== "CONTENT_DELIVERY_NON_DEDICATED")
+                return rightsPackage.some(p =>
+                    !(p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_NON_DEDICATED" ||
+                        p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY')
+                )
             } else {
                 return true
             }
