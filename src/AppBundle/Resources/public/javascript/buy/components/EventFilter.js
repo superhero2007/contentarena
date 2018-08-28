@@ -16,7 +16,7 @@ class EventFilter extends React.Component {
     }
 
     componentDidMount () {
-        if ( ContentArena.Data.Countries.length === 0) {
+        if ( ContentArena.Data.ActiveSports.length === 0) {
             ContentArena.Api.getActiveSports().done( (sports ) => {
                 ContentArena.Data.ActiveSports = sports;
                 this.setState({sports});
