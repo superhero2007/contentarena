@@ -76,7 +76,7 @@ class ContentListing extends React.Component{
         const { filter } = this.props;
 
         let temp = [] ;
-        let territories = filter.countries.map(c => c.value);
+        let territories = filter.countries.map(c => c);
 
         salesPackages.forEach((e,i,l)=>{
 

@@ -12,14 +12,9 @@ class CountrySelector extends React.Component {
 
     componentDidMount () {
         let _this = this;
-        if ( ContentArena.Data.Countries.length === 0) {
-            ContentArena.Api.getCountries().done( (countries ) => {
-                ContentArena.Data.Countries = countries;
-                _this.setState({countries});
-            });
-        } else {
-            _this.setState({countries: ContentArena.Data.Countries});
-        }
+        ContentArena.Api.getCountries().done( (countries ) => {
+            _this.setState({countries});
+        });
     }
 
     getOptions = () => {
@@ -43,7 +38,7 @@ class CountrySelector extends React.Component {
                 onChange={onChange}
                 placeholder={disabled ? 'Disabled' : 'Select...'}
                 disabled={disabled}
-                value={multi && value && value.length > 200 ? [] : value}
+                value={value}
                 multi={multi}
                 options={this.getOptions()}
             />

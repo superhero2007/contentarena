@@ -19,15 +19,15 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "General content"
-msgstr ""
+msgstr "General Content"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
 msgid "Multiple rounds"
-msgstr ""
+msgstr "Multiple Rounds"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Program: "
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Edited Program"
 msgstr ""
 
 # asd
@@ -62,7 +62,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
 msgid "PROGRAMS DESCRIPTION"
-msgstr ""
+msgstr "PROGRAM DESCRIPTION"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "Season :"
@@ -80,14 +80,36 @@ msgstr ""
 msgid "ATTACHMENTS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "No attachments available"
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Congratulations!"
 msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "You have successfully acquired the package!"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Your bid was placed successfully!"
+msgstr "Your bid was placed successfully!"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "View Closed Deals"
+msgstr "View Closed Deals"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "View Bids"
+msgstr "View Bids"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#, fuzzy
+#| msgid "Marketplace"
+msgid "Return to Marketplace"
+msgstr "Marketplace"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "Start of license period"
-msgstr ""
+msgstr "Start of License Period"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid " With contract conclusion"
@@ -96,7 +118,7 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "End of license period"
-msgstr ""
+msgstr "End of License Period"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid " days from contract conclusion"
@@ -108,7 +130,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Publishing date"
-msgstr ""
+msgstr "Publishing Date"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Expiry"
@@ -119,20 +141,20 @@ msgid "Contact Seller"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Added to watchlist"
+msgstr "Added to watchlist"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Watchlist"
 msgstr "Watchlist"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Program & Sales Bundles"
-msgstr ""
+msgstr "Event & Commercial Terms"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Grant of Rights & Production"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Edited Program"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -146,21 +168,19 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Commercial information"
-msgstr "Commercial information"
+msgstr "Commercial Information"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "License fee:"
-msgstr ""
+msgstr "License Fee:"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Logout"
-msgstr "Logout"
+msgid "Bid:"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "The bid must exceed current minimum"
-msgstr ""
+msgstr "The bid must exceed minimum bid"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Raise"
@@ -168,7 +188,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Technical fee:"
-msgstr ""
+msgstr "Technical Fee:"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Total:"
@@ -177,59 +197,64 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Payment details"
-msgstr ""
+msgstr "Payment Details"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "installment"
-msgstr ""
+msgstr "installment"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid " days after contract closure"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company address"
-msgstr ""
+msgstr "Company Address"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "License agreement"
-msgstr ""
+msgstr "License Agreement"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Accept terms conditions"
 msgstr ""
+"Check here to indicate that you have read and agree to the terms of Content "
+"Arena Pte. Ltd. "
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Buy"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Place Bid"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
 msgid "Sorry, no results. Try changing the filter settings!"
 msgstr ""
+"There are no results for your search. Change the filter settings and try "
+"again!"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "Program type"
-msgstr ""
+msgstr "Edited Program Type"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Number of episodes"
-msgstr ""
+msgstr "Number of Episodes"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "Average episode duration (min)"
-msgstr ""
+msgstr "Average Episode Duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "Year of program release"
-msgstr ""
+msgstr "Year of Program Release"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "Description"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "Information not available"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
@@ -247,7 +272,7 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Legal name"
-msgstr ""
+msgstr "Legal Company Name"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
@@ -272,13 +297,13 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "Company registration number"
-msgstr ""
+msgstr "Company Registration Number"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "VAT ID number"
-msgstr ""
+msgstr "VAT ID Number"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "DESCRIPTION"
@@ -290,12 +315,16 @@ msgid "Grant of Rights"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "Amendment(s) to the Grant of Rights / Special Conditions"
+msgid " Rights"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "Amendment(s) to the Grant of Rights / Special Conditions"
+msgstr "Amendment(s) to the Grant of Rights"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "Production details"
-msgstr ""
+msgstr "Production Details"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "Technical Fee Details"
@@ -303,11 +332,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "Amendment(s) to the Content Delivery / Special Conditions"
-msgstr ""
+msgstr "Amendment(s) to the Content Delivery"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "Yes"
 msgstr ""
 
@@ -315,27 +343,27 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "closed deal"
 msgid_plural "closed deals"
-msgstr[0] "{n} closed deal"
-msgstr[1] "{n} closed deals"
+msgstr[0] "{n} Closed Deal"
+msgstr[1] "{n} Closed Deals"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "open bid"
 msgid_plural "open bids"
-msgstr[0] "{n} open bid"
-msgstr[1] "{n} open bids"
+msgstr[0] "{n} Open Bid"
+msgstr[1] "{n} Open Bids"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "Buyer"
-msgstr ""
+msgstr "Buyer Company"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "Fee"
-msgstr ""
+msgstr "License Fee / Bid"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "User"
-msgstr ""
+msgstr "Buyer User"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "Action"
@@ -343,19 +371,22 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "Action date"
-msgstr ""
+msgstr "Date of Action"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "Are you sure you want to remove this bid?"
-msgstr ""
+msgstr "Are you sure that you want to remove this bid?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Remove"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
@@ -364,11 +395,23 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 msgid "Remove from Watchlist?"
-msgstr ""
+msgstr "Are you sure that you want to remove this listing from your Watchlist?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Commercial Activity Total - {n}"
-msgstr "Total: {n} "
+msgstr "Total: {n}"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Increase bid"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Listing edited after last bid. Please review term sheet."
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Placed by:"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "Digital Signature"
@@ -376,11 +419,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "Done"
-msgstr ""
+msgstr "Save Signature"
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "New Signature"
-msgstr ""
+msgstr "Create New Signature"
 
 #: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
 msgid "Upload"
@@ -391,21 +434,22 @@ msgid "Marketplace"
 msgstr "Marketplace"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "Bids"
 msgstr "Bids"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "Closed deals"
-msgstr "Closed deals"
+msgstr "Closed Deals"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Manage listings"
-msgstr "Manage listings"
+msgstr "Manage Listings"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Commercial activity"
-msgstr "Commercial activity"
+msgstr "Commercial Activity"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Create Listing"
@@ -413,11 +457,11 @@ msgstr "Create Listing"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Enter selling mode"
-msgstr "Enter selling mode"
+msgstr "Enter Selling Mode"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Enter buying mode"
-msgstr "Enter buying mode"
+msgstr "Enter Buying Mode"
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Messages"
@@ -426,6 +470,10 @@ msgstr "Messages"
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Settings"
 msgstr "Settings"
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "Logout"
+msgstr "Logout"
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
 msgid "Year"
@@ -439,9 +487,23 @@ msgstr ""
 msgid "Not applicable"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
+msgid "Country Selector"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
+msgid "List offers for at least one selected territory"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
+msgid "List offers for all selected territories"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Do you want to list competition-based content"
 msgstr ""
+"Do you want to list content that is based upon a competition? Enter the "
+"competition name in the field below"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
@@ -453,6 +515,7 @@ msgid "Enter competition name (e.g. Bundesliga)"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Country/Category"
 msgstr ""
 
@@ -466,17 +529,19 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Your search \"{n}\" did not match any products."
-msgstr "Your search \"{n}\" did not match any products."
+msgstr "There are no results for your search “{n}”"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid ""
 "Did you not find your competition in the database or not selling a "
 "competition"
 msgstr ""
+"Did you not find your competition in the database or are you not selling a "
+"competition?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Can't find your competition in our list?"
-msgstr ""
+msgstr "Can’t find your competition?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Try another search or enter content manually"
@@ -484,7 +549,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Enter content manually"
-msgstr ""
+msgstr "Enter Content Manually"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "Fixture"
@@ -500,11 +565,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid " Add season"
-msgstr ""
+msgstr " Add season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "Click here to add fixtures"
-msgstr ""
+msgstr "Add fixtures"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Popular"
@@ -520,7 +585,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Add new Sport"
-msgstr ""
+msgstr "Add new sport"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Can't find your competition in the list"
@@ -528,7 +593,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Add new Tournament"
-msgstr ""
+msgstr "Add new tournament"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Can't find your season in the list?"
@@ -536,7 +601,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Add new Season"
-msgstr ""
+msgstr "Add new season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Can't find your country in the list?"
@@ -552,7 +617,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Add new Category"
-msgstr ""
+msgstr "Add new category"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
 msgid "Contact"
@@ -590,12 +655,16 @@ msgid "View"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Archive"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Deactivate"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Last action: "
-msgstr ""
+msgstr "Last Action: "
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Listing Owner: "
@@ -603,11 +672,15 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Are you sure you want to deactivate the listing?"
-msgstr ""
+msgstr "Are you sure that you want to deactivate this listing?"
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Remove-listing-confirmation"
-msgstr "Are you sure you want to remove the listing"
+msgstr "Are you sure that you want to remove the listing"
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Are you sure you want to archive this listing?"
+msgstr "Are you sure you want to archive this listing?"
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Season: Multiple seasons"
@@ -618,22 +691,26 @@ msgid "Season: "
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Program: "
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Expiry:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 #: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js
 msgid "Listing name"
-msgstr ""
+msgstr "Listing Name"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "Seller"
-msgstr ""
+msgstr "Seller Company"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Territories"
-msgstr ""
+msgstr "Included Territories"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
@@ -642,11 +719,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "Price"
-msgstr ""
+msgstr "Price"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "Date of sale"
-msgstr ""
+msgstr "Date of Sale"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "Buyer name"
@@ -659,25 +736,24 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "You don't have closed deal yet"
 msgstr ""
+"You did not close any deals yet. Enter the Marketplace find the content you "
+"like."
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "All bundles"
-msgstr ""
+msgstr "All Sales Bundles"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "With activity"
-msgstr "With activity"
+msgstr "With Activity"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-#, fuzzy
-#| msgid "open bid"
-#| msgid_plural "open bids"
-msgid "Open Bids"
-msgstr "{n} open bid"
+msgid "Open"
+msgstr "Open"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "You have no offers yet"
-msgstr ""
+msgstr "There are no open bids at the moment"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "Draft"
@@ -685,23 +761,23 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "Inactive listings"
-msgstr "Inactive listings"
+msgstr "Inactive Listings"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "Active listings"
-msgstr "Active listings"
+msgstr "Active Listings"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "Expired & sold listings"
-msgstr ""
+msgstr "Expired & Sold Listings"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "No threads yet"
-msgstr ""
+msgstr "There are no messages yet."
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "Write a message"
-msgstr ""
+msgstr "Enter new message"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "No thread selected"
@@ -717,21 +793,21 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
 msgid "You haven't made any bids yet!"
-msgstr ""
+msgstr "There are no active bids at the moment!"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
 msgid "You haven't any declined bids yet!"
-msgstr ""
+msgstr "There are no declined bids at the moment!"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Company information"
-msgstr ""
+msgstr "Company Information"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 #: src/AppBundle/Resources/public/javascript/sell/components/Definition.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "Save"
-msgstr ""
+msgstr "Save Changes"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Legal Company Name"
@@ -752,7 +828,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Company description"
-msgstr ""
+msgstr "Company Description Text"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Familiy Name"
@@ -776,7 +852,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Personal information"
-msgstr ""
+msgstr "Personal Information"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Last Name"
@@ -788,11 +864,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Email address"
-msgstr ""
+msgstr "Email Address"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Phone number"
-msgstr ""
+msgstr "Phone Number"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Change Password"
@@ -816,11 +892,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Save password"
-msgstr ""
+msgstr "Save Password"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "Password updated successfully"
-msgstr ""
+msgstr "Your password was updated successfully"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "At least 8 characters long"
@@ -852,14 +928,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
 msgid "Add further comments"
-msgstr ""
+msgstr "Create an amendment. This will be included in the license agreement."
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company Information"
@@ -867,7 +943,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Registration number"
-msgstr ""
+msgstr "Company Registration Number"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CurrencySelector.js
 msgid "Currency"
@@ -875,11 +951,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
 msgid "Listing expiry"
-msgstr ""
+msgstr "Listing Expiry Date"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
 msgid "Place of jurisdiction"
-msgstr ""
+msgstr "Place of Jurisdiction"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "Edit license period"
@@ -900,11 +976,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Sales method"
-msgstr ""
+msgstr "Sales Method"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Fixed fee"
-msgstr ""
+msgstr "Fixed Fee"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Bidding"
@@ -916,11 +992,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "the total instalment percentage must accumulate to 100%"
-msgstr ""
+msgstr "the total installment percentage must equal 100%"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "Sales bundles"
-msgstr ""
+msgstr "Sales Bundles"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "Remove all"
@@ -942,7 +1018,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "Exclusive"
-msgstr ""
+msgstr "Offer exclusively"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "Review & Sign"
@@ -961,12 +1037,16 @@ msgid ""
 "I confirm that I have verified the terms stated above. They are correct and "
 "ready to be published."
 msgstr ""
+"Check here to indicate that the listing configurations made are correct and "
+"ready to be published."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid ""
 "I confirm that I have verified the terms and conditions that have been "
 "outlined by Content Arena Pte. Ltd."
 msgstr ""
+"Check here to indicate that you have read and agree to the terms of Content "
+"Arena Pte. Ltd."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "Submit Listing"
@@ -982,7 +1062,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Start over"
-msgstr ""
+msgstr "Start Over"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid ""
@@ -992,7 +1072,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Your content covers multiple sports?"
-msgstr ""
+msgstr "Does your content cover multiple sports?"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "e.g. Germany"
@@ -1004,7 +1084,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Additional information"
-msgstr ""
+msgstr "Additional Information (optional)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Website"
@@ -1019,6 +1099,9 @@ msgid ""
 "Which program do you wish to license? This may include events and/or "
 "produced content. All rights, selected later on, will refer to this."
 msgstr ""
+"Which program do you wish to license? This may include events and/or "
+"produced content. The rights, which are selected below, will refer to this "
+"in the license agreement."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid ""
@@ -1031,19 +1114,19 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Enter program name"
-msgstr ""
+msgstr "Edited Program Name"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Average episode duration in minutes"
-msgstr ""
+msgstr "Average Episode Duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Enter program type"
-msgstr ""
+msgstr "Program Type"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Release year (optional)"
-msgstr ""
+msgstr "Release Year (optional)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Edited Program Description (optional)"
@@ -1051,11 +1134,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Program details"
-msgstr ""
+msgstr "Program Details"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Program language"
-msgstr ""
+msgstr "Program Language"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Subtitles (if available)"
@@ -1079,18 +1162,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Configure Production Standards"
-msgstr ""
+msgstr "Production Standards"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "Further information"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "do you seek to apply VAT to buyers in company’s place of jurisdiction?"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "No"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
@@ -1099,17 +1174,17 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "Listing details"
-msgstr ""
+msgstr "Listing Details"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid ""
 "Please define listing details below. This determines how your listing is "
 "shown to potential buyers."
-msgstr ""
+msgstr "Configure the details of your listing below."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "Listing image (opt.)"
-msgstr ""
+msgstr "Listing Image"
 
 #~ msgid "Commercial Activity closed deals"
 #~ msgstr "{n} closed deals"

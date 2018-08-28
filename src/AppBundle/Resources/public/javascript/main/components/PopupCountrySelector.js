@@ -11,12 +11,10 @@ class PopupCountrySelector extends React.Component {
         super(props);
         this.state = {
             isOpen : false,
-            selectedOption : 'single'
+            selectedOption : props.includeAllCountries ? 'multiple' : 'single'
         };
     }
 
-    componentDidMount () {
-    }
 
     openModal = () => {
         this.setState({isOpen:true});
@@ -57,7 +55,7 @@ class PopupCountrySelector extends React.Component {
             </div>
 
             <div className="step-content">
-                <RegionCountrySelector value={value} ref="selector"/>
+                <RegionCountrySelector value={value} ref="selector" worldwide={true} />
             </div>
 
             <div style={{

@@ -192,10 +192,11 @@ class ManageListings extends React.Component {
                                     style={{
                                         zIndex : list.length - i
                                     }}
-                                    showEdit={listing.editable}
-                                    showRemove={listing.editable}
-                                    showDeactivate={listing.editable}
+                                    showEdit={!listing.hasPendingBids}
+                                    showRemove={!listing.hasActivity}
+                                    showDeactivate={!listing.hasPendingBids}
                                     showDuplicate={true}
+                                    showArchive={!listing.hasPendingBids && listing.hasActivity}
                                     showView={true}
                                     defaultAction={"VIEW"}
                                     onDeactivate={()=>{
@@ -207,6 +208,11 @@ class ManageListings extends React.Component {
                                         list.splice(i,1);
                                         this.setState({active: list});
                                         ContentArena.ContentApi.removeListing(listing.customId)
+                                    }}
+                                    onArchive={()=>{
+                                        list.splice(i,1);
+                                        this.setState({active: list});
+                                        ContentArena.ContentApi.archiveListing(listing.customId)
                                     }}
                                     onDuplicate={this.duplicate}
                                     {...listing}/>
@@ -227,13 +233,19 @@ class ManageListings extends React.Component {
                                     style={{
                                         zIndex : list.length - i
                                     }}
-                                    showRemove={listing.editable}
+                                    showRemove={!listing.hasActivity}
                                     showDuplicate={true}
+                                    showArchive={listing.hasActivity}
                                     showView={true}
                                     onRemove={()=>{
                                         list.splice(i,1);
                                         this.setState({expired: list});
                                         ContentArena.ContentApi.removeListing(listing.customId)
+                                    }}
+                                    onArchive={()=>{
+                                        list.splice(i,1);
+                                        this.setState({expired: list});
+                                        ContentArena.ContentApi.archiveListing(listing.customId)
                                     }}
                                     onDuplicate={this.duplicate}
                                     {...listing}/>

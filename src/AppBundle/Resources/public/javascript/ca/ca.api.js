@@ -104,28 +104,34 @@ ContentArena.Api= {
     getCountries () {
         let deferred = jQuery.Deferred();
         let _this = this;
-        $.ajax({
-            url: envhosturl + "api/search/countries/all",
-            type: "POST",
-            /**
-             * @param {array} response
-             */
-            success: function (response) {
-                response.sort(_this.sortByLabel);
-                response = response.map(c=>{
-                    c.regions = c.regions.map(r=>r.id);
-                    return c
 
-                });
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
-        });
+        if ( ContentArena.Data.Countries && ContentArena.Data.Countries.length > 0 ){
+            deferred.resolve(ContentArena.Data.Countries);
+        } else {
+            $.ajax({
+                url: envhosturl + "api/search/countries/all",
+                type: "POST",
+                /**
+                 * @param {array} response
+                 */
+                success: function (response) {
+                    response.sort(_this.sortByLabel);
+                    response = response.map(c=>{
+                        c.regions = c.regions.map(r=>r.id);
+                        return c
+
+                    });
+                    ContentArena.Data.Countries = response;
+                    deferred.resolve(response);
+                },
+                error : function (data, status) {
+                    deferred.reject({
+                        data: data,
+                        status: status
+                    });
+                }
+            });
+        }
 
         return deferred.promise();
     },

@@ -1,6 +1,12 @@
 @import "vars";
 
 .country-selector{
+  .Select-multi-value-wrapper {
+    outline: none;
+    display: inline-block;
+    overflow-y: auto;
+    max-height: 200px;
+  }
   .regions{
     display: flex;
     .region{

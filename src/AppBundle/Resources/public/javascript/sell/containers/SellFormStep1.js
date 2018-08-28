@@ -48,11 +48,8 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.FullSports = sports;
         });
 
-        if ( ContentArena.Data.Countries.length === 0) {
-            ContentArena.Api.getCountries().done( (countries ) => {
-                ContentArena.Data.Countries = countries;
-            });
-        }
+        ContentArena.Api.getCountries().done( (countries ) => {
+        });
     }
 
     loadCategories (sport) {
@@ -69,6 +66,8 @@ class SellFormStep1 extends React.Component {
     }
 
     loadTournaments (sport, category) {
+
+        if( sport.custom ) return;
 
         let sportId = sport.externalId;
         let categoryId = ( category ) ? category.externalId : null;
@@ -192,7 +191,8 @@ class SellFormStep1 extends React.Component {
 
         this.setState({
             sportCategories: sportCategories,
-            tournaments : tournaments
+            tournaments : tournaments,
+            seasons : seasons
         });
 
         if (sportCategories.length === 1 ) {
@@ -275,7 +275,13 @@ class SellFormStep1 extends React.Component {
     addSeason = () => {
         this.setState((prevState)=> ({
             seasonSelectors : [...prevState.seasonSelectors, 1]
-        }))
+        }));
+
+        if (this.state.seasons.length > 0 && this.state.seasons[0].custom ){
+            this.props.addNewSeason(this.state.seasonSelectors.length);
+        }
+
+
     };
 
     addSportSelector = () => {
@@ -412,6 +418,13 @@ class SellFormStep1 extends React.Component {
                 value: this.state.tournaments[0].name,
                 isCustom: this.state.tournaments[0].isCustom
             }
+        }
+
+        if ( this.state.seasons.length > 0 && this.props.seasons.length === 0) {
+            inputProps.seasons = [];
+            this.state.seasons.forEach(( season )=>{
+                inputProps.seasons.push({value: season.name,isCustom : season.custom})
+            });
         }
 
         if (  this.props.tournament.length > 0 ) {
@@ -668,9 +681,9 @@ const mapDispatchToProps = dispatch => {
             index : index,
             selectorType : "seasons",
         }),
-        addNewSeason : (index, clean) => dispatch({
+        addNewSeason : (index) => dispatch({
             type: 'ADD_NEW',
-            index : 0,
+            index : index,
             selectorType: "seasons",
             clean : []
         }),

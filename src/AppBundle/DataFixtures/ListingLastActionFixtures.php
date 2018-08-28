@@ -24,6 +24,7 @@ class ListingLastActionFixtures extends Fixture
             array('EDITED', 'Edited' ),
             array('DUPLICATED', 'Duplicated' ),
             array('DEACTIVATED', 'Deactivated' ),
+            array('ARCHIVED', 'Archived' ),
             array('Submitted', 'Submitted' ),
         );
 

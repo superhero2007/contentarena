@@ -4,6 +4,7 @@ export const filterTypes= {
     REMOVE_RIGHT : 'REMOVE_RIGHT',
     UPDATE_COUNTRIES : 'UPDATE_COUNTRIES',
     UPDATE_EXCLUSIVE : 'UPDATE_EXCLUSIVE',
+    UPDATE_INCLUDED_COUNTRIES : 'UPDATE_INCLUDED_COUNTRIES',
     UPDATE_SPORT : 'UPDATE_SPORT',
     UPDATE_EVENT : 'UPDATE_EVENT',
     CLEAR : 'CLEAR',
@@ -15,6 +16,7 @@ const defaultFilter = {
     rights: [],
     countries: [],
     exclusive : false,
+    includeAllCountries : false,
     sport: {
         value : null,
         label : "All sports"
@@ -27,6 +29,10 @@ const defaultFilter = {
 export const filter = (state = defaultFilter, action) => {
 
     switch (action.type) {
+        case filterTypes.UPDATE_INCLUDED_COUNTRIES:
+            return Object.assign({}, state, {
+                includeAllCountries: action.includeAllCountries
+            });
         case filterTypes.CLEAR:
             return Object.assign({}, state, defaultFilter);
         case filterTypes.CLEAR_UPDATE:

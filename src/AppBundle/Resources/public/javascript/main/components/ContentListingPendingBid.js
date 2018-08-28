@@ -6,6 +6,8 @@ import ContentListing from "./ContentListing";
 import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol} from "../actions/utils";
 import {blueEnvelopeIcon, bucketIcon, infoIcon} from "./Icons";
+import {PropTypes} from "prop-types";
+import DigitalSignature from "./DigitalSignature";
 
 class ContentListingPendingBid extends ContentListing {
     constructor(props){
@@ -134,13 +136,14 @@ class ContentListingPendingBid extends ContentListing {
                                             this.setState({showEdited: false})
                                         }}/>}
 
-                                { (!declined || (declined && bid.status.name === "REJECTED" ))
+                                { ( !declined || (declined && bid.status.name === "REJECTED" && !bid.salesPackage.sold ))
                                 && <a className="standard-button" style={{
                                     height: 36,
                                     fontSize: 16,
                                     marginBottom: 10
-                                }} href={envhosturl + "listing/" + customId + "/checkout/" + bid.salesPackage.id}>Increase
-                                    bid</a>}
+                                }} href={envhosturl + "listing/" + customId + "/checkout/" + bid.salesPackage.id}>
+                                    {this.context.t("Increase bid")}
+                                </a>}
 
 
                                 {bid.message && bid.message !== ""
@@ -166,7 +169,7 @@ class ContentListingPendingBid extends ContentListing {
                                 {/*EDITED TOOLTIP*/}
                                 {showEdited && <div className="status-tooltip">
                                     <div className={"option"}>
-                                        Listing edited after last bid. Please review term sheet.
+                                        {this.context.t("Listing edited after last bid. Please review term sheet.")}
                                     </div>
                                 </div>}
 
@@ -176,7 +179,9 @@ class ContentListingPendingBid extends ContentListing {
                                 fontWeight: 600,
                             }}>
                                 <div>
-                                    <span style={{fontWeight: 400,fontStyle: 'italic'}}>Placed by:</span>
+                                    <span style={{fontWeight: 400,fontStyle: 'italic'}}>
+                                        {this.context.t("Placed by:")}
+                                    </span>
                                     {" " +bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</div>
                             </div>
                             {bid.status.name === "REJECTED" && <div style={{
@@ -194,20 +199,20 @@ class ContentListingPendingBid extends ContentListing {
                             {/*CONFIRM REMOVE*/}
                             {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                 <div className={"confirmation-text"}>
-                                    Are you sure you want to remove this bid?
+                                    {this.context.t("Are you sure you want to remove this bid?")}
                                 </div>
                                 <button className={"button button-confirm"} onClick={(e)=>{
                                     this.setState({showRemoveConfirm: false});
                                     onDelete(bid.id);
                                     e.stopPropagation();
                                 }}>
-                                    Remove
+                                    {this.context.t("Remove")}
                                 </button>
                                 <button className={"button"} onClick={(e)=>{
                                     this.setState({showRemoveConfirm: false});
                                     e.stopPropagation();
                                 }}>
-                                    Cancel
+                                    {this.context.t("Cancel")}
                                 </button>
                             </div>}
                         </div>
@@ -218,5 +223,9 @@ class ContentListingPendingBid extends ContentListing {
         )
     }
 }
+
+ContentListingPendingBid.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default ContentListingPendingBid;

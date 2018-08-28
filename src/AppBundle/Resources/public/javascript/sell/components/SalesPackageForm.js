@@ -56,12 +56,9 @@ class SalesPackageForm extends React.Component {
     }
 
     componentDidMount() {
-        if ( this.state.countries.length === 0) {
-            ContentArena.Api.getCountries().done( (countries ) => {
-                ContentArena.Data.Countries = countries;
-                this.setState({countries})
-            });
-        }
+        ContentArena.Api.getCountries().done( (countries ) => {
+            this.setState({countries})
+        });
     }
 
     editSalesPackage = ( salesPackage, index ) => {

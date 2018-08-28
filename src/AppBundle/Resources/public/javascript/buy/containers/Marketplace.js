@@ -119,6 +119,7 @@ class Marketplace extends React.Component {
         }
         if ( filter.exclusive ) response.exclusive = filter.exclusive;
         if ( filter.event ) response.event = filter.event;
+        if ( filter.includeAllCountries ) response.includeAllCountries = filter.includeAllCountries;
 
         return response;
     };
@@ -139,6 +140,7 @@ class Marketplace extends React.Component {
         }
 
         if ( filter.exclusive ) response.exclusive = filter.exclusive;
+        if ( filter.includeAllCountries ) response.includeAllCountries = filter.includeAllCountries;
         if ( filter.event ) response.event = filter.event;
 
         return response;
@@ -193,7 +195,6 @@ class Marketplace extends React.Component {
         const {
             listings,
             loadingListing,
-            listingDetailsTab,
             loadingListingDetails,
             showDetails,
             content,

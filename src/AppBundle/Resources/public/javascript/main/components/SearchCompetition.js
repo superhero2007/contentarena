@@ -77,7 +77,7 @@ class SearchCompetition extends  React.Component {
         return(
             <div className="step-content-container">
                 <div className="step-item-description">
-                    {this.context.t("Do you want to list competition-based content")}?
+                    {this.context.t("Do you want to list competition-based content")}
                 </div>
                 <div className={"base-input"}>
                     <label>
@@ -129,7 +129,7 @@ class SearchCompetition extends  React.Component {
                     </div>}
 
                     {!this.state.searchDone &&<div className="step-item-description">
-                        {this.context.t("Did you not find your competition in the database or not selling a competition")}?
+                        {this.context.t("Did you not find your competition in the database or not selling a competition")}
                     </div>}
 
                     {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description">

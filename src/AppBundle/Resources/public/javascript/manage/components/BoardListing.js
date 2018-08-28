@@ -16,6 +16,7 @@ class BoardListing extends React.Component{
         this.state = {
             showOptions: false,
             showRemoveConfirm : false,
+            showArchiveConfirm : false,
             showDeactivateConfirm : false
         };
         this.clockIcon = assetsBaseDir + "app/images/clock.png";
@@ -93,11 +94,13 @@ class BoardListing extends React.Component{
             className,
             showEdit,
             showRemove,
+            showArchive,
             showSubmit,
             showDuplicate,
             showDeactivate,
             showView,
             onRemove,
+            onArchive,
             onDuplicate,
             onDeactivate,
             lastAction,
@@ -105,11 +108,13 @@ class BoardListing extends React.Component{
             lastActionUser,
             owner,
             status,
+            hasActivity,
+            hasPendingBids,
             onSubmit,
             style
         } = this.props;
 
-        const {showOptions, showRemoveConfirm, showDeactivateConfirm, showStatusInfo} = this.state;
+        const {showOptions, showRemoveConfirm, showDeactivateConfirm, showArchiveConfirm, showStatusInfo} = this.state;
 
         return (
             <div className={className} style={style} onClick={this.hideOptions}>
@@ -136,6 +141,12 @@ class BoardListing extends React.Component{
                     }}>
                         <img src={this.bucketIcon} />
                         {this.context.t("Remove")}
+                    </div>}
+                    {showArchive && <div className={"option"} onClick={()=>{
+                        this.setState({showArchiveConfirm: true});
+                    }}>
+                        <img src={this.bucketIcon} />
+                        {this.context.t("Archive")}
                     </div>}
                     {showDeactivate && <div className={"option"} onClick={()=>{
                         this.setState({showDeactivateConfirm: true});
@@ -173,7 +184,6 @@ class BoardListing extends React.Component{
                     </button>
                 </div>}
 
-
                 {/*CONFIRM REMOVE*/}
                 {showRemoveConfirm && <div className="confirmation-tooltip">
                     <div className={"confirmation-text"}>
@@ -194,6 +204,26 @@ class BoardListing extends React.Component{
                     </button>
                 </div>}
 
+                {/*CONFIRM ARCHIVE*/}
+                {showArchiveConfirm && <div className="confirmation-tooltip">
+                    <div className={"confirmation-text"}>
+                        {this.context.t("Are you sure you want to archive this listing?")}?
+                    </div>
+                    <button className={"button button-confirm"} onClick={(e)=>{
+                        this.setState({showArchiveConfirm: false});
+                        onArchive();
+                        e.stopPropagation();
+                    }}>
+                        {this.context.t("Archive")}
+                    </button>
+                    <button className={"button"} onClick={(e)=>{
+                        this.setState({showArchiveConfirm: false});
+                        e.stopPropagation();
+                    }}>
+                        {this.context.t("Cancel")}
+                    </button>
+                </div>}
+
                 {/*STATUS INFO*/}
                 {showStatusInfo && <div className="status-tooltip">
                     <div className={"option"}>
@@ -202,10 +232,11 @@ class BoardListing extends React.Component{
                         {status.name === 'REJECTED' && "Listing rejected. Please edit or contact support."}
                         {status.name === 'EXPIRED' && "This listing has expired."}
                         {status.name === 'SOLD_OUT' && "All sales bundle of this listing were sold."}
+                        {hasPendingBids && "There are open bids on this listing. You can view the bid via the Commercial Activity tab. Until the bid is processed, the edit, decline and remove functionality will be unavailable"}
                     </div>
                 </div>}
 
-                { (status.name !== 'DRAFT' && status.name !== 'APPROVED' && status.name !== 'EDITED' ) &&
+                { ((status.name !== 'DRAFT' && status.name !== 'EDITED' ) || hasPendingBids) &&
                 <div
                     className={"status-icon"}
                     onMouseOver={() => {this.setState({showStatusInfo : true})}}
@@ -215,7 +246,8 @@ class BoardListing extends React.Component{
                     {status.name === 'REJECTED' && <img src={exclamationRoundIcon} />}
                     {status.name === 'EXPIRED' && <img src={expiredIcon} />}
                     {status.name === 'SOLD_OUT' && <img src={soldIcon} />}
-                </div>}
+                    {hasPendingBids &&  <img src={exclamationRoundIcon} />}
+                        </div>}
 
                 <div  className="menu-icon" onClick={this.toggleOptions}>
                     <img src={this.dotsIcon} />

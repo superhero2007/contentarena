@@ -20,6 +20,11 @@ export const updateExclusive = exclusive => ({
     exclusive,
 });
 
+export const updateIncludedCountries = includeAllCountries => ({
+    type: filterTypes.UPDATE_INCLUDED_COUNTRIES,
+    includeAllCountries,
+});
+
 export const updateMany = filters => ({
     type: filterTypes.UPDATE_MANY,
     filters,

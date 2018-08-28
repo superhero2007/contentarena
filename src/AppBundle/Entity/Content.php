@@ -359,6 +359,19 @@ class Content
      */
     private $editable = true;
 
+    /**
+     * @var boolean;
+     * @Groups({"board"})
+     */
+    private $hasPendingBids = false;
+
+    /**
+     * @var boolean;
+     * @Groups({"board"})
+     */
+    private $hasActivity = false;
+
+
     public function __construct() {
         $this->rightsPackage = new ArrayCollection();
         $this->seasons = new ArrayCollection();
@@ -369,6 +382,42 @@ class Content
     {
         return $this->getName();
     }
+
+    /**
+     * @return bool
+     */
+    public function isHasActivity()
+    {
+        return $this->hasActivity;
+    }
+
+    /**
+     * @param bool $hasActivity
+     */
+    public function setHasActivity($hasActivity)
+    {
+        $this->hasActivity = $hasActivity;
+    }
+
+
+
+    /**
+     * @return bool
+     */
+    public function isHasPendingBids()
+    {
+        return $this->hasPendingBids;
+    }
+
+    /**
+     * @param bool $hasPendingBids
+     */
+    public function setHasPendingBids($hasPendingBids)
+    {
+        $this->hasPendingBids = $hasPendingBids;
+    }
+
+
 
     /**
      * Get id

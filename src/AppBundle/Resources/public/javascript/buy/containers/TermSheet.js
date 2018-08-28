@@ -143,7 +143,7 @@ class TermSheet extends React.Component {
 
     render() {
         const {selectedRightsBySuperRight, rightsPackage, PROGRAM_SCRIPT, PROGRAM_SUBTITLES, PROGRAM_LANGUAGE,
-            COMMENTS_RIGHTS, COMMENTS_PRODUCTION} = this.props;
+            COMMENTS_RIGHTS, COMMENTS_PRODUCTION, HL_INPUT, NA_INPUT} = this.props;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
 
         return (
@@ -173,7 +173,26 @@ class TermSheet extends React.Component {
                 <div>
                     { this.renderTextarea(RightDefinitions) }
                     { this.renderTextarea(ProductionStandardsDefinitions) }
+                </div>
 
+                <div>
+                    {
+                        rightsPackage.map((rp, i)=>{
+                            if (rp.shortLabel === "HL" && HL_INPUT) return <div className="term-sheet-full-item-box" key={'HL'}>
+                                <label>Transmission of Footage</label>
+                                <div  className="full-item-content">
+                                    Not exceeding {HL_INPUT} minutes not before the end of the relevant Event or the Time Embargo defined
+                                </div>
+                            </div>
+
+                            if (rp.shortLabel === "NA" && NA_INPUT) return <div className="term-sheet-full-item-box" key={'HL'}>
+                                <label>Transmission of Highlight footage</label>
+                                <div  className="full-item-content">
+                                    Not exceeding {NA_INPUT} seconds in news programs not before the end of the relevant Event or the Time Embargo defined
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
 
                 { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">
