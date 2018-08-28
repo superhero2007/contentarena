@@ -5,7 +5,6 @@ import SearchCompetition from '../../main/components/SearchCompetition'
 import SeasonSelector from '../../main/components/SeasonSelector'
 import TagsInput from 'react-tagsinput'
 import {stepChangeReset} from "../actions/contentActions";
-import debounce from 'lodash/debounce';
 
 import {
     Description,
@@ -149,7 +148,7 @@ class SellFormStep1 extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
-        let tournaments, seasons, sportCategories, websites, website, name = nextProps.name;
+        let tournaments, seasons, sportCategories, websites, name = nextProps.name;
 
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
         seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
@@ -336,14 +335,7 @@ class SellFormStep1 extends React.Component {
 
     handleWebsiteChange = website => {
         this.setState({website});
-        this.saveWebsite(website)
-    }
-
-    saveWebsite = debounce(website=>{
-        if (website.length > 2) {
-            return this.refs.tagsinput.accept()
-        }
-    },500)
+    };
 
     selectTournament = ( tournament ) =>{
         this.props.selectTournament(tournament);
