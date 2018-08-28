@@ -151,11 +151,13 @@ class ApiController extends BaseController
         $listings = $contentService->getActive($user);
 
         foreach ( $listings as $listing ) {
+            /* @var Content $listing*/
             $bids = $bidService->getAllBidsByContent($listing);
+            $pendingBid = $bidService->getPendingBidsByContent($listing);
 
-            if ( $bids != null ) $listing->setEditable(false);
+            if ( $pendingBid != null ) $listing->setHasPendingBids(true);
+            if ( $bids != null ) $listing->setHasActivity(true);
         }
-
 
         $context = SerializationContext::create()->setGroups(array('board'));
 
@@ -177,9 +179,10 @@ class ApiController extends BaseController
         $context = SerializationContext::create()->setGroups(array('board'));
 
         foreach ( $listings as $listing ) {
+            /* @var Content $listing*/
             $bids = $bidService->getAllBidsByContent($listing);
 
-            if ( $bids != null ) $listing->setEditable(false);
+            if ( $bids != null ) $listing->setHasActivity(true);
         }
 
         $data = $this->serialize($listings,$context);
@@ -213,6 +216,22 @@ class ApiController extends BaseController
 
         $user = $this->getUser();
         $listing = $contentService->deactivateListing($request->get('customId'), $user);
+        $context = SerializationContext::create()->setGroups(array('board'));
+        $data = array('success'=>true, 'listing' => $listing);
+        $serialized = $this->serialize($data,$context);
+        $response = new Response($serialized);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/listings/archive", name="apiListingsArchive")
+     */
+    public function apiListingsArchive(Request $request, ContentService $contentService){
+
+        $user = $this->getUser();
+        $listing = $contentService->archiveListing($request->get('customId'), $user);
         $context = SerializationContext::create()->setGroups(array('board'));
         $data = array('success'=>true, 'listing' => $listing);
         $serialized = $this->serialize($data,$context);

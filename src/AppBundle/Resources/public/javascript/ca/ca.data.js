@@ -22,6 +22,7 @@ ContentArena.Data.TopSports = [
 ];
 
 ContentArena.Data.FullSports = [];
+ContentArena.Data.ActiveSports = [];
 ContentArena.Data.Countries = [];
 ContentArena.Data.Territories = [];
 ContentArena.Data.Regions = [];

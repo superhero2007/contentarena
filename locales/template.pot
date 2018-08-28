@@ -12,8 +12,8 @@ msgid "Multiple rounds"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Program: "
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Edited Program"
 msgstr ""
 
 #. Marketplace - Title for event filters
@@ -65,8 +65,28 @@ msgstr ""
 msgid "ATTACHMENTS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "No attachments available"
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Congratulations!"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "You have successfully acquired the package!"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Your bid was placed successfully!"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "View Closed Deals"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "View Bids"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Return to Marketplace"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -104,6 +124,10 @@ msgid "Contact Seller"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Added to watchlist"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Watchlist"
 msgstr ""
@@ -114,10 +138,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Grant of Rights & Production"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Edited Program"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -187,6 +207,10 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Place Bid"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
 msgid "Sorry, no results. Try changing the filter settings!"
 msgstr ""
@@ -210,10 +234,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "Description"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "Information not available"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
@@ -274,6 +294,10 @@ msgid "Grant of Rights"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid " Rights"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "Amendment(s) to the Grant of Rights / Special Conditions"
 msgstr ""
 
@@ -291,7 +315,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "Yes"
 msgstr ""
 
@@ -330,16 +353,19 @@ msgid "Action date"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "Are you sure you want to remove this bid?"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Remove"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
@@ -352,6 +378,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Commercial Activity Total - {n}"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Increase bid"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Listing edited after last bid. Please review term sheet."
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Placed by:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -375,6 +413,7 @@ msgid "Marketplace"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "Bids"
 msgstr ""
 
@@ -427,6 +466,18 @@ msgstr ""
 msgid "Not applicable"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
+msgid "Country Selector"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
+msgid "List offers for at least one selected territory"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
+msgid "List offers for all selected territories"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Do you want to list competition-based content"
 msgstr ""
@@ -441,6 +492,7 @@ msgid "Enter competition name (e.g. Bundesliga)"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Country/Category"
 msgstr ""
 
@@ -576,6 +628,10 @@ msgid "View"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Archive"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Deactivate"
 msgstr ""
 
@@ -596,11 +652,19 @@ msgid "Remove-listing-confirmation"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Are you sure you want to archive this listing?"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Season: Multiple seasons"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Season: "
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "Program: "
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
@@ -655,7 +719,7 @@ msgid "With activity"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "Open Bids"
+msgid "Open"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
@@ -1051,14 +1115,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "Further information"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "do you seek to apply VAT to buyers in company’s place of jurisdiction?"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "No"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js

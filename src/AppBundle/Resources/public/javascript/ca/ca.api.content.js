@@ -536,6 +536,29 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    archiveListing( customId ) {
+        var deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/listings/archive",
+            type: "POST",
+            data: {
+                customId : customId,
+            },
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
 
     getClosedDeals (  ) {
         let deferred = jQuery.Deferred();

@@ -36,7 +36,7 @@ class TermSheet extends React.Component {
     renderList = (definitions, checkContentDelivery) => {
         const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
         if (checkContentDelivery) {
-            definitions = this.getFilteredByDelivery(definitions, rightsPackage)
+            definitions = this.getFilteredByDelivery(definitions, rightsPackage);
         }
         return definitions.map( (right, i) => {
 
@@ -51,13 +51,6 @@ class TermSheet extends React.Component {
                 <div className="right-name right-definition">{right.name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
-                        if ( checkContentDelivery && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
-
-                        if ( checkContentDelivery &&
-                            rp.shortLabel === "PR"
-                            && right.key !== 'TECHNICAL_DELIVERY' ) return <div className="right-definition">
-                            {/*-*/}
-                        </div>;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
@@ -105,10 +98,13 @@ class TermSheet extends React.Component {
     };
 
     getFilteredByDelivery = (definitions, rightsPackage) => {
-        //filter definitions by user chosen rightPackage which is not CONTENT_DELIVERY_NON_DEDICATED
+        //filter definitions by user chosen rightPackage
         return definitions.filter(d => {
             if (d.checkDelivery) {
-                return rightsPackage.some(p => p.selectedRights['CONTENT_DELIVERY'] !== "CONTENT_DELIVERY_NON_DEDICATED")
+                return rightsPackage.some(p =>
+                    !(p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_NON_DEDICATED" ||
+                        p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY')
+                )
             } else {
                 return true
             }
@@ -147,7 +143,7 @@ class TermSheet extends React.Component {
 
     render() {
         const {selectedRightsBySuperRight, rightsPackage, PROGRAM_SCRIPT, PROGRAM_SUBTITLES, PROGRAM_LANGUAGE,
-            COMMENTS_RIGHTS, COMMENTS_PRODUCTION} = this.props;
+            COMMENTS_RIGHTS, COMMENTS_PRODUCTION, HL_INPUT, NA_INPUT} = this.props;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
 
         return (
@@ -177,7 +173,26 @@ class TermSheet extends React.Component {
                 <div>
                     { this.renderTextarea(RightDefinitions) }
                     { this.renderTextarea(ProductionStandardsDefinitions) }
+                </div>
 
+                <div>
+                    {
+                        rightsPackage.map((rp, i)=>{
+                            if (rp.shortLabel === "HL" && HL_INPUT) return <div className="term-sheet-full-item-box" key={'HL'}>
+                                <label>Transmission of Footage</label>
+                                <div  className="full-item-content">
+                                    Not exceeding {HL_INPUT} minutes not before the end of the relevant Event or the Time Embargo defined
+                                </div>
+                            </div>
+
+                            if (rp.shortLabel === "NA" && NA_INPUT) return <div className="term-sheet-full-item-box" key={'HL'}>
+                                <label>Transmission of Highlight footage</label>
+                                <div  className="full-item-content">
+                                    Not exceeding {NA_INPUT} seconds in news programs not before the end of the relevant Event or the Time Embargo defined
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
 
                 { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">

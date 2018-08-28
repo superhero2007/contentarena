@@ -17,14 +17,9 @@ class RegionCountrySelector extends React.Component {
 
     componentDidMount () {
         let _this = this;
-        if ( ContentArena.Data.Countries.length === 0) {
-            ContentArena.Api.getCountries().done( (countries ) => {
-                ContentArena.Data.Countries = countries;
-                _this.setState({countries});
-            });
-        } else {
-            _this.setState({countries: ContentArena.Data.Countries});
-        }
+        ContentArena.Api.getCountries().done( (countries ) => {
+            _this.setState({countries});
+        });
 
         if ( ContentArena.Data.Territories.length === 0) {
             ContentArena.Api.getTerritories().done( (territories ) => {
@@ -60,7 +55,17 @@ class RegionCountrySelector extends React.Component {
         if (onChange) onChange(selection);
     }
 
-    selectRegion(id) {
+    selectWorldwide = () => {
+        const {
+            onChange
+        } = this.props;
+        const {countries} = this.state;
+        let selection = countries.map((i,k)=>({value : i.name , label : i.name }));
+        this.setState({ selection });
+        if (onChange) onChange(selection);
+    };
+
+    selectRegion = (id) => {
         const {countries} = this.state;
         const {
             filter = [],
@@ -87,6 +92,7 @@ class RegionCountrySelector extends React.Component {
         const {
             filter,
             disabled,
+            worldwide
         } = this.props;
 
         const {territories, regions} = this.state;
@@ -103,6 +109,9 @@ class RegionCountrySelector extends React.Component {
                                 {territory.name}
                             </button>
                         })}
+                        {worldwide && <button className={"region"} onClick={this.selectWorldwide}>
+                            Worldwide
+                        </button>}
                     </div>
                     <div className="regions">
                         {regions.map(region=>{

@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {addRight, clearFilter, removeRight, updateCountries, updateExclusive} from "../actions/filterActions";
+import {
+    addRight, clearFilter, removeRight, updateCountries, updateExclusive,
+    updateIncludedCountries
+} from "../actions/filterActions";
 import CountrySelector from "../../main/components/CountrySelector";
 import {PropTypes} from "prop-types";
 import PopupCountrySelector from "../../main/components/PopupCountrySelector";
@@ -12,6 +15,8 @@ class RightsFilter extends React.Component {
         super(props);
         this.state = {
         };
+
+        this.worldwideCountries = 242;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -19,11 +24,13 @@ class RightsFilter extends React.Component {
     }
 
     selectTerritory = (countries) => {
+        let includeAllCountries = (this.refs.countrySelector.state.selectedOption === "multiple");
         this.props.updateCountries(countries);
+        this.props.updateIncludedCountries(includeAllCountries);
     };
 
     render() {
-        const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter} = this.props;
+        const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter, includeAllCountries} = this.props;
         return (
             <div className="box">
                 <div className="title">
@@ -42,10 +49,16 @@ class RightsFilter extends React.Component {
                             }}/>
                         }
 
-                        {countries.length > 1 &&
+                        {countries.length > 1 && countries.length !== this.worldwideCountries &&
                             <div className="territories-placeholder">
                                 {countries.length} territories
                             </div>
+                        }
+
+                        {countries.length === this.worldwideCountries &&
+                        <div className="territories-placeholder">
+                            Worldwide
+                        </div>
                         }
 
                         {countries.length > 1 &&
@@ -55,7 +68,11 @@ class RightsFilter extends React.Component {
                             }}/>
                         }
 
-                        <PopupCountrySelector value={countries}  onSelect={this.selectTerritory}/>
+                        <PopupCountrySelector ref="countrySelector"
+                            value={countries}
+                            includeAllCountries={includeAllCountries}
+                            onSelect={this.selectTerritory}
+                        />
 
                     </div>
 
@@ -130,6 +147,7 @@ const mapDispatchToProps = dispatch => {
         removeRight: id => dispatch(removeRight(id)),
         updateCountries: countries => dispatch(updateCountries(countries)),
         updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
+        updateIncludedCountries: includeAllCountries => dispatch(updateIncludedCountries(includeAllCountries)),
         clearFilter : () => dispatch(clearFilter())
     }
 };

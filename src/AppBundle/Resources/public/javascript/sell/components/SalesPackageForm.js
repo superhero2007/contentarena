@@ -56,12 +56,9 @@ class SalesPackageForm extends React.Component {
     }
 
     componentDidMount() {
-        if ( this.state.countries.length === 0) {
-            ContentArena.Api.getCountries().done( (countries ) => {
-                ContentArena.Data.Countries = countries;
-                this.setState({countries})
-            });
-        }
+        ContentArena.Api.getCountries().done( (countries ) => {
+            this.setState({countries})
+        });
     }
 
     editSalesPackage = ( salesPackage, index ) => {
@@ -158,7 +155,6 @@ class SalesPackageForm extends React.Component {
         let territories = territoriesAsArray;
         let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
         let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
-
         if ( this.state.isNew ) {
 
             if ( bundleMethod === this.individually ){
@@ -176,7 +172,7 @@ class SalesPackageForm extends React.Component {
                         }
                     });
                 } else {
-                    salesPackagesList = territories.map((territory)=>{
+                    salesPackagesList = allTerritories.map((territory)=>{
                         return {
                             name : territory.label,
                             territories : [territory],

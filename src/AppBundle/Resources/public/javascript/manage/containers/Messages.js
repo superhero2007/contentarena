@@ -118,7 +118,7 @@ class Messages extends React.Component {
                         {this.context.t("No threads yet")}
                     </div> }
                     {!loadingThreads && threads.map((t,i)=>{
-                        return <div className={(selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
+                        return <div className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
                                     key={"thread-" + i}
                                     onClick={()=>{this.selectThread(t)}}>
                             <div className={"date"}>

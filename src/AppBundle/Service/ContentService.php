@@ -61,7 +61,12 @@ class ContentService
             $exclusive = $request->request->get("exclusive");
         }
 
-        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term, $exclusive);
+        $includeAllCountries = null;
+        if($request->request->get("includeAllCountries")){
+            $includeAllCountries = $request->request->get("includeAllCountries");
+        }
+
+        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term, $exclusive, $includeAllCountries);
 
         return $content;
 
@@ -91,10 +96,13 @@ class ContentService
         $listings = $this->em->getRepository('AppBundle:Content')->getExpired($user);
         $expiredStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'EXPIRED'));
         $soldStatus = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'SOLD_OUT'));
+        $archived = $this->em->getRepository('AppBundle:ListingStatus')->findOneBy(array('name'=>'ARCHIVED'));
 
         foreach ( $listings as $listing ){
             /* @var Content $listing*/
-            if ( $listing->getStatus()->getId() != $expiredStatus->getId() && $listing->getStatus()->getId() != $soldStatus->getId()) {
+            if ( $listing->getStatus()->getId() != $expiredStatus->getId() &&
+                $listing->getStatus()->getId() != $archived->getId() &&
+                $listing->getStatus()->getId() != $soldStatus->getId()) {
                 $listing->setStatus($expiredStatus);
                 $this->em->persist($listing);
                 $this->em->flush();
@@ -224,6 +232,23 @@ class ContentService
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
+        $content->setLastActionUser($user);
+        $content->setLastActionDate(new \DateTime());
+        $this->em->persist($content);
+        $this->em->flush();
+        return $content;
+    }
+
+    public function archiveListing($customId, $user){
+
+        if ($customId == null) return false;
+
+        $content = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"ARCHIVED")));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"ARCHIVED")));
         $content->setLastActionUser($user);
         $content->setLastActionDate(new \DateTime());
         $this->em->persist($content);
@@ -708,7 +733,7 @@ class ContentService
             $this->em->persist($season);
             $this->em->flush();
 
-            if ($seasonData->custom) {
+            if ( isset($seasonData->custom)) {
                 $season->setExternalId("ca:season:".$season->getId());
                 if ( isset( $tournament) ) {
                     $season->setName($tournament->getName(). " ". $season->getYear());

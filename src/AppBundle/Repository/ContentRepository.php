@@ -81,7 +81,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    public function getFilteredContent( ContentFilter $filter, $term = null, $exclusive = null ){
+    public function getFilteredContent( ContentFilter $filter, $term = null, $exclusive = null, $includeAllCountries = null ){
 
         $query = $this->createQueryBuilder('content');
 
@@ -122,13 +122,31 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         if ( count( $filter->getCountries() ) > 0 ) {
             $query
                 ->leftJoin('content.salesPackages', 'salesPackages')
-                ->leftJoin('salesPackages.territories', 'territories')
-                ->andWhere($query->expr()->orX(
-                    $query->expr()->eq('salesPackages.territoriesMethod', ':worldwide'),
-                    $query->expr()->in('territories', ':countries')
-                ))
-                ->setParameter('countries', $filter->getCountries())
-                ->setParameter('worldwide', 'WORLDWIDE');
+                ->leftJoin('salesPackages.territories', 'territories');
+
+
+            if($includeAllCountries == true){
+
+                foreach ($filter->getCountries() as $country){
+                    $query
+                        ->andWhere('territories IN (:country)')
+                        ->setParameter('country', array($country));
+                }
+
+                $query
+                    ->orWhere('salesPackages.territoriesMethod = :worldwide')
+                    ->setParameter('worldwide', 'WORLDWIDE');
+
+
+            } else {
+                $query
+                    ->setParameter('countries', $filter->getCountries())
+                    ->setParameter('worldwide', 'WORLDWIDE')
+                    ->andWhere($query->expr()->orX(
+                        $query->expr()->eq('salesPackages.territoriesMethod', ':worldwide'),
+                        $query->expr()->in('territories', ':countries')
+                    ));
+            }
         }
 
         if ( count( $filter->getSuperRights() ) > 0 ) {
@@ -368,8 +386,10 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin("c.status", "status")
             ->where('c.company = :company')
             ->andWhere(':now > c.expiresAt OR status.name = :statusName')
+            ->andWhere('status.name != :archived')
             ->setParameter('now',$now)
             ->setParameter('statusName',"SOLD_OUT")
+            ->setParameter('archived',"ARCHIVED")
             ->setParameter('company',$user->getCompany())
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();

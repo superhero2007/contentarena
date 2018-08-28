@@ -147,6 +147,8 @@ class Selector extends React.Component {
     addNewCategory = (index) => {
         this.setState({ updated: false, filterUpdated : false });
         this.props.addNewCategory(index,this.props.clean);
+        this.props.addNewTournament(0,[]);
+        this.props.addNewSeason(0,[]);
         this.props.closeSelector();
     };
 

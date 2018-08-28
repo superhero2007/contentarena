@@ -27,7 +27,8 @@ class ListingStatusFixtures extends Fixture
             'REJECTED',
             'EDITED',
             'SOLD_OUT',
-            'EXPIRED'
+            'EXPIRED',
+            'ARCHIVED'
         );
 
         for ($i = 0; $i < count($content); $i++) {
