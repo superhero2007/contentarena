@@ -337,13 +337,13 @@ class SellFormStep1 extends React.Component {
     handleWebsiteChange = website => {
         this.setState({website});
         this.saveWebsite(website)
-    }
+    };
 
     saveWebsite = debounce(website=>{
-        if (website.length > 2) {
+        if (website.on()) {
             return this.refs.tagsinput.accept()
         }
-    },500)
+    });
 
     selectTournament = ( tournament ) =>{
         this.props.selectTournament(tournament);
