@@ -118,6 +118,7 @@ ContentArena.Api= {
                     response.sort(_this.sortByLabel);
                     response = response.map(c=>{
                         c.regions = c.regions.map(r=>r.id);
+                        c.externalId = c.id;
                         return c
 
                     });

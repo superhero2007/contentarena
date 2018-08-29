@@ -32,7 +32,14 @@ class ApiController extends BaseController
     {
         $user = $this->getUser();
         $content = $contentService->saveContentAsInactive($user, $request);
-        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        return new JsonResponse(array(
+            "success"=>true,
+            "contentId"=> $content->getId(),
+            "customId" => $content->getCustomId(),
+            "salesPackages" => $serializer->toArray($content->getSalesPackages())
+        ));
     }
 
     /**

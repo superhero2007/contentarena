@@ -503,7 +503,13 @@ class ContentService
             if ( is_array($data->salesPackages)){
 
                 foreach ( $data->salesPackages as $salesPackage){
-                    $package = new SalesPackage();
+
+                    if (isset($salesPackage->id)){
+                        $package = $this->em->getRepository('AppBundle:SalesPackage')->findOneBy(array("id"=>$salesPackage->id));
+                    } else {
+                        $package = new SalesPackage();
+                    }
+
                     $package->setName($salesPackage->name);
                     $package->setCurrency($this->getCurrency($data->currency));
                     $package->setSalesMethod($this->getSalesMethod($salesPackage->salesMethod));

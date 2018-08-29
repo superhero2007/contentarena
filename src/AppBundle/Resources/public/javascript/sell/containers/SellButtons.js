@@ -194,6 +194,13 @@ class SellButtons extends React.Component {
 
         savePromise.done((response)=>{
             if ( response.success && response.contentId ){
+
+                if ( response.salesPackages && Array.isArray(response.salesPackages) ){
+                    response.salesPackages.forEach((sp, i)=>{
+                        this.props.updateSalesPackages("save", sp, i);
+                    });
+                }
+
                 this.props.updateContentValue("id", response.contentId);
                 this.setState({ saving : false, savingSuccess: true });
                 history.push("/contentlisting/"+ response.customId + "/sign");
@@ -275,7 +282,13 @@ const mapDispatchToProps = dispatch => {
         goToPreviousStep : () => dispatch(goToPreviousStep()),
         goToNextStep : () => dispatch(goToNextStep()),
         goToStep : (step) => dispatch(goToStep(step)),
-        updateContentValue : (key,value) => dispatch(updateContentValue(key,value))
+        updateContentValue : (key,value) => dispatch(updateContentValue(key,value)),
+        updateSalesPackages : (name, salesPackage, index) => dispatch({
+            type: 'UPDATE_SALES_PACKAGES',
+            index: index,
+            salesPackage : salesPackage,
+            name: name
+        }),
     }
 };
 

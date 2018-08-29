@@ -101,8 +101,8 @@ class SellFormStep1 extends React.Component {
         ContentArena.Api.getSeasons(tournamentId).done( (seasons ) => {
             ContentArena.Data.Seasons = seasons;
 
-            if (tournaments.length === 0 ) {
-                this.props.addNewCategory();
+            if (seasons.length === 0 ) {
+                this.props.addNewSeason();
                 return;
             }
 
@@ -148,6 +148,7 @@ class SellFormStep1 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
         const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
         let tournaments, seasons, sportCategories, websites, website, name = nextProps.name;
 
@@ -324,9 +325,15 @@ class SellFormStep1 extends React.Component {
         this.props.removeFromMultiple(i, "seasons");
     };
 
-    toggleSearch = () => {
+    toggleSearch = ( tournament) => {
         const {history} = this.props;
+        let _this = this;
         history.push("/contentlisting/1");
+        if (tournament){
+            setTimeout(()=>{
+                _this.props.selectTournament(tournament);
+            },1000);
+        }
     };
 
     websitesUpdated = (websites) => {
@@ -346,8 +353,8 @@ class SellFormStep1 extends React.Component {
     },500)
 
     selectTournament = ( tournament ) =>{
-        this.props.selectTournament(tournament);
-        setTimeout(this.toggleSearch,2000);
+
+        this.toggleSearch(tournament);
     };
 
     clear = () => {
@@ -375,6 +382,14 @@ class SellFormStep1 extends React.Component {
 
     removeFile = ( index ) => {
         this.props.updateAttachments("remove", index, null);
+    };
+
+    showSeasonSelector = () => {
+        let show = this.state.sportSelectors.length === 1 &&
+            ( this.state.seasons.length > 0 || this.forceCustomSeason() ) &&
+            this.state.seasonSelectors.length > 0;
+        return show;
+
     };
 
     render() {
@@ -420,12 +435,12 @@ class SellFormStep1 extends React.Component {
             }
         }
 
-        if ( this.state.seasons.length > 0 && this.props.seasons.length === 0) {
-            inputProps.seasons = [];
-            this.state.seasons.forEach(( season )=>{
-                inputProps.seasons.push({value: season.name,isCustom : season.custom})
-            });
-        }
+        //if ( this.state.seasons.length > 0 && this.props.seasons.length === 0) {
+            //inputProps.seasons = [];
+            //this.state.seasons.forEach(( season )=>{
+                //inputProps.seasons.push({value: season.name,isCustom : season.custom})
+            //});
+        //}
 
         if (  this.props.tournament.length > 0 ) {
             inputProps.tournament = {
@@ -480,7 +495,7 @@ class SellFormStep1 extends React.Component {
 
                     {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px"}}>
                         {this.context.t("Your content covers multiple sports?")}
-                         <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
+                        <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
                     </div>}
 
                     {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&
@@ -523,28 +538,28 @@ class SellFormStep1 extends React.Component {
 
                     { this.state.sportSelectors.length === 1 && this.hasCustomTournament() &&
                     <NewTournament showClose={!this.forceCustomTournament()}
-                                      value={this.props.customTournament}
-                                      onBlur={ (e) => this.updateContentValue(e, "customTournament")}
-                                      onClick={this.props.removeNewTournament} />
+                                   value={this.props.customTournament}
+                                   onBlur={ (e) => this.updateContentValue(e, "customTournament")}
+                                   onClick={this.props.removeNewTournament} />
                     }
 
-                    {this.state.sportSelectors.length === 1 && ( this.state.seasons.length > 0 || this.forceCustomSeason() )
-                        && this.state.seasonSelectors.length > 0 &&
-                    this.state.seasonSelectors.map( (season, i) => {
-                        return <SeasonSelector
-                            key={i}
-                            season={season}
-                            index={i}
-                            addSeason={this.addSeason}
-                            removeSeason={()=>this.removeSeason(i)}
-                            value={ (inputProps.seasons[i] ) ? inputProps.seasons[i].value : ""}
-                            loading={this.state.loadingSeasons}
-                            showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
-                            onBlur={ (e) => this.updateContentValue(e, "customSeason")}
-                            isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : false}
-                            showAddNew={this.state.seasonSelectors.length === i + 1}
-                            openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
-                    })}
+                    { this.showSeasonSelector() &&
+                        this.state.seasonSelectors.map( (season, i) => {
+                            return <SeasonSelector
+                                key={i}
+                                season={season}
+                                index={i}
+                                addSeason={this.addSeason}
+                                removeSeason={()=>this.removeSeason(i)}
+                                value={ (inputProps.seasons[i] ) ? inputProps.seasons[i].value : ""}
+                                loading={this.state.loadingSeasons}
+                                showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
+                                onBlur={ (e) => this.updateContentValue(e, "customSeason")}
+                                isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : false}
+                                showAddNew={this.state.seasonSelectors.length === i + 1}
+                                openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
+                        })
+                    }
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 

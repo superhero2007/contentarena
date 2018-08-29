@@ -5,7 +5,6 @@ import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
 import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
-import ApplicableLawSelector from "../components/ApplicableLawSelector";
 import CompanyInformation from "../components/CompanyInformation";
 import ListingName from "../components/ListingName";
 import {CountrySelector} from "../../main/components/CountrySelector";
@@ -27,14 +26,6 @@ class SellFormStep4 extends React.Component {
 
     selectCurrency = ( currency ) => {
         this.props.updateContentValue("currency", currency);
-    };
-
-    selectVat = ( vat ) => {
-        this.props.updateContentValue("vat", vat);
-    };
-
-    setApplyVatInJurisdiction = (e) => {
-        this.props.updateContentValue("applyVatInJurisdiction", e.target.value === 'yes');
     };
 
     updateName = ( e ) => {
@@ -104,7 +95,6 @@ class SellFormStep4 extends React.Component {
             currency,
             updateContentValue,
             image,
-            applyVatInJurisdiction
         } = this.props;
 
         if (step !== 4) return (null);

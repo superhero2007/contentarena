@@ -15,6 +15,11 @@ class TermSheet extends React.Component {
         };
     }
 
+    hasRight = (shortLabel) => {
+        const {rightsPackage} = this.props;
+        return rightsPackage.filter(rp => rp.shortLabel === shortLabel ).length > 0;
+    };
+
     renderProgramInfo = (values, name, i) => {
         const { rightsPackage } = this.props;
         return <div className={'row '+(i%2 ? 'odd-row':'')} key={'program'+i}>
@@ -168,31 +173,29 @@ class TermSheet extends React.Component {
                         }
                     </div>
                     { this.renderList(RightDefinitions, false) }
+
+                    { ( this.hasRight("NA") && this.hasRight("HL") ) &&
+                    <div className={'row'} key={'transmission'}>
+                        <div className="right-name right-definition">
+                            Granted Transmission Time
+                        </div>
+                        {
+                            rightsPackage.map((rp,k)=>{
+                                return <div  className="right-definition" key={'list_childs'+k}>
+                                    {rp.shortLabel === "NA" && NA_INPUT + " seconds" }
+                                    {rp.shortLabel === "HL" && HL_INPUT + " minutes" }
+                                    {rp.shortLabel !== "NA" && rp.shortLabel !== "HL" && "-" }
+                                </div>
+                            })
+                        }
+                    </div>
+                    }
+
                 </div>
 
                 <div>
                     { this.renderTextarea(RightDefinitions) }
                     { this.renderTextarea(ProductionStandardsDefinitions) }
-                </div>
-
-                <div>
-                    {
-                        rightsPackage.map((rp, i)=>{
-                            if (rp.shortLabel === "HL" && HL_INPUT) return <div className="term-sheet-full-item-box" key={'HL'}>
-                                <label>Transmission of Footage</label>
-                                <div  className="full-item-content">
-                                    Not exceeding {HL_INPUT} minutes not before the end of the relevant Event or the Time Embargo defined
-                                </div>
-                            </div>
-
-                            if (rp.shortLabel === "NA" && NA_INPUT) return <div className="term-sheet-full-item-box" key={'HL'}>
-                                <label>Transmission of Highlight footage</label>
-                                <div  className="full-item-content">
-                                    Not exceeding {NA_INPUT} seconds in news programs not before the end of the relevant Event or the Time Embargo defined
-                                </div>
-                            </div>
-                        })
-                    }
                 </div>
 
                 { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">

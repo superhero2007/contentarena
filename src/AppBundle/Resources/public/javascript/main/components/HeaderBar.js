@@ -12,6 +12,14 @@ const HeaderBarTab = ({match, children, route}) => {
     )
 };
 
+const CustomLink = ({match, children, route}) => {
+    return (
+        <div className={(match) ? "tab active-tab" : "tab"}>
+            <a href={route}>{children}</a>
+        </div>
+    )
+};
+
 class HeaderBar extends  React.Component {
     constructor(props){
         super(props);
@@ -71,11 +79,11 @@ class HeaderBar extends  React.Component {
                     {this.context.t("Commercial activity")}
                 </HeaderBarTab> }
 
-                { profile === "SELLER" && <HeaderBarTab
+                { profile === "SELLER" && <CustomLink
                     match={match.path === "/contentlisting/:customId?/:step?"}
                     route={"/contentlisting/new"}>
                     {this.context.t("Create Listing")}
-                </HeaderBarTab> }
+                </CustomLink> }
 
                 <div className="spacer" />
 
