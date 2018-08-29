@@ -201,16 +201,6 @@ class ReviewAndSign extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
-                    <div className="buttons-container"  >
-                        <button id="draft-listing"
-                                onClick={()=>{
-                                    viewLicense(customId);
-                                }}
-                                className="standard-button" style={{ width: '250px'}}>
-                            {this.context.t("View License Agreement")}
-                        </button>
-                    </div>
-
                     <div className={"terms-confirm"}
                          style={{
                              padding: '40px 0px',
