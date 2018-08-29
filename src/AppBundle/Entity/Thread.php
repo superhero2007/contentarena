@@ -28,7 +28,7 @@ class Thread
     private $customId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $listing;
