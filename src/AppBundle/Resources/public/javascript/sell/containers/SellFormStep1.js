@@ -460,7 +460,7 @@ class SellFormStep1 extends React.Component {
             <div className="step-content">
                 <div className="step-title">{this.state.title}</div>
 
-                {this.state.showSearch && <SearchCompetition close={this.toggleSearch} select={this.selectTournament} />}
+                {this.state.showSearch && <SearchCompetition close={()=>{this.toggleSearch(false)}} select={this.selectTournament} />}
                 {!this.state.showSearch &&
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
