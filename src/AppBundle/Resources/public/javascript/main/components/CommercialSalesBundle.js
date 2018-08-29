@@ -193,7 +193,7 @@ class CommercialSalesBundle extends React.Component{
                 {this.renderApproveModal()}
                 {this.renderRejectModal()}
                 {this.renderRemoveModal()}
-                <div className="commercial-sales-bundles-container">
+                <div className="commercial-sales-bundles-container" onClick={()=>{this.setState({showBids: !showBids})}}>
                     <div className="sales-bundle-item">
                         {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&<img style={{width: 26, height: 23}} src={fixedIcon}/>}
                         {salesBundle.name}
@@ -218,8 +218,7 @@ class CommercialSalesBundle extends React.Component{
                     </div>}
 
                     {salesBundle.bids.length > 0 &&
-                    <div className="sales-bundle-show-bids"
-                        onClick={()=>{this.setState({showBids: !showBids})}}>
+                    <div className="sales-bundle-show-bids">
                         {!showBids && <img src={addIcon}/>}
                         {showBids && <img src={cancelIcon}/>}
                     </div>}
