@@ -2,12 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\LicenseAgreement;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\MessageService;
 use AppBundle\Service\NotificationService;
 use AppBundle\Service\UserService;
+use PDFMerger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -255,18 +258,95 @@ class ApiController extends BaseController
      * @param ContentService $contentService
      * @return JsonResponse
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \exception
      */
     public function contentPlaceBid(Request $request, BidService $bidService, ContentService $contentService)
     {
         $user = $this->getUser();
-        $success = $bidService->saveBidsData($request,$user);
+        $bid = $bidService->saveBidsData($request,$user);
+        $content = $bid->getContent();
         $soldOut = false;
-
-        if ($success){
+        $success = false;
+        if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
+            $success = true;
+            if ($bid->getStatus()->getName() == 'APPROVED'){
+                $license_service = $this->get('license_service');
+                $viewElements = array(
+                    'user' => $user,
+                    'bid' => $bid,
+                    'watermark' => false,
+                    'bundle' => $bid->getSalesPackage(),
+                    'content' => $content,
+                    'rightDefinitions' => $license_service->getRightDefinitions($content),
+                    'exclusiveRights' => $license_service->getExclusiveRights($content),
+                    'hostUrl' => $this->container->getParameter("carena_host_url")
+                );
+
+                $this->mergeAndSave($content, $viewElements);
+            }
         }
 
         return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
+    }
+
+    /**
+     * @param $content
+     * @param $viewElements
+     * @throws \exception
+     */
+    public function mergeAndSave($content, $viewElements ){
+
+        /* @var Content $content  */
+        /* @var Bid $bid  */
+
+        // Create an instance of PDFMerger
+        $pdf = new PDFMerger();
+        $bid = $viewElements["bid"];
+
+        if ( isset($bid)){
+            $license = $this->getDoctrine()
+                ->getRepository('AppBundle:LicenseAgreement')
+                ->findOneBy([
+                    'bid' => $viewElements["bid"],
+                    'company' => $bid->getBuyerUser()->getCompany(),
+                ]);
+        }
+
+        if ( isset($license) && $license != null ){
+            return;
+        }
+
+        $time = new \DateTime();
+        $html = $this->renderView('contract/layout.html.twig', $viewElements);
+
+        $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $html,
+            $this->container->getParameter("uploads_main_folder") . "/" . $fileName
+        );
+
+        // Add 2 PDFs to the final PDF
+        $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/" . $fileName, 'all');
+
+        if ( $content->getAnnex() != null ){
+            foreach ($content->getAnnex() as $annex){
+                $pdf->addPDF($this->container->getParameter("main_folder") . "/" . $annex->file, 'all');
+            }
+        }
+
+        $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
+        $pdf->merge('file', $pathForTheMergedPdf);
+
+        if ( isset($bid)){
+            $license = new LicenseAgreement();
+            $license->setCompany($bid->getBuyerUser()->getCompany());
+            $license->setBid($bid);
+            $license->setFile($pathForTheMergedPdf);
+            $this->getDoctrine()->getManager()->persist($license);
+            $this->getDoctrine()->getManager()->flush();
+        }
     }
 
     /**
@@ -355,16 +435,35 @@ class ApiController extends BaseController
     /**
      * @Route("/api/bid/accept", name="acceptBids")
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \exception
      */
     public function acceptBids(Request $request, BidService $bidService, ContentService $contentService)
     {
         $user = $this->getUser();
 
-        $success = $bidService->acceptBid($request);
+        $bid = $bidService->acceptBid($request);
+        $content = $bid->getContent();
         $soldOut = false;
+        $success = false;
 
-        if ($success){
+        if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
+            $success = true;
+            $license_service = $this->get('license_service');
+            $viewElements = array(
+                'user' => $user,
+                'bid' => $bid,
+                'watermark' => false,
+                'bundle' => $bid->getSalesPackage(),
+                'content' => $content,
+                'rightDefinitions' => $license_service->getRightDefinitions($content),
+                'exclusiveRights' => $license_service->getExclusiveRights($content),
+                'hostUrl' => $this->container->getParameter("carena_host_url")
+            );
+
+            $this->mergeAndSave($content, $viewElements);
+
+
         }
 
         return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));

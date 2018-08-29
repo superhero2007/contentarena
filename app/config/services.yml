@@ -74,6 +74,9 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    license_service:
+            class: AppBundle\Controller\LicenseController
+
     app_bundle.user_service:
         class: AppBundle\Service\UserService
         arguments: ['@fos_user.user_manager']

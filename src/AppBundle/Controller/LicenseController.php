@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ContentFilter;
+use AppBundle\Entity\LicenseAgreement;
 use AppBundle\Entity\RightsPackage;
 use AppBundle\Entity\SalesPackage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,7 +35,7 @@ class LicenseController extends Controller
      * @param Content $content
      * @return array
      */
-    private function getRightDefinitions($content){
+    public function getRightDefinitions($content){
         $rightDefinitions = array();
         $definitions = $this->RIGHT_DEFINITIONS;
 
@@ -53,7 +54,7 @@ class LicenseController extends Controller
      * @param Content $content
      * @return array
      */
-    private function getExclusiveRights($content){
+    public function getExclusiveRights($content){
         $exclusiveRights = array();
         $selected = $content->getSelectedRightsBySuperRight();
 
@@ -69,9 +70,31 @@ class LicenseController extends Controller
     /**
      * @param $content
      * @param $viewElements
+     * @param $download
      * @throws \exception
      */
-    private function mergeAndSave($content, $viewElements){
+    private function mergeAndSave($content, $viewElements, $download = true){
+
+        // Create an instance of PDFMerger
+        /* @var Bid $bid*/
+        $pdf = new PDFMerger();
+        $bid = $viewElements["bid"];
+
+        if ( isset($bid)){
+            $license = $this->getDoctrine()
+                ->getRepository('AppBundle:LicenseAgreement')
+                ->findOneBy([
+                    'bid' => $viewElements["bid"],
+                    'company' => $bid->getBuyerUser()->getCompany(),
+                ]);
+        }
+
+        if ( isset($license) && $license != null ){
+            $pdf->addPDF($license->getFile(), 'all');
+            if ($download) $pdf->merge('download', "License Agreement.pdf");
+            return;
+        }
+
         /* @var Content $content  */
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
@@ -85,9 +108,6 @@ class LicenseController extends Controller
             $this->container->getParameter("uploads_main_folder") . "/" . $fileName
         );
 
-        // Create an instance of PDFMerger
-        $pdf = new PDFMerger();
-
         // Add 2 PDFs to the final PDF
         $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/" . $fileName, 'all');
 
@@ -97,7 +117,19 @@ class LicenseController extends Controller
             }
         }
 
-        $pdf->merge('download', "License Agreement.pdf");
+        $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
+        $pdf->merge('file', $pathForTheMergedPdf);
+
+        if ( isset($bid)){
+            $license = new LicenseAgreement();
+            $license->setCompany($bid->getBuyerUser()->getCompany());
+            $license->setBid($bid);
+            $license->setFile($pathForTheMergedPdf);
+            $this->getDoctrine()->getManager()->persist($license);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        if ($download) $pdf->merge('download', "License Agreement.pdf");
     }
 
     /**

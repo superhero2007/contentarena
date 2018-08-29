@@ -103,7 +103,7 @@ class BidService
             $this->em->persist($salesPackage);
         }
         $this->em->flush();
-        return true;
+        return $bid;
     }
 
     public function acceptBid($request){
@@ -156,7 +156,7 @@ class BidService
             $this->em->flush();
         }
 
-        return true;
+        return $bid;
     }
 
     public function rejectBid($request){
