@@ -415,7 +415,7 @@ class ContentService
          * Set sport
          * Create element in DB if it doesn't exist.
          */
-        if ( isset($data->sports) && count($data->sports) > 0 ) {
+        if ( isset($data->sports) && count($data->sports) > 0 && ( isset($data->step) && $data->step == 1 )) {
 
         } else if ( isset($data->sport) ) {
             $data->sports = array( $data->sport );
@@ -426,7 +426,7 @@ class ContentService
         /**
          * Set tournament
          */
-        if ( isset($data->tournament) && count($data->tournament) > 0 ) {
+        if ( isset($data->tournament) && count($data->tournament) > 0 && ( isset($data->step) && $data->step == 1 )) {
             $tournament = $this->getTournament($data);
             $content->setTournament($tournament);
         } else {
@@ -436,7 +436,7 @@ class ContentService
         /**
          * Set category
          */
-        if ( isset($data->sportCategory) && count($data->sportCategory) > 0  ) {
+        if ( isset($data->sportCategory) && count($data->sportCategory) > 0 && ( isset($data->step) && $data->step == 1 ) ) {
             $category = $this->getCategory($data);
             $content->setSportCategory($category);
         } else {
@@ -446,7 +446,7 @@ class ContentService
         /**
          * Set season
          */
-        if ( isset($data->seasons) && count($data->seasons) > 0  ) {
+        if ( isset($data->seasons) && count($data->seasons) > 0 && ( isset($data->step) && $data->step == 1 ) ) {
 
             $seasons = array();
             $schedules = [];
@@ -743,14 +743,16 @@ class ContentService
 
             $season->setName($seasonData->name);
             $this->em->persist($season);
-            $this->em->flush();
+            $time = new \DateTime();
+            //$this->em->flush();
 
             if ( isset($seasonData->custom)) {
-                $season->setExternalId("ca:season:".$season->getId());
+                $season->setExternalId("ca:season:".$time->getTimestamp());
                 if ( isset( $tournament) ) {
                     $season->setName($tournament->getName(). " ". $season->getYear());
                 }
-                $this->em->flush();
+                $this->em->persist($season);
+                //$this->em->flush();
             }
         }
 
@@ -938,7 +940,7 @@ class ContentService
             $this->em->persist($sport);
             $this->em->flush();
 
-            if ($sportData->custom) {
+            if (isset($sportData->custom)) {
                 $sport->setExternalId("ca:sport:".$sport->getId());
                 $this->em->flush();
             }
