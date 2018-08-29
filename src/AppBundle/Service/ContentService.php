@@ -140,10 +140,18 @@ class ContentService
     public function removeListing($customId){
 
         if ($customId == null) return false;
-
+        /* @var Content $content*/
         $content = $this->em->getRepository('AppBundle:Content')->findOneBy(array(
             'customId' => $customId
         ));
+
+        $threads = $this->em->getRepository('AppBundle:Thread')->findBy(array(
+            'listing' => $content
+        ));
+
+        foreach ($threads as $thread){
+            $this->em->remove($thread);
+        }
 
         if ($customId != null){
             $this->em->remove($content);

@@ -197,6 +197,10 @@ class SellFormStep1 extends React.Component {
 
         if (sportCategories.length === 1 ) {
             this.setState({sportCategoryExtended : sportCategories[0].extended});
+
+            if (sportCategories[0].extended){
+                this.props.updateContentValue("customCategory",sportCategories[0].name);
+            }
         }
 
         if (seasons.length > 0) {
@@ -277,7 +281,7 @@ class SellFormStep1 extends React.Component {
             seasonSelectors : [...prevState.seasonSelectors, 1]
         }));
 
-        if (this.state.seasons.length > 0 && this.state.seasons[0].custom ){
+        if ( (this.state.seasons.length > 0 && this.state.seasons[0].custom) || this.state.sportCategoryExtended ){
             this.props.addNewSeason(this.state.seasonSelectors.length);
         }
 
@@ -380,6 +384,7 @@ class SellFormStep1 extends React.Component {
         let show = this.state.sportSelectors.length === 1 &&
             ( this.state.seasons.length > 0 || this.forceCustomSeason() ) &&
             this.state.seasonSelectors.length > 0;
+        console.log(this.state.seasons.length,this.forceCustomSeason(),this.state.seasonSelectors.length )
         return show;
 
     };
@@ -426,13 +431,6 @@ class SellFormStep1 extends React.Component {
                 isCustom: this.state.tournaments[0].isCustom
             }
         }
-
-        //if ( this.state.seasons.length > 0 && this.props.seasons.length === 0) {
-            //inputProps.seasons = [];
-            //this.state.seasons.forEach(( season )=>{
-                //inputProps.seasons.push({value: season.name,isCustom : season.custom})
-            //});
-        //}
 
         if (  this.props.tournament.length > 0 ) {
             inputProps.tournament = {
@@ -636,7 +634,7 @@ const mapDispatchToProps = dispatch => {
             showNewCategory : true,
             selectedItems: selectedItems,
             index: 0,
-            clean: ["tournament", "seasons"]
+            clean: ["tournament", "seasons", "customCategory", "customTournament"]
         }),
         openTournamentSelector : (selectedItems) => dispatch({
             type: 'OPEN_SELECTOR',
@@ -698,7 +696,7 @@ const mapDispatchToProps = dispatch => {
             type : 'ADD_NEW',
             index : 0,
             selectorType: "sportCategory",
-            clean : ["tournament", "seasons"]
+            clean : ["tournament", "seasons", "customCategory"]
         }),
         reset : () => dispatch({
             type : 'RESET'

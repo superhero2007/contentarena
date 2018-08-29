@@ -106,13 +106,21 @@ class Selector extends React.Component {
 
     applySelection = () => {
 
-        let selectedItems = this.state.selectedItems,
+        let extended = false,
+            selectedItems = this.state.selectedItems,
             prevCountries = this.state.prevCountries;
 
         if ( this.state.customCountry ){
             selectedItems.forEach((item)=>{
-                if (!prevCountries.has(item.externalId)) item.extended = true;
+                if (!prevCountries.has(item.externalId)) {
+                    item.extended = true;
+                    extended = true;
+                }
             });
+        }
+
+        if (extended){
+            this.props.addNewSeason(0,[]);
         }
 
         this.setState({ updated: false, filterUpdated : false, customCountry : false });

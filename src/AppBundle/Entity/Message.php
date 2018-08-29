@@ -36,8 +36,10 @@ class Message
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread",  cascade={"remove"})
+     * @ORM\JoinColumn(name="thread_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE",nullable=true)
      */
     private $thread;
 

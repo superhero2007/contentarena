@@ -2,6 +2,8 @@
  * Created by JuanCruz on 4/1/2018.
  */
 
+import moment from "moment";
+
 window.ContentArena = window.ContentArena || {};
 ContentArena.Utils = {
 
@@ -42,6 +44,10 @@ ContentArena.Utils = {
             });
             if (sort) content.salesPackages.sort(this.sortSalesPackages).reverse();
         }
+
+        if (content.endDate) content.endDate = moment(content.endDate);
+        if (content.startDate) content.startDate = moment(content.startDate);
+
         content.step = Number(content.step);
         content.parsed = true;
 
