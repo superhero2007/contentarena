@@ -49,7 +49,7 @@ class Bid
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid", cascade={"remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(name="content_id", referencedColumnName="id", onDelete="CASCADE")
      * @Groups({"closed", "commercial"})
      */
     private $content;
