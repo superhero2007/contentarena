@@ -512,7 +512,13 @@ class ContentService
 
                     $package->setName($salesPackage->name);
                     $package->setCurrency($this->getCurrency($data->currency));
-                    $package->setSalesMethod($this->getSalesMethod($salesPackage->salesMethod));
+
+                    if ( is_string($salesPackage->salesMethod )){
+                        $salesMethod = $this->getSalesMethod($salesPackage->salesMethod);
+                    } else {
+                        $salesMethod = $this->getSalesMethod($salesPackage->salesMethod->name);
+                    }
+                    $package->setSalesMethod($salesMethod);
                     $package->setBundleMethod($salesPackage->bundleMethod);
                     $package->setTerritoriesMethod($salesPackage->territoriesMethod);
                     $package->setFee($salesPackage->fee);
