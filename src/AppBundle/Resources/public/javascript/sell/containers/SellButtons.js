@@ -1,11 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import cn from 'classnames';
 import store from '../../main/store';
 import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
 import {PropTypes} from 'prop-types';
+
 const MIN_PROGRAM_DESC_LENGTH = 30;
 
 class SellButtons extends React.Component {
@@ -171,11 +173,11 @@ class SellButtons extends React.Component {
     };
 
     onClickStep = (stepSelected) => {
-        const { step} = this.props;
-        if ( this.state.visited.indexOf(stepSelected) !== -1 && step !== stepSelected ) {
-            this.goToStep(stepSelected)
-        }
+        const { maxStep } = this.props;
 
+        if (stepSelected <= maxStep) {
+            this.goToStep(stepSelected);
+        }
     };
 
     goToReviewAndSign = () => {
@@ -227,7 +229,7 @@ class SellButtons extends React.Component {
     };
 
     render() {
-        const {step} = this.props;
+        const { step, maxStep } = this.props;
         const { lastStep, saving } = this.state;
         const cantReviewAndSign = (step === 4 && !this.reviewAndSignEnabled());
 
@@ -241,7 +243,7 @@ class SellButtons extends React.Component {
                     </button> }
                     {
                         [1,2,3,4].map((v,k)=>(
-                            <div className={"step " + ((this.props.step === v) ? "step-active" : "")}
+                            <div className={cn("step", { 'step-active': this.props.step === v, 'step-visited': v <= maxStep})}
                                  onClick={() => {this.onClickStep(v)}}
                                  key={k}>{v}</div>
                         ))
