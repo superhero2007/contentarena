@@ -81,7 +81,10 @@ a:hover {
         justify-content: center;
         align-items: center;
         margin: 0 5px;
-        cursor: pointer;
+
+        &.step-visited {
+          cursor: pointer;
+        }
       }
       .step-active {
         background-color: #1A4B63;
@@ -162,8 +165,18 @@ a:hover {
       justify-content: space-between;
 
       .base-input {
-        input {
+        .display-label {
           cursor: pointer;
+          border: 1px solid lightgray;
+          width: 100%;
+          margin: 0 0 0 5px;
+          height: 35px;
+          line-height: 35px;
+          font-size: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding: 0 38px 0 8px;
         }
       }
     }
