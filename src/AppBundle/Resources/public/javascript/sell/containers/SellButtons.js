@@ -187,8 +187,10 @@ class SellButtons extends React.Component {
         content = parseSeasons(content);
         this.setState({ saving : true });
 
-        if (!content.status) {
-            // No status set, we are in new mode
+        debugger;
+
+        if (!content.status || (content.status.name === 'DRAFT' && content.step === 4)) {
+            //we are in new mode or editing draft
             savePromise = ContentArena.ContentApi.saveContentAsInactive({...content, ...{ status: 'AUTO_INACTIVE' }});
         } else {
             savePromise = ContentArena.ContentApi.saveContentAsDraft(content);
