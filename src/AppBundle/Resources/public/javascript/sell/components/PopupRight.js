@@ -3,12 +3,52 @@ import Modal from 'react-modal';
 import cloneDeep from 'lodash/cloneDeep';
 import toNumber from 'lodash/toNumber';
 import isFinite from 'lodash/isFinite';
+import isEqual from 'lodash/isEqual';
 import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
 import {SuperRightProductionDetailsLabels} from "./SuperRightDefinitions";
 
 const numberFieldStyle = { width: '30px', paddingLeft: '10px'};
+
+const getLanguagesString = (languages) => {
+    return languages.map(item => item.label).join(', ');
+};
+
+const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions, item, predicate) => {
+    const rightLabel = nameToCustomValueConfig[item].key;
+    const rightLabelCustom = nameToCustomValueConfig[item].value;
+    
+    if ( currentRights === rightLabel){
+        return predicate(firstPackage.selectedRights[rightLabelCustom]);
+    } else {
+        return rightItemsDefinitions[currentRights].label;
+    }
+};
+
+const nameToCustomValueConfig = {
+    CAMERA: {
+        key: 'CAMERA_MINIMUM',
+        value: 'CAMERAS'
+    },
+    RUNS: {
+        key: 'RUNS_LIMITED',
+        value: 'RUNS_NUMBER'
+    },
+    ASPECT_RATIO: {
+        key: 'ASPECT_RATIO_CUSTOM',
+        value: 'ASPECT_RATIO_TEXT'
+    },
+    COMMENTARY: {
+        key: 'COMMENTARY_YES',
+        value: 'COMMENTARY_LANGUAGES'
+    },
+    GRAPHICS: {
+        key: 'GRAPHICS_YES',
+        value: 'GRAPHICS_LANGUAGES'
+    }
+};
+
 
 class PopupRight extends React.Component {
     constructor(props) {
@@ -182,27 +222,73 @@ class PopupRight extends React.Component {
 
     };
 
-    getSelection = (id,  superRights) =>{
+    filterRightsPackage(id, rightsPackages) {
+        const {checkContentDelivery, superRights} = this.props;
 
-        let custom = false, selected;
+        return rightsPackages.filter((rightsPackage) => {
+            if (superRights.length > 0 && superRights.indexOf(rightsPackage.shortLabel) === -1) {
+                return false;
+            }
 
-        superRights.forEach( ( superRight ) => {
+            if (checkContentDelivery && id !== "CONTENT_DELIVERY" &&
+                (rightsPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_NON_DEDICATED" ||
+                    rightsPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" )
+            ) {
+                return false;
+            }
 
-            if ( !superRight.selectedRights) return false;
+            return true;
+        });
+    }
 
-            let current = superRight.selectedRights[id];
+    isMultipleValuesSelected = (id,  rightsPackages) => {
+        let custom = false;
+        let selected;
+
+        rightsPackages.forEach( ( rightsPackage ) => {
+            if ( !rightsPackage.selectedRights) {
+                return false;
+            }
+
+            let current = rightsPackage.selectedRights[id];
+
+            switch (id) {
+                case 'RUNS':
+                    const rightLabel = nameToCustomValueConfig[id].key;
+                    const rightLabelCustom = nameToCustomValueConfig[id].value;
+
+                    if (current === rightLabel) {
+                        current = rightsPackage.selectedRights[rightLabelCustom];
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+
+
 
             if ( selected === undefined ){
                 selected = current;
                 return false;
             }
 
-            if ( current !== selected ){
+            if (Array.isArray(current) && Array.isArray(selected)) {
+                current = [...current];
+                current.sort();
+                selected.sort();
+
+                if (!isEqual(current, selected)){
+                    custom = true;
+                    return true;
+                }
+            } else if (current != selected){
                 custom = true;
                 return true;
             }
 
         });
+        
         return custom;
 
     };
@@ -548,64 +634,70 @@ class PopupRight extends React.Component {
 
     render(){
 
-        const {name, rightsPackage,programName, global, languages, checkContentDelivery} = this.props;
+        const {name, rightsPackage, programName, languages, checkContentDelivery} = this.props;
         let id = this.props.id;
-        let custom = this.getSelection(id,  rightsPackage);
-        let selected =  "";
+
+        const rightsPackageFiltered = this.filterRightsPackage(id, rightsPackage);
+
+        let isMultipleValuesSelected = this.isMultipleValuesSelected(id,  rightsPackageFiltered);
+        let displayedValue =  '';
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
         let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
 
         if ( deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery ) id = "LIVE_FEED_" + id;
         
-        if (rightsPackage.length > 0 ){
-            if (id === "PROGRAM") {
-                if (programName) {
-                    selected = programName;
-                }
-            } else if (id === "CAMERA"){
-                custom = custom || this.getSelection("CAMERAS",  rightsPackage);
-                if (!custom) {
+        if (rightsPackageFiltered.length > 0 ){
+            const firstPackage = rightsPackageFiltered[0];
+            const currentRights = firstPackage.selectedRights[id];
+            const getCurrentCustomValueString = getCustomValueString.bind(null, firstPackage, currentRights, RightItemsDefinitions);
 
-                    if ( rightsPackage[0].selectedRights[id] === "CAMERA_MINIMUM"){
-                        selected = "Minimum cameras: " + rightsPackage[0].selectedRights["CAMERAS"];
-                    } else {
-                        selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label;
+            switch (id) {
+                case 'PROGRAM':
+                    displayedValue = programName;
+                    break;
+                case 'LICENSED_LANGUAGES':
+                    displayedValue = getLanguagesString(languages);
+                    break;
+                case 'CAMERA':
+                    displayedValue = getCurrentCustomValueString(id, (value) => `Minimum cameras: ${value}` );
+                    break;
+                case 'RUNS':
+                    displayedValue = getCurrentCustomValueString(id, (value) => `${value} Runs` );
+                    break;
+                case 'ASPECT_RATIO':
+                    displayedValue = getCurrentCustomValueString(id, (value) => `${value}` );
+                    break;
+                case 'COMMENTARY':
+                    displayedValue = getCurrentCustomValueString(id, (value) => getLanguagesString(value));
+                    break;
+                case 'GRAPHICS':
+                    displayedValue = getCurrentCustomValueString(id, (value) => getLanguagesString(value));
+                    break;
+                default:
+                    if (firstPackage.selectedRights) {
+                        const isSingleLabel = !Array.isArray(currentRights);
+                        if (isSingleLabel) {
+                            displayedValue = RightItemsDefinitions[currentRights].label
+                        } else {
+                            displayedValue = currentRights.map(item => {
+                                return RightItemsDefinitions[item].label;
+                            }).join(', ');
+                        }
                     }
-                }
-            } else if (id === "EXPLOITATION_FORM" || id === "TRANSMISSION_MEANS" || id === "TECHNICAL_DELIVERY"){
-
-                if ( rightsPackage[0].selectedRights[id].length > 1 ) {
-                    custom = true;
-                } else {
-                    selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id][0]].label
-                }
-
-            }
-            else if (global){
-
-                if ( languages.length > 0 ) {
-                    custom = true;
-                } else {
-                }
-
-            }else {
-                if (rightsPackage[0].selectedRights && RightItemsDefinitions[rightsPackage[0].selectedRights[id]]) {
-                    selected = RightItemsDefinitions[rightsPackage[0].selectedRights[id]].label
-                }
             }
         }
+
+        const value = (isMultipleValuesSelected) ? "Multiple values selected" : displayedValue;
 
         return (
             <div className="base-input" style={{width: "49%"}}>
                 <label>{name}</label>
-                <input
-                    type="text"
-                    readOnly={true}
-                    value={(custom) ? "Custom!" : selected }
-                    className={(custom) ? "custom" : undefined}
-                    placeholder={"Select"}
+                <div
+                    className='display-label'
                     onClick={this.togglePopup}
-                />
+                >
+                    {value || 'Select'}
+                </div>
                 <i className="fa fa-edit" onClick={this.togglePopup} />
                 { this.renderModal() }
             </div>
