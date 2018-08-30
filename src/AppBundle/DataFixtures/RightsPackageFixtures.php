@@ -26,7 +26,7 @@ class RightsPackageFixtures extends Fixture
             "Delayed & Archive Transmission Rights" => "Delayed & Archive",
             "Live Betting Rights" => "Live Betting",
             "News Access Rights" => "News Access",
-            "Highlight & Clip Rights" => "Highlight & Clips",
+            "Highlight & Clips" => "Highlights & Clips",
             "Edited Program Rights" => "Edited Program"
         );
 
