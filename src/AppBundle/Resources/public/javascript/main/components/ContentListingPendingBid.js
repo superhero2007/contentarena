@@ -115,7 +115,7 @@ class ContentListingPendingBid extends ContentListing {
                                 fontWeight: 600,
                                 marginBottom: 10
                             }}>
-                                <div>{bid.amount} {getCurrencySymbol(bid.salesPackage.currency.code)}</div>
+                                <div>{bid.amount.toLocaleString()} {getCurrencySymbol(bid.salesPackage.currency.code)}</div>
                             </div>
                             <div style={{
                                 display: 'flex',

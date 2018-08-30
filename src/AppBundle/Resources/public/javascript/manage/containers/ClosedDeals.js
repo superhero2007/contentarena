@@ -222,7 +222,7 @@ class ClosedDeals extends React.Component {
                                 id: "price",
                                 accessor: d => {return {fee: d.totalFee, currency: d.salesPackage.currency.code}},
                                 Cell: props => <div className={"blue"}>
-                                    {props.value.fee + " " + getCurrencySymbol(props.value.currency)}
+                                    {props.value.fee.toLocaleString() + " " + getCurrencySymbol(props.value.currency)}
                                 </div>
                             }, {
                                 Header: () => (

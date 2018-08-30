@@ -130,12 +130,16 @@ class SalesPackages extends React.Component {
     };
 
     getFee = (salesPackage) => {
-        let currencySymbol = (salesPackage.currency.code === "EUR" ? "€" : "$");
-
-        if (salesPackage.fee == 0) return "";
-
-        return salesPackage.fee + " " + currencySymbol ;
+        const feeNumber = parseFloat(salesPackage.fee);
+        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol();
     };
+
+    getCurrencySymbol = () => {
+        const {currency} = this.props;
+        return (currency === "EUR" ? "€" : "$");
+    };
+
+
 
     render() {
         const {salesPackages, onSelectPackage, user, listingId} = this.props;
