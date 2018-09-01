@@ -285,8 +285,22 @@ class ContentService
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
-        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
-        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DRAFT")));
+
+        /**
+         * @var ListingStatus currentStatus
+         */
+        $currentStatus = $content->getStatus();
+        $newStatus = "DRAFT";
+        $lastAction = "DRAFT";
+
+        if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
+                || $currentStatus->getName() === 'EDITED' ) ){
+            $newStatus = "EDITED";
+            $lastAction = "EDITED";
+        }
+        
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=> $newStatus)));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
         $content->setLastActionUser($user);
         $content->setLastActionDate(new \DateTime());
         /**
@@ -347,7 +361,8 @@ class ContentService
         $newStatus = ($user->isAutoPublish()) ? "APPROVED": "PENDING";
         $lastAction = "SUBMITTED";
 
-        if ( $currentStatus != null && $currentStatus->getName() === 'APPROVED'){
+        if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
+                || $currentStatus->getName() === 'EDITED' ) ){
             $newStatus = "EDITED";
             $lastAction = "EDITED";
         }

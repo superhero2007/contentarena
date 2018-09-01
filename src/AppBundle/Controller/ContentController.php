@@ -64,6 +64,9 @@ class ContentController extends Controller
     {
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
+
+
+
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($content->getSalesPackages(), 'json',SerializationContext::create()->setGroups(array('listing', 'details')));
