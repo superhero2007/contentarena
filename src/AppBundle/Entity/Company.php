@@ -29,7 +29,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="legal_name", type="string", length=255, unique=true)
-     * @Groups({"details", "closed", "commercial", "settings"})
+     * @Groups({"details", "closed", "commercial", "settings", "listing"})
      */
     private $legalName;
 
