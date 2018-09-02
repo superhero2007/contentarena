@@ -118,7 +118,6 @@ class SellFormStep1 extends React.Component {
 
         this.setState({ loadingSeasons : true });
         ContentArena.Api.getSeasons(tournamentId).done( (seasons ) => {
-            console.log("get season response", seasons);
             ContentArena.Data.Seasons = seasons;
 
             if (seasons.length === 0 ) {
@@ -136,7 +135,6 @@ class SellFormStep1 extends React.Component {
             });
         })
             .always(()=>{
-                console.log("ALWAYS")
             });
     }
 
