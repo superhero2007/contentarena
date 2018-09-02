@@ -248,7 +248,7 @@ class ReviewAndSign extends React.Component {
                     {<div className="buttons" style={{marginTop: 20}}>
                         <div className="buttons-container"  >
                             {!showSubmitting && <button disabled={!(terms && terms_arena && signature)} id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
-                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" ) && this.context.t("Submit Listing") }
+                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" || status.name === "AUTO_INACTIVE" ) && this.context.t("Submit Listing") }
                                 {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && this.context.t("Save")}
                             </button>}
                             {showSubmitting && <i className="fa fa-cog fa-spin" />}
