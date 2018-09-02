@@ -21,7 +21,6 @@ use AppBundle\Entity\Tournament;
 use AppBundle\Entity\Sport;
 use Doctrine\ORM\EntityManager;
 
-
 class ContentService
 {
 
@@ -474,7 +473,7 @@ class ContentService
             $seasons = array();
             $schedules = [];
             foreach ($data->seasons as $key => $seasonData){
-                $season = $this->getSeason($seasonData, $tournament);
+                $season = $this->getSeason($seasonData, $tournament, $key);
                 $seasons[] = $season;
                 $schedules[] = $seasonData->selectedSchedules;
                 if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
@@ -593,7 +592,6 @@ class ContentService
 
         if ( isset($data->customTournament) ){
             $customTournament = $this->newTournament($data->customTournament);
-
             $content->setTournament($customTournament);
             $content->setCustomTournament($data->customTournament);
         }
@@ -732,7 +730,7 @@ class ContentService
 
     }
 
-    private function getSeason($seasonData, $tournament){
+    private function getSeason($seasonData, $tournament, $key){
         if ( isset($seasonData->externalId) ) {
             $season = $this->em
                 ->getRepository('AppBundle:Season')
@@ -770,7 +768,7 @@ class ContentService
             //$this->em->flush();
 
             if ( isset($seasonData->custom)) {
-                $season->setExternalId("ca:season:".$time->getTimestamp());
+                $season->setExternalId("ca:season:".$key.$time->getTimestamp());
                 if ( isset( $tournament) ) {
                     $season->setName($tournament->getName(). " ". $season->getYear());
                 }

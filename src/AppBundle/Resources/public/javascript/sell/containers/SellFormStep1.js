@@ -14,7 +14,6 @@ import {
 } from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
 
-
 class SellFormStep1 extends React.Component {
 
     constructor(props) {
@@ -38,7 +37,7 @@ class SellFormStep1 extends React.Component {
             tournaments: [],
             sportCategories: [],
             sportCategoryExtended : false,
-            nameFromCompetition : false
+            nameFromCompetition : false,
         };
     }
 
@@ -49,6 +48,8 @@ class SellFormStep1 extends React.Component {
 
         ContentArena.Api.getCountries().done( (countries ) => {
         });
+
+
     }
 
     loadCategories (sport) {
@@ -65,6 +66,7 @@ class SellFormStep1 extends React.Component {
     }
 
     loadTournaments (sport, category) {
+
         if( sport.custom ) return;
 
         let sportId = sport.externalId;
@@ -77,9 +79,27 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.Tournaments = tournaments;
 
             if (tournaments.length === 0 ) {
-                this.props.addNewCategory();
-                this.props.addNewTournament();
-                this.props.addNewSeason(0);
+                if (!this.state.customSeasonsParsed){
+                    this.props.addNewCategory();
+                    this.props.addNewTournament();
+
+                    if (this.props.customSeasons.length > 0 ){
+
+                        this.props.customSeasons.forEach((s,i)=>{
+                            this.props.addNewSeason(i);
+                            this.props.updateFromMultiple("seasons", i, "from", s.from);
+                            this.props.updateFromMultiple("seasons",i, "to", s.to);
+                        });
+                    } else {
+                        this.props.addNewSeason(0);
+                    }
+                }
+
+                this.setState({
+                    loadingTournaments : false,
+                    customSeasonsParsed : true
+                });
+
                 return;
             }
 
@@ -98,7 +118,7 @@ class SellFormStep1 extends React.Component {
 
         this.setState({ loadingSeasons : true });
         ContentArena.Api.getSeasons(tournamentId).done( (seasons ) => {
-
+            console.log("get season response")
             ContentArena.Data.Seasons = seasons;
 
             if (seasons.length === 0 ) {
@@ -114,7 +134,10 @@ class SellFormStep1 extends React.Component {
                 loadingSeasons : false,
                 seasons : seasons
             });
-        });
+        })
+            .always(()=>{
+                console.log("ALWAYS")
+            });
     }
 
     loadSchedule (nextProps) {
@@ -432,7 +455,11 @@ class SellFormStep1 extends React.Component {
         if ( this.props.seasons.length > 0 ) {
             inputProps.seasons = [];
             this.props.seasons.forEach(( season )=>{
-                inputProps.seasons.push({value: season.name,isCustom : season.custom})
+                inputProps.seasons.push({
+                    value: season.name,
+                    from: "2029",
+                    to: "2030",
+                    isCustom : season.custom})
             });
         }
         if ( this.state.sportCategories.length > 0 && this.props.sportCategory.length === 0) {
@@ -459,6 +486,7 @@ class SellFormStep1 extends React.Component {
                 isCustom: this.props.sportCategory[0].isCustom
             }
         }
+
 
         return (
             <div className="step-content">
@@ -710,13 +738,13 @@ const mapDispatchToProps = dispatch => {
             type : 'ADD_NEW',
             index : 0,
             selectorType: "sportCategory",
-            clean : ["tournament", "seasons", "customCategory", "customTournament"]
+            clean : ["tournament", "seasons"]
         }),
         addNewTournament : () => dispatch({
             type : 'ADD_NEW',
             index : 0,
             selectorType: "tournament",
-            clean : ["seasons", "customTournament"]
+            clean : ["seasons"]
         }),
         reset : () => dispatch({
             type : 'RESET'
