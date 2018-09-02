@@ -67,10 +67,10 @@ class AppExtension extends AbstractExtension
 
     public function contentDeliveryLabel($shortTag){
         switch ($shortTag){
-            case "LT" : return "Live Transmission";
-            case "DT" : return "Delayed & Archive Footage";
-            case "LB" : return "Live Betting Transmission";
-            case "HL" : return "Highlights & Clips";
+            case "LT" : return "Live Feed";
+            case "DT" : return "Delayed & Archive Content";
+            case "LB" : return "Live Betting Feed";
+            case "HL" : return "Highlight & Clip Footage";
             case "NA" : return "News Footage";
             case "PR" : return "Edited Program";
         }
