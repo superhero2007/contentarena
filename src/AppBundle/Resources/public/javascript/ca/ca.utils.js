@@ -49,7 +49,9 @@ ContentArena.Utils = {
         if (content.startDate) content.startDate = moment(content.startDate);
 
         content.step = Number(content.step);
-        content.customSeasons = content.seasons.filter(s=>s.externalId.startsWith("ca:")).map(s=>{
+        content.customSeasons = content.seasons.filter(s=>{
+            return s.externalId && s.externalId.startsWith("ca:")
+        }).map(s=>{
             let years = s.year.split("/");
             s.from = years.length === 1 ? years[0] : 2000 + Number(years[0]);
             s.to = years.length === 1 ? null : 2000 + Number(years[1]);
