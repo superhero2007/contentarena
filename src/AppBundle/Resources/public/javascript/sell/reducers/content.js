@@ -34,6 +34,7 @@ export const EmptyListing = {
     salesPackages : [],
     customTournament : null,
     customCategory : null,
+    description: null,
     attachments : [],
     annex : [],
     endDateLimit : 30,
@@ -47,7 +48,8 @@ export const EmptyListing = {
     LICENSED_LANGUAGES : [],
     PROGRAM_LANGUAGE : [],
     PROGRAM_SUBTITLES : [],
-    PROGRAM_SCRIPT : []
+    PROGRAM_SCRIPT : [],
+    website : null
 };
 
 export const content = (state = EmptyListing, action) => {

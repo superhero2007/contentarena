@@ -17,7 +17,9 @@ import {PropTypes} from "prop-types";
 class SellFormStep1 extends React.Component {
 
     constructor(props) {
+        console.log("CONTRUCTOR")
         super(props);
+        if ( props.step !== 1) return;
         this.state = {
             title : "Step 1 - Event selection",
             lastSportId : null,
@@ -42,6 +44,9 @@ class SellFormStep1 extends React.Component {
     }
 
     componentDidMount () {
+
+        if (this.props.step !== 1) return;
+
         ContentArena.Api.getSports().done( (sports ) => {
             ContentArena.Data.FullSports = sports;
         });
@@ -49,7 +54,7 @@ class SellFormStep1 extends React.Component {
         ContentArena.Api.getCountries().done( (countries ) => {
         });
 
-
+        this.props.updateContentValue("lastUpdate",new Date().getTime());
     }
 
     loadCategories (sport) {
@@ -172,13 +177,16 @@ class SellFormStep1 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+
+        if (nextProps.step !== 1) return;
+
         const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
         let tournaments, seasons, sportCategories, websites, name = nextProps.name;
 
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
         seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
         sportCategories =( Array.isArray(nextProps.sportCategory) ) ? nextProps.sportCategory : [nextProps.sportCategory];
-        websites =( Array.isArray(nextProps.websites) ) ? nextProps.websites : (nextProps.websites) ? [nextProps.websites]: [];
+        websites =( Array.isArray(nextProps.website) ) ? nextProps.website : (nextProps.website) ? [nextProps.website]: [];
 
         if (nextProps.sports.length === 1 && !loadingCategories) {
             this.loadCategories(nextProps.sports[0]);
@@ -314,6 +322,7 @@ class SellFormStep1 extends React.Component {
     };
 
     addSeason = () => {
+        console.log("ADDSEASON")
         this.setState((prevState)=> ({
             seasonSelectors : [...prevState.seasonSelectors, 1]
         }));
@@ -455,8 +464,8 @@ class SellFormStep1 extends React.Component {
             this.props.seasons.forEach(( season )=>{
                 inputProps.seasons.push({
                     value: season.name,
-                    from: "2029",
-                    to: "2030",
+                    from: season.from,
+                    to: season.to,
                     isCustom : season.custom})
             });
         }
@@ -593,7 +602,7 @@ class SellFormStep1 extends React.Component {
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                    <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "PROGRAM_DESCRIPTION")} />
+                    <Description value={this.props.description} onChange={ (e) => this.updateContentValue(e, "description")} />
 
                     <div className="step-item-description" style={{}}>
                         {this.context.t("Additional information")}

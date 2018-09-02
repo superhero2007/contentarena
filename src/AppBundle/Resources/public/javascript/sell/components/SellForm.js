@@ -32,7 +32,7 @@ class SellForm extends React.Component {
 
         this.state = {
             content : content,
-            showSearch : props.match.params.customId != 1
+            showSearch : props.match.params.customId === "new"
         };
 
         store.subscribe((a) => {
