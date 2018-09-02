@@ -65,8 +65,8 @@ class SuperRight extends React.Component {
                         style={{
                             margin: '0 5px',
                             padding: 4,
-                            width: 40,
-                            fontSize : 12
+                            width: 70,
+                            fontSize : 12,
                         }}/>}
                     { defByLabel[2] && defByLabel[2]}
                 </div>

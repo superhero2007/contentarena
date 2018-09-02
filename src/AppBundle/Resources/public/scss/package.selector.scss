@@ -53,6 +53,9 @@
           display: table-cell;
           vertical-align: middle;
           position: relative;
+          input[type=number] {
+            border: 1.2px solid #1DA9EF;
+          }
         }
         .select-box-item-child:nth-child(1) {
           width: 250px;
