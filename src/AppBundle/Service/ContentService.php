@@ -814,10 +814,11 @@ class ContentService
         if (!$tournament){
             $tournament = new Tournament();
             $tournament->setName($customTournament);
+            $time = new \DateTime();
+            //$this->em->flush();
+            $tournament->setExternalId("ca:tournament:".$time->getTimestamp());
             $this->em->persist($tournament);
-            $this->em->flush();
-            $tournament->setExternalId("ca:tournament:".$tournament->getId());
-            $this->em->flush();
+            //$this->em->flush();
         }
 
 
@@ -833,10 +834,11 @@ class ContentService
         if (!$sportCategory) {
             $sportCategory = new SportCategory();
             $sportCategory->setName($customSportCategory);
+            $time = new \DateTime();
+            //$this->em->flush();
+            $sportCategory->setExternalId("ca:sportCategory:".$time->getTimestamp());
             $this->em->persist($sportCategory);
-            $this->em->flush();
-            $sportCategory->setExternalId("ca:sportCategory:".$sportCategory->getId());
-            $this->em->flush();
+            //$this->em->flush();
         }
         return $sportCategory;
     }
@@ -860,7 +862,7 @@ class ContentService
             if ( isset($categoryData->externalId) ) $category->setExternalId($categoryData->externalId);
             $category->setName($categoryData->name);
             $this->em->persist($category);
-            $this->em->flush();
+            //$this->em->flush();
         }
 
         return $category;
@@ -959,11 +961,12 @@ class ContentService
             $name = ( isset($sportData->name) && $sportData->name != "" ) ? $sportData->name : $sportData->value;
             $sport->setName($name);
             $this->em->persist($sport);
-            $this->em->flush();
-
+            //$this->em->flush();
+            $time = new \DateTime();
             if (isset($sportData->custom)) {
-                $sport->setExternalId("ca:sport:".$sport->getId());
-                $this->em->flush();
+                $sport->setExternalId("ca:sport:".$time->getTimestamp());
+                $this->em->persist($sport);
+                //$this->em->flush();
             }
 
         }
