@@ -35,6 +35,7 @@ export const EmptyListing = {
     customTournament : null,
     customCategory : null,
     description: null,
+    programDescription : null,
     attachments : [],
     annex : [],
     endDateLimit : 30,
