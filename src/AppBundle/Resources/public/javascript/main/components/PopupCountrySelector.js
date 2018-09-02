@@ -108,7 +108,9 @@ class PopupCountrySelector extends React.Component {
         return (
             <div className="popup-country-selector">
                 { this.renderModal() }
-                <img className="territories-icon" src={filterIcon} onClick={this.openModal} />
+                <div className="filter-btn">
+                    <i className="fa fa-sliders" aria-hidden="true" onClick={this.openModal} />
+                </div>
             </div>
         )
     }

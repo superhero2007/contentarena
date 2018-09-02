@@ -1,8 +1,8 @@
 @import "vars";
 
 .manager-container{
-  padding: 20px;
-  background-color: #ffffff;
+  padding: 0 20px 20px;
+  background-color: #fff;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -15,8 +15,9 @@
   align-items: center;
   padding: 0 15px;
   min-height: $barHeight;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   margin-bottom: 20px;
+  background: #fff;
+  box-shadow: 0 1px 9px rgba(0,0,0,0.21);
   .logo {
     cursor: pointer;
 	flex: 150px 0 0;    margin-right: 40px;
@@ -30,7 +31,6 @@
     padding: 0 20px;
     font: inherit;
     font-size: 18px;
-    font-weight: 600;
     color: #1A4B63;
     margin-bottom: 3px;
     margin-right: 3px;
@@ -167,6 +167,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 0 15px;
 }
 
 .manager-content-message{

@@ -153,7 +153,7 @@ class ListingDetails extends React.Component {
 
             <div className="modal-title">
                 Company Information
-                <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
+                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content">

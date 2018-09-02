@@ -12,6 +12,7 @@ import {
 import {goToListing} from "../../main/actions/utils";
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {updateProfile} from "../../main/actions/userActions";
+import RightsLegend from "../../main/components/RightsLegend";
 import {PropTypes} from "prop-types";
 const queryString = require('query-string');
 
@@ -63,6 +64,12 @@ class Marketplace extends React.Component {
         this.filter();
         clearUpdateFilter();
         this.props.updateProfile("BUYER");
+
+        jQuery('.manager-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+    }
+
+    componentWillUnmount(){
+        jQuery('.manager-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     componentWillReceiveProps ( props ) {
@@ -201,14 +208,18 @@ class Marketplace extends React.Component {
             company,
             sortSalesPackages,
             profile,
-            errorMessage
+            errorMessage,
+            rightsPackage
         } = this.state;
 
         if (errorMessage) {
             return <h2 className="text-center">{errorMessage}</h2>
         }
         return (
-            <div className="manager-content" style={{flexDirection: 'row'}}>
+            <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                <div style={{width: '100%', textAlign: 'right'}}>
+                    <RightsLegend />
+                </div>
                 {!showDetails && <div className="buy-container-left">
                     <EventFilter
                         onFilter={this.filter}/>
@@ -217,30 +228,43 @@ class Marketplace extends React.Component {
                         rightsPackage={this.state.rightsPackage}/>
                 </div>}
 
-                {!showDetails && <div className="buy-container-right">
-                    {
-                        listings.length > 0 && listings.map((listing) => {
-                            return <ContentListing
-                                        onSelect={()=>goToListing(listing.customId, true)}
+                {
+                    !showDetails && (
+                        <div className="buy-container-right">
+
+                            {listings.length > 0 &&
+                            listings.map(listing => {
+                                return (
+                                    <ContentListing
+                                        onSelect={() => goToListing(listing.customId, true)}
                                         key={listing.customId}
                                         filter={filter}
                                         sortSalesPackages={sortSalesPackages}
-                                        {...listing} />
-                        })
-                    }
+                                        defaultRightsPackage={rightsPackage}
+                                        {...listing}
+                                    />
+                                );
+                            })}
 
-                    {
-                        listings.length === 0 && loadingListing && <div className={"big-spinner"}>
-                            <i className="fa fa-cog fa-spin"/>
+                            {listings.length === 0 &&
+                            loadingListing && (
+                                <div className={"big-spinner"}>
+                                    <i className="fa fa-cog fa-spin" />
+                                </div>
+                            )}
+
+                            {listings.length === 0 &&
+                            !loadingListing && (
+                                <span className={"no-results"}>
+                                    {this.context.t(
+                                        "Sorry, no results. Try changing the filter settings!"
+                                    )}
+                                </span>
+                            )}
                         </div>
-                    }
+                    )
+                }
 
-                    {
-                        listings.length === 0 && !loadingListing && <span className={"no-results"}>
-                            {this.context.t("Sorry, no results. Try changing the filter settings!")}
-                        </span>
-                    }
-                </div>}
 
                 {
                     loadingListingDetails && <div className={"big-spinner"}>

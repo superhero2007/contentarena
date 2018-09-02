@@ -187,7 +187,7 @@ class SellButtons extends React.Component {
         content = parseSeasons(content);
         this.setState({ saving : true });
 
-        debugger;
+
 
         if (!content.status || (content.status.name === 'DRAFT' && content.step === 4)) {
             //we are in new mode or editing draft
