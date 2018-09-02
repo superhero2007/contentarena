@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {getFullName, goTo, goToListing, limitText} from "../../main/actions/utils";
-import BoardListing from '../components/BoardListing';
+import {getFullName, goToListing, limitText} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import {PropTypes} from "prop-types";
+import cn from "classnames";
 
 class Messages extends React.Component {
     constructor(props) {
@@ -153,8 +153,11 @@ class Messages extends React.Component {
                         {loadingMessages && messages.length ===0 && <div>
                             <i className="fa fa-cog fa-spin" />
                         </div> }
-                        {!loadingMessages && messages.map((m,i)=>{
-                            return <div className={(user===m.sender.email) ? "message own-message" : "message"}>
+                        {!loadingMessages && messages.map((m, i)=>{
+                            const ownCompanyMessage = user.company.id === m.sender.company.id;
+                            const ownMessage = user.id === m.sender.id;
+                            
+                            return <div key={i} className={cn("message", { "own-message": ownMessage, 'own-company': ownCompanyMessage })}>
                                 <div className={"message-sender"}>
                                     {getFullName(m.sender)}
                                 </div>
