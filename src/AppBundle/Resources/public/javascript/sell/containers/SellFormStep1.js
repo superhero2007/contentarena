@@ -14,11 +14,12 @@ import {
 } from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
 
-
 class SellFormStep1 extends React.Component {
 
     constructor(props) {
+        console.log("CONTRUCTOR")
         super(props);
+        if ( props.step !== 1) return;
         this.state = {
             title : "Step 1 - Event selection",
             lastSportId : null,
@@ -38,17 +39,22 @@ class SellFormStep1 extends React.Component {
             tournaments: [],
             sportCategories: [],
             sportCategoryExtended : false,
-            nameFromCompetition : false
+            nameFromCompetition : false,
         };
     }
 
     componentDidMount () {
+
+        if (this.props.step !== 1) return;
+
         ContentArena.Api.getSports().done( (sports ) => {
             ContentArena.Data.FullSports = sports;
         });
 
         ContentArena.Api.getCountries().done( (countries ) => {
         });
+
+        this.props.updateContentValue("lastUpdate",new Date().getTime());
     }
 
     loadCategories (sport) {
@@ -78,7 +84,27 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.Tournaments = tournaments;
 
             if (tournaments.length === 0 ) {
-                this.props.addNewCategory();
+                if (!this.state.customSeasonsParsed){
+                    this.props.addNewCategory();
+                    this.props.addNewTournament();
+
+                    if (this.props.customSeasons.length > 0 ){
+
+                        this.props.customSeasons.forEach((s,i)=>{
+                            this.props.addNewSeason(i);
+                            this.props.updateFromMultiple("seasons", i, "from", s.from);
+                            this.props.updateFromMultiple("seasons",i, "to", s.to);
+                        });
+                    } else {
+                        this.props.addNewSeason(0);
+                    }
+                }
+
+                this.setState({
+                    loadingTournaments : false,
+                    customSeasonsParsed : true
+                });
+
                 return;
             }
 
@@ -91,7 +117,6 @@ class SellFormStep1 extends React.Component {
     }
 
     loadSeasons (tournaments) {
-
         let tournamentId = ( tournaments.length > 0 ) ? tournaments[0].externalId : null;
 
         if ( tournamentId === this.state.lastTournamentId ) return;
@@ -101,7 +126,10 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.Seasons = seasons;
 
             if (seasons.length === 0 ) {
-                this.props.addNewSeason();
+                this.props.addNewSeason(0);
+                this.setState({
+                    loadingSeasons : false,
+                });
                 return;
             }
 
@@ -110,7 +138,9 @@ class SellFormStep1 extends React.Component {
                 loadingSeasons : false,
                 seasons : seasons
             });
-        });
+        })
+            .always(()=>{
+            });
     }
 
     loadSchedule (nextProps) {
@@ -148,13 +178,15 @@ class SellFormStep1 extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
+        if (nextProps.step !== 1) return;
+
         const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
         let tournaments, seasons, sportCategories, websites, name = nextProps.name;
 
         tournaments = ( Array.isArray(nextProps.tournament) ) ? nextProps.tournament : [nextProps.tournament];
         seasons = ( Array.isArray(nextProps.seasons) ) ? nextProps.seasons : [nextProps.seasons];
         sportCategories =( Array.isArray(nextProps.sportCategory) ) ? nextProps.sportCategory : [nextProps.sportCategory];
-        websites =( Array.isArray(nextProps.websites) ) ? nextProps.websites : (nextProps.websites) ? [nextProps.websites]: [];
+        websites =( Array.isArray(nextProps.website) ) ? nextProps.website : (nextProps.website) ? [nextProps.website]: [];
 
         if (nextProps.sports.length === 1 && !loadingCategories) {
             this.loadCategories(nextProps.sports[0]);
@@ -225,64 +257,78 @@ class SellFormStep1 extends React.Component {
         this.props.updateContentValue(key,event.target.value);
     };
 
-    forceCustomTournament = () => { return this.hasCustomSport() || this.hasCustomCategory() || this.state.sportCategoryExtended  };
+    forceCustomTournament = () => {
+        return this.hasCustomSport() || this.hasCustomCategory() || this.state.sportCategoryExtended
+    };
 
-    forceCustomCategory = () => { return this.hasCustomSport()  };
+    forceCustomCategory = () => {
+        return this.hasCustomSport()
+    };
 
     forceCustomSeason = () => {
-        return this.hasCustomSport()
-            || this.hasCustomTournament()
+        let response = this.hasCustomSport() || this.hasCustomTournament();
+        return response;
     };
 
     hasCustomSport = () => {
+
         let hasCustomSport = false;
+        let response;
 
         this.props.sports.forEach( ( sport ) => {
             if ( sport.custom ) hasCustomSport = true;
         });
 
-        return hasCustomSport && this.props.sports.length === 1;
+        response = hasCustomSport && this.props.sports.length === 1;
+
+        return response;
 
     };
 
     hasCustomCategory = () => {
+
         let hasCustomCategory = false;
+        let response;
 
         this.state.sportCategories.forEach( ( sportCategory ) => {
             if ( sportCategory.custom ) hasCustomCategory = true;
         });
 
-        return this.forceCustomCategory() || hasCustomCategory ;
+        response =  this.forceCustomCategory() || hasCustomCategory ;
+        return response
     };
 
     hasCustomTournament = () => {
         let hasCustomTournament = false;
-
+        let response;
         this.state.tournaments.forEach( ( tournament ) => {
             if ( tournament.custom ) hasCustomTournament = true;
         });
 
-        return this.forceCustomTournament() || hasCustomTournament || this.state.sportCategoryExtended;
+        response =   this.forceCustomTournament() || hasCustomTournament || this.state.sportCategoryExtended;
+        return response
     };
 
     hasCustomSeason = () => {
 
         let hasCustomSeason = false;
-
+        let response;
         this.props.seasons.forEach( ( season ) => {
             if ( season.custom ) hasCustomSeason = true;
         });
 
-        return this.forceCustomSeason() || hasCustomSeason;
+        response =  this.forceCustomSeason() || hasCustomSeason;
+        return response
     };
 
     addSeason = () => {
+        console.log("ADDSEASON")
         this.setState((prevState)=> ({
             seasonSelectors : [...prevState.seasonSelectors, 1]
         }));
 
-        if ( (this.state.seasons.length > 0 && this.state.seasons[0].custom) || this.state.sportCategoryExtended ){
-            this.props.addNewSeason(this.state.seasonSelectors.length);
+        if ( this.hasCustomTournament() ){
+            this.props.addNewSeason(this.props.seasons.length);
         }
 
 
@@ -384,12 +430,12 @@ class SellFormStep1 extends React.Component {
         let show = this.state.sportSelectors.length === 1 &&
             ( this.state.seasons.length > 0 || this.forceCustomSeason() ) &&
             this.state.seasonSelectors.length > 0;
-        console.log(this.state.seasons.length,this.forceCustomSeason(),this.state.seasonSelectors.length )
         return show;
 
     };
 
     render() {
+
         if ( this.props.step !== 1 ) return (null);
 
         const {websites, website} = this.state;
@@ -416,7 +462,11 @@ class SellFormStep1 extends React.Component {
         if ( this.props.seasons.length > 0 ) {
             inputProps.seasons = [];
             this.props.seasons.forEach(( season )=>{
-                inputProps.seasons.push({value: season.name,isCustom : season.custom})
+                inputProps.seasons.push({
+                    value: season.name,
+                    from: season.from,
+                    to: season.to,
+                    isCustom : season.custom})
             });
         }
         if ( this.state.sportCategories.length > 0 && this.props.sportCategory.length === 0) {
@@ -431,20 +481,19 @@ class SellFormStep1 extends React.Component {
                 isCustom: this.state.tournaments[0].isCustom
             }
         }
-
         if (  this.props.tournament.length > 0 ) {
             inputProps.tournament = {
                 value: this.props.tournament[0].name,
                 isCustom: this.props.tournament[0].isCustom
             }
         }
-
         if (  this.props.sportCategory.length > 0 ) {
             inputProps.sportCategory = {
                 value: this.props.sportCategory[0].name,
                 isCustom: this.props.sportCategory[0].isCustom
             }
         }
+
 
         return (
             <div className="step-content">
@@ -545,7 +594,7 @@ class SellFormStep1 extends React.Component {
                                 loading={this.state.loadingSeasons}
                                 showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
                                 onBlur={ (e) => this.updateContentValue(e, "customSeason")}
-                                isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : false}
+                                isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : this.forceCustomSeason()}
                                 showAddNew={this.state.seasonSelectors.length === i + 1}
                                 openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
                         })
@@ -553,7 +602,7 @@ class SellFormStep1 extends React.Component {
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                    <Description value={this.props.description} onBlur={ (e) => this.updateContentValue(e, "PROGRAM_DESCRIPTION")} />
+                    <Description value={this.props.description} onChange={ (e) => this.updateContentValue(e, "description")} />
 
                     <div className="step-item-description" style={{}}>
                         {this.context.t("Additional information")}
@@ -696,7 +745,13 @@ const mapDispatchToProps = dispatch => {
             type : 'ADD_NEW',
             index : 0,
             selectorType: "sportCategory",
-            clean : ["tournament", "seasons", "customCategory"]
+            clean : ["tournament", "seasons"]
+        }),
+        addNewTournament : () => dispatch({
+            type : 'ADD_NEW',
+            index : 0,
+            selectorType: "tournament",
+            clean : ["seasons"]
         }),
         reset : () => dispatch({
             type : 'RESET'

@@ -126,9 +126,13 @@ class CommercialActivity extends React.Component {
                         <Select
                             name="form-field-name"
                             placeholder="All listings"
+                            isClearable={true}
                             onChange={(selected)=>{
-                                let filterString = (filter!=="ALL") ? "&" +filter : "" ;
-                                history.push("/commercialactivity/filter/"+selected.value + filterString)
+                                let filterString = (filter!=="ALL") ? (selected) ? "&" +filter : filter : "" ;
+                                let idString = selected ? selected.value : "";
+                                let prefix = ( !selected && filter === "ALL") ? "" : "/filter/";
+                                history.push("/commercialactivity"+ prefix + idString + filterString)
+
                             }}
                             multi={false}
                             value={selectedListings[0]}
@@ -139,7 +143,7 @@ class CommercialActivity extends React.Component {
                     <div className={"status-filter"}>
                         <div className={"status-filter-item"}
                              onClick={()=>{
-                                 let filterString = (selectedListings.length > 0) ? "/" + selectedListings[0]  : "" ;
+                                 let filterString = (selectedListings.length > 0) ? "/filter/" + selectedListings[0]  : "" ;
                                  history.push("/commercialactivity"+filterString)
                              }}>
                             {filter==="ALL" && <img src={this.activeBulletIcon} />}

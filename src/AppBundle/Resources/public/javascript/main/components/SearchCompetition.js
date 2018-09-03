@@ -33,6 +33,11 @@ class SearchCompetition extends  React.Component {
             _this.setState({
                 resultMessage : _this.getResultMessage(0)
             });
+        }).always(()=>{
+            _this.setState({
+                searching : false,
+                searchDone : true,
+            });
         });
 
     };

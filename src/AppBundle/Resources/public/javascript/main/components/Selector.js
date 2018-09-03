@@ -220,7 +220,12 @@ class Selector extends React.Component {
 
     getItems = () =>{
         let filter = this.getActiveFilter();
-        if ( filter.type === "origin" ) return this.props[filter.value];
+        if ( filter.type === "origin" ){
+            if (this.props[filter.value]) return this.props[filter.value];
+            if ( !this.shouldShowFilters() ) return this.state.selectorItems;
+
+            return this.state.selectorItems.filter(this.filterLetter);
+        }
 
         if ( filter.type === "international" ) return this.state.selectorItems.filter(this.filterInternational);
 

@@ -53,7 +53,7 @@ class SellButtons extends React.Component {
 
         }).fail(() =>{
             this.setState({ saving : false, savingSuccess: false });
-            history.push("/contentlisting/"+ response.customId + "/" + nextStep);
+            //history.push("/contentlisting/"+ response.customId + "/" + nextStep);
         });
     };
 

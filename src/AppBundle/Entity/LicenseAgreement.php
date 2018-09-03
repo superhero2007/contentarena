@@ -30,8 +30,10 @@ class LicenseAgreement
     private $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", cascade={"remove"})
+     * @ORM\JoinColumn(name="content_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE",nullable=true)
      */
     private $content;
 
@@ -42,8 +44,10 @@ class LicenseAgreement
     private $salesPackage;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Bid")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Bid", cascade={"remove"})
+     * @ORM\JoinColumn(name="bid_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE",nullable=true)
      */
     private $bid;
 

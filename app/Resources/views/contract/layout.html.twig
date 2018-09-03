@@ -479,6 +479,29 @@
                         {% endfor %}
                     </tr>
 
+                    {% if content.rightsPackage| has_right("NA") or content.rightsPackage| has_right("HL") %}
+
+                        <tr>
+                            <td>Granted Transmission Time</td>
+                            {% for right in content.rightsPackage %}
+                                <td>
+                                    {% if right.shortLabel == "NA" %}
+                                        {% if content.extraData.NA_INPUT is defined %}
+                                            {{ content.extraData.NA_INPUT }} seconds
+                                        {% endif %}
+                                    {% elseif right.shortLabel == "HL"%}
+                                        {% if content.extraData.HL_INPUT is defined %}
+                                            {{ content.extraData.HL_INPUT }} minutes
+                                        {% endif %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+
+
+                    {% endif %}
                 </table>
             </div>
 

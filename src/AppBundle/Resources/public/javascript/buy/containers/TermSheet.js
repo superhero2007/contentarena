@@ -57,6 +57,8 @@ class TermSheet extends React.Component {
                 {
                     rightsPackage.map((rp,k)=>{
 
+                        if ( checkContentDelivery && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_NON_DEDICATED") return;
+
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
                         </div>;
