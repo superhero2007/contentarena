@@ -94,6 +94,7 @@ class SellFormStep1 extends React.Component {
                             this.props.addNewSeason(i);
                             this.props.updateFromMultiple("seasons", i, "from", s.from);
                             this.props.updateFromMultiple("seasons",i, "to", s.to);
+                            if (s.fixtures) this.props.updateFromMultiple("seasons",i, "fixtures", s.fixtures);
                         });
                     } else {
                         this.props.addNewSeason(0);
@@ -221,10 +222,13 @@ class SellFormStep1 extends React.Component {
             }
         }
 
+        if (tournaments.length === 0) {
+            this.setState({seasons : []});
+        }
+
         this.setState({
             sportCategories: sportCategories,
             tournaments : tournaments,
-            seasons : seasons
         });
 
         if (sportCategories.length === 1 ) {

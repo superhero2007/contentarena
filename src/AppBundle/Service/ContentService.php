@@ -477,7 +477,19 @@ class ContentService
                     $season = $this->getSeason($seasonData, $tournament, $key);
                     $seasons[] = $season;
                     $schedules[] = $seasonData->selectedSchedules;
-                    if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
+                    if ( isset($seasonData->fixtures) ) {
+
+                        $filteredFixtures = [];
+                        foreach ( $seasonData->fixtures as $fixtureData ){
+                            if ( isset($fixtureData->name) && isset($fixtureData->date) ){
+                                $filteredFixtures[] = $fixtureData;
+                            }
+                        }
+
+                        $fixtures[] = $filteredFixtures;
+                    }
+
+
                 }
 
                 $content->setSchedulesBySeason($schedules);
@@ -490,8 +502,6 @@ class ContentService
 
             }
         }
-
-
 
         $selectedRights = array();
 
