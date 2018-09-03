@@ -51,10 +51,11 @@ ContentArena.Utils = {
         content.step = Number(content.step);
         content.customSeasons = content.seasons.filter(s=>{
             return s.externalId && s.externalId.startsWith("ca:")
-        }).map(s=>{
+        }).map((s,i)=>{
             let years = s.year.split("/");
             s.from = years.length === 1 ? years[0] : 2000 + Number(years[0]);
             s.to = years.length === 1 ? null : 2000 + Number(years[1]);
+            s.fixtures = content.fixturesBySeason[i]
             return s;
         });
         content.parsed = true;

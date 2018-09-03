@@ -197,6 +197,11 @@ class SellButtons extends React.Component {
 
                 if ( response.salesPackages && Array.isArray(response.salesPackages) ){
                     response.salesPackages.forEach((sp, i)=>{
+
+                        if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
+                        if (sp.excludedCountries) sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
+                        if (sp.territories) sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}});
+
                         this.props.updateSalesPackages("save", sp, i);
                     });
                 }
