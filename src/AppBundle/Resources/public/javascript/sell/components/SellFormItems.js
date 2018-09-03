@@ -9,11 +9,14 @@ export const Description = ({value, onChange, title= "Enter a description", plac
     </div>
 );
 
-export const TitleBar = ({title, subtitle}) => (
+export const TitleBar = ({title, subtitle, infoText}) => (
     <div className="title-bar">
         <hr/>
         <div className={"title"}>{title}</div>
         <div className={"subtitle"}>{subtitle}</div>
+        {infoText && (
+            <i className="fa fa-info-circle tooltip-icon" title={infoText}/>
+        )}
     </div>
 );
 
