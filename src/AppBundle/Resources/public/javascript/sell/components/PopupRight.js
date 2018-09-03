@@ -411,9 +411,11 @@ class PopupRight extends React.Component {
         >
 
             <div className="modal-title">
+                <i className="fa fa-edit"/>
                 Edit {name}
                 {description && <i className="fa fa-info-circle tooltip-icon" title={description}/>}
-                <i className="fa fa-times-circle-o close-icon" onClick={this.closePopupAndRestoreData}/>
+                <i className="fa fa-comments"/>
+                <i className="fa fa-times close-icon" onClick={this.closePopupAndRestoreData}/>
             </div>
 
             <div className="step-content">
@@ -509,7 +511,7 @@ class PopupRight extends React.Component {
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
                         {showTextArea && showTextArea === "FURTHER_DETAILS" && rightsPackage && rightsPackage.length > 0 &&
-                        <div>
+                        <div style={{ padding: "0 15px"}}>
                             <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Further details</div>
                             <textarea
 
@@ -518,7 +520,7 @@ class PopupRight extends React.Component {
                         </div>
                         }
 
-                        {technicalFee && this.hasSelection(id, technicalFee, rightsPackage) && <div>
+                        {technicalFee && this.hasSelection(id, technicalFee, rightsPackage) && <div style={{ padding: "0 15px"}}>
                             <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Technical fee</div>
                             <div>
                                 <input
@@ -538,10 +540,9 @@ class PopupRight extends React.Component {
                                     className="ca-radio"
                                     value={"ON_TOP"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
-                                    name="TECHNICAL_FEE"/>
-                                Technical fee charged on top of license fee
+                                    name="TECHNICAL_FEE"/> Technical fee charged on top of license fee
                                 <input
-                                    style={{ width: '50px', margin: '1px 10px'}}
+                                    style={{ width: '70px', margin: '1px 10px'}}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_PERCENTAGE")} }
                                     value={ rightsPackage[0].selectedRights["TECHNICAL_FEE_PERCENTAGE"] }
                                     type="number"
@@ -557,11 +558,15 @@ class PopupRight extends React.Component {
                 </div>
             </div>
 
-            <div className={"buttons"}>
+            <div className={"buttons popup-buttons"}>
+                <button
+                    className={"cancel-button"}
+                    onClick={this.closePopupAndRestoreData}>Cancel
+                </button>
                 <button
                     disabled={!this.showOkButton()}
                     className={"standard-button"}
-                    onClick={this.onOKClicked}>Ok
+                    onClick={this.onOKClicked}>Accept
                 </button>
             </div>
 

@@ -38,12 +38,12 @@ class Comments extends React.Component {
             style={customStyles}
         >
 
-            <div className="modal-title">
+            <div className="modal-title" style={{ width: "500px"}}>
                 {this.context.t("Add further comments")}
                 <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
-            <div className="step-content">
+            <div className="step-content" style={{ padding: "0 15px 5px"}}>
                 <div className="step-content-container">
 
                     <div className="base-full-input">

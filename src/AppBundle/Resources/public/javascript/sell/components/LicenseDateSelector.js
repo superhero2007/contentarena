@@ -55,8 +55,9 @@ class LicenseDateSelector extends React.Component {
             >
 
                 <div className="modal-title">
+                    <i className="fa fa-edit"/>
                     {this.context.t("Edit license period")}
-                    <i className="fa fa-times-circle-o close-icon" onClick={onClose}/>
+                    <i className="fa fa-times close-icon" onClick={onClose}/>
                 </div>
 
                 <div className="step-content step-content-custom">
@@ -157,13 +158,13 @@ class LicenseDateSelector extends React.Component {
                     </div>
                 </div>
 
-                <div className={"buttons"}>
+                <div className={"buttons popup-buttons"}>
                     <button
                         title={saveButtonTooltip}
                         disabled={!!saveButtonTooltip}
                         className={"standard-button"}
                         onClick={this.onOKClick}>
-                        {this.context.t("Ok")}
+                        {this.context.t("Accept")}
                     </button>
                 </div>
 
