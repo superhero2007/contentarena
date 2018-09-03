@@ -1,6 +1,7 @@
 import React from 'react';
 import {editedProgramSelected} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
+import {tournamentIcon, sportIcon, sportCategoryIcon, seasonReleaseIcon, fixturesEpisodeIcon, eventTimeIcon} from "../../main/components/Icons";
 
 class ContentListingEventDetails extends React.Component {
 
@@ -82,7 +83,6 @@ class ContentListingEventDetails extends React.Component {
             showCustomId,
             PROGRAM_YEAR,
             PROGRAM_EPISODES,
-            isFragment
         } = this.props;
 
         let schedules = this.getSchedules();
@@ -92,55 +92,44 @@ class ContentListingEventDetails extends React.Component {
         let seasonName =  seasonTitle + seasons.map(season => (season.year)).join(", ");
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
+
+
         return (
             <div className="listing-attributes col">
 
                 <div className="listing-item event">
+                    {/*Tournament name*/}
+                    {tournament && tournament.length > 0 && <span>{tournamentIcon} {tournament[0].name}</span>}
+                    {customTournament && !customId && <span>{tournamentIcon} {customTournament}</span>}
+                    {tournament && tournament.length === 0 && !customTournament && <span>
+                        {tournamentIcon} {this.context.t("General content")}
+                    </span>}
+                </div>
+
+                <div className="listing-item event">
                     {/*Sport name*/}
-                    {sports && sports.length === 1 && <span>{sports[0].name}</span>}
+                    {sports && sports.length === 1 && <span>{sportIcon} {sports[0].name}</span>}
                     {sports && sports.length > 1 && <span>
-                        {this.context.t("Multiple Sports")}
+                        {sportIcon} {this.context.t("Multiple Sports")}
                     </span>}
 
                     {/*Sport category*/}
-                    {sportCategory && sportCategory.length > 0 && <span>{sportCategory[0].name}</span> }
-                    {customCategory && <span>{customCategory}</span>}
+                    {sportCategory && sportCategory.length > 0 && <span>{sportCategoryIcon} {sportCategory[0].name}</span> }
+                    {customCategory && <span>{sportCategoryIcon} {customCategory}</span>}
+
+                    {/*Season/Release*/}
+                    {seasons && seasons.length > 0 && <span>{seasonReleaseIcon} {seasonName}</span>}
+                    {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} {PROGRAM_YEAR}</span>}
+
+                    {/*Fixtures/Episodes*/}
+                    {this.getFixtures().length > 1 && <span>{fixturesEpisodeIcon} {this.getFixtures().length} fixtures</span>}
+                    {this.getFixtures().length === 1 && <span>{fixturesEpisodeIcon} {this.getFixtures()[0].name}</span>}
+                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{fixturesEpisodeIcon} {PROGRAM_EPISODES}</span>}
                 </div>
 
                 <div className="listing-item event">
-                    {/*Tournament name*/}
-                    {tournament && tournament.length > 0 && <span>{tournament[0].name}</span>}
-                    {customTournament && !customId && <span>{customTournament}</span>}
-                    {tournament && tournament.length === 0 && !customTournament && <span>
-                        {this.context.t("General content")}
-                    </span>}
-
-                    {/*Season name*/}
-                    {seasons && seasons.length > 0 && seasonName}
-
-                    {/*Release*/}
-                    {this.showProgramInfo() && PROGRAM_YEAR && <span>{PROGRAM_YEAR}</span>}
-                </div>
-
-                <div className="listing-item event">
-                    {/*Round name*/}
-                    {rounds.length === 1 && <span>{roundsName}</span>}
-                    {rounds.length > 1 && <span>
-                        {this.context.t("Multiple rounds")}
-                    </span>}
-
-                    {/*Matches*/}
-                    {matches.length === 1 &&
-                    matches[0].competitors.map(( competitor, i, list)=>{
-                        return <span key={i}>{competitor.name} {(list.length !== i + 1) && " vs " }</span>
-                    })}
-
-                    {/*Summarizes two types: rounds and matches*/}
-                    {this.getFixtures().length > 1 && this.getFixtures().length +' fixtures'}
-                    {this.getFixtures().length === 1 && this.getFixtures()[0].name}
-
-                    {/*Episodes*/}
-                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{PROGRAM_EPISODES}</span>}
+                    {/*Event time*/}
+                    {eventTimeIcon} todo: event time
                 </div>
             </div>
         );

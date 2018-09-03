@@ -1,0 +1,18 @@
+$select-input-height: 44px;
+@import "../../../../../node_modules/react-select/scss/default.scss";
+
+.Select-arrow {
+  margin-right: 10px;
+  margin-top: 3px;
+  border: 0;
+}
+
+.Select-arrow:after {
+  content: "\f107";
+  font: normal normal normal 18px/1 FontAwesome;
+  color: #999999;
+}
+
+.Select.is-open > .Select-control .Select-arrow:after {
+  content: "\f106";
+}

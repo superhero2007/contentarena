@@ -529,7 +529,7 @@ ContentArena.Api= {
             dataType: "json",
             success: function (data) {
 
-                data.sort(_this.sortBySport);
+                data.filter(item => !!item.sport).sort(_this.sortBySport);
 
                 deferred.resolve(data);
             },

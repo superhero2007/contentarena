@@ -10,7 +10,7 @@ import {
     withRouter
 } from "react-router-dom";
 import {connect} from "react-redux";
-import {updateProfile} from "./actions/userActions";
+import {updateProfile, loadUserData} from "./actions/userActions";
 import {setLanguage} from "redux-i18n";
 
 
@@ -109,6 +109,7 @@ class AuthRouter extends React.Component {
     }
 
     componentWillMount() {
+        this.props.loadUserData();
         this.props.setLanguage("en");
     }
 
@@ -166,6 +167,7 @@ const mapDispatchToProps = dispatch => {
             email: email
         }),
         updateProfile : profile =>dispatch(updateProfile(profile)),
+        loadUserData : () => dispatch(loadUserData()),
         setLanguage: lang => dispatch(setLanguage(lang))
     }
 };

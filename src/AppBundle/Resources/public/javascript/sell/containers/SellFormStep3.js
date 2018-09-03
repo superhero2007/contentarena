@@ -228,8 +228,8 @@ class SellFormStep3 extends React.Component {
                                     {this.context.t("Start")}
                                 </div>
                                 <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
-                                    { !this.props.startDate  && "contract conclusion"}
-                                    { this.props.startDate  && Moment(this.props.startDate).format('DD/MM/YYYY')}
+                                    { this.props.startDateMode === "LICENSE"  && " contract conclusion"}
+                                    { this.props.startDateMode === "DATE"  && Moment(this.props.startDate).format('DD/MM/YYYY')}
                                 </div>
                                 <div className="column right-name">
                                     {this.context.t("End")}

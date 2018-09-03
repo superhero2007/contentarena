@@ -29,7 +29,7 @@ class CompanyInformation extends React.Component {
         });
     };
 
-    updateContent = (e, name) => {
+    updateCompanyContent = (e, name) => {
         const company = {...this.state.company};
 
         company[name] = e.target.value;
@@ -56,7 +56,7 @@ class CompanyInformation extends React.Component {
 
             <div className="modal-title">
                 {this.context.t("Company Information")}
-                <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
+                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content custom">
@@ -69,6 +69,7 @@ class CompanyInformation extends React.Component {
                         <input
                             type={"text"}
                             style={inputStyle}
+                            onChange={(e) => { this.updateCompanyContent(e, "legalName")}}
                             value={company.legalName}/>
                     </div>
 
@@ -79,7 +80,7 @@ class CompanyInformation extends React.Component {
                         <input
                             style={inputStyle}
                             type={"text"}
-                            onChange={(e) => { this.updateContent(e, "registrationNumber")}}
+                            onChange={(e) => { this.updateCompanyContent(e, "registrationNumber")}}
                             value={company.registrationNumber}/>
                     </div>
 
@@ -90,7 +91,7 @@ class CompanyInformation extends React.Component {
                         <input
                             style={inputStyle}
                             type={"text"}
-                            onChange={(e) => { this.updateContent(e, "vat")}}
+                            onChange={(e) => { this.updateCompanyContent(e, "vat")}}
                             value={company.vat}/>
                     </div>
 
@@ -101,7 +102,7 @@ class CompanyInformation extends React.Component {
                         <input
                             style={inputStyle}
                             type={"text"}
-                            onChange={(e) => { this.updateContent(e, "address")}}
+                            onChange={(e) => { this.updateCompanyContent(e, "address")}}
                             defaultValue={company.address}/>
                     </div>
 
@@ -112,7 +113,7 @@ class CompanyInformation extends React.Component {
                         <input
                             style={inputStyle}
                             type={"text"}
-                            onChange={(e) => { this.updateContent(e, "city")}}
+                            onChange={(e) => { this.updateCompanyContent(e, "city")}}
                             value={company.city}/>
                     </div>
 
@@ -123,7 +124,7 @@ class CompanyInformation extends React.Component {
                         <input
                             style={inputStyle}
                             type={"text"}
-                            onChange={(e) => { this.updateContent(e, "zip")}}
+                            onChange={(e) => { this.updateCompanyContent(e, "zip")}}
                             value={company.zip}/>
                     </div>
 
@@ -133,7 +134,7 @@ class CompanyInformation extends React.Component {
                         </label>
                         <CountrySelector
                             multi={false}
-                            onChange={(val) => { this.updateCountry(val)}}
+                            onChange={(val) => { this.updateCompanyContent(val)}}
                             value={{value: company.country.name, label: company.country.name}}/>
                     </div>
 

@@ -40,70 +40,84 @@ class HeaderBar extends  React.Component {
                     <img src={assetsBaseDir + "app/images/logo.png"} alt=""/>
                 </div>
 
-                { profile === "BUYER" &&
-                <HeaderBarTab
-                    match={match.url === "/marketplace"}
-                    route={"/marketplace"}>
-                    {this.context.t("Marketplace")}
-                </HeaderBarTab> }
-
-                { profile === "BUYER" && <HeaderBarTab
-                    match={match.url === "/watchlist"}
-                    route={"/watchlist"}>
-                    {this.context.t("Watchlist")}
-                </HeaderBarTab> }
-
-                { profile === "BUYER" && <HeaderBarTab
-                    match={match.url === "/bids/activebids" ||match.url === "/bids/declinedbids"  }
-                    route={"/bids/activebids"}
+                {profile === "BUYER" && (
+                    <HeaderBarTab
+                        match={match.url === "/marketplace"}
+                        route={"/marketplace"}
                     >
-                    {this.context.t("Bids")}
-                </HeaderBarTab> }
+                        <b>{this.context.t("Marketplace")}</b>
+                    </HeaderBarTab>
+                )}
 
-                { profile === "BUYER" && <HeaderBarTab
-                    match={match.url === "/closeddeals"}
-                    route={"/closeddeals"}
+                {profile === "BUYER" && (
+                    <HeaderBarTab match={match.url === "/watchlist"} route={"/watchlist"}>
+                        <b>{this.context.t("Watchlist")}</b>
+                    </HeaderBarTab>
+                )}
+
+                {profile === "BUYER" && (
+                    <HeaderBarTab
+                        match={
+                            match.url === "/bids/activebids" ||
+                            match.url === "/bids/declinedbids"
+                        }
+                        route={"/bids/activebids"}
                     >
-                    {this.context.t("Closed deals")}
-                </HeaderBarTab> }
+                        <b>{this.context.t("Bids")}</b>
+                    </HeaderBarTab>
+                )}
 
-                { profile === "SELLER" && <HeaderBarTab
-                    match={match.url === "/managelistings"}
-                    route={"/managelistings"}>
-                    {this.context.t("Manage listings")}
-                </HeaderBarTab> }
+                {profile === "BUYER" && (
+                    <HeaderBarTab
+                        match={match.url === "/closeddeals"}
+                        route={"/closeddeals"}
+                    >
+                        <b>{this.context.t("Closed deals")}</b>
+                    </HeaderBarTab>
+                )}
 
-                { profile === "SELLER" && <HeaderBarTab
-                    match={match.url === "/commercialactivity"}
-                    route={"/commercialactivity"} >
-                    {this.context.t("Commercial activity")}
-                </HeaderBarTab> }
+                {profile === "SELLER" && (
+                    <HeaderBarTab
+                        match={match.url === "/managelistings"}
+                        route={"/managelistings"}
+                    >
+                        <b>{this.context.t("Manage listings")}</b>
+                    </HeaderBarTab>
+                )}
 
-                { profile === "SELLER" && <CustomLink
-                    match={match.path === "/contentlisting/:customId?/:step?"}
-                    route={"/contentlisting/new"}>
-                    {this.context.t("Create Listing")}
-                </CustomLink> }
+                {profile === "SELLER" && (
+                    <HeaderBarTab
+                        match={match.url === "/commercialactivity"}
+                        route={"/commercialactivity"}
+                    >
+                        <b>{this.context.t("Commercial activity")}</b>
+                    </HeaderBarTab>
+                )}
+
+                {profile === "SELLER" && (
+                    <CustomLink
+                        match={match.path === "/contentlisting/:customId?/:step?"}
+                        route={"/contentlisting/new"}
+                    >
+                        <b>{this.context.t("Create Listing")}</b>
+                    </CustomLink>
+                )}
 
                 <div className="spacer" />
 
-                { profile === "BUYER" &&
-                <HeaderBarTab
-                    className="tab"
-                    route="/managelistings">
-                    {this.context.t("Enter selling mode")}
-                </HeaderBarTab> }
+                {profile === "BUYER" && (
+                    <HeaderBarTab className="tab" route="/managelistings">
+                        {this.context.t("Enter selling mode")}
+                    </HeaderBarTab>
+                )}
 
-                { profile === "SELLER" &&
-                <HeaderBarTab
-                    className="tab"
-                    route="/marketplace">
-                    {this.context.t("Enter buying mode")}
-                </HeaderBarTab> }
+                {profile === "SELLER" && (
+                    <HeaderBarTab className="tab" route="/marketplace">
+                        {this.context.t("Enter buying mode")}
+                    </HeaderBarTab>
+                )}
 
-                <HeaderBarTab
-                    className="tab"
-                    route="/messages">
+                <HeaderBarTab className="tab" route="/messages">
                     <i className="fa fa-envelope" />
                     {this.context.t("Messages")}
                 </HeaderBarTab>

@@ -334,6 +334,14 @@
                                                 </div>
                                             {% endfor %}
                                         {% endif %}
+
+                                        {% if content.fixturesBySeason[loop.index0] is defined %}
+                                            {% for round in content.fixturesBySeason[loop.index0]  %}
+                                                <div class="license-item-content ">
+                                                    {{ round.name }} - {{ round.date | date("m/d/Y") }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -341,9 +349,14 @@
 
                         {% endfor %}
                     {% endif %}
+
+                    {% if content.description is defined %}
+                        <div class="license-item-content">
+                            <label>Description:</label>
+                            {{ content.description }}
+                        </div>
+                    {% endif %}
                 </div>
-
-
             </div>
 
             {# PROGRAM TITLE#}
@@ -415,12 +428,12 @@
                         <td>Grant of Rights</td>
                         {% for right in content.rightsPackage %}
                             <td>
-                                {{ right.name }}
+                                {{ right.name }} Rights
                             </td>
                         {% endfor %}
                     </tr>
                     <tr>
-                        <td>Exploitation Form</td>
+                        <td>Transmission Form</td>
                         {% for right in content.rightsPackage %}
                             <td>
                                 {% for form in content.selectedRightsBySuperRight[right.id].items["EXPLOITATION_FORM"] %}
@@ -479,6 +492,29 @@
                         {% endfor %}
                     </tr>
 
+                    {% if content.rightsPackage| has_right("NA") or content.rightsPackage| has_right("HL") %}
+
+                        <tr>
+                            <td>Granted Transmission Time</td>
+                            {% for right in content.rightsPackage %}
+                                <td>
+                                    {% if right.shortLabel == "NA" %}
+                                        {% if content.extraData.NA_INPUT is defined %}
+                                            {{ content.extraData.NA_INPUT }} seconds
+                                        {% endif %}
+                                    {% elseif right.shortLabel == "HL"%}
+                                        {% if content.extraData.HL_INPUT is defined %}
+                                            {{ content.extraData.HL_INPUT }} minutes
+                                        {% endif %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+
+
+                    {% endif %}
                 </table>
             </div>
 

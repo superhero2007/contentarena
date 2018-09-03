@@ -3,6 +3,7 @@ import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import {PropTypes} from "prop-types";
+import {blueCheckIcon, yellowCheckIcon, coinIcon, hammerIcon} from "./Icons";
 
 class ContentListing extends React.Component{
     constructor(props){
@@ -12,10 +13,10 @@ class ContentListing extends React.Component{
             buyingMode : false
         };
         this.noImage = assetsBaseDir + "app/images/no-image.png";
-        this.bidIcon = assetsBaseDir + "app/images/hammer.png";
+        this.bidIcon = hammerIcon;
         this.fixedIcon = assetsBaseDir + "app/images/bid.png";
-        this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
-        this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
+        this.blueCheck = blueCheckIcon;
+        this.yellowCheck = yellowCheckIcon;
         this.bucketicon = assetsBaseDir + "app/images/bucket.png";
     }
 
@@ -105,6 +106,20 @@ class ContentListing extends React.Component{
         return (a > b) ? 1 : ((b > a) ? -1 : 0)
     };
 
+    getRightsPackages = (defaultRightsPackage , rightsPackage) => {
+
+        //get inner array objects
+        let obj1 = { ...defaultRightsPackage };
+        let obj2 = { ...rightsPackage };
+
+        //overwrite defaultRightsPackage by user chosen rightsPackage
+        let p = {...obj1, ...obj2};
+
+        //return array of rights
+        return Object.values(p)
+
+    }
+
     render(){
         const {
             name,
@@ -115,13 +130,14 @@ class ContentListing extends React.Component{
             image,
             filter,
             sortSalesPackages,
-            watchlistRemove
+            watchlistRemove,
+            company,
+            defaultRightsPackage,
+            rightsPackage,
         } = this.props;
-
-        let {rightsPackage} = this.props;
-        rightsPackage = rightsPackage.slice(-6);
-
         const {confirmWatchlistRemove} = this.state;
+
+        const packages = this.getRightsPackages(defaultRightsPackage, rightsPackage)
 
         let salesPackages = this.props.salesPackages;
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
@@ -133,8 +149,6 @@ class ContentListing extends React.Component{
             salesPackages.sort(this.sortSalesPackages).reverse();
         }
 
-
-
         return (
             <div className="listing-list-view" onClick={this.onSelect}>
                 <div className={"left"}  >
@@ -143,8 +157,15 @@ class ContentListing extends React.Component{
                     </div>
                 </div>
                 <div className={"right"} >
-                    <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>{name}</div>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
+                            {name}
+                        </div>
 
+                        {company.legalName && (
+                            <div className="company-name">{coinIcon} {company.legalName}</div>
+                        )}
+                    </div>
 
                     {watchlistRemove && !confirmWatchlistRemove &&
                     <img style={{
@@ -187,47 +208,50 @@ class ContentListing extends React.Component{
                     <div className="listing-wrapper">
                         <ContentListingEventDetails {...this.props} />
 
-                        <ContentListingRightsPackage rightsPackage={rightsPackage} programName={PROGRAM_NAME}/>
+                        <ContentListingRightsPackage rightsPackage={packages.slice(-6)} programName={PROGRAM_NAME}/>
                     </div>
 
-                    <div className={"sales-bundles"}>
-                        {
-                            salesPackages.slice(0, 4).map( ( salesPackage, i) => {
-                                return  <div className="sales-package" key={"sales-package-"+ i}>
-                                    {salesPackage.bundleMethod === "SELL_AS_BUNDLE"
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
+                        <div className={"sales-bundles"}>
+                            {salesPackages.slice(0, 3).map( ( salesPackage, i) => {
+                                    return  <div className="sales-package" key={"sales-package-"+ i}>
+                                        {/*       {salesPackage.bundleMethod === "SELL_AS_BUNDLE"
                                     &&<div style={{ margin: '0 10px 0 5px'}}>
                                         <img style={{width: 26, height: 23}} src={this.fixedIcon}/>
-                                    </div>}
+                                    </div>}*/}
 
-                                    <div style={{cursor: 'default'}}>
-                                        {salesPackage.name}
-                                    </div>
-                                    {
-                                        ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
-                                        &&<div style={{margin: '0 10px', display: "flex", flex: '1 0 auto'}}>
-                                            {this.getFee(salesPackage)}
+                                        <div style={{cursor: 'default'}}>
+                                            {salesPackage.name}
                                         </div>
-                                    }
+                                        {
+                                            ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
+                                            &&<b style={{margin: '0 10px', display: "flex", flex: '1 0 auto'}}>
+                                                {this.getFee(salesPackage)}
+                                            </b>
+                                        }
 
-                                    {salesPackage.salesMethod === "BIDDING"
-                                    &&<div style={{ margin: '0 10px 0 5px'}}>
-                                        <img style={{width: 23, height: 23}} src={this.bidIcon}/>
-                                    </div>}
+                                        {salesPackage.salesMethod === "BIDDING"
+                                        &&<div style={{ margin: '0 10px 0 5px'}}>
+                                            <img style={{width: 23, height: 23}} src={this.bidIcon}/>
+                                        </div>}
 
 
 
+                                    </div>
+                                })}
+                            {salesPackages.length > 3 && (
+                                <div className="sales-package show-all">
+                                    + {salesPackages.length - 3}
                                 </div>
-                            })
-                        }
-                        {
-                            salesPackages.length > 4 && <div className="sales-package">
-                                <div style={{color: '#2DA7E6', padding: '0 15px 0 0px'}}>
-                                   + {salesPackages.length - 4}
-                                </div>
+                            ) }
+                        </div>
+                        {expiresAt && (
+                            <div>
+                                Expiry: <b>{Moment(expiresAt).format('MM/DD/YYYY')}</b>
                             </div>
-                        }
-
+                        )}
                     </div>
+
                 </div>
             </div>
         )

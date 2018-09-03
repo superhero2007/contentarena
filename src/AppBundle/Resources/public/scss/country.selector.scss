@@ -3,8 +3,8 @@
 .country-selector{
   .Select-multi-value-wrapper {
     outline: none;
-    display: inline-block;
     overflow-y: auto;
+    height: 100%;
     max-height: 200px;
   }
   .regions{

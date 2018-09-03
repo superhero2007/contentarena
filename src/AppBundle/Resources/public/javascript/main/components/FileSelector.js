@@ -13,6 +13,18 @@ const FileItem = ({item, onClick}) => (
     </div>
 );
 
+const InvalidFileItem = ({item, onClick}) => (
+    <div style={{
+        border: '1px solid red',
+        padding: 10,
+        marginTop: 5,
+        cursor : 'normal',
+        color: "red"
+    }}>
+        {item} has an invalid format <img style={{ right: 10, position: 'absolute', cursor: 'pointer'}} src={assetsBaseDir + "app/images/cancel.png"} onClick={onClick}/>
+    </div>
+);
+
 const imageStyle = {
     maxHeight: 250,
     marginBottom: 5,
@@ -27,6 +39,7 @@ class FileSelector extends Component {
         let form = new FormData();
 
         this.state = {
+            failed: [],
             form : form,
             uploading : false,
             accept : props.accept || [".png", ".jpg"]
@@ -46,8 +59,18 @@ class FileSelector extends Component {
             this.setState({ uploading : true});
 
             ContentArena.ContentApi.saveTmpFile(event.target.files).then((response)=>{
-                if( onSelect ) onSelect( response  );
-                this.setState({ uploading : false});
+
+                if (response.success){
+                    if( onSelect ) onSelect( response  );
+                    this.setState({ uploading : false});
+                } else {
+                    this.setState((prev) => {
+                        return {
+                            failed : [...prev.failed, response.name],
+                            uploading : false
+                        }
+                    });
+                }
             });
 
         }
@@ -80,6 +103,16 @@ class FileSelector extends Component {
         this.setState({form:this.state.form});
     };
 
+    removeFailed = (index) => {
+        this.setState((prev) =>{
+            prev.failed.splice(index, 1);
+
+            return {
+                failed : prev.failed
+            }
+        });
+    };
+
     getBase64 = (file, cb) => {
         let reader = new FileReader();
         reader.readAsDataURL(file);
@@ -94,7 +127,7 @@ class FileSelector extends Component {
     render() {
 
         const {label, isImage, previousImage, selected, onRemove} = this.props;
-        const {image, uploading} = this.state;
+        const {image, uploading, failed} = this.state;
 
         return (
             <div className="base-input custom-selector" style={{flexDirection: 'column'}}>
@@ -116,9 +149,9 @@ class FileSelector extends Component {
                     {uploading && <i className="fa fa-cog fa-spin"/>}
                 </div>
                 <div>
-                    {/*{ !isImage && this.getItems().map((item, i)=>{
-                        return <FileItem key={i} item={item} onClick={ () => this.remove(item.size)} />
-                    })}*/}
+                    { failed && failed.map((item, i)=>{
+                        return <InvalidFileItem key={"failed" +i} item={item} onClick={ () => this.removeFailed(i)} />
+                    })}
 
                     {
                         selected && selected.length > 0 && selected.map((s, i ) => {

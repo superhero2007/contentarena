@@ -21,7 +21,6 @@ use AppBundle\Entity\Tournament;
 use AppBundle\Entity\Sport;
 use Doctrine\ORM\EntityManager;
 
-
 class ContentService
 {
 
@@ -285,8 +284,22 @@ class ContentService
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
-        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
-        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DRAFT")));
+
+        /**
+         * @var ListingStatus currentStatus
+         */
+        $currentStatus = $content->getStatus();
+        $newStatus = "DRAFT";
+        $lastAction = "DRAFT";
+
+        if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
+                || $currentStatus->getName() === 'EDITED' ) ){
+            $newStatus = "EDITED";
+            $lastAction = "EDITED";
+        }
+        
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=> $newStatus)));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
         $content->setLastActionUser($user);
         $content->setLastActionDate(new \DateTime());
         /**
@@ -347,7 +360,8 @@ class ContentService
         $newStatus = ($user->isAutoPublish()) ? "APPROVED": "PENDING";
         $lastAction = "SUBMITTED";
 
-        if ( $currentStatus != null && $currentStatus->getName() === 'APPROVED'){
+        if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
+                || $currentStatus->getName() === 'EDITED' ) ){
             $newStatus = "EDITED";
             $lastAction = "EDITED";
         }
@@ -431,49 +445,53 @@ class ContentService
         $sports = $this->getSports($data);
         $content->setSports($sports);
 
-        /**
-         * Set tournament
-         */
-        if ( isset($data->tournament) && count($data->tournament) > 0 && ( isset($data->step) && $data->step == 1 )) {
-            $tournament = $this->getTournament($data);
-            $content->setTournament($tournament);
-        } else {
-            $content->setTournament(null);
-        }
-
-        /**
-         * Set category
-         */
-        if ( isset($data->sportCategory) && count($data->sportCategory) > 0 && ( isset($data->step) && $data->step == 1 ) ) {
-            $category = $this->getCategory($data);
-            $content->setSportCategory($category);
-        } else {
-            //$content->setSportCategory(null);
-        }
-
-        /**
-         * Set season
-         */
-        if ( isset($data->seasons) && count($data->seasons) > 0 && ( isset($data->step) && $data->step == 1 ) ) {
-
-            $seasons = array();
-            $schedules = [];
-            foreach ($data->seasons as $key => $seasonData){
-                $season = $this->getSeason($seasonData, $tournament);
-                $seasons[] = $season;
-                $schedules[] = $seasonData->selectedSchedules;
-                if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
+        if ( isset($data->step) && $data->step == 1 ){
+            /**
+             * Set tournament
+             */
+            if ( isset($data->tournament) && count($data->tournament) > 0 ) {
+                $tournament = $this->getTournament($data);
+                $content->setTournament($tournament);
+            } else {
+                //$content->setTournament(null);
             }
 
-            $content->setSchedulesBySeason($schedules);
-            if ( isset($fixtures) ) $content->setFixturesBySeason($fixtures);
-            $content->setSeason($seasons);
-        } else {
-            $content->setSeason(null);
-            $content->setSchedulesBySeason(null);
-            $content->setFixturesBySeason(null);
+            /**
+             * Set category
+             */
+            if ( isset($data->sportCategory) && count($data->sportCategory) > 0  ) {
+                $category = $this->getCategory($data);
+                $content->setSportCategory($category);
+            } else {
+                //$content->setSportCategory(null);
+            }
 
+            /**
+             * Set season
+             */
+            if ( isset($data->seasons) && count($data->seasons) > 0  ) {
+
+                $seasons = array();
+                $schedules = [];
+                foreach ($data->seasons as $key => $seasonData){
+                    $season = $this->getSeason($seasonData, $tournament, $key);
+                    $seasons[] = $season;
+                    $schedules[] = $seasonData->selectedSchedules;
+                    if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
+                }
+
+                $content->setSchedulesBySeason($schedules);
+                if ( isset($fixtures) ) $content->setFixturesBySeason($fixtures);
+                $content->setSeason($seasons);
+            } else {
+                $content->setSeason(null);
+                $content->setSchedulesBySeason(null);
+                $content->setFixturesBySeason(null);
+
+            }
         }
+
+
 
         $selectedRights = array();
 
@@ -578,7 +596,6 @@ class ContentService
 
         if ( isset($data->customTournament) ){
             $customTournament = $this->newTournament($data->customTournament);
-
             $content->setTournament($customTournament);
             $content->setCustomTournament($data->customTournament);
         }
@@ -717,7 +734,7 @@ class ContentService
 
     }
 
-    private function getSeason($seasonData, $tournament){
+    private function getSeason($seasonData, $tournament, $key){
         if ( isset($seasonData->externalId) ) {
             $season = $this->em
                 ->getRepository('AppBundle:Season')
@@ -755,7 +772,7 @@ class ContentService
             //$this->em->flush();
 
             if ( isset($seasonData->custom)) {
-                $season->setExternalId("ca:season:".$time->getTimestamp());
+                $season->setExternalId("ca:season:".$key.$time->getTimestamp());
                 if ( isset( $tournament) ) {
                     $season->setName($tournament->getName(). " ". $season->getYear());
                 }
@@ -801,10 +818,11 @@ class ContentService
         if (!$tournament){
             $tournament = new Tournament();
             $tournament->setName($customTournament);
+            $time = new \DateTime();
+            //$this->em->flush();
+            $tournament->setExternalId("ca:tournament:".$time->getTimestamp());
             $this->em->persist($tournament);
-            $this->em->flush();
-            $tournament->setExternalId("ca:tournament:".$tournament->getId());
-            $this->em->flush();
+            //$this->em->flush();
         }
 
 
@@ -820,10 +838,11 @@ class ContentService
         if (!$sportCategory) {
             $sportCategory = new SportCategory();
             $sportCategory->setName($customSportCategory);
+            $time = new \DateTime();
+            //$this->em->flush();
+            $sportCategory->setExternalId("ca:sportCategory:".$time->getTimestamp());
             $this->em->persist($sportCategory);
-            $this->em->flush();
-            $sportCategory->setExternalId("ca:sportCategory:".$sportCategory->getId());
-            $this->em->flush();
+            //$this->em->flush();
         }
         return $sportCategory;
     }
@@ -847,7 +866,7 @@ class ContentService
             if ( isset($categoryData->externalId) ) $category->setExternalId($categoryData->externalId);
             $category->setName($categoryData->name);
             $this->em->persist($category);
-            $this->em->flush();
+            //$this->em->flush();
         }
 
         return $category;
@@ -946,11 +965,12 @@ class ContentService
             $name = ( isset($sportData->name) && $sportData->name != "" ) ? $sportData->name : $sportData->value;
             $sport->setName($name);
             $this->em->persist($sport);
-            $this->em->flush();
-
+            //$this->em->flush();
+            $time = new \DateTime();
             if (isset($sportData->custom)) {
-                $sport->setExternalId("ca:sport:".$sport->getId());
-                $this->em->flush();
+                $sport->setExternalId("ca:sport:".$time->getTimestamp());
+                $this->em->persist($sport);
+                //$this->em->flush();
             }
 
         }

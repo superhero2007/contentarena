@@ -53,7 +53,7 @@ class SellButtons extends React.Component {
 
         }).fail(() =>{
             this.setState({ saving : false, savingSuccess: false });
-            history.push("/contentlisting/"+ response.customId + "/" + nextStep);
+            //history.push("/contentlisting/"+ response.customId + "/" + nextStep);
         });
     };
 
@@ -187,7 +187,7 @@ class SellButtons extends React.Component {
         content = parseSeasons(content);
         this.setState({ saving : true });
 
-        debugger;
+
 
         if (!content.status || (content.status.name === 'DRAFT' && content.step === 4)) {
             //we are in new mode or editing draft

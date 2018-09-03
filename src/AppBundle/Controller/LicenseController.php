@@ -70,21 +70,22 @@ class LicenseController extends Controller
     /**
      * @param $content
      * @param $viewElements
-     * @param $download
+     * @param bool $download
+     * @param bool $save
      * @throws \exception
      */
-    private function mergeAndSave($content, $viewElements, $download = true){
+    private function mergeAndSave($content, $viewElements, $download = true, $save = true){
 
         // Create an instance of PDFMerger
         /* @var Bid $bid*/
         $pdf = new PDFMerger();
-        $bid = $viewElements["bid"];
+        $bid = (isset($viewElements["bid"]) ) ? $viewElements["bid"] : null;
 
-        if ( isset($bid)){
+        if ( $bid != null ){
             $license = $this->getDoctrine()
                 ->getRepository('AppBundle:LicenseAgreement')
                 ->findOneBy([
-                    'bid' => $viewElements["bid"],
+                    'bid' => $bid,
                     'company' => $bid->getBuyerUser()->getCompany(),
                 ]);
         }
@@ -120,7 +121,7 @@ class LicenseController extends Controller
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
         $pdf->merge('file', $pathForTheMergedPdf);
 
-        if ( isset($bid)){
+        if ( $bid != null && $save){
             $license = new LicenseAgreement();
             $license->setCompany($bid->getBuyerUser()->getCompany());
             $license->setBid($bid);
@@ -247,7 +248,7 @@ class LicenseController extends Controller
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
 
-        $this->mergeAndSave($content,$viewElements);
+        $this->mergeAndSave($content,$viewElements, true, false);
     }
 
 

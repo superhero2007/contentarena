@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
+import {searchIcon} from "../../main/components/Icons";
 import {PropTypes} from 'prop-types';
 
 class EventFilter extends React.Component {
@@ -12,7 +13,7 @@ class EventFilter extends React.Component {
             sports:[]
         };
 
-        this.searchIcon = assetsBaseDir + "app/images/search.png";
+        this.searchIcon = searchIcon;
     }
 
     componentDidMount () {
@@ -51,46 +52,41 @@ class EventFilter extends React.Component {
         this.props.updateEvent(this.refs.search_field.value);
     };
 
+    handleFilter = () => {
+        const {onFilter} = this.props;
+        onFilter();
+    }
+
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            const {onFilter} = this.props;
-            onFilter();
+            this.handleFilter()
         }
     };
 
     render() {
         const {sport, event} = this.props;
         return (
-            <div className="box">
-                <div className="title">
-                    {this.context.t("Event", {}, "Marketplace - Title for event filters")}
-                </div>
-                <div className="content">
-
-                    <div style={{
-                        position: 'relative',
-                        display: 'flex'
-                    }}>
-                        <img style={{
-                            position: 'absolute',
-                            width: 20,
-                            height: 20,
-                            cursor: 'pointer',
-                            margin: '23px 10px'
-                        }}
-                         src={this.searchIcon}
+            <div>
+                <div className="box">
+                    <div className="search-btn"
                          onClick={this.handleFilter}
-                        />
-                        <input
-                            style={{
-                                padding: '15px 15px 15px 40px',
-                                flex: 1
-                            }}
-                            defaultValue={event}
-                            onKeyPress={this.handleKeyPress}
-                            onChange={this.updateEvent}
-                            ref="search_field"
-                            type="text" id="inputSearch" name="event" placeholder={this.context.t("Search", {}, "Marketplace - Placeholder for Search input")}/>
+                    >
+                        <img src={this.searchIcon}/>
+                    </div>
+                    <input
+                        className="search-input ca-form-control"
+                        defaultValue={event}
+                        onKeyPress={this.handleKeyPress}
+                        onChange={this.updateEvent}
+                        ref="search_field"
+                        type="text"
+                        id="inputSearch"
+                        name="event"
+                        placeholder={this.context.t("Search", {}, "Marketplace - Placeholder for Search input")}/>
+                </div>
+                <div className="box">
+                    <div className="title">
+                        {this.context.t("Sports")}
                     </div>
 
                     <Select
@@ -99,7 +95,8 @@ class EventFilter extends React.Component {
                         className="sport-input-filter"
                         onChange={this.selectSport}
                         value={sport}
-                        options={this.getOptions()} />
+                        options={this.getOptions()}
+                    />
                 </div>
             </div>
         );

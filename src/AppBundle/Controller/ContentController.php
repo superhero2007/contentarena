@@ -6,6 +6,7 @@ use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\WatchlistService;
+use PDFMerger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,8 +50,46 @@ class ContentController extends Controller
      */
     public function saveTmpFile(Request $request, ContentService $contentService  )
     {
-        $file = $contentService->saveTmpFiles( $request );
-        return new JsonResponse(array("success"=>true, "file"=> $file, 'name' => $request->files->get("file")->getClientOriginalName()));
+        $uploadedFile = $request->files->get("file");
+        $testPdf = false;
+        $success = true;
+
+        if ( count( $uploadedFile ) > 0 && $uploadedFile->guessExtension() == "pdf" ) {
+            $testPdf = true;
+        }
+
+        $file = $contentService->saveTmpFiles($request);
+
+        if ($testPdf){
+            $success = $this->testPdf($file);
+        }
+
+        return new JsonResponse(array(
+            "success" => $success,
+            "file" => $file,
+            'name' => $request->files->get("file")->getClientOriginalName()
+        ));
+    }
+
+    private function testPdf( $file ){
+
+        $pdf = new PDFMerger();
+
+        // Add 2 PDFs to the final PDF
+        try {
+            $pdf->addPDF($file, 'all');
+        } catch (\exception $e) {
+            return false;
+        }
+
+        $pathForTheMergedPdf = $this->container->getParameter("uploads_tmp_folder") . "/test.pdf";
+        try {
+            $pdf->merge('file', $pathForTheMergedPdf);
+        } catch (\exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -64,6 +103,9 @@ class ContentController extends Controller
     {
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
+
+
+
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($content->getSalesPackages(), 'json',SerializationContext::create()->setGroups(array('listing', 'details')));

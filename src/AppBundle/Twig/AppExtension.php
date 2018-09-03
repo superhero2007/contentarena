@@ -8,6 +8,7 @@
 
 namespace AppBundle\Twig;
 
+use AppBundle\Entity\RightsPackage;
 use Psr\Container\ContainerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -27,6 +28,7 @@ class AppExtension extends AbstractExtension
     {
         return array(
             new TwigFilter('price', array($this, 'priceFilter')),
+            new TwigFilter('has_right', array($this, 'hasRight')),
             new TwigFilter('rightItem', array($this, 'rightItemFilter')),
             new TwigFilter('idSort', array($this, 'idSortFilter')),
             new TwigFilter('kebab', array($this, 'kebabFilter')),
@@ -34,8 +36,6 @@ class AppExtension extends AbstractExtension
             new TwigFilter('right_definitions_label', array($this, 'rightDefinitionsLabel')),
             new TwigFilter('cast_to_array', array($this, 'castToArray')),
             new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel'))
-
-
         );
     }
 
@@ -67,10 +67,10 @@ class AppExtension extends AbstractExtension
 
     public function contentDeliveryLabel($shortTag){
         switch ($shortTag){
-            case "LT" : return "Live Transmission";
-            case "DT" : return "Delayed & Archive Footage";
-            case "LB" : return "Live Betting Transmission";
-            case "HL" : return "Highlights & Clips";
+            case "LT" : return "Live Feed";
+            case "DT" : return "Delayed & Archive Content";
+            case "LB" : return "Live Betting Feed";
+            case "HL" : return "Highlight & Clip Footage";
             case "NA" : return "News Footage";
             case "PR" : return "Edited Program";
         }
@@ -190,6 +190,16 @@ class AppExtension extends AbstractExtension
             $response[] = array($key, $value);
         }
         return $response;
+    }
+
+    public function hasRight($rights, $shortLabel){
+        $has = false;
+        foreach ($rights as $right){
+            /* @var RightsPackage $right*/
+            if ( $right->getShortLabel() == $shortLabel ) $has = true;
+        }
+
+        return $has;
     }
 
     public function rightDefinitionsLabel ($right){

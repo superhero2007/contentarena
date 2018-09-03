@@ -40,7 +40,7 @@ class Comments extends React.Component {
 
             <div className="modal-title">
                 {this.context.t("Add further comments")}
-                <i className="fa fa-times-circle-o" onClick={this.closeModal}/>
+                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content">

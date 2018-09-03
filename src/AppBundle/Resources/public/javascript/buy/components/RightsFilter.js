@@ -32,12 +32,12 @@ class RightsFilter extends React.Component {
     render() {
         const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter, includeAllCountries} = this.props;
         return (
-            <div className="box">
-                <div className="title">
-                    {this.context.t("Rights")}
-                </div>
-                <div className="content">
-                    <div style={{display: 'flex'}}>
+            <div>
+                <div className="box">
+                    <div className="title">
+                        {this.context.t("Rights")}
+                    </div>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
 
                         {countries.length <= 1 &&
                         <CountrySelector
@@ -50,82 +50,86 @@ class RightsFilter extends React.Component {
                         }
 
                         {countries.length > 1 && countries.length !== this.worldwideCountries &&
-                            <div className="territories-placeholder">
-                                {countries.length} territories
-                            </div>
+                        <input type="text" className="ca-form-control" value={countries.length +" territories"} disabled/>
                         }
 
                         {countries.length === this.worldwideCountries &&
-                        <div className="territories-placeholder">
-                            Worldwide
-                        </div>
+                        <input type="text" className="ca-form-control" value={"Worldwide"} readonly/>
                         }
 
                         {countries.length > 1 &&
-                            <img className="territories-icon" src={cancelIcon}
-                                 onClick={()=>{
-                                this.selectTerritory([])
-                            }}/>
+                        <img className="territories-icon" src={cancelIcon}
+                             onClick={()=>{
+                                 this.selectTerritory([])
+                             }}/>
                         }
 
                         <PopupCountrySelector ref="countrySelector"
-                            value={countries}
-                            includeAllCountries={includeAllCountries}
-                            onSelect={this.selectTerritory}
+                                              value={countries}
+                                              includeAllCountries={includeAllCountries}
+                                              onSelect={this.selectTerritory}
                         />
 
                     </div>
-
-                    <div id="rights-packages" className={"filter-rights"} style={{marginTop: 20}}>
+                </div>
+                <div className="box">
+                    <div id="rights-packages" className={"filter-rights"}>
+                        <div className="title">
+                            {this.context.t("Territories")}
+                        </div>
                         {
-                            rightsPackage && rightsPackage.map(right => {
-                                return <div key={right.id} className="filter-right">
-                                    <input
-                                        className='ca-checkbox checkbox-item'
-                                        type='checkbox'
-                                        checked={rights.indexOf(right.id) !== -1}
-                                        onChange={(e) => {
-                                            if ( e.target.checked ) {
-                                                this.props.addRight(right.id)
-                                            } else {
-                                                this.props.removeRight(right.id)
-                                            }
-                                        }}
-                                        id={right.id}
-                                    /> {right.name}
-                                </div>
+                            rightsPackage && rightsPackage.map((right,i) => {
+                                return (
+                                    <div key={right.id} className="filter-right">
+                                        <input
+                                            className='ca-checkbox checkbox-item'
+                                            type='checkbox'
+                                            checked={rights.indexOf(right.id) !== -1}
+                                            onChange={(e) => {
+                                                if ( e.target.checked ) {
+                                                    this.props.addRight(right.id)
+                                                } else {
+                                                    this.props.removeRight(right.id)
+                                                }
+                                            }}
+                                            id={right.id}
+                                        />
+                                        <label htmlFor={right.id}>
+                                            {right.name}
+                                        </label>
+                                    </div>
+                                )
                             })
                         }
+                        <div style={{background: '#999', height: 1, margin: '20px 0'}} />
 
+                        <div className="filter-right">
+                            <input
+                                type="checkbox"
+                                checked={exclusive}
+                                className="ca-checkbox checkbox-item"
+                                onChange={(e) => {
+                                    this.props.updateExclusive(e.target.checked)
+                                }}
+                            />
+                            {this.context.t("Contains exclusive rights")}
+                        </div>
                     </div>
-                    <hr />
-                    <div style={{
-                        display:'flex',
-                        marginBottom: 20
-                    }}>
-                        <input
-                            type="checkbox"
-                            checked={exclusive}
-                            className="ca-checkbox checkbox-item"
-                            onChange={(e) => {
-                                this.props.updateExclusive(e.target.checked)
-                            }}
-                        />
-                        {this.context.t("Contains exclusive rights")}
-                    </div>
+
+                </div>
+                <div className="box">
                     <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="standard-button" style={{margin:5}} onClick={onFilter}>
+                        <button className="ca-btn ca-btn-primary" style={{margin:5}} onClick={onFilter}>
                             {this.context.t("Apply")}
                         </button>
-                        <button className="standard-button transparent" style={{margin:5}} onClick={clearFilter}>
+                        <button className="ca-btn ca-btn-link" style={{margin:5}} onClick={clearFilter}>
                             {this.context.t("Clear")}
                         </button>
                     </div>
-
                 </div>
             </div>
         );

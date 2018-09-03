@@ -1,95 +1,110 @@
 @import "vars";
 
 .buy-content {
-    display: flex;
-    padding: 20px;
-    width: 100%;
-    min-height: 500px;
-    flex-direction: column;
-    fieldset {
-        color: #000;
-    }
+  display: flex;
+  padding: 20px;
+  width: 100%;
+  min-height: 500px;
+  flex-direction: column;
+  fieldset {
+    color: #000;
+  }
 }
 
 .buy-container-left {
-    flex: 260px 0 0;
-    margin-right: 20px;
-    font-size: 14px;
+  flex: 240px 0 0;
+  margin-right: 20px;
+  font-size: 14px;
+  .box {
+    background-color: transparent;
+    margin: 0 0 20px;
+    color: $black-color;
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
     input {
-      font-size: 14px;
+      margin: initial;
     }
-    .box{
-        background-color: #F4F6F9;
-        margin: 0 0 20px;
-        border-bottom: 4px solid #2AAAEC;
-        .title{
-            color: #FFFFFF;
-            font-size: 22px;
-            line-height: 50px;
-            background-color: #1A4B63;
-            width: 100%;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-        .content{
-            .territories-placeholder{
-                background: white;
-                padding: 15px;
-                border: 1px solid lightgrey;
-                min-width: 165px;
-            }
-            .territories-icon{
-                cursor: pointer;
-                height: 20px;
-                width: 20px;
-                margin: 15px 5px;
-            }
-            padding: 20px;
-            .base-input-select{
-                display: inline-table;
-            }
-            .sport-input-filter {
-                margin: 10px 0;
-            }
-            .checkbox-item {
-                margin-right: 10px;
-            }
-            .standard-button {
-              width: 115px;
-            }
-            .filter-rights{
-                .filter-right{
-                    margin: 10px 0;
-                    display: flex;
-                    align-items: center;
-                    //input[type="checkbox"] {
-                    //    display: flex;
-                    //    margin: 0;
-                    //    max-width: 25px !important;
-                    //}
-                }
-
-            }
-
-        }
+    .search-input {
+      padding-right: 50px;
     }
+    .search-btn {
+      position: absolute;
+      cursor: pointer;
+      right: 10px;
+      border-left: 1px solid $grey-color;
+      padding-left: 10px;
+      height: 30px;
+      margin-top: 7px;
+      img {
+        width: 25px;
+        height: 25px;
+      }
+    }
+    .territories-placeholder {
+      background: white;
+      padding: 15px;
+      border: 1px solid lightgrey;
+      min-width: 165px;
+    }
+    .territories-icon {
+      cursor: pointer;
+      height: 20px;
+      width: 20px;
+      margin-left: 5px;
+    }
+    .filter-btn {
+      background: $orange-color;
+      font-size: 18px;
+      border-radius: 5px;
+      color: #333;
+      padding: 2px 4px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+    .base-input-select {
+      width: 100%;
+    }
+    .checkbox-item {
+      margin-right: 10px;
+      &:checked + label {
+        font-weight: bold;
+      }
+    }
+    .filter-rights {
+      .filter-right {
+        margin: 15px 0;
+        display: flex;
+        align-items: center;
+        //input[type="checkbox"] {
+        //    display: flex;
+        //    margin: 0;
+        //    max-width: 25px !important;
+        //}
+      }
+
+    }
+  }
 }
 
 .buy-container-right {
   width: 100%;
   flex: 1;
   min-width: 0;
-    .no-results{
-        font-size: 25px;
-        text-align: center;
-        display: flex;
-        margin: 250px 100px;
-    }
+  .no-results {
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    margin: 250px 100px;
+  }
 }
 
-.content-list-container{
-    flex: 1;
+.content-list-container {
+  flex: 1;
 }
+
 //.right_package{
 //    min-width: 0 !important;
 //}

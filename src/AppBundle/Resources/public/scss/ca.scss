@@ -1052,6 +1052,7 @@ a:hover {
 .ReactModal__Content {
   padding: 0 !important;
   overflow: visible !important;
+  max-width: 750px;
   .custom {
     .step-content-container {
       .modal-input {
@@ -1402,8 +1403,9 @@ a:hover {
   display: flex;
   margin-bottom: 20px;
   border: 1px solid lightgray;
-  border-top: 6px solid #1A4B63;
-  padding: 25px;
+  border-top: 2px solid $orange-color;
+  background: #ffffff;
+  //padding: 25px;
   //overflow: auto;
   a:hover {
     color: inherit;
@@ -1433,7 +1435,7 @@ a:hover {
   .right {
     display: block;
     width: 100%;
-    padding-left: 20px;
+    padding: 20px;
     position: relative;
     font-size: 14px;
     flex: 1;
@@ -1455,12 +1457,16 @@ a:hover {
       text-decoration: underline;
     }
     .name {
-      color: #2DA7E6;
-      font-size: 20px;
-      font-weight: 600;
-      text-decoration: underline;
+      color: #03547C;
+      font-size: 19px;
       padding-bottom: 10px;
       cursor: pointer;
+      font-weight: bold;
+    }
+
+    .company-name {
+      color: #2aaaec;
+      font-weight: bold;
     }
 
     .listing-wrapper {
@@ -1471,6 +1477,7 @@ a:hover {
         flex-flow: column wrap;
         max-height: 120px;
         max-width: 50%;
+        width: 100%;
 
         .listing-item {
           line-height: 40px;
@@ -1499,16 +1506,20 @@ a:hover {
 
     .sales-bundles {
       display: flex;
-      margin-top: 20px;
       .sales-package {
         display: flex;
-        border: 1px solid lightgrey;
+        border: 1px solid $orange-color;
         margin-right: 5px;
-        margin-bottom: 5px;
         align-items: center;
         padding: 0 0 0 10px;
         height: 36px;
         flex-shrink: 0;
+        border-radius: 5px;
+        &.show-all {
+          background-color: $orange-color;
+          color: #333333;
+          padding-right: 10px;
+        }
       }
     }
 
