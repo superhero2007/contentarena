@@ -349,9 +349,22 @@
 
                         {% endfor %}
                     {% endif %}
+
+                    {% if content.description is defined %}
+                        <div class="license-item-content">
+                            <label>Description:</label>
+                            {{ content.description }}
+                        </div>
+                    {% endif %}
                 </div>
 
 
+                {% if content.description is defined %}
+                <div class="license-item-content">
+                    <label>Description:</label>
+                    {{ content.description }}
+                </div>
+                {% endif %}
             </div>
 
             {# PROGRAM TITLE#}
