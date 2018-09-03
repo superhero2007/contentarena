@@ -219,7 +219,7 @@ class SellFormStep3 extends React.Component {
                         onClose={this.closeLicensePopup}
                     />
 
-                    <TitleBar title={"License period"}/>
+                    <TitleBar title={"License period"} infoText={'Means the time period during which the licensee may exploit the program.'}/>
 
                     <div className={"license-date-container"}>
                         <div className="table-right">

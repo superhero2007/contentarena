@@ -606,6 +606,7 @@ class SellFormStep1 extends React.Component {
 
                     <div className="step-item-description" style={{}}>
                         {this.context.t("Additional information")}
+                        <i className="fa fa-info-circle tooltip-icon" title={'The website link and the attached files will be made available to buyers in the listing details, when clicking on a listing in the marketplace.'}/>
                     </div>
 
                     <div className="base-input">
