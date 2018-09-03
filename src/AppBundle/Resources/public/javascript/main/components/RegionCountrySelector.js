@@ -101,8 +101,9 @@ class RegionCountrySelector extends React.Component {
             <div className="country-selector">
                 { !disabled && <div>
                     <div className="regions">
-                        {territories.map(territory=>{
+                        {territories.map((territory,i)=>{
                             return <button className={"region"}
+                                           key={"territory-" + i}
                                            onClick={()=>{
                                                this.selectTerritory(territory.id)
                                            }}>
@@ -114,8 +115,9 @@ class RegionCountrySelector extends React.Component {
                         </button>}
                     </div>
                     <div className="regions">
-                        {regions.map(region=>{
+                        {regions.map((region,i)=>{
                             return <button className={"region"}
+                                           key={"region-" + i}
                                            onClick={()=>{
                                                this.selectRegion(region.id)
                                            }}>
