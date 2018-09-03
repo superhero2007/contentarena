@@ -445,49 +445,53 @@ class ContentService
         $sports = $this->getSports($data);
         $content->setSports($sports);
 
-        /**
-         * Set tournament
-         */
-        if ( isset($data->tournament) && count($data->tournament) > 0 && ( isset($data->step) && $data->step == 1 )) {
-            $tournament = $this->getTournament($data);
-            $content->setTournament($tournament);
-        } else {
-            $content->setTournament(null);
-        }
-
-        /**
-         * Set category
-         */
-        if ( isset($data->sportCategory) && count($data->sportCategory) > 0 && ( isset($data->step) && $data->step == 1 ) ) {
-            $category = $this->getCategory($data);
-            $content->setSportCategory($category);
-        } else {
-            //$content->setSportCategory(null);
-        }
-
-        /**
-         * Set season
-         */
-        if ( isset($data->seasons) && count($data->seasons) > 0 && ( isset($data->step) && $data->step == 1 ) ) {
-
-            $seasons = array();
-            $schedules = [];
-            foreach ($data->seasons as $key => $seasonData){
-                $season = $this->getSeason($seasonData, $tournament, $key);
-                $seasons[] = $season;
-                $schedules[] = $seasonData->selectedSchedules;
-                if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
+        if ( isset($data->step) && $data->step == 1 ){
+            /**
+             * Set tournament
+             */
+            if ( isset($data->tournament) && count($data->tournament) > 0 ) {
+                $tournament = $this->getTournament($data);
+                $content->setTournament($tournament);
+            } else {
+                //$content->setTournament(null);
             }
 
-            $content->setSchedulesBySeason($schedules);
-            if ( isset($fixtures) ) $content->setFixturesBySeason($fixtures);
-            $content->setSeason($seasons);
-        } else {
-            $content->setSeason(null);
-            $content->setSchedulesBySeason(null);
-            $content->setFixturesBySeason(null);
+            /**
+             * Set category
+             */
+            if ( isset($data->sportCategory) && count($data->sportCategory) > 0  ) {
+                $category = $this->getCategory($data);
+                $content->setSportCategory($category);
+            } else {
+                //$content->setSportCategory(null);
+            }
 
+            /**
+             * Set season
+             */
+            if ( isset($data->seasons) && count($data->seasons) > 0  ) {
+
+                $seasons = array();
+                $schedules = [];
+                foreach ($data->seasons as $key => $seasonData){
+                    $season = $this->getSeason($seasonData, $tournament, $key);
+                    $seasons[] = $season;
+                    $schedules[] = $seasonData->selectedSchedules;
+                    if ( isset($seasonData->fixtures) )  $fixtures[] = $seasonData->fixtures;
+                }
+
+                $content->setSchedulesBySeason($schedules);
+                if ( isset($fixtures) ) $content->setFixturesBySeason($fixtures);
+                $content->setSeason($seasons);
+            } else {
+                $content->setSeason(null);
+                $content->setSchedulesBySeason(null);
+                $content->setFixturesBySeason(null);
+
+            }
         }
+
+
 
         $selectedRights = array();
 
