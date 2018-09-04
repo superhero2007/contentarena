@@ -176,6 +176,7 @@ class SalesPackageForm extends React.Component {
                         return {
                             name : territory.label,
                             territories : [territory],
+
                             fee : fee,
                             salesMethod : salesMethod,
                             bundleMethod : bundleMethod,

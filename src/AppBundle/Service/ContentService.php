@@ -532,7 +532,7 @@ class ContentService
             $content->setSignature($savedSignature);
         }
 
-        if ( isset($data->salesPackages) ) {
+        if ( isset($data->salesPackages ) && ( isset($data->step) && $data->step == 4 ) ) {
 
             $salesPackages = array();
 
@@ -542,6 +542,13 @@ class ContentService
 
                     if (isset($salesPackage->id)){
                         $package = $this->em->getRepository('AppBundle:SalesPackage')->findOneBy(array("id"=>$salesPackage->id));
+                        $bids = $this->em->getRepository("AppBundle:Bid")->getClosedDealsBySalesBundle($package);
+
+                        if ( count($bids) > 0 && isset($salesPackage->edited) && $salesPackage->edited == true) {
+                            $salesPackages[] = $package;
+                            $package = new SalesPackage();
+                        }
+
                     } else {
                         $package = new SalesPackage();
                     }

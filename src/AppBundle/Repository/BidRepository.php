@@ -91,6 +91,19 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getClosedDealsBySalesBundle($salesBundle){
+        $query = $this->createQueryBuilder('b')
+            ->orderBy("b.createdAt", "DESC")
+            ->join('b.status', 'status')
+            ->where('b.salesPackage = :salesBundle')
+            ->andWhere('status.name = :approved')
+            ->setParameter('approved', 'APPROVED')
+            ->setParameter('salesBundle', $salesBundle)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getAllBids($user){
         $query = $this->createQueryBuilder('b')
             ->join('b.content', 'c')

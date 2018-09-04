@@ -461,7 +461,13 @@ class ApiController extends BaseController
                 'hostUrl' => $this->container->getParameter("carena_host_url")
             );
 
-            $this->mergeAndSave($content, $viewElements);
+            try {
+                $this->mergeAndSave($content, $viewElements);
+            }
+            catch (\Exception $exception){
+
+            }
+
 
 
         }

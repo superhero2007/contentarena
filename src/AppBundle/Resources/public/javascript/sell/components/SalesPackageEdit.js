@@ -40,6 +40,7 @@ class SalesPackageEdit extends React.Component {
             filterTerritories : [],
             installments : salesPackage.installments || [],
             fee : salesPackage.fee,
+            salesPackageId: salesPackage.id,
             isNew : true
         };
         this.bidIcon = assetsBaseDir + "app/images/auction.svg";
@@ -156,7 +157,9 @@ class SalesPackageEdit extends React.Component {
             salesMethod : salesMethod,
             territoriesMethod : territoriesMethod,
             bundleMethod : bundleMethod,
-            installments : installments
+            installments : installments,
+            id: this.state.salesPackageId,
+            edited : true
         }, salesPackageId);
         this.closeModal();
     };
