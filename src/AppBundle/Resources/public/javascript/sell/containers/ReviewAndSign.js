@@ -24,8 +24,17 @@ class ReviewAndSign extends React.Component {
         this.fixed = "FIXED";
         this.bidding = "BIDDING";
         this.limit = 3;
-        this.state = {
-        };
+        this.state = {};
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { status, step, updateContentValue } = nextProps;
+
+        if((step === 5 && status && (status.name === "APPROVED" || status.name === "EDITED")) && !this.termsAutoSelected) {
+            updateContentValue('terms', true);
+            updateContentValue('terms_arena', true);
+            this.termsAutoSelected = true;
+        }
     }
 
     showTerritories = (salesPackage) => {
@@ -135,13 +144,8 @@ class ReviewAndSign extends React.Component {
             terms,
             history,
             customId,
-            status,
-            listingEdited
+            status
         } = this.props;
-
-        if (!listingEdited) {
-            updateContentValue('terms_arena', true)
-        }
 
         const {showDetails, showSubmitting} = this.state;
 
@@ -211,9 +215,10 @@ class ReviewAndSign extends React.Component {
                             <input
                                 type="checkbox"
                                 className="ca-checkbox"
+                                defaultChecked={terms}
                                 value={terms}
                                 onChange={(e)=>{
-                                    updateContentValue('terms',e.target.checked)
+                                    updateContentValue('terms', e.target.checked)
                                 }}
                                 id="terms"
                                 style={{marginRight: 10}}
@@ -228,7 +233,7 @@ class ReviewAndSign extends React.Component {
                                 defaultChecked={terms_arena}
                                 value={terms_arena}
                                 onChange={(e)=>{
-                                    updateContentValue('terms_arena',e.target.checked)
+                                    updateContentValue('terms_arena', e.target.checked)
                                 }}
                                 id="terms_arena"
                                 style={{marginRight: 10}}
