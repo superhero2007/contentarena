@@ -144,15 +144,14 @@ class HeaderBar extends  React.Component {
         )
     }
 
-    getLogoUrl = (tab) => {
-        let logoUrl = '';
-        if (tab === 'MANAGE_LISTINGS') {
-            logoUrl = 'managelistings'
+    getLogoUrl = () => {
+        const { profile } = this.props;
+
+        if (profile === "SELLER") {
+            return "managelistings";
+        } else {
+            return "marketplace";
         }
-        if (tab === 'MARKETPLACE') {
-            logoUrl = 'marketplace'
-        }
-        return logoUrl;
     }
 }
 
