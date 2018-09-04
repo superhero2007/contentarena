@@ -177,7 +177,7 @@ class ListingDetails extends React.Component {
                             style={inputStyle}
                             type={"text"}
                             onChange={(e) => {
-                                company.reregistrationNumber = e.target.value;
+                                company.registrationNumber = e.target.value;
                                 this.setState({company});
                             }}
                             value={company.registrationNumber}/>
