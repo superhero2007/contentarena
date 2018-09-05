@@ -24,6 +24,7 @@ class RightsFilter extends React.Component {
     }
 
     selectTerritory = (countries) => {
+        countries = countries[0] === null ? [] : countries;
         let includeAllCountries = (this.refs.countrySelector.state.selectedOption === "multiple");
         this.props.updateCountries(countries);
         this.props.updateIncludedCountries(includeAllCountries);
@@ -31,11 +32,13 @@ class RightsFilter extends React.Component {
 
     render() {
         const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter, includeAllCountries} = this.props;
+        let countriesValue  = (countries[0] && countries[0]) ? {label: countries[0], value: countries[0]} : '';
+
         return (
             <div>
                 <div className="box">
                     <div className="title">
-                        {this.context.t("Rights")}
+                        {this.context.t("Territories")}
                     </div>
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
@@ -43,7 +46,7 @@ class RightsFilter extends React.Component {
                         <CountrySelector
                             multi={false}
                             className={"base-input-select"}
-                            value={{label: countries[0], value: countries[0]}}
+                            value={countriesValue}
                             onChange={(c)=>{
                                 this.selectTerritory([c])
                             }}/>
@@ -75,7 +78,7 @@ class RightsFilter extends React.Component {
                 <div className="box">
                     <div id="rights-packages" className={"filter-rights"}>
                         <div className="title">
-                            {this.context.t("Territories")}
+                            {this.context.t("Rights")}
                         </div>
                         {
                             rightsPackage && rightsPackage.map((right,i) => {

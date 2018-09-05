@@ -144,7 +144,8 @@ class ReviewAndSign extends React.Component {
             terms,
             history,
             customId,
-            status
+            status,
+            defaultRightsPackage
         } = this.props;
 
         const {showDetails, showSubmitting} = this.state;
@@ -180,7 +181,7 @@ class ReviewAndSign extends React.Component {
 
                 {!showDetails && <div className="step-content-container">
 
-                    <ContentListing {...this.props} onSelectName={this.toggleDetails} />
+                    <ContentListing {...this.props} onSelectName={this.toggleDetails} defaultRightsPackage={defaultRightsPackage}/>
 
                     <SalesPackageForm
                         hideButtons

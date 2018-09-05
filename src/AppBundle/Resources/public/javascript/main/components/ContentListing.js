@@ -4,13 +4,16 @@ import ContentListingEventDetails from "../../buy/components/ContentListingEvent
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import {PropTypes} from "prop-types";
 import {blueCheckIcon, yellowCheckIcon, coinIcon, hammerIcon} from "./Icons";
+import Modal from 'react-modal';
+import {customStyles} from "../styles/custom";
 
 class ContentListing extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            buyingMode : false
+            buyingMode : false,
+            territoriesList: []
         };
         this.noImage = assetsBaseDir + "app/images/no-image.png";
         this.bidIcon = hammerIcon;
@@ -106,19 +109,40 @@ class ContentListing extends React.Component{
         return (a > b) ? 1 : ((b > a) ? -1 : 0)
     };
 
-    getRightsPackages = (defaultRightsPackage , rightsPackage) => {
+    closeTerritoriesModal = (e) => {
+        e.stopPropagation();
+        this.setState({ showAllTerritories: false});
+    };
 
-        //get inner array objects
-        let obj1 = { ...defaultRightsPackage };
-        let obj2 = { ...rightsPackage };
+    showAllTerritories = (e,extraTerritories) => {
+        e.stopPropagation();
+        this.setState({
+            showAllTerritories : true,
+            territoriesList : extraTerritories
+        })
+    };
 
-        //overwrite defaultRightsPackage by user chosen rightsPackage
-        let p = {...obj1, ...obj2};
+    allTerritories = () => {
 
-        //return array of rights
-        return Object.values(p)
+        return <Modal
+            isOpen={this.state.showAllTerritories}
+            onRequestClose={this.closeTerritoriesModal}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+        >
 
-    }
+            <div className="modal-inner">
+                {
+                    this.state.territoriesList.map(territory =>{
+                        return <div className="country-modal">
+                            {territory.label}
+                        </div>
+                    })
+                }
+            </div>
+
+        </Modal>
+    };
 
     render(){
         const {
@@ -136,8 +160,6 @@ class ContentListing extends React.Component{
             rightsPackage,
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
-
-        const packages = this.getRightsPackages(defaultRightsPackage, rightsPackage)
 
         let salesPackages = this.props.salesPackages;
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
@@ -157,7 +179,7 @@ class ContentListing extends React.Component{
                     </div>
                 </div>
                 <div className={"right"} >
-                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div className="name-wrapper">
                         <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
                             {name}
                         </div>
@@ -208,20 +230,41 @@ class ContentListing extends React.Component{
                     <div className="listing-wrapper">
                         <ContentListingEventDetails {...this.props} />
 
-                        <ContentListingRightsPackage rightsPackage={packages.slice(-6)} programName={PROGRAM_NAME}/>
+                        <ContentListingRightsPackage
+                            rightsPackage={rightsPackage}
+                            defaultRightsPackage={defaultRightsPackage}
+                            programName={PROGRAM_NAME}
+                        />
                     </div>
 
-                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20}}>
+                    <div className="sales-bundles-wrapper">
                         <div className={"sales-bundles"}>
                             {salesPackages.slice(0, 3).map( ( salesPackage, i) => {
+                                let extraTerritories = ( salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
+
                                     return  <div className="sales-package" key={"sales-package-"+ i}>
-                                        {/*       {salesPackage.bundleMethod === "SELL_AS_BUNDLE"
-                                    &&<div style={{ margin: '0 10px 0 5px'}}>
-                                        <img style={{width: 26, height: 23}} src={this.fixedIcon}/>
-                                    </div>}*/}
+
+                                        {salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
+                                            <div style={{ margin: '0 10px 0 5px'}}>
+                                                <img style={{width: 26, height: 23}} src={this.fixedIcon}/>
+                                            </div>
+                                        )}
 
                                         <div style={{cursor: 'default'}}>
                                             {salesPackage.name}
+
+                                            {extraTerritories && extraTerritories.length > 3 && (
+                                                <span
+                                                    style={{
+                                                        color: '#2DA7E6',
+                                                        textDecoration: 'underline',
+                                                        marginLeft : 5
+                                                    }}
+                                                    onClick={(e) => {this.showAllTerritories(e,extraTerritories)}}
+                                                >
+                                                {"+" + (extraTerritories.length - 3)}
+                                            </span>
+                                            )}
                                         </div>
                                         {
                                             ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
@@ -241,18 +284,19 @@ class ContentListing extends React.Component{
                                 })}
                             {salesPackages.length > 3 && (
                                 <div className="sales-package show-all">
-                                    + {salesPackages.length - 3}
+                                    <b> + {salesPackages.length - 3} </b>
                                 </div>
                             ) }
                         </div>
                         {expiresAt && (
-                            <div>
+                            <div className="expires">
                                 Expiry: <b>{Moment(expiresAt).format('MM/DD/YYYY')}</b>
                             </div>
                         )}
                     </div>
 
                 </div>
+                { this.allTerritories() }
             </div>
         )
     }

@@ -1,11 +1,16 @@
 import React from 'react';
 import {blueCheckIcon, yellowCheckIcon, greyMinusIcon} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
+import unionBy from 'lodash/unionBy';
 
-const ContentListingRightsPackage = ({rightsPackage}, context) => {
+const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage}, context) => {
+
+    let packages = unionBy(rightsPackage, defaultRightsPackage,  "id"); // overwrite defaultRightsPackage by user chosen rightsPackage
+    packages = packages.sort((a,b) => a.id - b.id); //sort by id
+
     return (
         <div className="listing-rights col">
-            {rightsPackage.map((rp, i) => {
+            {packages.slice(0,6).map((rp, i) => {
                 let icon = '';
 
                 if (rp.exclusive == null) {
@@ -19,11 +24,10 @@ const ContentListingRightsPackage = ({rightsPackage}, context) => {
                 return (
                     <div key={i} className="listing-item">
 
-                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={icon}/>
+                        <img style={{width: 15, height: 15, margin: '0 5px'}} src={icon}/>
 
                         <div style={{display: 'flex', flexDirection: "row"}}>
                             {rp.shortLabel === "PR" ? context.t("Edited Program") : rp.name}
-                            {rp.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                         </div>
                     </div>
                 )

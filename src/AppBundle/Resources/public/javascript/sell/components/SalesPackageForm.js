@@ -139,7 +139,7 @@ class SalesPackageForm extends React.Component {
         this.setState({ isOpen: false});
     };
 
-    closeTerritoiesModal = () => {
+    closeTerritoriesModal = () => {
         this.setState({ showAllTerritories: false});
     };
 
@@ -527,17 +527,12 @@ class SalesPackageForm extends React.Component {
 
         return <Modal
             isOpen={this.state.showAllTerritories}
-            onRequestClose={this.closeTerritoiesModal}
+            onRequestClose={this.closeTerritoriesModal}
             bodyOpenClassName={"selector"}
             style={customStyles}
         >
 
-            <div style={{
-                color: 'grey',
-                padding: 20,
-                display: 'flex',
-                flexWrap: 'wrap',
-            }}>
+            <div className="modal-inner">
                 {
                     this.state.territoriesList.map(territory =>{
                         return <div className="country-modal">

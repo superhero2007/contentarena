@@ -44,11 +44,11 @@ class ContentListingPendingBid extends ContentListing {
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
         return (
-            <div className="listing-list-view" style={{padding: 0}}>
+            <div className="listing-list-view">
                 <SendMessage ref={"messagePopup" + id }
                              listingId={id}
                              recipient={company}/>
-                <div className={"left"} style={{padding: 25}} >
+                <div className={"left"}>
                     <div className={"image"}>
                         <img src={listingImage}/>
                     </div>
