@@ -126,13 +126,18 @@ class FileSelector extends Component {
 
     render() {
 
-        const {label, isImage, previousImage, selected, onRemove} = this.props;
+        const {label, isImage, previousImage, selected, onRemove, infoText} = this.props;
         const {image, uploading, failed} = this.state;
 
         return (
             <div className="base-input custom-selector" style={{flexDirection: 'column'}}>
                 <div style={{display: 'flex'}}>
-                    <label>{(label)?label:"Files"}</label>
+                    <label>
+                        {(label)?label:"Files"}
+                        {infoText && (
+                            <i className="fa fa-info-circle tooltip-icon" title={infoText}/>
+                        )}
+                    </label>
                     <button
                         className="standard-button"
                         disabled={uploading}

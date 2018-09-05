@@ -607,6 +607,7 @@ class SalesPackageForm extends React.Component {
                     <label>
                         <div className='label-text'>
                             {this.context.t("Sales bundles")}
+                            <i className="fa fa-info-circle tooltip-icon" title={'Offer individual sales bundles to buyers. A sales bundle may consist out of one or multiple territories. For each sales bundle, you can set an individual payment method (fixed fee or bid) and payment schedule.'}/>
                         </div>
                         <CurrencySelector onClick={selectCurrency} selected={currency} />
                         <div className='clearfix'/>

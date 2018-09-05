@@ -17,11 +17,10 @@ import {PropTypes} from "prop-types";
 class SellFormStep1 extends React.Component {
 
     constructor(props) {
-        console.log("CONTRUCTOR")
+        console.log("CONTRUCTOR");
         super(props);
         if ( props.step !== 1) return;
         this.state = {
-            title : "Step 1 - Event selection",
             lastSportId : null,
             lastCategoryId : null,
             lastTournamentId : null,
