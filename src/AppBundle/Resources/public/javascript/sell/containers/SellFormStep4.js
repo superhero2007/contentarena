@@ -9,7 +9,7 @@ import CompanyInformation from "../components/CompanyInformation";
 import ListingName from "../components/ListingName";
 import {CountrySelector} from "../../main/components/CountrySelector";
 import {stepChangeReset} from "../actions/contentActions";
-import {TitleBar} from "../components/SellFormItems";
+import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
 
 class SellFormStep4 extends React.Component {
@@ -94,6 +94,9 @@ class SellFormStep4 extends React.Component {
             salesPackages,
             currency,
             updateContentValue,
+            sports,
+            sportCategory,
+            tournament,
             image,
         } = this.props;
 
@@ -102,6 +105,11 @@ class SellFormStep4 extends React.Component {
         return (
 
             <div className="step-content step-4">
+                {(sports.length || sportCategory.length || tournament.length ||  seasons.length) && (
+                    <div className="listing-summary">
+                        <SummaryText {...this.props}/>
+                    </div>
+                )}
                 <div className="step-content-container">
                     <SalesPackageForm
                         currency={currency}

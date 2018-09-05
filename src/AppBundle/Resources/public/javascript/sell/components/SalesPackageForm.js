@@ -434,7 +434,7 @@ class SalesPackageForm extends React.Component {
                                     min={0}
                                     onChange={this.updateFee}
                                     value={this.state.fee}
-                                    style={{ height: "26px", width: "80px" }}/>
+                                    style={{ height: "26px", width: "100px" }}/>
                                 <span style={{width: 'auto', padding: '0 10px'}}>{ this.getCurrencySymbol() }</span>
                             </div>
                         </div>
