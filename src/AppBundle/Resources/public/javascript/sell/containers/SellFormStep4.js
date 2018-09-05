@@ -9,7 +9,7 @@ import CompanyInformation from "../components/CompanyInformation";
 import ListingName from "../components/ListingName";
 import {CountrySelector} from "../../main/components/CountrySelector";
 import {stepChangeReset} from "../actions/contentActions";
-import {TitleBar} from "../components/SellFormItems";
+import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
 
 class SellFormStep4 extends React.Component {
@@ -94,6 +94,9 @@ class SellFormStep4 extends React.Component {
             salesPackages,
             currency,
             updateContentValue,
+            sports,
+            sportCategory,
+            tournament,
             image,
         } = this.props;
 
@@ -102,6 +105,11 @@ class SellFormStep4 extends React.Component {
         return (
 
             <div className="step-content step-4">
+                {(sports.length || sportCategory.length || tournament.length ||  seasons.length) && (
+                    <div className="listing-summary">
+                        <SummaryText {...this.props}/>
+                    </div>
+                )}
                 <div className="step-content-container">
                     <SalesPackageForm
                         currency={currency}
@@ -144,9 +152,11 @@ class SellFormStep4 extends React.Component {
                         acceptType={[
                             "application/pdf"
                         ]}
-                        tmp={true}/>
+                        tmp={true}
+                        infoText={'All files uploaded here will be merged with the license agreement. You may upload only PDF files.'}
+                    />
 
-                    <TitleBar title={this.context.t("Listing details")}/>
+                    <TitleBar title={this.context.t("Listing details")} infoText={'These details impact how your listing will be presented to buyers in the marketplace: Under which name, with which image and until when it shall be published.'}/>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
                         {this.context.t("Please define listing details below. This determines how your listing is shown to potential buyers.")}

@@ -9,12 +9,14 @@
     background-color: $background-2;
     padding-left: 20px;
     color: white;
-    height: 54px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 600;
     justify-content: center;
-    font-size: 24px;
     display: flex;
     flex-direction: column;
     padding-bottom: 2px;
+    text-transform: uppercase;
   }
 
   .package-selector-container {

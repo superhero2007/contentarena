@@ -434,7 +434,7 @@ class SalesPackageForm extends React.Component {
                                     min={0}
                                     onChange={this.updateFee}
                                     value={this.state.fee}
-                                    style={{ height: "26px", width: "80px" }}/>
+                                    style={{ height: "26px", width: "100px" }}/>
                                 <span style={{width: 'auto', padding: '0 10px'}}>{ this.getCurrencySymbol() }</span>
                             </div>
                         </div>
@@ -607,6 +607,7 @@ class SalesPackageForm extends React.Component {
                     <label>
                         <div className='label-text'>
                             {this.context.t("Sales bundles")}
+                            <i className="fa fa-info-circle tooltip-icon" title={'Offer individual sales bundles to buyers. A sales bundle may consist out of one or multiple territories. For each sales bundle, you can set an individual payment method (fixed fee or bid) and payment schedule.'}/>
                         </div>
                         <CurrencySelector onClick={selectCurrency} selected={currency} />
                         <div className='clearfix'/>

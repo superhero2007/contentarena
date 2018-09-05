@@ -4,7 +4,7 @@ import StaticRound from '../components/StaticRound';
 
 export const Description = ({value, onChange, title= "Enter a description", placeholder="Provide a short description of your content listing"}) => (
     <div className="textarea-input">
-        <label>{title}</label>
+        <label>{title} (optional)</label>
         <textarea onChange={onChange} value={value} placeholder={placeholder}/>
     </div>
 );
