@@ -47,7 +47,7 @@ input[type="radio"].ca-radio {
   flex: 20px 0 0;
   -webkit-appearance: none;
   appearance: none;
-  background-color: #ffffff;
+  background-color: #F4F6F9;
   border: 1px solid #cccccc;
   border-radius: 50%;
   //transition: background-color $input-animation, border $input-animation, background-image $input-animation;
@@ -56,16 +56,30 @@ input[type="radio"].ca-radio {
   margin: initial;
   padding: initial;
   font-size: initial;
+  position: relative;
 
   &:hover {
-    border-color: #ffc948;
+    border-color: #309AFF;
   }
 
   &:checked {
-    border: 5px solid #ffc948;
-    background-color: #ffffff;
+    border: 2px solid #309AFF;
     padding: 0 !important;
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      right: 0;
+      left: 0.5px;
+      top: 5.5px;
+      width: 5.5px;
+      height: 5.5px;
+      background: #309AFF;
+      margin: 0 auto;
+    }
   }
+
 
   &:disabled,
   &.disabled {
