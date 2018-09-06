@@ -120,12 +120,12 @@ class PackageSelector extends React.Component {
         return (
             <div className="package-selector table">
                 <div className="package-selector-title">
-                    {this.context.t("Rights selection & definition")}
+                    {this.context.t("CL_STEP2_RIGHTS_TITLE")}
                 </div>
                 <div className="package-selector-container">
 
                     <div style={{margin: 20}}>
-                        {this.context.t("Which rights, relating to the program defined above, do you wish to grant to the buyer?")}
+                        {this.context.t("CL_STEP2_RIGHTS_TEXT")}
                     </div>
 
                     <div className="package-exclusive">

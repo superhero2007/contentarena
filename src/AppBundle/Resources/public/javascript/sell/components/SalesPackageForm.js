@@ -139,7 +139,7 @@ class SalesPackageForm extends React.Component {
         this.setState({ isOpen: false});
     };
 
-    closeTerritoiesModal = () => {
+    closeTerritoriesModal = () => {
         this.setState({ showAllTerritories: false});
     };
 
@@ -298,9 +298,6 @@ class SalesPackageForm extends React.Component {
 
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
-        const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
-        const isWorldwideEnabled = territoriesMethod === this.worldwide;
-
         return <Modal
             isOpen={this.state.isOpen}
             onRequestClose={this.closeModal}
@@ -319,7 +316,7 @@ class SalesPackageForm extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            How would you like to sell your content?
+                            {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES_MODE")}
                         </label>
                         <div className={"content"}>
                             <div className={"item"} onClick={()=>this.handleTerritories('single')}>
@@ -328,7 +325,7 @@ class SalesPackageForm extends React.Component {
                                     <i className="fa fa-circle-thin" />
                                 }
                                 <div className={"title"}>
-                                    Add single territory
+                                    {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_SINGLE_TERRITORY")}
                                 </div>
                             </div>
                             <div className={"item"} onClick={()=>this.handleTerritories('multiple')}>
@@ -337,7 +334,7 @@ class SalesPackageForm extends React.Component {
                                     <i className="fa fa-circle-thin" />
                                 }
                                 <div className={"title"}>
-                                    Add multiple territory
+                                    {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_MULTIPLE_TERRITORIES")}
                                 </div>
                             </div>
                         </div>
@@ -351,7 +348,7 @@ class SalesPackageForm extends React.Component {
                                     {territoriesMethod !== this.selectedTerritories && <i className="fa fa-circle-thin"/>}
                                     {territoriesMethod === this.selectedTerritories && <i className="fa fa-check-circle-o"/>}
                                     <div className={"title"}>
-                                        Selected territories only
+                                        {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_SELECTED_TERRITORIES")}
                                     </div>
                                 </div>
                                 {(!exclusivity || (exclusivity && salesPackages.length === 0)) && (
@@ -359,7 +356,7 @@ class SalesPackageForm extends React.Component {
                                         {territoriesMethod !== this.worldwide && <i className="fa fa-circle-thin"/>}
                                         {territoriesMethod === this.worldwide && <i className="fa fa-check-circle-o"/>}
                                         <div className={"title"}>
-                                            Worldwide
+                                            {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE")}
                                         </div>
                                     </div>
                                 )}
@@ -367,7 +364,7 @@ class SalesPackageForm extends React.Component {
                                     {territoriesMethod !== this.worldwideExcluding && <i className="fa fa-circle-thin"/>}
                                     {territoriesMethod === this.worldwideExcluding && <i className="fa fa-check-circle-o"/>}
                                     <div className={"title"}>
-                                        Worldwide excluding
+                                        {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
                                     </div>
                                 </div>}
                             </div>
@@ -397,7 +394,7 @@ class SalesPackageForm extends React.Component {
                                            onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
                                     />
                                     <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>
-                                        Offer selected territories together as one territory package
+                                        {this.context.t("CL_STEP4_EDIT_BUNDLE_AS_PACKAGE")}
                                     </span>
                                     <Tooltip
                                         id="offer_info"
@@ -414,14 +411,14 @@ class SalesPackageForm extends React.Component {
                                 {this.state.salesMethod !== this.fixed && <i className="fa fa-circle-thin"/>}
                                 {this.state.salesMethod === this.fixed && <i className="fa fa-check-circle-o"/>}
                                 <div className={"title"}>
-                                    Fixed fee
+                                    {this.context.t("CL_STEP4_EDIT_BUNDLE_TYPE_FIXED")}
                                 </div>
                             </div>
                             <div className={"item"} onClick={() => { this.setSalesMethod(this.bidding) } }>
                                 {this.state.salesMethod !== this.bidding && <i className="fa fa-circle-thin"/>}
                                 {this.state.salesMethod === this.bidding && <i className="fa fa-check-circle-o"/>}
                                 <div className={"title"}>
-                                    Bidding
+                                    {this.context.t("CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING")}
                                 </div>
                             </div>
                             <div className={"item"} style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -462,13 +459,13 @@ class SalesPackageForm extends React.Component {
                                     { installment.type !== "DAY" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DAY",i)} }/>}
                                     { installment.type === "DAY" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
                                     <div className={"title"} >
-                                    <input
-                                        type="number"
-                                        min={0}
-                                        onChange={(e) => {this.setInstallmentDays(e.target.value,i)}}
-                                        disabled={installment.type !== "DAY"}
-                                        value={installment.days}
-                                        style={{ height: "26px", width: "70px" }}/> days after contract conclusion
+                                        <input
+                                            type="number"
+                                            min={0}
+                                            onChange={(e) => {this.setInstallmentDays(e.target.value,i)}}
+                                            disabled={installment.type !== "DAY"}
+                                            value={installment.days}
+                                            style={{ height: "26px", width: "70px" }}/> days after contract conclusion
                                     </div>
                                     { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
                                     { i === list.length - 1 && <i style={{margin: 0, position: "relative"}} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
@@ -488,7 +485,7 @@ class SalesPackageForm extends React.Component {
                 fontSize: '12px',
                 color: 'red'
             }}>
-                { this.installmentsIncomplete() && "the total instalment percentage must accumulate to 100%"}
+                { this.installmentsIncomplete() && this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING")}
             </div>
 
             <div className={"buttons"}>
@@ -502,6 +499,9 @@ class SalesPackageForm extends React.Component {
                     onClick={this.applySelection}>Ok</button>
             </div>
         </Modal>
+        const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
+
+        const isWorldwideEnabled = territoriesMethod === this.worldwide;
     };
 
     territoriesIncomplete = () => {
@@ -527,17 +527,12 @@ class SalesPackageForm extends React.Component {
 
         return <Modal
             isOpen={this.state.showAllTerritories}
-            onRequestClose={this.closeTerritoiesModal}
+            onRequestClose={this.closeTerritoriesModal}
             bodyOpenClassName={"selector"}
             style={customStyles}
         >
 
-            <div style={{
-                color: 'grey',
-                padding: 20,
-                display: 'flex',
-                flexWrap: 'wrap',
-            }}>
+            <div className="modal-inner">
                 {
                     this.state.territoriesList.map(territory =>{
                         return <div className="country-modal">
@@ -606,7 +601,8 @@ class SalesPackageForm extends React.Component {
                 <div className="base-full-input" style={inputStyle}>
                     <label>
                         <div className='label-text'>
-                            {this.context.t("Sales bundles")}
+                            {this.context.t("CL_STEP4_SALES_BUNDLES")}
+                            <i className="fa fa-info-circle tooltip-icon" title={'Offer individual sales bundles to buyers. A sales bundle may consist out of one or multiple territories. For each sales bundle, you can set an individual payment method (fixed fee or bid) and payment schedule.'}/>
                         </div>
                         <CurrencySelector onClick={selectCurrency} selected={currency} />
                         <div className='clearfix'/>
@@ -679,7 +675,7 @@ class SalesPackageForm extends React.Component {
                     {this.addBundlesAvailable() && this.renderAddSalesBundleButton() }
                     {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll}>
                         <i className="fa fa-minus-circle"/>
-                        {this.context.t("Remove all")}
+                        {this.context.t("CL_STEP4_REMOVE_ALL_BUNDLES")}
                     </div>}
                 </div>}
 
@@ -692,7 +688,7 @@ class SalesPackageForm extends React.Component {
         return (
             <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
                 <i className="fa fa-plus-circle"/>
-                {this.context.t("Add sales bundle")}
+                {this.context.t("CL_STEP4_ADD_SALES_BUNDLE")}
             </div>
         );
     }

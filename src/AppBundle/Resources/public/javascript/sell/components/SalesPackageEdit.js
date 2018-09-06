@@ -231,8 +231,8 @@ class SalesPackageEdit extends React.Component {
                 <div className="step-content-container">
                     <div className="base-full-input">
                         <label style={labelStyle}>
-                            {this.context.t("Territories")}
-                            {this.state.territoriesMethod === this.worldwideExcluding && ": Worldwide exluding"}
+                            {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES")}
+                            {this.state.territoriesMethod === this.worldwideExcluding && ": Worldwide excluding"}
                         </label>
                     </div>
 
@@ -299,7 +299,7 @@ class SalesPackageEdit extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle}>
-                            {this.context.t("Payment details")}
+                            {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_PAYMENT")}
                         </label>
 
                         { this.state.installments.map( (installment, i, list) => {
@@ -328,7 +328,7 @@ class SalesPackageEdit extends React.Component {
                                         disabled={installment.type !== "DAY"}
                                         value={installment.days}
                                         style={{ height: "26px", width: "40px" }}/>
-                                        {this.context.t("days after contract conclusion")}
+                                        {this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS")}
                                     </div>
                                     { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
                                     { i === list.length - 1 && <i style={{margin: 0, position: "relative"}} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
@@ -348,7 +348,7 @@ class SalesPackageEdit extends React.Component {
                 fontSize: '12px',
                 color: 'red'
             }}>
-                { this.installmentsIncomplete() && this.context.t("the total instalment percentage must accumulate to 100%")}
+                { this.installmentsIncomplete() && this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING")}
             </div>
 
             <div className={"buttons"}>

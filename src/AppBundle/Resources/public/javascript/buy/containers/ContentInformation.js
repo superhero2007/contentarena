@@ -69,7 +69,7 @@ class ContentInformation extends React.Component {
                     seasons && seasons.length > 0 && seasons.map((season, key)  => {
                         return <div key={"season-" + key} className="season-details">
                             <div className="season-name">
-                                 {this.context.t("Season :")} {season.name}
+                                {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}
                             </div>
                             {( !season.fixtures || season.fixtures.length === 0) && <StaticSchedules season={key} seasons={seasons}/>}
                             { season.fixtures && season.fixtures.length > 0 &&
@@ -87,7 +87,7 @@ class ContentInformation extends React.Component {
                 {description && (
                     <div className="full-item-box">
                         <label>
-                            {this.context.t("EVENT DESCRIPTION")}
+                            {this.context.t("LISTING_DETAILS_EVENT_TITLE_DESCRIPTION")}
                         </label>
                         <div className="full-item-content">
                             {description}
@@ -104,7 +104,7 @@ class ContentInformation extends React.Component {
                              width : '70%'
                          }}>
                         <label>
-                            {this.context.t("CONTENT WEBSITE")}
+                            {this.context.t("LISTING_DETAILS_EVENT_TITLE_WEBSITE")}
                         </label>
                         <div style={{ padding: 12, border: '1px solid lightgrey', marginLeft: 3, minWidth: 220}}>
                             {website && website.map(website=>{
@@ -124,7 +124,7 @@ class ContentInformation extends React.Component {
                         <label style={{
                             height: 'auto'
                         }}>
-                            {this.context.t("ATTACHMENTS")}
+                            {this.context.t("LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS")}
                         </label>
                         <div style={{display : "flex", flexDirection: 'column'}}>{attachments.map(a=>{
                             return <div onClick={()=>{}} style={{

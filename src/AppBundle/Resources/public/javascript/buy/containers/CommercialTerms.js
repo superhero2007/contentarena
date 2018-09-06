@@ -21,7 +21,7 @@ class CommercialTerms extends React.Component {
 
                 <div className="full-item-box">
                     <label>
-                        {this.context.t("PROGRAMS DESCRIPTION")}
+                        {this.context.t("LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION")}
                     </label>
                     <div className="full-item-content">
                         {programDescription && programDescription}

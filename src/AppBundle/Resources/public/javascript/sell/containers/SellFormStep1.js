@@ -17,11 +17,9 @@ import {PropTypes} from "prop-types";
 class SellFormStep1 extends React.Component {
 
     constructor(props) {
-        console.log("CONTRUCTOR")
         super(props);
         if ( props.step !== 1) return;
         this.state = {
-            title : "Step 1 - Event selection",
             lastSportId : null,
             lastCategoryId : null,
             lastTournamentId : null,
@@ -508,7 +506,7 @@ class SellFormStep1 extends React.Component {
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
                         <button className="light-blue-button" onClick={this.clear}>
-                            {this.context.t("Start over")}
+                            {this.context.t("CL_STEP1_BUTTON_START_OVER")}
                         </button>
                     </div>
                 </div>}
@@ -516,7 +514,7 @@ class SellFormStep1 extends React.Component {
                 {!this.state.showSearch && <div className="step-content-container">
 
                     <div className="step-item-description" >
-                        {this.context.t("Please fill in the information fields below. Note that, apart from 'Sport', you may skip all information fields.")}
+                        {this.context.t("CL_STEP1_DESCRIPTION_1")}
                     </div>
 
                     {
@@ -537,14 +535,14 @@ class SellFormStep1 extends React.Component {
                     }
 
                     {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px"}}>
-                        {this.context.t("Your content covers multiple sports?")}
+                        {this.context.t("CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS")}
                         <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
                     </div>}
 
                     {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&
                     <div className="base-input">
                         <label>
-                            {this.context.t("Country/Category")}
+                            {this.context.t("CL_STEP1_LABEL_COUNTRY")}
                         </label>
                         <input
                             type="text"
@@ -554,7 +552,7 @@ class SellFormStep1 extends React.Component {
                             onClick={() => {
                                 this.props.openCategorySelector(this.state.sportCategories)
                             }}
-                            placeholder={this.context.t("e.g. Germany")}  />
+                            placeholder={this.context.t("CL_STEP1_PLACEHOLDER_COUNTRY")}  />
                         { this.state.loadingCategories && <i className="fa fa-cog fa-spin"/>}
                     </div>}
                     {this.state.sportSelectors.length === 1 && this.hasCustomCategory() && <NewCategory
@@ -566,7 +564,7 @@ class SellFormStep1 extends React.Component {
                     {this.state.sportSelectors.length === 1 && !this.hasCustomTournament() &&
                     <div className="base-input">
                         <label>
-                            {this.context.t("Competition")}
+                            {this.context.t("CL_STEP1_LABEL_COMPETITION")}
                         </label>
                         <input type="text"
                                value ={inputProps.tournament.value || ""}
@@ -575,7 +573,7 @@ class SellFormStep1 extends React.Component {
                                onClick={() => {
                                    this.props.openTournamentSelector( this.state.tournaments );
                                }}
-                               placeholder={this.context.t("e.g. Bundesliga")}  />
+                               placeholder={this.context.t("CL_STEP1_PLACEHOLDER_COMPETITION")}  />
                         { this.state.loadingTournaments && <i className="fa fa-cog fa-spin"/>}
                     </div>}
 
@@ -609,13 +607,13 @@ class SellFormStep1 extends React.Component {
                     <Description value={this.props.description} onChange={ (e) => this.updateContentValue(e, "description")} />
 
                     <div className="step-item-description" style={{}}>
-                        {this.context.t("Additional information")}
+                        {this.context.t("CL_STEP1_LABEL_ADDITIONAL_INFO")}
                         <i className="fa fa-info-circle tooltip-icon" title={'The website link and the attached files will be made available to buyers in the listing details, when clicking on a listing in the marketplace.'}/>
                     </div>
 
                     <div className="base-input">
                         <label>
-                            {this.context.t("Website")}
+                            {this.context.t("CL_STEP1_LABEL_WEBSITE")}
                         </label>
                         <TagsInput
                             inputProps={{placeholder: websitePlaceholder}}

@@ -161,7 +161,7 @@ class TermSheet extends React.Component {
                         border: 'none'
                     }} >
                         <div className="right-definition right-definition-title">
-                            {this.context.t("Grant of Rights")}
+                            {this.context.t("LISTING_DETAILS_RIGHTS_HEADER_RIGHTS")}
                         </div>
                         {
                             rightsPackage.map((rp, i)=>{
@@ -179,7 +179,7 @@ class TermSheet extends React.Component {
                     { ( this.hasRight("NA") && this.hasRight("HL") ) &&
                     <div className={'row'} key={'transmission'}>
                         <div className="right-name right-definition">
-                            Granted Transmission Time
+                            {this.context.t("LISTING_DETAILS_RIGHTS_HEADER_GRANTED_TIME")}
                         </div>
                         {
                             rightsPackage.map((rp,k)=>{
@@ -202,7 +202,7 @@ class TermSheet extends React.Component {
 
                 { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">
                     <label>
-                        {this.context.t("Amendment(s) to the Grant of Rights / Special Conditions")}
+                        {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
                     </label>
                     <div  className="full-item-content">
                         {
@@ -214,7 +214,7 @@ class TermSheet extends React.Component {
                 <div className="term-sheet-items">
                     <div className="row" style={{border: 'none'}}>
                         <div className="right-definition right-definition-title">
-                            {this.context.t("Production details")}
+                            {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}
                         </div>
                         {
                             rightsPackage.map((rp, i)=>{
@@ -241,7 +241,7 @@ class TermSheet extends React.Component {
                     selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
                     <div className="term-sheet-full-item-box">
                         <label>
-                            {this.context.t("Technical Fee Details")}
+                            {this.context.t("LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS")}
                         </label>
                         <div  className="full-item-content">
                             {
@@ -253,7 +253,7 @@ class TermSheet extends React.Component {
 
                 { COMMENTS_PRODUCTION && <div className="term-sheet-full-item-box">
                     <label>
-                        {this.context.t("Amendment(s) to the Content Delivery / Special Conditions")}
+                        {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2")}
                     </label>
                     <div  className="full-item-content">
                         {

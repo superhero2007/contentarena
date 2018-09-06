@@ -86,8 +86,7 @@ class CommercialSalesBundle extends React.Component{
         >
             <div className={"generic-modal-container"}>
                 <div className="title">
-                    Are you sure you want to accept this bid?
-                    {this.context.t("Yes")}
+                    {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT")}
                 </div>
 
                 <div className="container">
@@ -95,10 +94,11 @@ class CommercialSalesBundle extends React.Component{
                 </div>
 
                 <div className={"buttons"}>
-                    <button onClick={this.closeApproveModal}>Cancel</button>
+                    <button onClick={this.closeApproveModal}>
+                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
+                    </button>
                     {!saving && <button className={"confirm"} disabled={!signature} onClick={this.acceptBid}>
-                        Accept Bid
-                        {this.context.t("Yes")}
+                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
                     </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
                 </div>
@@ -119,13 +119,11 @@ class CommercialSalesBundle extends React.Component{
         >
             <div className={"generic-modal-container"}>
                 <div className="title">
-                    Are you sure you want to decline this bid?
-                    {this.context.t("Yes")}
+                    {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REJECT")}
                 </div>
 
                 <div className="container">
-                    Enter Message (optional)
-                    {this.context.t("Yes")}
+                    {this.context.t("COMMERCIAL_ACTIVITY_BID_REJECT_MESSAGE")}
                     <textarea onChange={(e)=>{this.setState({message: e.target.value})}} value={message}>
                     </textarea>
                 </div>
@@ -133,12 +131,11 @@ class CommercialSalesBundle extends React.Component{
                 <div className={"buttons"}>
 
                     {!saving && <button className={"confirm"} onClick={this.rejectBid}>
-                        Confirm
+                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM")}
                     </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
                     <button onClick={this.closeRejectModal}>
-                        Cancel
-                        {this.context.t("Yes")}
+                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CANCEL")}
                     </button>
                 </div>
             </div>
@@ -157,8 +154,7 @@ class CommercialSalesBundle extends React.Component{
         >
             <div className={"generic-modal-container"}>
                 <div className="title">
-                    Are you sure you want to remove this bid?
-                    {this.context.t("Yes")}
+                    {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE")}
                 </div>
 
                 <div className="container">
@@ -167,13 +163,11 @@ class CommercialSalesBundle extends React.Component{
                 <div className={"buttons"}>
 
                     {!saving && <button onClick={this.removeBid} className={"confirm"}>
-                        Confirm
-                        {this.context.t("Yes")}
+                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM")}
                     </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
                     <button onClick={this.closeRemoveModal}>
-                        {this.context.t("Yes")}
-                        Cancel
+                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL")}
                     </button>
                 </div>
             </div>
@@ -280,7 +274,7 @@ class CommercialSalesBundle extends React.Component{
                             </div>
 
                         },{
-                            Header: this.context.t("Action date"),
+                            Header: this.context.t("COMMERCIAL_ACTIVITY_ACTION_DATE"),
                             headerClassName : 'table-header',
                             className : 'table-header',
                             accessor: 'createdAt',
@@ -320,20 +314,20 @@ class CommercialSalesBundle extends React.Component{
                                 {/*CONFIRM REMOVE*/}
                                 {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                     <div className={"confirmation-text"} style={{ whiteSpace: 'normal'}}>
-                                        {this.context.t("Are you sure you want to remove this bid?")}
+                                        {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE")}
                                     </div>
                                     <button className={"button button-confirm"} onClick={(e)=>{
                                         onDelete(this.state.selectedBidForDeletion.id);
                                         this.setState({showRemoveConfirm: false, selectedBidForDeletion: null});
                                         e.stopPropagation();
                                     }}>
-                                        {this.context.t("Remove")}
+                                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM")}
                                     </button>
                                     <button className={"button"} onClick={(e)=>{
                                         this.setState({showRemoveConfirm: false, selectedBidForDeletion: null});
                                         e.stopPropagation();
                                     }}>
-                                        {this.context.t("Cancel")}
+                                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL")}
                                     </button>
                                 </div>}
                             </div>

@@ -24,6 +24,7 @@ class RightsFilter extends React.Component {
     }
 
     selectTerritory = (countries) => {
+        countries = countries[0] === null ? [] : countries;
         let includeAllCountries = (this.refs.countrySelector.state.selectedOption === "multiple");
         this.props.updateCountries(countries);
         this.props.updateIncludedCountries(includeAllCountries);
@@ -31,11 +32,13 @@ class RightsFilter extends React.Component {
 
     render() {
         const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter, includeAllCountries} = this.props;
+        let countriesValue  = (countries[0] && countries[0]) ? {label: countries[0], value: countries[0]} : '';
+
         return (
             <div>
                 <div className="box">
                     <div className="title">
-                        {this.context.t("Rights")}
+                        {this.context.t("MARKETPLACE_LABEL_FILTER_TERRITORIES")}
                     </div>
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
@@ -43,7 +46,7 @@ class RightsFilter extends React.Component {
                         <CountrySelector
                             multi={false}
                             className={"base-input-select"}
-                            value={{label: countries[0], value: countries[0]}}
+                            value={countriesValue}
                             onChange={(c)=>{
                                 this.selectTerritory([c])
                             }}/>
@@ -75,7 +78,7 @@ class RightsFilter extends React.Component {
                 <div className="box">
                     <div id="rights-packages" className={"filter-rights"}>
                         <div className="title">
-                            {this.context.t("Territories")}
+                            {this.context.t("MARKETPLACE_LABEL_FILTER_RIGHTS")}
                         </div>
                         {
                             rightsPackage && rightsPackage.map((right,i) => {
@@ -112,7 +115,7 @@ class RightsFilter extends React.Component {
                                     this.props.updateExclusive(e.target.checked)
                                 }}
                             />
-                            {this.context.t("Contains exclusive rights")}
+                            {this.context.t("MARKETPLACE_LABEL_FILTER_EXCLUSIVE")}
                         </div>
                     </div>
 
@@ -124,10 +127,10 @@ class RightsFilter extends React.Component {
                         flexDirection: 'column'
                     }}>
                         <button className="ca-btn ca-btn-primary" style={{margin:5}} onClick={onFilter}>
-                            {this.context.t("Apply")}
+                            {this.context.t("MARKETPLACE_BUTTON_APPLY")}
                         </button>
                         <button className="ca-btn ca-btn-link" style={{margin:5}} onClick={clearFilter}>
-                            {this.context.t("Clear")}
+                            {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>
                     </div>
                 </div>

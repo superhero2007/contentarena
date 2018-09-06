@@ -44,11 +44,11 @@ class ContentListingPendingBid extends ContentListing {
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
         return (
-            <div className="listing-list-view" style={{padding: 0}}>
+            <div className="listing-list-view">
                 <SendMessage ref={"messagePopup" + id }
                              listingId={id}
                              recipient={company}/>
-                <div className={"left"} style={{padding: 25}} >
+                <div className={"left"}>
                     <div className={"image"}>
                         <img src={listingImage}/>
                     </div>
@@ -169,7 +169,7 @@ class ContentListingPendingBid extends ContentListing {
                                 {/*EDITED TOOLTIP*/}
                                 {showEdited && <div className="status-tooltip">
                                     <div className={"option"}>
-                                        {this.context.t("Listing edited after last bid. Please review term sheet.")}
+                                        {this.context.t("PENDING_BIDS_TOOLTIP_LISTING_EDITED")}
                                     </div>
                                 </div>}
 
@@ -199,20 +199,20 @@ class ContentListingPendingBid extends ContentListing {
                             {/*CONFIRM REMOVE*/}
                             {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                 <div className={"confirmation-text"}>
-                                    {this.context.t("Are you sure you want to remove this bid?")}
+                                    {this.context.t("PENDING_BIDS_REMOVE_TITLE")}
                                 </div>
                                 <button className={"button button-confirm"} onClick={(e)=>{
                                     this.setState({showRemoveConfirm: false});
                                     onDelete(bid.id);
                                     e.stopPropagation();
                                 }}>
-                                    {this.context.t("Remove")}
+                                    {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CONFIRM")}
                                 </button>
                                 <button className={"button"} onClick={(e)=>{
                                     this.setState({showRemoveConfirm: false});
                                     e.stopPropagation();
                                 }}>
-                                    {this.context.t("Cancel")}
+                                    {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CANCEL")}
                                 </button>
                             </div>}
                         </div>

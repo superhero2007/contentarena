@@ -20,7 +20,7 @@ class Marketplace extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rightsPackage : JSON.parse(props.rights),
+            defaultRightsPackage : JSON.parse(props.rights),
             company : JSON.parse(props.company),
             loadingListing: false,
             loadingListingDetails : false,
@@ -65,11 +65,11 @@ class Marketplace extends React.Component {
         clearUpdateFilter();
         this.props.updateProfile("BUYER");
 
-        jQuery('.manager-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+        jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
 
     componentWillUnmount(){
-        jQuery('.manager-container').removeAttr('style') //todo: remove this when other page redesign ready
+        jQuery('body, .marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     componentWillReceiveProps ( props ) {
@@ -209,7 +209,7 @@ class Marketplace extends React.Component {
             sortSalesPackages,
             profile,
             errorMessage,
-            rightsPackage
+            defaultRightsPackage
         } = this.state;
 
         if (errorMessage) {
@@ -225,7 +225,7 @@ class Marketplace extends React.Component {
                         onFilter={this.filter}/>
                     <RightsFilter
                         onFilter={this.filterByRoute}
-                        rightsPackage={this.state.rightsPackage}/>
+                        rightsPackage={this.state.defaultRightsPackage}/>
                 </div>}
 
                 {
@@ -240,7 +240,7 @@ class Marketplace extends React.Component {
                                         key={listing.customId}
                                         filter={filter}
                                         sortSalesPackages={sortSalesPackages}
-                                        defaultRightsPackage={rightsPackage}
+                                        defaultRightsPackage={defaultRightsPackage}
                                         {...listing}
                                     />
                                 );
@@ -257,7 +257,7 @@ class Marketplace extends React.Component {
                             !loadingListing && (
                                 <span className={"no-results"}>
                                     {this.context.t(
-                                        "Sorry, no results. Try changing the filter settings!"
+                                        "MARKETPLACE_NO_RESULTS"
                                     )}
                                 </span>
                             )}

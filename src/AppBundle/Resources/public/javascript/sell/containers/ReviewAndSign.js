@@ -94,7 +94,7 @@ class ReviewAndSign extends React.Component {
                     textAlign : 'center',
                     fontWeight: 600
                 }}>
-                    Congratulations!
+                    {this.context.t("CL_STEP5_MODAL_SUCCESS_MESSAGE_1")}
                 </div>
                 <div style={{
                     fontSize: 20,
@@ -102,10 +102,13 @@ class ReviewAndSign extends React.Component {
                     margin : 40,
                     textAlign : 'center'
                 }}>
-                    The listing was submitted successfully!
+
+                    {this.context.t("CL_STEP5_MODAL_SUCCESS_MESSAGE_2")}
                 </div>
                 <div>
-                    <button className="standard-button" onClick={this.closeSuccessScreen} >Continue</button>
+                    <button className="standard-button" onClick={this.closeSuccessScreen} >
+                        {this.context.t("CL_STEP5_MODAL_BUTTON")}
+                    </button>
                 </div>
             </div>
 
@@ -144,7 +147,8 @@ class ReviewAndSign extends React.Component {
             terms,
             history,
             customId,
-            status
+            status,
+            defaultRightsPackage
         } = this.props;
 
         const {showDetails, showSubmitting} = this.state;
@@ -162,10 +166,10 @@ class ReviewAndSign extends React.Component {
                     </div>
                 </div>
                 {!showDetails && <div className="step-title">
-                    {this.context.t("Review & Sign")}
+                    {this.context.t("CL_STEP5_TITLE_REVIEW")}
                 </div>}
                 {showDetails && <div className="step-title">
-                    {this.context.t("Marketplace Preview")}
+                    {this.context.t("CL_STEP5_TITLE_PREVIEW")}
                 </div>}
 
                 {
@@ -180,7 +184,7 @@ class ReviewAndSign extends React.Component {
 
                 {!showDetails && <div className="step-content-container">
 
-                    <ContentListing {...this.props} onSelectName={this.toggleDetails} />
+                    <ContentListing {...this.props} onSelectName={this.toggleDetails} defaultRightsPackage={defaultRightsPackage}/>
 
                     <SalesPackageForm
                         hideButtons
@@ -224,7 +228,7 @@ class ReviewAndSign extends React.Component {
                                 style={{marginRight: 10}}
                             />
                             <label htmlFor="terms"/>
-                            {this.context.t("I confirm that I have verified the terms stated above. They are correct and ready to be published.")}
+                            {this.context.t("CL_STEP5_TERMS_1")}
                         </div>
                         <div style={{display: 'flex', marginBottom: 10}}>
                             <input
@@ -239,7 +243,7 @@ class ReviewAndSign extends React.Component {
                                 style={{marginRight: 10}}
                             />
                             <label htmlFor="terms_arena"></label>
-                            {this.context.t("I confirm that I have verified the terms and conditions that have been outlined by Content Arena Pte. Ltd.")}
+                            {this.context.t("CL_STEP5_TERMS_2")}
                         </div>
                     </div>
 
@@ -253,8 +257,8 @@ class ReviewAndSign extends React.Component {
                     {<div className="buttons" style={{marginTop: 20}}>
                         <div className="buttons-container"  >
                             {!showSubmitting && <button disabled={!(terms && terms_arena && signature)} id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
-                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" || status.name === "AUTO_INACTIVE" ) && this.context.t("Submit Listing") }
-                                {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && this.context.t("Save")}
+                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" || status.name === "AUTO_INACTIVE" ) && this.context.t("CL_STEP5_BUTTON_SUBMIT") }
+                                {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && this.context.t("CL_STEP5_BUTTON_SAVE")}
                             </button>}
                             {showSubmitting && <i className="fa fa-cog fa-spin" />}
                         </div>

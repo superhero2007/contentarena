@@ -8,19 +8,19 @@ const RightsLegend = (props, context) => {
             <div className="item">
                 <img className="icon" src={yellowCheckIcon} alt=""/>
                 <span className="name">
-                    {context.t("Exclusive")}
+                    {context.t("MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE")}
                 </span>
             </div>
             <div className="item">
                 <img className="icon" src={blueCheckIcon} alt=""/>
                 <span className="name">
-                    {context.t("Non exclusive")}
+                    {context.t("MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE")}
                 </span>
             </div>
             <div className="item">
                 <img className="icon" src={greyMinusIcon} alt=""/>
                 <span className="name">
-                    {context.t("Non included")}
+                    {context.t("MARKETPLACE_RIGHTS_LABEL_NON_INCLUDED")}
                 </span>
             </div>
         </div>

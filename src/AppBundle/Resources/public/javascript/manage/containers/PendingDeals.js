@@ -74,7 +74,7 @@ class PendingDeals extends React.Component {
                          }}>
                         {tab === "activebids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {tab !== "activebids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
-                        {this.context.t("Active")}
+                        {this.context.t("PENDING_BIDS_FILTER_ACTIVE")}
                     </div>
                     <div style={{margin:'0 20px', cursor: 'pointer'}}
                          onClick={()=>{
@@ -82,7 +82,7 @@ class PendingDeals extends React.Component {
                          }}>
                         {tab === "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {tab !== "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
-                        {this.context.t("Declined")}
+                        {this.context.t("PENDING_BIDS_FILTER_DECLINED")}
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@ class PendingDeals extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                {this.context.t("You haven't made any bids yet!")}
+                                {this.context.t("PENDING_BIDS_MADE_EMPTY_MESSAGE")}
                             </div>
                         }
                     </div>
@@ -143,7 +143,7 @@ class PendingDeals extends React.Component {
                             !loadingDeclined && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                {this.context.t("You haven't any declined bids yet!")}
+                                {this.context.t("PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE")}
                             </div>
                         }
                     </div>

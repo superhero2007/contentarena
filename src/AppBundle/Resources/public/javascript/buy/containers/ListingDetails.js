@@ -326,7 +326,7 @@ class ListingDetails extends React.Component {
                     textAlign : 'center',
                     fontWeight: 600
                 }}>
-                    {this.context.t("Congratulations!")}
+                    {this.context.t("CHECKOUT_CONGRATULATIONS")}
                 </div>
                 {selectedPackage.salesMethod === "FIXED" && <div style={{
                     fontSize: 20,
@@ -334,7 +334,7 @@ class ListingDetails extends React.Component {
                     margin : 40,
                     textAlign : 'center'
                 }}>
-                    {this.context.t("You have successfully acquired the package!")}
+                    {this.context.t("CHECKOUT_FIXED_SUCCESS_MESSAGE")}
                 </div>}
                 {selectedPackage.salesMethod === "BIDDING" && <div style={{
                     fontSize: 20,
@@ -342,7 +342,7 @@ class ListingDetails extends React.Component {
                     margin : 40,
                     textAlign : 'center'
                 }}>
-                    {this.context.t("Your bid was placed successfully!")}
+                    {this.context.t("CHECKOUT_BID_SUCCESS_MESSAGE")}
                 </div>}
 
                 <div style={{display: 'flex'}}>
@@ -350,7 +350,7 @@ class ListingDetails extends React.Component {
                         <button className="standard-button" onClick={() => {
                             history.push("/closeddeals");
                         }} >
-                            {this.context.t("View Closed Deals")}
+                            {this.context.t("CHECKOUT_FIXED_GO_TO_CLOSED_DEALS")}
                         </button>
                     }
 
@@ -358,12 +358,12 @@ class ListingDetails extends React.Component {
                     <button className="standard-button" onClick={() => {
                         history.push("/bids/activebids");
                     }} >
-                        {this.context.t("View Bids")}
+                        {this.context.t("CHECKOUT_FIXED_GO_TO_BIDS")}
                     </button>
                     }
 
                     <button className="standard-button" onClick={this.closeSuccessScreen} >
-                        {this.context.t("Return to Marketplace")}
+                        {this.context.t("CHECKOUT_FIXED_GO_TO_MARKETPLACE")}
                     </button>
                 </div>
             </div>
@@ -508,16 +508,16 @@ class ListingDetails extends React.Component {
                         </div>
 
                         <div className={"date"}>
-                            {this.context.t("Start of license period")}
+                            {this.context.t("LISTING_DETAILS_LICENSE_START")}
                             <span>
-                                { content.startDateMode !== "DATE"  && this.context.t(" With contract conclusion")}
+                                { content.startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
                                 { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
                             </span>
                         </div>
                         <div className={"date"}>
-                            {this.context.t("End of license period")}
+                            {this.context.t("LISTING_DETAILS_LICENSE_END")}
                             <span>
-                            { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t(" days from contract conclusion")}
+                            { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
                             { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
                             { content.endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
                             </span>
@@ -567,7 +567,7 @@ class ListingDetails extends React.Component {
                                         margin: '0 10px 0 5px'
 
                                     }}>
-                                        {content.watchlist ? this.context.t('Added to watchlist') : this.context.t('Watchlist')}
+                                        {content.watchlist ? this.context.t('LISTING_DETAILS_ADDED_TO_WATCHLIST') : this.context.t('Watchlist')}
                                     </div>
                                 </div>}
 
@@ -582,7 +582,7 @@ class ListingDetails extends React.Component {
                                 history.push('/listing/'+content.customId+'/bundles');
                                 this.showTab("bundles")
                             }}>
-                                {this.context.t("Program & Sales Bundles")}
+                                {this.context.t("LISTING_DETAILS_TAB_BUNDLES")}
                             </button>
 
                             {this.isTabHasData(content, "event") &&
@@ -590,28 +590,28 @@ class ListingDetails extends React.Component {
                                     history.push('/listing/'+content.customId+'/event');
                                     this.showTab("event");
                                 }}>
-                                    {this.context.t("Event")}
+                                    {this.context.t("LISTING_DETAILS_TAB_EVENT")}
                                 </button>
                             }
                             <button className={(tab ==="grantofrights")?"active": ""} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/grantofrights');
                                 this.showTab("grantofrights")
                             }}>
-                                {this.context.t("Grant of Rights & Production")}
+                                {this.context.t("LISTING_DETAILS_TAB_RIGHTS")}
                             </button>
                             {content.PROGRAM_NAME &&
                                 <button className={(tab ==="editedprogram")?"active": ""} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/editedprogram');
                                     this.showTab("editedprogram")
                                 }}>
-                                    {this.context.t("Edited Program")}
+                                    {this.context.t("LISTING_DETAILS_EDITED_PROGRAM")}
                                 </button>
                             }
                             <button className={(tab ==="seller")?"active": ""} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/seller');
                                 this.showTab("seller")
                             }}>
-                                {this.context.t("Seller Information")}
+                                {this.context.t("LISTING_DETAILS_TAB_SELLER")}
                             </button>
                         </div>
 
@@ -780,7 +780,7 @@ class ListingDetails extends React.Component {
                                             </div>}
                                         <ReactTooltip id='apply-bid'>
                                             <span>
-                                                {this.context.t("The bid must exceed current minimum")}
+                                                {this.context.t("LISTING_DETAILS_EXCEED_MINIMUM")}
                                             </span>
                                         </ReactTooltip>
                                         {bidUpdated && <button className="link-button" onClick={this.editBid}>
@@ -847,7 +847,7 @@ class ListingDetails extends React.Component {
                                             </div>
                                             <div style={{margin: '0 30px'}}>{installment.value}%</div>
                                             <div style={{margin: '0 10px'}}>
-                                                {installment.type === "DAY" && installment.days + this.context.t(" days after contract closure")}
+                                                {installment.type === "DAY" && installment.days + this.context.t("INSTALLMENT_CLOSURE_DAYS")}
                                                 {installment.type === "DATE" && " " + Moment(installment.date).format('DD/MM/YYYY')}
                                             </div>
                                         </div>
@@ -867,7 +867,7 @@ class ListingDetails extends React.Component {
                                 alignItems: 'center'
 
                             }}>
-                                {this.context.t("Company address")}
+                                {this.context.t("CHECKOUT_LABEL_COMPANY_ADDRESS")}
                             </div>
                             <div style={{
                                 flex: '2.5 1 0%',
@@ -921,7 +921,7 @@ class ListingDetails extends React.Component {
                                        checked={this.state.terms}
                                 />
                                 <label htmlFor={"terms-buy"}>
-                                    {this.context.t("Accept terms conditions")}
+                                    {this.context.t("CHECKOUT_TERMS")}
                                 </label>
 
                             </div>
@@ -936,17 +936,15 @@ class ListingDetails extends React.Component {
                             <button className="standard-button"
                                     onClick={this.placeBid}
                                     disabled={this.invalidPackage()}>
-                                {this.context.t("Buy")}
+                                {this.context.t("CHECKOUT_BUTTON_BUY")}
                             </button>}
 
                             { !spinner && selectedPackage.salesMethod !== "FIXED" &&
                             <button className="standard-button"
                                     onClick={this.placeBid}
                                     disabled={this.invalidPackage()}>
-                                {this.context.t("Place Bid")}
+                                {this.context.t("CHECKOUT_BUTTON_PLACE_BID")}
                             </button>}
-
-
 
                             { spinner && <i className="fa fa-cog fa-spin"/>}
                         </div>

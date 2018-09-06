@@ -136,14 +136,14 @@ class SellFormStep4 extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
-                    <TitleBar title={this.context.t("Further information")}/>
+                    <TitleBar title={this.context.t("CL_STEP4_TITLE_INFO")}/>
 
                     <CompanyInformation/>
 
                     <JurisdictionSelector/>
 
                     <FileSelector
-                        label={this.context.t('Annex')}
+                        label={this.context.t('CL_STEP4_LABEL_ANNEX')}
                         target={"annex"}
                         selected={annex}
                         onSelect={this.addFile}
@@ -152,12 +152,14 @@ class SellFormStep4 extends React.Component {
                         acceptType={[
                             "application/pdf"
                         ]}
-                        tmp={true}/>
+                        tmp={true}
+                        infoText={'All files uploaded here will be merged with the license agreement. You may upload only PDF files.'}
+                    />
 
-                    <TitleBar title={this.context.t("Listing details")}/>
+                    <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} infoText={'These details impact how your listing will be presented to buyers in the marketplace: Under which name, with which image and until when it shall be published.'}/>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
-                        {this.context.t("Please define listing details below. This determines how your listing is shown to potential buyers.")}
+                        {this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")}
                     </div>
 
                     <ListingName/>
@@ -166,7 +168,7 @@ class SellFormStep4 extends React.Component {
                         <ExpirationDateSelector/>
 
                         <FileSelector
-                            label={this.context.t("Listing image (opt.)")}
+                            label={this.context.t("CL_STEP4_LABEL_IMAGE")}
                             isImage={true}
                             onSelect={updateContentValue}
                             previousImage={image}
@@ -174,7 +176,6 @@ class SellFormStep4 extends React.Component {
 
                         <div className='clearfix'/>
                     </div>
-
                 </div>
             </div>
         );

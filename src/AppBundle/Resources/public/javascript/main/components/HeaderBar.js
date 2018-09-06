@@ -45,13 +45,13 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/marketplace"}
                         route={"/marketplace"}
                     >
-                        <b>{this.context.t("Marketplace")}</b>
+                        <b>{this.context.t("HEADER_LINK_MARKETPLACE")}</b>
                     </HeaderBarTab>
                 )}
 
                 {profile === "BUYER" && (
                     <HeaderBarTab match={match.url === "/watchlist"} route={"/watchlist"}>
-                        <b>{this.context.t("Watchlist")}</b>
+                        <b>{this.context.t("HEADER_LINK_WATCHLIST")}</b>
                     </HeaderBarTab>
                 )}
 
@@ -63,7 +63,7 @@ class HeaderBar extends  React.Component {
                         }
                         route={"/bids/activebids"}
                     >
-                        <b>{this.context.t("Bids")}</b>
+                        <b>{this.context.t("HEADER_LINK_BIDS")}</b>
                     </HeaderBarTab>
                 )}
 
@@ -72,7 +72,7 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/closeddeals"}
                         route={"/closeddeals"}
                     >
-                        <b>{this.context.t("Closed deals")}</b>
+                        <b>{this.context.t("HEADER_LINK_CLOSED_DEALS")}</b>
                     </HeaderBarTab>
                 )}
 
@@ -81,7 +81,7 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/managelistings"}
                         route={"/managelistings"}
                     >
-                        <b>{this.context.t("Manage listings")}</b>
+                        <b>{this.context.t("HEADER_LINK_MANAGE_LISTINGS")}</b>
                     </HeaderBarTab>
                 )}
 
@@ -90,7 +90,7 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/commercialactivity"}
                         route={"/commercialactivity"}
                     >
-                        <b>{this.context.t("Commercial activity")}</b>
+                        <b>{this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}</b>
                     </HeaderBarTab>
                 )}
 
@@ -99,7 +99,7 @@ class HeaderBar extends  React.Component {
                         match={match.path === "/contentlisting/:customId?/:step?"}
                         route={"/contentlisting/new"}
                     >
-                        <b>{this.context.t("Create Listing")}</b>
+                        <b>{this.context.t("HEADER_LINK_CREATE_LISTING")}</b>
                     </CustomLink>
                 )}
 
@@ -107,19 +107,19 @@ class HeaderBar extends  React.Component {
 
                 {profile === "BUYER" && (
                     <HeaderBarTab className="tab" route="/managelistings">
-                        {this.context.t("Enter selling mode")}
+                        {this.context.t("HEADER_LINK_SELLING_MODE")}
                     </HeaderBarTab>
                 )}
 
                 {profile === "SELLER" && (
                     <HeaderBarTab className="tab" route="/marketplace">
-                        {this.context.t("Enter buying mode")}
+                        {this.context.t("HEADER_LINK_BUYING_MODE")}
                     </HeaderBarTab>
                 )}
 
                 <HeaderBarTab className="tab" route="/messages">
                     <i className="fa fa-envelope" />
-                    {this.context.t("Messages")}
+                    {this.context.t("HEADER_LINK_MESSAGES")}
                 </HeaderBarTab>
 
                 <HeaderNotifications />
@@ -132,10 +132,10 @@ class HeaderBar extends  React.Component {
                             <HeaderBarTab
                                 route="/settings"
                                 className="tab" >
-                                {this.context.t("Settings")}
+                                {this.context.t("HEADER_LINK_SETTINGS")}
                             </HeaderBarTab>
                             <a href="/logout" className="tab">
-                                {this.context.t("Logout")}
+                                {this.context.t("HEADER_LINK_LOGOUT")}
                             </a>
                         </div>
                     </div>
@@ -144,15 +144,14 @@ class HeaderBar extends  React.Component {
         )
     }
 
-    getLogoUrl = (tab) => {
-        let logoUrl = '';
-        if (tab === 'MANAGE_LISTINGS') {
-            logoUrl = 'managelistings'
+    getLogoUrl = () => {
+        const { profile } = this.props;
+
+        if (profile === "SELLER") {
+            return "managelistings";
+        } else {
+            return "marketplace";
         }
-        if (tab === 'MARKETPLACE') {
-            logoUrl = 'marketplace'
-        }
-        return logoUrl;
     }
 }
 

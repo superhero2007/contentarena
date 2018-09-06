@@ -38,9 +38,11 @@ class Comments extends React.Component {
             style={customStyles}
         >
 
-            <div className="modal-title" style={{ width: "500px"}}>
-                {this.context.t("Add further comments")}
-                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
+            <div className="modal-title">
+                <div style={{ width: "470px"}}>
+                    {this.context.t("CL_STEP3_AMENDMENT")}
+                </div>
+                <i className="fa fa-times close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content" style={{ padding: "0 15px 5px"}}>
@@ -55,11 +57,11 @@ class Comments extends React.Component {
                 </div>
             </div>
 
-            <div className={"buttons"}>
+            <div className={"buttons popup-buttons"}>
                 <button
                     className={"standard-button"}
                     onClick={this.closeModal}>
-                    {this.context.t("Ok")}
+                    {this.context.t("Accept")}
                 </button>
             </div>
         </Modal>
@@ -70,7 +72,7 @@ class Comments extends React.Component {
             <div style={{marginBottom: 20}}>
                 { this.renderModal() }
                 <button className={"link-button"} onClick={this.addComments}>
-                    {this.context.t("Add further comments")}
+                    {this.context.t("CL_STEP3_AMENDMENT")}
                 </button>
             </div>
         )

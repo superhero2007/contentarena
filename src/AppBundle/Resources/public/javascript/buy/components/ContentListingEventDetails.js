@@ -97,20 +97,20 @@ class ContentListingEventDetails extends React.Component {
         return (
             <div className="listing-attributes col">
 
-                <div className="listing-item event">
+                <div className="listing-item tournament">
                     {/*Tournament name*/}
                     {tournament && tournament.length > 0 && <span>{tournamentIcon} {tournament[0].name}</span>}
                     {customTournament && !customId && <span>{tournamentIcon} {customTournament}</span>}
                     {tournament && tournament.length === 0 && !customTournament && <span>
-                        {tournamentIcon} {this.context.t("General content")}
+                        {tournamentIcon} {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
                     </span>}
                 </div>
 
-                <div className="listing-item event">
+                <div className="listing-item">
                     {/*Sport name*/}
                     {sports && sports.length === 1 && <span>{sportIcon} {sports[0].name}</span>}
                     {sports && sports.length > 1 && <span>
-                        {sportIcon} {this.context.t("Multiple Sports")}
+                        {sportIcon} {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}
                     </span>}
 
                     {/*Sport category*/}
@@ -118,18 +118,18 @@ class ContentListingEventDetails extends React.Component {
                     {customCategory && <span>{sportCategoryIcon} {customCategory}</span>}
 
                     {/*Season/Release*/}
-                    {seasons && seasons.length > 0 && <span>{seasonReleaseIcon} {seasonName}</span>}
+                    {!this.showProgramInfo() && seasons && seasons.length > 0 && <span>{seasonReleaseIcon} {seasonName}</span>}
                     {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} {PROGRAM_YEAR}</span>}
-
-                    {/*Fixtures/Episodes*/}
-                    {this.getFixtures().length > 1 && <span>{fixturesEpisodeIcon} {this.getFixtures().length} fixtures</span>}
-                    {this.getFixtures().length === 1 && <span>{fixturesEpisodeIcon} {this.getFixtures()[0].name}</span>}
-                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{fixturesEpisodeIcon} {PROGRAM_EPISODES}</span>}
                 </div>
 
-                <div className="listing-item event">
+                <div className="listing-item">
                     {/*Event time*/}
-                    {eventTimeIcon} todo: event time
+                    <span>{eventTimeIcon} todo: event time</span>
+
+                    {/*Fixtures/Episodes*/}
+                    {!this.showProgramInfo() && this.getFixtures().length > 1 && <span>{fixturesEpisodeIcon} {this.getFixtures().length} fixtures</span>}
+                    {!this.showProgramInfo() && this.getFixtures().length === 1 && <span>{fixturesEpisodeIcon} {this.getFixtures()[0].name}</span>}
+                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{fixturesEpisodeIcon} {PROGRAM_EPISODES}</span>}
                 </div>
             </div>
         );

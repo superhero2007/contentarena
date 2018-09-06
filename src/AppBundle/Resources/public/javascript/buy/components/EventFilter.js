@@ -86,7 +86,7 @@ class EventFilter extends React.Component {
                 </div>
                 <div className="box">
                     <div className="title">
-                        {this.context.t("Sports")}
+                        {this.context.t("MARKETPLACE_LABEL_FILTER_SPORT")}
                     </div>
 
                     <Select

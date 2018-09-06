@@ -91,7 +91,7 @@ class SalesPackages extends React.Component {
                             <div style={{margin: '0 10px', fontWeight: 600}}>{ this.ordinal_suffix_of(index+1)} installment</div>
                             <div style={{margin: '0 30px'}}>{installment.value}%</div>
                             <div style={{margin: '0 10px'}}>
-                                {installment.type === "DAY" && installment.days + " days after contract closure"}
+                                {installment.type === "DAY" && installment.days + this.context.t("INSTALLMENT_CLOSURE_DAYS")}
                                 {installment.type === "DATE" && " " + Moment(installment.date).format('DD/MM/YYYY')}
                             </div>
                         </div>

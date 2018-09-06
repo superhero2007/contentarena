@@ -64,7 +64,7 @@ class LicenseDateSelector extends React.Component {
                     <div className="step-content-container">
                         <div className="modal-input">
                             <label>
-                                {this.context.t("Start of license period")}
+                                {this.context.t("CL_STEP3_LICENSE_POPUP_START")}
                             </label>
                             <div className="row">
                                 <div className="column">
@@ -76,7 +76,7 @@ class LicenseDateSelector extends React.Component {
                                         id={"license-start-contract"}
                                         className="ca-radio package-selector"
                                     />
-                                    {this.context.t("With contract conclusion")}
+                                    {this.context.t("CL_STEP3_LICENSE_POPUP_START_CONCLUSION")}
                                 </div>
                                 <div className="column">
                                     <input type="radio"
@@ -100,7 +100,7 @@ class LicenseDateSelector extends React.Component {
                         </div>
                         <div className="modal-input">
                             <label>
-                                {this.context.t("End of license period")}
+                                {this.context.t("CL_STEP3_LICENSE_POPUP_END")}
                             </label>
                             <div className="row">
                                 <div className="column">
@@ -119,7 +119,7 @@ class LicenseDateSelector extends React.Component {
                                         onChange={this.handleEndDateLimit}
                                         placeholder={"Enter number"}/>
                                     <span className={"small-label"}>
-                                        {this.context.t("days from contract conclusion")}
+                                        {this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
                                     </span>
                                 </div>
                                 <div className="column">

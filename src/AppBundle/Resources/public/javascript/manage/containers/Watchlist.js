@@ -72,7 +72,7 @@ class Watchlist extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                {this.context.t("Your watchlist is empty!")}
+                                {this.context.t("WATCHLIST_EMPTY_MESSAGE")}
                             </div>
                         }
                     </div>

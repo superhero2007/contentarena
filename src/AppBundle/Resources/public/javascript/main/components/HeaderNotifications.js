@@ -2,8 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import sortBy from 'lodash/sortBy';
+import {PropTypes} from "prop-types";
 
-class HeaderNotofications extends  React.Component {
+class HeaderNotifications extends  React.Component {
     constructor(props){
         super(props);
 
@@ -45,7 +46,7 @@ class HeaderNotofications extends  React.Component {
                     )}
                     {!dataLoading && !nCount && (
                         <div className='no-notifications'>
-                            No notifications
+                            {this.context.t("NOTIFICATIONS_EMPTY")}
                         </div>
                     )}
                 </div>
@@ -79,5 +80,9 @@ class HeaderNotofications extends  React.Component {
     }
 }
 
-export default HeaderNotofications;
+HeaderNotifications.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
+export default HeaderNotifications;
 

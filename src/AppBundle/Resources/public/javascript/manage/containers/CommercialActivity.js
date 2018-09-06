@@ -148,7 +148,8 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="ALL" && <img src={this.activeBulletIcon} />}
                             {filter!=="ALL" && <img src={this.bulletIcon} />}
-                            {this.context.t("All bundles")}
+
+                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_ALL")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
@@ -157,7 +158,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="withactivity" && <img src={this.activeBulletIcon} />}
                             {filter!=="withactivity" && <img src={this.bulletIcon} />}
-                            {this.context.t("With activity")}
+                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
@@ -166,7 +167,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="openbids" && <img src={this.activeBulletIcon} />}
                             {filter!=="openbids" && <img src={this.bulletIcon} />}
-                            {this.context.t("Open")} {this.context.t("Bids")}
+                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS")}
                         </div>
                         <div className={"status-filter-item"}
                              onClick={()=>{
@@ -175,7 +176,7 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="closeddeals" && <img src={this.activeBulletIcon} />}
                             {filter!=="closeddeals" && <img src={this.bulletIcon} />}
-                            {this.context.t("Closed deals")}
+                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS")}
                         </div>
                     </div>
                 </div>
@@ -210,7 +211,7 @@ class CommercialActivity extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                {this.context.t("You have no offers yet")}
+                                {this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE")}
                             </div>
                         }
                     </div>

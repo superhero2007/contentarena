@@ -132,14 +132,13 @@ class SeasonSelector extends React.Component {
                 </div>}*/}
                 {this.props.showAddNew && <div>
                     <button className="link-button" onClick={this.props.addSeason}>
-                        {this.context.t(" Add season")}
+                        {this.context.t("CL_STEP1_ADD_SEASON")}
                     </button>
                 </div>}
                 {this.props.showAddNew && activeSeason &&
                 <div className="step-item-description">
-                    {/*Do you wish to add fixtures individually?*/}
                     <button className="link-button" onClick={this.addFixture}>
-                        {this.context.t("Click here to add fixtures")}
+                        {this.context.t("CL_STEP1_ADD_FIXTURES")}
                     </button>
                 </div>}
 

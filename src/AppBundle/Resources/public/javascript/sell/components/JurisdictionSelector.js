@@ -19,7 +19,7 @@ class JurisdictionSelector extends React.Component {
         return (
             <div className="base-input">
                 <label>
-                    {this.context.t("Place of jurisdiction")}
+                    {this.context.t("CL_STEP4_LABEL_JURISDICTION")}
                 </label>
                 <CountrySelector
                     className={"base-input-select"} multi={false} value={jurisdiction}
