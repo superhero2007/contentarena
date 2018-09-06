@@ -45,7 +45,7 @@ class HeaderNotofications extends  React.Component {
                     )}
                     {!dataLoading && !nCount && (
                         <div className='no-notifications'>
-                            No notifications
+                            {this.context.t("NOTIFICATIONS_EMPTY")}
                         </div>
                     )}
                 </div>

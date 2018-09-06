@@ -59,7 +59,7 @@ class SendMessage extends React.Component{
                         <textarea onChange={(e)=>{this.setState({message: e.target.value})}} value={message}/>}
                         {saving && <div><i className="fa fa-cog fa-spin" /></div>}
                         {showSuccess && <div>
-                            {this.context.t("Message sent!")}
+                            {this.context.t("MESSAGE_POPUP_SENT")}
                         </div>}
                     </div>
 
@@ -67,14 +67,14 @@ class SendMessage extends React.Component{
 
                         {!saving && !showSuccess &&
                         <button className={"confirm"} disabled={!message} onClick={this.send}>
-                            {this.context.t("Send")}
+                            {this.context.t("MESSAGE_POPUP_BUTTON_SEND")}
                         </button>}
 
                         {!showSuccess && <button onClick={this.close}>
-                            {this.context.t("Cancel")}
+                            {this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
                         </button>}
                         {showSuccess && <button  className={"confirm"} onClick={this.close}>
-                            {this.context.t("Close")}
+                            {this.context.t("MESSAGE_POPUP_BUTTON_CLOSE")}
                         </button>}
                     </div>
                 </div>

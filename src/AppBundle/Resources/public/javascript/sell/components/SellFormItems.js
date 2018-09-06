@@ -20,12 +20,12 @@ export const TitleBar = ({title, subtitle, infoText}) => (
     </div>
 );
 
-export const SummaryText = ({sports, sportCategory, tournament, seasons}) => {
+export const SummaryText = ({sports, sportCategory, tournament, seasons}, context) => {
 
     let summary = "", rounds = [], fixtures = [], matches = [];
 
     if (sports.length === 0 && sportCategory.length === 0 && tournament.length === 0) return null;
-    if (sports.length > 1 ) return <span>Multiple sports</span>;
+    if (sports.length > 1 ) return <span>{context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}</span>;
 
     summary += sports[0].name;
     if ( sportCategory.length > 0 )  summary += " - " + sportCategory[0].name;

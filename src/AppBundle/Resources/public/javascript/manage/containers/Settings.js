@@ -104,17 +104,17 @@ class Settings extends React.Component {
         return (
             <div className={"settings-container"}>
                 <div className={"title"}>
-                    {this.context.t("Company information")}
+                    {this.context.t("SETTINGS_TITLE_COMPANY")}
                     {!editCompanyInfo && !updatingCompany &&
                     <div className={"edit-button"} onClick={e=>{
                         history.push("/settings/editcompany");
                     }}>
                         <img src={editIcon}/>
-                        {this.context.t("Edit")}
+                        {this.context.t("SETTINGS_BUTTON_EDIT")}
                     </div>}
                     {editCompanyInfo && !updatingCompany && <div className={"edit-button"} onClick={this.updateCompany}>
                         <img src={editIcon}/>
-                        {this.context.t("Save")}
+                        {this.context.t("SETTINGS_BUTTON_SAVE")}
                     </div>}
                     {updatingCompany && <Spinner/>}
                 </div>
@@ -123,7 +123,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Legal Company Name")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
                             </label>
                             <input value={user.company.legalName} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.legalName = e.target.value;
@@ -132,7 +132,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Company Registration Number")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER")}
                             </label>
                             <input value={user.company.registrationNumber} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.registrationNumber = e.target.value;
@@ -141,7 +141,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("VAT ID number")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_VAT")}
                             </label>
                             <input value={user.company.vat} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.vat = e.target.value;
@@ -152,7 +152,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Address")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")}
                             </label>
                             <input value={user.company.address} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.address = e.target.value;
@@ -161,7 +161,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("City")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_CITY")}
                             </label>
                             <input value={user.company.city} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.city = e.target.value;
@@ -170,7 +170,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("ZIP code")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_ZIP")}
                             </label>
                             <input value={user.company.zip} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.zip = e.target.value;
@@ -179,7 +179,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Country")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_COUNTRY")}
                             </label>
                             <CountrySelector multi={false} value={country} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.country.name = e.value;
@@ -189,7 +189,7 @@ class Settings extends React.Component {
                     </div>
                     <div>
                         <label>
-                            {this.context.t("Company description")}
+                            {this.context.t("SETTINGS_LABEL_COMPANY_DESCRIPTION")}
                         </label>
                         <textarea value={user.company.description} disabled={!editCompanyInfo} onChange={(e)=>{
                             user.company.description = e.target.value;
@@ -211,27 +211,27 @@ class Settings extends React.Component {
                                 resizable={false}
                                 data={companyUsers}
                                 columns={[{
-                                    Header: this.context.t("Familiy Name"),
+                                    Header: this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME"),
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                     accessor: 'lastName',
                                 }, {
                                     accessor: 'firstName', // Required because our accessor is not a string
-                                    Header: this.context.t("First Name"),
+                                    Header: this.context.t("SETTINGS_LABEL_USER_FIRST_NAME"),
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                 }, {
-                                    Header: this.context.t("Email"),
+                                    Header: this.context.t("SETTINGS_LABEL_USER_EMAIL"),
                                     accessor: 'email',
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                 },{
-                                    Header: this.context.t("Phone Number"),
+                                    Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),
                                     accessor: 'phone',
                                     headerClassName : 'table-header',
                                     className : 'table-header',
                                 },{
-                                    Header: this.context.t("Company Position"),
+                                    Header: this.context.t("SETTINGS_LABEL_USER_COMPANY_POSITION"),
                                     accessor: 'title',
                                     headerClassName : 'table-header',
                                     className : 'table-header',
@@ -243,7 +243,7 @@ class Settings extends React.Component {
                     </div>
                 </div>}
                 <div className={"title"}>
-                    {this.context.t("Personal information")}
+                    {this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
                     {!editPersonalInfo && !updatingUser &&
                     <div className={"edit-button"} onClick={e=>{
                         history.push("/settings/editpersonal");
@@ -263,7 +263,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("First Name")}
+                                {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
                             </label>
                             <input value={user.firstName} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.firstName = e.target.value;
@@ -272,7 +272,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Last Name")}
+                                {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
                             </label>
                             <input value={user.lastName} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.lastName = e.target.value;
@@ -281,7 +281,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Title")}
+                                {this.context.t("SETTINGS_LABEL_USER_TITLE")}
                             </label>
                             <input value={user.title} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.title = e.target.value;
@@ -292,7 +292,7 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Email address")}
+                                {this.context.t("SETTINGS_LABEL_USER_EMAIL")}
                             </label>
                             <input value={user.email} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.email = e.target.value;
@@ -301,7 +301,7 @@ class Settings extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("Phone number")}
+                                {this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")}
                             </label>
                             <input value={user.phone} disabled={!editPersonalInfo} onChange={(e)=>{
                                 user.phone = e.target.value;
@@ -314,15 +314,15 @@ class Settings extends React.Component {
 
 
                 <div className={"title"}>
-                    {this.context.t("Change Password")}
+                    {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD")}
                 </div>
                 <div className={"subtitle"}>
-                    {this.context.t("Choose a unique password to protect your account")}
+                    {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
                 </div>
                 <div className={"setting"} style={{display: 'flex'}}>
                     <div className={"password"}>
                         <label>
-                            {this.context.t(" Type your current password")}
+                            {this.context.t("SETTINGS_LABEL_TYPE_CURRENT_PASSWORD")}
                         </label>
                         <input type={"password"} onChange={(e)=>{
                             this.setState({
@@ -331,7 +331,7 @@ class Settings extends React.Component {
                         }}/>
 
                         <label>
-                            {this.context.t("Type your new password")}
+                            {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
                         </label>
                         <input type={"password"} onChange={(e)=>{
                             this.setState({
@@ -340,7 +340,7 @@ class Settings extends React.Component {
                         }}/>
 
                         <label>
-                            {this.context.t("Retype your new password")}
+                            {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
                         </label>
                         <input type={"password"} onChange={(e)=>{
                             this.setState({
@@ -352,38 +352,38 @@ class Settings extends React.Component {
                         <button onClick={this.updatePassword}
                                 disabled={this.invalidPassword()}
                                 className={"standard-button"}>
-                            {this.context.t("Save password")}
+                            {this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
                         </button>}
                         {updatingPassword && <Spinner/>}
                         {passwordUpdated && <div>
-                            {this.context.t("Password updated successfully")}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
                         </div>}
                     </div>
                     {password && <div className={"password-validation"}>
                         <div>
                             {this.validate(password).length && <img src={blueCheckIcon}/>}
                             {!this.validate(password).length&& <img src={cancelIcon}/>}
-                            {this.context.t("At least 8 characters long")}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
                         </div>
                         <div>
                             {this.validate(password).upper && <img src={blueCheckIcon}/>}
                             {!this.validate(password).upper&& <img src={cancelIcon}/>}
-                            {this.context.t("One uppercase character")}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
                         </div>
                         <div>
                             {this.validate(password).digit && <img src={blueCheckIcon}/>}
                             {!this.validate(password).digit&& <img src={cancelIcon}/>}
-                            {this.context.t("One number")}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
                         </div>
                         <div>
                             {this.validate(password).special && <img src={blueCheckIcon}/>}
                             {!this.validate(password).special&& <img src={cancelIcon}/>}
-                            {this.context.t("One special character")}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
                         </div>
                         {passwordCheck && <div>
                             {passwordCheck === password && <img src={blueCheckIcon}/>}
                             {passwordCheck !== password && <img src={cancelIcon}/>}
-                            {this.context.t("Passwords don't match")}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
                         </div>}
                     </div>}
 

@@ -54,7 +54,7 @@ class ProgramDetails extends React.Component {
                         {PROGRAM_TYPE && (
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("Program type")}
+                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE")}
                                 </div>
                                 <div style={valueStyle}>
                                     {ProgramTypesDefinitions[PROGRAM_TYPE]}
@@ -63,7 +63,7 @@ class ProgramDetails extends React.Component {
                         )}
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                {this.context.t("Number of episodes")}
+                                {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES")}
                             </div>
                             <div style={valueStyle}>
                                 {PROGRAM_EPISODES}
@@ -71,7 +71,7 @@ class ProgramDetails extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                {this.context.t("Average episode duration (min)")}
+                                {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION")}
                             </div>
                             <div style={valueStyle}>
                                 {PROGRAM_DURATION}
@@ -80,7 +80,7 @@ class ProgramDetails extends React.Component {
                         {PROGRAM_YEAR && (
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("Year of program release")}
+                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE")}
                                 </div>
                                 <div style={valueStyle}>
                                     {PROGRAM_YEAR}
@@ -90,7 +90,7 @@ class ProgramDetails extends React.Component {
                         {PROGRAM_DESCRIPTION && (
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("Description")}
+                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DESCRIPTION")}
                                 </div>
                                 <div style={valueStyle}>
                                     {PROGRAM_DESCRIPTION}

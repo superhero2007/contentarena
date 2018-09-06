@@ -140,87 +140,87 @@ class BoardListing extends React.Component{
                         this.setState({showRemoveConfirm: true});
                     }}>
                         <img src={this.bucketIcon} />
-                        {this.context.t("Remove")}
+                        {this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
                     </div>}
                     {showArchive && <div className={"option"} onClick={()=>{
                         this.setState({showArchiveConfirm: true});
                     }}>
                         <img src={this.bucketIcon} />
-                        {this.context.t("Archive")}
+                        {this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM")}
                     </div>}
                     {showDeactivate && <div className={"option"} onClick={()=>{
                         this.setState({showDeactivateConfirm: true});
                     }}>
                         <img src={this.deactivateIcon} style={{width: 16}} />
-                        {this.context.t("Deactivate")}
+                        {this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM")}
                     </div>}
 
                     {lastAction && <div className="last-action">
-                        {this.context.t("Last action: ")}{lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
+                        {this.context.t("MANAGE_LISTINGS_LAST_ACTION")}{lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
                     </div>}
 
                     {owner && <div className="last-action">
-                        {this.context.t("Listing Owner: ")}{owner.firstName + " " + owner.lastName }
+                        {this.context.t("MANAGE_LISTINGS_LISTING_OWNER")}{owner.firstName + " " + owner.lastName }
                     </div>}
                 </div>}
 
                 {/*CONFIRM DEACTIVATE*/}
                 {showDeactivateConfirm && <div className="confirmation-tooltip">
                     <div className={"confirmation-text"}>
-                        {this.context.t("Are you sure you want to deactivate the listing?")}
+                        {this.context.t("MANAGE_LISTINGS_DEACTIVATE_CONFIRMATION")}
                     </div>
                     <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
                         onDeactivate();
                         e.stopPropagation();
                     }}>
-                        {this.context.t("Deactivate")}
+                        {this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM")}
                     </button>
                     <button className={"button"} onClick={(e)=>{
                         this.setState({showDeactivateConfirm: false});
                         e.stopPropagation();
                     }}>
-                        {this.context.t("Cancel")}
+                        {this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CANCEL")}
                     </button>
                 </div>}
 
                 {/*CONFIRM REMOVE*/}
                 {showRemoveConfirm && <div className="confirmation-tooltip">
                     <div className={"confirmation-text"}>
-                        {this.context.t("Remove-listing-confirmation")}?
+                        {this.context.t("MANAGE_LISTINGS_REMOVE_CONFIRMATION")}
                     </div>
                     <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         onRemove();
                         e.stopPropagation();
                     }}>
-                        {this.context.t("Remove")}
+                        {this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
                     </button>
                     <button className={"button"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
                         e.stopPropagation();
                     }}>
-                        {this.context.t("Cancel")}
+                        {this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL")}
                     </button>
                 </div>}
 
                 {/*CONFIRM ARCHIVE*/}
                 {showArchiveConfirm && <div className="confirmation-tooltip">
                     <div className={"confirmation-text"}>
-                        {this.context.t("Are you sure you want to archive this listing?")}?
+                        {this.context.t("MANAGE_LISTINGS_ARCHIVE_CONFIRMATION")}
                     </div>
                     <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showArchiveConfirm: false});
                         onArchive();
                         e.stopPropagation();
                     }}>
-                        {this.context.t("Archive")}
+                        {this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM")}
                     </button>
                     <button className={"button"} onClick={(e)=>{
                         this.setState({showArchiveConfirm: false});
                         e.stopPropagation();
                     }}>
-                        {this.context.t("Cancel")}
+                        {this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL")}
                     </button>
                 </div>}
 
@@ -258,13 +258,13 @@ class BoardListing extends React.Component{
                 <div className={"tournament"}>
                     {tournament && tournament.length === 1 && <div className="item">{tournament[0].name}</div>}
                     {tournament && tournament.length === 0 && <div className="item">
-                        {this.context.t("General content")}
+                        {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
                     </div>}
                     {seasons && seasons.length > 1 && <div className="item">
-                        {this.context.t("Season: Multiple seasons")}
+                        {this.context.t("MANAGE_LISTINGS_MULTIPLE_SEASONS")}
                     </div>}
                     {seasons && seasons.length === 1 && <div className="item">
-                        {this.context.t("Season: ")}{seasons[0].year}
+                        {this.context.t("MANAGE_LISTINGS_SEASON")}{seasons[0].year}
                         </div>}
                 </div>
                 <div className={"rights"}>

@@ -257,7 +257,7 @@ class Marketplace extends React.Component {
                             !loadingListing && (
                                 <span className={"no-results"}>
                                     {this.context.t(
-                                        "Sorry, no results. Try changing the filter settings!"
+                                        "MARKETPLACE_NO_RESULTS"
                                     )}
                                 </span>
                             )}

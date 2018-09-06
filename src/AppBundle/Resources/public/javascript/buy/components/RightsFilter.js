@@ -38,7 +38,7 @@ class RightsFilter extends React.Component {
             <div>
                 <div className="box">
                     <div className="title">
-                        {this.context.t("Territories")}
+                        {this.context.t("MARKETPLACE_LABEL_FILTER_TERRITORIES")}
                     </div>
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
@@ -78,7 +78,7 @@ class RightsFilter extends React.Component {
                 <div className="box">
                     <div id="rights-packages" className={"filter-rights"}>
                         <div className="title">
-                            {this.context.t("Rights")}
+                            {this.context.t("MARKETPLACE_LABEL_FILTER_RIGHTS")}
                         </div>
                         {
                             rightsPackage && rightsPackage.map((right,i) => {
@@ -115,7 +115,7 @@ class RightsFilter extends React.Component {
                                     this.props.updateExclusive(e.target.checked)
                                 }}
                             />
-                            {this.context.t("Contains exclusive rights")}
+                            {this.context.t("MARKETPLACE_LABEL_FILTER_EXCLUSIVE")}
                         </div>
                     </div>
 
@@ -127,10 +127,10 @@ class RightsFilter extends React.Component {
                         flexDirection: 'column'
                     }}>
                         <button className="ca-btn ca-btn-primary" style={{margin:5}} onClick={onFilter}>
-                            {this.context.t("Apply")}
+                            {this.context.t("MARKETPLACE_BUTTON_APPLY")}
                         </button>
                         <button className="ca-btn ca-btn-link" style={{margin:5}} onClick={clearFilter}>
-                            {this.context.t("Clear")}
+                            {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>
                     </div>
                 </div>

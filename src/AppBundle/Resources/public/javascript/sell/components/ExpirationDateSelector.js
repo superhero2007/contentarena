@@ -21,7 +21,7 @@ class ExpirationDateSelector extends React.Component {
         return (
             <div className="base-input">
                 <label>
-                    {this.context.t("Listing expiry")}
+                    {this.context.t("CL_STEP4_TITLE_EXPIRY")}
                 </label>
                 <DatePicker
                     className={"date-picker"}

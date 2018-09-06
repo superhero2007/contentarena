@@ -288,7 +288,7 @@ class ClosedDeals extends React.Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                {this.context.t("You don't have closed deal yet")}
+                                {this.context.t("CLOSED_DEALS_EMPTY_MESSAGE")}
                             </div>
                         }
                     </div>

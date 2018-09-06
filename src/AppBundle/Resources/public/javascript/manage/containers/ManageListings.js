@@ -105,16 +105,16 @@ class ManageListings extends React.Component {
 
                 }}>
                     <div style={{margin:'0 20px' , flex: 1,display: 'flex', alignItems: 'center'}}>
-                        {this.context.t("Draft")} ({draft.length})
+                        {this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}({draft.length})
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
-                        {this.context.t("Inactive listings")} ({inactive.length})
+                        {this.context.t("MANAGE_LISTINGS_TITLE_INACTIVE")}({inactive.length})
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
-                        {this.context.t("Active listings")} ({active.length})
+                        {this.context.t("MANAGE_LISTINGS_TITLE_ACTIVE")}({active.length})
                     </div>
                     <div style={{margin:'0 20px', flex: 1}}>
-                        {this.context.t("Expired & sold listings")} ({expired.length})
+                        {this.context.t("MANAGE_LISTINGS_TITLE_EXPIRED")} ({expired.length})
                     </div>
                 </div>
 

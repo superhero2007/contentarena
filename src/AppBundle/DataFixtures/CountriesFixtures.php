@@ -1483,7 +1483,7 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
     "name": "Bouvet Island",
     "country_code": "BVT",
     "region": "",
-    "region_code": ""
+    "region_code": "" 
   },
   {
     "name": "British Indian Ocean Territory",

@@ -58,12 +58,12 @@ class Seller extends React.Component {
                 </div>
                 <div className="full-item-box" style={{width: '75%'}}>
                     <label>{company.displayName}
-                        {this.context.t("DETAILS")}
+                        {this.context.t("LISTING_DETAILS_SELLER_TITLE_DETAILS")}
                     </label>
                     <div >
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                {this.context.t("Legal name")}
+                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_NAME")}
                             </div>
                             <div style={valueStyle}>
                                 {company.legalName}
@@ -71,7 +71,7 @@ class Seller extends React.Component {
                         </div>
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                {this.context.t("Street Name / Number")}
+                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
                             </div>
                             <div style={valueStyle}>
                                 {company.address}
@@ -81,7 +81,7 @@ class Seller extends React.Component {
                         {company.city &&
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("City")}
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_CITY")}
                                 </div>
                                 <div style={valueStyle}>
                                     {company.city}
@@ -92,7 +92,7 @@ class Seller extends React.Component {
                         {company.country.name &&
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("Country")}
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_COUNTRY")}
                                 </div>
                                 <div style={valueStyle}>
                                     {company.country.name}
@@ -103,7 +103,7 @@ class Seller extends React.Component {
                         {company.zip &&
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("ZIP")}
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_ZIP")}
                                 </div>
                                 <div style={valueStyle}>
                                     {company.zip}
@@ -114,7 +114,7 @@ class Seller extends React.Component {
                         {company.registrationNumber &&
                             <div style={rowStyle}>
                                 <div style={titleStyle}>
-                                    {this.context.t("Company registration number")}
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
                                 </div>
                                 <div style={valueStyle}>
                                     {company.registrationNumber}
@@ -124,7 +124,7 @@ class Seller extends React.Component {
 
                         <div style={rowStyle}>
                             <div style={titleStyle}>
-                                {this.context.t("VAT ID number")}
+                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
                             </div>
                             <div style={valueStyle}>
                                 {company.vat}
@@ -136,7 +136,7 @@ class Seller extends React.Component {
                 {company.description &&
                     <div className="full-item-box">
                         <label>
-                            {this.context.t("DESCRIPTION")}
+                            {this.context.t("LISTING_DETAILS_SELLER_TITLE_DESCRIPTION")}
                         </label>
                         <div className="full-item-content">
                             {company.description}

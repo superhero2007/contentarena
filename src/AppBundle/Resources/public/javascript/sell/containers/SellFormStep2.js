@@ -98,16 +98,16 @@ class SellFormStep2 extends React.Component {
                 <div className="step-content-container">
                     <div className="textarea-input">
                         <label>
-                            {this.context.t("PROGRAM DESCRIPTION")}
+                            {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TITLE")}
                             <i className="fa fa-info-circle tooltip-icon" title={'The program description represents the core of the license agreement. It defines what is licensed by you, the licensor. You either can license produced content (e.g. live transmission of an event) or an event itself (e.g. a tennis tournament). In the license agreement, all rights selected below will directly refer to this program description.'}/>
                         </label>
                         <div className='textarea-input-text'>
-                            {this.context.t("Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.")}
+                            {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TEXT")}
                         </div>
                         <textarea
                             onChange={ (e) => updateContentValue("programDescription", e.target.value)}
                             defaultValue={programDescription}
-                            placeholder={this.context.t("Please enter the program description. The program description represents the core of the license agreement. All rights picked later on refer to this program description. You may enter all information you consider relevant (e.g. which events you seek to grant rights to or which events you will produce and deliver to the buyer). \n")}/>
+                            placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}/>
                     </div>
                 </div>
 
@@ -120,7 +120,7 @@ class SellFormStep2 extends React.Component {
                 <div className="left">
                     <div className="modal-input">
                         <label>
-                            {this.context.t("Enter program name")}
+                            {this.context.t("CL_STEP2_PROGRAM_NAME")}
                         </label>
                         <input
                             type="text"
@@ -130,7 +130,7 @@ class SellFormStep2 extends React.Component {
 
                     <div className="modal-input">
                         <label>
-                            {this.context.t("Number of episodes")}
+                            {this.context.t("CL_STEP2_PROGRAM_EPISODES")}
                         </label>
                         <input
                             type="number"
@@ -140,7 +140,7 @@ class SellFormStep2 extends React.Component {
 
                     <div className="modal-input">
                         <label>
-                            {this.context.t("Average episode duration in minutes")}
+                            {this.context.t("CL_STEP2_PROGRAM_DURATION")}
                         </label>
                         <input
                             type="number"
@@ -150,7 +150,7 @@ class SellFormStep2 extends React.Component {
 
                     <div className="modal-input">
                         <label>
-                            {this.context.t("Enter program type")}
+                            {this.context.t("CL_STEP2_PROGRAM_TYPE")}
                         </label>
                         <select
                             value={PROGRAM_TYPE}
@@ -167,7 +167,7 @@ class SellFormStep2 extends React.Component {
 
                     <div className={"modal-input"}>
                         <label>
-                            {this.context.t("Release year (optional)")}
+                            {this.context.t("CL_STEP2_PROGRAM_YEAR")}
                         </label>
                         <select
                             value={PROGRAM_YEAR}
@@ -180,11 +180,11 @@ class SellFormStep2 extends React.Component {
                 <div className='right'>
                     <div className="modal-input">
                         <label>
-                            {this.context.t("Edited Program Description (optional)")}
+                            {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL")}
                         </label>
                         <textarea
                             onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
-                            placeholder="Provide a description of your content listing">
+                            placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER")}>
                             {PROGRAM_DESCRIPTION}
                         </textarea>
                     </div>

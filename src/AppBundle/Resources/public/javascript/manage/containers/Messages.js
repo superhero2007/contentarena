@@ -115,7 +115,7 @@ class Messages extends React.Component {
                 <div className={"threads"}>
                     {loadingThreads && threads.length ===0 && <i className="fa fa-cog fa-spin" /> }
                     {!loadingThreads && threads.length ===0 && <div>
-                        {this.context.t("No threads yet")}
+                        {this.context.t("MESSAGES_NO_THREADS_YET")}
                     </div> }
                     {!loadingThreads && threads.map((t,i)=>{
                         return <div className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
@@ -173,24 +173,24 @@ class Messages extends React.Component {
                     </div>
                     <div className={"message-input"}>
                         <div className={"message-input-title"}>
-                            {this.context.t("Write a message")}
+                            {this.context.t("MESSAGES_TITLE")}
                         </div>
                         <textarea
                             value={inputMessage}
                             onChange={(e)=>{this.setState({inputMessage : e.target.value})}}
                             className={"message-content"}
-                            placeholder={"write a message"}/>
+                            placeholder={this.context.t("MESSAGES_PLACEHOLDER_WRITE")}/>
                         <button className={"standard-button"}
                                 onClick={this.send}
                                 disabled={!inputMessage|| inputMessage === "" || saving}>
-                            {!saving && "Send"}
+                            {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
                             {saving && <i className="fa fa-cog fa-spin"/>}
                         </button>
                     </div>
                 </div>}
 
                 {!selectedThread && <div>
-                    {this.context.t("No thread selected")}
+                    {this.context.t("MESSAGES_NO_THREAD_SELECTED")}
                 </div> }
             </div>
         )

@@ -292,46 +292,46 @@ class Selector extends React.Component {
 
                 {this.props.showNewSport && <div className={"extras"}>
                     <div className={"message"}>
-                        {this.context.t("Can't find your sport in the list?")}
+                        {this.context.t("CL_STEP1_SELECTOR_SPORT_1")}
                     </div>
                     <button className={"link-button"} onClick={() => { this.addNewSport(this.props.index) } } >
-                        {this.context.t("Add new Sport")}
+                        {this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
                     </button>
                 </div>}
 
                 {this.props.showNewTournament && <div className={"extras"}>
                     <div className={"message"}>
-                        {this.context.t("Can't find your competition in the list")}?
+                        {this.context.t("CL_STEP1_SELECTOR_TOURNAMENT_1")}
                     </div>
                     <button className={"link-button"} onClick={ () => { this.addNewTournament(this.props.index ) } } >
-                        {this.context.t("Add new Tournament")}
+                        {this.context.t("CL_STEP1_SELECTOR_ADD_TOURNAMENT")}
                     </button>
                 </div>}
 
                 {this.props.showNewSeason && <div className={"extras"}>
                     <div className={"message"}>
-                        {this.context.t("Can't find your season in the list?")}
+                        {this.context.t("CL_STEP1_SELECTOR_SEASON_1")}
                     </div>
                     <button className={"link-button"} onClick={() => { this.addNewSeason(this.props.index) } } >
-                        {this.context.t("Add new Season")}
+                        {this.context.t("CL_STEP1_SELECTOR_ADD_SEASON")}
                     </button>
                 </div>}
 
                 { this.props.showAllCountries&& <div className={"extras"}>
                     <div className={"message"}>
-                        {this.context.t("Can't find your country in the list?")}
+                        {this.context.t("CL_STEP1_SELECTOR_COUNTRY_1")}
                     </div>
                     <button className={"link-button"} onClick={this.showAllCountries } >
-                        {this.context.t("Show all countries")}
+                        {this.context.t("CL_STEP1_SELECTOR_COUNTRIES_ALL")}
                     </button>
                 </div>}
 
                 { this.props.showNewCategory && <div className={"extras"}>
                     <div className={"message"}>
-                        {this.context.t("Can't find your category in the list?")}
+                        {this.context.t("CL_STEP1_SELECTOR_CATEGORY_1")}
                     </div>
                     <button className={"link-button"} onClick={() => { this.addNewCategory(this.props.index) } } >
-                        {this.context.t("Add new Category")}
+                        {this.context.t("CL_STEP1_SELECTOR_ADD_CATEGORY")}
                     </button>
                 </div>}
 

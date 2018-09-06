@@ -117,7 +117,7 @@ class SellFormStep3 extends React.Component {
             >
 
                 <div className="modal-title">
-                    {this.context.t("Program details")}
+                    {this.context.t("CL_STEP3_PROGRAM_MODAL_TITLE")}
                     <i className="fa fa-times-circle-o" onClick={this.closeProgramsPopup}/>
                 </div>
 
@@ -126,7 +126,7 @@ class SellFormStep3 extends React.Component {
 
                         <div className="modal-input">
                             <label>
-                                {this.context.t("Program language")}
+                                {this.context.t("CL_STEP3_PROGRAM_MODAL_LANGUAGE")}
                             </label>
                             <LanguageSelector
                                 value={PROGRAM_LANGUAGE}
@@ -135,7 +135,7 @@ class SellFormStep3 extends React.Component {
 
                         <div className="modal-input">
                             <label>
-                                {this.context.t("Subtitles (if available)")}
+                                {this.context.t("CL_STEP3_PROGRAM_MODAL_SUBTITLES")}
                             </label>
                             <LanguageSelector
                                 value={PROGRAM_SUBTITLES}
@@ -144,7 +144,7 @@ class SellFormStep3 extends React.Component {
 
                         <div className="modal-input">
                             <label>
-                                {this.context.t("Script (if available)")}
+                                {this.context.t("CL_STEP3_PROGRAM_MODAL_SCRIPT")}
                             </label>
                             <LanguageSelector
                                 value={PROGRAM_SCRIPT}
@@ -158,7 +158,7 @@ class SellFormStep3 extends React.Component {
                     <button
                         className={"standard-button"}
                         onClick={this.closeProgramsPopup}>
-                        {this.context.t("Ok")}
+                        {this.context.t("CL_STEP3_PROGRAM_MODAL_BUTTON_OK")}
                     </button>
                 </div>
             </Modal>
@@ -225,20 +225,20 @@ class SellFormStep3 extends React.Component {
                         <div className="table-right">
                             <div className="row">
                                 <div className="column right-name">
-                                    {this.context.t("Start")}
+                                    {this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_START")}
                                 </div>
                                 <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
                                     { this.props.startDateMode === "LICENSE"  && " contract conclusion"}
                                     { this.props.startDateMode === "DATE"  && Moment(this.props.startDate).format('DD/MM/YYYY')}
                                 </div>
                                 <div className="column right-name">
-                                    {this.context.t("End")}
+                                    {this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_END")}
                                 </div>
                                 <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
-                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + " days from contract conclusion"}
+                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + "LISTING_DETAILS_LICENSE_END_DAYS"}
                                     { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
                                     { endDateMode === "UNLIMITED"  && this.context.t("Unlimited")}
-                                    { !endDateMode && this.context.t("Please select")}
+                                    { !endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
                                     <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
                                         <i className="fa fa-edit"/>
                                     </div>
@@ -247,7 +247,7 @@ class SellFormStep3 extends React.Component {
                         </div>
                     </div>
 
-                    <TitleBar title={this.context.t("Grant of Rights")}/>
+                    <TitleBar title={this.context.t("CL_STEP3_TITLE_GRANT_RIGHT")}/>
 
                     <div className="rights-container">
                         {
@@ -277,7 +277,7 @@ class SellFormStep3 extends React.Component {
 
                     <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
 
-                    <TitleBar title={this.context.t("Configure Production Standards")}/>
+                    <TitleBar title={this.context.t("CL_STEP3_TITLE_PRODUCTION_STANDARDS")}/>
 
                     <div className="rights-container">
                         {

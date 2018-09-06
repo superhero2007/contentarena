@@ -210,7 +210,7 @@ class ContentListing extends React.Component{
                         fontSize: 13
                     }}>
                         <span>
-                            {this.context.t("Remove from Watchlist?")}
+                            {this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}
                         </span>
                         <span onClick={this.removeFromWatchlist} style={{
                             cursor : 'pointer',

@@ -45,7 +45,7 @@ class DigitalSignature extends React.Component{
         return (
             <div className="digital-signature">
                 <div className={"digital-signature-placeholder"}>
-                    {this.context.t("Digital Signature")}
+                    {this.context.t("DIGITAL_SIGNATURE_TITLE")}
                 </div>
                 {signature && ready &&
                     <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
@@ -55,13 +55,13 @@ class DigitalSignature extends React.Component{
 
                 <div className={"buttons"}>
                     {!ready && <button onClick={this.clear} className="standard-button-small transparent">
-                        {this.context.t("Clear")}
+                        {this.context.t("DIGITAL_SIGNATURE_BUTTON_CLEAR")}
                     </button>}
                     {!ready && <button onClick={this.done} className="standard-button-small">
-                        {this.context.t("Done")}
+                        {this.context.t("DIGITAL_SIGNATURE_BUTTON_DONE")}
                     </button>}
                     {ready && <button onClick={this.edit} className="standard-button-big">
-                        {this.context.t("New Signature")}
+                        {this.context.t("DIGITAL_SIGNATURE_BUTTON_NEW")}
                     </button>}
                 </div>
             </div>

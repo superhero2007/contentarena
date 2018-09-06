@@ -82,7 +82,7 @@ class SearchCompetition extends  React.Component {
         return(
             <div className="step-content-container">
                 <div className="step-item-description">
-                    {this.context.t("Do you want to list competition-based content")}
+                    {this.context.t("CL_STEP1_SEARCH_TITLE")}
                 </div>
                 <div className={"base-input"}>
                     <label>
@@ -91,7 +91,7 @@ class SearchCompetition extends  React.Component {
                     <input type="text"
                            onKeyPress={this.handleKeyPress}
                            onChange={this.handleInput}
-                           placeholder={this.context.t("Enter competition name (e.g. Bundesliga)")} />
+                           placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")} />
                     <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
                 </div>
 
@@ -111,18 +111,18 @@ class SearchCompetition extends  React.Component {
                         select={this.props.select}
                         className="ca-table"
                         columns={[{
-                            Header: this.context.t("Competition"),
+                            Header: this.context.t("CL_STEP1_SEARCH_HEADER_COMPETITION"),
                             accessor: 'name' // String-based value accessors!
                         }, {
-                            Header: this.context.t("Country/Category"),
+                            Header: this.context.t("CL_STEP1_SEARCH_HEADER_COUNTRY"),
                             accessor: 'sportCategory.name',
                         }, {
                             accessor: 'sport.name', // Required because our accessor is not a string
-                            Header: this.context.t("Sport"),
+                            Header: this.context.t("CL_STEP1_SEARCH_HEADER_SPORT"),
                         }, {
                             Header: '', // Custom header components!
                             Cell: props => <button className={"blue-button"} onClick={() =>{ this.props.select(props.original) }}>
-                                {this.context.t("Select")}
+                                {this.context.t("CL_STEP1_SEARCH_BUTTON_SELECT")}
                             </button>
                         }]}
                     />
@@ -130,23 +130,23 @@ class SearchCompetition extends  React.Component {
 
                 <div style={{ display: "inline-flex" }} >
                     {this.state.searchDone && this.state.results.length === 0 && <div>
-                        {this.context.t('Your search "{n}" did not match any products.', {n: this.state.input })}
+                        {this.context.t("CL_STEP1_SEARCH_NO_RESULTS", {n: this.state.input })}
                     </div>}
 
                     {!this.state.searchDone &&<div className="step-item-description">
-                        {this.context.t("Did you not find your competition in the database or not selling a competition")}
+                        {this.context.t("CL_STEP1_SEARCH_CANT_FIND_2")}
                     </div>}
 
                     {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description">
-                        {this.context.t("Can't find your competition in our list?")}
+                        {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
                     </div>}
 
                     {this.state.searchDone && this.state.results.length === 0 && <div className="step-item-description">
-                        {this.context.t("Try another search or enter content manually")}
+                        {this.context.t("CL_STEP1_SEARCH_TRY")}
                     </div>}
 
                     <button className={"standard-button standard-button-big"} onClick={this.props.close}>
-                        {this.context.t("Enter content manually")}
+                        {this.context.t("CL_STEP1_ENTER_MANUALLY")}
                     </button>
                 </div>
             </div>

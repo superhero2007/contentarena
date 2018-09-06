@@ -1,25 +1,16 @@
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-msgid "Multiple Sports"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "General content"
+msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-msgid "Multiple rounds"
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+msgid "LISTING_DETAILS_MULTIPLE_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Edited Program"
-msgstr ""
-
-#. Marketplace - Title for event filters
-#: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Event"
+msgid "LISTING_DETAILS_EDITED_PROGRAM"
 msgstr ""
 
 #. Marketplace - Placeholder for Search input
@@ -27,84 +18,89 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "Rights"
+#: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
+msgid "MARKETPLACE_LABEL_FILTER_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "Contains exclusive rights"
+msgid "MARKETPLACE_LABEL_FILTER_RIGHTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Apply"
+msgid "MARKETPLACE_LABEL_FILTER_TERRITORIES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "Clear"
+msgid "MARKETPLACE_LABEL_FILTER_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
+msgid "MARKETPLACE_BUTTON_APPLY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
+msgid "MARKETPLACE_BUTTON_CLEAR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
-msgid "PROGRAMS DESCRIPTION"
+msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "Season :"
+msgid "LISTING_DETAILS_EVENT_TITLE_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "EVENT DESCRIPTION"
+msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "CONTENT WEBSITE"
+msgid "LISTING_DETAILS_EVENT_TITLE_WEBSITE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "ATTACHMENTS"
+msgid "LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Congratulations!"
+msgid "CHECKOUT_CONGRATULATIONS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "You have successfully acquired the package!"
+msgid "CHECKOUT_FIXED_SUCCESS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Your bid was placed successfully!"
+msgid "CHECKOUT_BID_SUCCESS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "View Closed Deals"
+msgid "CHECKOUT_FIXED_GO_TO_CLOSED_DEALS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "View Bids"
+msgid "CHECKOUT_FIXED_GO_TO_BIDS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Return to Marketplace"
+msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "LISTING_DETAILS_LICENSE_START"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "LISTING_DETAILS_LICENSE_END"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "Start of license period"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid " With contract conclusion"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "End of license period"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid " days from contract conclusion"
+msgid "LISTING_DETAILS_LICENSE_END_DAYS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -124,24 +120,27 @@ msgid "Contact Seller"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Added to watchlist"
+msgid "LISTING_DETAILS_ADDED_TO_WATCHLIST"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "Watchlist"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Program & Sales Bundles"
+msgid "LISTING_DETAILS_TAB_BUNDLES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Grant of Rights & Production"
+msgid "LISTING_DETAILS_TAB_EVENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Seller Information"
+msgid "LISTING_DETAILS_TAB_RIGHTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "LISTING_DETAILS_TAB_SELLER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -162,7 +161,7 @@ msgid "Bid:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "The bid must exceed current minimum"
+msgid "LISTING_DETAILS_EXCEED_MINIMUM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -178,7 +177,6 @@ msgid "Total:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Payment details"
 msgstr ""
 
@@ -187,12 +185,12 @@ msgid "installment"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid " days after contract closure"
+#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
+msgid "INSTALLMENT_CLOSURE_DAYS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Company address"
+msgid "CHECKOUT_LABEL_COMPANY_ADDRESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -200,40 +198,39 @@ msgid "License agreement"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Accept terms conditions"
+msgid "CHECKOUT_TERMS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Buy"
+msgid "CHECKOUT_BUTTON_BUY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Place Bid"
+msgid "CHECKOUT_BUTTON_PLACE_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
-msgid "Sorry, no results. Try changing the filter settings!"
+msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "Program type"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Number of episodes"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_EPISODES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "Average episode duration (min)"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "Year of program release"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "Description"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
@@ -245,52 +242,43 @@ msgid "Place bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "DETAILS"
+msgid "LISTING_DETAILS_SELLER_TITLE_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Legal name"
+msgid "LISTING_DETAILS_SELLER_TITLE_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Street Name / Number"
+msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "City"
+msgid "LISTING_DETAILS_SELLER_TITLE_CITY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Country"
+msgid "LISTING_DETAILS_SELLER_TITLE_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "ZIP"
+msgid "LISTING_DETAILS_SELLER_TITLE_ZIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "Company registration number"
+msgid "LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "VAT ID number"
+msgid "LISTING_DETAILS_SELLER_TITLE_VAT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "DESCRIPTION"
+msgid "LISTING_DETAILS_SELLER_TITLE_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Grant of Rights"
+msgid "LISTING_DETAILS_RIGHTS_HEADER_RIGHTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
@@ -298,24 +286,63 @@ msgid " Rights"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "Amendment(s) to the Grant of Rights / Special Conditions"
+msgid "LISTING_DETAILS_RIGHTS_HEADER_GRANTED_TIME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "Production details"
+msgid "LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "Technical Fee Details"
+msgid "LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "Amendment(s) to the Content Delivery / Special Conditions"
+msgid "LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-msgid "Yes"
+msgid "COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_TITLE_REJECT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_REJECT_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
@@ -349,31 +376,25 @@ msgid "Action"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Action date"
+msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
-msgid "Are you sure you want to remove this bid?"
+#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
+msgid "Actions"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Remove"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "WATCHLIST_REMOVE_CONFIRMATION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+msgid "Yes"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Cancel"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-msgid "Remove from Watchlist?"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
@@ -385,23 +406,39 @@ msgid "Increase bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
-msgid "Listing edited after last bid. Please review term sheet."
+msgid "PENDING_BIDS_TOOLTIP_LISTING_EDITED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "Placed by:"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "Digital Signature"
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "PENDING_BIDS_REMOVE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "PENDING_BIDS_REMOVE_BUTTON_CONFIRM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "Done"
+msgid "DIGITAL_SIGNATURE_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "New Signature"
+msgid "DIGITAL_SIGNATURE_BUTTON_CLEAR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "DIGITAL_SIGNATURE_BUTTON_DONE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "DIGITAL_SIGNATURE_BUTTON_NEW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
@@ -409,49 +446,55 @@ msgid "Upload"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Marketplace"
+msgid "HEADER_LINK_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "Bids"
+msgid "HEADER_LINK_WATCHLIST"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "Closed deals"
+msgid "HEADER_LINK_BIDS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Manage listings"
+msgid "HEADER_LINK_CLOSED_DEALS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Commercial activity"
+msgid "HEADER_LINK_MANAGE_LISTINGS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Create Listing"
+msgid "HEADER_LINK_COMMERCIAL_ACTIVITY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Enter selling mode"
+msgid "HEADER_LINK_CREATE_LISTING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Enter buying mode"
+msgid "HEADER_LINK_SELLING_MODE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Messages"
+msgid "HEADER_LINK_BUYING_MODE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Settings"
+msgid "HEADER_LINK_MESSAGES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "Logout"
+msgid "HEADER_LINK_SETTINGS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_LOGOUT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
+msgid "NOTIFICATIONS_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
@@ -471,57 +514,71 @@ msgid "Country Selector"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
-msgid "List offers for at least one selected territory"
+msgid "MARKETPLACE_FILTER_ONE_TERRITORY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
-msgid "List offers for all selected territories"
+msgid "MARKETPLACE_FILTER_ALL_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/RightsLegend.js
+msgid "MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/RightsLegend.js
+msgid "MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/RightsLegend.js
+msgid "MARKETPLACE_RIGHTS_LABEL_NON_INCLUDED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Do you want to list competition-based content"
+msgid "CL_STEP1_SEARCH_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "Competition"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Enter competition name (e.g. Bundesliga)"
+msgid "CL_STEP1_SEARCH_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "Country/Category"
+msgid "CL_STEP1_SEARCH_HEADER_COMPETITION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Sport"
+msgid "CL_STEP1_SEARCH_HEADER_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Select"
+msgid "CL_STEP1_SEARCH_HEADER_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Your search \"{n}\" did not match any products."
+msgid "CL_STEP1_SEARCH_BUTTON_SELECT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Did you not find your competition in the database or not selling a competition"
+msgid "CL_STEP1_SEARCH_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Can't find your competition in our list?"
+msgid "CL_STEP1_SEARCH_CANT_FIND_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Try another search or enter content manually"
+msgid "CL_STEP1_SEARCH_CANT_FIND"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Enter content manually"
+msgid "CL_STEP1_SEARCH_TRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_ENTER_MANUALLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
@@ -537,11 +594,11 @@ msgid "Season"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid " Add season"
+msgid "CL_STEP1_ADD_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "Click here to add fixtures"
+msgid "CL_STEP1_ADD_FIXTURES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
@@ -553,43 +610,47 @@ msgid "International"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Can't find your sport in the list?"
+msgid "Apply"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Add new Sport"
+msgid "CL_STEP1_SELECTOR_SPORT_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Can't find your competition in the list"
+msgid "CL_STEP1_SELECTOR_ADD_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Add new Tournament"
+msgid "CL_STEP1_SELECTOR_TOURNAMENT_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Can't find your season in the list?"
+msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Add new Season"
+msgid "CL_STEP1_SELECTOR_SEASON_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Can't find your country in the list?"
+msgid "CL_STEP1_SELECTOR_ADD_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Show all countries"
+msgid "CL_STEP1_SELECTOR_COUNTRY_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Can't find your category in the list?"
+msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Add new Category"
+msgid "CL_STEP1_SELECTOR_CATEGORY_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "CL_STEP1_SELECTOR_ADD_CATEGORY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
@@ -597,15 +658,19 @@ msgid "Contact"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "Message sent!"
+msgid "MESSAGE_POPUP_SENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "Send"
+msgid "MESSAGE_POPUP_BUTTON_SEND"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "Close"
+msgid "MESSAGE_POPUP_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
+msgid "MESSAGE_POPUP_BUTTON_CLOSE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
@@ -628,39 +693,55 @@ msgid "View"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Archive"
+msgid "MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Deactivate"
+msgid "MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Last action: "
+msgid "MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Listing Owner: "
+msgid "MANAGE_LISTINGS_LAST_ACTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Are you sure you want to deactivate the listing?"
+msgid "MANAGE_LISTINGS_LISTING_OWNER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Remove-listing-confirmation"
+msgid "MANAGE_LISTINGS_DEACTIVATE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Are you sure you want to archive this listing?"
+msgid "MANAGE_LISTINGS_DEACTIVATE_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Season: Multiple seasons"
+msgid "MANAGE_LISTINGS_REMOVE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Season: "
+msgid "MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "MANAGE_LISTINGS_ARCHIVE_CONFIRMATION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "MANAGE_LISTINGS_MULTIPLE_SEASONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+msgid "MANAGE_LISTINGS_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
@@ -681,7 +762,6 @@ msgid "Seller"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Territories"
 msgstr ""
 
@@ -703,194 +783,208 @@ msgid "Buyer name"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
-msgid "Actions"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
-msgid "You don't have closed deal yet"
+msgid "CLOSED_DEALS_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "All bundles"
+msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "With activity"
+msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "Open"
+msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "You have no offers yet"
+msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
-msgid "Draft"
+msgid "MANAGE_LISTINGS_TITLE_DRAFT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
-msgid "Inactive listings"
+msgid "MANAGE_LISTINGS_TITLE_INACTIVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
-msgid "Active listings"
+msgid "MANAGE_LISTINGS_TITLE_ACTIVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
-msgid "Expired & sold listings"
+msgid "MANAGE_LISTINGS_TITLE_EXPIRED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "No threads yet"
+msgid "MESSAGES_NO_THREADS_YET"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "Write a message"
+msgid "MESSAGES_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "No thread selected"
+msgid "MESSAGES_PLACEHOLDER_WRITE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
+msgid "MESSAGES_SEND_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
+msgid "MESSAGES_NO_THREAD_SELECTED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
-msgid "Active"
+msgid "PENDING_BIDS_FILTER_ACTIVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
-msgid "Declined"
+msgid "PENDING_BIDS_FILTER_DECLINED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
-msgid "You haven't made any bids yet!"
+msgid "PENDING_BIDS_MADE_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
-msgid "You haven't any declined bids yet!"
+msgid "PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Company information"
+msgid "SETTINGS_TITLE_COMPANY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_BUTTON_EDIT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_BUTTON_SAVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_VAT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_CITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ZIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_FAMILY_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_FIRST_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_PHONE_NUMBER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_COMPANY_POSITION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_TITLE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 #: src/AppBundle/Resources/public/javascript/sell/components/Definition.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "Save"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Legal Company Name"
+msgid "SETTINGS_LABEL_USER_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Company Registration Number"
+msgid "SETTINGS_LABEL_CHANGE_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Address"
+msgid "SETTINGS_LABEL_CHANGE_PASSWORD_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "ZIP code"
+msgid "SETTINGS_LABEL_TYPE_CURRENT_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Company description"
+msgid "SETTINGS_LABEL_TYPE_NEW_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Familiy Name"
+msgid "SETTINGS_LABEL_RETYPE_NEW_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "First Name"
+msgid "SETTINGS_BUTTON_SAVE_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Email"
+msgid "SETTINGS_LABEL_PASSWORD_UPDATED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Phone Number"
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Company Position"
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Personal information"
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Last Name"
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_4"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Title"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Email address"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Phone number"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Change Password"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Choose a unique password to protect your account"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid " Type your current password"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Type your new password"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Retype your new password"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Save password"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Password updated successfully"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "At least 8 characters long"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "One uppercase character"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "One number"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "One special character"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "Passwords don't match"
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Watchlist.js
-msgid "Your watchlist is empty!"
+msgid "WATCHLIST_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLawSelector.js
@@ -898,13 +992,11 @@ msgid "Applicable Law"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
-msgid "Add further comments"
+msgid "CL_STEP3_AMENDMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Ok"
 msgstr ""
 
@@ -913,7 +1005,35 @@ msgid "Company Information"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Legal name"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Registration number"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "VAT ID number"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Street Name / Number"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "City"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "ZIP code"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Country"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Company address"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CurrencySelector.js
@@ -921,11 +1041,11 @@ msgid "Currency"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
-msgid "Listing expiry"
+msgid "CL_STEP4_TITLE_EXPIRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
-msgid "Place of jurisdiction"
+msgid "CL_STEP4_LABEL_JURISDICTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
@@ -933,16 +1053,28 @@ msgid "Edit license period"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "With contract conclusion"
+msgid "CL_STEP3_LICENSE_POPUP_START"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "days from contract conclusion"
+msgid "CL_STEP3_LICENSE_POPUP_START_CONCLUSION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+msgid "CL_STEP3_LICENSE_POPUP_END"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+msgid "Accept"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
@@ -958,31 +1090,72 @@ msgid "Bidding"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
-msgid "days after contract conclusion"
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_PAYMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
-msgid "the total instalment percentage must accumulate to 100%"
+msgid "CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
-msgid "Sales bundles"
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES_MODE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
-msgid "Remove all"
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_SINGLE_TERRITORY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
-msgid "Add sales bundle"
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_MULTIPLE_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_SELECTED_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_AS_PACKAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_TYPE_FIXED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_SALES_BUNDLES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_REMOVE_ALL_BUNDLES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_ADD_SALES_BUNDLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
-msgid "Rights selection & definition"
+msgid "CL_STEP2_RIGHTS_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
-msgid "Which rights, relating to the program defined above, do you wish to grant to the buyer?"
+msgid "CL_STEP2_RIGHTS_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
@@ -990,27 +1163,39 @@ msgid "Exclusive"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "Review & Sign"
+msgid "CL_STEP5_MODAL_SUCCESS_MESSAGE_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "Marketplace Preview"
+msgid "CL_STEP5_MODAL_SUCCESS_MESSAGE_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "View License Agreement"
+msgid "CL_STEP5_MODAL_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "I confirm that I have verified the terms stated above. They are correct and ready to be published."
+msgid "CL_STEP5_TITLE_REVIEW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "I confirm that I have verified the terms and conditions that have been outlined by Content Arena Pte. Ltd."
+msgid "CL_STEP5_TITLE_PREVIEW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "Submit Listing"
+msgid "CL_STEP5_TERMS_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_TERMS_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_BUTTON_SUBMIT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_BUTTON_SAVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellButtons.js
@@ -1022,114 +1207,138 @@ msgid "Next"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "Start over"
+msgid "CL_STEP1_BUTTON_START_OVER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "Please fill in the information fields below. Note that, apart from 'Sport', you may skip all information fields."
+msgid "CL_STEP1_DESCRIPTION_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "Your content covers multiple sports?"
+msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "e.g. Germany"
+msgid "CL_STEP1_LABEL_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "e.g. Bundesliga"
+msgid "CL_STEP1_PLACEHOLDER_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "Additional information"
+msgid "CL_STEP1_LABEL_COMPETITION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "Website"
+msgid "CL_STEP1_PLACEHOLDER_COMPETITION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LABEL_ADDITIONAL_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LABEL_WEBSITE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "PROGRAM DESCRIPTION"
+msgid "CL_STEP2_PROGRAM_DESCRIPTION_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this."
+msgid "CL_STEP2_PROGRAM_DESCRIPTION_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Please enter the program description. The program description represents the core of the license agreement. All rights picked later on refer to this program description. You may enter all information you consider relevant (e.g. which events you seek to grant rights to or which events you will produce and deliver to the buyer). \n"
+msgid "CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Enter program name"
+msgid "CL_STEP2_PROGRAM_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Average episode duration in minutes"
+msgid "CL_STEP2_PROGRAM_EPISODES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Enter program type"
+msgid "CL_STEP2_PROGRAM_DURATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Release year (optional)"
+msgid "CL_STEP2_PROGRAM_TYPE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "Edited Program Description (optional)"
+msgid "CL_STEP2_PROGRAM_YEAR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Program details"
+msgid "CL_STEP3_PROGRAM_MODAL_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Program language"
+msgid "CL_STEP3_PROGRAM_MODAL_LANGUAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Subtitles (if available)"
+msgid "CL_STEP3_PROGRAM_MODAL_SUBTITLES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Script (if available)"
+msgid "CL_STEP3_PROGRAM_MODAL_SCRIPT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Start"
+msgid "CL_STEP3_PROGRAM_MODAL_BUTTON_OK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "End"
+msgid "CL_STEP3_TITLE_LICENSE_PERIOD_START"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Please select"
+msgid "CL_STEP3_TITLE_LICENSE_PERIOD_END"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "Configure Production Standards"
+msgid "CL_STEP3_SELECT_LICENSE_PERIOD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "CL_STEP3_TITLE_GRANT_RIGHT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "CL_STEP3_TITLE_PRODUCTION_STANDARDS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "Further information"
+msgid "CL_STEP4_TITLE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "Annex"
+msgid "CL_STEP4_LABEL_ANNEX"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "Listing details"
+msgid "CL_STEP4_TITLE_LISTING_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "Please define listing details below. This determines how your listing is shown to potential buyers."
+msgid "CL_STEP4_LISTING_DETAILS_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "Listing image (opt.)"
+msgid "CL_STEP4_LABEL_IMAGE"
 msgstr ""
 

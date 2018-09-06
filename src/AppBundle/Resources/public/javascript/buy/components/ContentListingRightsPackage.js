@@ -27,7 +27,7 @@ const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage}, cont
                         <img style={{width: 15, height: 15, margin: '0 5px'}} src={icon}/>
 
                         <div style={{display: 'flex', flexDirection: "row"}}>
-                            {rp.shortLabel === "PR" ? context.t("Edited Program") : rp.name}
+                            {rp.shortLabel === "PR" ? context.t("LISTING_DETAILS_EDITED_PROGRAM") : rp.name}
                         </div>
                     </div>
                 )

@@ -101,14 +101,16 @@ class ContentListingEventDetails extends React.Component {
                     {/*Tournament name*/}
                     {tournament && tournament.length > 0 && <span>{tournamentIcon} {tournament[0].name}</span>}
                     {customTournament && !customId && <span>{tournamentIcon} {customTournament}</span>}
-                    {tournament && tournament.length === 0 && !customTournament && <span>{tournamentIcon} {this.context.t("General content")}</span>}
+                    {tournament && tournament.length === 0 && !customTournament && <span>
+                        {tournamentIcon} {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
+                    </span>}
                 </div>
 
                 <div className="listing-item">
                     {/*Sport name*/}
                     {sports && sports.length === 1 && <span>{sportIcon} {sports[0].name}</span>}
                     {sports && sports.length > 1 && <span>
-                        {sportIcon} {this.context.t("Multiple Sports")}
+                        {sportIcon} {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}
                     </span>}
 
                     {/*Sport category*/}

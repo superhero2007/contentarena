@@ -85,7 +85,7 @@ class PopupCountrySelector extends React.Component {
                        onChange={this.handleOptionChange}
                 />
                 <span style={{color:'black', marginRight: 30, fontSize: '14px'}}>
-                    {this.context.t("List offers for at least one selected territory")}
+                    {this.context.t("MARKETPLACE_FILTER_ONE_TERRITORY")}
                 </span>
 
                 <input type="radio"
@@ -96,7 +96,7 @@ class PopupCountrySelector extends React.Component {
                        onChange={this.handleOptionChange}
                 />
                 <span style={{color:'black', fontSize: '14px'}}>
-                    {this.context.t("List offers for all selected territories")}
+                    {this.context.t("MARKETPLACE_FILTER_ALL_TERRITORIES")}
                 </span>
             </div>
 

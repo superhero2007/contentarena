@@ -40,7 +40,7 @@ class Comments extends React.Component {
 
             <div className="modal-title">
                 <div style={{ width: "470px"}}>
-                    {this.context.t("Add further comments")}
+                    {this.context.t("CL_STEP3_AMENDMENT")}
                 </div>
                 <i className="fa fa-times close-icon" onClick={this.closeModal}/>
             </div>
@@ -72,7 +72,7 @@ class Comments extends React.Component {
             <div style={{marginBottom: 20}}>
                 { this.renderModal() }
                 <button className={"link-button"} onClick={this.addComments}>
-                    {this.context.t("Add further comments")}
+                    {this.context.t("CL_STEP3_AMENDMENT")}
                 </button>
             </div>
         )
