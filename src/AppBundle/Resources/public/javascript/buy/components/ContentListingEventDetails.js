@@ -109,17 +109,21 @@ class ContentListingEventDetails extends React.Component {
                 <div className="listing-item">
                     {/*Sport name*/}
                     {sports && sports.length === 1 && <span>{sportIcon} {sports[0].name}</span>}
-                    {sports && sports.length > 1 && <span>
-                        {sportIcon} {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}
-                    </span>}
+                    {sports && sports.length > 1 && <span>{sportIcon} {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}</span>}
 
-                    {/*Sport category*/}
-                    {sportCategory && sportCategory.length > 0 && <span>{sportCategoryIcon} {sportCategory[0].name}</span> }
-                    {customCategory && <span>{sportCategoryIcon} {customCategory}</span>}
+                    {/*Sport category/Country*/}
+                    {sportCategory && sportCategory.length > 0 ? (
+                            <span>{sportCategoryIcon} {sportCategory[0].name}</span>
+                        ) : (
+                            <span>{sportCategoryIcon} {this.context.t("International")}</span>
+                        )
+                    }
+                    {/*as is duplicate in sportCategory*/}
+                    {/*{customCategory && <span>{sportCategoryIcon} {customCategory}</span>}*/}
 
                     {/*Season/Release*/}
                     {!this.showProgramInfo() && seasons && seasons.length > 0 && <span>{seasonReleaseIcon} {seasonName}</span>}
-                    {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} {PROGRAM_YEAR}</span>}
+                    {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} {this.context.t("Release year:")} {PROGRAM_YEAR}</span>}
                 </div>
 
                 <div className="listing-item">
@@ -128,8 +132,8 @@ class ContentListingEventDetails extends React.Component {
 
                     {/*Fixtures/Episodes*/}
                     {!this.showProgramInfo() && this.getFixtures().length > 1 && <span>{fixturesEpisodeIcon} {this.getFixtures().length} fixtures</span>}
-                    {!this.showProgramInfo() && this.getFixtures().length === 1 && <span>{fixturesEpisodeIcon} {this.getFixtures()[0].name}</span>}
-                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{fixturesEpisodeIcon} {PROGRAM_EPISODES}</span>}
+                    {!this.showProgramInfo() && this.getFixtures().length === 1 && this.getFixtures()[0].name && <span>{fixturesEpisodeIcon} {this.getFixtures()[0].name}</span>}
+                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{fixturesEpisodeIcon} {PROGRAM_EPISODES} {this.context.t("episodes")}</span>}
                 </div>
             </div>
         );
