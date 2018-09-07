@@ -14,7 +14,6 @@ export const routes = [
     {
         path: "/",
         exact: true,
-        header: HeaderBar,
         main: Marketplace
     },
     {

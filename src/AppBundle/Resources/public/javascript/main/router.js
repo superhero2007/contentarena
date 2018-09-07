@@ -30,8 +30,15 @@ const PrivateRoute = ({ component: Component, updateByPath, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            fakeAuth.isAuthenticated ? (
-                <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search} />
+            fakeAuth.isAuthenticated ? props.match.path === "/" ? (
+                <Redirect
+                    to={{
+                        pathname: "/marketplace",
+                        state: { from: props.location }
+                    }}
+                />
+            ) : (
+                Component && <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search} />
             ) : (
                 <Redirect
                     to={{
@@ -47,7 +54,10 @@ const PrivateRoute = ({ component: Component, updateByPath, ...rest }) => (
 const PublicRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
-        render={props => <Component {...props} {...rest} />}
+        render={props => {
+            if (!Component) return null
+            return <Component {...props} {...rest}/>
+        }}
     />
 );
 

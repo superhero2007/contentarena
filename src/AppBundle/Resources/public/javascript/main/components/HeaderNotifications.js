@@ -34,7 +34,7 @@ class HeaderNotifications extends  React.Component {
                                 const { id, seen, text } = item;
                                 return (
                                     <div
-                                         key={`notification-${id}`}
+                                         key={"notification-"+id}
                                          className={cn('item', {'unread': !seen })}
                                          onClick={this.onNotificationClicked.bind(this, item)}
                                     >
@@ -64,6 +64,9 @@ class HeaderNotifications extends  React.Component {
 
     loadNotifications() {
         ContentArena.Api.getNotifications().then(({data}) => {
+
+            if ( data === undefined ) return;
+
             data.sort((a, b) => {
                 return b.id - a.id;
             });

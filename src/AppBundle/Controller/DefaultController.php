@@ -23,7 +23,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="test|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialactivity|messages|settings"},
+     *     requirements={"reactRouting"="landing|test|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialactivity|messages|settings"},
      *     name="homepage", defaults={"reactRouting": null})
      */
     public function indexAction(Request $request)
