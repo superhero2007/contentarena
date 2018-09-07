@@ -685,6 +685,7 @@ a:hover {
       }
       .Select {
         margin-left: 5px;
+        width: 100%;
         .Select-control {
           height: 35px;
           .Select-value {
@@ -1257,7 +1258,7 @@ a:hover {
     flex-direction: row;
     box-sizing: border-box;
     width: 100%;
-    min-width: 800px;
+    min-width: 750px;
     border-bottom: 1px solid lightgray;
     align-items: center;
     min-height: 40px;
@@ -1287,7 +1288,7 @@ a:hover {
       width: 85px;
       min-width: 50px;
     }
-    input[type="checkbox"], input[type="radio"] {
+    input[type="checkbox"] {
       width: 50px;
     }
     input[type="checkbox"] {
@@ -1338,6 +1339,7 @@ a:hover {
     }
 
     .Select {
+      width: 100%;
       min-height: 31px;
       height: auto;
       .Select-control {

@@ -312,7 +312,7 @@ export const translations = {
     'CL_STEP1_PLACEHOLDER_COUNTRY': 'e.g. Germany',
     'CL_STEP1_LABEL_COMPETITION': 'Competition',
     'CL_STEP1_PLACEHOLDER_COMPETITION': 'e.g. Bundesliga',
-    'CL_STEP1_LABEL_ADDITIONAL_INFO': 'Additional Information (optional(',
+    'CL_STEP1_LABEL_ADDITIONAL_INFO': 'Additional Information (optional)',
     'CL_STEP1_LABEL_WEBSITE': 'Website',
     'CL_STEP2_PROGRAM_DESCRIPTION_TITLE': 'PROGRAM DESCRIPTION',
     'CL_STEP2_PROGRAM_DESCRIPTION_TEXT': 'Which program do you wish to license? This may include events and/or produced content. All rights, selected later on, will refer to this.',

@@ -14,7 +14,7 @@
   line-height: 1.5;
   border-radius: .25rem;
   outline: none;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
   &.ca-btn-link {
     font-weight: 400;
@@ -46,6 +46,7 @@ input[type="radio"].ca-radio {
   height: 20px;
   flex: 20px 0 0;
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   background-color: #F4F6F9;
   border: 1px solid #cccccc;
@@ -56,30 +57,21 @@ input[type="radio"].ca-radio {
   margin: initial;
   padding: initial;
   font-size: initial;
-  position: relative;
 
   &:hover {
     border-color: #309AFF;
   }
 
   &:checked {
-    border: 2px solid #309AFF;
-    padding: 0 !important;
+    border: none;
     &:after {
       content: "";
+      background: url('../bundles/app/images/radio-active.png') no-repeat;
+      background-size: contain;
+      height: 20px;
       display: block;
-      position: absolute;
-      border-radius: 50%;
-      right: 0;
-      left: 0.5px;
-      top: 5.5px;
-      width: 5.5px;
-      height: 5.5px;
-      background: #309AFF;
-      margin: 0 auto;
     }
   }
-
 
   &:disabled,
   &.disabled {
@@ -107,7 +99,7 @@ input[type="checkbox"].ca-checkbox {
   font-size: initial;
 
   &:hover {
-    border-color:#ffc948;
+    border-color: #ffc948;
   }
 
   &:checked {
@@ -145,12 +137,12 @@ i.fa.ca-tooltip {
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
-  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
   &:focus {
     border-color: #66afe9;
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
   }
 
   &:disabled,
