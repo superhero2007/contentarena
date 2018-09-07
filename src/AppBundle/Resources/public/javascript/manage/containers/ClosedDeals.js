@@ -264,7 +264,7 @@ class ClosedDeals extends React.Component {
                                         viewLicenseBid(props.value.customId)
                                     }} src={this.docIcon}/>
                                     <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                        this.refs["messagePopup"+props.value.id].open();
+                                        window.location.href = `/redirect-integration/messages-by-bid/${props.value.id}`;
                                     }} src={this.blueEnvelopeIcon}/>
                                 </div>
                             }

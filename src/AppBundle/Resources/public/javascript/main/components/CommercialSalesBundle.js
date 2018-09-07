@@ -307,7 +307,11 @@ class CommercialSalesBundle extends React.Component{
                                 }} src={docIcon}/>}
                                 {props.value.status === "APPROVED"
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                    _this.refs["messagePopup" + props.value.bid.id].open();
+                                        if (props.value.status === "APPROVED") {
+                                            window.location.href = `/redirect-integration/messages-by-bid/${props.value.bid.id}`;
+                                        } else {
+                                            _this.refs["messagePopup" + props.value.bid.id].open();
+                                        }
                                 }} src={blueEnvelopeIcon}/>}
 
 

@@ -157,5 +157,20 @@ class MessageService
         return $message;
     }
 
+    public function createThread(Content $content, User $user) {
+        $thread = new Thread();
+        $ownerCompany = $content->getCompany();
+        $buyerCompany = $user->getCompany();
+        $customId = $this->idGenerator->generate($content);
+        $thread->setCustomId($customId);
 
+        $thread->setBuyerCompany($buyerCompany);
+        $thread->setOwnerCompany($ownerCompany);
+        $thread->setUser($user);
+        $thread->setListing($content);
+        $this->em->persist($thread);
+        $this->em->flush();
+
+        return $thread;
+    }
 }

@@ -131,7 +131,7 @@ class Messages extends React.Component {
                                 {t.oppositeParty.legalName}
                             </div>
                             <div className={"user"}>
-                                {getFullName(t.lastMessageUser) }
+                                {t.lastMessageUser ? getFullName(t.lastMessageUser) : '' }
                             </div>
                             <div className={"last-message"}>
                                 {t.lastMessageContent && limitText(t.lastMessageContent)}

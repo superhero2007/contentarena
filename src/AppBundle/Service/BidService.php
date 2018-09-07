@@ -198,4 +198,8 @@ class BidService
         return false;
     }
 
+    public function getBidById($id) {
+        $bid = $this->em->getRepository('AppBundle:Bid')->find($id);
+        return $bid;
+    }
 }
