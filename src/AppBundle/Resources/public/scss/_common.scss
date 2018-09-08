@@ -37,6 +37,32 @@
       background-color: darken($orange-color, 7.5%),;
     }
   }
+  &.ca-btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+
+    &:hover {
+      background-color: darken(#dc3545, 7.5%);
+    }
+  }
+
+  &.ca-btn-danger-outline {
+    color: #dc3545;
+    background-color: transparent;
+    background-image: none;
+    border-color: #dc3545;
+
+    &:hover {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+  }
+
+  &.ca-btn-small {
+    font-size: 12px;
+    padding: 4px 1rem;
+  }
 }
 
 input[type="radio"].ca-radio {

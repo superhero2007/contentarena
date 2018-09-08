@@ -1653,7 +1653,33 @@ a:hover {
       }
     }
   }
+  .additional {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F7F7F7;
 
+    &.watchlist-data {
+      max-width: 200px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+
+      .ca-btn {
+        margin: 5px 3px;
+      }
+
+      .icon {
+        color: #3399FF;
+        font-size: 26px;
+        cursor: pointer;
+      }
+
+      .owner {
+        margin-top: 15px;
+      }
+    }
+  }
 }
 
 .medium-spinner {

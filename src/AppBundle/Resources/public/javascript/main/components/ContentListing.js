@@ -158,6 +158,7 @@ class ContentListing extends React.Component{
             company,
             defaultRightsPackage,
             rightsPackage,
+            owner
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
 
@@ -184,48 +185,10 @@ class ContentListing extends React.Component{
                             {name}
                         </div>
 
-                        {company.legalName && (
+                        {company && (
                             <div className="company-name">{coinIcon} {company.legalName}</div>
                         )}
                     </div>
-
-                    {watchlistRemove && !confirmWatchlistRemove &&
-                    <img style={{
-                        cursor : 'pointer',
-                        position: 'absolute',
-                        right: 0,
-                        top : 0,
-                        margin: '0 5px'
-
-                    }} src={this.bucketicon} onClick={this.confirmRemoveFromWatchlist}/>}
-
-                    {confirmWatchlistRemove &&
-                    <div style={{
-                        position: 'absolute',
-                        right: 0,
-                        top : 0,
-                        margin: '0 5px',
-                        border : '1px solid lightgrey',
-                        padding : 5,
-                        fontSize: 13
-                    }}>
-                        <span>
-                            {this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}
-                        </span>
-                        <span onClick={this.removeFromWatchlist} style={{
-                            cursor : 'pointer',
-                            margin: '0 15px',
-                            color : 'red'
-                        }}>
-                            {this.context.t("Yes")}
-                            </span>
-                        <span onClick={this.cancelRemoveFromWatchlist} style={{
-                            cursor : 'pointer',
-                            color : 'green'
-                        }}>
-                            {this.context.t("Cancel")}
-                            </span>
-                    </div>}
 
                     <div className="listing-wrapper">
                         <ContentListingEventDetails {...this.props} />
@@ -296,6 +259,52 @@ class ContentListing extends React.Component{
                     </div>
 
                 </div>
+                {watchlistRemove && (
+                    <div className="watchlist-data additional">
+                        {confirmWatchlistRemove ? (
+                            <div>
+                                <div>
+                                    {this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}
+                                </div>
+                                <button type="button" className="ca-btn ca-btn-primary ca-btn-small" onClick={this.removeFromWatchlist}>
+                                    {this.context.t("Yes")}
+                                 </button>
+                                <button type="button" className="ca-btn ca-btn-danger ca-btn-small" onClick={this.cancelRemoveFromWatchlist}>
+                                    {this.context.t("Cancel")}
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <i className="fa fa-trash-o icon" aria-hidden="true"
+                                   onClick={this.confirmRemoveFromWatchlist}
+                                />
+                                {owner && (
+                                    <div className="owner">
+                                        {this.context.t("Placed by")} <b>{owner.firstName} {owner.lastName}</b>
+                                    </div>
+                                )}
+                            </div>
+
+                        )}
+                    </div>
+
+                )}
+       {/*         <div>
+                    {watchlistRemove && !confirmWatchlistRemove && (
+                        <img
+                            src={this.bucketicon}
+                            onClick={this.confirmRemoveFromWatchlist}
+                        />
+                    )}
+
+                    {confirmWatchlistRemove && (
+                        <div>
+                            <span>{this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}</span>
+                            <span onClick={this.removeFromWatchlist}>{this.context.t("Yes")}</span>
+                            <span onClick={this.cancelRemoveFromWatchlist}>{this.context.t("Cancel")}</span>
+                        </div>
+                    )}
+                </div>*/}
                 { this.allTerritories() }
             </div>
         )
