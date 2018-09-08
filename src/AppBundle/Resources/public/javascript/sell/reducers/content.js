@@ -50,7 +50,8 @@ export const EmptyListing = {
     PROGRAM_LANGUAGE : [],
     PROGRAM_SUBTITLES : [],
     PROGRAM_SCRIPT : [],
-    website : null
+    website : null,
+    law : "English"
 };
 
 export const content = (state = EmptyListing, action) => {

@@ -321,6 +321,13 @@ class Content
     private $extraData;
 
     /**
+     * @var string
+     * @ORM\Column(name="law", type="string", length=255, nullable=true)
+     * @Groups({"listing", "commercial"})
+     */
+    private $law;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      * @Groups({"listing", "commercial"})
      */
@@ -1282,6 +1289,23 @@ class Content
     {
         $this->annex = $annex;
     }
+
+    /**
+     * @return string
+     */
+    public function getLaw()
+    {
+        return $this->law;
+    }
+
+    /**
+     * @param string $law
+     */
+    public function setLaw($law)
+    {
+        $this->law = $law;
+    }
+
 
 
 

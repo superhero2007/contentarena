@@ -11,6 +11,7 @@ import {CountrySelector} from "../../main/components/CountrySelector";
 import {stepChangeReset} from "../actions/contentActions";
 import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
+import ApplicableLaw from "../components/ApplicableLaw";
 
 class SellFormStep4 extends React.Component {
 
@@ -141,6 +142,8 @@ class SellFormStep4 extends React.Component {
                     <CompanyInformation/>
 
                     <JurisdictionSelector/>
+
+                    <ApplicableLaw />
 
                     <FileSelector
                         label={this.context.t('CL_STEP4_LABEL_ANNEX')}

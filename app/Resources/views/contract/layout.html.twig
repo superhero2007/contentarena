@@ -976,8 +976,18 @@
 
             </div>
 
+            {# APPLICABLE LAW TITLE#}
+            <div class="license-item-title">12. Applicable Law:</div>
+
+            {# APPLICABLE LAW #}
+            <div class="license-item">
+                {% if content.law is defined and content.law is not null %}
+                    {{ content.law }}
+                {% endif %}
+            </div>
+
             {# SIGNATURE TITLE#}
-            <div class="license-item-title">12. Signature:</div>
+            <div class="license-item-title">13. Signature:</div>
 
             {# SIGNATURE#}
             <div class="license-item">
