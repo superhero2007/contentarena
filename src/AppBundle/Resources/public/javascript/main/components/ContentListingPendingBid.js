@@ -152,6 +152,9 @@ class ContentListingPendingBid extends ContentListing {
                                             marginLeft: 5,
                                             cursor: 'pointer'
                                         }}
+                                        onClick={() => {
+                                            window.location.href = `/redirect-integration/messages-by-bid/${this.props.bid.id}`;
+                                        }}
                                         onMouseOver={() => {
                                             this.setState({showMessage: true})
                                         }}
