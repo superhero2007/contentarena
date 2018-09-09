@@ -1,4 +1,5 @@
 import max from 'lodash/max';
+import { allValue } from './../../main/components/LanguageSelector';
 
 export const contentType= {
     CONTENT_INIT:'CONTENT_INIT',
@@ -46,7 +47,7 @@ export const EmptyListing = {
     vat : "no",
     NA_INPUT : 90,
     HL_INPUT : 5,
-    LICENSED_LANGUAGES : [],
+    LICENSED_LANGUAGES : [allValue],
     PROGRAM_LANGUAGE : [],
     PROGRAM_SUBTITLES : [],
     PROGRAM_SCRIPT : [],
