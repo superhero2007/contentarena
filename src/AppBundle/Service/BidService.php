@@ -8,6 +8,8 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Content;
+use AppBundle\Entity\SoldListing;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Bid;
@@ -97,11 +99,21 @@ class BidService
         $bid->setAmount($amount);
         $bid->setTotalFee($request->get('totalFee'));
         $bid->setUpdatedAt($updatedAt);
+
+        if ( $status->getName() == "APPROVED" ){
+            $soldListing = clone ($content);
+            $soldListing->setCustomId($this->idGenerator->generate($soldListing));
+            $soldListing->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"SOLD_COPY")));
+            $this->em->persist($soldListing);
+            $bid->setSoldListing($soldListing);
+        }
+
         $this->em->persist($bid);
         if ($exclusive && $status->getName() == "APPROVED"){
             $salesPackage->setSold(true);
             $this->em->persist($salesPackage);
         }
+
         $this->em->flush();
         return $bid;
     }
@@ -138,6 +150,11 @@ class BidService
 
         $bid->setStatus($this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"APPROVED")));
         $bid->setUpdatedAt($updatedAt);
+        $soldListing = clone ($listing);
+        $soldListing->setCustomId($this->idGenerator->generate($soldListing));
+        $soldListing->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"SOLD_COPY")));
+        $this->em->persist($soldListing);
+        $bid->setSoldListing($soldListing);
         $this->em->persist($bid);
         $this->em->flush();
         if ($exclusive){

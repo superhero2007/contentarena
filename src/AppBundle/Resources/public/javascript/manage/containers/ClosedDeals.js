@@ -41,6 +41,7 @@ class ClosedDeals extends React.Component {
 
     render () {
         const { loading, bids } = this.state;
+
         return (
             <div style={{
                 display: 'flex',
@@ -107,7 +108,9 @@ class ClosedDeals extends React.Component {
                                         LT
                                     </span>
                                 ),
-                                accessor: 'content.rightsPackage',
+                                //accessor: 'soldListing.rightsPackage',
+                                accessor: d => d.soldListing ? d.soldListing.rightsPackage : d.content.rightsPackage,
+                                id: 'LT',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
@@ -121,21 +124,23 @@ class ClosedDeals extends React.Component {
                                         LB
                                     </span>
                                 ),
-                                accessor: 'content.rightsPackage',
+                                accessor: d => d.soldListing ? d.soldListing.rightsPackage : d.content.rightsPackage,
+                                id: 'LB',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("HL") !== -1 &&
+                                    {props.value.map(r=>r.shortLabel).indexOf("LB") !== -1 &&
                                     <img style={rightImageStyle} src={this.checkIcon}/>}
                                 </div>
                             },{
                                 Header: () => (
                                     <span data-tip="Delayed & Archive">
-                                        DA
+                                        DT
                                     </span>
                                 ),
-                                accessor: 'content.rightsPackage',
+                                accessor: d => d.soldListing ? d.soldListing.rightsPackage : d.content.rightsPackage,
+                                id: 'DT',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
@@ -149,7 +154,8 @@ class ClosedDeals extends React.Component {
                                         HL
                                     </span>
                                 ),
-                                accessor: 'content.rightsPackage',
+                                accessor: d => d.soldListing ? d.soldListing.rightsPackage : d.content.rightsPackage,
+                                id: 'HL',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
@@ -163,7 +169,8 @@ class ClosedDeals extends React.Component {
                                         NA
                                     </span>
                                 ),
-                                accessor: 'content.rightsPackage',
+                                accessor: d => d.soldListing ? d.soldListing.rightsPackage : d.content.rightsPackage,
+                                id: 'NA',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div
@@ -177,7 +184,8 @@ class ClosedDeals extends React.Component {
                                         PR
                                     </span>
                                 ),
-                                accessor: 'content.rightsPackage',
+                                accessor: d => d.soldListing ? d.soldListing.rightsPackage : d.content.rightsPackage,
+                                id: 'PR',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
                                 Cell: props => <div

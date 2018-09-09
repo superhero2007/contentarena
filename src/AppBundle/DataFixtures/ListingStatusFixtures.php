@@ -28,7 +28,8 @@ class ListingStatusFixtures extends Fixture
             'EDITED',
             'SOLD_OUT',
             'EXPIRED',
-            'ARCHIVED'
+            'ARCHIVED',
+            'SOLD_COPY'
         );
 
         for ($i = 0; $i < count($content); $i++) {

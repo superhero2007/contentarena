@@ -387,9 +387,11 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->where('c.company = :company')
             ->andWhere(':now > c.expiresAt OR status.name = :statusName')
             ->andWhere('status.name != :archived')
+            ->andWhere('status.name != :soldCopy')
             ->setParameter('now',$now)
             ->setParameter('statusName',"SOLD_OUT")
             ->setParameter('archived',"ARCHIVED")
+            ->setParameter('soldCopy',"SOLD_COPY")
             ->setParameter('company',$user->getCompany())
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();

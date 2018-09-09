@@ -56,6 +56,15 @@ class Bid
      */
     private $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid", cascade={"remove"})
+     * @ORM\JoinColumn(name="sold_listing_id",
+     *      referencedColumnName="id",
+     *      onDelete="CASCADE",nullable=true)
+     * @Groups({"closed", "commercial"})
+     */
+    private $soldListing;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
@@ -387,6 +396,22 @@ class Bid
     public function setMessage($message)
     {
         $this->message = $message;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSoldListing()
+    {
+        return $this->soldListing;
+    }
+
+    /**
+     * @param mixed $soldListing
+     */
+    public function setSoldListing($soldListing)
+    {
+        $this->soldListing = $soldListing;
     }
 
 

@@ -390,6 +390,11 @@ class Content
         return $this->getName();
     }
 
+    public function __clone()
+    {
+        $this->id = null;
+    }
+
     /**
      * @return bool
      */
