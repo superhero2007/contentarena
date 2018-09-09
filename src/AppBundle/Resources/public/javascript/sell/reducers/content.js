@@ -34,7 +34,7 @@ export const EmptyListing = {
     salesPackages : [],
     customTournament : null,
     customCategory : null,
-    description: null,
+    description: '',
     programDescription : null,
     attachments : [],
     annex : [],
