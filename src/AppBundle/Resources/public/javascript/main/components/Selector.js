@@ -29,7 +29,7 @@ class Selector extends React.Component {
             popularItems : props.popularItems || [],
             filter : {
                 "ag" : { type: "firstLetter", values: ["a",'b','c','d','e','f','g'] },
-                "hn" : { type: "firstLetter", values: ["h",'i','j','k','l','k','n'] },
+                "hn" : { type: "firstLetter", values: ["h",'i','j','k','l','m','n'] },
                 "ot" : { type: "firstLetter", values: ["o",'p','q','r','s','t'] },
                 "uz" : { type: "firstLetter", values: ["u",'v','w','x','y','z'] },
                 "popular" : { type: "origin", value: "popularItems"},
