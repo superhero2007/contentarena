@@ -272,7 +272,7 @@ class Content
     private $tournament;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Season")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Season",cascade={"persist"})
      * @ORM\JoinTable(name="content_season",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
