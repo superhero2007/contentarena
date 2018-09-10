@@ -928,7 +928,7 @@
 
                         {% if bid is defined %}
                             {% if bid.totalFee != 0 %}
-                                {{ bid.totalFee | percentage(technicalFee) + bundle.fee}} {{ bid.salesPackage.currency.code }}
+                                {{ bid.totalFee | percentage(technicalFee) + bid.totalFee}} {{ bid.salesPackage.currency.code }}
                             {% else %}
                                 Depending on bid
                             {% endif %}
