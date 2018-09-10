@@ -47,6 +47,10 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getAllBidsBySalesBundle($salesBundle);
     }
 
+    public function getClosedDealsBySalesBundle($salesBundle){
+        return $this->em->getRepository('AppBundle:Bid')->getClosedDealsBySalesBundle($salesBundle);
+    }
+
     public function saveBidsData($request,$user){
 
         $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));

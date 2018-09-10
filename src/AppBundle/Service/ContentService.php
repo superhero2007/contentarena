@@ -86,8 +86,8 @@ class ContentService
         return $content;
     }
 
-    public function getActiveAndExpired($user) {
-        $content = $this->em->getRepository('AppBundle:Content')->getActiveAndExpired($user);
+    public function getForCommercialActivity($user) {
+        $content = $this->em->getRepository('AppBundle:Content')->getForCommercialActivity($user);
         return $content;
     }
 

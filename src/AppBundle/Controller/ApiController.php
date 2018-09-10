@@ -66,7 +66,7 @@ class ApiController extends BaseController
 
         $user = $this->getUser();
         $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['user'=>$user], array('id' => 'DESC'));
-        
+
         $contents = [];
 
         foreach ($watchlists as $watchlist){
@@ -410,17 +410,28 @@ class ApiController extends BaseController
     {
         $user = $this->getUser();
 
-        $listings = $contentService->getActiveAndExpired($user);
+        $listings = $contentService->getForCommercialActivity($user);
 
-        foreach ( $listings as $listing ){
+        foreach ( $listings as $key => $listing ){
+
+            $totalBids = 0;
 
             /* @var $listing Content */
             foreach ($listing->getSalesPackages() as $salesBundle){
 
+                $bids = ($listing->getStatus()->getName() == "EXPIRED") ?
+                    $bidService->getClosedDealsBySalesBundle($salesBundle) :
+                    $bidService->getAllBidsBySalesBundle($salesBundle);
+                $totalBids += count( $bids );
+
                 /* @var $salesBundle SalesPackage */
-                $salesBundle->setBids($bidService->getAllBidsBySalesBundle($salesBundle));
+                $salesBundle->setBids($bids);
             }
+
+            if ( $totalBids == 0 && $listing->getStatus()->getName() == "EXPIRED" ) unset($listings[$key]);
         }
+
+        $listings = array_values($listings);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
@@ -684,7 +695,7 @@ class ApiController extends BaseController
     public function markNotificationAsSeen(Request $request, NotificationService $notificationService){
         $id = $request->request->get('id');
         $notificationService->markNotificationAsSeen($id);
-        
+
         return new JsonResponse(array("success"=>true));
     }
 
