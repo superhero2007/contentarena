@@ -225,20 +225,8 @@ class LicenseController extends Controller
         $exclusiveRights = $this->getExclusiveRights($content);
         $bidStatus = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"PENDING"));
 
-        $bid = new Bid();
-
-        $fee = $request->query->get("bid");
-        $fee = $fee == "undefined" ? 0 : $fee;
-
-        $bid->setTotalFee($fee);
-        $bid->setSalesPackage($bundle);
-        $bid->setBuyerUser($user);
-        $bid->setCreatedAt($time);
-        $bid->setStatus($bidStatus);
-
         $viewElements = array(
             'user' => $user,
-            'bid' => $bid,
             'watermark' => true,
             'bundle' => $bundle,
             'content' => $content,
@@ -246,6 +234,22 @@ class LicenseController extends Controller
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
+
+        if ($bundle->getSalesMethod()->getName() != "FIXED"){
+            $bid = new Bid();
+
+            $fee = $request->query->get("bid");
+            $fee = $fee == "undefined" ? 0 : $fee;
+
+            $bid->setTotalFee($fee);
+            $bid->setSalesPackage($bundle);
+            $bid->setBuyerUser($user);
+            $bid->setCreatedAt($time);
+            $bid->setStatus($bidStatus);
+
+            $viewElements['bid'] = $bid;
+        }
+
         //return $this->render('contract/layout.html.twig', $viewElements);
 
         $this->mergeAndSave($content,$viewElements, true, false);

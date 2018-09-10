@@ -29,6 +29,7 @@ class AppExtension extends AbstractExtension
         return array(
             new TwigFilter('price', array($this, 'priceFilter')),
             new TwigFilter('has_right', array($this, 'hasRight')),
+            new TwigFilter('percentage', array($this, 'percentage')),
             new TwigFilter('rightItem', array($this, 'rightItemFilter')),
             new TwigFilter('idSort', array($this, 'idSortFilter')),
             new TwigFilter('kebab', array($this, 'kebabFilter')),
@@ -200,6 +201,13 @@ class AppExtension extends AbstractExtension
         }
 
         return $has;
+    }
+
+    public function percentage($total, $percentage){
+        $result = ($percentage / 100) * $total;
+
+        return $result;
+
     }
 
     public function rightDefinitionsLabel ($right){

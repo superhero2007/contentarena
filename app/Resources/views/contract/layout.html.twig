@@ -1,751 +1,751 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <style>
-            .license-content{
-                margin: 0 auto;
-                width: 800px;
-            }
-            .license-item{
-                margin: 20px 0 ;
-                display: flex;
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        .license-content{
+            margin: 0 auto;
+            width: 800px;
+        }
+        .license-item{
+            margin: 20px 0 ;
+            display: flex;
 
-            }
-            table{
-                width: 100%;
-                border: 1px solid black;
-                border-collapse: collapse;
-            }
-            td {
-                border: 1px solid black;
-                padding: 5px;
-            }
+        }
+        table{
+            width: 100%;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td {
+            border: 1px solid black;
+            padding: 5px;
+        }
 
-            .no-border, .no-border td{
-                border: none;
-                padding: 0px;
-            }
-            .license-item-column{
-                flex: 1;
-            }
+        .no-border, .no-border td{
+            border: none;
+            padding: 0px;
+        }
+        .license-item-column{
+            flex: 1;
+        }
 
-            .license-title{
-                text-align: center;
-                font-size: 150%;
-            }
+        .license-title{
+            text-align: center;
+            font-size: 150%;
+        }
 
-            .license-item-title{
-                font-size: 110%;
-                margin-bottom: 5px;
-                margin-top: 15px;
-                font-weight: bold;
-            }
-            .license-item-content{
-                display: flex;
-            }
-            .license-signature{
-                width: 100%;
-            }
-            .license-fixture-item{
-                flex-direction: column;
-                margin-left: 20px;
-            }
-            label {
-                font-weight: 600;
-                width: 210px;
-                display: flex;
-            }
+        .license-item-title{
+            font-size: 110%;
+            margin-bottom: 5px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .license-item-content{
+            display: flex;
+        }
+        .license-signature{
+            width: 100%;
+        }
+        .license-fixture-item{
+            flex-direction: column;
+            margin-left: 20px;
+        }
+        label {
+            font-weight: 600;
+            width: 210px;
+            display: flex;
+        }
 
-            .watermark {
-                display: block;
-                position: relative;
-            }
+        .watermark {
+            display: block;
+            position: relative;
+        }
 
-            .watermark::after {
-                content: "";
-                background:url({{ hostUrl }}bundles/app/images/watermark.png);
-                background-size: 50%;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                right: 0;
-                position: absolute;
-                z-index: -1;
-            }
+        .watermark::after {
+            content: "";
+            background:url({{ hostUrl }}bundles/app/images/watermark.png);
+            background-size: 50%;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;
+        }
 
-        </style>
-    </head>
-    <body class="license {% if watermark %}watermark{% endif %}">
-        <div class="license-content">
-            <div class="license-title">LICENSE AGREEMENT</div>
+    </style>
+</head>
+<body class="license {% if watermark %}watermark{% endif %}">
+<div class="license-content">
+    <div class="license-title">LICENSE AGREEMENT</div>
 
-            {# DATE #}
-            <div class="license-item">
-                <div class="license-item-content">
-                    <label>
-                        Effective Date:
-                    </label>
-                    {% if bid is defined and bid.status.name == "APPROVED" %}
-                        {{ bid.updatedAt|date("m/d/Y") }}
-                    {% else %}
-                        -
-                    {% endif %}
-                </div>
-            </div>
+    {# DATE #}
+    <div class="license-item">
+        <div class="license-item-content">
+            <label>
+                Effective Date:
+            </label>
+            {% if bid is defined and bid.status.name == "APPROVED" %}
+                {{ bid.updatedAt|date("m/d/Y") }}
+            {% else %}
+                -
+            {% endif %}
+        </div>
+    </div>
 
-            {# COMPANY DATA#}
-            <div class="license-item">
-                <table class="no-border">
-                    <tr>
-                        <td>Between:</td>
-                        <td>And:</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Company name:
-                                </label>
-                                {{ content.company.legalName }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Company name:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.legalName }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Street/Number:
-                                </label>
-                                {{ content.company.address }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Street/Number:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.address }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    City:
-                                </label>
-                                {{ content.company.city }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    City:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.city }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    ZIP code:
-                                </label>
-                                {{ content.company.zip }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    ZIP code:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.zip }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Country:
-                                </label>
-                                {{ content.company.country.name }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Country:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.country.name }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    VAT Number:
-                                </label>
-                                {{ content.company.vat }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    VAT Number:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.vat }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Registration Number:
-                                </label>
-                                {{ content.company.registrationNumber }}
-                            </div>
-                        </td>
-                        <td>
-                            <div class="license-item-content">
-                                <label>
-                                    Registration Number:
-                                </label>
-                                {% if bid is defined %}
-                                    {{ bid.buyerUser.company.registrationNumber }}
-                                {% else %}
-                                    -
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>(hereinafter: 'Licensor')</td>
-                        <td>(hereinafter: 'Licensee')</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="license-item">
-                (Licensor and Licensee together are hereinafter referred to as the 'Parties' and individually as 'Party').
-            </div>
-            <div class="license-item">
-                The Parties are members of ContentArena, a digital rights trading platform run by Content Arena Ltd. with registered office in Singapore (Reg No 201722155K) through which the Parties made contact.
-            </div>
-            <div class="license-item">
-                Now, Licensee wishes to acquire certain Audio-visual Rights, and Licensors wishes to grant to Licensee certain Audio-visual Rights to the Event. Therefore, the Parties agree to enter into the following License Agreement consisting of the Schedule and the Terms and Conditions below. All capitalized expressions used in this License Agreement shall have the meanings as set out in the Schedule and Clause 1 of the Terms and Conditions.”
-
-            </div>
-
-            {# EVENT TITLE#}
-            <div class="license-item-title">1. Event:</div>
-
-            {# EVENT #}
-            <div class="license-item">
-                <div class="license-item-column">
-                    {% if content.sports is not empty %}
-                        <div class="license-item-content">
-                        <label>Sport(s):</label>
-                        {% for sport in content.sports %}
-                            {{ sport.name }}
-                        {% endfor %}
-                        </div>
-                    {% endif %}
-
-                    {% if content.tournament is not empty %}
-                        <div class="license-item-content">
-                            <label>Competition:</label>
-                            {{ content.tournament.name }}
-                        </div>
-                    {% endif %}
-
-                    {% if content.sportCategory is not empty %}
-                        <div class="license-item-content">
-                            <label>Country of origin/Category:</label>
-                            {{ content.sportCategory.name }}
-                        </div>
-                    {% endif %}
-
-                    {% if content.seasons is not empty %}
-                        {% for season in content.seasons %}
-                        <div class="license-item-content">
-                            <label>Season: </label>
-                                {{ season.name }}
-                        </div>
-
-                        {% if content.schedulesBySeason[loop.index0] is defined or content.fixturesBySeason[loop.index0] is defined %}
-                            <div class="license-item-content">
-                                <label>Fixtures: </label>
-                                <div class="license-item-content">
-                                    <div class="license-item-column">
-                                        {% if content.schedulesBySeason[loop.index0] is defined %}
-                                            {% for round in content.schedulesBySeason[loop.index0] | cast_to_array %}
-                                                <div class="license-item-content license-fixture-item">
-                                                <strong>{{ round[0] }}</strong>
-                                                    <div class="license-item-content license-fixture-item">
-                                                        {% for games in round[1] | cast_to_array%}
-                                                    {% for game in games[1] %}
-                                                        <div class="license-item-content">
-                                                            {% if game.competitors[0] is defined %}
-                                                                {{ game.competitors[0].name }}
-                                                            {% endif %}
-                                                            {% if game.competitors[1] is defined %}
-                                                                vs {{ game.competitors[1].name }}
-                                                            {% endif %}
-                                                        </div>
-                                                    {% endfor %}
-                                                {% endfor %}
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}
-
-                                        {% if content.fixturesBySeason[loop.index0] is defined %}
-                                            {% for round in content.fixturesBySeason[loop.index0]  %}
-                                                <div class="license-item-content ">
-                                                    {{ round.name }} - {{ round.date | date("m/d/Y") }}
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% endfor %}
-                    {% endif %}
-
-                    {% if content.description is defined %}
-                        <div class="license-item-content">
-                            <label>Description:</label>
-                            {{ content.description }}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            {# PROGRAM TITLE#}
-            <div class="license-item-title">2. Program:</div>
-
-            {# PROGRAM DESCRIPTION #}
-            <div class="license-item">
-                <div class="license-item-content">
-                    <label>
-                        Program Description:
-                    </label>
-                    {{ content.programDescription }}
-                </div>
-            </div>
-            {% if content.extraData.PROGRAM_NAME is defined %}
-                <div class="license-item">
-                    <div class="license-item-column">
-                        <div class="license-item-content">
-                            <label>Edited Program Name</label>
-                            {{ content.extraData.PROGRAM_NAME }}
-                        </div>
-
-                        {% if content.extraData.PROGRAM_DESCRIPTION is defined %}
-                        <div class="license-item-content">
-                            <label>Edited Program Description</label>
-                            {{ content.extraData.PROGRAM_DESCRIPTION }}
-                        </div>
-                        {% endif %}
-
-                        <div class="license-item-content">
-                            <label>Number of Episodes</label>
-                            {{ content.extraData.PROGRAM_EPISODES }}
-                        </div>
-
-                        <div class="license-item-content">
-                            <label>Average Episode Duration </label>
-                            {{ content.extraData.PROGRAM_DURATION }}
-                        </div>
-
-                        {% if content.extraData.PROGRAM_TYPE is defined %}
-                        <div class="license-item-content">
-                            <label>Program Type</label>
-                            {{ content.extraData.PROGRAM_TYPE }}
-                        </div>
-                        {% endif %}
-
-                        {% if content.extraData.PROGRAM_YEAR is defined %}
-                        <div class="license-item-content">
-                            <label>Release Year</label>
-                            {{ content.extraData.PROGRAM_YEAR }}
-                        </div>
+    {# COMPANY DATA#}
+    <div class="license-item">
+        <table class="no-border">
+            <tr>
+                <td>Between:</td>
+                <td>And:</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Company name:
+                        </label>
+                        {{ content.company.legalName }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Company name:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.legalName }}
+                        {% else %}
+                            -
                         {% endif %}
                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Street/Number:
+                        </label>
+                        {{ content.company.address }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Street/Number:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.address }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            City:
+                        </label>
+                        {{ content.company.city }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            City:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.city }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            ZIP code:
+                        </label>
+                        {{ content.company.zip }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            ZIP code:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.zip }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Country:
+                        </label>
+                        {{ content.company.country.name }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Country:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.country.name }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            VAT Number:
+                        </label>
+                        {{ content.company.vat }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            VAT Number:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.vat }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Registration Number:
+                        </label>
+                        {{ content.company.registrationNumber }}
+                    </div>
+                </td>
+                <td>
+                    <div class="license-item-content">
+                        <label>
+                            Registration Number:
+                        </label>
+                        {% if bid is defined %}
+                            {{ bid.buyerUser.company.registrationNumber }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>(hereinafter: 'Licensor')</td>
+                <td>(hereinafter: 'Licensee')</td>
+            </tr>
+        </table>
+    </div>
+    <div class="license-item">
+        (Licensor and Licensee together are hereinafter referred to as the 'Parties' and individually as 'Party').
+    </div>
+    <div class="license-item">
+        The Parties are members of ContentArena, a digital rights trading platform run by Content Arena Ltd. with registered office in Singapore (Reg No 201722155K) through which the Parties made contact.
+    </div>
+    <div class="license-item">
+        Now, Licensee wishes to acquire certain Audio-visual Rights, and Licensors wishes to grant to Licensee certain Audio-visual Rights to the Event. Therefore, the Parties agree to enter into the following License Agreement consisting of the Schedule and the Terms and Conditions below. All capitalized expressions used in this License Agreement shall have the meanings as set out in the Schedule and Clause 1 of the Terms and Conditions.”
+
+    </div>
+
+    {# EVENT TITLE#}
+    <div class="license-item-title">1. Event:</div>
+
+    {# EVENT #}
+    <div class="license-item">
+        <div class="license-item-column">
+            {% if content.sports is not empty %}
+                <div class="license-item-content">
+                    <label>Sport(s):</label>
+                    {% for sport in content.sports %}
+                        {{ sport.name }}
+                    {% endfor %}
                 </div>
             {% endif %}
 
-            {# RIGHTS TITLE#}
-            <div class="license-item-title">3. Grant of Rights:</div>
+            {% if content.tournament is not empty %}
+                <div class="license-item-content">
+                    <label>Competition:</label>
+                    {{ content.tournament.name }}
+                </div>
+            {% endif %}
 
-            {# RIGHTS DESCRIPTION#}
-            <div class="license-item">
-                Licensor hereby grants to Licensee during the License Period the Audio-visual Rights to the Program in the Territory, for the Licensed Language and as specified in this License Agreement and the following Rights Specifications:
+            {% if content.sportCategory is not empty %}
+                <div class="license-item-content">
+                    <label>Country of origin/Category:</label>
+                    {{ content.sportCategory.name }}
+                </div>
+            {% endif %}
+
+            {% if content.seasons is not empty %}
+                {% for season in content.seasons %}
+                    <div class="license-item-content">
+                        <label>Season: </label>
+                        {{ season.name }}
+                    </div>
+
+                    {% if content.schedulesBySeason[loop.index0] is defined or content.fixturesBySeason[loop.index0] is defined %}
+                        <div class="license-item-content">
+                            <label>Fixtures: </label>
+                            <div class="license-item-content">
+                                <div class="license-item-column">
+                                    {% if content.schedulesBySeason[loop.index0] is defined %}
+                                        {% for round in content.schedulesBySeason[loop.index0] | cast_to_array %}
+                                            <div class="license-item-content license-fixture-item">
+                                                <strong>{{ round[0] }}</strong>
+                                                <div class="license-item-content license-fixture-item">
+                                                    {% for games in round[1] | cast_to_array%}
+                                                        {% for game in games[1] %}
+                                                            <div class="license-item-content">
+                                                                {% if game.competitors[0] is defined %}
+                                                                    {{ game.competitors[0].name }}
+                                                                {% endif %}
+                                                                {% if game.competitors[1] is defined %}
+                                                                    vs {{ game.competitors[1].name }}
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    {% if content.fixturesBySeason[loop.index0] is defined %}
+                                        {% for round in content.fixturesBySeason[loop.index0]  %}
+                                            <div class="license-item-content ">
+                                                {{ round.name }} - {{ round.date | date("m/d/Y") }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+            {% endif %}
+
+            {% if content.description is defined %}
+                <div class="license-item-content">
+                    <label>Description:</label>
+                    {{ content.description }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# PROGRAM TITLE#}
+    <div class="license-item-title">2. Program:</div>
+
+    {# PROGRAM DESCRIPTION #}
+    <div class="license-item">
+        <div class="license-item-content">
+            <label>
+                Program Description:
+            </label>
+            {{ content.programDescription }}
+        </div>
+    </div>
+    {% if content.extraData.PROGRAM_NAME is defined %}
+        <div class="license-item">
+            <div class="license-item-column">
+                <div class="license-item-content">
+                    <label>Edited Program Name</label>
+                    {{ content.extraData.PROGRAM_NAME }}
+                </div>
+
+                {% if content.extraData.PROGRAM_DESCRIPTION is defined %}
+                    <div class="license-item-content">
+                        <label>Edited Program Description</label>
+                        {{ content.extraData.PROGRAM_DESCRIPTION }}
+                    </div>
+                {% endif %}
+
+                <div class="license-item-content">
+                    <label>Number of Episodes</label>
+                    {{ content.extraData.PROGRAM_EPISODES }}
+                </div>
+
+                <div class="license-item-content">
+                    <label>Average Episode Duration </label>
+                    {{ content.extraData.PROGRAM_DURATION }}
+                </div>
+
+                {% if content.extraData.PROGRAM_TYPE is defined %}
+                    <div class="license-item-content">
+                        <label>Program Type</label>
+                        {{ content.extraData.PROGRAM_TYPE }}
+                    </div>
+                {% endif %}
+
+                {% if content.extraData.PROGRAM_YEAR is defined %}
+                    <div class="license-item-content">
+                        <label>Release Year</label>
+                        {{ content.extraData.PROGRAM_YEAR }}
+                    </div>
+                {% endif %}
             </div>
+        </div>
+    {% endif %}
 
-            {# RIGHTS #}
-            <div class="license-item">
-                <table>
-                    <tr>
-                        <td>Grant of Rights</td>
-                        {% for right in content.rightsPackage %}
-                            <td>
-                                {{ right.name }} Rights
-                            </td>
+    {# RIGHTS TITLE#}
+    <div class="license-item-title">3. Grant of Rights:</div>
+
+    {# RIGHTS DESCRIPTION#}
+    <div class="license-item">
+        Licensor hereby grants to Licensee during the License Period the Audio-visual Rights to the Program in the Territory, for the Licensed Language and as specified in this License Agreement and the following Rights Specifications:
+    </div>
+
+    {# RIGHTS #}
+    <div class="license-item">
+        <table>
+            <tr>
+                <td>Grant of Rights</td>
+                {% for right in content.rightsPackage %}
+                    <td>
+                        {{ right.name }} Rights
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Transmission Form</td>
+                {% for right in content.rightsPackage %}
+                    <td>
+                        {% for form in content.selectedRightsBySuperRight[right.id].items["EXPLOITATION_FORM"] %}
+                            {{ form | right_definitions_label  }} {% if not loop.last %},{% endif %}
                         {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Transmission Form</td>
-                        {% for right in content.rightsPackage %}
-                            <td>
-                                {% for form in content.selectedRightsBySuperRight[right.id].items["EXPLOITATION_FORM"] %}
-                                    {{ form | right_definitions_label  }} {% if not loop.last %},{% endif %}
-                                {% endfor %}
-                            </td>
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Transmission Means</td>
+                {% for right in content.rightsPackage %}
+                    <td>
+                        {% for form in content.selectedRightsBySuperRight[right.id].items["TRANSMISSION_MEANS"] %}
+                            {{ form | right_definitions_label  }} {% if not loop.last %},{% endif %}
                         {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Transmission Means</td>
-                        {% for right in content.rightsPackage %}
-                            <td>
-                                {% for form in content.selectedRightsBySuperRight[right.id].items["TRANSMISSION_MEANS"] %}
-                                    {{ form | right_definitions_label  }} {% if not loop.last %},{% endif %}
-                                {% endfor %}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                    {% if "EXPLOITATION_WINDOW" in rightDefinitions %}
-                    <tr>
-                        <td>Exploitation Window</td>
-                        {% for right in content.rightsPackage %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% if "EXPLOITATION_WINDOW" in rightDefinitions %}
+                <tr>
+                    <td>Exploitation Window</td>
+                    {% for right in content.rightsPackage %}
                         <td>
                             {{ content.selectedRightsBySuperRight[right.id].items["EXPLOITATION_WINDOW"] | right_definitions_label}}
                         </td>
-                        {% endfor %}
-                    </tr>
-                    {% endif %}
-                    {% if "RUNS" in rightDefinitions %}
-                    <tr>
-                        <td>Number of Runs</td>
-                        {% for right in content.rightsPackage %}
+                    {% endfor %}
+                </tr>
+            {% endif %}
+            {% if "RUNS" in rightDefinitions %}
+                <tr>
+                    <td>Number of Runs</td>
+                    {% for right in content.rightsPackage %}
                         <td>
                             {{ content.selectedRightsBySuperRight[right.id].items["RUNS"] | right_definitions_label }}
                             {% if content.selectedRightsBySuperRight[right.id].items["RUNS"] == "RUNS_LIMITED" %}
-                            {{ ":" + content.selectedRightsBySuperRight[right.id].items["RUNS_NUMBER"] }}
+                                {{ ":" + content.selectedRightsBySuperRight[right.id].items["RUNS_NUMBER"] }}
                             {% endif %}
                         </td>
-                        {% endfor %}
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <td>Right to Sublicense</td>
-                        {% for right in content.rightsPackage %}
-                        <td>
-                            {{ content.selectedRightsBySuperRight[right.id].items["SUBLICENSE"] | right_definitions_label}}
-                        </td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Reserved Rights</td>
-                        {% for right in content.rightsPackage %}
-                        <td>
-                            {{ content.selectedRightsBySuperRight[right.id].items["RESERVED_RIGHTS"] | right_definitions_label}}
-                        </td>
-                        {% endfor %}
-                    </tr>
-
-                    {% if content.rightsPackage| has_right("NA") or content.rightsPackage| has_right("HL") %}
-
-                        <tr>
-                            <td>Granted Transmission Time</td>
-                            {% for right in content.rightsPackage %}
-                                <td>
-                                    {% if right.shortLabel == "NA" %}
-                                        {% if content.extraData.NA_INPUT is defined %}
-                                            {{ content.extraData.NA_INPUT }} seconds
-                                        {% endif %}
-                                    {% elseif right.shortLabel == "HL"%}
-                                        {% if content.extraData.HL_INPUT is defined %}
-                                            {{ content.extraData.HL_INPUT }} minutes
-                                        {% endif %}
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
-                        </tr>
-
-
-                    {% endif %}
-                </table>
-            </div>
-
-            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] is defined%}
-                <div class="license-item">
-                    <div class="license-item-content">
-                        <label>
-                            Exploitation Window Details:
-                        </label>
-                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] }}
-                    </div>
-                </div>
-            {% endif %}
-
-            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] is defined %}
-                <div class="license-item">
-                    <div class="license-item-content">
-                        <label>
-                            Reserved Right Details:
-                        </label>
-                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
-                    </div>
-                </div>
-            {% endif %}
-
-            {# AMMENDMENTS#}
-            {% if content.extraData.COMMENTS_RIGHTS is defined %}
-                <div class="license-item">
-                    <div class="license-item-content">
-                        <label>
-                            Amendment(s) to the Grant of Rights / Special Conditions:
-                        </label>
-                        {{ content.extraData.COMMENTS_RIGHTS }}
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="license-item">
-                All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
-            </div>
-
-            {# EXCLUSIVITY TITLE#}
-            <div class="license-item-title">4. Exclusivity of the Grant of Rights:</div>
-
-            {# EXCLUSIVITY#}
-            <div class="license-item">
-                <div class="license-item-content">
-
-                    {% if exclusiveRights|length >0 %}
-                        The following Audio-visual Right(s) shall be granted exclusively to the Licensee:
-                        {% for right in exclusiveRights %}
-                            {{ right }}{% if not loop.last %},{% endif %}
-                        {% endfor %}
-                        <br/><br/>All rights, which are not explicitly granted exclusively are granted on a non-exclusive basis.
-                    {% else %}
-                        None
-                    {% endif %}
-                </div>
-            </div>
-
-            {# TERRITORY TITLE#}
-            <div class="license-item-title">5. Territory:</div>
-
-            {# TERRITORY#}
-            <div class="license-item">
-                {% if bundle is not defined %} - {% endif %}
-                {% if bundle is defined %}
-                    {% if bundle.bundleMethod == "SELL_AS_BUNDLE" and bundle.territoriesMethod == "WORLDWIDE" %}
-                        Worldwide
-                    {% elseif bundle.territoriesMethod == "WORLDWIDE_EXCLUDING" %}
-                        Worldwide excluding
-                        {% for territory in bundle.territories %}
-                            {{ territory.name }}{% if not loop.last %},{% endif %}
-                        {% endfor %}
-                    {% else %}
-                        {% for territory in bundle.territories %}
-                            {{ territory.name }}{% if not loop.last %},{% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-                {% endif %}
-
-            </div>
-
-            {# LANGUAGE TITLE#}
-            <div class="license-item-title">6. Licensed Language(s):</div>
-
-            {# LANGUAGE#}
-            <div class="license-item">
-                {% if content.extraData.LICENSED_LANGUAGES is not defined %} -  {% endif %}
-                {% if content.extraData.LICENSED_LANGUAGES is defined %}
-                    {% for language in content.extraData.LICENSED_LANGUAGES %}
-                        {{ language.label }}{% if not loop.last %},{% endif %}
                     {% endfor %}
-                {% endif %}
-            </div>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>Right to Sublicense</td>
+                {% for right in content.rightsPackage %}
+                    <td>
+                        {{ content.selectedRightsBySuperRight[right.id].items["SUBLICENSE"] | right_definitions_label}}
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Reserved Rights</td>
+                {% for right in content.rightsPackage %}
+                    <td>
+                        {{ content.selectedRightsBySuperRight[right.id].items["RESERVED_RIGHTS"] | right_definitions_label}}
+                    </td>
+                {% endfor %}
+            </tr>
 
-            {# LICENSE PERIOD TITLE#}
-            <div class="license-item-title">7. License Period:</div>
+            {% if content.rightsPackage| has_right("NA") or content.rightsPackage| has_right("HL") %}
 
-            {# LICENSE PERIOD#}
-            <div class="license-item">
-                {% if content.startDateMode == "DATE" %}
-                    {{ content.startDate| date("m/d/Y") }}
-                {% elseif bid is defined %}
-                    {{ bid.createdAt| date("m/d/Y") }}
-                {% elseif bid is not defined %}
-                    With contract conclusion
-                {% endif %}
-
-                {{ "-" }}
-
-                {% if content.endDateMode == "UNLIMITED" %}
-                    Unlimited
-                {% elseif content.endDateMode == "DATE" %}
-                    {{ content.endDate| date("m/d/Y") }}
-                {% elseif content.endDateMode == "LIMITED" and bid is defined%}
-                    {{ bid.createdAt|date_modify("+#{content.endDateLimit} day")| date("m/d/Y") }}
-                {% elseif content.endDateMode == "LIMITED" and bid is not defined%}
-                    {{ content.endDateLimit }} days from contract conclusion
-                {% endif %}
-            </div>
-
-            {# CONTENT DELIVERY TITLE#}
-            <div class="license-item-title">8. Content Delivery:</div>
-
-            {# CONTENT DELIVERY #}
-            <div class="license-item">
-                <table>
-                    <tr>
-                        <td>Content Delivery</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                            <td>
-                                {{ right.shortLabel | content_delivery_label }}
-                            </td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Graphics</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                                <td>
-                                    {% if right.shortLabel == "PR" %}
-                                        -
-                                    {% else %}
-                                        {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
-                                            {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
-                                                {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
-                                                    {{ language.label }}{% if not loop.last %},{% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% else %}
-                                            {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
-                                        {% endif %}
-                                    {% endif %}
-                                </td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Commentary</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                            <td>
-                                {% if right.shortLabel == "PR" %}
-                                -
-                                {% else %}
-                                    {% if content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] == "COMMENTARY_YES" %}
-                                        {% if  content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] is defined %}
-                                            {% for language in content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] %}
-                                                {{ language.label }}{% if not loop.last %},{% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% else %}
-                                        {{ content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] | right_definitions_label}}
-                                    {% endif %}
+                <tr>
+                    <td>Granted Transmission Time</td>
+                    {% for right in content.rightsPackage %}
+                        <td>
+                            {% if right.shortLabel == "NA" %}
+                                {% if content.extraData.NA_INPUT is defined %}
+                                    {{ content.extraData.NA_INPUT }} seconds
                                 {% endif %}
-                            </td>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Camera Standards</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                            <td>
-                                {% if right.shortLabel == "PR" %}
-                                -
-                                {% else %}
-                                    {% if content.selectedRightsBySuperRight[right.id].items["CAMERA"] == "CAMERA_MINIMUM" %}
-                                        Minimum cameras: {{ content.selectedRightsBySuperRight[right.id].items["CAMERAS"] }}
-                                    {% else %}
-                                        {{ content.selectedRightsBySuperRight[right.id].items["CAMERA"] | right_definitions_label}}
-                                    {% endif %}
+                            {% elseif right.shortLabel == "HL"%}
+                                {% if content.extraData.HL_INPUT is defined %}
+                                    {{ content.extraData.HL_INPUT }} minutes
                                 {% endif %}
-                            </td>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Aspect Ratio</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                                <td>
-                                    {% if right.shortLabel == "PR" %}
-                                    -
-                                    {% else %}
-                                        {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
-                                            {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
-                                        {% else %}
-                                            {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
-                                        {% endif %}
-                                    {% endif %}
-                                </td>
+                            {% else %}
+                                -
                             {% endif %}
-                        {% endfor %}
-                    </tr>
+                        </td>
+                    {% endfor %}
+                </tr>
 
-                    {% if content.extraData.PROGRAM_NAME is defined %}
-                    <tr>
-                        <td>Edited Program Language</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+
+            {% endif %}
+        </table>
+    </div>
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Exploitation Window Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] is defined %}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Reserved Right Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {# AMMENDMENTS#}
+    {% if content.extraData.COMMENTS_RIGHTS is defined %}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Amendment(s) to the Grant of Rights / Special Conditions:
+                </label>
+                {{ content.extraData.COMMENTS_RIGHTS }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="license-item">
+        All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
+    </div>
+
+    {# EXCLUSIVITY TITLE#}
+    <div class="license-item-title">4. Exclusivity of the Grant of Rights:</div>
+
+    {# EXCLUSIVITY#}
+    <div class="license-item">
+        <div class="license-item-content">
+
+            {% if exclusiveRights|length >0 %}
+                The following Audio-visual Right(s) shall be granted exclusively to the Licensee:
+                {% for right in exclusiveRights %}
+                    {{ right }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                <br/><br/>All rights, which are not explicitly granted exclusively are granted on a non-exclusive basis.
+            {% else %}
+                None
+            {% endif %}
+        </div>
+    </div>
+
+    {# TERRITORY TITLE#}
+    <div class="license-item-title">5. Territory:</div>
+
+    {# TERRITORY#}
+    <div class="license-item">
+        {% if bundle is not defined %} - {% endif %}
+        {% if bundle is defined %}
+            {% if bundle.bundleMethod == "SELL_AS_BUNDLE" and bundle.territoriesMethod == "WORLDWIDE" %}
+                Worldwide
+            {% elseif bundle.territoriesMethod == "WORLDWIDE_EXCLUDING" %}
+                Worldwide excluding
+                {% for territory in bundle.territories %}
+                    {{ territory.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            {% else %}
+                {% for territory in bundle.territories %}
+                    {{ territory.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    {# LANGUAGE TITLE#}
+    <div class="license-item-title">6. Licensed Language(s):</div>
+
+    {# LANGUAGE#}
+    <div class="license-item">
+        {% if content.extraData.LICENSED_LANGUAGES is not defined %} -  {% endif %}
+        {% if content.extraData.LICENSED_LANGUAGES is defined %}
+            {% for language in content.extraData.LICENSED_LANGUAGES %}
+                {{ language.label }}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    {# LICENSE PERIOD TITLE#}
+    <div class="license-item-title">7. License Period:</div>
+
+    {# LICENSE PERIOD#}
+    <div class="license-item">
+        {% if content.startDateMode == "DATE" %}
+            {{ content.startDate| date("m/d/Y") }}
+        {% elseif bid is defined %}
+            {{ bid.createdAt| date("m/d/Y") }}
+        {% elseif bid is not defined %}
+            With contract conclusion
+        {% endif %}
+
+        {{ "-" }}
+
+        {% if content.endDateMode == "UNLIMITED" %}
+            Unlimited
+        {% elseif content.endDateMode == "DATE" %}
+            {{ content.endDate| date("m/d/Y") }}
+        {% elseif content.endDateMode == "LIMITED" and bid is defined%}
+            {{ bid.createdAt|date_modify("+#{content.endDateLimit} day")| date("m/d/Y") }}
+        {% elseif content.endDateMode == "LIMITED" and bid is not defined%}
+            {{ content.endDateLimit }} days from contract conclusion
+        {% endif %}
+    </div>
+
+    {# CONTENT DELIVERY TITLE#}
+    <div class="license-item-title">8. Content Delivery:</div>
+
+    {# CONTENT DELIVERY #}
+    <div class="license-item">
+        <table>
+            <tr>
+                <td>Content Delivery</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>
+                            {{ right.shortLabel | content_delivery_label }}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Graphics</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>
+                            {% if right.shortLabel == "PR" %}
+                                -
+                            {% else %}
+                                {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
+                                    {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
+                                        {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
+                                            {{ language.label }}{% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% else %}
+                                    {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Commentary</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>
+                            {% if right.shortLabel == "PR" %}
+                                -
+                            {% else %}
+                                {% if content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] == "COMMENTARY_YES" %}
+                                    {% if  content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] is defined %}
+                                        {% for language in content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] %}
+                                            {{ language.label }}{% if not loop.last %},{% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% else %}
+                                    {{ content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] | right_definitions_label}}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Camera Standards</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>
+                            {% if right.shortLabel == "PR" %}
+                                -
+                            {% else %}
+                                {% if content.selectedRightsBySuperRight[right.id].items["CAMERA"] == "CAMERA_MINIMUM" %}
+                                    Minimum cameras: {{ content.selectedRightsBySuperRight[right.id].items["CAMERAS"] }}
+                                {% else %}
+                                    {{ content.selectedRightsBySuperRight[right.id].items["CAMERA"] | right_definitions_label}}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Aspect Ratio</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>
+                            {% if right.shortLabel == "PR" %}
+                                -
+                            {% else %}
+                                {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
+                                    {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                                {% else %}
+                                    {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+
+            {% if content.extraData.PROGRAM_NAME is defined %}
+                <tr>
+                    <td>Edited Program Language</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -761,13 +761,13 @@
                                 {% endif %}
                             </td>
                         {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Subtitles</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Subtitles</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -783,13 +783,13 @@
                                 {% endif %}
                             </td>
                         {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Script</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Script</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -805,235 +805,270 @@
                                 {% endif %}
                             </td>
                         {% endif %}
-                        {% endfor %}
-                    </tr>
-                    {% endif %}
-
-                    <tr>
-                        <td>Video Standards</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                            <td>
-                                {{ content.selectedRightsBySuperRight[right.id].items["VIDEO_STANDARD"] | right_definitions_label}}
-                            </td>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>Technical delivery method</td>
-                        {% for right in content.rightsPackage %}
-                            {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                            {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                            <td>{% for tech in content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] %}
-                                {{ tech | right_definitions_label}}
-                                {% endfor %}
-                            </td>
-                        {% endif %}
-                        {% endfor %}
-                    </tr>
-                </table>
-            </div>
-
-            {# CONTENT DELIVERY AMMENDMENTS#}
-            {% if content.extraData.COMMENTS_PRODUCTION is defined%}
-                <div class="license-item">
-                    <div class="license-item-content">
-                        <label>
-                            Amendment(s) to the Content Delivery / Special Conditions:
-                        </label>
-                        {{ content.extraData.COMMENTS_PRODUCTION }}
-                    </div>
-                </div>
-            {% endif %}
-
-            {# TRANSMISSION TITLE#}
-            <div class="license-item-title">9. Transmission Obligation:</div>
-
-            {# TRANSMISSION #}
-            <div class="license-item">
-                {% set hasTransmission = [] %}
-                {% for right in content.rightsPackage %}
-                    {% if content.selectedRightsBySuperRight[right.id].items["BROADCASTING"] == "BROADCASTING_YES" %}
-                        {% set hasTransmission = hasTransmission|merge([right.name]) %}
-                    {% endif %}
-                {% endfor %}
-                {% if hasTransmission|length > 0 %}
-                    The content for the following rights must be transmitted:
-                    {% for right in hasTransmission %}
-                        {{ right }}{% if not loop.last %},{% endif %}
                     {% endfor %}
-                {% else %}
-                    {{ "None" }}
+                </tr>
+            {% endif %}
+
+            <tr>
+                <td>Video Standards</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>
+                            {{ content.selectedRightsBySuperRight[right.id].items["VIDEO_STANDARD"] | right_definitions_label}}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Technical delivery method</td>
+                {% for right in content.rightsPackage %}
+                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                        <td>{% for tech in content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] %}
+                                {{ tech | right_definitions_label}}
+                            {% endfor %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+
+    {# CONTENT DELIVERY AMMENDMENTS#}
+    {% if content.extraData.COMMENTS_PRODUCTION is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Amendment(s) to the Content Delivery / Special Conditions:
+                </label>
+                {{ content.extraData.COMMENTS_PRODUCTION }}
+            </div>
+        </div>
+    {% endif %}
+
+    {# TRANSMISSION TITLE#}
+    <div class="license-item-title">9. Transmission Obligation:</div>
+
+    {# TRANSMISSION #}
+    <div class="license-item">
+        {% set hasTransmission = [] %}
+        {% for right in content.rightsPackage %}
+            {% if content.selectedRightsBySuperRight[right.id].items["BROADCASTING"] == "BROADCASTING_YES" %}
+                {% set hasTransmission = hasTransmission|merge([right.name]) %}
+            {% endif %}
+        {% endfor %}
+        {% if hasTransmission|length > 0 %}
+            The content for the following rights must be transmitted:
+            {% for right in hasTransmission %}
+                {{ right }}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        {% else %}
+            {{ "None" }}
+        {% endif %}
+    </div>
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {# FEE TITLE#}
+    <div class="license-item-title">10.1 Commercial Terms:</div>
+
+    {# FEE #}
+    <div class="license-item">
+        {% if bundle is defined %}
+            <div class="license-item-column">
+                <div class="license-item-content">
+                    <label>License Fee:</label>
+
+                    {% if bid is defined %}
+                        {% if bid.totalFee != 0 %}
+                            {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+                        {% else %}
+                            Depending on bid
+                        {% endif %}
+                    {% else %}
+                        {% if bundle.salesMethod.name == "FIXED" %}
+                            {{ bundle.fee }} {{ bundle.currency.code }}
+                        {% else %}
+                            Depending on bid
+                        {% endif %}
+                    {% endif %}
+
+
+                </div>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_FEE"] == "ON_TOP" %}
+                    {% set technicalFee = content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_FEE_PERCENTAGE"] %}
+                    <div class="license-item-content">
+                        <label>Technical Fee:</label>
+
+                        {% if bid is defined %}
+                            {% if bid.totalFee != 0 %}
+                                {{ bid.totalFee | percentage(technicalFee) }} {{ bid.salesPackage.currency.code }}
+                            {% else %}
+                                {{ technicalFee }} %
+                            {% endif %}
+                        {% else %}
+                            {% if bundle.salesMethod.name == "FIXED" %}
+                                {{ bundle.fee | percentage(technicalFee) }} {{ bundle.currency.code }}
+                            {% else %}
+                                {{ technicalFee }} %
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+
+                    <div class="license-item-content">
+                        <label>Total:</label>
+
+                        {% if bid is defined %}
+                            {% if bid.totalFee != 0 %}
+                                {{ bid.totalFee | percentage(technicalFee) + bundle.fee}} {{ bid.salesPackage.currency.code }}
+                            {% else %}
+                                Depending on bid
+                            {% endif %}
+                        {% else %}
+                            {% if bundle.salesMethod.name == "FIXED" %}
+                                {{ bundle.fee | percentage(technicalFee) + bundle.fee }} {{ bundle.currency.code }}
+                            {% else %}
+                                Depending on bid
+                            {% endif %}
+                        {% endif %}
+
+
+                    </div>
                 {% endif %}
             </div>
+        {% else %}
+            {{  "Depending on bundle" }}
+        {% endif %}
+    </div>
 
-            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] is defined%}
-                <div class="license-item">
-                    <div class="license-item-content">
-                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] }}
-                    </div>
+    {# PAYMENT TITLE#}
+    <div class="license-item-title">10.2 Payment Schedule:</div>
+
+    {# PAYMENT #}
+    <div class="license-item">
+        {% if bundle is defined %}
+            {% if bundle.installments | length == 1 %}
+                <label>Payment Due:</label>
+                {% if bundle.installments[0].type == "DATE" %}
+                    {{ bundle.installments[0].date | date(("m/d/Y"))  }}
+                {% elseif bundle.installments[0].type == "DAY" %}
+                    {% if bid is defined %}
+                        {% if bid.status.name != "APPROVED" %}
+                            {{ bundle.installments[0].days }} days after conclusion
+                        {% elseif bid.status.name == "APPROVED" %}
+                            {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
+                        {% endif %}
+                    {% else %}
+                        {{ bundle.installments[0].days }} days after conclusion
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+            {% if bundle.installments | length > 1 %}
+                <div class="license-item-column">
+                    {% for installment in bundle.installments %}
+                        <div class="license-item-content">
+                            <label>{{ loop.index }} installment:</label>
+                            {% if installment.type == "DATE" %}
+                                {{ installment.date | date(("m/d/Y"))  }}
+                            {% elseif installment.type == "DAY" %}
+                                {% if bid is defined %}
+                                    {% if bid.status.name != "APPROVED" %}
+                                        {{ installment.days }} days after conclusion
+                                    {% elseif bid.status.name == "APPROVED" %}
+                                        {{ bid.createdAt|date_modify("+#{installment.days} day")| date("m/d/Y") }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ installment.days }} days after conclusion
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 </div>
             {% endif %}
 
-            {# FEE TITLE#}
-            <div class="license-item-title">10.1 Commercial Terms:</div>
+        {% else %}
+            {{  "-" }}
+        {% endif %}
+    </div>
 
-            {# FEE #}
-            <div class="license-item">
-                {% if bundle is defined %}
-                    <div class="license-item-column">
-                        <div class="license-item-content">
-                            <label>License Fee:</label>
+    {# JURISDICTION TITLE#}
+    <div class="license-item-title">11. Place of Jurisdiction:</div>
 
-                            {% if bid is defined %}
-                                {% if bid.totalFee != 0 %}
-                                    {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
-                                {% else %}
-                                    Depending on bid
-                                {% endif %}
-                            {% else %}
-                                {% if bundle.salesMethod.name == "FIXED" %}
-                                    {{ bundle.fee }} {{ bundle.currency.code }}
-                                {% else %}
-                                    Depending on bid
-                                {% endif %}
-                            {% endif %}
+    {# JURISDICTION #}
+    <div class="license-item">
+        {% if content.jurisdiction is defined and content.jurisdiction is not null %}
+            {{ content.jurisdiction.name }}
+        {% endif %}
 
+    </div>
 
-                        </div>
-                        {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_FEE"] == "ON_TOP" %}
-                            <div class="license-item-content">
-                                <label>Technical Fee:</label>
-                                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_FEE_PERCENTAGE"] }}%
-                            </div>
+    {# APPLICABLE LAW TITLE#}
+    <div class="license-item-title">12. Applicable Law:</div>
+
+    {# APPLICABLE LAW #}
+    <div class="license-item">
+        {% if content.law is defined and content.law is not null %}
+            {{ content.law }}
+        {% endif %}
+    </div>
+
+    {# SIGNATURE TITLE#}
+    <div class="license-item-title">13. Signature:</div>
+
+    {# SIGNATURE#}
+    <div class="license-item">
+        {% if bid is defined %}
+            <table>
+                <tr>
+                    <td>Licensor:</td>
+                    <td>Licensee:</td>
+                </tr>
+                <tr>
+                    <td>
+                        {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
+                            <img class="license-signature" src="{{ hostUrl }}{{ bid.sellerSignature }}" />
+                        {% elseif content.signature is defined  %}
+                            <img class="license-signature" src="{{ hostUrl }}{{ content.signature }}" />
+                        {% else %}
+                            Not available
                         {% endif %}
-                    </div>
-                {% else %}
-                    {{  "Depending on bundle" }}
-                {% endif %}
-            </div>
-
-            {# PAYMENT TITLE#}
-            <div class="license-item-title">10.2 Payment Schedule:</div>
-
-            {# PAYMENT #}
-            <div class="license-item">
-                {% if bundle is defined %}
-                    {% if bundle.installments | length == 1 %}
-                        <label>Payment Due:</label>
-                        {% if bundle.installments[0].type == "DATE" %}
-                            {{ bundle.installments[0].date | date(("m/d/Y"))  }}
-                        {% elseif bundle.installments[0].type == "DAY" %}
-                            {% if bid is defined %}
-                                {% if bid.status.name != "APPROVED" %}
-                                    {{ bundle.installments[0].days }} days after conclusion
-                                {% elseif bid.status.name == "APPROVED" %}
-                                    {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
-                                {% endif %}
-                            {% else %}
-                                {{ bundle.installments[0].days }} days after conclusion
-                            {% endif %}
+                    </td>
+                    <td>
+                        {% if bid is defined %}
+                            <img class="license-signature" src="{{ hostUrl }}{{ bid.signature }}" />
+                        {% else %}
+                            Not available
                         {% endif %}
-                    {% endif %}
+                    </td>
+                </tr>
+            </table>
+        {% else %}
+            Not available yet
+        {% endif %}
+    </div>
 
-                    {% if bundle.installments | length > 1 %}
-                        <div class="license-item-column">
-                            {% for installment in bundle.installments %}
-                                <div class="license-item-content">
-                                    <label>{{ loop.index }} installment:</label>
-                                    {% if installment.type == "DATE" %}
-                                        {{ installment.date | date(("m/d/Y"))  }}
-                                    {% elseif installment.type == "DAY" %}
-                                        {% if bid is defined %}
-                                            {% if bid.status.name != "APPROVED" %}
-                                                {{ installment.days }} days after conclusion
-                                            {% elseif bid.status.name == "APPROVED" %}
-                                                {{ bid.createdAt|date_modify("+#{installment.days} day")| date("m/d/Y") }}
-                                            {% endif %}
-                                        {% else %}
-                                            {{ installment.days }} days after conclusion
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+</div>
 
-                {% else %}
-                    {{  "-" }}
-                {% endif %}
-            </div>
+{#{% if bid is defined %}
+    {{ dump(bid) }}
+{{ dump(bid.salesPackage) }}
+{% endif %}#}
+{#{% for right in content.rightsPackage %}
+    <div class="license-item-column">
 
-            {# JURISDICTION TITLE#}
-            <div class="license-item-title">11. Place of Jurisdiction:</div>
-
-            {# JURISDICTION #}
-            <div class="license-item">
-                {% if content.jurisdiction is defined and content.jurisdiction is not null %}
-                {{ content.jurisdiction.name }}
-                {% endif %}
-
-            </div>
-
-            {# APPLICABLE LAW TITLE#}
-            <div class="license-item-title">12. Applicable Law:</div>
-
-            {# APPLICABLE LAW #}
-            <div class="license-item">
-                {% if content.law is defined and content.law is not null %}
-                    {{ content.law }}
-                {% endif %}
-            </div>
-
-            {# SIGNATURE TITLE#}
-            <div class="license-item-title">13. Signature:</div>
-
-            {# SIGNATURE#}
-            <div class="license-item">
-                {% if bid is defined %}
-                <table>
-                    <tr>
-                        <td>Licensor:</td>
-                        <td>Licensee:</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
-                                <img class="license-signature" src="{{ hostUrl }}{{ bid.sellerSignature }}" />
-                            {% elseif content.signature is defined  %}
-                                <img class="license-signature" src="{{ hostUrl }}{{ content.signature }}" />
-                            {% else %}
-                                Not available
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if bid is defined %}
-                                <img class="license-signature" src="{{ hostUrl }}{{ bid.signature }}" />
-                            {% else %}
-                                Not available
-                            {% endif %}
-                        </td>
-                    </tr>
-                </table>
-                {% else %}
-                    Not available yet
-                {% endif %}
-            </div>
-
-        </div>
-
-        {#{% if bid is defined %}
-            {{ dump(bid) }}
-        {{ dump(bid.salesPackage) }}
-        {% endif %}#}
-        {#{% for right in content.rightsPackage %}
-            <div class="license-item-column">
-
-                {% for key, selected in content.selectedRightsBySuperRight[right.id].items %}
-                    {{ key }}{{ dump(selected) }}
-                {% endfor %}
-            </div>
-        {% endfor %}#}
-    </body>
+        {% for key, selected in content.selectedRightsBySuperRight[right.id].items %}
+            {{ key }}{{ dump(selected) }}
+        {% endfor %}
+    </div>
+{% endfor %}#}
+</body>
 </html>
