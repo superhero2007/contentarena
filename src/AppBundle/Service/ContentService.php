@@ -786,18 +786,15 @@ class ContentService
             }
 
             $season->setName($seasonData->name);
-            $this->em->persist($season);
             $time = new \DateTime();
-            //$this->em->flush();
 
             if ( isset($seasonData->custom)) {
                 $season->setExternalId("ca:season:".$key.$time->getTimestamp());
                 if ( isset( $tournament) ) {
                     $season->setName($tournament->getName(). " ". $season->getYear());
                 }
-                $this->em->persist($season);
-                //$this->em->flush();
             }
+            $this->em->persist($season);
         }
 
         return $season;
