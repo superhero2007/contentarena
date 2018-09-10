@@ -22,6 +22,23 @@ msgstr "General Content"
 msgid "LISTING_DETAILS_MULTIPLE_SPORTS"
 msgstr "Multiple Sports"
 
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "International"
+msgstr "International"
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+#, fuzzy
+#| msgid "Release year (optional)"
+msgid "Release year:"
+msgstr "Release Year (optional)"
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+#, fuzzy
+#| msgid "Number of episodes"
+msgid "episodes"
+msgstr "Number of Episodes"
+
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_EDITED_PROGRAM"
@@ -37,12 +54,12 @@ msgid "MARKETPLACE_LABEL_FILTER_SPORT"
 msgstr "Sports"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_LABEL_FILTER_RIGHTS"
-msgstr "Rights"
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 msgid "MARKETPLACE_LABEL_FILTER_TERRITORIES"
 msgstr "Territories"
+
+#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
+msgid "MARKETPLACE_LABEL_FILTER_RIGHTS"
+msgstr "Rights"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 msgid "MARKETPLACE_LABEL_FILTER_EXCLUSIVE"
@@ -115,7 +132,7 @@ msgstr "End of license period"
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "LISTING_DETAILS_LICENSE_END_DAYS"
-msgstr "  days from contract conclusion"
+msgstr " days after contract conclusion"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid " Unlimited"
@@ -411,6 +428,12 @@ msgstr "Yes"
 msgid "Cancel"
 msgstr "Cancel"
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#, fuzzy
+#| msgid "Placed by:"
+msgid "Placed by"
+msgstr "Placed by:"
+
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Commercial Activity Total - {n}"
 msgstr "Total: {n}"
@@ -529,11 +552,11 @@ msgstr "Country Selector"
 
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
 msgid "MARKETPLACE_FILTER_ONE_TERRITORY"
-msgstr "List offers for at least one selected territory"
+msgstr "Show listings for at least one selected territory"
 
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
 msgid "MARKETPLACE_FILTER_ALL_TERRITORIES"
-msgstr "List offers for all selected territories"
+msgstr "Show listings for all selected territories"
 
 #: src/AppBundle/Resources/public/javascript/main/components/RightsLegend.js
 msgid "MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE"
@@ -550,8 +573,9 @@ msgstr "Non included"
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_TITLE"
 msgstr ""
-"Do you want to list content that is based upon a competition? Enter the "
-"competition name in the field below"
+"Please enter the competition name for which you would like to sell content. "
+"Select “Enter Content Manually” if you cannot find the competition in the "
+"database or if your content is not related to a specific competition."
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "Competition"
@@ -584,8 +608,6 @@ msgstr "Your search \"{n}\" did not match any products."
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND_2"
 msgstr ""
-"Did you not find your competition in the database or not selling a "
-"competition"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND"
@@ -624,10 +646,6 @@ msgid "Popular"
 msgstr "Popular"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "International"
-msgstr "International"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Apply"
 msgstr "Apply"
 
@@ -637,7 +655,7 @@ msgstr "Can't find your sport in the list?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_ADD_SPORT"
-msgstr "Add new Sport"
+msgstr "Add new sport"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_TOURNAMENT_1"
@@ -645,15 +663,15 @@ msgstr "Can't find your competition in the list?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
-msgstr "Add new Tournament"
+msgstr "Add new competition"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_SEASON_1"
-msgstr "Can't find your season in the list?"
+msgstr "Can’t find the relevant season(s)?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_ADD_SEASON"
-msgstr "Add new Season"
+msgstr "Add new season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_COUNTRY_1"
@@ -1005,6 +1023,14 @@ msgstr "Passwords don't match"
 msgid "WATCHLIST_EMPTY_MESSAGE"
 msgstr "Your watchlist is empty!"
 
+#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
+msgid "CL_STEP4_LABEL_APPLICABLE_LAW"
+msgstr "Applicable Law"
+
+#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
+msgid "CL_STEP4_PLACEHOLDER_APPLICABLE_LAW"
+msgstr "Select language"
+
 #: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLawSelector.js
 msgid "Applicable Law"
 msgstr "Applicable Law"
@@ -1014,9 +1040,9 @@ msgid "CL_STEP3_AMENDMENT"
 msgstr "Create an amendment. This will be included in the license agreement."
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Ok"
-msgstr "Ok"
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+msgid "Accept"
+msgstr "Accept"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company Information"
@@ -1049,6 +1075,10 @@ msgstr "ZIP code"
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Country"
 msgstr "Country"
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Ok"
+msgstr "Ok"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company address"
@@ -1087,10 +1117,6 @@ msgstr "End of license period"
 msgid "Unlimited"
 msgstr "Unlimited"
 
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "Accept"
-msgstr "Accept"
-
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES"
 msgstr "Territories"
@@ -1118,7 +1144,7 @@ msgstr "days after contract conclusion"
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING"
-msgstr "the total instalment percentage must accumulate to 100%"
+msgstr "the total installment percentage must accumulate to 100%"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES_MODE"
@@ -1170,13 +1196,11 @@ msgstr "Add sales bundle"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "CL_STEP2_RIGHTS_TITLE"
-msgstr "Rights selection & definition"
+msgstr "RIGHTS SELECTION"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "CL_STEP2_RIGHTS_TEXT"
-msgstr ""
-"Which rights, relating to the program defined above, do you wish to grant to "
-"the buyer?"
+msgstr "Which rights fdo you want to grant to the buyer?"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "Exclusive"
@@ -1237,8 +1261,8 @@ msgstr "Start over"
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_1"
 msgstr ""
-"Please fill in the information fields below. Note that, apart from 'Sport', "
-"you may skip all information fields."
+"Please fill in the fields below. “Country/Category” and “Competition” are "
+"optional."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
@@ -1270,22 +1294,17 @@ msgstr "Website"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_TITLE"
-msgstr "PROGRAM DESCRIPTION"
+msgstr "PROGRAM DEFINITION"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_TEXT"
-msgstr ""
-"Which program do you wish to license? This may include events and/or "
-"produced content. All rights, selected later on, will refer to this."
+msgstr "Please describe which program you would like to license specifically."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER"
 msgstr ""
-"Please enter the program description. The program description represents the "
-"core of the license agreement. All rights picked later on refer to this "
-"program description. You may enter all information you consider relevant (e."
-"g. which events you seek to grant rights to or which events you will produce "
-"and deliver to the buyer)."
+"The program definition represents the basis of the license agreement. All "
+"rights selected will granted for the programs as defined here."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_NAME"
@@ -1313,7 +1332,7 @@ msgstr "Edited Program Description (optional)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER"
-msgstr "Provide a description of your content listing"
+msgstr "Provide a description of your content listing."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "CL_STEP3_PROGRAM_MODAL_TITLE"
@@ -1364,10 +1383,6 @@ msgid "CL_STEP4_LABEL_ANNEX"
 msgstr "Annex"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_TITLE_LISTING_DETAILS"
-msgstr "Listing details"
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LISTING_DETAILS_TEXT"
 msgstr ""
 "Please define listing details below. This determines how your listing is "
@@ -1376,6 +1391,9 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LABEL_IMAGE"
 msgstr "Listing image (opt.)"
+
+#~ msgid "CL_STEP4_TITLE_LISTING_DETAILS"
+#~ msgstr "Listing details"
 
 #~ msgid "Action date"
 #~ msgstr "Date of Action"
@@ -1562,9 +1580,6 @@ msgstr "Listing image (opt.)"
 #~ msgid "Program type"
 #~ msgstr "Edited Program Type"
 
-#~ msgid "Number of episodes"
-#~ msgstr "Number of Episodes"
-
 #~ msgid "Average episode duration (min)"
 #~ msgstr "Average Episode Duration (min)"
 
@@ -1628,9 +1643,6 @@ msgstr "Listing image (opt.)"
 
 #~ msgid "Enter program type"
 #~ msgstr "Program Type"
-
-#~ msgid "Release year (optional)"
-#~ msgstr "Release Year (optional)"
 
 #~ msgid ""
 #~ "Which program do you wish to license? This may include events and/or "

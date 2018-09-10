@@ -8,6 +8,19 @@ msgstr ""
 msgid "LISTING_DETAILS_MULTIPLE_SPORTS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "International"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "Release year:"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "episodes"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_EDITED_PROGRAM"
@@ -23,11 +36,11 @@ msgid "MARKETPLACE_LABEL_FILTER_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_LABEL_FILTER_RIGHTS"
+msgid "MARKETPLACE_LABEL_FILTER_TERRITORIES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_LABEL_FILTER_TERRITORIES"
+msgid "MARKETPLACE_LABEL_FILTER_RIGHTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
@@ -397,6 +410,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+msgid "Placed by"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Commercial Activity Total - {n}"
 msgstr ""
@@ -603,10 +620,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Popular"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "International"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
@@ -987,6 +1000,14 @@ msgstr ""
 msgid "WATCHLIST_EMPTY_MESSAGE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
+msgid "CL_STEP4_LABEL_APPLICABLE_LAW"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
+msgid "CL_STEP4_PLACEHOLDER_APPLICABLE_LAW"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLawSelector.js
 msgid "Applicable Law"
 msgstr ""
@@ -996,8 +1017,8 @@ msgid "CL_STEP3_AMENDMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Ok"
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+msgid "Accept"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
@@ -1030,6 +1051,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Country"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Ok"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
@@ -1067,10 +1092,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "Accept"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
@@ -1328,10 +1349,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LABEL_ANNEX"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_TITLE_LISTING_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
