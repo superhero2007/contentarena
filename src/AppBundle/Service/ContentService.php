@@ -685,7 +685,7 @@ class ContentService
             if ( isset($data->country) ) $company->setCountry($this->getCountry($data->country->name));
 
             $this->em->persist($company);
-            $this->em->flush();
+            //$this->em->flush();
         }
 
 
@@ -835,10 +835,8 @@ class ContentService
             $tournament = new Tournament();
             $tournament->setName($customTournament);
             $time = new \DateTime();
-            //$this->em->flush();
             $tournament->setExternalId("ca:tournament:".$time->getTimestamp());
             $this->em->persist($tournament);
-            //$this->em->flush();
         }
 
 
@@ -855,10 +853,8 @@ class ContentService
             $sportCategory = new SportCategory();
             $sportCategory->setName($customSportCategory);
             $time = new \DateTime();
-            //$this->em->flush();
             $sportCategory->setExternalId("ca:sportCategory:".$time->getTimestamp());
             $this->em->persist($sportCategory);
-            //$this->em->flush();
         }
         return $sportCategory;
     }
@@ -882,7 +878,6 @@ class ContentService
             if ( isset($categoryData->externalId) ) $category->setExternalId($categoryData->externalId);
             $category->setName($categoryData->name);
             $this->em->persist($category);
-            //$this->em->flush();
         }
 
         return $category;
@@ -981,12 +976,10 @@ class ContentService
             $name = ( isset($sportData->name) && $sportData->name != "" ) ? $sportData->name : $sportData->value;
             $sport->setName($name);
             $this->em->persist($sport);
-            //$this->em->flush();
             $time = new \DateTime();
             if (isset($sportData->custom)) {
                 $sport->setExternalId("ca:sport:".$time->getTimestamp());
                 $this->em->persist($sport);
-                //$this->em->flush();
             }
 
         }
