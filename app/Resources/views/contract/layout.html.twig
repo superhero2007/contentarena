@@ -1027,26 +1027,49 @@
     {# SIGNATURE#}
     <div class="license-item">
         {% if bid is defined %}
-            <table>
+            <table >
                 <tr>
-                    <td>Licensor:</td>
-                    <td>Licensee:</td>
+                    <td width="50%">Licensor:</td>
+                    <td width="50%">Licensee:</td>
                 </tr>
                 <tr>
                     <td>
                         {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
                             <img class="license-signature" src="{{ hostUrl }}{{ bid.sellerSignature }}" />
-                        {% elseif content.signature is defined  %}
+                        {% elseif bid is defined and bid.sellerSignature is defined and bid.sellerSignature is null and content.signature is defined and bid.status.name == "APPROVED"  %}
                             <img class="license-signature" src="{{ hostUrl }}{{ content.signature }}" />
                         {% else %}
                             Not available
                         {% endif %}
                     </td>
                     <td>
-                        {% if bid is defined %}
+                        {% if bid is defined and bid.signature is not null%}
                             <img class="license-signature" src="{{ hostUrl }}{{ bid.signature }}" />
                         {% else %}
                             Not available
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%"class="no-border">
+                        {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
+                            {{ content.owner.fullName }}
+                            {% if bid.sellerSignatureDate is defined and bid.sellerSignatureDate is not null%}
+                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i") }}
+                            {% endif %}
+                        {% elseif bid is defined and bid.sellerSignature is defined and bid.sellerSignature is null and content.signature is defined and bid.status.name == "APPROVED"  %}
+                            {{ content.owner.fullName }}
+                            {% if content.sellerSignatureDate is defined and content.sellerSignatureDate is not null%}
+                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i") }}
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td width="50%" class="no-border">
+                        {% if bid is defined and bid.signature is not null%}
+                            {{ bid.buyerUser.fullName }}
+                            {% if bid.buyerSignatureDate is defined and bid.buyerSignatureDate is not null%}
+                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i") }}
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>

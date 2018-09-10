@@ -544,6 +544,7 @@ class ContentService
             $fileName = "signature_".md5(uniqid()).'.jpg';
             $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
             $content->setSignature($savedSignature);
+            $content->setSellerSignatureDate(new \DateTime());
         }
 
         if ( isset($data->salesPackages ) && ( isset($data->step) && $data->step == 4 ) ) {

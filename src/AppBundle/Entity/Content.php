@@ -361,6 +361,13 @@ class Content
     private $owner;
 
     /**
+     * @var mixed
+     *
+     * @ORM\Column(name="seller_signature_date", type="datetime", nullable=true)
+     */
+    private $sellerSignatureDate;
+
+    /**
      * @var boolean;
      * @Groups({"board"})
      */
@@ -1309,6 +1316,22 @@ class Content
     public function setLaw($law)
     {
         $this->law = $law;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSellerSignatureDate()
+    {
+        return $this->sellerSignatureDate;
+    }
+
+    /**
+     * @param mixed $sellerSignatureDate
+     */
+    public function setSellerSignatureDate($sellerSignatureDate)
+    {
+        $this->sellerSignatureDate = $sellerSignatureDate;
     }
 
 

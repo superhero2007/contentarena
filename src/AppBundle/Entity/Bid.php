@@ -133,6 +133,20 @@ class Bid
      */
     private $updatedAt;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="seller_signature_date", type="datetime", nullable=true)
+     */
+    private $sellerSignatureDate;
+
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="buyer_signature_date", type="datetime", nullable=true)
+     */
+    private $buyerSignatureDate;
+
     public function __construct() {
     }
 
@@ -412,6 +426,38 @@ class Bid
     public function setSoldListing($soldListing)
     {
         $this->soldListing = $soldListing;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSellerSignatureDate()
+    {
+        return $this->sellerSignatureDate;
+    }
+
+    /**
+     * @param mixed $sellerSignatureDate
+     */
+    public function setSellerSignatureDate($sellerSignatureDate)
+    {
+        $this->sellerSignatureDate = $sellerSignatureDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuyerSignatureDate()
+    {
+        return $this->buyerSignatureDate;
+    }
+
+    /**
+     * @param mixed $buyerSignatureDate
+     */
+    public function setBuyerSignatureDate($buyerSignatureDate)
+    {
+        $this->buyerSignatureDate = $buyerSignatureDate;
     }
 
 

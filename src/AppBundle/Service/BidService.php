@@ -76,6 +76,7 @@ class BidService
             "salesPackage" => $salesPackage,
             "buyerUser" => $user
         ));
+        $updatedAt = new \DateTime();
 
         if ( $bid == null || $bid->getStatus() != $status) {
             $bid = new Bid();
@@ -89,9 +90,8 @@ class BidService
             $fileName = "signature_".md5(uniqid()).'.jpg';
             $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
             $bid->setSignature($savedSignature);
+            $bid->setBuyerSignatureDate($updatedAt);
         }
-
-        $updatedAt = new \DateTime();
 
         $amount = ( $request->get('amount') != null )? $request->get('amount') : $request->get('totalFee');
 
@@ -135,8 +135,9 @@ class BidService
         $listing = $this->em->getRepository('AppBundle:Content')->find($listingId);
         $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($salesPackageId);
         //$listing = $bid->getContent();
-
+        $updatedAt = new \DateTime();
         $exclusive = false;
+
         foreach ($listing->getSelectedRightsBySuperRight() as $val)
         {
             if( $val['exclusive'] ) {
@@ -148,9 +149,9 @@ class BidService
             $fileName = "signature_".md5(uniqid()).'.jpg';
             $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
             $bid->setSellerSignature($savedSignature);
+            $bid->setSellerSignatureDate($updatedAt);
         }
 
-        $updatedAt = new \DateTime();
 
         $bid->setStatus($this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"APPROVED")));
         $bid->setUpdatedAt($updatedAt);
