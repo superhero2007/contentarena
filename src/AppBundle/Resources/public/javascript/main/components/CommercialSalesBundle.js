@@ -76,7 +76,7 @@ class CommercialSalesBundle extends React.Component{
     renderApproveModal = () => {
 
         const {salesBundle} = this.props;
-        const {signature, saving} = this.state;
+        const {signature, saving, selectedBid} = this.state;
 
         return <Modal
             isOpen={this.state.approveModalIsOpen}
@@ -94,6 +94,7 @@ class CommercialSalesBundle extends React.Component{
                 </div>
 
                 <div className={"buttons"}>
+                    <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.id) }}>View License Agreement</button>
                     <button onClick={this.closeApproveModal}>
                         {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                     </button>
