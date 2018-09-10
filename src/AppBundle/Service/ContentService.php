@@ -467,6 +467,18 @@ class ContentService
                 //$content->setSportCategory(null);
             }
 
+            if ( isset($data->customTournament) ){
+                $customTournament = $this->newTournament($data->customTournament);
+                $content->setTournament($customTournament);
+                $content->setCustomTournament($data->customTournament);
+            }
+
+            if ( isset($data->customCategory) ){
+                $customCategory = $this->newSportCategory($data->customCategory);
+                $content->setSportCategory($customCategory);
+                $content->setCustomCategory($data->customCategory);
+            }
+
             /**
              * Set season
              */
@@ -475,7 +487,7 @@ class ContentService
                 $seasons = array();
                 $schedules = [];
                 foreach ($data->seasons as $key => $seasonData){
-                    $season = $this->getSeason($seasonData, $tournament, $key);
+                    $season = $this->getSeason($seasonData, $content->getTournament(), $key);
                     $seasons[] = $season;
                     $schedules[] = $seasonData->selectedSchedules;
                     if ( isset($seasonData->fixtures) ) {
@@ -612,18 +624,6 @@ class ContentService
         }
 
         $content = $this->saveExtraData($content, $data);
-
-        if ( isset($data->customTournament) ){
-            $customTournament = $this->newTournament($data->customTournament);
-            $content->setTournament($customTournament);
-            $content->setCustomTournament($data->customTournament);
-        }
-
-        if ( isset($data->customCategory) ){
-            $customCategory = $this->newSportCategory($data->customCategory);
-            $content->setSportCategory($customCategory);
-            $content->setCustomCategory($data->customCategory);
-        }
 
         if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
@@ -795,7 +795,7 @@ class ContentService
                 }
             }
             $this->em->persist($season);
-            
+
         }
 
         return $season;
@@ -815,9 +815,9 @@ class ContentService
                 ->findOneBy(array('name' => $tournamentData->name));
         }
 
-        if (!$tournament) {
+        if (!$tournament && isset($tournamentData->externalId) ) {
             $tournament = new Tournament();
-            if ( isset($tournamentData->externalId) ) $tournament->setExternalId($tournamentData->externalId);
+            $tournament->setExternalId($tournamentData->externalId);
             $tournament->setName($tournamentData->name);
             $this->em->persist($tournament);
             $this->em->flush();
@@ -838,6 +838,7 @@ class ContentService
             $time = new \DateTime();
             $tournament->setExternalId("ca:tournament:".$time->getTimestamp());
             $this->em->persist($tournament);
+            $this->em->flush();
         }
 
 
@@ -874,11 +875,12 @@ class ContentService
                 ->findOneBy(array('name' => $categoryData->name));
         }
 
-        if (!$category) {
+        if (!$category && isset($categoryData->externalId)) {
             $category = new SportCategory();
-            if ( isset($categoryData->externalId) ) $category->setExternalId($categoryData->externalId);
+            $category->setExternalId($categoryData->externalId);
             $category->setName($categoryData->name);
             $this->em->persist($category);
+            $this->em->flush();
         }
 
         return $category;

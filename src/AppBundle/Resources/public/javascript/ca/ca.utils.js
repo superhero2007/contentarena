@@ -60,6 +60,18 @@ ContentArena.Utils = {
             }
             return s;
         });
+
+
+        content.seasons = content.seasons.map(s=>{
+            if ( s.externalId && s.externalId.startsWith("ca:") ){
+                s.custom = true
+            }
+
+            return s;
+
+        });
+
+
         content.parsed = true;
 
         return content;
