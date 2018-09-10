@@ -302,7 +302,7 @@ class CommercialSalesBundle extends React.Component{
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
                                     this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
                                 }} src={cancelIcon}/>}
-                                {props.value.status === "APPROVED"
+                                { (props.value.status === "APPROVED" || props.value.status === "PENDING")
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
                                         viewLicenseBid(props.value.bid.customId)
                                 }} src={docIcon}/>}

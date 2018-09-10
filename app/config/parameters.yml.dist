@@ -19,3 +19,4 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     local_host: http://localhost:8200/
     external_api_url: http://api.contentarena.com/
+    knp_snappy_binary : /usr/local/bin/wkhtmltopdf
