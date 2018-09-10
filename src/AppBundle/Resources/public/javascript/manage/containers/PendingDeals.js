@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ContentListingPendingBid from '../../main/components/ContentListingPendingBid';
 import {goTo} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
+import ContentListing from "../../main/components/ContentListing";
 
 class PendingDeals extends React.Component {
     constructor(props) {
@@ -54,6 +55,8 @@ class PendingDeals extends React.Component {
     render () {
         const { loading, bids, tab, declinedBids, loadingDeclined } = this.state;
         const { history } = this.props;
+        const defaultRightsPackage = JSON.parse(this.props.rights)
+
         return (
             <div style={{
                 display: 'flex',
@@ -86,68 +89,60 @@ class PendingDeals extends React.Component {
                     </div>
                 </div>
 
-                {
-                    tab === "activebids" && bids.length > 0 && bids.map((bid, i) => {
-                        return <ContentListingPendingBid
-                            onSelect={this.selectListing}
-                            onDelete={this.deleteBid}
-                            key={i + "-" + bid.content.customId}
-                            bid={bid}
-                            {...bid.content}
-                        />
-                    })
-                }
+                {tab === "activebids" && (
+                    bids.length > 0 ? (
+                        bids.map((bid, i) => {
+                            return (
+                                <ContentListing
+                                    onSelect={this.selectListing}
+                                    onDelete={this.deleteBid}
+                                    key={i + "-" + bid.content.customId}
+                                    bid={bid}
+                                    defaultRightsPackage={defaultRightsPackage}
+                                    {...bid.content}
+                                />
+                            )
+                        })
+                    ) : (
+                        <div className="manager-content-message">
+                            {loading && <div className="big-spinner"><i className="fa fa-cog fa-spin"/></div>}
 
-                {
-                    tab === "declinedbids" && declinedBids.length > 0 && declinedBids.map((bid, i) => {
-                        return <ContentListingPendingBid
-                            onSelect={this.selectListing}
-                            declined={true}
-                            onDelete={this.deleteBid}
-                            key={i + "-" + bid.content.customId}
-                            bid={bid}
-                            {...bid.content}
-                        />
-                    })
-                }
+                            {!loading && (
+                                <div className="big-spinner" style={{fontSize: 30}}>
+                                    {this.context.t("PENDING_BIDS_MADE_EMPTY_MESSAGE")}
+                                </div>
+                            )}
+                        </div>
+                    )
+                )}
 
-                {
-                    tab === "activebids" && bids.length === 0 &&
-                    <div className="manager-content-message">
-                        {
-                            loading && <div className="big-spinner">
-                                <i className="fa fa-cog fa-spin"/>
-                            </div>
-                        }
+                {tab === "declinedbids" && (
+                    declinedBids.length > 0 ? (
+                        declinedBids.map((bid, i) => {
+                            return (
+                                <ContentListing
+                                    onSelect={this.selectListing}
+                                    onDelete={this.deleteBid}
+                                    key={i + "-" + bid.content.customId}
+                                    bid={bid}
+                                    declined={true}
+                                    defaultRightsPackage={defaultRightsPackage}
+                                    {...bid.content}
+                                />
+                            )
+                        })
+                    ) : (
+                        <div className="manager-content-message">
+                            {loadingDeclined && <div className="big-spinner"><i className="fa fa-cog fa-spin"/></div>}
 
-                        {
-                            !loading && <div className="big-spinner" style={{
-                                fontSize: 30
-                            }}>
-                                {this.context.t("PENDING_BIDS_MADE_EMPTY_MESSAGE")}
-                            </div>
-                        }
-                    </div>
-                }
-
-                {
-                    tab === "declinedbids" && declinedBids.length === 0 &&
-                    <div className="manager-content-message">
-                        {
-                            loadingDeclined && <div className="big-spinner">
-                                <i className="fa fa-cog fa-spin"/>
-                            </div>
-                        }
-
-                        {
-                            !loadingDeclined && <div className="big-spinner" style={{
-                                fontSize: 30
-                            }}>
-                                {this.context.t("PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE")}
-                            </div>
-                        }
-                    </div>
-                }
+                            {!loadingDeclined && (
+                                <div className="big-spinner" style={{fontSize: 30}}>
+                                    {this.context.t("PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE")}
+                                </div>
+                            )}
+                        </div>
+                    )
+                )}
 
             </div>
         )

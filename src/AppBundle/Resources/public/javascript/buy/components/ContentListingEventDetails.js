@@ -93,15 +93,19 @@ class ContentListingEventDetails extends React.Component {
         let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
         let roundsName =  roundsTitle + rounds.join(", ");
 
+        let tournamentArray = [];
+        if (tournament) {
+            tournamentArray = Array.isArray(tournament) ? tournament : [tournament]
+        }
 
         return (
             <div className="listing-attributes col">
 
                 <div className="listing-item tournament">
                     {/*Tournament name*/}
-                    {tournament && tournament.length > 0 && <span>{tournamentIcon} {tournament[0].name}</span>}
+                    {tournamentArray && tournamentArray.length > 0 && <span>{tournamentIcon} {tournamentArray[0].name}</span>}
                     {customTournament && !customId && <span>{tournamentIcon} {customTournament}</span>}
-                    {tournament && tournament.length === 0 && !customTournament && <span>
+                    {tournamentArray && tournamentArray.length === 0 && !customTournament && <span>
                         {tournamentIcon} {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
                     </span>}
                 </div>

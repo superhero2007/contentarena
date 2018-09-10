@@ -1553,10 +1553,6 @@ a:hover {
         font-size: 19px;
         cursor: pointer;
         font-weight: bold;
-
-        &:hover {
-          text-decoration: underline;
-        }
       }
 
       .company-name {
@@ -1567,7 +1563,6 @@ a:hover {
         font-size: 12px;
       }
     }
-
 
     .listing-wrapper {
       display: flex;
@@ -1626,24 +1621,6 @@ a:hover {
       .sales-bundles {
         display: flex;
         flex-wrap: wrap;
-
-        .sales-package {
-          display: flex;
-          border: 1px solid $orange-color;
-          margin-right: 5px;
-          align-items: center;
-          padding: 0 0 0 10px;
-          height: 36px;
-          flex-shrink: 0;
-          border-radius: 5px;
-          margin-bottom: 5px;
-
-          &.show-all {
-            background-color: $orange-color;
-            color: #333333;
-            padding-right: 10px;
-          }
-        }
       }
 
       .expires {
@@ -1653,13 +1630,55 @@ a:hover {
       }
     }
   }
+  .sales-package {
+    display: inline-flex;
+    border: 1px solid $orange-color;
+    margin-right: 5px;
+    align-items: center;
+    padding: 0 10px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    margin-bottom: 5px;
+
+    .name {
+      margin-right: 5px;
+      margin-left: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .all-territories {
+      margin-right: 5px;
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    .fee {
+      font-weight: bold;
+      margin-right: 5px;
+      white-space: nowrap;
+    }
+
+    &.show-all {
+      background-color: $orange-color;
+      color: #333333;
+      padding-right: 10px;
+    }
+  }
   .additional {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #F7F7F7;
 
-    &.watchlist-data {
+    .wrapper {
+      width: 100%;
+    }
+
+    &.watchlist-options {
       max-width: 200px;
       width: 100%;
       text-align: center;
@@ -1677,6 +1696,64 @@ a:hover {
 
       .owner {
         margin-top: 15px;
+      }
+    }
+
+    &.bids-options {
+      max-width: 300px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      position: relative;
+
+      .ca-btn {
+        text-transform: uppercase;
+      }
+
+      .bid-sales-wrap {
+        padding: 0 15px;
+        margin-top: 20px;
+      }
+
+      .bid-price {
+        white-space: nowrap;
+        font-weight: bold;
+        font-size: 24px;
+        padding: 10px 0;
+        color: #000;
+      }
+
+      .bid-actions {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+
+        .ca-btn {
+          margin: 0 5px;
+        }
+
+        .bid-icon {
+          position: absolute;
+          color: #000;
+          font-size: 21px;
+
+          &.status {
+            left: -35px;
+          }
+          &.message {
+            right: -35px;
+          }
+        }
+      }
+
+      .bid-author {
+        padding: 10px 0 0;
+      }
+
+      .bid-remove {
+        position: absolute;
+        right: 10px;
+        top: 10px;
       }
     }
   }
@@ -1880,6 +1957,7 @@ a:hover {
       .sales-bundles {
         display: flex;
         margin-top: 20px;
+
         .sales-package {
           display: flex;
           border: 1px solid lightgrey;

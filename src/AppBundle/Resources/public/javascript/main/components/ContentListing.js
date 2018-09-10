@@ -3,9 +3,70 @@ import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import {PropTypes} from "prop-types";
-import {blueCheckIcon, yellowCheckIcon, coinIcon, hammerIcon} from "./Icons";
+import {
+    blueCheckIcon,
+    yellowCheckIcon,
+    coinIcon,
+    hammerIcon,
+    bucketIcon,
+    bidIcon,
+    fixedIcon
+} from "./Icons";
 import Modal from 'react-modal';
 import {customStyles} from "../styles/custom";
+import {getCurrencySymbol} from "../actions/utils";
+import Tooltip from '../../main/components/Tooltip';
+
+const SalesPackages = ({salesPackages, getFee, showAllTerritories}) => {
+    let salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages]
+    return (
+        <React.Fragment>
+            {salesPackagesArray.slice(0, 3).map( ( salesPackage, i) => {
+                let extraTerritories = ( salesPackage.territoriesMethod === 'WORLDWIDE_EXCLUDING') ? salesPackage.excludedTerritories : salesPackage.territories;
+                return (
+                    <div className="sales-package" key={"sp-"+ i}>
+
+                        {salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
+                            <div className="icon">
+                                <img src={fixedIcon}/>
+                            </div>
+                        )}
+
+                        <div className="name">
+                            {salesPackage.name}
+                        </div>
+
+                        {extraTerritories && extraTerritories.length > 3 && (
+                            <div className="all-territories">
+                                <a onClick={(e) => {showAllTerritories(e,extraTerritories)}}>
+                                    {"+" + (extraTerritories.length - 3)}
+                                </a>
+                            </div>
+                        )}
+
+                        {(salesPackage.salesMethod !== "BIDDING" ||  (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0)) && (
+                            <div className="fee">
+                                {getFee(salesPackage)}
+                            </div>
+                        )}
+
+                        {salesPackage.salesMethod === "BIDDING" && (
+                            <div className="icon">
+                                <img src={bidIcon}/>
+                            </div>
+                        )}
+
+                    </div>
+                )
+            })}
+            {salesPackages.length > 3 && (
+                <div className="sales-package show-all">
+                    <b> + {salesPackages.length - 3} </b>
+                </div>
+            ) }
+        </React.Fragment>
+    )
+}
 
 class ContentListing extends React.Component{
     constructor(props){
@@ -17,7 +78,7 @@ class ContentListing extends React.Component{
         };
         this.noImage = assetsBaseDir + "app/images/no-image.png";
         this.bidIcon = hammerIcon;
-        this.fixedIcon = assetsBaseDir + "app/images/bid.png";
+        this.fixedIcon = fixedIcon;
         this.blueCheck = blueCheckIcon;
         this.yellowCheck = yellowCheckIcon;
         this.bucketicon = assetsBaseDir + "app/images/bucket.png";
@@ -158,7 +219,10 @@ class ContentListing extends React.Component{
             company,
             defaultRightsPackage,
             rightsPackage,
-            owner
+            owner,
+            bid,
+            declined,
+            customId
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
 
@@ -202,54 +266,11 @@ class ContentListing extends React.Component{
 
                     <div className="sales-bundles-wrapper">
                         <div className={"sales-bundles"}>
-                            {salesPackages.slice(0, 3).map( ( salesPackage, i) => {
-                                let extraTerritories = ( salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
-
-                                    return  <div className="sales-package" key={"sales-package-"+ i}>
-
-                                        {salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
-                                            <div style={{ margin: '0 10px 0 5px'}}>
-                                                <img style={{width: 26, height: 23}} src={this.fixedIcon}/>
-                                            </div>
-                                        )}
-
-                                        <div style={{cursor: 'default'}}>
-                                            {salesPackage.name}
-
-                                            {extraTerritories && extraTerritories.length > 3 && (
-                                                <span
-                                                    style={{
-                                                        color: '#2DA7E6',
-                                                        textDecoration: 'underline',
-                                                        marginLeft : 5
-                                                    }}
-                                                    onClick={(e) => {this.showAllTerritories(e,extraTerritories)}}
-                                                >
-                                                {"+" + (extraTerritories.length - 3)}
-                                            </span>
-                                            )}
-                                        </div>
-                                        {
-                                            ( salesPackage.salesMethod !== "BIDDING" ||  ( salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0 ) )
-                                            &&<b style={{margin: '0 10px', display: "flex", flex: '1 0 auto'}}>
-                                                {this.getFee(salesPackage)}
-                                            </b>
-                                        }
-
-                                        {salesPackage.salesMethod === "BIDDING"
-                                        &&<div style={{ margin: '0 10px 0 5px'}}>
-                                            <img style={{width: 23, height: 23}} src={this.bidIcon}/>
-                                        </div>}
-
-
-
-                                    </div>
-                                })}
-                            {salesPackages.length > 3 && (
-                                <div className="sales-package show-all">
-                                    <b> + {salesPackages.length - 3} </b>
-                                </div>
-                            ) }
+                            <SalesPackages
+                                salesPackages={salesPackages}
+                                getFee={this.getFee}
+                                showAllTerritories={this.showAllTerritories}
+                            />
                         </div>
                         {expiresAt && (
                             <div className="expires">
@@ -260,9 +281,9 @@ class ContentListing extends React.Component{
 
                 </div>
                 {watchlistRemove && (
-                    <div className="watchlist-data additional">
+                    <div className="watchlist-options additional">
                         {confirmWatchlistRemove ? (
-                            <div>
+                            <div className="wrapper">
                                 <div>
                                     {this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}
                                 </div>
@@ -287,24 +308,86 @@ class ContentListing extends React.Component{
 
                         )}
                     </div>
-
                 )}
-       {/*         <div>
-                    {watchlistRemove && !confirmWatchlistRemove && (
-                        <img
-                            src={this.bucketicon}
-                            onClick={this.confirmRemoveFromWatchlist}
-                        />
-                    )}
 
-                    {confirmWatchlistRemove && (
-                        <div>
-                            <span>{this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}</span>
-                            <span onClick={this.removeFromWatchlist}>{this.context.t("Yes")}</span>
-                            <span onClick={this.cancelRemoveFromWatchlist}>{this.context.t("Cancel")}</span>
+                {/*BID OPTIONS*/}
+                {bid && (
+                    <div className="bids-options additional">
+                        <div className="wrapper">
+                            <div className="bid-sales-wrap">
+                                <SalesPackages
+                                    salesPackages={bid.salesPackage}
+                                    getFee={this.getFee}
+                                    showAllTerritories={this.showAllTerritories}
+                                />
+                            </div>
+
+                            <div className="bid-price">
+                                {parseFloat(bid.amount).toLocaleString()} {getCurrencySymbol(bid.salesPackage.currency.code)}
+                            </div>
+
+                            <div className="bid-actions">
+                                {bid.status.name === "EDITED" && (
+                                    <Tooltip
+                                        id="StatusTooltip"
+                                        icon={"bid-icon status fa fa-info-circle"}
+                                        text={this.context.t("PENDING_BIDS_TOOLTIP_LISTING_EDITED")}
+                                    />
+                                )}
+
+                                {( !declined || (declined && bid.status.name === "REJECTED" && !bid.salesPackage.sold) ) && (
+                                    <a className="ca-btn ca-btn-primary"
+                                       href={envhosturl + "listing/" + customId + "/checkout/" + bid.salesPackage.id}
+                                    >
+                                        {this.context.t("Increase bid")}
+                                    </a>
+                                )}
+
+                                {bid.message && bid.message !== "" && (
+                                    <Tooltip
+                                        id="MessageTooltip"
+                                        icon={"bid-icon message fa fa-envelope"}
+                                        text={bid.message}
+                                    />
+                                )}
+                            </div>
+
+                            <div className="bid-author">
+                                <div>{Moment(bid.createdAt).format('DD/MM/YYYY')}</div>
+                                {this.context.t("Placed by:")} <b>{bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</b>
+                            </div>
+
+                            {bid.status.name === "REJECTED" && (
+                                <div className="bid-remove"
+                                     onClick={(e)=>{this.setState({showRemoveConfirm: true});e.stopPropagation();}}
+                                >
+                                    <img src={bucketIcon}/>
+                                </div>
+                            )}
+                            {/*CONFIRM REMOVE*/}
+                            {this.state.showRemoveConfirm && (
+                                <div className="confirmation-tooltip">
+                                    <div className={"confirmation-text"}>
+                                        {this.context.t("PENDING_BIDS_REMOVE_TITLE")}
+                                    </div>
+                                    <button className={"button button-confirm"} onClick={(e)=>{
+                                        this.setState({showRemoveConfirm: false});
+                                        onDelete(bid.id);
+                                        e.stopPropagation();
+                                    }}>
+                                        {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CONFIRM")}
+                                    </button>
+                                    <button className={"button"} onClick={(e)=>{
+                                        this.setState({showRemoveConfirm: false});
+                                        e.stopPropagation();
+                                    }}>
+                                        {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CANCEL")}
+                                    </button>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>*/}
+                    </div>
+                )}
                 { this.allTerritories() }
             </div>
         )
