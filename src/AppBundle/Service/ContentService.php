@@ -424,28 +424,6 @@ class ContentService
         $company = $user->getCompany();
         $content->setCompany($company);
 
-        /**
-         * Set custom ID
-         */
-
-        if ( $content->getCustomId() == null){
-            $customId = $this->idGenerator->generate($content);
-            $content->setCustomId($customId);
-        }
-
-
-        /**
-         * Set sport
-         * Create element in DB if it doesn't exist.
-         */
-        if ( isset($data->sports) && count($data->sports) > 0 && ( isset($data->step) && $data->step == 1 )) {
-
-        } else if ( isset($data->sport) ) {
-            $data->sports = array( $data->sport );
-        }
-        $sports = $this->getSports($data);
-        $content->setSports($sports);
-
         if ( isset($data->step) && $data->step == 1 ){
             /**
              * Set tournament
@@ -503,6 +481,28 @@ class ContentService
 
             }
         }
+
+        /**
+         * Set custom ID
+         */
+
+        if ( $content->getCustomId() == null){
+            $customId = $this->idGenerator->generate($content);
+            $content->setCustomId($customId);
+        }
+
+
+        /**
+         * Set sport
+         * Create element in DB if it doesn't exist.
+         */
+        if ( isset($data->sports) && count($data->sports) > 0 && ( isset($data->step) && $data->step == 1 )) {
+
+        } else if ( isset($data->sport) ) {
+            $data->sports = array( $data->sport );
+        }
+        $sports = $this->getSports($data);
+        $content->setSports($sports);
 
         $selectedRights = array();
 
@@ -685,7 +685,7 @@ class ContentService
             if ( isset($data->country) ) $company->setCountry($this->getCountry($data->country->name));
 
             $this->em->persist($company);
-            //$this->em->flush();
+            $this->em->flush();
         }
 
 
@@ -795,6 +795,7 @@ class ContentService
                 }
             }
             $this->em->persist($season);
+            $this->em->flush();
         }
 
         return $season;
