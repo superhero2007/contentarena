@@ -252,7 +252,7 @@ class BoardListing extends React.Component{
                 <div  className="menu-icon" onClick={this.toggleOptions}>
                     <img src={this.dotsIcon} />
                 </div>
-                <div className={"name"}>
+                <div className={"name"} title={name}>
                     { name }
                 </div>
                 <div className={"tournament"}>
