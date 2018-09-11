@@ -324,9 +324,11 @@ class SellFormStep1 extends React.Component {
     };
 
     addSeason = () => {
-        console.log("ADDSEASON")
+        console.log("ADDSEASON");
+        const {seasons} = this.props;
+
         this.setState((prevState)=> ({
-            seasonSelectors : [...prevState.seasonSelectors, 1]
+            seasonSelectors : [...Array(seasons.length +1).keys()]
         }));
 
         if ( this.hasCustomTournament() ){
@@ -588,7 +590,7 @@ class SellFormStep1 extends React.Component {
                         this.state.seasonSelectors.map( (season, i) => {
                             return <SeasonSelector
                                 key={i}
-                                season={season}
+                                season={i}
                                 index={i}
                                 addSeason={this.addSeason}
                                 removeSeason={()=>this.removeSeason(i)}

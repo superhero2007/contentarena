@@ -34,10 +34,8 @@ msgid "Release year:"
 msgstr "Release Year (optional)"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-#, fuzzy
-#| msgid "Number of episodes"
 msgid "episodes"
-msgstr "Number of Episodes"
+msgstr "episodes"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -608,6 +606,8 @@ msgstr "Your search \"{n}\" did not match any products."
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND_2"
 msgstr ""
+"Did you not find your competition in the database or are you not selling a "
+"competition?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND"

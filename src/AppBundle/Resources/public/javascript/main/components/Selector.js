@@ -51,7 +51,8 @@ class Selector extends React.Component {
         if ( nextProps.disabled ) disabled = nextProps.disabled;
         if ( nextProps.selectedItems ) {
             nextProps.selectedItems.forEach(function(v, k) {
-                selectedItems.set(v.externalId, v);
+                let key = v.externalId ? v.externalId : "custom" + k;
+                selectedItems.set(key, v);
             });
         }
 
