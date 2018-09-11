@@ -52,7 +52,7 @@ class Season
     /**
      * @var string
      *
-     * @ORM\Column(name="year", type="string", length=255)
+     * @ORM\Column(name="year", type="string", length=255, nullable=true)
      * @Groups({"listing", "board", "commercial"})
      */
     private $year;
