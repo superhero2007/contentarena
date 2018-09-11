@@ -196,7 +196,8 @@ class ContentListing extends React.Component{
                 {
                     this.state.territoriesList.map(territory =>{
                         return <div className="country-modal">
-                            {territory.label}
+                            {territory.label && territory.label}
+                            {territory.name && territory.name}
                         </div>
                     })
                 }

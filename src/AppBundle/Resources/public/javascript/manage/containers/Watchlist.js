@@ -55,6 +55,7 @@ class Watchlist extends React.Component {
                             {...listing}
                             watchlistRemove={true}
                             onWatchlistRemove={this.remove}
+                            defaultRightsPackage={JSON.parse(this.props.rights)}
                         />
                     })
                 }

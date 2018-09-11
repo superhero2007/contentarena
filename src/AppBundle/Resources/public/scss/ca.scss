@@ -1577,7 +1577,7 @@ a:hover {
 
         .listing-item {
           line-height: $col-height / 3;
-          min-height: $col-height / 3;
+          max-height: $col-height / 3;
           //margin-right: 75px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -1590,7 +1590,14 @@ a:hover {
             padding: initial;
           }
           span {
-            margin-right: 10px;
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+            margin-right: 15px;
+            img,
+            .fa {
+              margin-right: 5px;
+            }
             &:last-child {
               margin-right: 0;
             }
@@ -1603,6 +1610,7 @@ a:hover {
 
         &.listing-rights {
           flex: 0 0 300px;
+          margin-left: auto;
           .listing-item {
             display: flex;
             align-items: center;
