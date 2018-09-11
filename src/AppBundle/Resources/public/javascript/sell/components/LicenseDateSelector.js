@@ -56,7 +56,7 @@ class LicenseDateSelector extends React.Component {
 
                 <div className="modal-title">
                     <i className="fa fa-edit"/>
-                    {this.context.t("Edit license period")}
+                    {this.context.t("license period")}
                     <i className="fa fa-times close-icon" onClick={onClose}/>
                 </div>
 
