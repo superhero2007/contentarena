@@ -92,71 +92,73 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('content.sportCategory', 'cat')
                 ->leftJoin('content.sports', 'sport')
                 ->leftJoin('content.seasons', 'season')
-                ->leftJoin('content.rightsPackage', 'rights')
-                ->orWhere('content.description LIKE :value')
-                ->orWhere('content.selectedRightsBySuperRight LIKE :value')
+                //->leftJoin('content.rightsPackage', 'rights')
+                //->orWhere('content.description LIKE :value')
+                //->orWhere('content.selectedRightsBySuperRight LIKE :value')
                 ->orWhere('content.name LIKE :value')
-                ->orWhere('com.legalName LIKE :value')
-                ->orWhere('rights.name LIKE :value')
+                //->orWhere('com.legalName LIKE :value')
+                //->orWhere('rights.name LIKE :value')
                 ->orWhere('t.name LIKE :value')
                 ->orWhere('cat.name LIKE :value')
                 ->orWhere('sport.name LIKE :value')
                 ->orWhere('season.name LIKE :value')
                 ->setParameter('value', '%'.trim($term).'%');
-        }
+        } else {
+            if($exclusive == true){
+                $query
+                    ->andWhere('content.selectedRightsBySuperRight LIKE :value')
+                    ->setParameter('value', '%"exclusive";b:1%');
+            }
 
-        if($exclusive == true){
-            $query
-                ->andWhere('content.selectedRightsBySuperRight LIKE :value')
-                ->setParameter('value', '%"exclusive";b:1%');
-        }
+            if ( count( $filter->getSports() ) > 0 ) {
+                $query
+                    ->leftJoin('content.sports', 'sports')
+                    ->andWhere("sports IN(:sportList)")
+                    //->andWhere("content.approved = true")
+                    ->setParameter('sportList', $filter->getSports());
+            }
 
-        if ( count( $filter->getSports() ) > 0 ) {
-            $query
-                ->leftJoin('content.sports', 'sports')
-                ->andWhere("sports IN(:sportList)")
-                //->andWhere("content.approved = true")
-                ->setParameter('sportList', $filter->getSports());
-        }
-
-        if ( count( $filter->getCountries() ) > 0 ) {
-            $query
-                ->leftJoin('content.salesPackages', 'salesPackages')
-                ->leftJoin('salesPackages.territories', 'territories');
+            if ( count( $filter->getCountries() ) > 0 ) {
+                $query
+                    ->leftJoin('content.salesPackages', 'salesPackages')
+                    ->leftJoin('salesPackages.territories', 'territories');
 
 
-            if($includeAllCountries == true){
+                if($includeAllCountries == true){
 
-                foreach ($filter->getCountries() as $country){
+                    foreach ($filter->getCountries() as $country){
+                        $query
+                            ->andWhere('territories IN (:country)')
+                            ->setParameter('country', array($country));
+                    }
+
                     $query
-                        ->andWhere('territories IN (:country)')
-                        ->setParameter('country', array($country));
+                        ->orWhere('salesPackages.territoriesMethod = :worldwide')
+                        ->setParameter('worldwide', 'WORLDWIDE');
+
+
+                } else {
+                    $query
+                        ->setParameter('countries', $filter->getCountries())
+                        ->setParameter('worldwide', 'WORLDWIDE')
+                        ->andWhere($query->expr()->orX(
+                            $query->expr()->eq('salesPackages.territoriesMethod', ':worldwide'),
+                            $query->expr()->in('territories', ':countries')
+                        ));
                 }
+            }
 
+            if ( count( $filter->getSuperRights() ) > 0 ) {
                 $query
-                    ->orWhere('salesPackages.territoriesMethod = :worldwide')
-                    ->setParameter('worldwide', 'WORLDWIDE');
-
-
-            } else {
-                $query
-                    ->setParameter('countries', $filter->getCountries())
-                    ->setParameter('worldwide', 'WORLDWIDE')
+                    ->leftJoin('content.rightsPackage', 'rightsPackage')
                     ->andWhere($query->expr()->orX(
-                        $query->expr()->eq('salesPackages.territoriesMethod', ':worldwide'),
-                        $query->expr()->in('territories', ':countries')
-                    ));
+                        $query->expr()->in('rightsPackage', ':rightsPackages')
+                    ))
+                    ->setParameter('rightsPackages', $filter->getSuperRights());
             }
         }
 
-        if ( count( $filter->getSuperRights() ) > 0 ) {
-            $query
-                ->leftJoin('content.rightsPackage', 'rightsPackage')
-                ->andWhere($query->expr()->orX(
-                    $query->expr()->in('rightsPackage', ':rightsPackages')
-                ))
-                ->setParameter('rightsPackages', $filter->getSuperRights());
-        }
+
 
         $now = date('Y-m-d H:i:s');
 
