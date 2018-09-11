@@ -113,6 +113,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "LISTING_DETAILS_LICENSE_END_DAYS"
 msgstr ""
 
@@ -414,32 +415,38 @@ msgstr ""
 msgid "Placed by"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "Commercial Activity Total - {n}"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
-msgid "Increase bid"
-msgstr ""
-
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_TOOLTIP_LISTING_EDITED"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Increase bid"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "Placed by:"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_TITLE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_BUTTON_CONFIRM"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "Commercial Activity Total - {n}"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -1228,6 +1235,10 @@ msgid "Next"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_PLACEHOLDER_WEBSITE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_BUTTON_START_OVER"
 msgstr ""
 
@@ -1237,6 +1248,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_BUTTON_MULTIPLE_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
@@ -1352,7 +1367,15 @@ msgid "CL_STEP4_LABEL_ANNEX"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_INFO_ANNEX"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LISTING_DETAILS_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_INFO_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js

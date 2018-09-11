@@ -443,7 +443,7 @@ class SellFormStep1 extends React.Component {
         if ( this.props.step !== 1 ) return (null);
 
         const {websites, website} = this.state;
-        const websitePlaceholder = websites.length > 0 ? '' : 'e.g. bundesliga.de';
+        const websitePlaceholder = websites.length > 0 ? '' : this.context.t("CL_STEP1_PLACEHOLDER_WEBSITE");
 
         this.scroll();
 
@@ -538,7 +538,9 @@ class SellFormStep1 extends React.Component {
 
                     {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px"}}>
                         {this.context.t("CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS")}
-                        <button className={"link-button"} onClick={this.addSportSelector}>Please click here</button>
+                        <button className={"link-button"} onClick={this.addSportSelector}>
+                            {this.context.t("CL_STEP1_BUTTON_MULTIPLE_SPORTS")}
+                        </button>
                     </div>}
 
                     {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&

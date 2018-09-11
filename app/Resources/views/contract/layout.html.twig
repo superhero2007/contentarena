@@ -655,91 +655,92 @@
                     {% endif %}
                 {% endfor %}
             </tr>
-            <tr>
-                <td>Graphics</td>
-                {% for right in content.rightsPackage %}
-                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                        <td>
-                            {% if right.shortLabel == "PR" %}
-                                -
-                            {% else %}
-                                {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
-                                    {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
-                                        {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
-                                            {{ language.label }}{% if not loop.last %},{% endif %}
-                                        {% endfor %}
+            {% if content.rightsPackage | length > 1 or content.rightsPackage|length==1 and content.rightsPackage|has_right("PR") == false %}
+                <tr>
+                    <td>Graphics</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                            <td>
+                                {% if right.shortLabel == "PR" %}
+                                    -
+                                {% else %}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
+                                        {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
+                                            {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
+                                                {{ language.label }}{% if not loop.last %},{% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
                                     {% endif %}
-                                {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
                                 {% endif %}
-                            {% endif %}
-                        </td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Commentary</td>
-                {% for right in content.rightsPackage %}
-                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                        <td>
-                            {% if right.shortLabel == "PR" %}
-                                -
-                            {% else %}
-                                {% if content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] == "COMMENTARY_YES" %}
-                                    {% if  content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] is defined %}
-                                        {% for language in content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] %}
-                                            {{ language.label }}{% if not loop.last %},{% endif %}
-                                        {% endfor %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Commentary</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                            <td>
+                                {% if right.shortLabel == "PR" %}
+                                    -
+                                {% else %}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] == "COMMENTARY_YES" %}
+                                        {% if  content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] is defined %}
+                                            {% for language in content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] %}
+                                                {{ language.label }}{% if not loop.last %},{% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] | right_definitions_label}}
                                     {% endif %}
-                                {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] | right_definitions_label}}
                                 {% endif %}
-                            {% endif %}
-                        </td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Camera Standards</td>
-                {% for right in content.rightsPackage %}
-                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                        <td>
-                            {% if right.shortLabel == "PR" %}
-                                -
-                            {% else %}
-                                {% if content.selectedRightsBySuperRight[right.id].items["CAMERA"] == "CAMERA_MINIMUM" %}
-                                    Minimum cameras: {{ content.selectedRightsBySuperRight[right.id].items["CAMERAS"] }}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Camera Standards</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                            <td>
+                                {% if right.shortLabel == "PR" %}
+                                    -
                                 {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["CAMERA"] | right_definitions_label}}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["CAMERA"] == "CAMERA_MINIMUM" %}
+                                        Minimum cameras: {{ content.selectedRightsBySuperRight[right.id].items["CAMERAS"] }}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["CAMERA"] | right_definitions_label}}
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        </td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-            <tr>
-                <td>Aspect Ratio</td>
-                {% for right in content.rightsPackage %}
-                    {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
-                    {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
-                        <td>
-                            {% if right.shortLabel == "PR" %}
-                                -
-                            {% else %}
-                                {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Aspect Ratio</td>
+                    {% for right in content.rightsPackage %}
+                        {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
+                        {% if definition is not defined or definition != "CONTENT_DELIVERY_NON_DEDICATED" %}
+                            <td>
+                                {% if right.shortLabel == "PR" %}
+                                    -
                                 {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                    {% endif %}
                                 {% endif %}
-                            {% endif %}
-                        </td>
-                    {% endif %}
-                {% endfor %}
-            </tr>
-
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endif %}
             {% if content.extraData.PROGRAM_NAME is defined %}
                 <tr>
                     <td>Edited Program Language</td>

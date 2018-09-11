@@ -156,10 +156,10 @@ class SellFormStep4 extends React.Component {
                             "application/pdf"
                         ]}
                         tmp={true}
-                        infoText={'All files uploaded here will be merged with the license agreement. You may upload only PDF files.'}
+                        infoText={this.context.t('CL_STEP4_INFO_ANNEX')}
                     />
 
-                    <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} infoText={'These details impact how your listing will be presented to buyers in the marketplace: Under which name, with which image and until when it shall be published.'}/>
+                    <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} infoText={this.context.t('CL_STEP4_INFO_DETAILS')}/>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
                         {this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")}

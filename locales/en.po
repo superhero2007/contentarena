@@ -129,6 +129,7 @@ msgstr "End of license period"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "LISTING_DETAILS_LICENSE_END_DAYS"
 msgstr " days after contract conclusion"
 
@@ -432,33 +433,39 @@ msgstr "Cancel"
 msgid "Placed by"
 msgstr "Placed by:"
 
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "Commercial Activity Total - {n}"
-msgstr "Total: {n}"
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
-msgid "Increase bid"
-msgstr "Increase bid"
-
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_TOOLTIP_LISTING_EDITED"
 msgstr "Listing edited after last bid. Please review term sheet."
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
+msgid "Increase bid"
+msgstr "Increase bid"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "Placed by:"
 msgstr "Placed by:"
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_TITLE"
 msgstr "Are you sure you want to remove this bid?"
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_BUTTON_CONFIRM"
 msgstr "Remove"
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
 msgstr "Cancel"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "Commercial Activity Total - {n}"
+msgstr "Total: {n}"
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_TITLE"
@@ -1255,6 +1262,10 @@ msgid "Next"
 msgstr "Next"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_PLACEHOLDER_WEBSITE"
+msgstr "e.g. bundesliga.de"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_BUTTON_START_OVER"
 msgstr "Start over"
 
@@ -1267,6 +1278,10 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
 msgstr "Your content covers multiple sports?"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_BUTTON_MULTIPLE_SPORTS"
+msgstr "Please click here"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LABEL_COUNTRY"
@@ -1304,7 +1319,7 @@ msgstr "Please describe which program you would like to license specifically."
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER"
 msgstr ""
 "The program definition represents the basis of the license agreement. All "
-"rights selected will granted for the programs as defined here."
+"rights selected will be granted for the programs as defined here."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_NAME"
@@ -1381,6 +1396,12 @@ msgstr "Further information"
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LABEL_ANNEX"
 msgstr "Annex"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_INFO_ANNEX"
+msgstr ""
+"All files uploaded here will be merged with the license agreement. You may "
+"upload only PDF files."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LISTING_DETAILS_TEXT"

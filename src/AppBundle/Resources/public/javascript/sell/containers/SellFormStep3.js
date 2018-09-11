@@ -235,7 +235,7 @@ class SellFormStep3 extends React.Component {
                                     {this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_END")}
                                 </div>
                                 <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
-                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + "LISTING_DETAILS_LICENSE_END_DAYS"}
+                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
                                     { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
                                     { endDateMode === "UNLIMITED"  && this.context.t("Unlimited")}
                                     { !endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
