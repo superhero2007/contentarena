@@ -49,6 +49,9 @@
       .name{
         margin-bottom: 20px;
         max-width: 80%;
+        width: 310px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .tournament{
         display: flex;

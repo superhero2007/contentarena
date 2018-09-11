@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import cn from 'classnames';
 import store from '../../main/store';
-import {goToPreviousStep, goToNextStep, updateContentValue, goToStep} from "../actions/contentActions";
+import {goToPreviousStep, goToNextStep, updateContentValue, goToStep, scrollTopMainContent} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
@@ -50,6 +50,7 @@ class SellButtons extends React.Component {
             this.setState({ saving : false, savingSuccess: true });
 
             history.push("/contentlisting/"+ response.customId + "/" + nextStep);
+            scrollTopMainContent();
 
         }).fail(() =>{
             this.setState({ saving : false, savingSuccess: false });
@@ -213,6 +214,8 @@ class SellButtons extends React.Component {
                 this.props.updateContentValue("id", response.contentId);
                 this.setState({ saving : false, savingSuccess: true });
                 history.push("/contentlisting/"+ response.customId + "/sign");
+
+                scrollTopMainContent();
             }
         });
     };
@@ -223,6 +226,8 @@ class SellButtons extends React.Component {
         let prevStep = (Number(content.step) - 1);
 
         history.push("/contentlisting/"+ content.customId + "/" + prevStep);
+
+        scrollTopMainContent();
     };
 
     goToNextStep = () => {
@@ -233,6 +238,8 @@ class SellButtons extends React.Component {
         const {history} = this.props;
         let content = store.getState().content;
         history.push("/contentlisting/"+ content.customId + "/" + step);
+        
+        scrollTopMainContent();
     };
 
     render() {

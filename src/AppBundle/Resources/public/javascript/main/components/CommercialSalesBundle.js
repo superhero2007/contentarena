@@ -94,7 +94,7 @@ class CommercialSalesBundle extends React.Component{
                 </div>
 
                 <div className={"buttons"}>
-                    <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.id) }}>View License Agreement</button>
+                    <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.customId) }}>View License Agreement</button>
                     <button onClick={this.closeApproveModal}>
                         {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                     </button>
