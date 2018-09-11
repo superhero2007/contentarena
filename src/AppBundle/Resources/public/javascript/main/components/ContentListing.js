@@ -346,6 +346,10 @@ class ContentListing extends React.Component{
 
                                 {bid.message && bid.message !== "" && (
                                     <Tooltip
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            window.location.href = `/redirect-integration/messages-by-bid/${bid.id}`;
+                                        }}
                                         id="MessageTooltip"
                                         icon={"bid-icon message fa fa-envelope"}
                                         text={bid.message}
