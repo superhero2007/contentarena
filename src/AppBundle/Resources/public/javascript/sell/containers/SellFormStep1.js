@@ -37,7 +37,6 @@ class SellFormStep1 extends React.Component {
             tournaments: [],
             sportCategories: [],
             sportCategoryExtended : false,
-            nameFromCompetition : false,
         };
     }
 
@@ -203,11 +202,6 @@ class SellFormStep1 extends React.Component {
             tournaments= [];
 
             this.props.updateContentValue("name","");
-        }
-
-        if ( !name && tournaments.length > 0 && !this.state.nameFromCompetition) {
-            this.setState({nameFromCompetition : true});
-            this.props.updateContentValue("name",tournaments[0].name);
         }
 
         if (nextProps.sports.length === 1 && !loadingTournaments) {

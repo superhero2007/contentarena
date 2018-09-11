@@ -10,6 +10,17 @@ class ListingName extends React.Component {
         };
     }
 
+    componentDidMount() {
+        const element = document.querySelectorAll('.step-content.step-4 .listing-summary');
+
+        if (element) {
+            const node = element[0];
+            this.setState({
+                name: node.textContent
+            })
+        }
+    }
+
     updateName = ( e ) => {
         this.props.updateContentValue("name", e.target.value);
     };
@@ -23,7 +34,7 @@ class ListingName extends React.Component {
                 </label>
                 <input
                     type="text"
-                    value={name}
+                    value={name || this.state.name}
                     onChange={this.updateName}
                     placeholder=""
                     maxLength={70}
