@@ -118,7 +118,7 @@ class SellFormStep3 extends React.Component {
 
                 <div className="modal-title">
                     {this.context.t("CL_STEP3_PROGRAM_MODAL_TITLE")}
-                    <i className="fa fa-times-circle-o" onClick={this.closeProgramsPopup}/>
+                    <i className="fa fa-times close-icon" onClick={this.closeProgramsPopup}/>
                 </div>
 
                 <div className="step-content custom">
@@ -154,7 +154,7 @@ class SellFormStep3 extends React.Component {
                     </div>
                 </div>
 
-                <div className={"buttons"}>
+                <div className={"buttons popup-buttons"}>
                     <button
                         className={"standard-button"}
                         onClick={this.closeProgramsPopup}>

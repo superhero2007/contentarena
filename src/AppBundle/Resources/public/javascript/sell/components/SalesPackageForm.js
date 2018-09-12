@@ -442,7 +442,7 @@ class SalesPackageForm extends React.Component {
 
                         { this.state.installments.map( (installment, i, list) => {
                             return <div className={"content"}>
-                                <div className={"item"} style={{ paddingLeft: 0 }}>
+                                <div className={"item"} style={{ paddingLeft: 15, alignItems: 'flex-start'}}>
                                     <div className={"title"} >
                                         {i+1} Instalment <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/> % of payment
                                     </div>

@@ -74,6 +74,7 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header',
                                 className : 'table-header table-header-left',
                                 accessor: 'customId',
+                                width: 80,
                                 Cell: props => <div>
                                     {"#"+props.value}
                                 </div>
@@ -86,6 +87,7 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big sorting',
                                 id: 'name',
+                                width: 170,
                                 accessor: d => {return{
                                     name : d.content.name,
                                     customId : d.content.customId,

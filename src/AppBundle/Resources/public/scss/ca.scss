@@ -1135,6 +1135,7 @@ a:hover {
     .step-content-container {
       .modal-input {
         margin-bottom: 15px;
+        padding: 0 16px;
         label {
           float: left;
           min-width: inherit;
@@ -1143,8 +1144,14 @@ a:hover {
         }
         div.Select {
           float: right;
-          max-width: 300px;
+          max-width: 280px;
+          width: 100%;
           margin-top: -5px;
+          .Select-input {
+            input {
+              border: none;
+            }
+          }
         }
       }
       .base-full-input {
