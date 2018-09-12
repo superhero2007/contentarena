@@ -11,7 +11,7 @@ class PopupCountrySelector extends React.Component {
         super(props);
         this.state = {
             isOpen : false,
-            value : props.value,
+            value : props.value.map(c=>{return{label:c,value:c}}),
             selectedOption : props.includeAllCountries ? 'multiple' : 'single'
         };
     }

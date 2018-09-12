@@ -297,7 +297,7 @@ export const translations = {
     'CL_STEP4_REMOVE_ALL_BUNDLES': 'Remove al',
     'CL_STEP4_ADD_SALES_BUNDLE': 'Add sales bundle',
     'CL_STEP2_RIGHTS_TITLE': 'RIGHTS SELECTION',
-    'CL_STEP2_RIGHTS_TEXT': 'Which rights fdo you want to grant to the buyer?',
+    'CL_STEP2_RIGHTS_TEXT': 'Which rights would you like to grant to the buyer?',
     'Exclusive': 'Offer exclusively',
     'CL_STEP5_MODAL_SUCCESS_MESSAGE_1': 'Congratulations!',
     'CL_STEP5_MODAL_SUCCESS_MESSAGE_2': 'The listing was submitted successfully!',
@@ -345,6 +345,7 @@ export const translations = {
     'CL_STEP4_LABEL_ANNEX': 'Annex',
     'CL_STEP4_INFO_ANNEX': 'All files uploaded here will be merged with the license agreement. You may upload only PDF files.',
     'CL_STEP4_LISTING_DETAILS_TEXT': 'Please define listing details below. This determines how your listing is shown to potential buyers.',
+    'CL_STEP4_INFO_DETAILS': 'These details impact how your listing will be presented to buyers in the marketplace: Under which name, with which image and until when it shall be published.',
     'CL_STEP4_LABEL_IMAGE': 'Listing image (opt.)',
   },
 }

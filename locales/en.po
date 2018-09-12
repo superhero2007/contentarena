@@ -1207,7 +1207,7 @@ msgstr "RIGHTS SELECTION"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "CL_STEP2_RIGHTS_TEXT"
-msgstr "Which rights fdo you want to grant to the buyer?"
+msgstr "Which rights would you like to grant to the buyer?"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "Exclusive"
@@ -1410,8 +1410,20 @@ msgstr ""
 "shown to potential buyers."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_INFO_DETAILS"
+msgstr ""
+"These details impact how your listing will be presented to buyers in the "
+"marketplace: Under which name, with which image and until when it shall be "
+"published."
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LABEL_IMAGE"
 msgstr "Listing image (opt.)"
+
+#, fuzzy
+#~| msgid "CL_STEP4_TITLE_INFO"
+#~ msgid "CL_STEP4_"
+#~ msgstr "Further information"
 
 #~ msgid "CL_STEP4_TITLE_LISTING_DETAILS"
 #~ msgstr "Listing details"

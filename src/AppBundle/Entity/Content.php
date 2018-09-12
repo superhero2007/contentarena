@@ -159,6 +159,14 @@ class Content
     private $vat;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="edited_program_name", type="string", length=255, nullable=true)
+     * @Groups({"listing"})
+     */
+    private $editedProgramName;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="vat_percentage", type="integer", nullable=true)
@@ -1333,6 +1341,23 @@ class Content
     {
         $this->sellerSignatureDate = $sellerSignatureDate;
     }
+
+    /**
+     * @return string
+     */
+    public function getEditedProgramName()
+    {
+        return $this->editedProgramName;
+    }
+
+    /**
+     * @param string $editedProgramName
+     */
+    public function setEditedProgramName($editedProgramName)
+    {
+        $this->editedProgramName = $editedProgramName;
+    }
+
 
 
 

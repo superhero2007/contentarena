@@ -193,6 +193,7 @@ class ContentService
             $content->setPrograms($modelListing->getPrograms());
             $content->setAttachments($modelListing->getAttachments());
             $content->setAnnex($modelListing->getAnnex());
+            $content->setEditedProgramName($modelListing->getEditedProgramName());
             $content->setLaw($modelListing->getLaw());
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
 
@@ -536,6 +537,7 @@ class ContentService
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
         if ( isset($data->annex) ) $content->setAnnex($data->annex);
         if ( isset($data->law) ) $content->setLaw($data->law);
+        if ( isset($data->PROGRAM_NAME) ) $content->setEditedProgramName($data->PROGRAM_NAME);
         if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
 
