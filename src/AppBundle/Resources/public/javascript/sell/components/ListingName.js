@@ -15,9 +15,11 @@ class ListingName extends React.Component {
 
         if (element) {
             const node = element[0];
-            this.setState({
-                name: node.textContent
-            })
+            if (!this.props.name) {
+                setTimeout(() => {
+                    this.props.updateContentValue("name", node.textContent);
+                }, 1);
+            }
         }
     }
 
