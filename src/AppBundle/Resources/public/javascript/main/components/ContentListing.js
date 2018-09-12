@@ -351,7 +351,7 @@ class ContentListing extends React.Component{
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
-                                            location.href = `listing/${customId}/checkout/${bid.salesPackage.id}`;
+                                            location.href = `/listing/${customId}/checkout/${bid.salesPackage.id}`;
                                         }}
                                     >
                                         {this.context.t("Increase bid")}
