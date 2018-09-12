@@ -95,7 +95,9 @@ class ContentListing extends React.Component{
     };
 
     onSelect = () => {
-      const {onSelect, customId} = this.props;
+      const {onSelect, customId, status, checkExpired} = this.props;
+
+      if (status.name !== "EDITED" && status.name !== "APPROVED" && checkExpired) return;
 
       if ( onSelect ) onSelect(customId);
 
@@ -222,6 +224,8 @@ class ContentListing extends React.Component{
             rightsPackage,
             owner,
             bid,
+            checkExpired,
+            status,
             declined,
             customId
         } = this.props;
@@ -246,9 +250,13 @@ class ContentListing extends React.Component{
                 </div>
                 <div className={"right"} >
                     <div className="name-wrapper">
-                        <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
+                        { (status.name === "EDITED" || status.name === "APPROVED" || !checkExpired ) && <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
                             {name}
-                        </div>
+                        </div>}
+
+                        { status.name !== "EDITED" && status.name !== "APPROVED" && checkExpired && <div className={"name"} style={{cursor: "default"}}>
+                            {name}
+                        </div>}
 
                         {company && (
                             <div className="company-name">{coinIcon} {company.legalName}</div>

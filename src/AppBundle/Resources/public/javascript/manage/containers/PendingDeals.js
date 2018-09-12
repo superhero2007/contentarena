@@ -125,6 +125,7 @@ class PendingDeals extends React.Component {
                                     onDelete={this.deleteBid}
                                     key={i + "-" + bid.content.customId}
                                     bid={bid}
+                                    checkExpired={true}
                                     declined={true}
                                     defaultRightsPackage={defaultRightsPackage}
                                     {...bid.content}

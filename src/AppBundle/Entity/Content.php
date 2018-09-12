@@ -1359,6 +1359,17 @@ class Content
     }
 
 
+    public function userIsCompanyMember($user){
+
+        $isMember = false;
+        /* @var Company $company*/
+        $company = $this->getCompany();
+        foreach ($company->getUsers() as $users){ if ($users == $user) $isMember= true; }
+
+        return $isMember;
+    }
+
+
 
 
 

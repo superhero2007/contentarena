@@ -53,6 +53,7 @@ class Watchlist extends React.Component {
                             onSelect={this.selectListing}
                             key={listing.customId}
                             {...listing}
+                            checkExpired={true}
                             watchlistRemove={true}
                             onWatchlistRemove={this.remove}
                             defaultRightsPackage={JSON.parse(this.props.rights)}

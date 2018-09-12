@@ -84,6 +84,8 @@ class Marketplace extends React.Component {
 
     selectListing = (id) => {
 
+        const {history} = this.props;
+
         let _this = this;
 
         if ( id === _this.state.id ){
@@ -107,8 +109,13 @@ class Marketplace extends React.Component {
                 loadingListingDetails : false
             })
         }).fail(error => {
+
+            let data = error.data.responseJSON;
+
+            if (data.code === 101 ) history.push("/marketplace");
+
             _this.setState({
-                errorMessage: error.data.responseJSON.message,
+                errorMessage: data.message,
                 loadingListingDetails: false
             })
 

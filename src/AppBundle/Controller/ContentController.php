@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
+use AppBundle\Error\ListingErrors;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\WatchlistService;
 use PDFMerger;
@@ -127,13 +128,42 @@ class ContentController extends Controller
         $user = $this->getUser();
         //Take Repositories
         $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
+        $statusesForbiddenForNonMembers = array(
+            'DRAFT',
+            'INACTIVE',
+            'AUTO_INACTIVE',
+            'PENDING',
+            'REJECTED',
+            'SOLD_OUT',
+            'EXPIRED',
+            'ARCHIVED',
+            'SOLD_COPY'
+        );
 
         /* @var Content $content */
         $content = $repository->findOneBy(array("customId"=>$customId));
 
         if (!$content) {
             $response = new JsonResponse(
-                $data = array("success" => false, "message" => "This listing doesn't exist"),
+                $data = array(
+                    "success" => false,
+                    "code" => ListingErrors::LISTING_NOT_EXISTS,
+                    "message" => ListingErrors::getErrorMessage(ListingErrors::LISTING_NOT_EXISTS),
+                ),
+                $status = Response::HTTP_NOT_FOUND
+            );
+            return $response;
+        }
+
+        $isMember = $content->userIsCompanyMember($user);
+
+        if (!$isMember && in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) ) {
+            $response = new JsonResponse(
+                $data = array(
+                    "success" => false,
+                    "code" => ListingErrors::LISTING_NOT_OWNER,
+                    "message" => ListingErrors::getErrorMessage(ListingErrors::LISTING_NOT_OWNER),
+                ),
                 $status = Response::HTTP_NOT_FOUND
             );
             return $response;
