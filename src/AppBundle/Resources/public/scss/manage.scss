@@ -266,6 +266,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .Select {
+      width: 100%;
+    }
   }
   .status-filter{
     display: flex;
