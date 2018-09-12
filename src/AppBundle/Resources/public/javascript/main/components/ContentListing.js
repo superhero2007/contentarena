@@ -345,8 +345,14 @@ class ContentListing extends React.Component{
                                 )}
 
                                 {( !declined || (declined && bid.status.name === "REJECTED" && !bid.salesPackage.sold) ) && (
-                                    <a className="ca-btn ca-btn-primary"
-                                       href={envhosturl + "listing/" + customId + "/checkout/" + bid.salesPackage.id}
+                                    <a
+                                        className="ca-btn ca-btn-primary"
+                                        href='#'
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            location.href = `listing/${customId}/checkout/${bid.salesPackage.id}`;
+                                        }}
                                     >
                                         {this.context.t("Increase bid")}
                                     </a>
@@ -356,7 +362,7 @@ class ContentListing extends React.Component{
                                     <Tooltip
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            window.location.href = `/redirect-integration/messages-by-bid/${bid.id}`;
+                                            location.href = `/redirect-integration/messages-by-bid/${bid.id}`;
                                         }}
                                         id="MessageTooltip"
                                         icon={"bid-icon message fa fa-envelope"}
