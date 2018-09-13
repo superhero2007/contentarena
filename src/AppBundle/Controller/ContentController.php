@@ -174,7 +174,7 @@ class ContentController extends Controller
         }
 
 
-        if (!$isMember && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) || ($content->getStatus()->getName() == "EXPIRED" && count($closedDeals) > 0) )) {
+        if (!$isMember && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) || ($content->getStatus()->getName() == "EXPIRED" && count($closedDeals) == 0) )) {
             $response = new JsonResponse(
                 $data = array(
                     "success" => false,
