@@ -51,6 +51,8 @@ class ListingDetails extends React.Component {
             editCompanyOpen : false,
             bidUpdated : false
         };
+
+        if ( this.state.selectedPackage ) this.state.minimumBid =  this.state.selectedPackage.fee;
         this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
         this.checkIcon = assetsBaseDir + "app/images/check.png";
         this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
