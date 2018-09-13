@@ -23,6 +23,8 @@ class SellForm extends React.Component {
             value: content.company.country.name
         };
 
+        if (content.userCanNotView) props.history.push("/managelistings");
+
         content = ContentArena.Utils.contentParserFromServer(content);
 
         if (props.match && props.match.params.step ) {

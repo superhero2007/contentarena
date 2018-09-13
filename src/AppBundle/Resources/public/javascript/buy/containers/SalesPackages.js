@@ -142,7 +142,7 @@ class SalesPackages extends React.Component {
 
 
     render() {
-        const {salesPackages, onSelectPackage, user, listingId} = this.props;
+        const {salesPackages, onSelectPackage, user, listingId, userCanNotBuy, bundlesWithActivity} = this.props;
 
         return (
             <div className="sales-packages">
@@ -151,6 +151,8 @@ class SalesPackages extends React.Component {
                 { salesPackages.map( (salesPackage, i) => {
 
                     if (salesPackage.sold ) return;
+
+                    let hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(salesPackage.id) !== -1 : false;
 
                     let extraTerritories = ( salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? salesPackage.excludedTerritories : salesPackage.territories;
                     return <div className="sales-package-container" key={"sales-package-"+ i}>
@@ -204,16 +206,18 @@ class SalesPackages extends React.Component {
                                 && <img style={{width: 23, height: 23}} src={this.bidIcon}/>}
                         </div>
 
-                        { salesPackage.salesMethod === "FIXED" && user.profile === "BUYER" &&
+                        { salesPackage.salesMethod === "FIXED" &&
                             <button className="standard-button"
+                                    disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || hasOfferFromUser}
                                     style={{width: 130}}
                                     onClick={() => {onSelectPackage(salesPackage, listingId) }}>
                                 {this.context.t("Buy now")}
                             </button>
                         }
 
-                        { salesPackage.salesMethod === "BIDDING" && user.profile === "BUYER" &&
+                        { salesPackage.salesMethod === "BIDDING" &&
                             <button className="standard-button"
+                                    disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || hasOfferFromUser }
                                     style={{width: 130}}
                                     onClick={() => {onSelectPackage(salesPackage, listingId) }}>
                                 {this.context.t("Place bid")}

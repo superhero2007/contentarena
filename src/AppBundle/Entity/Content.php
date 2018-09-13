@@ -393,6 +393,24 @@ class Content
      */
     private $hasActivity = false;
 
+    /**
+     * @var boolean;
+     * @Groups({"board"})
+     */
+    private $userCanNotView = false;
+
+    /**
+     * @var boolean;
+     * @Groups({"details"})
+     */
+    private $userCanNotBuy = false;
+
+    /**
+     * @var array;
+     * @Groups({"details"})
+     */
+    private $bundlesWithActivity = array();
+
 
     public function __construct() {
         $this->rightsPackage = new ArrayCollection();
@@ -1369,8 +1387,53 @@ class Content
         return $isMember;
     }
 
+    /**
+     * @return bool
+     */
+    public function isUserCanNotView()
+    {
+        return $this->userCanNotView;
+    }
 
+    /**
+     * @param bool $userCanNotView
+     */
+    public function setUserCanNotView($userCanNotView)
+    {
+        $this->userCanNotView = $userCanNotView;
+    }
 
+    /**
+     * @return bool
+     */
+    public function isUserCanNotBuy()
+    {
+        return $this->userCanNotBuy;
+    }
+
+    /**
+     * @param bool $userCanNotBuy
+     */
+    public function setUserCanNotBuy($userCanNotBuy)
+    {
+        $this->userCanNotBuy = $userCanNotBuy;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBundlesWithActivity()
+    {
+        return $this->bundlesWithActivity;
+    }
+
+    /**
+     * @param array $bundlesWithActivity
+     */
+    public function setBundlesWithActivity($bundlesWithActivity)
+    {
+        $this->bundlesWithActivity = $bundlesWithActivity;
+    }
 
 
 

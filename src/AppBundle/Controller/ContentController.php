@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Error\ListingErrors;
+use AppBundle\Service\BidService;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\WatchlistService;
 use PDFMerger;
@@ -122,7 +124,7 @@ class ContentController extends Controller
     /**
      * @Route("/listing/details", name="listingDetails")
      */
-    public function searchRights(Request $request, WatchlistService $watchlistService){
+    public function listingDetails(Request $request, WatchlistService $watchlistService, BidService $bidService){
 
         $customId = $request->get('customId');
         $user = $this->getUser();
@@ -156,6 +158,18 @@ class ContentController extends Controller
         }
 
         $isMember = $content->userIsCompanyMember($user);
+        $content->setUserCanNotBuy($isMember);
+
+        $bids = $bidService->getAllBidsByContentAndUser($content, $user);
+        $bundlesWithActivity = array();
+        if ($bids != null){
+            foreach ($bids as $bid){
+                /* @var Bid $bid*/
+                $bundlesWithActivity[] = $bid->getSalesPackage()->getId();
+            }
+            $content->setBundlesWithActivity($bundlesWithActivity);
+        }
+
 
         if (!$isMember && in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) ) {
             $response = new JsonResponse(

@@ -544,7 +544,7 @@ class ListingDetails extends React.Component {
                                     fontWeight: 600
                                 }}>{content.company.legalName}</div>}
 
-                                {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
+                                {profile === "BUYER" && !content.userCanNotBuy && <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
                                      onClick={()=>{
                                          this.refs.messagePopup.open()
                                      }}>
