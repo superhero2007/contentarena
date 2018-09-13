@@ -46,7 +46,7 @@ class Seller extends React.Component {
                         fontSize: 20,
                         fontWeight: 600
                     }}>
-                        {company.displayName}
+                        {company.legalName}
                     </div>
                     {company.website && <div style={{
                         color: '#4F4F4F',
@@ -57,7 +57,9 @@ class Seller extends React.Component {
 
                 </div>
                 <div className="full-item-box" style={{width: '75%'}}>
-                    <label>{company.displayName}
+                    <label>
+                        {company.legalName}
+                        {" "}
                         {this.context.t("LISTING_DETAILS_SELLER_TITLE_DETAILS")}
                     </label>
                     <div >

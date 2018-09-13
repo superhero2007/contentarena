@@ -18,7 +18,7 @@ class PopupCountrySelector extends React.Component {
 
 
     openModal = () => {
-        this.setState({isOpen:true});
+        this.setState({ value : this.props.value.map(c=>{return{label:c,value:c}}),isOpen:true});
     };
 
     closeModal = () => {

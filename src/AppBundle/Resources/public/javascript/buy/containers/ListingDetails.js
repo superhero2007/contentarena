@@ -39,6 +39,7 @@ class ListingDetails extends React.Component {
         let listing = ContentArena.Utils.contentParserFromServer(props.listing) || {};
 
         this.state = {
+            companyUpdated : false,
             content : listing,
             company: props.company,
             spinner : false,
@@ -126,7 +127,7 @@ class ListingDetails extends React.Component {
     }
 
     closeModal = () => {
-        this.setState({ editCompanyOpen: false});
+        this.setState({ editCompanyOpen: false, companyUpdated : true});
     };
 
     closeTerritoriesModal = () => {
@@ -419,7 +420,7 @@ class ListingDetails extends React.Component {
     };
 
     placeBid = () => {
-        const {bid, selectedPackage, signature, content } = this.state;
+        const {bid, selectedPackage, signature, content, companyUpdated, company } = this.state;
         this.setState({spinner : true});
         let bidObj = {
             amount : bid,
@@ -429,6 +430,10 @@ class ListingDetails extends React.Component {
             content : content.id,
             salesMethod : selectedPackage.salesMethod
         };
+
+        if ( companyUpdated ){
+            bidObj.company = company
+        }
 
         ContentArena.ContentApi.placeBid(bidObj).then(r =>{
             this.setState({showSuccessScreen : true, soldOut : r.soldOut, spinner : false});
@@ -903,7 +908,7 @@ class ListingDetails extends React.Component {
                             fontSize: 16,
                             margin: 10
                         }} onClick={()=>{
-                            viewLicenseCustom(content.customId, selectedPackage.id, bid);
+                            viewLicenseCustom(content.customId, selectedPackage.id, bid, company);
                         }}>
                             <img style={{marginRight: 10}} src={this.pdfIcon}/>
                             {this.context.t("License agreement")}

@@ -469,7 +469,7 @@ msgstr "Total: {n}"
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_TITLE"
-msgstr "Digital Signatur"
+msgstr "Digital Signature"
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_BUTTON_CLEAR"
@@ -481,7 +481,7 @@ msgstr "Done"
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_BUTTON_NEW"
-msgstr "New Signatur"
+msgstr "New Signature"
 
 #: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
 msgid "Upload"
@@ -1301,7 +1301,7 @@ msgstr "e.g. Bundesliga"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LABEL_ADDITIONAL_INFO"
-msgstr "Additional Information (optional("
+msgstr "Additional Information (optional)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LABEL_WEBSITE"

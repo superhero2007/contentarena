@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Bid;
+use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\LicenseAgreement;
@@ -243,9 +244,30 @@ class LicenseController extends Controller
 
             $bid->setTotalFee($fee);
             $bid->setSalesPackage($bundle);
-            $bid->setBuyerUser($user);
+
             $bid->setCreatedAt($time);
             $bid->setStatus($bidStatus);
+
+            if ($request->query->get("company") != null){
+                /* @var Company $company */
+                $company = $user->getCompany();
+                $customCompany = $request->query->get("company");
+                if (isset($customCompany['address'])) $company->setAddress($customCompany['address']);
+                if (isset($customCompany['legalName'])) $company->setLegalName($customCompany['legalName']);
+                if (isset($customCompany['registrationNumber'])) $company->setRegistrationNumber($customCompany['registrationNumber']);
+                if (isset($customCompany['vat'])) $company->setVat($customCompany['vat']);
+                if (isset($customCompany['city'])) $company->setCity($customCompany['city']);
+                if (isset($customCompany['zip'])) $company->setZip($customCompany['zip']);
+                if (isset($customCompany['country']) && isset($customCompany['country']['name'])){
+                    $country = $this->getDoctrine()->getRepository('AppBundle:Country')
+                        ->findOneBy(array('name' => $customCompany['country']['name']));
+                    $company->setCountry($country);
+                }
+
+                $user->setCompany($company);
+
+            }
+            $bid->setBuyerUser($user);
 
             $viewElements['bid'] = $bid;
         }

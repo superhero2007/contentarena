@@ -235,7 +235,12 @@ class SellFormStep1 extends React.Component {
             this.setState(() => ({
                 seasonSelectors: [...Array(seasons.length).keys()]
             }));
-            //this.loadSchedule(nextProps);
+        }
+
+        if (nextProps.sports.length > 0) {
+            this.setState(() => ({
+                sportSelectors: [...Array(nextProps.sports.length).keys()]
+            }));
         }
 
         if (websites && websites.length > 0) {

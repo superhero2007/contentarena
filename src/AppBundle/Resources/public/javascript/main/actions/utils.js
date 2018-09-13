@@ -31,7 +31,7 @@ export const viewLicenseBundle = (id, listingId) => {
     goTo("license/bundle/"+ id + "/" + listingId)
 };
 
-export const viewLicenseCustom = (listingId, bundleId, bid) => {
+export const viewLicenseCustom = (listingId, bundleId, bid, company) => {
 
     const serialize = function(obj, prefix) {
         var str = [],
@@ -49,7 +49,7 @@ export const viewLicenseCustom = (listingId, bundleId, bid) => {
     };
 
     //let queryString = Object.keys(bundle).map(key => key + '=' + bundle[key]).join('&');
-    goTo("license/custom/" + listingId + "/" + bundleId + "?" + serialize({bid: bid}) );
+    goTo("license/custom/" + listingId + "/" + bundleId + "?" + serialize({bid: bid, company}) );
 };
 
 export const goToMarketplace = () => {

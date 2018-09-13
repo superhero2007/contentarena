@@ -161,9 +161,9 @@ class SellFormStep4 extends React.Component {
 
                     <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} infoText={this.context.t('CL_STEP4_INFO_DETAILS')}/>
 
-                    <div className="step-item-description" style={{marginTop: 0}}>
+                    {/*<div className="step-item-description" style={{marginTop: 0}}>
                         {this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")}
-                    </div>
+                    </div>*/}
 
                     <ListingName/>
 

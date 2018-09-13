@@ -97,7 +97,7 @@ class ContentListing extends React.Component{
     onSelect = () => {
       const {onSelect, customId, status, checkExpired} = this.props;
 
-      if (status.name !== "EDITED" && status.name !== "APPROVED" && checkExpired) return;
+      if (checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ) return;
 
       if ( onSelect ) onSelect(customId);
 
@@ -250,11 +250,11 @@ class ContentListing extends React.Component{
                 </div>
                 <div className={"right"} >
                     <div className="name-wrapper">
-                        { (status.name === "EDITED" || status.name === "APPROVED" || !checkExpired ) && <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
+                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
                             {name}
                         </div>}
 
-                        { status.name !== "EDITED" && status.name !== "APPROVED" && checkExpired && <div className={"name"} style={{cursor: "default"}}>
+                        { checkExpired && status.name !== "EDITED" && status.name !== "APPROVED" && <div className={"name"} style={{cursor: "default"}}>
                             {name}
                         </div>}
 

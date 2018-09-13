@@ -71,6 +71,14 @@ class BidService
             }
         }
 
+
+        try {
+            if ( $request->get("company") != null ){
+                $this->saveCompany($request->get("company"));
+            }
+        }
+        catch (\Exception $e){}
+
         $bid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
             "content" =>$content,
             "salesPackage" => $salesPackage,
@@ -223,5 +231,37 @@ class BidService
     public function getBidById($id) {
         $bid = $this->em->getRepository('AppBundle:Bid')->find($id);
         return $bid;
+    }
+
+    private function saveCompany($data){
+        if ( isset($data['id']) ) {
+
+            $company = $this->em
+                ->getRepository('AppBundle:Company')
+                ->findOneBy(array('id' => $data['id']));
+
+
+            if ( isset($data['vat']) ) $company->setVat($data['vat']);
+            if ( isset($data['zip']) ) $company->setZip($data['zip']);
+            if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
+            if ( isset($data['address']) ) $company->setAddress($data['address']);
+            if ( isset($data['city']) ) $company->setCity($data['city']);
+            if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
+            if ( isset($data['country']) && isset($data['country']['name'])) $company->setCountry($this->getCountry($data['country']['name']));
+
+            $this->em->persist($company);
+        }
+
+
+        return $company;
+    }
+
+    private function getCountry($country){
+
+        $country =  $this->em
+            ->getRepository('AppBundle:Country')
+            ->findOneBy(array('name' => $country));
+
+        return $country;
     }
 }

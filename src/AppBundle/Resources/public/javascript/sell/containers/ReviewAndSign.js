@@ -178,6 +178,8 @@ class ReviewAndSign extends React.Component {
                         <ListingDetails
                         onBack={this.toggleDetails}
                         company={company}
+                        listing={this.props}
+                        history={history}
                         content={this.props}/>
                     </div>
                 }
