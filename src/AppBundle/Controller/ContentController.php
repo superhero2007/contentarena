@@ -132,7 +132,6 @@ class ContentController extends Controller
         $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
         $statusesForbiddenForNonMembers = array(
             'DRAFT',
-            'INACTIVE',
             'AUTO_INACTIVE',
             'PENDING',
             'REJECTED',
@@ -142,7 +141,8 @@ class ContentController extends Controller
 
         $statusesAllowedForBuyers = array(
             'SOLD_OUT',
-            "EXPIRED"
+            "EXPIRED",
+            'INACTIVE',
         );
 
         /* @var Content $content */
