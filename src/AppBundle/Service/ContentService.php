@@ -732,12 +732,12 @@ class ContentService
             $content->setImage($savedImage);
         }
 
-        if ( count( $license ) > 0 ) {
+        if ( $license != null && count( $license ) > 0 ) {
             $licenseFileName = $this->fileUploader->upload($license[0]);
             $content->setOwnLicense($licenseFileName);
         }
 
-        if ( count($brochure) > 0 ){
+        if ( $brochure != null &&  count($brochure) > 0 ){
             $brochureFileName = $this->fileUploader->upload($brochure[0]);
             $content->setBrochure($brochureFileName);
         }
