@@ -138,7 +138,13 @@ class ContentController extends Controller
             'REJECTED',
             'SOLD_OUT',
             'ARCHIVED',
+            "EXPIRED",
             'SOLD_COPY'
+        );
+
+        $statusesAllowedForBuyers = array(
+            'SOLD_OUT',
+            "EXPIRED"
         );
 
         /* @var Content $content */
@@ -174,7 +180,7 @@ class ContentController extends Controller
         }
 
 
-        if (!$isMember && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) || ($content->getStatus()->getName() == "EXPIRED" && count($closedDeals) == 0) )) {
+        if (!$isMember && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) || (in_array($content->getStatus()->getName(),$statusesAllowedForBuyers) && count($closedDeals) == 0) )) {
             $response = new JsonResponse(
                 $data = array(
                     "success" => false,
