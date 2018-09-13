@@ -7,7 +7,7 @@ import ListingDetails from './../../buy/containers/ListingDetails';
 import ContentListing from "../../main/components/ContentListing";
 import {goToPreviousStep, stepChangeReset} from "../actions/contentActions";
 import DigitalSignature from "../../main/components/DigitalSignature";
-import {goTo, parseSeasons, viewLicense} from "../../main/actions/utils";
+import {goTo, goToListing, parseSeasons, viewLicense} from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
@@ -186,7 +186,7 @@ class ReviewAndSign extends React.Component {
 
                 {!showDetails && <div className="step-content-container">
 
-                    <ContentListing {...this.props} onSelectName={this.toggleDetails} defaultRightsPackage={defaultRightsPackage}/>
+                    <ContentListing {...this.props} onSelect={() => goToListing(customId, true)} defaultRightsPackage={defaultRightsPackage}/>
 
                     <SalesPackageForm
                         hideButtons
