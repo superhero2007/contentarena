@@ -22,6 +22,11 @@
       .date{
         margin-left: auto;
       }
+      .listing-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
       .last-message{
         font-size: 12px;
         font-weight: normal;
@@ -43,6 +48,10 @@
       margin-bottom: 20px;
       .listing-name{
         cursor: pointer;
+        max-width: 520px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .company-name{
         color: black;
@@ -72,7 +81,7 @@
       }
       .own-message,
       .own-company {
-        margin-left: auto;
+        margin-left: 0;
       }
     }
     .message-input{

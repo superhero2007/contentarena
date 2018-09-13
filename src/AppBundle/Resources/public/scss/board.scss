@@ -52,6 +52,7 @@
         width: 310px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .tournament{
         display: flex;

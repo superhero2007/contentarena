@@ -93,7 +93,7 @@ class ClosedDeals extends React.Component {
                                     customId : d.content.customId,
                                 }},
                                 Cell: props => <div>
-                                    <a href={"listing/" + props.value.customId}>{limitText(props.value.name)}</a>
+                                    <a title={props.value.name} href={"listing/" + props.value.customId}>{limitText(props.value.name)}</a>
                                 </div>
                             }, {
                                 accessor: 'content.company.legalName', // Required because our accessor is not a string

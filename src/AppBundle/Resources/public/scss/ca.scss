@@ -1871,6 +1871,9 @@ a:hover {
           display: flex;
           align-items: center;
           height: 70px;
+          .publisher {
+            text-align: center;
+          }
         }
       }
       .name {
@@ -1880,6 +1883,10 @@ a:hover {
         text-decoration: underline;
         line-height: 26px;
         flex: 3 0 0;
+        max-width: 520px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .custom-id {
         background-color: lightgrey;
