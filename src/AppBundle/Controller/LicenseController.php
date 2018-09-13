@@ -91,7 +91,7 @@ class LicenseController extends Controller
                 ]);
         }
 
-        if ( isset($license) && $license != null ){
+        if ( isset($license) && $license != null && $license->getUpdatedAt() != null && $license->getUpdatedAt() > $bid->getUpdatedAt() ){
             $pdf->addPDF($license->getFile(), 'all');
             if ($download) $pdf->merge('download', "License Agreement.pdf");
             return;
@@ -122,10 +122,15 @@ class LicenseController extends Controller
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
         $pdf->merge('file', $pathForTheMergedPdf);
 
-        if ( $bid != null && $save){
-            $license = new LicenseAgreement();
-            $license->setCompany($bid->getBuyerUser()->getCompany());
-            $license->setBid($bid);
+        if ( $bid != null && $save ){
+
+            if ( $license == null  ){
+                $license = new LicenseAgreement();
+                $license->setCompany($bid->getBuyerUser()->getCompany());
+                $license->setBid($bid);
+            }
+
+            $license->setUpdatedAt($time);
             $license->setFile($pathForTheMergedPdf);
             $this->getDoctrine()->getManager()->persist($license);
             $this->getDoctrine()->getManager()->flush();
