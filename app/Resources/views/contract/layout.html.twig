@@ -338,7 +338,7 @@
                                     {% if content.fixturesBySeason[loop.index0] is defined %}
                                         {% for round in content.fixturesBySeason[loop.index0]  %}
                                             <div class="license-item-content ">
-                                                {{ round.name }} - {{ round.date | date("m/d/Y") }}
+                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("m/d/Y") }}{% endif %}
                                             </div>
                                         {% endfor %}
                                     {% endif %}
