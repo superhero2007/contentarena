@@ -18,6 +18,9 @@ class SellForm extends React.Component {
         super(props);
 
         let content = (props.content.initialized) ? props.content : JSON.parse(props.newListing);
+
+
+        if ()
         content.jurisdiction = {
             label: content.company.country.name,
             value: content.company.country.name

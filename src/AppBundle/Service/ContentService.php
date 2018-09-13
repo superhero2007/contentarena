@@ -763,7 +763,7 @@ class ContentService
                 ->getRepository('AppBundle:Season')
                 ->findOneBy(array('externalId' => $seasonData->externalId));
 
-        } else if ( isset($seasonData->name)  ){
+        } else if ( isset($seasonData->name) && $seasonData->name != ""  ){
             $season = $this->em
                 ->getRepository('AppBundle:Season')
                 ->findOneBy(array('name' => $seasonData->name));
@@ -799,10 +799,6 @@ class ContentService
                 }
             }
             $this->em->persist($season);
-            try {
-                $this->em->flush();
-            } catch (OptimisticLockException $e) {
-            }
         }
 
         return $season;
