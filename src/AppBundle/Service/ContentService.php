@@ -44,10 +44,10 @@ class ContentService
             $filter = $this->em->getRepository('AppBundle:ContentFilter')->findOneBy(array('id' => $filterId));
         } else {
             $filter = $this->getFilterFromResponse( $request );
-            if ( count( $filter->getTerritories() ) > 0 && count( $filter->getCountries() ) == 0 ) {
-                $countries = $this->em->getRepository('AppBundle:Country')->findBy(array('territory' => $filter->getTerritories()));
-                $filter->setCountries($countries);
-            }
+            //if ( count( $filter->getTerritories() ) > 0 && count( $filter->getCountries() ) == 0 ) {
+            //    $countries = $this->em->getRepository('AppBundle:Country')->findBy(array('territory' => $filter->getTerritories()));
+            //    $filter->setCountries($countries);
+            //}
         }
 
         $term = null;
