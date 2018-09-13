@@ -469,7 +469,7 @@
                         <td>
                             {{ content.selectedRightsBySuperRight[right.id].items["RUNS"] | right_definitions_label }}
                             {% if content.selectedRightsBySuperRight[right.id].items["RUNS"] == "RUNS_LIMITED" %}
-                                {{ ":" + content.selectedRightsBySuperRight[right.id].items["RUNS_NUMBER"] }}
+                                {{ ":" }} {{  content.selectedRightsBySuperRight[right.id].items["RUNS_NUMBER"] }}
                             {% endif %}
                         </td>
                     {% endfor %}
