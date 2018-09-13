@@ -12,6 +12,7 @@ use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\User;
@@ -798,7 +799,10 @@ class ContentService
                 }
             }
             $this->em->persist($season);
-
+            try {
+                $this->em->flush();
+            } catch (OptimisticLockException $e) {
+            }
         }
 
         return $season;
