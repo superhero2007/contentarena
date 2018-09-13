@@ -137,7 +137,6 @@ class ContentController extends Controller
             'PENDING',
             'REJECTED',
             'SOLD_OUT',
-            'EXPIRED',
             'ARCHIVED',
             'SOLD_COPY'
         );
@@ -162,16 +161,20 @@ class ContentController extends Controller
 
         $bids = $bidService->getAllBidsByContentAndUser($content, $user);
         $bundlesWithActivity = array();
+        $closedDeals = array();
         if ($bids != null){
             foreach ($bids as $bid){
                 /* @var Bid $bid*/
                 $bundlesWithActivity[] = $bid->getSalesPackage()->getId();
+
+                if ( $bid->getStatus()->getName() == "APPROVED") $closedDeals[] = $bid->getSalesPackage()->getId();
+
             }
             $content->setBundlesWithActivity($bundlesWithActivity);
         }
 
 
-        if (!$isMember && in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) ) {
+        if (!$isMember && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) || ($content->getStatus()->getName() == "EXPIRED" && count($closedDeals) > 0) )) {
             $response = new JsonResponse(
                 $data = array(
                     "success" => false,
