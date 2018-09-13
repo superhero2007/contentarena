@@ -136,9 +136,7 @@ class ContentController extends Controller
             'AUTO_INACTIVE',
             'PENDING',
             'REJECTED',
-            'SOLD_OUT',
             'ARCHIVED',
-            "EXPIRED",
             'SOLD_COPY'
         );
 
@@ -180,7 +178,9 @@ class ContentController extends Controller
         }
 
 
-        if (!$isMember && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers) || (in_array($content->getStatus()->getName(),$statusesAllowedForBuyers) && count($closedDeals) == 0) )) {
+        if (!$isMember
+            && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers)
+                || (in_array($content->getStatus()->getName(),$statusesAllowedForBuyers) && count($closedDeals) == 0) )) {
             $response = new JsonResponse(
                 $data = array(
                     "success" => false,
