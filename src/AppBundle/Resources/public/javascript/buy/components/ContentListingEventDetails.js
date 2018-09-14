@@ -75,32 +75,27 @@ class ContentListingEventDetails extends React.Component {
         if (!seasons || seasons.length === 0) {
             return [];
         }
-        let years = [];
         seasons.forEach(s => {
-            if (s.from) {
-                years.push(s.from)
-            }
-            if (s.to) {
-                years.push(s.to)
-            }
+
             if (!s.to && !s.from && s.year) {
                 let processedYears = s.year.split("/");
                 s.from = processedYears.length === 1 ? processedYears[0] : 2000 + Number(processedYears[0]);
                 s.to = processedYears.length === 1 ? false : 2000 + Number(processedYears[1]);
+            }
 
-                years.push(s.from)
-                if (s.to) {
-                    years.push(s.to)
+            if (s.from) {
+                if (!s.to){
+                    s.to = s.from;
+                    s.year = s.from
+                } else {
+                    s.year = s.from + "/" + s.to.toString().slice(-2)
                 }
             }
-        })
-        years = years.sort((a,b)=> a-b);
 
-        if (years.length > 1) {
-            return [years[0], years[years.length-1]]
-        } else {
-            return [years[0]]
-        }
+        });
+        seasons = seasons.sort((a,b)=> a.from-b.from);
+
+        return seasons
     }
 
     render() {
@@ -165,9 +160,9 @@ class ContentListingEventDetails extends React.Component {
                     {/*Season/Release*/}
                     {!this.showProgramInfo() && seasonsArray.length > 0 && (
                         seasonsArray.length > 1 ? (
-                            <span>{seasonReleaseIcon} from {seasonsArray[0]} to {seasonsArray[1]}</span>
+                            <span>{seasonReleaseIcon} from {seasonsArray[0].year} to {seasonsArray[seasonsArray.length -1].year}</span>
                         ) : (
-                            <span>{seasonReleaseIcon} Season {seasonsArray[0]}</span>
+                            <span>{seasonReleaseIcon} Season {seasonsArray[0].year}</span>
                         )
                     )}
                     {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} Release year: {PROGRAM_YEAR}</span>}
