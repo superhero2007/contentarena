@@ -196,6 +196,10 @@ class ContentService
             $content->setAnnex($modelListing->getAnnex());
             $content->setEditedProgramName($modelListing->getEditedProgramName());
             $content->setLaw($modelListing->getLaw());
+            $content->setWebsite($modelListing->getWebsite());
+            $content->setExtraData($modelListing->getExtraData());
+
+
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
 
             $rights = [];
