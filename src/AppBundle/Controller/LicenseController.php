@@ -190,7 +190,7 @@ class LicenseController extends Controller
         $bid = $this->getDoctrine()
             ->getRepository('AppBundle:Bid')
             ->findOneBy(['customId' => $request->get("customId")]);
-        $content = $bid->getContent();
+        $content = $bid->getStatus()->getName() != 'APPROVED' ? $bid->getContent() : $bid->getSoldListing();
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $bid->getSalesPackage()->getCurrency()->getName();
