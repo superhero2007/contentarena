@@ -169,6 +169,7 @@ class ListingDetails extends React.Component {
                         <input
                             type={"text"}
                             style={inputStyle}
+                            disabled={true}
                             value={company.legalName}/>
                     </div>
 

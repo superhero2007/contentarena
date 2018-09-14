@@ -125,10 +125,7 @@ class Settings extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
                             </label>
-                            <input value={user.company.legalName} disabled={!editCompanyInfo} onChange={(e)=>{
-                                user.company.legalName = e.target.value;
-                                this.setState({user});
-                            }}/>
+                            <input value={user.company.legalName} disabled={true} />
                         </div>
                         <div className={"item"}>
                             <label>
