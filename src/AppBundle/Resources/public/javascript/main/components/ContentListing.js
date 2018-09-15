@@ -12,13 +12,12 @@ import {
     bidIcon,
     fixedIcon
 } from "./Icons";
-import Modal from 'react-modal';
-import {customStyles} from "../styles/custom";
 import {getCurrencySymbol} from "../actions/utils";
 import Tooltip from '../../main/components/Tooltip';
+import ExtraTerritories from '../../main/components/ExtraTerritories';
 
-const SalesPackages = ({salesPackages, getFee, showAllTerritories}) => {
-    let salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages]
+const SalesPackages = ({salesPackages, getFee}) => {
+    let salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages];
     return (
         <React.Fragment>
             {salesPackagesArray.slice(0, 3).map( ( salesPackage, i) => {
@@ -37,10 +36,10 @@ const SalesPackages = ({salesPackages, getFee, showAllTerritories}) => {
                         </div>
 
                         {extraTerritories && extraTerritories.length > 3 && (
-                            <div className="all-territories">
-                                <a onClick={(e) => {showAllTerritories(e,extraTerritories)}}>
-                                    {"+" + (extraTerritories.length - 3)}
-                                </a>
+                            <div style={{marginRight: 5}}>
+                                <ExtraTerritories
+                                    extraTerritories={extraTerritories}
+                                />
                             </div>
                         )}
 
@@ -136,7 +135,7 @@ class ContentListing extends React.Component{
 
         return this.compareProperty(a.territories.length, b.territories.length)
             || this.compareProperty(a.name, b.name);
-};
+    };
 
     sortByFilter = (salesPackages) => {
 
@@ -170,42 +169,6 @@ class ContentListing extends React.Component{
 
     compareProperty = (a, b) =>  {
         return (a > b) ? 1 : ((b > a) ? -1 : 0)
-    };
-
-    closeTerritoriesModal = (e) => {
-        e.stopPropagation();
-        this.setState({ showAllTerritories: false});
-    };
-
-    showAllTerritories = (e,extraTerritories) => {
-        e.stopPropagation();
-        this.setState({
-            showAllTerritories : true,
-            territoriesList : extraTerritories
-        })
-    };
-
-    allTerritories = () => {
-
-        return <Modal
-            isOpen={this.state.showAllTerritories}
-            onRequestClose={this.closeTerritoriesModal}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
-        >
-
-            <div className="modal-inner">
-                {
-                    this.state.territoriesList.map(territory =>{
-                        return <div className="country-modal">
-                            {territory.label && territory.label}
-                            {territory.name && territory.name}
-                        </div>
-                    })
-                }
-            </div>
-
-        </Modal>
     };
 
     render(){
@@ -274,13 +237,10 @@ class ContentListing extends React.Component{
                     </div>
 
                     <div className="sales-bundles-wrapper">
-                        <div className={"sales-bundles"}>
-                            <SalesPackages
-                                salesPackages={salesPackages}
-                                getFee={this.getFee}
-                                showAllTerritories={this.showAllTerritories}
-                            />
-                        </div>
+                        <SalesPackages
+                            salesPackages={salesPackages}
+                            getFee={this.getFee}
+                        />
                         {expiresAt && (
                             <div className="expires">
                                 Expiry: <b>{Moment(expiresAt).format('MM/DD/YYYY')}</b>
@@ -327,7 +287,6 @@ class ContentListing extends React.Component{
                                 <SalesPackages
                                     salesPackages={bid.salesPackage}
                                     getFee={this.getFee}
-                                    showAllTerritories={this.showAllTerritories}
                                 />
                             </div>
 
@@ -407,7 +366,6 @@ class ContentListing extends React.Component{
                         </div>
                     </div>
                 )}
-                { this.allTerritories() }
             </div>
         )
     }

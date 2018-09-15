@@ -8,6 +8,7 @@ import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
 import {PropTypes} from "prop-types";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
+import ExtraTerritories from "../../main/components/ExtraTerritories";
 import moment from "moment";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
@@ -197,7 +198,7 @@ class SalesPackageForm extends React.Component {
 
                 } else if ( territoriesMethod === this.worldwideExcluding ) {
                     territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
-                    name = "Worldwide excluding " + excludedTerritories.slice(0, 3).map( ( territory, i )=>{
+                    name = "Worldwide excl. " + excludedTerritories.slice(0, 3).map( ( territory, i )=>{
                         return territory.label
                     }).join(", ");
                 }
@@ -525,28 +526,6 @@ class SalesPackageForm extends React.Component {
         })
     };
 
-    allTerritories = () => {
-
-        return <Modal
-            isOpen={this.state.showAllTerritories}
-            onRequestClose={this.closeTerritoriesModal}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
-        >
-
-            <div className="modal-inner">
-                {
-                    this.state.territoriesList.map(territory =>{
-                        return <div className="country-modal">
-                            {territory.label}
-                        </div>
-                    })
-                }
-            </div>
-
-        </Modal>
-    };
-
     showTerritories = (salesPackage) => {
         return ( salesPackage.bundleMethod === this.individually &&
         salesPackage.territoriesMethod === this.worldwide ) ||
@@ -599,7 +578,6 @@ class SalesPackageForm extends React.Component {
         return (
             <div className="sales-package-form">
                 { this.renderModal() }
-                { this.allTerritories() }
                 <div className="base-full-input" style={inputStyle}>
                     <label>
                         <div className='label-text'>
@@ -623,19 +601,15 @@ class SalesPackageForm extends React.Component {
 
                             return <div className="sales-package-container" key={i}>
                                 <div className="sales-package" key={"sales-package-"+ i}>
-                                    <div style={{flex : 5, cursor: 'default'}}>
+                                    <div style={{display:'flex', flex : 5, cursor: 'default'}}>
                                         {salesPackage.name}
-                                        {
-                                            extraTerritories && extraTerritories.length > 3 && <span
-                                                style={{
-                                                    color: '#2DA7E6',
-                                                    textDecoration: 'underline',
-                                                    marginLeft : 5
-                                                }}
-                                                onClick={() => {this.showAllTerritories(extraTerritories)}}>
-                                                {"+" + (extraTerritories.length - 3)}
-                                            </span>
-                                        }
+                                        {extraTerritories && extraTerritories.length > 3 && (
+                                            <div style={{marginLeft: 5}}>
+                                                <ExtraTerritories
+                                                    extraTerritories={extraTerritories}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
 
                                     {hideButtons && <LicenseDownloader

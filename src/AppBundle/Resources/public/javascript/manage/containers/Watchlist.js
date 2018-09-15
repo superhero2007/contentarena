@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ContentListing from '../../main/components/ContentListing';
 import {goTo} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
+import RightsLegend from "../../main/components/RightsLegend";
 
 class Watchlist extends React.Component {
     constructor(props) {
@@ -41,12 +42,10 @@ class Watchlist extends React.Component {
     render () {
         const { loading, listings } = this.state;
         return (
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1
-            }}>
-
+            <div>
+                <div style={{textAlign: 'right'}}>
+                    <RightsLegend />
+                </div>
                 {
                     listings.length > 0 && listings.map((listing) => {
                         return <ContentListing

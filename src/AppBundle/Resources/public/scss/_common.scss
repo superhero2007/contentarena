@@ -177,3 +177,33 @@ i.fa.ca-tooltip {
     opacity: 1
   }
 }
+
+.CaTooltip {
+  $bg: #fff;
+  max-width: 350px !important;
+  width: 100% !important;
+  color: #333333 !important;
+  background-color: $bg !important;
+  pointer-events: auto !important;
+  padding: 15px !important;
+  opacity: 1 !important;
+  box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
+  text-align: left;
+
+  &:hover {
+    visibility: visible !important;
+  }
+
+  &.place-bottom:after {
+    border-bottom-color: $bg !important;
+  }
+  &.place-top:after {
+    border-top-color: $bg !important;
+  }
+  &.place-left:after {
+    border-left-color: $bg !important;
+  }
+  &.place-right:after {
+    border-right-color: $bg !important;
+  }
+}

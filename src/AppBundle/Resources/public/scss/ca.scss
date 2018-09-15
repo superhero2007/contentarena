@@ -7,7 +7,6 @@ html {
 
 body {
   font: 100% $font-stack;
-  color: $primary-color;
   text-transform: none;
   font-family: 'Open Sans', sans-serif;
   height: 100%;
@@ -371,14 +370,14 @@ a:hover {
         .sales-package-container {
           display: flex;
           flex-direction: row;
-          i {
-            position: relative;
-            font-size: 25px;
-            flex: 0.5;
-            color: grey;
-            top: 13px;
-            padding: 0;
-          }
+          //i {
+          //  position: relative;
+          //  font-size: 25px;
+          //  flex: 0.5;
+          //  color: grey;
+          //  top: 13px;
+          //  padding: 0;
+          //}
           .sales-package {
             display: flex;
             flex-direction: row;
@@ -1619,32 +1618,26 @@ a:hover {
 
     .sales-bundles-wrapper {
       display: flex;
-      justify-content: flex-end;
       align-items: center;
       margin-top: 20px;
 
-      .sales-bundles {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
       .expires {
         white-space: nowrap;
-        margin-left: auto;
         font-size: 12px;
+        margin-left: auto;
       }
     }
   }
   .sales-package {
     display: inline-flex;
+    align-items: center;
     border: 1px solid $orange-color;
     margin-right: 5px;
-    align-items: center;
     padding: 0 10px;
     height: 36px;
-    flex-shrink: 0;
     border-radius: 5px;
     margin-bottom: 5px;
+    min-width: 0;
 
     .name {
       margin-right: 5px;
@@ -1661,6 +1654,10 @@ a:hover {
       }
     }
 
+    .icon {
+      flex-shrink: 0;
+    }
+
     .fee {
       font-weight: bold;
       margin-right: 5px;
@@ -1668,6 +1665,8 @@ a:hover {
     }
 
     &.show-all {
+      cursor: pointer;
+      white-space: nowrap;
       background-color: $orange-color;
       color: #333333;
       padding-right: 10px;
@@ -1795,14 +1794,14 @@ a:hover {
   overflow: auto;
 }
 
-.country-modal {
-  padding: 5px;
-  border: 1px solid #DDE1E7;
-  background-color: #FAFBFC;
-  flex: 0 0 160px;
-  margin: 5px;
-  box-sizing: border-box;
-}
+//.country-modal {
+//  padding: 5px;
+//  border: 1px solid #DDE1E7;
+//  background-color: #FAFBFC;
+//  flex: 0 0 160px;
+//  margin: 5px;
+//  box-sizing: border-box;
+//}
 
 .listing-details {
   width: 100%;
@@ -2074,6 +2073,55 @@ a:hover {
   }
 }
 
+.ExtraTerritories {
+  display: inline-block;
 
+  .tooltipInner {
+    .head {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333333;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px dotted #ccc;
+      .fa {
+        color: #2AAAEC;
+        font-size: 18px;
+        padding-left: 0;
+      }
+    }
+    .body {
+      display: flex;
+      flex-wrap: wrap;
+      max-height: 200px;
+      overflow-y: auto;
+      margin: 0 -15px;
 
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
 
+      /* Track */
+      &::-webkit-scrollbar-track {
+        background: #E7E7E7;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #2AAAEC;
+      }
+
+      /* Handle on hover */
+      //::-webkit-scrollbar-thumb:hover {
+      //  background: #555;
+      //}
+
+      .country {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 0 15px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}

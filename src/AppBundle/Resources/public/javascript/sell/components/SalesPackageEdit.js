@@ -132,7 +132,7 @@ class SalesPackageEdit extends React.Component {
 
         } else if ( territoriesMethod === this.worldwideExcluding ) {
 
-            name = "Worldwide excluding " + excludedTerritories.slice(0, 3).map( ( territory, i )=>{
+            name = "Worldwide excl. " + excludedTerritories.slice(0, 3).map( ( territory, i )=>{
                 return territory.label
             }).join(", ");
         }

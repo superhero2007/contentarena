@@ -4,6 +4,7 @@ import ContentListingPendingBid from '../../main/components/ContentListingPendin
 import {goTo} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
 import ContentListing from "../../main/components/ContentListing";
+import RightsLegend from "../../main/components/RightsLegend";
 
 class PendingDeals extends React.Component {
     constructor(props) {
@@ -32,6 +33,9 @@ class PendingDeals extends React.Component {
         let _this = this;
         this.setState({loading:true, loadingDeclined : true});
         ContentArena.ContentApi.getPendingDeals().done((bids) => {
+            bids.map(bid =>{
+                bid.content = ContentArena.Utils.contentParserFromServer(bid.content)
+            })
             _this.setState({bids: bids, loading : false});
         });
 
@@ -58,11 +62,7 @@ class PendingDeals extends React.Component {
         const defaultRightsPackage = JSON.parse(this.props.rights)
 
         return (
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1
-            }}>
+            <div>
                 <div style={{
                     display: 'flex',
                     padding: '0 0 20px',
@@ -86,6 +86,9 @@ class PendingDeals extends React.Component {
                         {tab === "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.activeBulletIcon} />}
                         {tab !== "declinedbids" && <img  style={{margin:'0px 10px 3px'}} src={this.bulletIcon} />}
                         {this.context.t("PENDING_BIDS_FILTER_DECLINED")}
+                    </div>
+                    <div style={{marginLeft: 'auto'}}>
+                        <RightsLegend />
                     </div>
                 </div>
 
