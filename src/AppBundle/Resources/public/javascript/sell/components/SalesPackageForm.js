@@ -8,6 +8,7 @@ import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
 import {PropTypes} from "prop-types";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
+import moment from "moment";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -453,6 +454,7 @@ class SalesPackageForm extends React.Component {
                                             disabled={installment.type !== "DATE"}
                                             selected={installment.date}
                                             placeholderText={"dd/mm/yyyy"}
+                                            minDate={moment()}
                                             onChange={(date) => {this.setInstallmentDate(date,i)}}
                                             className="small-datepicker"/>
                                     </div>
