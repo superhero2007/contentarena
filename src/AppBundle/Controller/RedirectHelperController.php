@@ -32,4 +32,27 @@ class RedirectHelperController extends BaseController
         return $this->redirect('/messages'.($customId ? ('/'.$customId) : ''));
     }
 
+    /**
+     * @Route("/redirect-integration/messages-by-bid-seller/{bidId}", name="redirectToMessagesThreadFromBidSeller")
+     */
+    public function redirectToMessagesThreadFromBidSeller(Request $request, BidService $bidService, MessageService $messageService)
+    {
+        $user = $this->getUser();
+        $bidId = $request->get("bidId");
+        $bid = $bidService->getBidById($bidId);
+        $customId = '';
+
+        if ($bid) {
+            $thread = $messageService->getThreadByListingAndSeller($bid->getContent(), $user, $user->getCompany());
+            if ($thread) {
+                $customId = $thread->getCustomId();
+            } else {
+                $thread = $messageService->createThread($bid->getContent(), $user);
+                $customId = $thread->getCustomId();
+            }
+        }
+
+        return $this->redirect('/messages'.($customId ? ('/'.$customId) : ''));
+    }
+
 }
