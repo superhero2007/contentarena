@@ -655,7 +655,7 @@
                     {% endif %}
                 {% endfor %}
             </tr>
-            {% if content.rightsPackage | length > 1 or (content.rightsPackage|length==1 and content.rightsPackage|has_right("PR") == false) %}
+            {% if content.selectedRightsBySuperRight | has_content_dedicated_length > 1 or (content.rightsPackage|length==1 and content.rightsPackage|has_right("PR") == false) %}
                 <tr>
                     <td>Graphics</td>
                     {% for right in content.rightsPackage %}
