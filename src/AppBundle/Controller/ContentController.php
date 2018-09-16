@@ -57,7 +57,7 @@ class ContentController extends Controller
         $testPdf = false;
         $success = true;
 
-        if ( $uploadedFile != null && count( $uploadedFile ) > 0 && $uploadedFile->guessExtension() == "pdf" ) {
+        if ( $uploadedFile != null && $uploadedFile->guessExtension() == "pdf" ) {
             $testPdf = true;
         }
 
