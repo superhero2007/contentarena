@@ -753,7 +753,7 @@ class ContentService
     public function saveTmpFiles( Request $request ){
         $files = $request->files->get("file");
 
-        if ( count( $files ) > 0 ) {
+        if ( $files != null ) {
             $fileName = $this->fileUploader->tmpUpload($files);
         }
 
