@@ -74,7 +74,7 @@ class DefaultController extends BaseController
 
         if ($listingId && $listingId != "new" && $listingId != "1"){
             $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $listingId]);
-            $content->setUserCanNotView(!$content->userIsCompanyMember($user));
+            if ($content != null ) $content->setUserCanNotView(!$content->userIsCompanyMember($user));
 
         } else{
             $content = new Content();

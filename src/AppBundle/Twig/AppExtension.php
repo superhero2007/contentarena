@@ -36,6 +36,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('json_decode', array($this, 'jsonDecode')),
             new TwigFilter('right_definitions_label', array($this, 'rightDefinitionsLabel')),
             new TwigFilter('cast_to_array', array($this, 'castToArray')),
+            new TwigFilter('has_content_dedicated_length', array($this, 'hasContentDedicatedLength')),
             new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel'))
         );
     }
@@ -201,6 +202,16 @@ class AppExtension extends AbstractExtension
         }
 
         return $has;
+    }
+
+    public function hasContentDedicatedLength($rights){
+        $length = 0;
+        foreach ($rights as $right){
+            /* @var RightsPackage $right*/
+            if ( $right['items']["CONTENT_DELIVERY"] !== 'CONTENT_DELIVERY_NON_DEDICATED' ) $length+=1;
+        }
+
+        return $length;
     }
 
     public function percentage($total, $percentage){

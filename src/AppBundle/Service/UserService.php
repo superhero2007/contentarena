@@ -102,7 +102,7 @@ class UserService
             if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
             if ( isset($data['address']) ) $company->setAddress($data['address']);
             if ( isset($data['city']) ) $company->setCity($data['city']);
-            if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
+            //if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
             if ( isset($data['description']) ) $company->setDescription($data['description']);
             if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));
 

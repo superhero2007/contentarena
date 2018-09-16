@@ -22,8 +22,8 @@ class Watchlist
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="content", cascade={"remove"})
-     * @ORM\JoinColumn(name="content_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="content")
+     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     private $content;
 

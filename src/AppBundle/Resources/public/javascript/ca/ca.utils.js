@@ -52,9 +52,13 @@ ContentArena.Utils = {
         content.customSeasons = content.seasons.filter(s=>{
             return s.externalId && s.externalId.startsWith("ca:")
         }).map((s,i)=>{
-            let years = s.year.split("/");
-            s.from = years.length === 1 ? years[0] : 2000 + Number(years[0]);
-            s.to = years.length === 1 ? null : 2000 + Number(years[1]);
+            let years;
+            if (s.year){
+                years = s.year.split("/");
+                s.from = years.length === 1 ? years[0] : 2000 + Number(years[0]);
+                s.to = years.length === 1 ? null : 2000 + Number(years[1]);
+            }
+
             if (content.fixturesBySeason){
                 s.fixtures = content.fixturesBySeason[i]
             }

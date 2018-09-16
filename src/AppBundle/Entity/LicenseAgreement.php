@@ -58,6 +58,13 @@ class LicenseAgreement
     private $company;
 
     /**
+     * @var mixed
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
      * Get id
      *
      * @return int
@@ -153,6 +160,22 @@ class LicenseAgreement
     public function setCompany($company)
     {
         $this->company = $company;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
 

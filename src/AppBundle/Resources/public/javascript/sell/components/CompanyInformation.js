@@ -69,7 +69,7 @@ class CompanyInformation extends React.Component {
                         <input
                             type={"text"}
                             style={inputStyle}
-                            onChange={(e) => { this.updateCompanyContent(e, "legalName")}}
+                            disabled={true}
                             value={company.legalName}/>
                     </div>
 

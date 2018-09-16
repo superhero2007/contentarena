@@ -86,17 +86,23 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('content');
 
         if($term){
+
+            preg_match('/(20([0-9][0-9]))/', $term, $matches);
+
+            if ($matches != null){
+                $fullYear = $matches[0];
+                $year = intval(substr($matches[0], -2));
+                $nextYear = $year."/".($year + 1);
+                $prevYear = ($year -1)."/".$year;
+            }
+
             $query
                 ->leftJoin('content.company', 'com')
                 ->leftJoin('content.tournament', 't')
                 ->leftJoin('content.sportCategory', 'cat')
                 ->leftJoin('content.sports', 'sport')
                 ->leftJoin('content.seasons', 'season')
-                //->leftJoin('content.rightsPackage', 'rights')
-                //->orWhere('content.description LIKE :value')
-                //->orWhere('content.selectedRightsBySuperRight LIKE :value')
                 ->orWhere('content.name LIKE :value')
-                //->orWhere('com.legalName LIKE :value')
                 ->orWhere('content.editedProgramName LIKE :value')
                 ->orWhere('content.fixturesBySeason LIKE :value')
                 ->orWhere('t.name LIKE :value')
@@ -104,6 +110,18 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->orWhere('sport.name LIKE :value')
                 ->orWhere('season.name LIKE :value')
                 ->setParameter('value', '%'.trim($term).'%');
+
+            if ( isset($year) ){
+                $query
+                    ->orWhere('season.year LIKE :year')
+                    ->orWhere('season.name LIKE :year')
+                    ->orWhere('season.year LIKE :prevYear')
+                    ->orWhere('season.year LIKE :nextYear')
+                    ->setParameter('year', $fullYear)
+                    ->setParameter('prevYear', $prevYear)
+                    ->setParameter('nextYear', $nextYear);
+            }
+
         } else {
             if($exclusive == true){
                 $query

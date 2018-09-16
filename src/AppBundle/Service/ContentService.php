@@ -12,6 +12,7 @@ use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\User;
@@ -44,10 +45,10 @@ class ContentService
             $filter = $this->em->getRepository('AppBundle:ContentFilter')->findOneBy(array('id' => $filterId));
         } else {
             $filter = $this->getFilterFromResponse( $request );
-            if ( count( $filter->getTerritories() ) > 0 && count( $filter->getCountries() ) == 0 ) {
-                $countries = $this->em->getRepository('AppBundle:Country')->findBy(array('territory' => $filter->getTerritories()));
-                $filter->setCountries($countries);
-            }
+            //if ( count( $filter->getTerritories() ) > 0 && count( $filter->getCountries() ) == 0 ) {
+            //    $countries = $this->em->getRepository('AppBundle:Country')->findBy(array('territory' => $filter->getTerritories()));
+            //    $filter->setCountries($countries);
+            //}
         }
 
         $term = null;
@@ -195,6 +196,10 @@ class ContentService
             $content->setAnnex($modelListing->getAnnex());
             $content->setEditedProgramName($modelListing->getEditedProgramName());
             $content->setLaw($modelListing->getLaw());
+            $content->setWebsite($modelListing->getWebsite());
+            $content->setExtraData($modelListing->getExtraData());
+
+
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
 
             $rights = [];
@@ -684,7 +689,7 @@ class ContentService
             if ( isset($data->registrationNumber) ) $company->setRegistrationNumber($data->registrationNumber);
             if ( isset($data->address) ) $company->setAddress($data->address);
             if ( isset($data->city) ) $company->setCity($data->city);
-            if ( isset($data->legalName) ) $company->setLegalName($data->legalName);
+            //if ( isset($data->legalName) ) $company->setLegalName($data->legalName);
             if ( isset($data->country) ) $company->setCountry($this->getCountry($data->country->name));
 
             $this->em->persist($company);
@@ -732,12 +737,12 @@ class ContentService
             $content->setImage($savedImage);
         }
 
-        if ( count( $license ) > 0 ) {
+        if ( $license != null && count( $license ) > 0 ) {
             $licenseFileName = $this->fileUploader->upload($license[0]);
             $content->setOwnLicense($licenseFileName);
         }
 
-        if ( count($brochure) > 0 ){
+        if ( $brochure != null &&  count($brochure) > 0 ){
             $brochureFileName = $this->fileUploader->upload($brochure[0]);
             $content->setBrochure($brochureFileName);
         }
@@ -748,7 +753,7 @@ class ContentService
     public function saveTmpFiles( Request $request ){
         $files = $request->files->get("file");
 
-        if ( count( $files ) > 0 ) {
+        if ( $files != null ) {
             $fileName = $this->fileUploader->tmpUpload($files);
         }
 
@@ -762,13 +767,13 @@ class ContentService
                 ->getRepository('AppBundle:Season')
                 ->findOneBy(array('externalId' => $seasonData->externalId));
 
-        } else if ( isset($seasonData->name)  ){
+        } else if ( isset($seasonData->name) && $seasonData->name != ""  ){
             $season = $this->em
                 ->getRepository('AppBundle:Season')
                 ->findOneBy(array('name' => $seasonData->name));
         }
 
-        if (!$season) {
+        if ( !isset($season) || $season == null || !$season) {
             $season = new Season();
 
             if ( isset( $tournament) ) {
@@ -798,7 +803,6 @@ class ContentService
                 }
             }
             $this->em->persist($season);
-
         }
 
         return $season;
