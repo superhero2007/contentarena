@@ -18,7 +18,9 @@ class CommercialSalesBundle extends React.Component{
             approveModalIsOpen : false,
             rejectModalIsOpen : false,
             removeModalIsOpen : false,
-            showBids : props.bidsOpen
+            showBids : props.bidsOpen,
+            territoriesList : [],
+            showAllTerritories : false
 
         }
     }
@@ -175,6 +177,39 @@ class CommercialSalesBundle extends React.Component{
         </Modal>
     };
 
+    showAllTerritories = (extraTerritories) => {
+        this.setState({
+            showAllTerritories : true,
+            territoriesList : extraTerritories
+        })
+    };
+
+    closeTerritoriesModal = () => {
+        this.setState({ showAllTerritories: false});
+    };
+
+    allTerritories = () => {
+
+        return <Modal
+            isOpen={this.state.showAllTerritories}
+            onRequestClose={this.closeTerritoriesModal}
+            bodyOpenClassName={"selector"}
+            style={customStyles}
+        >
+
+            <div className="modal-inner">
+                {
+                    this.state.territoriesList.map(territory =>{
+                        return <div className="country-modal">
+                            {territory.label}
+                        </div>
+                    })
+                }
+            </div>
+
+        </Modal>
+    };
+
     render(){
         const { salesBundle, company, onDelete, contentId } = this.props;
         const { showBids } = this.state;
@@ -182,16 +217,36 @@ class CommercialSalesBundle extends React.Component{
         let closedDeals = salesBundle.bids.filter(b=>b.status.name === "APPROVED");
         let totalFee = (closedDeals.length > 0) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
         let _this = this;
+        let extraTerritories = ( salesBundle.territoriesMethod === this.worldwideExcluding) ? salesBundle.excludedTerritories : salesBundle.territories;
+
 
         return (
             <div className="commercial-sales-bundles">
                 {this.renderApproveModal()}
                 {this.renderRejectModal()}
                 {this.renderRemoveModal()}
+                {this.allTerritories()}
                 <div className="commercial-sales-bundles-container" onClick={()=>{this.setState({showBids: !showBids})}}>
                     <div className="sales-bundle-item">
-                        {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&<img style={{width: 26, height: 23}} src={fixedIcon}/>}
+                        {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&
+                        <img style={{width: 26, height: 23, marginRight: 5}} src={fixedIcon}/>}
                         {salesBundle.name}
+
+                        {
+                            extraTerritories && extraTerritories.length > 3 && <span
+                                style={{
+                                    color: '#2DA7E6',
+                                    textDecoration: 'underline',
+                                    marginLeft : 5
+                                }}
+                                onClick={(e) => {
+                                    this.showAllTerritories(extraTerritories);
+                                    e.stopPropagation();
+                                }}>
+                                                {"+" + (extraTerritories.length - 3)}
+                                            </span>
+                        }
+
                     </div>
 
                     <div className="sales-bundle-item">
