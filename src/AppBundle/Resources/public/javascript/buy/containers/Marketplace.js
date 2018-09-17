@@ -13,6 +13,8 @@ import {goToListing} from "../../main/actions/utils";
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {updateProfile} from "../../main/actions/userActions";
 import RightsLegend from "../../main/components/RightsLegend";
+import LocalStorageHelper from '../../main/utiles/localStorageHelper';
+import first from 'lodash/first';
 import {PropTypes} from "prop-types";
 const queryString = require('query-string');
 
@@ -115,40 +117,59 @@ class Marketplace extends React.Component {
         });
     };
 
-    parseFilter = (filter) =>{
+    parseFilter = (filter) => {
+        const sports = LocalStorageHelper.getSportsSelected();
+        const sportsFromStorege = sports ? [{name: sports.value}] : null;
+        const sportsFromProps = filter.sport ? [{name: filter.sport.value}] : null;
+        const exclusiveFromStorege = LocalStorageHelper.getExclusive();
+        const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
+        const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
+
         let response = {
             rights: filter.rights,
-            countries: filter.countries,
+            countries: countriesFromStorage || filter.countries,
         };
 
-        if ( filter.sport ) {
-            response.sports = (filter.sport.value) ? [{name: filter.sport.label}] : (!filter.sport.label) ? [{name: filter.sport}] : null;
-        }
-        if ( filter.exclusive ) response.exclusive = filter.exclusive;
         if ( filter.event ) response.event = filter.event;
-        if ( filter.includeAllCountries ) response.includeAllCountries = filter.includeAllCountries;
+
+        if(exclusiveFromStorege || filter.exclusive) {
+            response.exclusive = exclusiveFromStorege || filter.exclusive;
+        }
+        if (sportsFromStorege || first(sportsFromProps.name)) {
+            response.sports = sportsFromStorege || sportsFromProps;
+        }
+        if(allCountriesFromStorage || filter.includeAllCountries) {
+            response.includeAllCountries = allCountriesFromStorage || filter.includeAllCountries;
+        }
 
         return response;
     };
 
     parseFilterForUrl = (filter) =>{
 
+        const sports = LocalStorageHelper.getSportsSelected();
+        const sportsFromStorage = sports ? [{name: sports.value}] : null;
+        const sportsFromProps = filter.sport ? [{name: filter.sport.value}] : null;
+        const exclusiveFromStorage = LocalStorageHelper.getExclusive();
+        const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
+        const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
+
         let response = {
             rights: filter.rights,
-            countries: filter.countries,
+            countries: countriesFromStorage || filter.countries,
         };
 
-        if ( filter.sport && filter.sport.value && filter.sport.label !== "All sports" ) {
-            response.sport = filter.sport.label
-        }
-
-        if ( filter.sport && !filter.sport.value && !filter.sport.label) {
-            response.sport = filter.sport
-        }
-
-        if ( filter.exclusive ) response.exclusive = filter.exclusive;
-        if ( filter.includeAllCountries ) response.includeAllCountries = filter.includeAllCountries;
         if ( filter.event ) response.event = filter.event;
+
+        if(exclusiveFromStorage || filter.exclusive) {
+            response.exclusive = exclusiveFromStorage || filter.exclusive;
+        }
+        if (sportsFromStorage || sportsFromProps) {
+            response.sports = sportsFromStorage || sportsFromProps;
+        }
+        if(allCountriesFromStorage || filter.includeAllCountries) {
+            response.includeAllCountries = allCountriesFromStorage || filter.includeAllCountries;
+        }
 
         return response;
     };
@@ -169,11 +190,9 @@ class Marketplace extends React.Component {
     };
 
     filter = () => {
-
         const { filter } = this.props;
         let parsedFilter = this.parseFilter(filter);
         this.getContent(parsedFilter);
-
     };
 
     filterByRoute = () => {
@@ -193,8 +212,6 @@ class Marketplace extends React.Component {
             return str.join("&");
         };
         history.push("/marketplace/filter/multi?"+serialize(this.parseFilterForUrl(filter)));
-
-
     };
 
     render () {

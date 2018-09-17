@@ -134,7 +134,7 @@ class ContentListing extends React.Component{
 
         return this.compareProperty(a.territories.length, b.territories.length)
             || this.compareProperty(a.name, b.name);
-};
+    };
 
     sortByFilter = (salesPackages) => {
 
