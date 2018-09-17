@@ -35,6 +35,11 @@ export const updateSport = sport => ({
     sport
 });
 
+export const updateAllFilters = filters => ({
+    type: filterTypes.UPDATE_FILTERS_CONFIG,
+    filters
+});
+
 export const updateEvent = event => ({
     type: filterTypes.UPDATE_EVENT,
     event

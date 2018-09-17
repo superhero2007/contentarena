@@ -2,37 +2,107 @@ import React from 'react';
 import { connect } from "react-redux";
 import {
     addRight, clearFilter, removeRight, updateCountries, updateExclusive,
-    updateIncludedCountries
+    updateIncludedCountries, updateAllFilters
 } from "../actions/filterActions";
 import CountrySelector from "../../main/components/CountrySelector";
-import {PropTypes} from "prop-types";
+import { PropTypes } from "prop-types";
 import PopupCountrySelector from "../../main/components/PopupCountrySelector";
-import {cancelIcon} from "../../main/components/Icons";
+import { cancelIcon } from "../../main/components/Icons";
+import first from 'lodash/first';
+import localStorageEnums from '../../main/constants/localStorageEnums';
+import LocalStorageHelper from '../../main/utiles/localStorageHelper';
 
 class RightsFilter extends React.Component {
-
     constructor(props) {
         super(props);
-        this.state = {
+
+        this.worldwideCountries = 242; // todo: should be global constant
+    }
+
+    componentDidMount() {
+        if (!this.props.syncWithLocalStorage) {
+            this.syncPropsWithLocalStorage();
+        }
+    }
+
+    syncPropsWithLocalStorage = () => {
+        const { exclusive, includeAllCountries, countries } = this.props;
+
+        const checkboxesFromStorage = LocalStorageHelper.getRightsCheckboxSelected();
+        const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
+        const exclusiveFromStorage = LocalStorageHelper.getExclusive();
+
+        const config = {
+            rights: checkboxesFromStorage,
+            exclusive: exclusiveFromStorage || exclusive,
+            countries: countriesFromStorage || countries,
+            includeAllCountries: (countriesFromStorage && countriesFromStorage.length === this.worldwideCountries) || includeAllCountries,
+            syncWithLocalStorage : true
         };
 
-        this.worldwideCountries = 242;
-    }
+        this.props.updateAllFilters(config);
+    };
 
     componentWillReceiveProps(nextProps) {
         console.log("RightsFilter", nextProps)
     }
 
-    selectTerritory = (countries) => {
-        countries = countries[0] === null ? [] : countries;
-        let includeAllCountries = (this.refs.countrySelector.state.selectedOption === "multiple");
-        this.props.updateCountries(countries);
+    selectTerritory = selectedCountry => {
+        selectedCountry = first(selectedCountry) ? selectedCountry : [];
+        let includeAllCountries = selectedCountry.length === this.worldwideCountries;
+
+        if (selectedCountry.length === 1) {
+            const selectedCountryObj = first(selectedCountry);
+            localStorage.setItem(localStorageEnums.TERRITORIES, JSON.stringify([selectedCountryObj.value]));
+        } else if(selectedCountry.length > 1) {
+            const selectedCoutryFormatted = selectedCountry.map(country => country.value);
+            localStorage.setItem(localStorageEnums.TERRITORIES, JSON.stringify(selectedCoutryFormatted));
+        } else {
+            localStorage.removeItem(localStorageEnums.TERRITORIES);
+        }
+
+        this.props.updateCountries(selectedCountry);
         this.props.updateIncludedCountries(includeAllCountries);
     };
 
+    onChangeRight(right, event){
+        if (event.target.checked) {
+            localStorage.setItem(localStorageEnums[right.shortLabel], right.id);
+            this.props.addRight(right.id);
+        } else {
+            localStorage.removeItem(localStorageEnums[right.shortLabel]);
+            this.props.removeRight(right.id);
+        }
+    };
+
+    onChangeExclusive = event => {
+        const { checked } = event.target;
+        localStorage.setItem(localStorageEnums.EXCLUSIVE, checked);
+        this.props.updateExclusive(checked);
+    };
+
+    onClearFilter = () => {
+        localStorage.clear();
+        this.props.clearFilter();
+    };
+
+    onApplyFilter = () => {
+        this.props.onFilter();
+    };
+
     render() {
-        const {rights,rightsPackage,countries, onFilter, exclusive, clearFilter, includeAllCountries} = this.props;
-        let countriesValue  = (countries[0] && countries[0]) ? {label: countries[0], value: countries[0]} : '';
+        const {rights,rightsPackage,countries, exclusive, includeAllCountries} = this.props;
+        let countriesValue  = first(countries) ? {label: first(countries), value: first(countries)} : '';
+
+        const isWorldWideCountriesSelected = countries.length === this.worldwideCountries;
+        const isMoreThanOneSelected = countries.length > 1 && countries.length !== this.worldwideCountries;
+        const countriesInputValueObj = {
+            isShown: isWorldWideCountriesSelected || isMoreThanOneSelected,
+            value: isMoreThanOneSelected ? `${countries.length} territories` :
+                isWorldWideCountriesSelected ? 'Worldwide' : '',
+            isDisabled: isMoreThanOneSelected && !isWorldWideCountriesSelected,
+            isReadonly: isWorldWideCountriesSelected
+        };
 
         return (
             <div>
@@ -42,7 +112,7 @@ class RightsFilter extends React.Component {
                     </div>
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
-                        {countries.length <= 1 &&
+                        {!countriesInputValueObj.isShown &&
                         <CountrySelector
                             multi={false}
                             className={"base-input-select"}
@@ -52,19 +122,21 @@ class RightsFilter extends React.Component {
                             }}/>
                         }
 
-                        {countries.length > 1 && countries.length !== this.worldwideCountries &&
-                        <input type="text" className="ca-form-control" value={countries.length +" territories"} disabled/>
-                        }
+                        {countriesInputValueObj.isShown &&
+                            <React.Fragment>
+                                <input
+                                    type="text"
+                                    className="ca-form-control"
+                                    value={countriesInputValueObj.value}
+                                    disabled={countriesInputValueObj.isDisabled}
+                                    readOnly={countriesInputValueObj.isReadonly} />
 
-                        {countries.length === this.worldwideCountries &&
-                        <input type="text" className="ca-form-control" value={"Worldwide"} readonly/>
-                        }
+                                <img className="territories-icon" src={cancelIcon}
+                                     onClick={() => {
+                                         this.selectTerritory([])
+                                     }}/>
 
-                        {countries.length > 1 &&
-                        <img className="territories-icon" src={cancelIcon}
-                             onClick={()=>{
-                                 this.selectTerritory([])
-                             }}/>
+                            </React.Fragment>
                         }
 
                         <PopupCountrySelector ref="countrySelector"
@@ -81,20 +153,16 @@ class RightsFilter extends React.Component {
                             {this.context.t("MARKETPLACE_LABEL_FILTER_RIGHTS")}
                         </div>
                         {
-                            rightsPackage && rightsPackage.map((right,i) => {
+                            rightsPackage && rightsPackage.map((right) => {
+                                const isChecked = rights.includes(right.id);
+
                                 return (
                                     <div key={right.id} className="filter-right">
                                         <input
                                             className='ca-checkbox checkbox-item'
                                             type='checkbox'
-                                            checked={rights.indexOf(right.id) !== -1}
-                                            onChange={(e) => {
-                                                if ( e.target.checked ) {
-                                                    this.props.addRight(right.id)
-                                                } else {
-                                                    this.props.removeRight(right.id)
-                                                }
-                                            }}
+                                            checked={isChecked}
+                                            onChange={this.onChangeRight.bind(this, right)}
                                             id={right.id}
                                         />
                                         <label htmlFor={right.id}>
@@ -111,9 +179,7 @@ class RightsFilter extends React.Component {
                                 type="checkbox"
                                 checked={exclusive}
                                 className="ca-checkbox checkbox-item"
-                                onChange={(e) => {
-                                    this.props.updateExclusive(e.target.checked)
-                                }}
+                                onChange={this.onChangeExclusive}
                             />
                             {this.context.t("MARKETPLACE_LABEL_FILTER_EXCLUSIVE")}
                         </div>
@@ -126,10 +192,10 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="ca-btn ca-btn-primary" style={{margin:5}} onClick={onFilter}>
+                        <button className="ca-btn ca-btn-primary" style={{margin:5}} onClick={this.onApplyFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_APPLY")}
                         </button>
-                        <button className="ca-btn ca-btn-link" style={{margin:5}} onClick={clearFilter}>
+                        <button className="ca-btn ca-btn-link" style={{margin:5}} onClick={this.onClearFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>
                     </div>
@@ -155,7 +221,8 @@ const mapDispatchToProps = dispatch => {
         updateCountries: countries => dispatch(updateCountries(countries)),
         updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
         updateIncludedCountries: includeAllCountries => dispatch(updateIncludedCountries(includeAllCountries)),
-        clearFilter : () => dispatch(clearFilter())
+        clearFilter : () => dispatch(clearFilter()),
+        updateAllFilters: filters => dispatch(updateAllFilters(filters))
     }
 };
 

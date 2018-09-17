@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Select from 'react-select';
 import {updateEvent, updateSport} from "../actions/filterActions";
 import {searchIcon} from "../../main/components/Icons";
+import localStorageEnums from '../../main/constants/localStorageEnums';
 import {PropTypes} from 'prop-types';
 
 class EventFilter extends React.Component {
@@ -25,13 +26,18 @@ class EventFilter extends React.Component {
         } else {
             this.setState({sports: ContentArena.Data.ActiveSports});
         }
+
+        this.syncPropsWithLocalStorage();
     }
 
-    componentWillReceiveProps(nextProps) {
+    syncPropsWithLocalStorage() {
+        const sports = localStorage.getItem(localStorageEnums.SPORTS) && JSON.parse(localStorage.getItem(localStorageEnums.SPORTS));
+        if (sports && sports.label !== this.props.sport.label) {
+            this.props.selectSport(sports);
+        }
     }
 
     getOptions = () => {
-        const {filter = [], available} = this.props;
         const {sports} = this.state;
 
         let countries = sports.filter(s=>s.name).map((i,k)=>({value : i.name , label : i.name }));
@@ -43,9 +49,9 @@ class EventFilter extends React.Component {
         this.setState({tab});
     };
 
-    selectSport = (e) => {
-
-        this.props.selectSport(e);
+    onSelectSport = (selectedSport) => {
+        localStorage.setItem(localStorageEnums.SPORTS, JSON.stringify(selectedSport));
+        this.props.selectSport(selectedSport);
     };
 
     updateEvent = (e) => {
@@ -53,9 +59,8 @@ class EventFilter extends React.Component {
     };
 
     handleFilter = () => {
-        const {onFilter} = this.props;
-        onFilter();
-    }
+        this.props.onFilter();
+    };
 
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -64,7 +69,10 @@ class EventFilter extends React.Component {
     };
 
     render() {
-        const {sport, event} = this.props;
+        const { sport, event } = this.props;
+        const sportFromStorage = localStorage.getItem(localStorageEnums.SPORTS) &&
+            JSON.parse(localStorage.getItem(localStorageEnums.SPORTS));
+        const sportValue = sportFromStorage ? sportFromStorage : sport;
         return (
             <div>
                 <div className="box">
@@ -93,8 +101,8 @@ class EventFilter extends React.Component {
                         name="form-field-name"
                         multi={false}
                         className="sport-input-filter"
-                        onChange={this.selectSport}
-                        value={sport}
+                        onChange={this.onSelectSport}
+                        value={sportValue}
                         options={this.getOptions()}
                     />
                 </div>

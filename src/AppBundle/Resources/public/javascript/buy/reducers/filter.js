@@ -9,7 +9,8 @@ export const filterTypes= {
     UPDATE_EVENT : 'UPDATE_EVENT',
     CLEAR : 'CLEAR',
     CLEAR_UPDATE : 'CLEAR_UPDATE',
-    UPDATE_MANY : 'UPDATE_MANY'
+    UPDATE_MANY : 'UPDATE_MANY',
+    UPDATE_FILTERS_CONFIG: "UPDATE_ALL"
 };
 
 const defaultFilter = {
@@ -22,8 +23,8 @@ const defaultFilter = {
         label : "All sports"
     },
     event : "",
-    forceUpdate : true
-
+    forceUpdate : true,
+    syncWithLocalStorage: false
 };
 
 export const filter = (state = defaultFilter, action) => {
@@ -62,6 +63,8 @@ export const filter = (state = defaultFilter, action) => {
             return Object.assign({}, state, {
                 sport: action.sport
             });
+        case filterTypes.UPDATE_FILTERS_CONFIG:
+            return Object.assign({}, state, action.filters);
         case filterTypes.UPDATE_EVENT:
             return Object.assign({}, state, {
                 event: action.event
