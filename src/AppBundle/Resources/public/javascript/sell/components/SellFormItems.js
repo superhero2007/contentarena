@@ -21,20 +21,22 @@ export const TitleBar = ({title, subtitle, infoText}) => (
     </div>
 );
 
-export const SummaryText = ({sports, sportCategory, tournament, seasons}) => {
+export const SummaryText = ({sports, sportCategory, tournament, seasons, customCategory, customTournament}) => {
 
     let summary = "", rounds = [], fixtures = [], matches = [];
 
     if (sports.length === 0 && sportCategory.length === 0 && tournament.length === 0) return null;
 
     summary += sports[0].name;
-    if ( sportCategory.length > 0 )  summary += " - " + sportCategory[0].name;
-    if ( tournament.length > 0 )  summary += " - " + tournament[0].name;
+    if ( sportCategory.length > 0 && !sportCategory[0].custom )  summary += " - " + sportCategory[0].name;
+    if ( customCategory && customCategory != "") summary += " - " + customCategory;
+    if ( tournament.length > 0 && !tournament[0].custom )  summary += " - " + tournament[0].name;
+    if ( customTournament && customTournament != "") summary += " - " + customTournament;
     if ( seasons.length > 0 ){
         const seasonsStr = [];
         seasons.forEach(s => {
-            const str = s.custom ? `${s.from}/${s.to}` : s.year;
-            seasonsStr.push(str);
+            const str = s.custom && s.from && s.to ? `${s.from}/${s.to}` : (s.custom && s.from) ? s.from : (s.year) ? s.year: null;
+            if (str) seasonsStr.push(str);
             if ( s.fixtures ) fixtures = [...fixtures, ...s.fixtures];
         });
 

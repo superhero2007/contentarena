@@ -190,6 +190,7 @@ class ContentListing extends React.Component{
             checkExpired,
             status,
             declined,
+            onDelete,
             customId
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
@@ -335,7 +336,7 @@ class ContentListing extends React.Component{
                                 {this.context.t("Placed by:")} <b>{bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</b>
                             </div>
 
-                            {bid.status.name === "REJECTED" && (
+                            {declined && (
                                 <div className="bid-remove"
                                      onClick={(e)=>{this.setState({showRemoveConfirm: true});e.stopPropagation();}}
                                 >
