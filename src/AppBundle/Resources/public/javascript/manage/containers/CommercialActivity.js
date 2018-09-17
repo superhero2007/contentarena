@@ -148,7 +148,6 @@ class CommercialActivity extends React.Component {
                              }}>
                             {filter==="ALL" && <img src={this.activeBulletIcon} />}
                             {filter!=="ALL" && <img src={this.bulletIcon} />}
-
                             {this.context.t("COMMERCIAL_ACTIVITY_FILTER_ALL")}
                         </div>
                         <div className={"status-filter-item"}

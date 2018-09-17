@@ -247,7 +247,7 @@ class BoardListing extends React.Component{
                     {status.name === 'EXPIRED' && <img src={expiredIcon} />}
                     {status.name === 'SOLD_OUT' && <img src={soldIcon} />}
                     {hasPendingBids &&  <img src={exclamationRoundIcon} />}
-                        </div>}
+                </div>}
 
                 <div  className="menu-icon" onClick={this.toggleOptions}>
                     <img src={this.dotsIcon} />

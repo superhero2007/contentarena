@@ -1,6 +1,6 @@
 @import "vars";
 
-.manager-container{
+.manager-container {
   padding: 0 20px 20px;
   flex: 1;
   display: flex;
@@ -8,7 +8,7 @@
   //overflow: auto;
 }
 
-.manager-header{
+.manager-header {
   $barHeight: 65px;
   display: flex;
   align-items: center;
@@ -16,13 +16,13 @@
   min-height: $barHeight;
   margin-bottom: 20px;
   background: #fff;
-  box-shadow: 0 1px 9px rgba(0,0,0,0.21);
+  box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
   .logo {
     cursor: pointer;
-	flex: 150px 0 0;    margin-right: 40px;
+    flex: 150px 0 0;
+    margin-right: 40px;
   }
-
-  a{
+  a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,8 +46,8 @@
   .spacer {
     margin-right: auto;
   }
-  .active-tab{
-    a{
+  .active-tab {
+    a {
       position: relative;
       &:after {
         content: "";
@@ -56,7 +56,8 @@
         width: 100%;
         border-bottom: 4px solid #296380;
         bottom: -4px;
-      }}
+      }
+    }
 
   }
   .settings {
@@ -124,7 +125,7 @@
       border: 1px solid lightgray;
       background-color: #fff;
       z-index: 1;
-      
+
       .caption {
         padding: 5px 10px;
         border-bottom: 1px solid lightgray;
@@ -162,14 +163,14 @@
   }
 }
 
-.manager-content{
+.manager-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0 15px;
 }
 
-.manager-content-message{
+.manager-content-message {
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -220,10 +221,10 @@
     .rt-tr-group {
       border-color: #EEF3F6;;
     }
-    .rt-tr  {
-     &.-even {
-       background-color: #F4F6F9;
-     }
+    .rt-tr {
+      &.-even {
+        background-color: #F4F6F9;
+      }
     }
     .rt-td {
       color: black;
@@ -243,7 +244,7 @@
   }
 }
 
-.new-listing-button{
+.new-listing-button {
   background-color: #2AAAEC;
   color: white;
   border: none;
@@ -258,18 +259,18 @@
   height: 46px;
 }
 
-.new-listing-button:hover{
+.new-listing-button:hover {
   text-decoration: none;
   color: white;
 }
 
-.manager-filter-container{
+.manager-filter-container {
   display: flex;
   flex-direction: row;
   flex: 1;
   margin-top: -20px;
   height: 60px;
-  .listing-filter{
+  .listing-filter {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -279,7 +280,7 @@
       width: 100%;
     }
   }
-  .status-filter{
+  .status-filter {
     display: flex;
     justify-content: flex-end;
     color: #4F4F4F;
@@ -287,7 +288,7 @@
     font-weight: 600;
     flex: 2;
     align-items: center;
-    .status-filter-item{
+    .status-filter-item {
       margin: 0 20px;
       cursor: pointer;
       img {
