@@ -125,7 +125,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                     ->orWhere('season.name LIKE :year')
                     ->orWhere('season.year LIKE :prevYear')
                     ->orWhere('season.year LIKE :nextYear')
-                    ->orWhere('content.extraData LIKE :year')
+                    ->orWhere('content.editedProgramYear LIKE :year')
                     ->setParameter('year', $fullYear)
                     ->setParameter('prevYear', $prevYear)
                     ->setParameter('nextYear', $nextYear);
