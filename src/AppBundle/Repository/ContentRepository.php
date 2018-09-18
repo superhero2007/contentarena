@@ -87,7 +87,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
         if($term){
 
-            preg_match('/(20([0-9][0-9]))/', $term, $matches);
+            preg_match('/(19([0-9][0-9])|20([0-9][0-9]))/', $term, $matches);
 
             if ($matches != null){
                 $fullYear = $matches[0];
@@ -125,7 +125,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                     ->orWhere('season.name LIKE :year')
                     ->orWhere('season.year LIKE :prevYear')
                     ->orWhere('season.year LIKE :nextYear')
-                    ->orWhere('content.extraData LIKE :year')
+                    ->orWhere('content.editedProgramYear LIKE :year')
                     ->setParameter('year', $fullYear)
                     ->setParameter('prevYear', $prevYear)
                     ->setParameter('nextYear', $nextYear);

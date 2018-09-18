@@ -195,6 +195,7 @@ class ContentService
             $content->setAttachments($modelListing->getAttachments());
             $content->setAnnex($modelListing->getAnnex());
             $content->setEditedProgramName($modelListing->getEditedProgramName());
+            $content->setEditedProgramYear($modelListing->getEditedProgramYear());
             $content->setLaw($modelListing->getLaw());
             $content->setWebsite($modelListing->getWebsite());
             $content->setExtraData($modelListing->getExtraData());
@@ -543,6 +544,7 @@ class ContentService
         if ( isset($data->annex) ) $content->setAnnex($data->annex);
         if ( isset($data->law) ) $content->setLaw($data->law);
         if ( isset($data->PROGRAM_NAME) ) $content->setEditedProgramName($data->PROGRAM_NAME);
+        if ( isset($data->PROGRAM_YEAR) ) $content->setEditedProgramYear($data->PROGRAM_YEAR);
         if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
 

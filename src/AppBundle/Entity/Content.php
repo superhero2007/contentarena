@@ -167,6 +167,13 @@ class Content
     private $editedProgramName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="edited_program_year", type="string", length=5, nullable=true)
+     */
+    private $editedProgramYear;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="vat_percentage", type="integer", nullable=true)
@@ -1434,6 +1441,23 @@ class Content
     {
         $this->bundlesWithActivity = $bundlesWithActivity;
     }
+
+    /**
+     * @return string
+     */
+    public function getEditedProgramYear()
+    {
+        return $this->editedProgramYear;
+    }
+
+    /**
+     * @param string $editedProgramYear
+     */
+    public function setEditedProgramYear($editedProgramYear)
+    {
+        $this->editedProgramYear = $editedProgramYear;
+    }
+
 
 
 
