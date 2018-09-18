@@ -87,7 +87,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
         if($term){
 
-            preg_match('/(20([0-9][0-9]))/', $term, $matches);
+            preg_match('/(19([0-9][0-9])|20([0-9][0-9]))/', $term, $matches);
 
             if ($matches != null){
                 $fullYear = $matches[0];
