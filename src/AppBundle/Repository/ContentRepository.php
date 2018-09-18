@@ -101,15 +101,23 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('content.tournament', 't')
                 ->leftJoin('content.sportCategory', 'cat')
                 ->leftJoin('content.sports', 'sport')
-                ->leftJoin('content.seasons', 'season')
-                ->orWhere('content.name LIKE :value')
-                ->orWhere('content.editedProgramName LIKE :value')
-                ->orWhere('content.fixturesBySeason LIKE :value')
-                ->orWhere('t.name LIKE :value')
-                ->orWhere('cat.name LIKE :value')
-                ->orWhere('sport.name LIKE :value')
-                ->orWhere('season.name LIKE :value')
-                ->setParameter('value', '%'.trim($term).'%');
+                ->leftJoin('content.seasons', 'season');
+
+            $parts = explode(" ",trim($term));
+
+            foreach ($parts as $key => $val){
+                $query
+                    ->orWhere('content.name LIKE :value'.$key)
+                    ->orWhere('content.editedProgramName LIKE :value'.$key)
+                    ->orWhere('content.fixturesBySeason LIKE :value'.$key)
+                    ->orWhere('t.name LIKE :value'.$key)
+                    ->orWhere('cat.name LIKE :value'.$key)
+                    ->orWhere('sport.name LIKE :value'.$key)
+                    ->orWhere('season.name LIKE :value'.$key)
+                    ->setParameter('value'.$key, '%'.trim($val).'%');
+            }
+
+
 
             if ( isset($year) ){
                 $query
@@ -117,6 +125,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                     ->orWhere('season.name LIKE :year')
                     ->orWhere('season.year LIKE :prevYear')
                     ->orWhere('season.year LIKE :nextYear')
+                    ->orWhere('content.extraData LIKE :nextYear')
                     ->setParameter('year', $fullYear)
                     ->setParameter('prevYear', $prevYear)
                     ->setParameter('nextYear', $nextYear);
