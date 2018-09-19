@@ -40,6 +40,9 @@ class PendingDeals extends React.Component {
         });
 
         ContentArena.ContentApi.getRejectedDeals().done((declinedBids) => {
+            declinedBids.map(bid =>{
+                declinedBids.content = ContentArena.Utils.contentParserFromServer(bid.content)
+            })
             _this.setState({declinedBids: declinedBids, loadingDeclined : false});
         });
     };
