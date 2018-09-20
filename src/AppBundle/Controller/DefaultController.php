@@ -89,7 +89,7 @@ class DefaultController extends BaseController
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'     =>  $serializer->serialize($content, 'json'),
             'loggedUser'     => $user,
-            'loggedUserData' => ($user) ? $serializer->serialize($user, 'json',SerializationContext::create()->enableMaxDepthChecks()): null,
+            'loggedUserData' => ($user) ? $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings'))): null,
             'company'        => ($user) ? $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()): null,
             'rights'         => $this->serialize($rights),
             'packages' => $serializer->serialize($packages, 'json',SerializationContext::create()->setGroups(array('common'))),

@@ -618,6 +618,27 @@ class ApiController extends BaseController
     }
 
     /**
+     * @Route("/api/user/profile", name="updateUserProfile")
+     */
+    public function updateUserProfile(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+        $profile = $request->get("profile");
+
+        if ( $profile == null ) return false;
+
+        $user = $userService->updateUserProfile($user, $profile);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
      * @Route("/api/user/password", name="updatePassword")
      */
     public function updatePassword(Request $request, UserService $userService)

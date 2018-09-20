@@ -50,7 +50,6 @@ class ManageListings extends React.Component {
             _this.setState({expired: listings, loadingExpired : false});
         });
 
-        this.props.updateProfile("SELLER");
     }
 
     selectListing = (id) => {

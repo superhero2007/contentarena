@@ -6,16 +6,12 @@ export const updateProfile = profile => ({
     profile,
 });
 
-export const loadUserData = () => {
-    const dataContainer = document.getElementsByClassName('marketplace-container');
+export const loadUserData = loggedUserData => {
     let user = {};
                 
-    if (dataContainer && dataContainer.length) {
-        const userStr = dataContainer[0].dataset.loggedUserData;
-        try {
-            user = JSON.parse(userStr);
-        } catch (e) {}
-    }
+    try {
+        user = JSON.parse(loggedUserData);
+    } catch (e) {}
 
     return {
         type: userTypes.LOAD_USER_DATA,

@@ -20,7 +20,8 @@ export const routes = [
         path: "/marketplace",
         exact: true,
         header: HeaderBar,
-        main: Marketplace
+        main: Marketplace,
+        profile : "BUYER"
     },
     {
         path: "/test",
@@ -31,25 +32,29 @@ export const routes = [
     {
         path: "/marketplace/filter/:filterName/:filterValue?",
         header: HeaderBar,
-        main: Marketplace
+        main: Marketplace,
+        profile : "BUYER"
     },
     {
         path: "/contentlisting/:customId?/:step?",
         header: HeaderBar,
         main: SellForm,
-        updateByPath : true
+        updateByPath : true,
+        profile : "SELLER"
     },
     {
         path: "/commercialactivity",
         header: HeaderBar,
         exact: true,
-        main: CommercialActivity
+        main: CommercialActivity,
+        profile : "SELLER"
     },
     {
         path: "/commercialactivity/filter/:filterName/:filterValue?",
         header: HeaderBar,
         main: CommercialActivity,
-        updateByPath : true
+        updateByPath : true,
+        profile : "SELLER"
     },
     {
         path: "/listing/:customId/:tab?/:bundle?",
@@ -59,12 +64,14 @@ export const routes = [
     {
         path: "/watchlist",
         header: HeaderBar,
-        main: Watchlist
+        main: Watchlist,
+        profile : "BUYER"
     },
     {
         path: "/closeddeals",
         header: HeaderBar,
-        main: ClosedDeals
+        main: ClosedDeals,
+        profile : "BUYER"
     },
     {
         path: "/settings/:filter?",
@@ -81,12 +88,14 @@ export const routes = [
     {
         path: "/managelistings",
         header: HeaderBar,
-        main: ManageListings
+        main: ManageListings,
+        profile : "SELLER"
     },
     {
         path: "/bids/:tab?",
         header: HeaderBar,
         main: PendingDeals,
-        updateByPath : true
+        updateByPath : true,
+        profile : "BUYER"
     }
 ];

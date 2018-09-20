@@ -1,7 +1,7 @@
 import React from "react";
 import {routes} from "./routes";
 import {PropTypes} from 'prop-types';
-
+import store  from './store';
 import {
     BrowserRouter as Router,
     Route,
@@ -12,6 +12,8 @@ import {
 import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
 import {setLanguage} from "redux-i18n";
+import Marketplace from "../buy/containers/Marketplace";
+import ManageListings from "../manage/containers/ManageListings";
 
 
 const fakeAuth = {
@@ -26,30 +28,55 @@ const fakeAuth = {
     }
 };
 
-const PrivateRoute = ({ component: Component, updateByPath, ...rest }) => (
-    <Route
-        {...rest}
-        render={props =>
-            fakeAuth.isAuthenticated ? props.match.path === "/" ? (
-                <Redirect
-                    to={{
-                        pathname: "/marketplace",
-                        state: { from: props.location }
-                    }}
-                />
-            ) : (
-                Component && <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search} />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: "/landing",
-                        state: { from: props.location }
-                    }}
-                />
-            )
+class PrivateRoute extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        };
+    }
+
+    updateProfile() {
+        const {profile, routeProfile} = this.props;
+
+        if ( routeProfile && profile !== routeProfile ){
+            store.dispatch(updateProfile(routeProfile));
+            ContentArena.ContentApi.updateUserProfile(routeProfile)
         }
-    />
-);
+    }
+
+    render(){
+        const { component: Component, updateByPath, profile, ...rest } = this.props;
+        return <Route
+            {...rest}
+            render={props => {
+
+                this.updateProfile();
+
+                return fakeAuth.isAuthenticated ? props.match.path === "/" ? (
+                    <Redirect
+                        to={{
+                            pathname: profile === "BUYER" ? "/marketplace" : "/managelistings",
+                            state: {from: props.location}
+                        }}
+                    />
+                ) : (
+                    Component &&
+                    <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search}/>
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/landing",
+                            state: {from: props.location}
+                        }}
+                    />
+                )
+            }
+            }
+        />
+    }
+}
 
 const PublicRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -115,17 +142,25 @@ class AuthRouter extends React.Component {
         if (props.loggedUser) fakeAuth.authenticate(()=>{});
 
         this.state = {
+            user : JSON.parse(props.loggedUserData)
         };
     }
 
     componentWillMount() {
-        this.props.loadUserData();
+        const {loggedUserData} = this.props;
+        this.props.loadUserData(loggedUserData);
         this.props.setLanguage("en");
+    }
+
+    componentWillReceiveProps(nextProps){
+        if (nextProps.user){
+            this.setState({user: nextProps.user})
+        }
     }
 
     render() {
 
-        const {user} = this.props;
+        const {user} = this.state;
 
         return (
             <Router>
@@ -151,11 +186,12 @@ class AuthRouter extends React.Component {
                             exact={route.exact}
                             updateByPath={route.updateByPath}
                             component={route.main}
+                            profile={user.profile}
+                            routeProfile={route.profile}
+                            updateProfile={this.props.updateProfile}
                             {...this.props}
                         />
                     ))}
-
-
                 </div>
             </Router>
         );
@@ -177,7 +213,7 @@ const mapDispatchToProps = dispatch => {
             email: email
         }),
         updateProfile : profile =>dispatch(updateProfile(profile)),
-        loadUserData : () => dispatch(loadUserData()),
+        loadUserData : data => dispatch(loadUserData(data)),
         setLanguage: lang => dispatch(setLanguage(lang))
     }
 };

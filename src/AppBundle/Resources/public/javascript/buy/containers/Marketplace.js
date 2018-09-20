@@ -9,9 +9,7 @@ import {
     addRight, clearUpdateFilter, removeRight, updateCountries, updateExclusive,
     updateMany
 } from "../actions/filterActions";
-import {goToListing} from "../../main/actions/utils";
 import {updateEvent, updateSport} from "../actions/filterActions";
-import {updateProfile} from "../../main/actions/userActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from '../../main/utiles/localStorageHelper';
 import first from 'lodash/first';
@@ -65,7 +63,6 @@ class Marketplace extends React.Component {
 
         this.filter();
         clearUpdateFilter();
-        this.props.updateProfile("BUYER");
 
         jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
@@ -221,6 +218,11 @@ class Marketplace extends React.Component {
         history.push("/marketplace/filter/multi?"+serialize(this.parseFilterForUrl(filter)));
     };
 
+    goToListing = (customId) => {
+        const { history } = this.props;
+        history.push('/listing/' + customId )
+    };
+
     render () {
         const { filter, salesPackage ,history, location, match } = this.props;
         const {
@@ -260,7 +262,7 @@ class Marketplace extends React.Component {
                             listings.map(listing => {
                                 return (
                                     <ContentListing
-                                        onSelect={() => goToListing(listing.customId, true)}
+                                        onSelect={() => this.goToListing(listing.customId)}
                                         key={listing.customId}
                                         filter={filter}
                                         sortSalesPackages={sortSalesPackages}
@@ -334,7 +336,6 @@ const mapDispatchToProps = dispatch => {
         updateCountries: countries => dispatch(updateCountries(countries)),
         updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
         updateFilters: filters => dispatch(updateMany(filters)),
-        updateProfile : profile =>dispatch(updateProfile(profile)),
     }
 };
 

@@ -47,7 +47,6 @@ class SellForm extends React.Component {
 
     componentDidMount = () =>{
         this.props.contentListingInit( this.state.content );
-        this.props.updateProfile('SELLER');
     } ;
 
     render() {

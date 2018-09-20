@@ -27,6 +27,14 @@ use JMS\Serializer\Annotation\Groups;
  */
 class User extends BaseUser
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->profile = "BUYER";
+    }
+
+
     /**
      * @var int
      *
@@ -104,10 +112,12 @@ class User extends BaseUser
     private $company;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Profile")
-     * @ORM\JoinColumn(nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="profile", type="string", nullable=true)
+     * @Groups({"commercial", "closed", "settings"})
      */
-    private $profile;
+    private $profile = "BUYER";
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserStatus")
@@ -338,27 +348,6 @@ class User extends BaseUser
         return $this->country;
     }
 
-    /**
-     * Set profile
-     *
-     * @param Profile $profile
-     *
-     * @return User
-     */
-    public function setProfile(Profile $profile)
-    {
-        $this->rol = $profile;
-    }
-
-    /**
-     * Get rol
-     *
-     * @return Rol
-     */
-    public function getProfile()
-    {
-        return $this->profile;
-    }
 
     /**
      * @return string
@@ -438,6 +427,22 @@ class User extends BaseUser
     public function setAutoPublish($autoPublish)
     {
         $this->autoPublish = $autoPublish;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param string $profile
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
     }
 
 

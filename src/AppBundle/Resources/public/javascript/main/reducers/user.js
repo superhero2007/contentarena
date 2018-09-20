@@ -6,7 +6,7 @@ export const userTypes= {
 };
 
 const defaultUser = {
-    profile : "BUYER"
+    profile : "SELLER"
 
 };
 

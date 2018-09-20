@@ -207,6 +207,29 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+
+    updateUserProfile ( profile ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/user/profile",
+            type: "POST",
+            data: JSON.stringify({profile:profile}),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getThread ( customId ) {
         let deferred = jQuery.Deferred(),
             _this = this;
