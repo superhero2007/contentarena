@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Company;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\BidService;
@@ -19,8 +20,12 @@ class RedirectHelperController extends BaseController
         $bid = $bidService->getBidById($bidId);
         $customId = '';
 
+
+        /* @var Content $listing */
+        $listing = $bid->getContent();
+
         if ($bid) {
-            $thread = $messageService->getThreadByListingAndBuyer($bid->getContent(), $bid->getBuyerUser(), $user->getCompany());
+            $thread = $messageService->getThreadByListingAndBuyer($bid->getContent(), $bid->getBuyerUser(), $listing->getCompany());
             if ($thread) {
                 $customId = $thread->getCustomId();
             } else {
@@ -43,7 +48,7 @@ class RedirectHelperController extends BaseController
         $customId = '';
 
         if ($bid) {
-            $thread = $messageService->getThreadByListingAndSeller($bid->getContent(), $user, $user->getCompany());
+            $thread = $messageService->getThreadByListingAndSeller($bid->getContent(), $bid->getBuyerUser(), $user->getCompany());
             if ($thread) {
                 $customId = $thread->getCustomId();
             } else {
