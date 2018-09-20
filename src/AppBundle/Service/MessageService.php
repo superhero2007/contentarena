@@ -74,8 +74,8 @@ class MessageService
     public function getThreadByListingAndSeller(Content $content, User $user, Company $company){
         return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
             "listing" => $content,
-            "ownerCompany" => $user->getCompany(),
-            "buyerCompany" => $company
+            "buyerCompany" => $user->getCompany(),
+            "ownerCompany" => $company,
         ));
     }
 
