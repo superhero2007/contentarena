@@ -92,7 +92,7 @@ input[type="radio"].ca-radio {
     border: none;
     &:after {
       content: "";
-      //background: url('../bundles/app/images/radio-active.png') no-repeat;
+      background: url('../images/radio-active.png') no-repeat;
       background-size: contain;
       height: 20px;
       display: block;
