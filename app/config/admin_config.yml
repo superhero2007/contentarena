@@ -4,7 +4,7 @@ easy_admin:
             menu:
                 - Content
                 - label: 'User Information'
-                  children: ['User', 'Company', 'Status', 'Profile']
+                  children: ['User', 'Company', 'Status']
                 - Deals
                 - RightsPackage
                 - label: 'Sports'
