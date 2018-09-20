@@ -192,10 +192,10 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="ca-btn ca-btn-primary" style={{margin:5}} onClick={this.onApplyFilter}>
+                        <button className="ca-btn primary" style={{margin:5}} onClick={this.onApplyFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_APPLY")}
                         </button>
-                        <button className="ca-btn ca-btn-link" style={{margin:5}} onClick={this.onClearFilter}>
+                        <button className="ca-btn link" style={{margin:5}} onClick={this.onClearFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>
                     </div>

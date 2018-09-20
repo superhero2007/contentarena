@@ -62,7 +62,6 @@ class PendingDeals extends React.Component {
     render () {
         const { loading, bids, tab, declinedBids, loadingDeclined } = this.state;
         const { history } = this.props;
-        const defaultRightsPackage = JSON.parse(this.props.rights)
 
         return (
             <div>
@@ -104,7 +103,6 @@ class PendingDeals extends React.Component {
                                     onDelete={this.deleteBid}
                                     key={i + "-" + bid.content.customId}
                                     bid={bid}
-                                    defaultRightsPackage={defaultRightsPackage}
                                     {...bid.content}
                                 />
                             )
@@ -133,7 +131,6 @@ class PendingDeals extends React.Component {
                                     bid={bid}
                                     checkExpired={true}
                                     declined={true}
-                                    defaultRightsPackage={defaultRightsPackage}
                                     {...bid.content}
                                 />
                             )

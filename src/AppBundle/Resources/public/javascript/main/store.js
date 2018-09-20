@@ -13,6 +13,7 @@ import {filter} from "../buy/reducers/filter";
 import {marketplace} from "../buy/reducers/marketplace";
 import {manage} from "../manage/reducers/manage";
 import {user} from "./reducers/user";
+import {common} from "./reducers/common";
 
 
 const reducers = combineReducers({
@@ -22,6 +23,7 @@ const reducers = combineReducers({
     filter,
     manage,
     user,
+    common,
     i18nState
 });
 

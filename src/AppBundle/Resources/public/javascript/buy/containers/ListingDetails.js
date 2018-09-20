@@ -21,6 +21,7 @@ import Modal from 'react-modal';
 import CountrySelector from "../../main/components/CountrySelector";
 import ReactTooltip from 'react-tooltip'
 import {PropTypes} from "prop-types";
+import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
 const bidButtonStyle = { height: 34, width: 75, padding: 5, marginLeft: 10, fontSize: 14, marginRight: 10 };
@@ -75,6 +76,12 @@ class ListingDetails extends React.Component {
             selectedPackage = content.salesPackages.filter(p=>{return Number(p.id)===Number(salesPackage)})[0];
             this.selectPackage(selectedPackage);
         }
+
+        jQuery('body,.manager-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+    }
+
+    componentWillUnmount(){
+        jQuery('body,.manager-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     componentWillReceiveProps(nextProps) {
@@ -465,6 +472,10 @@ class ListingDetails extends React.Component {
 
     };
 
+    isActiveTab = (activeTab, tab) =>{
+        return activeTab === tab ? 'active': '';
+    }
+
     render() {
         ReactTooltip.rebuild();
         const {onBack, profile,history } = this.props;
@@ -478,6 +489,36 @@ class ListingDetails extends React.Component {
                 { this.editCompany() }
                 { this.allTerritories() }
                 { this.successScreen() }
+                {!buyingMode && (
+                    <div className="listing-details-top-info">
+                        {profile === "BUYER" && (
+                            <div className="publisher">
+                                <i className="fa fa-user-o icon" />
+                                {content.company.legalName}
+                            </div>
+                        )}
+
+                        {profile === "BUYER" && !content.userCanNotBuy && (
+                            <a onClick={()=>{this.refs.messagePopup.open()}}>
+                                <img src={this.contactIcon} className="icon"/>
+                                <span>
+                                    {this.context.t("Contact Seller")}
+                                </span>
+                            </a>
+                        )}
+
+                        {profile === "BUYER" && (
+                            <a onClick={this.watchlist}>
+                                <img src={content.watchlist ? this.checkIcon : this.watchlistIcon} className="icon"/>
+                                <span>
+                                    {content.watchlist ? this.context.t('LISTING_DETAILS_ADDED_TO_WATCHLIST') : this.context.t('Watchlist')}
+                                </span>
+                            </a>
+                        )}
+
+                        <div className="custom-id">#{content.customId}</div>
+                    </div>
+                )}
                 <div className="listing-details-content">
                     <div className={"left"}  >
                         {/*IMAGE*/}
@@ -487,140 +528,101 @@ class ListingDetails extends React.Component {
 
                         <ContentListingEventDetails {...this.props.listing}/>
 
-                        {/* RIGHTS*/}
-                        <div style={{flex: 2, flexDirection: "column", margin: '20px 0' }}>
-                            {
-                                content.rightsPackage.map(( sr,i )=>{
-                                    return <div key={i}  style={{
-                                        minHeight: 46,
-                                        flexDirection: 'row',
-                                        display: 'flex',
-                                        alignItems: 'center'
-                                    }}>
-                                        {!sr.exclusive &&
-                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
+                        <ContentListingRightsPackage
+                            rightsPackage={content.rightsPackage}
+                        />
 
-                                        {sr.exclusive &&
-                                        <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
-
-                                        <div style={{display: 'flex', flexDirection: "row"  }}>
-                                            { sr.shortLabel !== "PR" && sr.name }
-                                            { sr.shortLabel === "PR" && content.PROGRAM_NAME &&
-                                            "Program: " + content.PROGRAM_NAME
-                                            }
-                                            {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
-                                        </div>
-                                    </div>
-                                })
-                            }
-                        </div>
-
-                        <div className={"date"}>
-                            {this.context.t("LISTING_DETAILS_LICENSE_START")}
-                            <span>
-                                { content.startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
-                                { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
-                            </span>
-                        </div>
-                        <div className={"date"}>
-                            {this.context.t("LISTING_DETAILS_LICENSE_END")}
-                            <span>
-                            { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
-                            { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
-                            { content.endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
-                            </span>
-                        </div>
-                        <div className={"date"}>
-                            {this.context.t("Publishing date")}
-                            <span>{Moment().format('DD/MM/YYYY')}</span></div>
-                        <div className={"date"}>
-                            {this.context.t("Expiry")}
-                            <span>{Moment(content.expiresAt).format('DD/MM/YYYY')}</span></div>
+                        <table className="table-info">
+                            <tr>
+                                <td>
+                                    {this.context.t("LISTING_DETAILS_LICENSE_START")}
+                                </td>
+                                <td>
+                                    <b>
+                                        { content.startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
+                                        { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {this.context.t("LISTING_DETAILS_LICENSE_END")}
+                                </td>
+                                <td>
+                                    <b>
+                                    { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
+                                    { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
+                                    { content.endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
+                                    </b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {this.context.t("Publishing date")}
+                                </td>
+                                <td>
+                                    <b>{Moment().format('DD/MM/YYYY')}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {this.context.t("Expiry")}
+                                </td>
+                                <td>
+                                    <b>{Moment(content.expiresAt).format('DD/MM/YYYY')}</b>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     {!buyingMode && <div className={"right"} >
-                        <div className={"header"}>
-                            <div className={"content"}>
-                                <div className="name">{content.name}</div>
-                                {profile === "BUYER" && <div className="publisher" style={{
-                                    flex:1,
-                                    fontSize: 18,
-                                    fontWeight: 600
-                                }}>{content.company.legalName}</div>}
-
-                                {profile === "BUYER" && !content.userCanNotBuy && <div style={{margin: '0 10px', display: 'flex', cursor: 'pointer'}}
-                                     onClick={()=>{
-                                         this.refs.messagePopup.open()
-                                     }}>
-                                    <img style={{width: 22, height: 18, marginBottom: 5}} src={this.contactIcon}/>
-                                    <div style={{
-                                        flex:1,
-                                        color: '#4F4F4F',
-                                        fontSize: 16,
-                                        margin: '0 10px'
-                                    }}>
-                                        {this.context.t("Contact Seller")}
-                                    </div>
-                                </div>}
-
-                                {profile === "BUYER" && <div style={{margin: '0 10px', display: 'flex', cursor : 'pointer'}}
-                                     onClick={this.watchlist}>
-                                    <img style={{width: 18, height: 18, marginTop: 2}}
-                                         src={content.watchlist ? this.checkIcon : this.watchlistIcon}
-                                    />
-                                    <div style={{
-                                        flex:1,
-                                        color: '#2DA7E6',
-                                        fontSize: 16,
-                                        textDecoration: (content.watchlist) ? '' : 'underline',
-                                        margin: '0 10px 0 5px'
-
-                                    }}>
-                                        {content.watchlist ? this.context.t('LISTING_DETAILS_ADDED_TO_WATCHLIST') : this.context.t('Watchlist')}
-                                    </div>
-                                </div>}
-
-                                {/*CUSTOM ID*/}
-                                <div className="custom-id">#{content.customId}</div>
+                        <div className="listings-details-title">
+                            <div className="ca-title">
+                                {content.name}
                             </div>
                         </div>
 
                         {/*TABS*/}
-                        <div className={"listing-details-buttons"}>
-                            <button className={(tab ==="bundles")?"active": ""} onClick={()=>{
+                        <div className={"ca-tabs"}>
+                            <div className={'tab '+ this.isActiveTab(tab, 'bundles')} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/bundles');
                                 this.showTab("bundles")
                             }}>
                                 {this.context.t("LISTING_DETAILS_TAB_BUNDLES")}
-                            </button>
+                            </div>
 
-                            {this.isTabHasData(content, "event") &&
-                                <button className={(tab ==="event")?"active": ""} onClick={()=>{
-                                    history.push('/listing/'+content.customId+'/event');
-                                    this.showTab("event");
-                                }}>
-                                    {this.context.t("LISTING_DETAILS_TAB_EVENT")}
-                                </button>
-                            }
-                            <button className={(tab ==="grantofrights")?"active": ""} onClick={()=>{
-                                history.push('/listing/'+content.customId+'/grantofrights');
-                                this.showTab("grantofrights")
-                            }}>
-                                {this.context.t("LISTING_DETAILS_TAB_RIGHTS")}
-                            </button>
-                            {content.PROGRAM_NAME &&
-                                <button className={(tab ==="editedprogram")?"active": ""} onClick={()=>{
+                            {content.PROGRAM_NAME && (
+                                <div className={'tab '+ this.isActiveTab(tab, 'editedprogram')} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/editedprogram');
                                     this.showTab("editedprogram")
                                 }}>
                                     {this.context.t("LISTING_DETAILS_EDITED_PROGRAM")}
-                                </button>
-                            }
-                            <button className={(tab ==="seller")?"active": ""} onClick={()=>{
+                                </div>
+                            )}
+
+
+                            {/*{this.isTabHasData(content, "event") &&
+                                <div className={'tab '+ this.isActiveTab(tab, 'event')} onClick={()=>{
+                                    history.push('/listing/'+content.customId+'/event');
+                                    this.showTab("event");
+                                }}>
+                                    {this.context.t("LISTING_DETAILS_TAB_EVENT")}
+                                </div>
+                            }*/}
+
+                            <div className={'tab '+ this.isActiveTab(tab, 'grantofrights')} onClick={()=>{
+                                history.push('/listing/'+content.customId+'/grantofrights');
+                                this.showTab("grantofrights")
+                            }}>
+                                {this.context.t("LISTING_DETAILS_TAB_RIGHTS")}
+                            </div>
+
+
+                            <div className={'tab '+ this.isActiveTab(tab, 'seller')} onClick={()=>{
                                 history.push('/listing/'+content.customId+'/seller');
                                 this.showTab("seller")
                             }}>
                                 {this.context.t("LISTING_DETAILS_TAB_SELLER")}
-                            </button>
+                            </div>
                         </div>
 
                         {/*TAB CONTENT*/}

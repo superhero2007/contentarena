@@ -234,8 +234,7 @@ class Marketplace extends React.Component {
             company,
             sortSalesPackages,
             profile,
-            errorMessage,
-            defaultRightsPackage
+            errorMessage
         } = this.state;
 
         if (errorMessage) {
@@ -243,9 +242,13 @@ class Marketplace extends React.Component {
         }
         return (
             <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                <div style={{width: '100%', textAlign: 'right'}}>
-                    <RightsLegend />
-                </div>
+
+                {!showDetails && !loadingListingDetails && (
+                    <div style={{width: '100%', textAlign: 'right'}}>
+                        <RightsLegend />
+                    </div>
+                )}
+
                 {!showDetails && <div className="buy-container-left">
                     <EventFilter
                         onFilter={this.filter}/>
@@ -266,7 +269,6 @@ class Marketplace extends React.Component {
                                         key={listing.customId}
                                         filter={filter}
                                         sortSalesPackages={sortSalesPackages}
-                                        defaultRightsPackage={defaultRightsPackage}
                                         {...listing}
                                     />
                                 );

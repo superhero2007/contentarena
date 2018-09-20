@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
+import {getDefaultRightsPackage} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
 import Marketplace from "../buy/containers/Marketplace";
 import ManageListings from "../manage/containers/ManageListings";
@@ -149,6 +150,7 @@ class AuthRouter extends React.Component {
     componentWillMount() {
         const {loggedUserData} = this.props;
         this.props.loadUserData(loggedUserData);
+        this.props.getDefaultRightsPackage();
         this.props.setLanguage("en");
     }
 
@@ -214,6 +216,7 @@ const mapDispatchToProps = dispatch => {
         }),
         updateProfile : profile =>dispatch(updateProfile(profile)),
         loadUserData : data => dispatch(loadUserData(data)),
+        getDefaultRightsPackage : () => dispatch(getDefaultRightsPackage()),
         setLanguage: lang => dispatch(setLanguage(lang))
     }
 };

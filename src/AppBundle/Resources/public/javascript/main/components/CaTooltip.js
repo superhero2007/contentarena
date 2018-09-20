@@ -7,7 +7,13 @@ const CaTooltip = (props) => {
         <div>
             {props.children}
             <ReactTooltip id={props.id} effect='solid' className='CaTooltip' delayHide={400}>
-                {props.data}
+                <div className="head">
+                    <i className={props.icon} />
+                    {props.title}
+                </div>
+                <div className="body">
+                    {props.data}
+                </div>
             </ReactTooltip>
         </div>
     );

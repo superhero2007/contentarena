@@ -51,7 +51,6 @@ class SellForm extends React.Component {
 
     render() {
         const {history} = this.props;
-        const defaultRightsPackage = JSON.parse(this.props.rights)
         return (
             <div className="manager-content">
                 <Selector style={{zIndex: 100}}/>
@@ -60,7 +59,7 @@ class SellForm extends React.Component {
                 <SellFormStep2 packages={this.props.packages} />
                 <SellFormStep3 packages={this.props.packages} />
                 <SellFormStep4 packages={this.props.packages} />
-                <ReviewAndSign history={history} defaultRightsPackage={defaultRightsPackage}/>
+                <ReviewAndSign history={history} />
                 <SellButtons history={history}/>
                 <ReactTooltip html={true} />
             </div>

@@ -16,7 +16,14 @@
   outline: none;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
-  &.ca-btn-link {
+  &[disabled],
+  &.disabled {
+    background-color: $color-grey !important;
+    border-color: $color-grey !important;
+    cursor: default;
+  }
+
+  &.link {
     font-weight: 400;
     color: #007bff;
     background-color: transparent;
@@ -28,16 +35,16 @@
     }
   }
 
-  &.ca-btn-primary {
+  &.primary {
     color: #333;
     background-color: $orange-color;
     border-color: $orange-color;
 
     &:hover {
-      background-color: darken($orange-color, 7.5%),;
+      background-color: darken($orange-color, 7.5%);
     }
   }
-  &.ca-btn-danger {
+  &.danger {
     color: #fff;
     background-color: #dc3545;
     border-color: #dc3545;
@@ -47,7 +54,7 @@
     }
   }
 
-  &.ca-btn-danger-outline {
+  &.danger-outline {
     color: #dc3545;
     background-color: transparent;
     background-image: none;
@@ -59,7 +66,7 @@
     }
   }
 
-  &.ca-btn-small {
+  &.small {
     font-size: 12px;
     padding: 4px 1rem;
   }
@@ -185,10 +192,50 @@ i.fa.ca-tooltip {
   color: #333333 !important;
   background-color: $bg !important;
   pointer-events: auto !important;
-  padding: 15px !important;
+  padding: 10px !important;
   opacity: 1 !important;
   box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
   text-align: left;
+
+  .head {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #ccc;
+    .fa {
+      color: #2AAAEC;
+      font-size: 18px;
+      margin-right: 5px;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: #E7E7E7;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #2AAAEC;
+    }
+
+    /* Handle on hover */
+    //::-webkit-scrollbar-thumb:hover {
+    //  background: #555;
+    //}
+  }
 
   &:hover {
     visibility: visible !important;
@@ -205,5 +252,69 @@ i.fa.ca-tooltip {
   }
   &.place-right:after {
     border-right-color: $bg !important;
+  }
+}
+
+.ca-title {
+  cursor: pointer;
+  font-weight: bold;
+  color: #03547C;
+  font-size: 21px;
+
+  &.small {
+    font-size: 19px;
+
+  }
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.d-inline-flex {
+  display: flex !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.align-middle {
+  vertical-align: middle !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.ca-tabs {
+  display: flex;
+  flex-wrap: wrap;
+
+  .tab {
+    display: block;
+    margin-right: 30px;
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.active {
+      font-weight: bold;
+      border-bottom: 2px solid $color-primary;
+    }
   }
 }
