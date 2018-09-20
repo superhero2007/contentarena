@@ -142,7 +142,7 @@ class AuthRouter extends React.Component {
         if (props.loggedUser) fakeAuth.authenticate(()=>{});
 
         this.state = {
-            user : JSON.parse(props.loggedUserData)
+            user : props.loggedUserData !== "" ? JSON.parse(props.loggedUserData) : {}
         };
     }
 
