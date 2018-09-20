@@ -350,15 +350,15 @@ class ContentListing extends React.Component{
                                         {this.context.t("PENDING_BIDS_REMOVE_TITLE")}
                                     </div>
                                     <button className={"button button-confirm"} onClick={(e)=>{
+                                        e.stopPropagation()
                                         this.setState({showRemoveConfirm: false});
                                         onDelete(bid.id);
-                                        e.stopPropagation();
                                     }}>
                                         {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CONFIRM")}
                                     </button>
                                     <button className={"button"} onClick={(e)=>{
+                                        e.stopPropagation()
                                         this.setState({showRemoveConfirm: false});
-                                        e.stopPropagation();
                                     }}>
                                         {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CANCEL")}
                                     </button>
