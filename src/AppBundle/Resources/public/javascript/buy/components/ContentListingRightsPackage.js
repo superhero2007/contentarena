@@ -2,6 +2,8 @@ import React from 'react';
 import {blueCheckIcon, yellowCheckIcon, greyMinusIcon} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import unionBy from 'lodash/unionBy';
+import {connect} from 'react-redux';
+import cn from "classnames";
 
 const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage}, context) => {
 
@@ -22,11 +24,11 @@ const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage}, cont
                 }
 
                 return (
-                    <div key={i} className="listing-item">
+                    <div key={i} className="listing-item d-flex align-items-center">
 
-                        <img style={{width: 15, height: 15, margin: '0 5px'}} src={icon}/>
+                        <img src={icon}/>
 
-                        <div style={{display: 'flex', flexDirection: "row"}}>
+                        <div className={cn("d-flex", {'disabled':rp.exclusive == null})}>
                             {rp.shortLabel === "PR" ? context.t("LISTING_DETAILS_EDITED_PROGRAM") : rp.name}
                         </div>
                     </div>
@@ -40,4 +42,10 @@ ContentListingRightsPackage.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-export default ContentListingRightsPackage;
+const mapStateToProps = state => {
+    return state.common
+};
+
+export default connect(
+    mapStateToProps
+)(ContentListingRightsPackage)

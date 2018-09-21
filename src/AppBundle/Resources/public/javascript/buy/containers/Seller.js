@@ -3,31 +3,6 @@ import { connect } from "react-redux";
 import { test } from "../actions";
 import {PropTypes} from "prop-types";
 
-const rowStyle = {
-    borderBottom: '1px solid #EEF3F6',
-    borderRight: '1px solid #EEF3F6',
-    display: 'flex'
-};
-
-const titleStyle = {
-    backgroundColor: '#F4F6F9',
-    color: '#4F4F4F',
-    fontSize: 14,
-    fontWeight: 600,
-    margin: '3px 0',
-    padding: 10,
-    width: '50%'
-};
-
-const valueStyle = {
-    color: '#4F4F4F',
-    fontSize: 14,
-    fontWeight: 600,
-    margin: '3px 0',
-    padding: 10,
-    width: '50%'
-};
-
 class Seller extends React.Component {
 
     constructor(props) {
@@ -39,113 +14,58 @@ class Seller extends React.Component {
     render() {
         const { company } = this.props;
         return (
-            <div style={{ padding:'20px 0'}}>
-                <div style={{marginBottom: 20}}>
-                    <div style={{
-                        color: '#1A4B63',
-                        fontSize: 20,
-                        fontWeight: 600
-                    }}>
+            <div>
+                <div>
+                    <div className="ca-title">
                         {company.legalName}
                     </div>
-                    {company.website && <div style={{
-                        color: '#4F4F4F',
-                        fontSize: 14,
-                    }}>
-                        {company.website}
-                    </div>}
-
+                    {company.website && (
+                        <div>
+                            <a href={company.website} target="_blank">{company.website}</a>
+                        </div>
+                    )}
                 </div>
-                <div className="full-item-box" style={{width: '75%'}}>
-                    <label>
-                        {company.legalName}
-                        {" "}
-                        {this.context.t("LISTING_DETAILS_SELLER_TITLE_DETAILS")}
-                    </label>
-                    <div >
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_NAME")}
-                            </div>
-                            <div style={valueStyle}>
-                                {company.legalName}
-                            </div>
-                        </div>
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
+                <div className="description-info d-flex">
+                    <div className="col">
+                        <div>
+                            <b>
                                 {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
-                            </div>
-                            <div style={valueStyle}>
-                                {company.address}
-                            </div>
+                            </b>
                         </div>
 
-                        {company.city &&
-                            <div style={rowStyle}>
-                                <div style={titleStyle}>
-                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_CITY")}
-                                </div>
-                                <div style={valueStyle}>
-                                    {company.city}
-                                </div>
-                            </div>
-                        }
+                        <div>{company.address}</div>
+                        {company.country.name && <div>{company.country.name}</div>}
+                        {company.city && <div>{company.city}</div>}
+                        {company.zip && <div>{company.zip}</div>}
 
-                        {company.country.name &&
-                            <div style={rowStyle}>
-                                <div style={titleStyle}>
-                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_COUNTRY")}
+                    </div>
+                    <div className="col">
+                        {company.registrationNumber && (
+                            <div>
+                                <div>
+                                    <b>
+                                        {this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
+                                    </b>
                                 </div>
-                                <div style={valueStyle}>
-                                    {company.country.name}
-                                </div>
-                            </div>
-                        }
 
-                        {company.zip &&
-                            <div style={rowStyle}>
-                                <div style={titleStyle}>
-                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_ZIP")}
-                                </div>
-                                <div style={valueStyle}>
-                                    {company.zip}
-                                </div>
-                            </div>
-                        }
-
-                        {company.registrationNumber &&
-                            <div style={rowStyle}>
-                                <div style={titleStyle}>
-                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
-                                </div>
-                                <div style={valueStyle}>
+                                <div>
                                     {company.registrationNumber}
                                 </div>
                             </div>
-                        }
-
-                        <div style={rowStyle}>
-                            <div style={titleStyle}>
-                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
+                        )}
+                        <div>
+                            <div>
+                                <b>
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
+                                </b>
                             </div>
-                            <div style={valueStyle}>
+                            <div>
                                 {company.vat}
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {company.description &&
-                    <div className="full-item-box">
-                        <label>
-                            {this.context.t("LISTING_DETAILS_SELLER_TITLE_DESCRIPTION")}
-                        </label>
-                        <div className="full-item-content">
-                            {company.description}
-                        </div>
-                    </div>
-                }
-
+                {company.description && <div className="txt">{company.description}</div>}
             </div>
         );
     }

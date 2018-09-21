@@ -157,9 +157,7 @@ class TermSheet extends React.Component {
             <div className="term-sheet">
 
                 <div className="term-sheet-items">
-                    <div className="row" style={{
-                        border: 'none'
-                    }} >
+                    <div className="row">
                         <div className="right-definition right-definition-title">
                             {this.context.t("LISTING_DETAILS_RIGHTS_HEADER_RIGHTS")}
                         </div>
@@ -211,7 +209,7 @@ class TermSheet extends React.Component {
                 </div>}
 
                 <div className="term-sheet-items">
-                    <div className="row" style={{border: 'none'}}>
+                    <div className="row">
                         <div className="right-definition right-definition-title">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}
                         </div>

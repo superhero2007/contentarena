@@ -183,7 +183,6 @@ class ContentListing extends React.Component{
             sortSalesPackages,
             watchlistRemove,
             company,
-            defaultRightsPackage,
             rightsPackage,
             owner,
             bid,
@@ -214,11 +213,11 @@ class ContentListing extends React.Component{
                 </div>
                 <div className={"right"} >
                     <div className="name-wrapper">
-                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"name"} onClick={() => { if (onSelectName) onSelectName() }}>
+                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"ca-title text-truncate small"} onClick={() => { if (onSelectName) onSelectName() }}>
                             {name}
                         </div>}
 
-                        { checkExpired && status.name !== "EDITED" && status.name !== "APPROVED" && <div className={"name"} style={{cursor: "default"}}>
+                        { checkExpired && status.name !== "EDITED" && status.name !== "APPROVED" && <div className={"ca-title text-truncate small"} style={{cursor: "default"}}>
                             {name}
                         </div>}
 
@@ -232,7 +231,6 @@ class ContentListing extends React.Component{
 
                         <ContentListingRightsPackage
                             rightsPackage={rightsPackage}
-                            defaultRightsPackage={defaultRightsPackage}
                             programName={PROGRAM_NAME}
                         />
                     </div>
@@ -257,10 +255,10 @@ class ContentListing extends React.Component{
                                 <div>
                                     {this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}
                                 </div>
-                                <button type="button" className="ca-btn ca-btn-primary ca-btn-small" onClick={this.removeFromWatchlist}>
+                                <button type="button" className="ca-btn primary small" onClick={this.removeFromWatchlist}>
                                     {this.context.t("Yes")}
                                  </button>
-                                <button type="button" className="ca-btn ca-btn-danger ca-btn-small" onClick={this.cancelRemoveFromWatchlist}>
+                                <button type="button" className="ca-btn danger small" onClick={this.cancelRemoveFromWatchlist}>
                                     {this.context.t("Cancel")}
                                 </button>
                             </div>
@@ -306,7 +304,7 @@ class ContentListing extends React.Component{
 
                                 {( !declined || (declined && bid.status.name === "REJECTED" && !bid.salesPackage.sold) ) && (
                                     <a
-                                        className="ca-btn ca-btn-primary"
+                                        className="ca-btn primary"
                                         href='#'
                                         onClick={(e) => {
                                             e.stopPropagation();
