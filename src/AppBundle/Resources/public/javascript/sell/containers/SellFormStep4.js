@@ -12,6 +12,7 @@ import {stepChangeReset} from "../actions/contentActions";
 import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
 import ApplicableLaw from "../components/ApplicableLaw";
+import CurrencySelector from "../components/CurrencySelector";
 
 class SellFormStep4 extends React.Component {
 
@@ -98,7 +99,7 @@ class SellFormStep4 extends React.Component {
             sports,
             sportCategory,
             tournament,
-            image,
+            image
         } = this.props;
 
         if (step !== 4) return (null);
@@ -111,6 +112,7 @@ class SellFormStep4 extends React.Component {
                         <SummaryText {...this.props}/>
                     </div>
                 )}
+                <CurrencySelector onClick={this.selectCurrency} selected={currency} />
                 <div className="step-content-container">
                     <SalesPackageForm
                         currency={currency}

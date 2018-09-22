@@ -570,7 +570,7 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { onRemove, hideButtons, currency, fullSize, sort, listingId, selectCurrency } = this.props;
+        const { onRemove, hideButtons, fullSize, sort, listingId } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
 
@@ -584,8 +584,6 @@ class SalesPackageForm extends React.Component {
                             {this.context.t("CL_STEP4_SALES_BUNDLES")}
                             <i className="fa fa-info-circle tooltip-icon" title={'Offer individual sales bundles to buyers. A sales bundle may consist out of one or multiple territories. For each sales bundle, you can set an individual payment method (fixed fee or bid) and payment schedule.'}/>
                         </div>
-                        <CurrencySelector onClick={selectCurrency} selected={currency} />
-                        <div className='clearfix'/>
                     </label>
 
                     {!salesPackages.length && this.addBundlesAvailable() && (

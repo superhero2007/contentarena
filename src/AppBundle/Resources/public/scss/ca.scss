@@ -674,6 +674,52 @@ a:hover {
 }
 
 .step-4 {
+  .select-currency {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 4px solid #D4D8DE;
+    margin-bottom: 30px;
+    padding-bottom: 3px;
+    position: relative;
+    max-width: 515px;
+    .select-text {
+      text-transform: uppercase;
+      background-color: #1a4b63;
+      align-items: center;
+      padding: 0 20px;
+      height: 35px;
+      color: #fff;
+      font-weight: 600;
+      display: flex;
+      width: 100%;
+    }
+    .currency-selector {
+      .current {
+        padding: 6px 30px;
+        width: 100px;
+        text-align: center;
+        border: 1px solid #DADADA;
+        margin-top: 1px;
+      }
+      .dropdown {
+        right: 0;
+        position: absolute;
+        top: 34px;
+        display: none;
+        width: 100px;
+        .currency-item {
+          padding: 7px 0;
+          color: #000;
+          background: #FFFFFF;
+          border: 1px solid #DADADA;
+          text-align: center;
+        }
+      }
+      &:hover > .dropdown {
+        display: block;
+      }
+    }
+  }
   .step-content-container {
     .base-input {
       input {
@@ -749,46 +795,9 @@ a:hover {
           max-width: inherit;
           z-index: 100;
           .label-text {
-            float: left;
             display: flex;
             align-items: center;
             height: 35px;
-          }
-          .select-currency {
-            float: right;
-            display: flex;
-            align-items: baseline;
-            margin-right: -20px;
-            .select-text {
-              padding: 2px 15px 0 0;
-              border-right: 1px solid #FFFFFF;
-            }
-            .currency-selector {
-              .current {
-                padding: 7px 30px;
-                width: 100px;
-                text-align: center;
-              }
-              .dropdown {
-                right: 0;
-                position: absolute;
-                top: 35px;
-                display: none;
-                width: 100px;
-                .currency-item {
-                  padding: 7px 30px;
-                  background: none;
-                  color: #000;
-                  background: #FFFFFF;
-                  border: 1px solid #DADADA;
-                  margin: inherit;
-                  font-size: 16px;
-                }
-              }
-              &:hover > .dropdown {
-                display: block;
-              }
-            }
           }
         }
       }
@@ -1119,7 +1128,7 @@ a:hover {
       min-width: 150px;
       font-size: 16px;
       font-weight: bold;
-      box-shadow: 0 8px 12px -2px rgba(0,0,0,0.09);
+      box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.09);
     }
   }
   .step-content-custom {
