@@ -103,6 +103,13 @@ class PackageSelector extends React.Component {
     updateSuperRightsList = (superRight, status) => {
         if (status && !this.state.rightsPackage.has(superRight.id)) this.state.rightsPackage.set(superRight.id, superRight);
         if (!status && this.state.rightsPackage.has(superRight.id)) this.state.rightsPackage.delete(superRight.id);
+
+        let rightPackage = this.state.rightsPackage.get(superRight.id);
+        if (rightPackage) {
+            rightPackage.exclusive = false;
+            this.state.rightsPackage.set(superRight.id, rightPackage);
+        }
+
         this.props.superRightsUpdated(this.state.rightsPackage);
     };
 
