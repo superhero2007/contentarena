@@ -22,62 +22,60 @@ class ProgramDetails extends React.Component {
             PROGRAM_TYPE,
         } = this.props;
         return (
-            <div style={{ padding:'20px 0'}}>
+            <div>
                 <div>
                     <div className="description-info">
                         <div className="col">
-                            <div>
+                            <div className="row-title">
                                 <b>
-                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE")}
+                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_NAME")} - {PROGRAM_NAME}
                                 </b>
-                                <div>
-                                    {PROGRAM_NAME}
-                                </div>
                             </div>
-                            {PROGRAM_TYPE && (
-                                <div>
-                                    <b>
-                                        {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE")}
-                                    </b>
-                                    <div>
-                                        {ProgramTypesDefinitions[PROGRAM_TYPE]}
-                                    </div>
+                            <div className="row-item">
+                                <div className="cap">
+                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES")}
                                 </div>
-                            )}
-                            {PROGRAM_DESCRIPTION && (
-                                <div>
-                                    <b>{this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DESCRIPTION")}</b>
-                                    <div>
-                                        {PROGRAM_DESCRIPTION}
-                                    </div>
+                                <b>
+                                    {PROGRAM_EPISODES}
+                                </b>
+                            </div>
+                            <div className="row-item">
+                                <div className="cap">
+                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION")}
                                 </div>
-                            )}
+                                <b>
+                                    {PROGRAM_DURATION}
+                                </b>
+                            </div>
                         </div>
                         <div className="col">
-                            <b>
-                                {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION")}
-                            </b>
-                            <div>
-                                {PROGRAM_DURATION}
-                            </div>
-                            {PROGRAM_YEAR && (
-                                <div>
-                                    <b>
-                                        {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE")}
-                                    </b>
-                                    <div>
-                                        {PROGRAM_YEAR}
+                            {PROGRAM_TYPE && (
+                                <div className="row-item">
+                                    <div className="cap">
+                                        {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE")}
                                     </div>
+                                    <b>
+                                        {ProgramTypesDefinitions[PROGRAM_TYPE]}
+                                    </b>
                                 </div>
                             )}
-                            <b>
-                                {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES")}
-                            </b>
-                            <div>
-                                {PROGRAM_EPISODES}
-                            </div>
+                            {PROGRAM_YEAR && (
+                                <div className="row-item">
+                                    <div className="cap">
+                                        {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE")}
+                                    </div>
+                                    <b>
+                                        {PROGRAM_YEAR}
+                                    </b>
+                                </div>
+                            )}
                         </div>
                     </div>
+                    {PROGRAM_DESCRIPTION && (
+                        <div>
+                            {PROGRAM_DESCRIPTION}
+                        </div>
+                    )}
                 </div>
             </div>
         );

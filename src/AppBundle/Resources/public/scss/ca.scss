@@ -66,6 +66,9 @@ a:hover {
   .buttons {
     display: flex;
     flex-direction: column;
+    i.fa {
+      padding: 5px;
+    }
     .buttons-container {
       margin: 0 0 8px;
       display: inline-flex;
@@ -120,6 +123,9 @@ a:hover {
   color: #1a1a1a;
   padding: 20px;
   text-align: left;
+  i.fa {
+    padding: 5px;
+  }
 
   .listing-summary {
     border-bottom: 4px solid #D4D8DE;
@@ -895,7 +901,7 @@ a:hover {
 }
 
 .season-details {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   .season-name {
     background-color: $blue-color;
     color: white;
@@ -968,6 +974,9 @@ a:hover {
   background-color: $blue-color;
   border-bottom: 5px solid $orange-color;
   color: white;
+  i.fa {
+    padding: 5px;
+  }
 
   .step {
     padding: 19px 20px 16px 75px;
@@ -1811,13 +1820,8 @@ a:hover {
       margin-left: 20px;
     }
   }
-  .table-info {
-    border-collapse: collapse;
+  .info {
     font-size: 14px;
-
-    td {
-      padding-bottom: 10px;
-    }
   }
   .listing-details-content {
     display: flex;
@@ -1835,6 +1839,7 @@ a:hover {
 
         img {
           object-fit: cover;
+          width: 100%;
         }
       }
 
@@ -1898,6 +1903,10 @@ a:hover {
       background-color: $content-bg;
       box-shadow: 0 1px 9px rgba(0,0,0,0.21);
 
+      .spacer {
+        margin-bottom: 10px;
+      }
+
       .listings-details-title {
         margin-bottom: 10px;
         padding: 10px 0 20px;
@@ -1906,6 +1915,9 @@ a:hover {
 
       .description-info {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
         max-width: 800px;
         padding: 30px;
         background: #EFEEEE;
@@ -1913,23 +1925,37 @@ a:hover {
         margin-bottom: 15px;
 
         .col {
-          width: 100%;
+          flex: 45%0 0;
 
-          div {
-            margin-bottom: 10px;
+          .row-title {
+            margin-bottom: 20px;
           }
 
-          &:first-child {
-            border-right: 1px solid #cccccc;
-          }
-          &:last-child {
-            padding-left: 20px;
+          .row-item {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #cccccc;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            font-size: 14px;
+
+            .cap {
+              margin-right: 10px;
+            }
+
+            &:before {
+              content: "\f0da";
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 10px;
+              font: normal normal normal 21px/1 FontAwesome;
+            }
           }
         }
       }
 
       .ca-tabs {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
       .txt {
@@ -1951,7 +1977,6 @@ a:hover {
             background-color: $color-grey-light;
             padding: 10px 20px;
             margin-right: 10px;
-            font-weight: 600;
 
             .icon {
               font-size: 21px;
@@ -1997,7 +2022,7 @@ a:hover {
             align-items: center;
 
             .item {
-              margin-left: 10px;
+              margin-left: 20px;
             }
 
             .ca-btn {
@@ -2042,6 +2067,7 @@ a:hover {
             margin-bottom: 30px;
             border: 1px solid #999;
             border-radius: 5px 5px 0 0;
+            padding: 0 1px;
 
             & > div:only-child {
               display: none; //means if only table title is rendered, and no data is rendered, we hide full block
@@ -2049,6 +2075,12 @@ a:hover {
             .row {
               display: flex;
               border-bottom: 1px solid #999;
+              &:nth-child(odd) {
+                background-color: #efefef;
+              }
+              &:first-child {
+                background-color: #ffffff;
+              }
               &:last-child {
                 border-bottom: 0;
               }
@@ -2080,10 +2112,6 @@ a:hover {
                 padding: 10px;
                 min-height: 30px;
               }
-
-            }
-            .odd-row {
-              background-color: #efefef;
             }
           }
         }
@@ -2208,6 +2236,11 @@ a:hover {
 }
 
 .Installments {
+  .icon-info {
+    font-size: 21px;
+    color: $color-blue;
+  }
+
   .payment {
     display: flex;
     align-items: center;

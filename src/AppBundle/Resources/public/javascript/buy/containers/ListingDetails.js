@@ -77,11 +77,11 @@ class ListingDetails extends React.Component {
             this.selectPackage(selectedPackage);
         }
 
-        jQuery('body,.manager-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+        jQuery('body,.manager-container,.marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
 
     componentWillUnmount(){
-        jQuery('body,.manager-container').removeAttr('style') //todo: remove this when other page redesign ready
+        jQuery('body,.manager-container,.marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     componentWillReceiveProps(nextProps) {
@@ -483,6 +483,11 @@ class ListingDetails extends React.Component {
         let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
         let technicalFee = this.getTechnicalFee();
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
+
+        const isEditedProgramShownInFirstTab = content.rightsPackage.length === 1 && content.rightsPackage.some(e => e.shortLabel === 'PR')
+
+        console.log(this.props.listing.programDescription);
+        console.log(content.programDescription);
         return (
             <div className="listing-details">
                 <SendMessage ref="messagePopup" listingId={content.id} recipient={content.company}/>
@@ -532,75 +537,75 @@ class ListingDetails extends React.Component {
                             rightsPackage={content.rightsPackage}
                         />
 
-                        <table className="table-info">
-                            <tr>
-                                <td>
-                                    {this.context.t("LISTING_DETAILS_LICENSE_START")}
-                                </td>
-                                <td>
-                                    <b>
-                                        { content.startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
-                                        { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
-                                    </b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {this.context.t("LISTING_DETAILS_LICENSE_END")}
-                                </td>
-                                <td>
-                                    <b>
+                 {/*       <div>
+                            <div>
+                                {this.context.t("LISTING_DETAILS_LICENSE_START")}
+                            </div>
+                            <div>
+                                <b>
+                                    { content.startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
+                                    { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
+                                </b>
+                            </div>
+                            <div>
+                                {this.context.t("LISTING_DETAILS_LICENSE_END")}
+                            </div>
+                            <td>
+                                <b>
                                     { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
                                     { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
                                     { content.endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
-                                    </b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
+                                </b>
+                            </td>
+                        </div>*/}
+                        <div className="info">
+                            <div className="d-flex">
+                                <div style={{marginRight: 5}}>
                                     {this.context.t("Publishing date")}
-                                </td>
-                                <td>
+                                </div>
+                                <div>
                                     <b>{Moment().format('DD/MM/YYYY')}</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
+                                </div>
+                            </div>
+                            <div className="d-flex">
+                                <div style={{marginRight: 5}}>
                                     {this.context.t("Expiry")}
-                                </td>
-                                <td>
+                                </div>
+                                <div>
                                     <b>{Moment(content.expiresAt).format('DD/MM/YYYY')}</b>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    {!buyingMode && <div className={"right"} >
-                        <div className="listings-details-title">
-                            <div className="ca-title">
-                                {content.name}
+                                </div>
                             </div>
                         </div>
 
-                        {/*TABS*/}
-                        <div className={"ca-tabs"}>
-                            <div className={'tab '+ this.isActiveTab(tab, 'bundles')} onClick={()=>{
-                                history.push('/listing/'+content.customId+'/bundles');
-                                this.showTab("bundles")
-                            }}>
-                                {this.context.t("LISTING_DETAILS_TAB_BUNDLES")}
+                    </div>
+                    {!buyingMode && (
+                        <div className={"right"} >
+                            <div className="listings-details-title">
+                                <div className="ca-title">
+                                    {content.name}
+                                </div>
                             </div>
 
-                            {content.PROGRAM_NAME && (
-                                <div className={'tab '+ this.isActiveTab(tab, 'editedprogram')} onClick={()=>{
-                                    history.push('/listing/'+content.customId+'/editedprogram');
-                                    this.showTab("editedprogram")
+                            {/*TABS*/}
+                            <div className={"ca-tabs"}>
+                                <div className={'tab '+ this.isActiveTab(tab, 'bundles')} onClick={()=>{
+                                    history.push('/listing/'+content.customId+'/bundles');
+                                    this.showTab("bundles")
                                 }}>
-                                    {this.context.t("LISTING_DETAILS_EDITED_PROGRAM")}
+                                    {this.context.t("LISTING_DETAILS_TAB_BUNDLES")}
                                 </div>
-                            )}
+
+                                {content.PROGRAM_NAME && !isEditedProgramShownInFirstTab &&(
+                                    <div className={'tab '+ this.isActiveTab(tab, 'editedprogram')} onClick={()=>{
+                                        history.push('/listing/'+content.customId+'/editedprogram');
+                                        this.showTab("editedprogram")
+                                    }}>
+                                        {this.context.t("LISTING_DETAILS_EDITED_PROGRAM")}
+                                    </div>
+                                )}
 
 
-                            {/*{this.isTabHasData(content, "event") &&
+                                {/*{this.isTabHasData(content, "event") &&
                                 <div className={'tab '+ this.isActiveTab(tab, 'event')} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/event');
                                     this.showTab("event");
@@ -609,48 +614,50 @@ class ListingDetails extends React.Component {
                                 </div>
                             }*/}
 
-                            <div className={'tab '+ this.isActiveTab(tab, 'grantofrights')} onClick={()=>{
-                                history.push('/listing/'+content.customId+'/grantofrights');
-                                this.showTab("grantofrights")
-                            }}>
-                                {this.context.t("LISTING_DETAILS_TAB_RIGHTS")}
+                                <div className={'tab '+ this.isActiveTab(tab, 'grantofrights')} onClick={()=>{
+                                    history.push('/listing/'+content.customId+'/grantofrights');
+                                    this.showTab("grantofrights")
+                                }}>
+                                    {this.context.t("LISTING_DETAILS_TAB_RIGHTS")}
+                                </div>
+
+
+                                <div className={'tab '+ this.isActiveTab(tab, 'seller')} onClick={()=>{
+                                    history.push('/listing/'+content.customId+'/seller');
+                                    this.showTab("seller")
+                                }}>
+                                    {this.context.t("LISTING_DETAILS_TAB_SELLER")}
+                                </div>
                             </div>
 
+                            {/*TAB CONTENT*/}
+                            <div className={"listing-details-tab"}>
 
-                            <div className={'tab '+ this.isActiveTab(tab, 'seller')} onClick={()=>{
-                                history.push('/listing/'+content.customId+'/seller');
-                                this.showTab("seller")
-                            }}>
-                                {this.context.t("LISTING_DETAILS_TAB_SELLER")}
-                            </div>
-                        </div>
-
-                        {/*TAB CONTENT*/}
-                        <div className={"listing-details-tab"}>
-
-                            { this.state.tab === "bundles" &&
+                                { this.state.tab === "bundles" &&
                                 <CommercialTerms
                                     profile={profile}
                                     onSelectPackage={this.selectPackage}
+                                    programDetails={(content.PROGRAM_NAME && isEditedProgramShownInFirstTab) ? <ProgramDetails {...content}/> : false}
                                     {...content}
                                 />
-                            }
-                            {this.state.tab === "event" && this.isTabHasData(content, "event") &&
+                                }
+                          {/*      {this.state.tab === "event" && this.isTabHasData(content, "event") &&
                                 <ContentInformation {...content}/>
-                            }
-                            { this.state.tab === "grantofrights" &&
+                                }*/}
+                                { this.state.tab === "grantofrights" &&
                                 <TermSheet{...content}/>
-                            }
-                            { this.state.tab === "editedprogram" &&
+                                }
+                                { this.state.tab === "editedprogram" &&
                                 <ProgramDetails {...content}/>
-                            }
-                            {this.state.tab === "seller" &&
+                                }
+                                {this.state.tab === "seller" &&
                                 <Seller {...content}/>
-                            }
+                                }
 
 
+                            </div>
                         </div>
-                    </div>}
+                    )}
 
                     {buyingMode && <div className={"right"} style={{padding:'0 20px'}} >
 
@@ -940,7 +947,7 @@ class ListingDetails extends React.Component {
                             display: 'flex',
                             justifyContent: 'center',
                             marginTop: 20,
-                            marginBottom: 40
+                            marginBottom: 40,
                         }}>
                             { !spinner && selectedPackage.salesMethod === "FIXED" &&
                             <button className="standard-button"

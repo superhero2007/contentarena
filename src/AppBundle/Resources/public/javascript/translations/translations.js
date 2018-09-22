@@ -62,6 +62,7 @@ export const translations = {
     'CHECKOUT_BUTTON_BUY': 'Buy',
     'CHECKOUT_BUTTON_PLACE_BID': 'Place Bid',
     'MARKETPLACE_NO_RESULTS': 'Sorry, no results. Try changing the filter settings!',
+    'LISTING_DETAILS_PROGRAM_TITLE_NAME': 'Program name',
     'LISTING_DETAILS_PROGRAM_TITLE_TYPE': 'Program type',
     'LISTING_DETAILS_PROGRAM_TITLE_EPISODES': 'Number of episodes',
     'LISTING_DETAILS_PROGRAM_TITLE_DURATION': 'Average episode duration (min)',

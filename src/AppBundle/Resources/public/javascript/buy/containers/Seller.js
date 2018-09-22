@@ -15,50 +15,52 @@ class Seller extends React.Component {
         const { company } = this.props;
         return (
             <div>
-                <div>
+                <div className="spacer">
                     <div className="ca-title">
                         {company.legalName}
                     </div>
                     {company.website && (
                         <div>
-                            <a href={company.website} target="_blank">{company.website}</a>
+                            {company.website}
                         </div>
                     )}
                 </div>
-                <div className="description-info d-flex">
+                <div className="description-info align-items-center">
                     <div className="col">
-                        <div>
+                        <div className="spacer">
                             <b>
                                 {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
                             </b>
                         </div>
 
-                        <div>{company.address}</div>
-                        {company.country.name && <div>{company.country.name}</div>}
-                        {company.city && <div>{company.city}</div>}
-                        {company.zip && <div>{company.zip}</div>}
+                        <div className="spacer">{company.address}</div>
+
+                        {(company.city || company.zip) && (
+                            <div className="spacer">
+                                {company.city && company.city}&nbsp;
+                                {company.zip && company.zip}
+                            </div>
+                        )}
+
+                        {company.country.name && <div className="spacer">{company.country.name}</div>}
+
 
                     </div>
                     <div className="col">
                         {company.registrationNumber && (
-                            <div>
-                                <div>
-                                    <b>
-                                        {this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
-                                    </b>
-                                </div>
-
+                            <div className="spacer">
+                                <b>
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
+                                </b>
                                 <div>
                                     {company.registrationNumber}
                                 </div>
                             </div>
                         )}
-                        <div>
-                            <div>
-                                <b>
-                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
-                                </b>
-                            </div>
+                        <div className="spacer">
+                            <b>
+                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
+                            </b>
                             <div>
                                 {company.vat}
                             </div>

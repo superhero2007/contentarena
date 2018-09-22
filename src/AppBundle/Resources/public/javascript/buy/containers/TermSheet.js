@@ -6,6 +6,7 @@ import {ProductionStandardsDefinitions} from "../../sell/components/ProductionSt
 import {RightItemsDefinitions} from "../../sell/components/RightItemsDefinitions";
 import {SuperRightProductionDetailsLabels} from "../../sell/components/SuperRightDefinitions";
 import {PropTypes} from "prop-types";
+import Moment from "moment/moment";
 
 class TermSheet extends React.Component {
 
@@ -22,7 +23,7 @@ class TermSheet extends React.Component {
 
     renderProgramInfo = (values, name, i) => {
         const { rightsPackage } = this.props;
-        return <div className={'row '+(i%2 ? 'odd-row':'')} key={'program'+i}>
+        return <div className='row' key={'program'+i}>
                 <div className="right-name right-definition">{name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
@@ -52,7 +53,7 @@ class TermSheet extends React.Component {
                 if (!LICENSED_LANGUAGES || LICENSED_LANGUAGES.length === 0) return false;
             }
 
-            return <div className={'row '+(i%2 ? 'odd-row':'')} key={'list'+i}>
+            return <div className='row' key={'list'+i}>
                 <div className="right-name right-definition">{right.name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
@@ -122,14 +123,16 @@ class TermSheet extends React.Component {
         const {selectedRightsBySuperRight, rightsPackage} = this.props;
         return definitions.map( (right,i) => {
             if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
-            return <div className="term-sheet-full-item-box" key={'textarea_'+i}>
-                <label>{right.name}</label>
-                <div  className="full-item-content">
-                    {
-                        selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]
-                    }
+            return (
+                <div key={'textarea_'+i}>
+                    <div className="title spacer">
+                        {right.name}
+                    </div>
+                    <div className="txt">
+                        {selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]}
+                    </div>
                 </div>
-            </div>
+            )
         })
     };
 
@@ -149,12 +152,61 @@ class TermSheet extends React.Component {
     };
 
     render() {
-        const {selectedRightsBySuperRight, rightsPackage, PROGRAM_SCRIPT, PROGRAM_SUBTITLES, PROGRAM_LANGUAGE,
-            COMMENTS_RIGHTS, COMMENTS_PRODUCTION, HL_INPUT, NA_INPUT} = this.props;
+        const {
+            selectedRightsBySuperRight,
+            rightsPackage,
+            PROGRAM_SCRIPT,
+            PROGRAM_SUBTITLES,
+            PROGRAM_LANGUAGE,
+            COMMENTS_RIGHTS,
+            COMMENTS_PRODUCTION,
+            HL_INPUT,
+            NA_INPUT,
+            programDescription,
+            startDateMode,
+            startDate,
+            endDateMode,
+            endDateLimit,
+            endDate
+        } = this.props;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
 
         return (
             <div className="term-sheet">
+
+                {programDescription && (
+                    <div className="txt">
+                        {programDescription}
+                    </div>
+                )}
+
+                <div className="additional-items">
+                    <div className="item">
+                        <i className="fa fa-calendar-check-o icon" />
+                        <div className="cap">
+                            {this.context.t("LISTING_DETAILS_LICENSE_START")}:
+                        </div>
+                        <div className="d-flex">
+                            <b>
+                                { startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
+                                { startDateMode === "DATE"  && " " + Moment(startDate).format('DD/MM/YYYY')}
+                            </b>
+                        </div>
+                    </div>
+                    <div className="item">
+                        <i className="fa fa-calendar-times-o icon" />
+                        <div className="cap">
+                            {this.context.t("LISTING_DETAILS_LICENSE_END")}:
+                        </div>
+                        <div className="d-flex">
+                            <b>
+                                { endDateMode === "LIMITED"  && " " + endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
+                                { endDateMode === "DATE"  && " " +Moment(endDate).format('DD/MM/YYYY')}
+                                { endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
+                            </b>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="term-sheet-items">
                     <div className="row">
@@ -197,16 +249,16 @@ class TermSheet extends React.Component {
                     { this.renderTextarea(ProductionStandardsDefinitions) }
                 </div>
 
-                { COMMENTS_RIGHTS && <div className="term-sheet-full-item-box">
-                    <label>
-                        {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
-                    </label>
-                    <div  className="full-item-content">
-                        {
-                            COMMENTS_RIGHTS
-                        }
+                { COMMENTS_RIGHTS && (
+                    <div>
+                        <div className="title spacer">
+                            {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
+                        </div>
+                        <div className="txt">
+                            {COMMENTS_RIGHTS}
+                        </div>
                     </div>
-                </div>}
+                )}
 
                 <div className="term-sheet-items">
                     <div className="row">
@@ -234,30 +286,27 @@ class TermSheet extends React.Component {
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
                 </div>
 
-                {
-                    selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&
-                    <div className="term-sheet-full-item-box">
-                        <label>
+                {selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] && (
+                    <div>
+                        <div className="title spacer">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS")}
-                        </label>
-                        <div  className="full-item-content">
-                            {
-                                selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]
-                            }
+                        </div>
+                        <div className="txt">
+                            {selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]}
                         </div>
                     </div>
-                }
+                )}
 
-                { COMMENTS_PRODUCTION && <div className="term-sheet-full-item-box">
-                    <label>
-                        {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2")}
-                    </label>
-                    <div  className="full-item-content">
-                        {
-                            COMMENTS_PRODUCTION
-                        }
+                { COMMENTS_PRODUCTION && (
+                    <div>
+                        <div className="title spacer">
+                            {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2")}
+                        </div>
+                        <div  className="txt">
+                            {COMMENTS_PRODUCTION}
+                        </div>
                     </div>
-                </div>}
+                )}
 
             </div>
         );

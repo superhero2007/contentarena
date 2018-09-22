@@ -213,11 +213,11 @@ class ContentListing extends React.Component{
                 </div>
                 <div className={"right"} >
                     <div className="name-wrapper">
-                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"ca-title text-truncate small"} onClick={() => { if (onSelectName) onSelectName() }}>
+                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"ca-title text-truncate small"} style={{cursor: "pointer"}} onClick={() => { if (onSelectName) onSelectName() }}>
                             {name}
                         </div>}
 
-                        { checkExpired && status.name !== "EDITED" && status.name !== "APPROVED" && <div className={"ca-title text-truncate small"} style={{cursor: "default"}}>
+                        { checkExpired && status.name !== "EDITED" && status.name !== "APPROVED" && <div className={"ca-title text-truncate small"} >
                             {name}
                         </div>}
 

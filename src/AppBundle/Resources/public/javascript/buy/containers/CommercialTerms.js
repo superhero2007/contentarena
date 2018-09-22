@@ -70,83 +70,71 @@ class CommercialTerms extends React.Component {
             bundlesWithActivity,
             website,
             attachments,
-            description
+            description,
+            programDetails
         } = this.props;
         const {seasons} = this.state;
         return (
             <div>
-                {programDescription && (
-                    <div>
-                        <b>
-                            {this.context.t("LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION")}
-                        </b>
 
-                        <div className="txt">
-                            {programDescription}
-                        </div>
+                {description && !programDetails && (
+                    <div className="txt">
+                        {description}
                     </div>
                 )}
 
-                {description && (
-                    <div>
-                        <b>
-                            {this.context.t("LISTING_DETAILS_EVENT_TITLE_DESCRIPTION")}
-                        </b>
-                        <div className="txt">
-                            {description}
-                        </div>
+                {programDetails && programDetails}
+
+                {website && attachments && attachments.length > 0 && (
+                    <div className="additional-items">
+                        {website && (
+                            <div className="item">
+                                <i className="fa fa-link icon"/>
+                                <div className="cap">
+                                    {this.context.t("LISTING_DETAILS_EVENT_TITLE_WEBSITE")}
+                                </div>
+                                <div className="d-flex">
+                                    <b>
+                                        {website && website.map(website => {
+                                            return <div className="d-inline-flex">{website}</div>
+                                        })}
+                                    </b>
+                                </div>
+                            </div>
+                        )}
+
+                        {attachments && attachments.length > 0 && (
+                            <div className="item">
+                                <i className="fa fa-folder-open-o icon"/>
+                                <div className="cap">
+                                    {this.context.t("LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS")}
+                                </div>
+                                <div className="d-flex">
+                                    <b>
+                                        {attachments.map(a => (
+                                            <div>
+                                                <a download={a.name} target="_blank" href={this.baseDir + a.file}>
+                                                    <img style={{margin: '-2px 5px 0 0'}} src={this.pdfIcon}/>
+                                                    {a.name}
+                                                </a>
+                                            </div>
+                                        ))}
+                                    </b>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
-
-                <div className="additional-items">
-                    {website && (
-                        <div className="item">
-                            <i className="fa fa-link icon"/>
-                            <div className="cap">
-                                {this.context.t("LISTING_DETAILS_EVENT_TITLE_WEBSITE")}
-                            </div>
-                            <div className="d-flex">
-                                {website && website.map(website => {
-                                    return <div><a target="_blank" href={website}>{website}</a></div>
-                                })}
-                            </div>
-                        </div>
-                    )}
-
-                    {attachments && attachments.length > 0 && (
-                        <div className="item">
-                            <i className="fa fa-folder-open-o icon"/>
-                            <div className="cap">
-                                {this.context.t("LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS")}
-                            </div>
-                            <div className="d-flex">
-                                {attachments.map(a => (
-                                    <div>
-                                        <a download={a.name} target="_blank" href={this.baseDir + a.file}>
-                                            <img style={{margin: '-2px 5px 0 0'}} src={this.pdfIcon}/>
-                                            {a.name}
-                                        </a>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </div>
 
                 {/*SEASON/FIXTURES*/}
                 {seasons && seasons.length > 0 && (
                     <div>
                         {seasons.map((season, key) => (
-                            <div key={"season-" + key} className="season-details">
-                                <div className="title">
-                                    {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}
-                                </div>
-
-                                {/*{(!season.fixtures || season.fixtures.length === 0) && (
-                                    <StaticSchedules season={key} seasons={seasons}/>
-                                )}*/}
-
-                                {season.fixtures && season.fixtures.length > 0 && (
+                            season.fixtures && season.fixtures.length > 0 && (
+                                <div key={"season-" + key} className="season-details">
+                                    <div className="title">
+                                        {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}
+                                    </div>
                                     <div className="d-flex align-items-center justify-content-between flex-wrap">
                                         {season.fixtures.map(fixture => (
                                             <div className="row-container" style={{width: '45%'}}>
@@ -164,8 +152,8 @@ class CommercialTerms extends React.Component {
                                             </div>
                                         ))}
                                     </div>
-                                )}
-                            </div>
+                                </div>
+                            )
                         ))}
                     </div>
                 )}

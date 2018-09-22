@@ -78,13 +78,6 @@ class SalesPackages extends React.Component {
 
                             <div className="actions">
                                 <div className="spacer">
-                                    <LicenseDownloader
-                                        type={"BUNDLE"}
-                                        id={salesPackage.id}
-                                        listingId={listingId}
-                                    />
-                                </div>
-                                <div className="spacer">
                                     <Installments
                                         installments={salesPackage.installments}
                                     />

@@ -45,7 +45,7 @@ const Installments = ({installments},context) => {
                     ))
                 }>
                 <a data-tip data-for={tooltipId}>
-                    <i className="fa fa-info-circle" />
+                    <i className="fa fa-info-circle icon-info" />
                 </a>
             </CaTooltip>
         </div>
