@@ -27,7 +27,12 @@ export const SummaryText = ({sports, sportCategory, tournament, seasons, customC
 
     if (sports.length === 0 && sportCategory.length === 0 && tournament.length === 0) return null;
 
-    summary += sports[0].name;
+    if (sports.length > 1) {
+        summary += 'Multiple sports';
+    } else {
+        summary += sports[0].name;
+    }
+
     if ( sportCategory.length > 0 && !sportCategory[0].custom )  summary += " - " + sportCategory[0].name;
     if ( customCategory && customCategory != "") summary += " - " + customCategory;
     if ( tournament.length > 0 && !tournament[0].custom )  summary += " - " + tournament[0].name;
