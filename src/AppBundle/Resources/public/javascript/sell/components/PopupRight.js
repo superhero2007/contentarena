@@ -520,7 +520,7 @@ class PopupRight extends React.Component {
                         </div>
                         }
 
-                        {technicalFee && this.hasSelection(id, technicalFee, rightsPackage) && <div style={{ padding: "0 15px"}}>
+                        {technicalFee && <div style={{ padding: "0 15px"}}>
                             <div style={{ fontWeight: 600, padding: "15px 0 5px"}}>Technical fee</div>
                             <div>
                                 <input
