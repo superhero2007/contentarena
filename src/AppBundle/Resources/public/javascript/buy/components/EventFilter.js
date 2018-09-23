@@ -52,6 +52,8 @@ class EventFilter extends React.Component {
     onSelectSport = (selectedSport) => {
         localStorage.setItem(localStorageEnums.SPORTS, JSON.stringify(selectedSport));
         this.props.selectSport(selectedSport);
+
+        this.handleFilter();
     };
 
     updateEvent = (e) => {
