@@ -20,6 +20,7 @@ use AppBundle\Entity\Season;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\Sport;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
 class UserService
@@ -40,6 +41,17 @@ class UserService
         $this->fosUserManager = $fosUserManager;
     }
 
+    public function getUserByActivationCode( $activationCode )
+    {
+        if( $activationCode == null ) return null;
+
+        $user = $this->em
+            ->getRepository('AppBundle:User')
+            ->findOneBy(array('confirmationToken' => $activationCode));
+
+        return $user;
+    }
+
     public function updateUser($data){
 
         if ( isset($data['id']) ) {
@@ -53,6 +65,7 @@ class UserService
             if ( isset($data['title']) ) $user->setTitle($data['title']);
             if ( isset($data['email']) ) $user->setEmail($data['email']);
             if ( isset($data['phone']) ) $user->setPhone($data['phone']);
+            $user->setConfirmationToken(null);
 
             $this->em->persist($user);
             $this->em->flush();
@@ -60,6 +73,26 @@ class UserService
         }
 
         return false;
+
+    }
+
+    public function activateUser(Request $request){
+
+        $data = $request->get("user");
+
+        if ( !isset($data['activationCode']) ) throw new BadRequestHttpException();
+
+        $user = $this->em
+            ->getRepository('AppBundle:User')
+            ->findOneBy(array('confirmationToken' => $data['activationCode']));
+
+        if ($user == null) throw new BadRequestHttpException();
+
+        $user = $this->updateUser($data);
+        $this->updateCompany($data['company'], $user);
+        $this->updatePassword($request);
+
+        return $user;
 
     }
 
@@ -121,7 +154,6 @@ class UserService
             if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
             if ( isset($data['address']) ) $company->setAddress($data['address']);
             if ( isset($data['city']) ) $company->setCity($data['city']);
-            //if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
             if ( isset($data['description']) ) $company->setDescription($data['description']);
             if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));
 

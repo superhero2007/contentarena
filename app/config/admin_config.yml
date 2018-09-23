@@ -22,11 +22,11 @@ easy_admin:
                         - { name: 'edit', icon: 'pencil', label: '' }
                         - { name: 'delete', icon: 'times', label: '' }
                         - { name: 'createCompany' }
+                        - { name: 'sendActivationLink' }
 
                 form:
                     fields:
                         - 'email'
-                        - 'username'
                         - 'firstName'
                         - 'lastName'
                         - 'status'

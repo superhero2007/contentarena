@@ -19,7 +19,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
-                default_target_path: /marketplace
+                default_target_path: /
 
             logout:       true
             anonymous:    true
@@ -27,6 +27,8 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/v1/auth/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user/code, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/user/activate, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }

@@ -20,12 +20,7 @@ class RegistrationFormType extends AbstractType {
         $builder
             ->add('firstName')
             ->add('lastName')
-            ->add('companyLegalName')
-            ->add('companyWebsite')
-            ->add('profile', EntityType::class, array(
-                    'class' => Profile::class,
-                    'choice_label' => 'name'))
-            ->add('country', CountryType::class);
+            ->add('companyLegalName');
 
     }
 

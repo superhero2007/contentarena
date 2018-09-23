@@ -580,6 +580,21 @@ class ApiController extends BaseController
     }
 
     /**
+     * @Route("/api/user/code", name="getUserInfoByActivationCode")
+     */
+    public function getUserInfoByActivationCode(Request $request, UserService $userService)
+    {
+        $user = $userService->getUserByActivationCode($request->get("activationCode"));
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
      * @Route("/api/company/users", name="getCompanyUsers")
      */
     public function getCompanyUsers(Request $request)
@@ -607,6 +622,22 @@ class ApiController extends BaseController
         if ($userData['id'] !== $user->getId()) return false;
 
         $user = $userService->updateUser($userData);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/user/activate", name="activateUser")
+     */
+    public function activateUser(Request $request, UserService $userService)
+    {
+        $user = $userService->activateUser($request);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();

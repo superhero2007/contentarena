@@ -84,7 +84,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      * @Groups({"settings"})
      */
     protected $phone;
@@ -92,7 +92,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Groups({"settings"})
      */
     protected $title;
@@ -100,7 +100,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=25)
+     * @ORM\Column(name="country", type="string", length=25, nullable=true)
      */
     private $country;
 
@@ -183,6 +183,11 @@ class User extends BaseUser
     public function setUnconfirmedChecked($unconfirmedChecked)
     {
         $this->unconfirmedChecked = $unconfirmedChecked;
+    }
+
+    public function setEmail($email){
+        parent::setEmail($email);
+        parent::setUsername($email);
     }
 
 

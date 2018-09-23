@@ -9,6 +9,8 @@ import HeaderBar from "./components/HeaderBar";
 import Marketplace from "../buy/containers/Marketplace";
 import SellForm from "../sell/components/SellForm";
 import TestPage from "./containers/TestPage";
+import Register from "./containers/Register";
+import PublicHeaderBar from "./components/PulbicHeaderBar";
 
 export const routes = [
     {
@@ -28,6 +30,20 @@ export const routes = [
         exact: true,
         header: HeaderBar,
         main: TestPage
+    },
+    {
+        path: "/register",
+        exact: true,
+        header: PublicHeaderBar,
+        main: Register,
+
+    },
+    {
+        path: "/register/:activationCode",
+        exact: true,
+        header: PublicHeaderBar,
+        main: Register,
+        isPublic : true
     },
     {
         path: "/marketplace/filter/:filterName/:filterValue?",

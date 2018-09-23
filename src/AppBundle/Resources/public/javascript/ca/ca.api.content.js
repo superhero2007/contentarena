@@ -119,6 +119,28 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    getUserInfoByActivationCode ( activationCode ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/user/code",
+            type: "POST",
+            contentType: "application/json",
+            data : JSON.stringify({activationCode: activationCode}),
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getCompanyUsers ( ) {
         let deferred = jQuery.Deferred(),
             _this = this;
@@ -162,7 +184,6 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
-
     updatePassword ( data ) {
         let deferred = jQuery.Deferred(),
             _this = this;
@@ -193,6 +214,28 @@ ContentArena.ContentApi= {
             url: envhosturl + "api/user/update",
             type: "POST",
             data: JSON.stringify({user:user}),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    activateUser ( user, password ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/user/activate",
+            type: "POST",
+            data: JSON.stringify({user:user, password : password}),
             contentType: "application/json",
             success: function (response) {
                 deferred.resolve(response);

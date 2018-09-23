@@ -4,21 +4,12 @@ msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
 msgid "LISTING_DETAILS_MULTIPLE_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "International"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-msgid "Release year:"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-msgid "episodes"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
@@ -33,6 +24,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
 msgid "MARKETPLACE_LABEL_FILTER_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/Installments.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "INSTALLMENT_CLOSURE_DAYS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
@@ -56,23 +52,20 @@ msgid "MARKETPLACE_BUTTON_CLEAR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
-msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
+msgid "LISTING_DETAILS_EVENT_TITLE_WEBSITE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
+msgid "LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "LISTING_DETAILS_EVENT_TITLE_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "LISTING_DETAILS_EVENT_TITLE_WEBSITE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -100,36 +93,6 @@ msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_LICENSE_START"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_LICENSE_END"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "LISTING_DETAILS_LICENSE_END_DAYS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid " Unlimited"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Publishing date"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Expiry"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Contact Seller"
 msgstr ""
 
@@ -139,6 +102,41 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Watchlist"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_START"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_END"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "LISTING_DETAILS_LICENSE_END_DAYS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid " Unlimited"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Publishing date"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Expiry"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -199,11 +197,6 @@ msgid "installment"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
-msgid "INSTALLMENT_CLOSURE_DAYS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "CHECKOUT_LABEL_COMPANY_ADDRESS"
 msgstr ""
 
@@ -228,7 +221,7 @@ msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
@@ -240,11 +233,11 @@ msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_DESCRIPTION"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
@@ -256,27 +249,7 @@ msgid "Place bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_DETAILS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_CITY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_COUNTRY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_ZIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
@@ -287,16 +260,8 @@ msgstr ""
 msgid "LISTING_DETAILS_SELLER_TITLE_VAT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_DESCRIPTION"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_RIGHTS_HEADER_RIGHTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid " Rights"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
@@ -693,6 +658,131 @@ msgstr ""
 msgid "MESSAGE_POPUP_BUTTON_CLOSE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_TITLE_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_FIRST_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_FAMILY_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_LABEL_COMPANY_POSITION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_PHONE_NUMBER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TITLE_COMPANY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_BUTTON_EDIT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_VAT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_CITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ZIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "REGISTER_LABEL_SELECT_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_CHANGE_PASSWORD_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_TYPE_NEW_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_RETYPE_NEW_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_4"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "REGISTER_BUTTON_SAVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "REGISTER_SUCCESS_MESSAGE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Submit"
 msgstr ""
@@ -879,43 +969,7 @@ msgid "PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_TITLE_COMPANY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_BUTTON_EDIT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_BUTTON_SAVE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_VAT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_ADDRESS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_CITY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_ZIP"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -923,27 +977,7 @@ msgid "SETTINGS_LABEL_COMPANY_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_FAMILY_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_FIRST_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_EMAIL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_PHONE_NUMBER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_COMPANY_POSITION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_TITLE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -960,19 +994,7 @@ msgid "SETTINGS_LABEL_CHANGE_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_CHANGE_PASSWORD_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_TYPE_CURRENT_PASSWORD"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_TYPE_NEW_PASSWORD"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_RETYPE_NEW_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -981,22 +1003,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_PASSWORD_UPDATED"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_3"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_4"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -1081,7 +1087,7 @@ msgid "CL_STEP4_LABEL_JURISDICTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "Edit license period"
+msgid "license period"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js

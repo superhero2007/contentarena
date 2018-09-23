@@ -13,9 +13,6 @@ import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
 import {getDefaultRightsPackage} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
-import Marketplace from "../buy/containers/Marketplace";
-import ManageListings from "../manage/containers/ManageListings";
-
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -48,14 +45,21 @@ class PrivateRoute extends React.Component {
     }
 
     render(){
-        const { component: Component, updateByPath, profile, ...rest } = this.props;
+        const { component: Component, updateByPath, profile, isPublic, ...rest } = this.props;
         return <Route
             {...rest}
             render={props => {
 
                 this.updateProfile();
 
-                return fakeAuth.isAuthenticated ? props.match.path === "/" ? (
+                if ( !fakeAuth.isAuthenticated && !isPublic ) return <Redirect
+                    to={{
+                        pathname: "/landing",
+                        state: {from: props.location}
+                    }}
+                />;
+
+                return props.match.path === "/" ? (
                     <Redirect
                         to={{
                             pathname: profile === "BUYER" ? "/marketplace" : "/managelistings",
@@ -65,13 +69,6 @@ class PrivateRoute extends React.Component {
                 ) : (
                     Component &&
                     <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search}/>
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/landing",
-                            state: {from: props.location}
-                        }}
-                    />
                 )
             }
             }
@@ -79,11 +76,11 @@ class PrivateRoute extends React.Component {
     }
 }
 
-const PublicRoute = ({ component: Component, ...rest }) => (
+const HeaderRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props => {
-            if (!Component) return null
+            if (!Component) return null;
             return <Component {...props} {...rest}/>
         }}
     />
@@ -106,6 +103,7 @@ class Login extends React.Component {
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
+            console.log("Redirecting to ", from);
             return <Redirect to={from} />;
         }
 
@@ -172,7 +170,7 @@ class AuthRouter extends React.Component {
                     <Route path="/logout" component={Logout} />
 
                     {routes.map((route, index) => (
-                        <PublicRoute
+                        <HeaderRoute
                             key={index}
                             path={route.path}
                             exact={route.exact}
@@ -190,6 +188,7 @@ class AuthRouter extends React.Component {
                             component={route.main}
                             profile={user.profile}
                             routeProfile={route.profile}
+                            isPublic={route.isPublic}
                             updateProfile={this.props.updateProfile}
                             {...this.props}
                         />
