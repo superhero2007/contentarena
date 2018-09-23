@@ -218,7 +218,11 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
         $query
             ->select('sports.name')
-            ->leftJoin('content.sports', 'sports');
+            ->leftJoin('content.sports', 'sports')
+            ->leftJoin('content.status', 'status')
+            ->andWhere('status.name = :approvedStatusName OR status.name = :editedStatusName')
+            ->setParameter('approvedStatusName',"APPROVED")
+            ->setParameter('editedStatusName',"EDITED");
 
         $query->groupBy("sports.name");
 
