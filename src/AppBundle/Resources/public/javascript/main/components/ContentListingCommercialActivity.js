@@ -1,12 +1,13 @@
 import React from 'react';
-import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import CommercialSalesBundle from "../../main/components/CommercialSalesBundle";
+import SalesPackages from './SalesPackeges';
 import ContentListing from "./ContentListing";
 import {getCurrencySymbol} from "../actions/utils";
-import {addIcon, cancelIcon} from "./Icons";
+import {plusGreyIcon, minusGreyIcon, coinIcon} from "./Icons";
 import {PropTypes} from "prop-types";
+import Moment from "moment/moment";
 
 class ContentListingCommercialActivity extends ContentListing {
     constructor(props){
@@ -23,6 +24,12 @@ class ContentListingCommercialActivity extends ContentListing {
         this.bucketicon = assetsBaseDir + "app/images/bucket.png";
         this.exclamationIcon = assetsBaseDir + "app/images/Exclamation.png";
         this.envelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
+
+        jQuery('body, .manager-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+    }
+
+    componentWillUnmount() {
+        jQuery('body, .manager-container').css('background-color', '') //todo: remove this when other page redesign ready
     }
 
     sortSalesPackages = (a, b) => {
@@ -46,15 +53,19 @@ class ContentListingCommercialActivity extends ContentListing {
         return (a > b) ? 1 : ((b > a) ? -1 : 0)
     };
 
+    onClickShowBundle = () => this.setState((state) => ({showSalesPackage: !state.showSalesPackage}));
+
     render(){
         const {
             name,
             onDelete,
+            expiresAt,
             onUpdate,
             hideWithoutBids,
             filterByOpenBids,
             filterByClosedDeals,
             bidsOpen,
+            salesPackages,
             rightsPackage,
             imageBase64,
             image,
@@ -64,55 +75,67 @@ class ContentListingCommercialActivity extends ContentListing {
 
         const {showSalesPackage} = this.state;
 
-        let salesPackages = this.props.salesPackages;
         salesPackages.sort(this.sortSalesPackages);
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         let bids = salesPackages.reduce((t, sp)=>t.concat(sp.bids),[]);
-        let closedDeals = bids.filter(b=>b.status.name === "APPROVED");
+        let closedBids = bids.filter(b=>b.status.name === "APPROVED");
         let openBids = bids.filter(b=>b.status.name === "PENDING");
-        let total = (closedDeals.length > 0 ) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : 0;
+        let total = (closedBids.length > 0 ) ? closedBids.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : 0;
         return (
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
-                <div className="listing-list-view" style={{padding: 0, marginBottom: 0 }}>
-                    <div className={"left"} style={{padding: 25}} >
+                <div className="listing-list-view commercial-activity">
+                    <div className={"left"}>
                         <div className={"image"}>
                             <img src={listingImage}/>
                         </div>
                     </div>
-                    <div className={"right"}  style={{padding:'25px 0'}}>
-                        <div className={"name"} onClick={this.onSelect}>{name}</div>
+                    <div className={"right"}>
+                        <div className={"name-wrapper"} onClick={this.onSelect}>
+                            <span className={"listing-name"}>{name}</span>
+                            <span className={"company-name"}>
+                                {coinIcon} {company.legalName}
+                            </span>
+                        </div>
 
                         <div className="listing-wrapper">
                             <ContentListingEventDetails {...this.props} />
 
                             <ContentListingRightsPackage rightsPackage={rightsPackage}/>
                         </div>
+
+                        <div className="sales-and-exp-wrapper">
+                            <SalesPackages salesPackages={salesPackages} />
+                            {expiresAt && (
+                                <div className="expires">
+                                    Expiry: <b>{Moment(expiresAt).format('MM/DD/YYYY')}</b>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    {/*BID DETAILS*/}
                     <div  className={"bid-listing-details"}>
                         <div className={"item"}>
-                            <div>
-                                {this.context.t(["closed deal", "closed deals", "n"], {n : closedDeals.length})}
-                            </div>
+                            <span>
+                                {this.context.t(["closed bid", "closed bids", "n"], {n : closedBids.length})}
+                            </span>
                         </div>
                         <div className={"item"}>
-                            <div>
+                            <span>
                                 {this.context.t(["open bid","open bids", "n"], {n : openBids.length})}
-                            </div>
+                            </span>
                         </div>
-                        {bids.length > 0 && <div className={"item"} style={{fontWeight:600}}>
-                            <div>
-                                {this.context.t("Commercial Activity Total - {n}", {n : total.toLocaleString("en", { maximumFractionDigits: 2 })})}
-                                {getCurrencySymbol(salesPackages[0].currency.code)}
-                            </div>
+                        {bids.length > 0 && <div className={"total-wrapper"}>
+                            <span className={"bid-total"}>{this.context.t("Revenue")}</span>
+                            <span className={"bid-currency"}>
+                                {total.toLocaleString("en", { maximumFractionDigits: 2 })} {getCurrencySymbol(salesPackages[0].currency.code)}
+                            </span>
                         </div>}
 
-                        {bids.length > 0 && <div className="show-bundle" onClick={()=>{this.setState({showSalesPackage: !showSalesPackage})}}>
-                            {!showSalesPackage && "Show sales bundle"}
-                            {showSalesPackage && "Hide sales bundle"}
-                            {!showSalesPackage && <img src={addIcon}/>}
-                            {showSalesPackage && <img src={cancelIcon}/>}
+                        {bids.length > 0 && <div className="show-bundle-wrapper" onClick={this.onClickShowBundle}>
+                            <div className={"bundle-text"}>
+                                {showSalesPackage ? "Show sales bundle" : "Hide sales bundle"}
+                                {showSalesPackage ? plusGreyIcon : minusGreyIcon}
+                            </div>
                         </div>}
                     </div>
                 </div>
@@ -120,8 +143,6 @@ class ContentListingCommercialActivity extends ContentListing {
 
                     let closed= sb.bids.filter(b=>b.status.name === "APPROVED");
                     let open = sb.bids.filter(b=>b.status.name === "PENDING");
-
-
 
                     if (hideWithoutBids && sb.bids.length === 0 ) return;
                     if (filterByOpenBids && open.length === 0 ) return;

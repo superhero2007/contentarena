@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Select from 'react-select';
 import ContentListingCommercialActivity from '../../main/components/ContentListingCommercialActivity';
-import {goToListing} from "../../main/actions/utils";
-import {PropTypes} from "prop-types";
+import { goToListing } from "../../main/actions/utils";
+import { PropTypes } from "prop-types";
+import cn from "classnames";
 
-class CommercialActivity extends React.Component {
+class CommercialActivity extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,13 +15,11 @@ class CommercialActivity extends React.Component {
             selectedListings: [],
             filter: 'ALL',
             bundlesOpen: false,
-            bidsOpen : false
-
+            bidsOpen : false,
         };
         this.bulletIcon = assetsBaseDir + "app/images/bullet.png";
-        this.activeBulletIcon = assetsBaseDir + "app/images/active_bullet.png";
-
-
+        this.activeBulletIcon = assetsBaseDir + "app/images/radio-active.png";
+        this.reloadIcon = assetsBaseDir + "app/images/reload.png";
     }
 
     componentDidMount () {
@@ -71,12 +70,11 @@ class CommercialActivity extends React.Component {
     };
 
     filtered = () => {
-        const { filter , selectedListings} = this.state;
+        const { filter , selectedListings } = this.state;
 
-        let listings = this.state.listings || [];
-
+        let { listings = [] } = this.state;
         if ( selectedListings.length > 0 ){
-            return this.state.listings.filter(b => selectedListings.indexOf(b.customId) !== -1);
+            return this.state.listings.filter(b => selectedListings.includes(b.customId));
         }
 
         switch (filter) {
@@ -102,20 +100,61 @@ class CommercialActivity extends React.Component {
                 return listings;
             default :
                 return listings;
-
         }
-
     };
 
-    remove = ( customId) => {
-        this.setState({
-            listings : this.state.listings.filter(l => l.customId !== customId)
-        });
+    onResetFilter = () => {
+        const { history } = this.props;
+        history.push("/commercialactivity");
     };
+
+    onChangeSelect = (selectedItem) => {
+        const { history } = this.props;
+        const { filter } = this.state;
+        let filterString = (filter!=="ALL") ? (selectedItem) ? "&" +filter : filter : "" ;
+        let idString = selectedItem ? selectedItem.value : "";
+        let prefix = ( !selectedItem && filter === "ALL") ? "" : "/filter/";
+        history.push("/commercialactivity"+ prefix + idString + filterString);
+    };
+
+    allBundlesCallback = () => {
+        const { selectedListings } = this.state;
+        let filterString = (selectedListings.length > 0) ? "/filter/" + selectedListings[0]  : "" ;
+        this.props.history.push("/commercialactivity"+filterString)
+    };
+    withActivityCallback = () => {
+        const { selectedListings } = this.state;
+        let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
+        this.props.history.push("/commercialactivity/filter/"+filterString+"withactivity")
+    };
+    openBidsCallback = () => {
+        const { selectedListings } = this.state;
+        let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
+        this.props.history.push("/commercialactivity/filter/"+filterString+"openbids")
+    };
+    closedBidsCallback = () => {
+        const { selectedListings } = this.state;
+        let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
+        this.props.history.push("/commercialactivity/filter/"+filterString+"closeddeals")
+    };
+
+    statusFilterItem(callBack, content, filterType) {
+        const { filter } = this.state;
+
+        return (
+            <div
+                key={filterType}
+                className={cn("status-filter-item", {active: filter === filterType})}
+                onClick={callBack}>
+
+                <img src={filter === filterType ? this.activeBulletIcon : this.bulletIcon} />
+                {this.context.t(content)}
+            </div>
+        );
+    }
 
     render () {
-        const { loading, filter, selectedListings } = this.state;
-        const {history } = this.props;
+        const { loading, selectedListings } = this.state;
         let listings = this.filtered();
         const allListings = this.state.listings;
         return (
@@ -125,58 +164,24 @@ class CommercialActivity extends React.Component {
                     <div className={"listing-filter"}>
                         <Select
                             name="form-field-name"
-                            placeholder="All listings"
+                            placeholder="All the listings"
                             isClearable={true}
-                            onChange={(selected)=>{
-                                let filterString = (filter!=="ALL") ? (selected) ? "&" +filter : filter : "" ;
-                                let idString = selected ? selected.value : "";
-                                let prefix = ( !selected && filter === "ALL") ? "" : "/filter/";
-                                history.push("/commercialactivity"+ prefix + idString + filterString)
-
-                            }}
+                            onChange={this.onChangeSelect}
                             multi={false}
                             value={selectedListings[0]}
                             options={allListings.map((b)=>({value : b.customId , label : b.name }))}
                         />
+                        <div className="reset-listing-filter" onClick={this.onResetFilter}>
+                            <img src={this.reloadIcon} />
+                            <span>All listings</span>
+                        </div>
                     </div>
 
                     <div className={"status-filter"}>
-                        <div className={"status-filter-item"}
-                             onClick={()=>{
-                                 let filterString = (selectedListings.length > 0) ? "/filter/" + selectedListings[0]  : "" ;
-                                 history.push("/commercialactivity"+filterString)
-                             }}>
-                            {filter==="ALL" && <img src={this.activeBulletIcon} />}
-                            {filter!=="ALL" && <img src={this.bulletIcon} />}
-                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_ALL")}
-                        </div>
-                        <div className={"status-filter-item"}
-                             onClick={()=>{
-                                 let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
-                                 history.push("/commercialactivity/filter/"+filterString+"withactivity")
-                             }}>
-                            {filter==="withactivity" && <img src={this.activeBulletIcon} />}
-                            {filter!=="withactivity" && <img src={this.bulletIcon} />}
-                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY")}
-                        </div>
-                        <div className={"status-filter-item"}
-                             onClick={()=>{
-                                 let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
-                                 history.push("/commercialactivity/filter/"+filterString+"openbids")
-                             }}>
-                            {filter==="openbids" && <img src={this.activeBulletIcon} />}
-                            {filter!=="openbids" && <img src={this.bulletIcon} />}
-                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS")}
-                        </div>
-                        <div className={"status-filter-item"}
-                             onClick={()=>{
-                                 let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
-                                 history.push("/commercialactivity/filter/"+filterString+"closeddeals")
-                             }}>
-                            {filter==="closeddeals" && <img src={this.activeBulletIcon} />}
-                            {filter!=="closeddeals" && <img src={this.bulletIcon} />}
-                            {this.context.t("COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS")}
-                        </div>
+                        {this.statusFilterItem(this.allBundlesCallback, 'COMMERCIAL_ACTIVITY_FILTER_ALL', 'ALL')}
+                        {this.statusFilterItem(this.withActivityCallback, 'COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY', 'withactivity')}
+                        {this.statusFilterItem(this.openBidsCallback, 'COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS', 'openbids')}
+                        {this.statusFilterItem(this.closedBidsCallback, 'COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS', 'closeddeals')}
                     </div>
                 </div>
 

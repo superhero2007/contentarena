@@ -1,7 +1,14 @@
 import React from 'react';
 import {editedProgramSelected} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
-import {tournamentIcon, sportIcon, sportCategoryIcon, seasonReleaseIcon, fixturesEpisodeIcon, eventTimeIcon} from "../../main/components/Icons";
+import {
+    tournamentIcon,
+    sportIcon,
+    sportCategoryIcon,
+    seasonReleaseIcon,
+    fixturesEpisodeIcon,
+    eventTimeIcon
+} from "../../main/components/Icons";
 
 class ContentListingEventDetails extends React.Component {
 
@@ -96,7 +103,7 @@ class ContentListingEventDetails extends React.Component {
         seasons = seasons.sort((a,b)=> a.from-b.from);
 
         return seasons
-    }
+    };
 
     render() {
         const {
