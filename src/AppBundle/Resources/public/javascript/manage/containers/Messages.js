@@ -29,11 +29,13 @@ class Messages extends React.Component {
 
             let selectedThread;
 
-            r.sort((a, b) => {
+           /* r.sort((a, b) => {
+
+                if (!a.lastMessageDate) return 1;
                 let aDate = Moment(a.lastMessageDate);
                 let bDate = Moment(b.lastMessageDate);
                 return (aDate > bDate) ? 1 : ((bDate > a.bDate) ? -1 : 0)
-            }).reverse();
+            }).reverse();*/
 
             if (this.props.match.params.customId){
                 selectedThread = r.filter(t=>t.customId === this.props.match.params.customId)[0];

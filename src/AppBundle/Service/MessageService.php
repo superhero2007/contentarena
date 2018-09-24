@@ -63,8 +63,17 @@ class MessageService
             }
         }
 
-        return $threads;
+        usort($threads, array($this, "sortByLastMessage"));
+
+        return $threads ;
     }
+
+    public function sortByLastMessage(Thread $a, Thread $b)
+    {
+        return $a->getLastMessageDate() < $b->getLastMessageDate();
+    }
+
+
 
     public function getThread($request){
         $thread = $this->em->getRepository('AppBundle:Thread')->findOneBy(array("customId" => $request->get("customId")));
@@ -84,6 +93,14 @@ class MessageService
             "listing" => $content,
             "buyerCompany" => $user->getCompany(),
             "ownerCompany" => $company
+        ));
+    }
+
+    public function getThreadByListing(Content $content, Company $buyerCompany, Company $ownerCompany){
+        return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
+            "listing" => $content,
+            "buyerCompany" => $buyerCompany,
+            "ownerCompany" => $ownerCompany
         ));
     }
 
@@ -152,6 +169,53 @@ class MessageService
         $message->setThread($thread);
         $message->setSender($user);
 
+        $this->em->persist($message);
+        $this->em->flush();
+        return $message;
+    }
+
+    public function sendMessageAsOwner(Content $content, User $recipient, $messageContent, User $user){
+
+        $ownerCompany = $content->getCompany();
+        $buyerCompany = $recipient->getCompany();
+        $thread = $this->getThreadByListing($content, $buyerCompany, $content->getCompany());
+
+        if ( $thread == null ){
+            $thread = new Thread();
+            $customId = $this->idGenerator->generate($content);
+            $thread->setCustomId($customId);
+            $thread->setBuyerCompany($buyerCompany);
+            $thread->setOwnerCompany($ownerCompany);
+            $thread->setUser($user);
+            $thread->setListing($content);
+            $this->em->persist($thread);
+            $this->em->flush();
+        }
+
+        /**
+         * Send notification to involved users
+         */
+
+        $notificationMessage = "New message on ".$content->getName();
+
+        foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
+            if ( $companyUser->getId() != $user->getId() ){
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
+            }
+        }
+        foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
+            if ( $companyUser->getId() != $user->getId() ){
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
+            }
+        }
+
+
+        $message = new Message();
+        $createdAt = new \DateTime();
+        $message->setCreatedAt($createdAt);
+        $message->setContent($messageContent);
+        $message->setThread($thread);
+        $message->setSender($user);
         $this->em->persist($message);
         $this->em->flush();
         return $message;
