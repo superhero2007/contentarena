@@ -246,7 +246,6 @@ class TermSheet extends React.Component {
 
                 <div>
                     { this.renderTextarea(RightDefinitions) }
-                    { this.renderTextarea(ProductionStandardsDefinitions) }
                 </div>
 
                 { COMMENTS_RIGHTS && (
@@ -284,6 +283,10 @@ class TermSheet extends React.Component {
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages") }
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles") }
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
+                </div>
+
+                <div>
+                    { this.renderTextarea(ProductionStandardsDefinitions) }
                 </div>
 
                 {selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] && (
