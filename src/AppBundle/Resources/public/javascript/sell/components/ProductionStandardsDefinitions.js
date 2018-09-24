@@ -11,7 +11,7 @@ export const ProductionStandardsDefinitions = [
         multiple : false
     },
     {
-        name: "Video Standard",
+        name: "Minimum Video Standard",
         key: "VIDEO_STANDARD",
         superRights: ["LT","HL", "LB", "NA","DT"],
         productionLabel : true,
@@ -19,8 +19,7 @@ export const ProductionStandardsDefinitions = [
             "VIDEO_STANDARD_HD",
             "VIDEO_STANDARD_SD",
             "VIDEO_STANDARD_UHD",
-            "VIDEO_STANDARD_VR",
-            "VIDEO_STANDARD_NOT_AVAILABLE"
+            "VIDEO_STANDARD_VR"
         ],
         multiple : false,
         checkDelivery: true
@@ -33,8 +32,7 @@ export const ProductionStandardsDefinitions = [
         options : [
             "ASPECT_RATIO_16_9",
             "ASPECT_RATIO_4_3",
-            "ASPECT_RATIO_CUSTOM",
-            "ASPECT_RATIO_NOT_AVAILABLE"
+            "ASPECT_RATIO_CUSTOM"
         ],
         multiple : false,
         checkDelivery: true
@@ -46,8 +44,7 @@ export const ProductionStandardsDefinitions = [
         productionLabel : true,
         options : [
             "GRAPHICS_NO",
-            "GRAPHICS_YES",
-            "GRAPHICS_NOT_AVAILABLE"
+            "GRAPHICS_YES"
         ],
         multiple : false,
         checkDelivery: true
@@ -59,8 +56,7 @@ export const ProductionStandardsDefinitions = [
         superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
             "COMMENTARY_NO",
-            "COMMENTARY_YES",
-            "COMMENTARY_NOT_AVAILABLE"
+            "COMMENTARY_YES"
         ],
         multiple : false,
         checkDelivery: true
@@ -71,8 +67,7 @@ export const ProductionStandardsDefinitions = [
         productionLabel : true,
         superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
-            "CAMERA_MINIMUM",
-            "CAMERA_NOT_AVAILABLE"
+            "CAMERA_MINIMUM"
         ],
         multiple : false,
         checkDelivery: true

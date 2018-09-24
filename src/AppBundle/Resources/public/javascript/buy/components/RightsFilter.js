@@ -63,6 +63,8 @@ class RightsFilter extends React.Component {
 
         this.props.updateCountries(selectedCountry);
         this.props.updateIncludedCountries(includeAllCountries);
+
+        this.onApplyFilter();
     };
 
     onChangeRight(right, event){
@@ -73,12 +75,18 @@ class RightsFilter extends React.Component {
             localStorage.removeItem(localStorageEnums[right.shortLabel]);
             this.props.removeRight(right.id);
         }
+        
+        setTimeout(() => {
+            this.onApplyFilter();
+        }, 1);
     };
 
     onChangeExclusive = event => {
         const { checked } = event.target;
         localStorage.setItem(localStorageEnums.EXCLUSIVE, checked);
         this.props.updateExclusive(checked);
+
+        this.onApplyFilter();
     };
 
     onClearFilter = () => {
@@ -192,9 +200,6 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="ca-btn primary" style={{margin:5}} onClick={this.onApplyFilter}>
-                            {this.context.t("MARKETPLACE_BUTTON_APPLY")}
-                        </button>
                         <button className="ca-btn link" style={{margin:5}} onClick={this.onClearFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>

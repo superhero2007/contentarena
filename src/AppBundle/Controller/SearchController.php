@@ -43,10 +43,10 @@ class SearchController extends BaseController
     public function searchSportsActive(Request $request){
 
         //Take Repositories
-        $tournamentRepo     = $this->getDoctrine()->getRepository("AppBundle:Content");
+        $tournamentRepo = $this->getDoctrine()->getRepository("AppBundle:Content");
 
         //Get results
-        $tournaments     = $tournamentRepo    ->getActiveSports();
+        $tournaments = $tournamentRepo->getActiveSports();
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
