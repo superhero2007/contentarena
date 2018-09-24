@@ -25,10 +25,13 @@ class BidService
 
     private $fileUploader;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader) {
+    private $messageService;
+
+    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, MessageService $messageService) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
+        $this->messageService = $messageService;
     }
 
     public function getClosedDeals($request){
@@ -193,17 +196,23 @@ class BidService
         return $bid;
     }
 
-    public function rejectBid($request){
+    public function rejectBid($request, User $user){
 
         /**
          * @var $bid Bid
+         * @var Content $listing
          */
         $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
+        $listing = $bid->getContent();
         $message = $request->get('message');
         $updatedAt = new \DateTime();
 
         if ( isset($message) ) {
             $bid->setMessage($message);
+            try{
+                $this->messageService->sendMessageAsOwner($listing, $bid->getBuyerUser(), $message, $user);
+            }
+            catch (\Exception $e){}
         }
 
         $bid->setStatus($this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"REJECTED")));
