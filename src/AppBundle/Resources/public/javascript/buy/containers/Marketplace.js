@@ -140,7 +140,7 @@ class Marketplace extends React.Component {
             response.exclusive = exclusiveFromStorege || filter.exclusive;
         }
         if (sportsFromStorege || first(sportsFromProps.name)) {
-            response.sports = sportsFromStorege || sportsFromProps;
+            response.sports = (sportsFromStorege || sportsFromProps).filter(s => s.name || s.value);
         }
         if(allCountriesFromStorage || filter.includeAllCountries) {
             response.includeAllCountries = allCountriesFromStorage || filter.includeAllCountries;
