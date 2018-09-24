@@ -235,7 +235,7 @@ ContentArena.ContentApi= {
         $.ajax({
             url: envhosturl + "api/user/activate",
             type: "POST",
-            data: JSON.stringify({user:user, password : password}),
+            data: JSON.stringify({user:user,id: user.id, password : password}),
             contentType: "application/json",
             success: function (response) {
                 deferred.resolve(response);

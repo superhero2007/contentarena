@@ -28,7 +28,7 @@ class Register extends React.Component {
         let activationCode = match.params.activationCode;
 
         ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done(user=>{
-            user.activationCode = activationCode;
+            if (user) user.activationCode = activationCode;
             this.setState({loading:false, user : user});
         });
 
