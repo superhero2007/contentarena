@@ -49,7 +49,7 @@ class BoardListing extends React.Component{
         let stepToShow = 1;
         
         if (status && status.name === 'DRAFT') {
-            stepToShow = step > 3 ? 'sign' : step + 1;
+            stepToShow = step > 3 ? 'sign' : (step + 1);
         }
 
         goTo(`contentlisting/${customId}/${stepToShow}`);
