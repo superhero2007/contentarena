@@ -62,7 +62,7 @@ class PrivateRoute extends React.Component {
                 return props.match.path === "/" ? (
                     <Redirect
                         to={{
-                            pathname: profile === "BUYER" ? "/marketplace" : "/managelistings",
+                            pathname: profile === "SELLER" ? "/managelistings" : "/marketplace",
                             state: {from: props.location}
                         }}
                     />
@@ -101,6 +101,8 @@ class Login extends React.Component {
     render() {
         const { from } = this.props.location.state || { from: { pathname: "/" } };
         const { redirectToReferrer } = this.state;
+
+        if (hosturl === "https://app.contentarena.com/") window.location = 'https://contentarena.com';
 
         if (redirectToReferrer) {
             console.log("Redirecting to ", from);
