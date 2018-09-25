@@ -161,11 +161,17 @@ class BoardListing extends React.Component{
                     </div>}
 
                     {lastAction && <div className="last-action">
-                        {this.context.t("MANAGE_LISTINGS_LAST_ACTION")}{lastAction.description} {lastActionUser && "by " + lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "on " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
+                        <div style={{fontWeight: 500}}>
+                            {this.context.t("MANAGE_LISTINGS_LAST_ACTION")} {lastAction.description + " by "}
+                        </div>
+                        {lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "- " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
                     </div>}
 
                     {owner && <div className="last-action">
-                        {this.context.t("MANAGE_LISTINGS_LISTING_OWNER")}{owner.firstName + " " + owner.lastName }
+                        <div style={{fontWeight: 500}}>
+                            {this.context.t("MANAGE_LISTINGS_LISTING_OWNER")}
+                        </div>
+                        {owner.firstName + " " + owner.lastName }
                     </div>}
                 </div>}
 
@@ -260,18 +266,6 @@ class BoardListing extends React.Component{
                 <div className={"name"} title={name}>
                     { name }
                 </div>
-                <div className={"tournament"}>
-                    {tournament && tournament.length === 1 && <div className="item">{tournament[0].name}</div>}
-                    {tournament && tournament.length === 0 && <div className="item">
-                        {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
-                    </div>}
-                    {seasons && seasons.length > 1 && <div className="item">
-                        {this.context.t("MANAGE_LISTINGS_MULTIPLE_SEASONS")}
-                    </div>}
-                    {seasons && seasons.length === 1 && <div className="item">
-                        {this.context.t("MANAGE_LISTINGS_SEASON")}{seasons[0].year}
-                        </div>}
-                </div>
                 <div className={"rights"}>
                     {rightsPackage && rightsPackage.map((rp,i,l) => {
                         return <span key={"rp-"+i}>
@@ -291,7 +285,7 @@ class BoardListing extends React.Component{
 
                 <div className={"expiry"}>
                     <div>{ salesPackages.length } sales bundle{ salesPackages.length > 1 && "s"}</div>
-                    <div>{this.context.t("Expiry:")} {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
+                    <div><div style={{fontWeight: 500}}>{this.context.t("Expiry:")}</div> {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
                 </div>
 
             </div>
