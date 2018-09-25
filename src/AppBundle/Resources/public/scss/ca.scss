@@ -1112,11 +1112,10 @@ a:hover {
       outline: none;
 
       &.required {
-        /*TODO set color*/
-        border-color: red;
+        border-color: $red-color;
 
         &::placeholder{
-          color: red;
+          color: $red-color;
         }
       }
     }
