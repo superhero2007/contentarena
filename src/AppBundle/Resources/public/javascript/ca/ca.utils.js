@@ -151,6 +151,14 @@ ContentArena.Utils = {
             }
         }
         return -1; //to handle the case where the value doesn't exist
+    },
+
+    getWebsiteURl(str) {
+        if (str.includes('http://') || str.includes('https://')) {
+            return str
+        } else {
+            return 'http://'+str
+        }
     }
 
 };

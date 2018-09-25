@@ -1,17 +1,29 @@
 @import "vars";
 
-.board{
+.board {
   display: flex;
   flex-direction: row;
   padding: 0 0 20px;
-  .column{
+  .column {
     margin-right: 5px;
-    padding: 12px;
+    padding: 15px 10px 20px;
     flex: 1;
-    background: #F4F6F9;
+    background-color: #E8E8E8;
     border: 1px solid #DADADA;
-    .listing{
-      border: 1px solid #DADADA;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    height: 100%;
+    .column-title {
+      margin-bottom: 10px;
+      div {
+        font-weight: 600;
+        display: inline;
+      }
+    }
+    .listing {
+      border: 1px solid #FFCC33;
+      box-shadow: 0 1px 4px 1px rgba(51, 51, 51, 0.34);
       padding: 18px 12px;
       background-color: #ffffff;
       font-size: 16px;
@@ -20,7 +32,10 @@
       position: relative;
       z-index: 1;
       cursor: pointer;
-      .menu-icon{
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      .menu-icon {
         position: absolute;
         top: 5px;
         right: 0;
@@ -31,33 +46,35 @@
         width: 45px;
         justify-content: center;
       }
-      .status-icon{
+      .status-icon {
         position: absolute;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 25px;
-        height: 25px;
+        width: 18px;
+        height: 18px;
         right: 45px;
-        top: 15px;
+        top: 20px;
         &:empty {
           display: none;
         }
-        img{
-          width: 25px;
-          height: 25px;
+        img {
+          width: 18px;
+          height: 18px;
         }
       }
-      .name{
+      .name {
         margin-bottom: 20px;
         max-width: 80%;
         width: 310px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color: #02557E;
+        font-size: 15px;
       }
-      .tournament{
+      .tournament {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -67,14 +84,14 @@
           margin-right: 5px;
         }
       }
-      .rights{
+      .rights {
         font-size: 14px;
         font-weight: normal;
         margin-bottom: 10px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        span{
+        span {
           margin-right: 5px;
           display: flex;
           align-items: center;
@@ -87,10 +104,13 @@
           margin: 0 4px 0 0;
         }
       }
-      .expiry{
+      .expiry {
         display: flex;
         justify-content: space-between;
-        font-size: 12px;
+        font-size: 13px;
+        div {
+          display: inline;
+        }
       }
     }
   }
@@ -101,27 +121,34 @@
   z-index: 20;
   background: white;
   border: 1px solid lightgray;
-  top: 35px;
-  right: -1px;
-  padding: 20px 15px 5px;
-  min-width: 150px;
-  .last-action{
-    font-size: 10px;
-    line-height: 10px;
-    margin-bottom: 10px;
-    max-width: 150px;
-  }
-  .option{
+  padding: 20px 15px 30px;
+  min-width: 250px;
+  right: 10px;
+  top: 45px;
+  border-radius: 5px;
+  box-shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.21);
+  .last-action {
     font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    max-width: 200px;
+    &:first-child {
+      padding-top: 15px;
+      border-top: 1px solid #E9E9E9;
+    }
+  }
+  .option {
+    font-size: 13px;
     margin: 0 0 15px 0;
     display: flex;
     align-items: center;
     img {
-      margin-right: 5px;
+      margin-right: 8px;
     }
   }
 }
-.status-tooltip{
+
+.status-tooltip {
   @extend .options-tooltip;
   top: 40px;
   border: 2px solid $border-color-2;
@@ -130,18 +157,19 @@
   font-weight: 600;
   max-width: 250px;
 }
-.confirmation-tooltip{
+
+.confirmation-tooltip {
   @extend .options-tooltip;
   border: 2px solid #FFC94B;
   color: #4F4F4F;
   font-size: 14px;
   font-weight: 600;
   max-width: 250px;
-  .confirmation-text{
+  .confirmation-text {
     text-align: center;
     font-size: 14px;
   }
-  .button{
+  .button {
     border: 1px solid lightgrey;
     font-weight: normal;
     height: 30px;
@@ -153,7 +181,7 @@
     margin: 10px auto;
 
   }
-  .button-confirm{
+  .button-confirm {
     background-color: #FFC94B;
   }
 }

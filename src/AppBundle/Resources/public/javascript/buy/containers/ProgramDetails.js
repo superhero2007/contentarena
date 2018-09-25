@@ -24,6 +24,11 @@ class ProgramDetails extends React.Component {
         return (
             <div>
                 <div>
+                    {PROGRAM_DESCRIPTION && (
+                        <div className="spacer-bottom">
+                            {PROGRAM_DESCRIPTION}
+                        </div>
+                    )}
                     <div className="description-info">
                         <div className="col">
                             <div className="row-title">
@@ -71,11 +76,6 @@ class ProgramDetails extends React.Component {
                             )}
                         </div>
                     </div>
-                    {PROGRAM_DESCRIPTION && (
-                        <div>
-                            {PROGRAM_DESCRIPTION}
-                        </div>
-                    )}
                 </div>
             </div>
         );

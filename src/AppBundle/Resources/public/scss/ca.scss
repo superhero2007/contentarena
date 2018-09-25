@@ -1593,6 +1593,8 @@ a:hover {
       margin-bottom: 10px;
 
       .company-name {
+        display: flex;
+        align-items: center;
         white-space: nowrap;
         color: #2aaaec;
         font-weight: bold;
@@ -1946,7 +1948,7 @@ a:hover {
       background-color: $content-bg;
       box-shadow: 0 1px 9px rgba(0,0,0,0.21);
 
-      .spacer {
+      .spacer-bottom {
         margin-bottom: 10px;
       }
 
@@ -2110,7 +2112,7 @@ a:hover {
             margin-bottom: 30px;
             border: 1px solid #999;
             border-radius: 5px 5px 0 0;
-            padding: 0 1px;
+            padding: 1px; //prevent hide borders
 
             & > div:only-child {
               display: none; //means if only table title is rendered, and no data is rendered, we hide full block

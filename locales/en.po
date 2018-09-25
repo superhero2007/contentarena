@@ -76,7 +76,7 @@ msgstr "EVENT DESCRIPTION"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
 msgid "LISTING_DETAILS_EVENT_TITLE_WEBSITE"
-msgstr "CONTENT WEBSITE"
+msgstr "WEBSITE"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
 msgid "LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS"
@@ -155,7 +155,7 @@ msgstr "Expiry"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_TAB_BUNDLES"
-msgstr "Program & Sales Bundles"
+msgstr "Event & Commercial Terms"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_TAB_EVENT"
@@ -270,7 +270,7 @@ msgstr "Place bid"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
-msgstr "Street Name / Number"
+msgstr "Company Address"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER"
@@ -1530,7 +1530,7 @@ msgstr "Listing image (opt.)"
 #~ msgstr ""
 #~ "Are you sure that you want to remove this listing from your Watchlist?"
 
-#~ msgid "Program & Sales Bundles"
+#~ msgid "Event & Commercial Terms"
 #~ msgstr "Event & Commercial Terms"
 
 # asd
