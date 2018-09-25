@@ -1,6 +1,7 @@
 import React from 'react';
 import {editedProgramSelected} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
+import moment from "moment";
 import {
     tournamentIcon,
     sportIcon,
@@ -9,6 +10,13 @@ import {
     fixturesEpisodeIcon,
     eventTimeIcon
 } from "../../main/components/Icons";
+
+import { DATE_FORMAT } from "../../common/constants";
+
+const buildSeasonString = (season) => {
+    return (season.startDate && season.endDate) ? ` (${moment(season.startDate).format(DATE_FORMAT)} - ${moment(season.endDate).format(DATE_FORMAT)}) `: '';
+};
+
 
 class ContentListingEventDetails extends React.Component {
 
@@ -167,9 +175,12 @@ class ContentListingEventDetails extends React.Component {
                     {/*Season/Release*/}
                     {!this.showProgramInfo() && seasonsArray.length > 0 && (
                         seasonsArray.length > 1 ? (
-                            <span>{seasonReleaseIcon} from {seasonsArray[0].year} to {seasonsArray[seasonsArray.length -1].year}</span>
+                            <span>{seasonReleaseIcon} from {seasonsArray[0].year} {buildSeasonString(seasonsArray[0])} to {seasonsArray[seasonsArray.length -1].year} {buildSeasonString(seasonsArray[seasonsArray.length -1])}</span>
                         ) : (
-                            <span>{seasonReleaseIcon} Season {seasonsArray[0].year}</span>
+                            <span>
+                                {seasonReleaseIcon} Season {seasonsArray[0].year}
+                                {buildSeasonString(seasonsArray[0])}
+                            </span>
                         )
                     )}
                     {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} Release year: {PROGRAM_YEAR}</span>}

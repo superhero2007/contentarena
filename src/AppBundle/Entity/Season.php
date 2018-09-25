@@ -41,11 +41,13 @@ class Season
 
     /**
      * @ORM\Column(type="datetime", name="start_date", nullable=true)
+     * @Groups({"listing"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime", name="end_date", nullable=true)
+     * @Groups({"listing"})
      */
     private $endDate;
 
