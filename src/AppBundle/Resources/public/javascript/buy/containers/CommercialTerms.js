@@ -85,7 +85,7 @@ class CommercialTerms extends React.Component {
 
                 {programDetails && programDetails}
 
-                {website && attachments && attachments.length > 0 && (
+                {(website || (attachments && attachments.length > 0)) && (
                     <div className="additional-items">
                         {website && (
                             <div className="item">
@@ -96,7 +96,7 @@ class CommercialTerms extends React.Component {
                                 <div className="d-flex">
                                     <b>
                                         {website && website.map(website => {
-                                            return <div className="d-inline-flex">{website}</div>
+                                            return <a href={ContentArena.Utils.getWebsiteURl(website)}>{website}</a>
                                         })}
                                     </b>
                                 </div>

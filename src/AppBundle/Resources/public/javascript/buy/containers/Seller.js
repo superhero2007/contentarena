@@ -15,40 +15,42 @@ class Seller extends React.Component {
         const { company } = this.props;
         return (
             <div>
-                <div className="spacer">
+                <div className="spacer-bottom">
                     <div className="ca-title">
                         {company.legalName}
                     </div>
                     {company.website && (
                         <div>
-                            {company.website}
+                            <a href={ContentArena.Utils.getWebsiteURl(company.website)}>{company.website}</a>
                         </div>
                     )}
                 </div>
                 <div className="description-info align-items-center">
                     <div className="col">
-                        <div className="spacer">
+                        <div className="spacer-bottom">
                             <b>
                                 {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
                             </b>
                         </div>
 
-                        <div className="spacer">{company.address}</div>
+                        <div className="spacer-bottom">
+                            {company.address}
+                        </div>
 
                         {(company.city || company.zip) && (
-                            <div className="spacer">
+                            <div className="spacer-bottom">
                                 {company.city && company.city}&nbsp;
                                 {company.zip && company.zip}
                             </div>
                         )}
 
-                        {company.country.name && <div className="spacer">{company.country.name}</div>}
+                        {company.country.name && <div className="spacer-bottom">{company.country.name}</div>}
 
 
                     </div>
                     <div className="col">
                         {company.registrationNumber && (
-                            <div className="spacer">
+                            <div className="spacer-bottom">
                                 <b>
                                     {this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
                                 </b>
@@ -57,7 +59,7 @@ class Seller extends React.Component {
                                 </div>
                             </div>
                         )}
-                        <div className="spacer">
+                        <div className="spacer-bottom">
                             <b>
                                 {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
                             </b>

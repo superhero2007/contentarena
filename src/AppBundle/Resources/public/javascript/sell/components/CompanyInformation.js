@@ -97,7 +97,7 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            {this.context.t("Street Name / Number")}
+                            {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
                         </label>
                         <input
                             style={inputStyle}

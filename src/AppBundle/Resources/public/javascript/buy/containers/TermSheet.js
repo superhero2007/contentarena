@@ -289,8 +289,9 @@ class TermSheet extends React.Component {
                     { this.renderTextarea(ProductionStandardsDefinitions) }
                 </div>
 
-                {selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] && (
-                    <div>
+                {
+                    selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&(
+                    <div >
                         <div className="title spacer">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS")}
                         </div>
