@@ -4,6 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import toNumber from 'lodash/toNumber';
 import isFinite from 'lodash/isFinite';
 import isEqual from 'lodash/isEqual';
+import cn from 'classnames';
 import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
@@ -395,7 +396,7 @@ class PopupRight extends React.Component {
         const {
             name,
             description,
-            options, id,  superRights, showTextArea, rightsPackage, technicalFee,
+            options, id,  superRights, showTextArea, textAreaRequired, rightsPackage, technicalFee,
             checkContentDelivery,
             global,
             language,
@@ -507,7 +508,10 @@ class PopupRight extends React.Component {
                         })}
                         {showTextArea && ( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage)) &&
                         <textarea
-                            placeholder={"Enter text to proceed"}
+                            className={cn('popup-rights-text-area', {
+                                'required': this.hasSelection(id, textAreaRequired, rightsPackage) && !rightsPackage[0].selectedRights[id+ "_TEXTAREA"]
+                            })}
+                            placeholder={"Additional comments..."}
                             onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, id+ "_TEXTAREA")}}
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
@@ -575,7 +579,7 @@ class PopupRight extends React.Component {
     };
 
     showOkButton=()=>{
-        const {name, multiple, options, id,  superRights, showTextArea, rightsPackage, technicalFee, global,
+        const {name, multiple, options, id,  superRights, showTextArea, textAreaRequired, rightsPackage, technicalFee, global,
             language,
             languages} = this.props;
 
@@ -587,7 +591,7 @@ class PopupRight extends React.Component {
         }
 
         if ( showTextArea ){
-            if (( showTextArea === "ALL" || this.hasSelection(id, showTextArea, rightsPackage))){
+            if (showTextArea === "ALL" && this.hasSelection(id, textAreaRequired, rightsPackage)) {
                 if (!rightsPackage[0].selectedRights[id+ "_TEXTAREA"] || rightsPackage[0].selectedRights[id+ "_TEXTAREA"] === "" ) return false;
             }
         }

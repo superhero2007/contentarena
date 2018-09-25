@@ -21,6 +21,7 @@ export const RightDefinitions = [
             "BROADCASTING_YES"
         ],
         showTextArea:"ALL",
+        textAreaRequired:"BROADCASTING_YES",
         multiple : false,
         description: 'Means the licensee\'s obligation to transmit the program.'
     },
@@ -87,6 +88,7 @@ export const RightDefinitions = [
             "EXPLOITATION_WINDOW_LIMITED",
         ],
         showTextArea:"ALL",
+        textAreaRequired:"EXPLOITATION_WINDOW_LIMITED",
         multiple : false,
         description: 'Means the specific time frame within the license period in which the licensee may exploit a specific right.',
     },
@@ -100,7 +102,7 @@ export const RightDefinitions = [
         ],
         multiple : false,
         description: 'Means the audio-visual rights to the program that you, or your sublicensee, may exploit irrespective of any exclusivity granted.',
-        showTextArea:"RESERVED_RIGHTS_YES"
-
+        showTextArea:"ALL",
+        textAreaRequired:"RESERVED_RIGHTS_YES",
     },
 ];

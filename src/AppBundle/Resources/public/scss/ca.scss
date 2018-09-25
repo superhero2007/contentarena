@@ -1110,6 +1110,15 @@ a:hover {
       border: 1px solid #E4E4E4;
       color: #343434;
       outline: none;
+
+      &.required {
+        /*TODO set color*/
+        border-color: red;
+
+        &::placeholder{
+          color: red;
+        }
+      }
     }
     div {
       textarea {

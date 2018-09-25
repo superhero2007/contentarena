@@ -268,6 +268,7 @@ class SellFormStep3 extends React.Component {
                                     multiple={right.multiple}
                                     superRights={right.superRights}
                                     showTextArea={right.showTextArea}
+                                    textAreaRequired={right.textAreaRequired}
                                     onUpdate={this.updateRight}
                                     onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
                                     rightsPackage={this.props.rightsPackage}/>
@@ -309,6 +310,7 @@ class SellFormStep3 extends React.Component {
                                     content={this.props}
                                     superRights={superRights}
                                     showTextArea={right.showTextArea}
+                                    textAreaRequired={right.textAreaRequired}
                                     technicalFee={right.technicalFee}
                                     onUpdate={this.updateRight}
                                     onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
