@@ -52,7 +52,7 @@ class LoginController extends FOSRestController
                 array('Content-type' => 'application/json')
             );
             // Here, "public" is the name of the firewall in your security.yml
-            $token = new UsernamePasswordToken($user, $user->getPassword(), "public", $user->getRoles());
+            $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
 
             // For older versions of Symfony, use security.context here
             $this->get("security.token_storage")->setToken($token);
