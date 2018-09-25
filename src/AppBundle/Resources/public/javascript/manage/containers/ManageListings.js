@@ -92,12 +92,34 @@ class ManageListings extends React.Component {
                 flexDirection: 'column',
                 flex: 1
             }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    padding: '0 0 5px',
+                    color: '#4F4F4F',
+                    fontSize: 16,
+                    fontWeight: 600,
+                    alignItems: 'center',
+                    marginTop : '-15px'
+
+                }}>
+                    <div style={{margin:'0 20px' , flex: 1,display: 'flex', alignItems: 'center'}}>
+                        {this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}({draft.length})
+                    </div>
+                    <div style={{margin:'0 20px', flex: 1}}>
+                        {this.context.t("MANAGE_LISTINGS_TITLE_INACTIVE")}({inactive.length})
+                    </div>
+                    <div style={{margin:'0 20px', flex: 1}}>
+                        {this.context.t("MANAGE_LISTINGS_TITLE_ACTIVE")}({active.length})
+                    </div>
+                    <div style={{margin:'0 20px', flex: 1}}>
+                        {this.context.t("MANAGE_LISTINGS_TITLE_EXPIRED")} ({expired.length})
+                    </div>
+                </div>
+
                 <div className={"board"}>
                     {/*DRAFT*/}
                     <div className={"column"}>
-                        <div className={"column-title"}>
-                            <div>{this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}</div> ({draft.length})
-                        </div>
                         {loadingDraft &&
                         <div className="medium-spinner">
                             <i className="fa fa-cog fa-spin"/>
@@ -127,9 +149,6 @@ class ManageListings extends React.Component {
                     </div>
                     {/*INACTIVE*/}
                     <div className={"column"}>
-                        <div className={"column-title"}>
-                            <div>{this.context.t("MANAGE_LISTINGS_TITLE_INACTIVE")}</div> ({inactive.length})
-                        </div>
                         {loadingInactive &&
                         <div className="medium-spinner">
                             <i className="fa fa-cog fa-spin"/>
@@ -160,9 +179,6 @@ class ManageListings extends React.Component {
                     </div>
                     {/*ACTIVE*/}
                     <div className={"column"}>
-                        <div className={"column-title"}>
-                            <div>{this.context.t("MANAGE_LISTINGS_TITLE_ACTIVE")}</div> ({active.length})
-                        </div>
                         {active.length === 0 && loadingActive &&
                         <div className="medium-spinner">
                             <i className="fa fa-cog fa-spin"/>
@@ -198,9 +214,6 @@ class ManageListings extends React.Component {
                     </div>
                     {/*EXPIRED*/}
                     <div className={"column"}>
-                        <div className={"column-title"}>
-                            <div>{this.context.t("MANAGE_LISTINGS_TITLE_EXPIRED")}</div> ({expired.length})
-                        </div>
                         {expired.length === 0 && loadingExpired &&
                         <div className="medium-spinner">
                             <i className="fa fa-cog fa-spin"/>

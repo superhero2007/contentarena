@@ -10,8 +10,6 @@
     flex: 1;
     background-color: #E8E8E8;
     border: 1px solid #DADADA;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     border-radius: 5px;
     height: 100%;
     .column-title {
@@ -32,8 +30,6 @@
       position: relative;
       z-index: 1;
       cursor: pointer;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
       border-radius: 5px;
       .menu-icon {
         position: absolute;
@@ -84,30 +80,39 @@
           margin-right: 5px;
         }
       }
-      .rights {
-        font-size: 14px;
-        font-weight: normal;
-        margin-bottom: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        span {
-          margin-right: 5px;
-          display: flex;
-          align-items: center;
-          width: auto;
-          margin-bottom: 4px;
+      .col {
+        $col-height: 105px;
+        display: inline-flex;
+        flex-flow: column wrap;
+        max-height: $col-height;
+        width: 100%;
+        .listing-item {
+          line-height: $col-height / 3;
+          max-height: $col-height / 3;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
-        img {
-          width: 18px;
-          height: 18px;
-          margin: 0 4px 0 0;
+        &.listing-rights {
+          flex: 0 0 300px;
+          margin-left: auto;
+          .listing-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            img,
+            .fa {
+              margin-right: 5px;
+            }
+          }
         }
       }
       .expiry {
         display: flex;
         justify-content: space-between;
         font-size: 13px;
+        margin-top: 20px;
+        line-height: 2;
         div {
           display: inline;
         }
@@ -131,11 +136,9 @@
     font-size: 12px;
     line-height: 16px;
     margin-bottom: 10px;
-    max-width: 200px;
-    &:first-child {
-      padding-top: 15px;
-      border-top: 1px solid #E9E9E9;
-    }
+    max-width: 220px;
+    padding-top: 10px;
+    border-top: 1px solid #E7E7E7;
   }
   .option {
     font-size: 13px;
@@ -151,11 +154,16 @@
 .status-tooltip {
   @extend .options-tooltip;
   top: 40px;
-  border: 2px solid $border-color-2;
-  color: $border-color-2;
+  color: $font-color-3;
   font-size: 14px;
   font-weight: 600;
   max-width: 250px;
+  padding-bottom: inherit;
+  .option {
+    text-align: center;
+    display: block;
+    margin-bottom: inherit;
+  }
 }
 
 .confirmation-tooltip {
@@ -164,22 +172,27 @@
   color: #4F4F4F;
   font-size: 14px;
   font-weight: 600;
-  max-width: 250px;
+  max-width: 235px;
+  top: 25px;
   .confirmation-text {
     text-align: center;
     font-size: 14px;
+    margin-bottom: 15px;
   }
   .button {
     border: 1px solid lightgrey;
-    font-weight: normal;
+    font-weight: 600;
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: white;
     min-width: 100px;
-    margin: 10px auto;
-
+    margin: 8px auto;
+    outline: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-size: 12px;
   }
   .button-confirm {
     background-color: #FFC94B;
