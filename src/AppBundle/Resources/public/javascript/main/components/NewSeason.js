@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {stepChangeReset} from "../../sell/actions/contentActions";
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
+import DatePicker from "react-datepicker/es";
+import moment from "moment";
+import { DATE_FORMAT } from "../../common/constants";
 
 class NewSeason extends React.Component{
     constructor(props){
@@ -13,9 +15,9 @@ class NewSeason extends React.Component{
         for (let i =0; i < 81;i++ ){ years.push(startYear-i)}
 
         this.state = {
-            startDate : null,
-            endDate : null,
-            years : years
+            years : years,
+            startDate : moment(),
+            endDate : moment(),
         }
     }
 
@@ -39,8 +41,20 @@ class NewSeason extends React.Component{
         this.props.updateFromMultiple(index, key, value)
     };
 
+    setDurationStart = (e) => {
+        const {index} = this.props;
+        this.props.updateFromMultiple(index, 'startDate', e.format(DATE_FORMAT));
+    };
+
+    setDurationEnd = (e) => {
+        const {index} = this.props;
+        this.props.updateFromMultiple(index, 'endDate', e.format(DATE_FORMAT));
+    };
+
     render(){
         const {index, seasons} = this.props;
+        const { startDate, endDate } = seasons[index];
+
         return (
             <div>
                 <div className="base-input">
@@ -56,7 +70,7 @@ class NewSeason extends React.Component{
                         {this.state.years.map((year,i)=>(<option key={i} value={year}>{year}</option>))}
                     </select>
                     <label className={"season-selector-label"}>
-                        /{this.context.t("To")}
+                        {this.context.t("To")}
                     </label>
                     <select
                         value={seasons[index].to}
@@ -71,6 +85,27 @@ class NewSeason extends React.Component{
                     <button className={"standard-button"} onClick={this.props.onRemove}>
                         <i className="fa fa-close"/>
                     </button>}
+                </div>
+                <div className="base-input duration-date-pickers">
+                    <label>Duration</label>
+                    <label className={"season-selector-label"}>From</label>
+                    <DatePicker
+                        showYearDropdown
+                        className={"date-picker"}
+                        selected={startDate ? moment(startDate) : undefined}
+                        onChange={this.setDurationStart}
+                        placeholderText={DATE_FORMAT}
+                    />
+                    <label className={"season-selector-label"}>
+                        {this.context.t("To")}
+                    </label>
+                    <DatePicker
+                        showYearDropdown
+                        className={"date-picker"}
+                        selected={endDate ? moment(endDate) : undefined}
+                        onChange={this.setDurationEnd}
+                        placeholderText={DATE_FORMAT}
+                    />
                 </div>
             </div>
         )

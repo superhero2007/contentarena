@@ -63,6 +63,11 @@ a:hover {
     outline: none;
     margin: 0;
   }
+
+  .duration-date-pickers .date-picker {
+    border: 1px solid lightgray;
+  }
+
   .buttons {
     display: flex;
     flex-direction: column;
