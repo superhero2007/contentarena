@@ -22,11 +22,7 @@ class LoginController extends FOSRestController
         $password = $request->request->get('password');
 
         if(is_null($username) || is_null($password)) {
-            return new JsonResponse(
-                array("success" => false, "message" => 'Please verify all your inputs.'),
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
+            return $this->redirect('https://contentarena.com');
         }
 
         $user_manager = $this->get('fos_user.user_manager');
@@ -35,41 +31,30 @@ class LoginController extends FOSRestController
         $user = $user_manager->findUserByUsername($username);
 
         if(is_null($user)) {
-            return new JsonResponse(
-                array("success" => false, "message" => 'User not found'),
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
+            return $this->redirect('https://contentarena.com');
         }
 
         $encoder = $factory->getEncoder($user);
         $salt = $user->getSalt();
 
         if($encoder->isPasswordValid($user->getPassword(), $password, $salt)) {
-            $response = new JsonResponse(
-                array("success" => true),
-                Response::HTTP_OK,
-                array('Content-type' => 'application/json')
-            );
             // Here, "public" is the name of the firewall in your security.yml
             $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
 
             // For older versions of Symfony, use security.context here
             $this->get("security.token_storage")->setToken($token);
+            $this->get('session')->set('_security_main',serialize($token));
 
             // Fire the login event
             // Logging the user in above the way we do it doesn't do this automatically
             $event = new InteractiveLoginEvent($request, $token);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+            return $this->redirect('https://app.contentarena.com');
         } else {
-            $response = new JsonResponse(
-                array("success" => false),
-                Response::HTTP_UNAUTHORIZED,
-                array('Content-type' => 'application/json')
-            );
+            return $this->redirect('https://contentarena.com');
         }
 
-        return $response;
+
     }
 
     public function postRegisterAction(Request $request)
