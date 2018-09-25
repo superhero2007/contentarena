@@ -12,6 +12,8 @@ import {SuperRightProductionDetailsLabels} from "./SuperRightDefinitions";
 const numberFieldStyle = { width: '30px', paddingLeft: '10px'};
 
 const getLanguagesString = (languages) => {
+
+    if (!languages) return null;
     return languages.map(item => item.label).join(', ');
 };
 
