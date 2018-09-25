@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import Moment from "moment/moment";
 import { test } from "../actions";
 import { StaticSchedules } from "../../sell/components/SellFormItems";
 import {PropTypes} from "prop-types";
@@ -76,7 +77,7 @@ class ContentInformation extends React.Component {
                             <div className="schedule">
                                 {season.fixtures.map(fixture => {
                                     return <div className="matchday">
-                                        {fixture.name}
+                                        {fixture.name} {Moment(fixture.date).format('DD/MM/YYYY - HH:mm')}
                                     </div>})}
                             </div>}
                         </div>

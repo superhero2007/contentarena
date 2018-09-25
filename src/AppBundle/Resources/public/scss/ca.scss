@@ -240,6 +240,11 @@ a:hover {
       padding: 0;
     }
     .base-input {
+      &.new-fixture {
+        .react-datepicker-wrapper {
+          width: 180px;
+        }
+      }
       padding-bottom: 5px;
       border-bottom: 4px solid $border-color-1;
       display: flex;

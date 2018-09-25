@@ -69,6 +69,7 @@ class ContentListingCommercialActivity extends ContentListing {
             rightsPackage,
             imageBase64,
             image,
+            customId,
             company,
             id,
         } = this.props;
@@ -93,9 +94,7 @@ class ContentListingCommercialActivity extends ContentListing {
                     <div className={"right"}>
                         <div className={"name-wrapper"} onClick={this.onSelect}>
                             <span className={"listing-name"}>{name}</span>
-                            <span className={"company-name"}>
-                                {coinIcon} {company.legalName}
-                            </span>
+                            <span className="custom-id">#{customId}</span>
                         </div>
 
                         <div className="listing-wrapper">
@@ -133,8 +132,8 @@ class ContentListingCommercialActivity extends ContentListing {
 
                         {bids.length > 0 && <div className="show-bundle-wrapper" onClick={this.onClickShowBundle}>
                             <div className={"bundle-text"}>
-                                {showSalesPackage ? "Show sales bundle" : "Hide sales bundle"}
-                                {showSalesPackage ? plusGreyIcon : minusGreyIcon}
+                                {showSalesPackage ? "Hide sales bundle" : "Show sales bundle"}
+                                {showSalesPackage ? minusGreyIcon : plusGreyIcon}
                             </div>
                         </div>}
                     </div>

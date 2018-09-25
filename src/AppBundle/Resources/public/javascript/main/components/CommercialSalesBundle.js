@@ -6,11 +6,9 @@ import Modal from 'react-modal';
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/utils";
 import {
-    addIcon,
     bidIcon,
     blueCheckIcon,
     blueEnvelopeIcon,
-    bucketIcon,
     cancelIcon,
     docIcon,
     fixedIcon,
@@ -369,19 +367,19 @@ class CommercialSalesBundle extends React.Component{
                             className : 'table-header-big',
                             id : "actions",
                             accessor: b => {return {status: b.status.name, bid: b}},
-                            Cell: props => <div className={""}>
+                            Cell: props => <div className="actions-col">
                                 {props.value.status === "REJECTED"
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                    this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
-                                }} src={bucketIcon}/>}
+                                    && <i className={"fa fa-trash-o"} style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                        this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
+                                }} />}
                                 {props.value.status === "PENDING"
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                        this.setState({approveModalIsOpen:true, selectedBid : props.value.bid});
-                                }} src={blueCheckIcon}/>}
+                                    && <i className="fa fa-check-circle-o green-icon" style={{margin:'0 10px', cursor: 'pointer', color:'#19CB43'}} onClick={()=>{
+                                    this.setState({approveModalIsOpen:true, selectedBid : props.value.bid});
+                                }} />}
                                 {props.value.status === "PENDING"
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                    && <i className="fa fa-times-circle-o red-icon" style={{margin:'0 10px', cursor: 'pointer', color: '#990000'}} onClick={()=>{
                                     this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
-                                }} src={cancelIcon}/>}
+                                }} />}
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING")
                                     && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
                                         viewLicenseBid(props.value.bid.customId)

@@ -9,7 +9,7 @@ import {addIcon, cancelIcon} from "./Icons";
 import {PropTypes} from "prop-types";
 
 export const NewFixture = ({onRemove, onAdd, onChange, value, showAdd, date, handleDate}, context) => (
-    <div className="base-input" style={{display: 'flex', alignItems:'center'}}>
+    <div className="base-input new-fixture" style={{display: 'flex', alignItems:'center'}}>
         <label>
             {context.t("Fixture")}
         </label>
@@ -21,15 +21,20 @@ export const NewFixture = ({onRemove, onAdd, onChange, value, showAdd, date, han
             value={value}/>
         <DatePicker
             className={"date-picker"}
+            showTimeSelect
             selected={(date)? moment(date): undefined}
             onChange={handleDate}
-            placeholderText={"dd/mm/yyyy"}
+            timeIntervals={15}
+            onChangeRaw={undefined}
+            timeFormat="HH:mm"
+            dateFormat="DD/MM/YYYY HH:mm"
+            placeholderText={"DD/MM/YYYY HH:mm"}
         />
         <div style={{
             display: 'flex',
             alignItems:'center',
             minWidth: 50,
-            marginLeft: 30,
+            marginLeft: 10,
             justifyContent: 'flex-end'
         }}>
             {showAdd && <img src={addIcon} onClick={onAdd} style={{cursor: 'pointer', width:20, height: 20, marginRight: 5}}/>}
