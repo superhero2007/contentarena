@@ -8,6 +8,7 @@ export const ProductionStandardsDefinitions = [
             "CONTENT_DELIVERY_DEDICATED",
             "CONTENT_DELIVERY_NON_DEDICATED"
         ],
+        showTextArea: "ALL",
         multiple : false
     },
     {
@@ -21,6 +22,7 @@ export const ProductionStandardsDefinitions = [
             "VIDEO_STANDARD_UHD",
             "VIDEO_STANDARD_VR"
         ],
+        showTextArea: "ALL",
         multiple : false,
         checkDelivery: true
     },
@@ -34,6 +36,7 @@ export const ProductionStandardsDefinitions = [
             "ASPECT_RATIO_4_3",
             "ASPECT_RATIO_CUSTOM"
         ],
+        showTextArea: "ALL",
         multiple : false,
         checkDelivery: true
     },
@@ -46,6 +49,7 @@ export const ProductionStandardsDefinitions = [
             "GRAPHICS_NO",
             "GRAPHICS_YES"
         ],
+        showTextArea: "ALL",
         multiple : false,
         checkDelivery: true
     },
@@ -58,6 +62,7 @@ export const ProductionStandardsDefinitions = [
             "COMMENTARY_NO",
             "COMMENTARY_YES"
         ],
+        showTextArea: "ALL",
         multiple : false,
         checkDelivery: true
     },
@@ -69,6 +74,7 @@ export const ProductionStandardsDefinitions = [
         options : [
             "CAMERA_MINIMUM"
         ],
+        showTextArea: "ALL",
         multiple : false,
         checkDelivery: true
     },
@@ -84,7 +90,7 @@ export const ProductionStandardsDefinitions = [
             "TECHNICAL_DELIVERY_FIBER",
         ],
         multiple : true,
-        showTextArea:"FURTHER_DETAILS",
+        showTextArea:"ALL",
         technicalFee : "TECHNICAL_DELIVERY_SATELLITE",
         checkDelivery: true
     },
@@ -94,6 +100,7 @@ export const ProductionStandardsDefinitions = [
         superRights: ['PR'],
         options : [
         ],
+        showTextArea: "ALL",
         multiple : false
     }
 

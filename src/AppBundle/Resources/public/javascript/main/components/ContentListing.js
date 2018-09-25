@@ -1,73 +1,22 @@
 import React, { Component } from 'react';
+import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
-import {PropTypes} from "prop-types";
+import SalesPackages from './SalesPackeges';
 import {
     blueCheckIcon,
     yellowCheckIcon,
     coinIcon,
     hammerIcon,
     bucketIcon,
-    bidIcon,
     fixedIcon
 } from "./Icons";
-import {getCurrencySymbol} from "../actions/utils";
+import { getCurrencySymbol } from "../actions/utils";
 import Tooltip from '../../main/components/Tooltip';
-import ExtraTerritories from '../../main/components/ExtraTerritories';
 
-const SalesPackages = ({salesPackages, getFee}) => {
-    let salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages];
-    return (
-        <React.Fragment>
-            {salesPackagesArray.slice(0, 3).map( ( salesPackage, i) => {
-                let extraTerritories = ( salesPackage.territoriesMethod === 'WORLDWIDE_EXCLUDING') ? salesPackage.excludedTerritories : salesPackage.territories;
-                return (
-                    <div className="sales-package" key={"sp-"+ i}>
 
-                        {salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
-                            <div className="icon">
-                                <img src={fixedIcon}/>
-                            </div>
-                        )}
-
-                        <div className="name">
-                            {salesPackage.name}
-                        </div>
-
-                        {extraTerritories && extraTerritories.length > 3 && (
-                            <div style={{marginRight: 5}}>
-                                <ExtraTerritories
-                                    extraTerritories={extraTerritories}
-                                />
-                            </div>
-                        )}
-
-                        {(salesPackage.salesMethod !== "BIDDING" ||  (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0)) && (
-                            <div className="fee">
-                                {getFee(salesPackage)}
-                            </div>
-                        )}
-
-                        {salesPackage.salesMethod === "BIDDING" && (
-                            <div className="icon">
-                                <img src={bidIcon}/>
-                            </div>
-                        )}
-
-                    </div>
-                )
-            })}
-            {salesPackages.length > 3 && (
-                <div className="sales-package show-all">
-                    <b> + {salesPackages.length - 3} </b>
-                </div>
-            ) }
-        </React.Fragment>
-    )
-}
-
-class ContentListing extends React.Component{
+class ContentListing extends Component{
     constructor(props){
         super(props);
 
@@ -83,23 +32,10 @@ class ContentListing extends React.Component{
         this.bucketicon = assetsBaseDir + "app/images/bucket.png";
     }
 
-    getFee = (salesPackage) => {
-        const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol();
-    };
-
-    getCurrencySymbol = () => {
-        const {currency} = this.props;
-        return (currency === "EUR" ? "€" : "$");
-    };
-
     onSelect = () => {
       const {onSelect, customId, status, checkExpired} = this.props;
-
       if (checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ) return;
-
-      if ( onSelect ) onSelect(customId);
-
+      onSelect(customId);
     };
 
     confirmRemoveFromWatchlist = (e) =>{
@@ -127,7 +63,6 @@ class ContentListing extends React.Component{
     };
 
     sortAfterFilter = (a, b) => {
-
         if (b.territoriesMethod ==="WORLDWIDE") {
             return this.compareProperty(b.territories.length, a.territories.length)
                 || this.compareProperty(a.name, b.name);
@@ -138,7 +73,6 @@ class ContentListing extends React.Component{
     };
 
     sortByFilter = (salesPackages) => {
-
         const { filter } = this.props;
 
         let temp = [] ;
@@ -238,7 +172,6 @@ class ContentListing extends React.Component{
                     <div className="sales-bundles-wrapper">
                         <SalesPackages
                             salesPackages={salesPackages}
-                            getFee={this.getFee}
                         />
                         {expiresAt && (
                             <div className="expires">
@@ -285,7 +218,6 @@ class ContentListing extends React.Component{
                             <div className="bid-sales-wrap">
                                 <SalesPackages
                                     salesPackages={bid.salesPackage}
-                                    getFee={this.getFee}
                                 />
                             </div>
 

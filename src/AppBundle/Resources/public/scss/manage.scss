@@ -271,14 +271,34 @@
   flex: 1;
   margin-top: -20px;
   height: 60px;
+
   .listing-filter {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
 
     .Select {
-      width: 100%;
+      width: 220px;
+
+      .Select-control {
+        color: $font-color-2;
+        font-style: italic;
+        border-radius: 0;
+      }
+    }
+
+    .reset-listing-filter{
+      cursor: pointer;
+      padding: 0 5px;
+
+      img {
+        margin-bottom: 3px;
+      }
+      span{
+        color: $border-color-2;
+        padding-left: 5px;
+      }
     }
   }
   .status-filter {
@@ -289,9 +309,19 @@
     font-weight: 600;
     flex: 2;
     align-items: center;
+
     .status-filter-item {
       margin: 0 20px;
+
       cursor: pointer;
+      color: $font-color-1;
+      font-size: 13px;
+      font-weight: normal;
+
+      &.active{
+        font-weight: bold;
+        color: $black-color;
+      }
       img {
         margin: 0 10px 3px;
       }

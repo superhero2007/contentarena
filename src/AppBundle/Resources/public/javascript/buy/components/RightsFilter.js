@@ -75,10 +75,8 @@ class RightsFilter extends React.Component {
             localStorage.removeItem(localStorageEnums[right.shortLabel]);
             this.props.removeRight(right.id);
         }
-        
-        setTimeout(() => {
-            this.onApplyFilter();
-        }, 1);
+
+        this.onApplyFilter();
     };
 
     onChangeExclusive = event => {
@@ -95,7 +93,9 @@ class RightsFilter extends React.Component {
     };
 
     onApplyFilter = () => {
-        this.props.onFilter();
+        setTimeout(() => {
+            this.props.onFilter();
+        }, 1);
     };
 
     render() {

@@ -1101,6 +1101,12 @@ a:hover {
       color: #343434;
       outline: none;
     }
+    div {
+      textarea {
+        margin: inherit;
+        width: 100% !important;
+      }
+    }
   }
   .step-content {
     padding: inherit;

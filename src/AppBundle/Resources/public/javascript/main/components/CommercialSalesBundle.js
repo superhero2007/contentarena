@@ -5,7 +5,18 @@ import Modal from 'react-modal';
 
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/utils";
-import {addIcon, bidIcon, blueCheckIcon, blueEnvelopeIcon, bucketIcon, cancelIcon, docIcon, fixedIcon} from "./Icons";
+import {
+    addIcon,
+    bidIcon,
+    blueCheckIcon,
+    blueEnvelopeIcon,
+    bucketIcon,
+    cancelIcon,
+    docIcon,
+    fixedIcon,
+    plusYellowIcon,
+    minusYellowIcon
+} from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "../../main/components/SendMessage";
 import {PropTypes} from "prop-types";
@@ -22,7 +33,13 @@ class CommercialSalesBundle extends React.Component{
             territoriesList : [],
             showAllTerritories : false
 
-        }
+        };
+
+        this.creditIcon = assetsBaseDir + "app/images/credit-card.png";
+        this.coinIcon = assetsBaseDir + "app/images/listing/coin.svg";
+        this.userIcon = assetsBaseDir + "app/images/user.png";
+        this.calendarIcon = assetsBaseDir + "app/images/listing/calendar.svg";
+        this.actionIcon = assetsBaseDir + "app/images/download.png";
     }
 
     componentWillReceiveProps (){
@@ -206,19 +223,25 @@ class CommercialSalesBundle extends React.Component{
                     })
                 }
             </div>
-
         </Modal>
     };
 
     render(){
-        const { salesBundle, company, onDelete, contentId } = this.props;
+        const { salesBundle, onDelete, contentId } = this.props;
         const { showBids } = this.state;
 
         let closedDeals = salesBundle.bids.filter(b=>b.status.name === "APPROVED");
         let totalFee = (closedDeals.length > 0) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
         let _this = this;
         let extraTerritories = ( salesBundle.territoriesMethod === this.worldwideExcluding) ? salesBundle.excludedTerritories : salesBundle.territories;
-
+        const headers = {
+            buyer: () => <span><img src={this.creditIcon} alt="Buyer"/> {this.context.t("BUYER")}</span>,
+            fee: () => <span><img src={this.coinIcon} alt="Fee"/> {this.context.t("FEE")}</span>,
+            user: () => <span><img src={this.userIcon} alt="User"/> {this.context.t("USER")}</span>,
+            lastAction: () => <span><i className="fa fa-arrow-circle-o-right" /> {this.context.t("LAST_ACTION")}</span>,
+            date: () => <span><img src={this.calendarIcon} alt="Action Date"/> {this.context.t("ACTION_DATE")}</span>,
+            actions: () => <span><img src={this.actionIcon} alt="Action"/> {this.context.t("Actions")}</span>,
+        };
 
         return (
             <div className="commercial-sales-bundles">
@@ -228,49 +251,51 @@ class CommercialSalesBundle extends React.Component{
                 {this.allTerritories()}
                 <div className="commercial-sales-bundles-container" onClick={()=>{this.setState({showBids: !showBids})}}>
                     <div className="sales-bundle-item">
-                        {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&
-                        <img style={{width: 26, height: 23, marginRight: 5}} src={fixedIcon}/>}
-                        {salesBundle.name}
+                        <span>
+                            {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&
+                            <img style={{width: 26, height: 23, marginRight: 5}} src={fixedIcon}/>}
+                            {salesBundle.name}
 
-                        {
-                            extraTerritories && extraTerritories.length > 3 && <span
-                                style={{
-                                    color: '#2DA7E6',
-                                    textDecoration: 'underline',
-                                    marginLeft : 5
-                                }}
-                                onClick={(e) => {
-                                    this.showAllTerritories(extraTerritories);
-                                    e.stopPropagation();
-                                }}>
+                            {
+                                extraTerritories && extraTerritories.length > 3 && <span
+                                    style={{
+                                        color: '#2DA7E6',
+                                        textDecoration: 'underline',
+                                        marginLeft : 5
+                                    }}
+                                    onClick={(e) => {
+                                        this.showAllTerritories(extraTerritories);
+                                        e.stopPropagation();
+                                    }}>
                                                 {"+" + (extraTerritories.length - 3)}
                                             </span>
-                        }
-
+                            }
+                        </span>
                     </div>
 
                     <div className="sales-bundle-item">
-                        {salesBundle.fee > 0 && getFee(salesBundle)}
-                        {salesBundle.salesMethod === "BIDDING"
-                        &&<img style={{width: 23, height: 23}} src={bidIcon}/>}
+                        <span>
+                            {salesBundle.fee > 0 && getFee(salesBundle)}
+                            {salesBundle.salesMethod === "BIDDING"
+                            &&<img style={{width: 23, height: 23}} src={bidIcon}/>}
+                        </span>
                     </div>
 
                     <div className="sales-bundle-item-right" style={{marginLeft: 'auto'}}>
-                        {this.context.t(["closed deal", "closed deals", "n"], {n : closedDeals.length})}
+                        <span>{this.context.t(["closed deal", "closed deals", "n"], {n : closedDeals.length})}</span>
                     </div>
 
                     <div className="sales-bundle-item-right">
-                        {this.context.t(["open bid","open bids", "n"], {n : salesBundle.bids.filter(b=>b.status.name === "PENDING").length})}
+                        <span>{this.context.t(["open bid","open bids", "n"], {n : salesBundle.bids.filter(b=>b.status.name === "PENDING").length})}</span>
                     </div>
 
                     {totalFee && <div className="sales-bundle-item-right">
-                        {totalFee} {getCurrencySymbol(salesBundle.currency.code)}
+                        <span>{totalFee} {getCurrencySymbol(salesBundle.currency.code)}</span>
                     </div>}
 
                     {salesBundle.bids.length > 0 &&
                     <div className="sales-bundle-show-bids">
-                        {!showBids && <img src={addIcon}/>}
-                        {showBids && <img src={cancelIcon}/>}
+                       {showBids ? minusYellowIcon : plusYellowIcon}
                     </div>}
                 </div>
                 {showBids && salesBundle.bids.length > 0 &&
@@ -282,7 +307,7 @@ class CommercialSalesBundle extends React.Component{
                     })}
 
                     <ReactTable
-                        className={"ca-table"}
+                        className={"ca-table bid-table"}
                         defaultPageSize={30}
                         showPageSizeOptions={false}
                         showPagination={false}
@@ -296,21 +321,21 @@ class CommercialSalesBundle extends React.Component{
                             Cell: props => <div>
                                 {props.value}
                             </div>,
-                            Header: this.context.t("Buyer"),
+                            Header: headers.buyer(),
                             headerClassName : 'table-header-big',
                             className : 'table-header-big',
                             id : "company"
                         },  {
-                            Header: this.context.t("Fee"),
-                            headerClassName : 'table-header',
-                            className : 'table-header',
+                            Header: headers.fee(),
+                            headerClassName : 'table-header-big',
+                            className : 'table-header-big',
                             id: "price",
                             accessor: d => {return {fee: d.totalFee, currency: salesBundle.currency.code}},
                             Cell: props => <div className={"blue"}>
                                 {parseFloat(props.value.fee).toLocaleString() + " " + getCurrencySymbol(props.value.currency)}
                             </div>
                         }, {
-                            Header: this.context.t("User"),
+                            Header: headers.user(),
                             headerClassName : 'table-header-big',
                             className : 'table-header-big',
                             accessor: 'buyerUser',
@@ -319,9 +344,9 @@ class CommercialSalesBundle extends React.Component{
                             </div>
 
                         },{
-                            Header: this.context.t("Action"),
-                            headerClassName : 'table-header',
-                            className : 'table-header',
+                            Header: headers.lastAction(),
+                            headerClassName : 'table-header-big',
+                            className : 'table-header-big',
                             accessor: 'status.name',
                             Cell: props => <div>
                                 {props.value === "APPROVED" && "Closed Deal"}
@@ -330,18 +355,18 @@ class CommercialSalesBundle extends React.Component{
                             </div>
 
                         },{
-                            Header: this.context.t("COMMERCIAL_ACTIVITY_ACTION_DATE"),
-                            headerClassName : 'table-header',
-                            className : 'table-header',
+                            Header: headers.date(),
+                            headerClassName : 'table-header-big',
+                            className : 'table-header-big',
                             accessor: 'createdAt',
                             Cell: props => <div>
                                 {Moment(props.value).format('DD/MM/YYYY')}
                             </div>
 
                         }, {
-                            Header: this.context.t("Actions"),
-                            headerClassName : 'table-header',
-                            className : 'table-header',
+                            Header: headers.actions(),
+                            headerClassName : 'table-header-big',
+                            className : 'table-header-big',
                             id : "actions",
                             accessor: b => {return {status: b.status.name, bid: b}},
                             Cell: props => <div className={""}>
@@ -370,8 +395,6 @@ class CommercialSalesBundle extends React.Component{
                                         }
                                 }} src={blueEnvelopeIcon}/>}
 
-
-                                {/*CONFIRM REMOVE*/}
                                 {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                     <div className={"confirmation-text"} style={{ whiteSpace: 'normal'}}>
                                         {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE")}
