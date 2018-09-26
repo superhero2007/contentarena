@@ -86,6 +86,9 @@ class ManageListings extends React.Component {
             loadingExpired,
             loadingInactive,
             draft, active, inactive, expired } = this.state;
+
+        document.title = "Content Arena - Manage Listings";
+
         return (
             <div style={{
                 display: 'flex',

@@ -240,6 +240,9 @@ class Marketplace extends React.Component {
         if (errorMessage) {
             return <h2 className="text-center">{errorMessage}</h2>
         }
+
+        document.title = "Content Arena - Marketplace";
+
         return (
             <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
 

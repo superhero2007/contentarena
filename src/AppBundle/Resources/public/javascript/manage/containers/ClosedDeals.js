@@ -42,6 +42,8 @@ class ClosedDeals extends React.Component {
     render () {
         const { loading, bids } = this.state;
 
+        document.title = "Content Arena - Closed Deals";
+
         return (
             <div style={{
                 display: 'flex',

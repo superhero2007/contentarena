@@ -276,7 +276,7 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
-                    <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>
+                    {/*<Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>*/}
 
                     <TitleBar title={this.context.t("CL_STEP3_TITLE_PRODUCTION_STANDARDS")}/>
 
@@ -320,7 +320,7 @@ class SellFormStep3 extends React.Component {
                         }
                     </div>
 
-                    <Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>
+                    {/*<Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>*/}
 
                 </div>
             </div>

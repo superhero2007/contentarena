@@ -540,18 +540,6 @@
         </div>
     {% endif %}
 
-    {# AMMENDMENTS#}
-    {% if content.extraData.COMMENTS_RIGHTS is defined %}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Amendment(s) to the Grant of Rights / Special Conditions:
-                </label>
-                {{ content.extraData.COMMENTS_RIGHTS }}
-            </div>
-        </div>
-    {% endif %}
-
     <div class="license-item">
         All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
     </div>
@@ -836,19 +824,7 @@
         </table>
     </div>
 
-    {# CONTENT DELIVERY AMMENDMENTS#}
-    {% if content.extraData.COMMENTS_PRODUCTION is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Amendment(s) to the Content Delivery / Special Conditions:
-                </label>
-                {{ content.extraData.COMMENTS_PRODUCTION }}
-            </div>
-        </div>
-    {% endif %}
-
-    {# TRANSMISSION TITLE#}
+       {# TRANSMISSION TITLE#}
     <div class="license-item-title">9. Transmission Obligation:</div>
 
     {# TRANSMISSION #}
@@ -1022,8 +998,24 @@
         {% endif %}
     </div>
 
+    {# AMMENDMENTS TITLE#}
+    <div class="license-item-title">13. General amendments:</div>
+
+    {# AMMENDMENTS#}
+    {% if content.extraData.COMMENTS_RIGHTS is defined %}
+        <div class="license-item">
+            <div class="license-item-content">
+                {{ content.extraData.COMMENTS_RIGHTS }}
+            </div>
+        </div>
+    {% else %}
+        <div class="license-item">
+            None
+        </div>
+    {% endif %}
+
     {# SIGNATURE TITLE#}
-    <div class="license-item-title">13. Signature:</div>
+    <div class="license-item-title">14. Signature:</div>
 
     {# SIGNATURE#}
     <div class="license-item">

@@ -41,6 +41,9 @@ class Watchlist extends React.Component {
 
     render () {
         const { loading, listings } = this.state;
+
+        document.title = "Content Arena - Watchlist";
+
         return (
             <div>
                 <div style={{textAlign: 'right'}}>

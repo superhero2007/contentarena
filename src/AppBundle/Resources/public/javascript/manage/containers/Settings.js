@@ -101,6 +101,8 @@ class Settings extends React.Component {
 
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
 
+        document.title = "Content Arena - Settings";
+
         return (
             <div className={"settings-container"}>
                 <div className={"title"}>

@@ -58,21 +58,8 @@ msgid "MARKETPLACE_LABEL_FILTER_EXCLUSIVE"
 msgstr "Contains exclusive rights"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_BUTTON_APPLY"
-msgstr "Apply"
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 msgid "MARKETPLACE_BUTTON_CLEAR"
-msgstr "Clear"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
-msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
-msgstr "PROGRAMS DESCRIPTION"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
-msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
-msgstr "EVENT DESCRIPTION"
+msgstr "Clear Filter"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
 msgid "LISTING_DETAILS_EVENT_TITLE_WEBSITE"
@@ -86,6 +73,10 @@ msgstr "ATTACHMENTS"
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "LISTING_DETAILS_EVENT_TITLE_SEASON"
 msgstr "Season :"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
+msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
+msgstr "EVENT DESCRIPTION"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "CHECKOUT_CONGRATULATIONS"
@@ -124,24 +115,29 @@ msgid "Watchlist"
 msgstr "Watchlist"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_LICENSE_START"
 msgstr "Start of License Period"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
 msgstr " With contract conclusion"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_LICENSE_END"
 msgstr "End of license period"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "LISTING_DETAILS_LICENSE_END_DAYS"
 msgstr " days after contract conclusion"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid " Unlimited"
 msgstr " Unlimited"
 
@@ -237,28 +233,24 @@ msgstr "Sorry, no results. Try changing the filter settings!"
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 #, fuzzy
 #| msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
-msgid "LISTING_DETAILS_PROGRAM_TITLE"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr "Program type"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
-msgstr "Program type"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_DESCRIPTION"
-msgstr "Description"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_EPISODES"
+msgstr "Number of episodes"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
 msgstr "Average episode duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
-msgstr "Year of program release"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
+msgstr "Program type"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_EPISODES"
-msgstr "Number of episodes"
+msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
+msgstr "Year of program release"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
 msgid "Buy now"
@@ -345,7 +337,31 @@ msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL"
 msgstr "Cancel"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "BUYER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "FEE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "USER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "LAST_ACTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "ACTION_DATE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
+msgid "Actions"
+msgstr "Actions"
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "closed deal"
 msgid_plural "closed deals"
 msgstr[0] "{n} Closed Deal"
@@ -357,31 +373,6 @@ msgid "open bid"
 msgid_plural "open bids"
 msgstr[0] "{n} Open Bid"
 msgstr[1] "{n} Open Bids"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Buyer"
-msgstr "Buyer Company"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Fee"
-msgstr "License Fee / Bid"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "User"
-msgstr "Buyer User"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Action"
-msgstr "Action"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
-msgstr "Date of Action"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
-msgid "Actions"
-msgstr "Actions"
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 msgid "WATCHLIST_REMOVE_CONFIRMATION"
@@ -433,8 +424,17 @@ msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
 msgstr "Cancel"
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "Commercial Activity Total - {n}"
-msgstr "Total: {n}"
+#, fuzzy
+#| msgid "closed deal"
+#| msgid_plural "closed deals"
+msgid "closed bid"
+msgid_plural "closed bids"
+msgstr[0] "{n} Closed Deal"
+msgstr[1] "{n} Closed Deals"
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "Revenue"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_TITLE"
@@ -924,22 +924,6 @@ msgid "CLOSED_DEALS_EMPTY_MESSAGE"
 msgstr "You don't have closed deal yet"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
-msgstr "All bundles"
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
-msgstr "With activity"
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
-msgstr "Open bids"
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
-msgstr "Closed deals"
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE"
 msgstr "You have no offers yet"
 
@@ -1246,6 +1230,10 @@ msgid "CL_STEP5_TITLE_PREVIEW"
 msgstr "Marketplace Preview"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_ADD_AMENDMENT"
+msgstr "Add amendment to license agreement"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_TERMS_1"
 msgstr ""
 "I confirm that I have verified the terms stated above. They are correct and "
@@ -1431,6 +1419,45 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LABEL_IMAGE"
 msgstr "Listing image (opt.)"
+
+#~ msgid "MARKETPLACE_BUTTON_APPLY"
+#~ msgstr "Apply"
+
+#~ msgid "Buyer"
+#~ msgstr "Buyer Company"
+
+#~ msgid "Fee"
+#~ msgstr "License Fee / Bid"
+
+#~ msgid "User"
+#~ msgstr "Buyer User"
+
+#~ msgid "Action"
+#~ msgstr "Action"
+
+#~ msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
+#~ msgstr "Date of Action"
+
+#~ msgid "Commercial Activity Total - {n}"
+#~ msgstr "Total: {n}"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
+#~ msgstr "All bundles"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
+#~ msgstr "With activity"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
+#~ msgstr "Open bids"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
+#~ msgstr "Closed deals"
+
+#~ msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
+#~ msgstr "PROGRAMS DESCRIPTION"
+
+#~ msgid "LISTING_DETAILS_PROGRAM_TITLE_DESCRIPTION"
+#~ msgstr "Description"
 
 #~ msgid "LISTING_DETAILS_SELLER_TITLE_DETAILS"
 #~ msgstr "DETAILS"

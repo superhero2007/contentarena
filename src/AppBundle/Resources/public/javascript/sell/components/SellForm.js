@@ -51,6 +51,9 @@ class SellForm extends React.Component {
 
     render() {
         const {history} = this.props;
+
+        document.title = "Content Arena - Create Listing";
+
         return (
             <div className="manager-content">
                 <Selector style={{zIndex: 100}}/>

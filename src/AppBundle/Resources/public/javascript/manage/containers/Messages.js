@@ -112,6 +112,8 @@ class Messages extends React.Component {
 
         const { user } = this.props;
 
+        document.title = "Content Arena - Messages";
+
         return (
             <div className={"messages-container"}>
                 <div className={"threads"}>

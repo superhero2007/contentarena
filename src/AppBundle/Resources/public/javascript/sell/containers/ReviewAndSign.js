@@ -5,12 +5,13 @@ import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
 import ListingDetails from './../../buy/containers/ListingDetails';
 import ContentListing from "../../main/components/ContentListing";
-import {goToPreviousStep, stepChangeReset} from "../actions/contentActions";
+import {goToPreviousStep, scrollTopMainContent, stepChangeReset} from "../actions/contentActions";
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {goTo, goToListing, parseSeasons, viewLicense} from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
+import Comments from "../components/Comments";
 
 class ReviewAndSign extends React.Component {
 
@@ -58,13 +59,25 @@ class ReviewAndSign extends React.Component {
         let content = store.getState().content;
         let _this = this;
         content = parseSeasons(content);
-        this.setState({showSubmitting: true})
+        this.setState({showSubmitting: true});
         ContentArena.ContentApi.saveContentAsActive(content).done(function ( response ) {
 
             if ( response.success && response.contentId ){
                 updateContentValue("id", response.contentId);
                 _this.setState({showSuccessScreen: true,showSubmitting: false})
             }
+        });
+    };
+
+    save = () => {
+        this.setState({ showSubmitting : true });
+
+        let content = store.getState().content;
+        content = parseSeasons(content);
+        ContentArena.ContentApi.saveContentAsDraft(content).done(()=>{
+            this.setState({ showSubmitting : false });
+        }).fail(() =>{
+            this.setState({ showSubmitting: false });
         });
     };
 
@@ -147,7 +160,8 @@ class ReviewAndSign extends React.Component {
             terms,
             history,
             customId,
-            status
+            status,
+            COMMENTS_RIGHTS
         } = this.props;
 
         const {showDetails, showSubmitting} = this.state;
@@ -209,6 +223,12 @@ class ReviewAndSign extends React.Component {
                         salesPackageId={this.state.salesPackageToEdit}
                         salesPackages={salesPackages}
                     />}
+
+
+                    <div style={{margin: '20px auto'}}>
+                        <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"} onClose={this.save}/>
+                    </div>
+
 
                     <div className={"terms-confirm"}
                          style={{

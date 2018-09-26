@@ -13,7 +13,12 @@ class Comments extends React.Component {
     }
 
     closeModal = () => {
+        const {onClose} = this.props;
+
+        if ( onClose) onClose();
+
         this.setState({ isOpen: false});
+
     };
 
     updateContent = (e) => {
@@ -60,6 +65,7 @@ class Comments extends React.Component {
             <div className={"buttons popup-buttons"}>
                 <button
                     className={"standard-button"}
+                    disabled={!comments || comments === ""}
                     onClick={this.closeModal}>
                     {this.context.t("Accept")}
                 </button>
@@ -71,8 +77,8 @@ class Comments extends React.Component {
         return (
             <div style={{marginBottom: 20}}>
                 { this.renderModal() }
-                <button className={"link-button"} onClick={this.addComments}>
-                    {this.context.t("CL_STEP3_AMENDMENT")}
+                <button onClick={this.addComments} className="standard-button" style={{width: 500}}>
+                    {this.context.t("CL_STEP5_ADD_AMENDMENT")}
                 </button>
             </div>
         )

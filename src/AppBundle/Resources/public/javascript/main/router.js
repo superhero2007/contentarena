@@ -45,7 +45,8 @@ class PrivateRoute extends React.Component {
     }
 
     render(){
-        const { component: Component, updateByPath, profile, isPublic, ...rest } = this.props;
+        const { component: Component, updateByPath, profile, isPublic, title, ...rest } = this.props;
+
         return <Route
             {...rest}
             render={props => {
@@ -190,6 +191,7 @@ class AuthRouter extends React.Component {
                             component={route.main}
                             profile={user.profile}
                             routeProfile={route.profile}
+                            title={route.title}
                             isPublic={route.isPublic}
                             updateProfile={this.props.updateProfile}
                             {...this.props}

@@ -44,10 +44,6 @@ msgid "MARKETPLACE_LABEL_FILTER_EXCLUSIVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_BUTTON_APPLY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 msgid "MARKETPLACE_BUTTON_CLEAR"
 msgstr ""
 
@@ -325,7 +321,31 @@ msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "BUYER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "FEE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "USER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "LAST_ACTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "ACTION_DATE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
+msgid "Actions"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "closed deal"
 msgid_plural "closed deals"
 msgstr[0] ""
@@ -337,31 +357,6 @@ msgid "open bid"
 msgid_plural "open bids"
 msgstr[0] ""
 msgstr[1] ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Buyer"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Fee"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "User"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "Action"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
-msgid "Actions"
-msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 msgid "WATCHLIST_REMOVE_CONFIRMATION"
@@ -411,7 +406,13 @@ msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "Commercial Activity Total - {n}"
+msgid "closed bid"
+msgid_plural "closed bids"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "Revenue"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -897,22 +898,6 @@ msgid "CLOSED_DEALS_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE"
 msgstr ""
 
@@ -1214,6 +1199,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_TITLE_PREVIEW"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_ADD_AMENDMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
