@@ -1,5 +1,4 @@
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr ""
 
@@ -245,6 +244,7 @@ msgid "Place bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
 msgstr ""
 
@@ -848,18 +848,6 @@ msgid "MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "MANAGE_LISTINGS_MULTIPLE_SEASONS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "MANAGE_LISTINGS_SEASON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Program: "
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Expiry:"
 msgstr ""
 
@@ -1019,6 +1007,10 @@ msgstr ""
 msgid "Accept"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
+msgid "CL_STEP5_ADD_AMENDMENT"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company Information"
 msgstr ""
@@ -1033,10 +1025,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "VAT ID number"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Street Name / Number"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
@@ -1199,10 +1187,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_TITLE_PREVIEW"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_ADD_AMENDMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js

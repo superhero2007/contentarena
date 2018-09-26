@@ -25,11 +25,11 @@ class ContentListingCommercialActivity extends ContentListing {
         this.exclamationIcon = assetsBaseDir + "app/images/Exclamation.png";
         this.envelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
 
-        jQuery('body, .manager-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+        jQuery('body, #home-wrapper').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
 
     componentWillUnmount() {
-        jQuery('body, .manager-container').css('background-color', '') //todo: remove this when other page redesign ready
+        jQuery('body, #home-wrapper').css('background-color', '') //todo: remove this when other page redesign ready
     }
 
     sortSalesPackages = (a, b) => {

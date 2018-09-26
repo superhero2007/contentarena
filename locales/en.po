@@ -1441,17 +1441,17 @@ msgstr "Listing image (opt.)"
 #~ msgid "Commercial Activity Total - {n}"
 #~ msgstr "Total: {n}"
 
-#~ msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
-#~ msgstr "All bundles"
+msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
+msgstr "All bundles"
 
-#~ msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
-#~ msgstr "With activity"
+msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
+msgstr "With activity"
 
-#~ msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
-#~ msgstr "Open bids"
+msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
+msgstr "Open bids"
 
-#~ msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
-#~ msgstr "Closed deals"
+msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
+msgstr "Closed deals"
 
 #~ msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
 #~ msgstr "PROGRAMS DESCRIPTION"

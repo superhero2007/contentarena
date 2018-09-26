@@ -2220,7 +2220,10 @@ a:hover {
 }
 
 .custom-id {
-  background-color: lightgrey;
+  border-radius: 5px;
+  border: 1px solid $orange-color;
+  background: $background-3;
+
   padding: 4px 12px;
   color: #4F4F4F;
   font-size: 14px;
