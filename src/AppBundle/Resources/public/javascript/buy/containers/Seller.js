@@ -21,7 +21,7 @@ class Seller extends React.Component {
                     </div>
                     {company.website && (
                         <div>
-                            <a href={ContentArena.Utils.getWebsiteURl(company.website)}>{company.website}</a>
+                            <a href={ContentArena.Utils.getWebsiteURl(company.website)} target='_blank'>{company.website}</a>
                         </div>
                     )}
                 </div>
