@@ -32,9 +32,9 @@ export const SuperRightProductionDetailsLabels = {
 
 export const SuperRightBoardLabels = {
     "LT" : "Live",
-    "DT" : "Delayed&Archive",
-    "LB" : "Betting",
-    "HL" : "Highlights&Clips",
     "NA" : "News",
+    "DT" : "Delayed&Archive",
+    "HL" : "Highlights&Clips",
+    "LB" : "Betting",
     "PR" : "Program",
 };

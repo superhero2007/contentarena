@@ -6,7 +6,6 @@ import {
     blueCheckIcon, clockRoundIcon, exclamationRoundIcon, expiredIcon, hammerIcon, playIcon, soldIcon,
     yellowCheckIcon
 } from "../../main/components/Icons";
-import {SuperRightBoardLabels} from "../../sell/components/SuperRightDefinitions";
 import {PropTypes} from "prop-types";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 
@@ -272,6 +271,7 @@ class BoardListing extends React.Component{
                 <ContentListingRightsPackage
                     rightsPackage={rightsPackage}
                     programName={PROGRAM_NAME}
+                    boardLabels={true}
                 />
 
                 <div className={"expiry"}>

@@ -3,12 +3,20 @@ import {blueCheckIcon, yellowCheckIcon, greyMinusIcon} from "../../main/componen
 import {PropTypes} from "prop-types";
 import unionBy from 'lodash/unionBy';
 import {connect} from 'react-redux';
+import {SuperRightBoardLabels} from "../../sell/components/SuperRightDefinitions";
 import cn from "classnames";
 
-const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage}, context) => {
+const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage, boardLabels}, context) => {
 
     let packages = unionBy(rightsPackage, defaultRightsPackage,  "id"); // overwrite defaultRightsPackage by user chosen rightsPackage
-    packages = packages.sort((a,b) => a.id - b.id); //sort by id
+    packages = packages.concat().sort((a,b) => a.id - b.id); //sort by id
+
+    if (boardLabels) { //sort labels based on SuperRightBoardLabels order
+        let order = Object.keys(SuperRightBoardLabels);
+        packages = packages.concat().sort((a,b)=>{
+            return order.indexOf(a.shortLabel) - order.indexOf(b.shortLabel)
+        })
+    }
 
     return (
         <div className="listing-rights col">
@@ -29,7 +37,7 @@ const ContentListingRightsPackage = ({defaultRightsPackage, rightsPackage}, cont
                         <img src={icon}/>
 
                         <div className={cn("d-flex", {'disabled':rp.exclusive == null})}>
-                            {rp.shortLabel === "PR" ? context.t("LISTING_DETAILS_EDITED_PROGRAM") : rp.name}
+                            {boardLabels ? SuperRightBoardLabels[rp.shortLabel] : rp.name}
                         </div>
                     </div>
                 )
