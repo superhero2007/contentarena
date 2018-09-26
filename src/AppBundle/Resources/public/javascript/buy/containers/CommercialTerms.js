@@ -146,7 +146,7 @@ class CommercialTerms extends React.Component {
                                                         <i className="fa fa-calendar icon" /> {Moment(fixture.date).format('DD/MM/YYYY')}
                                                     </div>
                                                     <div className="item">
-                                                        <i className="fa fa-clock-o icon" /> todo: time
+                                                        <i className="fa fa-clock-o icon" /> {Moment(fixture.date).format('HH:mm')}
                                                     </div>
                                                 </div>
                                             </div>
