@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Company;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
@@ -66,6 +67,7 @@ class UserService
             if ( isset($data['email']) ) $user->setEmail($data['email']);
             if ( isset($data['phone']) ) $user->setPhone($data['phone']);
             $user->setConfirmationToken(null);
+            $user->setEnabled(true);
 
             $this->em->persist($user);
             $this->em->flush();
@@ -89,7 +91,12 @@ class UserService
         if ($user == null) throw new BadRequestHttpException();
 
         $user = $this->updateUser($data);
-        $this->updateCompany($data['company'], $user);
+        if ( isset($data['company']) && isset($data['company']['id']) ){
+            $this->updateCompany($data['company'], $user);
+        } else {
+            $this->createCompany($data['company'], $user);
+        }
+
         $this->updatePassword($request);
 
         return $user;
@@ -165,6 +172,28 @@ class UserService
         return false;
 
     }
+
+    public function createCompany($data, User $user){
+
+        $company = new Company();
+
+        if ( isset($data['vat']) ) $company->setVat($data['vat']);
+        if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
+        if ( isset($data['zip']) ) $company->setZip($data['zip']);
+        if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
+        if ( isset($data['address']) ) $company->setAddress($data['address']);
+        if ( isset($data['city']) ) $company->setCity($data['city']);
+        if ( isset($data['description']) ) $company->setDescription($data['description']);
+        if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));
+        $company->setUsers(array($user));
+        $this->em->persist($company);
+        $user->setCompany($company);
+        $this->em->persist($user);
+        $this->em->flush();
+        return $company;
+
+    }
+
 
     private function getCountry($country){
 

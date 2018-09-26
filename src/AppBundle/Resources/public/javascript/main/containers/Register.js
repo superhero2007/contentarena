@@ -6,8 +6,6 @@ import CountrySelector from "../components/CountrySelector";
 import {Redirect} from "react-router-dom";
 import {blueCheckIcon, cancelIcon, editIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
-import {goTo} from "../actions/utils";
-
 
 class Register extends React.Component {
     constructor(props) {
@@ -16,6 +14,7 @@ class Register extends React.Component {
             loading : false,
             updatingUser : false,
             editCompanyInfo : false,
+            editCompanyNameDisabled : true,
             user : {}
         };
     }
@@ -26,10 +25,24 @@ class Register extends React.Component {
         const { match } = this.props;
 
         let activationCode = match.params.activationCode;
+        let editCompanyInfo = false;
+        let editCompanyNameDisabled = true;
 
         ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done(user=>{
-            if (user) user.activationCode = activationCode;
-            this.setState({loading:false, user : user});
+            if (user) {
+                user.activationCode = activationCode;
+                if (!user.company) {
+                    editCompanyInfo = true;
+                    editCompanyNameDisabled = false;
+                    user.company = {country:{}};
+                }
+            }
+            this.setState({
+                loading:false,
+                user : user,
+                editCompanyInfo: editCompanyInfo,
+                editCompanyNameDisabled: editCompanyNameDisabled
+            });
         });
 
     }
@@ -86,16 +99,25 @@ class Register extends React.Component {
         return user === null ||
             user.company.registrationNumber === "" ||
             user.company.registrationNumber === null ||
+            user.company.registrationNumber === undefined ||
             user.company.vat === "" ||
             user.company.vat === null ||
+            user.company.vat === undefined ||
             user.company.city === "" ||
             user.company.city === null ||
+            user.company.city === undefined ||
             user.company.address === null ||
             user.company.address === "" ||
+            user.company.address === undefined ||
             user.company.zip === null ||
             user.company.zip === "" ||
+            user.company.zip === undefined ||
             user.company.country === null ||
-            user.company.country === "" ;
+            user.company.country === undefined ||
+            user.company.country.name === undefined ||
+            user.company.legalName === undefined ||
+            user.company.legalName === null ||
+            user.company.legalName === "" ;
 
     };
 
@@ -103,7 +125,7 @@ class Register extends React.Component {
 
         const {history, match, location} = this.props;
 
-        const { loading, editCompanyInfo, updatingUser, password, updated } = this.state;
+        const { loading, editCompanyInfo, updatingUser, password, updated, editCompanyNameDisabled } = this.state;
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
@@ -200,7 +222,10 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
                             </label>
-                            <input value={user.company.legalName} disabled={true} />
+                            <input value={user.company.legalName} disabled={editCompanyNameDisabled} onChange={(e)=>{
+                                user.company.legalName = e.target.value;
+                                this.setState({user});
+                            }} />
                         </div>
                         <div className={"item"}>
                             <label>
@@ -254,7 +279,8 @@ class Register extends React.Component {
                                 {this.context.t("SETTINGS_LABEL_COMPANY_COUNTRY")} *
                             </label>
                             <CountrySelector multi={false} value={country} disabled={!editCompanyInfo} onChange={(e)=>{
-                                user.company.country.name = e.value;
+                                if (e && e.value ) user.company.country.name = e.value;
+                                if (e === null) user.company.country = {};
                                 this.setState({user});
                             }}/>
                         </div>

@@ -20,6 +20,8 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use AppBundle\Service\WatchlistService;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class ApiController extends BaseController
 {
@@ -638,6 +640,17 @@ class ApiController extends BaseController
     public function activateUser(Request $request, UserService $userService)
     {
         $user = $userService->activateUser($request);
+
+        $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
+
+        // For older versions of Symfony, use security.context here
+        $this->get("security.token_storage")->setToken($token);
+        $this->get('session')->set('_security_main',serialize($token));
+
+        // Fire the login event
+        // Logging the user in above the way we do it doesn't do this automatically
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
