@@ -7,10 +7,10 @@ import SalesPackages from './SalesPackeges';
 import {
     blueCheckIcon,
     yellowCheckIcon,
-    coinIcon,
     hammerIcon,
     bucketIcon,
-    fixedIcon
+    fixedIcon,
+    userIcon
 } from "./Icons";
 import { getCurrencySymbol } from "../actions/utils";
 import Tooltip from '../../main/components/Tooltip';
@@ -156,7 +156,7 @@ class ContentListing extends Component{
                         </div>}
 
                         {company && (
-                            <div className="company-name">{coinIcon} {company.legalName}</div>
+                            <div className="company-name">{userIcon} {company.legalName}</div>
                         )}
                     </div>
 

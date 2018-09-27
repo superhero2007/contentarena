@@ -6,10 +6,12 @@ export const addIcon = assetsBaseDir + "app/images/add.png";
 export const exclamationRoundIcon = assetsBaseDir + "app/images/exclamation_round.png";
 export const clockRoundIcon = assetsBaseDir + "app/images/clock.png";
 export const playIcon = assetsBaseDir + "app/images/play.png";
+
 export const minusGreyIcon = <img src={assetsBaseDir + "app/images/minus-gray.png"} alt="close" />;
 export const plusGreyIcon = <img src={assetsBaseDir + "app/images/plus-gray.png"} alt="open"/>;
 export const minusYellowIcon = <img src={assetsBaseDir + "app/images/minus-yellow.png"} alt="close"/>;
 export const plusYellowIcon = <img src={assetsBaseDir + "app/images/plus-yellow.png"} alt="open"/>;
+export const userIcon = <img src={assetsBaseDir + "app/images/user.png"} alt="open"/>;
 
 
 export const bidIcon = assetsBaseDir + "app/images/hammer.png";
