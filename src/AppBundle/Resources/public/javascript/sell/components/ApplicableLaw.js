@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
-import LanguageSelectorExtended from "../../main/components/LanguageSelectorExtended";
+import CountrySelector from "../../main/components/CountrySelector";
 
 class ApplicableLaw extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class ApplicableLaw extends React.Component {
                 <label>
                     {this.context.t("CL_STEP4_LABEL_APPLICABLE_LAW")}
                 </label>
-                <LanguageSelectorExtended
+                <CountrySelector
                     value={law}
                     multi={false}
                     placeholder={this.context.t("CL_STEP4_PLACEHOLDER_APPLICABLE_LAW")}
