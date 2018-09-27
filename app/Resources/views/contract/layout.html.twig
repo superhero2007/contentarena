@@ -574,7 +574,7 @@
                 Worldwide
             {% elseif bundle.territoriesMethod == "WORLDWIDE_EXCLUDING" %}
                 Worldwide excluding
-                {% for territory in bundle.territories %}
+                {% for territory in bundle.excludedCountries %}
                     {{ territory.name }}{% if not loop.last %},{% endif %}
                 {% endfor %}
             {% else %}
