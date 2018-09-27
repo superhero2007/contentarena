@@ -87,8 +87,6 @@ class Register extends React.Component {
             user.lastName === null ||
             user.email === "" ||
             user.email === null ||
-            user.title === null ||
-            user.title === "" ||
             user.phone === null ||
             user.phone === "";
 
@@ -97,12 +95,6 @@ class Register extends React.Component {
     invalidCompany = () => {
         let user = this.state.user;
         return user === null ||
-            user.company.registrationNumber === "" ||
-            user.company.registrationNumber === null ||
-            user.company.registrationNumber === undefined ||
-            user.company.vat === "" ||
-            user.company.vat === null ||
-            user.company.vat === undefined ||
             user.company.city === "" ||
             user.company.city === null ||
             user.company.city === undefined ||
@@ -174,7 +166,7 @@ class Register extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")} *
+                                {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")}
                             </label>
                             <input value={user.title} onChange={(e)=>{
                                 user.title = e.target.value;
@@ -229,7 +221,7 @@ class Register extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER")} *
+                                {this.context.t("SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER")}
                             </label>
                             <input value={user.company.registrationNumber} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.registrationNumber = e.target.value;
@@ -238,7 +230,7 @@ class Register extends React.Component {
                         </div>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_VAT")} *
+                                {this.context.t("SETTINGS_LABEL_COMPANY_VAT")}
                             </label>
                             <input value={user.company.vat} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.vat = e.target.value;
