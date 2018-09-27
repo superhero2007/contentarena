@@ -175,6 +175,7 @@ class ContentController extends Controller
 
             }
             $content->setBundlesWithActivity($bundlesWithActivity);
+            $content->setBundlesSold($closedDeals);
         }
 
 

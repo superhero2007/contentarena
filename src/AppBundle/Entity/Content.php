@@ -418,6 +418,12 @@ class Content
      */
     private $bundlesWithActivity = array();
 
+    /**
+     * @var array;
+     * @Groups({"details"})
+     */
+    private $bundlesSold = array();
+
 
     public function __construct() {
         $this->rightsPackage = new ArrayCollection();
@@ -1456,6 +1462,22 @@ class Content
     public function setEditedProgramYear($editedProgramYear)
     {
         $this->editedProgramYear = $editedProgramYear;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBundlesSold()
+    {
+        return $this->bundlesSold;
+    }
+
+    /**
+     * @param array $bundlesSold
+     */
+    public function setBundlesSold($bundlesSold)
+    {
+        $this->bundlesSold = $bundlesSold;
     }
 
 

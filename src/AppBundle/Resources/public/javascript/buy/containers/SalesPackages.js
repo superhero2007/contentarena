@@ -33,7 +33,7 @@ class SalesPackages extends React.Component {
     };
 
     render() {
-        const {salesPackages, onSelectPackage, user, listingId, userCanNotBuy, bundlesWithActivity} = this.props;
+        const {salesPackages, onSelectPackage, user, listingId, userCanNotBuy, bundlesWithActivity, bundlesSold} = this.props;
         return (
             <div className="sales-packages">
                 { salesPackages.map((item) => {
@@ -45,6 +45,11 @@ class SalesPackages extends React.Component {
                 }).map( (salesPackage, i) => {
 
                     if (salesPackage.sold ) return;
+
+                    let hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(salesPackage.id) !== -1 : false;
+                    let hasClosedDeal = (bundlesSold !== null) ? bundlesSold.indexOf(salesPackage.id) !== -1 : false;
+
+                    console.log("hasOfferFromUser", hasOfferFromUser);
 
                     let extraTerritories = ( salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? salesPackage.excludedTerritories : salesPackage.territories;
 
@@ -97,15 +102,18 @@ class SalesPackages extends React.Component {
                                     <button className="ca-btn primary"
                                             disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || salesPackage.hasOfferFromUser}
                                             onClick={() => {onSelectPackage(salesPackage, listingId) }}>
-                                        {this.context.t("Buy now")}
+                                        {!hasOfferFromUser && this.context.t("Buy now")}
+                                        {hasOfferFromUser && this.context.t("Acquired")}
                                     </button>
                                 )}
 
                                 { salesPackage.salesMethod === "BIDDING" && (
                                     <button className="ca-btn primary"
-                                            disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || salesPackage.hasOfferFromUser }
+                                            disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || hasClosedDeal }
                                             onClick={() => {onSelectPackage(salesPackage, listingId) }}>
-                                        {this.context.t("Place bid")}
+                                        { hasOfferFromUser && !hasClosedDeal && this.context.t("Raise bid") }
+                                        { hasOfferFromUser && hasClosedDeal && this.context.t("Acquired") }
+                                        { !hasOfferFromUser && this.context.t("Place bid") }
                                     </button>
                                 )}
                             </div>

@@ -68,6 +68,7 @@ class CommercialTerms extends React.Component {
             customId,
             userCanNotBuy,
             bundlesWithActivity,
+            bundlesSold,
             website,
             attachments,
             description,
@@ -169,6 +170,7 @@ class CommercialTerms extends React.Component {
                     profile={profile}
                     onSelectPackage={onSelectPackage}
                     bundlesWithActivity={bundlesWithActivity}
+                    bundlesSold={bundlesSold}
                     salesPackages={salesPackages}
                 />
             </div>
