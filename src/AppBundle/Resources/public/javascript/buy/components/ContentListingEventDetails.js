@@ -11,19 +11,19 @@ import {
     eventTimeIcon
 } from "../../main/components/Icons";
 
-import { DATE_FORMAT } from "../../common/constants";
-
-const buildSeasonString = (season) => {
-    return (season.startDate && season.endDate) ? ` (${moment(season.startDate).format(DATE_FORMAT)} - ${moment(season.endDate).format(DATE_FORMAT)}) `: '';
-};
-
+import {DATE_FORMAT} from "../../common/constants";
 
 class ContentListingEventDetails extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
+    }
+
+    buildSeasonString = (season) => {
+        return (season.startDate && season.endDate) ?
+            `(${moment(season.startDate).format(DATE_FORMAT)} - ${moment(season.endDate).format(DATE_FORMAT)})` :
+            '';
     }
 
     getFixtures = () => {
@@ -31,8 +31,8 @@ class ContentListingEventDetails extends React.Component {
 
         let fixtures = [];
 
-        seasons.forEach( s => {
-            if ( s.fixtures ) fixtures = [...fixtures, ...s.fixtures]
+        seasons.forEach(s => {
+            if (s.fixtures) fixtures = [...fixtures, ...s.fixtures]
         });
 
         return fixtures;
@@ -41,29 +41,29 @@ class ContentListingEventDetails extends React.Component {
 
     getSchedules = () => {
 
-        const { seasons , schedulesBySeason} = this.props;
+        const {seasons, schedulesBySeason} = this.props;
         let schedules = {
-            rounds : [],
-            matches : []
+            rounds: [],
+            matches: []
         };
         seasons.forEach(s => {
-            if (s.schedules) Object.entries(s.schedules).forEach((sh) =>{
-                if (sh[1].selected && schedules.rounds.indexOf(sh[0]) === -1){
+            if (s.schedules) Object.entries(s.schedules).forEach((sh) => {
+                if (sh[1].selected && schedules.rounds.indexOf(sh[0]) === -1) {
                     schedules.rounds.push(sh[0]);
                     sh[1].matches.forEach(m => {
-                        if(m.selected) schedules.matches.push(m)
+                        if (m.selected) schedules.matches.push(m)
                     });
                 }
             })
         });
 
-        if ( schedulesBySeason ){
+        if (schedulesBySeason) {
             schedulesBySeason.forEach(s => {
-                if (s && Object.entries(s)) Object.entries(s).forEach((sh) =>{
-                    if (schedules.rounds.indexOf(sh[0]) === -1){
+                if (s && Object.entries(s)) Object.entries(s).forEach((sh) => {
+                    if (schedules.rounds.indexOf(sh[0]) === -1) {
                         schedules.rounds.push(sh[0]);
                         sh[1].matches.forEach(m => {
-                            if(m.selected) schedules.matches.push(m)
+                            if (m.selected) schedules.matches.push(m)
                         });
                     }
 
@@ -99,7 +99,7 @@ class ContentListingEventDetails extends React.Component {
             }
 
             if (s.from) {
-                if (!s.to){
+                if (!s.to) {
                     s.to = s.from;
                     s.year = s.from
                 } else {
@@ -108,7 +108,7 @@ class ContentListingEventDetails extends React.Component {
             }
 
         });
-        seasons = seasons.sort((a,b)=> a.from-b.from);
+        seasons = seasons.sort((a, b) => a.from - b.from);
 
         return seasons
     };
@@ -130,12 +130,12 @@ class ContentListingEventDetails extends React.Component {
         let schedules = this.getSchedules();
         let rounds = schedules.rounds;
         let matches = schedules.matches;
-        let seasonTitle = ( seasons.length > 1 ) ? "Seasons: " : "Season: ";
-        let episodesText = ( PROGRAM_EPISODES > 1 ) ? "episodes" : "episode";
-        let seasonName =  seasonTitle + seasons.map(season => (season.year)).join(", ");
-        let seasonsArray =  this.getSeasonsYears(seasons);
-        let roundsTitle = ( rounds.length > 1 ) ? "Rounds: " : "Round: ";
-        let roundsName =  roundsTitle + rounds.join(", ");
+        let seasonTitle = (seasons.length > 1) ? "Seasons: " : "Season: ";
+        let episodesText = (PROGRAM_EPISODES > 1) ? "episodes" : "episode";
+        let seasonName = seasonTitle + seasons.map(season => (season.year)).join(", ");
+        let seasonsArray = this.getSeasonsYears(seasons);
+        let roundsTitle = (rounds.length > 1) ? "Rounds: " : "Round: ";
+        let roundsName = roundsTitle + rounds.join(", ");
 
         let tournamentArray = [];
         if (tournament) {
@@ -147,25 +147,82 @@ class ContentListingEventDetails extends React.Component {
 
                 <div className="listing-item tournament">
                     {/*Tournament name*/}
-                    {tournamentArray && tournamentArray.length > 0 && <span>{tournamentIcon} {tournamentArray[0].name}</span>}
-                    {customTournament && !customId && <span>{tournamentIcon} {customTournament}</span>}
-                    {tournamentArray && tournamentArray.length === 0 && !customTournament && <span>
-                        {tournamentIcon} {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
-                    </span>}
+                    {tournamentArray && tournamentArray.length > 0 && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {tournamentIcon}
+                            </div>
+                            <div className="event-text">
+                                {tournamentArray[0].name}
+                            </div>
+                        </div>
+                    )}
+                    {customTournament && !customId && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {tournamentIcon}
+                            </div>
+                            <div className="event-text">
+                                {customTournament}
+                            </div>
+                        </div>
+                    )}
+                    {tournamentArray && tournamentArray.length === 0 && !customTournament && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {tournamentIcon}
+                            </div>
+                            <div className="event-text">
+                                {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="listing-item">
                     {/*Sport name*/}
-                    {sports && sports.length === 1 && <span>{sportIcon} {sports[0].name}</span>}
-                    {sports && sports.length > 1 && <span>{sportIcon} {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}</span>}
+                    {sports && sports.length === 1 && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {sportIcon}
+                            </div>
+                            <div className="event-text">
+                                {sports[0].name}
+                            </div>
+                        </div>
+                    )}
+                    {sports && sports.length > 1 && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {sportIcon}
+                            </div>
+                            <div className="event-text">
+                                {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}
+                            </div>
+                        </div>
+                    )}
 
                     {/*Sport category/Country*/}
                     {sportCategory && sportCategory.length > 0 ? (
-                            <span>{sportCategoryIcon} {sportCategory[0].name}</span>
-                        ) : (
-                            <span>{sportCategoryIcon} {this.context.t("International")}</span>
-                        )
-                    }
+                        <div className="event">
+                            <div className="event-icon">
+                                {sportCategoryIcon}
+                            </div>
+                            <div className="event-text">
+                                {sportCategory[0].name}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="event">
+                            <div className="event-icon">
+                                {sportCategoryIcon}
+                            </div>
+                            <div className="event-text">
+                                {this.context.t("International")}
+                            </div>
+                        </div>
+                    )}
+
                     {/*as is duplicate in sportCategory*/}
                     {/*{customCategory && <span>{sportCategoryIcon} {customCategory}</span>}*/}
 
@@ -175,23 +232,76 @@ class ContentListingEventDetails extends React.Component {
                     {/*Season/Release*/}
                     {!this.showProgramInfo() && seasonsArray.length > 0 && (
                         seasonsArray.length > 1 ? (
-                            <span>{seasonReleaseIcon} from {seasonsArray[0].year} {buildSeasonString(seasonsArray[0])} to {seasonsArray[seasonsArray.length -1].year} {buildSeasonString(seasonsArray[seasonsArray.length -1])}</span>
+                            <div className="event">
+                                <div className="event-icon">
+                                    {seasonReleaseIcon}
+                                </div>
+                                <div className="event-text">
+                                    <span>
+                                        from {seasonsArray[0].year} {this.buildSeasonString(seasonsArray[0])}
+                                    </span>
+                                    <span>
+                                        to {seasonsArray[seasonsArray.length - 1].year} {this.buildSeasonString(seasonsArray[seasonsArray.length - 1])}
+                                    </span>
+                                </div>
+                            </div>
                         ) : (
-                            <span>
-                                {seasonReleaseIcon} Season {seasonsArray[0].year}
-                                {buildSeasonString(seasonsArray[0])}
-                            </span>
+                            <div className="event">
+                                <div className="event-icon">
+                                    {seasonReleaseIcon}
+                                </div>
+                                <div className="event-text">
+                                    Season {seasonsArray[0].year} {this.buildSeasonString(seasonsArray[0])}
+                                </div>
+                            </div>
                         )
                     )}
-                    {this.showProgramInfo() && PROGRAM_YEAR && <span>{seasonReleaseIcon} Release year: {PROGRAM_YEAR}</span>}
+
+                    {this.showProgramInfo() && PROGRAM_YEAR && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {seasonReleaseIcon}
+                            </div>
+                            <div className="event-text">
+                                Release year: {PROGRAM_YEAR}
+                            </div>
+                        </div>
+                    )}
 
                     {/*Event time*/}
-                    <span>{eventTimeIcon} todo: event time</span>
+                    {/*<span>{eventTimeIcon} todo: event time</span>*/}
 
                     {/*Fixtures/Episodes*/}
-                    {!this.showProgramInfo() && this.getFixtures().length > 1 && <span>{fixturesEpisodeIcon} {this.getFixtures().length} fixtures</span>}
-                    {!this.showProgramInfo() && this.getFixtures().length === 1 && this.getFixtures()[0].name && <span>{fixturesEpisodeIcon} {this.getFixtures()[0].name}</span>}
-                    {this.showProgramInfo() && PROGRAM_EPISODES && <span>{fixturesEpisodeIcon} {PROGRAM_EPISODES} {episodesText}</span>}
+                    {!this.showProgramInfo() && this.getFixtures().length > 1 && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {fixturesEpisodeIcon}
+                            </div>
+                            <div className="event-text">
+                                {this.getFixtures().length} fixtures
+                            </div>
+                        </div>
+                    )}
+                    {!this.showProgramInfo() && this.getFixtures().length === 1 && this.getFixtures()[0].name && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {fixturesEpisodeIcon}
+                            </div>
+                            <div className="event-text">
+                                {this.getFixtures()[0].name}
+                            </div>
+                        </div>
+                    )}
+                    {this.showProgramInfo() && PROGRAM_EPISODES && (
+                        <div className="event">
+                            <div className="event-icon">
+                                {fixturesEpisodeIcon}
+                            </div>
+                            <div className="event-icon">
+                                {PROGRAM_EPISODES} {episodesText}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         );

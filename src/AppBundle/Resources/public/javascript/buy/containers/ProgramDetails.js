@@ -25,7 +25,7 @@ class ProgramDetails extends React.Component {
             <div>
                 <div>
                     {PROGRAM_DESCRIPTION && (
-                        <div className="spacer-bottom">
+                        <div className="spacer-bottom txt">
                             {PROGRAM_DESCRIPTION}
                         </div>
                     )}

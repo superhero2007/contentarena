@@ -486,8 +486,6 @@ class ListingDetails extends React.Component {
 
         const isEditedProgramShownInFirstTab = content.rightsPackage.length === 1 && content.rightsPackage.some(e => e.shortLabel === 'PR')
 
-        console.log(this.props.listing.programDescription);
-        console.log(content.programDescription);
         return (
             <div className="listing-details">
                 <SendMessage ref="messagePopup" listingId={content.id} recipient={content.company}/>
@@ -537,27 +535,6 @@ class ListingDetails extends React.Component {
                             rightsPackage={content.rightsPackage}
                         />
 
-                 {/*       <div>
-                            <div>
-                                {this.context.t("LISTING_DETAILS_LICENSE_START")}
-                            </div>
-                            <div>
-                                <b>
-                                    { content.startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
-                                    { content.startDateMode === "DATE"  && " " + Moment(content.startDate).format('DD/MM/YYYY')}
-                                </b>
-                            </div>
-                            <div>
-                                {this.context.t("LISTING_DETAILS_LICENSE_END")}
-                            </div>
-                            <td>
-                                <b>
-                                    { content.endDateMode === "LIMITED"  && " " + content.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
-                                    { content.endDateMode === "DATE"  && " " +Moment(content.endDate).format('DD/MM/YYYY')}
-                                    { content.endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
-                                </b>
-                            </td>
-                        </div>*/}
                         <div className="info">
                             <div className="d-flex">
                                 <div style={{marginRight: 5}}>
@@ -605,15 +582,6 @@ class ListingDetails extends React.Component {
                                 )}
 
 
-                                {/*{this.isTabHasData(content, "event") &&
-                                <div className={'tab '+ this.isActiveTab(tab, 'event')} onClick={()=>{
-                                    history.push('/listing/'+content.customId+'/event');
-                                    this.showTab("event");
-                                }}>
-                                    {this.context.t("LISTING_DETAILS_TAB_EVENT")}
-                                </div>
-                            }*/}
-
                                 <div className={'tab '+ this.isActiveTab(tab, 'grantofrights')} onClick={()=>{
                                     history.push('/listing/'+content.customId+'/grantofrights');
                                     this.showTab("grantofrights")
@@ -641,9 +609,6 @@ class ListingDetails extends React.Component {
                                     {...content}
                                 />
                                 }
-                          {/*      {this.state.tab === "event" && this.isTabHasData(content, "event") &&
-                                <ContentInformation {...content}/>
-                                }*/}
                                 { this.state.tab === "grantofrights" &&
                                 <TermSheet{...content}/>
                                 }

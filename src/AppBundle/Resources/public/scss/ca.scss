@@ -1610,7 +1610,6 @@ a:hover {
         display: inline-flex;
         flex-flow: column wrap;
         max-height: $col-height;
-        max-width: 50%;
         width: 100%;
 
         .listing-item {
@@ -1624,35 +1623,22 @@ a:hover {
             font-weight: 600;
             text-transform: uppercase;
           }
-          .fa {
-            padding: initial;
-          }
-          span {
-            display: inline-flex;
-            align-items: center;
-            vertical-align: middle;
-            margin-right: 15px;
-            img,
-            .fa {
-              margin-right: 5px;
-            }
-            &:last-child {
-              margin-right: 0;
-            }
-          }
+
         }
 
-        //&.listing-attributes {
-        //  width: 100%;
-        //}
+        &.listing-attributes {
+          max-width: 65%;
+        }
 
         &.listing-rights {
           flex: 0 0 300px;
+          max-width: 35%;
           margin-left: auto;
           .listing-item {
             display: flex;
             align-items: center;
             font-size: 12px;
+
             img,
             .fa {
               margin-right: 5px;
@@ -1810,6 +1796,35 @@ a:hover {
   }
 }
 
+.listing-attributes {
+  .event {
+    display: inline;
+    margin-right: 15px;
+    .event-icon {
+      display: inline;
+      margin-right: 5px;
+      vertical-align: 2px;
+
+      .fa {
+        vertical-align: middle;
+      }
+    }
+    .event-text {
+      display: inline;
+      span {
+        margin-right: 5px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+
 .medium-spinner {
   font-size: 40px;
   width: 100%;
@@ -1873,6 +1888,7 @@ a:hover {
 
     .left {
       flex: 1;
+      font-size: 14px;
 
       .image {
         width: 300px;
@@ -1909,19 +1925,25 @@ a:hover {
       }
 
       .listing-item {
-        span {
-          display: block;
+        display: block;
+        .event {
+          display: flex;
+          align-items: flex-start;
           margin-bottom: 10px;
 
-          img,
-          .fa {
-            margin-right: 5px;
-            width: 17px;
+          .event-icon {
+            flex: 17px 0 0;
+          }
+
+          .event-text {
+            white-space: normal;
+
+            span {
+              display: block;
+              width: 100%;
+            }
           }
         }
-      }
-      .listing-item span {
-        display: block;
       }
       .header {
         height: 70px;
