@@ -48,10 +48,8 @@ class Bid
     private $totalFee;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid", cascade={"remove"})
-     * @ORM\JoinColumn(name="content_id",
-     *      referencedColumnName="id",
-     *      onDelete="CASCADE",nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid")
+     * @ORM\JoinColumn(name="content_id",referencedColumnName="id",nullable=true)
      * @Groups({"closed", "commercial"})
      */
     private $content;
