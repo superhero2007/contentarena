@@ -220,7 +220,7 @@ class Marketplace extends React.Component {
 
     goToListing = (customId) => {
         const { history } = this.props;
-        history.push('/listing/' + customId )
+        history.push('/listing/' + customId );
     };
 
     render () {
@@ -268,6 +268,7 @@ class Marketplace extends React.Component {
                             listings.map(listing => {
                                 return (
                                     <ContentListing
+                                        redirectOnRightClick
                                         onSelect={() => this.goToListing(listing.customId)}
                                         key={listing.customId}
                                         filter={filter}
@@ -295,10 +296,7 @@ class Marketplace extends React.Component {
                         </div>
                     )
                 }
-
-
-                {
-                    loadingListingDetails && <div className={"big-spinner"}>
+                {loadingListingDetails && <div className={"big-spinner"}>
                         <i className="fa fa-cog fa-spin"/>
                     </div>
                 }
