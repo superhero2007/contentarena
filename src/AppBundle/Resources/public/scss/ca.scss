@@ -1592,6 +1592,9 @@ a:hover {
       margin-bottom: 10px;
 
       .company-name {
+        i {
+          padding-right: 5px;
+        }
         display: flex;
         align-items: center;
         white-space: nowrap;
