@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {PropTypes} from "prop-types";
-import { withRouter } from "react-router-dom";
 import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
@@ -10,8 +9,7 @@ import {
     yellowCheckIcon,
     hammerIcon,
     bucketIcon,
-    fixedIcon,
-    userIcon
+    fixedIcon
 } from "./Icons";
 import { getCurrencySymbol } from "../actions/utils";
 import Tooltip from '../../main/components/Tooltip';
@@ -161,7 +159,8 @@ class ContentListing extends Component{
                         </div>}
 
                         {company && (
-                            <div className="company-name">{userIcon} {company.legalName}</div>
+                            <div className="company-name">
+                                <i className="fa fa-user-o icon" />{company.legalName}</div>
                         )}
                     </div>
 
@@ -310,5 +309,5 @@ ContentListing.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-export default withRouter(ContentListing);
+export default ContentListing;
 
