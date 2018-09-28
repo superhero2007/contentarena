@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
 import CurrencySelector from "../components/CurrencySelector";
-import DatePicker from 'react-datepicker';
+import DatePicker from 'components/DatePicker';
 import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
 import {PropTypes} from "prop-types";
