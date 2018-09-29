@@ -174,7 +174,7 @@ class SalesPackageForm extends React.Component {
                         }
                     });
                 } else {
-                    salesPackagesList = allTerritories.map((territory)=>{
+                    salesPackagesList = territories.map((territory)=>{
                         return {
                             name : territory.label,
                             territories : [territory],
