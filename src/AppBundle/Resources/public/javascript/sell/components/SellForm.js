@@ -21,15 +21,19 @@ class SellForm extends React.Component {
 
         if ( content === null ) props.history.push("/managelistings");
 
-        content.jurisdiction = {
-            label: content.company.country.name,
-            value: content.company.country.name
-        };
+        if ( content.jurisdiction === undefined || content.jurisdiction === null ){
+            content.jurisdiction = {
+                label: content.company.country.name,
+                value: content.company.country.name
+            };
+        }
 
-        content.law = {
-            label: content.company.country.name,
-            value: content.company.country.name
-        };
+        if ( content.law === undefined || content.law === null ){
+            content.law = {
+                label: content.company.country.name,
+                value: content.company.country.name
+            };
+        }
 
         if (content.userCanNotView) props.history.push("/managelistings");
 

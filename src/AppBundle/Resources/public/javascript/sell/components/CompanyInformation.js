@@ -134,7 +134,7 @@ class CompanyInformation extends React.Component {
                         </label>
                         <CountrySelector
                             multi={false}
-                            onChange={(val) => { this.updateCompanyContent(val)}}
+                            onChange={(val) => { this.updateCountry(val)}}
                             value={{value: company.country.name, label: company.country.name}}/>
                     </div>
 

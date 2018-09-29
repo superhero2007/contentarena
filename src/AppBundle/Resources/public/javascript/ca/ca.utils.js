@@ -35,6 +35,16 @@ ContentArena.Utils = {
             });
         }
 
+        if (content.jurisdiction){
+            content.jurisdiction.label = content.jurisdiction.name;
+            content.jurisdiction.value = content.jurisdiction.name;
+        }
+
+        if (content.law){
+            content.law.label = content.law.name;
+            content.law.value = content.law.name;
+        }
+
         if ( content.salesPackages ) {
             content.salesPackages.forEach((sp) => {
                 if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
