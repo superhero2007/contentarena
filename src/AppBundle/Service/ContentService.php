@@ -530,6 +530,11 @@ class ContentService
         if ( isset($data->expiresAt) ) $content->setExpiresAt(new \DateTime($data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
+        if ( isset($data->maxStep) ) {
+            $maxStep = $data->maxStep + 1;
+            if ( $maxStep > $content->getMaxStep()) $content->setMaxStep($maxStep);
+        }
+
         if ( isset($data->customSport) ) $content->setCustomSport($data->customSport);
         if ( isset($data->name) ) $content->setName($data->name);
         if ( isset($data->vat) ) $content->setVat($data->vat);
@@ -542,10 +547,10 @@ class ContentService
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
         if ( isset($data->annex) ) $content->setAnnex($data->annex);
-        if ( isset($data->law) ) $content->setLaw($this->getCountry($data->law->value));
+        if ( isset($data->law) && isset($data->law->value) ) $content->setLaw($this->getCountry($data->law->value));
         if ( isset($data->PROGRAM_NAME) ) $content->setEditedProgramName($data->PROGRAM_NAME);
         if ( isset($data->PROGRAM_YEAR) ) $content->setEditedProgramYear($data->PROGRAM_YEAR);
-        if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
+        if ( isset($data->jurisdiction) && isset($data->jurisdiction->value) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
 
         if ( isset($data->signature) && $data->signature != "" && substr_count($data->signature, "uploads") == 0 ) {

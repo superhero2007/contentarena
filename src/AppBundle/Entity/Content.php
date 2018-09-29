@@ -81,6 +81,14 @@ class Content
     protected $step = 1;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="maxStep", type="smallint")
+     * @Groups({"listing", "board"})
+     */
+    protected $maxStep = 1;
+
+    /**
      * @var boolean
      * @Groups({"listing"})
      *
@@ -1474,6 +1482,22 @@ class Content
     public function setBundlesSold($bundlesSold)
     {
         $this->bundlesSold = $bundlesSold;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxStep()
+    {
+        return $this->maxStep;
+    }
+
+    /**
+     * @param int $maxStep
+     */
+    public function setMaxStep($maxStep)
+    {
+        $this->maxStep = $maxStep;
     }
 
 

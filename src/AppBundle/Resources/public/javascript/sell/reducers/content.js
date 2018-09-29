@@ -64,7 +64,7 @@ export const content = (state = EmptyListing, action) => {
             return Object.assign({}, state, EmptyListing);
         case contentType.CONTENT_INIT:
             action.content.initialized = true;
-            return Object.assign({}, state, action.content, {maxStep: max([action.content.step, state.maxStep])});
+            return Object.assign({}, state, action.content, {maxStep: max([action.content.maxStep, state.maxStep])});
         case contentType.GO_TO_NEXT_STEP:
             const newStep = state.step + 1;
             return Object.assign({}, state, {
