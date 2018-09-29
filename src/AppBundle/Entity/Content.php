@@ -336,8 +336,8 @@ class Content
     private $extraData;
 
     /**
-     * @var string
-     * @ORM\Column(name="law", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
+     * @ORM\JoinColumn(name="law", referencedColumnName="id")
      * @Groups({"listing", "commercial"})
      */
     private $law;
@@ -457,8 +457,6 @@ class Content
         $this->hasActivity = $hasActivity;
     }
 
-
-
     /**
      * @return bool
      */
@@ -474,8 +472,6 @@ class Content
     {
         $this->hasPendingBids = $hasPendingBids;
     }
-
-
 
     /**
      * Get id

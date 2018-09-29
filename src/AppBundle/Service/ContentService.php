@@ -542,7 +542,7 @@ class ContentService
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
         if ( isset($data->annex) ) $content->setAnnex($data->annex);
-        if ( isset($data->law) ) $content->setLaw($data->law);
+        if ( isset($data->law) ) $content->setLaw($this->getCountry($data->law->value));
         if ( isset($data->PROGRAM_NAME) ) $content->setEditedProgramName($data->PROGRAM_NAME);
         if ( isset($data->PROGRAM_YEAR) ) $content->setEditedProgramYear($data->PROGRAM_YEAR);
         if ( isset($data->jurisdiction) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
