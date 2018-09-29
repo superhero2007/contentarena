@@ -37,6 +37,7 @@ class SellFormStep1 extends React.Component {
             tournaments: [],
             sportCategories: [],
             sportCategoryExtended : false,
+            tournamentHasNoSeason: false
         };
     }
 
@@ -127,6 +128,7 @@ class SellFormStep1 extends React.Component {
                 this.props.addNewSeason(0);
                 this.setState({
                     loadingSeasons : false,
+                    tournamentHasNoSeason : true
                 });
                 return;
             }
@@ -134,6 +136,7 @@ class SellFormStep1 extends React.Component {
             this.setState({
                 lastTournamentId : tournamentId,
                 loadingSeasons : false,
+                tournamentHasNoSeason : false,
                 seasons : seasons
             });
         })
@@ -267,7 +270,7 @@ class SellFormStep1 extends React.Component {
     };
 
     forceCustomSeason = () => {
-        let response = this.hasCustomSport() || this.hasCustomTournament();
+        let response = this.hasCustomSport() || this.hasCustomTournament() || this.state.tournamentHasNoSeason;
         return response;
     };
 

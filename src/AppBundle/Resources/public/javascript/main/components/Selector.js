@@ -234,7 +234,12 @@ class Selector extends React.Component {
 
             if ( !this.shouldShowFilters() ) return this.state.selectorItems;
 
-            return this.state.selectorItems.filter(this.filterLetter);
+            let filteredItems = this.state.selectorItems.filter(this.filterLetter);
+
+            if ( filteredItems.length === 0 ) return this.state.selectorItems;
+
+            return filteredItems;
+
         }
     };
 

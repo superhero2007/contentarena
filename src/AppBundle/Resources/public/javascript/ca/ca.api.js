@@ -429,7 +429,10 @@ ContentArena.Api= {
 
                 var list;
 
-                if ( response.seasons === undefined || response.seasons.season === undefined ) return false;
+                if ( response.seasons === undefined || response.seasons.season === undefined ){
+                    deferred.resolve([]);
+                    return false;
+                }
 
                 if ( $.isArray(response.seasons.season) ){
                     list = $.map(response.seasons.season, function (item) {
