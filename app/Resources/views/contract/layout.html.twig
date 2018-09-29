@@ -993,7 +993,7 @@
 
     {# APPLICABLE LAW #}
     <div class="license-item">
-        {% if content.law is defined and content.law is not null %}
+        {% if content.law is defined and content.law is not null and content.law.name is defined %}
             {{ content.law.name }}
         {% endif %}
     </div>
