@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Message
@@ -18,6 +19,7 @@ class Message
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"messages"})
      */
     private $id;
 
@@ -25,12 +27,14 @@ class Message
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Groups({"messages"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"messages"})
      */
     private $sender;
 
@@ -40,6 +44,7 @@ class Message
      * @ORM\JoinColumn(name="thread_id",
      *      referencedColumnName="id",
      *      onDelete="CASCADE",nullable=true)
+     * @Groups({"messages"})
      */
     private $thread;
 
@@ -47,6 +52,7 @@ class Message
      * @var mixed
      *
      * @ORM\Column(name="created_at", type="datetime")
+     * @Groups({"messages"})
      */
     private $createdAt;
 

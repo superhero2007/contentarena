@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Thread
@@ -18,56 +19,66 @@ class Thread
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"messages"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
+     * @Groups({"messages"})
      */
     private $customId;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content",  cascade={"remove"} )
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"messages"})
      */
     private $listing;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"messages"})
      */
     private $ownerCompany;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"messages"})
      */
     private $buyerCompany;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"messages"})
      */
     private $user;
 
     /**
      * @var User
+     * @Groups({"messages"})
      */
     private $oppositeParty;
 
     /**
      * @var User
+     * @Groups({"messages"})
      */
     private $lastMessageUser;
 
     /**
      * @var mixed
+     * @Groups({"messages"})
      */
     private $lastMessageDate;
 
     /**
      * @var string
+     * @Groups({"messages"})
      */
     private $lastMessageContent;
 

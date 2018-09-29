@@ -541,7 +541,7 @@ class ApiController extends BaseController
         $threads = $messageService->getThread($request);
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($threads, 'json',SerializationContext::create());
+        $data = $serializer->serialize($threads, 'json',SerializationContext::create()->setGroups(array('messages')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
