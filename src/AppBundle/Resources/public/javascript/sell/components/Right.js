@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'components/DatePicker';
 
 const RightItem = ({selected, onClick}) => (
     <div onClick={onClick} className="column right-item-selection">

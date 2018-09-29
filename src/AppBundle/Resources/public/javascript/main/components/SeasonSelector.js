@@ -3,7 +3,7 @@ import NewSeason from './NewSeason'
 import { Schedules } from "../../sell/components/SellFormItems";
 import {connect} from "react-redux";
 import {stepChangeReset} from "../../sell/actions/contentActions";
-import DatePicker from 'react-datepicker';
+import DatePicker from 'components/DatePicker';
 import moment from "moment/moment";
 import {addIcon, cancelIcon} from "./Icons";
 import {PropTypes} from "prop-types";

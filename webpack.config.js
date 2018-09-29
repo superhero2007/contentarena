@@ -1,5 +1,6 @@
 // webpack.config.js
 var Encore = require('@symfony/webpack-encore');
+var path = require('path');
 
 Encore
 // the project directory where all compiled assets will be stored
@@ -20,6 +21,10 @@ Encore
         './src/AppBundle/Resources/public/javascript/ca/ca.data.js',
         './src/AppBundle/Resources/public/javascript/ca/ca.utils.js',
     ])
+
+    .addAliases({
+        components: path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/components/'),
+    })
 
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()

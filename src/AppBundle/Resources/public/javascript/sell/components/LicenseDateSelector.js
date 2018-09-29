@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'components/DatePicker';
 import moment from 'moment';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";

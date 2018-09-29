@@ -7,7 +7,6 @@ import SalesPackages from './SalesPackeges';
 import {
     blueCheckIcon,
     yellowCheckIcon,
-    coinIcon,
     hammerIcon,
     bucketIcon,
     fixedIcon
@@ -33,9 +32,14 @@ class ContentListing extends Component{
     }
 
     onSelect = () => {
-      const {onSelect, customId, status, checkExpired} = this.props;
-      if (checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ) return;
-      onSelect(customId);
+        const {onSelect, customId, status, checkExpired} = this.props;
+        if (checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ) return;
+        onSelect(customId);
+    };
+
+    onHandleRightClick = (e) => {
+        if (!this.props.redirectOnRightClick || e.nativeEvent.which !== 3) return; // nativeEvent.which = 3 means right click by mouse
+        window.open(`listing/${this.props.customId}`, '_blank');
     };
 
     confirmRemoveFromWatchlist = (e) =>{
@@ -75,11 +79,10 @@ class ContentListing extends Component{
     sortByFilter = (salesPackages) => {
         const { filter } = this.props;
 
-        let temp = [] ;
+        let temp = [];
         let territories = filter.countries.map(c => c);
 
-        salesPackages.forEach((e,i,l)=>{
-
+        salesPackages.forEach((e)=>{
             let t = e.territories.map(t=>t.value);
             let et = (e.territoriesMethod === "WORLDWIDE_EXCLUDING") ? e.excludedTerritories.map(t=>t.value) : [];
             let all = [...t,...et];
@@ -102,7 +105,7 @@ class ContentListing extends Component{
     };
 
     compareProperty = (a, b) =>  {
-        return (a > b) ? 1 : ((b > a) ? -1 : 0)
+        return (a > b) ? 1 : ((b > a) ? -1 : 0);
     };
 
     render(){
@@ -139,7 +142,7 @@ class ContentListing extends Component{
         }
 
         return (
-            <div className="listing-list-view" onClick={this.onSelect}>
+            <div className="listing-list-view" onClick={this.onSelect} onContextMenu={this.onHandleRightClick}>
                 <div className={"left"}  >
                     <div className={"image"}>
                         <img src={listingImage}/>
@@ -156,7 +159,8 @@ class ContentListing extends Component{
                         </div>}
 
                         {company && (
-                            <div className="company-name">{coinIcon} {company.legalName}</div>
+                            <div className="company-name">
+                                <i className="fa fa-user-o icon" />{company.legalName}</div>
                         )}
                     </div>
 
@@ -206,7 +210,6 @@ class ContentListing extends Component{
                                     </div>
                                 )}
                             </div>
-
                         )}
                     </div>
                 )}

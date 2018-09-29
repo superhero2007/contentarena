@@ -2,8 +2,9 @@ import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
-import DatePicker from 'react-datepicker';
+import DatePicker from 'components/DatePicker';
 import {PropTypes} from "prop-types";
+import moment from "moment";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -315,6 +316,7 @@ class SalesPackageEdit extends React.Component {
                                             disabled={installment.type !== "DATE"}
                                             selected={installment.date}
                                             placeholderText={"dd/mm/yyyy"}
+                                            minDate={moment()}
                                             onChange={(date) => {this.setInstallmentDate(date,i)}}
                                             className="small-datepicker"/>
                                     </div>
