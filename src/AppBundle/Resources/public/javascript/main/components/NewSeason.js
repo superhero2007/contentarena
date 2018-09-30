@@ -43,12 +43,12 @@ class NewSeason extends React.Component{
 
     setDurationStart = (e) => {
         const {index} = this.props;
-        this.props.updateFromMultiple(index, 'startDate', e.format(DATE_FORMAT));
+        this.props.updateFromMultiple(index, 'startDate', e.format());
     };
 
     setDurationEnd = (e) => {
         const {index} = this.props;
-        this.props.updateFromMultiple(index, 'endDate', e.format(DATE_FORMAT));
+        this.props.updateFromMultiple(index, 'endDate', e.format());
     };
 
     render(){
@@ -92,7 +92,7 @@ class NewSeason extends React.Component{
                     <DatePicker
                         showYearDropdown
                         className={"date-picker"}
-                        selected={startDate ? moment(startDate, DATE_FORMAT) : undefined}
+                        selected={startDate ? moment(startDate) : undefined}
                         onChange={this.setDurationStart}
                         dateFormat={"DD/MM/YYYY"}
                         placeholderText={DATE_FORMAT}
@@ -103,7 +103,7 @@ class NewSeason extends React.Component{
                     <DatePicker
                         showYearDropdown
                         className={"date-picker"}
-                        selected={endDate ? moment(endDate, DATE_FORMAT) : undefined}
+                        selected={endDate ? moment(endDate) : undefined}
                         onChange={this.setDurationEnd}
                         placeholderText={DATE_FORMAT}
                         dateFormat={"DD/MM/YYYY"}
