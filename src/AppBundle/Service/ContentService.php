@@ -595,6 +595,7 @@ class ContentService
                     $package->setTerritoriesMethod($salesPackage->territoriesMethod);
                     $package->setFee($salesPackage->fee);
                     $package->setInstallments($salesPackage->installments);
+                    if ( isset($salesPackage->regionNamed) ) $package->setRegionNamed($salesPackage->regionNamed);
 
                     if ( is_array($salesPackage->territories) && count( $salesPackage->territories) > 0  )
                     {

@@ -145,10 +145,17 @@ class SalesPackageForm extends React.Component {
         this.setState({ showAllTerritories: false});
     };
 
+    selectRegion = (region, countries) => {
+        this.setState({
+            selectedRegion : region,
+            selectedRegionCountries : countries
+        });
+    };
+
     applySelection  = () => {
         this.setState({ isOpen: false});
 
-        const { bundleMethod, territoriesMethod, fee, salesMethod, installments } = this.state;
+        const { bundleMethod, territoriesMethod, fee, salesMethod, installments, selectedRegion, selectedRegionCountries } = this.state;
         const {exclusivity} = this.props;
 
         const territoriesAsArray = Array.isArray(this.state.territories) ? this.state.territories : [this.state.territories];
@@ -157,6 +164,7 @@ class SalesPackageForm extends React.Component {
         let territories = territoriesAsArray;
         let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
         let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
+        let regionNamed = false;
         if ( this.state.isNew ) {
 
             if ( bundleMethod === this.individually ){
@@ -192,9 +200,25 @@ class SalesPackageForm extends React.Component {
                 if ( territoriesMethod === this.worldwide ){
                     name = "Worldwide";
                 } else if ( territoriesMethod === this.selectedTerritories ) {
-                    name = territories.slice(0, 3).map( ( territory, i )=>{
-                        return territory.label
-                    }).join(", ");
+
+                    if ( selectedRegion && territories.length <= selectedRegionCountries.length && territories.length >= (selectedRegionCountries.length - 3) ){
+                        name = selectedRegion.name;
+
+                        if (territories.length < selectedRegionCountries.length){
+                            name += " excluding ";
+                            let territoriesNames = territories.map(t=>t.label);
+                            let excludedFromRegion = selectedRegionCountries.filter(c=>territoriesNames.indexOf(c.label) === -1);
+                            name += excludedFromRegion.map( ( territory, i )=>{
+                                return territory.label
+                            }).join(", ");
+                        }
+                        regionNamed = true;
+
+                    } else {
+                        name = territories.slice(0, 3).map( ( territory, i )=>{
+                            return territory.label
+                        }).join(", ");
+                    }
 
                 } else if ( territoriesMethod === this.worldwideExcluding ) {
                     territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
@@ -211,7 +235,8 @@ class SalesPackageForm extends React.Component {
                     salesMethod : salesMethod,
                     bundleMethod : bundleMethod,
                     territoriesMethod: territoriesMethod,
-                    installments : installments
+                    installments : installments,
+                    regionNamed : regionNamed
                 }]
 
             }
@@ -383,6 +408,7 @@ class SalesPackageForm extends React.Component {
                             {isMultipleEnabled && <RegionCountrySelector
                                 className={"small-select"}
                                 onChange={this.selectTerritories}
+                                onSelectRegion={this.selectRegion}
                                 value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 disabled={isWorldwideEnabled}
@@ -604,6 +630,7 @@ class SalesPackageForm extends React.Component {
                                         {extraTerritories && extraTerritories.length > 3 && (
                                             <div style={{marginLeft: 5}}>
                                                 <ExtraTerritories
+                                                    showAll={salesPackage.regionNamed}
                                                     extraTerritories={extraTerritories}
                                                 />
                                             </div>

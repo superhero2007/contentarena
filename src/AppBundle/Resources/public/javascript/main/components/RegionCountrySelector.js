@@ -44,15 +44,17 @@ class RegionCountrySelector extends React.Component {
         this.setState({ selection: nextProps.value });
     }
 
-    selectTerritory(id) {
+    selectTerritory(region) {
         const {
             filter = [],
-            onChange
+            onChange,
+            onSelectRegion
         } = this.props;
         const {countries} = this.state;
-        let selection = countries.filter(c=>c.territoryId === id && filter.indexOf(c.name) === -1).map((i,k)=>({value : i.name , label : i.name }));
+        let selection = countries.filter(c=>c.territoryId === region.id && filter.indexOf(c.name) === -1).map((i,k)=>({value : i.name , label : i.name }));
         this.setState({ selection });
         if (onChange) onChange(selection);
+        if (onSelectRegion) onSelectRegion(region, selection)
     }
 
     selectWorldwide = () => {
@@ -65,15 +67,17 @@ class RegionCountrySelector extends React.Component {
         if (onChange) onChange(selection);
     };
 
-    selectRegion = (id) => {
+    selectRegion = (region) => {
         const {countries} = this.state;
         const {
             filter = [],
             onChange,
+            onSelectRegion
         } = this.props;
-        let selection = countries.filter(c=>c.regions.indexOf(id) !== -1 && filter.indexOf(c.name) === -1).map((i,k)=>({value : i.name , label : i.name }));
+        let selection = countries.filter(c=>c.regions.indexOf(region.id) !== -1 && filter.indexOf(c.name) === -1).map((i,k)=>({value : i.name , label : i.name }));
         this.setState({ selection });
         if (onChange) onChange(selection);
+        if (onSelectRegion) onSelectRegion(region, selection)
     }
 
     handleChange = (selection) => {
@@ -105,7 +109,7 @@ class RegionCountrySelector extends React.Component {
                             return <button className={"region"}
                                            key={"territory-" + i}
                                            onClick={()=>{
-                                               this.selectTerritory(territory.id)
+                                               this.selectTerritory(territory)
                                            }}>
                                 {territory.name}
                             </button>
@@ -119,7 +123,7 @@ class RegionCountrySelector extends React.Component {
                             return <button className={"region"}
                                            key={"region-" + i}
                                            onClick={()=>{
-                                               this.selectRegion(region.id)
+                                               this.selectRegion(region)
                                            }}>
                                 {region.name}
                             </button>

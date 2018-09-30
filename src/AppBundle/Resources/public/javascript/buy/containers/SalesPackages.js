@@ -78,6 +78,7 @@ class SalesPackages extends React.Component {
 
                                     {extraTerritories && extraTerritories.length > 3 && (
                                         <ExtraTerritories
+                                            showAll={salesPackage.regionNamed}
                                             extraTerritories={extraTerritories}
                                         />
                                     )}

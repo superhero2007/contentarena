@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import CaTooltip from './CaTooltip';
 import uniqueId from 'lodash/uniqueid';
 
-const ExtraTerritories = ({extraTerritories}) => {
+const ExtraTerritories = ({extraTerritories, showAll}) => {
     const tooltipId = uniqueId();
     return (
         <div className="ExtraTerritories">
@@ -20,7 +20,8 @@ const ExtraTerritories = ({extraTerritories}) => {
                     ))
                 }>
                 <a data-tip data-for={tooltipId}>
-                    {"+" + (extraTerritories.length - 3)}
+                    {!showAll && "+" + (extraTerritories.length - 3)}
+                    {showAll && "+" + (extraTerritories.length )}
                 </a>
             </CaTooltip>
         </div>

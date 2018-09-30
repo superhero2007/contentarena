@@ -37,6 +37,7 @@ class SalesPackages extends PureComponent{
                             {extraTerritories && extraTerritories.length > 3 && (
                                 <div style={{marginRight: 5}}>
                                     <ExtraTerritories
+                                        showAll={salesPackage.regionNamed}
                                         extraTerritories={extraTerritories}
                                     />
                                 </div>

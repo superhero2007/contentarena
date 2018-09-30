@@ -109,6 +109,14 @@ class SalesPackage
      */
     private $sold = false;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="region_named", type="boolean")
+     * @Groups({"listing", "closed", "commercial"})
+     */
+    private $regionNamed = false;
+
     public function __construct() {
         $this->excludedCountries = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -117,6 +125,24 @@ class SalesPackage
     {
         return $this->getName();
     }
+
+    /**
+     * @return bool
+     */
+    public function isRegionNamed()
+    {
+        return $this->regionNamed;
+    }
+
+    /**
+     * @param bool $regionNamed
+     */
+    public function setRegionNamed($regionNamed)
+    {
+        $this->regionNamed = $regionNamed;
+    }
+
+
 
     /**
      * Get id
