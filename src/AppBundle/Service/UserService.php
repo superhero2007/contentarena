@@ -160,6 +160,7 @@ class UserService
             if ( isset($data['zip']) ) $company->setZip($data['zip']);
             if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
             if ( isset($data['address']) ) $company->setAddress($data['address']);
+            if ( isset($data['address2']) ) $company->setAddress2($data['address2']);
             if ( isset($data['city']) ) $company->setCity($data['city']);
             if ( isset($data['description']) ) $company->setDescription($data['description']);
             if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));
@@ -182,6 +183,7 @@ class UserService
         if ( isset($data['zip']) ) $company->setZip($data['zip']);
         if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
         if ( isset($data['address']) ) $company->setAddress($data['address']);
+        if ( isset($data['address2']) ) $company->setAddress2($data['address2']);
         if ( isset($data['city']) ) $company->setCity($data['city']);
         if ( isset($data['description']) ) $company->setDescription($data['description']);
         if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));

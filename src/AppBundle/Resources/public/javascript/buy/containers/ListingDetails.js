@@ -210,7 +210,7 @@ class ListingDetails extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            Street Name / Number
+                            Address 1
                         </label>
                         <input
                             style={inputStyle}
@@ -220,6 +220,20 @@ class ListingDetails extends React.Component {
                                 this.setState({company});
                             }}
                             value={company.address}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            Address 2
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => {
+                                company.address2 = e.target.value;
+                                this.setState({company});
+                            }}
+                            value={company.address2}/>
                     </div>
 
                     <div className="base-full-input">

@@ -97,13 +97,24 @@ class CompanyInformation extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle} >
-                            {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+                            {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")} 1
                         </label>
                         <input
                             style={inputStyle}
                             type={"text"}
                             onChange={(e) => { this.updateCompanyContent(e, "address")}}
                             defaultValue={company.address}/>
+                    </div>
+
+                    <div className="base-full-input">
+                        <label style={labelStyle} >
+                            {this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")} 2
+                        </label>
+                        <input
+                            style={inputStyle}
+                            type={"text"}
+                            onChange={(e) => { this.updateCompanyContent(e, "address2")}}
+                            defaultValue={company.address2}/>
                     </div>
 
                     <div className="base-full-input">
