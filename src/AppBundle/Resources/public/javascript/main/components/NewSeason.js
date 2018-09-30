@@ -92,7 +92,7 @@ class NewSeason extends React.Component{
                     <DatePicker
                         showYearDropdown
                         className={"date-picker"}
-                        selected={startDate ? moment(startDate) : undefined}
+                        selected={startDate ? moment(startDate, DATE_FORMAT) : undefined}
                         onChange={this.setDurationStart}
                         dateFormat={"DD/MM/YYYY"}
                         placeholderText={DATE_FORMAT}
@@ -103,7 +103,7 @@ class NewSeason extends React.Component{
                     <DatePicker
                         showYearDropdown
                         className={"date-picker"}
-                        selected={endDate ? moment(endDate) : undefined}
+                        selected={endDate ? moment(endDate, DATE_FORMAT) : undefined}
                         onChange={this.setDurationEnd}
                         placeholderText={DATE_FORMAT}
                         dateFormat={"DD/MM/YYYY"}
