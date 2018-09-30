@@ -325,6 +325,8 @@ class SalesPackageForm extends React.Component {
 
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
+        const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding && exclusivity;
+        const isWorldwideEnabled = territoriesMethod === this.worldwide;
         return <Modal
             isOpen={this.state.isOpen}
             onRequestClose={this.closeModal}
@@ -529,9 +531,7 @@ class SalesPackageForm extends React.Component {
                     onClick={this.applySelection}>Ok</button>
             </div>
         </Modal>
-        const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
 
-        const isWorldwideEnabled = territoriesMethod === this.worldwide;
     };
 
     territoriesIncomplete = () => {
