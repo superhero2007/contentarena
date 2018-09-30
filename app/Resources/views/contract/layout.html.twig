@@ -783,7 +783,7 @@
                     {% endfor %}
                 </tr>
             {% endif %}
-            {% if content.extraData.PROGRAM_NAME is defined %}
+            {% if content.rightsPackage| has_right("PR") and content.extraData.PROGRAM_NAME is defined %}
                 <tr>
                     <td>Edited Program Language</td>
                     {% for right in content.rightsPackage %}
