@@ -308,12 +308,12 @@
                         {{ season.name }}
                     </div>
 
-                    {% if content.schedulesBySeason[loop.index0] is defined or content.fixturesBySeason[loop.index0] is defined %}
+                    {% if content.fixturesBySeason[loop.index0] is defined %}
                         <div class="license-item-content">
                             <label>Fixtures: </label>
                             <div class="license-item-content">
                                 <div class="license-item-column">
-                                    {% if content.schedulesBySeason[loop.index0] is defined %}
+                                    {#{% if content.schedulesBySeason[loop.index0] is defined %}
                                         {% for round in content.schedulesBySeason[loop.index0] | cast_to_array %}
                                             <div class="license-item-content license-fixture-item">
                                                 <strong>{{ round[0] }}</strong>
@@ -333,12 +333,12 @@
                                                 </div>
                                             </div>
                                         {% endfor %}
-                                    {% endif %}
+                                    {% endif %}#}
 
                                     {% if content.fixturesBySeason[loop.index0] is defined %}
                                         {% for round in content.fixturesBySeason[loop.index0]  %}
                                             <div class="license-item-content ">
-                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y") }}{% endif %}
+                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y - H:i") }}{% endif %}
                                             </div>
                                         {% endfor %}
                                     {% endif %}
@@ -350,7 +350,7 @@
                 {% endfor %}
             {% endif %}
 
-            {% if content.description is defined %}
+            {% if content.description is defined and content.description is not empty %}
                 <div class="license-item-content">
                     <label>Description:</label>
                     {{ content.description }}
@@ -371,7 +371,7 @@
             {{ content.programDescription }}
         </div>
     </div>
-    {% if content.extraData.PROGRAM_NAME is defined %}
+    {% if content.rightsPackage| has_right("PR") and content.extraData.PROGRAM_NAME is defined %}
         <div class="license-item">
             <div class="license-item-column">
                 <div class="license-item-content">
