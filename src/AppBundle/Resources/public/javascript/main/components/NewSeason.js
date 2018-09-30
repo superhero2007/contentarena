@@ -94,6 +94,7 @@ class NewSeason extends React.Component{
                         className={"date-picker"}
                         selected={startDate ? moment(startDate) : undefined}
                         onChange={this.setDurationStart}
+                        dateFormat={"DD/MM/YYYY"}
                         placeholderText={DATE_FORMAT}
                     />
                     <label className={"season-selector-label"}>
@@ -105,6 +106,7 @@ class NewSeason extends React.Component{
                         selected={endDate ? moment(endDate) : undefined}
                         onChange={this.setDurationEnd}
                         placeholderText={DATE_FORMAT}
+                        dateFormat={"DD/MM/YYYY"}
                     />
                 </div>
             </div>

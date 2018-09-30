@@ -94,6 +94,7 @@ class LicenseDateSelector extends React.Component {
                                         disabled={startDateMode!=="DATE"}
                                         onChange={this.handleStartDate}
                                         placeholderText={"dd/mm/yyyy"}
+                                        dateFormat={"DD/MM/YYYY"}
                                     />
                                 </div>
                             </div>
@@ -137,6 +138,7 @@ class LicenseDateSelector extends React.Component {
                                         selected={(endDate)? moment(endDate): undefined}
                                         disabled={endDateMode!=="DATE"}
                                         onChange={this.handleEndDate}
+                                        dateFormat={"DD/MM/YYYY"}
                                         placeholderText={"dd/mm/yyyy"}
                                     />
                                 </div>

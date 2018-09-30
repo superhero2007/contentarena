@@ -156,6 +156,7 @@ class Right extends React.Component {
                                         if ( this.showProgramColumns(rightPackage) && rightItem.calendar ) return <div className="column right-item-selection">
                                             <DatePicker
                                                 className={"date-picker"}
+                                                dateFormat={"DD/MM/YYYY"}
                                                 selected={this.state.selection.get(rightItem.id).get(rightPackage.id)}
                                                 onChange={(date) => this.setDate(date, rightItem.id, rightPackage.id)}
                                                 placeholderText={"dd/mm/yyyy"}

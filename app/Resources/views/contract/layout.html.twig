@@ -87,7 +87,7 @@
                 Effective Date:
             </label>
             {% if bid is defined and bid.status.name == "APPROVED" %}
-                {{ bid.updatedAt|date("m/d/Y") }}
+                {{ bid.updatedAt|date("d/m/Y") }}
             {% else %}
                 -
             {% endif %}
@@ -338,7 +338,7 @@
                                     {% if content.fixturesBySeason[loop.index0] is defined %}
                                         {% for round in content.fixturesBySeason[loop.index0]  %}
                                             <div class="license-item-content ">
-                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("m/d/Y") }}{% endif %}
+                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y") }}{% endif %}
                                             </div>
                                         {% endfor %}
                                     {% endif %}
@@ -660,9 +660,9 @@
     {# LICENSE PERIOD#}
     <div class="license-item">
         {% if content.startDateMode == "DATE" %}
-            {{ content.startDate| date("m/d/Y") }}
+            {{ content.startDate| date("d/m/Y") }}
         {% elseif bid is defined %}
-            {{ bid.createdAt| date("m/d/Y") }}
+            {{ bid.createdAt| date("d/m/Y") }}
         {% elseif bid is not defined %}
             With contract conclusion
         {% endif %}
@@ -672,9 +672,9 @@
         {% if content.endDateMode == "UNLIMITED" %}
             Unlimited
         {% elseif content.endDateMode == "DATE" %}
-            {{ content.endDate| date("m/d/Y") }}
+            {{ content.endDate| date("d/m/Y") }}
         {% elseif content.endDateMode == "LIMITED" and bid is defined%}
-            {{ bid.createdAt|date_modify("+#{content.endDateLimit} day")| date("m/d/Y") }}
+            {{ bid.createdAt|date_modify("+#{content.endDateLimit} day")| date("d/m/Y") }}
         {% elseif content.endDateMode == "LIMITED" and bid is not defined%}
             {{ content.endDateLimit }} days from contract conclusion
         {% endif %}
@@ -1066,13 +1066,13 @@
             {% if bundle.installments | length == 1 %}
                 <label>Payment Due:</label>
                 {% if bundle.installments[0].type == "DATE" %}
-                    {{ bundle.installments[0].date | date(("m/d/Y"))  }}
+                    {{ bundle.installments[0].date | date(("d/m/Y"))  }}
                 {% elseif bundle.installments[0].type == "DAY" %}
                     {% if bid is defined %}
                         {% if bid.status.name != "APPROVED" %}
                             {{ bundle.installments[0].days }} days after conclusion
                         {% elseif bid.status.name == "APPROVED" %}
-                            {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("m/d/Y") }}
+                            {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("d/m/Y") }}
                         {% endif %}
                     {% else %}
                         {{ bundle.installments[0].days }} days after conclusion
@@ -1086,13 +1086,13 @@
                         <div class="license-item-content">
                             <label>{{ loop.index }} installment:</label>
                             {% if installment.type == "DATE" %}
-                                {{ installment.date | date(("m/d/Y"))  }}
+                                {{ installment.date | date(("d/m/Y"))  }}
                             {% elseif installment.type == "DAY" %}
                                 {% if bid is defined %}
                                     {% if bid.status.name != "APPROVED" %}
                                         {{ installment.days }} days after conclusion
                                     {% elseif bid.status.name == "APPROVED" %}
-                                        {{ bid.createdAt|date_modify("+#{installment.days} day")| date("m/d/Y") }}
+                                        {{ bid.createdAt|date_modify("+#{installment.days} day")| date("d/m/Y") }}
                                     {% endif %}
                                 {% else %}
                                     {{ installment.days }} days after conclusion

@@ -315,6 +315,7 @@ class SalesPackageEdit extends React.Component {
                                         <DatePicker
                                             disabled={installment.type !== "DATE"}
                                             selected={installment.date}
+                                            dateFormat={"DD/MM/YYYY"}
                                             placeholderText={"dd/mm/yyyy"}
                                             minDate={moment()}
                                             onChange={(date) => {this.setInstallmentDate(date,i)}}

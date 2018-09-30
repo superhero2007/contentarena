@@ -481,6 +481,7 @@ class SalesPackageForm extends React.Component {
                                             disabled={installment.type !== "DATE"}
                                             selected={installment.date}
                                             placeholderText={"dd/mm/yyyy"}
+                                            dateFormat={"DD/MM/YYYY"}
                                             minDate={moment()}
                                             onChange={(date) => {this.setInstallmentDate(date,i)}}
                                             className="small-datepicker"/>

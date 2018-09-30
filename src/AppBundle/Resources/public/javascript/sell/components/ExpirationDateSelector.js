@@ -29,6 +29,7 @@ class ExpirationDateSelector extends React.Component {
                     onChange={this.handleStartDate}
                     minDate={moment()}
                     fixedHeight={true}
+                    dateFormat={"DD/MM/YYYY"}
                     placeholderText={"dd/mm/yyyy"}
                 />
             </div>
