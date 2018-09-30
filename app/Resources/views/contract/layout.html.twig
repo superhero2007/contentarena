@@ -518,6 +518,54 @@
         </table>
     </div>
 
+    <div class="license-item">
+        All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
+    </div>
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Transmission Form Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Transmission Means Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Right to Sublicense Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Number of Runs Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
     {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] is defined%}
         <div class="license-item">
             <div class="license-item-content">
@@ -540,9 +588,7 @@
         </div>
     {% endif %}
 
-    <div class="license-item">
-        All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
-    </div>
+
 
     {# EXCLUSIVITY TITLE#}
     <div class="license-item-title">4. Exclusivity of the Grant of Rights:</div>
@@ -599,6 +645,14 @@
             {% endfor %}
         {% endif %}
     </div>
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["LICENSED_LANGUAGES_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["LICENSED_LANGUAGES_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
 
     {# LICENSE PERIOD TITLE#}
     <div class="license-item-title">7. License Period:</div>
@@ -823,6 +877,83 @@
             </tr>
         </table>
     </div>
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CONTENT_DELIVERY_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Content Delivery Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CONTENT_DELIVERY_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["VIDEO_STANDARD_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Video Standards Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["VIDEO_STANDARD_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_DELIVERY_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Technical Delivery Method Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_DELIVERY_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["GRAPHICS_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Graphics Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["GRAPHICS_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["COMMENTARY_TEXTAREA"] is defined%}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Commentary Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["COMMENTARY_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CAMERA_TEXTAREA"] is defined %}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Camera Standards Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CAMERA_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["ASPECT_RATIO_TEXTAREA"] is defined %}
+        <div class="license-item">
+            <div class="license-item-content">
+                <label>
+                    Aspect Ratio Details:
+                </label>
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["ASPECT_RATIO_TEXTAREA"] }}
+            </div>
+        </div>
+    {% endif %}
 
        {# TRANSMISSION TITLE#}
     <div class="license-item-title">9. Transmission Obligation:</div>
