@@ -63,6 +63,7 @@ class ManageListings extends React.Component {
             if ( response.success ) {
                 draft.unshift(response.listing);
                 this.setState({draft : draft, loadingDraft : false});
+                goTo("contentlisting/" + response.listing.customId + "/1");
             }
         });
     };

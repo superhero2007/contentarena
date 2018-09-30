@@ -84,7 +84,7 @@ class EventFilter extends React.Component {
                     </div>
                     <input
                         className="search-input ca-form-control"
-                        defaultValue={event}
+                        value={event}
                         onKeyPress={this.handleKeyPress}
                         onChange={this.updateEvent}
                         ref="search_field"

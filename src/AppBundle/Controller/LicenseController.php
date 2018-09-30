@@ -258,6 +258,7 @@ class LicenseController extends Controller
                 $company = $user->getCompany();
                 $customCompany = $request->query->get("company");
                 if (isset($customCompany['address'])) $company->setAddress($customCompany['address']);
+                if (isset($customCompany['address2'])) $company->setAddress2($customCompany['address2']);
                 if (isset($customCompany['legalName'])) $company->setLegalName($customCompany['legalName']);
                 if (isset($customCompany['registrationNumber'])) $company->setRegistrationNumber($customCompany['registrationNumber']);
                 if (isset($customCompany['vat'])) $company->setVat($customCompany['vat']);

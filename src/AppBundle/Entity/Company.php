@@ -84,6 +84,14 @@ class Company
     /**
      * @var string
      *
+     * @ORM\Column(name="address2", type="string", length=255, nullable=true)
+     * @Groups({"details", "settings"})
+     */
+    private $address2;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="zip", type="string", length=255, nullable=true)
      * @Groups({"details", "settings"})
      */
@@ -559,6 +567,24 @@ class Company
     {
         $this->city = $city;
     }
+
+    /**
+     * @return string
+     */
+    public function getAddress2()
+    {
+        return $this->address2;
+    }
+
+    /**
+     * @param string $address2
+     */
+    public function setAddress2($address2)
+    {
+        $this->address2 = $address2;
+    }
+
+
 
 
 

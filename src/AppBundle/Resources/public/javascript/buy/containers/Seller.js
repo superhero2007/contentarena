@@ -35,6 +35,7 @@ class Seller extends React.Component {
 
                         <div className="spacer-bottom">
                             {company.address}
+                            {company.address2 && company.address2}
                         </div>
 
                         {(company.city || company.zip) && (

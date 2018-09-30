@@ -151,10 +151,20 @@ class Settings extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")} 1
                             </label>
                             <input value={user.company.address} disabled={!editCompanyInfo} onChange={(e)=>{
                                 user.company.address = e.target.value;
+                                this.setState({user});
+                            }}/>
+                        </div>
+
+                        <div className={"item"}>
+                            <label>
+                                {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")} 2
+                            </label>
+                            <input value={user.company.address2} disabled={!editCompanyInfo} onChange={(e)=>{
+                                user.company.address2 = e.target.value;
                                 this.setState({user});
                             }}/>
                         </div>
@@ -167,6 +177,8 @@ class Settings extends React.Component {
                                 this.setState({user});
                             }}/>
                         </div>
+                    </div>
+                    <div className={"row"}>
                         <div className={"item"}>
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_ZIP")}
