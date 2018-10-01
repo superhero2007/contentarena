@@ -121,12 +121,13 @@ class Messages extends React.Component {
                     {!loadingThreads && threads.length ===0 && <div>
                         {this.context.t("MESSAGES_NO_THREADS_YET")}
                     </div> }
+                    <div className={'thread-title'}>{this.context.t("Messages")}</div>
                     {!loadingThreads && threads.map((t,i)=>{
                         return <div className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
                                     key={"thread-" + i}
                                     onClick={()=>{this.selectThread(t)}}>
                             <div className={"date"}>
-                                {t.lastMessageDate && Moment(t.lastMessageDate).format('YYYY/MM/DD')}
+                                {t.lastMessageDate && Moment(t.lastMessageDate).format('YYYY/MM/DD HH:mm')}
                             </div>
                             <div className={"listing-name"}>
                                 {t.listing.name}
@@ -150,6 +151,7 @@ class Messages extends React.Component {
                             {selectedThread.listing.name}
                         </div>
                         <div className="company-name">
+                            <i className="fa fa-user-o icon" />
                             {selectedThread.oppositeParty.legalName}
                         </div>
                     </div>
@@ -165,11 +167,11 @@ class Messages extends React.Component {
                                 <div className={"message-sender"}>
                                     {getFullName(m.sender)}
                                 </div>
-                                <div className={"message-content"}>
-                                    {m.content}
-                                </div>
                                 <div className={"message-date"}>
                                     {Moment(m.createdAt).format('YYYY/MM/DD HH:mm')}
+                                </div>
+                                <div className={"message-content"}>
+                                    {m.content}
                                 </div>
                             </div>
                         })}
@@ -183,7 +185,7 @@ class Messages extends React.Component {
                             value={inputMessage}
                             onChange={(e)=>{this.setState({inputMessage : e.target.value})}}
                             className={"message-content"}
-                            placeholder={this.context.t("MESSAGES_PLACEHOLDER_WRITE")}/>
+                        />
                         <button className={"standard-button"}
                                 onClick={this.send}
                                 disabled={!inputMessage|| inputMessage === "" || saving}>

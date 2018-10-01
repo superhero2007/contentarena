@@ -1,82 +1,122 @@
 @import "vars";
 
-.messages-container{
+.messages-container {
   display: flex;
   flex-direction: row;
   margin-top: 10px;
-  .threads{
+  .threads {
     width: 300px;
-    border: 1px solid #C1C1C1;
-    background-color: #F4F6F9;
-    .thread{
+    margin-left: 20px;
+    .thread-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .thread {
       background-color: white;
-      margin: 10px;
       font-size: 14px;
       font-weight: 600;
       line-height: 25px;
-      padding: 5px 20px 20px;
+      padding: 5px 10px;
       border: 1px solid lightgrey;
+      border-left: none;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      .date{
+      .date {
         margin-left: auto;
+        font-size: 12px;
       }
       .listing-name {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        max-width: 175px;
+        margin-top: -25px;
       }
-      .last-message{
+      .last-message {
         font-size: 12px;
         font-weight: normal;
+        color: #999999;
       }
     }
-    .thread-selected{
-      background-color: lightgrey;
+    .thread-selected {
+      background-color: #03547C;
+      color: #FFFFFF;
+      .last-message {
+        color: #FFFFFF;
+      }
     }
   }
-  .thread-content{
+  .thread-content {
+    position: relative;
     flex: 5;
-    margin: 0 30px;
-    .thread-title{
+    .thread-title {
       color: #48C0FE;
       font-size: 20px;
       font-weight: 600;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
-      .listing-name{
+      margin: 0 30px 20px;
+      .listing-name {
         cursor: pointer;
-        max-width: 520px;
+        max-width: 620px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        color: #03547C;
+        font-size: 19px;
       }
-      .company-name{
+      .company-name {
         color: black;
+        .fa {
+          padding-right: 10px;
+          color: #2AAAEC;
+        }
       }
     }
-    .messages{
+    .messages {
       display: flex;
       flex-direction: column;
-      .message{
+      margin: 0 30px;
+      .message {
         color: #4F4F4F;
         font-size: 16px;
         line-height: 30px;
-        width: 60%;
+        max-width: 60%;
         display: flex;
         flex-direction: column;
+        margin-left: 0;
+        margin-right: auto;
         .message-sender {
           font-weight: 600;
         }
         .message-content {
-          border: 1px solid lightgray;
-          padding: 5px 15px;
+          background: #EFEFEF;
+          padding: 10px 30px 10px 20px;
+          color: #333333;
+          border-radius: 0 25px 25px 0;
         }
-        .message-date{
+        .message-date {
           font-size: 14px;
-          margin-left: auto;
+        }
+        .message-sender,
+        .message-date {
+          text-align: left;
+          line-height: 20px;
+          color: #333333;
+        }
+      }
+      .own-company {
+        .message-content {
+          background: #00537D;
+          color: #F7F7F7;
+          border-radius: 25px 0 0 25px;
+          padding: 10px 20px 10px 30px;
+        }
+        .message-sender,
+        .message-date {
+          text-align: right;
         }
       }
       .own-message,
@@ -85,15 +125,33 @@
         margin-left: auto;
       }
     }
-    .message-input{
-      .message-content{
+    .message-input {
+      position: absolute;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: #EFEFEF;
+      padding: 30px 20px;
+      .message-input-title {
+        font-weight: bold;
+      }
+      .message-content {
         display: flex;
         margin: 10px 0;
         box-sizing: border-box;
+        min-height: 70px !important;
+        width: 1000px !important;
+        outline: none;
+        border-radius: 8px 0 0 8px;
+        border: none;
+        resize: none;
       }
-      .standard-button{
-        margin-left: auto;
-        margin-right: 0;
+      .standard-button {
+        position: absolute;
+        right: 20px;
+        border-radius: 0 8px 8px 0;
+        top: 61px;
+        height: 71px;
       }
     }
   }
