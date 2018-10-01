@@ -1423,17 +1423,22 @@ msgstr "Listing image (opt.)"
 #~ msgid "MARKETPLACE_BUTTON_APPLY"
 #~ msgstr "Apply"
 
-#~ msgid "Buyer"
-#~ msgstr "Buyer Company"
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "BUYER"
+msgstr "Buyer"
 
-#~ msgid "Fee"
-#~ msgstr "License Fee / Bid"
+msgid "FEE"
+msgstr "Fee"
 
-#~ msgid "User"
-#~ msgstr "Buyer User"
+msgid "USER"
+msgstr "User"
 
-#~ msgid "Action"
-#~ msgstr "Action"
+msgid "LAST_ACTION"
+msgstr "Last Action"
+
+msgid "ACTION_DATE"
+msgstr "Action Date"
+
 
 #~ msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
 #~ msgstr "Date of Action"

@@ -11,11 +11,6 @@ msgstr ""
 msgid "International"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_EDITED_PROGRAM"
-msgstr ""
-
 #. Marketplace - Placeholder for Search input
 #: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
 msgid "Search"
@@ -100,33 +95,6 @@ msgid "Watchlist"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "LISTING_DETAILS_LICENSE_START"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "LISTING_DETAILS_LICENSE_END"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "LISTING_DETAILS_LICENSE_END_DAYS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid " Unlimited"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Publishing date"
 msgstr ""
 
@@ -139,7 +107,7 @@ msgid "LISTING_DETAILS_TAB_BUNDLES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_TAB_EVENT"
+msgid "LISTING_DETAILS_EDITED_PROGRAM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -240,6 +208,14 @@ msgid "Buy now"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
+msgid "Acquired"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
+msgid "Raise bid"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
 msgid "Place bid"
 msgstr ""
 
@@ -254,6 +230,28 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "LISTING_DETAILS_SELLER_TITLE_VAT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_START"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_END"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "LISTING_DETAILS_LICENSE_END_DAYS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid " Unlimited"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
@@ -992,10 +990,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
 msgid "CL_STEP4_PLACEHOLDER_APPLICABLE_LAW"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLawSelector.js
-msgid "Applicable Law"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
