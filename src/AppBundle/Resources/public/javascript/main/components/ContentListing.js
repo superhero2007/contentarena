@@ -108,6 +108,35 @@ class ContentListing extends Component{
         return (a > b) ? 1 : ((b > a) ? -1 : 0);
     };
 
+    getTechnicalFee = () => {
+        const {rightsPackage} = this.props;
+
+        let response = {
+            TECHNICAL_FEE :"",
+            TECHNICAL_FEE_PERCENTAGE : 0
+        };
+
+        let selected = (rightsPackage && rightsPackage[0] && rightsPackage[0].selectedRights) ? rightsPackage[0].selectedRights : null;
+
+        if ( selected ){
+            response["TECHNICAL_FEE"] = selected["TECHNICAL_FEE"];
+            response["TECHNICAL_FEE_PERCENTAGE"] = selected["TECHNICAL_FEE_PERCENTAGE"];
+        }
+
+        return selected;
+
+    };
+
+    getTotalFee = (amount) => {
+        let technicalFee = this.getTechnicalFee();
+        let total = Number(amount);
+
+        if ( technicalFee.TECHNICAL_FEE === "ON_TOP" ){
+            total  = total + (total/100)*Number(technicalFee.TECHNICAL_FEE_PERCENTAGE)
+        }
+        return total;
+    };
+
     render(){
         const {
             name,
@@ -225,7 +254,7 @@ class ContentListing extends Component{
                             </div>
 
                             <div className="bid-price">
-                                {parseFloat(bid.amount).toLocaleString()} {getCurrencySymbol(bid.salesPackage.currency.code)}
+                                {this.getTotalFee(bid.amount)} {getCurrencySymbol(bid.salesPackage.currency.code)}
                             </div>
 
                             <div className="bid-actions">
