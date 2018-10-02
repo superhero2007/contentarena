@@ -116,12 +116,14 @@ class Messages extends React.Component {
 
         return (
             <div className={"messages-container"}>
-                <div className={"threads"}>
+                <div className={"threads ca-overflow"}>
                     {loadingThreads && threads.length ===0 && <i className="fa fa-cog fa-spin" /> }
-                    {!loadingThreads && threads.length ===0 && <div>
-                        {this.context.t("MESSAGES_NO_THREADS_YET")}
-                    </div> }
-                    <div className={'thread-title'}>{this.context.t("Messages")}</div>
+                    {!loadingThreads && threads.length ===0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
+
+                    <div className={'thread-title'}>
+                        {this.context.t("Messages")}
+                    </div>
+
                     {!loadingThreads && threads.map((t,i)=>{
                         return <div className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
                                     key={"thread-" + i}
@@ -145,59 +147,65 @@ class Messages extends React.Component {
                     })}
                 </div>
 
-                {selectedThread && <div className="thread-content">
-                    <div className={"thread-title"}>
-                        <div className={"listing-name"} onClick={()=>{goToListing(selectedThread.listing.customId, true)}}>
-                            {selectedThread.listing.name}
-                        </div>
-                        <div className="company-name">
-                            <i className="fa fa-user-o icon" />
-                            {selectedThread.oppositeParty.legalName}
-                        </div>
-                    </div>
-                    <div className={"messages"}>
-                        {loadingMessages && messages.length ===0 && <div>
-                            <i className="fa fa-cog fa-spin" />
-                        </div> }
-                        {!loadingMessages && messages.map((m, i)=>{
-                            const ownCompanyMessage = user.company.id === m.sender.company.id;
-                            const ownMessage = user.id === m.sender.id;
-                            
-                            return <div key={i} className={cn("message", { "own-message": ownMessage, 'own-company': ownCompanyMessage })}>
-                                <div className={"message-sender"}>
-                                    {getFullName(m.sender)}
-                                </div>
-                                <div className={"message-date"}>
-                                    {Moment(m.createdAt).format('YYYY/MM/DD HH:mm')}
-                                </div>
-                                <div className={"message-content"}>
-                                    {m.content}
-                                </div>
+                {selectedThread && (
+                    <div className="thread-content">
+                        <div className={"thread-title"}>
+                            <div className={"listing-name"} onClick={()=>{goToListing(selectedThread.listing.customId, true)}}>
+                                {selectedThread.listing.name}
                             </div>
-                        })}
-
-                    </div>
-                    <div className={"message-input"}>
-                        <div className={"message-input-title"}>
-                            {this.context.t("MESSAGES_TITLE")}
+                            <div className="company-name">
+                                <i className="fa fa-user-o icon" />
+                                {selectedThread.oppositeParty.legalName}
+                            </div>
                         </div>
-                        <textarea
-                            value={inputMessage}
-                            onChange={(e)=>{this.setState({inputMessage : e.target.value})}}
-                            className={"message-content"}
-                        />
-                        <button className={"standard-button"}
-                                onClick={this.send}
-                                disabled={!inputMessage|| inputMessage === "" || saving}>
-                            {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
-                            {saving && <i className="fa fa-cog fa-spin"/>}
-                        </button>
-                    </div>
-                </div>}
+                        <div className={"messages ca-overflow"}>
+                            {loadingMessages && messages.length ===0 && <div>
+                                <i className="fa fa-cog fa-spin" />
+                            </div> }
+                            {!loadingMessages && messages.map((m, i)=>{
+                                const ownCompanyMessage = user.company.id === m.sender.company.id;
+                                const ownMessage = user.id === m.sender.id;
 
-                {!selectedThread && <div>
-                    {this.context.t("MESSAGES_NO_THREAD_SELECTED")}
-                </div> }
+                                return <div key={i} className={cn("message", { "own-message": ownMessage, 'own-company': ownCompanyMessage })}>
+                                    <div className={"message-sender"}>
+                                        {getFullName(m.sender)}
+                                    </div>
+                                    <div className={"message-date"}>
+                                        {Moment(m.createdAt).format('YYYY/MM/DD HH:mm')}
+                                    </div>
+                                    <div className={"message-content"}>
+                                        {m.content}
+                                    </div>
+                                </div>
+                            }).reverse()}
+
+                        </div>
+                        <div className={"message-input"}>
+                            <div className={"message-input-title"}>
+                                {this.context.t("MESSAGES_TITLE")}
+                            </div>
+                            <div className="d-flex align-items-center">
+                              <textarea
+                                  value={inputMessage}
+                                  onChange={(e) => {
+                                      this.setState({inputMessage: e.target.value})
+                                  }}
+                                  className={"message-content"}
+                              />
+                                <button className={"standard-button"} onClick={this.send} disabled={!inputMessage || inputMessage === "" || saving}>
+                                    {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
+                                    {saving && <i className="fa fa-cog fa-spin"/>}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {!selectedThread && (
+                    <div>
+                        {this.context.t("MESSAGES_NO_THREAD_SELECTED")}
+                    </div>
+                ) }
             </div>
         )
     }
