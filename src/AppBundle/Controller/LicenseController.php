@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ContentService;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PDFMerger;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class LicenseController extends Controller
 {
@@ -100,6 +101,7 @@ class LicenseController extends Controller
         /* @var Content $content  */
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
+        $htmlGeneralTerms = $this->renderView('contract/la-general-terms.html.twig', $viewElements);
 
         $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
 
@@ -110,7 +112,13 @@ class LicenseController extends Controller
             $this->container->getParameter("uploads_main_folder") . "/" . $fileName
         );
 
-        // Add 2 PDFs to the final PDF
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $htmlGeneralTerms,
+            $this->container->getParameter("uploads_main_folder") . "/general-terms.pdf",
+            array(),
+            true
+        );
+
         $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/" . $fileName, 'all');
 
         if ( $content->getAnnex() != null ){
@@ -118,6 +126,8 @@ class LicenseController extends Controller
                 $pdf->addPDF($this->container->getParameter("main_folder") . "/" . $annex->file, 'all');
             }
         }
+
+        $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
 
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
         $pdf->merge('file', $pathForTheMergedPdf);
@@ -136,7 +146,16 @@ class LicenseController extends Controller
             $this->getDoctrine()->getManager()->flush();
         }
 
-        if ($download) $pdf->merge('download', "License Agreement.pdf");
+        if ($download){
+            $response = new BinaryFileResponse($pathForTheMergedPdf);
+            $response->headers->set('Content-Type', 'application/x-download');
+
+            $response->setContentDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                $fileName
+            );
+            return $response;
+        }
     }
 
     /**
@@ -168,7 +187,7 @@ class LicenseController extends Controller
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
 
-        $this->mergeAndSave($content,$viewElements);
+        return $this->mergeAndSave($content,$viewElements);
 
         //return new PdfResponse(
         //    $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
@@ -208,7 +227,7 @@ class LicenseController extends Controller
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
-        $this->mergeAndSave($content,$viewElements);
+        return $this->mergeAndSave($content,$viewElements);
 
     }
 
@@ -280,7 +299,7 @@ class LicenseController extends Controller
 
         //return $this->render('contract/layout.html.twig', $viewElements);
 
-        $this->mergeAndSave($content,$viewElements, true, false);
+        return $this->mergeAndSave($content,$viewElements, true, false);
     }
 
 
@@ -307,7 +326,49 @@ class LicenseController extends Controller
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
         //return $this->render('contract/layout.html.twig', $viewElements);
-        $this->mergeAndSave($content,$viewElements);
+        return $this->mergeAndSave($content,$viewElements);
+    }
+
+    /**
+     * @Route("/license/test/{customId}", name="contractTest")
+     * @throws \exception
+     */
+    public function contractTestAction(Request $request){
+
+        $user = $this->getUser();
+        $content = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->findOneBy(['customId' => $request->get("customId")]);
+
+        $rightDefinitions = $this->getRightDefinitions($content);
+        $exclusiveRights = $this->getExclusiveRights($content);
+
+        $viewElements = array(
+            'user' => $user,
+            'content' => $content,
+            'watermark' => true,
+            'rightDefinitions' => $rightDefinitions,
+            'exclusiveRights' => $exclusiveRights,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+        return $this->render('contract/layout.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/license/test-general", name="contractTestGeneral")
+     * @throws \exception
+     */
+    public function contractTestGeneralAction(Request $request){
+
+        $user = $this->getUser();
+
+        $viewElements = array(
+            'user' => $user,
+            'watermark' => true,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('contract/la-general-terms.html.twig', $viewElements);
     }
 
 }

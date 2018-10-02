@@ -321,6 +321,14 @@ class ApiController extends BaseController
 
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
+        $htmlGeneralTerms = $this->renderView('contract/la-general-terms.html.twig', $viewElements);
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $htmlGeneralTerms,
+            $this->container->getParameter("uploads_main_folder") . "/general-terms.pdf",
+            array(),
+            true
+        );
 
         $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
 
@@ -337,6 +345,8 @@ class ApiController extends BaseController
                 $pdf->addPDF($this->container->getParameter("main_folder") . "/" . $annex->file, 'all');
             }
         }
+
+        $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
 
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
         $pdf->merge('file', $pathForTheMergedPdf);
