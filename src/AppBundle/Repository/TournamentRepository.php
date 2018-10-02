@@ -16,6 +16,7 @@ class TournamentRepository extends \Doctrine\ORM\EntityRepository
         $qb->select('t', 'sport', 'sportCategory')
             ->from($this->_entityName, 't')
             ->where( 't.name like :name')
+            ->orWhere("sportCategory.name like :name")
             ->andWhere("t.sport IS NOT NULL")
             ->setParameter('name', $name )
             ->leftJoin('t.sport', 'sport')
