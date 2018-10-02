@@ -169,6 +169,10 @@ ContentArena.Utils = {
         } else {
             return 'http://'+str
         }
+    },
+
+    isListingPublished(status) {
+        return (status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED"));
     }
 
 };

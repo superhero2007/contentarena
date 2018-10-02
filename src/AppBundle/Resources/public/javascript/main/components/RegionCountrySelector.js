@@ -100,6 +100,7 @@ class RegionCountrySelector extends React.Component {
         } = this.props;
 
         const {territories, regions} = this.state;
+        const {hiddenTerritories} = this.props;
 
         return (
             <div className="country-selector">
@@ -136,6 +137,7 @@ class RegionCountrySelector extends React.Component {
                     disabled={disabled}
                     onChange={this.handleChange}
                     value={this.state.selection}
+                    hiddenTerritories={hiddenTerritories}
                 />
             </div>
         )

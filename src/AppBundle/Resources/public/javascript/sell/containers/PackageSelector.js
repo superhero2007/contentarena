@@ -22,7 +22,7 @@ class SuperRight extends React.Component {
 
     render(){
 
-        const {onExclusive, superRight, exclusive, onChangeInput, inputValues} = this.props;
+        const {onExclusive, superRight, exclusive, onChangeInput, inputValues, isListingPublished} = this.props;
         const defByLabel = SuperRightDefinitions[superRight.shortLabel] || [];
 
         let inputData = defByLabel[1];
@@ -44,15 +44,25 @@ class SuperRight extends React.Component {
                            { superRight.name }
                 </div>
                 <div className="select-box-item-child">
-                    <Toggle
-                        icons={false}
-                        checked={exclusive}
-                        disabled={!this.state.checked}
-                        onChange={(e) => {
-                            this.setState({exclusive: e.target.checked});
-                            onExclusive(superRight ,e.target.checked );
-                        }}
-                    />
+
+                    {isListingPublished ? (
+                        <Toggle
+                            icons={false}
+                            checked={exclusive}
+                            disabled={true}
+                        />
+                    ):(
+                        <Toggle
+                            icons={false}
+                            checked={exclusive}
+                            disabled={!this.state.checked}
+                            onChange={(e) => {
+                                this.setState({exclusive: e.target.checked});
+                                onExclusive(superRight ,e.target.checked );
+                            }}
+                        />
+                    )}
+
                 </div>
                 <div className="select-box-item-child">
                     { defByLabel[0] }
@@ -123,7 +133,9 @@ class PackageSelector extends React.Component {
 
     render() {
         let _this = this;
-        const {HL_INPUT, NA_INPUT} = this.props;
+        const {HL_INPUT, NA_INPUT, status} = this.props;
+
+        const isListingPublished = ContentArena.Utils.isListingPublished(status);
         return (
             <div className="package-selector table">
                 <div className="package-selector-title">
@@ -148,6 +160,7 @@ class PackageSelector extends React.Component {
                                 key={superRight.id}
                                 onExclusive={_this.onExclusive}
                                 superRight={superRight}
+                                isListingPublished={isListingPublished}
                                 inputValues={{
                                     HL_INPUT : HL_INPUT,
                                     NA_INPUT : NA_INPUT
