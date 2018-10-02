@@ -122,14 +122,23 @@ class SellButtons extends React.Component {
     };
 
     step3Enabled = () => {
-        const {endDateMode} = this.props;
+        const {endDateMode, TEMP_DATA} = this.props;
+
+        if (TEMP_DATA.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !TEMP_DATA.CONTENT_DELIVERY_CONFIGURED) {
+            return false;
+        }
+
         return endDateMode !== undefined;
     };
 
     step3GetMessages = () => {
-        const {endDateMode} = this.props;
+        const {endDateMode, TEMP_DATA} = this.props;
         let message = "Please complete missing information\n";
         if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
+
+        if (TEMP_DATA.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !TEMP_DATA.CONTENT_DELIVERY_CONFIGURED) {
+            message += "<br/>- Content Delivery must be configured first.";
+        }
 
         return message;
     };

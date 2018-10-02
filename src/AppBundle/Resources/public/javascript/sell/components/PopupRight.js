@@ -140,7 +140,7 @@ class PopupRight extends React.Component {
     };
 
     togglePopup = () => {
-        const {onProgram, id, onUpdate} = this.props;
+        const {onProgram, id} = this.props;
 
         if ( id === "PROGRAM") {
             onProgram();
@@ -170,6 +170,12 @@ class PopupRight extends React.Component {
     };
 
     onOKClicked = () => {
+        const { id, onOKClicked } = this.props;
+
+        if (onOKClicked) {
+            onOKClicked(id);
+        }
+
         this.togglePopup();
     };
 
@@ -644,7 +650,7 @@ class PopupRight extends React.Component {
 
     render(){
 
-        const {name, rightsPackage, programName, languages, checkContentDelivery} = this.props;
+        const {name, rightsPackage, programName, languages, checkContentDelivery, disabled} = this.props;
         let id = this.props.id;
 
         const rightsPackageFiltered = this.filterRightsPackage(id, rightsPackage);
@@ -700,7 +706,7 @@ class PopupRight extends React.Component {
         const value = (isMultipleValuesSelected) ? "Multiple values selected" : displayedValue;
 
         return (
-            <div className="base-input" style={{width: "49%"}}>
+            <div className={cn("base-input", { "disabled": disabled })} style={{width: "49%"}}>
                 <label>{name}</label>
                 <div
                     className='display-label'

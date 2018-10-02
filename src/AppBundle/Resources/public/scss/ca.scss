@@ -179,6 +179,11 @@ a:hover {
       justify-content: space-between;
 
       .base-input {
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.6;
+        }
+
         .display-label {
           cursor: pointer;
           border: 1px solid lightgray;

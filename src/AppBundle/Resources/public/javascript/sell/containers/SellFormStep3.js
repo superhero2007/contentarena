@@ -32,11 +32,25 @@ class SellFormStep3 extends React.Component {
             programPopupActive: false,
             licensePopup : false,
             rights : RightDefinitions,
-            productionStandards : ProductionStandardsDefinitions
+            productionStandards : ProductionStandardsDefinitions,
+            contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item)),
+            contentDeliveryConfigured: false
         };
+
+        this.updateContentDeliveryStatus();
+
         this.blueCheck = assetsBaseDir + "app/images/blue_check.png";
         this.yellowCheck = assetsBaseDir + "app/images/yellow_chech.png";
+    }
 
+    componentWillReceiveProps(nextProps) {
+        const { rightsPackage } = this.props;
+        
+        if (rightsPackage !== nextProps.rightsPackage) {
+            this.setState({
+                contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item, nextProps))
+            }, () => this.updateContentDeliveryStatus());
+        }
     }
 
     loadRights = (rightsPackage, group) => {
@@ -74,10 +88,7 @@ class SellFormStep3 extends React.Component {
 
     };
 
-    skipContentDelivery = (right) => {
-
-        const {rightsPackage} = this.props;
-
+    skipContentDelivery = (right, { rightsPackage } = this.props) => {
         let selected = rightsPackage.map(a => a.shortLabel);
 
         return right.key === "CONTENT_DELIVERY"
@@ -291,6 +302,11 @@ class SellFormStep3 extends React.Component {
 
                                 if ( this.skipContentDelivery(right) ) return;
 
+                                const { contentDeliveryShouldBeConfigured, contentDeliveryConfigured }  = this.state;
+
+                                const rightDisabled = contentDeliveryShouldBeConfigured &&
+                                    !contentDeliveryConfigured && right.key !== "CONTENT_DELIVERY";
+
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
@@ -302,6 +318,7 @@ class SellFormStep3 extends React.Component {
                                     productionLabel={right.productionLabel}
                                     checkContentDelivery={true}
                                     programName={PROGRAM_NAME}
+                                    onOKClicked={this.onProductionPopupOKClicked}
                                     onProgram={() => {
                                         this.setState({
                                             programPopupActive : true,
@@ -315,6 +332,7 @@ class SellFormStep3 extends React.Component {
                                     onUpdate={this.updateRight}
                                     onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
                                     rightsPackage={this.props.rightsPackage}
+                                    disabled={rightDisabled}
                                 />
                             })
                         }
@@ -331,6 +349,23 @@ class SellFormStep3 extends React.Component {
         this.setState({
             licensePopup: true
         });
+    };
+
+    onProductionPopupOKClicked = (name) => {
+        const { updateContentValue, TEMP_DATA } = this.props;
+
+        if (name === "CONTENT_DELIVERY") {
+            updateContentValue("TEMP_DATA", {...TEMP_DATA, ...{ CONTENT_DELIVERY_CONFIGURED: true }});
+            this.setState({
+                contentDeliveryConfigured: true
+            });
+        }
+    };
+
+    updateContentDeliveryStatus = () => {
+        const { updateContentValue } = this.props;
+        
+        updateContentValue("TEMP_DATA", { CONTENT_DELIVERY_SHOULD_BE_CONFIGURED: this.state.contentDeliveryShouldBeConfigured });
     }
 }
 SellFormStep3.contextTypes = {
