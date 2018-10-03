@@ -251,7 +251,8 @@ class ContentListingEventDetails extends React.Component {
                                     {seasonReleaseIcon}
                                 </div>
                                 <div className="event-text">
-                                    Season {seasonsArray[0].year} {this.buildSeasonString(seasonsArray[0])}
+                                    Season {seasonsArray[0].year}
+                                    {/*{this.buildSeasonString(seasonsArray[0])}*/}
                                 </div>
                             </div>
                         )
