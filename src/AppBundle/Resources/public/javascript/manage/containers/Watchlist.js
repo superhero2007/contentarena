@@ -30,7 +30,6 @@ class Watchlist extends React.Component {
 
     selectListing = (id) => {
         goTo("listing/" + id);
-
     };
 
     remove = ( customId) => {
@@ -45,7 +44,7 @@ class Watchlist extends React.Component {
         document.title = "Content Arena - Watchlist";
 
         return (
-            <div>
+            <div className="watch-list-container">
                 <div style={{textAlign: 'right'}}>
                     <RightsLegend />
                 </div>
