@@ -318,9 +318,11 @@ class SalesPackageForm extends React.Component {
     }
 
     getSoldPackages = (salesPackages) => {
-        return salesPackages.map(p => {
-            if (p.sold) return p
+        let soldPackages = [];
+        salesPackages.forEach(p => {
+            if (p.sold) soldPackages.push(p);
         })
+        return soldPackages;
     }
 
     getHiddenTerritories = (soldPackages) => {
@@ -356,7 +358,11 @@ class SalesPackageForm extends React.Component {
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding && exclusivity;
         const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
-        let hiddenTerritories = exclusivity ?  this.getHiddenTerritories(this.getSoldPackages(salesPackages)) : false;
+        let hiddenTerritories = false;
+        if (exclusivity) {
+            let soldPackages = this.getSoldPackages(salesPackages);
+            hiddenTerritories = soldPackages.length > 0 ?  this.getHiddenTerritories(soldPackages) : false;
+        }
 
         return <Modal
             isOpen={this.state.isOpen}
