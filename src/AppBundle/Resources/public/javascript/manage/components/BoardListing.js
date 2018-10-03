@@ -3,7 +3,7 @@ import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {goTo, limitText} from "../../main/actions/utils";
 import {
-    blueCheckIcon, clockRoundIcon, exclamationRoundIcon, expiredIcon, hammerIcon, playIcon, soldIcon,
+    blueCheckIcon, clockRoundIcon, exclamationRoundIcon, expiredIcon, playIcon, soldIcon,
     yellowCheckIcon
 } from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
@@ -21,7 +21,6 @@ class BoardListing extends React.Component{
         };
         this.clockIcon = assetsBaseDir + "app/images/clock.png";
         this.exclamationIcon = assetsBaseDir + "app/images/exclamation_round.png";
-        this.bidIcon = hammerIcon;
         this.playIcon = assetsBaseDir + "app/images/play.png";
         this.bucketIcon = assetsBaseDir + "app/images/bucket_blue.png";
         this.editIcon = assetsBaseDir + "app/images/edit.png";
@@ -275,9 +274,7 @@ class BoardListing extends React.Component{
                 />
 
                 <div className={"expiry"}>
-                    <div><img src={this.bidIcon} />
-                        { salesPackages.length } sales bundle{ salesPackages.length > 1 && "s"}
-                    </div>
+                    <div>{ salesPackages.length } sales bundle{ salesPackages.length > 1 && "s"}</div>
                     <div><div style={{fontWeight: 500}}>{this.context.t("Expiry:")}</div> {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
                 </div>
 
