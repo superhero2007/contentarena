@@ -31,17 +31,6 @@ class ContentListing extends Component{
         this.bucketicon = assetsBaseDir + "app/images/bucket.png";
     }
 
-    onSelect = () => {
-        const {onSelect, customId, status, checkExpired} = this.props;
-        if (checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ) return;
-        onSelect(customId);
-    };
-
-    onHandleRightClick = (e) => {
-        if (!this.props.redirectOnRightClick || e.nativeEvent.which !== 3) return; // nativeEvent.which = 3 means right click by mouse
-        window.open(`listing/${this.props.customId}`, '_blank');
-    };
-
     confirmRemoveFromWatchlist = (e) =>{
         this.setState({confirmWatchlistRemove : true});
         e.stopPropagation();
@@ -129,6 +118,8 @@ class ContentListing extends Component{
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
 
+        const listingHref = checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ? '#' : `/listing/${customId}`;
+
         let salesPackages = this.props.salesPackages;
 
         if ( filter && filter.countries.length > 0 && sortSalesPackages) {
@@ -139,7 +130,7 @@ class ContentListing extends Component{
         }
 
         return (
-            <div className="listing-list-view" onClick={this.onSelect} onContextMenu={this.onHandleRightClick}>
+            <a href={listingHref} className="listing-list-view">
                 <div className={"left"}  >
                     {this.getListingImage()}
                 </div>
@@ -295,7 +286,7 @@ class ContentListing extends Component{
                         </div>
                     </div>
                 )}
-            </div>
+            </a>
         )
     }
 

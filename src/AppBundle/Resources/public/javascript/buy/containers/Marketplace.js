@@ -268,7 +268,6 @@ class Marketplace extends React.Component {
                             listings.map(listing => {
                                 return (
                                     <ContentListing
-                                        redirectOnRightClick
                                         onSelect={() => this.goToListing(listing.customId)}
                                         key={listing.customId}
                                         filter={filter}
