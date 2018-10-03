@@ -1,0 +1,16 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.56 126.01">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #349fd9;
+      }
+    </style>
+  </defs>
+  <title>table-tennis-eps</title>
+  <g>
+    <path class="cls-1" d="M49,145.67a5.37,5.37,0,0,0,0,7.58l7.58,7.61a5.38,5.38,0,0,0,7.59,0l18.95-18.94L68,126.74Z" transform="translate(-47.44 -44.33)"/>
+    <path class="cls-1" d="M71.76,123l15.17,15.16c6.4-6.41,17.61-.79,30.93.6L71.16,92C72.55,105.33,78.16,116.54,71.76,123Z" transform="translate(-47.44 -44.33)"/>
+    <path class="cls-1" d="M151.82,58.93a48.19,48.19,0,0,0-68.15-1l-.54.54A38.12,38.12,0,0,0,71,84.23l54.64,54.64a38.06,38.06,0,0,0,25.74-12.15A47.92,47.92,0,0,0,151.84,59Z" transform="translate(-47.44 -44.33)"/>
+    <circle class="cls-1" cx="109.47" cy="109.92" r="16.09"/>
+  </g>
+</svg>
