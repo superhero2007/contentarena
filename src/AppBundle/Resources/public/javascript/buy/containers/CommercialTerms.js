@@ -97,7 +97,7 @@ class CommercialTerms extends React.Component {
                                 <div className="d-flex">
                                     <b>
                                         {website && website.map(website => {
-                                            return <a href={ContentArena.Utils.getWebsiteURl(website)}>{website}</a>
+                                            return <a href={ContentArena.Utils.getWebsiteURl(website)} target="_blank">{website}</a>
                                         })}
                                     </b>
                                 </div>
