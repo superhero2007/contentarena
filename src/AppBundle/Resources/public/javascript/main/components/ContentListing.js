@@ -119,6 +119,7 @@ class ContentListing extends Component{
         const {confirmWatchlistRemove} = this.state;
 
         const listingHref = checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ? '#' : `/listing/${customId}`;
+        const isStatusShown = ((watchlistRemove || (bid && declined) && (status.name === 'SOLD_OUT' || status.name === 'EXPIRED' || status.name === 'INACTIVE' || status.name === 'REJECTED')))
 
         let salesPackages = this.props.salesPackages;
 
@@ -171,6 +172,8 @@ class ContentListing extends Component{
                     </div>
 
                 </div>
+
+                {/*Watchlist*/}
                 {watchlistRemove && (
                     <div className="watchlist-options additional">
                         {confirmWatchlistRemove ? (
@@ -283,6 +286,22 @@ class ContentListing extends Component{
                                     </button>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                )}
+
+                {isStatusShown && (
+                    <div className="status-overlay">
+                        <div className="inner">
+                            <div className="cap">
+                                listing status is {status.name}
+                            </div>
+                            {watchlistRemove && <div className="ca-btn primary" onClick={this.removeFromWatchlist}>remove</div>}
+                            {bid && <div className="ca-btn primary" onClick={(e) => {e.stopPropagation();onDelete(bid.id);}}>remove</div>}
+
+                            <div className="icon" title="Some title">
+                                <i className="fa fa-question-circle" aria-hidden="true"/>
+                            </div>
                         </div>
                     </div>
                 )}
