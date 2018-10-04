@@ -33,7 +33,7 @@ class SellFormStep3 extends React.Component {
             licensePopup : false,
             rights : RightDefinitions,
             productionStandards : ProductionStandardsDefinitions,
-            contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item)),
+            contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item)) && !props.expiresAt,
             contentDeliveryConfigured: false
         };
 
@@ -48,7 +48,7 @@ class SellFormStep3 extends React.Component {
         
         if (rightsPackage !== nextProps.rightsPackage) {
             this.setState({
-                contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item, nextProps))
+                contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item, nextProps))  && !nextProps.expiresAt
             }, () => this.updateContentDeliveryStatus());
         }
     }

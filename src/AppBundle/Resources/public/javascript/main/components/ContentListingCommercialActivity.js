@@ -49,6 +49,12 @@ class ContentListingCommercialActivity extends ContentListing {
             || this.compareProperty(b.name, a.name);
     };
 
+    onSelect = () => {
+        const {onSelect, customId, status, checkExpired} = this.props;
+        if (checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ) return;
+        onSelect(customId);
+    };
+
     compareProperty = (a, b) =>  {
         return (a > b) ? 1 : ((b > a) ? -1 : 0)
     };
