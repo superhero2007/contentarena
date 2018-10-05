@@ -33,8 +33,8 @@ class SellFormStep3 extends React.Component {
             licensePopup : false,
             rights : RightDefinitions,
             productionStandards : ProductionStandardsDefinitions,
-            contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item)) && !props.expiresAt,
-            contentDeliveryConfigured: false
+            contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item)),
+            contentDeliveryConfigured: props.contentDeliveryConfigured
         };
 
         this.updateContentDeliveryStatus();
@@ -44,11 +44,12 @@ class SellFormStep3 extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { rightsPackage } = this.props;
-        
-        if (rightsPackage !== nextProps.rightsPackage) {
+        const { rightsPackage, contentDeliveryConfigured } = this.props;
+
+        if (rightsPackage !== nextProps.rightsPackage || contentDeliveryConfigured !== nextProps.contentDeliveryConfigured) {
             this.setState({
-                contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item, nextProps))  && !nextProps.expiresAt
+                contentDeliveryShouldBeConfigured: !ProductionStandardsDefinitions.find(item => this.skipContentDelivery(item, nextProps)),
+                contentDeliveryConfigured: nextProps.contentDeliveryConfigured
             }, () => this.updateContentDeliveryStatus());
         }
     }
@@ -352,10 +353,10 @@ class SellFormStep3 extends React.Component {
     };
 
     onProductionPopupOKClicked = (name) => {
-        const { updateContentValue, TEMP_DATA } = this.props;
+        const { updateContentValue } = this.props;
 
         if (name === "CONTENT_DELIVERY") {
-            updateContentValue("TEMP_DATA", {...TEMP_DATA, ...{ CONTENT_DELIVERY_CONFIGURED: true }});
+            updateContentValue("contentDeliveryConfigured", true);
             this.setState({
                 contentDeliveryConfigured: true
             });
@@ -363,9 +364,10 @@ class SellFormStep3 extends React.Component {
     };
 
     updateContentDeliveryStatus = () => {
-        const { updateContentValue } = this.props;
-        
-        updateContentValue("TEMP_DATA", { CONTENT_DELIVERY_SHOULD_BE_CONFIGURED: this.state.contentDeliveryShouldBeConfigured });
+        const { updateContentValue, tempData } = this.props;
+        const { contentDeliveryShouldBeConfigured } = this.state;
+
+        updateContentValue("tempData", { ...tempData, CONTENT_DELIVERY_SHOULD_BE_CONFIGURED: contentDeliveryShouldBeConfigured });
     }
 }
 SellFormStep3.contextTypes = {
@@ -373,6 +375,7 @@ SellFormStep3.contextTypes = {
 };
 
 const mapStateToProps = state => {
+    debugger;
     return state.content
 };
 

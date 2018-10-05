@@ -53,7 +53,8 @@ export const EmptyListing = {
     PROGRAM_SCRIPT : [],
     EDIT_PROGRAM_DESCRIPTION_OPTIONAL: true,
     website : null,
-    law : "English"
+    law : "English",
+    tempData: {}
 };
 
 export const content = (state = EmptyListing, action) => {

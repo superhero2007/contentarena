@@ -123,9 +123,9 @@ class SellButtons extends React.Component {
     };
 
     step3Enabled = () => {
-        const {endDateMode, TEMP_DATA} = this.props;
+        const {endDateMode, contentDeliveryConfigured, tempData} = this.props;
 
-        if (TEMP_DATA.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !TEMP_DATA.CONTENT_DELIVERY_CONFIGURED) {
+        if (tempData.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !contentDeliveryConfigured) {
             return false;
         }
 
@@ -133,11 +133,11 @@ class SellButtons extends React.Component {
     };
 
     step3GetMessages = () => {
-        const {endDateMode, TEMP_DATA} = this.props;
+        const {endDateMode, tempData, contentDeliveryConfigured} = this.props;
         let message = "Please complete missing information\n";
         if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
 
-        if (TEMP_DATA.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !TEMP_DATA.CONTENT_DELIVERY_CONFIGURED) {
+        if (tempData.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !contentDeliveryConfigured) {
             message += "<br/>- Content Delivery must be configured first.";
         }
 

@@ -421,6 +421,13 @@ class Content
     private $userCanNotBuy = false;
 
     /**
+     * @var boolean;
+     * @ORM\Column(name="content_delivery_configured", type="boolean")
+     * @Groups({"listing"})
+     */
+    private $contentDeliveryConfigured = false;
+
+    /**
      * @var array;
      * @Groups({"details"})
      */
@@ -1434,6 +1441,22 @@ class Content
     public function setUserCanNotBuy($userCanNotBuy)
     {
         $this->userCanNotBuy = $userCanNotBuy;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isContentDeliveryConfigured()
+    {
+        return $this->contentDeliveryConfigured;
+    }
+
+    /**
+     * @param bool $contentDeliveryConfigured
+     */
+    public function setContentDeliveryConfigured($contentDeliveryConfigured)
+    {
+        $this->contentDeliveryConfigured = $contentDeliveryConfigured;
     }
 
     /**
