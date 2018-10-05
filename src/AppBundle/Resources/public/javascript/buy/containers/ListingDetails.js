@@ -22,6 +22,8 @@ import CountrySelector from "../../main/components/CountrySelector";
 import ReactTooltip from 'react-tooltip'
 import {PropTypes} from "prop-types";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
+import { getListingImage } from "./../../common/utils/listing";
+
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
 const bidButtonStyle = { height: 34, width: 75, padding: 5, marginLeft: 10, fontSize: 14, marginRight: 10 };
@@ -494,7 +496,6 @@ class ListingDetails extends React.Component {
         ReactTooltip.rebuild();
         const {onBack, profile,history } = this.props;
         const {buyingMode, selectedPackage,tab, content, signature, bid, company, bidUpdated, spinner, minimumBid} = this.state;
-        let listingImage = (content.image) ? assetsBaseDir + "../" + content.image : this.noImage;
         let technicalFee = this.getTechnicalFee();
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
 
@@ -538,10 +539,7 @@ class ListingDetails extends React.Component {
                 )}
                 <div className="listing-details-content">
                     <div className={"left"}  >
-                        {/*IMAGE*/}
-                        <div className={"image"}>
-                            <img src={listingImage}/>
-                        </div>
+                        {getListingImage(content)}
 
                         <ContentListingEventDetails {...this.props.listing}/>
 

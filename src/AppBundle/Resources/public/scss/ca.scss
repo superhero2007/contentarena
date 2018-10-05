@@ -1615,10 +1615,25 @@ a:hover {
         display: flex;
         background-color: lightgray;
         margin-bottom: 15px;
+        align-items: center;
+        justify-content: center;
 
         img {
           object-fit: cover;
           width: 100%;
+        }
+
+        &.sport-placeholder {
+          img {
+            width: 70%;
+            height: auto;
+          }
+        }
+
+        &.ca-logo {
+          img {
+            width: 80%;
+          }
         }
       }
 
