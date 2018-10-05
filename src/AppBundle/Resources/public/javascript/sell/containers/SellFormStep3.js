@@ -375,7 +375,6 @@ SellFormStep3.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    debugger;
     return state.content
 };
 
