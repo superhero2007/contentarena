@@ -98,27 +98,28 @@ class SellButtons extends React.Component {
             PROGRAM_NAME,
             PROGRAM_EPISODES,
             PROGRAM_DURATION,
-            PROGRAM_TYPE
+            PROGRAM_TYPE,
+            PROGRAM_DESCRIPTION,
+            EDIT_PROGRAM_DESCRIPTION_OPTIONAL,
         } = this.props;
 
         let program = editedProgramSelected(rightsPackage);
-
         if (!program) return true;
+
+        let editProgramDescriptionValidation = EDIT_PROGRAM_DESCRIPTION_OPTIONAL || PROGRAM_DESCRIPTION;
 
         return PROGRAM_NAME && PROGRAM_NAME !== "" &&
             PROGRAM_EPISODES && PROGRAM_EPISODES !== "" &&
             PROGRAM_DURATION && PROGRAM_DURATION !== "" &&
-            PROGRAM_TYPE !== "SELECT"
-
+            PROGRAM_TYPE !== "SELECT" &&
+            editProgramDescriptionValidation;
     };
 
     step2Enabled = () => {
         const {rightsPackage, programDescription} = this.props;
-
         let program = this.programIsValid();
-
+        console.log(program);
         return rightsPackage.length > 0 && program && programDescription && programDescription.length >= MIN_PROGRAM_DESC_LENGTH;
-
     };
 
     step3Enabled = () => {

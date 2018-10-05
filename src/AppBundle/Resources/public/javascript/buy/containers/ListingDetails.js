@@ -133,7 +133,7 @@ class ListingDetails extends React.Component {
             return !!(description || website || (attachments && attachments.length > 0));
         }
 
-    }
+    };
 
     closeModal = () => {
         this.setState({ editCompanyOpen: false, companyUpdated : true});
@@ -488,7 +488,7 @@ class ListingDetails extends React.Component {
 
     isActiveTab = (activeTab, tab) =>{
         return activeTab === tab ? 'active': '';
-    }
+    };
 
     render() {
         ReactTooltip.rebuild();

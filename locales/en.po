@@ -242,7 +242,15 @@ msgstr "Number of episodes"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
-msgstr "Average episode duration (min)"
+msgstr "Episode Duration (min)"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "LISTING_DETAILS_SIMILAR_LENGTH"
+msgstr "All episodes have similar length"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "LISTING_DETAILS_SIMILAR_LENGTH"
+msgstr "All episodes have similar length"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
@@ -251,6 +259,18 @@ msgstr "Program type"
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
 msgstr "Year of program release"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES"
+msgstr "Enter details via the Edited Program Description"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/SellFormStep2.js
+msgid "LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC"
+msgstr "All episodes have similar length"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"
+msgstr "The included episodes have different length - Review the Edited Program Description for details"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
 msgid "Buy now"
@@ -1331,7 +1351,7 @@ msgstr "Number of episodes"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DURATION"
-msgstr "Average episode duration in minutes"
+msgstr "Episode Duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_TYPE"
@@ -1342,8 +1362,8 @@ msgid "CL_STEP2_PROGRAM_YEAR"
 msgstr "Release year (optional)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL"
-msgstr "Edited Program Description (optional)"
+msgid "CL_STEP2_PROGRAM_DESCRIPTION"
+msgstr "Edited Program Description"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER"
