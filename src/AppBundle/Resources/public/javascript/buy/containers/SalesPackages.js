@@ -46,7 +46,6 @@ class SalesPackages extends React.Component {
 
                     let hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(salesPackage.id) !== -1 : false;
                     let hasClosedDeal = (bundlesSold !== null) ? bundlesSold.indexOf(salesPackage.id) !== -1 : false;
-
                     let extraTerritories = ( salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? salesPackage.excludedTerritories : salesPackage.territories;
 
                     if (salesPackage.sold) return;
@@ -75,6 +74,7 @@ class SalesPackages extends React.Component {
 
                                     {extraTerritories && extraTerritories.length > 3 && (
                                         <ExtraTerritories
+                                            excluded={salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING"}
                                             showAll={salesPackage.regionNamed}
                                             extraTerritories={extraTerritories}
                                         />
