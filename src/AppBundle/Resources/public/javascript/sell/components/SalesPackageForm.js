@@ -250,6 +250,7 @@ class SalesPackageForm extends React.Component {
         this.setState({
             fee: 0,
             territories: [],
+            territoriesMethod : this.selectedTerritories,
             // territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories
         });
     };
