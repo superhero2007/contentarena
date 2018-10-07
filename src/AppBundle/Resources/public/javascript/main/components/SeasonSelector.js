@@ -1,48 +1,8 @@
 import React from 'react';
 import NewSeason from './NewSeason'
-import { Schedules } from "../../sell/components/SellFormItems";
 import {connect} from "react-redux";
-import {stepChangeReset} from "../../sell/actions/contentActions";
-import DatePicker from 'components/DatePicker';
-import moment from "moment/moment";
-import {addIcon, cancelIcon} from "./Icons";
 import {PropTypes} from "prop-types";
-
-export const NewFixture = ({onRemove, onAdd, onChange, value, showAdd, date, handleDate}, context) => (
-    <div className="base-input new-fixture" style={{display: 'flex', alignItems:'center'}}>
-        <label>
-            {context.t("Fixture")}
-        </label>
-        <input
-            className="new-category"
-            type="text"
-            placeholder={context.t("Enter fixture")}
-            onChange={onChange}
-            value={value}/>
-        <DatePicker
-            className={"date-picker"}
-            showTimeSelect
-            selected={(date)? moment(date): undefined}
-            onChange={handleDate}
-            timeIntervals={15}
-            onChangeRaw={undefined}
-            timeFormat="HH:mm"
-            dateFormat="DD/MM/YYYY HH:mm"
-            placeholderText={"DD/MM/YYYY HH:mm"}
-        />
-        <div style={{
-            display: 'flex',
-            alignItems:'center',
-            minWidth: 50,
-            marginLeft: 10,
-            justifyContent: 'flex-end'
-        }}>
-            {showAdd && <img src={addIcon} onClick={onAdd} style={{cursor: 'pointer', width:20, height: 20, marginRight: 5}}/>}
-            <img src={cancelIcon} onClick={onRemove} style={{cursor: 'pointer', width:20, height: 20}}/>
-        </div>
-
-    </div>
-);
+import NewFixture from "./NewFixture"
 
 class SeasonSelector extends React.Component {
     constructor(props) {
@@ -152,6 +112,7 @@ class SeasonSelector extends React.Component {
                         activeSeason.fixtures.map( (fixture, i, list) => {
                             return <NewFixture
                                 key={i}
+                                id={i}
                                 onAdd={this.addFixture}
                                 value={fixture.name}
                                 date={fixture.date}
