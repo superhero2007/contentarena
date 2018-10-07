@@ -28,7 +28,7 @@ const Installments = ({installments},context) => {
                 icon="fa fa-money"
                 data={
                     installments && installments.map(( installment, index ) =>(
-                        <div className={"payment"}>
+                        <div className={"payment"} key={"payment"+index}>
                             <div>
                                 <b>
                                     { ordinal_suffix_of(index+1)} installment

@@ -88,9 +88,12 @@ class SalesPackages extends React.Component {
                                         installments={salesPackage.installments}
                                     />
                                 </div>
-                                <div className="spacer">
-                                    {this.getFee(salesPackage)}
-                                </div>
+                                {salesPackage.fee > 0 && (
+                                    <div className="spacer">
+                                        {this.getFee(salesPackage)}
+                                    </div>
+                                )}
+
                                 <div className="spacer">
                                     {salesPackage.salesMethod === "BIDDING" && (
                                         <img style={{width: 23, height: 23}} src={this.bidIcon}/>
