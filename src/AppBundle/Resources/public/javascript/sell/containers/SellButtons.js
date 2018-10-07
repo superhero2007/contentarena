@@ -98,33 +98,34 @@ class SellButtons extends React.Component {
             PROGRAM_NAME,
             PROGRAM_EPISODES,
             PROGRAM_DURATION,
-            PROGRAM_TYPE
+            PROGRAM_TYPE,
+            PROGRAM_DESCRIPTION,
+            EDIT_PROGRAM_DESCRIPTION_OPTIONAL,
         } = this.props;
 
         let program = editedProgramSelected(rightsPackage);
-
         if (!program) return true;
+
+        let editProgramDescriptionValidation = EDIT_PROGRAM_DESCRIPTION_OPTIONAL || PROGRAM_DESCRIPTION;
 
         return PROGRAM_NAME && PROGRAM_NAME !== "" &&
             PROGRAM_EPISODES && PROGRAM_EPISODES !== "" &&
             PROGRAM_DURATION && PROGRAM_DURATION !== "" &&
-            PROGRAM_TYPE !== "SELECT"
-
+            PROGRAM_TYPE !== "SELECT" &&
+            editProgramDescriptionValidation;
     };
 
     step2Enabled = () => {
         const {rightsPackage, programDescription} = this.props;
-
         let program = this.programIsValid();
-
+        console.log(program);
         return rightsPackage.length > 0 && program && programDescription && programDescription.length >= MIN_PROGRAM_DESC_LENGTH;
-
     };
 
     step3Enabled = () => {
-        const {endDateMode, TEMP_DATA} = this.props;
+        const {endDateMode, contentDeliveryConfigured, tempData} = this.props;
 
-        if (TEMP_DATA.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !TEMP_DATA.CONTENT_DELIVERY_CONFIGURED) {
+        if (tempData.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !contentDeliveryConfigured) {
             return false;
         }
 
@@ -132,11 +133,11 @@ class SellButtons extends React.Component {
     };
 
     step3GetMessages = () => {
-        const {endDateMode, TEMP_DATA} = this.props;
+        const {endDateMode, tempData, contentDeliveryConfigured} = this.props;
         let message = "Please complete missing information\n";
         if ( endDateMode === undefined ) message += "<br/>- Select when the license period ends.";
 
-        if (TEMP_DATA.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !TEMP_DATA.CONTENT_DELIVERY_CONFIGURED) {
+        if (tempData.CONTENT_DELIVERY_SHOULD_BE_CONFIGURED && !contentDeliveryConfigured) {
             message += "<br/>- Content Delivery must be configured first.";
         }
 

@@ -39,6 +39,15 @@ export const stepChangeReset = () =>{
     }
 };
 
+
+
+export const changeAllEpisodeFlag = (flag) =>{
+    return{
+        type: contentType.ALL_EPISODE_UPDATE_FLAG,
+        payload: flag
+    }
+};
+
 export const updateContentValue = (key, value) => {
     return{
         type: 'UPDATE_CONTENT_VALUE',
@@ -46,3 +55,5 @@ export const updateContentValue = (key, value) => {
         value : value
     }
 };
+
+

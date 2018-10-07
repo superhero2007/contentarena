@@ -17,10 +17,9 @@ class SalesPackages extends PureComponent{
         return (
             <React.Fragment>
                 {salesPackagesArray.slice(0, 3).map((salesPackage, i) => {
-                    let extraTerritories = (salesPackage.territoriesMethod === 'WORLDWIDE_EXCLUDING')
-                        ? salesPackage.excludedTerritories
-                        : salesPackage.territories;
+                    let extraTerritories = (salesPackage.territoriesMethod === 'WORLDWIDE_EXCLUDING') ? salesPackage.excludedTerritories : salesPackage.territories;
 
+                    if (salesPackage.sold) return;
                     return (
                         <div className="sales-package" key={"sp-"+ i}>
 

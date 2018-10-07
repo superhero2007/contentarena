@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import CaTooltip from './CaTooltip';
 import uniqueId from 'lodash/uniqueid';
 
-const ExtraTerritories = ({extraTerritories, showAll}) => {
+const ExtraTerritories = ({extraTerritories, showAll, excluded = false}) => {
     const tooltipId = uniqueId();
     return (
         <div className="ExtraTerritories">
             <CaTooltip
                 id={tooltipId}
-                title="Territories Included"
+                title={excluded ? "Territories Excluded" : "Territories Included"}
                 icon="fa fa-globe"
                 data={
                     extraTerritories.map((territory, i) => (

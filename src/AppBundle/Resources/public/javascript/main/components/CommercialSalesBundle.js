@@ -18,6 +18,7 @@ import {
 import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "../../main/components/SendMessage";
 import {PropTypes} from "prop-types";
+import ExtraTerritories from "./ExtraTerritories";
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -249,26 +250,18 @@ class CommercialSalesBundle extends React.Component{
                 {this.allTerritories()}
                 <div className="commercial-sales-bundles-container" onClick={()=>{this.setState({showBids: !showBids})}}>
                     <div className="sales-bundle-item">
-                        <span>
-                            {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&
-                            <img style={{width: 26, height: 23, marginRight: 5}} src={fixedIcon}/>}
-                            {salesBundle.name}
+                        {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&
+                        <img style={{width: 26, height: 23, marginRight: 5}} src={fixedIcon}/>}
+                        {salesBundle.name}
 
-                            {
-                                extraTerritories && extraTerritories.length > 3 && <span
-                                    style={{
-                                        color: '#2DA7E6',
-                                        textDecoration: 'underline',
-                                        marginLeft : 5
-                                    }}
-                                    onClick={(e) => {
-                                        this.showAllTerritories(extraTerritories);
-                                        e.stopPropagation();
-                                    }}>
-                                                {"+" + (extraTerritories.length - 3)}
-                                            </span>
-                            }
-                        </span>
+                        {extraTerritories && extraTerritories.length > 3 && (
+                            <div style={{marginRight: 5, marginLeft: 5}}>
+                                <ExtraTerritories
+                                    showAll={salesBundle.regionNamed}
+                                    extraTerritories={extraTerritories}
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <div className="sales-bundle-item">

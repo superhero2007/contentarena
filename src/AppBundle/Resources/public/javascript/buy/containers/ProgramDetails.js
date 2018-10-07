@@ -1,16 +1,45 @@
-import React from 'react';
-import { connect } from "react-redux";
-import { test } from "../actions";
-import {ProgramTypesDefinitions} from "../../main/components/ProgramTypesDefinitions";
-import {PropTypes} from "prop-types";
+import React, { Component } from 'react';
+import { ProgramTypesDefinitions } from "../../main/components/ProgramTypesDefinitions";
+import { PropTypes } from "prop-types";
 
-class ProgramDetails extends React.Component {
+class ProgramDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            similarLengthCheckbox: true
         };
     }
+
+    handleCheckboxChange = () => {
+        this.setState(state => ({similarLengthCheckbox: !state.similarLengthCheckbox}));
+    };
+
+    programDescription = (description) => {
+        return description && (
+            <div className="spacer-bottom txt">
+                {description}
+            </div>);
+    };
+
+    programTitle = (title) => {
+        return (
+            <div className="row-title">
+                <b>{title}</b>
+            </div>
+        );
+    };
+
+    programItem = (text, value) => {
+        return (
+            <div className="row-item">
+                <i className="fa fa-caret-right" />
+                <div className="cap">{text}</div>
+                <b>{value}</b>
+            </div>
+        );
+    };
+
 
     render() {
         const {
@@ -19,61 +48,23 @@ class ProgramDetails extends React.Component {
             PROGRAM_DESCRIPTION,
             PROGRAM_DURATION,
             PROGRAM_EPISODES,
-            PROGRAM_TYPE,
+            PROGRAM_TYPE
         } = this.props;
+
+        const title = `${this.context.t("LISTING_DETAILS_PROGRAM_TITLE_NAME")} - ${PROGRAM_NAME}`;
         return (
             <div>
-                <div>
-                    {PROGRAM_DESCRIPTION && (
-                        <div className="spacer-bottom txt">
-                            {PROGRAM_DESCRIPTION}
-                        </div>
-                    )}
-                    <div className="description-info">
+                {this.programDescription(PROGRAM_DESCRIPTION)}
+                <div className="description-info">
+                    {this.programTitle(title)}
+                    <div className="col-wrapper">
                         <div className="col">
-                            <div className="row-title">
-                                <b>
-                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_NAME")} - {PROGRAM_NAME}
-                                </b>
-                            </div>
-                            <div className="row-item">
-                                <div className="cap">
-                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES")}
-                                </div>
-                                <b>
-                                    {PROGRAM_EPISODES}
-                                </b>
-                            </div>
-                            <div className="row-item">
-                                <div className="cap">
-                                    {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION")}
-                                </div>
-                                <b>
-                                    {PROGRAM_DURATION}
-                                </b>
-                            </div>
+                            {this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES"), PROGRAM_EPISODES)}
+                            {this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION"), PROGRAM_DURATION)}
                         </div>
                         <div className="col">
-                            {PROGRAM_TYPE && (
-                                <div className="row-item">
-                                    <div className="cap">
-                                        {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE")}
-                                    </div>
-                                    <b>
-                                        {ProgramTypesDefinitions[PROGRAM_TYPE]}
-                                    </b>
-                                </div>
-                            )}
-                            {PROGRAM_YEAR && (
-                                <div className="row-item">
-                                    <div className="cap">
-                                        {this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE")}
-                                    </div>
-                                    <b>
-                                        {PROGRAM_YEAR}
-                                    </b>
-                                </div>
-                            )}
+                            {PROGRAM_TYPE && this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE"), ProgramTypesDefinitions[PROGRAM_TYPE])}
+                            {PROGRAM_YEAR && this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE"), PROGRAM_YEAR)}
                         </div>
                     </div>
                 </div>

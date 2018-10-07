@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
 import PackageSelector from "../containers/PackageSelector";
-import {SummaryText, TitleBar} from "../components/SellFormItems";
+import {SummaryText} from "../components/SellFormItems";
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
-import {stepChangeReset} from "../actions/contentActions";
+import { stepChangeReset, changeAllEpisodeFlag} from "../actions/contentActions";
 import {editedProgramSelected} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
 
@@ -39,31 +39,31 @@ class SellFormStep2 extends React.Component {
         });
     };
 
+    handleCheckboxChange = () => {
+        const { changeAllEpisodeFlag, EDIT_PROGRAM_DESCRIPTION_OPTIONAL } = this.props;
+        changeAllEpisodeFlag(!EDIT_PROGRAM_DESCRIPTION_OPTIONAL);
+    };
+
     updateRight = (rightsPackage) => {
         this.props.superRightsUpdated(rightsPackage);
     };
 
     superRightsEnabled = ( superRights ) => {
-
         var selected = this.props.rightsPackage.map(a => a.shortLabel);
-
         return superRights.filter(r => selected.indexOf(r) !== -1).length > 0;
-
     };
 
     scroll = () => {
-
-        const {stepChange, stepChangeReset } = this.props;
+        const { stepChange, stepChangeReset } = this.props;
 
         if ( stepChange ) {
             window.scrollTo(0, 0);
             stepChangeReset();
         }
-
     };
 
     render() {
-
+        console.log('Sell FORM STEP 2');
         const {
             programDescription,
             updateContentValue,
@@ -73,6 +73,7 @@ class SellFormStep2 extends React.Component {
             PROGRAM_TYPE,
             PROGRAM_DURATION,
             PROGRAM_DESCRIPTION,
+            EDIT_PROGRAM_DESCRIPTION_OPTIONAL,
             rightsPackage,
             step,
             sports,
@@ -149,6 +150,23 @@ class SellFormStep2 extends React.Component {
                     </div>
 
                     <div className="modal-input">
+                        <label htmlFor="similar-length">
+                            {this.context.t("LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC")}
+                        </label>
+                        <input
+                            id="similar-length"
+                            className='ca-checkbox package-selector'
+                            type='checkbox'
+                            checked={EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
+                            onChange={this.handleCheckboxChange}
+                        />
+                        <div className="checkbox-custom" />
+
+                    </div>
+                    {!EDIT_PROGRAM_DESCRIPTION_OPTIONAL && <div className="modal-input red-text">
+                        {this.context.t("LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES")}
+                    </div>}
+                    <div className="modal-input">
                         <label>
                             {this.context.t("CL_STEP2_PROGRAM_TYPE")}
                         </label>
@@ -180,7 +198,7 @@ class SellFormStep2 extends React.Component {
                 <div className='right'>
                     <div className="modal-input">
                         <label>
-                            {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL")}
+                            {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION")}
                         </label>
                         <textarea
                             onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
@@ -215,7 +233,8 @@ const mapDispatchToProps = dispatch => {
             key: key,
             value : value
         }),
-        stepChangeReset : () => dispatch(stepChangeReset())
+        stepChangeReset : () => dispatch(stepChangeReset()),
+        changeAllEpisodeFlag: (flag) => dispatch(changeAllEpisodeFlag(flag))
     }
 };
 

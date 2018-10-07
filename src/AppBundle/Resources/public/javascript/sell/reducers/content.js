@@ -19,8 +19,8 @@ export const contentType= {
     UPDATE_ATTACHMENTS : 'UPDATE_ATTACHMENTS',
     UPDATE_ANNEX : 'UPDATE_ANNEX',
     ADD_SALES_PACKAGES : 'ADD_SALES_PACKAGES',
-    RESET : 'RESET'
-
+    RESET : 'RESET',
+    ALL_EPISODE_UPDATE_FLAG: 'UPDATE_ALL_EPISODES_FLAG'
 };
 
 export const EmptyListing = {
@@ -51,8 +51,10 @@ export const EmptyListing = {
     PROGRAM_LANGUAGE : [],
     PROGRAM_SUBTITLES : [],
     PROGRAM_SCRIPT : [],
+    EDIT_PROGRAM_DESCRIPTION_OPTIONAL: true,
     website : null,
-    law : "English"
+    law : "English",
+    tempData: {}
 };
 
 export const content = (state = EmptyListing, action) => {
@@ -64,7 +66,9 @@ export const content = (state = EmptyListing, action) => {
             return Object.assign({}, state, EmptyListing);
         case contentType.CONTENT_INIT:
             action.content.initialized = true;
-            return Object.assign({}, state, action.content, {maxStep: max([action.content.maxStep,action.content.step, state.maxStep])});
+            return Object.assign({}, state, action.content, {maxStep: max([action.content.maxStep, state.maxStep])});
+        case contentType.ALL_EPISODE_UPDATE_FLAG:
+            return Object.assign({}, state, {EDIT_PROGRAM_DESCRIPTION_OPTIONAL: action.payload});
         case contentType.GO_TO_NEXT_STEP:
             const newStep = state.step + 1;
             return Object.assign({}, state, {

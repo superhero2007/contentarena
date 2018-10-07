@@ -44,18 +44,14 @@ class SalesPackages extends React.Component {
                     return b.hasOfferFromUser - a.hasOfferFromUser;
                 }).map( (salesPackage, i) => {
 
-                    if (salesPackage.sold ) return;
-
                     let hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(salesPackage.id) !== -1 : false;
                     let hasClosedDeal = (bundlesSold !== null) ? bundlesSold.indexOf(salesPackage.id) !== -1 : false;
-
-                    console.log("hasOfferFromUser", hasOfferFromUser);
-
                     let extraTerritories = ( salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? salesPackage.excludedTerritories : salesPackage.territories;
+
+                    if (salesPackage.sold) return;
 
                     return (
                         <div className="sales-package-container" key={"sales-package-"+ i}>
-
                             <div className="name">
                                 {salesPackage.bundleMethod === "SELL_AS_BUNDLE" && salesPackage.territories.length > 1 && (
                                     <div className="icon spacer">
@@ -78,6 +74,7 @@ class SalesPackages extends React.Component {
 
                                     {extraTerritories && extraTerritories.length > 3 && (
                                         <ExtraTerritories
+                                            excluded={salesPackage.territoriesMethod === "WORLDWIDE_EXCLUDING"}
                                             showAll={salesPackage.regionNamed}
                                             extraTerritories={extraTerritories}
                                         />

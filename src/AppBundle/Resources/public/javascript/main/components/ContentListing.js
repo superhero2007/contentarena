@@ -14,6 +14,7 @@ import {
 } from "./Icons";
 import { getCurrencySymbol } from "../actions/utils";
 import Tooltip from '../../main/components/Tooltip';
+import { getListingImage } from "./../../common/utils/listing";
 
 class ContentListing extends Component{
     constructor(props){
@@ -97,6 +98,35 @@ class ContentListing extends Component{
         return (a > b) ? 1 : ((b > a) ? -1 : 0);
     };
 
+    getTechnicalFee = () => {
+        const {rightsPackage} = this.props;
+
+        let response = {
+            TECHNICAL_FEE :"",
+            TECHNICAL_FEE_PERCENTAGE : 0
+        };
+
+        let selected = (rightsPackage && rightsPackage[0] && rightsPackage[0].selectedRights) ? rightsPackage[0].selectedRights : null;
+
+        if ( selected ){
+            response["TECHNICAL_FEE"] = selected["TECHNICAL_FEE"];
+            response["TECHNICAL_FEE_PERCENTAGE"] = selected["TECHNICAL_FEE_PERCENTAGE"];
+        }
+
+        return selected;
+
+    };
+
+    getTotalFee = (amount) => {
+        let technicalFee = this.getTechnicalFee();
+        let total = Number(amount);
+
+        if ( technicalFee.TECHNICAL_FEE === "ON_TOP" ){
+            total  = total + (total/100)*Number(technicalFee.TECHNICAL_FEE_PERCENTAGE)
+        }
+        return total;
+    };
+
     render(){
         const {
             name,
@@ -119,6 +149,7 @@ class ContentListing extends Component{
         const {confirmWatchlistRemove} = this.state;
 
         const listingHref = checkExpired && status && status.name !== "EDITED" && status.name !== "APPROVED" ? '#' : `/listing/${customId}`;
+        const isStatusShown = ((watchlistRemove || (bid && declined) && (status.name === 'SOLD_OUT' || status.name === 'EXPIRED' || status.name === 'INACTIVE' || status.name === 'REJECTED')))
 
         let salesPackages = this.props.salesPackages;
 
@@ -132,7 +163,7 @@ class ContentListing extends Component{
         return (
             <a href={listingHref} className="listing-list-view">
                 <div className={"left"}  >
-                    {this.getListingImage()}
+                    {getListingImage(this.props)}
                 </div>
                 <div className={"right"} >
                     <div className="name-wrapper">
@@ -171,6 +202,8 @@ class ContentListing extends Component{
                     </div>
 
                 </div>
+
+                {/*Watchlist*/}
                 {watchlistRemove && (
                     <div className="watchlist-options additional">
                         {confirmWatchlistRemove ? (
@@ -211,7 +244,7 @@ class ContentListing extends Component{
                             </div>
 
                             <div className="bid-price">
-                                {parseFloat(bid.amount).toLocaleString()} {getCurrencySymbol(bid.salesPackage.currency.code)}
+                                {this.getTotalFee(bid.amount)} {getCurrencySymbol(bid.salesPackage.currency.code)}
                             </div>
 
                             <div className="bid-actions">
@@ -286,77 +319,24 @@ class ContentListing extends Component{
                         </div>
                     </div>
                 )}
+
+                {isStatusShown && (
+                    <div className="status-overlay">
+                        <div className="inner">
+                            <div className="cap">
+                                listing status is {status.name}
+                            </div>
+                            {watchlistRemove && <div className="ca-btn primary" onClick={this.removeFromWatchlist}>remove</div>}
+                            {bid && <div className="ca-btn primary" onClick={(e) => {e.stopPropagation();onDelete(bid.id);}}>remove</div>}
+
+                            <div className="icon" title="Some title">
+                                <i className="fa fa-question-circle" aria-hidden="true"/>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </a>
         )
-    }
-
-    getListingImage() {
-        const { imageBase64, image, sports } = this.props;
-        let listingImageUrl = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : null;
-        let isSportPlaceholder = false;
-        let caLogo = false;
-
-        if (!listingImageUrl) {
-            const sportId = sports && sports.length ? (sports[0].id || sports[0].externalId): null;
-            const imagesBaseDir = assetsBaseDir + "app/images/listing/default-sports/";
-            let imageName = "";
-            isSportPlaceholder = true;
-                    
-            switch (sportId) {
-                case 1:
-                case "sr:sport:1":
-                    imageName = "soccer.svg"; // Soccer
-                    break;
-                case 15:
-                case "sr:sport:16":
-                    imageName = "america-futbol.svg"; // American Football
-                    break;
-                case 7:
-                case "sr:sport:3":
-                    imageName = "basketball.svg"; // Baseball
-                    break;
-                case 3:
-                case "sr:sport:2":
-                    imageName = "basketball.svg"; // Basketball
-                    break;
-                case 10:
-                case "sr:sport:21":
-                    imageName = "cricket.svg"; // Cricket
-                    break;
-                case 11:
-                case "sr:sport:24":
-                    imageName = "hockey.svg"; // Field Hockey
-                    break;
-                case 4:
-                case "sr:sport:20":
-                    imageName = "table-tennis.svg"; // Table Tennis
-                    break;
-                case 5:
-                case "sr:sport:5":
-                    imageName = "tennis.svg"; // Tennis
-                    break;
-                case 16:
-                case "sr:sport:23":
-                    imageName = "volleyball.svg"; // Volleyball
-                    break;
-                case 9:
-                case "sr:sport:9":
-                    imageName = "golf.svg"; // Golf
-                    break;
-                default:
-                    imageName = "logo-content-arena.svg";
-                    caLogo = true;
-                    break;
-            }
-
-            listingImageUrl = imagesBaseDir + imageName;
-        }
-
-        return (
-            <div className={cn("image", { 'sport-placeholder': isSportPlaceholder, 'ca-logo': caLogo })}>
-                <img src={listingImageUrl} />
-            </div>
-        );
     }
 }
 

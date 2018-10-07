@@ -1,28 +1,30 @@
 easy_admin:
     site_name: 'Content Arena'
     design:
-            menu:
-                - Content
-                - label: 'User Information'
-                  children: ['User', 'Company', 'Status']
-                - Deals
-                - RightsPackage
-                - label: 'Sports'
-                  children: ['Sport', 'SportCategory', 'Tournament', 'Season']
-                - label: 'Custom Text'
-                  children: ['EmailContent']
-                - Country
+        menu:
+            - Content
+            - label: 'User Information'
+              children: ['User', 'Company', 'Status']
+            - Deals
+            - RightsPackage
+            - label: 'Sports'
+              children: ['Sport', 'SportCategory', 'Tournament', 'Season']
+            - label: 'Custom Text'
+              children: ['EmailContent']
+            - Country
+
+        form_theme:
+            - 'horizontal'
+            # the following Twig template can be located anywhere in the application.
+            # it can also be added to the twig.form_themes option to use it in the
+            # entire application, not only the backend
+            - 'easy_admin/basic.form.html.twig'
 
     entities:
             User:
                 class: AppBundle\Entity\User
                 list:
                     fields: ['id', 'firstName', 'lastName', 'email', 'approved', 'autoPublish']
-                    actions:
-                        - { name: 'edit', icon: 'pencil', label: '' }
-                        - { name: 'delete', icon: 'times', label: '' }
-                        - { name: 'createCompany' }
-                        - { name: 'sendActivationLink' }
 
                 form:
                     fields:
@@ -34,6 +36,10 @@ easy_admin:
                         - 'phone'
                         - 'country'
                         - 'company'
+                    actions:
+                        - { name: 'sendActivationLink', css_class : 'btn btn-primary' }
+                        - { name: 'createCompany', css_class : 'btn btn-primary' }
+
             Company:
                 class: AppBundle\Entity\Company
                 controller: AppBundle\Controller\Admin\CompanyController

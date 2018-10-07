@@ -230,32 +230,19 @@ class ContentListingEventDetails extends React.Component {
 
                 <div className="listing-item">
                     {/*Season/Release*/}
-                    {!this.showProgramInfo() && seasonsArray.length > 0 && (
-                        seasonsArray.length > 1 ? (
-                            <div className="event">
-                                <div className="event-icon">
-                                    {seasonReleaseIcon}
-                                </div>
-                                <div className="event-text">
-                                    <span>
-                                        from {seasonsArray[0].year} {this.buildSeasonString(seasonsArray[0])}
-                                    </span>
-                                    <span>
-                                        to {seasonsArray[seasonsArray.length - 1].year} {this.buildSeasonString(seasonsArray[seasonsArray.length - 1])}
-                                    </span>
-                                </div>
+                    { seasonsArray.length > 0 && (
+                         <div className="event">
+                            <div className="event-icon">
+                                {seasonReleaseIcon}
                             </div>
-                        ) : (
-                            <div className="event">
-                                <div className="event-icon">
-                                    {seasonReleaseIcon}
-                                </div>
-                                <div className="event-text">
-                                    Season {seasonsArray[0].year}
-                                    {/*{this.buildSeasonString(seasonsArray[0])}*/}
-                                </div>
+                            <div className="event-text">
+                                {seasons.map(season => {
+                                return <span>
+                                        {season.year} {this.buildSeasonString(season)}
+                                    </span>
+                                })}
                             </div>
-                        )
+                        </div>
                     )}
 
                     {this.showProgramInfo() && PROGRAM_YEAR && (

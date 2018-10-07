@@ -249,6 +249,7 @@ class SalesPackageForm extends React.Component {
         this.setState({
             fee: 0,
             territories: [],
+            territoriesMethod : this.selectedTerritories,
             // territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories
         });
     };
@@ -662,19 +663,20 @@ class SalesPackageForm extends React.Component {
 
                             let extraTerritories = ( salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
 
-                            if (salesPackage.exclusive && salesPackage.sold) {return}
-                            return ( <div className="sales-package-container" key={i}>
-                                <div className="sales-package" key={"sales-package-"+ i}>
-                                    <div style={{display:'flex', flex : 5, cursor: 'default'}}>
-                                        {salesPackage.name}
-                                        {extraTerritories && extraTerritories.length > 3 && (
-                                            <div style={{marginLeft: 5}}>
-                                                <ExtraTerritories
-                                                    showAll={salesPackage.regionNamed}extraTerritories={extraTerritories}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
+                            if (salesPackage.sold) return;
+                            return (
+                                <div className="sales-package-container" key={i}>
+                                    <div className="sales-package" key={"sales-package-"+ i}>
+                                        <div style={{display:'flex', flex : 5, cursor: 'default'}}>
+                                            {salesPackage.name}
+                                            {extraTerritories && extraTerritories.length > 3 && (
+                                                <div style={{marginLeft: 5}}>
+                                                    <ExtraTerritories
+                                                        showAll={salesPackage.regionNamed}extraTerritories={extraTerritories}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
 
                                         {hideButtons && <LicenseDownloader
                                             type={"BUNDLE"}

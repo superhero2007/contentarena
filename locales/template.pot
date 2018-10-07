@@ -184,6 +184,10 @@ msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr ""
 
@@ -411,6 +415,14 @@ msgstr[1] ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Revenue"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CountrySelector.js
+msgid "All territories are sold and listing is exclusive"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CountrySelector.js
+msgid "Worldwide includes sold territories and listing is exclusive"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -908,11 +920,11 @@ msgid "MESSAGES_NO_THREADS_YET"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "MESSAGES_TITLE"
+msgid "Messages"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "MESSAGES_PLACEHOLDER_WRITE"
+msgid "MESSAGES_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
@@ -1276,6 +1288,14 @@ msgid "CL_STEP2_PROGRAM_DURATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_TYPE"
 msgstr ""
 
@@ -1284,7 +1304,7 @@ msgid "CL_STEP2_PROGRAM_YEAR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL"
+msgid "CL_STEP2_PROGRAM_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js

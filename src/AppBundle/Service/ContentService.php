@@ -199,6 +199,7 @@ class ContentService
             $content->setLaw($modelListing->getLaw());
             $content->setWebsite($modelListing->getWebsite());
             $content->setExtraData($modelListing->getExtraData());
+            $content->setContentDeliveryConfigured($modelListing->isContentDeliveryConfigured());
 
 
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
@@ -552,6 +553,7 @@ class ContentService
         if ( isset($data->PROGRAM_YEAR) ) $content->setEditedProgramYear($data->PROGRAM_YEAR);
         if ( isset($data->jurisdiction) && isset($data->jurisdiction->value) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
+        if ( isset($data->contentDeliveryConfigured) ) $content->setContentDeliveryConfigured($data->contentDeliveryConfigured);
 
         if ( isset($data->signature) && $data->signature != "" && substr_count($data->signature, "uploads") == 0 ) {
             $signature = $data->signature;

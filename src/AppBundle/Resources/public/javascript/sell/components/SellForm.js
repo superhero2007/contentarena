@@ -47,7 +47,8 @@ class SellForm extends React.Component {
 
         this.state = {
             content : content,
-            showSearch : props.match.params.customId === "new"
+            showSearch : props.match.params.customId === "new",
+            editProgramDescriptionOptional: true
         };
 
         store.subscribe((a) => {
