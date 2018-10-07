@@ -20,7 +20,7 @@ class PublicHeaderBar extends  React.Component {
         return(
             <div className="manager-header">
                 <div className="logo" onClick={()=>goTo("/")} style={{margin:'0 auto'}}>
-                    <img src={assetsBaseDir + "app/images/logo.png"} alt=""/>
+                    <img src={assetsBaseDir + "app/images/logo.svg"} alt=""/>
                 </div>
             </div>
         )
