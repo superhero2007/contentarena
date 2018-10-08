@@ -588,8 +588,6 @@
         </div>
     {% endif %}
 
-
-
     {# EXCLUSIVITY TITLE#}
     <div class="license-item-title">4. Exclusivity of the Grant of Rights:</div>
 
@@ -955,7 +953,7 @@
         </div>
     {% endif %}
 
-       {# TRANSMISSION TITLE#}
+    {# TRANSMISSION TITLE#}
     <div class="license-item-title">9. Transmission Obligation:</div>
 
     {# TRANSMISSION #}
@@ -995,8 +993,8 @@
                     <label>License Fee:</label>
 
                     {% if bid is defined %}
-                        {% if bid.totalFee != 0 %}
-                            {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+                        {% if bid.amount != 0 %}
+                            {{ bid.amount }} {{ bid.salesPackage.currency.code }}
                         {% else %}
                             Depending on bid
                         {% endif %}
@@ -1017,7 +1015,7 @@
 
                         {% if bid is defined %}
                             {% if bid.totalFee != 0 %}
-                                {{ bid.totalFee | percentage(technicalFee) }} {{ bid.salesPackage.currency.code }}
+                                {{ bid.amount | percentage(technicalFee) }} {{ bid.salesPackage.currency.code }}
                             {% else %}
                                 {{ technicalFee }} %
                             {% endif %}
@@ -1036,7 +1034,7 @@
 
                         {% if bid is defined %}
                             {% if bid.totalFee != 0 %}
-                                {{ bid.totalFee | percentage(technicalFee) + bid.totalFee}} {{ bid.salesPackage.currency.code }}
+                                {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
                             {% else %}
                                 Depending on bid
                             {% endif %}
