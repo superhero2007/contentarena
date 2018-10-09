@@ -13,7 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr "General Content"
 
@@ -25,11 +24,6 @@ msgstr "Multiple Sports"
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "International"
 msgstr "International"
-
-#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingRightsPackage.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_EDITED_PROGRAM"
-msgstr "Edited Program"
 
 #. Marketplace - Placeholder for Search input
 #: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
@@ -115,33 +109,6 @@ msgid "Watchlist"
 msgstr "Watchlist"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "LISTING_DETAILS_LICENSE_START"
-msgstr "Start of License Period"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
-msgstr " With contract conclusion"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "LISTING_DETAILS_LICENSE_END"
-msgstr "End of license period"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "LISTING_DETAILS_LICENSE_END_DAYS"
-msgstr " days after contract conclusion"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid " Unlimited"
-msgstr " Unlimited"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Publishing date"
 msgstr "Publishing Date"
 
@@ -154,8 +121,8 @@ msgid "LISTING_DETAILS_TAB_BUNDLES"
 msgstr "Event & Commercial Terms"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_TAB_EVENT"
-msgstr "Event"
+msgid "LISTING_DETAILS_EDITED_PROGRAM"
+msgstr "Edited Program"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_TAB_RIGHTS"
@@ -245,14 +212,6 @@ msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
 msgstr "Episode Duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_SIMILAR_LENGTH"
-msgstr "All episodes have similar length"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_SIMILAR_LENGTH"
-msgstr "All episodes have similar length"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
 msgstr "Program type"
 
@@ -260,27 +219,26 @@ msgstr "Program type"
 msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
 msgstr "Year of program release"
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES"
-msgstr "Enter details via the Edited Program Description"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/SellFormStep2.js
-msgid "LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC"
-msgstr "All episodes have similar length"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"
-msgstr "The included episodes have different length - Review the Edited Program Description for details"
-
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
 msgid "Buy now"
 msgstr "Buy now"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
+msgid "Acquired"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
+#, fuzzy
+#| msgid "Raise"
+msgid "Raise bid"
+msgstr "Raise"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
 msgid "Place bid"
 msgstr "Place bid"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
 msgstr "Company Address"
 
@@ -291,6 +249,28 @@ msgstr "Company registration number"
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 msgid "LISTING_DETAILS_SELLER_TITLE_VAT"
 msgstr "VAT ID number"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_START"
+msgstr "Start of License Period"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_START_CONCLUSION"
+msgstr " With contract conclusion"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_LICENSE_END"
+msgstr "End of license period"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "LISTING_DETAILS_LICENSE_END_DAYS"
+msgstr " days after contract conclusion"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid " Unlimited"
+msgstr " Unlimited"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_RIGHTS_HEADER_RIGHTS"
@@ -358,23 +338,23 @@ msgstr "Cancel"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "BUYER"
-msgstr ""
+msgstr "Buyer"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "FEE"
-msgstr ""
+msgstr "Fee"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "USER"
-msgstr ""
+msgstr "User"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "LAST_ACTION"
-msgstr ""
+msgstr "Last Action"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "ACTION_DATE"
-msgstr ""
+msgstr "Action Date"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
@@ -456,6 +436,14 @@ msgstr[1] "{n} Closed Deals"
 msgid "Revenue"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/CountrySelector.js
+msgid "All territories are sold and listing is exclusive"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CountrySelector.js
+msgid "Worldwide includes sold territories and listing is exclusive"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_TITLE"
 msgstr "Digital Signature"
@@ -527,6 +515,30 @@ msgstr "Logout"
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
 msgid "NOTIFICATIONS_EMPTY"
 msgstr "No notifications"
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Fixture"
+msgstr "Fixture"
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Enter fixture"
+msgstr "Enter fixture"
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Add Time"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+#, fuzzy
+#| msgid "Action date"
+msgid "Add date"
+msgstr "Date of Action"
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid ""
+"All fixture times are GMT; please ensure to use this time standard and not "
+"the local event time"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
 msgid "Year"
@@ -616,14 +628,6 @@ msgstr "Try another search or enter content manually"
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_ENTER_MANUALLY"
 msgstr "Enter content manually"
-
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "Fixture"
-msgstr "Fixture"
-
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "Enter fixture"
-msgstr "Enter fixture"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "Season"
@@ -894,18 +898,6 @@ msgid "MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL"
 msgstr "Cancel"
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "MANAGE_LISTINGS_MULTIPLE_SEASONS"
-msgstr "Season: Multiple seasons"
-
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "MANAGE_LISTINGS_SEASON"
-msgstr "Season:  "
-
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-msgid "Program: "
-msgstr "Program: "
-
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Expiry:"
 msgstr "Expiry:"
 
@@ -968,11 +960,11 @@ msgid "MESSAGES_NO_THREADS_YET"
 msgstr "No threads yet"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "MESSAGES_TITLE"
-msgstr "Write a message"
+msgid "Messages"
+msgstr "Messages"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "MESSAGES_PLACEHOLDER_WRITE"
+msgid "MESSAGES_TITLE"
 msgstr "Write a message"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
@@ -1052,10 +1044,6 @@ msgstr "Applicable Law"
 msgid "CL_STEP4_PLACEHOLDER_APPLICABLE_LAW"
 msgstr "Select language"
 
-#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLawSelector.js
-msgid "Applicable Law"
-msgstr "Applicable Law"
-
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
 msgid "CL_STEP3_AMENDMENT"
 msgstr "Create an amendment. This will be included in the license agreement."
@@ -1064,6 +1052,10 @@ msgstr "Create an amendment. This will be included in the license agreement."
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "Accept"
 msgstr "Accept"
+
+#: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
+msgid "CL_STEP5_ADD_AMENDMENT"
+msgstr "Add amendment to license agreement"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company Information"
@@ -1080,10 +1072,6 @@ msgstr "Company Registration Number"
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "VAT ID number"
 msgstr "VAT ID Number"
-
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Street Name / Number"
-msgstr "Street Name / Number"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "City"
@@ -1250,10 +1238,6 @@ msgid "CL_STEP5_TITLE_PREVIEW"
 msgstr "Marketplace Preview"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_ADD_AMENDMENT"
-msgstr "Add amendment to license agreement"
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_TERMS_1"
 msgstr ""
 "I confirm that I have verified the terms stated above. They are correct and "
@@ -1354,6 +1338,14 @@ msgid "CL_STEP2_PROGRAM_DURATION"
 msgstr "Episode Duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC"
+msgstr "All episodes have similar length"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES"
+msgstr "Enter details via the Edited Program Description"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_TYPE"
 msgstr "Enter program type"
 
@@ -1440,43 +1432,55 @@ msgstr ""
 msgid "CL_STEP4_LABEL_IMAGE"
 msgstr "Listing image (opt.)"
 
+#~ msgid "LISTING_DETAILS_TAB_EVENT"
+#~ msgstr "Event"
+
+#~ msgid "LISTING_DETAILS_SIMILAR_LENGTH"
+#~ msgstr "All episodes have similar length"
+
+#~ msgid "INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"
+#~ msgstr ""
+#~ "The included episodes have different length - Review the Edited Program "
+#~ "Description for details"
+
+#~ msgid "MANAGE_LISTINGS_MULTIPLE_SEASONS"
+#~ msgstr "Season: Multiple seasons"
+
+#~ msgid "MANAGE_LISTINGS_SEASON"
+#~ msgstr "Season:  "
+
+#~ msgid "Program: "
+#~ msgstr "Program: "
+
+#~ msgid "MESSAGES_PLACEHOLDER_WRITE"
+#~ msgstr "Write a message"
+
+#~ msgid "Applicable Law"
+#~ msgstr "Applicable Law"
+
+#~ msgid "Street Name / Number"
+#~ msgstr "Street Name / Number"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
+#~ msgstr "All bundles"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
+#~ msgstr "With activity"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
+#~ msgstr "Open bids"
+
+#~ msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
+#~ msgstr "Closed deals"
+
 #~ msgid "MARKETPLACE_BUTTON_APPLY"
 #~ msgstr "Apply"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "BUYER"
-msgstr "Buyer"
-
-msgid "FEE"
-msgstr "Fee"
-
-msgid "USER"
-msgstr "User"
-
-msgid "LAST_ACTION"
-msgstr "Last Action"
-
-msgid "ACTION_DATE"
-msgstr "Action Date"
-
 
 #~ msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
 #~ msgstr "Date of Action"
 
 #~ msgid "Commercial Activity Total - {n}"
 #~ msgstr "Total: {n}"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
-msgstr "All bundles"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
-msgstr "With activity"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
-msgstr "Open bids"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
-msgstr "Closed deals"
 
 #~ msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
 #~ msgstr "PROGRAMS DESCRIPTION"
@@ -1520,9 +1524,6 @@ msgstr "Closed deals"
 
 #~ msgid "CL_STEP4_TITLE_LISTING_DETAILS"
 #~ msgstr "Listing details"
-
-#~ msgid "Action date"
-#~ msgstr "Date of Action"
 
 #~ msgid "Sales bundles"
 #~ msgstr "Sales Bundles"
@@ -1806,9 +1807,6 @@ msgstr "Closed deals"
 
 #~ msgid "Enter buying mode"
 #~ msgstr "Enter Buying Mode"
-
-#~ msgid "Messages"
-#~ msgstr "Messages"
 
 #~ msgid "Settings"
 #~ msgstr "Settings"

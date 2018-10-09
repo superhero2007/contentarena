@@ -184,10 +184,6 @@ msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr ""
 
@@ -497,6 +493,26 @@ msgstr ""
 msgid "NOTIFICATIONS_EMPTY"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Fixture"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Enter fixture"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Add Time"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "Add date"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "All fixture times are GMT; please ensure to use this time standard and not the local event time"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
 msgid "Year"
 msgstr ""
@@ -579,14 +595,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_ENTER_MANUALLY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "Fixture"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "Enter fixture"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
