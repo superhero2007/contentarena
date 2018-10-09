@@ -582,15 +582,15 @@ msgid "CL_STEP1_SEARCH_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_TRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_TRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
@@ -602,11 +602,15 @@ msgid "Season"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "CL_STEP1_ADD_SEASON"
+msgid "Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds."
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_FIXTURES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "CL_STEP1_ADD_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
@@ -1236,6 +1240,10 @@ msgid "CL_STEP1_BUTTON_START_OVER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LABEL_EVENT_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_1"
 msgstr ""
 
@@ -1264,7 +1272,16 @@ msgid "CL_STEP1_PLACEHOLDER_COMPETITION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_LABEL_ADDITIONAL_INFO"
+msgid "CL_STEP1_LABEL_LISTING_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_LISTING_DETAILS_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LABEL_IMAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
@@ -1372,14 +1389,6 @@ msgid "CL_STEP4_INFO_ANNEX"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_LISTING_DETAILS_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_INFO_DETAILS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_LABEL_IMAGE"
 msgstr ""
 

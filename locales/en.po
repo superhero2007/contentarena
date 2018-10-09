@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
@@ -612,6 +612,10 @@ msgid "CL_STEP1_SEARCH_NO_RESULTS"
 msgstr "Your search \"{n}\" did not match any products."
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_TRY"
+msgstr "Try another search or enter content manually"
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_CANT_FIND_2"
 msgstr ""
 "Did you not find your competition in the database or are you not selling a "
@@ -622,10 +626,6 @@ msgid "CL_STEP1_SEARCH_CANT_FIND"
 msgstr "Can't find your competition in our list?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_TRY"
-msgstr "Try another search or enter content manually"
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_ENTER_MANUALLY"
 msgstr "Enter content manually"
 
@@ -634,12 +634,19 @@ msgid "Season"
 msgstr "Season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "CL_STEP1_ADD_SEASON"
-msgstr "Add season"
+msgid ""
+"Would you like to add specific fixture details to your listing? This is "
+"especially important if you sell single matches (e.g. friendly matches) or "
+"rounds."
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_FIXTURES"
 msgstr "Add fixtures"
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "CL_STEP1_ADD_SEASON"
+msgstr "Add season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Popular"
@@ -1274,6 +1281,10 @@ msgid "CL_STEP1_BUTTON_START_OVER"
 msgstr "Start over"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LABEL_EVENT_TITLE"
+msgstr "Event Details"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_1"
 msgstr ""
 "Please fill in the fields below. “Country/Category” and “Competition” are "
@@ -1304,8 +1315,21 @@ msgid "CL_STEP1_PLACEHOLDER_COMPETITION"
 msgstr "e.g. Bundesliga"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_LABEL_ADDITIONAL_INFO"
-msgstr "Additional Information (optional)"
+msgid "CL_STEP1_LABEL_LISTING_TITLE"
+msgstr "Listing Details"
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_LISTING_DETAILS_TEXT"
+msgstr ""
+"Please define listing details below. This determines how your listing is "
+"shown to potential buyers."
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+#, fuzzy
+#| msgid "CL_STEP4_LABEL_IMAGE"
+msgid "CL_STEP1_LABEL_IMAGE"
+msgstr "Listing image (opt.)"
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LABEL_WEBSITE"
@@ -1416,21 +1440,14 @@ msgstr ""
 "upload only PDF files."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_LISTING_DETAILS_TEXT"
-msgstr ""
-"Please define listing details below. This determines how your listing is "
-"shown to potential buyers."
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_INFO_DETAILS"
 msgstr ""
 "These details impact how your listing will be presented to buyers in the "
 "marketplace: Under which name, with which image and until when it shall be "
 "published."
 
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_LABEL_IMAGE"
-msgstr "Listing image (opt.)"
+#~ msgid "CL_STEP1_LABEL_ADDITIONAL_INFO"
+#~ msgstr "Additional Information (optional)"
 
 #~ msgid "LISTING_DETAILS_TAB_EVENT"
 #~ msgstr "Event"

@@ -66,6 +66,7 @@ a:hover {
 
   .duration-date-pickers .date-picker {
     border: 1px solid lightgray;
+    margin-left: inherit !important;
   }
 
   .buttons {
@@ -168,7 +169,6 @@ a:hover {
         flex-direction: row;
         display: flex;
         align-items: center;
-        //flex: 1;
         min-width: 33%;
       }
     }
@@ -270,7 +270,6 @@ a:hover {
       .fa-edit {
         position: absolute;
         right: 3px;
-        //top: 7px;
         color: grey;
         font-size: 26px;
       }
@@ -344,7 +343,6 @@ a:hover {
     }
     .textarea-input {
       flex-direction: column;
-      margin-bottom: inherit;
       @extend .base-input;
       label {
         width: 100%;

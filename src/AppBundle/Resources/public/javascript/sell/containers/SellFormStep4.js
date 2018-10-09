@@ -95,11 +95,9 @@ class SellFormStep4 extends React.Component {
             annex,
             salesPackages,
             currency,
-            updateContentValue,
             sports,
             sportCategory,
             tournament,
-            image
         } = this.props;
 
         if (step !== 4) return (null);
@@ -163,18 +161,8 @@ class SellFormStep4 extends React.Component {
 
                     <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} infoText={this.context.t('CL_STEP4_INFO_DETAILS')}/>
 
-                    <ListingName/>
-
                     <div className='row'>
                         <ExpirationDateSelector/>
-
-                        <FileSelector
-                            label={this.context.t("CL_STEP4_LABEL_IMAGE")}
-                            isImage={true}
-                            onSelect={updateContentValue}
-                            previousImage={image}
-                            target={"imageBase64"}/>
-
                         <div className='clearfix'/>
                     </div>
                 </div>

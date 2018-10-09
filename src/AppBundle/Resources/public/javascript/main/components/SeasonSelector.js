@@ -52,7 +52,7 @@ class SeasonSelector extends React.Component {
         const {index, season, seasons} = this.props;
         let activeSeason = seasons[season];
         return (
-            <div style={{zIndex: 1}}>
+            <div style={{zIndex: 1, maxWidth: 872}}>
                 {!this.props.isCustom &&
                 <div className="base-input">
                     <label>
@@ -79,31 +79,19 @@ class SeasonSelector extends React.Component {
                               index={index}
                               onRemove={this.props.removeSeason } />}
 
-
-                {/*{activeSeason && activeSeason.schedules && <div className={"base-input"}
-                                                                onClick={this.toggle}
-                                                                style={{zIndex: 1}}>
-                    <label>Event</label>
-                    <input type="text"
-                           disabled
-                           style={{
-                               backgroundColor: 'white'
-                           }}
-                           placeholder={"Select events"}
-                           />
-                </div>}*/}
-                {/*{activeSeason && activeSeason.showSchedule && <div>
-                    <Schedules season={season} seasons={seasons}/>
-                </div>}*/}
-                {this.props.showAddNew && <div>
-                    <button className="link-button" onClick={this.props.addSeason}>
-                        {this.context.t("CL_STEP1_ADD_SEASON")}
+                {this.props.showAddNew && activeSeason &&
+                <div className="step-item-description" style={{display: 'flex'}}>
+                    <div style={{maxWidth: 655}}>
+                        {this.context.t("Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds.")}
+                    </div>
+                    <button style={{marginLeft: 21}} className="standard-button link-button" onClick={this.addFixture}>
+                        {this.context.t("CL_STEP1_ADD_FIXTURES")}
                     </button>
                 </div>}
-                {this.props.showAddNew && activeSeason &&
-                <div className="step-item-description">
-                    <button className="link-button" onClick={this.addFixture}>
-                        {this.context.t("CL_STEP1_ADD_FIXTURES")}
+
+                {this.props.showAddNew && <div>
+                    <button style={{marginBottom: 25, marginLeft: 'auto', minWidth: 196}} className="standard-button link-button" onClick={this.props.addSeason}>
+                        {this.context.t("CL_STEP1_ADD_SEASON")}
                     </button>
                 </div>}
 

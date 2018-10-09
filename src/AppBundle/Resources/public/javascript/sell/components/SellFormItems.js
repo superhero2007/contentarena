@@ -21,45 +21,8 @@ export const TitleBar = ({title, subtitle, infoText}) => (
     </div>
 );
 
-export const SummaryText = ({sports, sportCategory, tournament, seasons, customCategory, customTournament}) => {
-
-    let summary = "", rounds = [], fixtures = [], matches = [];
-
-    if (sports.length === 0 && sportCategory.length === 0 && tournament.length === 0) return null;
-
-    if (sports.length > 1) {
-        summary += 'Multiple sports';
-    } else {
-        summary += sports[0].name;
-    }
-
-    if ( sportCategory.length > 0 && !sportCategory[0].custom )  summary += " - " + sportCategory[0].name;
-    if ( customCategory && customCategory != "") summary += " - " + customCategory;
-    if ( tournament.length > 0 && !tournament[0].custom )  summary += " - " + tournament[0].name;
-    if ( customTournament && customTournament != "") summary += " - " + customTournament;
-    if ( seasons.length > 0 ){
-        const seasonsStr = [];
-        seasons.forEach(s => {
-            const str = s.custom && s.from && s.to ? `${s.from}/${s.to}` : (s.custom && s.from) ? s.from : (s.year) ? s.year: null;
-            if (str) seasonsStr.push(str);
-            if ( s.fixtures ) fixtures = [...fixtures, ...s.fixtures];
-        });
-
-        if (seasonsStr.length) {
-            summary += " - " + seasonsStr.join(' - ');
-        }
-    }
-
-    if ( rounds.length <= 1 && fixtures.length === 1 )  summary += ` - ${fixtures[0].name} (${moment(fixtures[0].date).format('DD-MM-YYYY')})`;
-    if ( rounds.length <= 1 && fixtures.length > 1 )  summary += " - " + fixtures.length + " Fixtures";
-    if ( rounds.length <= 1 && matches.length === 1 )  summary += " - " + matches[0].competitors.map(function (competitor) {
-        return competitor.name ;
-    }).join(" vs ");
-    if ( rounds.length === 1 && matches.length !== 1 )  summary += " - " + rounds[0];
-    if ( rounds.length > 1) summary += " - Multiple rounds";
-
-
-    return <span>{summary}</span>;
+export const SummaryText = ({name}) => {
+    return <span>{name}</span>;
 };
 
 export const NewCategory = ({onClick, showClose, onBlur, value}) => (
@@ -122,7 +85,7 @@ export class SportSelector extends React.Component {
     render(){
         const {sports, index} = this.props;
         return (
-            <div>
+            <div style={{maxWidth: 872}}>
                 <div className="base-input">
                     <label>Sport</label>
                     {
@@ -151,7 +114,7 @@ export class SportSelector extends React.Component {
                     }
                 </div>
                 {this.props.showAddNew &&
-                <button style={{marginBottom: "25px"}} className={"link-button"} onClick={this.props.addSportSelector}>Add sport</button> }
+                <button style={{marginBottom: "25px", marginLeft: 'auto'}} className={"standard-button link-button"} onClick={this.props.addSportSelector}>Add sport</button> }
             </div>
         )
     }

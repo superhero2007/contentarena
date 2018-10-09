@@ -71,20 +71,17 @@ class SellButtons extends React.Component {
             && ( vat === "no" || (vatPercentage && vatPercentage != 0 && vatPercentage !== "") )
             && law !== null
             && salesPackages.length > 0
-            && name
-            && name !== ""
             && companyIsValid(company);
 
     };
 
     reviewAndSignGetMessages = () => {
-        const {expiresAt, vat, vatPercentage, salesPackages, company, name, law} = this.props;
+        const {expiresAt, vat, vatPercentage, salesPackages, company, law} = this.props;
         let message = "Please complete missing information\n";
 
         if ( salesPackages.length === 0 ) message += "<br/>- Select at least one sales bundle.\n";
         if ( !expiresAt ) message += "<br/>- Select listing expiry.";
         if ( !companyIsValid(company) ) message += "<br/>- Enter company information.";
-        if ( !name || name === "") message += "<br/>- Enter a name for the listing.";
         if ( law === null) message += "<br/>- Select application law";
 
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
@@ -145,8 +142,8 @@ class SellButtons extends React.Component {
     };
 
     step1Enabled = () => {
-        const {sports} = this.props;
-        return sports.length > 0;
+        const {sports, name} = this.props;
+        return sports.length > 0 && name && name !== "";
     };
 
     step1GetMessages = () => {
@@ -154,7 +151,7 @@ class SellButtons extends React.Component {
         let message = "Please complete missing information\n";
 
         if ( sports.length === 0 ) message += "<br/>- Select a sport.\n";
-        //if ( name === undefined || name === "" ) message += "<br/>- Enter a name for the listing.";
+        if ( !name || name === "") message += "<br/>- Enter a name for the listing.";
 
         return message;
     };

@@ -84,7 +84,7 @@ class SearchCompetition extends  React.Component {
                 <div className="step-item-description">
                     {this.context.t("CL_STEP1_SEARCH_TITLE")}
                 </div>
-                <div className={"base-input"}>
+                <div className={"base-input"} style={{maxWidth: 935}}>
                     <label>
                         {this.context.t("Competition")}
                     </label>
@@ -128,12 +128,13 @@ class SearchCompetition extends  React.Component {
                     />
                 </div>}
 
-                <div style={{ display: "inline-flex" }} >
-                    {this.state.searchDone && this.state.results.length === 0 && <div>
+                <div style={{ display: "inline-flex", width: 935, minHeight: 61 }} >
+                    {this.state.searchDone && this.state.results.length === 0 && <div style={{width: 645}}>
                         {this.context.t("CL_STEP1_SEARCH_NO_RESULTS", {n: this.state.input })}
+                        {this.context.t("CL_STEP1_SEARCH_TRY")}
                     </div>}
 
-                    {!this.state.searchDone &&<div className="step-item-description">
+                    {!this.state.searchDone && <div className="step-item-description">
                         {this.context.t("CL_STEP1_SEARCH_CANT_FIND_2")}
                     </div>}
 
@@ -141,11 +142,7 @@ class SearchCompetition extends  React.Component {
                         {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
                     </div>}
 
-                    {this.state.searchDone && this.state.results.length === 0 && <div className="step-item-description">
-                        {this.context.t("CL_STEP1_SEARCH_TRY")}
-                    </div>}
-
-                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>
+                    <button style={{marginLeft: 'auto'}} className={"standard-button standard-button-big"} onClick={this.props.close}>
                         {this.context.t("CL_STEP1_ENTER_MANUALLY")}
                     </button>
                 </div>
