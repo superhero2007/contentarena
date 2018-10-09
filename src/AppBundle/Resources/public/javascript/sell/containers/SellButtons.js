@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import cn from 'classnames';
 import store from '../../main/store';
-import {goToPreviousStep, goToNextStep, updateContentValue, goToStep, scrollTopMainContent} from "../actions/contentActions";
+import {updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip'
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
@@ -33,7 +33,7 @@ class SellButtons extends React.Component {
     }
 
     saveAndGoNext = () => {
-        const {history} = this.props;
+        const {history, goToStep} = this.props;
         this.setState({ saving : true });
 
         let content = store.getState().content;
@@ -50,7 +50,7 @@ class SellButtons extends React.Component {
             this.setState({ saving : false, savingSuccess: true });
 
             history.push("/contentlisting/"+ response.customId + "/" + nextStep);
-            scrollTopMainContent();
+            goToStep(nextStep);
 
         }).fail(() =>{
             this.setState({ saving : false, savingSuccess: false });
@@ -191,13 +191,11 @@ class SellButtons extends React.Component {
     };
 
     goToReviewAndSign = () => {
-        const {history} = this.props;
+        const {history, goToStep} = this.props;
         let savePromise = null;
         let content = store.getState().content;
         content = parseSeasons(content);
         this.setState({ saving : true });
-
-
 
         if (!content.status || (content.status.name === 'DRAFT' && content.step === 4)) {
             //we are in new mode or editing draft
@@ -223,32 +221,25 @@ class SellButtons extends React.Component {
                 this.props.updateContentValue("id", response.contentId);
                 this.setState({ saving : false, savingSuccess: true });
                 history.push("/contentlisting/"+ response.customId + "/sign");
-
-                scrollTopMainContent();
+                goToStep(5);
             }
         });
     };
 
     goToPreviousStep = () => {
-        const {history} = this.props;
+        const {history, goToStep} = this.props;
         let content = store.getState().content;
         let prevStep = (Number(content.step) - 1);
 
         history.push("/contentlisting/"+ content.customId + "/" + prevStep);
-
-        scrollTopMainContent();
-    };
-
-    goToNextStep = () => {
-
+        goToStep(prevStep);
     };
 
     goToStep = (step) => {
-        const {history} = this.props;
+        const {history, goToStep} = this.props;
         let content = store.getState().content;
         history.push("/contentlisting/"+ content.customId + "/" + step);
-        
-        scrollTopMainContent();
+        goToStep(step);
     };
 
     render() {
@@ -304,8 +295,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        goToPreviousStep : () => dispatch(goToPreviousStep()),
-        goToNextStep : () => dispatch(goToNextStep()),
         goToStep : (step) => dispatch(goToStep(step)),
         updateContentValue : (key,value) => dispatch(updateContentValue(key,value)),
         updateSalesPackages : (name, salesPackage, index) => dispatch({
