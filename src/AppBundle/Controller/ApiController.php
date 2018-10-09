@@ -43,6 +43,7 @@ class ApiController extends BaseController
             "success"=>true,
             "contentId"=> $content->getId(),
             "customId" => $content->getCustomId(),
+            "status" => $content->getStatus()->getName(),
             "salesPackages" => ($content->getSalesPackages() != null) ? $serializer->toArray($content->getSalesPackages()) : array()
         ));
     }
@@ -59,6 +60,25 @@ class ApiController extends BaseController
         $user = $this->getUser();
         $content = $contentService->saveContentAsActive($user, $request);
         return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+    }
+
+    /**
+     * @Route("/api/listing/republish", name="republishListing")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @return Response
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function republishListing(Request $request, ContentService $contentService  )
+    {
+        $user = $this->getUser();
+        $listing = $contentService->republishListing($user, $request->get('customId'));
+        $context = SerializationContext::create()->setGroups(array('board'));
+        $data = array('success'=>true, 'listing' => $listing);
+        $serialized = $this->serialize($data,$context);
+        $response = new Response($serialized);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**

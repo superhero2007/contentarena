@@ -68,6 +68,17 @@ class ManageListings extends React.Component {
         });
     };
 
+    republish = (customId) => {
+        let active = this.state.active;
+        this.setState({loadingActive : true});
+        ContentArena.ContentApi.republishListing(customId).done(response => {
+            if ( response.success ) {
+                active.unshift(response.listing);
+                this.setState({active : active, loadingActive : false});
+            }
+        });
+    };
+
     deactivate = (customId) => {
         let inactive = this.state.inactive;
         this.setState({loadingInactive : true});
@@ -153,6 +164,11 @@ class ManageListings extends React.Component {
                                     showDuplicate={true}
                                     showSubmit={true}
                                     showView={true}
+                                    onRepublish={()=>{
+                                        list.splice(i,1);
+                                        this.setState({inactive: list});
+                                        this.republish(listing.customId);
+                                    }}
                                     onArchive={()=>{
                                         list.splice(i,1);
                                         this.setState({inactive: list});

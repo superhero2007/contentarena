@@ -57,6 +57,7 @@ ContentArena.Utils = {
 
         if (content.endDate) content.endDate = moment(content.endDate);
         if (content.startDate) content.startDate = moment(content.startDate);
+        if (content.signature) content.signature = hosturl + content.signature;
 
         content.step = Number(content.step);
         content.customSeasons = content.seasons.filter(s=>{

@@ -7,12 +7,12 @@ class DigitalSignature extends React.Component{
         super(props);
 
         this.state = {
-            ready : false
+            ready : (props.ready) ? props.ready :  false
         }
     }
 
     componentDidMount () {
-        this.setState({blank:this.refs.signature.toDataURL()});
+        if (!this.state.ready) this.setState({blank:this.refs.signature.toDataURL()});
     }
 
     clear = () => {

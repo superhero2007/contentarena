@@ -76,6 +76,28 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    republishListing ( customId ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/listing/republish",
+            type: "POST",
+            data: JSON.stringify({customId: customId}),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     sendMessage ( message ) {
         let deferred = jQuery.Deferred(),
             _this = this;

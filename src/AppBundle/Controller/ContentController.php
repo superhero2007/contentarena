@@ -117,6 +117,7 @@ class ContentController extends Controller
             "success"=>true,
             "contentId"=> $content->getId(),
             "customId" => $content->getCustomId(),
+            "status" => $content->getStatus()->getName(),
             "salesPackages" => ($content->getSalesPackages() != null) ? $serializer->toArray($content->getSalesPackages()) : array()
         ));
     }

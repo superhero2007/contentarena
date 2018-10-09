@@ -56,8 +56,15 @@ class BoardListing extends React.Component{
     };
 
     submit = () => {
-        const { customId } = this.props;
-        goTo("contentlisting/" + customId + "/sign")
+        const { customId, status, onRepublish } = this.props;
+
+        if (status && status.name === "INACTIVE" && onRepublish){
+            onRepublish();
+        } else {
+            goTo("contentlisting/" + customId + "/sign")
+        }
+
+
     };
 
     view = () => {

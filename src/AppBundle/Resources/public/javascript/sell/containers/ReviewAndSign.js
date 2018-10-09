@@ -166,6 +166,8 @@ class ReviewAndSign extends React.Component {
 
         const {showDetails, showSubmitting} = this.state;
 
+        let signatureReady = (signature && status !== undefined && status.name === "INACTIVE" ) ? true : false ;
+
         return (
             <div className="step-content">
                 { this.successScreen() }
@@ -224,11 +226,9 @@ class ReviewAndSign extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
-
                     <div style={{margin: '20px auto'}}>
                         <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"} onClose={this.save}/>
                     </div>
-
 
                     <div className={"terms-confirm"}
                          style={{
@@ -272,6 +272,7 @@ class ReviewAndSign extends React.Component {
                         onReady={(signature) => {
                             updateContentValue("signature", signature);
                         }}
+                        ready={signatureReady}
                         signature={signature}
                     />
 

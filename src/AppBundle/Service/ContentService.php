@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Company;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
@@ -384,6 +385,41 @@ class ContentService
          * Save files
          */
         $content = $this->saveFiles($request, $content);
+        $this->em->persist($content);
+        $this->em->flush();
+
+        return $content;
+    }
+
+    /**
+     * @param User $user
+     * @param $customId
+     * @return Content|null|object
+     * @throws OptimisticLockException
+     */
+    public function republishListing(User $user, $customId)
+    {
+        /**
+         * @var ListingStatus $currentStatus
+         * @var Content $content
+         * @var Company $company
+         * @var Company $listingCompany
+         */
+        $content = $this->em->getRepository("AppBundle:Content")->findOneBy(array("customId" => $customId));
+
+        $currentStatus = $content->getStatus();
+        $company = $user->getCompany();
+        $listingCompany = $content->getCompany();
+
+        if ( $currentStatus != "INACTIVE" || $company->getId() != $listingCompany->getId() ) return $content;
+
+        $newStatus = "APPROVED";
+        $lastAction = "SUBMITTED";
+        $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$newStatus)));
+        $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
+        $content->setLastActionUser($user);
+        $content->setOwner($user);
+        $content->setLastActionDate(new \DateTime());
         $this->em->persist($content);
         $this->em->flush();
 
