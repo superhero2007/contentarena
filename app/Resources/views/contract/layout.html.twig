@@ -396,6 +396,16 @@
                     {{ content.extraData.PROGRAM_DURATION }}
                 </div>
 
+                {% if content.extraData.EDIT_PROGRAM_DESCRIPTION_OPTIONAL is defined %}
+                    <div class="license-item-content">
+                        {% if content.extraData.EDIT_PROGRAM_DESCRIPTION_OPTIONAL %}
+                            All episodes have similar length
+                        {% else %}
+                            Episodes have different length.
+                        {% endif %}
+                    </div>
+                {% endif %}
+
                 {% if content.extraData.PROGRAM_TYPE is defined %}
                     <div class="license-item-content">
                         <label>Program Type</label>

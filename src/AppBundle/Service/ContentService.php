@@ -702,6 +702,7 @@ class ContentService
             "PROGRAM_YEAR",
             "PROGRAM_TYPE",
             "PROGRAM_EPISODES",
+            "EDIT_PROGRAM_DESCRIPTION_OPTIONAL",
             "PROGRAM_DURATION",
             "PROGRAM_DESCRIPTION",
             "COMMENTS_RIGHTS",
