@@ -1,69 +1,75 @@
 @import "vars";
 
-.selector{
-    .selector-filter {
-        margin: 0 5px;
-        border: none;
-        background-color: $blue-color;
-        padding: 8px 20px;
-        font-size: 16px;
-        font-weight: normal;
-        color: #48C0FE;
+.selector {
+  .selector-filter {
+    margin: 0 5px;
+    border: none;
+    background-color: $blue-color;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: normal;
+    color: #48C0FE;
 
+  }
+  .selector-filter-active {
+    color: white;
+    font-weight: 600;
+  }
+  .selector-content {
+    display: flex;
+    min-width: 700px;
+    max-height: 401px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    overflow: overlay;
+    max-width: 900px;
+    margin-top: 20px;
+    .selector-item {
+      color: #4F4F4F;
+      font-size: 16px;
+      padding: 3px;
+      border: 1px solid lightgrey;
+      margin: 2px;
+      width: 200px;
+      height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      text-align: center;
+      line-height: 16px;
     }
-    .selector-filter-active {
-        color: white;
-        font-weight: 600;
+    .selector-item-selected {
+      background-color: $blue-color;
+      color: white;
     }
-    .selector-content{
-        display: flex;
-        min-width: 700px;
-        max-height: 401px;
-        flex-wrap: wrap;
-        flex-direction: row;
-        overflow: overlay;
-        max-width: 900px;
-        margin-top: 20px;
-        .selector-item{
-            color: #4F4F4F;
-            font-size: 16px;
-            padding: 3px;
-            border: 1px solid lightgrey;
-            margin: 2px;
-            width: 200px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            text-align: center;
-            line-height: 16px;
-        }
-        .selector-item-selected{
-            background-color: $blue-color;
-            color: white;
-        }
-        .selector-item-disabled{
-            background-color: #888;
-            color: white;
-        }
+    .selector-item-disabled {
+      background-color: #888;
+      color: white;
     }
+  }
 
-    .buttons{
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        margin: 20px 0;
-    }
+  .buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
 
-    .extras{
-        display: flex;
-        .message{
-            color: #4F4F4F;
-            font-size: 14px;
-        }
+  .extras {
+    display: flex;
+    .message {
+      color: #4F4F4F;
+      font-size: 14px;
     }
+    .standard-button {
+      margin: 20px auto 0;
+      &:last-child {
+        margin: 10px auto -5px;
+      }
+    }
+  }
 }
 
 

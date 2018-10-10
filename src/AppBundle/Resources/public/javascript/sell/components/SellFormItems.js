@@ -114,7 +114,7 @@ export class SportSelector extends React.Component {
                     }
                 </div>
                 {this.props.showAddNew &&
-                <button style={{marginBottom: "25px", marginLeft: 'auto'}} className={"standard-button link-button"} onClick={this.props.addSportSelector}>Add sport</button> }
+                <button style={{marginBottom: "25px", marginLeft: 'auto'}} className={"standard-button link-button"} onClick={this.props.addSportSelector}>{this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}</button> }
             </div>
         )
     }

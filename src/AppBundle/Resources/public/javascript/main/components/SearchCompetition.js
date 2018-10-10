@@ -85,13 +85,12 @@ class SearchCompetition extends  React.Component {
                     {this.context.t("CL_STEP1_SEARCH_TITLE")}
                 </div>
                 <div className={"base-input"} style={{maxWidth: 935}}>
-                    <label>
-                        {this.context.t("Competition")}
-                    </label>
                     <input type="text"
                            onKeyPress={this.handleKeyPress}
                            onChange={this.handleInput}
-                           placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")} />
+                           placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")}
+                           style={{marginLeft: 'inherit', height: 70}}
+                    />
                     <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
                 </div>
 
@@ -101,7 +100,7 @@ class SearchCompetition extends  React.Component {
                     {this.state.resultMessage}
                 </div>}
 
-                {this.state.results.length > 0 && <div>
+                {this.state.results.length > 0 && <div style={{marginBottom: 20}}>
                     <ReactTable
                         defaultPageSize={this.state.pageSize}
                         showPageSizeOptions={false}
@@ -138,11 +137,11 @@ class SearchCompetition extends  React.Component {
                         {this.context.t("CL_STEP1_SEARCH_CANT_FIND_2")}
                     </div>}
 
-                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description">
+                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description" style={{marginLeft: 'auto'}}>
                         {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
                     </div>}
 
-                    <button style={{marginLeft: 'auto'}} className={"standard-button standard-button-big"} onClick={this.props.close}>
+                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>
                         {this.context.t("CL_STEP1_ENTER_MANUALLY")}
                     </button>
                 </div>
