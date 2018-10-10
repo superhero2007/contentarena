@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
@@ -652,15 +652,15 @@ msgstr "Popular"
 #: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_SELECTOR_ADD_SPORT"
-msgstr "Add new sport"
+msgstr "Add sport"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_ADD_SEASON"
-msgstr "Add new season"
+msgstr "Add season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
-msgstr "Add new competition"
+msgstr "Add competition"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Apply"
