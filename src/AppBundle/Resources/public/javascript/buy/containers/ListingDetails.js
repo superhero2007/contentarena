@@ -541,7 +541,7 @@ class ListingDetails extends React.Component {
                     <div className={"left"}  >
                         {getListingImage(content)}
 
-                        <ContentListingEventDetails {...this.props.listing}/>
+                        <ContentListingEventDetails {...this.props.listing} showSeasonDuration={true}/>
 
                         <ContentListingRightsPackage
                             rightsPackage={content.rightsPackage}
