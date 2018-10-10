@@ -24,11 +24,10 @@ class SalesPackages extends React.Component {
 
     getFee = (salesPackage) => {
         const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol();
+        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol(salesPackage.currency.code);
     };
 
-    getCurrencySymbol = () => {
-        const {currency} = this.props;
+    getCurrencySymbol = (currency) => {
         return (currency === "EUR" ? "€" : "$");
     };
 
