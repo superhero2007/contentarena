@@ -8,7 +8,7 @@ class SalesPackages extends PureComponent{
 
     getFee = (salesPackage) => {
         const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber.toLocaleString() + " " + getCurrencySymbol();
+        return feeNumber.toLocaleString() + " " + getCurrencySymbol(salesPackage.currency.code);
     };
 
     render() {
