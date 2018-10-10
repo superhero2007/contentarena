@@ -5,6 +5,7 @@ import CommercialSalesBundle from "../../main/components/CommercialSalesBundle";
 import SalesPackages from './SalesPackeges';
 import ContentListing from "./ContentListing";
 import {getCurrencySymbol} from "../actions/utils";
+import {getListingImage} from "../../common/utils/listing";
 import {plusGreyIcon, minusGreyIcon, coinIcon} from "./Icons";
 import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
@@ -73,8 +74,6 @@ class ContentListingCommercialActivity extends ContentListing {
             bidsOpen,
             salesPackages,
             rightsPackage,
-            imageBase64,
-            image,
             customId,
             company,
             id,
@@ -84,7 +83,6 @@ class ContentListingCommercialActivity extends ContentListing {
 
         salesPackages.sort(this.sortSalesPackages);
 
-        let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
         let bids = salesPackages.reduce((t, sp)=>t.concat(sp.bids),[]);
         let closedBids = bids.filter(b=>b.status.name === "APPROVED");
         let openBids = bids.filter(b=>b.status.name === "PENDING");
@@ -93,9 +91,7 @@ class ContentListingCommercialActivity extends ContentListing {
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
                 <div className="listing-list-view commercial-activity">
                     <div className={"left"}>
-                        <div className={"image"}>
-                            <img src={listingImage}/>
-                        </div>
+                        {getListingImage(this.props)}
                     </div>
                     <div className={"right"}>
                         <div className={"name-wrapper"} onClick={this.onSelect}>
