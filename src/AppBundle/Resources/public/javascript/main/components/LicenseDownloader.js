@@ -30,7 +30,7 @@ class LicenseDownloader extends React.Component {
     render(){
         const {style={}, iconStyle={height: 23}} = this.props;
         return (
-            <div style={{...style,cursor: 'pointer'}}
+            <div style={{...style}}
                  onClick={this.getLicense}>
                 <img style={iconStyle} src={pdfIcon}/>
             </div>

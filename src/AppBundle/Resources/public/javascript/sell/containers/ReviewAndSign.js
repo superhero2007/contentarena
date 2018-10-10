@@ -212,7 +212,7 @@ class ReviewAndSign extends React.Component {
                         currency={currency}
                         onEdit={this.editSalesPackage}
                         onUpdate={this.updateSalesPackage}
-                        onRemove={this.removeSalesPackage}/>
+                        onRemove={this.removeSalesPackage} />
 
                     {this.state.editOpen && <SalesPackageEdit
                         isOpen={this.state.editOpen}
@@ -263,7 +263,7 @@ class ReviewAndSign extends React.Component {
                                 id="terms_arena"
                                 style={{marginRight: 10}}
                             />
-                            <label htmlFor="terms_arena"></label>
+                            <label htmlFor="terms_arena" />
                             {this.context.t("CL_STEP5_TERMS_2")}
                         </div>
                     </div>

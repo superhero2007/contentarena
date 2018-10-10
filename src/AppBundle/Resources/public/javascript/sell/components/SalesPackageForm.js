@@ -52,7 +52,6 @@ class SalesPackageForm extends React.Component {
             countries: ContentArena.Data.Countries
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
-        this.fixedIcon = assetsBaseDir + "app/images/bid.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
         this.cancelIcon = assetsBaseDir + "app/images/cancel.png";
     }
@@ -682,13 +681,7 @@ class SalesPackageForm extends React.Component {
                                             type={"BUNDLE"}
                                             id={salesPackage.id}
                                             listingId={listingId}
-                                            style={{flex: 1, display: 'flex', justifyContent: 'center'}}/>}
-
-
-                                        {salesPackage.territories.length !== 1 &&
-                                        <div style={{marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
-                                            <img style={{marginTop: '2px', width: 26, height: 23}} src={this.fixedIcon}/>
-                                        </div>}
+                                            style={{display: 'flex', justifyContent: 'center', cursor: 'pointer'}}/>}
 
                                         {salesPackage.salesMethod === "BIDDING" &&
                                         <div style={{marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
