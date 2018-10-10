@@ -554,10 +554,6 @@ msgid "CL_STEP1_SEARCH_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Competition"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_PLACEHOLDER"
 msgstr ""
 
@@ -618,27 +614,9 @@ msgid "Popular"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Apply"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_SPORT_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_SELECTOR_ADD_SPORT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_TOURNAMENT_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_SEASON_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
@@ -646,19 +624,11 @@ msgid "CL_STEP1_SELECTOR_ADD_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_COUNTRY_1"
+msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_CATEGORY_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_CATEGORY"
+msgid "Apply"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
@@ -925,6 +895,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "MANAGE_LISTINGS_TITLE_EXPIRED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
+msgid "MESSAGES_NO_MESSAGES_YET"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
@@ -1245,14 +1219,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_BUTTON_MULTIPLE_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js

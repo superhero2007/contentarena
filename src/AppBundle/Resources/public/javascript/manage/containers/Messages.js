@@ -51,6 +51,8 @@ class Messages extends React.Component {
             });
             this.updateMessages();
         });
+
+        document.title = "Content Arena - Messages";
     }
 
     selectThread = (selectedThread) => {
@@ -79,7 +81,6 @@ class Messages extends React.Component {
     };
 
     send = () => {
-
         const {
             selectedThread,
             inputMessage,
@@ -102,6 +103,25 @@ class Messages extends React.Component {
     render () {
         const {
             loadingThreads,
+            threads
+        } = this.state;
+
+        return (
+            <div className={"messages-container"}>
+                {!loadingThreads && threads.length === 0 ? this.renderNoMessages() : this.renderMessages()}
+            </div>
+        )
+    }
+
+    renderNoMessages() {
+        return (
+            <div className='no-messages'>{this.context.t("MESSAGES_NO_MESSAGES_YET")}</div>
+        );
+    }
+
+    renderMessages() {
+        const {
+            loadingThreads,
             loadingMessages,
             selectedThread,
             threads,
@@ -110,24 +130,25 @@ class Messages extends React.Component {
             saving
         } = this.state;
 
-        const { user } = this.props;
-
-        document.title = "Content Arena - Messages";
+        const {user} = this.props;
 
         return (
-            <div className={"messages-container"}>
+            <React.Fragment>
                 <div className={"threads ca-overflow"}>
-                    {loadingThreads && threads.length ===0 && <i className="fa fa-cog fa-spin" /> }
-                    {!loadingThreads && threads.length ===0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
+                    {loadingThreads && threads.length === 0 && <i className="fa fa-cog fa-spin"/>}
+                    {!loadingThreads && threads.length === 0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
 
                     <div className={'thread-title'}>
                         {this.context.t("Messages")}
                     </div>
 
-                    {!loadingThreads && threads.map((t,i)=>{
-                        return <div className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
-                                    key={"thread-" + i}
-                                    onClick={()=>{this.selectThread(t)}}>
+                    {!loadingThreads && threads.map((t, i) => {
+                        return <div
+                            className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
+                            key={"thread-" + i}
+                            onClick={() => {
+                                this.selectThread(t)
+                            }}>
                             <div className={"date"}>
                                 {t.lastMessageDate && Moment(t.lastMessageDate).format('YYYY/MM/DD HH:mm')}
                             </div>
@@ -138,7 +159,7 @@ class Messages extends React.Component {
                                 {t.oppositeParty.legalName}
                             </div>
                             <div className={"user"}>
-                                {t.lastMessageUser ? getFullName(t.lastMessageUser) : '' }
+                                {t.lastMessageUser ? getFullName(t.lastMessageUser) : ''}
                             </div>
                             <div className={"last-message"}>
                                 {t.lastMessageContent && limitText(t.lastMessageContent)}
@@ -150,23 +171,28 @@ class Messages extends React.Component {
                 {selectedThread && (
                     <div className="thread-content">
                         <div className={"thread-title"}>
-                            <div className={"listing-name"} onClick={()=>{goToListing(selectedThread.listing.customId, true)}}>
+                            <div className={"listing-name"} onClick={() => {
+                                goToListing(selectedThread.listing.customId, true)
+                            }}>
                                 {selectedThread.listing.name}
                             </div>
                             <div className="company-name">
-                                <i className="fa fa-user-o icon" />
+                                <i className="fa fa-user-o icon"/>
                                 {selectedThread.oppositeParty.legalName}
                             </div>
                         </div>
                         <div className={"messages ca-overflow"}>
-                            {loadingMessages && messages.length ===0 && <div>
-                                <i className="fa fa-cog fa-spin" />
-                            </div> }
-                            {!loadingMessages && messages.map((m, i)=>{
+                            {loadingMessages && messages.length === 0 && <div>
+                                <i className="fa fa-cog fa-spin"/>
+                            </div>}
+                            {!loadingMessages && messages.map((m, i) => {
                                 const ownCompanyMessage = user.company.id === m.sender.company.id;
                                 const ownMessage = user.id === m.sender.id;
 
-                                return <div key={i} className={cn("message", { "own-message": ownMessage, 'own-company': ownCompanyMessage })}>
+                                return <div key={i} className={cn("message", {
+                                    "own-message": ownMessage,
+                                    'own-company': ownCompanyMessage
+                                })}>
                                     <div className={"message-sender"}>
                                         {getFullName(m.sender)}
                                     </div>
@@ -192,7 +218,8 @@ class Messages extends React.Component {
                                   }}
                                   className={"message-content"}
                               />
-                                <button className={"standard-button"} onClick={this.send} disabled={!inputMessage || inputMessage === "" || saving}>
+                                <button className={"standard-button"} onClick={this.send}
+                                        disabled={!inputMessage || inputMessage === "" || saving}>
                                     {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
                                     {saving && <i className="fa fa-cog fa-spin"/>}
                                 </button>
@@ -205,9 +232,9 @@ class Messages extends React.Component {
                     <div>
                         {this.context.t("MESSAGES_NO_THREAD_SELECTED")}
                     </div>
-                ) }
-            </div>
-        )
+                )}
+            </React.Fragment>
+        );
     }
 }
 

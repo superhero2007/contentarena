@@ -5,6 +5,14 @@
   flex-direction: row;
   margin-top: 10px;
   margin-bottom: -20px;
+
+  .no-messages {
+    width: 100%;
+    padding-top: 100px;
+    text-align: center;
+    font-size: 28px;
+  }
+
   .threads {
     width: 300px;
     overflow-y: auto;

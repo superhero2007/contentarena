@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
@@ -584,10 +584,6 @@ msgstr ""
 "database or if your content is not related to a specific competition."
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "Competition"
-msgstr "Competition"
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_PLACEHOLDER"
 msgstr "Enter competition name (e.g. Bundesliga)"
 
@@ -653,48 +649,22 @@ msgid "Popular"
 msgstr "Popular"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Apply"
-msgstr "Apply"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_SPORT_1"
-msgstr "Can't find your sport in the list?"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_SELECTOR_ADD_SPORT"
 msgstr "Add new sport"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_TOURNAMENT_1"
-msgstr "Can't find your competition in the list?"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
-msgstr "Add new competition"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_SEASON_1"
-msgstr "Can’t find the relevant season(s)?"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "CL_STEP1_SELECTOR_ADD_SEASON"
 msgstr "Add new season"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_COUNTRY_1"
-msgstr "Can't find your country in the list?"
+msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
+msgstr "Add new competition"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
-msgstr "Show all countries"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_CATEGORY_1"
-msgstr "Can't find your category in the list?"
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_CATEGORY"
-msgstr "Add new Category"
+msgid "Apply"
+msgstr "Apply"
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
 msgid "Contact"
@@ -961,6 +931,10 @@ msgstr "Active listings"
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "MANAGE_LISTINGS_TITLE_EXPIRED"
 msgstr "Expired & Sold Listings"
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
+msgid "MESSAGES_NO_MESSAGES_YET"
+msgstr "No messages yet"
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "MESSAGES_NO_THREADS_YET"
@@ -1291,14 +1265,6 @@ msgstr ""
 "optional."
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
-msgstr "Your content covers multiple sports?"
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_BUTTON_MULTIPLE_SPORTS"
-msgstr "Please click here"
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LABEL_COUNTRY"
 msgstr "Country/Category"
 
@@ -1445,6 +1411,36 @@ msgstr ""
 "These details impact how your listing will be presented to buyers in the "
 "marketplace: Under which name, with which image and until when it shall be "
 "published."
+
+#~ msgid "Competition"
+#~ msgstr "Competition"
+
+#~ msgid "CL_STEP1_SELECTOR_SPORT_1"
+#~ msgstr "Can't find your sport in the list?"
+
+#~ msgid "CL_STEP1_SELECTOR_TOURNAMENT_1"
+#~ msgstr "Can't find your competition in the list?"
+
+#~ msgid "CL_STEP1_SELECTOR_SEASON_1"
+#~ msgstr "Can’t find the relevant season(s)?"
+
+#~ msgid "CL_STEP1_SELECTOR_COUNTRY_1"
+#~ msgstr "Can't find your country in the list?"
+
+#~ msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
+#~ msgstr "Show all countries"
+
+#~ msgid "CL_STEP1_SELECTOR_CATEGORY_1"
+#~ msgstr "Can't find your category in the list?"
+
+#~ msgid "CL_STEP1_SELECTOR_ADD_CATEGORY"
+#~ msgstr "Add new Category"
+
+#~ msgid "CL_STEP1_DESCRIPTION_MULTIPLE_SPORTS"
+#~ msgstr "Your content covers multiple sports?"
+
+#~ msgid "CL_STEP1_BUTTON_MULTIPLE_SPORTS"
+#~ msgstr "Please click here"
 
 #~ msgid "CL_STEP1_LABEL_ADDITIONAL_INFO"
 #~ msgstr "Additional Information (optional)"
