@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Round from '../components/Round';
 import StaticRound from '../components/StaticRound';
+import {PropTypes} from "prop-types";
 
 export const Description = ({value, onChange, title= "Enter a description", placeholder="Provide a short description of your content listing"}) => (
     <div className="textarea-input">
@@ -119,3 +120,7 @@ export class SportSelector extends React.Component {
         )
     }
 }
+
+SportSelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
