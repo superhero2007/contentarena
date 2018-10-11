@@ -87,6 +87,7 @@ class ContentListingCommercialActivity extends ContentListing {
         let closedBids = bids.filter(b=>b.status.name === "APPROVED");
         let openBids = bids.filter(b=>b.status.name === "PENDING");
         let total = (closedBids.length > 0 ) ? closedBids.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : 0;
+        
         return (
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
                 <div className="listing-list-view commercial-activity">
