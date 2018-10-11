@@ -33,7 +33,7 @@ class UpdateTranslations extends ContainerAwareCommand
         /**
          * @var UserRepository
          */
-        $localesPath = $this->getContainer()->getParameter("dev_locales");
+        $localesPath = $this->getContainer()->getParameter("upload_locales");
         $translationsPath = $this->getContainer()->getParameter("upload_translations");
         $translations = Translations::fromPoFile($localesPath . "/en.po");
 
