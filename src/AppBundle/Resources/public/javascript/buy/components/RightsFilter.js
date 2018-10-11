@@ -155,7 +155,7 @@ class RightsFilter extends React.Component {
 
                     </div>
                 </div>
-                <div className="box">
+                <div className="box right-checkboxes">
                     <div id="rights-packages" className={"filter-rights"}>
                         <div className="title">
                             {this.context.t("MARKETPLACE_LABEL_FILTER_RIGHTS")}
@@ -200,7 +200,7 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="ca-btn link" style={{margin:5}} onClick={this.onClearFilter}>
+                        <button className="ca-btn primary small" onClick={this.onClearFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>
                     </div>

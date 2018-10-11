@@ -19,6 +19,11 @@
     background-color: transparent;
     margin: 0 0 20px;
     color: $black-color;
+
+    &.right-checkboxes{
+      margin-bottom: 5px;
+    }
+
     .title {
       font-size: 16px;
       font-weight: 600;
@@ -78,11 +83,6 @@
         margin: 15px 0;
         display: flex;
         align-items: center;
-        //input[type="checkbox"] {
-        //    display: flex;
-        //    margin: 0;
-        //    max-width: 25px !important;
-        //}
       }
 
     }
