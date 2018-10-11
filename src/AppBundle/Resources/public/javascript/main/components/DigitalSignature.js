@@ -1,6 +1,7 @@
 import React from 'react';
 import SignaturePad from 'react-signature-pad';
 import {PropTypes} from "prop-types";
+import cn from "classnames";
 
 class DigitalSignature extends React.Component{
     constructor(props){
@@ -39,14 +40,18 @@ class DigitalSignature extends React.Component{
     };
 
     render(){
-        const { signature } = this.props;
+        const {
+            signature,
+            title = this.context.t("DIGITAL_SIGNATURE_TITLE"),
+            clearBtnText = this.context.t("DIGITAL_SIGNATURE_BUTTON_CLEAR"),
+            customClass = ''
+        } = this.props;
+
         const { ready } = this.state;
 
         return (
-            <div className="digital-signature">
-                <div className={"digital-signature-placeholder"}>
-                    {this.context.t("DIGITAL_SIGNATURE_TITLE")}
-                </div>
+            <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
+                <div className={"digital-signature-placeholder"}>{title}</div>
                 {signature && ready &&
                     <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
                 }
@@ -55,7 +60,7 @@ class DigitalSignature extends React.Component{
 
                 <div className={"buttons"}>
                     {!ready && <button onClick={this.clear} className="standard-button-small transparent">
-                        {this.context.t("DIGITAL_SIGNATURE_BUTTON_CLEAR")}
+                        {clearBtnText}
                     </button>}
                     {!ready && <button onClick={this.done} className="standard-button-small">
                         {this.context.t("DIGITAL_SIGNATURE_BUTTON_DONE")}

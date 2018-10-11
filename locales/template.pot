@@ -119,28 +119,19 @@ msgid "LISTING_DETAILS_TAB_SELLER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
-msgid "Sales bundle"
+msgid "License fee"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Commercial information"
+msgid "Bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "License fee:"
+msgid "MIN_BID_2000"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Bid:"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_EXCEED_MINIMUM"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Raise"
+msgid "MARKETPLACE_BUTTON_APPLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -148,7 +139,7 @@ msgid "Technical fee:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Total:"
+msgid "Total"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -160,11 +151,16 @@ msgid "installment"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_LABEL_COMPANY_ADDRESS"
+msgid "License agreement"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "License agreement"
+msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -280,10 +276,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
@@ -1070,6 +1062,10 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
+msgid "Sales bundle"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js

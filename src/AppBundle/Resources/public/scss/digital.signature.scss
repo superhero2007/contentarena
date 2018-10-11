@@ -4,6 +4,42 @@
   flex-shrink: 0;
   flex-direction: column;
   display: flex;
+
+  &.for-listing{
+    .digital-signature-placeholder{
+      text-align: left;
+      font-weight: bold;
+      color: $black-color;
+      font-size: 16px;
+    }
+    .m-signature-pad--body{
+      border-right: 0;
+      background: $primary-color;
+    }
+    .buttons{
+      margin-top: 30px;
+      button{
+        color: $black-color;
+        font-weight: bold;
+
+        &.standard-button-small, &.standard-button-big{
+          font-size: 14px;
+          background: $color-grey-light;
+          padding: 15px 50px;
+          border: 1px solid $orange-color;
+          border-radius: 5px;
+
+          &.transparent {
+            width: 60px;
+            border: none;
+            padding: 15px 5px;
+          }
+        }
+      }
+    }
+
+  }
+
   .digital-signature-placeholder{
     text-align: center;
     margin-bottom: 10px;
@@ -36,5 +72,4 @@
     justify-content: center;
     margin-top: 15px;
   }
-
 }

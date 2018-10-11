@@ -13,6 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr "General Content"
 
@@ -142,12 +143,24 @@ msgid "Commercial information"
 msgstr "Commercial Information"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "License fee:"
-msgstr "License Fee:"
+msgid "License fee"
+msgstr "License Fee"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Bid:"
-msgstr "Bid:"
+msgid "MARKETPLACE_BUTTON_APPLY"
+msgstr "Apply"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
+msgstr "Please sign with your cursor in the box below"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "Bid"
+msgstr "Bid"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "MIN_BID_2000"
+msgstr "(Minimum Bid $2000)"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_EXCEED_MINIMUM"
@@ -162,8 +175,8 @@ msgid "Technical fee:"
 msgstr "Technical Fee:"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Total:"
-msgstr "Total:"
+msgid "Total"
+msgstr "Total"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Payment details"
@@ -209,7 +222,7 @@ msgstr "Number of episodes"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
-msgstr "Episode Duration (min)"
+msgstr "Average episode duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
@@ -1494,6 +1507,18 @@ msgstr ""
 
 #~ msgid "Commercial Activity Total - {n}"
 #~ msgstr "Total: {n}"
+
+msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
+msgstr "All bundles"
+
+msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
+msgstr "With activity"
+
+msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
+msgstr "Open bids"
+
+msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
+msgstr "Closed deals"
 
 #~ msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
 #~ msgstr "PROGRAMS DESCRIPTION"

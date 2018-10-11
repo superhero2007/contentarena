@@ -1,0 +1,232 @@
+@import "vars";
+@import "mixins";
+
+.bid-wrapper{
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 15px;
+  background-color: $primary-color;
+
+  @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
+
+  .bid-header {
+    margin-bottom: 30px;
+    .name{
+      font-size: 21px;
+      font-weight: bold;
+      color: $font-color-6;
+    }
+  }
+
+  .bid-info-wrapper{
+    width: 100%;
+    background: $color-grey-light;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+
+    .bid-location{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      padding-bottom: 20px;
+
+      .bid-location-icon{
+        width: 26px;
+        height: 23px;
+        margin-right: 5px;
+      }
+
+      .bid-location-number{
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        color: $black-color;
+        margin-right: 5px;
+      }
+
+      .bid-location-name{
+        @extend .bid-location-number;
+      }
+
+      .bid-extra-territories{
+        color: $blue-secondary-color;
+        text-decoration: underline;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
+
+    .bid-fee{
+      .bid-license, .bid-technical, .bid-total{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        & .bid-value{
+          font-weight: bold;
+
+          &.padding-right{
+            padding-right: 116px;
+            span{
+              padding-right: 10px;
+            }
+          }
+          &.right-section{
+            display: flex;
+            align-items: center;
+
+            .bid-change-value{
+              input{
+                width: 80%;
+                margin: 0;
+                padding: 15px 5px;
+
+                font-weight: bold;
+                text-align: right;
+              }
+            }
+          }
+        }
+
+        & .bid-label{
+          font-size: 14px;
+        }
+      }
+
+      .bid-license{
+        padding: 25px 0 20px;
+        border-top: 1px solid $font-color-2;
+      }
+
+      .bid-technical{
+        padding: 5px 0 25px 0;
+      }
+
+      .bid-total{
+        border-top: 1px solid $font-color-2;
+        padding-top: 25px;
+      }
+    }
+  }
+
+  .bid-payment-details{
+    margin-bottom: 35px;
+
+    header{
+      font-size: 16px;
+      font-weight: bold;
+
+      color: $black-color;
+      border-bottom: 1px solid $black-color;
+
+      padding-bottom: 15px;
+    }
+    .bid-payment-table{
+      display: flex;
+      flex-direction: column;
+
+      .payment-row{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+
+        padding: 20px;
+        border-bottom: 1px solid $font-color-5;
+
+        .payment-installment, .payment-percentage, .payment-date{
+          color: $font-color-5;
+          font-size: 14px;
+        }
+
+        .payment-installment, .payment-percentage{
+          font-weight: bold;
+
+          i{
+            font-size: 20px;
+            color: $orange-color;
+          }
+        }
+      }
+    }
+  }
+
+  .bid-address-license{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+
+    .bid-address, .bid-license{
+      flex: 0 1 49%;
+      background: $color-grey-light;
+
+      font-size: 13px;
+      padding: 15px 20px;
+
+      i{
+        font-size: 23px;
+        color: $color-blue;
+        float: right;
+        cursor: pointer;
+      }
+      span{
+        display: inline-block;
+        width: 90%;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
+    }
+    .bid-license{
+      cursor: pointer;
+
+      span{
+        width: auto;
+        color: $color-blue;
+      }
+    }
+  }
+
+  .bid-signature{
+    background: $color-grey-light;
+    padding: 25px 20px 30px;
+  }
+
+  .bid-signature-btns{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 25px;
+
+    label{
+      padding-left: 5px;
+      color: $font-color-5;
+      font-size: 12px;
+    }
+
+    button{
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+
+      color: $black-color;
+      background: $orange-color;
+      border-radius: 5px;
+
+      padding: 20px 40px;
+      margin: 15px 0 0 0;
+
+      &:disabled{
+        background: lightgray;
+      }
+    }
+  }
+}
