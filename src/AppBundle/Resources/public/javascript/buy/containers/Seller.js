@@ -60,14 +60,16 @@ class Seller extends React.Component {
                                 </div>
                             </div>
                         )}
-                        <div className="spacer-bottom">
-                            <b>
-                                {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
-                            </b>
-                            <div>
-                                {company.vat}
+                        {company.vat && (
+                            <div className="spacer-bottom">
+                                <b>
+                                    {this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
+                                </b>
+                                <div>
+                                    {company.vat}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
                 {company.description && <div className="txt">{company.description}</div>}
