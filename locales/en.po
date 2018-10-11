@@ -13,7 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
-#: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr "General Content"
 
@@ -134,49 +133,34 @@ msgid "LISTING_DETAILS_TAB_SELLER"
 msgstr "Seller Information"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
-msgid "Sales bundle"
-msgstr "Sales bundle"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Commercial information"
-msgstr "Commercial Information"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#, fuzzy
+#| msgid "License fee:"
 msgid "License fee"
-msgstr "License Fee"
+msgstr "License Fee:"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#, fuzzy
+#| msgid "Bid:"
+msgid "Bid"
+msgstr "Bid:"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "MIN_BID_2000"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "MARKETPLACE_BUTTON_APPLY"
 msgstr "Apply"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
-msgstr "Please sign with your cursor in the box below"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Bid"
-msgstr "Bid"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "MIN_BID_2000"
-msgstr "(Minimum Bid $2000)"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "LISTING_DETAILS_EXCEED_MINIMUM"
-msgstr "The bid must exceed minimum bid"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Raise"
-msgstr "Raise"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Technical fee:"
 msgstr "Technical Fee:"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#, fuzzy
+#| msgid "Total:"
 msgid "Total"
-msgstr "Total"
+msgstr "Total:"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Payment details"
@@ -187,12 +171,17 @@ msgid "installment"
 msgstr "installment"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_LABEL_COMPANY_ADDRESS"
-msgstr "Company address"
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "License agreement"
 msgstr "License Agreement"
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
+msgstr "Cancel"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "CHECKOUT_TERMS"
@@ -222,7 +211,7 @@ msgstr "Number of episodes"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_DURATION"
-msgstr "Average episode duration (min)"
+msgstr "Episode Duration (min)"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_TYPE"
@@ -312,10 +301,6 @@ msgstr "Amendment(s) to the Content Delivery / Special Conditions"
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT"
 msgstr "Are you sure you want to accept this bid?"
-
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
-msgstr "Cancel"
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT"
@@ -1123,6 +1108,10 @@ msgid "Unlimited"
 msgstr "Unlimited"
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
+msgid "Sales bundle"
+msgstr "Sales bundle"
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES"
 msgstr "Territories"
 
@@ -1425,6 +1414,18 @@ msgstr ""
 "marketplace: Under which name, with which image and until when it shall be "
 "published."
 
+#~ msgid "Commercial information"
+#~ msgstr "Commercial Information"
+
+#~ msgid "LISTING_DETAILS_EXCEED_MINIMUM"
+#~ msgstr "The bid must exceed minimum bid"
+
+#~ msgid "Raise"
+#~ msgstr "Raise"
+
+#~ msgid "CHECKOUT_LABEL_COMPANY_ADDRESS"
+#~ msgstr "Company address"
+
 #~ msgid "Competition"
 #~ msgstr "Competition"
 
@@ -1499,26 +1500,11 @@ msgstr ""
 #~ msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
 #~ msgstr "Closed deals"
 
-#~ msgid "MARKETPLACE_BUTTON_APPLY"
-#~ msgstr "Apply"
-
 #~ msgid "COMMERCIAL_ACTIVITY_ACTION_DATE"
 #~ msgstr "Date of Action"
 
 #~ msgid "Commercial Activity Total - {n}"
 #~ msgstr "Total: {n}"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
-msgstr "All bundles"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
-msgstr "With activity"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
-msgstr "Open bids"
-
-msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
-msgstr "Closed deals"
 
 #~ msgid "LISTING_DETAILS_EVENT_TITLE_PROGRAM_DESCRIPTION"
 #~ msgstr "PROGRAMS DESCRIPTION"
