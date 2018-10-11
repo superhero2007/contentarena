@@ -50,7 +50,8 @@
     "webpack": ".\\node_modules\\.bin\\encore dev --watch",
     "prod": ".\\node_modules\\.bin\\encore production",
     "extract": "i18n_extract",
-    "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations"
+    "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations",
+    "import-admin": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations --locales=admin-locales"
   },
   "repository": {
     "type": "git",

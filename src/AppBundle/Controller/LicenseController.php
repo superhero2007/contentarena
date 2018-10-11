@@ -2,6 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Service\FileUploader;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
@@ -101,7 +107,7 @@ class LicenseController extends Controller
         /* @var Content $content  */
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        $htmlGeneralTerms = $this->renderView('contract/la-general-terms.html.twig', $viewElements);
+        $htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
 
         $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
 
@@ -368,7 +374,55 @@ class LicenseController extends Controller
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
 
-        return $this->render('contract/la-general-terms.html.twig', $viewElements);
+        return $this->render('contract/la-general-terms-base.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/license/upload", name="uploadGeneralTerms")
+     * @throws \exception
+     */
+    public function uploadGeneralTerms(Request $request, FileUploader $fileUploader){
+
+        $user = $this->getUser();
+        $data = null;
+        $message = "";
+        $fileName = "la-general-terms.html.twig";
+
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('terms', FileType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            $file = $data['terms'];
+            $extension = $file->guessExtension();
+
+            if ( $extension == "html"){
+                $file->move($this->container->getParameter("upload_general_terms_folder") , $fileName);
+                $message = "General Terms updated successfully!";
+            } else {
+                $message = "Please upload a valid html file";
+            }
+        }
+
+        $viewElements = array(
+            'user' => $user,
+            'form' => $form->createView(),
+            'message' => $message,
+            'data' => $data,
+            'watermark' => true,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+
+
+
+        return $this->render('contract/upload.form.html.twig', $viewElements);
     }
 
 }

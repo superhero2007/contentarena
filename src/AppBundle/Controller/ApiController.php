@@ -341,7 +341,7 @@ class ApiController extends BaseController
 
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        $htmlGeneralTerms = $this->renderView('contract/la-general-terms.html.twig', $viewElements);
+        $htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
 
         $this->get('knp_snappy.pdf')->generateFromHtml(
             $htmlGeneralTerms,

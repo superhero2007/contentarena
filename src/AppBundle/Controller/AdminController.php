@@ -16,6 +16,11 @@ class AdminController extends BaseAdminController
 
     use \AppBundle\Helper\EmailHelper;
 
+
+    public function utilsAction(){
+
+    }
+
     public function createCompanyAction()
     {
         // controllers extending the base AdminController can access to the

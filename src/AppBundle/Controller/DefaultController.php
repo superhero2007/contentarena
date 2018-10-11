@@ -3,11 +3,23 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
+use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use Gettext\Translations;
+
+
 
 class DefaultController extends BaseController
 {
@@ -94,6 +106,117 @@ class DefaultController extends BaseController
             'rights'         => $this->serialize($rights),
             'packages' => $serializer->serialize($packages, 'json',SerializationContext::create()->setGroups(array('common'))),
         ];
+    }
+
+    /**
+     * @Route("/locales/upload", name="uploadLocales")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function uploadLocales(Request $request){
+
+        /* @var User $user*/
+        $user = $this->getUser();
+
+        if ($this->isGranted('ROLE_USER') == false) {
+            return $this->render('@App/home.html.twig', $this->getInternalParams());
+        }
+
+        $data = null;
+        $message = "";
+        $defaultData = array();
+        $localesPath = $this->container->getParameter("upload_locales");
+        $translationsPath = $this->container->getParameter("upload_translations");
+
+        $form = $this->createFormBuilder($defaultData)
+            ->add('po', FileType::class, array('label' => 'Upload en.po file'))
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /* @var UploadedFile $file*/
+            $data = $form->getData();
+            $file = $data['po'];
+            $fileName = $file->getClientOriginalName();
+
+            if ( $fileName == "en.po"){
+                $file->move($localesPath, $fileName);
+                $message = "Localization updated successfully!";
+
+                //import from a .po file:
+                $translations = Translations::fromPoFile($localesPath . "/". $fileName);
+
+                //Export to a js file
+                $prefix = "{\"en\":";
+                $test = $translations->toJsonDictionaryString();
+                $suffix = ",\"options\": {\"plural_rule\": \"n != 1\",\"plural_number\": \"2\"}}";
+                $fs = new Filesystem();
+
+                try {
+                    $fs->dumpFile($translationsPath . '/translations.json', $prefix.$test.$suffix);
+                }
+                catch(IOException $e) {
+                }
+
+            } else {
+                $message = "Please upload a valid en.po file";
+            }
+        }
+
+        $viewElements = array(
+            'user' => $user,
+            'form' => $form->createView(),
+            'message' => $message,
+            'data' => $data,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('upload.locales.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/locales/devfile", name="getLocalesDevFile")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getLocalesDevFile()
+    {
+
+        $localesPath = $this->container->getParameter("dev_locales");
+        // load the file from the filesystem
+        $file = new File($localesPath. '/en.po');
+
+        return $this->file($file);
+    }
+
+    /**
+     * @Route("/locales/file", name="getLocalesFile")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getLocalesFile()
+    {
+
+        $localesPath = $this->container->getParameter("upload_locales");
+        // load the file from the filesystem
+        $file = new File($localesPath. '/en.po');
+
+        return $this->file($file);
+    }
+
+    /**
+     * @Route("/locales/template", name="getLocalesTemplates")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getLocalesTemplates()
+    {
+
+        $localesPath = $this->container->getParameter("dev_locales");
+        // load the file from the filesystem
+        $file = new File($localesPath. '/template.pot');
+
+        return $this->file($file);
     }
 
 }

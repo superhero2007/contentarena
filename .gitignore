@@ -25,3 +25,5 @@
 /node_modules
 /private_scripts/*
 /app/config/parameters.yml.dist
+/src/AppBundle/Resources/public/javascript/translations/translations.js
+/admin-locales/en.po
