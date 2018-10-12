@@ -89,7 +89,7 @@ class SearchCompetition extends  React.Component {
                            onKeyPress={this.handleKeyPress}
                            onChange={this.handleInput}
                            placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")}
-                           style={{marginLeft: 'inherit', height: 70}}
+                           style={{marginLeft: 'inherit'}}
                     />
                     <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
                 </div>
@@ -128,7 +128,7 @@ class SearchCompetition extends  React.Component {
                 </div>}
 
                 <div style={{ display: "inline-flex", width: 935, minHeight: 61 }} >
-                    {this.state.searchDone && this.state.results.length === 0 && <div style={{width: 645}}>
+                    {this.state.searchDone && this.state.results.length === 0 && <div style={{width: 645, alignSelf: 'center'}}>
                         {this.context.t("CL_STEP1_SEARCH_NO_RESULTS", {n: this.state.input })}
                         {this.context.t("CL_STEP1_SEARCH_TRY")}
                     </div>}
@@ -141,7 +141,7 @@ class SearchCompetition extends  React.Component {
                         {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
                     </div>}
 
-                    <button className={"standard-button standard-button-big"} onClick={this.props.close}>
+                    <button className={"standard-button standard-button-big"} onClick={this.props.close} style={{alignSelf: 'center'}}>
                         {this.context.t("CL_STEP1_ENTER_MANUALLY")}
                     </button>
                 </div>

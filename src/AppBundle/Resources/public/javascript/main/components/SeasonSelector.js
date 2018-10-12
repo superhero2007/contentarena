@@ -84,7 +84,7 @@ class SeasonSelector extends React.Component {
                     <div style={{maxWidth: 655}}>
                         {this.context.t("Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds.")}
                     </div>
-                    <button style={{marginLeft: 21}} className="standard-button link-button" onClick={this.addFixture}>
+                    <button style={{marginLeft: 21, alignSelf: 'center'}} className="standard-button link-button" onClick={this.addFixture}>
                         {this.context.t("CL_STEP1_ADD_FIXTURES")}
                     </button>
                 </div>}

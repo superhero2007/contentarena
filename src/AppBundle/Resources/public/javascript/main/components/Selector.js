@@ -304,6 +304,12 @@ class Selector extends React.Component {
                     </button>
                 </div>}
 
+                {this.props.showAllCountries&& <div className={"extras"}>
+                    <button className={"standard-button link-button"} onClick={this.showAllCountries } >
+                        {this.context.t("CL_STEP1_SELECTOR_COUNTRIES_ALL")}
+                    </button>
+                </div>}
+
                 <div className={"buttons"}>
                     <button className={"light-blue-button"} style={{backgroundColor: SelectorModalStyle.content.backgroundColor}} onClick={this.closeModal}>
                         {this.context.t("Cancel")}

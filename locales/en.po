@@ -661,6 +661,10 @@ msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
 msgstr "Add competition"
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
+msgstr "Select from country list"
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Apply"
 msgstr "Apply"
 
@@ -1440,9 +1444,6 @@ msgstr ""
 
 #~ msgid "CL_STEP1_SELECTOR_COUNTRY_1"
 #~ msgstr "Can't find your country in the list?"
-
-#~ msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
-#~ msgstr "Show all countries"
 
 #~ msgid "CL_STEP1_SELECTOR_CATEGORY_1"
 #~ msgstr "Can't find your category in the list?"

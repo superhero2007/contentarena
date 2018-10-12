@@ -618,8 +618,6 @@ class SellFormStep1 extends React.Component {
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                    <Description value={this.props.description} onChange={ (e) => this.updateContentValue(e, "description")} />
-
                     <div className="step-title" style={{marginBottom: 0}}>{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}</div>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
@@ -628,6 +626,8 @@ class SellFormStep1 extends React.Component {
                     </div>
 
                     <ListingName onChange={() => this.setState({ nameSet: true })} />
+
+                    <Description value={this.props.description} onChange={ (e) => this.updateContentValue(e, "description")} />
 
                     <FileSelector
                         label={this.context.t("CL_STEP1_LABEL_IMAGE")}

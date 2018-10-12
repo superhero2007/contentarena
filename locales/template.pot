@@ -620,6 +620,10 @@ msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Apply"
 msgstr ""
 
