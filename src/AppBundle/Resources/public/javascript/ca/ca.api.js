@@ -403,7 +403,24 @@ ContentArena.Api= {
                 }
 
                 __apiStore.tournaments[sportId] = response.tournaments;
-                deferred.resolve(_this.prepareList(response.tournaments.tournament, categoryId));
+
+                let list = _this.prepareList(response.tournaments.tournament, categoryId);
+                let names = [];
+
+                if ( sportId === "sr:sport:5" ){
+                    list = list.map(item=>{
+                        item.name = item.name.replace(/ singles/gi,'').replace(/ double/gi,'');
+                        return item;
+                    }).filter(item=>{
+                        if (names.indexOf(item.name) === -1){
+                            names.push(item.name);
+                            return true
+                        }
+                        return false;
+                    })
+                }
+
+                deferred.resolve(list);
             },
             error : function (data, status ) {
                 deferred.reject({
