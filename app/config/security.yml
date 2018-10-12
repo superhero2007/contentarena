@@ -23,6 +23,7 @@ security:
 
             logout:       true
             anonymous:    true
+            switch_user:  { role: ROLE_ADMIN, parameter: _ghost_mode }
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
