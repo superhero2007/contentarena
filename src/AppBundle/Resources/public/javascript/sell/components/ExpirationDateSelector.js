@@ -3,6 +3,7 @@ import DatePicker from 'components/DatePicker';
 import moment from 'moment';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
+import { SERVER_DATE_TIME_FORMAT } from "./../../common/constants";
 
 class ExpirationDateSelector extends React.Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class ExpirationDateSelector extends React.Component {
     }
 
     handleStartDate = (date) => {
-        this.props.updateContentValue("expiresAt", date);
+        this.props.updateContentValue("expiresAt", date.set({hour: 23, minute: 59}).format(SERVER_DATE_TIME_FORMAT));
     };
 
     render(){
