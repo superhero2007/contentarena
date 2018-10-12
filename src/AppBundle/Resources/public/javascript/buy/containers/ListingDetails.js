@@ -538,7 +538,7 @@ class ListingDetails extends React.Component {
 
     isBidBtnDisabled = () => {
         const { bid, minimumBid} = this.state;
-        return !bid || parseFloat(bid) === 0 || parseFloat(bid)<parseFloat(minimumBid) || parseFloat(bid) < 2000;
+        return !bid || parseFloat(bid) === 0 || parseFloat(bid) < parseFloat(minimumBid);
     };
 
     getCompanyAddress = () => {
@@ -725,7 +725,8 @@ class ListingDetails extends React.Component {
                                 {checkoutType !== 'BUY_NOW' && <div className="bid-technical">
                                     <span className="bid-label">
                                         {this.context.t("Bid")}
-                                        <i> {this.context.t("MIN_BID_2000")}</i>
+                                        {parseFloat(minimumBid) ? <i> ({this.context.t("MIN_BID")} {minimumBid}{getCurrencySymbol(selectedPackage.currency.code)})</i> : null }
+
                                     </span>
                                     <span className="bid-value right-section">
                                         <div className="bid-change-value">

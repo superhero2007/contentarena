@@ -145,8 +145,8 @@ msgid "Bid"
 msgstr "Bid:"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "MIN_BID_2000"
-msgstr ""
+msgid "MIN_BID"
+msgstr "Minimum Bid"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "MARKETPLACE_BUTTON_APPLY"
@@ -176,7 +176,7 @@ msgstr "License Agreement"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
-msgstr ""
+msgstr "Please sign with your cursor in the box below"
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js

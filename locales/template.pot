@@ -127,7 +127,7 @@ msgid "Bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "MIN_BID_2000"
+msgid "MIN_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
