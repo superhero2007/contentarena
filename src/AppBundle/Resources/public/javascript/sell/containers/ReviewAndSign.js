@@ -166,7 +166,7 @@ class ReviewAndSign extends React.Component {
 
         const {showDetails, showSubmitting} = this.state;
 
-        let signatureReady = (signature && status !== undefined && status.name === "INACTIVE" ) ? true : false ;
+        let signatureReady = (signature && status !== undefined && (status.name === "INACTIVE" || status.name === "EDITED" || status.name === "APPROVED")) ? true : false ;
 
         return (
             <div className="step-content">
