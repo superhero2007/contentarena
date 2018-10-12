@@ -91,9 +91,10 @@ class BidService
             "salesPackage" => $salesPackage,
             "buyerUser" => $user
         ));
+
         $updatedAt = new \DateTime();
 
-        if ( $bid == null || $bid->getStatus() != $status) {
+        if ( $bid == null) {
             $bid = new Bid();
             $customId = $this->idGenerator->generate($content);
             $createdAt = new \DateTime();
