@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
-import DatePicker from 'components/DatePicker';
+import DatePicker from '@components/DatePicker';
 import moment from "moment";
 import { DATE_FORMAT } from "../../common/constants";
 

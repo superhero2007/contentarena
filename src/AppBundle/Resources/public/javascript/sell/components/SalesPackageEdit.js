@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
-import DatePicker from 'components/DatePicker';
+import DatePicker from '@components/DatePicker';
 import {PropTypes} from "prop-types";
 import moment from "moment";
 

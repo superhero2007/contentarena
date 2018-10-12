@@ -23,7 +23,7 @@ Encore
     ])
 
     .addAliases({
-        components: path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/components/'),
+        '@components': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/components/'),
     })
 
     // allow legacy applications to use $/jQuery as a global variable

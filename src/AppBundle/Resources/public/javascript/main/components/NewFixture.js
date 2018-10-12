@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {addIcon, cancelIcon} from "./Icons";
-import DatePicker from 'components/DatePicker';
+import DatePicker from '@components/DatePicker';
 import moment from "moment/moment";
 import { DATE_TIME_FORMAT, DATE_FORMAT } from "./../../common/constants";
 import { formatMomentToServerFormat } from "./../../common/utils/time";

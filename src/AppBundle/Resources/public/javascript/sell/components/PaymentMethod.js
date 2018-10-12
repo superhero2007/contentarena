@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'components/DatePicker';
+import DatePicker from '@components/DatePicker';
 import moment from 'moment';
 
 class PaymentMethod extends React.Component {
