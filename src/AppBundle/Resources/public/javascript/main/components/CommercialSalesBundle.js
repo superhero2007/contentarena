@@ -322,18 +322,9 @@ class CommercialSalesBundle extends React.Component{
                             className : 'table-header-big',
                             id: "price",
                             accessor: d => {return {fee: d.totalFee, currency: salesBundle.currency.code}},
-                            Cell: props => <div className={"blue"}>
+                            Cell: props => <div className={"blue"} style={{width: '100%', textAlign: 'right'}}>
                                 {parseFloat(props.value.fee).toLocaleString() + " " + getCurrencySymbol(props.value.currency)}
                             </div>
-                        }, {
-                            Header: headers.user(),
-                            headerClassName : 'table-header-big',
-                            className : 'table-header-big',
-                            accessor: 'buyerUser',
-                            Cell: props => <div>
-                                {props.value.firstName + " " + props.value.lastName}
-                            </div>
-
                         },{
                             Header: headers.lastAction(),
                             headerClassName : 'table-header-big',
@@ -352,6 +343,15 @@ class CommercialSalesBundle extends React.Component{
                             accessor: 'createdAt',
                             Cell: props => <div>
                                 {Moment(props.value).format('DD/MM/YYYY')}
+                            </div>
+
+                        },{
+                            Header: headers.user(),
+                            headerClassName : 'table-header-big',
+                            className : 'table-header-big',
+                            accessor: 'buyerUser',
+                            Cell: props => <div>
+                                {props.value.firstName + " " + props.value.lastName}
                             </div>
 
                         }, {

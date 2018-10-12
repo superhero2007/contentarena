@@ -47,13 +47,13 @@ class NewFixture extends Component {
                             />
 
                             {!isDatePickerWithTimeEnabled && (
-                                <a className="text-nowrap" onClick={() =>this.enablePicker('isDatePickerWithTimeEnabled')} style={{marginLeft:10}}>
+                                <a className="ca-link text-nowrap" onClick={() =>this.enablePicker('isDatePickerWithTimeEnabled')} style={{marginLeft:10}}>
                                     {this.context.t("Add Time")}
                                 </a>
                             )}
                         </div>
                     ) : (
-                        <a className="text-nowrap" onClick={() => this.enablePicker('isDatePickerEnabled')}>
+                        <a className="ca-link text-nowrap" onClick={() => this.enablePicker('isDatePickerEnabled')}>
                             {this.context.t("Add date")}
                         </a>
                     )}

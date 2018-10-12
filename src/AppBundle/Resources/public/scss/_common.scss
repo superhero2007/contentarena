@@ -327,3 +327,10 @@ i.fa.ca-tooltip {
     }
   }
 }
+
+.ca-link {
+  color: #3399FF;
+  &:hover {
+    text-decoration: underline;
+  }
+}
