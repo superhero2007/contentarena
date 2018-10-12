@@ -3,21 +3,50 @@ import PropTypes from 'prop-types';
 import {addIcon, cancelIcon} from "./Icons";
 import DatePicker from 'components/DatePicker';
 import moment from "moment/moment";
+import { DATE_TIME_FORMAT, DATE_FORMAT } from "./../../common/constants";
+import { formatMomentToServerFormat } from "./../../common/utils/time";
+
+const isStartOfTheDay = (date) => {
+    return moment(date).startOf('day').valueOf() !== moment(date).valueOf()
+};
 
 class NewFixture extends Component {
-    state = {
-        isDatePickerEnabled: false,
-        isDatePickerWithTimeEnabled: false,
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isDatePickerEnabled: !!props.date,
+            isDatePickerWithTimeEnabled: isStartOfTheDay(props.date),
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { isDatePickerEnabled } = this.state;
+
+        if (nextProps.date && !isDatePickerEnabled ) {{
+            this.setState({
+                isDatePickerEnabled: true,
+                isDatePickerWithTimeEnabled: isStartOfTheDay(nextProps.date)
+            })
+        }}
+    }
+
+
 
     enablePicker = (type) => {
         const {id} = this.props;
-        this.setState({[type]:true})
+        this.setState({[type]:true});
         setTimeout(()=> jQuery('.date-picker.id'+id).focus(),100)
-    }
+    };
+
+    onDateSelected = (e) => {
+        const { handleDate } = this.props;
+        const formatted = formatMomentToServerFormat(e);
+        handleDate(formatted);
+    };
 
     render() {
-        const {onRemove, onAdd, onChange, value, showAdd, date, handleDate, id} = this.props;
+        const {onRemove, onAdd, onChange, value, showAdd, date, id} = this.props;
         const {isDatePickerEnabled, isDatePickerWithTimeEnabled} = this.state;
         return (
             <div className="base-input new-fixture" style={{display: 'flex', alignItems: 'center'}}>
@@ -37,11 +66,11 @@ class NewFixture extends Component {
                             <DatePicker
                                 className={"date-picker id"+id}
                                 selected={(date) ? moment(date) : undefined}
-                                onChange={handleDate}
+                                onChange={this.onDateSelected}
                                 onChangeRaw={undefined}
                                 timeIntervals={15}
-                                dateFormat={isDatePickerWithTimeEnabled ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY"}
-                                placeholderText={isDatePickerWithTimeEnabled ? "DD/MM/YYYY HH:mm" : "DD/MM/YYYY"}
+                                dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [GMT]` : DATE_FORMAT}
+                                placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} GMT` : DATE_FORMAT}
                                 timeFormat="HH:mm"
                                 showTimeSelect={isDatePickerWithTimeEnabled}
                             />
