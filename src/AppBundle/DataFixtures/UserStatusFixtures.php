@@ -18,7 +18,8 @@ class UserStatusFixtures extends Fixture
     {
         $content = array(
             'On Hold',
-            'Registration Data Sent',
+            'Active',
+            'Deactivated',
             'Declined'
         );
 

@@ -29,18 +29,21 @@ easy_admin:
             User:
                 class: AppBundle\Entity\User
                 list:
-                    fields: ['id', 'firstName', 'lastName', 'email', 'approved', 'autoPublish']
+                    fields: ['id', 'firstName', 'lastName', 'email', 'company', 'status', 'lastLogin']
 
                 form:
                     fields:
-                        - 'email'
-                        - 'firstName'
-                        - 'lastName'
-                        - 'status'
-                        - 'title'
-                        - 'phone'
-                        - 'country'
-                        - 'company'
+                        - { property: 'email' }
+                        - { property: 'firstName' }
+                        - { property: 'lastName' }
+                        - { property: 'status' }
+                        - { property: 'title' }
+                        - { property: 'phone' }
+                        - { property: 'country' }
+                        - { property: 'company' }
+                        - { property: 'applicationCompany' }
+                        - { property: 'confirmationToken', label: 'Activation Code' }
+                        - { property: 'autoPublish' }
                     actions:
                         - { name: 'sendActivationLink', css_class : 'btn btn-primary' }
                         - { name: 'createCompany', css_class : 'btn btn-primary' }

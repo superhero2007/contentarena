@@ -120,6 +120,14 @@ class User extends BaseUser
     private $profile = "BUYER";
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="application_company", type="string", nullable=true)
+     * @Groups({"commercial", "closed", "settings"})
+     */
+    private $applicationCompany;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserStatus")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -400,6 +408,12 @@ class User extends BaseUser
     public function setStatus($status)
     {
         $this->status = $status;
+
+        if ($status->getName() == "Deactivated"){
+            $this->enabled = false;
+        } else {
+            $this->enabled = true;
+        }
     }
 
     /**
@@ -448,6 +462,22 @@ class User extends BaseUser
     public function setProfile($profile)
     {
         $this->profile = $profile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationCompany()
+    {
+        return $this->applicationCompany;
+    }
+
+    /**
+     * @param string $applicationCompany
+     */
+    public function setApplicationCompany($applicationCompany)
+    {
+        $this->applicationCompany = $applicationCompany;
     }
 
 

@@ -51,7 +51,7 @@ class AdminEditAction implements EventSubscriberInterface
             /**
              * Update user status
              */
-            $userStatus = $em->getRepository('AppBundle:UserStatus')->findByName("Registration Data Sent");
+            $userStatus = $em->getRepository('AppBundle:UserStatus')->findByName("Active");
             $emailContent = $em->getRepository('AppBundle:EmailContent')->findBySlug("company_registered_owner");
 
             if ( $userStatus != null ) $owner->setStatus($userStatus);
