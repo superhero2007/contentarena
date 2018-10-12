@@ -409,7 +409,7 @@ class User extends BaseUser
     {
         $this->status = $status;
 
-        if ($status->getName() == "Deactivated"){
+        if ($status != null && $status->getName() == "Deactivated"){
             $this->enabled = false;
         } else {
             $this->enabled = true;
