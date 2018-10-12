@@ -525,6 +525,8 @@ class ListingDetails extends React.Component {
     };
 
     getTitlePrefix = (type) => {
+        if (!type) return '';
+
         const titleMap = {
             'BUY_NOW': 'Buy Now',
             'PLACE_BID': 'Place Bid',
@@ -536,7 +538,7 @@ class ListingDetails extends React.Component {
 
     isBidBtnDisabled = () => {
         const { bid, minimumBid} = this.state;
-        return !bid || parseFloat(bid) === 0 || parseFloat(bid)<parseFloat(minimumBid);
+        return !bid || parseFloat(bid) === 0 || parseFloat(bid)<parseFloat(minimumBid) || parseFloat(bid) < 2000;
     };
 
     getCompanyAddress = () => {
