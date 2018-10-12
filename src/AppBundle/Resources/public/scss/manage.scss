@@ -1,5 +1,7 @@
 @import "vars";
 
+$icon-color: #00769A;
+
 .manager-container {
   padding: 0 20px 20px;
   flex: 1;
@@ -9,7 +11,9 @@
 }
 
 .manager-header {
-  $barHeight: 65px;
+  margin-left: -20px;
+  margin-right: -20px;
+  $barHeight: 74px;
   display: flex;
   align-items: center;
   padding: 0 15px;
@@ -32,10 +36,9 @@
     justify-content: center;
     align-items: center;
     min-height: $barHeight;
-    padding: 0 20px;
     font: inherit;
-    font-size: 18px;
-    color: #1A4B63;
+    font-size: 16px;
+    color: #03547C;
     margin-bottom: 3px;
     margin-right: 3px;
     cursor: pointer;
@@ -44,31 +47,51 @@
     border: 0;
     outline: none;
     text-decoration: none;
+    padding: 15px 20px 0;
     &:hover {
       opacity: .7;
     }
-    .fa {
-      padding-right: 5px;
+  }
+  .baseline {
+    padding-top: 15px;
+    a {
+      padding-top: 0;
     }
   }
+
+  .messages {
+    a {
+      color: #1A4B63;
+    }
+  }
+
+  .switch-mode {
+    a {
+      height: 34px;
+      min-height: auto;
+    }
+  }
+
   .spacer {
     margin-right: auto;
   }
   .active-tab {
     a {
       position: relative;
+      font-weight: bold;
       &:after {
         content: "";
         position: absolute;
         display: block;
         width: 100%;
         border-bottom: 4px solid #296380;
-        bottom: -4px;
+        bottom: -10px;
       }
     }
 
   }
   .settings {
+    margin-top: 15px;
     position: relative;
     cursor: pointer;
     .popup {
@@ -96,26 +119,28 @@
         }
       }
     }
+
+    i {
+
+    }
   }
 
   .notifications {
+    margin-top: 15px;
     margin-right: 20px;
     position: relative;
 
-    i {
-      font-size: 1.8em;
-    }
-
     .counter {
       position: absolute;
-      right: 3px;
+      right: -1px;
       top: 1px;
       border-radius: 50%;
-      background-color: #fa3e3e;
+      background-color: #FFC94B;
       font-size: 10px;
       width: 15px;
       height: 15px;
-      color: #fff;
+      color: #333333;
+      font-weight: bold;
       text-align: center;
     }
 
@@ -168,6 +193,12 @@
     .no-notifications {
       padding: 5px 10px;
     }
+  }
+
+  .fa {
+    color: $icon-color;
+    padding-right: 5px;
+    font-size: 1.6em;
   }
 }
 

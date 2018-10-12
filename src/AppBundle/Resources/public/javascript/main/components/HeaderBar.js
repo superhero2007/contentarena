@@ -4,10 +4,10 @@ import {Link} from "react-router-dom";
 import {PropTypes} from 'prop-types';
 import HeaderNotifications from './HeaderNotifications';
 
-const HeaderBarTab = ({match, children, route}) => {
+const HeaderBarTab = ({match, children, route, className = '', linkClass = ''}) => {
     return (
-        <div className={(match) ? "tab active-tab" : "tab"}>
-            <Link to={route} >{children}</Link>
+        <div className={(match) ? "tab active-tab" : `tab ${className}`}>
+            <Link to={route} className={linkClass} >{children}</Link>
         </div>
     )
 };
@@ -45,13 +45,13 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/marketplace"}
                         route={"/marketplace"}
                     >
-                        <b>{this.context.t("HEADER_LINK_MARKETPLACE")}</b>
+                        {this.context.t("HEADER_LINK_MARKETPLACE")}
                     </HeaderBarTab>
                 )}
 
                 {profile === "BUYER" && (
                     <HeaderBarTab match={match.url === "/watchlist"} route={"/watchlist"}>
-                        <b>{this.context.t("HEADER_LINK_WATCHLIST")}</b>
+                        {this.context.t("HEADER_LINK_WATCHLIST")}
                     </HeaderBarTab>
                 )}
 
@@ -63,7 +63,7 @@ class HeaderBar extends  React.Component {
                         }
                         route={"/bids/activebids"}
                     >
-                        <b>{this.context.t("HEADER_LINK_BIDS")}</b>
+                        {this.context.t("HEADER_LINK_BIDS")}
                     </HeaderBarTab>
                 )}
 
@@ -72,7 +72,7 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/closeddeals"}
                         route={"/closeddeals"}
                     >
-                        <b>{this.context.t("HEADER_LINK_CLOSED_DEALS")}</b>
+                        {this.context.t("HEADER_LINK_CLOSED_DEALS")}
                     </HeaderBarTab>
                 )}
 
@@ -81,7 +81,7 @@ class HeaderBar extends  React.Component {
                         match={match.url === "/managelistings"}
                         route={"/managelistings"}
                     >
-                        <b>{this.context.t("HEADER_LINK_MANAGE_LISTINGS")}</b>
+                        {this.context.t("HEADER_LINK_MANAGE_LISTINGS")}
                     </HeaderBarTab>
                 )}
 
@@ -95,7 +95,7 @@ class HeaderBar extends  React.Component {
                         }
                         route={"/commercialactivity"}
                     >
-                        <b>{this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}</b>
+                        {this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
                     </HeaderBarTab>
                 )}
 
@@ -104,25 +104,25 @@ class HeaderBar extends  React.Component {
                         match={match.path === "/contentlisting/:customId?/:step?"}
                         route={"/contentlisting/new"}
                     >
-                        <b>{this.context.t("HEADER_LINK_CREATE_LISTING")}</b>
+                        {this.context.t("HEADER_LINK_CREATE_LISTING")}
                     </CustomLink>
                 )}
 
                 <div className="spacer" />
 
                 {profile === "BUYER" && (
-                    <HeaderBarTab className="tab" route="/managelistings">
+                    <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/managelistings">
                         {this.context.t("HEADER_LINK_SELLING_MODE")}
                     </HeaderBarTab>
                 )}
 
                 {profile === "SELLER" && (
-                    <HeaderBarTab className="tab" route="/marketplace">
+                    <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/marketplace">
                         {this.context.t("HEADER_LINK_BUYING_MODE")}
                     </HeaderBarTab>
                 )}
 
-                <HeaderBarTab className="tab" route="/messages">
+                <HeaderBarTab className="tab baseline messages" route="/messages">
                     <i className="fa fa-envelope" />
                     {this.context.t("HEADER_LINK_MESSAGES")}
                 </HeaderBarTab>
@@ -130,7 +130,7 @@ class HeaderBar extends  React.Component {
                 <HeaderNotifications />
 
                 <div className="settings">
-                    <i className="fa fa-2x fa-gear" />
+                    <i className="fa fa-gear" />
 
                     <div className="popup">
                         <div className="wrap">
