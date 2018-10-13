@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Service\EmailService;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -62,7 +63,15 @@ class AdminController extends BaseAdminController
     }
 
 
-    public function sendActivationLinkAction()
+    /**
+     * @param EmailService $emailService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function sendActivationLinkAction(EmailService $emailService)
     {
         // controllers extending the base AdminController can access to the
         // following variables:
@@ -81,24 +90,23 @@ class AdminController extends BaseAdminController
 
         $this->em->persist($user);
         $this->em->flush();
-
+        $hostUrl = $this->container->getParameter("carena_host_url");
         $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $params = array(
+            "hostUrl" => $hostUrl,
+            "user" => $user,
+            "confirmationUrl" => $confirmationUrl
+        );
+        $emailService->sendActivationLink($params);
 
-        $this->sendEmail(
+
+        /*$this->sendEmail(
             'Registration/email.txt.twig',
             'Welcome to Content Arena',
             $user->getEmail(),
             array('user' => $user, 'confirmationUrl' => $confirmationUrl)
-        );
+        );*/
 
-
-        // redirect to the 'list' view of the given entity
-        /*  return $this->redirectToRoute('easyadmin', array(
-              'action' => 'list',
-              'entity' => $this->request->query->get('entity'),
-          ));*/
-
-        // redirect to the 'edit' view of the given entity item
         return $this->redirectToRoute('easyadmin', array(
             'action' => 'edit',
             'id' => $user->getId(),
