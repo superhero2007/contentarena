@@ -1,0 +1,98 @@
+<!-- Created by TopStyle Trial - www.topstyle4.com -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Content Arena</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <style type="text/css">
+        table {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body style="margin: 0 !important; padding: 0 !important; background: #eee">
+<table border="0" cellpadding="0" cellspacing="0" width="700px" style="margin-top:20px">
+    <thead>
+    <tr>
+        <th>
+            <a href="https://contentarena.com/" title="Content Arena"><img
+                        src="{{ hostUrl }}bundles/app/images/email-bg.jpg"/></a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="background: #FFF; padding:20px; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 24px; color:#666">
+            <table align="left" width="100%">
+                <tr>
+                    <td style="text-align: left">
+                        {% block header %}
+                            Dear Team [Name],
+                        {% endblock %}
+                    </td>
+                </tr>
+
+                {% block content %}
+                <tr>
+                    <td style="text-align: left">
+                        <strong>Congratulations!</strong> Your bid for the following listing has been accepted by the
+                        seller:
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left">
+
+                        <p style="border-top: 1px dashed #999; padding: 10px 0; width:97%; margin: 10px 0; color: #666; border-bottom: 1px dashed #999;">
+                            Name: <a href="#" style="color:#2aaaec">Baseball - Germany - 1st Bundesliga - 2017 -
+                                (04-10-2018)</a>
+                            <span style="display: block; margin-bottom: 5px">ID: #22YQF</span>
+
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left">
+                        <p style="margin: 0; padding: 0 0 5px">
+                            You can review the details and download the counter-signed license agreement in the <a
+                                    href="http://app.contentarena.com/closeddeals" style="color:#2aaaec">Closed
+                                Deals</a> section.
+                            <br/>
+                            The seller will get in touch with you soon to provide more information on the next steps.
+                        </p>
+                    </td>
+                </tr>
+                {% endblock %}
+                {% block footer %}
+                <tr>
+                    <td style="text-align: left">
+                        <p style="margin: 0; padding: 0 0 5px">
+                            Need assistance? We will be glad to help. To contact us, simply send an email to <a
+                                    href="mailto:support@contentarena.com" style="color: #2aaaec">support@contentarena.com.</a>
+                        </p>
+                        <p>
+                            Kind regards<br/>
+                            Team Content Arena
+                        </p>
+
+
+                    </td>
+                </tr>
+                {% endblock %}
+            </table>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td style="font-size: 12px; text-align: center; font-family: Arial, Helvetica, sans-serif; padding: 20px 0 10px; color:#666">
+            Copyright © Content Arena
+        </td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>

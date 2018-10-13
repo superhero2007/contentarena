@@ -2,6 +2,7 @@
 
 namespace ApiBundle\Controller;
 
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,9 +76,9 @@ class LoginController extends FOSRestController
         $userManager = $this->get('fos_user.user_manager');
 
         $tokenGenerator = $this->get('fos_user.util.token_generator');
-
+        /** @var User $user */
         $user = $userManager->createUser();
-        $user->setEnabled(false);
+        $user->setEnabled(true);
         $user->setEmail($request->get("email"));
         $user->setTitle($request->get("title"));
         $user->setCountry($request->get("country"));
@@ -86,7 +87,7 @@ class LoginController extends FOSRestController
         $user->setLastName($request->get("lastName"));
         $user->setPhone($request->get("phone"));
         $user->setRegisteredAt(new \DateTime());
-        $user->setCompanyLegalName($request->get("companyLegalName"));
+        $user->setApplicationCompany($request->get("companyLegalName"));
         $user->setCompanyWebsite($request->get("companyWebsite"));
         $user->setPlainPassword('');
         if (null === $user->getConfirmationToken()) {

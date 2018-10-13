@@ -1,0 +1,44 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+	Team!
+{% endblock %}
+
+
+{% block content %}
+	<tr>
+		<td style="text-align: left">
+			<strong>{{ content }}</strong>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: left">
+			<strong>First name:</strong> {{ user.firstName }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Last name:</strong> {{ user.lastName }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Company:</strong> {{ user.applicationCompany }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Email:</strong> {{ user.email }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Phone:</strong> {{ user.phone }}
+		</td>
+	</tr>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -51,6 +51,14 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
+    AppBundle\Service\EmailService:
+        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer']
+
+    app.command.send_email:
+            class: AppBundle\Command\SendEmail
+            tags:
+                -  { name: console.command }
+
     app.form.registration:
             class: AppBundle\Form\RegistrationFormType
             tags:

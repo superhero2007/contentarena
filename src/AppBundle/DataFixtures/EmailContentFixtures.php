@@ -18,10 +18,27 @@ class EmailContentFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $content = array(
-            array("company_registered_owner", "Notification to the user when the company is approved", "has been registered successfully and it's ready to operate in Content Arena!"),
-            array("reset_password_success", "Email to tell the user password was successfully changed", "Your password has been reset successfully!")
+            array(
+                "company_registered_owner",
+                "Notification to the user when the company is approved",
+                "has been registered successfully and it's ready to operate in Content Arena!"
+            ),
+            array(
+                "reset_password_success",
+                "Email to tell the user password was successfully changed",
+                "Your password has been reset successfully!"
+            ),
+            array(
+                "email_subject_internal_user_request",
+                "Email subject when user requested login on landing page",
+                "New Content Arena User"
+            ),
+            array(
+                "email_content_internal_user_request",
+                "Email content when user requested login on landing page",
+                "New User Request:"
+            )
         );
-
 
         for ($i = 0; $i < count($content); $i++) {
 
