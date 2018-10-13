@@ -64,14 +64,13 @@ class AdminController extends BaseAdminController
 
 
     /**
-     * @param EmailService $emailService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function sendActivationLinkAction(EmailService $emailService)
+    public function sendActivationLinkAction()
     {
         // controllers extending the base AdminController can access to the
         // following variables:
@@ -83,7 +82,7 @@ class AdminController extends BaseAdminController
         $user = $this->em->getRepository('AppBundle:User')->find($id);
         $user->setStatus( $this->em->getRepository('AppBundle:UserStatus')->findByName("Registration Data Sent"));
         $tokenGenerator = $this->get('fos_user.util.token_generator');
-
+        $emailService = $this->get("AppBundle\Service\EmailService");
         if (null === $user->getConfirmationToken()) {
             $user->setConfirmationToken($tokenGenerator->generateToken());
         }
