@@ -70,7 +70,7 @@ class NewFixture extends Component {
                                 onChangeRaw={undefined}
                                 timeIntervals={15}
                                 dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [GMT]` : DATE_FORMAT}
-                                placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} GMT` : DATE_FORMAT}
+                                placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT}` : DATE_FORMAT}
                                 timeFormat={TIME_FORMAT}
                                 showTimeSelect={isDatePickerWithTimeEnabled}
                             />
