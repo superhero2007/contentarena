@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {addIcon, cancelIcon} from "./Icons";
 import DatePicker from '@components/DatePicker';
 import moment from "moment/moment";
-import { DATE_TIME_FORMAT, DATE_FORMAT } from "./../../common/constants";
-import { formatMomentToServerFormat } from "./../../common/utils/time";
+import { DATE_TIME_FORMAT, DATE_FORMAT } from "@constants";
+import { formatMomentToServerFormat } from "@utils/time";
 
 const isStartOfTheDay = (date) => {
     return moment(date).startOf('day').valueOf() !== moment(date).valueOf()

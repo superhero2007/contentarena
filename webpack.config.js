@@ -24,6 +24,8 @@ Encore
 
     .addAliases({
         '@components': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/components/'),
+        '@utils': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/utils/'),
+        '@constants': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/constants.js'),
     })
 
     // allow legacy applications to use $/jQuery as a global variable

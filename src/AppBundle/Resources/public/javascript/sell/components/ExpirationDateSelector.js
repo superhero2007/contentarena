@@ -1,9 +1,9 @@
 import React from 'react';
 import DatePicker from '@components/DatePicker';
+import { SERVER_DATE_TIME_FORMAT } from "@constants";
 import moment from 'moment';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
-import { SERVER_DATE_TIME_FORMAT } from "./../../common/constants";
 
 class ExpirationDateSelector extends React.Component {
     constructor(props) {

@@ -11,7 +11,7 @@ import {
     eventTimeIcon
 } from "../../main/components/Icons";
 
-import {DATE_FORMAT} from "../../common/constants";
+import {DATE_FORMAT} from "@constants";
 
 class ContentListingEventDetails extends React.Component {
 
