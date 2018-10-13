@@ -4,6 +4,7 @@ import { SERVER_DATE_TIME_FORMAT } from "@constants";
 import moment from 'moment';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT } from "@constants";
 
 class ExpirationDateSelector extends React.Component {
     constructor(props) {
@@ -30,8 +31,8 @@ class ExpirationDateSelector extends React.Component {
                     onChange={this.handleStartDate}
                     minDate={moment()}
                     fixedHeight={true}
-                    dateFormat={"DD/MM/YYYY"}
-                    placeholderText={"dd/mm/yyyy"}
+                    dateFormat={DATE_FORMAT}
+                    placeholderText={DATE_FORMAT.toLowerCase()}
                 />
             </div>
         )

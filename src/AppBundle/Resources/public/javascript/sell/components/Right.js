@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from '@components/DatePicker';
+import { DATE_FORMAT } from "@constants";
 
 const RightItem = ({selected, onClick}) => (
     <div onClick={onClick} className="column right-item-selection">
@@ -156,10 +157,10 @@ class Right extends React.Component {
                                         if ( this.showProgramColumns(rightPackage) && rightItem.calendar ) return <div className="column right-item-selection">
                                             <DatePicker
                                                 className={"date-picker"}
-                                                dateFormat={"DD/MM/YYYY"}
+                                                dateFormat={DATE_FORMAT}
                                                 selected={this.state.selection.get(rightItem.id).get(rightPackage.id)}
                                                 onChange={(date) => this.setDate(date, rightItem.id, rightPackage.id)}
-                                                placeholderText={"dd/mm/yyyy"}
+                                                placeholderText={DATE_FORMAT.toLowerCase()}
                                             />
                                         </div>;
 

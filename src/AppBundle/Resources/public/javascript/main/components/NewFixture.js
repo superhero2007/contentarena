@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {addIcon, cancelIcon} from "./Icons";
 import DatePicker from '@components/DatePicker';
 import moment from "moment/moment";
-import { DATE_TIME_FORMAT, DATE_FORMAT } from "@constants";
+import { DATE_TIME_FORMAT, DATE_FORMAT, TIME_FORMAT } from "@constants";
 import { formatMomentToServerFormat } from "@utils/time";
 
 const isStartOfTheDay = (date) => {
@@ -71,7 +71,7 @@ class NewFixture extends Component {
                                 timeIntervals={15}
                                 dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [GMT]` : DATE_FORMAT}
                                 placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} GMT` : DATE_FORMAT}
-                                timeFormat="HH:mm"
+                                timeFormat={TIME_FORMAT}
                                 showTimeSelect={isDatePickerWithTimeEnabled}
                             />
 

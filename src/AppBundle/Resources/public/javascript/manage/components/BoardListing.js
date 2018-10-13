@@ -7,6 +7,7 @@ import {
     yellowCheckIcon
 } from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 
 class BoardListing extends React.Component{
@@ -171,7 +172,7 @@ class BoardListing extends React.Component{
                         <div style={{fontWeight: 500}}>
                             {this.context.t("MANAGE_LISTINGS_LAST_ACTION")} {lastAction.description + " by "}
                         </div>
-                        {lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "- " + Moment(lastActionDate).format('HH:mm DD/MM/YYYY')}
+                        {lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "- " + Moment(lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT} [GMT]`)}
                     </div>}
 
                     {owner && <div className="last-action">
@@ -282,7 +283,7 @@ class BoardListing extends React.Component{
 
                 <div className={"expiry"}>
                     <div>{ salesPackages.length } sales bundle{ salesPackages.length > 1 && "s"}</div>
-                    <div><div style={{fontWeight: 500}}>{this.context.t("Expiry:")}</div> {expiresAt ? Moment(expiresAt).format('DD/MM/YYYY') : 'Not set'}</div>
+                    <div><div style={{fontWeight: 500}}>{this.context.t("Expiry:")}</div> {expiresAt ? Moment(expiresAt).format(DATE_FORMAT) : 'Not set'}</div>
                 </div>
 
             </div>

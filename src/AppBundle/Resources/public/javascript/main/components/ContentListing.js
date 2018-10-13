@@ -15,6 +15,7 @@ import {
 import { getCurrencySymbol } from "../actions/utils";
 import Tooltip from '../../main/components/Tooltip';
 import { getListingImage } from "./../../common/utils/listing";
+import { DATE_FORMAT } from "@constants";
 
 class ContentListing extends Component{
     constructor(props){
@@ -196,7 +197,7 @@ class ContentListing extends Component{
                         />
                         {expiresAt && (
                             <div className="expires">
-                                Expiry: <b>{Moment(expiresAt).format('MM/DD/YYYY')}</b>
+                                Expiry: <b>{Moment(expiresAt).format(DATE_FORMAT)}</b>
                             </div>
                         )}
                     </div>
@@ -284,7 +285,7 @@ class ContentListing extends Component{
                             </div>
 
                             <div className="bid-author">
-                                <div>{Moment(bid.createdAt).format('DD/MM/YYYY')}</div>
+                                <div>{Moment(bid.createdAt).format(DATE_FORMAT)}</div>
                                 {this.context.t("Placed by:")} <b>{bid.buyerUser.firstName + " " + bid.buyerUser.lastName}</b>
                             </div>
 

@@ -9,6 +9,7 @@ import {getListingImage} from "../../common/utils/listing";
 import {plusGreyIcon, minusGreyIcon, coinIcon} from "./Icons";
 import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
+import { DATE_FORMAT } from "@constants";
 
 class ContentListingCommercialActivity extends ContentListing {
     constructor(props){
@@ -110,7 +111,7 @@ class ContentListingCommercialActivity extends ContentListing {
                             <SalesPackages salesPackages={salesPackages} />
                             {expiresAt && (
                                 <div className="expires">
-                                    Expiry: <b>{Moment(expiresAt).format('MM/DD/YYYY')}</b>
+                                    Expiry: <b>{Moment(expiresAt).format(DATE_FORMAT)}</b>
                                 </div>
                             )}
                         </div>

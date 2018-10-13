@@ -24,6 +24,7 @@ import ReactTooltip from 'react-tooltip'
 import {PropTypes} from "prop-types";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import { getListingImage } from "./../../common/utils/listing";
+import { DATE_FORMAT } from "@constants";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -615,7 +616,7 @@ class ListingDetails extends React.Component {
                                     {this.context.t("Publishing date")}
                                 </div>
                                 <div>
-                                    <b>{Moment().format('DD/MM/YYYY')}</b>
+                                    <b>{Moment().format(DATE_FORMAT)}</b>
                                 </div>
                             </div>
                             <div className="d-flex">
@@ -623,7 +624,7 @@ class ListingDetails extends React.Component {
                                     {this.context.t("Expiry")}
                                 </div>
                                 <div>
-                                    <b>{Moment(content.expiresAt).format('DD/MM/YYYY')}</b>
+                                    <b>{Moment(content.expiresAt).format(DATE_FORMAT)}</b>
                                 </div>
                             </div>
                         </div>
@@ -776,7 +777,7 @@ class ListingDetails extends React.Component {
                                         <div className="payment-percentage"><i className="fa fa-angle-right" />{` ${installment.value}%`}</div>
                                         <div className="payment-date">
                                             {installment.type === "DAY" && installment.days + this.context.t("INSTALLMENT_CLOSURE_DAYS")}
-                                            {installment.type === "DATE" && ` ${Moment(installment.date).format('DD/MM/YYYY')}`}
+                                            {installment.type === "DATE" && ` ${Moment(installment.date).format(DATE_FORMAT)}`}
                                         </div>
                                     </div>
                                 })}

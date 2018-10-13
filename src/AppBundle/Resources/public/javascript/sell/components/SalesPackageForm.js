@@ -10,6 +10,7 @@ import {PropTypes} from "prop-types";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import moment from "moment";
+import { DATE_FORMAT } from "@constants";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -520,8 +521,8 @@ class SalesPackageForm extends React.Component {
                                         <DatePicker
                                             disabled={installment.type !== "DATE"}
                                             selected={installment.date}
-                                            placeholderText={"dd/mm/yyyy"}
-                                            dateFormat={"DD/MM/YYYY"}
+                                            placeholderText={DATE_FORMAT.toLowerCase()}
+                                            dateFormat={DATE_FORMAT}
                                             minDate={moment()}
                                             onChange={(date) => {this.setInstallmentDate(date,i)}}
                                             className="small-datepicker"/>

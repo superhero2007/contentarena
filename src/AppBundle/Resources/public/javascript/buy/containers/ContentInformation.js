@@ -4,6 +4,7 @@ import Moment from "moment/moment";
 import { test } from "../actions";
 import { StaticSchedules } from "../../sell/components/SellFormItems";
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 
 class ContentInformation extends React.Component {
 
@@ -77,7 +78,7 @@ class ContentInformation extends React.Component {
                             <div className="schedule">
                                 {season.fixtures.map(fixture => {
                                     return <div className="matchday">
-                                        {fixture.name} {Moment(fixture.date).format('DD/MM/YYYY - HH:mm')}
+                                        {fixture.name} {Moment(fixture.date).format(`${DATE_FORMAT} ${TIME_FORMAT} [GMT]`)}
                                     </div>})}
                             </div>}
                         </div>

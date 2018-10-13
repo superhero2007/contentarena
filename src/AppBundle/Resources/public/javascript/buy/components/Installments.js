@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CaTooltip from '../../main/components/CaTooltip';
 import uniqueId from 'lodash/uniqueid';
 import Moment from "moment/moment";
+import { DATE_FORMAT } from "@constants";
 
 const Installments = ({installments},context) => {
     const tooltipId = uniqueId();
@@ -39,7 +40,7 @@ const Installments = ({installments},context) => {
                             </div>
                             <div className="info">
                                 {installment.type === "DAY" && installment.days + context.t("INSTALLMENT_CLOSURE_DAYS")}
-                                {installment.type === "DATE" && " " + Moment(installment.date).format('DD/MM/YYYY')}
+                                {installment.type === "DATE" && " " + Moment(installment.date).format(DATE_FORMAT)}
                             </div>
                         </div>
                     ))

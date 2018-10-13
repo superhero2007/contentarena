@@ -7,6 +7,7 @@ import {getCurrencySymbol, goTo, limitText, viewLicenseBid} from "../../main/act
 import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT } from "@constants";
 
 const rightImageStyle = {
     width: 17,
@@ -246,7 +247,7 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header',
                                 accessor: 'createdAt',
                                 Cell: props => <div>
-                                    {Moment(props.value).format('DD/MM/YYYY')}
+                                    {Moment(props.value).format(DATE_FORMAT)}
                                 </div>
 
                             }, {

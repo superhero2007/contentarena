@@ -2,6 +2,7 @@ import React from 'react';
 import Moment from "moment/moment";
 import ReactTable from "react-table";
 import Modal from 'react-modal';
+import { DATE_FORMAT } from "@constants";
 
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/utils";
@@ -342,7 +343,7 @@ class CommercialSalesBundle extends React.Component{
                             className : 'table-header-big',
                             accessor: 'createdAt',
                             Cell: props => <div>
-                                {Moment(props.value).format('DD/MM/YYYY')}
+                                {Moment(props.value).format(DATE_FORMAT)}
                             </div>
 
                         },{

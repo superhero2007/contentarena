@@ -7,6 +7,7 @@ import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol} from "../actions/utils";
 import {blueEnvelopeIcon, bucketIcon, infoIcon} from "./Icons";
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT } from "@constants";
 import DigitalSignature from "./DigitalSignature";
 
 class ContentListingPendingBid extends ContentListing {
@@ -60,7 +61,7 @@ class ContentListingPendingBid extends ContentListing {
                         {name}
                     </div>
                     <div style={{display: 'flex', alignItems:'center'}}>
-                        <div>Expiry: {Moment(expiresAt).format('DD/MM/YYYY')}</div>
+                        <div>Expiry: {Moment(expiresAt).format(DATE_FORMAT)}</div>
                         <div className="custom-id">#{customId}</div>
                     </div>
 
@@ -99,7 +100,7 @@ class ContentListingPendingBid extends ContentListing {
                                 alignItems: 'center',
                                 width: '100%',
                             }}>
-                                <div>{Moment(bid.createdAt).format('DD/MM/YYYY')}</div>
+                                <div>{Moment(bid.createdAt).format(DATE_FORMAT)}</div>
                             </div>
                             <div style={{
                                 backgroundColor: '#fff',

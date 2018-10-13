@@ -16,6 +16,7 @@ import {LanguageSelector} from "../../main/components/LanguageSelector";
 
 import {customStyles} from "../../main/styles/custom";
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT } from "@constants";
 
 const licenseStyles = {
     fontSize: "15px",
@@ -241,14 +242,14 @@ class SellFormStep3 extends React.Component {
                                 </div>
                                 <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
                                     { this.props.startDateMode === "LICENSE"  && " contract conclusion"}
-                                    { this.props.startDateMode === "DATE"  && Moment(this.props.startDate).format('DD/MM/YYYY')}
+                                    { this.props.startDateMode === "DATE"  && Moment(this.props.startDate).format(DATE_FORMAT)}
                                 </div>
                                 <div className="column right-name">
                                     {this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_END")}
                                 </div>
                                 <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
                                     { endDateMode === "LIMITED"  && this.props.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
-                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format('DD/MM/YYYY')}
+                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format(DATE_FORMAT)}
                                     { endDateMode === "UNLIMITED"  && this.context.t("Unlimited")}
                                     { !endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
                                     <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>

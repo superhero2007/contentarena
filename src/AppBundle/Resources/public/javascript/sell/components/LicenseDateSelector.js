@@ -4,6 +4,7 @@ import moment from 'moment';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import {PropTypes} from "prop-types";
+import { DATE_FORMAT } from "@constants";
 
 class LicenseDateSelector extends React.Component {
     constructor(props) {
@@ -93,8 +94,8 @@ class LicenseDateSelector extends React.Component {
                                         selected={(startDate)? moment(startDate): undefined}
                                         disabled={startDateMode!=="DATE"}
                                         onChange={this.handleStartDate}
-                                        placeholderText={"dd/mm/yyyy"}
-                                        dateFormat={"DD/MM/YYYY"}
+                                        placeholderText={DATE_FORMAT.toLowerCase()}
+                                        dateFormat={DATE_FORMAT}
                                     />
                                 </div>
                             </div>
@@ -138,8 +139,8 @@ class LicenseDateSelector extends React.Component {
                                         selected={(endDate)? moment(endDate): undefined}
                                         disabled={endDateMode!=="DATE"}
                                         onChange={this.handleEndDate}
-                                        dateFormat={"DD/MM/YYYY"}
-                                        placeholderText={"dd/mm/yyyy"}
+                                        dateFormat={DATE_FORMAT}
+                                        placeholderText={DATE_FORMAT.toLowerCase()}
                                     />
                                 </div>
                                 <div className="column">

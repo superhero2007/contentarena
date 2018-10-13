@@ -7,6 +7,7 @@ import {RightItemsDefinitions} from "../../sell/components/RightItemsDefinitions
 import {SuperRightProductionDetailsLabels} from "../../sell/components/SuperRightDefinitions";
 import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
+import { DATE_FORMAT } from "@constants";
 
 class TermSheet extends React.Component {
 
@@ -189,7 +190,7 @@ class TermSheet extends React.Component {
                         <div className="d-flex">
                             <b>
                                 { startDateMode !== "DATE"  && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
-                                { startDateMode === "DATE"  && " " + Moment(startDate).format('DD/MM/YYYY')}
+                                { startDateMode === "DATE"  && " " + Moment(startDate).format(DATE_FORMAT)}
                             </b>
                         </div>
                     </div>
@@ -201,7 +202,7 @@ class TermSheet extends React.Component {
                         <div className="d-flex">
                             <b>
                                 { endDateMode === "LIMITED"  && " " + endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
-                                { endDateMode === "DATE"  && " " +Moment(endDate).format('DD/MM/YYYY')}
+                                { endDateMode === "DATE"  && " " +Moment(endDate).format(DATE_FORMAT)}
                                 { endDateMode === "UNLIMITED"  && this.context.t(" Unlimited")}
                             </b>
                         </div>

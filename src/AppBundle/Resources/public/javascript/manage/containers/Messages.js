@@ -4,6 +4,7 @@ import {getFullName, goToListing, limitText} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
+import { DATE_TIME_FORMAT } from "@constants";
 
 class Messages extends React.Component {
     constructor(props) {
@@ -150,7 +151,7 @@ class Messages extends React.Component {
                                 this.selectThread(t)
                             }}>
                             <div className={"date"}>
-                                {t.lastMessageDate && Moment(t.lastMessageDate).format('YYYY/MM/DD HH:mm')}
+                                {t.lastMessageDate && Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
                             </div>
                             <div className={"listing-name"}>
                                 {t.listing.name}
@@ -197,7 +198,7 @@ class Messages extends React.Component {
                                         {getFullName(m.sender)}
                                     </div>
                                     <div className={"message-date"}>
-                                        {Moment(m.createdAt).format('YYYY/MM/DD HH:mm')}
+                                        {Moment(m.createdAt).format(`${DATE_TIME_FORMAT}`)}
                                     </div>
                                     <div className={"message-content"}>
                                         {m.content}

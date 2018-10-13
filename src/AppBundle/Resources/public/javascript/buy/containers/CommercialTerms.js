@@ -5,6 +5,7 @@ import SalesPackages from "./SalesPackages";
 import {PropTypes} from "prop-types";
 import {StaticSchedules} from "../../sell/components/SellFormItems";
 import Moment from "moment/moment";
+import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 
 class CommercialTerms extends React.Component {
 
@@ -144,10 +145,10 @@ class CommercialTerms extends React.Component {
                                                 </div>
                                                 <div className="actions">
                                                     <div className="item">
-                                                        <i className="fa fa-calendar icon" /> {Moment(fixture.date).format('DD/MM/YYYY')}
+                                                        <i className="fa fa-calendar icon" /> {Moment(fixture.date).format(DATE_FORMAT)}
                                                     </div>
                                                     <div className="item">
-                                                        <i className="fa fa-clock-o icon" /> {Moment(fixture.date).format('HH:mm')}
+                                                        <i className="fa fa-clock-o icon" /> {Moment(fixture.date).format(TIME_FORMAT)}
                                                     </div>
                                                 </div>
                                             </div>
