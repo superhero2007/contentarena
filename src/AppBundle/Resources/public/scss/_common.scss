@@ -328,8 +328,103 @@ i.fa.ca-tooltip {
   }
 }
 
+.ReactTable.ca-table {
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 1px;
+  border: 1px solid #999;
+
+  .table-header-small {
+    flex: 35px 0 1 !important;
+    width: 35px !important;
+    text-align: center;
+  }
+
+  input {
+    margin: inherit;
+  }
+
+  .rt-th,
+  .rt-td {
+    padding: 9px 5px;
+  }
+
+  .rt-thead {
+    min-width: auto !important;
+    .rt-th {
+      background-color: #ffffff;
+      box-shadow: none;
+      padding: 12px 5px;
+      font-weight: bold;
+      border-right: 1px solid #999;
+      border-bottom: 1px solid #999;
+      color: #1A4B63;
+      font-size: 15px;
+      text-transform: uppercase;
+
+      .fa {
+        padding: 0 0 0 5px;
+        color: $color-blue;
+        font-size: 20px;
+      }
+
+      img {
+        margin-top: -5px;
+      }
+    }
+    .rt-tr {
+      text-align: left;
+    }
+    .rt-th.-sort-asc,
+    .rt-td.-sort-asc,
+    .rt-th.-sort-desc,
+    .rt-td.-sort-desc {
+      box-shadow: none !important;
+    }
+    &.-header {
+      box-shadow: none;
+    }
+  }
+
+  .rt-tbody {
+    min-width: auto !important;
+    .rt-tr-group {
+      border-color: #999;
+    }
+    .rt-tr {
+      background-color: #ffffff;
+      &.-even {
+        background-color: #efefef;
+      }
+    }
+    .rt-td {
+      //color: black;
+      border-right: 1px solid #999;
+      a,
+      div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+    }
+  }
+
+  .rt-tr {
+    text-align: left;
+  }
+}
+
+// @todo remove it on refactor
+a, a:hover {
+  text-decoration: none;
+  color: #1a4b63;
+}
+
+//a,
 .ca-link {
   color: #3399FF;
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
   }

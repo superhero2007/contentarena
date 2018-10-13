@@ -33,7 +33,6 @@ class ProgramDetails extends Component {
     programItem = (text, value) => {
         return (
             <div className="row-item">
-                <i className="fa fa-caret-right" />
                 <div className="cap">{text}</div>
                 <b>{value}</b>
             </div>

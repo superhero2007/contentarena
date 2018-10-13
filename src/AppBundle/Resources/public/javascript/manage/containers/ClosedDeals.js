@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import ContentListing from '../../main/components/ContentListing';
 import SendMessage from "../../main/components/SendMessage";
-import {getCurrencySymbol, goTo, limitText, viewLicenseBid} from "../../main/actions/utils";
+import {getCurrencySymbol, goTo, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
@@ -33,7 +33,11 @@ class ClosedDeals extends React.Component {
         ContentArena.ContentApi.getClosedDeals().done((bids) => {
             _this.setState({bids: bids, loading : false});
         });
+        jQuery('body, #home-wrapper').css('background-color', '#efefef') //todo: remove this when other page redesign ready
+    }
 
+    componentWillUnmount() {
+        jQuery('body, #home-wrapper').css('background-color', '') //todo: remove this when other page redesign ready
     }
 
     selectListing = (id) => {
@@ -90,13 +94,12 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big sorting',
                                 id: 'name',
-                                width: 170,
                                 accessor: d => {return{
                                     name : d.content.name,
                                     customId : d.content.customId,
                                 }},
                                 Cell: props => <div>
-                                    <a title={props.value.name} href={"listing/" + props.value.customId}>{limitText(props.value.name)}</a>
+                                    <a title={props.value.name} href={"listing/" + props.value.customId}>{props.value.name}</a>
                                 </div>
                             }, {
                                 accessor: 'content.company.legalName', // Required because our accessor is not a string
@@ -207,6 +210,7 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 id: "territories",
+                                width: 200,
                                 accessor: d => {return{
                                     size : d.salesPackage.territories.length,
                                     territories : d.salesPackage.territories,
@@ -232,6 +236,7 @@ class ClosedDeals extends React.Component {
                                 ),
                                 headerClassName : 'table-header',
                                 className : 'table-header',
+                                width: 120,
                                 id: "price",
                                 accessor: d => {return {fee: d.totalFee, currency: d.salesPackage.currency.code}},
                                 Cell: props => <div className={"blue"}>
@@ -243,6 +248,7 @@ class ClosedDeals extends React.Component {
                                         {this.context.t("Date of sale")} <i className="fa fa-sort" />
                                     </span>
                                 ),
+                                width: 135,
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 accessor: 'createdAt',
@@ -259,7 +265,7 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
                                 accessor: 'buyerUser',
-                                Cell: props => <div>
+                                Cell: props => <div title={props.value.firstName + " " + props.value.lastName}>
                                     {props.value.firstName + " " + props.value.lastName}
                                 </div>
 
@@ -267,6 +273,7 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header',
                                 className : 'table-header',
                                 Header: this.context.t("Actions"), // Custom header components!
+                                width: 100,
                                 id: 'header',
                                 accessor: d => {return{
                                     id : d.id,
