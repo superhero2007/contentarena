@@ -3,6 +3,7 @@
 namespace ApiBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Service\EmailService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,7 +59,15 @@ class LoginController extends FOSRestController
 
     }
 
-    public function postRegisterAction(Request $request)
+    /**
+     * @param Request $request
+     * @param EmailService $emailService
+     * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function postRegisterAction(Request $request, EmailService $emailService)
     {
 
         $user = $this->getDoctrine()
@@ -96,6 +105,13 @@ class LoginController extends FOSRestController
 
         $userManager->updateUser($user);
 
+        $hostUrl = $this->container->getParameter("carena_host_url");
+        $params = array(
+            "hostUrl" => $hostUrl,
+            "user" => $user
+        );
+
+        $emailService->userRequestedLogin($params);
 
         $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 

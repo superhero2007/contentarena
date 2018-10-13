@@ -31,6 +31,7 @@ class EmailService
     }
 
     /**
+     * @param $params
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
@@ -46,7 +47,7 @@ class EmailService
                 "content" => $content->getContent()
             )
         );
-        $this->sendEmail("email/email.internal.user-request.twig", $subject->getContent(), $this::$TEST_EMAIL, $parameters );
+        $this->sendEmail("email/email.internal.user-request.twig", $subject->getContent(), $this::$ALERTS_EMAIL, $parameters );
 
     }
 
