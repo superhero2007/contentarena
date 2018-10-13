@@ -60,9 +60,11 @@ class SendEmail extends ContainerAwareCommand
         $userRepository = $this->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:User');
         $type = $input->getArgument('type');
         $user = $userRepository->findOneBy(array("username"=>"juancruztalco@gmail.com"));
+        $confirmationUrl = $this->getContainer()->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $params = array(
             "hostUrl" => $hostUrl,
-            "user" => $user
+            "user" => $user,
+            "confirmationUrl" => $confirmationUrl
         );
 
         $output->writeln('Type: '.$input->getArgument('type'));
@@ -70,6 +72,10 @@ class SendEmail extends ContainerAwareCommand
         switch ($type){
             case "register_user":
                 $this->emailService->userRequestedLogin($params);
+                break;
+
+            case "activation_link":
+                $this->emailService->sendActivationLink($params);
                 break;
 
 

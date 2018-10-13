@@ -52,6 +52,29 @@ class EmailService
     }
 
     /**
+     * @param $params
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function sendActivationLink($params){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_user_activation_link");
+        $content = $repository->findBySlug("email_content_user_activation_link");
+        $content2 = $repository->findBySlug("email_content_user_activation_link_2");
+        $parameters = array_merge(
+            $params,
+            array(
+                "content" => $content->getContent(),
+                "content2" => $content2->getContent()
+            )
+        );
+        $this->sendEmail("email/email.user.activation-link.twig", $subject->getContent(), $params['user']->getEmail(), $parameters );
+
+    }
+
+    /**
      * @param $template
      * @param $subject
      * @param $to

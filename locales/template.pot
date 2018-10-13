@@ -874,6 +874,22 @@ msgid "CLOSED_DEALS_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE"
 msgstr ""
 

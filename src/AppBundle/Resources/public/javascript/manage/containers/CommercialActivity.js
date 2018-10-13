@@ -148,7 +148,7 @@ class CommercialActivity extends Component {
                 onClick={callBack}>
 
                 <img src={filter === filterType ? this.activeBulletIcon : this.bulletIcon} />
-                {this.context.t(content)}
+                {content}
             </div>
         );
     }
@@ -181,10 +181,10 @@ class CommercialActivity extends Component {
                     </div>
 
                     <div className={"status-filter"}>
-                        {this.statusFilterItem(this.allBundlesCallback, 'COMMERCIAL_ACTIVITY_FILTER_ALL', 'ALL')}
-                        {this.statusFilterItem(this.withActivityCallback, 'COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY', 'withactivity')}
-                        {this.statusFilterItem(this.openBidsCallback, 'COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS', 'openbids')}
-                        {this.statusFilterItem(this.closedBidsCallback, 'COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS', 'closeddeals')}
+                        {this.statusFilterItem(this.allBundlesCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_ALL'), 'ALL')}
+                        {this.statusFilterItem(this.withActivityCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY'), 'withactivity')}
+                        {this.statusFilterItem(this.openBidsCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS'), 'openbids')}
+                        {this.statusFilterItem(this.closedBidsCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS'), 'closeddeals')}
                     </div>
                 </div>
 

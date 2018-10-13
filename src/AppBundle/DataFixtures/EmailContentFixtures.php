@@ -37,6 +37,21 @@ class EmailContentFixtures extends Fixture
                 "email_content_internal_user_request",
                 "Email content when user requested login on landing page",
                 "New User Request:"
+            ),
+            array(
+                "email_subject_user_activation_link",
+                "Email subject when sending activation link",
+                "Finish your Content Arena registration"
+            ),
+            array(
+                "email_content_user_activation_link",
+                "Email content when sending activation link",
+                "To finish activating your account - please visit"
+            ),
+            array(
+                "email_content_user_activation_link_2",
+                "Email content when sending activation link_2",
+                "This link can only be used once to validate your account."
             )
         );
 

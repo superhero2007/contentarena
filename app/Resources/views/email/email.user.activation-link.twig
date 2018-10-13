@@ -1,0 +1,21 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+	{% include 'email/email.header.1.twig' %}
+{% endblock %}
+
+
+{% block content %}
+	<tr>
+		<td style="text-align: left">
+			{{ content }} <a href="{{ confirmationUrl }}" style="color:#2aaaec">Click here</a>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: left">
+            {{ content2 }}
+		</td>
+	</tr>
+
+{% endblock %}
