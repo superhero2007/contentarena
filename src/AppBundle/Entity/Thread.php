@@ -82,6 +82,14 @@ class Thread
      */
     private $lastMessageContent;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="last_notification_date", type="datetime", nullable=true)
+     * @Groups({"messages"})
+     */
+    private $lastNotificationDate;
+
 
     /**
      * Get id
@@ -141,7 +149,21 @@ class Thread
         $this->buyerCompany = $buyerCompany;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLastNotificationDate()
+    {
+        return $this->lastNotificationDate;
+    }
 
+    /**
+     * @param mixed $lastNotificationDate
+     */
+    public function setLastNotificationDate($lastNotificationDate)
+    {
+        $this->lastNotificationDate = $lastNotificationDate;
+    }
 
     /**
      * @return mixed

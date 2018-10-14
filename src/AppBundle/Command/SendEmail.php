@@ -56,15 +56,24 @@ class SendEmail extends ContainerAwareCommand
         /**
          * @var EmailService $emailService
          */
-        $hostUrl = $this->getContainer()->getParameter("carena_host_url");
-        $userRepository = $this->getContainer()->get('doctrine')->getManager()->getRepository('AppBundle:User');
+        $container = $this->getContainer();
+        $hostUrl = $container->getParameter("carena_host_url");
+        $userRepository = $container->get('doctrine')->getManager()->getRepository('AppBundle:User');
+        $listingRepository = $container->get('doctrine')->getManager()->getRepository('AppBundle:Content');
+        $listingStatusRepository = $container->get('doctrine')->getManager()->getRepository('AppBundle:ListingStatus');
         $type = $input->getArgument('type');
         $user = $userRepository->findOneBy(array("username"=>"juancruztalco@gmail.com"));
+        $approvedStatus = $listingStatusRepository->findOneBy(array("name"=>"APPROVED"));
+        $listing = $listingRepository->findOneBy(
+            array('status'=>$approvedStatus),
+            array('id' => 'DESC')
+        );
         $confirmationUrl = $this->getContainer()->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $params = array(
             "hostUrl" => $hostUrl,
             "user" => $user,
-            "confirmationUrl" => $confirmationUrl
+            "confirmationUrl" => $confirmationUrl,
+            "listing" => $listing
         );
 
         $output->writeln('Type: '.$input->getArgument('type'));
@@ -78,6 +87,17 @@ class SendEmail extends ContainerAwareCommand
                 $this->emailService->sendActivationLink($params);
                 break;
 
+            case "forgot_password":
+                $this->emailService->forgotPassword($params);
+                break;
+
+            case "listing_approved":
+                $this->emailService->listingApproved($listing);
+                break;
+
+            case "listing_deactivated":
+                $this->emailService->listingDeactivated($listing);
+                break;
 
         }
 

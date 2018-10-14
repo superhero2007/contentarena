@@ -52,7 +52,7 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Service\EmailService:
-        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer']
+        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%local_host%']
 
     app.command.send_email:
             class: AppBundle\Command\SendEmail
@@ -72,7 +72,7 @@ services:
 
     app_bundle.resettin_password_completed:
         class: AppBundle\EventListener\ResetPasswordSuccess
-        arguments: ['@twig','@mailer', '@doctrine.orm.entity_manager']
+        arguments: ['@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container']
         tags:
             - { name: kernel.event_subscriber }
 
@@ -102,3 +102,8 @@ services:
     api.feed_controller:
         class: ApiBundle\Controller\FeedController
         arguments: ['@AppBundle\Service\SportRadarService']
+
+    AppBundle\EventListener\UpdateListingSubscriber:
+        arguments: ['@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container']
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

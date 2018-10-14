@@ -30,16 +30,20 @@ class MessageService
 
     private $notificationService;
 
+    private $emailService;
+
     public function __construct(
         EntityManager $entityManager,
         RandomIdGenerator $idGenerator,
         NotificationService $notificationService,
+        EmailService $emailService,
         FileUploader $fileUploader
     ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
         $this->notificationService = $notificationService;
+        $this->emailService = $emailService;
     }
 
     public function getAllThreads(Request $request, User $user){
@@ -73,8 +77,6 @@ class MessageService
         return $a->getLastMessageDate() < $b->getLastMessageDate();
     }
 
-
-
     public function getThread($request){
         $thread = $this->em->getRepository('AppBundle:Thread')->findOneBy(array("customId" => $request->get("customId")));
         return $this->em->getRepository('AppBundle:Message')->getThreadMessages($thread);
@@ -104,6 +106,16 @@ class MessageService
         ));
     }
 
+    /**
+     * @param $request
+     * @param User $user
+     * @return Message
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function sendMessage($request, User $user){
 
         $recipient = $request->get('recipient');
@@ -159,6 +171,18 @@ class MessageService
             if ( $companyUser->getId() != $user->getId() ){
                 $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
             }
+        }
+
+
+        $recipientCompany = ( $thread->getBuyerCompany()->getId() == $user->getCompany()->getId()) ? $thread->getOwnerCompany() : $thread->getBuyerCompany() ;
+
+        $now = new \DateTime();
+
+        if ($thread->getLastNotificationDate() == null || date_diff($now, $thread->getLastNotificationDate())->i > 10){
+            $this->emailService->newMessage($content, $thread, $user->getCompany(), $recipientCompany );
+            $thread->setLastNotificationDate($now);
+            $this->em->persist($thread);
+            $this->em->flush();
         }
 
 

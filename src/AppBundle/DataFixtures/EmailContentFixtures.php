@@ -46,13 +46,209 @@ class EmailContentFixtures extends Fixture
             array(
                 "email_content_user_activation_link",
                 "Email content when sending activation link",
-                "To finish activating your account - please visit"
+                "To finish activating your account - please"
             ),
             array(
                 "email_content_user_activation_link_2",
                 "Email content when sending activation link_2",
                 "This link can only be used once to validate your account."
-            )
+            ),
+            array(
+                "email_subject_user_forgot_password",
+                "Email subject when requesting new password",
+                "Reset password request for Content Arena"
+            ),
+            array(
+                "email_content_user_forgot_password",
+                "Email subject when requesting new password",
+                "You sent the request to reset your password."
+            ),
+            array(
+                "email_content_user_forgot_password_2",
+                "Email subject when requesting new password",
+                "to set a new password."
+            ),
+            array(
+                "email_subject_seller_listing_approved",
+                "Email subject when a listing is approved",
+                "Your listing has been published on Content Arena"
+            ),
+            array(
+                "email_content_seller_listing_approved",
+                "Email content when a listing is approved",
+                "Congratulations! We are glad to inform you that the following listing has been published on Content Arena:"
+            ),
+            array(
+                "email_content_seller_listing_approved_2",
+                "Email content when a listing is approved",
+                "We will inform you as soon as a potential buyer will buy or bid for your content. In the meanwhile you can review and edit your listing in the"
+            ),
+            array(
+                "email_subject_seller_listing_deactivated",
+                "Email subject when a listing is deactivated",
+                "Your listing on Content Arena has been deactivated"
+            ),
+            array(
+                "email_content_seller_listing_deactivated",
+                "Email content when a listing is deactivated",
+                "The following listing on Content Arena has been deactivated and is no longer available on the marketplace:"
+            ),
+            array(
+                "email_content_seller_listing_deactivated_2",
+                "Email content when a listing is deactivated",
+                "If you wish to reactivate the listing, you can easily do so in the"
+            ),
+            array(
+                "email_subject_seller_bid_received",
+                "Email subject when a bid is received",
+                "You have received a new bid on Content Arena"
+            ),
+            array(
+                "email_content_seller_bid_received",
+                "Email content when a bid is received",
+                "Congratulations! You have received a new bid on Content Arena for the following listing:"
+            ),
+            array(
+                "email_content_seller_bid_received_2",
+                "Email content when a bid is received",
+                "Please make sure to review the bid in the"
+            ),
+            array(
+                "email_content_seller_bid_received_3",
+                "Email content when a bid is received",
+                "section and respond to the bidder as soon as possible."
+            ),
+            array(
+                "email_subject_seller_deal_closed",
+                "Email subject when a deal is closed",
+                "You have closed a new deal on Content Arena"
+            ),
+            array(
+                "email_content_seller_deal_closed",
+                "Email content when a deal is closed",
+                "Congratulations! You have closed a new deal on Content Arena for the following listing:"
+            ),
+            array(
+                "email_content_seller_deal_closed_2",
+                "Email content when a deal is closed",
+                "You will find all details as well as the counter-signed license agreement available in the “Commercial Activity” section. "
+            ),
+            array(
+                "email_content_seller_deal_closed_3",
+                "Email content when a deal is closed",
+                "Please make sure to get in touch with the buyer as soon as possible in order to provide him further information about the next steps."
+            ),
+            array(
+                "email_subject_seller_sold_out",
+                "",
+                "Sold out! All your bundles have been acquired"
+            ),
+            array(
+                "email_content_seller_sold_out",
+                "",
+                "Congratulations! All your sales bundles for the following listing have been sold:"
+            ),
+            array(
+                "email_content_seller_sold_out_2",
+                "",
+                "You can review all deals and download license agreements in the “Commercial Activity” section."
+            ),
+            array(
+                "email_subject_buyer_bid_placed",
+                "",
+                "Your bid has been placed"
+            ),
+            array(
+                "email_content_buyer_bid_placed",
+                "",
+                "Your bid for the following listing has been placed successfully:"
+            ),
+            array(
+                "email_content_buyer_bid_placed_2",
+                "",
+                "In a next step the seller will get back to you after reviewing your bid. In the meanwhile you can review or raise your bid in the "
+            ),
+            array(
+                "email_subject_buyer_bid_declined",
+                "",
+                "Your bid has been declined"
+            ),
+            array(
+                "email_content_buyer_bid_declined",
+                "",
+                "Your bid for the following listing has been declined by the seller:"
+            ),
+            array(
+                "email_content_buyer_bid_declined_2",
+                "",
+                "You can review your bid in the "
+            ),
+            array(
+                "email_content_buyer_bid_declined_3",
+                "",
+                "section. In case that the bidding process is still running you can raise your offer."
+            ),
+            array(
+                "email_subject_buyer_bid_accepted",
+                "",
+                "Your bid has been accepted"
+            ),
+            array(
+                "email_content_buyer_bid_accepted",
+                "",
+                "Congratulations! Your bid for the following listing has been accepted by the seller:"
+            ),
+            array(
+                "email_content_buyer_bid_accepted_2",
+                "",
+                "You can review the details and download the counter-signed license agreement in the "
+            ),
+            array(
+                "email_content_buyer_bid_accepted_3",
+                "",
+                "The seller will get in touch with you soon to provide more information on the next steps."
+            ),
+            array(
+                "email_subject_buyer_closed_deal",
+                "",
+                "You have closed a new deal"
+            ),
+            array(
+                "email_content_buyer_closed_deal",
+                "",
+                "Congratulations! You have closed a new deal on Content Arena for the following listing:"
+            ),
+            array(
+                "email_content_buyer_closed_deal_2",
+                "",
+                "You can review the details and download the counter-signed license agreement in the "
+            ),
+            array(
+                "email_content_buyer_closed_deal_3",
+                "",
+                "The seller will get in touch with you soon to provide more information on the next steps."
+            ),
+            array(
+                "email_subject_message_new",
+                "",
+                "You have received a new message"
+            ),
+            array(
+                "email_content_message_new",
+                "",
+                "You have received a new message regarding the following listing:"
+            ),
+            array(
+                "email_content_message_new_2",
+                "",
+                "Please go to the "
+            ),
+            array(
+                "email_content_message_new_3",
+                "",
+                "section to view the message"
+            ),
+
         );
 
         for ($i = 0; $i < count($content); $i++) {

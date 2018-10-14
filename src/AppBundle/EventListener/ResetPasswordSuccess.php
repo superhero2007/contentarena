@@ -8,8 +8,10 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Service\EmailService;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Doctrine\ORM\EntityManager;
@@ -19,15 +21,15 @@ use Doctrine\ORM\EntityManager;
  */
 class ResetPasswordSuccess implements EventSubscriberInterface
 {
-    protected $twig;
     protected $mailer;
     protected $em;
+    protected $container;
 
-    public function __construct(\Twig_Environment $twig, \Swift_Mailer $mailer, EntityManager $em)
+    public function __construct(EmailService $mailer, EntityManager $em, ContainerInterface $container)
     {
-        $this->twig = $twig;
         $this->mailer = $mailer;
         $this->em = $em;
+        $this->container = $container;
     }
 
     /**
@@ -40,23 +42,24 @@ class ResetPasswordSuccess implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param FilterUserResponseEvent $event
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function onResetPassword(FilterUserResponseEvent $event)
     {
 
-        $emailContent = $this->em->getRepository('AppBundle:EmailContent')->findBySlug("reset_password_success");
-
+        $hostUrl = $this->container->getParameter("carena_host_url");
         $user = $event->getUser();
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Content Arena')
-            ->setFrom('noreply@contentarena.com', "Content Arena Admin")
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'Registration/reset_password_success.txt.twig',
-                    array('user' => $user, 'content' => $emailContent->getContent() )
-                )
-            )
-        ;
-        $this->mailer->send($message);
+        $confirmationUrl = $this->container->get('router')->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $params = array(
+            "hostUrl" => $hostUrl,
+            "user" => $user,
+            "confirmationUrl" => $confirmationUrl
+        );
+
+        $this->mailer->forgotPassword($params);
     }
 }

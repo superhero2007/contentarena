@@ -7,6 +7,7 @@ use AppBundle\Entity\Content;
 use AppBundle\Entity\LicenseAgreement;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Service\ContentService;
+use AppBundle\Service\EmailService;
 use AppBundle\Service\MessageService;
 use AppBundle\Service\NotificationService;
 use AppBundle\Service\UserService;
@@ -278,11 +279,15 @@ class ApiController extends BaseController
      * @param Request $request
      * @param BidService $bidService
      * @param ContentService $contentService
+     * @param EmailService $emailService
      * @return JsonResponse
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      * @throws \exception
      */
-    public function contentPlaceBid(Request $request, BidService $bidService, ContentService $contentService)
+    public function contentPlaceBid(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService)
     {
         $user = $this->getUser();
         $bid = $bidService->saveBidsData($request,$user);
@@ -306,8 +311,17 @@ class ApiController extends BaseController
                 );
 
                 $this->mergeAndSave($content, $viewElements);
+                $emailService->dealClosed($content, $bid);
+                $emailService->closedDealBuyer($content, $bid);
+            } else {
+                $emailService->bidReceived($content, $bid);
+                $emailService->bidPlaced($content, $bid);
             }
+
+            if ($soldOut) $emailService->soldOut($content);
         }
+
+
 
         return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
     }
@@ -477,10 +491,14 @@ class ApiController extends BaseController
 
     /**
      * @Route("/api/bid/accept", name="acceptBids")
+     * @param Request $request
+     * @param BidService $bidService
+     * @param ContentService $contentService
+     * @param EmailService $emailService
+     * @return JsonResponse
      * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \exception
      */
-    public function acceptBids(Request $request, BidService $bidService, ContentService $contentService)
+    public function acceptBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService)
     {
         $user = $this->getUser();
 
@@ -506,6 +524,8 @@ class ApiController extends BaseController
 
             try {
                 $this->mergeAndSave($content, $viewElements);
+                $emailService->bidAccepted($content, $bid);
+                if ($soldOut) $emailService->soldOut($content);
             }
             catch (\Exception $exception){
 
@@ -521,12 +541,22 @@ class ApiController extends BaseController
 
     /**
      * @Route("/api/bid/reject", name="rejectBid")
+     * @param Request $request
+     * @param BidService $bidService
+     * @param EmailService $emailService
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function rejectBid(Request $request, BidService $bidService)
+    public function rejectBid(Request $request, BidService $bidService, EmailService $emailService)
     {
         $user = $this->getUser();
 
-        $bundle = $bidService->rejectBid($request, $user);
+        $bid= $bidService->rejectBid($request, $user);
+        $listing = $bid->getContent();
+        $bundle = $bid->getSalesPackage();
+        $emailService->bidDeclined($listing, $bid);
 
         return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
 
