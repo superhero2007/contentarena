@@ -119,12 +119,16 @@ class ContentListingCommercialActivity extends ContentListing {
                     <div  className={"bid-listing-details"}>
                         <div className={"item"}>
                             <span>
-                                {this.context.t(["closed bid", "closed bids", "n"], {n : closedBids.length})}
+                                {closedBids.length}{" "}
+                                {closedBids.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEAL")}
+                                {closedBids.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEALS")}
                             </span>
                         </div>
                         <div className={"item"}>
                             <span>
-                                {this.context.t(["open bid","open bids", "n"], {n : openBids.length})}
+                                {openBids.length}{" "}
+                                {openBids.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID")}
+                                {openBids.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BIDS")}
                             </span>
                         </div>
                         {bids.length > 0 && <div className={"total-wrapper"}>

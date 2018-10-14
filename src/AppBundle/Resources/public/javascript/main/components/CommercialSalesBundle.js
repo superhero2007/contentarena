@@ -231,6 +231,7 @@ class CommercialSalesBundle extends React.Component{
         const { showBids } = this.state;
 
         let closedDeals = salesBundle.bids.filter(b=>b.status.name === "APPROVED");
+        let openBids = salesBundle.bids.filter(b=>b.status.name === "PENDING");
         let totalFee = (closedDeals.length > 0) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
         let _this = this;
         let extraTerritories = ( salesBundle.territoriesMethod === this.worldwideExcluding) ? salesBundle.excludedTerritories : salesBundle.territories;
@@ -274,11 +275,19 @@ class CommercialSalesBundle extends React.Component{
                     </div>
 
                     <div className="sales-bundle-item-right" style={{marginLeft: 'auto'}}>
-                        <span>{this.context.t(["closed deal", "closed deals", "n"], {n : closedDeals.length})}</span>
+                        <span>
+                            {closedDeals.length}{" "}
+                            {closedDeals.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEAL")}
+                            {closedDeals.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEALS")}
+                        </span>
                     </div>
 
                     <div className="sales-bundle-item-right">
-                        <span>{this.context.t(["open bid","open bids", "n"], {n : salesBundle.bids.filter(b=>b.status.name === "PENDING").length})}</span>
+                        <span>
+                            {openBids.length}{" "}
+                            {openBids.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID")}
+                            {openBids.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BIDS")}
+                        </span>
                     </div>
 
                     {totalFee && <div className="sales-bundle-item-right">

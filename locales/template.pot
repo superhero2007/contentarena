@@ -396,10 +396,20 @@ msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "closed bid"
-msgid_plural "closed bids"
-msgstr[0] ""
-msgstr[1] ""
+msgid "COMMERCIAL_ACTIVITY_CLOSED_DEAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_CLOSED_DEALS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_OPEN_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_OPEN_BIDS"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Revenue"
@@ -686,7 +696,6 @@ msgid "SETTINGS_TITLE_COMPANY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_BUTTON_EDIT"
 msgstr ""
 
@@ -777,7 +786,6 @@ msgid "Submit"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 #: src/AppBundle/Resources/public/javascript/sell/components/Definition.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "Edit"
@@ -950,20 +958,11 @@ msgid "PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_BUTTON_SAVE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_COMPANY_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_COMPANY_POSITION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-#: src/AppBundle/Resources/public/javascript/sell/components/Definition.js
-msgid "Save"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -1053,6 +1052,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CurrencySelector.js
 msgid "Currency"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/Definition.js
+msgid "Save"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
