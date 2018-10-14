@@ -415,17 +415,12 @@ i.fa.ca-tooltip {
   }
 }
 
-// @todo remove it on refactor
-a, a:hover {
-  text-decoration: none;
-  color: #1a4b63;
-}
-
-//a,
-.ca-link {
+//todo: apply to all urls
+a.ca-link {
   color: #3399FF;
   text-decoration: none;
   &:hover {
+    color: #3399FF;
     text-decoration: underline;
   }
 }

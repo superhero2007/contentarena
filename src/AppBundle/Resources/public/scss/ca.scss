@@ -35,6 +35,18 @@ body.page-home {
   box-sizing: border-box;
 }
 
+a {
+  color: $border-color-2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: $blue-color;
+  text-decoration: none;
+}
+
+
 button {
   cursor: pointer;
 }
