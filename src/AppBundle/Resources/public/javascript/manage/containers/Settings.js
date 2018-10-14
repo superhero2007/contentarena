@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
+import cloneDeep from "lodash/cloneDeep";
 import {getCurrencySymbol, getFullName, goTo, limitText} from "../../main/actions/utils";
 import CountrySelector from '../../main/components/CountrySelector'
 import Moment from "moment/moment";
-import {blueCheckIcon, cancelIcon, editIcon, Spinner} from "../../main/components/Icons";
+import {blueCheckIcon, cancelIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 
 class Settings extends React.Component {
@@ -16,8 +17,8 @@ class Settings extends React.Component {
             updatingUser : false,
             updatingPassword : false,
             loadingCompanyUsers : false,
-            editPersonalInfo: props.match.params.filter === "editpersonal",
-            editCompanyInfo : props.match.params.filter === "editcompany",
+            editPersonalInfo: false,
+            editCompanyInfo : true,
             companyUsers : [],
             user : {}
         };
@@ -27,6 +28,7 @@ class Settings extends React.Component {
         this.setState({loading:true, loadingCompanyUsers: true});
 
         ContentArena.ContentApi.getUserInfo().done(user=>{
+            this.originalUser = cloneDeep(user);
             this.setState({loading:false, user : user});
         });
 
@@ -38,16 +40,18 @@ class Settings extends React.Component {
     updateCompany = () => {
         const {history} = this.props;
         this.setState({updatingCompany:true, editCompanyInfo: false});
+        this.originalUser = cloneDeep(this.state.user);
         ContentArena.ContentApi.updateCompany(this.state.user.company).done(()=>{
-            history.push("/settings");
+            this.setState({updatingCompany: false});
         })
     };
 
     updateUser = () => {
         const {history} = this.props;
         this.setState({updatingUser:true, editPersonalInfo: false});
+        this.originalUser = cloneDeep(this.state.user);
         ContentArena.ContentApi.updateUser(this.state.user).done(()=>{
-            history.push("/settings");
+            this.setState({updatingUser: false});
         })
     };
 
@@ -105,23 +109,19 @@ class Settings extends React.Component {
 
         return (
             <div className={"settings-container"}>
-                <div className={"title"}>
-                    {this.context.t("SETTINGS_TITLE_COMPANY")}
-                    {!editCompanyInfo && !updatingCompany &&
-                    <div className={"edit-button"} onClick={e=>{
-                        history.push("/settings/editcompany");
-                    }}>
-                        <img src={editIcon}/>
-                        {this.context.t("SETTINGS_BUTTON_EDIT")}
-                    </div>}
-                    {editCompanyInfo && !updatingCompany && <div className={"edit-button"} onClick={this.updateCompany}>
-                        <img src={editIcon}/>
-                        {this.context.t("SETTINGS_BUTTON_SAVE")}
-                    </div>}
-                    {updatingCompany && <Spinner/>}
-                </div>
-
                 {user.company && <div className={"setting"}>
+                    <div className={"title"}>
+                        {this.context.t("SETTINGS_TITLE_COMPANY")}
+                        {!editCompanyInfo && !updatingCompany &&
+                        <div className={"edit-button"} onClick={e=>{
+                            this.setState({
+                                editCompanyInfo: true
+                            })
+                        }}>
+                            <i className="fa fa-edit"/>
+                        </div>}
+                        {updatingCompany && <Spinner/>}
+                    </div>
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
@@ -158,7 +158,6 @@ class Settings extends React.Component {
                                 this.setState({user});
                             }}/>
                         </div>
-
                         <div className={"item"}>
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")} 2
@@ -207,70 +206,82 @@ class Settings extends React.Component {
                             this.setState({user});
                         }}/>
                     </div>
+                    <div className={"buttons"}>
+                        {editCompanyInfo && !updatingCompany && <div>
+                            <button
+                                onClick={() => {
+                                    this.setState({
+                                        user: { ...this.originalUser },
+                                        editCompanyInfo: false
+                                    });
 
-                    {/*ACTIVE USERS*/}
-                    <div style={{margin: '20px 0'}}>
-                        <label>Active Users</label>
-                        {loadingCompanyUsers && companyUsers.length === 0 && <Spinner/>}
-                        {!loadingCompanyUsers && companyUsers.length > 0 && <div>
-                            <ReactTable
-                                className={"closed-deals-table"}
-                                defaultPageSize={30}
-                                showPageSizeOptions={false}
-                                showPagination={false}
-                                minRows={0}
-                                resizable={false}
-                                data={companyUsers}
-                                columns={[{
-                                    Header: this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME"),
-                                    headerClassName : 'table-header',
-                                    className : 'table-header',
-                                    accessor: 'lastName',
-                                }, {
-                                    accessor: 'firstName', // Required because our accessor is not a string
-                                    Header: this.context.t("SETTINGS_LABEL_USER_FIRST_NAME"),
-                                    headerClassName : 'table-header',
-                                    className : 'table-header',
-                                }, {
-                                    Header: this.context.t("SETTINGS_LABEL_USER_EMAIL"),
-                                    accessor: 'email',
-                                    headerClassName : 'table-header',
-                                    className : 'table-header',
-                                },{
-                                    Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),
-                                    accessor: 'phone',
-                                    headerClassName : 'table-header',
-                                    className : 'table-header',
-                                },{
-                                    Header: this.context.t("SETTINGS_LABEL_USER_COMPANY_POSITION"),
-                                    accessor: 'title',
-                                    headerClassName : 'table-header',
-                                    className : 'table-header',
-                                }
-
-                                ]}
-                            />
+                                }}
+                                className={"cancel-button"}>Cancel
+                            </button>
+                            <button
+                                onClick={this.updateCompany}
+                                className={"standard-button"}>Save
+                            </button>
                         </div>}
                     </div>
                 </div>}
-                <div className={"title"}>
-                    {this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
-                    {!editPersonalInfo && !updatingUser &&
-                    <div className={"edit-button"} onClick={e=>{
-                        history.push("/settings/editpersonal");
-                    }}>
-                        <img src={editIcon}/>
+                <div className={'setting'}>
+                    {/*ACTIVE USERS*/}
+                    <div className={'title'}>Active Users</div>
+                    {loadingCompanyUsers && companyUsers.length === 0 && <Spinner/>}
+                    {!loadingCompanyUsers && companyUsers.length > 0 && <div>
+                        <ReactTable
+                            className={"closed-deals-table"}
+                            defaultPageSize={30}
+                            showPageSizeOptions={false}
+                            showPagination={false}
+                            minRows={0}
+                            resizable={false}
+                            data={companyUsers}
+                            columns={[{
+                                Header: this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME"),
+                                headerClassName: 'table-header',
+                                className: 'table-header',
+                                accessor: 'lastName',
+                            }, {
+                                accessor: 'firstName', // Required because our accessor is not a string
+                                Header: this.context.t("SETTINGS_LABEL_USER_FIRST_NAME"),
+                                headerClassName: 'table-header',
+                                className: 'table-header',
+                            }, {
+                                Header: this.context.t("SETTINGS_LABEL_USER_EMAIL"),
+                                accessor: 'email',
+                                headerClassName: 'table-header',
+                                className: 'table-header',
+                            }, {
+                                Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),
+                                accessor: 'phone',
+                                headerClassName: 'table-header',
+                                className: 'table-header',
+                            }, {
+                                Header: this.context.t("SETTINGS_LABEL_USER_COMPANY_POSITION"),
+                                accessor: 'title',
+                                headerClassName: 'table-header',
+                                className: 'table-header',
+                            }
 
-                        {this.context.t("Edit")}
+                            ]}
+                        />
                     </div>}
-                    {editPersonalInfo && !updatingUser && <div className={"edit-button"} onClick={this.updateUser}>
-                        <img src={editIcon}/>
-
-                        {this.context.t("Save")}
-                    </div>}
-                    {updatingUser && <Spinner/>}
                 </div>
                 <div className={"setting"}>
+                    <div className={"title"}>
+                        {this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
+                        {!editPersonalInfo && !updatingUser &&
+                        <div className={"edit-button"} onClick={e=>{
+                            this.setState({
+                                editPersonalInfo: true
+                            })
+                        }}>
+                            <i className="fa fa-edit"/>
+                        </div>}
+                        {updatingUser && <Spinner/>}
+                    </div>
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
@@ -320,55 +331,72 @@ class Settings extends React.Component {
                             }}/>
                         </div>
                     </div>
+                    <div className={"buttons"}>
+                        {editPersonalInfo && !updatingUser && <div>
+                            <button
+                                onClick={() => {
+                                    this.setState({
+                                        user: { ...this.originalUser },
+                                        editPersonalInfo: false
+                                    });
 
-                </div>
-
-
-                <div className={"title"}>
-                    {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD")}
-                </div>
-                <div className={"subtitle"}>
-                    {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
-                </div>
-                <div className={"setting"} style={{display: 'flex'}}>
-                    <div className={"password"}>
-                        <label>
-                            {this.context.t("SETTINGS_LABEL_TYPE_CURRENT_PASSWORD")}
-                        </label>
-                        <input type={"password"} onChange={(e)=>{
-                            this.setState({
-                                oldPassword : e.target.value
-                            })
-                        }}/>
-
-                        <label>
-                            {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
-                        </label>
-                        <input type={"password"} onChange={(e)=>{
-                            this.setState({
-                                password : e.target.value
-                            })
-                        }}/>
-
-                        <label>
-                            {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
-                        </label>
-                        <input type={"password"} onChange={(e)=>{
-                            this.setState({
-                                passwordCheck : e.target.value
-                            })
-                        }}/>
-
-                        {!updatingPassword && !passwordUpdated &&
-                        <button onClick={this.updatePassword}
-                                disabled={this.invalidPassword()}
-                                className={"standard-button"}>
-                            {this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
-                        </button>}
-                        {updatingPassword && <Spinner/>}
-                        {passwordUpdated && <div>
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
+                                }}
+                                className={"cancel-button"}>Cancel
+                            </button>
+                            <button
+                                onClick={this.updateUser}
+                                className={"standard-button"}>Save
+                            </button>
                         </div>}
+                    </div>
+                </div>
+                <div style={{position: 'relative'}}>
+                    <div className={"setting"} style={{maxWidth: '50%'}}>
+                        <div className={"title"} style={{marginBottom: 0}}>
+                            {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD")}
+                        </div>
+                        <div className={"subtitle"}>
+                            {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
+                        </div>
+                        <div className={"password"}>
+                            <label>
+                                {this.context.t("SETTINGS_LABEL_TYPE_CURRENT_PASSWORD")}
+                            </label>
+                            <input type={"password"} onChange={(e)=>{
+                                this.setState({
+                                    oldPassword : e.target.value
+                                })
+                            }}/>
+
+                            <label>
+                                {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
+                            </label>
+                            <input type={"password"} onChange={(e)=>{
+                                this.setState({
+                                    password : e.target.value
+                                })
+                            }}/>
+
+                            <label>
+                                {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
+                            </label>
+                            <input type={"password"} onChange={(e)=>{
+                                this.setState({
+                                    passwordCheck : e.target.value
+                                })
+                            }}/>
+
+                            {!updatingPassword && !passwordUpdated &&
+                            <button onClick={this.updatePassword}
+                                    disabled={this.invalidPassword()}
+                                    className={"standard-button"}>
+                                {this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
+                            </button>}
+                            {updatingPassword && <Spinner/>}
+                            {passwordUpdated && <div>
+                                {this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
+                            </div>}
+                        </div>
                     </div>
                     {password && <div className={"password-validation"}>
                         <div>
@@ -397,7 +425,6 @@ class Settings extends React.Component {
                             {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
                         </div>}
                     </div>}
-
                 </div>
             </div>
         )

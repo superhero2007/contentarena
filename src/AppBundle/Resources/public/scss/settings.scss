@@ -1,63 +1,201 @@
 @import "vars";
 
-.settings-container{
-  .edit-button{
+.settings-container {
+  .setting {
+    background-color: #F7F7F7;
+    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
+    padding: 25px 20px;
+    margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: inherit;
+    }
+    .ReactTable {
+      border-radius: 5px;
+      border: 1px solid #999999;
+      text-align: left;
+      .rt-thead {
+        box-shadow: none;
+        border-bottom: 1px solid #999999;
+        .table-header {
+          color: #0C4772;
+          font-size: 19px;
+          font-weight: bold;
+          text-align: left;
+          outline: none;
+        }
+      }
+      .rt-tr-group {
+        border-bottom: 1px solid #999999;
+      }
+      .table-header {
+        padding: 10px;
+        border-right: 1px solid #999999;
+      }
+    }
+    .buttons {
+      div {
+        display: flex;
+        margin: 20px auto 0;
+      }
+      .cancel-button {
+        border: none;
+        background: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #3F5667;
+        outline: none;
+        font-size: 15px;
+      }
+      .standard-button {
+        border-radius: 5px;
+        text-transform: uppercase;
+        padding: 15px 25px;
+        min-width: 150px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.09);
+      }
+    }
+  }
+  .edit-button {
     cursor: pointer;
     color: $border-color-2;
     font-size: 16px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 75px;
+    margin-left: auto;
+    width: inherit;
+    .fa {
+      font-size: 28px;
+    }
   }
-  .title{
+  .title {
     display: flex;
-    font-size: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    color: #03547C;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 24px;
   }
-  .subtitle{
+  .subtitle {
     margin-bottom: 20px;
+    font-size: 14px;
   }
   textarea {
     display: flex;
     box-sizing: border-box;
+    margin-top: 10px;
+    min-height: 220px;
+    font-weight: bold;
+    font-size: 15px;
+    background: #F5F5F5;
+    border-color: #E6E6E6;
+    &:disabled {
+      background: #EDEDED;
+      border-color: #E3E3E3;
+      color: #999999;
+    }
   }
-  .setting{
+  .setting {
     .password {
-      width: 300px;
       display: flex;
       flex-direction: column;
+      label {
+        color: #333333;
+        font-size: 16px;
+        font-weight: 600;
+      }
       input {
-        width: 250px;
-        height: 30px;
+        width: 380px;
+        height: 45px;
         padding: 5px;
         line-height: 20px;
         font-size: 16px;
         margin: 5px 0 10px;
+        background: #F5F5F5;
+        border-color: #E6E6E6;
+      }
+      .standard-button {
+        margin-left: 0;
+        height: 68px;
+        width: 253px;
+        margin-top: 30px;
+        border-radius: 5px;
       }
     }
-    .password-validation{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .row{
+    .row {
       display: flex;
       margin-bottom: 20px;
-      .item{
-        width: 240px;
+      .item {
+        width: 33%;
+        max-width: 467px;
         box-sizing: border-box;
         margin: 0 20px 0 0;
         display: flex;
         flex-direction: column;
-        input{
+        &:last-child {
+          margin-right: inherit;
+        }
+        label {
+          color: #333333;
+          font-size: 16px;
+          font-weight: 600;
+        }
+        input {
           width: auto;
           padding: 10px;
+          margin-bottom: inherit;
+          background: #F5F5F5;
+          border-color: #E6E6E6;
+          font-weight: bold;
+          font-size: 15px;
+          &:disabled {
+            background: #EDEDED;
+            border-color: #E3E3E3;
+            color: #999999;
+          }
+        }
+        .Select-control {
+          margin-top: 10px;
+          border-radius: inherit;
+          background: #EDEDED;
+          border-color: #E3E3E3;
+          .Select-value-label {
+            color: #999999;
+            font-weight: bold;
+            font-size: 80%;
+          }
+          input {
+            background: inherit;
+          }
         }
       }
     }
   }
-  .save-button-container{
+  .password-validation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 10px solid #CCCCCC;
+    height: 305px;
+    width: 385px;
+    position: absolute;
+    right: 10%;
+    top: 15%;
+    div {
+      width: 230px;
+      margin: 0 auto;
+      text-align: left;
+      padding: 6px 0;
+      img {
+        width: 23px;
+        height: 23px;
+        margin-right: 10px;
+      }
+    }
+  }
+  .save-button-container {
     display: flex;
     justify-content: center;
     margin: 20px;
