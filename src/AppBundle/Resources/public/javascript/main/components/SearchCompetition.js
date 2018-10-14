@@ -25,6 +25,24 @@ class SearchCompetition extends  React.Component {
         });
 
         ContentArena.Api.searchCompetition(this.state.input).done((results)=>{
+
+            let names = [];
+
+            results = results.map(item=>{
+                item.name = item.name.replace(/ singles/gi,'').replace(/ double/gi,'');
+                return item;
+            }).filter(item=>{
+                if (!item.sport || !item.sport.externalId || item.sport.externalId !== "sr:sport:5" ){
+                    return true
+                }
+
+                if (names.indexOf(item.name) === -1){
+                    names.push(item.name);
+                    return true
+                }
+                return false;
+            });
+
             _this.setState({
                 results : results,
                 searching : false,
