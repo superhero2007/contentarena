@@ -318,7 +318,7 @@ class Content
     /**
      * @var object
      * @ORM\Column(name="selected_rights_by_super_right", type="object", nullable=true)
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "closed"})
      */
     private $selectedRightsBySuperRight;
 

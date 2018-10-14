@@ -8,6 +8,7 @@ import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
+import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
 
 const rightImageStyle = {
     width: 17,
@@ -48,6 +49,16 @@ class ClosedDeals extends React.Component {
         const { loading, bids } = this.state;
 
         document.title = "Content Arena - Closed Deals";
+
+        bids.forEach(bid=>{
+            if (bid.soldListing && bid.soldListing.selectedRightsBySuperRight){
+                bid.soldListing.rightsPackage.forEach( (rp,k) => {
+                    rp.exclusive = Object.values(bid.soldListing.selectedRightsBySuperRight)[k]['exclusive'];
+                });
+            }
+
+        });
+
 
         return (
             <div style={{
@@ -121,11 +132,14 @@ class ClosedDeals extends React.Component {
                                 id: 'LT',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
-                                Cell: props => <div
+                                Cell: props => {
+                                    let right = props.value.find(e=>e.shortLabel === "LT");
+                                    return <div
                                     className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("LT") !== -1 &&
-                                    <img style={rightImageStyle} src={this.checkIcon}/>}
+                                    {right &&
+                                    <img style={rightImageStyle} src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}/>}
                                 </div>
+                                }
                             },{
                                 Header: () => (
                                     <span data-tip="Live betting">
@@ -136,11 +150,14 @@ class ClosedDeals extends React.Component {
                                 id: 'LB',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("LB") !== -1 &&
-                                    <img style={rightImageStyle} src={this.checkIcon}/>}
-                                </div>
+                                Cell: props => {
+                                    let right = props.value.find(e=>e.shortLabel === "LB");
+                                    return <div
+                                        className={"blue"}>
+                                        {right &&
+                                        <img style={rightImageStyle} src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}/>}
+                                    </div>
+                                }
                             },{
                                 Header: () => (
                                     <span data-tip="Delayed & Archive">
@@ -151,11 +168,14 @@ class ClosedDeals extends React.Component {
                                 id: 'DT',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("DT") !== -1 &&
-                                    <img style={rightImageStyle} src={this.checkIcon}/>}
-                                </div>
+                                Cell: props => {
+                                    let right = props.value.find(e=>e.shortLabel === "DT");
+                                    return <div
+                                        className={"blue"}>
+                                        {right &&
+                                        <img style={rightImageStyle} src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}/>}
+                                    </div>
+                                }
                             },{
                                 Header: () => (
                                     <span data-tip="Highlights">
@@ -166,11 +186,14 @@ class ClosedDeals extends React.Component {
                                 id: 'HL',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("HL") !== -1 &&
-                                    <img style={rightImageStyle} src={this.checkIcon}/>}
-                                </div>
+                                Cell: props => {
+                                    let right = props.value.find(e=>e.shortLabel === "HL");
+                                    return <div
+                                        className={"blue"}>
+                                        {right &&
+                                        <img style={rightImageStyle} src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}/>}
+                                    </div>
+                                }
                             },{
                                 Header: () => (
                                     <span data-tip="News access">
@@ -181,11 +204,14 @@ class ClosedDeals extends React.Component {
                                 id: 'NA',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("NA") !== -1 &&
-                                    <img style={rightImageStyle} src={this.checkIcon}/>}
-                                </div>
+                                Cell: props => {
+                                    let right = props.value.find(e=>e.shortLabel === "NA");
+                                    return <div
+                                        className={"blue"}>
+                                        {right &&
+                                        <img style={rightImageStyle} src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}/>}
+                                    </div>
+                                }
                             },{
                                 Header: () => (
                                     <span data-tip="Program">
@@ -196,11 +222,14 @@ class ClosedDeals extends React.Component {
                                 id: 'PR',
                                 headerClassName : 'table-header-small',
                                 className : 'table-header-small',
-                                Cell: props => <div
-                                    className={"blue"}>
-                                    {props.value.map(r=>r.shortLabel).indexOf("PR") !== -1 &&
-                                    <img style={rightImageStyle} src={this.checkIcon}/>}
-                                </div>
+                                Cell: props => {
+                                    let right = props.value.find(e=>e.shortLabel === "PR");
+                                    return <div
+                                        className={"blue"}>
+                                        {right &&
+                                        <img style={rightImageStyle} src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}/>}
+                                    </div>
+                                }
                             }, {
                                 Header: () => (
                                     <span>
