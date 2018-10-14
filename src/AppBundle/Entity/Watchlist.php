@@ -28,10 +28,10 @@ class Watchlist
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="watchlist")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="watchlist")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $user;
+    private $company;
 
     /**
      * Get id
@@ -68,26 +68,21 @@ class Watchlist
     }
 
     /**
-     * Set user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Watchlist
+     * @return mixed
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function getCompany()
     {
-        $this->user = $user;
-
-        return $this;
+        return $this->company;
     }
 
     /**
-     * Get user
-     *
-     * @return \AppBundle\Entity\User
+     * @param mixed $company
      */
-    public function getUser()
+    public function setCompany($company)
     {
-        return $this->user;
+        $this->company = $company;
     }
+
+
+
 }

@@ -86,6 +86,13 @@ class Bid
     private $buyerUser;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="bid")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"closed", "commercial"})
+     */
+    private $buyerCompany;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial"})
@@ -456,6 +463,22 @@ class Bid
     public function setBuyerSignatureDate($buyerSignatureDate)
     {
         $this->buyerSignatureDate = $buyerSignatureDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuyerCompany()
+    {
+        return $this->buyerCompany;
+    }
+
+    /**
+     * @param mixed $buyerCompany
+     */
+    public function setBuyerCompany($buyerCompany)
+    {
+        $this->buyerCompany = $buyerCompany;
     }
 
 

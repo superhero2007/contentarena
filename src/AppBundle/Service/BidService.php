@@ -46,8 +46,8 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getAllBidsByContent($listing);
     }
 
-    public function getAllBidsByContentAndUser($listing, $user){
-        return $this->em->getRepository('AppBundle:Bid')->getAllBidsByContentAndUser($listing, $user);
+    public function getAllBidsByContentAndUser($listing, $company){
+        return $this->em->getRepository('AppBundle:Bid')->getAllBidsByContentAndUser($listing, $company);
     }
 
     public function getAllBidsBySalesBundle($salesBundle){
@@ -116,6 +116,7 @@ class BidService
         $bid->setContent($content);
         $bid->setSalesPackage($salesPackage);
         $bid->setBuyerUser($user);
+        $bid->setBuyerCompany($user->getCompany());
         $bid->setAmount($amount);
         $bid->setTotalFee($request->get('totalFee'));
         $bid->setUpdatedAt($updatedAt);

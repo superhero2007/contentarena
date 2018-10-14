@@ -10,7 +10,7 @@ namespace AppBundle\Repository;
  */
 class BidRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getPendingBids($user){
+    public function getPendingBids($company){
         $now = date('Y-m-d H:i:s');
         $query = $this->createQueryBuilder('b')
             ->orderBy("b.createdAt", "DESC")
@@ -18,7 +18,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
             ->join('b.salesPackage', 'bundle')
             ->join('b.status', 'status')
             ->join('b.type', 'type')
-            ->where('b.buyerUser = :user')
+            ->where('b.buyerCompany = :company')
             ->andWhere('status.name = :pending')
             ->andWhere('type.name = :type')
             ->andWhere('bundle.sold = :isSold')
@@ -26,14 +26,14 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('now',$now)
             ->setParameter('pending', 'PENDING')
             ->setParameter('type', 'BIDDING')
-            ->setParameter('user', $user)
+            ->setParameter('company', $company)
             ->setParameter('isSold', false)
             ->getQuery();
 
         return $query->getResult();
     }
 
-    public function getRejectedBids($user){
+    public function getRejectedBids($company){
         $now = date('Y-m-d H:i:s');
         $query = $this->createQueryBuilder('b')
             ->orderBy("b.updatedAt", "DESC")
@@ -41,7 +41,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
             ->join('b.salesPackage', 'bundle')
             ->join('b.status', 'status')
             ->join('b.type', 'type')
-            ->where('b.buyerUser = :user')
+            ->where('b.buyerCompany = :company')
             ->andWhere('status.name = :rejected or :now > c.expiresAt or bundle.sold = :isSold')
             ->andWhere('type.name = :type')
             ->andWhere('status.name != :approved')
@@ -49,7 +49,7 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('rejected', 'REJECTED')
             ->setParameter('approved', 'APPROVED')
             ->setParameter('type', 'BIDDING')
-            ->setParameter('user', $user)
+            ->setParameter('company', $company)
             ->setParameter('isSold', true)
             ->getQuery();
 
@@ -81,13 +81,13 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function getAllBidsByContentAndUser($content, $user){
+    public function getAllBidsByContentAndUser($content, $company){
         $query = $this->createQueryBuilder('b')
             ->orderBy("b.createdAt", "DESC")
             ->where('b.content = :content')
-            ->andWhere('b.buyerUser = :buyerUser')
+            ->andWhere('b.buyerCompany = :buyerCompany')
             ->setParameter('content', $content)
-            ->setParameter('buyerUser', $user)
+            ->setParameter('buyerCompany', $company)
             ->getQuery();
 
         return $query->getResult();
@@ -128,15 +128,15 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function getClosedBids($user){
+    public function getClosedBids($company){
         $query = $this->createQueryBuilder('b')
             ->orderBy("b.createdAt", "DESC")
             ->join('b.content', 'c')
             ->join('b.status', 'status')
-            ->where('b.buyerUser = :user')
+            ->where('b.buyerCompany = :company')
             ->andWhere('status.name = :approved')
             ->setParameter('approved', 'APPROVED')
-            ->setParameter('user', $user)
+            ->setParameter('company', $company)
             ->getQuery();
 
         return $query->getResult();

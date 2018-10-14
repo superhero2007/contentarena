@@ -88,7 +88,7 @@ class ApiController extends BaseController
     public function apiListingsWatchlist(Request $request){
 
         $user = $this->getUser();
-        $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['user'=>$user], array('id' => 'DESC'));
+        $watchlists = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findBy(['company'=>$user->getCompany()], array('id' => 'DESC'));
 
         $contents = [];
 
@@ -401,7 +401,8 @@ class ApiController extends BaseController
     public function apiClosedBids(Request $request)
     {
         $user = $this->getUser();
-        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getClosedBids($user);
+        $company = $user->getCompany();
+        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getClosedBids($company);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
@@ -419,7 +420,8 @@ class ApiController extends BaseController
     public function apiPendingBids(Request $request)
     {
         $user = $this->getUser();
-        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getPendingBids($user);
+        $company = $user->getCompany();
+        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getPendingBids($company);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
@@ -437,7 +439,8 @@ class ApiController extends BaseController
     public function apiRejectedBids(Request $request)
     {
         $user = $this->getUser();
-        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getRejectedBids($user);
+        $company = $user->getCompany();
+        $bids = $this->getDoctrine()->getRepository('AppBundle:Bid')->getRejectedBids($company);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();

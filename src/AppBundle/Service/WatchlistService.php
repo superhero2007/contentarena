@@ -21,12 +21,12 @@ class WatchlistService
 
     public function newOrRemove($user, $content){
 
-        $watchlist = $this->em->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'user'=>$user]);
+        $watchlist = $this->em->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'company'=>$user->getCompany()]);
 
         if(!$watchlist){
             $watchlist = new Watchlist();
             $watchlist->setContent($content);
-            $watchlist->setUser($user);
+            $watchlist->setCompany($user->getCompany());
 
             $this->em->persist($watchlist);
             $this->em->flush();
@@ -41,7 +41,7 @@ class WatchlistService
     }
 
     public function isInWatchlist($user, $content){
-        $watchlist = $this->em->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'user'=>$user]);
+        $watchlist = $this->em->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'company'=>$user->getCompany()]);
         return !!$watchlist;
     }
 

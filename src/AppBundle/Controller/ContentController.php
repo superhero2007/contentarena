@@ -37,7 +37,7 @@ class ContentController extends Controller
             ->getRepository('AppBundle:Content')
             ->getTerritoryInfo($request->get("customId"));
 
-        $watchlisted = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'user'=>$user]);
+        $watchlisted = $this->getDoctrine()->getRepository('AppBundle:Watchlist')->findOneBy(['content'=>$content, 'company'=>$user->getCompany()]);
         return $this->render('content/content.html.twig', [
             'user' => $user,
             'content' => $content,
@@ -129,6 +129,7 @@ class ContentController extends Controller
 
         $customId = $request->get('customId');
         $user = $this->getUser();
+        $company = $user->getCompany();
         //Take Repositories
         $repository = $this->getDoctrine()->getRepository("AppBundle:Content");
         $statusesForbiddenForNonMembers = array(
@@ -164,7 +165,7 @@ class ContentController extends Controller
         $isMember = $content->userIsCompanyMember($user);
         $content->setUserCanNotBuy($isMember);
 
-        $bids = $bidService->getAllBidsByContentAndUser($content, $user);
+        $bids = $bidService->getAllBidsByContentAndUser($content, $company);
         $bundlesWithActivity = array();
         $closedDeals = array();
         if ($bids != null){
