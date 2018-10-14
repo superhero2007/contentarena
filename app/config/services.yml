@@ -52,7 +52,7 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Service\EmailService:
-        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%local_host%']
+        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%carena_host_url%']
 
     app.command.send_email:
             class: AppBundle\Command\SendEmail
