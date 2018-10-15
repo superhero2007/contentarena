@@ -65,24 +65,26 @@ class SellButtons extends React.Component {
      */
     reviewAndSignEnabled = () =>{
 
-        const {expiresAt, vat, vatPercentage, salesPackages, company, name, law} = this.props;
+        const {expiresAt, vat, vatPercentage, salesPackages, company, name, law, jurisdiction} = this.props;
 
         return expiresAt
             && ( vat === "no" || (vatPercentage && vatPercentage != 0 && vatPercentage !== "") )
             && law !== null
+            && jurisdiction !== null
             && salesPackages.length > 0
             && companyIsValid(company);
 
     };
 
     reviewAndSignGetMessages = () => {
-        const {expiresAt, vat, vatPercentage, salesPackages, company, law} = this.props;
+        const {expiresAt, vat, vatPercentage, salesPackages, company, law, jurisdiction} = this.props;
         let message = "Please complete missing information\n";
 
         if ( salesPackages.length === 0 ) message += "<br/>- Select at least one sales bundle.\n";
         if ( !expiresAt ) message += "<br/>- Select listing expiry.";
         if ( !companyIsValid(company) ) message += "<br/>- Enter company information.";
         if ( law === null) message += "<br/>- Select application law";
+        if ( jurisdiction === null ) message += "<br/>- Select place of jurisdiction";
 
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
 
