@@ -167,7 +167,7 @@ class CommercialActivity extends Component {
                     <div className={"listing-filter"}>
                         <Select
                             name="form-field-name"
-                            placeholder="All the listings"
+                            placeholder={this.context.t('COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER')}
                             isClearable={true}
                             onChange={this.onChangeSelect}
                             multi={false}
@@ -176,7 +176,7 @@ class CommercialActivity extends Component {
                         />
                         <div className="reset-listing-filter" onClick={this.onResetFilter}>
                             <img src={this.reloadIcon} />
-                            <span>All listings</span>
+                            <span>{this.context.t('COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR')}</span>
                         </div>
                     </div>
 

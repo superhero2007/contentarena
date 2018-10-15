@@ -905,6 +905,14 @@ msgid "CLOSED_DEALS_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
 msgid "COMMERCIAL_ACTIVITY_FILTER_ALL"
 msgstr ""
 
