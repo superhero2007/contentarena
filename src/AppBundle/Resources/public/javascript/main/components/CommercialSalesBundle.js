@@ -341,9 +341,9 @@ class CommercialSalesBundle extends React.Component{
                             className : 'table-header-big',
                             accessor: 'status.name',
                             Cell: props => <div>
-                                {props.value === "APPROVED" && "Closed Deal"}
-                                {props.value === "PENDING" && "Bid Placed"}
-                                {props.value === "REJECTED" && "Bid Declined"}
+                                {props.value === "APPROVED" && this.context.t("COMMERCIAL_ACTIVITY_BID_STATUS_CLOSED_DEAL")}
+                                {props.value === "PENDING" && this.context.t("COMMERCIAL_ACTIVITY_BID_STATUS_PENDING")}
+                                {props.value === "REJECTED" && this.context.t("COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED")}
                             </div>
 
                         },{

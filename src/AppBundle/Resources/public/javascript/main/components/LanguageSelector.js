@@ -38,7 +38,7 @@ class LanguageSelector extends  React.Component {
     };
 
     render(){
-        const { value, multi = true } = this.props;
+        const { value, multi = true, placeholder } = this.props;
         const realLanguages = Object.values(languages).map((i, k)=>({value : i.name , label : i.name }));
         const allLanguages = [ allValue, ...realLanguages ];
 
@@ -48,6 +48,7 @@ class LanguageSelector extends  React.Component {
                 onChange={this.handleOnChange}
                 value={value}
                 multi={multi}
+                placeholder={placeholder}
                 options={allLanguages}
             />
         )
