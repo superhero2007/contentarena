@@ -6,17 +6,13 @@ import moment from "moment/moment";
 import { DATE_TIME_FORMAT, DATE_FORMAT, TIME_FORMAT } from "@constants";
 import { formatMomentToServerFormat } from "@utils/time";
 
-const isStartOfTheDay = (date) => {
-    return moment(date).startOf('day').valueOf() !== moment(date).valueOf()
-};
-
 class NewFixture extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isDatePickerEnabled: !!props.date,
-            isDatePickerWithTimeEnabled: isStartOfTheDay(props.date),
+            isDatePickerWithTimeEnabled: !!props.date ? isStartOfTheDay(props.date) : false,
         };
     }
 
@@ -30,8 +26,6 @@ class NewFixture extends Component {
             })
         }}
     }
-
-
 
     enablePicker = (type) => {
         const {id} = this.props;
@@ -105,6 +99,11 @@ class NewFixture extends Component {
         )
     }
 }
+
+const isStartOfTheDay = (date) => {
+    return moment(date).startOf('day').valueOf() !== moment(date).valueOf()
+};
+
 
 NewFixture.contextTypes = {
     t: PropTypes.func.isRequired
