@@ -226,7 +226,10 @@ class CommercialActivity extends Component {
                             !loading && <div className="big-spinner" style={{
                                 fontSize: 30
                             }}>
-                                {this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE")}
+                                {this.state.filter === "ALL" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE")}
+                                {this.state.filter === "withactivity" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_WITH_ACTIVITY")}
+                                {this.state.filter === "openbids" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_OPEN_BIDS")}
+                                {this.state.filter === "closeddeals" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS")}
                             </div>
                         }
                     </div>

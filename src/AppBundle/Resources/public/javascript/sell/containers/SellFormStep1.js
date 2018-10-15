@@ -549,7 +549,7 @@ class SellFormStep1 extends React.Component {
 
                     {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px", maxWidth: 872}}>
                         <button className={"standard-button link-button"} onClick={this.addSportSelector} style={{marginLeft: 'auto'}}>
-                            {this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
+                            {this.context.t("CL_STEP1_FORM_ADD_SPORT")}
                         </button>
                     </div>}
 
@@ -627,7 +627,11 @@ class SellFormStep1 extends React.Component {
 
                     <ListingName onChange={() => this.setState({ nameSet: true })} />
 
-                    <Description value={this.props.description} onChange={ (e) => this.updateContentValue(e, "description")} />
+                    <Description
+                        value={this.props.description}
+                        title={this.context.t("CL_STEP1_LISTING_DETAILS_TITLE")}
+                        placeholder={this.context.t("CL_STEP1_LISTING_DETAILS_PLACEHOLDER")}
+                        onChange={ (e) => this.updateContentValue(e, "description")} />
 
                     <FileSelector
                         label={this.context.t("CL_STEP1_LABEL_IMAGE")}

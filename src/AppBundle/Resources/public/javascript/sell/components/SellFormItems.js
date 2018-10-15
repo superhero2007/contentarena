@@ -6,7 +6,7 @@ import {PropTypes} from "prop-types";
 
 export const Description = ({value, onChange, title= "Enter a description", placeholder="Provide a short description of your content listing"}) => (
     <div className="textarea-input">
-        <label>{title} (optional)</label>
+        <label>{title}</label>
         <textarea onChange={onChange} value={value} placeholder={placeholder}/>
     </div>
 );

@@ -355,6 +355,18 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_OPEN_BIDS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_STATUS_CLOSED_DEAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_STATUS_PENDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 msgid "WATCHLIST_REMOVE_CONFIRMATION"
 msgstr ""
@@ -404,6 +416,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "Revenue"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_HIDE_BUNDLES_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CountrySelector.js
@@ -608,7 +628,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_SELECTOR_ADD_SPORT"
 msgstr ""
 
@@ -1196,6 +1215,18 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_WITH_ACTIVITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_OPEN_BIDS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/CommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "MANAGE_LISTINGS_TITLE_DRAFT"
 msgstr ""
@@ -1382,6 +1413,30 @@ msgstr ""
 msgid "Unlimited"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_LANGUAGE_SELECTOR_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_LICENSED_LANGUAGE_SELECTOR_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_COMMENTS_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL_STEP3_POPUP_TECHNICAL_FEE_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL_STEP3_POPUP_TECHNICAL_FEE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL_STEP3_POPUP_TECHNICAL_FEE_3"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
 msgid "Sales bundle"
 msgstr ""
@@ -1449,6 +1504,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_INSTALLMENTS_PERCENTAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_INSTALLMENTS_DAYS_AFTER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
@@ -1540,6 +1603,10 @@ msgid "CL_STEP1_DESCRIPTION_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_FORM_ADD_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LABEL_COUNTRY"
 msgstr ""
 
@@ -1565,6 +1632,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LISTING_DETAILS_TOOLTIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LISTING_DETAILS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LISTING_DETAILS_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js

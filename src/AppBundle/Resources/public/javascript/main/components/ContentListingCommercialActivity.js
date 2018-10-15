@@ -140,7 +140,7 @@ class ContentListingCommercialActivity extends ContentListing {
 
                         {bids.length > 0 && <div className="show-bundle-wrapper" onClick={this.onClickShowBundle}>
                             <div className={"bundle-text"}>
-                                {showSalesPackage ? "Hide sales bundle" : "Show sales bundle"}
+                                {showSalesPackage ? this.context.t("COMMERCIAL_ACTIVITY_HIDE_BUNDLES_BUTTON") : this.context.t("COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON")}
                                 {showSalesPackage ? minusGreyIcon : plusGreyIcon}
                             </div>
                         </div>}

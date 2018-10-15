@@ -364,6 +364,7 @@ class PopupRight extends React.Component {
 
                     {RightItemsDefinitions[option].language &&
                     <LanguageSelector
+                        placeholder={this.context.t("CL3_LANGUAGE_SELECTOR_PLACEHOLDER")}
                         onChange={(value) => {
                             this.updateSelection(value, id+ "_LANGUAGES",rightPackage);
                             this.updateSelection(option, id, rightPackage);
@@ -447,6 +448,7 @@ class PopupRight extends React.Component {
                         </div>
                         {global && language &&
                         <LanguageSelector
+                            placeholder={this.context.t("CL3_LICENSED_LANGUAGE_SELECTOR_PLACEHOLDER")}
                             onChange={(value) => { onUpdateListing("LICENSED_LANGUAGES", value) }}
                             value={languages}/>}
 
@@ -516,7 +518,7 @@ class PopupRight extends React.Component {
                             className={cn('popup-rights-text-area', {
                                 'required': this.hasSelection(id, textAreaRequired, rightsPackage) && !rightsPackage[0].selectedRights[id+ "_TEXTAREA"]
                             })}
-                            placeholder={"Additional comments..."}
+                            placeholder={this.context.t("CL3_COMMENTS_PLACEHOLDER")}
                             onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, id+ "_TEXTAREA")}}
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
@@ -540,7 +542,7 @@ class PopupRight extends React.Component {
                                     className="ca-radio"
                                     value={"INCLUDED"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
-                                    name="TECHNICAL_FEE"/> Technical fee included in license fee
+                                    name="TECHNICAL_FEE"/> {this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_1")}
                             </div>
                             <div>
                                 <input
@@ -550,7 +552,7 @@ class PopupRight extends React.Component {
                                     className="ca-radio"
                                     value={"ON_TOP"}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE")} }
-                                    name="TECHNICAL_FEE"/> Technical fee charged on top of license fee
+                                    name="TECHNICAL_FEE"/>  {this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_2")}
                                 <input
                                     style={{ width: '70px', margin: '1px 10px'}}
                                     onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_PERCENTAGE")} }
@@ -559,7 +561,8 @@ class PopupRight extends React.Component {
                                     max={100}
                                     min={0}
                                     onFocus={(e) => { this.updateSelectionInAllPackages("ON_TOP", "TECHNICAL_FEE")} }/>
-                                % technical fee
+                                {this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_3")}
+
                             </div>
                         </div>}
 
