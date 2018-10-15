@@ -138,7 +138,7 @@ class CommercialActivity extends Component {
         this.props.history.push("/commercialactivity/filter/"+filterString+"closeddeals")
     };
 
-    statusFilterItem(callBack, content, filterType) {
+    statusFilterItem(callBack, text, filterType) {
         const { filter } = this.state;
 
         return (
@@ -148,15 +148,23 @@ class CommercialActivity extends Component {
                 onClick={callBack}>
 
                 <img src={filter === filterType ? this.activeBulletIcon : this.bulletIcon} />
-                {content}
+                {text}
             </div>
         );
     }
+
+    getFiltersText = () => ({
+        all: this.context.t('COMMERCIAL_ACTIVITY_FILTER_ALL'),
+        withActivity: this.context.t('COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY'),
+        openBids: this.context.t('COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS'),
+        closedDeals: this.context.t('COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS')
+    });
 
     render () {
         const { loading, selectedListings } = this.state;
         let listings = this.filtered();
         const allListings = this.state.listings;
+        const filters = this.getFiltersText();
 
         document.title = "Content Arena - Commercial Activity";
 
@@ -181,10 +189,10 @@ class CommercialActivity extends Component {
                     </div>
 
                     <div className={"status-filter"}>
-                        {this.statusFilterItem(this.allBundlesCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_ALL'), 'ALL')}
-                        {this.statusFilterItem(this.withActivityCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY'), 'withactivity')}
-                        {this.statusFilterItem(this.openBidsCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS'), 'openbids')}
-                        {this.statusFilterItem(this.closedBidsCallback, this.context.t('COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS'), 'closeddeals')}
+                        {this.statusFilterItem(this.allBundlesCallback, filters.all, 'ALL')}
+                        {this.statusFilterItem(this.withActivityCallback, filters.withActivity, 'withactivity')}
+                        {this.statusFilterItem(this.openBidsCallback, filters.openBids, 'openbids')}
+                        {this.statusFilterItem(this.closedBidsCallback, filters.closedDeals, 'closeddeals')}
                     </div>
                 </div>
 
