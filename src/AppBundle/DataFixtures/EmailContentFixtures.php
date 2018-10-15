@@ -248,6 +248,16 @@ class EmailContentFixtures extends Fixture
                 "",
                 "section to view the message"
             ),
+            array(
+                "email_subject_user_welcome",
+                "",
+                "Your registration on Content Arena"
+            ),
+            array(
+                "email_content_user_welcome",
+                "",
+                "Thank you for interest in joining Content Arena. Next, we will verify your application request. In case your application is approved, we will send you the access link to enter Content Arena as soon as possible."
+            ),
 
         );
 

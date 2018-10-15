@@ -421,6 +421,27 @@ class EmailService
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
+    public function welcomeUser($params){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_user_welcome");
+        $content = $repository->findBySlug("email_content_user_welcome");
+        $parameters = array_merge(
+            $params,
+            array(
+                "content" => $content->getContent(),
+            )
+        );
+        $this->sendEmail("email/email.user.welcome.twig", $subject->getContent(), $params['user']->getEmail(), $parameters );
+
+    }
+
+    /**
+     * @param $params
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function forgotPassword($params){
 
         $repository = $this->em->getRepository("AppBundle:EmailContent");

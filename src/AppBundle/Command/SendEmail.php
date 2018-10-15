@@ -83,6 +83,10 @@ class SendEmail extends ContainerAwareCommand
                 $this->emailService->userRequestedLogin($params);
                 break;
 
+            case "welcome_user":
+                $this->emailService->welcomeUser($params);
+                break;
+
             case "activation_link":
                 $this->emailService->sendActivationLink($params);
                 break;

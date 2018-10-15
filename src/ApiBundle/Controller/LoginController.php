@@ -112,6 +112,7 @@ class LoginController extends FOSRestController
         );
 
         $emailService->userRequestedLogin($params);
+        $emailService->welcomeUser($params);
 
         $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
 
