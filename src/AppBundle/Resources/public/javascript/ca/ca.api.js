@@ -41,6 +41,24 @@ ContentArena.Api= {
 
         return list;
     },
+    filterDoubles ( list, sportId ){
+        let names = [];
+
+        if ( sportId === "sr:sport:5" ){
+            list = list.map(item=>{
+                item.name = item.name.replace(/ singles/gi,'').replace(/ double/gi,'');
+                return item;
+            }).filter(item=>{
+                if (names.indexOf(item.name) === -1){
+                    names.push(item.name);
+                    return true
+                }
+                return false;
+            })
+        }
+
+        return list;
+    },
     getContent ( filter) {
         let deferred = jQuery.Deferred();
 
@@ -380,10 +398,13 @@ ContentArena.Api= {
     },
     getTournaments ( sportId, categoryId ) {
         var deferred = jQuery.Deferred(),
-            _this = this;
+            _this = this, storedResponse;
 
         if ( __apiStore.tournaments[sportId] !== undefined ){
-            deferred.resolve(_this.prepareList(__apiStore.tournaments[sportId].tournament, categoryId));
+
+            storedResponse = _this.prepareList(__apiStore.tournaments[sportId].tournament, categoryId)
+            storedResponse = _this.filterDoubles(storedResponse,sportId);
+            deferred.resolve(storedResponse);
             return deferred.promise();
         }
 
@@ -405,21 +426,7 @@ ContentArena.Api= {
                 __apiStore.tournaments[sportId] = response.tournaments;
 
                 let list = _this.prepareList(response.tournaments.tournament, categoryId);
-                let names = [];
-
-                if ( sportId === "sr:sport:5" ){
-                    list = list.map(item=>{
-                        item.name = item.name.replace(/ singles/gi,'').replace(/ double/gi,'');
-                        return item;
-                    }).filter(item=>{
-                        if (names.indexOf(item.name) === -1){
-                            names.push(item.name);
-                            return true
-                        }
-                        return false;
-                    })
-                }
-
+                list = _this.filterDoubles(list, sportId);
                 deferred.resolve(list);
             },
             error : function (data, status ) {
