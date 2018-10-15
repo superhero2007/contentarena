@@ -9,6 +9,7 @@ import {customStyles} from "../../main/styles/custom";
 import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
 import {SuperRightProductionDetailsLabels} from "./SuperRightDefinitions";
+import {PropTypes} from "prop-types";
 
 const numberFieldStyle = { width: '30px', paddingLeft: '10px'};
 
@@ -18,14 +19,15 @@ const getLanguagesString = (languages) => {
     return languages.map(item => item.label).join(', ');
 };
 
-const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions, item, predicate) => {
+const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions, context,  item, predicate) => {
     const rightLabel = nameToCustomValueConfig[item].key;
     const rightLabelCustom = nameToCustomValueConfig[item].value;
+    let suffix = "RIGHTS_";
     
     if ( currentRights === rightLabel){
         return predicate(firstPackage.selectedRights[rightLabelCustom]);
     } else {
-        return rightItemsDefinitions[currentRights].label;
+        return context.t(suffix + currentRights);
     }
 };
 
@@ -124,7 +126,6 @@ class PopupRight extends React.Component {
         let selection = this.state.selection;
         return selection.get(rightItem).has(rightPackage);
     };
-
 
     packageIsActive = ( id ) => {
         return this.state.activePackages.has( id ) && this.state.availablePackages.has( id );
@@ -273,9 +274,6 @@ class PopupRight extends React.Component {
                 default:
                     break;
             }
-
-
-
 
             if ( selected === undefined ){
                 selected = current;
@@ -437,7 +435,8 @@ class PopupRight extends React.Component {
 
                                 let definition = RightItemsDefinitions[option];
                                 if (definition.language) flex = flex+ 2;
-                                let label = definition.label;
+                                let rightKeyPreffix = "RIGHTS_";
+                                let label = this.context.t(rightKeyPreffix + option);
 
                                 if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
 
@@ -665,7 +664,7 @@ class PopupRight extends React.Component {
         if (rightsPackageFiltered.length > 0 ){
             const firstPackage = rightsPackageFiltered[0];
             const currentRights = firstPackage.selectedRights[id];
-            const getCurrentCustomValueString = getCustomValueString.bind(null, firstPackage, currentRights, RightItemsDefinitions);
+            const getCurrentCustomValueString = getCustomValueString.bind(null, firstPackage, currentRights, RightItemsDefinitions, this.context);
 
             switch (id) {
                 case 'PROGRAM':
@@ -692,11 +691,12 @@ class PopupRight extends React.Component {
                 default:
                     if (firstPackage.selectedRights) {
                         const isSingleLabel = !Array.isArray(currentRights);
+                        let suffix = "RIGHTS_";
                         if (isSingleLabel) {
-                            displayedValue = RightItemsDefinitions[currentRights].label
+                            displayedValue = this.context.t(suffix+ currentRights);
                         } else {
                             displayedValue = currentRights.map(item => {
-                                return RightItemsDefinitions[item].label;
+                                return this.context.t(suffix+ item);
                             }).join(', ');
                         }
                     }
@@ -721,5 +721,7 @@ class PopupRight extends React.Component {
     }
 }
 
-
+PopupRight.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 export default PopupRight;

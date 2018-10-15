@@ -180,8 +180,8 @@ class SellFormStep3 extends React.Component {
 
     render() {
 
-        const {step, rightsPackage, startDateMode, endDateMode, endDate, COMMENTS_RIGHTS, COMMENTS_PRODUCTION,
-            updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES
+        const {
+            step, rightsPackage, startDateMode, endDateMode, endDate, updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES
         } = this.props;
         if ( step !== 3) return (null);
         this.scroll();
@@ -232,7 +232,7 @@ class SellFormStep3 extends React.Component {
                         onClose={this.closeLicensePopup}
                     />
 
-                    <TitleBar title={"License period"} infoText={'Means the time period during which the licensee may exploit the program.'}/>
+                    <TitleBar title={"License period"} infoText={this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_TOOLTIP")}/>
 
                     <div className={"license-date-container"}>
                         <div className="table-right">
@@ -269,11 +269,14 @@ class SellFormStep3 extends React.Component {
                                 if ( right.superRights.length > 0
                                     && !this.superRightsEnabled(right.superRights)) return;
 
+                                let rightKeyPreffix = "RIGHTS_";
+                                let rightKeySuffix = "_DESCRIPTION";
+
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
-                                    name={right.name}
-                                    description={right.description}
+                                    name={this.context.t(rightKeyPreffix + right.key )}
+                                    description={this.context.t(rightKeyPreffix + right.key + rightKeySuffix )}
                                     global={right.global}
                                     language={right.language}
                                     languages={LICENSED_LANGUAGES}
@@ -288,8 +291,6 @@ class SellFormStep3 extends React.Component {
                             })
                         }
                     </div>
-
-                    {/*<Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"}/>*/}
 
                     <TitleBar title={this.context.t("CL_STEP3_TITLE_PRODUCTION_STANDARDS")}/>
 
@@ -309,10 +310,12 @@ class SellFormStep3 extends React.Component {
                                 const rightDisabled = contentDeliveryShouldBeConfigured &&
                                     !contentDeliveryConfigured && right.key !== "CONTENT_DELIVERY";
 
+                                let rightKeyPreffix = "RIGHTS_";
+
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
-                                    name={right.name}
+                                    name={this.context.t(rightKeyPreffix + right.key )}
                                     description={right.description}
                                     selected={this.props[right.key]}
                                     options={right.options}
@@ -339,9 +342,6 @@ class SellFormStep3 extends React.Component {
                             })
                         }
                     </div>
-
-                    {/*<Comments comments={COMMENTS_PRODUCTION} propName={"COMMENTS_PRODUCTION"}/>*/}
-
                 </div>
             </div>
         );

@@ -680,6 +680,270 @@ msgstr ""
 msgid "CL_STEP2_RIGHT_DEFINITIONS_PR"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_SUBLICENSE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_SUBLICENSE_YES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_SUBLICENSE_YES_APPROVAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_SUBLICENSE_NO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_SUBLICENSE_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_BROADCASTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_BROADCASTING_YES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_BROADCASTING_NO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_BROADCASTING_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_CABLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_SATELLITE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_DIGITAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_OTT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_INTERNET"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_MOBILE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM_FREE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM_PAY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM_IN-SHIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_FORM_CLOSED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_LICENSED_LANGUAGES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_LICENSED_LANGUAGES_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RUNS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RUNS_UNLIMITED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RUNS_LIMITED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RUNS_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_WINDOW"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_WINDOW_UNLIMITED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_WINDOW_LIMITED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_EXPLOITATION_WINDOW_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RESERVED_RIGHTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RESERVED_RIGHTS_YES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RESERVED_RIGHTS_NO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RESERVED_RIGHTS_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY_DEDICATED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY_LIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY_NON_DEDICATED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_VIDEO_STANDARD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_VIDEO_STANDARD_HD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_VIDEO_STANDARD_SD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_VIDEO_STANDARD_UHD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_VIDEO_STANDARD_VR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_ASPECT_RATIO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_ASPECT_RATIO_16_9"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_ASPECT_RATIO_4_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_ASPECT_RATIO_CUSTOM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_GRAPHICS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_GRAPHICS_YES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_GRAPHICS_NO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_COMMENTARY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_COMMENTARY_YES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_COMMENTARY_NO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CAMERA"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CAMERA_MINIMUM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY_SATELLITE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY_IP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY_FTP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY_FIBER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_PROGRAM"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
 msgstr ""
@@ -1381,6 +1645,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "CL_STEP3_PROGRAM_MODAL_BUTTON_OK"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "CL_STEP3_TITLE_LICENSE_PERIOD_TOOLTIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
