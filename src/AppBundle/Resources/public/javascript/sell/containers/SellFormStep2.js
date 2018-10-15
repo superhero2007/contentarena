@@ -100,7 +100,7 @@ class SellFormStep2 extends React.Component {
                     <div className="textarea-input">
                         <label>
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TITLE")}
-                            <i className="fa fa-info-circle tooltip-icon" title={'The program description represents the core of the license agreement. It defines what is licensed by you, the licensor. You either can license produced content (e.g. live transmission of an event) or an event itself (e.g. a tennis tournament). In the license agreement, all rights selected below will directly refer to this program description.'}/>
+                            <i className="fa fa-info-circle tooltip-icon" title={this.context.t('CL_STEP2_PROGRAM_TITLE_TOOLTIP')}/>
                         </label>
                         <div className='textarea-input-text'>
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TEXT")}

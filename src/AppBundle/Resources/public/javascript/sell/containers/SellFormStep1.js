@@ -621,8 +621,8 @@ class SellFormStep1 extends React.Component {
                     <div className="step-title" style={{marginBottom: 0}}>{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}</div>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
-                        {this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")}
-                        <i className="fa fa-info-circle tooltip-icon" title={'Below you can define how your listing shall be presented to buyers in the marketplace: Under which name and with which image. Also, you can insert website information and attach files. Buyers will see this information when reviewing your listing. This information will not be included in the license agreement. '}/>
+                        {this.context.t("CL_STEP1_LISTING_DETAILS_TEXT")}
+                        <i className="fa fa-info-circle tooltip-icon" title={this.context.t("CL_STEP1_LISTING_DETAILS_TOOLTIP")}/>
                     </div>
 
                     <ListingName onChange={() => this.setState({ nameSet: true })} />

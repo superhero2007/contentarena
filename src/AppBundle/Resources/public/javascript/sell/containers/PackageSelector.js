@@ -65,7 +65,7 @@ class SuperRight extends React.Component {
 
                 </div>
                 <div className="select-box-item-child">
-                    { defByLabel[0] }
+                    { this.context.t("CL_STEP2_RIGHT_DEFINITIONS_" + superRight.shortLabel) }
                     { inputData &&
                     <input
                         type={"number"}
@@ -78,7 +78,7 @@ class SuperRight extends React.Component {
                             width: 70,
                             fontSize : 12,
                         }}/>}
-                    { defByLabel[2] && defByLabel[2]}
+                    { defByLabel[2] && this.context.t("CL_STEP2_RIGHT_DEFINITIONS_" + superRight.shortLabel + "_2") }
                 </div>
 
             </div>
@@ -177,6 +177,10 @@ class PackageSelector extends React.Component {
         );
     }
 }
+
+SuperRight.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 PackageSelector.contextTypes = {
     t: PropTypes.func.isRequired

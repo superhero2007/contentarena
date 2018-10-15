@@ -336,17 +336,24 @@ msgid "Actions"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "closed deal"
-msgid_plural "closed deals"
-msgstr[0] ""
-msgstr[1] ""
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_CLOSED_DEAL"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "open bid"
-msgid_plural "open bids"
-msgstr[0] ""
-msgstr[1] ""
+msgid "COMMERCIAL_ACTIVITY_CLOSED_DEALS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_OPEN_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "COMMERCIAL_ACTIVITY_OPEN_BIDS"
+msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 msgid "WATCHLIST_REMOVE_CONFIRMATION"
@@ -393,22 +400,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingPendingBid.js
 msgid "PENDING_BIDS_REMOVE_BUTTON_CANCEL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_CLOSED_DEAL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_CLOSED_DEALS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_OPEN_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
-msgid "COMMERCIAL_ACTIVITY_OPEN_BIDS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
@@ -655,6 +646,38 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
 msgid "MESSAGE_POPUP_BUTTON_CLOSE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_LT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_LB"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_DT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_NA"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_NA_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_HL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_HL_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_PR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1169,6 +1192,10 @@ msgid "CL_STEP4_ADD_SALES_BUNDLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
+msgid "CL_STEP2_RIGHT_DEFINITIONS_"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
 msgid "CL_STEP2_RIGHTS_TITLE"
 msgstr ""
 
@@ -1261,8 +1288,11 @@ msgid "CL_STEP1_LABEL_LISTING_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_LISTING_DETAILS_TEXT"
+msgid "CL_STEP1_LISTING_DETAILS_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_LISTING_DETAILS_TOOLTIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
@@ -1275,6 +1305,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "CL_STEP2_PROGRAM_TITLE_TOOLTIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
@@ -1371,6 +1405,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_INFO_ANNEX"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_LISTING_DETAILS_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
