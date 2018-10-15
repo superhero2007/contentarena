@@ -18,7 +18,7 @@ class Settings extends React.Component {
             updatingPassword : false,
             loadingCompanyUsers : false,
             editPersonalInfo: false,
-            editCompanyInfo : true,
+            editCompanyInfo : false,
             companyUsers : [],
             user : {}
         };
