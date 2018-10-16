@@ -1016,8 +1016,8 @@
                     <label>License Fee:</label>
 
                     {% if bid is defined %}
-                        {% if bid.totalFee != 0 %}
-                            {{ bid.totalFee }} {{ bid.salesPackage.currency.code }}
+                        {% if bid.amount != 0 %}
+                            {{ bid.amount }} {{ bid.salesPackage.currency.code }}
                         {% else %}
                             Depending on bid
                         {% endif %}
@@ -1037,8 +1037,8 @@
                         <label>Technical Fee:</label>
 
                         {% if bid is defined %}
-                            {% if bid.totalFee != 0 %}
-                                {{ bid.totalFee | percentage(technicalFee) }} {{ bid.salesPackage.currency.code }}
+                            {% if bid.amount != 0 %}
+                                {{ bid.amount | percentage(technicalFee) }} {{ bid.salesPackage.currency.code }}
                             {% else %}
                                 {{ technicalFee }} %
                             {% endif %}
@@ -1056,8 +1056,8 @@
                         <label>Total:</label>
 
                         {% if bid is defined %}
-                            {% if bid.totalFee != 0 %}
-                                {{ bid.totalFee | percentage(technicalFee) + bid.totalFee}} {{ bid.salesPackage.currency.code }}
+                            {% if bid.amount != 0 %}
+                                {{ bid.amount | percentage(technicalFee) + bid.amount}} {{ bid.salesPackage.currency.code }}
                             {% else %}
                                 Depending on bid
                             {% endif %}
