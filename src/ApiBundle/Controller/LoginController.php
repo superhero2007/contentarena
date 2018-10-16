@@ -67,7 +67,7 @@ class LoginController extends FOSRestController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function postRegisterAction(Request $request, EmailService $emailService)
+    public function postRegisterAction(Request $request)
     {
 
         $user = $this->getDoctrine()
@@ -85,6 +85,7 @@ class LoginController extends FOSRestController
         $userManager = $this->get('fos_user.user_manager');
 
         $tokenGenerator = $this->get('fos_user.util.token_generator');
+        $emailService = $this->container->get("AppBundle\Service\EmailService");
         /** @var User $user */
         $user = $userManager->createUser();
         $user->setEnabled(true);
