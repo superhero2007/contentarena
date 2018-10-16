@@ -117,6 +117,10 @@ class CommercialActivity extends Component {
         history.push("/commercialactivity"+ prefix + idString + filterString);
     };
 
+    approve = (listingId) => {
+        const { history } = this.props;
+        history.push("/commercialactivity/filter/"+ listingId + "&closeddeals");
+    };
     allBundlesCallback = () => {
         const { selectedListings } = this.state;
         let filterString = (selectedListings.length > 0) ? "/filter/" + selectedListings[0]  : "" ;
@@ -201,6 +205,7 @@ class CommercialActivity extends Component {
                         return <ContentListingCommercialActivity
                             onUpdate={this.update}
                             onDelete={this.deleteBid}
+                            onApprove={this.approve}
                             bidsOpen={list.length === 1 || this.state.filter !== "ALL"}
                             bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
                             hideWithoutBids={this.state.filter === "withactivity"}

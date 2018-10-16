@@ -48,13 +48,13 @@ class CommercialSalesBundle extends React.Component{
 
     acceptBid = () => {
         const {signature} = this.state;
-        const {contentId} = this.props;
+        const {contentId, onApprove, listingCustomId} = this.props;
         let selectedBid = this.state.selectedBid;
         selectedBid.content = contentId;
         this.setState({saving : true});
         ContentArena.ContentApi.acceptBid(selectedBid, signature).done(response=>{
             this.setState({approveModalIsOpen : false, saving : false});
-            this.props.onUpdate();
+            onApprove(listingCustomId);
         });
 
     };

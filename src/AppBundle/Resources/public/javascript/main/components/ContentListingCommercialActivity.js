@@ -69,6 +69,7 @@ class ContentListingCommercialActivity extends ContentListing {
             onDelete,
             expiresAt,
             onUpdate,
+            onApprove,
             hideWithoutBids,
             filterByOpenBids,
             filterByClosedDeals,
@@ -158,10 +159,12 @@ class ContentListingCommercialActivity extends ContentListing {
                     return <CommercialSalesBundle
                         onUpdate={onUpdate}
                         onDelete={onDelete}
+                        onApprove={onApprove}
                         salesBundle={sb}
                         bidsOpen={bidsOpen}
                         company={company}
                         contentId={id}
+                        listingCustomId={customId}
                         key={i}/>
                 })}
             </div>
