@@ -159,7 +159,7 @@ class SellFormStep4 extends React.Component {
                         infoText={this.context.t('CL_STEP4_INFO_ANNEX')}
                     />
 
-                    <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} infoText={this.context.t('CL_STEP4_INFO_DETAILS')}/>
+                    <TitleBar title={this.context.t("CL_STEP4_LISTING_DETAILS_TEXT")} />
 
                     <div className='row'>
                         <ExpirationDateSelector/>

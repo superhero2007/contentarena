@@ -624,7 +624,6 @@ class SellFormStep1 extends React.Component {
 
                     <div className="step-item-description" style={{marginTop: 0}}>
                         {this.context.t("CL_STEP1_LISTING_DETAILS_TEXT")}
-                        <i className="fa fa-info-circle tooltip-icon" title={this.context.t("CL_STEP1_LISTING_DETAILS_TOOLTIP")}/>
                     </div>
 
                     <ListingName onChange={() => this.setState({ nameSet: true })} />

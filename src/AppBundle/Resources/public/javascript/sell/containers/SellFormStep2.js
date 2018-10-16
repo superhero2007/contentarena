@@ -100,7 +100,6 @@ class SellFormStep2 extends React.Component {
                     <div className="textarea-input">
                         <label>
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TITLE")}
-                            <i className="fa fa-info-circle tooltip-icon" title={this.context.t('CL_STEP2_PROGRAM_TITLE_TOOLTIP')}/>
                         </label>
                         <div className='textarea-input-text'>
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TEXT")}

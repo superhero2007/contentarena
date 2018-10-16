@@ -232,7 +232,7 @@ class SellFormStep3 extends React.Component {
                         onClose={this.closeLicensePopup}
                     />
 
-                    <TitleBar title={"License period"} infoText={this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_TOOLTIP")}/>
+                    <TitleBar title={"License period"} />
 
                     <div className={"license-date-container"}>
                         <div className="table-right">

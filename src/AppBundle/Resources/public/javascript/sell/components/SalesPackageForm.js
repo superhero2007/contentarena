@@ -648,7 +648,6 @@ class SalesPackageForm extends React.Component {
                     <label>
                         <div className='label-text'>
                             {this.context.t("CL_STEP4_SALES_BUNDLES")}
-                            <i className="fa fa-info-circle tooltip-icon" title={'Offer individual sales bundles to buyers. A sales bundle may consist out of one or multiple territories. For each sales bundle, you can set an individual payment method (fixed fee or bid) and payment schedule.'}/>
                         </div>
                     </label>
 
