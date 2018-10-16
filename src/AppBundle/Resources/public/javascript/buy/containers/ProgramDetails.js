@@ -6,14 +6,8 @@ class ProgramDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            similarLengthCheckbox: true
-        };
+        this.state = {};
     }
-
-    handleCheckboxChange = () => {
-        this.setState(state => ({similarLengthCheckbox: !state.similarLengthCheckbox}));
-    };
 
     programDescription = (description) => {
         return description && (
@@ -39,6 +33,12 @@ class ProgramDetails extends Component {
         );
     };
 
+    getProgramTitle = () => ({
+        episode: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES"),
+        duration: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION"),
+        type: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE"),
+        release: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE")
+    });
 
     render() {
         const {
@@ -50,6 +50,8 @@ class ProgramDetails extends Component {
             PROGRAM_TYPE
         } = this.props;
 
+        const programsTitle = this.getProgramTitle();
+
         const title = `${this.context.t("LISTING_DETAILS_PROGRAM_TITLE_NAME")} - ${PROGRAM_NAME}`;
         return (
             <div>
@@ -58,12 +60,12 @@ class ProgramDetails extends Component {
                     {this.programTitle(title)}
                     <div className="col-wrapper">
                         <div className="col">
-                            {this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES"), PROGRAM_EPISODES)}
-                            {this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION"), PROGRAM_DURATION)}
+                            {this.programItem(programsTitle.episode, PROGRAM_EPISODES)}
+                            {this.programItem(programsTitle.duration, PROGRAM_DURATION)}
                         </div>
                         <div className="col">
-                            {PROGRAM_TYPE && this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE"), ProgramTypesDefinitions[PROGRAM_TYPE])}
-                            {PROGRAM_YEAR && this.programItem(this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE"), PROGRAM_YEAR)}
+                            {PROGRAM_TYPE && this.programItem(programsTitle.type, ProgramTypesDefinitions[PROGRAM_TYPE])}
+                            {PROGRAM_YEAR && this.programItem(programsTitle.release, PROGRAM_YEAR)}
                         </div>
                     </div>
                 </div>

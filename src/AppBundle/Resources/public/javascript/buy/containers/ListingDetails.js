@@ -457,9 +457,10 @@ class ListingDetails extends React.Component {
 
     };
 
-    invalidPackage = () => {
-        const {signature, terms} = this.state;
-        return !signature || !terms;
+    isPackageValid = () => {
+        const {signature, terms, bid, minimumBid, selectedPackage} = this.state;
+        const isRaiseBidValid = selectedPackage.salesMethod === 'BIDDING' ? parseFloat(bid) > parseFloat(minimumBid) : true;
+        return signature && terms && isRaiseBidValid;
     };
 
     watchlist = () => {
@@ -539,7 +540,7 @@ class ListingDetails extends React.Component {
 
     isBidBtnDisabled = () => {
         const { bid, minimumBid} = this.state;
-        return !bid || parseFloat(bid) === 0 || parseFloat(bid) < parseFloat(minimumBid);
+        return !bid || parseFloat(bid) === 0 || parseFloat(bid) <= parseFloat(minimumBid);
     };
 
     getCompanyAddress = () => {
@@ -815,7 +816,7 @@ class ListingDetails extends React.Component {
                                 <label htmlFor={"terms-buy"}>{this.context.t("CHECKOUT_TERMS")}</label>
                             </div>
                             {!spinner
-                                ? (<button className="standard-button" onClick={this.placeBid} disabled={this.invalidPackage()}>
+                                ? (<button className="standard-button" onClick={this.placeBid} disabled={!this.isPackageValid()}>
                                     {selectedPackage.salesMethod === "FIXED"
                                         ? this.context.t("CHECKOUT_BUTTON_BUY")
                                         : this.context.t("CHECKOUT_BUTTON_PLACE_BID")
