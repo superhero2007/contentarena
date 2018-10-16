@@ -335,7 +335,6 @@ class SellFormStep1 extends React.Component {
     };
 
     addSeason = () => {
-        console.log("ADDSEASON");
         const {seasons} = this.props;
 
         this.setState((prevState)=> ({
@@ -445,6 +444,9 @@ class SellFormStep1 extends React.Component {
         let show = this.state.sportSelectors.length === 1 &&
             ( this.state.seasons.length > 0 || this.forceCustomSeason() ) &&
             this.state.seasonSelectors.length > 0;
+
+        if ( this.hasCustomTournament() && ( this.props.customTournament === null || this.props.customTournament === "") ) show = false;
+
         return show;
 
     };

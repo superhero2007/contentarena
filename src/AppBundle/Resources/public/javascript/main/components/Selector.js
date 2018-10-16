@@ -204,7 +204,13 @@ class Selector extends React.Component {
 
         this.setState((prevState) => ({
             prevCountries : new Map(prevState.selectorItems.map(i=>[i.externalId, i])) ,
-            selectorItems : ContentArena.Data.Countries,
+            selectorItems : [...ContentArena.Data.Countries,{
+                country_code: "INT",
+                id: 10000,
+                name: "International",
+                regions: [],
+                territoryId: 0,
+            }],
             customCountry : true
         }));
 

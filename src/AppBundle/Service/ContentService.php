@@ -538,7 +538,7 @@ class ContentService
 
                         $filteredFixtures = [];
                         foreach ( $seasonData->fixtures as $fixtureData ){
-                            if ( isset($fixtureData->name) ){
+                            if ( isset($fixtureData->name) && $fixtureData->name != "" ){
                                 $filteredFixtures[] = $fixtureData;
                             }
                         }

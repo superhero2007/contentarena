@@ -28,13 +28,27 @@ class ContentListingEventDetails extends React.Component {
             '';
     };
 
+    buildSeasonYear = (season) => {
+
+        if (season.from !== undefined &&
+            ( season.to === undefined || season.to === "" || season.from === season.to)
+        ){
+            return season.from
+        }
+
+        return season.year;
+    };
+
     getFixtures = () => {
         const {seasons} = this.props;
 
         let fixtures = [];
 
         seasons.forEach(s => {
-            if (s.fixtures) fixtures = [...fixtures, ...s.fixtures]
+            if (s.fixtures){
+                s.fixtures = s.fixtures.filter(fixture=>fixture.name!=="");
+                fixtures = [...fixtures, ...s.fixtures]
+            }
         });
 
         return fixtures;
@@ -124,6 +138,7 @@ class ContentListingEventDetails extends React.Component {
             customId,
             tournament,
             seasons,
+            showFullSeasons,
             showCustomId,
             PROGRAM_YEAR,
             PROGRAM_EPISODES,
@@ -138,6 +153,7 @@ class ContentListingEventDetails extends React.Component {
         let seasonsArray = this.getSeasonsYears(seasons);
         let roundsTitle = (rounds.length > 1) ? "Rounds: " : "Round: ";
         let roundsName = roundsTitle + rounds.join(", ");
+        let seasonsWithYear = seasons.filter(season => (season.year !== undefined));
 
         let tournamentArray = [];
         if (tournament) {
@@ -189,7 +205,8 @@ class ContentListingEventDetails extends React.Component {
                                 {sportIcon}
                             </div>
                             <div className="event-text">
-                                {sports[0].name}
+                                {sports[0].name !== "" && sports[0].name}
+                                {sports[0].name === "" &&  sports[0].value !== "" && sports[0].value}
                             </div>
                         </div>
                     )}
@@ -232,17 +249,23 @@ class ContentListingEventDetails extends React.Component {
 
                 <div className="listing-item">
                     {/*Season/Release*/}
-                    { seasonsArray.length > 0 && (
+                    { seasonsArray.length > 0 && seasonsWithYear.length > 0 && (
                          <div className="event">
                             <div className="event-icon">
                                 {seasonReleaseIcon}
                             </div>
                             <div className="event-text">
-                                {seasons.map(season => {
+                                {showFullSeasons && seasons.map(season => {
                                 return <span>
-                                        {season.year} {this.buildSeasonString(season)}
+                                        {this.buildSeasonYear(season)} {this.buildSeasonString(season)}
                                     </span>
                                 })}
+
+                                {!showFullSeasons && <span>
+                                        {this.buildSeasonYear(seasons[0])}
+                                        {seasons.length > 1 && "-" + this.buildSeasonYear(seasons[seasons.length-1])}
+                                    </span>
+                                }
                             </div>
                         </div>
                     )}
