@@ -424,3 +424,25 @@ a.ca-link {
     text-decoration: underline;
   }
 }
+
+.ca-modal-open {
+  overflow: hidden;
+
+  .ca-modal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 20px auto;
+    outline: none;
+  }
+
+  .ca-modal-overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.75);
+    overflow-y: scroll;
+  }
+}

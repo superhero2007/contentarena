@@ -368,8 +368,9 @@ class SalesPackageForm extends React.Component {
         return <Modal
             isOpen={this.state.isOpen}
             onRequestClose={this.closeModal}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
+            bodyOpenClassName={"selector ca-modal-open"}
+            className={"ca-modal"}
+            overlayClassName={"ca-modal-overlay"}
             contentLabel="Example Modal"
         >
 
