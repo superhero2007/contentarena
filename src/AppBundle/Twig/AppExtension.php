@@ -208,7 +208,7 @@ class AppExtension extends AbstractExtension
         $length = 0;
         foreach ($rights as $right){
             /* @var RightsPackage $right*/
-            if ( $right['items']["CONTENT_DELIVERY"] !== 'CONTENT_DELIVERY_NON_DEDICATED' ) $length+=1;
+            if ( $right['items']["CONTENT_DELIVERY"] !== 'CONTENT_DELIVERY_LIVE' ) $length+=1;
         }
 
         return $length;

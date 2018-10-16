@@ -222,13 +222,14 @@ export const RightItemsDefinitions = {
     "CONTENT_DELIVERY_LIVE": {
         "parent" : "Content Delivery",
         "label" : "Delivered via live feed",
-        hideIf : ["LT", "PR"]
+        disabledIf : ["LT", "PR"]
 
     },
 
     "CONTENT_DELIVERY_DEDICATED": {
         "parent" : "Content Delivery",
-        "label" : "Dedicated content delivery"
+        "label" : "Dedicated content delivery",
+        disabledIf : ["LT", "PR"]
     },
 
     "CONTENT_DELIVERY_NON_DEDICATED": {

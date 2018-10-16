@@ -6,7 +6,6 @@ export const ProductionStandardsDefinitions = [
         options : [
             "CONTENT_DELIVERY_LIVE",
             "CONTENT_DELIVERY_DEDICATED",
-            "CONTENT_DELIVERY_NON_DEDICATED"
         ],
         showTextArea: "ALL",
         multiple : false
