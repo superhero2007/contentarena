@@ -370,17 +370,17 @@ class CommercialSalesBundle extends React.Component{
                             className : 'table-header-big',
                             id : "actions",
                             accessor: b => {return {status: b.status.name, bid: b}},
-                            Cell: props => <div className="actions-col">
+                            Cell: props => <div className="actions-col d-flex">
                                 {props.value.status === "REJECTED"
                                     && <i className={"fa fa-trash-o"} style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
                                         this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
                                 }} />}
                                 {props.value.status === "PENDING"
-                                    && <i className="fa fa-check-circle-o green-icon" style={{margin:'0 10px', cursor: 'pointer', color:'#19CB43'}} onClick={()=>{
+                                    && <i className="fa fa-check-circle-o green-icon" style={{margin:'0 10px', cursor: 'pointer', color:'#19CB43', fontSize: 26}} onClick={()=>{
                                     this.setState({approveModalIsOpen:true, selectedBid : props.value.bid});
                                 }} />}
                                 {props.value.status === "PENDING"
-                                    && <i className="fa fa-times-circle-o red-icon" style={{margin:'0 10px', cursor: 'pointer', color: '#990000'}} onClick={()=>{
+                                    && <i className="fa fa-times-circle-o red-icon" style={{margin:'0 10px', cursor: 'pointer', color: '#990000', fontSize: 26}} onClick={()=>{
                                     this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
                                 }} />}
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING")
