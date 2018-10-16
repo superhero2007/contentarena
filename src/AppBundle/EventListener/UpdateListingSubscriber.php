@@ -73,6 +73,9 @@ class UpdateListingSubscriber implements EventSubscriber
                 if ( $changed["status"][0]->getName() !== "REJECTED" && $changed["status"][1]->getName() === "REJECTED"  ){
                     $this->mailer->listingDeactivated($entity);
                 }
+                if ( $changed["status"][0]->getName() !== "INACTIVE" && $changed["status"][1]->getName() === "INACTIVE"  ){
+                    $this->mailer->listingDeactivated($entity);
+                }
             }
 
         }

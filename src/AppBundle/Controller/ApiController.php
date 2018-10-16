@@ -528,6 +528,7 @@ class ApiController extends BaseController
             try {
                 $this->mergeAndSave($content, $viewElements);
                 $emailService->bidAccepted($content, $bid);
+                $emailService->dealClosed($content, $bid);
                 if ($soldOut) $emailService->soldOut($content);
             }
             catch (\Exception $exception){
