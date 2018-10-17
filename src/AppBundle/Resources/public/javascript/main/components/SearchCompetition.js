@@ -109,7 +109,7 @@ class SearchCompetition extends  React.Component {
                            placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")}
                            style={{marginLeft: 'inherit'}}
                     />
-                    <button className="standard-button" disabled={!this.state.valid || this.state.searching} onClick={this.search}>Search</button>
+                    <button className="standard-button" disabled={!this.state.valid || this.state.searching} style={{width: 355}} onClick={this.search}>Search</button>
                 </div>
 
                 {this.state.searching && <div><i className="fa fa-cog fa-spin"/></div>}
@@ -117,6 +117,21 @@ class SearchCompetition extends  React.Component {
                 {this.state.searchDone && this.state.results.length > 0 && <div>
                     {this.state.resultMessage}
                 </div>}
+
+                <div style={{ display: "inline-flex", width: 935, minHeight: 61 }} >
+                    {this.state.searchDone && this.state.results.length === 0 && <div style={{width: 645, alignSelf: 'center'}}>
+                        {this.context.t("CL_STEP1_SEARCH_NO_RESULTS", {n: this.state.input })}
+                        {this.context.t("CL_STEP1_SEARCH_TRY")}
+                    </div>}
+
+                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description" style={{marginLeft: 'auto'}}>
+                        {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
+                    </div>}
+
+                    <button className={"standard-button standard-button-big"} onClick={this.props.close} style={{marginLeft: 'auto', alignSelf: 'center'}}>
+                        {this.context.t("CL_STEP1_ENTER_MANUALLY")}
+                    </button>
+                </div>
 
                 {this.state.results.length > 0 && <div style={{marginBottom: 20}}>
                     <ReactTable
@@ -145,24 +160,6 @@ class SearchCompetition extends  React.Component {
                     />
                 </div>}
 
-                <div style={{ display: "inline-flex", width: 935, minHeight: 61 }} >
-                    {this.state.searchDone && this.state.results.length === 0 && <div style={{width: 645, alignSelf: 'center'}}>
-                        {this.context.t("CL_STEP1_SEARCH_NO_RESULTS", {n: this.state.input })}
-                        {this.context.t("CL_STEP1_SEARCH_TRY")}
-                    </div>}
-
-                    {!this.state.searchDone && <div className="step-item-description">
-                        {this.context.t("CL_STEP1_SEARCH_CANT_FIND_2")}
-                    </div>}
-
-                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description" style={{marginLeft: 'auto'}}>
-                        {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
-                    </div>}
-
-                    <button className={"standard-button standard-button-big"} onClick={this.props.close} style={{alignSelf: 'center'}}>
-                        {this.context.t("CL_STEP1_ENTER_MANUALLY")}
-                    </button>
-                </div>
             </div>
         )
     }
