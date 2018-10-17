@@ -1,3 +1,5 @@
+@import "vars";
+
 .listing-list-view {
   display: flex;
   margin-bottom: 20px;
@@ -109,7 +111,6 @@
         .listing-item {
           line-height: $col-height / 3;
           max-height: $col-height / 3;
-          //margin-right: 75px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -623,8 +624,53 @@
           }
         }
         .sales-packages {
+          display: table;
+          width: 100%;
+
           .sales-package-container {
-            @extend .row-container
+            padding: 15px 0;
+            display: table-row;
+
+            & .package-row {
+              display: table-cell;
+              text-align: center;
+              vertical-align: middle;
+              padding: 10px 0;
+              border-bottom: 1px solid $color-grey-light;
+
+              &.name{
+                text-align: left;
+                b, span, img{ margin-right: 15px; }
+                img{
+                  height: 23px;
+                  width: 26px;
+                }
+              }
+
+              &.bid{
+                padding-top: 5px;
+              }
+
+              &.bid, &.info{
+                width: 60px;
+              }
+
+              &.price{
+                text-align: right;
+                padding-right: 10px;
+
+                width: 1%;
+                white-space: nowrap;
+              }
+
+              &.buttons{
+                width: 150px;
+              }
+
+              .ca-btn {
+                width: 145px;
+              }
+            }
           }
         }
         .term-sheet {

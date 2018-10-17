@@ -63,7 +63,6 @@ class SellFormStep2 extends React.Component {
     };
 
     render() {
-        console.log('Sell FORM STEP 2');
         const {
             programDescription,
             updateContentValue,

@@ -218,9 +218,6 @@ button {
         color: grey;
 
       }
-      .table-right {
-
-      }
     }
     .react-tagsinput {
       width: 100%;
@@ -391,12 +388,18 @@ button {
           display: none;
         }
       }
+      .sales-package-table{
+        @extend %sales-package-table;
+      }
       .content {
         display: flex;
         flex-direction: row;
         .sales-package-container {
           display: flex;
           flex-direction: row;
+
+
+
           .sales-package {
             display: flex;
             flex-direction: row;
@@ -511,21 +514,7 @@ button {
         width: 90%;
         display: inline-block;
         font-size: 16px;
-        //input[type="checkbox"] + label {
-        //  display: inline-block;
-        //  width: 21px;
-        //  height: 19px;
-        //  vertical-align: middle;
-        //  cursor: pointer;
-        //  background-image: none;
-        //  background-color: #E8EBF0;
-        //  position: relative;
-        //  margin-right: 4px;
-        //  margin-left: 0px;
-        //  border: 1px solid #A9B5C6;
-        //  border-radius: 4px;
-        //
-        //}
+
         span {
           display: block;
           float: right;
@@ -830,6 +819,11 @@ button {
             height: 35px;
           }
         }
+
+        .sales-package-table{
+          @extend %sales-package-table;
+        }
+
       }
       .add-item {
         margin-bottom: 0;
@@ -890,21 +884,7 @@ button {
     display: inline-block;
     font-size: 16px;
     box-sizing: border-box;
-    //input[type="checkbox"] + label {
-    //  display: inline-block;
-    //  width: 21px;
-    //  height: 19px;
-    //  vertical-align: middle;
-    //  cursor: pointer;
-    //  background-image: none;
-    //  background-color: #E8EBF0;
-    //  position: relative;
-    //  margin-right: 4px;
-    //  margin-left: 0px;
-    //  border: 1px solid #A9B5C6;
-    //  border-radius: 4px;
-    //
-    //}
+
     span {
       display: block;
       float: right;
@@ -1507,48 +1487,6 @@ button {
   input::placeholder {
     color: #000;
   }
-  //input[type="radio"]{
-  //  display: none;
-  //}
-  //
-  //input[type="checkbox"] + label, input[type="radio"] + label  {
-  //  display: inline-block;
-  //  width: 26px;
-  //  height: 26px;
-  //  min-width: 19px;
-  //  vertical-align: middle;
-  //  cursor: pointer;
-  //  background-color: transparent;
-  //  border-radius: 50%;
-  //  border: 1px solid lightgray;
-  //  position: relative;
-  //  margin-right: 20px;
-  //  background-image: none;
-  //}
-  //input[type="checkbox"]:checked + label:after, input[type="radio"]:checked + label:after {
-  //  opacity: 1;
-  //}
-  //
-  //input[type="checkbox"]:checked + label, input[type="radio"]:checked + label {
-  //  border: 1px solid #48C0FE;
-  //}
-  //input[type="radio"]:checked + label {
-  //  margin-left: 5px;
-  //}
-  //
-  //input[type="checkbox"] + label:after, input[type="radio"] + label:after {
-  //  content: '';
-  //  width: 20px;
-  //  height: 20px;
-  //  position: absolute;
-  //  top: 2px;
-  //  left: 2px;
-  //  border: none;
-  //  background: #48C0FE;
-  //  opacity: 0;
-  //  transform: none;
-  //  border-radius: 50%;
-  //}
 }
 
 .medium-spinner {
@@ -1585,9 +1523,6 @@ button {
 }
 
 .marketplace-container {
-  //display: flex;
-  //flex-direction: row;
-  //color: $blue-color;
   min-height: 100%;
 }
 
@@ -1671,3 +1606,75 @@ button {
     }
   }
 }
+
+
+%sales-package-table{
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+
+  label {
+    display: inline-block;
+    max-width: inherit;
+    z-index: 100;
+    .label-text {
+      display: flex;
+      align-items: center;
+      height: 35px;
+    }
+  }
+
+  .sales-package-container{
+    display: table-row;
+    height: 45px;
+
+    & .sales-cell{
+      width: auto;
+      display: table-cell;
+      cursor: default;
+      border: 1px solid $border-color-1;
+      vertical-align: middle;
+
+      div{
+        display: inline-block;
+      }
+
+      &.bid, &.license{
+        width: 40px;
+        border-left: none;
+        border-right: none;
+        text-align: center;
+      }
+
+      &.name{
+        border-right: none;
+        padding-left: 10px;
+      }
+      &.fee{
+        text-align: right;
+        border-left: none;
+        padding-right: 10px;
+
+        width: 1%;
+        white-space: nowrap;
+      }
+
+      &.buttons{
+        width: 100px;
+        text-align: left;
+        border: none;
+        img {
+          margin-left: 15px;
+          cursor: pointer;
+        }
+      }
+
+      img{
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
+}
+
+

@@ -117,7 +117,6 @@ class SellButtons extends React.Component {
     step2Enabled = () => {
         const {rightsPackage, programDescription} = this.props;
         let program = this.programIsValid();
-        console.log(program);
         return rightsPackage.length > 0 && program && programDescription && programDescription.length >= MIN_PROGRAM_DESC_LENGTH;
     };
 

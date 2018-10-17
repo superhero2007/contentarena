@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import {customStyles} from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
-import CurrencySelector from "../components/CurrencySelector";
 import DatePicker from '@components/DatePicker';
 import Tooltip from '../../main/components/Tooltip';
 import LicenseDownloader from '../../main/components/LicenseDownloader'
@@ -14,16 +13,6 @@ import { DATE_FORMAT } from "@constants";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
-const smallContainerStyle = {
-    display: 'inline-block',
-    overflowY: 'overlay',
-    maxHeight: '200px',
-    paddingRight: 20
-};
-const containerStyle = {
-    display: 'inline-block',
-    paddingTop: 5
-};
 
 class SalesPackageForm extends React.Component {
     constructor(props) {
@@ -324,7 +313,7 @@ class SalesPackageForm extends React.Component {
             if (p.sold) soldPackages.push(p);
         })
         return soldPackages;
-    }
+    };
 
     getHiddenTerritories = (soldPackages) => {
         const {territoriesMethod, countries} = this.state;
@@ -336,7 +325,7 @@ class SalesPackageForm extends React.Component {
             p.territories.forEach(t => {
                 hiddenTerritories.push(t)
             })
-        })
+        });
 
         if (isExcludedTerritoriesEnabled && countries) {
             hiddenTerritories = countries.filter(c => !hiddenTerritories.some(ht => c.name === ht.label))
@@ -347,7 +336,7 @@ class SalesPackageForm extends React.Component {
         }
 
         return hiddenTerritories
-    }
+    };
 
     renderModal = () => {
 
@@ -636,6 +625,10 @@ class SalesPackageForm extends React.Component {
         return (a > b) ? 1 : ((b > a) ? -1 : 0);
     };
 
+    isShowFee = (salesPackage) => {
+        return salesPackage.salesMethod !== "BIDDING" || (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0);
+    };
+
     render(){
         const { onRemove, hideButtons, fullSize, sort, listingId } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
@@ -647,9 +640,7 @@ class SalesPackageForm extends React.Component {
                 { this.renderModal() }
                 <div className="base-full-input" style={inputStyle}>
                     <label>
-                        <div className='label-text'>
-                            {this.context.t("CL_STEP4_SALES_BUNDLES")}
-                        </div>
+                        {this.context.t("CL_STEP4_SALES_BUNDLES")}
                     </label>
 
                     {!salesPackages.length && this.addBundlesAvailable() && (
@@ -658,60 +649,48 @@ class SalesPackageForm extends React.Component {
                         </div>
                     )}
 
-                    <div className="content" style={(hideButtons) ? containerStyle: smallContainerStyle}>
+                    <div className="sales-package-table">
                         { salesPackages.map( (salesPackage, i) => {
-
                             let extraTerritories = ( salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
 
                             if (salesPackage.sold) return;
                             return (
-                                <div className="sales-package-container" key={i}>
-                                    <div className="sales-package" key={"sales-package-"+ i}>
-                                        <div style={{display:'flex', flex : 5, cursor: 'default'}}>
-                                            {salesPackage.name}
-                                            {extraTerritories && extraTerritories.length > 3 && (
-                                                <div style={{marginLeft: 5}}>
-                                                    <ExtraTerritories
-                                                        showAll={salesPackage.regionNamed}extraTerritories={extraTerritories}
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
+                                <div className="sales-package-container" key={`sales-package-${i}`}>
+                                    <div className="sales-cell name">
+                                        {salesPackage.name}
+                                        {extraTerritories && extraTerritories.length > 3 && (
+                                            <div style={{marginLeft: 5}}>
+                                                <ExtraTerritories
+                                                    showAll={salesPackage.regionNamed} extraTerritories={extraTerritories}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
 
-                                        {hideButtons && <LicenseDownloader
+                                    {hideButtons && <div className="sales-cell license">
+                                        <LicenseDownloader
                                             type={"BUNDLE"}
                                             id={salesPackage.id}
                                             listingId={listingId}
-                                            style={{display: 'flex', justifyContent: 'center', cursor: 'pointer'}}/>}
+                                        />
+                                    </div>}
 
-                                        {salesPackage.salesMethod === "BIDDING" &&
-                                        <div style={{marginLeft: 20, justifyContent: "flex-end", display: "flex"}}>
-                                            <img style={{width: 23, height: 23}} src={this.bidIcon}/>
-                                        </div>}
-
-                                        {
-                                            (salesPackage.salesMethod !== "BIDDING" || (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0))
-                                            && <div style={{marginLeft: 20, justifyContent: "flex-end", display: "flex", cursor: 'default'}}>
-                                                {this.getFee(salesPackage)}
-                                            </div>
-                                        }
+                                    <div className="sales-cell bid">
+                                        {salesPackage.salesMethod === "BIDDING" && <img src={this.bidIcon} /> }
                                     </div>
-                                    {!hideButtons && <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0'}}
-                                                          src={this.cancelIcon}
-                                                          onClick={() => {
-                                                              onRemove(i)
-                                                          }}/>}
-                                    {!hideButtons &&
-                                    <img style={{width: 23, height: 23, cursor: 'pointer', margin: '15px 5px 0', color: 'grey'}}
-                                         src={this.draftIcon}
-                                         onClick={() => {
-                                             this.editSalesPackage(salesPackage, i)
-                                         }}/>}
+
+                                    <div className="sales-cell fee" title={salesPackage.fee}>
+                                        {this.isShowFee(salesPackage) && this.getFee(salesPackage)}
+                                    </div>
+
+                                    {!hideButtons && <div className="sales-cell buttons">
+                                        <img src={this.cancelIcon} onClick={() => {onRemove(i)}}/>
+                                        <img src={this.draftIcon} onClick={() => {this.editSalesPackage(salesPackage, i)}}/>
+                                    </div>}
 
                                 </div>
                             )
                         })}
-
                     </div>
                 </div>
 
