@@ -308,7 +308,7 @@ class SalesPackageEdit extends React.Component {
                             return <div className={"content"}>
                                 <div className={"item"} style={{ paddingLeft: 0 }}>
                                     <div className={"title"} >
-                                        {i+1} Instalment <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "50px" }} type="number" max={100} value={installment.value}/> % of payment
+                                        {i+1} Instalment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "50px" }} type="number" max={100} value={installment.value}/> % of payment
                                     </div>
                                     {installment.type !== "DATE" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DATE",i)}}  />}
                                     { installment.type === "DATE" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
