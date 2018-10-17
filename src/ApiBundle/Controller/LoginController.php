@@ -74,6 +74,10 @@ class LoginController extends FOSRestController
             ->getRepository('AppBundle:User')
             ->findOneBy(['email' => $request->get("email")]);
 
+        $userStatus = $this->getDoctrine()
+            ->getRepository('AppBundle:UserStatus')
+            ->findOneBy(['name' => "Active"]);
+
         if ($user) {
 
             $data = array("success" => true, "user_exists" => true);
@@ -100,6 +104,7 @@ class LoginController extends FOSRestController
         $user->setApplicationCompany($request->get("companyLegalName"));
         $user->setCompanyWebsite($request->get("companyWebsite"));
         $user->setPlainPassword('');
+        $user->setStatus($userStatus);
         if (null === $user->getConfirmationToken()) {
             $user->setConfirmationToken($tokenGenerator->generateToken());
         }
