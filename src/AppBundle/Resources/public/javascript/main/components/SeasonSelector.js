@@ -89,7 +89,8 @@ class SeasonSelector extends React.Component {
                     </button>
                 </div>}
 
-                {this.props.showAddNew && <div>
+                {this.props.showAddNew && <div className="step-item-description" style={{display: 'flex'}}>
+                    <div>{this.context.t("CL_STEP1_ADD_SEASON_BUTTON_DESCRIPTION")}</div>
                     <button style={{marginBottom: 25, marginLeft: 'auto', minWidth: 196}} className="standard-button link-button" onClick={this.props.addSeason}>
                         {this.context.t("CL_STEP1_ADD_SEASON")}
                     </button>

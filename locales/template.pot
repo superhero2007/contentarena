@@ -180,10 +180,6 @@ msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
-msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_EPISODES"
 msgstr ""
 
@@ -197,6 +193,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
@@ -571,6 +571,22 @@ msgid "CL_STEP1_SEARCH_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_NO_RESULTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_TRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_CANT_FIND"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_ENTER_MANUALLY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_HEADER_COMPETITION"
 msgstr ""
 
@@ -586,26 +602,6 @@ msgstr ""
 msgid "CL_STEP1_SEARCH_BUTTON_SELECT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_NO_RESULTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_TRY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_CANT_FIND_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_CANT_FIND"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_ENTER_MANUALLY"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "Season"
 msgstr ""
@@ -616,6 +612,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_FIXTURES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "CL_STEP1_ADD_SEASON_BUTTON_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
@@ -1603,6 +1603,10 @@ msgid "CL_STEP1_DESCRIPTION_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_FORM_ADD_SPORT"
 msgstr ""
 
@@ -1631,10 +1635,6 @@ msgid "CL_STEP1_LISTING_DETAILS_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_LISTING_DETAILS_TOOLTIP"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LISTING_DETAILS_TITLE"
 msgstr ""
 
@@ -1652,10 +1652,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_TITLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "CL_STEP2_PROGRAM_TITLE_TOOLTIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
@@ -1723,10 +1719,6 @@ msgid "CL_STEP3_PROGRAM_MODAL_BUTTON_OK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "CL_STEP3_TITLE_LICENSE_PERIOD_TOOLTIP"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "CL_STEP3_TITLE_LICENSE_PERIOD_START"
 msgstr ""
 
@@ -1760,9 +1752,5 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LISTING_DETAILS_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_INFO_DETAILS"
 msgstr ""
 
