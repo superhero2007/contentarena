@@ -1614,14 +1614,8 @@ button {
   border-spacing: 0 5px;
 
   label {
-    display: inline-block;
+    display: flex;
     max-width: inherit;
-    z-index: 100;
-    .label-text {
-      display: flex;
-      align-items: center;
-      height: 35px;
-    }
   }
 
   .sales-package-container{
