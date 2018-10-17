@@ -28,7 +28,7 @@ class TermSheet extends React.Component {
                 <div className="right-name right-definition">{name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
-                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE") return;
+                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT") return;
                         if ( rp.shortLabel !== 'PR' ) return <div className="right-definition"/>;
 
                         return <div  className="right-definition" key={"program_child"+k}>
@@ -60,8 +60,9 @@ class TermSheet extends React.Component {
                     rightsPackage.map((rp,k)=>{
 
                         if ( checkContentDelivery &&
-                            ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT" ) ||
-                                rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT" )) return;
+                            ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT" && rp.shortLabel !== "PR" ) ||
+                                rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT"
+                            )) return;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
@@ -113,7 +114,7 @@ class TermSheet extends React.Component {
         return definitions.filter(d => {
             if (d.checkDelivery) {
                 return rightsPackage.some(p =>
-                    !( (p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT") ||
+                    !( (p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT" && p.shortLabel !== "PR") ||
                         p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY') ||
                         p.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT"
                 )
@@ -270,7 +271,7 @@ class TermSheet extends React.Component {
                         </div>
                         {
                             rightsPackage.map((rp, i)=>{
-                                if ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT" ) ||
+                                if ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "PR" && rp.shortLabel !== "LT" ) ||
                                     rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT") return;
                                 let viaLiveFeed = rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE_BACK";
 

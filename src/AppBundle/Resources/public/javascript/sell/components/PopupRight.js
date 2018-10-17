@@ -23,6 +23,8 @@ const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions
     const rightLabel = nameToCustomValueConfig[item].key;
     const rightLabelCustom = nameToCustomValueConfig[item].value;
     let suffix = "RIGHTS_";
+
+    console.log(currentRights, rightLabel)
     
     if ( currentRights === rightLabel){
         return predicate(firstPackage.selectedRights[rightLabelCustom]);
@@ -235,15 +237,17 @@ class PopupRight extends React.Component {
     filterRightsPackage(id, rightsPackages) {
         const {checkContentDelivery, superRights} = this.props;
 
-        return rightsPackages.filter((rightsPackage) => {
-            if (superRights.length > 0 && superRights.indexOf(rightsPackage.shortLabel) === -1) {
+        return rightsPackages.filter((rightPackage) => {
+            if (superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1) {
                 return false;
             }
 
-            if (checkContentDelivery && id !== "CONTENT_DELIVERY" &&
-                (rightsPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" ||
-                    rightsPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE_BACK" )
-            ) {
+            if (checkContentDelivery
+                && id !== "CONTENT_DELIVERY"
+                && rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                && rightPackage.shortLabel !== "LT"
+                && rightPackage.shortLabel !== "PR"
+            ){
                 return false;
             }
 
@@ -517,9 +521,9 @@ class PopupRight extends React.Component {
 
                             if (checkContentDelivery
                                 && id !== "CONTENT_DELIVERY"
-                                && ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" ||
-                                    rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE_BACK" )
-                            //&& packagesAvailable.indexOf("LT") === -1
+                                && rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                && rightPackage.shortLabel !== "LT"
+                                && rightPackage.shortLabel !== "PR"
                             ){
                                 return;
                             }
