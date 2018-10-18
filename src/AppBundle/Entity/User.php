@@ -34,6 +34,11 @@ class User extends BaseUser
         $this->profile = "BUYER";
     }
 
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
+
 
     /**
      * @var int
