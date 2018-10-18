@@ -24,20 +24,23 @@ class ProgramDetails extends Component {
         );
     };
 
-    programItem = (text, value) => {
+    programItem = (text, value, additionText) => {
         return (
-            <div className="row-item">
-                <div className="cap">{text}</div>
-                <b>{value}</b>
+            <div className="row-item-wrapper">
+                <div className="row-item">
+                    <div className="cap">{text}</div>
+                    {value && <b>{value}</b>}
+                </div>
+                {additionText && <i>{additionText}</i>}
             </div>
         );
     };
-
     getProgramTitle = () => ({
         episode: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES"),
         duration: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION"),
         type: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE"),
-        release: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE")
+        release: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE"),
+        differentLength: this.context.t("INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH")
     });
 
     render() {
@@ -47,12 +50,17 @@ class ProgramDetails extends Component {
             PROGRAM_DESCRIPTION,
             PROGRAM_DURATION,
             PROGRAM_EPISODES,
-            PROGRAM_TYPE
+            PROGRAM_TYPE,
+            EDIT_PROGRAM_DESCRIPTION_OPTIONAL
         } = this.props;
 
         const programsTitle = this.getProgramTitle();
 
         const title = `${this.context.t("LISTING_DETAILS_PROGRAM_TITLE_NAME")} - ${PROGRAM_NAME}`;
+        const differentLengthText = EDIT_PROGRAM_DESCRIPTION_OPTIONAL === undefined || EDIT_PROGRAM_DESCRIPTION_OPTIONAL
+            ?  null
+            : programsTitle.differentLength; //old listings have that flag as undefined so we should treat it as default 'true'
+
         return (
             <div>
                 {this.programDescription(PROGRAM_DESCRIPTION)}
@@ -61,7 +69,7 @@ class ProgramDetails extends Component {
                     <div className="col-wrapper">
                         <div className="col">
                             {this.programItem(programsTitle.episode, PROGRAM_EPISODES)}
-                            {this.programItem(programsTitle.duration, PROGRAM_DURATION)}
+                            {this.programItem(programsTitle.duration, PROGRAM_DURATION, differentLengthText)}
                         </div>
                         <div className="col">
                             {PROGRAM_TYPE && this.programItem(programsTitle.type, ProgramTypesDefinitions[PROGRAM_TYPE])}

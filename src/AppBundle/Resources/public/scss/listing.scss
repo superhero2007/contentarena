@@ -517,26 +517,29 @@
               margin-bottom: 20px;
             }
 
-            .row-item {
-              display: flex;
-              align-items: center;
-              border-top: 1px solid #cccccc;
-              padding-top: 20px;
-              padding-bottom: 20px;
-              font-size: 14px;
+            .row-item-wrapper{
+              padding: 20px 0;
+              border-top: 1px solid $font-color-2;
 
-              .cap {
-                margin-right: 10px;
-              }
+              .row-item {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
 
-              &:before {
-                content: "\f0da";
-                display: inline-block;
-                vertical-align: middle;
-                margin-right: 10px;
-                font: normal normal normal 21px/1 FontAwesome;
+                .cap {
+                  margin-right: 10px;
+                }
+
+                &:before {
+                  content: "\f0da";
+                  display: inline-block;
+                  vertical-align: middle;
+                  margin-right: 10px;
+                  font: normal normal normal 21px/1 FontAwesome;
+                }
               }
             }
+
           }
         }
       }
