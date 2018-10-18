@@ -75,16 +75,16 @@ class SalesPackages extends React.Component {
                                 )}
                             </div>
 
+                            <div className="package-row price" title={salesPackage.fee}>
+                                {+salesPackage.fee > 0 && this.getFee(salesPackage)}
+                            </div>
+
                             <div className="package-row info">
                                 <Installments installments={salesPackage.installments} />
                             </div>
 
                             <div className="package-row bid">
                                 {salesPackage.salesMethod === "BIDDING" && <img style={{width: 23, height: 23}} src={this.bidIcon}/>}
-                            </div>
-
-                            <div className="package-row price" title={salesPackage.fee}>
-                                {+salesPackage.fee > 0 && this.getFee(salesPackage)}
                             </div>
 
                             <div className="package-row buttons">

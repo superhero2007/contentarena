@@ -1640,6 +1640,10 @@ button {
         text-align: center;
       }
 
+      &.bid{
+        border-right: 1px solid $border-color-1;
+      }
+
       &.name{
         border-right: none;
         padding-left: 10px;
@@ -1647,6 +1651,7 @@ button {
       &.fee{
         text-align: right;
         border-left: none;
+        border-right: none;
         padding-right: 10px;
 
         width: 1%;

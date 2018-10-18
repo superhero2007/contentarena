@@ -667,6 +667,10 @@ class SalesPackageForm extends React.Component {
                                         )}
                                     </div>
 
+                                    <div className="sales-cell fee" title={salesPackage.fee}>
+                                        {this.isShowFee(salesPackage) && this.getFee(salesPackage)}
+                                    </div>
+
                                     {hideButtons && <div className="sales-cell license">
                                         <LicenseDownloader
                                             type={"BUNDLE"}
@@ -677,10 +681,6 @@ class SalesPackageForm extends React.Component {
 
                                     <div className="sales-cell bid">
                                         {salesPackage.salesMethod === "BIDDING" && <img src={this.bidIcon} /> }
-                                    </div>
-
-                                    <div className="sales-cell fee" title={salesPackage.fee}>
-                                        {this.isShowFee(salesPackage) && this.getFee(salesPackage)}
                                     </div>
 
                                     {!hideButtons && <div className="sales-cell buttons">
