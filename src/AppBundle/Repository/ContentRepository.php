@@ -178,11 +178,17 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
             if ( count( $filter->getSuperRights() ) > 0 ) {
                 $query
-                    ->leftJoin('content.rightsPackage', 'rightsPackage')
-                    ->andWhere($query->expr()->orX(
-                        $query->expr()->in('rightsPackage', ':rightsPackages')
-                    ))
-                    ->setParameter('rightsPackages', $filter->getSuperRights());
+                    ->leftJoin('content.rightsPackage', 'rightsPackage');
+
+                foreach ($filter->getSuperRights() as $entity)
+                {
+                    $id = $entity->getId();
+                    $query
+                        ->leftJoin('content.rightsPackage', 'b'.$id)
+                        ->andWhere('b'.$id.'.id IN (:b_entity'.$id.')')
+                        ->setParameter('b_entity'.$id, array($id));
+                }
+
             }
         }
 
@@ -217,7 +223,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('content');
 
         $query
-            ->select('sports.name')
+            ->select('sports.name', 'sports.id')
             ->leftJoin('content.sports', 'sports')
             ->leftJoin('content.status', 'status')
             ->andWhere('status.name = :approvedStatusName OR status.name = :editedStatusName')

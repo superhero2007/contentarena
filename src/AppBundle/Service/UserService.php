@@ -61,6 +61,10 @@ class UserService
                 ->getRepository('AppBundle:User')
                 ->findOneBy(array('id' => $data['id']));
 
+            $userStatus = $this->em
+                ->getRepository('AppBundle:UserStatus')
+                ->findOneBy(array('name' => "Active"));
+
             if ( isset($data['firstName']) ) $user->setFirstName($data['firstName']);
             if ( isset($data['lastName']) ) $user->setLastName($data['lastName']);
             if ( isset($data['title']) ) $user->setTitle($data['title']);
@@ -68,6 +72,7 @@ class UserService
             if ( isset($data['phone']) ) $user->setPhone($data['phone']);
             $user->setConfirmationToken(null);
             $user->setEnabled(true);
+            $user->setStatus($userStatus);
 
             $this->em->persist($user);
             $this->em->flush();

@@ -40,14 +40,23 @@ class SellButtons extends React.Component {
         content = parseSeasons(content);
         ContentArena.ContentApi.saveContentAsDraft(content).done((response)=>{
 
-            let nextStep = (Number(content.step) + 1);
+            let currentStep = Number(content.step);
+            let nextStep = currentStep + 1;
 
             if ( response.success && response.contentId ){
                 this.props.updateContentValue("id", response.contentId);
                 this.props.updateContentValue("customId", response.customId);
             }
 
+            if ( response.success && response.sports ){
+                this.props.updateContentValue("sports", response.sports);
+            }
+
             this.setState({ saving : false, savingSuccess: true });
+
+            if (currentStep === 1){
+                history.replace("/contentlisting/"+ response.customId + "/1");
+            }
 
             history.push("/contentlisting/"+ response.customId + "/" + nextStep);
             goToStep(nextStep);

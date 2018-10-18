@@ -51,6 +51,16 @@ ContentArena.Utils = {
                 if (sp.excludedCountries) sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
                 if (sp.territories) sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
                 if (!sp.territories) sort = false
+
+                try {
+                    if (sp.installments){
+                        sp.installments.forEach(i=>{
+                            if (i.date) i.date = moment(i.date);
+                        })
+                    }
+                } catch (e){}
+
+
             });
             if (sort) content.salesPackages.sort(this.sortSalesPackages).reverse();
         }

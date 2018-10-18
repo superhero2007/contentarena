@@ -42,6 +42,7 @@ class FileSelector extends Component {
             failed: [],
             form : form,
             uploading : false,
+            image : (props.imageBase64) ? props.imageBase64 : null,
             accept : props.accept || [".png", ".jpg"]
         }
     };

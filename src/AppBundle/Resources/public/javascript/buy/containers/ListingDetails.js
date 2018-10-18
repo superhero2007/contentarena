@@ -53,7 +53,8 @@ class ListingDetails extends React.Component {
             soldOut  : false,
             selectedPackage : ( props.tab && props.tab === "checkout") ? listing.salesPackages.find(sp=>sp.id==props.bundle) : {},
             territoriesList: [],
-            editCompanyOpen : false
+            editCompanyOpen : false,
+            bidApplied : false
         };
 
         if ( this.state.selectedPackage ) this.state.minimumBid =  this.state.selectedPackage.fee;
@@ -431,7 +432,8 @@ class ListingDetails extends React.Component {
         selectedPackage.fee = bid;
 
         this.setState({
-            selectedPackage
+            selectedPackage,
+            bidApplied: true
         })
     };
 
@@ -457,10 +459,9 @@ class ListingDetails extends React.Component {
 
     };
 
-    isPackageValid = () => {
-        const {signature, terms, bid, minimumBid, selectedPackage} = this.state;
-        const isRaiseBidValid = selectedPackage.salesMethod === 'BIDDING' ? parseFloat(bid) > parseFloat(minimumBid) : true;
-        return signature && terms && isRaiseBidValid;
+    invalidPackage = () => {
+        const {signature, terms, bidApplied} = this.state;
+        return !signature || !terms || ( this.getCheckoutType() !== 'BUY_NOW' && !bidApplied );
     };
 
     watchlist = () => {
@@ -484,7 +485,7 @@ class ListingDetails extends React.Component {
     };
 
     onBidChange = () => {
-        this.setState({bid: +this.bidInput.value});
+        this.setState({bid: +this.bidInput.value, bidApplied : false});
     };
 
     getTechnicalFeeLabel = () => {

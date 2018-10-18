@@ -212,7 +212,7 @@ class Register extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_NAME")} *
                             </label>
                             <input value={user.company.legalName} disabled={editCompanyNameDisabled} onChange={(e)=>{
                                 user.company.legalName = e.target.value;
@@ -353,9 +353,7 @@ class Register extends React.Component {
                     </button>}
                     {updatingUser && <Spinner/>}
 
-                    {updated && <a onClick={()=>{
-                        history.push("/")
-                    }}>
+                    {updated && <a href="/marketplace">
                         {this.context.t("REGISTER_SUCCESS_MESSAGE")}
                     </a>}
                 </div>

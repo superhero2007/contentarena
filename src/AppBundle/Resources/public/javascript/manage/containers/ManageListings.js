@@ -73,7 +73,7 @@ class ManageListings extends React.Component {
         this.setState({loadingActive : true});
         ContentArena.ContentApi.republishListing(customId).done(response => {
             if ( response.success ) {
-                active.unshift(response.listing);
+                active.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
                 this.setState({active : active, loadingActive : false});
             }
         });
@@ -85,7 +85,7 @@ class ManageListings extends React.Component {
         ContentArena.ContentApi.deactivateListing(customId).done(response => {
             if ( response.success ) {
                 //inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
-                inactive.unshift(response.listing);
+                inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
                 this.setState({inactive : inactive, loadingInactive : false});
             }
         });

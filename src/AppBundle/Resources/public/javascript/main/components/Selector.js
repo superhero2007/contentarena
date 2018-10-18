@@ -108,8 +108,10 @@ class Selector extends React.Component {
     applySelection = () => {
 
         let extended = false,
+            clean = this.props.clean,
             selectedItems = this.state.selectedItems,
             prevCountries = this.state.prevCountries;
+
 
         if ( this.state.customCountry ){
             selectedItems.forEach((item)=>{
@@ -122,6 +124,7 @@ class Selector extends React.Component {
 
         if (extended){
             this.props.addNewSeason(0,[]);
+            clean = clean.filter(c=>c!=="seasons")
         }
 
         this.setState({ updated: false, filterUpdated : false, customCountry : false });
@@ -130,7 +133,7 @@ class Selector extends React.Component {
             selectedItems,
             this.props.multiple,
             this.props.index,
-            this.props.clean);
+            clean);
     };
 
     addNewSport = (index) => {

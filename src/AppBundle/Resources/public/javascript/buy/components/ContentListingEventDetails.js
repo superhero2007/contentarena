@@ -31,7 +31,7 @@ class ContentListingEventDetails extends React.Component {
     buildSeasonYear = (season) => {
 
         if (season.from !== undefined &&
-            ( season.to === undefined || season.to === "" || season.from === season.to)
+            ( season.to === undefined || season.to === "" || season.to === 0 || season.from === season.to)
         ){
             return season.from
         }
@@ -165,7 +165,7 @@ class ContentListingEventDetails extends React.Component {
 
                 <div className="listing-item tournament">
                     {/*Tournament name*/}
-                    {tournamentArray && tournamentArray.length > 0 && (
+                    {tournamentArray && tournamentArray.length > 0 && tournamentArray[0].name !== "" && (
                         <div className="event">
                             <div className="event-icon">
                                 {tournamentIcon}
@@ -175,7 +175,7 @@ class ContentListingEventDetails extends React.Component {
                             </div>
                         </div>
                     )}
-                    {customTournament && !customId && (
+                    {customTournament && tournamentArray[0].name === "" && (
                         <div className="event">
                             <div className="event-icon">
                                 {tournamentIcon}
@@ -228,7 +228,8 @@ class ContentListingEventDetails extends React.Component {
                                 {sportCategoryIcon}
                             </div>
                             <div className="event-text">
-                                {sportCategory[0].name}
+                                {sportCategory[0].name !== "" && sportCategory[0].name}
+                                {sportCategory[0].name === "" && customCategory}
                             </div>
                         </div>
                     ) : (

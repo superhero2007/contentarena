@@ -478,19 +478,20 @@ class ContentService
         }
 
 
-        /**
-         * Set sport
-         * Create element in DB if it doesn't exist.
-         */
-        if ( isset($data->sports) && count($data->sports) > 0 && ( isset($data->step) && $data->step == 1 )) {
-
-        } else if ( isset($data->sport) ) {
-            $data->sports = array( $data->sport );
-        }
-        $sports = $this->getSports($data);
-        $content->setSports($sports);
-
         if ( isset($data->step) && $data->step == 1 ){
+
+            /**
+             * Set sport
+             * Create element in DB if it doesn't exist.
+             */
+            if ( isset($data->sports) && count($data->sports) > 0 && ( isset($data->step) && $data->step == 1 )) {
+
+            } else if ( isset($data->sport) ) {
+                $data->sports = array( $data->sport );
+            }
+            $sports = $this->getSports($data);
+            $content->setSports($sports);
+
             /**
              * Set tournament
              */
