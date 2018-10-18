@@ -459,9 +459,10 @@ class ListingDetails extends React.Component {
 
     };
 
-    invalidPackage = () => {
-        const {signature, terms, bidApplied} = this.state;
-        return !signature || !terms || ( this.getCheckoutType() !== 'BUY_NOW' && !bidApplied );
+    isPackageValid = () => {
+        const {signature, terms, bid, minimumBid, selectedPackage} = this.state;
+        const isRaiseBidValid = selectedPackage.salesMethod === 'BIDDING' ? parseFloat(bid) > parseFloat(minimumBid) : true;
+        return signature && terms && isRaiseBidValid;
     };
 
     watchlist = () => {
