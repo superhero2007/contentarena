@@ -114,10 +114,6 @@ class SearchCompetition extends  React.Component {
 
                 {this.state.searching && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                {this.state.searchDone && this.state.results.length > 0 && <div>
-                    {this.state.resultMessage}
-                </div>}
-
                 <div style={{ display: "inline-flex", width: 935, minHeight: 61 }} >
                     {this.state.searchDone && this.state.results.length === 0 && <div style={{width: 645, alignSelf: 'center'}}>
                         {this.context.t("CL_STEP1_SEARCH_NO_RESULTS", {n: this.state.input })}
@@ -132,6 +128,10 @@ class SearchCompetition extends  React.Component {
                         {this.context.t("CL_STEP1_ENTER_MANUALLY")}
                     </button>
                 </div>
+
+                {this.state.searchDone && this.state.results.length > 0 && <div>
+                    {this.state.resultMessage}
+                </div>}
 
                 {this.state.results.length > 0 && <div style={{marginBottom: 20}}>
                     <ReactTable
