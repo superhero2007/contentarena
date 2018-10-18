@@ -308,7 +308,7 @@ class SalesPackageEdit extends React.Component {
                             return <div className={"content"}>
                                 <div className={"item"} style={{ paddingLeft: 0 }}>
                                     <div className={"title"} >
-                                        {i+1} Instalment <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "50px" }} type="number" max={100} value={installment.value}/> % of payment
+                                        {i+1} Instalment <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/> % of payment
                                     </div>
                                     {installment.type !== "DATE" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DATE",i)}}  />}
                                     { installment.type === "DATE" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
@@ -331,7 +331,7 @@ class SalesPackageEdit extends React.Component {
                                         onChange={(e) => {this.setInstallmentDays(e.target.value,i)}}
                                         disabled={installment.type !== "DAY"}
                                         value={installment.days}
-                                        style={{ height: "26px", width: "40px" }}/>
+                                        style={{ height: "26px", width: "70px" }}/>
                                         {this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS")}
                                     </div>
                                     { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
