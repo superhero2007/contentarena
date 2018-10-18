@@ -74,10 +74,20 @@ class NewSeason extends React.Component{
                     </label>
                     <select
                         value={seasons[index].to}
-                        onChange={(e) => { this.setDate('to', e.target.value) }}
+                        onChange={(e) => {
+                            let value = e.target.value;
+
+                            if (value === "null") {
+                                this.setDate('to', null)
+                            } else {
+                                this.setDate('to', value)
+                            }
+
+                        }}
+
                         disabled={!seasons[index].from}>
                         {this.getEndOptions()}
-                        <option value={0}>
+                        <option value={null} selected={(!seasons[index].to) ? "selected" : ""}>
                             {this.context.t("Not applicable")}
                         </option>
                     </select>
