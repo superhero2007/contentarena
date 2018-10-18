@@ -353,9 +353,7 @@ class Register extends React.Component {
                     </button>}
                     {updatingUser && <Spinner/>}
 
-                    {updated && <a onClick={()=>{
-                        history.push("/marketplace")
-                    }}>
+                    {updated && <a href="/marketplace">
                         {this.context.t("REGISTER_SUCCESS_MESSAGE")}
                     </a>}
                 </div>
