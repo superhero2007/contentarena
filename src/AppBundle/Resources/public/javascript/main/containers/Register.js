@@ -212,7 +212,7 @@ class Register extends React.Component {
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
+                                {this.context.t("SETTINGS_LABEL_COMPANY_NAME")} *
                             </label>
                             <input value={user.company.legalName} disabled={editCompanyNameDisabled} onChange={(e)=>{
                                 user.company.legalName = e.target.value;
