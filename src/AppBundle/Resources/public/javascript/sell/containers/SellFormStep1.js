@@ -640,6 +640,7 @@ class SellFormStep1 extends React.Component {
                         isImage={true}
                         onSelect={this.props.updateContentValue}
                         previousImage={this.props.image}
+                        imageBase64={this.props.imageBase64}
                         target={"imageBase64"}
                     />
 
