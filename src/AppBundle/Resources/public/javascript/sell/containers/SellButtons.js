@@ -47,6 +47,10 @@ class SellButtons extends React.Component {
                 this.props.updateContentValue("customId", response.customId);
             }
 
+            if ( response.success && response.sports ){
+                this.props.updateContentValue("sports", response.sports);
+            }
+
             this.setState({ saving : false, savingSuccess: true });
 
             history.push("/contentlisting/"+ response.customId + "/" + nextStep);
