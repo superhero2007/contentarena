@@ -12,7 +12,7 @@ class SalesPackages extends PureComponent{
     };
 
     render() {
-        const { salesPackages } = this.props;
+        const { salesPackages, limitedSize } = this.props;
         let salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages];
         return (
             <React.Fragment>
@@ -21,7 +21,7 @@ class SalesPackages extends PureComponent{
 
                     if (salesPackage.sold) return;
                     return (
-                        <div className="sales-package" key={"sp-"+ i}>
+                        <div className={(limitedSize) ? "sales-package limited-sales-package" : "sales-package" } key={"sp-"+ i}>
 
                             {salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
                                 <div className="icon">

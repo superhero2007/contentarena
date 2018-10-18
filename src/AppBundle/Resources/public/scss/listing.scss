@@ -164,7 +164,6 @@
     border-radius: 5px;
     margin-bottom: 5px;
     min-width: 0;
-
     .name {
       margin-right: 5px;
       margin-left: 5px;
@@ -197,6 +196,9 @@
       color: #333333;
       padding-right: 10px;
     }
+  }
+  .limited-sales-package{
+    max-width: 270px;
   }
   .additional {
     display: flex;

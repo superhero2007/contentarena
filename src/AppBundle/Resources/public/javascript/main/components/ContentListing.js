@@ -240,6 +240,7 @@ class ContentListing extends Component{
                         <div className="wrapper">
                             <div className="bid-sales-wrap">
                                 <SalesPackages
+                                    limitedSize={true}
                                     salesPackages={bid.salesPackage}
                                 />
                             </div>
