@@ -808,7 +808,7 @@ button {
         max-width: inherit;
         margin-bottom: inherit;
         flex-direction: column;
-        height: 250px;
+        min-height: 250px;
         label {
           max-width: inherit;
           display: flex;

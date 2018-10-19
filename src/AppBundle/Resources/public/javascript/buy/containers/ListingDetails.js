@@ -461,9 +461,9 @@ class ListingDetails extends React.Component {
     };
 
     isPackageValid = () => {
-        const {signature, terms, bid, minimumBid, selectedPackage} = this.state;
-        const isRaiseBidValid = selectedPackage.salesMethod === 'BIDDING' ? parseFloat(bid) > parseFloat(minimumBid) : true;
-        return signature && terms && isRaiseBidValid;
+        const {signature, terms, selectedPackage} = this.state;
+        const isBidValueValid = selectedPackage.salesMethod === 'BIDDING' ? this.isBidValid() : true;
+        return signature && terms && isBidValueValid;
     };
 
     watchlist = () => {
@@ -538,12 +538,13 @@ class ListingDetails extends React.Component {
             'RAISE_BID': 'Raise Bid'
         };
 
-        return `${titleMap[type]} -` || '';
+        return titleMap[type] || '';
     };
 
-    isBidBtnDisabled = () => {
+    isBidValid = () => {
         const { bid, minimumBid} = this.state;
-        return !bid || parseFloat(bid) === 0 || parseFloat(bid) <= parseFloat(minimumBid);
+        const validateMinimumBid = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(bid) > parseFloat(minimumBid) : parseFloat(bid) >= parseFloat(minimumBid);
+        return bid && parseFloat(bid) !== 0 && validateMinimumBid;
     };
 
     getCompanyAddress = () => {
@@ -557,6 +558,16 @@ class ListingDetails extends React.Component {
 
     setTermsAndConditions = (e) => {
         this.setState({terms: e.target.checked})
+    };
+
+    getMinBid = () => {
+        const { minimumBid, selectedPackage } = this.state;
+        if (!parseFloat(minimumBid)) return;
+
+        let bidValue = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(minimumBid) + 1 : parseFloat(minimumBid);
+        bidValue = `${bidValue + getCurrencySymbol(selectedPackage.currency.code)}`;
+
+        return <i>({this.context.t("MIN_BID")} {bidValue})</i>;
     };
 
     render() {
@@ -706,7 +717,7 @@ class ListingDetails extends React.Component {
                     {buyingMode && <div className="bid-wrapper">
                         <div className="bid-header">
                             <div className="name">
-                                {this.getTitlePrefix(checkoutType)} {listing.name}
+                                {checkoutType && `${this.getTitlePrefix(checkoutType)} -`} {listing.name}
                             </div>
                         </div>
 
@@ -730,7 +741,7 @@ class ListingDetails extends React.Component {
                                 {checkoutType !== 'BUY_NOW' && <div className="bid-technical">
                                     <span className="bid-label">
                                         {this.context.t("Bid")}
-                                        {parseFloat(minimumBid) ? <i> ({this.context.t("MIN_BID")} {minimumBid}{getCurrencySymbol(selectedPackage.currency.code)})</i> : null }
+                                        {this.getMinBid()}
 
                                     </span>
                                     <span className="bid-value right-section">
@@ -750,7 +761,7 @@ class ListingDetails extends React.Component {
                                             <button
                                                 onClick={this.setBid}
                                                 className="ca-btn primary"
-                                                disabled={this.isBidBtnDisabled()}>{this.context.t("MARKETPLACE_BUTTON_APPLY")}</button>
+                                                disabled={!this.isBidValid()}>{this.context.t("MARKETPLACE_BUTTON_APPLY")}</button>
                                         </div>
                                     </span>
                                 </div>}
@@ -820,10 +831,7 @@ class ListingDetails extends React.Component {
                             </div>
                             {!spinner
                                 ? (<button className="standard-button" onClick={this.placeBid} disabled={!this.isPackageValid()}>
-                                    {selectedPackage.salesMethod === "FIXED"
-                                        ? this.context.t("CHECKOUT_BUTTON_BUY")
-                                        : this.context.t("CHECKOUT_BUTTON_PLACE_BID")
-                                    }</button>)
+                                    {this.getTitlePrefix(checkoutType)}</button>)
                                 : <i className="fa fa-cog fa-spin" />}
                         </div>
                     </div>}
