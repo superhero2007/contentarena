@@ -52,7 +52,7 @@ class SeasonSelector extends React.Component {
         const {index, season, seasons} = this.props;
         let activeSeason = seasons[season];
         return (
-            <div style={{zIndex: 1, maxWidth: 872}}>
+            <div style={{zIndex: 50-index, maxWidth: 872}}>
                 {!this.props.isCustom &&
                 <div className="base-input">
                     <label>
