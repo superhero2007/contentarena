@@ -102,6 +102,22 @@ ContentArena.Utils = {
         return content;
     },
 
+    filterCompanyInfo(data){
+
+        let company = {};
+
+        company.legalName = data.legalName;
+        company.registrationNumber = data.registrationNumber;
+        company.vat = data.vat;
+        company.address = data.address;
+        company.address2 = data.address2;
+        company.city = data.city;
+        company.zip = data.zip;
+        company.country = data.country;
+
+        return company;
+    },
+
     sortSalesPackages (a, b){
         let c = (a, b) => {
             return (a > b) ? 1 : ((b > a) ? -1 : 0)

@@ -42,11 +42,12 @@ class ListingDetails extends React.Component {
         super(props);
 
         let listing = ContentArena.Utils.contentParserFromServer(props.listing) || {};
+        let company = ContentArena.Utils.filterCompanyInfo(props.company);
 
         this.state = {
             companyUpdated : false,
             content : listing,
-            company: props.company,
+            company: company,
             spinner : false,
             tab : props.tab || "bundles",
             buyingMode : props.tab && props.tab === "checkout",
