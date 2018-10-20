@@ -99,15 +99,27 @@ class FileSelector extends Component {
                     imageWidth: res.imageWidth,
                     crop: {
                         ...state.crop,
-                        x: (100 - (this.cropSize.max / res.imageWidth * 100)) / 2, //show cropp in center of image
-                        width: this.cropSize.max / res.imageWidth * 100, //calculate crop percent size based on client req
-                        height: this.cropSize.max / res.imageHeight * 100
+                        x: this.getCropPosition(res.imageWidth),
+                        width: this.getCropSize(res.imageWidth),
+                        height: this.getCropSize(res.imageHeight)
                     },
                     croppedImage: null,
                 }));
             })
         }
     };
+
+    getCropSize = (imageSize) => {
+        let size = this.cropSize.max / imageSize * 100;
+        if (size < 0 || size > 100) size = 100;
+        return size;
+    }
+
+    getCropPosition = (imageWidth) => {
+        let pos = (100 - (this.cropSize.max / imageWidth* 100)) / 2;
+        if (pos < 0 || pos > 100) pos = 0
+        return pos;
+    }
 
     getItems = () => {
         let list = [];
