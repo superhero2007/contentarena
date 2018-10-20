@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {PropTypes} from "prop-types";
-import HeaderBar from "./HeaderBar";
+import Modal from 'react-modal';
+import ReactCrop, { makeAspectCrop } from 'react-image-crop'
 
 const FileItem = ({item, onClick}) => (
     <div style={{
@@ -42,8 +43,23 @@ class FileSelector extends Component {
             failed: [],
             form : form,
             uploading : false,
-            image : (props.imageBase64) ? props.imageBase64 : null,
-            accept : props.accept || [".png", ".jpg"]
+            image : null,
+            accept : props.accept || [".png", ".jpg"],
+            imageWidth: null,
+            croppedImage: (props.imageBase64) ? props.imageBase64 : null,
+            pixelCrop: null,
+            crop: {
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0,
+                aspect: 1/1
+            },
+        }
+
+        this.cropSize = {
+            max: 1024,
+            min: 450
         }
     };
 
@@ -77,16 +93,18 @@ class FileSelector extends Component {
         }
 
         if ( isImage ) {
-            this.getBase64(event.target.files[0], (response) => {
-                _this.setState({
-                    image : response
-                });
-
-                if( onSelect ) {
-                    onSelect(target, response);
-                    onSelect("image", null);
-                }
-
+            this.getBase64(event.target.files[0], (res) => {
+                _this.setState(state => ({
+                    image: res.imageBase64,
+                    imageWidth: res.imageWidth,
+                    crop: {
+                        ...state.crop,
+                        x: (100 - (this.cropSize.max / res.imageWidth * 100)) / 2, //show cropp in center of image
+                        width: this.cropSize.max / res.imageWidth * 100, //calculate crop percent size based on client req
+                        height: this.cropSize.max / res.imageHeight * 100
+                    },
+                    croppedImage: null,
+                }));
             })
         }
     };
@@ -118,18 +136,55 @@ class FileSelector extends Component {
         let reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
-            cb(reader.result)
+            let image = new Image();
+            image.src = reader.result;
+
+            image.onload = () => {
+               cb({
+                   imageBase64 : reader.result,
+                   imageWidth: image.width,
+                   imageHeight: image.height,
+               })
+            };
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
     };
 
+    closeModal = () => {
+        this.setState({image: null})
+    }
+
+    onCropChange = (crop, pixelCrop) => {
+        this.setState({ crop, pixelCrop })
+    }
+
+    handleCrop = () => {
+        const {onSelect, target} = this.props;
+        const {image, pixelCrop} = this.state;
+
+        if (onSelect) {
+            let newImage = new Image();
+            newImage.src = image;
+
+            const croppedImage = getCroppedImg(newImage, pixelCrop)
+
+            onSelect(target, croppedImage);
+            onSelect("image", null);
+
+            this.setState({image: null, croppedImage: croppedImage})
+        }
+    }
+
+    onImageLoaded = (crop, pixelCrop) => {
+        this.setState({pixelCrop})
+    }
+
     render() {
 
         const {label, isImage, previousImage, selected, onRemove, infoText} = this.props;
-        const {image, uploading, failed} = this.state;
-
+        const {image, uploading, failed, crop, croppedImage, imageWidth} = this.state;
         return (
             <div className="base-input custom-selector" style={{flexDirection: 'column'}}>
                 <div style={{display: 'flex'}}>
@@ -148,6 +203,7 @@ class FileSelector extends Component {
                     <input
                         className="is-hidden"
                         onChange={this.handleUploadFile}
+                        onClick={e=>e.target.value = null}
                         accept={this.state.accept.join(", ")}
                         id={"input-" + this.props.target}
                         type="file"
@@ -155,30 +211,85 @@ class FileSelector extends Component {
                     {uploading && <i className="fa fa-cog fa-spin"/>}
                 </div>
                 <div>
-                    { failed && failed.map((item, i)=>{
+                    {failed && failed.map((item, i)=>{
                         return <InvalidFileItem key={"failed" +i} item={item} onClick={ () => this.removeFailed(i)} />
                     })}
 
-                    {
-                        selected && selected.length > 0 && selected.map((s, i ) => {
-                            return <FileItem key={"key-" + i} item={{name: s.name}} onClick={onRemove} />
-                        })
-                    }
+                    {selected && selected.length > 0 && selected.map((s, i) => {
+                        return <FileItem key={"key-" + i} item={{name: s.name}} onClick={onRemove}/>
+                    })}
 
-                    {
-                        isImage && image &&
-                        <img src={image} style={imageStyle}/>
-                    }
+                    {isImage && image && !croppedImage && (
+                        <Modal
+                            isOpen={true}
+                            onRequestClose={this.closeModal}
+                            bodyOpenClassName={"ca-modal-open"}
+                            className={"ca-modal"}
+                            overlayClassName={"ca-modal-overlay"}
+                        >
+                            {imageWidth >= this.cropSize.min ? (
+                                <div style={{padding: 15}}>
+                                    <ReactCrop
+                                        src={image}
+                                        crop={crop}
+                                        onImageLoaded = {this.onImageLoaded}
+                                        maxWidth={this.cropSize.max / imageWidth * 100}
+                                        minWidth={this.cropSize.min / imageWidth * 100}
+                                        onChange={this.onCropChange}
+                                    />
 
-                    {
-                        previousImage &&
-                        <img src={assetsBaseDir + "../"  + previousImage}
-                             style={imageStyle}/>
-                    }
+                                    <div className="text-center" style={{padding:15}}>
+                                        <div className="ca-btn primary" onClick={this.handleCrop}>
+                                            OK
+                                        </div>
+                                    </div>
+                                </div>
+                            ):(
+                                <div style={{padding:15, minHeight: 200}}>
+                                    <div className="text-center">
+                                        <div style={{padding: 15}}>
+                                            {this.context.t("CL_STEP1_IMAGE_SMALL")}
+                                        </div>
+                                        <div className="ca-btn primary" onClick={this.closeModal} >
+                                            {this.context.t("CLOSE")}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                        </Modal>
+                    )}
+
+                    {croppedImage && <img src={croppedImage} style={imageStyle} alt=""/>}
+
+                    {previousImage && <img src={assetsBaseDir + "../"  + previousImage} style={imageStyle}/>}
+
                 </div>
             </div>
         )
     }
+}
+
+const getCroppedImg = (image, pixelCrop) => {
+
+    const canvas = document.createElement('canvas');
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+    const ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+        image,
+        pixelCrop.x,
+        pixelCrop.y,
+        pixelCrop.width,
+        pixelCrop.height,
+        0,
+        0,
+        pixelCrop.width,
+        pixelCrop.height
+    );
+
+    return canvas.toDataURL('image/jpeg')
 }
 
 FileSelector.contextTypes = {
