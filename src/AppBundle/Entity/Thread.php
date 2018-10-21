@@ -90,6 +90,31 @@ class Thread
      */
     private $lastNotificationDate;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @Groups({"messages"})
+     */
+    private $createdAt;
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+
 
     /**
      * Get id
