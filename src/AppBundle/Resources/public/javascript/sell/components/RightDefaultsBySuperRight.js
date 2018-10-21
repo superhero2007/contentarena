@@ -3,7 +3,7 @@ export const RightDefaultsBySuperRight = {
         "CONTENT_DELIVERY" : "CONTENT_DELIVERY_LIVE"
     },
     "PR" : {
-        "CONTENT_DELIVERY" : "CONTENT_DELIVERY_LIVE"
+        "CONTENT_DELIVERY" : "CONTENT_DELIVERY_DEDICATED"
     },
     "NA" : {
         "CONTENT_DELIVERY" : "CONTENT_DELIVERY_LIVE"

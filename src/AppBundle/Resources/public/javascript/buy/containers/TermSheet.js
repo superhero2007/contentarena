@@ -60,9 +60,9 @@ class TermSheet extends React.Component {
                     rightsPackage.map((rp,k)=>{
 
                         if ( checkContentDelivery &&
-                            ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT" && rp.shortLabel !== "PR" ) ||
-                                rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT"
-                            )) return;
+                            rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                            && rp.shortLabel !== "LT"
+                            && rp.shortLabel !== "PR" ) return;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
@@ -115,8 +115,7 @@ class TermSheet extends React.Component {
             if (d.checkDelivery) {
                 return rightsPackage.some(p =>
                     !( (p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT" && p.shortLabel !== "PR") ||
-                        p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY') ||
-                        p.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT"
+                        p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY')
                 )
             } else {
                 return true
@@ -271,14 +270,18 @@ class TermSheet extends React.Component {
                         </div>
                         {
                             rightsPackage.map((rp, i)=>{
-                                if ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "PR" && rp.shortLabel !== "LT" ) ||
-                                    rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT") return;
-                                let viaLiveFeed = rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE_BACK";
+                                if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" &&
+                                    rp.shortLabel !== "PR" &&
+                                    rp.shortLabel !== "LT" ) return;
 
                                 return (
                                     <div key={"rp-prod" + i } className="right-definition right-definition-title">
-                                        {SuperRightProductionDetailsLabels[rp.shortLabel]}
-                                        {viaLiveFeed && " (via live feed)"}
+
+                                        {rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT" &&
+                                        SuperRightProductionDetailsLabels['HL']}
+
+                                        {rp.selectedRights['CONTENT_DELIVERY_NA']!=="CONTENT_DELIVERY_NA_HIGHLIGHT" &&
+                                        SuperRightProductionDetailsLabels[rp.shortLabel]}
                                     </div>
                                 )
                             })

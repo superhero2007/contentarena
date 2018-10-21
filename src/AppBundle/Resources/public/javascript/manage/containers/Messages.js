@@ -26,27 +26,19 @@ class Messages extends React.Component {
         });
 
 
-        ContentArena.ContentApi.getThreads().done(r=>{
+        ContentArena.ContentApi.getThreads().done(threads=>{
 
             let selectedThread;
 
-           /* r.sort((a, b) => {
-
-                if (!a.lastMessageDate) return 1;
-                let aDate = Moment(a.lastMessageDate);
-                let bDate = Moment(b.lastMessageDate);
-                return (aDate > bDate) ? 1 : ((bDate > a.bDate) ? -1 : 0)
-            }).reverse();*/
-
             if (this.props.match.params.customId){
-                selectedThread = r.filter(t=>t.customId === this.props.match.params.customId)[0];
-            } else if (r.length > 0) {
-                selectedThread =  r[0] ;
+                selectedThread = threads.filter(t=>t.customId === this.props.match.params.customId)[0];
+            } else if (threads.length > 0) {
+                selectedThread =  threads[0] ;
             }
 
 
             this.setState({
-                threads : r,
+                threads : threads,
                 selectedThread : selectedThread,
                 loadingThreads :false
             });
@@ -151,7 +143,7 @@ class Messages extends React.Component {
                                 this.selectThread(t)
                             }}>
                             <div className={"date"}>
-                                {t.lastMessageDate && Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
+                                {Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
                             </div>
                             <div className={"listing-name"}>
                                 {t.listing.name}

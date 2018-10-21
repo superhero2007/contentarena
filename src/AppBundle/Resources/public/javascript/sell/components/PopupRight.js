@@ -24,8 +24,7 @@ const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions
     const rightLabelCustom = nameToCustomValueConfig[item].value;
     let suffix = "RIGHTS_";
 
-    console.log(currentRights, rightLabel)
-    
+
     if ( currentRights === rightLabel){
         return predicate(firstPackage.selectedRights[rightLabelCustom]);
     } else {
@@ -71,7 +70,6 @@ class PopupRight extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        //console.log("PopupRight - props",props);
         this.setState({
             rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i]))
         });
@@ -336,10 +334,11 @@ class PopupRight extends React.Component {
         } = this.props;
         const { productionLabels } = this.state;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+
         return <div className="row">
             <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                 {!productionLabel && rightPackage.name}
-                {productionLabel && productionLabels[rightPackage.shortLabel]}
+                {productionLabel && productionLabels[(rightPackage.selectedRights["CONTENT_DELIVERY_NA"] === "CONTENT_DELIVERY_NA_HIGHLIGHT") ? "HL" : rightPackage.shortLabel]}
             </div>
             {options.map((option, i ,list)=> {
 

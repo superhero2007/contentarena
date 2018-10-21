@@ -822,6 +822,14 @@ button {
 
         .sales-package-table{
           @extend %sales-package-table;
+          display: table-row !important;
+          overflow: auto;
+          height: 250px;
+          .sales-package-container{
+            display: table !important;
+            height: 50px !important;
+            width: 100%;
+          }
         }
 
       }

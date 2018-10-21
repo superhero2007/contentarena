@@ -72,8 +72,8 @@ class MessageService
         return $threads ;
     }
 
-    public function sortByLastMessage(Thread $a, Thread $b)
-    {
+    public function sortByLastMessage(Thread $a, Thread $b){
+        if ($a->getLastMessageDate() == null) return -1;
         return $a->getLastMessageDate() < $b->getLastMessageDate();
     }
 
