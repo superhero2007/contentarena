@@ -370,7 +370,7 @@ class CommercialSalesBundle extends React.Component{
                             className : 'table-header-big',
                             id : "actions",
                             accessor: b => {return {status: b.status.name, bid: b}},
-                            Cell: props => <div className="actions-col d-flex">
+                            Cell: props => <div className="actions-col d-flex align-items-center">
                                 {props.value.status === "REJECTED"
                                     && <i className={"fa fa-trash-o"} style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
                                         this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
