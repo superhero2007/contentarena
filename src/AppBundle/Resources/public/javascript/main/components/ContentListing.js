@@ -34,21 +34,26 @@ class ContentListing extends Component{
     }
 
     confirmRemoveFromWatchlist = (e) =>{
-        this.setState({confirmWatchlistRemove : true});
+        e.preventDefault();
         e.stopPropagation();
+        this.setState({confirmWatchlistRemove : true});
     };
 
     cancelRemoveFromWatchlist = (e) =>{
-        this.setState({confirmWatchlistRemove : false});
+        e.preventDefault();
         e.stopPropagation();
+        this.setState({confirmWatchlistRemove : false});
     };
 
     removeFromWatchlist = (e) => {
         const {customId, onWatchlistRemove} = this.props;
-        ContentArena.Api.watchlist(customId);
 
-        if ( onWatchlistRemove ) onWatchlistRemove(customId);
+        e.preventDefault();
         e.stopPropagation();
+
+        ContentArena.Api.watchlist(customId);
+        if ( onWatchlistRemove ) onWatchlistRemove(customId);
+
     };
 
     sortSalesPackages = (a, b) => {
