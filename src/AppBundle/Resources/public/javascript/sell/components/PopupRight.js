@@ -324,7 +324,7 @@ class PopupRight extends React.Component {
 
     };
 
-    renderModalRow = (rightPackage) => {
+    renderModalRow = (rightPackage, name) => {
         const {
             multiple,
             options,
@@ -338,7 +338,8 @@ class PopupRight extends React.Component {
         return <div className="row">
             <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                 {!productionLabel && rightPackage.name}
-                {productionLabel && productionLabels[(rightPackage.selectedRights["CONTENT_DELIVERY_NA"] === "CONTENT_DELIVERY_NA_HIGHLIGHT") ? "HL" : rightPackage.shortLabel]}
+                {!name && productionLabel && productionLabels[(rightPackage.selectedRights["CONTENT_DELIVERY_NA"] === "CONTENT_DELIVERY_NA_HIGHLIGHT") ? "HL" : rightPackage.shortLabel]}
+                {name && name }
             </div>
             {options.map((option, i ,list)=> {
 
@@ -424,7 +425,8 @@ class PopupRight extends React.Component {
         } = this.props;
 
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
-        let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE_BACK");
+        let liveFeedPackages = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+        let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -466,7 +468,7 @@ class PopupRight extends React.Component {
                             onChange={(value) => { onUpdateListing("LICENSED_LANGUAGES", value) }}
                             value={languages}/>}
 
-                        {deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery
+                        {/*{deliveryViaLiveFeed && checkContentDelivery
                         && <div className="row">
                             <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                                 Live Transmission
@@ -513,7 +515,14 @@ class PopupRight extends React.Component {
                                     }
                                 </div>
                             })}
-                        </div>}
+                        </div>}*/}
+
+
+                        {deliveryViaLiveFeed
+                            && checkContentDelivery
+                            && id !== "CONTENT_DELIVERY"
+                            && this.renderModalRow(liveFeedPackages[0], "Live Feed")
+                        }
 
                         {!global && rightsPackage.map((rightPackage)=>{
                             if ( superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1 ) return;

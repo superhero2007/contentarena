@@ -22,14 +22,19 @@ class TermSheet extends React.Component {
         return rightsPackage.filter(rp => rp.shortLabel === shortLabel ).length > 0;
     };
 
-    renderProgramInfo = (values, name, i) => {
+    renderProgramInfo = (values, name, deliveryViaLiveFeed, liveFeedPackages) => {
         const { rightsPackage } = this.props;
-        return <div className='row' key={'program'+i}>
+        return <div className='row' key={'program-'+ name}>
                 <div className="right-name right-definition">{name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
-                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT") return;
-                        if ( rp.shortLabel !== 'PR' ) return <div className="right-definition"/>;
+
+                        let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+
+                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                            && !liveFeedColumn
+                            && rp.shortLabel !== "LT") return;
+                        if ( rp.shortLabel !== 'PR' ) return <div className="right-definition">-</div>;
 
                         return <div  className="right-definition" key={"program_child"+k}>
                             { values && values.length === 0 && "No" }
@@ -40,7 +45,7 @@ class TermSheet extends React.Component {
             </div>
     };
 
-    renderList = (definitions, checkContentDelivery) => {
+    renderList = (definitions, checkContentDelivery, deliveryViaLiveFeed, liveFeedPackages) => {
         const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
         if (checkContentDelivery) {
             definitions = this.getFilteredByDelivery(definitions, rightsPackage);
@@ -59,13 +64,23 @@ class TermSheet extends React.Component {
                 {
                     rightsPackage.map((rp,k)=>{
 
-                        if ( checkContentDelivery &&
-                            rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                        let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+
+                        if ( checkContentDelivery
+                            && !liveFeedColumn
+                            && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
                             && rp.shortLabel !== "LT"
                             && rp.shortLabel !== "PR" ) return;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
+                        </div>;
+
+
+                        if ( checkContentDelivery
+                            && right.superRights.length > 0
+                            && right.superRights.indexOf(rp.shortLabel) === -1 ) return <div className="right-definition">
+                            -
                         </div>;
 
                         const defItems = selectedRightsBySuperRight[rp.id].items;
@@ -174,6 +189,8 @@ class TermSheet extends React.Component {
             endDate
         } = this.props;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+        let liveFeedPackages = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+        let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
 
         return (
             <div className="term-sheet">
@@ -268,6 +285,12 @@ class TermSheet extends React.Component {
                         <div className="right-definition right-definition-title">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}
                         </div>
+
+                        {deliveryViaLiveFeed
+                        && <div key={"rp-prod-live" } className="right-definition right-definition-title">
+                            Live Feed
+                        </div>
+                        }
                         {
                             rightsPackage.map((rp, i)=>{
                                 if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" &&
@@ -287,11 +310,11 @@ class TermSheet extends React.Component {
                             })
                         }
                     </div>
-                    { this.renderList(ProductionStandardsDefinitions, true) }
+                    { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
 
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages") }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles") }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages) }
                 </div>
 
                 <div>
