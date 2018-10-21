@@ -50,7 +50,7 @@ class TermSheet extends React.Component {
     renderList = (definitions, checkContentDelivery, deliveryViaLiveFeed, liveFeedPackages) => {
         const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
         if (checkContentDelivery) {
-            definitions = this.getFilteredByDelivery(definitions, rightsPackage);
+            definitions = this.getFilteredByDelivery(definitions, rightsPackage, deliveryViaLiveFeed, liveFeedPackages);
         }
 
         let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
@@ -132,12 +132,13 @@ class TermSheet extends React.Component {
         })
     };
 
-    getFilteredByDelivery = (definitions, rightsPackage) => {
+    getFilteredByDelivery = (definitions, rightsPackage, deliveryViaLiveFeed, liveFeedPackages) => {
         //filter definitions by user chosen rightPackage
+
         return definitions.filter(d => {
             if (d.checkDelivery) {
                 return rightsPackage.some(p =>
-                    !( (p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT" && p.shortLabel !== "PR") ||
+                    !( ( !(deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === p.shortLabel) && p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT" && p.shortLabel !== "PR") ||
                         p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY')
                 )
             } else {
