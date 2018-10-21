@@ -693,18 +693,33 @@
 
     {# CONTENT DELIVERY #}
     <div class="license-item">
+        {% set hasHighlights = content.selectedRightsBySuperRight | has_dedicated_highlights(content.rightsPackage) | default(false) %}
+        {% set customLive = content.selectedRightsBySuperRight | get_custom_live(content.rightsPackage) | default(null) %}
         <table>
+
             <tr>
                 <td>Content Delivery</td>
                 {% for right in content.rightsPackage %}
 
                     {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                     {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                    {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                    {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                    {% if (
+                        ( definition is not defined
+                        or definition != "CONTENT_DELIVERY_LIVE"
+                        or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                        or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                        ) and skipNews == false
+                        )
+                    %}
+
                         <td>
 
                             {% if definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT" %}
                                 {{ "HL" | content_delivery_label }}
+                            {% elseif customLive is not null and right.id == customLive.id %}
+                                Live Feed
                             {% else %}
                                 {{ right.shortLabel | content_delivery_label }}
                             {% endif %}
@@ -719,16 +734,29 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
-                                {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
-                                    {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
-                                        {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
-                                            {{ language.label }}{% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    {% endif %}
+                                {% if right.shortLabel == "PR" %}
+                                    -
                                 {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] == "GRAPHICS_YES" %}
+                                        {% if  content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] is defined %}
+                                            {% for language in content.selectedRightsBySuperRight[right.id].items["GRAPHICS_LANGUAGES"] %}
+                                                {{ language.label }}{% if not loop.last %},{% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["GRAPHICS"] | right_definitions_label}}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         {% endif %}
@@ -739,16 +767,29 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
-                                {% if content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] == "COMMENTARY_YES" %}
-                                    {% if  content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] is defined %}
-                                        {% for language in content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] %}
-                                            {{ language.label }}{% if not loop.last %},{% endif %}
-                                        {% endfor %}
-                                    {% endif %}
+                                {% if right.shortLabel == "PR" %}
+                                    -
                                 {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] | right_definitions_label}}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] == "COMMENTARY_YES" %}
+                                        {% if  content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] is defined %}
+                                            {% for language in content.selectedRightsBySuperRight[right.id].items["COMMENTARY_LANGUAGES"] %}
+                                                {{ language.label }}{% if not loop.last %},{% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["COMMENTARY"] | right_definitions_label}}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         {% endif %}
@@ -759,12 +800,25 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
-                                {% if content.selectedRightsBySuperRight[right.id].items["CAMERA"] == "CAMERA_MINIMUM" %}
-                                    Minimum cameras: {{ content.selectedRightsBySuperRight[right.id].items["CAMERAS"] }}
+                                {% if right.shortLabel == "PR" %}
+                                    -
                                 {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["CAMERA"] | right_definitions_label}}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["CAMERA"] == "CAMERA_MINIMUM" %}
+                                        Minimum cameras: {{ content.selectedRightsBySuperRight[right.id].items["CAMERAS"] }}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["CAMERA"] | right_definitions_label}}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         {% endif %}
@@ -775,12 +829,25 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
-                                {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                                {% if right.shortLabel == "PR" %}
+                                    -
                                 {% else %}
-                                    {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                    {% if content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] == "ASPECT_RATIO_CUSTOM" %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO_TEXT"] }}
+                                    {% else %}
+                                        {{ content.selectedRightsBySuperRight[right.id].items["ASPECT_RATIO"] | right_definitions_label}}
+                                    {% endif %}
                                 {% endif %}
                             </td>
                         {% endif %}
@@ -793,7 +860,16 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -816,7 +892,16 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -839,7 +924,16 @@
                     {% for right in content.rightsPackage %}
                         {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                         {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                        {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                        {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                        {% if (
+                            ( definition is not defined
+                            or definition != "CONTENT_DELIVERY_LIVE"
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                            or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                            ) and skipNews == false
+                            )
+                        %}
                             <td>
                                 {% if right.shortLabel != "PR" %}
                                     -
@@ -864,7 +958,16 @@
                 {% for right in content.rightsPackage %}
                     {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                     {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                    {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                    {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                    {% if (
+                        ( definition is not defined
+                        or definition != "CONTENT_DELIVERY_LIVE"
+                        or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                        or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                        ) and skipNews == false
+                        )
+                    %}
                         <td>
                             {{ content.selectedRightsBySuperRight[right.id].items["VIDEO_STANDARD"] | right_definitions_label}}
                         </td>
@@ -876,7 +979,16 @@
                 {% for right in content.rightsPackage %}
                     {% set definition = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY"] | default(null) %}
                     {% set definition2 = content.selectedRightsBySuperRight[right.id].items["CONTENT_DELIVERY_NA"] | default(null) %}
-                    {% if (definition is not defined or definition != "CONTENT_DELIVERY_LIVE"  or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )) %}
+                    {% set skipNews = hasHighlights and definition2 == "CONTENT_DELIVERY_NA_HIGHLIGHT"  | default(false) %}
+
+                    {% if (
+                        ( definition is not defined
+                        or definition != "CONTENT_DELIVERY_LIVE"
+                        or ( definition == "CONTENT_DELIVERY_LIVE" and customLive is not null and right.id == customLive.id )
+                        or ( definition == "CONTENT_DELIVERY_LIVE" and ( right.shortLabel == "PR" or right.shortLabel == "LT" ) )
+                        ) and skipNews == false
+                        )
+                    %}
                         <td>{% for tech in content.selectedRightsBySuperRight[right.id].items["TECHNICAL_DELIVERY"] %}
                                 {{ tech | right_definitions_label}}
                             {% endfor %}

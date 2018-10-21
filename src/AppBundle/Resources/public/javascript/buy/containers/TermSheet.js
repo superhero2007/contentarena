@@ -22,7 +22,7 @@ class TermSheet extends React.Component {
         return rightsPackage.filter(rp => rp.shortLabel === shortLabel ).length > 0;
     };
 
-    renderProgramInfo = (values, name, deliveryViaLiveFeed, liveFeedPackages) => {
+    renderProgramInfo = (values, name, deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) => {
         const { rightsPackage } = this.props;
         return <div className='row' key={'program-'+ name}>
                 <div className="right-name right-definition">{name}</div>
@@ -31,7 +31,9 @@ class TermSheet extends React.Component {
 
                         let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
 
-                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                        if ( ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                                || highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT"
+                            )
                             && !liveFeedColumn
                             && rp.shortLabel !== "LT") return;
                         if ( rp.shortLabel !== 'PR' ) return <div className="right-definition">-</div>;
@@ -50,6 +52,11 @@ class TermSheet extends React.Component {
         if (checkContentDelivery) {
             definitions = this.getFilteredByDelivery(definitions, rightsPackage);
         }
+
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+
+
         return definitions.map( (right, i) => {
 
             if (right.key === 'CONTENT_DELIVERY') return;
@@ -68,7 +75,8 @@ class TermSheet extends React.Component {
 
                         if ( checkContentDelivery
                             && !liveFeedColumn
-                            && rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                            &&  ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) )
                             && rp.shortLabel !== "LT"
                             && rp.shortLabel !== "PR" ) return;
 
@@ -191,6 +199,9 @@ class TermSheet extends React.Component {
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
         let liveFeedPackages = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
         let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+
 
         return (
             <div className="term-sheet">
@@ -293,7 +304,8 @@ class TermSheet extends React.Component {
                         }
                         {
                             rightsPackage.map((rp, i)=>{
-                                if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" &&
+                                if ( ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                        || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) ) &&
                                     rp.shortLabel !== "PR" &&
                                     rp.shortLabel !== "LT" ) return;
 
@@ -312,9 +324,9 @@ class TermSheet extends React.Component {
                     </div>
                     { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
 
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages) }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages) }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
                 </div>
 
                 <div>

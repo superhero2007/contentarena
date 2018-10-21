@@ -235,6 +235,13 @@ class PopupRight extends React.Component {
     filterRightsPackage(id, rightsPackages) {
         const {checkContentDelivery, superRights} = this.props;
 
+        let packagesAvailable = rightsPackages.map(rp =>rp.shortLabel);
+        let liveFeedPackages = rightsPackages.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+        let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+        let highlightRight = rightsPackages.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED"
+        let liveIncluded = false;
+
         return rightsPackages.filter((rightPackage) => {
             if (superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1) {
                 return false;
@@ -242,11 +249,22 @@ class PopupRight extends React.Component {
 
             if (checkContentDelivery
                 && id !== "CONTENT_DELIVERY"
-                && rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
                 && rightPackage.shortLabel !== "LT"
                 && rightPackage.shortLabel !== "PR"
             ){
-                return false;
+                if ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" ) {
+                    if (deliveryViaLiveFeed) {
+                        if (!liveIncluded) {
+                            liveIncluded = true;
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                if ( highlightIsDedicated && rightPackage.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) {
+                    return false
+                }
             }
 
             return true;
@@ -427,6 +445,8 @@ class PopupRight extends React.Component {
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
         let liveFeedPackages = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
         let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED"
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -529,7 +549,8 @@ class PopupRight extends React.Component {
 
                             if (checkContentDelivery
                                 && id !== "CONTENT_DELIVERY"
-                                && rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                &&  ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                    || ( highlightIsDedicated && rightPackage.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) )
                                 && rightPackage.shortLabel !== "LT"
                                 && rightPackage.shortLabel !== "PR"
                             ){
@@ -683,11 +704,9 @@ class PopupRight extends React.Component {
 
         let isMultipleValuesSelected = this.isMultipleValuesSelected(id,  rightsPackageFiltered);
         let displayedValue =  '';
-        let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
-        let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE_BACK");
 
-        if ( deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery ) id = "LIVE_FEED_" + id;
-        
+        console.log(rightsPackageFiltered)
+
         if (rightsPackageFiltered.length > 0 ){
             const firstPackage = rightsPackageFiltered[0];
             const currentRights = firstPackage.selectedRights[id];

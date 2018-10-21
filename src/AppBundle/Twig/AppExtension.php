@@ -37,7 +37,11 @@ class AppExtension extends AbstractExtension
             new TwigFilter('right_definitions_label', array($this, 'rightDefinitionsLabel')),
             new TwigFilter('cast_to_array', array($this, 'castToArray')),
             new TwigFilter('has_content_dedicated_length', array($this, 'hasContentDedicatedLength')),
-            new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel'))
+            new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel')),
+            new TwigFilter('has_dedicated_highlights', array($this, 'hasDedicatedHighlights')),
+            new TwigFilter('get_custom_live', array($this, 'getCustomLive'))
+
+
         );
     }
 
@@ -202,6 +206,33 @@ class AppExtension extends AbstractExtension
         }
 
         return $has;
+    }
+
+    public function hasDedicatedHighlights($selectedRights,$rights){
+        $has = false;
+        foreach ($rights as $key => $right){
+            /* @var RightsPackage $right*/
+            if ( $right->getShortLabel() == "HL" && $selectedRights[$right->getId()]['items']["CONTENT_DELIVERY"] === 'CONTENT_DELIVERY_DEDICATED' ) $has = true;
+        }
+
+        return $has;
+    }
+
+
+    public function getCustomLive($selectedRights,$rights){
+        $custom = null;
+
+        if ( $this->hasRight($rights, "LT") ) return null;
+
+        foreach ($rights as $key => $right){
+            /* @var RightsPackage $right*/
+            if ( $selectedRights[$right->getId()]['items']["CONTENT_DELIVERY"] === 'CONTENT_DELIVERY_LIVE' ) {
+                $custom = $right;
+                break;
+            }
+        }
+
+        return $custom;
     }
 
     public function hasContentDedicatedLength($rights){
