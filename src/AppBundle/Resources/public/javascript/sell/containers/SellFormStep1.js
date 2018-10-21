@@ -550,7 +550,7 @@ class SellFormStep1 extends React.Component {
                     }
 
                     {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px", maxWidth: 872, display: 'flex'}}>
-                        <div>{this.context.t("CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION")}</div>
+                        <div style={{width: 615, textAlign: 'right'}}>{this.context.t("CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION")}</div>
                         <button className={"standard-button link-button"} onClick={this.addSportSelector} style={{marginLeft: 'auto'}}>
                             {this.context.t("CL_STEP1_FORM_ADD_SPORT")}
                         </button>

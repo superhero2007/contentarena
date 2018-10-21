@@ -81,7 +81,7 @@ class SeasonSelector extends React.Component {
 
                 {this.props.showAddNew && activeSeason &&
                 <div className="step-item-description" style={{display: 'flex'}}>
-                    <div style={{maxWidth: 655}}>
+                    <div style={{width: 655, textAlign: 'right'}}>
                         {this.context.t("Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds.")}
                     </div>
                     <button style={{marginLeft: 'auto', alignSelf: 'center'}} className="standard-button link-button" onClick={this.addFixture}>
@@ -90,7 +90,7 @@ class SeasonSelector extends React.Component {
                 </div>}
 
                 {this.props.showAddNew && <div className="step-item-description" style={{display: 'flex'}}>
-                    <div>{this.context.t("CL_STEP1_ADD_SEASON_BUTTON_DESCRIPTION")}</div>
+                    <div style={{width: 653, textAlign: 'right'}}>{this.context.t("CL_STEP1_ADD_SEASON_BUTTON_DESCRIPTION")}</div>
                     <button style={{marginBottom: 25, marginLeft: 'auto', minWidth: 196}} className="standard-button link-button" onClick={this.props.addSeason}>
                         {this.context.t("CL_STEP1_ADD_SEASON")}
                     </button>

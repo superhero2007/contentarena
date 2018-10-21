@@ -120,7 +120,7 @@ class SearchCompetition extends  React.Component {
                         {this.context.t("CL_STEP1_SEARCH_TRY")}
                     </div>}
 
-                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description" style={{marginLeft: 'auto'}}>
+                    {this.state.searchDone && this.state.results.length > 0 && <div className="step-item-description" style={{margin: 'auto', marginRight: -210}}>
                         {this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
                     </div>}
 
