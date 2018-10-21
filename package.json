@@ -16,7 +16,6 @@
     "react": "^16.4.2",
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.4.2",
-    "react-image-crop": "^6.0.0",
     "react-modal": "^3.3.2",
     "react-popup": "^0.9.2",
     "react-redux": "^5.0.7",

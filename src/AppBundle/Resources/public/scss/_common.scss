@@ -282,10 +282,6 @@ i.fa.ca-tooltip {
   justify-content: space-between !important;
 }
 
-.justify-content-center {
-  justify-content: center !important;
-}
-
 .d-inline-flex {
   display: flex !important;
 }
@@ -438,7 +434,6 @@ a.ca-link {
     right: 0;
     margin: 20px auto;
     outline: none;
-    z-index: 9999;
   }
 
   .ca-modal-overlay {
@@ -449,6 +444,5 @@ a.ca-link {
     bottom: 0px;
     background-color: rgba(255, 255, 255, 0.75);
     overflow-y: scroll;
-    z-index: 9998;
   }
 }
