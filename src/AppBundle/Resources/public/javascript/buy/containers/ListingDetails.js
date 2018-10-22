@@ -25,6 +25,7 @@ import {PropTypes} from "prop-types";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import { getListingImage } from "./../../common/utils/listing";
 import { DATE_FORMAT } from "@constants";
+import RightsLegend from "../../main/components/RightsLegend";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -585,6 +586,9 @@ class ListingDetails extends React.Component {
                 { this.editCompany() }
                 { this.allTerritories() }
                 { this.successScreen() }
+                <div style={{width: '100%', textAlign: 'right', marginBottom: 10}}>
+                    <RightsLegend />
+                </div>
                 {!buyingMode && (
                     <div className="listing-details-top-info">
                         {profile === "BUYER" && (
