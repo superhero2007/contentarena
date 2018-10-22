@@ -12,6 +12,7 @@ import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
 import Comments from "../components/Comments";
+import RightsLegend from "../../main/components/RightsLegend";
 
 class ReviewAndSign extends React.Component {
 
@@ -170,6 +171,9 @@ class ReviewAndSign extends React.Component {
 
         return (
             <div className="step-content">
+                <div style={{width: '100%', textAlign: 'right'}}>
+                    <RightsLegend />
+                </div>
                 { this.successScreen() }
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>

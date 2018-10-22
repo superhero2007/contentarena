@@ -4,6 +4,7 @@ import {goTo} from "../../main/actions/utils";
 import BoardListing from '../components/BoardListing';
 import {updateProfile} from "../../main/actions/userActions";
 import {PropTypes} from "prop-types";
+import RightsLegend from "../../main/components/RightsLegend";
 
 class ManageListings extends React.Component {
     constructor(props) {
@@ -107,6 +108,9 @@ class ManageListings extends React.Component {
                 flexDirection: 'column',
                 flex: 1
             }}>
+                <div style={{width: '100%', textAlign: 'right'}}>
+                    <RightsLegend />
+                </div>
 
                 <div className={"board"}>
                     {/*DRAFT*/}

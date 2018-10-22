@@ -17,6 +17,7 @@ import {LanguageSelector} from "../../main/components/LanguageSelector";
 import {customStyles} from "../../main/styles/custom";
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
+import RightsLegend from "../../main/components/RightsLegend";
 
 const licenseStyles = {
     fontSize: "15px",
@@ -189,6 +190,9 @@ class SellFormStep3 extends React.Component {
         return (
 
             <div className="step-content step-3">
+                <div style={{width: '100%', textAlign: 'right', marginBottom: 10}}>
+                    <RightsLegend />
+                </div>
                 { this.renderProgramPopup() }
 
                 {/*SUMMARY*/}

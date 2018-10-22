@@ -9,6 +9,7 @@ import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
 import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
+import RightsLegend from "../../main/components/RightsLegend";
 
 const rightImageStyle = {
     width: 17,
@@ -323,6 +324,10 @@ class ClosedDeals extends React.Component {
                         <ReactTooltip place="top" type="dark" effect="solid"/>
                     </div>
                 }
+
+                <div style={{width: '100%', textAlign: 'right'}}>
+                    <RightsLegend />
+                </div>
 
                 {
                     bids.length === 0 &&

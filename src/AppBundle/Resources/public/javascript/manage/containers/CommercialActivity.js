@@ -5,6 +5,7 @@ import ContentListingCommercialActivity from '../../main/components/ContentListi
 import { goToListing } from "../../main/actions/utils";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
+import RightsLegend from "../../main/components/RightsLegend";
 
 class CommercialActivity extends Component {
     constructor(props) {
@@ -198,6 +199,10 @@ class CommercialActivity extends Component {
                         {this.statusFilterItem(this.openBidsCallback, filters.openBids, 'openbids')}
                         {this.statusFilterItem(this.closedBidsCallback, filters.closedDeals, 'closeddeals')}
                     </div>
+                </div>
+
+                <div style={{width: '100%', textAlign: 'right', marginBottom: 10}}>
+                    <RightsLegend />
                 </div>
 
                 {
