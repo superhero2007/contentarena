@@ -83,6 +83,10 @@ msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "MIN_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Contact Seller"
 msgstr ""
 
@@ -127,10 +131,6 @@ msgid "Bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "MIN_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "MARKETPLACE_BUTTON_APPLY"
 msgstr ""
 
@@ -163,18 +163,6 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_TERMS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_BUTTON_BUY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_BUTTON_PLACE_BID"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
 msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
@@ -193,6 +181,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_RELEASE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
@@ -452,6 +444,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
 msgid "Upload"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
+msgid "GENERIC_TERMS_TEXT_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
+msgid "GENERIC_TERMS_TEXT_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
@@ -1571,6 +1571,10 @@ msgid "CL_STEP5_TERMS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_TERMS_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_BUTTON_SUBMIT"
 msgstr ""
 
@@ -1748,9 +1752,5 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_INFO_ANNEX"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_LISTING_DETAILS_TEXT"
 msgstr ""
 
