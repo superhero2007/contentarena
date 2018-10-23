@@ -4,7 +4,7 @@ import {languages} from "../../../data/languages";
 
 export const allValue = {
     value: 'all',
-    label: 'All'
+    label: 'All local languages'
 };
 
 class LanguageSelector extends  React.Component {
