@@ -24,8 +24,7 @@ const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions
     const rightLabelCustom = nameToCustomValueConfig[item].value;
     let suffix = "RIGHTS_";
 
-    console.log(currentRights, rightLabel)
-    
+
     if ( currentRights === rightLabel){
         return predicate(firstPackage.selectedRights[rightLabelCustom]);
     } else {
@@ -71,7 +70,6 @@ class PopupRight extends React.Component {
     }
 
     componentWillReceiveProps(props){
-        //console.log("PopupRight - props",props);
         this.setState({
             rightsPackage : new Map(props.rightsPackage.map((i) => [i.id, i]))
         });
@@ -237,6 +235,13 @@ class PopupRight extends React.Component {
     filterRightsPackage(id, rightsPackages) {
         const {checkContentDelivery, superRights} = this.props;
 
+        let packagesAvailable = rightsPackages.map(rp =>rp.shortLabel);
+        let liveFeedPackages = rightsPackages.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+        let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+        let highlightRight = rightsPackages.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED"
+        let liveIncluded = false;
+
         return rightsPackages.filter((rightPackage) => {
             if (superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1) {
                 return false;
@@ -244,11 +249,22 @@ class PopupRight extends React.Component {
 
             if (checkContentDelivery
                 && id !== "CONTENT_DELIVERY"
-                && rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
                 && rightPackage.shortLabel !== "LT"
                 && rightPackage.shortLabel !== "PR"
             ){
-                return false;
+                if ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE" ) {
+                    if (deliveryViaLiveFeed) {
+                        if (!liveIncluded) {
+                            liveIncluded = true;
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                if ( highlightIsDedicated && rightPackage.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) {
+                    return false
+                }
             }
 
             return true;
@@ -326,7 +342,7 @@ class PopupRight extends React.Component {
 
     };
 
-    renderModalRow = (rightPackage) => {
+    renderModalRow = (rightPackage, name) => {
         const {
             multiple,
             options,
@@ -336,10 +352,12 @@ class PopupRight extends React.Component {
         } = this.props;
         const { productionLabels } = this.state;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+
         return <div className="row">
             <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                 {!productionLabel && rightPackage.name}
-                {productionLabel && productionLabels[rightPackage.shortLabel]}
+                {!name && productionLabel && productionLabels[(rightPackage.selectedRights["CONTENT_DELIVERY_NA"] === "CONTENT_DELIVERY_NA_HIGHLIGHT") ? "HL" : rightPackage.shortLabel]}
+                {name && name }
             </div>
             {options.map((option, i ,list)=> {
 
@@ -425,7 +443,10 @@ class PopupRight extends React.Component {
         } = this.props;
 
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
-        let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE_BACK");
+        let liveFeedPackages = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+        let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED"
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -467,7 +488,7 @@ class PopupRight extends React.Component {
                             onChange={(value) => { onUpdateListing("LICENSED_LANGUAGES", value) }}
                             value={languages}/>}
 
-                        {deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery
+                        {/*{deliveryViaLiveFeed && checkContentDelivery
                         && <div className="row">
                             <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
                                 Live Transmission
@@ -514,14 +535,22 @@ class PopupRight extends React.Component {
                                     }
                                 </div>
                             })}
-                        </div>}
+                        </div>}*/}
+
+
+                        {deliveryViaLiveFeed
+                            && checkContentDelivery
+                            && id !== "CONTENT_DELIVERY"
+                            && this.renderModalRow(liveFeedPackages[0], "Live Feed")
+                        }
 
                         {!global && rightsPackage.map((rightPackage)=>{
                             if ( superRights.length > 0 && superRights.indexOf(rightPackage.shortLabel) === -1 ) return;
 
                             if (checkContentDelivery
                                 && id !== "CONTENT_DELIVERY"
-                                && rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                &&  ( rightPackage.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                    || ( highlightIsDedicated && rightPackage.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) )
                                 && rightPackage.shortLabel !== "LT"
                                 && rightPackage.shortLabel !== "PR"
                             ){
@@ -675,11 +704,9 @@ class PopupRight extends React.Component {
 
         let isMultipleValuesSelected = this.isMultipleValuesSelected(id,  rightsPackageFiltered);
         let displayedValue =  '';
-        let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
-        let deliveryViaLiveFeed = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE_BACK");
 
-        if ( deliveryViaLiveFeed.length > 0 && id !== "CONTENT_DELIVERY" && packagesAvailable.indexOf("LT") === -1 && checkContentDelivery ) id = "LIVE_FEED_" + id;
-        
+        console.log(rightsPackageFiltered)
+
         if (rightsPackageFiltered.length > 0 ){
             const firstPackage = rightsPackageFiltered[0];
             const currentRights = firstPackage.selectedRights[id];

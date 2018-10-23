@@ -13,8 +13,7 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Minimum Video Standard",
         key: "VIDEO_STANDARD",
-        //superRights: ["LT","HL", "LB", "NA","DT"],
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
         productionLabel : true,
         options : [
             "VIDEO_STANDARD_HD",
@@ -29,8 +28,7 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Aspect ratio",
         key: "ASPECT_RATIO",
-        //superRights: ["LT","HL", "LB", "NA","DT"],
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
         productionLabel : true,
         options : [
             "ASPECT_RATIO_16_9",
@@ -44,8 +42,7 @@ export const ProductionStandardsDefinitions = [
     {
         name: "Graphics",
         key: "GRAPHICS",
-        //superRights: ["LT","HL", "LB", "NA","DT"],
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
         productionLabel : true,
         options : [
             "GRAPHICS_NO",
@@ -59,8 +56,7 @@ export const ProductionStandardsDefinitions = [
         name: "Commentary",
         key: "COMMENTARY",
         productionLabel : true,
-        //superRights: ["LT","HL", "LB", "NA","DT"],
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
             "COMMENTARY_NO",
             "COMMENTARY_YES"
@@ -73,8 +69,7 @@ export const ProductionStandardsDefinitions = [
         name: "Camera standards",
         key: "CAMERA",
         productionLabel : true,
-        //superRights: ["LT","HL", "LB", "NA","DT"],
-        superRights: [],
+        superRights: ["LT","HL", "LB", "NA","DT"],
         options : [
             "CAMERA_MINIMUM"
         ],

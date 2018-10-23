@@ -34,21 +34,26 @@ class ContentListing extends Component{
     }
 
     confirmRemoveFromWatchlist = (e) =>{
-        this.setState({confirmWatchlistRemove : true});
+        e.preventDefault();
         e.stopPropagation();
+        this.setState({confirmWatchlistRemove : true});
     };
 
     cancelRemoveFromWatchlist = (e) =>{
-        this.setState({confirmWatchlistRemove : false});
+        e.preventDefault();
         e.stopPropagation();
+        this.setState({confirmWatchlistRemove : false});
     };
 
     removeFromWatchlist = (e) => {
         const {customId, onWatchlistRemove} = this.props;
-        ContentArena.Api.watchlist(customId);
 
-        if ( onWatchlistRemove ) onWatchlistRemove(customId);
+        e.preventDefault();
         e.stopPropagation();
+
+        ContentArena.Api.watchlist(customId);
+        if ( onWatchlistRemove ) onWatchlistRemove(customId);
+
     };
 
     sortSalesPackages = (a, b) => {
@@ -292,7 +297,11 @@ class ContentListing extends Component{
 
                             {declined && (
                                 <div className="bid-remove"
-                                     onClick={(e)=>{this.setState({showRemoveConfirm: true});e.stopPropagation();}}
+                                     onClick={(e)=>{
+                                         e.stopPropagation();
+                                         e.preventDefault();
+                                         this.setState({showRemoveConfirm: true});
+                                     }}
                                 >
                                     <img src={bucketIcon}/>
                                 </div>
@@ -304,14 +313,16 @@ class ContentListing extends Component{
                                         {this.context.t("PENDING_BIDS_REMOVE_TITLE")}
                                     </div>
                                     <button className={"button button-confirm"} onClick={(e)=>{
-                                        e.stopPropagation()
+                                        e.stopPropagation();
+                                        e.preventDefault();
                                         this.setState({showRemoveConfirm: false});
                                         onDelete(bid.id);
                                     }}>
                                         {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CONFIRM")}
                                     </button>
                                     <button className={"button"} onClick={(e)=>{
-                                        e.stopPropagation()
+                                        e.stopPropagation();
+                                        e.preventDefault();
                                         this.setState({showRemoveConfirm: false});
                                     }}>
                                         {this.context.t("PENDING_BIDS_REMOVE_BUTTON_CANCEL")}

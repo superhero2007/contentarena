@@ -22,14 +22,21 @@ class TermSheet extends React.Component {
         return rightsPackage.filter(rp => rp.shortLabel === shortLabel ).length > 0;
     };
 
-    renderProgramInfo = (values, name, i) => {
+    renderProgramInfo = (values, name, deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) => {
         const { rightsPackage } = this.props;
-        return <div className='row' key={'program'+i}>
+        return <div className='row' key={'program-'+ name}>
                 <div className="right-name right-definition">{name}</div>
                 {
                     rightsPackage.map((rp,k)=>{
-                        if ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT") return;
-                        if ( rp.shortLabel !== 'PR' ) return <div className="right-definition"/>;
+
+                        let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+
+                        if ( ( rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE"
+                                || highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT"
+                            )
+                            && !liveFeedColumn
+                            && rp.shortLabel !== "LT") return;
+                        if ( rp.shortLabel !== 'PR' ) return <div className="right-definition">-</div>;
 
                         return <div  className="right-definition" key={"program_child"+k}>
                             { values && values.length === 0 && "No" }
@@ -40,11 +47,16 @@ class TermSheet extends React.Component {
             </div>
     };
 
-    renderList = (definitions, checkContentDelivery) => {
+    renderList = (definitions, checkContentDelivery, deliveryViaLiveFeed, liveFeedPackages) => {
         const {selectedRightsBySuperRight, rightsPackage, LICENSED_LANGUAGES} = this.props;
         if (checkContentDelivery) {
-            definitions = this.getFilteredByDelivery(definitions, rightsPackage);
+            definitions = this.getFilteredByDelivery(definitions, rightsPackage, deliveryViaLiveFeed, liveFeedPackages);
         }
+
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+
+
         return definitions.map( (right, i) => {
 
             if (right.key === 'CONTENT_DELIVERY') return;
@@ -59,13 +71,24 @@ class TermSheet extends React.Component {
                 {
                     rightsPackage.map((rp,k)=>{
 
-                        if ( checkContentDelivery &&
-                            ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "LT" && rp.shortLabel !== "PR" ) ||
-                                rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT"
-                            )) return;
+                        let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+
+                        if ( checkContentDelivery
+                            && !liveFeedColumn
+                            &&  ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) )
+                            && rp.shortLabel !== "LT"
+                            && rp.shortLabel !== "PR" ) return;
 
                         if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
                             {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
+                        </div>;
+
+
+                        if ( checkContentDelivery
+                            && right.superRights.length > 0
+                            && right.superRights.indexOf(rp.shortLabel) === -1 ) return <div className="right-definition">
+                            -
                         </div>;
 
                         const defItems = selectedRightsBySuperRight[rp.id].items;
@@ -109,14 +132,14 @@ class TermSheet extends React.Component {
         })
     };
 
-    getFilteredByDelivery = (definitions, rightsPackage) => {
+    getFilteredByDelivery = (definitions, rightsPackage, deliveryViaLiveFeed, liveFeedPackages) => {
         //filter definitions by user chosen rightPackage
+
         return definitions.filter(d => {
             if (d.checkDelivery) {
                 return rightsPackage.some(p =>
-                    !( (p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT" && p.shortLabel !== "PR") ||
-                        p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY') ||
-                        p.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT"
+                    !( ( !(deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === p.shortLabel) && p.selectedRights['CONTENT_DELIVERY'] === "CONTENT_DELIVERY_LIVE" && p.shortLabel !== "LT" && p.shortLabel !== "PR") ||
+                        p.shortLabel === "PR" && d.key !== 'TECHNICAL_DELIVERY')
                 )
             } else {
                 return true
@@ -175,6 +198,11 @@ class TermSheet extends React.Component {
             endDate
         } = this.props;
         let packagesAvailable = rightsPackage.map(rp =>rp.shortLabel);
+        let liveFeedPackages = rightsPackage.filter(rp =>rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+        let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+
 
         return (
             <div className="term-sheet">
@@ -269,26 +297,37 @@ class TermSheet extends React.Component {
                         <div className="right-definition right-definition-title">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}
                         </div>
+
+                        {deliveryViaLiveFeed
+                        && <div key={"rp-prod-live" } className="right-definition right-definition-title">
+                            Live Feed
+                        </div>
+                        }
                         {
                             rightsPackage.map((rp, i)=>{
-                                if ( (rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE" && rp.shortLabel !== "PR" && rp.shortLabel !== "LT" ) ||
-                                    rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT") return;
-                                let viaLiveFeed = rp.selectedRights['CONTENT_DELIVERY']==="CONTENT_DELIVERY_LIVE_BACK";
+                                if ( ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                        || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) ) &&
+                                    rp.shortLabel !== "PR" &&
+                                    rp.shortLabel !== "LT" ) return;
 
                                 return (
                                     <div key={"rp-prod" + i } className="right-definition right-definition-title">
-                                        {SuperRightProductionDetailsLabels[rp.shortLabel]}
-                                        {viaLiveFeed && " (via live feed)"}
+
+                                        {rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT" &&
+                                        SuperRightProductionDetailsLabels['HL']}
+
+                                        {rp.selectedRights['CONTENT_DELIVERY_NA']!=="CONTENT_DELIVERY_NA_HIGHLIGHT" &&
+                                        SuperRightProductionDetailsLabels[rp.shortLabel]}
                                     </div>
                                 )
                             })
                         }
                     </div>
-                    { this.renderList(ProductionStandardsDefinitions, true) }
+                    { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
 
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages") }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles") }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script") }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
                 </div>
 
                 <div>

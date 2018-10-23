@@ -64,7 +64,12 @@ class MessageService
                 $thread->setLastMessageContent($lastMessage[0]->getContent());
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
+            } else if ($thread->getCreatedAt() != null) {
+                $thread->setLastMessageDate($thread->getCreatedAt());
+            } else {
+                $thread->setLastMessageDate(new \DateTime());
             }
+
         }
 
         usort($threads, array($this, "sortByLastMessage"));
@@ -72,8 +77,7 @@ class MessageService
         return $threads ;
     }
 
-    public function sortByLastMessage(Thread $a, Thread $b)
-    {
+    public function sortByLastMessage(Thread $a, Thread $b){
         return $a->getLastMessageDate() < $b->getLastMessageDate();
     }
 
@@ -147,7 +151,7 @@ class MessageService
 
             $customId = $this->idGenerator->generate($content);
             $thread->setCustomId($customId);
-
+            $thread->setCreatedAt(new \DateTime());
             $thread->setBuyerCompany($company);
             $thread->setOwnerCompany($ownerCompany);
             $thread->setUser($user);
@@ -210,6 +214,7 @@ class MessageService
             $thread->setCustomId($customId);
             $thread->setBuyerCompany($buyerCompany);
             $thread->setOwnerCompany($ownerCompany);
+            $thread->setCreatedAt(new \DateTime());
             $thread->setUser($user);
             $thread->setListing($content);
             $this->em->persist($thread);
@@ -251,7 +256,7 @@ class MessageService
         $buyerCompany = $user->getCompany();
         $customId = $this->idGenerator->generate($content);
         $thread->setCustomId($customId);
-
+        $thread->setCreatedAt(new \DateTime());
         $thread->setBuyerCompany($buyerCompany);
         $thread->setOwnerCompany($ownerCompany);
         $thread->setUser($user);
