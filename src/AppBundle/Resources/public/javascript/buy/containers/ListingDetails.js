@@ -4,6 +4,7 @@ import { test } from "../actions";
 import CommercialTerms from "./CommercialTerms";
 import cn from "classnames";
 import ContentInformation from "./ContentInformation";
+import { pdfIcon } from "./../../main/components/Icons";
 import TermSheet from "./TermSheet";
 import ProgramDetails from "./ProgramDetails";
 import Seller from "./Seller";
@@ -30,13 +31,6 @@ import GeneralTerms from "../../main/components/GeneralTerms";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
-const bidButtonStyle = { height: 34, width: 75, padding: 5, marginLeft: 10, fontSize: 14, marginRight: 10 };
-const bidTextBoxStyle = {
-    backgroundColor: "#fff",
-    padding: '5px 10px',
-    border: '1px solid lightgrey',
-    marginLeft: 5
-};
 
 class ListingDetails extends React.Component {
 
@@ -68,8 +62,6 @@ class ListingDetails extends React.Component {
         this.watchlistIcon = assetsBaseDir + "app/images/watchlist.png";
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.packageIcon = assetsBaseDir + "app/images/bid.png";
-        this.infoIcon = assetsBaseDir + "app/images/info.png";
-        this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
         this.baseDir = assetsBaseDir + "../";
     }
@@ -811,7 +803,7 @@ class ListingDetails extends React.Component {
                             </div>
                             <div className="bid-license" onClick={()=> viewLicenseCustom(content.customId, selectedPackage.id, bid, company)}>
                                 <span>{this.context.t("License agreement")}</span>
-                                <i className="fa fa-file-pdf-o" />
+                                <img src={pdfIcon} alt="Licence"/>
                             </div>
                         </div>
 

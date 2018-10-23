@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
-import ContentListing from '../../main/components/ContentListing';
 import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol, goTo, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
-import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
+import { blueCheckIcon, yellowCheckIcon, pdfIcon } from "../../main/components/Icons";
 import RightsLegend from "../../main/components/RightsLegend";
 
 const rightImageStyle = {
@@ -25,7 +24,6 @@ class ClosedDeals extends React.Component {
         };
         this.cancelIcon = assetsBaseDir + "app/images/cancel.png";
         this.checkIcon = assetsBaseDir + "app/images/blue_check.png";
-        this.docIcon = assetsBaseDir + "app/images/doc.png";
         this.blueEnvelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
     }
 
@@ -309,11 +307,9 @@ class ClosedDeals extends React.Component {
                                     id : d.id,
                                     customId : d.customId
                                 }},
-                                Cell: props => <div className={""}>
-                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
-                                        viewLicenseBid(props.value.customId)
-                                    }} src={this.docIcon}/>
-                                    <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                Cell: props => <div className="actions-col">
+                                    <img onClick={()=>{ viewLicenseBid(props.value.customId)} } src={pdfIcon}/>
+                                    <img onClick={()=>{
                                         window.location.href = `/redirect-integration/messages-by-bid/${props.value.id}`;
                                     }} src={this.blueEnvelopeIcon}/>
                                 </div>

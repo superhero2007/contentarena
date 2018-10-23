@@ -11,13 +11,9 @@ export const minusGreyIcon = <img src={assetsBaseDir + "app/images/minus-gray.pn
 export const plusGreyIcon = <img src={assetsBaseDir + "app/images/plus-gray.png"} alt="open"/>;
 export const minusYellowIcon = <img src={assetsBaseDir + "app/images/minus-yellow.png"} alt="close"/>;
 export const plusYellowIcon = <img src={assetsBaseDir + "app/images/plus-yellow.png"} alt="open"/>;
-export const userIcon = <img src={assetsBaseDir + "app/images/user.png"} alt="open"/>;
-
 
 export const bidIcon = assetsBaseDir + "app/images/hammer.png";
 export const fixedIcon = assetsBaseDir + "app/images/bid.png";
-export const docIcon = assetsBaseDir + "app/images/doc.png";
-export const pdfIcon = assetsBaseDir + "app/images/pdf.png";
 export const editIcon = assetsBaseDir + "app/images/edit.png";
 export const blueEnvelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
 export const infoIcon = assetsBaseDir + "app/images/info_blue.png";
@@ -26,6 +22,7 @@ export const expiredIcon = assetsBaseDir + "app/images/expired.png";
 export const filterIcon = assetsBaseDir + "app/images/filter.png";
 export const searchIcon = assetsBaseDir + "app/images/search.svg";
 export const hammerIcon = assetsBaseDir + "app/images/listing/hammer.svg";
+export const pdfIcon = assetsBaseDir + "app/images/file-pdf.svg";
 
 //rights
 export const yellowCheckIcon = assetsBaseDir + "app/images/rights/exclusive.svg";

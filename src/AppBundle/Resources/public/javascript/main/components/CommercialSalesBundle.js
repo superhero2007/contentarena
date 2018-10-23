@@ -11,7 +11,7 @@ import {
     blueCheckIcon,
     blueEnvelopeIcon,
     cancelIcon,
-    docIcon,
+    pdfIcon,
     fixedIcon,
     plusYellowIcon,
     minusYellowIcon
@@ -382,23 +382,23 @@ class CommercialSalesBundle extends React.Component{
                             accessor: b => {return {status: b.status.name, bid: b}},
                             Cell: props => <div className="actions-col d-flex align-items-center">
                                 {props.value.status === "REJECTED"
-                                    && <i className={"fa fa-trash-o"} style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                    && <i className={"fa fa-trash-o"} onClick={()=>{
                                         this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
                                 }} />}
                                 {props.value.status === "PENDING"
-                                    && <i className="fa fa-check-circle-o green-icon" style={{margin:'0 10px', cursor: 'pointer', color:'#19CB43', fontSize: 26}} onClick={()=>{
+                                    && <i className="fa fa-check-circle-o green-icon" style={{color:'#19CB43', fontSize: 26}} onClick={()=>{
                                     this.setState({approveModalIsOpen:true, selectedBid : props.value.bid});
                                 }} />}
                                 {props.value.status === "PENDING"
-                                    && <i className="fa fa-times-circle-o red-icon" style={{margin:'0 10px', cursor: 'pointer', color: '#990000', fontSize: 26}} onClick={()=>{
+                                    && <i className="fa fa-times-circle-o red-icon" style={{color: '#990000', fontSize: 26}} onClick={()=>{
                                     this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
                                 }} />}
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING")
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                    && <img onClick={()=>{
                                         viewLicenseBid(props.value.bid.customId)
-                                }} src={docIcon}/>}
+                                }} src={pdfIcon} />}
                                 {props.value.status === "APPROVED"
-                                    && <img style={{margin:'0 10px', cursor: 'pointer'}} onClick={()=>{
+                                    && <img onClick={()=>{
                                         if (props.value.status === "APPROVED") {
                                             window.location.href = `/redirect-integration/messages-by-bid-seller/${props.value.bid.id}`;
                                         } else {

@@ -4,6 +4,7 @@ import {test} from "../actions";
 import SalesPackages from "./SalesPackages";
 import {PropTypes} from "prop-types";
 import {StaticSchedules} from "../../sell/components/SellFormItems";
+import { pdfIcon } from './../../main/components/Icons';
 import Moment from "moment/moment";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 
@@ -15,8 +16,6 @@ class CommercialTerms extends React.Component {
             seasons: props.seasons
         };
         this.baseDir = assetsBaseDir + "../";
-        this.pdfIcon = assetsBaseDir + "app/images/pdf.png";
-        this.noInfoText = "No information available";
     }
 
     componentDidMount() {
@@ -114,9 +113,9 @@ class CommercialTerms extends React.Component {
                                 <div className="d-flex">
                                     <b>
                                         {attachments.map(a => (
-                                            <div>
+                                            <div className="attachment-item">
                                                 <a download={a.name} target="_blank" href={this.baseDir + a.file}>
-                                                    <img style={{margin: '-2px 5px 0 0'}} src={this.pdfIcon}/>
+                                                    <img src={pdfIcon} />
                                                     {a.name}
                                                 </a>
                                             </div>

@@ -568,6 +568,14 @@
             padding: 10px 20px;
             margin-right: 10px;
 
+            .attachment-item a{
+              line-height: 25px;
+
+              img {
+                margin: -2px 5px 0 0;
+              }
+            }
+
             .icon {
               font-size: 21px;
               padding: 0;
