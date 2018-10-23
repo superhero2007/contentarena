@@ -20,6 +20,7 @@ import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "../../main/components/SendMessage";
 import {PropTypes} from "prop-types";
 import ExtraTerritories from "./ExtraTerritories";
+import GeneralTerms from "./GeneralTerms";
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -95,7 +96,7 @@ class CommercialSalesBundle extends React.Component{
     renderApproveModal = () => {
 
         const {salesBundle} = this.props;
-        const {signature, saving, selectedBid} = this.state;
+        const {signature, saving, selectedBid, terms} = this.state;
 
         return <Modal
             isOpen={this.state.approveModalIsOpen}
@@ -112,12 +113,21 @@ class CommercialSalesBundle extends React.Component{
                     <DigitalSignature signature={signature} onReady={signature => { this.setState({signature}) }} />
                 </div>
 
+                <GeneralTerms
+                    defaultChecked={terms}
+                    value={terms}
+                    onChange={(e)=>{
+                        this.setState({ 'terms' : e.target.checked})
+                    }}
+                />
+
+
                 <div className={"buttons"}>
                     <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.customId) }}>View License Agreement</button>
                     <button onClick={this.closeApproveModal}>
                         {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                     </button>
-                    {!saving && <button className={"confirm"} disabled={!signature} onClick={this.acceptBid}>
+                    {!saving && <button className={"confirm"} disabled={!signature || !terms} onClick={this.acceptBid}>
                         {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
                     </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}

@@ -20,6 +20,7 @@ parameters:
     uploads_tmp_folder: '%kernel.project_dir%/web/tmpUploads'
     upload_general_terms_folder: '%kernel.project_dir%/app/Resources/views/contract'
     upload_translations: '%kernel.project_dir%/web/bundles/app/data'
+    upload_general_terms_page: '%kernel.project_dir%/web/admin-uploads'
     upload_locales: '%kernel.project_dir%/admin-locales'
     dev_locales: '%kernel.project_dir%/locales'
     uploads_uri_prefix: 'uploads'

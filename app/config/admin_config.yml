@@ -13,8 +13,9 @@ easy_admin:
               children: ['EmailContent']
             - label: 'Utils'
               children:
-                - {label: 'View General Terms', icon: 'file-new', route: 'contractTestGeneral', target: '_blank'}
-                - {label: 'Upload General Terms', icon: 'file-new', route: 'uploadGeneralTerms'}
+                - {label: 'View LA General Terms', icon: 'file-new', route: 'contractTestGeneral', target: '_blank'}
+                - {label: 'Upload General Terms Page', icon: 'file-new', route: 'uploadGeneralTermsPage'}
+                - {label: 'Upload LA General Terms', icon: 'file-new', route: 'uploadGeneralTerms'}
                 - {label: 'Upload Localization File', icon: 'file-new', route: 'uploadLocales'}
             - Country
 

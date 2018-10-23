@@ -13,6 +13,7 @@ import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
 import Comments from "../components/Comments";
 import RightsLegend from "../../main/components/RightsLegend";
+import GeneralTerms from "../../main/components/GeneralTerms";
 
 class ReviewAndSign extends React.Component {
 
@@ -255,21 +256,16 @@ class ReviewAndSign extends React.Component {
                             <label htmlFor="terms"/>
                             {this.context.t("CL_STEP5_TERMS_1")}
                         </div>
-                        <div style={{display: 'flex', marginBottom: 10}}>
-                            <input
-                                type="checkbox"
-                                className="ca-checkbox"
-                                defaultChecked={terms_arena}
-                                value={terms_arena}
-                                onChange={(e)=>{
-                                    updateContentValue('terms_arena', e.target.checked)
-                                }}
-                                id="terms_arena"
-                                style={{marginRight: 10}}
-                            />
-                            <label htmlFor="terms_arena" />
-                            {this.context.t("CL_STEP5_TERMS_2")}
-                        </div>
+
+                        <GeneralTerms
+                            defaultChecked={terms_arena}
+                            value={terms_arena}
+                            onChange={(e)=>{
+                                updateContentValue('terms_arena', e.target.checked)
+                            }}
+                            text={this.context.t("CL_STEP5_TERMS_2")}
+                            text2={this.context.t("CL_STEP5_TERMS_3")}
+                        />
                     </div>
 
                     <DigitalSignature

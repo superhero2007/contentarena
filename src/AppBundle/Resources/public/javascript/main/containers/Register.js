@@ -6,6 +6,7 @@ import CountrySelector from "../components/CountrySelector";
 import {Redirect} from "react-router-dom";
 import {blueCheckIcon, cancelIcon, editIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
+import GeneralTerms from "../components/GeneralTerms";
 
 class Register extends React.Component {
     constructor(props) {
@@ -117,7 +118,7 @@ class Register extends React.Component {
 
         const {history, match, location} = this.props;
 
-        const { loading, editCompanyInfo, updatingUser, password, updated, editCompanyNameDisabled } = this.state;
+        const { loading, editCompanyInfo, updatingUser, password, updated, editCompanyNameDisabled, terms } = this.state;
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
@@ -345,12 +346,31 @@ class Register extends React.Component {
 
                 </div>
 
-                <div className={"setting save-button-container"}>
+                <div className="setting save-button-container">
+
+                    <div className={"terms-confirm"}
+                         style={{
+                             padding: '20px 0px',
+                             width: '50%',
+                             margin: '0 auto'
+                         }}>
+                        <GeneralTerms
+                            activationCode={activationCode}
+                            defaultChecked={terms}
+                            value={terms}
+                            onChange={(e)=>{
+                                this.setState({ 'terms' : e.target.checked})
+                            }}/>
+                    </div>
+
+
                     {!updatingUser && !updated && <button onClick={this.updateInfo}
-                            disabled={this.invalidPassword() || this.invalidUser() || this.invalidCompany()}
-                            className={"standard-button"}>
+                            disabled={this.invalidPassword() || this.invalidUser() || this.invalidCompany() || !terms}
+                            className={"standard-button"}
+                            style={{maxWidth: 300}}>
                         {this.context.t("REGISTER_BUTTON_SAVE")}
                     </button>}
+
                     {updatingUser && <Spinner/>}
 
                     {updated && <a href="/marketplace">

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\User;
+use AppBundle\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,355 +17,29 @@ class MainController extends BaseController
 {
 
     /**
-     * @Route("/old/marketplace", name="oldMarketplace")
+     * @Route("/generalterms", name="generalTerms")
      */
-    public function buyAction(Request $request)
+    public function generalTermsAction(Request $request, UserService $userService)
     {
         $user = $this->getUser();
-        $this->get('session')->set('profile',"BUYER");
-        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
-        return $this->render('@App/marketplace.html.twig', [
-            'user'      => $user,
-            'company'   => $this->serialize($user->getCompany()),
-            'rights'    => $this->serialize($rights),
-            'profile'   => "BUYER"
+        $file = $this->container->getParameter('upload_general_terms_page')."/general-terms.html";
+        $file_exists = file_exists($file);
+
+        if ( $user == null ){
+            $activationCode = $request->get("activationCode");
+            $user = $userService->getUserByActivationCode($activationCode);
+        }
+
+        return $this->render('statics/general-terms-base.html.twig', [
+            'user'              => $user,
+            'hostUrl'           => $this->container->getParameter('local_host'),
+            'externalApiUrl'    => $this->container->getParameter('external_api_url'),
+            'file_exists'       => $file_exists,
+            'file'              => $file
         ]);
 
     }
 
-    /**
-     * @Route("/old/listing/{customId}", name="listing")
-     */
-    public function marketplaceListingAction(Request $request)
-    {
-        $user = $this->getUser();
-        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $profile = $this->get('session')->get('profile');
-
-        return $this->render('@App/marketplace.listing.html.twig', [
-            'user' => $user,
-            'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'customId' => $request->get('customId'),
-            'salesPackage' => null,
-            'tab'=> "bundles",
-            'profile' => $profile,
-            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldlisting/{customId}/{tab}", name="listingTab")
-     */
-    public function listingTab(Request $request)
-    {
-        $user = $this->getUser();
-        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $profile = $this->get('session')->get('profile');
-
-        return $this->render('@App/marketplace.listing.html.twig', [
-            'user' => $user,
-            'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'customId' => $request->get('customId'),
-            'salesPackage' => null,
-            'tab'=> $request->get("tab"),
-            'profile' => $profile,
-            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
-        ]);
-    }
-
-    /**
-     * @Route("/oldlisting/{customId}/buy/{salesPackage}", name="buyListing")
-     */
-    public function buyListing(Request $request)
-    {
-
-        $user = $this->getUser();
-        $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
-        /**
-         * Strategy to keep camel case on property names
-         */
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-
-        return $this->render('@App/marketplace.listing.html.twig', [
-            'user' => $user,
-            'company' => $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'customId' => $request->get('customId'),
-            'salesPackage' => $request->get('salesPackage'),
-            'profile'   => "BUYER",
-            'tab'=> "bundles",
-            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldmanagelistings{trailingSlash}", name="manageListings", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
-     */
-    public function manageListings(Request $request)
-    {
-        $user = $this->getUser();
-        $this->get('session')->set('profile',"SELLER");
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'profile' => "SELLER",
-            'tab' => "MANAGE_LISTINGS",
-            'company' => null,
-        ]);
-    }
-
-    /**
-     * @Route("/oldmanagelistings/buyer", name="manageListingsBuyer")
-     */
-    public function manageBuyer(Request $request)
-    {
-        $user = $this->getUser();
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'company' => $this->serialize($user->getCompany()),
-            'profile' => "BUYER"
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldwatchlist", name="manageWatchlist")
-     */
-    public function manageWatchlist(Request $request)
-    {
-        $user = $this->getUser();
-        $this->get('session')->set('profile',"BUYER");
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'company' => $this->serialize($user->getCompany()),
-            'profile' => "BUYER",
-            'tab' => "WATCHLIST"
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldcloseddeals", name="manageClosedDeals")
-     */
-    public function manageClosedDeals(Request $request)
-    {
-        $user = $this->getUser();
-        $this->get('session')->set('profile',"BUYER");
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'profile' => "BUYER",
-            'tab' => "CLOSED_DEALS"
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldbids/activebids", name="manageActiveBids")
-     */
-    public function manageActiveBids(Request $request)
-    {
-        $user = $this->getUser();
-        $this->get('session')->set('profile',"BUYER");
-        return $this->render('@App/manage.html.twig', [
-            'user'      => $user,
-            'company'   => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'profile'   => "BUYER",
-            'tab'       => "BIDS",
-            'mode'      => "ACTIVE"
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldbids/declinedbids", name="manageDeclinedBids")
-     */
-    public function manageDeclinedBids(Request $request)
-    {
-        $user = $this->getUser();
-        $this->get('session')->set('profile',"BUYER");
-        return $this->render('@App/manage.html.twig', [
-            'user'      => $user,
-            'company'   => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'profile'   => "BUYER",
-            'tab'       => "BIDS",
-            'mode'      => "DECLINED"
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldcommercialactivity", name="commercialActivity")
-     */
-    public function commercialActivity(Request $request)
-    {
-        $user = $this->getUser();
-        $this->get('session')->set('profile',"SELLER");
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'company' => $this->serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()),
-            'profile' => "SELLER",
-            'tab' => "COMMERCIAL_ACTIVITY"
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldsettings", name="settings")
-     */
-    public function settings(Request $request)
-    {
-        /* @var User $user */
-        $user = $this->getUser();
-        $profile = $this->get('session')->get('profile');
-
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'tab' => "SETTINGS",
-            'company' => null,
-            'profile' => $profile
-        ]);
-    }
-
-    /**
-     * @Route("/oldmessages", name="allMessages")
-     */
-    public function allMessages(Request $request){
-        return $this->redirectToRoute("messages", array("customId"=>"ALL"));
-    }
-
-    /**
-     * @Route("/oldmessages/{customId}", name="messages", requirements={"trailingSlash" = "[/]{0,1}"}, defaults={"trailingSlash" = "/"})
-     */
-    public function messages(Request $request)
-    {
-        $user = $this->getUser();
-        $profile = $this->get('session')->get('profile');
-        return $this->render('@App/manage.html.twig', [
-            'user' => $user,
-            'tab' => "MESSAGES",
-            'company' => null,
-            'profile' => $profile
-        ]);
-    }
-
-    /**
-     * @Route("/oldcontentlisting/new", name="manageNewListing")
-     */
-    public function manageNewListing(Request $request)
-    {
-
-        $user = $this->getUser();
-
-        $packages = $this->getDoctrine()
-            ->getRepository('AppBundle:RightsPackage')
-            ->findAll();
-
-        $rights = $this->getDoctrine()
-            ->getRepository('AppBundle:Rights')
-            ->findAll();
-
-        /**
-         * Strategy to keep camel case on property names
-         */
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-
-        $content = new Content();
-        $content->setCompany($user->getCompany());
-
-        return $this->render('@App/sell/sell.new.html.twig', [
-
-            'content' =>  $serializer->serialize($content, 'json'),
-            'user' => $user,
-            'packages' => $serializer->serialize($packages, 'json',SerializationContext::create()->setGroups(array('common'))),
-            'rights' => $serializer->serialize($rights, 'json',SerializationContext::create()->enableMaxDepthChecks())
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldcontentlisting/edit/{customId}", name="manageEditListing")
-     */
-    public function manageEditListing(Request $request)
-    {
-
-        $user = $this->getUser();
-        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
-
-        $packages = $this->getDoctrine()
-            ->getRepository('AppBundle:RightsPackage')
-            ->findAll();
-
-        $rights = $this->getDoctrine()
-            ->getRepository('AppBundle:Rights')
-            ->findAll();
-
-        /**
-         * Strategy to keep camel case on property names
-         */
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-
-        /**
-         * Serialization
-         */
-        $jsonContent = $serializer->serialize($content, 'json');
-
-        // replace this example code with whatever you need
-        return $this->render('@App/sell/sell.new.html.twig', [
-            'content' =>  $jsonContent,
-            'user' => $user,
-            'packages' => $serializer->serialize($packages, 'json'),
-            'rights' => $serializer->serialize($rights, 'json')
-        ]);
-
-    }
-
-    /**
-     * @Route("/oldcontentlisting/edit/{customId}/{step}", name="manageEditListingStep")
-     */
-    public function manageEditListingStep(Request $request)
-    {
-
-        $user = $this->getUser();
-        $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $request->get("customId")]);
-
-        $packages = $this->getDoctrine()
-            ->getRepository('AppBundle:RightsPackage')
-            ->findAll();
-
-        $rights = $this->getDoctrine()
-            ->getRepository('AppBundle:Rights')
-            ->findAll();
-
-        /**
-         * Strategy to keep camel case on property names
-         */
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-
-        $content->setStep($request->get('step'));
-
-        /**
-         * Serialization
-         */
-        $jsonContent = $serializer->serialize($content, 'json');
-
-        // replace this example code with whatever you need
-        return $this->render('@App/sell/sell.new.html.twig', [
-            'content' =>  $jsonContent,
-            'user' => $user,
-            'packages' => $serializer->serialize($packages, 'json'),
-            'rights' => $serializer->serialize($rights, 'json')
-        ]);
-
-    }
 
 
 }

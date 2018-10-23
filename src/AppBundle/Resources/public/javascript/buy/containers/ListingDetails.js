@@ -26,6 +26,7 @@ import ContentListingRightsPackage from "../../buy/components/ContentListingRigh
 import { getListingImage } from "./../../common/utils/listing";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
+import GeneralTerms from "../../main/components/GeneralTerms";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -574,7 +575,7 @@ class ListingDetails extends React.Component {
     render() {
         ReactTooltip.rebuild();
         const { profile,history, listing } = this.props;
-        const {buyingMode, selectedPackage,tab, content, signature, bid, company, spinner, minimumBid} = this.state;
+        const {buyingMode, selectedPackage,tab, content, signature, bid, company, spinner, minimumBid, terms} = this.state;
         const checkoutType = this.getCheckoutType();
 
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
@@ -824,15 +825,12 @@ class ListingDetails extends React.Component {
                         </div>
 
                         <div className="bid-signature-btns">
-                            <div className="terms-wrapper">
-                                <input type="checkbox"
-                                       id="terms-buy"
-                                       className="ca-checkbox"
-                                       onChange={e => this.setTermsAndConditions(e) }
-                                       checked={this.state.terms}
-                                />
-                                <label htmlFor={"terms-buy"}>{this.context.t("CHECKOUT_TERMS")}</label>
-                            </div>
+                            <GeneralTerms
+                                defaultChecked={terms}
+                                value={terms}
+                                onChange={e => this.setTermsAndConditions(e) }
+                            />
+
                             {!spinner
                                 ? (<button className="standard-button" onClick={this.placeBid} disabled={!this.isPackageValid()}>
                                     {this.getTitlePrefix(checkoutType)}</button>)

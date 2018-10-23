@@ -9,8 +9,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\EmailService;
+use AppBundle\Service\FileUploader;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AdminController extends BaseAdminController
 {
@@ -62,7 +67,6 @@ class AdminController extends BaseAdminController
         ));
     }
 
-
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -112,4 +116,55 @@ class AdminController extends BaseAdminController
             'entity' => 'User'
         ));
     }
+
+    /**
+     * @Route("/generalterms/upload", name="uploadGeneralTermsPage")
+     * @throws \exception
+     */
+    public function uploadGeneralTermsPage(Request $request, FileUploader $fileUploader){
+
+        $user = $this->getUser();
+        $data = null;
+        $message = "";
+        $fileName = "general-terms.html";
+
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('terms', FileType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            $file = $data['terms'];
+            $extension = $file->guessExtension();
+
+            if ( $extension == "html"){
+                $file->move($this->container->getParameter("upload_general_terms_page") , $fileName);
+                $message = "General Terms updated successfully!";
+            } else {
+                $message = "Please upload a valid html file";
+            }
+        }
+
+        $viewElements = array(
+            'user' => $user,
+            'form' => $form->createView(),
+            'message' => $message,
+            'data' => $data,
+            'watermark' => true,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+
+
+
+        return $this->render('contract/upload.form.html.twig', $viewElements);
+    }
+
+
+
 }
