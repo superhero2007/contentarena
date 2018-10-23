@@ -46,7 +46,7 @@ class ProgramDetails extends Component {
     render() {
         const {
             PROGRAM_NAME,
-            PROGRAM_YEAR,
+            PROGRAM_YEAR = 'Not available',
             PROGRAM_DESCRIPTION,
             PROGRAM_DURATION,
             PROGRAM_EPISODES,
@@ -73,7 +73,7 @@ class ProgramDetails extends Component {
                         </div>
                         <div className="col">
                             {PROGRAM_TYPE && this.programItem(programsTitle.type, ProgramTypesDefinitions[PROGRAM_TYPE])}
-                            {PROGRAM_YEAR && this.programItem(programsTitle.release, PROGRAM_YEAR)}
+                            {this.programItem(programsTitle.release, PROGRAM_YEAR)}
                         </div>
                     </div>
                 </div>
