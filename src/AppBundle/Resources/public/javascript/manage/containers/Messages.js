@@ -127,44 +127,46 @@ class Messages extends React.Component {
 
         return (
             <React.Fragment>
-                <div className={"threads ca-overflow"}>
-                    {loadingThreads && threads.length === 0 && <i className="fa fa-cog fa-spin"/>}
-                    {!loadingThreads && threads.length === 0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
-
+                <div className={"threads"}>
                     <div className={'thread-title'}>
                         {this.context.t("Messages")}
                     </div>
 
-                    {!loadingThreads && threads.map((t, i) => {
-                        return <div
-                            className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
-                            key={"thread-" + i}
-                            onClick={() => {
-                                this.selectThread(t)
-                            }}>
-                            <div className={"date"}>
-                                {Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
+                    <div className="thread-wrapper ca-overflow">
+                        {loadingThreads && threads.length === 0 && <i className="fa fa-cog fa-spin"/>}
+                        {!loadingThreads && threads.length === 0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
+                        {!loadingThreads && threads.map((t, i) => {
+                            return <div
+                                className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
+                                key={"thread-" + i}
+                                onClick={() => {
+                                    this.selectThread(t)
+                                }}>
+                                <div className={"date"}>
+                                    {Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
+                                </div>
+                                <div className={"listing-name"}>
+                                    {t.listing.name}
+                                </div>
+                                <div className={"company"}>
+                                    {t.oppositeParty.legalName}
+                                </div>
+                                <div className={"user"}>
+                                    {t.lastMessageUser ? getFullName(t.lastMessageUser) : ''}
+                                </div>
+                                <div className={"last-message"}>
+                                    {t.lastMessageContent && limitText(t.lastMessageContent)}
+                                </div>
                             </div>
-                            <div className={"listing-name"}>
-                                {t.listing.name}
-                            </div>
-                            <div className={"company"}>
-                                {t.oppositeParty.legalName}
-                            </div>
-                            <div className={"user"}>
-                                {t.lastMessageUser ? getFullName(t.lastMessageUser) : ''}
-                            </div>
-                            <div className={"last-message"}>
-                                {t.lastMessageContent && limitText(t.lastMessageContent)}
-                            </div>
-                        </div>
-                    })}
+                        })}
+                    </div>
+
                 </div>
 
                 {selectedThread && (
                     <div className="thread-content">
                         <div className={"thread-title"}>
-                            <div className={"listing-name"} onClick={() => {
+                            <div className={"listing-name ca-title"} onClick={() => {
                                 goToListing(selectedThread.listing.customId, true)
                             }}>
                                 {selectedThread.listing.name}
@@ -222,7 +224,7 @@ class Messages extends React.Component {
                 )}
 
                 {!selectedThread && (
-                    <div>
+                    <div style={{padding:'0 15px'}}>
                         {this.context.t("MESSAGES_NO_THREAD_SELECTED")}
                     </div>
                 )}

@@ -615,53 +615,6 @@ a.uk-button {
   font-size: 75%;
 }
 
-
-//$selectHeight: 50px;
-//.Select {
-//  position: relative;
-//  width: 100%;
-//  .Select-value-label {
-//    font-weight: bold;
-//  }
-//  &.is-open .Select-arrow,
-//  & .Select-arrow-zone:hover > .Select-arrow {
-//    border-top-color: #40bfff;
-//  }
-//
-//  .Select-arrow {
-//    border: 0;
-//    padding-right: 12px;
-//    &:after {
-//      content: "\f107";
-//      display: inline-block;
-//      color: #40bfff;
-//      font: normal normal normal 14px/1 FontAwesome;
-//      font-size: 21px;
-//      text-rendering: auto;
-//      -webkit-font-smoothing: antialiased;
-//      -moz-osx-font-smoothing: grayscale;
-//    }
-//  }
-//  .Select-control {
-//    border-radius: 0px;
-//    border: 1px solid lightgrey;
-//    height: $selectHeight;
-//
-//    .Select-placeholder {
-//      line-height: $selectHeight;
-//    }
-//  }
-//  .Select-input > input {
-//    line-height: 28px;
-//    padding: inherit;
-//    border: 0;
-//  }
-//}
-//
-//.Select--single > .Select-control .Select-value {
-//  line-height: $selectHeight !important;
-//}
-
 .text-center {
   text-align: center;
 }

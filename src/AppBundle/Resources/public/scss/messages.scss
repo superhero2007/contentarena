@@ -15,25 +15,30 @@
 
   .threads {
     width: 300px;
-    overflow-y: auto;
-    height: 86vh;
     .thread-title {
       text-align: center;
       font-weight: bold;
       margin-bottom: 5px;
     }
+    .thread-wrapper {
+      overflow-y: scroll;
+      height: 86vh;
+      .thread {
+        border-bottom: 1px solid lightgrey;
+        &:first-child {
+          border-top: 1px solid lightgrey;
+        }
+      }
+    }
     .thread {
       background-color: white;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 25px;
-      padding: 5px 10px;
-      border: 1px solid lightgrey;
-      border-left: none;
+      line-height: 20px;
+      padding: 15px 10px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      min-height: 111px;
+      min-height: 105px;
+      font-size: 13px;
       .date {
         margin-left: auto;
         font-size: 12px;
@@ -43,7 +48,12 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         max-width: 175px;
-        margin-top: -25px;
+        margin-top: -21px;
+        font-weight: 600;
+      }
+      .user {
+        color: #999999;
+        font-size: 12px;
       }
       .last-message {
         font-size: 12px;
@@ -83,6 +93,7 @@
       font-weight: 600;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 0 30px;
       margin-bottom: 20px;
       flex: 0 0 auto;
@@ -93,11 +104,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: #03547C;
-        font-size: 19px;
       }
       .company-name {
-        color: black;
+        color: #333333;
+        font-size: 13px;
         .fa {
           padding-right: 10px;
           color: #2AAAEC;
@@ -135,6 +145,7 @@
 
         .message-sender {
           font-weight: 600;
+          font-size: 13px;
         }
         .message-content {
           background: #EFEFEF;
@@ -143,12 +154,12 @@
           border-radius: 0 25px 25px 0;
         }
         .message-date {
-          font-size: 14px;
+          font-size: 11px;
+          margin-bottom: 5px;
         }
         .message-sender,
         .message-date {
           text-align: left;
-          line-height: 20px;
           color: #333333;
         }
       }
