@@ -11,6 +11,7 @@ import I18n from "redux-i18n"
 import 'react-table/react-table.css';
 import 'react-tagsinput/react-tagsinput.css' // If using WebPack and style-loader.
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-image-crop/dist/ReactCrop.css'
 import "react-toggle/style.css";
 require ("../ca/ca.data");
 require ("../ca/ca.api.content");
