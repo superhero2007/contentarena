@@ -25,7 +25,7 @@ class Seller extends React.Component {
                         </div>
                     )}
                 </div>
-                <div className="description-info align-items-center">
+                <div className="description-info align-items-start">
                     <div className="col">
                         <div className="spacer-bottom">
                             <b>

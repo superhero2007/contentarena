@@ -1754,3 +1754,7 @@ msgstr ""
 msgid "CL_STEP4_INFO_ANNEX"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP5_PREVIEW_INFO"
+msgstr ""
+

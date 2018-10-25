@@ -206,7 +206,15 @@ class ReviewAndSign extends React.Component {
 
                 {!showDetails && <div className="step-content-container">
 
-                    <ContentListing {...this.props} onSelect={() => goToListing(customId, true)}/>
+                    <div onClick={(e) => {
+                        goToListing(customId, true);
+                        e.preventDefault()
+                    }}>
+                        <div style={{marginBottom:5}}>
+                            {this.context.t('CL_STEP5_PREVIEW_INFO')}
+                        </div>
+                        <ContentListing {...this.props} />
+                    </div>
 
                     <SalesPackageForm
                         hideButtons
