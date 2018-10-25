@@ -411,13 +411,18 @@ class ListingDetails extends React.Component {
     };
 
     getTotalFee = () => {
-        const {selectedPackage } = this.state;
+        const { selectedPackage, bidApplied } = this.state;
         let technicalFee = this.getTechnicalFee();
         let total = Number(selectedPackage.fee);
 
-        if ( technicalFee.TECHNICAL_FEE === "ON_TOP" ){
-            total  = total + (total/100)*Number(technicalFee.TECHNICAL_FEE_PERCENTAGE)
+        if (selectedPackage.salesMethod === 'BIDDING' && !bidApplied) {
+            return 0;
         }
+
+        if ( technicalFee.TECHNICAL_FEE === "ON_TOP" ){
+            return total + (total/100)*Number(technicalFee.TECHNICAL_FEE_PERCENTAGE)
+        }
+
         return total;
     };
 
@@ -433,10 +438,10 @@ class ListingDetails extends React.Component {
     };
 
     placeBid = () => {
-        const {bid, selectedPackage, signature, content, companyUpdated, company } = this.state;
+        const {selectedPackage, signature, content, companyUpdated, company } = this.state;
         this.setState({spinner : true});
         let bidObj = {
-            amount : bid,
+            amount : parseFloat(selectedPackage.fee),
             salesPackage : selectedPackage.id,
             signature : signature,
             totalFee : this.getTotalFee(),
@@ -455,8 +460,9 @@ class ListingDetails extends React.Component {
     };
 
     isPackageValid = () => {
-        const {signature, terms, selectedPackage} = this.state;
-        const isBidValueValid = selectedPackage.salesMethod === 'BIDDING' ? this.isBidValid() : true;
+        const {signature, terms, selectedPackage, bidApplied} = this.state;
+        const isBidValueValid = selectedPackage.salesMethod === 'BIDDING' ? this.getTotalFee() && bidApplied : true;
+
         return signature && terms && isBidValueValid;
     };
 
@@ -481,7 +487,7 @@ class ListingDetails extends React.Component {
     };
 
     onBidChange = () => {
-        this.setState({bid: +this.bidInput.value, bidApplied : false});
+        this.setState({bid: +this.bidInput.value});
     };
 
     getTechnicalFeeLabel = () => {
