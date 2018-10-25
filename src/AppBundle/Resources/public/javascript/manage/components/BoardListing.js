@@ -251,7 +251,7 @@ class BoardListing extends React.Component{
                         {status.name === 'REJECTED' && "Listing rejected. Please edit or contact support."}
                         {status.name === 'EXPIRED' && "This listing has expired."}
                         {status.name === 'SOLD_OUT' && "All sales bundle of this listing were sold."}
-                        {hasPendingBids && "There are open bids on this listing. You can view the bid via the Commercial Activity tab. Until the bid is processed, the edit, decline and remove functionality will be unavailable"}
+                        {hasPendingBids && "There are open bids on this listing. You can view the bid via the Commercial Overview tab. Until the bid is processed, the edit, decline and remove functionality will be unavailable"}
                     </div>
                 </div>}
 

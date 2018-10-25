@@ -1248,11 +1248,11 @@ msgid "MESSAGES_NO_MESSAGES_YET"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "MESSAGES_NO_THREADS_YET"
+msgid "Messages"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "Messages"
+msgid "MESSAGES_NO_THREADS_YET"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js

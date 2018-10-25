@@ -85,8 +85,7 @@ class TermSheet extends React.Component {
                         </div>;
 
 
-                        if ( checkContentDelivery
-                            && right.superRights.length > 0
+                        if ( right.superRights.length > 0
                             && right.superRights.indexOf(rp.shortLabel) === -1 ) return <div className="right-definition">
                             -
                         </div>;

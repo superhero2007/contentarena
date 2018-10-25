@@ -467,7 +467,11 @@
                     <td>Exploitation Window</td>
                     {% for right in content.rightsPackage %}
                         <td>
-                            {{ content.selectedRightsBySuperRight[right.id].items["EXPLOITATION_WINDOW"] | right_definitions_label}}
+                            {% if right.shortLabel == "LT" or right.shortLabel == "LB" %}
+                            -
+                            {% else %}
+                                {{ content.selectedRightsBySuperRight[right.id].items["EXPLOITATION_WINDOW"] | right_definitions_label}}
+                            {% endif %}
                         </td>
                     {% endfor %}
                 </tr>
@@ -477,9 +481,13 @@
                     <td>Number of Runs</td>
                     {% for right in content.rightsPackage %}
                         <td>
-                            {{ content.selectedRightsBySuperRight[right.id].items["RUNS"] | right_definitions_label }}
-                            {% if content.selectedRightsBySuperRight[right.id].items["RUNS"] == "RUNS_LIMITED" %}
-                                {{ ":" }} {{  content.selectedRightsBySuperRight[right.id].items["RUNS_NUMBER"] }}
+                            {% if right.shortLabel == "LT" or right.shortLabel == "LB" %}
+                            -
+                            {% else %}
+                                {{ content.selectedRightsBySuperRight[right.id].items["RUNS"] | right_definitions_label }}
+                                {% if content.selectedRightsBySuperRight[right.id].items["RUNS"] == "RUNS_LIMITED" %}
+                                    {{ ":" }} {{  content.selectedRightsBySuperRight[right.id].items["RUNS_NUMBER"] }}
+                                {% endif %}
                             {% endif %}
                         </td>
                     {% endfor %}
@@ -1300,12 +1308,12 @@
                         {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
                             {{ content.owner.fullName }}
                             {% if bid.sellerSignatureDate is defined and bid.sellerSignatureDate is not null%}
-                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i") }}
+                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i", "GMT") }} GMT
                             {% endif %}
                         {% elseif bid is defined and bid.sellerSignature is defined and bid.sellerSignature is null and content.signature is defined and bid.status.name == "APPROVED"  %}
                             {{ content.owner.fullName }}
                             {% if content.sellerSignatureDate is defined and content.sellerSignatureDate is not null%}
-                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i") }}
+                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i", "GMT") }} GMT
                             {% endif %}
                         {% endif %}
                     </td>
@@ -1313,7 +1321,7 @@
                         {% if bid is defined and bid.signature is not null%}
                             {{ bid.buyerUser.fullName }}
                             {% if bid.buyerSignatureDate is defined and bid.buyerSignatureDate is not null%}
-                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i") }}
+                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i", "GMT") }} GMT
                             {% endif %}
                         {% endif %}
                     </td>

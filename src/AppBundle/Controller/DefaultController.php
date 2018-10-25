@@ -35,7 +35,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="register|landing|test|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialactivity|messages|settings"},
+     *     requirements={"reactRouting"="register|landing|test|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings"},
      *     name="homepage", defaults={"reactRouting": null})
      */
     public function indexAction(Request $request)
@@ -46,7 +46,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="register|marketplace|listing|bids|messages|contentlisting|commercialactivity|settings"},
+     *     requirements={"reactRouting"="register|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      */
     public function indexParamsAction(Request $request)
@@ -57,7 +57,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
-     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialactivity"},
+     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      */
     public function indexParams2Action(Request $request)
@@ -69,7 +69,7 @@ class DefaultController extends BaseController
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}/{reactParam3}",
      *     name="homepageParams3",
-     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialactivity"},
+     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialoverview"},
      *     defaults={"reactParam3" : null, "reactParam2" : null, "reactRouting": null, "reactParam" : null})
      */
     public function indexParams3Action(Request $request)

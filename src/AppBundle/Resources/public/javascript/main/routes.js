@@ -59,14 +59,14 @@ export const routes = [
         profile : "SELLER"
     },
     {
-        path: "/commercialactivity",
+        path: "/commercialoverview",
         header: HeaderBar,
         exact: true,
         main: CommercialActivity,
         profile : "SELLER"
     },
     {
-        path: "/commercialactivity/filter/:filterName/:filterValue?",
+        path: "/commercialoverview/filter/:filterName/:filterValue?",
         header: HeaderBar,
         main: CommercialActivity,
         updateByPath : true,

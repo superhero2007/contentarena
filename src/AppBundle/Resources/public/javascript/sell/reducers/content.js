@@ -54,6 +54,8 @@ export const EmptyListing = {
     EDIT_PROGRAM_DESCRIPTION_OPTIONAL: true,
     website : null,
     law : "English",
+    image : null,
+    imageBase64 : null,
     tempData: {}
 };
 

@@ -88,12 +88,12 @@ class HeaderBar extends  React.Component {
                 {profile === "SELLER" && (
                     <HeaderBarTab
                         match={
-                            match.url === "/commercialactivity" ||
-                            match.url === "/commercialactivity/filter/withactivity" ||
-                            match.url === "/commercialactivity/filter/openbids" ||
-                            match.url === "/commercialactivity/filter/closeddeals"
+                            match.url === "/commercialoverview" ||
+                            match.url === "/commercialoverview/filter/withactivity" ||
+                            match.url === "/commercialoverview/filter/openbids" ||
+                            match.url === "/commercialoverview/filter/closeddeals"
                         }
-                        route={"/commercialactivity"}
+                        route={"/commercialoverview"}
                     >
                         {this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
                     </HeaderBarTab>

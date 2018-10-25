@@ -106,7 +106,7 @@ class CommercialActivity extends Component {
 
     onResetFilter = () => {
         const { history } = this.props;
-        history.push("/commercialactivity");
+        history.push("/commercialoverview");
     };
 
     onChangeSelect = (selectedItem) => {
@@ -115,32 +115,32 @@ class CommercialActivity extends Component {
         let filterString = (filter!=="ALL") ? (selectedItem) ? "&" +filter : filter : "" ;
         let idString = selectedItem ? selectedItem.value : "";
         let prefix = ( !selectedItem && filter === "ALL") ? "" : "/filter/";
-        history.push("/commercialactivity"+ prefix + idString + filterString);
+        history.push("/commercialoverview"+ prefix + idString + filterString);
     };
 
     approve = (listingId) => {
         const { history } = this.props;
-        history.push("/commercialactivity/filter/"+ listingId + "&closeddeals");
+        history.push("/commercialoverview/filter/"+ listingId + "&closeddeals");
     };
     allBundlesCallback = () => {
         const { selectedListings } = this.state;
         let filterString = (selectedListings.length > 0) ? "/filter/" + selectedListings[0]  : "" ;
-        this.props.history.push("/commercialactivity"+filterString)
+        this.props.history.push("/commercialoverview"+filterString)
     };
     withActivityCallback = () => {
         const { selectedListings } = this.state;
         let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
-        this.props.history.push("/commercialactivity/filter/"+filterString+"withactivity")
+        this.props.history.push("/commercialoverview/filter/"+filterString+"withactivity")
     };
     openBidsCallback = () => {
         const { selectedListings } = this.state;
         let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
-        this.props.history.push("/commercialactivity/filter/"+filterString+"openbids")
+        this.props.history.push("/commercialoverview/filter/"+filterString+"openbids")
     };
     closedBidsCallback = () => {
         const { selectedListings } = this.state;
         let filterString = (selectedListings.length > 0) ? selectedListings[0] + "&" : "" ;
-        this.props.history.push("/commercialactivity/filter/"+filterString+"closeddeals")
+        this.props.history.push("/commercialoverview/filter/"+filterString+"closeddeals")
     };
 
     statusFilterItem(callBack, text, filterType) {
@@ -171,7 +171,7 @@ class CommercialActivity extends Component {
         const allListings = this.state.listings;
         const filters = this.getFiltersText();
 
-        document.title = "Content Arena - Commercial Activity";
+        document.title = "Content Arena - Commercial Overview";
 
         return (
             <div style={{height : '100%'}}>

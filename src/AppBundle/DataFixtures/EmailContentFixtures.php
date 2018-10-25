@@ -131,7 +131,7 @@ class EmailContentFixtures extends Fixture
             array(
                 "email_content_seller_deal_closed_2",
                 "Email content when a deal is closed",
-                "You will find all details as well as the counter-signed license agreement available in the “Commercial Activity” section. "
+                "You will find all details as well as the counter-signed license agreement available in the “Commercial Overview” section. "
             ),
             array(
                 "email_content_seller_deal_closed_3",
@@ -151,7 +151,7 @@ class EmailContentFixtures extends Fixture
             array(
                 "email_content_seller_sold_out_2",
                 "",
-                "You can review all deals and download license agreements in the “Commercial Activity” section."
+                "You can review all deals and download license agreements in the “Commercial Overview” section."
             ),
             array(
                 "email_subject_buyer_bid_placed",
