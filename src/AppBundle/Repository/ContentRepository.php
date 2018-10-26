@@ -467,15 +467,17 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getExpireTomorrow($user){
 
-        $now = date('Y-m-d H:i:s', strtotime('tomorrow'));
+        $now = date('Y-m-d H:i:s');
+        $tomorrow = date('Y-m-d H:i:s', strtotime('tomorrow'));
 
         return $this->createQueryBuilder('c')
             ->innerJoin("c.status", "status")
             ->where('c.company = :company')
-            ->andWhere(':now > c.expiresAt')
+            ->andWhere(':tomorrow > c.expiresAt AND :now < c.expiresAt')
             ->andWhere('status.name != :archived')
             ->andWhere('status.name != :soldCopy')
             ->setParameter('now',$now)
+            ->setParameter('tomorrow',$tomorrow)
             ->setParameter('archived',"ARCHIVED")
             ->setParameter('soldCopy',"SOLD_COPY")
             ->setParameter('company',$user->getCompany())

@@ -88,6 +88,7 @@ class SendEmail extends ContainerAwareCommand
                 foreach ($expireTomorrowListings as $expiredListing){
                     /*  @var Content $expiredListing */
                     if ( !$expiredListing->isExpiryNotified() ){
+                        $output->writeln('Listing'.$expiredListing->getCustomId()."-".$expiredListing->getExpiresAt()->format('H:i:s \O\n Y-m-d'));
                         $this->emailService->listingExpiry($expiredListing);
                         $expiredListing->setExpiryNotified(true);
                         $entityManager->persist($expiredListing);
