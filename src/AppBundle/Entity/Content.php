@@ -264,6 +264,22 @@ class Content
     private $applyVatInJurisdiction = false;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="expiry_notified", type="boolean")
+     * @Groups({"listing"})
+     *
+     */
+    private $expiryNotified = false;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="expired_notified", type="boolean")
+     * @Groups({"listing"})
+     *
+     */
+    private $expiredNotified = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"listing", "closed", "commercial"})
@@ -1521,6 +1537,38 @@ class Content
     public function setMaxStep($maxStep)
     {
         $this->maxStep = $maxStep;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpiryNotified()
+    {
+        return $this->expiryNotified;
+    }
+
+    /**
+     * @param bool $expiryNotified
+     */
+    public function setExpiryNotified($expiryNotified)
+    {
+        $this->expiryNotified = $expiryNotified;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExpiredNotified()
+    {
+        return $this->expiredNotified;
+    }
+
+    /**
+     * @param bool $expiredNotified
+     */
+    public function setExpiredNotified($expiredNotified)
+    {
+        $this->expiredNotified = $expiredNotified;
     }
 
 

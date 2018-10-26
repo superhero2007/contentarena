@@ -8,6 +8,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Content;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\UserService;
 use Gettext\Translations;
@@ -58,9 +59,10 @@ class SendEmail extends ContainerAwareCommand
          */
         $container = $this->getContainer();
         $hostUrl = $container->getParameter("carena_host_url");
-        $userRepository = $container->get('doctrine')->getManager()->getRepository('AppBundle:User');
-        $listingRepository = $container->get('doctrine')->getManager()->getRepository('AppBundle:Content');
-        $listingStatusRepository = $container->get('doctrine')->getManager()->getRepository('AppBundle:ListingStatus');
+        $entityManager = $this->getContainer()->get('doctrine')->getManager();
+        $userRepository = $entityManager->getRepository('AppBundle:User');
+        $listingRepository = $entityManager->getRepository('AppBundle:Content');
+        $listingStatusRepository = $entityManager->getRepository('AppBundle:ListingStatus');
         $type = $input->getArgument('type');
         $user = $userRepository->findOneBy(array("username"=>"juancruztalco@gmail.com"));
         $approvedStatus = $listingStatusRepository->findOneBy(array("name"=>"APPROVED"));
@@ -68,6 +70,8 @@ class SendEmail extends ContainerAwareCommand
             array('status'=>$approvedStatus),
             array('id' => 'DESC')
         );
+        $expiredListings = $listingRepository->getExpiredByDate($user);
+        $expireTomorrowListings = $listingRepository->getExpireTomorrow($user);
         $confirmationUrl = $this->getContainer()->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $params = array(
             "hostUrl" => $hostUrl,
@@ -79,6 +83,33 @@ class SendEmail extends ContainerAwareCommand
         $output->writeln('Type: '.$input->getArgument('type'));
 
         switch ($type){
+
+            case "listing_expiry":
+                foreach ($expireTomorrowListings as $expiredListing){
+                    /*  @var Content $expiredListing */
+                    if ( !$expiredListing->isExpiryNotified() ){
+                        $this->emailService->listingExpiry($expiredListing);
+                        $expiredListing->setExpiryNotified(true);
+                        $entityManager->persist($expiredListing);
+                    }
+
+                }
+                $entityManager->flush();
+                break;
+
+            case "listing_expired":
+                foreach ($expiredListings as $expiredListing){
+                    /*  @var Content $expiredListing */
+                    if ( !$expiredListing->isExpiredNotified() ){
+                        $this->emailService->listingExpired($expiredListing);
+                        $expiredListing->setExpiredNotified(true);
+                        $entityManager->persist($expiredListing);
+                    }
+
+                }
+                $entityManager->flush();
+                break;
+
             case "register_user":
                 $this->emailService->userRequestedLogin($params);
                 break;

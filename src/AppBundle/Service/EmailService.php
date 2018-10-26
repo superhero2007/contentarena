@@ -39,6 +39,74 @@ class EmailService
 
     /**
      * @param Content $listing
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function listingExpired( Content $listing){
+
+        /* @var Company $company*/
+
+        $emailContentRepository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $emailContentRepository->findBySlug("email_subject_seller_listing_expired");
+        $content = $emailContentRepository->findBySlug("email_content_seller_listing_expired");
+        $content2 = $emailContentRepository->findBySlug("email_content_seller_listing_expired_2");
+        $content3 = $emailContentRepository->findBySlug("email_content_seller_listing_expired_3");
+        $company = $listing->getCompany();
+        $recipients = array();
+
+        $parameters = array(
+            "content" => $content->getContent(),
+            "content2" => $content2->getContent(),
+            "content3" => $content3->getContent(),
+            "listing" => $listing,
+            "company" => $company,
+        );
+
+        foreach ($company->getUsers() as $user){
+            $recipients[] = $user->getEmail();
+        }
+
+        $this->sendEmails("email/email.seller.listing-expired.twig", $subject->getContent(), $recipients, $parameters );
+
+    }
+
+    /**
+     * @param Content $listing
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function listingExpiry( Content $listing){
+
+        /* @var Company $company*/
+
+        $emailContentRepository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $emailContentRepository->findBySlug("email_subject_seller_listing_expiry");
+        $content = $emailContentRepository->findBySlug("email_content_seller_listing_expiry");
+        $content2 = $emailContentRepository->findBySlug("email_content_seller_listing_expiry_2");
+        $content3 = $emailContentRepository->findBySlug("email_content_seller_listing_expiry_3");
+        $company = $listing->getCompany();
+        $recipients = array();
+
+        $parameters = array(
+            "content" => $content->getContent(),
+            "content2" => $content2->getContent(),
+            "content3" => $content3->getContent(),
+            "listing" => $listing,
+            "company" => $company,
+        );
+
+        foreach ($company->getUsers() as $user){
+            $recipients[] = $user->getEmail();
+        }
+
+        $this->sendEmails("email/email.seller.listing-expiry.twig", $subject->getContent(), $recipients, $parameters );
+
+    }
+
+    /**
+     * @param Content $listing
      * @param Thread $thread
      * @param Company $sender
      * @param Company $recipient

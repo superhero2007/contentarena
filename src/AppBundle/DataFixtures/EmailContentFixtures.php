@@ -258,6 +258,48 @@ class EmailContentFixtures extends Fixture
                 "",
                 "Thank you for interest in joining Content Arena. Next, we will verify your application request. In case your application is approved, we will send you the access link to enter Content Arena as soon as possible."
             ),
+            array(
+                "email_subject_seller_listing_expiry",
+                "",
+                "Your listing on Content Arena will expire in 24 hours"
+            ),
+            array(
+                "email_content_seller_listing_expiry",
+                "",
+                "The following listing on Content Arena will expire in 24 hours:"
+            ),
+            array(
+                "email_content_seller_listing_expiry_2",
+                "",
+                "You can easily extend the expiration date in the"
+            ),
+            array(
+                "email_content_seller_listing_expiry_3",
+                "",
+                "section if you wish to continue offering your content to potential buyers on Content Arena."
+            ),
+
+            array(
+                "email_subject_seller_listing_expired",
+                "",
+                "Your listing on Content Arena has expired"
+            ),
+            array(
+                "email_content_seller_listing_expired",
+                "",
+                "The following listing on Content Arena has expired and is no longer available on the marketplace:"
+            ),
+            array(
+                "email_content_seller_listing_expired_2",
+                "",
+                "If you wish to reactivate the listing, you can easily do so by changing the expiry date in the"
+            ),
+            array(
+                "email_content_seller_listing_expired_3",
+                "",
+                "section and re-publish the content."
+            ),
+
 
         );
 
