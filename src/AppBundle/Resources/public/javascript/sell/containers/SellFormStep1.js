@@ -635,6 +635,7 @@ class SellFormStep1 extends React.Component {
                         placeholder={this.context.t("CL_STEP1_LISTING_DETAILS_PLACEHOLDER")}
                         onChange={ (e) => this.updateContentValue(e, "description")} />
 
+                    <div className="step-item-description" style={{marginTop:0}}>{this.context.t("CL_STEP1_IMAGE_INFO")}</div>
                     <FileSelector
                         label={this.context.t("CL_STEP1_LABEL_IMAGE")}
                         isImage={true}
