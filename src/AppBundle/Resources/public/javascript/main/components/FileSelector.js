@@ -193,13 +193,31 @@ class FileSelector extends Component {
         this.setState({pixelCrop})
     }
 
+    handleRemoveFile = () => {
+        const {onSelect, target} = this.props;
+
+        if (onSelect) {
+            this.setState({
+                image: null,
+                croppedImage: null
+            })
+
+            onSelect("image", null);
+            onSelect(target, null);
+        }
+    }
+
     render() {
 
         const {label, isImage, previousImage, selected, onRemove, infoText} = this.props;
         const {image, uploading, failed, crop, croppedImage, imageWidth} = this.state;
+
+        const isImageCropEnabled =  isImage && image && !croppedImage;
+        const isImageSizeFit = imageWidth && imageWidth >= this.cropSize.min;
+
         return (
             <div className="base-input custom-selector" style={{flexDirection: 'column'}}>
-                <div style={{display: 'flex'}}>
+                <div className="d-flex">
                     <label>
                         {(label)?label:"Files"}
                         {infoText && (
@@ -212,6 +230,20 @@ class FileSelector extends Component {
                         onClick={()=>{ $("#input-" + this.props.target).trigger("click")  }}>
                         {this.context.t("Upload")}
                     </button>
+
+                    {isImageCropEnabled && !isImageSizeFit && (
+                        <span style={{padding: "6px 15px"}} className={"text-danger"}>
+                            {this.context.t('CL_STEP1_IMAGE_SMALL')}
+                        </span>
+                    )}
+
+                    {croppedImage && (
+                        <span
+                            className="fa fa-times text-danger"
+                            style={{fontSize: 21, cursor: 'pointer', marginLeft: 10, marginTop: 5}}
+                            onClick={this.handleRemoveFile}>
+                        </span>
+                    )}
                     <input
                         className="is-hidden"
                         onChange={this.handleUploadFile}
@@ -231,45 +263,31 @@ class FileSelector extends Component {
                         return <FileItem key={"key-" + i} item={{name: s.name}} onClick={onRemove}/>
                     })}
 
-                    {isImage && image && !croppedImage && (
-                        <Modal
-                            isOpen={true}
-                            onRequestClose={this.closeModal}
-                            bodyOpenClassName={"ca-modal-open"}
-                            className={"ca-modal"}
-                            overlayClassName={"ca-modal-overlay"}
-                        >
-                            {imageWidth >= this.cropSize.min ? (
+                    {isImageCropEnabled && isImageSizeFit && (
+                            <Modal
+                                isOpen={true}
+                                onRequestClose={this.closeModal}
+                                bodyOpenClassName={"ca-modal-open"}
+                                className={"ca-modal"}
+                                overlayClassName={"ca-modal-overlay"}
+                            >
                                 <div style={{padding: 15}}>
                                     <ReactCrop
                                         src={image}
                                         crop={crop}
-                                        onImageLoaded = {this.onImageLoaded}
+                                        onImageLoaded={this.onImageLoaded}
                                         maxWidth={this.cropSize.max / imageWidth * 100}
                                         minWidth={this.cropSize.min / imageWidth * 100}
                                         onChange={this.onCropChange}
                                     />
 
-                                    <div className="text-center" style={{padding:15}}>
+                                    <div className="text-center" style={{padding: 15}}>
                                         <div className="ca-btn primary" onClick={this.handleCrop}>
                                             OK
                                         </div>
                                     </div>
                                 </div>
-                            ):(
-                                <div style={{padding:15, minHeight: 200}}>
-                                    <div className="text-center">
-                                        <div style={{padding: 15}}>
-                                            {this.context.t("CL_STEP1_IMAGE_SMALL")}
-                                        </div>
-                                        <div className="ca-btn primary" onClick={this.closeModal} >
-                                            {this.context.t("CLOSE")}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                        </Modal>
+                            </Modal>
                     )}
 
                     {croppedImage && <img src={croppedImage} style={imageStyle} alt=""/>}
