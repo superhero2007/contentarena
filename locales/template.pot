@@ -446,6 +446,10 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
+msgid "CL_STEP1_IMAGE_SMALL"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
 msgid "GENERIC_TERMS_TEXT_1"
 msgstr ""
@@ -523,7 +527,7 @@ msgid "Add date"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "All fixture times are GMT; please ensure to use this time standard and not the local event time"
+msgid "All fixture times are UTC; please ensure to use this time standard and not the local event time"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
@@ -1392,6 +1396,10 @@ msgstr ""
 msgid "CL_STEP4_LABEL_JURISDICTION"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
+msgid "CL_STEP4_PLACEHOLDER_JURISDICTION"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "license period"
 msgstr ""
@@ -1563,6 +1571,10 @@ msgid "CL_STEP5_TITLE_PREVIEW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_PREVIEW_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_TERMS_1"
 msgstr ""
 
@@ -1644,6 +1656,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_LISTING_DETAILS_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP1_IMAGE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
@@ -1747,14 +1763,10 @@ msgid "CL_STEP4_TITLE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
+msgid "CL_STEP4_ANNEX_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
 msgid "CL_STEP4_LABEL_ANNEX"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP4_INFO_ANNEX"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep4.js
-msgid "CL_STEP5_PREVIEW_INFO"
 msgstr ""
 
