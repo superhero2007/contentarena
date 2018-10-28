@@ -11,7 +11,7 @@ class ProgramDetails extends Component {
 
     programDescription = (description) => {
         return description && (
-            <div className="spacer-bottom txt">
+            <div className="spacer-bottom txt description-text">
                 {description}
             </div>);
     };

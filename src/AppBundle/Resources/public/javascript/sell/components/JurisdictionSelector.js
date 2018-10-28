@@ -10,8 +10,8 @@ class JurisdictionSelector extends React.Component {
         };
     }
 
-    selectTerritory = (value) => {
-        this.props.updateContentValue("jurisdiction", value);
+    selectTerritory = (e) => {
+        this.props.updateContentValue("jurisdiction", e.target.value);
     };
 
     render(){
@@ -21,9 +21,14 @@ class JurisdictionSelector extends React.Component {
                 <label>
                     {this.context.t("CL_STEP4_LABEL_JURISDICTION")}
                 </label>
-                <CountrySelector
-                    className={"base-input-select"} multi={false} value={jurisdiction}
-                    onChange={this.selectTerritory} />
+                <input
+                    type="text"
+                    value={jurisdiction}
+                    onChange={this.selectTerritory}
+                    placeholder={this.context.t("CL_STEP4_PLACEHOLDER_JURISDICTION")}
+                    maxLength={250}
+                />
+
             </div>
         )
     }

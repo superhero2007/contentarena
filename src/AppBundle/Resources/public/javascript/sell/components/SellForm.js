@@ -21,14 +21,6 @@ class SellForm extends React.Component {
 
         if ( content === null ) props.history.push("/managelistings");
 
-        if ( content.jurisdiction === undefined || content.jurisdiction === null || content.jurisdiction.name === undefined ){
-            content.jurisdiction = {
-                label: content.company.country.name,
-                value: content.company.country.name,
-                name : content.company.country.name,
-            };
-        }
-
         if ( content.law === undefined || content.law === null ){
             content.law = {
                 label: content.company.country.name,

@@ -35,11 +35,6 @@ ContentArena.Utils = {
             });
         }
 
-        if (content.jurisdiction){
-            content.jurisdiction.label = content.jurisdiction.name;
-            content.jurisdiction.value = content.jurisdiction.name;
-        }
-
         if (content.law){
             content.law.label = content.law.name;
             content.law.value = content.law.name;

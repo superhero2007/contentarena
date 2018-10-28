@@ -588,7 +588,7 @@ class ContentService
         if ( isset($data->law) && isset($data->law->value) ) $content->setLaw($this->getCountry($data->law->value));
         if ( isset($data->PROGRAM_NAME) ) $content->setEditedProgramName($data->PROGRAM_NAME);
         if ( isset($data->PROGRAM_YEAR) ) $content->setEditedProgramYear($data->PROGRAM_YEAR);
-        if ( isset($data->jurisdiction) && isset($data->jurisdiction->value) ) $content->setJurisdiction($this->getCountry($data->jurisdiction->value));
+        if ( isset($data->jurisdiction) ) $content->setJurisdiction($data->jurisdiction);
         if ( isset($data->applyVatInJurisdiction) ) $content->setApplyVatInJurisdiction($data->applyVatInJurisdiction);
         if ( isset($data->contentDeliveryConfigured) ) $content->setContentDeliveryConfigured($data->contentDeliveryConfigured);
 

@@ -172,7 +172,7 @@ class BoardListing extends React.Component{
                         <div style={{fontWeight: 500}}>
                             {this.context.t("MANAGE_LISTINGS_LAST_ACTION")} {lastAction.description + " by "}
                         </div>
-                        {lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "- " + Moment(lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT} [GMT]`)}
+                        {lastActionUser.firstName + " " + lastActionUser.lastName } {lastActionDate && "- " + Moment(lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}
                     </div>}
 
                     {owner && <div className="last-action">

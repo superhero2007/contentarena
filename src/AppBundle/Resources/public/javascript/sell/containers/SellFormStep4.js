@@ -141,9 +141,11 @@ class SellFormStep4 extends React.Component {
 
                     <CompanyInformation/>
 
+                    <ApplicableLaw />
+
                     <JurisdictionSelector/>
 
-                    <ApplicableLaw />
+                    <TitleBar title={this.context.t("CL_STEP4_ANNEX_INFO")}/>
 
                     <FileSelector
                         label={this.context.t('CL_STEP4_LABEL_ANNEX')}
@@ -156,7 +158,6 @@ class SellFormStep4 extends React.Component {
                             "application/pdf"
                         ]}
                         tmp={true}
-                        infoText={this.context.t('CL_STEP4_INFO_ANNEX')}
                     />
 
                     <div className='row'>

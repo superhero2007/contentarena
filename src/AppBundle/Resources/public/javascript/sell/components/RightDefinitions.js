@@ -50,7 +50,7 @@ export const RightDefinitions = [
             "EXPLOITATION_FORM_ALL",
             "EXPLOITATION_FORM_FREE",
             "EXPLOITATION_FORM_PAY",
-            "EXPLOITATION_FORM_IN-SHIP",
+            /*"EXPLOITATION_FORM_IN-SHIP",*/
             "EXPLOITATION_FORM_CLOSED"
         ],
         showTextArea:"ALL",

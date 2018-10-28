@@ -155,7 +155,7 @@ class TermSheet extends React.Component {
                     <div className="title spacer">
                         {right.name}
                     </div>
-                    <div className="txt">
+                    <div className="txt description-text">
                         {selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]}
                     </div>
                 </div>
@@ -207,7 +207,7 @@ class TermSheet extends React.Component {
             <div className="term-sheet">
 
                 {programDescription && (
-                    <div className="txt">
+                    <div className="txt description-text">
                         {programDescription}
                     </div>
                 )}
@@ -285,7 +285,7 @@ class TermSheet extends React.Component {
                         <div className="title spacer">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
                         </div>
-                        <div className="txt">
+                        <div className="txt description-text">
                             {COMMENTS_RIGHTS}
                         </div>
                     </div>
@@ -339,7 +339,7 @@ class TermSheet extends React.Component {
                         <div className="title spacer">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS")}
                         </div>
-                        <div className="txt">
+                        <div className="txt description-text">
                             {selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"]}
                         </div>
                     </div>
@@ -350,7 +350,7 @@ class TermSheet extends React.Component {
                         <div className="title spacer">
                             {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2")}
                         </div>
-                        <div  className="txt">
+                        <div  className="txt description-text">
                             {COMMENTS_PRODUCTION}
                         </div>
                     </div>

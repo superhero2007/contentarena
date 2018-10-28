@@ -79,7 +79,7 @@ class CommercialTerms extends React.Component {
             <div>
 
                 {description && !programDetails && (
-                    <div className="txt">
+                    <div className="txt description-text">
                         {description}
                     </div>
                 )}

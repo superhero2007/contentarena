@@ -63,7 +63,7 @@ class NewFixture extends Component {
                                 onChange={this.onDateSelected}
                                 onChangeRaw={undefined}
                                 timeIntervals={15}
-                                dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [GMT]` : DATE_FORMAT}
+                                dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [UTC]` : DATE_FORMAT}
                                 placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT}` : DATE_FORMAT}
                                 timeFormat={TIME_FORMAT}
                                 showTimeSelect={isDatePickerWithTimeEnabled}
@@ -90,7 +90,7 @@ class NewFixture extends Component {
                     minWidth: 100,
                     justifyContent: 'flex-end'
                 }}>
-                    <i className="fa fa-info-circle icon" title={this.context.t("All fixture times are GMT; please ensure to use this time standard and not the local event time")} />
+                    <i className="fa fa-info-circle icon" title={this.context.t("All fixture times are UTC; please ensure to use this time standard and not the local event time")} />
                     {showAdd && <img src={addIcon} onClick={onAdd} style={{cursor: 'pointer', width: 20, height: 20, marginRight: 5}}/>}
                     <img src={cancelIcon} onClick={onRemove} style={{cursor: 'pointer', width: 20, height: 20}}/>
                 </div>

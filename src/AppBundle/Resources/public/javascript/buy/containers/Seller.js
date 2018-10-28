@@ -72,7 +72,7 @@ class Seller extends React.Component {
                         )}
                     </div>
                 </div>
-                {company.description && <div className="txt">{company.description}</div>}
+                {company.description && <div className="txt description-text">{company.description}</div>}
             </div>
         );
     }

@@ -78,7 +78,7 @@ class ContentInformation extends React.Component {
                             <div className="schedule">
                                 {season.fixtures.map(fixture => {
                                     return <div className="matchday">
-                                        {fixture.name} {Moment(fixture.date).format(`${DATE_FORMAT} ${TIME_FORMAT} [GMT]`)}
+                                        {fixture.name} {Moment(fixture.date).format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}
                                     </div>})}
                             </div>}
                         </div>

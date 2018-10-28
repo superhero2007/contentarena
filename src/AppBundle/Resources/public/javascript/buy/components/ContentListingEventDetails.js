@@ -302,7 +302,7 @@ class ContentListingEventDetails extends React.Component {
                                 {fixturesEpisodeIcon}
                             </div>
                             <div className="event-text">
-                                {this.getFixtures()[0].name}
+                                {this.getFixtures()[0].name} {this.getFixtures()[0].date !== undefined && "(" + moment(this.getFixtures()[0].date).format(DATE_FORMAT)+")"}
                             </div>
                         </div>
                     )}

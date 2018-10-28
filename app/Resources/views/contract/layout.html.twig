@@ -350,12 +350,12 @@
                 {% endfor %}
             {% endif %}
 
-            {% if content.description is defined and content.description is not empty %}
+           {# {% if content.description is defined and content.description is not empty %}
                 <div class="license-item-content">
                     <label>Description:</label>
                     {{ content.description }}
                 </div>
-            {% endif %}
+            {% endif %}#}
         </div>
     </div>
 
@@ -1199,12 +1199,12 @@
                 {% elseif bundle.installments[0].type == "DAY" %}
                     {% if bid is defined %}
                         {% if bid.status.name != "APPROVED" %}
-                            {{ bundle.installments[0].days }} days after conclusion
+                            {{ bundle.installments[0].days }} days after contract conclusion
                         {% elseif bid.status.name == "APPROVED" %}
                             {{ bid.createdAt|date_modify("+#{bid.salesPackage.installments[0].days} day")| date("d/m/Y") }}
                         {% endif %}
                     {% else %}
-                        {{ bundle.installments[0].days }} days after conclusion
+                        {{ bundle.installments[0].days }} days after contract conclusion
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -1219,12 +1219,12 @@
                             {% elseif installment.type == "DAY" %}
                                 {% if bid is defined %}
                                     {% if bid.status.name != "APPROVED" %}
-                                        {{ installment.days }} days after conclusion
+                                        {{ installment.days }} days after contract conclusion
                                     {% elseif bid.status.name == "APPROVED" %}
                                         {{ bid.createdAt|date_modify("+#{installment.days} day")| date("d/m/Y") }}
                                     {% endif %}
                                 {% else %}
-                                    {{ installment.days }} days after conclusion
+                                    {{ installment.days }} days after contract conclusion
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -1237,19 +1237,8 @@
         {% endif %}
     </div>
 
-    {# JURISDICTION TITLE#}
-    <div class="license-item-title">11. Place of Jurisdiction:</div>
-
-    {# JURISDICTION #}
-    <div class="license-item">
-        {% if content.jurisdiction is defined and content.jurisdiction is not null %}
-            {{ content.jurisdiction.name }}
-        {% endif %}
-
-    </div>
-
     {# APPLICABLE LAW TITLE#}
-    <div class="license-item-title">12. Applicable Law:</div>
+    <div class="license-item-title">11. Applicable Law:</div>
 
     {# APPLICABLE LAW #}
     <div class="license-item">
@@ -1258,8 +1247,19 @@
         {% endif %}
     </div>
 
+    {# JURISDICTION TITLE#}
+    <div class="license-item-title">12. Place of Jurisdiction:</div>
+
+    {# JURISDICTION #}
+    <div class="license-item">
+        {% if content.jurisdiction is defined and content.jurisdiction is not null %}
+            {{ content.jurisdiction }}
+        {% endif %}
+
+    </div>
+
     {# AMMENDMENTS TITLE#}
-    <div class="license-item-title">13. General amendments:</div>
+    <div class="license-item-title">13. Miscellaneous:</div>
 
     {# AMMENDMENTS#}
     {% if content.extraData.COMMENTS_RIGHTS is defined %}
@@ -1308,12 +1308,12 @@
                         {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
                             {{ content.owner.fullName }}
                             {% if bid.sellerSignatureDate is defined and bid.sellerSignatureDate is not null%}
-                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i", "GMT") }} GMT
+                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i", "UTC") }} UTC
                             {% endif %}
                         {% elseif bid is defined and bid.sellerSignature is defined and bid.sellerSignature is null and content.signature is defined and bid.status.name == "APPROVED"  %}
                             {{ content.owner.fullName }}
                             {% if content.sellerSignatureDate is defined and content.sellerSignatureDate is not null%}
-                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i", "GMT") }} GMT
+                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i", "UTC") }} UTC
                             {% endif %}
                         {% endif %}
                     </td>
@@ -1321,7 +1321,7 @@
                         {% if bid is defined and bid.signature is not null%}
                             {{ bid.buyerUser.fullName }}
                             {% if bid.buyerSignatureDate is defined and bid.buyerSignatureDate is not null%}
-                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i", "GMT") }} GMT
+                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i", "UTC") }} UTC
                             {% endif %}
                         {% endif %}
                     </td>

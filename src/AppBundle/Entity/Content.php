@@ -250,8 +250,8 @@ class Content
     private $brochure;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
-     * @ORM\JoinColumn(name="jurisdiction", referencedColumnName="id")
+     * @var string
+     * @ORM\Column(name="jurisdiction", type="string", length=255, nullable=true)
      */
     private $jurisdiction;
 
