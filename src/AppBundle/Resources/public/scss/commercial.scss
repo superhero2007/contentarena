@@ -1,7 +1,7 @@
 @import "vars";
 @import "mixins";
 
-.commercial-sales-bundles{
+.commercial-sales-bundles {
   display: flex;
   flex-direction: column;
   background: $background-3;
@@ -10,14 +10,14 @@
   margin: 10px 0;
   padding: 10px;
 
-  .commercial-sales-bundles-container{
+  .commercial-sales-bundles-container {
     display: flex;
     flex-direction: row;
     height: 60px;
     align-items: center;
     cursor: pointer;
 
-    .sales-bundle-item{
+    .sales-bundle-item {
       height: 35px;
 
       display: flex;
@@ -33,15 +33,15 @@
       font-size: 13px;
       font-weight: bold;
     }
-    .sales-bundle-item-right{
+    .sales-bundle-item-right {
       @extend .sales-bundle-item;
     }
 
-    .sales-bundle-show-bids{
+    .sales-bundle-show-bids {
       @extend .sales-bundle-item-right;
       padding-left: 0;
-      padding-right: 20px;
-
+      padding-right: 0;
+      margin-right: 10px;
       border: none;
       cursor: pointer;
 
@@ -52,12 +52,12 @@
   }
 }
 
-.listing-list-view.commercial-activity{
+.listing-list-view.commercial-activity {
   @include shadow(0px 4px 10px -6px rgba(0, 0, 0, 0.75));
   padding: 0;
   margin-bottom: 5px;
 
-  .right{
+  .right {
     padding: 15px 20px 10px;
 
     & .name-wrapper {
@@ -66,35 +66,35 @@
       align-items: baseline;
       margin: 0 10px 10px 0;
 
-      & .listing-name{
+      & .listing-name {
         cursor: pointer;
         color: $font-color-6;
         font-size: 19px;
         font-weight: bold;
       }
-      & .custom-id{
+      & .custom-id {
         border-radius: 5px;
         border: 1px solid $orange-color;
         background: $background-3;
       }
     }
-    & .listing-wrapper{
-      .listing-item.tournament{
+    & .listing-wrapper {
+      .listing-item.tournament {
         font-size: 13px;
         font-weight: bold;
         color: $font-color-1;
       }
-      .listing-item{
+      .listing-item {
         color: $font-color-1;
         font-size: 13px;
       }
     }
-    & .sales-and-exp-wrapper{
+    & .sales-and-exp-wrapper {
       display: flex;
       align-items: center;
       margin-top: 20px;
 
-      .expires{
+      .expires {
         white-space: nowrap;
         font-size: 12px;
         margin-left: auto;
@@ -102,7 +102,7 @@
     }
   }
 
-  .bid-listing-details{
+  .bid-listing-details {
     flex: 0.25 1 0;
     background-color: #F7F7F7;
     border-left: 1px solid #E6E6E6;
@@ -113,7 +113,7 @@
 
     padding: 15px 0;
 
-    .item{
+    .item {
       border-radius: 5px;
       border: 1px solid $orange-color;
       background-color: #fff;
@@ -126,7 +126,7 @@
       font-size: 14px;
     }
 
-    .total-wrapper{
+    .total-wrapper {
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
@@ -143,8 +143,10 @@
 
         color: $font-color-3;
 
-        &.bid-total{ font-size: 12px; }
-        &.bid-currency{
+        &.bid-total {
+          font-size: 12px;
+        }
+        &.bid-currency {
           font-size: 24px;
           font-weight: bold;
         }
@@ -154,9 +156,7 @@
     .show-bundle-wrapper {
       cursor: pointer;
 
-      .bundle-text{
-        position: relative;
-
+      .bundle-text {
         display: inline-flex;
         align-items: center;
 
@@ -168,10 +168,9 @@
         font-size: 13px;
         font-weight: 600;
 
-        img{
+        img {
           position: absolute;
-          right: -25px;
-
+          right: 20px;
           width: 17px;
           height: 17px;
         }
@@ -180,7 +179,7 @@
   }
 }
 
-.bid-listing-details{
+.bid-listing-details {
   flex: 1.5 1 0;
   background-color: #FAFBFC;
   border-left: 1px solid #E6E6E6;
@@ -189,21 +188,21 @@
   flex-direction: column;
   padding: 20px 0;
   justify-content: space-evenly;
-  .item{
+  .item {
     background-color: #fff;
     border: 1px solid lightgrey;
     padding: 5px 10px;
     min-width: 150px;
     text-align: center;
   }
-  .show-bundle{
+  .show-bundle {
     cursor: pointer;
     color: #48C0FE;
     font-size: 16px;
     font-weight: 600;
     display: flex;
     align-items: center;
-    img{
+    img {
       width: 17px;
       height: 17px;
       margin-left: 5px;
