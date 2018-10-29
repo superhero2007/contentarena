@@ -60,6 +60,6 @@ class ResetPasswordSuccess implements EventSubscriberInterface
             "confirmationUrl" => $confirmationUrl
         );
 
-        $this->mailer->forgotPassword($params);
+        //$this->mailer->forgotPassword($params);
     }
 }

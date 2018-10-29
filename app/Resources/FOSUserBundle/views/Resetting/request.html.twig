@@ -1,0 +1,25 @@
+{% extends "layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block main_content %}
+
+    <div class="manager-header">
+        <div class="logo" style="margin: 0 auto">
+            <img src={{ asset('bundles/app/images/logo.svg') }} alt=""/>
+        </div>
+    </div>
+    <div class="manager-content">
+
+        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+            <div class="static-page-container">
+                <label for="username">{{ 'resetting.request.username'|trans }}</label>
+                <input type="text" id="username" name="username" required="required" />
+            </div>
+            <div class="static-page-container">
+                <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
+            </div>
+        </form>
+
+    </div>
+
+{% endblock main_content %}

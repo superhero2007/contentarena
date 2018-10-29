@@ -1686,3 +1686,14 @@ button {
 }
 
 
+.static-page-container{
+  max-width: 400px;
+  margin: 20px auto;
+  input[type=submit] {
+    margin: 0;
+  }
+}
+.static-page-text-container{
+  max-width: 800px;
+  margin: 20px auto;
+}

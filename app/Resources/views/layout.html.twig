@@ -13,8 +13,16 @@
 
         <script>
             var envhosturl = "{{ path('homepage')|escape('js') }}";
-            var hosturl = "{{ hostUrl }}";
-            var externalApiUrl = "{{ externalApiUrl }}";
+
+            {% if hostUrl is defined %}
+                var hosturl = "{{ hostUrl }}";
+            {% endif %}
+
+            {% if externalApiUrl is defined %}
+                var externalApiUrl = "{{ externalApiUrl }}";
+            {% endif %}
+
+
             var assetsBaseDir = "{{ asset('bundles/') }}";
         </script>
         <title>Content Arena</title>
