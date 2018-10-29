@@ -333,10 +333,10 @@ class ClosedDeals extends React.Component {
                                     customId : d.customId
                                 }},
                                 Cell: props => <div className="actions-col">
-                                    <img onClick={()=>{ viewLicenseBid(props.value.customId)} } src={pdfIcon}/>
+                                    <img onClick={()=>{ viewLicenseBid(props.value.customId)} } src={pdfIcon} title={this.context.t("CLOSED_DEALS_LICENSE_AGREEMENT_ICON")} />
                                     <img onClick={()=>{
                                         window.location.href = `/redirect-integration/messages-by-bid/${props.value.id}`;
-                                    }} src={this.blueEnvelopeIcon}/>
+                                    }} src={this.blueEnvelopeIcon} title={this.context.t("CLOSED_DEALS_MESSAGE_ICON")} />
                                 </div>
                             }
 

@@ -123,11 +123,11 @@ class CommercialSalesBundle extends React.Component{
 
 
                 <div className={"buttons"}>
-                    <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.customId) }}>View License Agreement</button>
+                    <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.customId) }} title={this.context.t("COMMERCIAL_ACTIVITY_LICENSE_AGREEMENT_POPUP")}>View License Agreement</button>
                     <button onClick={this.closeApproveModal}>
                         {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                     </button>
-                    {!saving && <button className={"confirm"} disabled={!signature || !terms} onClick={this.acceptBid}>
+                    {!saving && <button className={"confirm"} disabled={!signature || !terms} onClick={this.acceptBid} title={this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_POPUP")}>
                         {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
                     </button>}
                     {saving && <i className="fa fa-spin fa-cog"/>}
@@ -384,15 +384,15 @@ class CommercialSalesBundle extends React.Component{
                                 {props.value.status === "REJECTED"
                                     && <i className={"fa fa-trash-o"} onClick={()=>{
                                         this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
-                                }} />}
+                                }} title={this.context.t("COMMERCIAL_ACTIVITY_TRASH_ICON")} />}
                                 {props.value.status === "PENDING"
                                     && <i className="fa fa-check-circle-o green-icon" style={{color:'#19CB43', fontSize: 26}} onClick={()=>{
                                     this.setState({approveModalIsOpen:true, selectedBid : props.value.bid});
-                                }} />}
+                                }} title={this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_ICON")} />}
                                 {props.value.status === "PENDING"
                                     && <i className="fa fa-times-circle-o red-icon" style={{color: '#990000', fontSize: 26}} onClick={()=>{
                                     this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
-                                }} />}
+                                }} title={this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_ICON")} />}
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING")
                                     && <img onClick={()=>{
                                         viewLicenseBid(props.value.bid.customId)
@@ -404,7 +404,9 @@ class CommercialSalesBundle extends React.Component{
                                         } else {
                                             _this.refs["messagePopup" + props.value.bid.id].open();
                                         }
-                                }} src={blueEnvelopeIcon}/>}
+                                }} src={blueEnvelopeIcon}
+                                title={this.context.t("COMMERCIAL_ACTIVITY_MESSAGE_ICON")}
+                                />}
 
                                 {this.state.showRemoveConfirm && <div className="confirmation-tooltip">
                                     <div className={"confirmation-text"} style={{ whiteSpace: 'normal'}}>
