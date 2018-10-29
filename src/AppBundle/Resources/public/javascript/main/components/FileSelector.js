@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {PropTypes} from "prop-types";
 import Modal from 'react-modal';
 import ReactCrop, { makeAspectCrop } from 'react-image-crop'
+import {bucketIcon} from "./Icons";
 
 const FileItem = ({item, onClick}) => (
     <div style={{
@@ -238,11 +239,7 @@ class FileSelector extends Component {
                     )}
 
                     {croppedImage && (
-                        <span
-                            className="fa fa-times text-danger"
-                            style={{fontSize: 21, cursor: 'pointer', marginLeft: 10, marginTop: 5}}
-                            onClick={this.handleRemoveFile}>
-                        </span>
+                        <img src={bucketIcon} style={{cursor: 'pointer', marginLeft: 10, objectFit: 'contain'}} onClick={this.handleRemoveFile}/>
                     )}
                     <input
                         className="is-hidden"

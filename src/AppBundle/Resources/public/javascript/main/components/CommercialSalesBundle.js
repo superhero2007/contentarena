@@ -14,7 +14,7 @@ import {
     pdfIcon,
     fixedIcon,
     plusYellowIcon,
-    minusYellowIcon
+    minusYellowIcon, bucketIcon
 } from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "../../main/components/SendMessage";
@@ -382,8 +382,8 @@ class CommercialSalesBundle extends React.Component{
                             accessor: b => {return {status: b.status.name, bid: b}},
                             Cell: props => <div className="actions-col d-flex align-items-center">
                                 {props.value.status === "REJECTED"
-                                    && <i className={"fa fa-trash-o"} onClick={()=>{
-                                        this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
+                                    && <img src={bucketIcon} onClick={()=>{
+                                    this.setState({showRemoveConfirm: true, selectedBidForDeletion : props.value.bid});
                                 }} title={this.context.t("COMMERCIAL_ACTIVITY_TRASH_ICON")} />}
                                 {props.value.status === "PENDING"
                                     && <i className="fa fa-check-circle-o green-icon" style={{color:'#19CB43', fontSize: 26}} onClick={()=>{
