@@ -46,7 +46,6 @@ class FileSelector extends Component {
             uploading : false,
             image : null,
             accept : props.accept || [".png", ".jpg"],
-            imageWidth: null,
             croppedImage: (props.imageBase64) ? props.imageBase64 : null,
             pixelCrop: null,
             crop: {
@@ -95,14 +94,21 @@ class FileSelector extends Component {
 
         if ( isImage ) {
             this.getBase64(event.target.files[0], (res) => {
+                const {maxWidth, maxHeight, minHeight, minWidth} = this.getCropSize(res);
+
                 _this.setState(state => ({
                     image: res.imageBase64,
-                    imageWidth: res.imageWidth,
+                    maxWidth,
+                    maxHeight,
+                    minHeight,
+                    minWidth,
+                    isImageSizeFit: res.imageWidth >= this.cropSize.min && res.imageHeight >= this.cropSize.min,
                     crop: {
                         ...state.crop,
-                        x: this.getCropPosition(res.imageWidth),
-                        width: this.getCropSize(res.imageWidth),
-                        height: this.getCropSize(res.imageHeight)
+                        x: this.getCropPosition(maxWidth),
+                        y: 0,
+                        width: maxWidth,
+                        height: maxHeight,
                     },
                     croppedImage: null,
                 }));
@@ -110,16 +116,58 @@ class FileSelector extends Component {
         }
     };
 
-    getCropSize = (imageSize) => {
-        let size = this.cropSize.max / imageSize * 100;
-        if (size < 0 || size > 100) size = 100;
-        return size;
+    getCropSize = (userImage) => {
+        const {imageWidth, imageHeight} = userImage;
+        let maxWidth;
+        let maxHeight;
+        let minWidth;
+        let minHeight;
+
+        if (imageWidth > imageHeight) {
+            maxHeight = 100;
+            maxWidth = imageHeight * 100 / imageWidth;
+        } else {
+            maxWidth = 100;
+            maxHeight = imageWidth * 100 / imageHeight;
+        }
+
+        minHeight = this.cropSize.min * 100 / imageHeight;
+        minWidth = this.cropSize.min * 100 / imageWidth;
+
+        return {maxWidth, maxHeight, minWidth, minHeight}
     }
 
-    getCropPosition = (imageWidth) => {
-        let pos = (100 - (this.cropSize.max / imageWidth* 100)) / 2;
-        if (pos < 0 || pos > 100) pos = 0
+    getCropPosition = (maxWidth) => {
+        let pos = (25 * 100 / maxWidth) / 2;
+        if (maxWidth === 100) pos = 0;
         return pos;
+    }
+
+    getCroppedImg = (image, pixelCrop) => {
+
+        const canvas = document.createElement('canvas');
+
+        let resolutionWidth = pixelCrop.width > this.cropSize.max ? this.cropSize.max : pixelCrop.width;
+        let resolutionHeight = pixelCrop.height > this.cropSize.max ? this.cropSize.max : pixelCrop.height;
+
+        canvas.width = resolutionWidth;
+        canvas.height =  resolutionHeight;
+
+        const ctx = canvas.getContext('2d');
+
+        ctx.drawImage(
+            image,
+            pixelCrop.x,
+            pixelCrop.y,
+            pixelCrop.width,
+            pixelCrop.height,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        return canvas.toDataURL('image/jpeg')
     }
 
     getItems = () => {
@@ -181,7 +229,7 @@ class FileSelector extends Component {
             let newImage = new Image();
             newImage.src = image;
 
-            const croppedImage = getCroppedImg(newImage, pixelCrop)
+            const croppedImage = this.getCroppedImg(newImage, pixelCrop)
 
             onSelect(target, croppedImage);
             onSelect("image", null);
@@ -211,10 +259,10 @@ class FileSelector extends Component {
     render() {
 
         const {label, isImage, previousImage, selected, onRemove, infoText} = this.props;
-        const {image, uploading, failed, crop, croppedImage, imageWidth} = this.state;
+        const {image, uploading, failed, crop, croppedImage, isImageSizeFit} = this.state;
+        const {maxWidth, maxHeight, minHeight, minWidth} = this.state;
 
         const isImageCropEnabled =  isImage && image && !croppedImage;
-        const isImageSizeFit = imageWidth && imageWidth >= this.cropSize.min;
 
         return (
             <div className="base-input custom-selector" style={{flexDirection: 'column'}}>
@@ -268,13 +316,15 @@ class FileSelector extends Component {
                                 className={"ca-modal"}
                                 overlayClassName={"ca-modal-overlay"}
                             >
-                                <div style={{padding: 15}}>
+                                <div style={{padding: 15}} className="text-center">
                                     <ReactCrop
                                         src={image}
                                         crop={crop}
                                         onImageLoaded={this.onImageLoaded}
-                                        maxWidth={this.cropSize.max / imageWidth * 100}
-                                        minWidth={this.cropSize.min / imageWidth * 100}
+                                        maxWidth={maxWidth}
+                                        maxHeight={maxHeight}
+                                        minWidth={minWidth}
+                                        minHeight={minHeight}
                                         onChange={this.onCropChange}
                                     />
 
@@ -295,28 +345,6 @@ class FileSelector extends Component {
             </div>
         )
     }
-}
-
-const getCroppedImg = (image, pixelCrop) => {
-
-    const canvas = document.createElement('canvas');
-    canvas.width = pixelCrop.width;
-    canvas.height = pixelCrop.height;
-    const ctx = canvas.getContext('2d');
-
-    ctx.drawImage(
-        image,
-        pixelCrop.x,
-        pixelCrop.y,
-        pixelCrop.width,
-        pixelCrop.height,
-        0,
-        0,
-        pixelCrop.width,
-        pixelCrop.height
-    );
-
-    return canvas.toDataURL('image/jpeg')
 }
 
 FileSelector.contextTypes = {
