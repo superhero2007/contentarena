@@ -83,6 +83,7 @@ class ClosedDeals extends React.Component {
                             showPagination={false}
                             onPageChange={this.onPageChange}
                             minRows={0}
+                            multiSort={false}
                             resizable={false}
                             data={bids}
                             select={this.props.select}
@@ -102,8 +103,15 @@ class ClosedDeals extends React.Component {
                                     </span>
                                 ),
                                 headerClassName : 'table-header-big',
-                                className : 'table-header-big sorting',
+                                className : 'table-header-big',
                                 id: 'name',
+                                sortMethod: (a, b) => {
+                                    console.log(a,b)
+                                    if (a.name.length === b.name.length) {
+                                        return a > b ? 1 : -1;
+                                    }
+                                    return a.name.length > b.name.length ? 1 : -1;
+                                },
                                 accessor: d => {return{
                                     name : d.content.name,
                                     customId : d.content.customId,
@@ -239,7 +247,15 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header',
                                 id: "territories",
                                 width: 200,
+                                sortMethod: (a, b) => {
+                                    console.log(a,b)
+                                    if (a.name.length === b.name.length) {
+                                        return a > b ? 1 : -1;
+                                    }
+                                    return a.name.length > b.name.length ? 1 : -1;
+                                },
                                 accessor: d => {return{
+                                    name: d.salesPackage.name,
                                     size : d.salesPackage.territories.length,
                                     territories : d.salesPackage.territories,
                                     excludedCountries : d.salesPackage.excludedCountries,
@@ -266,6 +282,9 @@ class ClosedDeals extends React.Component {
                                 className : 'table-header',
                                 width: 120,
                                 id: "price",
+                                sortMethod: (a, b) => {
+                                    return parseFloat(a.fee) > parseFloat(b.fee) ? 1 : -1;
+                                },
                                 accessor: d => {return {fee: d.totalFee, currency: d.salesPackage.currency.code}},
                                 Cell: props => <div className={"blue"}>
                                     {parseFloat(props.value.fee).toLocaleString() + " " + getCurrencySymbol(props.value.currency)}
@@ -293,6 +312,12 @@ class ClosedDeals extends React.Component {
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
                                 accessor: 'buyerUser',
+                                sortMethod: (a, b) => {
+                                    if (a.lastName.length === b.lastName.length) {
+                                        return a > b ? 1 : -1;
+                                    }
+                                    return a.lastName.length > b.lastName.length ? 1 : -1;
+                                },
                                 Cell: props => <div title={props.value.firstName + " " + props.value.lastName}>
                                     {props.value.firstName + " " + props.value.lastName}
                                 </div>
@@ -321,7 +346,7 @@ class ClosedDeals extends React.Component {
                     </div>
                 }
 
-                <div style={{width: '100%', textAlign: 'right'}}>
+                <div style={{width: '100%', textAlign: 'right', marginTop: 15}}>
                     <RightsLegend />
                 </div>
 

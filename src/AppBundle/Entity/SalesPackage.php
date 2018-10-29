@@ -27,7 +27,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing","closed", "commercial"})
      */
     private $name;
 
