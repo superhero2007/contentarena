@@ -590,7 +590,25 @@ class ApiController extends BaseController
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($threads, 'json',SerializationContext::create());
+        $data = $serializer->serialize($threads, 'json',SerializationContext::create()->setGroups(array('thread')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/messages/unread", name="getUnreadThreads")
+     */
+    public function getUnreadThreads(Request $request, MessageService $messageService)
+    {
+        $user = $this->getUser();
+
+        $threads = $messageService->getUnreadThreads($request, $user);
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($threads, 'json',SerializationContext::create()->setGroups(array('unread')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
@@ -602,7 +620,8 @@ class ApiController extends BaseController
      */
     public function getThread(Request $request, MessageService $messageService)
     {
-        $threads = $messageService->getThread($request);
+        $user = $this->getUser();
+        $threads = $messageService->getThread($request, $user);
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($threads, 'json',SerializationContext::create()->setGroups(array('messages')));

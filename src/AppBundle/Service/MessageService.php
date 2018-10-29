@@ -55,7 +55,6 @@ class MessageService
             /* @var Thread $thread */
             /* @var Message[]  $lastMessage */
             $lastMessage = $this->em->getRepository('AppBundle:Message')->getThreadLastMessage($thread);
-
             $oppositeParty = ($ownCompany->getId() == $thread->getBuyerCompany()->getId()) ? $thread->getOwnerCompany() :$thread->getBuyerCompany();
             $thread->setOppositeParty($oppositeParty);
 
@@ -64,11 +63,15 @@ class MessageService
                 $thread->setLastMessageContent($lastMessage[0]->getContent());
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
+                $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
+                $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
             } else if ($thread->getCreatedAt() != null) {
                 $thread->setLastMessageDate($thread->getCreatedAt());
             } else {
                 $thread->setLastMessageDate(new \DateTime());
             }
+
+
 
         }
 
@@ -77,14 +80,67 @@ class MessageService
         return $threads ;
     }
 
+    public function getUnreadThreads(Request $request, User $user){
+        /* @var Company $ownCompany */
+        $ownCompany = $user->getCompany();
+        $threads = $this->em->getRepository('AppBundle:Thread')->getAllThreads($ownCompany);
+        $unreadThreads = [];
+
+        foreach ($threads as $thread){
+            /* @var Thread $thread */
+            /* @var Message[]  $lastMessage */
+            $lastMessage = $this->em->getRepository('AppBundle:Message')->getThreadLastMessage($thread);
+            $oppositeParty = ($ownCompany->getId() == $thread->getBuyerCompany()->getId()) ? $thread->getOwnerCompany() :$thread->getBuyerCompany();
+            $thread->setOppositeParty($oppositeParty);
+
+
+            if ( $lastMessage != null && count($lastMessage) > 0 ){
+                $thread->setLastMessageContent($lastMessage[0]->getContent());
+                $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
+                $thread->setLastMessageUser($lastMessage[0]->getSender());
+                $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
+                $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
+                if ($hasUnreadMessagesForCurrentUser) $unreadThreads[] = $thread;
+            }
+
+        }
+
+        usort($unreadThreads, array($this, "sortByLastMessage"));
+
+        return $unreadThreads ;
+    }
+
     public function sortByLastMessage(Thread $a, Thread $b){
         return $a->getLastMessageDate() < $b->getLastMessageDate();
     }
 
-    public function getThread($request){
+    public function getThread($request, $user){
         $thread = $this->em->getRepository('AppBundle:Thread')->findOneBy(array("customId" => $request->get("customId")));
-        return $this->em->getRepository('AppBundle:Message')->getThreadMessages($thread);
+        $messages = $this->em->getRepository('AppBundle:Message')->getThreadMessages($thread);
+
+        if (count($messages) > 0 ){
+
+            $lastMessageUnread = true;
+            $lastMessage = end($messages);
+            /* @var Message $lastMessage*/
+            $readers = $lastMessage->getReaders();
+
+            foreach ($readers as $reader){
+                if ($reader->getId() == $user->getId() ) $lastMessageUnread = false;
+            }
+
+            if ($lastMessageUnread){
+                $readers[] = $user;
+                $lastMessage->setReaders($readers);
+                $this->em->persist($lastMessage);
+                $this->em->flush();
+            }
+        }
+
+        return $messages;
     }
+
+
 
     public function getThreadByListingAndSeller(Content $content, User $user, Company $company){
         return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(

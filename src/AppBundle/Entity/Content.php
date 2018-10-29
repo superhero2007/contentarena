@@ -39,7 +39,7 @@ class Content
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread"})
      */
     protected $customId;
 
@@ -238,7 +238,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread"})
      */
     private $name;
 

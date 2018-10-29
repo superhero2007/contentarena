@@ -46,12 +46,12 @@ class User extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"settings", "messages"})
+     * @Groups({"settings", "messages", "thread"})
      */
     protected $id;
 
     /**
-     * @Groups({"settings","messages"})
+     * @Groups({"settings","messages", "thread"})
      */
     protected $email;
 
@@ -59,7 +59,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial", "settings","messages"})
+     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread"})
      *
      */
     protected $firstName;
@@ -68,7 +68,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial", "settings","messages"})
+     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread"})
      */
     protected $lastName;
 

@@ -19,74 +19,80 @@ class Thread
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"messages"})
+     * @Groups({"messages", "unread", "thread"})
      */
     private $id;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "unread", "thread"})
      */
     private $customId;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content",  cascade={"remove"} )
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $listing;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $ownerCompany;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $buyerCompany;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $user;
 
     /**
      * @var User
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $oppositeParty;
 
     /**
      * @var User
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $lastMessageUser;
 
     /**
      * @var mixed
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $lastMessageDate;
 
     /**
      * @var string
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $lastMessageContent;
+
+    /**
+     * @var boolean
+     * @Groups({"messages", "unread", "thread"})
+     */
+    private $unreadMessagesForCurrentUser;
 
     /**
      * @var mixed
      *
      * @ORM\Column(name="last_notification_date", type="datetime", nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $lastNotificationDate;
 
@@ -94,9 +100,26 @@ class Thread
      * @var mixed
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     * @Groups({"messages"})
+     * @Groups({"messages", "thread"})
      */
     private $createdAt;
+
+    /**
+     * @return bool
+     */
+    public function isUnreadMessagesForCurrentUser()
+    {
+        return $this->unreadMessagesForCurrentUser;
+    }
+
+    /**
+     * @param bool $unreadMessagesForCurrentUser
+     */
+    public function setUnreadMessagesForCurrentUser($unreadMessagesForCurrentUser)
+    {
+        $this->unreadMessagesForCurrentUser = $unreadMessagesForCurrentUser;
+    }
+
 
     /**
      * @return mixed

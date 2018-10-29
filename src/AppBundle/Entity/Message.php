@@ -56,6 +56,49 @@ class Message
      */
     private $createdAt;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User")
+    * @ORM\JoinTable(name="message_readers",
+    *      joinColumns={@ORM\JoinColumn(name="message_id", referencedColumnName="id")},
+    *      inverseJoinColumns={@ORM\JoinColumn(name="message_reader_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"messages"})
+     */
+    private $readers;
+
+    /**
+     * @return mixed
+     */
+    public function getReaders()
+    {
+        return $this->readers;
+    }
+
+    /**
+     * @param mixed $readers
+     */
+    public function setReaders($readers)
+    {
+        $this->readers = $readers;
+    }
+
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function readBy($user){
+        $read = false;
+
+        if ( $this->getSender()->getId() == $user->getId()  ) return true;
+
+        foreach ($this->readers as $reader){
+            if ($reader->getId() == $user->getId() ) $read = true;
+        }
+
+        return $read;
+
+    }
+
 
     /**
      * Get id
