@@ -3,6 +3,9 @@ import NewSeason from './NewSeason'
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import NewFixture from "./NewFixture"
+import DatePicker from '@components/DatePicker';
+import { DATE_FORMAT } from "@constants";
+import moment from "moment";
 
 class SeasonSelector extends React.Component {
     constructor(props) {
@@ -48,9 +51,20 @@ class SeasonSelector extends React.Component {
         updateFromMultiple("seasons", index, "fixtures", fixtures );
     };
 
+    setDurationStart = (e) => {
+        const {index} = this.props;
+        this.props.updateFromMultiple("seasons", index, 'customStartDate', e.format());
+    };
+
+    setDurationEnd = (e) => {
+        const {index} = this.props;
+        this.props.updateFromMultiple("seasons", index, 'customEndDate', e.format());
+    };
+
     render(){
         const {index, season, seasons} = this.props;
         let activeSeason = seasons[season];
+
         return (
             <div style={{zIndex: 1, maxWidth: 872}}>
                 {!this.props.isCustom &&
@@ -78,6 +92,8 @@ class SeasonSelector extends React.Component {
                               onBlur={this.props.onBlur}
                               index={index}
                               onRemove={this.props.removeSeason } />}
+
+                {this.renderDurationFields(activeSeason)}
 
                 {this.props.showAddNew && activeSeason &&
                 <div className="step-item-description" style={{display: 'flex'}}>
@@ -116,7 +132,44 @@ class SeasonSelector extends React.Component {
             </div>
         )
     }
+
+    renderDurationFields(activeSeason) {
+        if (!activeSeason) {
+            return null;
+        }
+        
+        const { startDate, endDate, customStartDate, customEndDate } = activeSeason;
+        const realStartDate = customStartDate || startDate;
+        const realEndDate = customEndDate || endDate;
+
+        return (
+            <div className="base-input duration-date-pickers">
+                <label>Duration</label>
+                <label className={"season-selector-label"}>From</label>
+                <DatePicker
+                    showYearDropdown
+                    className={"date-picker"}
+                    selected={realStartDate ? moment(realStartDate) : undefined}
+                    onChange={this.setDurationStart}
+                    dateFormat={DATE_FORMAT}
+                    placeholderText={DATE_FORMAT.toLowerCase()}
+                />
+                <label className={"season-selector-label"}>
+                    {this.context.t("To")}
+                </label>
+                <DatePicker
+                    showYearDropdown
+                    className={"date-picker"}
+                    selected={realEndDate ? moment(realEndDate) : undefined}
+                    onChange={this.setDurationEnd}
+                    placeholderText={DATE_FORMAT.toLowerCase()}
+                    dateFormat={DATE_FORMAT}
+                />
+            </div>
+        );
+    }
 }
+
 SeasonSelector.contextTypes = {
     t: PropTypes.func.isRequired
 };

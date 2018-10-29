@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
-import DatePicker from '@components/DatePicker';
-import moment from "moment";
-import { DATE_FORMAT } from "@constants";
 
 class NewSeason extends React.Component{
     constructor(props){
@@ -15,9 +12,7 @@ class NewSeason extends React.Component{
         for (let i =0; i < 81;i++ ){ years.push(startYear-i)}
 
         this.state = {
-            years : years,
-            startDate : moment(),
-            endDate : moment(),
+            years : years
         }
     }
 
@@ -41,19 +36,8 @@ class NewSeason extends React.Component{
         this.props.updateFromMultiple(index, key, value)
     };
 
-    setDurationStart = (e) => {
-        const {index} = this.props;
-        this.props.updateFromMultiple(index, 'startDate', e.format());
-    };
-
-    setDurationEnd = (e) => {
-        const {index} = this.props;
-        this.props.updateFromMultiple(index, 'endDate', e.format());
-    };
-
     render(){
         const {index, seasons} = this.props;
-        const { startDate, endDate } = seasons[index];
 
         return (
             <div>
@@ -95,29 +79,6 @@ class NewSeason extends React.Component{
                     <button className={"standard-button"} onClick={this.props.onRemove}>
                         <i className="fa fa-close"/>
                     </button>}
-                </div>
-                <div className="base-input duration-date-pickers">
-                    <label>Duration</label>
-                    <label className={"season-selector-label"}>From</label>
-                    <DatePicker
-                        showYearDropdown
-                        className={"date-picker"}
-                        selected={startDate ? moment(startDate) : undefined}
-                        onChange={this.setDurationStart}
-                        dateFormat={DATE_FORMAT}
-                        placeholderText={DATE_FORMAT.toLowerCase()}
-                    />
-                    <label className={"season-selector-label"}>
-                        {this.context.t("To")}
-                    </label>
-                    <DatePicker
-                        showYearDropdown
-                        className={"date-picker"}
-                        selected={endDate ? moment(endDate) : undefined}
-                        onChange={this.setDurationEnd}
-                        placeholderText={DATE_FORMAT.toLowerCase()}
-                        dateFormat={DATE_FORMAT}
-                    />
                 </div>
             </div>
         )

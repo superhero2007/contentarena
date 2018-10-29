@@ -679,6 +679,7 @@ class ContentService
         }
 
         $content = $this->saveExtraData($content, $data);
+        $content = $this->saveSeasonExtraData($content, $data);
 
         if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
@@ -722,6 +723,35 @@ class ContentService
 
         return $content;
 
+    }
+
+    /**
+     * @param Content $content
+     * @param $data
+     * @return mixed
+     */
+    private function saveSeasonExtraData($content, $data) {
+        if ($data->seasons) {
+            $extraData = $content->getExtraData();
+            $sData = [];
+            foreach ($data->seasons as $key => $seasonData) {
+                $startDate = $seasonData->customStartDate ? $seasonData->customStartDate : $seasonData->startDate;
+                $endDate = $seasonData->customEndDate ? $seasonData->customEndDate : $seasonData->endDate;
+
+                if ($startDate && $endDate) {
+                    $sData[$seasonData->externalId] = array(
+                        'startDate' => $startDate,
+                        'endDate' => $endDate
+                    );
+                }
+            }
+
+            $extraData['seasonDurations'] = $sData;
+
+            $content->setExtraData($extraData);
+        }
+
+        return $content;
     }
 
     private function saveCompany($data){

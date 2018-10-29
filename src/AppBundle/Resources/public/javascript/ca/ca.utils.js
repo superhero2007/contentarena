@@ -87,6 +87,15 @@ ContentArena.Utils = {
                 s.custom = true
             }
 
+            if (content.extraData && content.extraData.seasonDurations) {
+                const customSeasonDur = content.extraData.seasonDurations[s.externalId];
+
+                if (customSeasonDur) {
+                    s.customStartDate = customSeasonDur.startDate;
+                    s.customEndDate = customSeasonDur.endDate;
+                }
+            }
+
             return s;
 
         });

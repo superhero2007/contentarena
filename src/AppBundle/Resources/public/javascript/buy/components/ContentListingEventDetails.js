@@ -24,7 +24,7 @@ class ContentListingEventDetails extends React.Component {
         const { showSeasonDuration } = this.props;
 
         return (showSeasonDuration && season.startDate && season.endDate) ?
-            `(${moment(season.startDate).format(DATE_FORMAT)} - ${moment(season.endDate).format(DATE_FORMAT)})` :
+            `(${moment(season.customStartDate).format(DATE_FORMAT)} - ${moment(season.customEndDate).format(DATE_FORMAT)})` :
             '';
     };
 
