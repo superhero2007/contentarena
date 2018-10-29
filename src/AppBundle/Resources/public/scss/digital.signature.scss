@@ -5,17 +5,29 @@
   flex-direction: column;
   display: flex;
 
-  &.for-listing{
+  &.for-listing, &.for-modal{
     .digital-signature-placeholder{
-      text-align: left;
-      font-weight: bold;
-      color: $black-color;
-      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+
+      .title{
+        font-weight: bold;
+        color: $black-color;
+        font-size: 16px;
+      }
+
+      .license-bid{
+        color: $font-color-7;
+        font-size: 13px;
+        cursor: pointer;
+      }
     }
-    .m-signature-pad--body{
+    #signature-pad .m-signature-pad--body{
       border-right: 0;
       background: $primary-color;
     }
+
     .buttons{
       margin-top: 30px;
       button{
@@ -37,7 +49,25 @@
         }
       }
     }
+  }
 
+  &.for-modal{
+    width: 100%;
+    margin: 20px 0;
+    padding: 0 20px;
+
+    #signature-pad .m-signature-pad--body{
+      border: none;
+      border-radius: 0;
+    }
+
+    .buttons button{
+      padding: 10px 50px;
+
+      &.transparent{
+        background: transparent;
+      }
+    }
   }
 
   .digital-signature-placeholder{

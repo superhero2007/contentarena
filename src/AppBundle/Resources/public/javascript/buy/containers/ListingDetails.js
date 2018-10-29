@@ -10,9 +10,9 @@ import ProgramDetails from "./ProgramDetails";
 import Seller from "./Seller";
 import Moment from "moment/moment";
 import {Link, Route} from 'react-router-dom';
+import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import DigitalSignature from "../../main/components/DigitalSignature";
-import SendMessage from "../../main/components/SendMessage";
 import {
     getCurrencySymbol, getFullName, goTo, goToClosedDeals, goToListing,
     goToMarketplace, viewLicense, viewLicenseCustom
@@ -51,7 +51,8 @@ class ListingDetails extends React.Component {
             selectedPackage : ( props.tab && props.tab === "checkout") ? listing.salesPackages.find(sp=>sp.id==props.bundle) : {},
             territoriesList: [],
             editCompanyOpen : false,
-            bidApplied : false
+            bidApplied : false,
+            openContactSellerModal: false,
         };
 
         if ( this.state.selectedPackage ) this.state.minimumBid =  this.state.selectedPackage.fee;
@@ -570,10 +571,25 @@ class ListingDetails extends React.Component {
         return <i>({this.context.t("MIN_BID")} {bidValue})</i>;
     };
 
+    handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
+    handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
+
     render() {
         ReactTooltip.rebuild();
         const { profile,history, listing } = this.props;
-        const {buyingMode, selectedPackage,tab, content, signature, bid, company, spinner, minimumBid, terms} = this.state;
+        const {
+            buyingMode,
+            selectedPackage,
+            tab,
+            content,
+            signature,
+            bid,
+            company,
+            spinner,
+            minimumBid,
+            terms,
+            openContactSellerModal
+        } = this.state;
         const checkoutType = this.getCheckoutType();
 
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
@@ -581,7 +597,13 @@ class ListingDetails extends React.Component {
 
         return (
             <div className="listing-details">
-                <SendMessage ref="messagePopup" listingId={content.id} recipient={content.company}/>
+                {openContactSellerModal && <SendMessage
+                    title={content.company.legalName}
+                    isOpen={openContactSellerModal}
+                    listing={content.id}
+                    recipient={content.company.id}
+                    onCloseModal={this.handleCloseContactSellerModal}
+                />}
                 { this.editCompany() }
                 { this.allTerritories() }
                 { this.successScreen() }
@@ -598,7 +620,7 @@ class ListingDetails extends React.Component {
                         )}
 
                         {profile === "BUYER" && !content.userCanNotBuy && (
-                            <a onClick={()=>{this.refs.messagePopup.open()}}>
+                            <a onClick={this.handleOpenContactSellerModal} >
                                 <img src={this.contactIcon} className="icon"/>
                                 <span>
                                     {this.context.t("Contact Seller")}

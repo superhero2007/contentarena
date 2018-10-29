@@ -1,6 +1,9 @@
 import React from 'react';
 import SignaturePad from 'react-signature-pad';
 import {PropTypes} from "prop-types";
+import { pdfIcon } from "./Icons";
+import {viewLicenseBid} from "../actions/utils";
+
 import cn from "classnames";
 
 class DigitalSignature extends React.Component{
@@ -42,6 +45,7 @@ class DigitalSignature extends React.Component{
     render(){
         const {
             signature,
+            licenseBidId,
             title = this.context.t("DIGITAL_SIGNATURE_TITLE"),
             clearBtnText = this.context.t("DIGITAL_SIGNATURE_BUTTON_CLEAR"),
             customClass = ''
@@ -51,7 +55,12 @@ class DigitalSignature extends React.Component{
 
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
-                <div className={"digital-signature-placeholder"}>{title}</div>
+                <div className={"digital-signature-placeholder"}>
+                    <span>{title}</span>
+                    {licenseBidId && <span className="license-bid" onClick={() => {viewLicenseBid(licenseBidId)}}>
+                        <img src={pdfIcon} alt="Licence" /> {this.context.t("LICENSE_AGREEMENT")}
+                    </span>}
+                </div>
                 {signature && ready &&
                     <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
                 }

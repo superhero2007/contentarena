@@ -3,8 +3,8 @@ import Moment from "moment/moment";
 import ReactTable from "react-table";
 import Modal from 'react-modal';
 import { DATE_FORMAT } from "@constants";
-
-import DigitalSignature from "../../main/components/DigitalSignature";
+import DeclineBidModal from "./../../common/modals/DeclineBidModal/DeclineBidModal";
+import AcceptBidModal from "./../../common/modals/AcceptBidModal/AcceptBidModal";
 import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/utils";
 import {
     bidIcon,
@@ -17,10 +17,9 @@ import {
     minusYellowIcon, bucketIcon
 } from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
-import SendMessage from "../../main/components/SendMessage";
+import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import {PropTypes} from "prop-types";
 import ExtraTerritories from "./ExtraTerritories";
-import GeneralTerms from "./GeneralTerms";
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -32,8 +31,8 @@ class CommercialSalesBundle extends React.Component{
             removeModalIsOpen : false,
             showBids : props.bidsOpen,
             territoriesList : [],
-            showAllTerritories : false
-
+            showAllTerritories : false,
+            openContactSellerModal: false
         };
 
         this.creditIcon = assetsBaseDir + "app/images/credit-card.png";
@@ -47,19 +46,6 @@ class CommercialSalesBundle extends React.Component{
         this.setState({removeModalIsOpen : false, saving : false});
     }
 
-    acceptBid = () => {
-        const {signature} = this.state;
-        const {contentId, onApprove, listingCustomId} = this.props;
-        let selectedBid = this.state.selectedBid;
-        selectedBid.content = contentId;
-        this.setState({saving : true});
-        ContentArena.ContentApi.acceptBid(selectedBid, signature).done(response=>{
-            this.setState({approveModalIsOpen : false, saving : false});
-            onApprove(listingCustomId);
-        });
-
-    };
-
     removeBid = () => {
         let selectedBid = this.state.selectedBid;
         this.setState({saving : true});
@@ -67,113 +53,17 @@ class CommercialSalesBundle extends React.Component{
             //this.setState({removeModalIsOpen : false, saving : false})
             this.props.onUpdate();
         });
-
     };
 
-    rejectBid = () => {
-        let selectedBid = this.state.selectedBid;
-        selectedBid.message = this.state.message;
-        this.setState({saving : true});
-        ContentArena.ContentApi.rejectBid(selectedBid).always(response=>{
-            this.setState({rejectModalIsOpen : false, saving : false});
-            this.props.onUpdate();
-        });
-
-    };
-
-    closeRemoveModal = () => {
-        this.setState({removeModalIsOpen : false})
-    };
-
-    closeApproveModal = () => {
-        this.setState({approveModalIsOpen : false})
-    };
-
-    closeRejectModal = () => {
-        this.setState({rejectModalIsOpen : false})
-    };
-
-    renderApproveModal = () => {
-
-        const {salesBundle} = this.props;
-        const {signature, saving, selectedBid, terms} = this.state;
-
-        return <Modal
-            isOpen={this.state.approveModalIsOpen}
-            onRequestClose={this.closeApproveModal}
-            bodyOpenClassName={"generic-modal"}
-            style={GenericModalStyle}
-        >
-            <div className={"generic-modal-container"}>
-                <div className="title">
-                    {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT")}
-                </div>
-
-                <div className="container">
-                    <DigitalSignature signature={signature} onReady={signature => { this.setState({signature}) }} />
-                </div>
-
-                <GeneralTerms
-                    defaultChecked={terms}
-                    value={terms}
-                    onChange={(e)=>{
-                        this.setState({ 'terms' : e.target.checked})
-                    }}
-                />
-
-
-                <div className={"buttons"}>
-                    <button style={{fontSize: 13}} onClick={()=>{ viewLicenseBid(selectedBid.customId) }} title={this.context.t("COMMERCIAL_ACTIVITY_LICENSE_AGREEMENT_POPUP")}>View License Agreement</button>
-                    <button onClick={this.closeApproveModal}>
-                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
-                    </button>
-                    {!saving && <button className={"confirm"} disabled={!signature || !terms} onClick={this.acceptBid} title={this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_POPUP")}>
-                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
-                    </button>}
-                    {saving && <i className="fa fa-spin fa-cog"/>}
-                </div>
-            </div>
-        </Modal>
-    };
-
-    renderRejectModal = () => {
-
-        const {salesBundle} = this.props;
-        const {saving, message} = this.state;
-
-        return <Modal
-            isOpen={this.state.rejectModalIsOpen}
-            onRequestClose={this.closeRejectModal}
-            bodyOpenClassName={"generic-modal"}
-            style={GenericModalStyle}
-        >
-            <div className={"generic-modal-container"}>
-                <div className="title">
-                    {this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REJECT")}
-                </div>
-
-                <div className="container">
-                    {this.context.t("COMMERCIAL_ACTIVITY_BID_REJECT_MESSAGE")}
-                    <textarea onChange={(e)=>{this.setState({message: e.target.value})}} value={message}>
-                    </textarea>
-                </div>
-
-                <div className={"buttons"}>
-
-                    {!saving && <button className={"confirm"} onClick={this.rejectBid}>
-                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM")}
-                    </button>}
-                    {saving && <i className="fa fa-spin fa-cog"/>}
-                    <button onClick={this.closeRejectModal}>
-                        {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CANCEL")}
-                    </button>
-                </div>
-            </div>
-        </Modal>
-    };
+    closeRemoveModal = () => this.setState({removeModalIsOpen : false});
+    closeApproveModal = () => this.setState({approveModalIsOpen : false});
+    openApproveModal = () => this.setState({approveModalIsOpen : true});
+    closeRejectModal = () => this.setState({rejectModalIsOpen : false});
+    openRejectModal = () => this.setState({rejectModalIsOpen : true});
+    openContactSellerModal = () => this.setState({ openContactSellerModal: true });
+    closeContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
     renderRemoveModal = () => {
-
         const {saving} = this.state;
 
         return <Modal
@@ -216,7 +106,6 @@ class CommercialSalesBundle extends React.Component{
     };
 
     allTerritories = () => {
-
         return <Modal
             isOpen={this.state.showAllTerritories}
             onRequestClose={this.closeTerritoriesModal}
@@ -237,13 +126,12 @@ class CommercialSalesBundle extends React.Component{
     };
 
     render(){
-        const { salesBundle, onDelete, contentId } = this.props;
-        const { showBids } = this.state;
+        const { salesBundle, onDelete, contentId, onUpdate, onApprove, listingCustomId } = this.props;
+        const { showBids, rejectModalIsOpen, approveModalIsOpen, selectedBid, openContactSellerModal, selectedCompany } = this.state;
 
         let closedDeals = salesBundle.bids.filter(b=>b.status.name === "APPROVED");
         let openBids = salesBundle.bids.filter(b=>b.status.name === "PENDING");
         let totalFee = (closedDeals.length > 0) ? closedDeals.map(b=>Number(b.totalFee)).reduce((t,n)=>t+n) : null;
-        let _this = this;
         let extraTerritories = ( salesBundle.territoriesMethod === this.worldwideExcluding) ? salesBundle.excludedTerritories : salesBundle.territories;
         const headers = {
             buyer: () => <span><img src={this.creditIcon} alt="Buyer"/> {this.context.t("BUYER")}</span>,
@@ -256,10 +144,31 @@ class CommercialSalesBundle extends React.Component{
 
         return (
             <div className="commercial-sales-bundles">
-                {this.renderApproveModal()}
-                {this.renderRejectModal()}
                 {this.renderRemoveModal()}
                 {this.allTerritories()}
+                {approveModalIsOpen && <AcceptBidModal
+                    selectedBid={selectedBid}
+                    postAction={onApprove}
+                    contentId={contentId}
+                    listingCustomId={listingCustomId}
+                    isOpen={approveModalIsOpen}
+                    onCloseModal={this.closeApproveModal} />}
+
+                {rejectModalIsOpen && <DeclineBidModal
+                    selectedBid={selectedBid}
+                    postAction={onUpdate}
+                    isOpen={rejectModalIsOpen}
+                    onCloseModal={this.closeRejectModal} />}
+
+                {openContactSellerModal && <SendMessage
+                    title={selectedCompany.legalName}
+                    isOpen={openContactSellerModal}
+                    listing={contentId}
+                    recipient={selectedCompany.id}
+                    role="SELLER"
+                    onCloseModal={this.closeContactSellerModal}
+                />}
+
                 <div className="commercial-sales-bundles-container" onClick={()=>{this.setState({showBids: !showBids})}}>
                     <div className="sales-bundle-item">
                         {salesBundle.bundleMethod === "SELL_AS_BUNDLE" &&
@@ -311,12 +220,6 @@ class CommercialSalesBundle extends React.Component{
                 </div>
                 {showBids && salesBundle.bids.length > 0 &&
                 <div>
-                    {salesBundle.bids.map((b)=>{
-                        return <SendMessage role={'SELLER'}
-                                            ref={"messagePopup" + b.id }
-                                            listingId={contentId} recipient={b.buyerUser.company}/>
-                    })}
-
                     <ReactTable
                         className={"ca-table bid-table"}
                         defaultPageSize={30}
@@ -387,11 +290,11 @@ class CommercialSalesBundle extends React.Component{
                                 }} title={this.context.t("COMMERCIAL_ACTIVITY_TRASH_ICON")} />}
                                 {props.value.status === "PENDING"
                                     && <i className="fa fa-check-circle-o green-icon" style={{color:'#19CB43', fontSize: 26}} onClick={()=>{
-                                    this.setState({approveModalIsOpen:true, selectedBid : props.value.bid});
+                                    this.setState({selectedBid : props.value.bid}, this.openApproveModal);
                                 }} title={this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_ICON")} />}
                                 {props.value.status === "PENDING"
                                     && <i className="fa fa-times-circle-o red-icon" style={{color: '#990000', fontSize: 26}} onClick={()=>{
-                                    this.setState({rejectModalIsOpen:true, selectedBid : props.value.bid});
+                                    this.setState({selectedBid : props.value.bid}, this.openRejectModal);
                                 }} title={this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_ICON")} />}
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING")
                                     && <img onClick={()=>{
@@ -402,7 +305,7 @@ class CommercialSalesBundle extends React.Component{
                                         if (props.value.status === "APPROVED") {
                                             window.location.href = `/redirect-integration/messages-by-bid-seller/${props.value.bid.id}`;
                                         } else {
-                                            _this.refs["messagePopup" + props.value.bid.id].open();
+                                            this.setState({selectedCompany : props.value.bid.buyerUser.company}, this.openContactSellerModal);
                                         }
                                 }} src={blueEnvelopeIcon}
                                 title={this.context.t("COMMERCIAL_ACTIVITY_MESSAGE_ICON")}

@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import {PropTypes} from "prop-types";
-import HeaderBar from "./HeaderBar";
-
 
 class GeneralTerms extends Component {
-
     constructor (props) {
         super(props);
-
-
-        this.state = {
-        }
     };
 
     render() {
-
         const {
             text = this.context.t("GENERIC_TERMS_TEXT_1"),
             text2 = this.context.t("GENERIC_TERMS_TEXT_2"),
@@ -25,7 +17,7 @@ class GeneralTerms extends Component {
         } = this.props;
 
         return (
-            <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center'}}>
+            <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center'}} className="terms-and-condition-wrapper">
                 <input
                     type="checkbox"
                     className="ca-checkbox"
@@ -40,7 +32,6 @@ class GeneralTerms extends Component {
                     <a href={(activationCode) ? "/generalterms?activationCode=" + activationCode : "/generalterms"} target={"_blank"}> Terms & Conditions </a>
                     {text2}
                 </div>
-
             </div>
         )
     }

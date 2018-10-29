@@ -3,18 +3,18 @@ import Moment from "moment/moment";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import ContentListing from "./ContentListing";
-import SendMessage from "../../main/components/SendMessage";
+import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import {getCurrencySymbol} from "../actions/utils";
 import {blueEnvelopeIcon, bucketIcon, infoIcon} from "./Icons";
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
-import DigitalSignature from "./DigitalSignature";
 
 class ContentListingPendingBid extends ContentListing {
     constructor(props){
         super(props);
 
         this.state = {
+            openContactSellerModal: false,
         };
         this.noImage = assetsBaseDir + "app/images/no-image.png";
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
@@ -24,6 +24,9 @@ class ContentListingPendingBid extends ContentListing {
         this.exclamationIcon = assetsBaseDir + "app/images/Exclamation.png";
         this.envelopeIcon = assetsBaseDir + "app/images/envelope_2.png";
     }
+
+    handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
+    handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
     render(){
         const {
@@ -40,15 +43,20 @@ class ContentListingPendingBid extends ContentListing {
             bid,
         } = this.props;
 
-        const {showMessage, showEdited} = this.state;
+        const {showMessage, showEdited, openContactSellerModal} = this.state;
 
         let listingImage = (imageBase64) ? imageBase64 : image ? assetsBaseDir + "../" + image : this.noImage;
 
         return (
             <div className="listing-list-view">
-                <SendMessage ref={"messagePopup" + id }
-                             listingId={id}
-                             recipient={company}/>
+                {openContactSellerModal && <SendMessage
+                    title={company.legalName}
+                    isOpen={openContactSellerModal}
+                    listing={id}
+                    recipient={company.id}
+                    onCloseModal={this.handleCloseContactSellerModal}
+                />}
+
                 <div className={"left"}>
                     <div className={"image"}>
                         <img src={listingImage}/>
@@ -66,10 +74,7 @@ class ContentListingPendingBid extends ContentListing {
                     </div>
 
                     {/*COMPANY*/}
-                    <div className={"company"} onClick={(e)=>{
-                        this.refs["messagePopup" + id].open();
-                        e.stopPropagation();
-                    }}>
+                    <div className={"company"} onClick={this.handleOpenContactSellerModal}>
                         {company.legalName} <img style={{marginLeft: 5}} src={this.envelopeIcon}/>
                     </div>
 

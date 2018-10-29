@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
-import SendMessage from "../../main/components/SendMessage";
 import {getCurrencySymbol, goTo, viewLicenseBid} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
@@ -15,7 +14,7 @@ const rightImageStyle = {
     height: 17
 };
 
-class ClosedDeals extends React.Component {
+class ClosedDeals extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,7 +54,6 @@ class ClosedDeals extends React.Component {
                     rp.exclusive = Object.values(bid.soldListing.selectedRightsBySuperRight)[k]['exclusive'];
                 });
             }
-
         });
 
 
@@ -66,14 +64,6 @@ class ClosedDeals extends React.Component {
                 flex: 1
             }}>
                 {
-                    bids.length > 0 && bids.map((b,i) => {
-                        return <SendMessage key={i}
-                                            ref={"messagePopup" + b.id }
-                                            listingId={b.content.id}
-                                            recipient={b.content.company}/>
-                    })
-                }
-                    {
                     bids.length > 0 &&
                     <div>
                         <ReactTable

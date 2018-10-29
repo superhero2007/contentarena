@@ -1,5 +1,15 @@
+@import "vars.scss";
+
 @mixin shadow($property) {
   -webkit-box-shadow: $property;
   -moz-box-shadow: $property;
   box-shadow: $property;
+}
+
+@mixin placeholder{
+  &::-webkit-input-placeholder {@content}
+  &:-ms-input-placeholder      {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+  &:-moz-placeholder           {@content}
 }

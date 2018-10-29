@@ -159,7 +159,7 @@ msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
 msgstr ""
 
@@ -266,28 +266,63 @@ msgstr ""
 msgid "LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
+msgid "ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
+msgid "COMMERCIAL_ACTIVITY_ACCEPT_BID_FAILED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
+#: src/AppBundle/Resources/public/javascript/common/modals/DeclineBidModal/DeclineBidModal.js
+#: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
+msgid "MESSAGE_POPUP_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/common/modals/DeclineBidModal/DeclineBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_REJECT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "COMMERCIAL_ACTIVITY_BID_REJECT_MESSAGE"
+#: src/AppBundle/Resources/public/javascript/common/modals/DeclineBidModal/DeclineBidModal.js
+msgid "COMMERCIAL_ACTIVITY_BID_REJECT_PLACEHOLDER"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+#: src/AppBundle/Resources/public/javascript/common/modals/DeclineBidModal/DeclineBidModal.js
+msgid "COMMERCIAL_ACTIVITY_DECLINE_BID_FAILED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/DeclineBidModal/DeclineBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
-msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CANCEL"
+#: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
+msgid "ENTER_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
+msgid "MESSAGE_POPUP_FAILED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
+msgid "MESSAGE_POPUP_SENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
+msgid "MESSAGE_POPUP_BUTTON_CLOSE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
+msgid "MESSAGES_SEND_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
@@ -435,6 +470,10 @@ msgid "DIGITAL_SIGNATURE_BUTTON_CLEAR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "LICENSE_AGREEMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_BUTTON_DONE"
 msgstr ""
 
@@ -448,6 +487,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
 msgid "CL_STEP1_IMAGE_SMALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
+msgid "CLOSE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
@@ -649,26 +692,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 msgid "Apply"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "Contact"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "MESSAGE_POPUP_SENT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "MESSAGE_POPUP_BUTTON_SEND"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "MESSAGE_POPUP_BUTTON_CANCEL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SendMessage.js
-msgid "MESSAGE_POPUP_BUTTON_CLOSE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -1261,10 +1284,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "MESSAGES_TITLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "MESSAGES_SEND_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
