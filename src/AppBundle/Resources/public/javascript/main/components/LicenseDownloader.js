@@ -31,7 +31,8 @@ class LicenseDownloader extends React.Component {
         const {style={}, iconStyle={height: 23}} = this.props;
         return (
             <div style={{...style}}
-                 onClick={this.getLicense}>
+                 onClick={this.getLicense}
+            title={this.context.t("CL5_LICENSE_AGREEMENT")}>
                 <img style={iconStyle} src={pdfIcon}/>
             </div>
         )

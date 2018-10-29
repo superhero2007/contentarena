@@ -829,7 +829,7 @@ class ListingDetails extends React.Component {
                                 <span>{this.getCompanyAddress()}</span>
                                 <i className="fa fa-pencil-square-o" onClick={() => this.openEditCompany()} />
                             </div>
-                            <div className="bid-license" onClick={()=> viewLicenseCustom(content.customId, selectedPackage.id, bid, company)}>
+                            <div className="bid-license" onClick={()=> viewLicenseCustom(content.customId, selectedPackage.id, bid, company)} title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
                                 <span>{this.context.t("License agreement")}</span>
                                 <img src={pdfIcon} alt="Licence"/>
                             </div>
