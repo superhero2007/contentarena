@@ -1,4 +1,5 @@
 import React from 'react';
+import {PropTypes} from "prop-types";
 import {pdfIcon} from "./Icons";
 import {viewLicense, viewLicenseBid, viewLicenseBundle, viewLicenseCustom} from "../actions/utils";
 
