@@ -151,6 +151,10 @@ msgid "installment"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_LICENSE_AGREEMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "License agreement"
 msgstr ""
 
@@ -394,6 +398,22 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_TRASH_ICON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_ACCEPT_BID_ICON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_DECLINE_BID_ICON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_MESSAGE_ICON"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 msgid "WATCHLIST_REMOVE_CONFIRMATION"
 msgstr ""
@@ -489,15 +509,13 @@ msgstr ""
 msgid "CL_STEP1_IMAGE_SMALL"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
-msgid "CLOSE"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
+#: src/AppBundle/Resources/public/javascript/main/components/PrivacyPolicy.js
 msgid "GENERIC_TERMS_TEXT_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
+#: src/AppBundle/Resources/public/javascript/main/components/PrivacyPolicy.js
 msgid "GENERIC_TERMS_TEXT_2"
 msgstr ""
 
@@ -553,6 +571,10 @@ msgstr ""
 msgid "NOTIFICATIONS_EMPTY"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/LicenseDownloader.js
+msgid "CL5_LICENSE_AGREEMENT"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
 msgid "Fixture"
 msgstr ""
@@ -578,6 +600,7 @@ msgid "Year"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "To"
 msgstr ""
 
@@ -1211,6 +1234,14 @@ msgid "Buyer name"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
+msgid "CLOSED_DEALS_LICENSE_AGREEMENT_ICON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
+msgid "CLOSED_DEALS_MESSAGE_ICON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "CLOSED_DEALS_EMPTY_MESSAGE"
 msgstr ""
 
@@ -1332,6 +1363,22 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_PASSWORD_UPDATED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LINKS_HEADER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LINKS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LINKS_BUTTON_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LINKS_BUTTON_PRIVACY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js

@@ -118,6 +118,29 @@ class AdminController extends BaseAdminController
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function createActivationLinkAction()
+    {
+        $id = $this->request->query->get('id');
+        $user = $this->em->getRepository('AppBundle:User')->find($id);
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+        if (null === $user->getConfirmationToken()) {
+            $user->setConfirmationToken($tokenGenerator->generateToken());
+        }
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $this->redirectToRoute('easyadmin', array(
+            'action' => 'show',
+            'id' => $user->getId(),
+            'entity' => 'User'
+        ));
+    }
+
+    /**
      * @Route("/generalterms/upload", name="uploadGeneralTermsPage")
      * @throws \exception
      */

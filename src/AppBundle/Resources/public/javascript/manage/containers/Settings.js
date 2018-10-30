@@ -350,8 +350,12 @@ class Settings extends React.Component {
                         </div>}
                     </div>
                 </div>
-                <div style={{position: 'relative'}}>
-                    <div className={"setting"} style={{maxWidth: '50%'}}>
+                <div style={{
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                }}>
+                    <div className={"setting"} style={{width: '48%'}}>
                         <div className={"title"} style={{marginBottom: 0}}>
                             {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD")}
                         </div>
@@ -398,34 +402,55 @@ class Settings extends React.Component {
                             </div>}
                         </div>
                     </div>
-                    {password && <div className={"password-validation"}>
-                        <div>
-                            {this.validate(password).length && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).length&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
+                    <div className="setting" style={{width: '48%', marginBottom: 30}}>
+                        <div className={"title"} style={{marginBottom: 0}}>
+                            {this.context.t("SETTINGS_LINKS_HEADER")}
                         </div>
-                        <div>
-                            {this.validate(password).upper && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).upper&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
+                        <div className={"subtitle"} style={{marginBottom: 0}}>
+                            {this.context.t("SETTINGS_LINKS_TITLE")}
                         </div>
+
                         <div>
-                            {this.validate(password).digit && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).digit&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
+                            <a href="/generalterms"
+                               target="_blank"
+                               className="standard-button settings-link">
+                                    {this.context.t("SETTINGS_LINKS_BUTTON_TERMS")}
+                            </a>
+                            <a href="/web/privacy-policy/"
+                               target="_blank"
+                               className="standard-button settings-link">
+                                    {this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
+                            </a>
                         </div>
-                        <div>
-                            {this.validate(password).special && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).special&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
-                        </div>
-                        {passwordCheck && <div>
-                            {passwordCheck === password && <img src={blueCheckIcon}/>}
-                            {passwordCheck !== password && <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
-                        </div>}
-                    </div>}
+                    </div>
                 </div>
+                {password && <div className={"password-validation"}>
+                    <div>
+                        {this.validate(password).length && <img src={blueCheckIcon}/>}
+                        {!this.validate(password).length&& <img src={cancelIcon}/>}
+                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
+                    </div>
+                    <div>
+                        {this.validate(password).upper && <img src={blueCheckIcon}/>}
+                        {!this.validate(password).upper&& <img src={cancelIcon}/>}
+                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
+                    </div>
+                    <div>
+                        {this.validate(password).digit && <img src={blueCheckIcon}/>}
+                        {!this.validate(password).digit&& <img src={cancelIcon}/>}
+                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
+                    </div>
+                    <div>
+                        {this.validate(password).special && <img src={blueCheckIcon}/>}
+                        {!this.validate(password).special&& <img src={cancelIcon}/>}
+                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
+                    </div>
+                    {passwordCheck && <div>
+                        {passwordCheck === password && <img src={blueCheckIcon}/>}
+                        {passwordCheck !== password && <img src={cancelIcon}/>}
+                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
+                    </div>}
+                </div>}
             </div>
         )
     }
