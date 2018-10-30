@@ -18,6 +18,7 @@ import {customStyles} from "../../main/styles/custom";
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
+import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
 
 const licenseStyles = {
     fontSize: "15px",
@@ -208,17 +209,16 @@ class SellFormStep3 extends React.Component {
                             rightsPackage.map(( sr,i )=>{
                                 return <div key={i}  className={"rights-box-item"}>
                                     {!sr.exclusive &&
-                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.blueCheck}/>}
+                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={blueCheckIcon}/>}
 
                                     {sr.exclusive &&
-                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={this.yellowCheck}/>}
+                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={yellowCheckIcon}/>}
 
                                     <div style={{display: 'flex', flexDirection: "row"  }}>
                                         { sr.shortLabel !== "PR" && sr.name }
                                         { sr.shortLabel === "PR" && content.PROGRAM_NAME &&
                                         "Edited Program"
                                         }
-                                        {sr.exclusive && <span style={{fontWeight: 600, marginLeft: 3}}> EX</span>}
                                     </div>
                                 </div>
                             })

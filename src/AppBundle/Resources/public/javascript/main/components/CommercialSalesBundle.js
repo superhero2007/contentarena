@@ -299,7 +299,8 @@ class CommercialSalesBundle extends React.Component{
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING")
                                     && <img onClick={()=>{
                                         viewLicenseBid(props.value.bid.customId)
-                                }} src={pdfIcon} />}
+                                }} src={pdfIcon}
+                                title={this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />}
                                 {props.value.status === "APPROVED"
                                     && <img onClick={()=>{
                                         if (props.value.status === "APPROVED") {
