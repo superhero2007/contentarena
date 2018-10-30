@@ -172,17 +172,19 @@ class ReviewAndSign extends React.Component {
 
         return (
             <div className="step-content">
-                <div style={{width: '100%', textAlign: 'right'}}>
-                    <RightsLegend />
-                </div>
                 { this.successScreen() }
                 <div className="buttons">
-                    <div className={"buttons-container"} style={{ justifyContent: 'flex-start'}}>
+                    <div className={"buttons-container"} style={{ 'display': 'flex',
+                        'flex-direction': 'row',
+                        'justify-content': 'space-between'}}>
                         <button className="light-blue-button" onClick={()=>{
                             history.push("/contentlisting/"+ customId + "/4");
                         }}>
                             <i className="fa fa-chevron-left"/> {this.context.t("Edit")}
                         </button>
+                        <div>
+                            <RightsLegend />
+                        </div>
                     </div>
                 </div>
                 {!showDetails && <div className="step-title">

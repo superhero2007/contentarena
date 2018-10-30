@@ -607,9 +607,6 @@ class ListingDetails extends React.Component {
                 { this.editCompany() }
                 { this.allTerritories() }
                 { this.successScreen() }
-                <div style={{width: '100%', textAlign: 'right', marginBottom: 10}}>
-                    <RightsLegend />
-                </div>
                 {!buyingMode && (
                     <div className="listing-details-top-info">
                         {profile === "BUYER" && (
@@ -649,6 +646,10 @@ class ListingDetails extends React.Component {
                         <ContentListingRightsPackage
                             rightsPackage={content.rightsPackage}
                         />
+
+                        <div className="legend-wrapper">
+                            <RightsLegend />
+                        </div>
 
                         <div className="info">
                             <div className="d-flex">

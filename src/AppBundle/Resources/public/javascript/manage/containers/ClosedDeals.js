@@ -66,6 +66,9 @@ class ClosedDeals extends Component {
                 {
                     bids.length > 0 &&
                     <div>
+                        <div className="align-to-right">
+                            <RightsLegend />
+                        </div>
                         <ReactTable
                             className={"ca-table"}
                             defaultPageSize={30}
@@ -334,13 +337,7 @@ class ClosedDeals extends Component {
                         />
                         <ReactTooltip place="top" type="dark" effect="solid"/>
                     </div>
-                }
-
-                <div style={{width: '100%', textAlign: 'right', marginTop: 15}}>
-                    <RightsLegend />
-                </div>
-
-                {
+                } {
                     bids.length === 0 &&
                     <div className="manager-content-message">
                         {
