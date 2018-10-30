@@ -500,10 +500,15 @@ class SalesPackageForm extends React.Component {
                         <label style={labelStyle}>Payment details</label>
 
                         { this.state.installments.map( (installment, i, list) => {
-                            return <div className={"content"}>
-                                <div className={"item"} style={{ paddingLeft: 15 }}>
+                            return <div className="content">
+                                <div className={"item"} style={{
+                                    marginRight: 55,
+                                    paddingLeft: 10
+                                }}>
                                     <div className={"title"} >
-                                        {i+1} Installment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/>{this.context.t("CL_STEP4_INSTALLMENTS_PERCENTAGE")}
+                                        {i+1} Instalment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/>
+                                        {" "}
+                                        {this.context.t("CL_STEP4_INSTALLMENTS_PERCENTAGE")}
                                     </div>
                                     {installment.type !== "DATE" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DATE",i)}}  />}
                                     { installment.type === "DATE" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
@@ -526,11 +531,25 @@ class SalesPackageForm extends React.Component {
                                             onChange={(e) => {this.setInstallmentDays(e.target.value,i)}}
                                             disabled={installment.type !== "DAY"}
                                             value={installment.days}
-                                            style={{ height: "26px", width: "70px" }}/>{this.context.t("CL_STEP4_INSTALLMENTS_DAYS_AFTER")}
+                                            style={{ height: "26px", width: "70px" }}/>
+                                        {" "}
+                                        {this.context.t("CL_STEP4_INSTALLMENTS_DAYS_AFTER")}
                                     </div>
-                                    { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
-                                    { i === list.length - 1 && <i style={{margin: 0, position: "relative"}} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
                                 </div>
+                                { i !== 0 && <i style={{
+                                    position: 'absolute',
+                                    color: 'red',
+                                    fontSize: 26,
+                                    right: 36,
+                                    top: 12
+                                }} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
+                                { i === list.length - 1 && <i style={{
+                                    position: 'absolute',
+                                    color: 'green',
+                                    fontSize: 26,
+                                    right: 5,
+                                    top: 12
+                                }} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
                             </div>
                         }) }
 

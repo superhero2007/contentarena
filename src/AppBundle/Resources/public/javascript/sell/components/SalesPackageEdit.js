@@ -306,7 +306,10 @@ class SalesPackageEdit extends React.Component {
 
                         { this.state.installments.map( (installment, i, list) => {
                             return <div className={"content"}>
-                                <div className={"item"} style={{ paddingLeft: 0 }}>
+                                <div className={"item"} style={{
+                                    marginRight: 55,
+                                    paddingLeft: 10
+                                }}>
                                     <div className={"title"} >
                                         {i+1} Installment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/> % of payment
                                     </div>
@@ -332,11 +335,25 @@ class SalesPackageEdit extends React.Component {
                                         disabled={installment.type !== "DAY"}
                                         value={installment.days}
                                         style={{ height: "26px", width: "70px" }}/>
+                                        {" "}
                                         {this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS")}
                                     </div>
-                                    { i !== 0 && <i style={{margin: 0, position: "relative"}} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
-                                    { i === list.length - 1 && <i style={{margin: 0, position: "relative"}} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
+
                                 </div>
+                                { i !== 0 && <i style={{
+                                    position: 'absolute',
+                                    color: 'red',
+                                    fontSize: 26,
+                                    right: 36,
+                                    top: 12
+                                }} className="fa fa-minus-circle" onClick={() => { this.removeInstallment(i) }}/>}
+                                { i === list.length - 1 && <i style={{
+                                    position: 'absolute',
+                                    color: 'green',
+                                    fontSize: 26,
+                                    right: 5,
+                                    top: 12
+                                }} className="fa fa-plus-circle" onClick={this.addInstallment}/>}
                             </div>
                         }) }
 
