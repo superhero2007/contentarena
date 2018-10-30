@@ -416,7 +416,7 @@ class Settings extends React.Component {
                                className="standard-button settings-link">
                                     {this.context.t("SETTINGS_LINKS_BUTTON_TERMS")}
                             </a>
-                            <a href="/web/privacy-policy/"
+                            <a href="https://contentarena.com/web/privacy-policy/"
                                target="_blank"
                                className="standard-button settings-link">
                                     {this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
