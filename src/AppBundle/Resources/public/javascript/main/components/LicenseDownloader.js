@@ -32,11 +32,15 @@ class LicenseDownloader extends React.Component {
         return (
             <div style={{...style}}
                  onClick={this.getLicense}
-            title={this.context.t("CL5_LICENSE_AGREEMENT")}>
+                 title={this.context.t("CL5_LICENSE_AGREEMENT")}>
                 <img style={iconStyle} src={pdfIcon}/>
             </div>
         )
     }
 }
+
+LicenseDownloader.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default LicenseDownloader;
