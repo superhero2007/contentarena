@@ -3,7 +3,6 @@
 .messages-container {
   display: flex;
   flex-direction: row;
-  margin-top: 10px;
   margin-bottom: -20px;
 
   .no-messages {
@@ -18,11 +17,11 @@
     .thread-title {
       text-align: center;
       font-weight: bold;
-      margin-bottom: 5px;
+      height: 2vh;
     }
     .thread-wrapper {
       overflow-y: scroll;
-      height: 86vh;
+      height: calc(98vh - 112px);
       .thread {
         border-bottom: 1px solid lightgrey;
         &:first-child {
@@ -85,8 +84,7 @@
     flex-direction: column;
     position: relative;
     flex: 1;
-    height: 88vh;
-
+    height: calc(100vh - 112px);
     .thread-title {
       color: #48C0FE;
       font-size: 20px;
