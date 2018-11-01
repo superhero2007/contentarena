@@ -59,24 +59,27 @@ class AdminEditAction implements EventSubscriberInterface
                 $owner->setApproved(true);
                 $em->persist($owner);
                 $em->flush();
+
+                /**
+                 * Send congratulations message
+                 */
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Content Arena')
+                    ->setFrom('noreply@contentarena.com', "Content Arena Admin")
+                    ->setTo($owner->getEmail())
+                    ->setBody(
+                        $this->twig->render(
+                            'Registration/company_registered_owner.txt.twig',
+                            array('company' => $company, 'content'=> $emailContent  )
+                        )
+                    )
+                ;
+                $this->mailer->send($message);
+
             }
 
 
-            /**
-             * Send congratulations message
-             */
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Content Arena')
-                ->setFrom('noreply@contentarena.com', "Content Arena Admin")
-                ->setTo($owner->getEmail())
-                ->setBody(
-                    $this->twig->render(
-                        'Registration/company_registered_owner.txt.twig',
-                        array('company' => $company, 'content'=> $emailContent  )
-                    )
-                )
-            ;
-            $this->mailer->send($message);
+
 
             /**
              * Set flag to prevent doing this again
