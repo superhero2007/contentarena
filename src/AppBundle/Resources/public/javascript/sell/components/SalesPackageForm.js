@@ -364,7 +364,7 @@ class SalesPackageForm extends React.Component {
         >
 
             <div className="modal-title">
-                Sales bundle
+                {this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
                 <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 
@@ -506,7 +506,7 @@ class SalesPackageForm extends React.Component {
                                     paddingLeft: 10
                                 }}>
                                     <div className={"title"} >
-                                        {i+1} Instalment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/>
+                                        {i+1} Installment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/>
                                         {" "}
                                         {this.context.t("CL_STEP4_INSTALLMENTS_PERCENTAGE")}
                                     </div>

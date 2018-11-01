@@ -225,6 +225,10 @@ msgid "LISTING_DETAILS_SELLER_TITLE_VAT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "RIGHTS_"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_LICENSE_START"
 msgstr ""
 
@@ -408,6 +412,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_DECLINE_BID_ICON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
@@ -673,6 +681,10 @@ msgid "CL_STEP1_SEARCH_BUTTON_SELECT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "CL_STEP1_LABEL_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "Season"
 msgstr ""
 
@@ -690,6 +702,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "CL_STEP1_ADD_SEASON_DURATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
@@ -1049,10 +1065,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_TITLE_COMPANY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_BUTTON_EDIT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1512,7 +1524,8 @@ msgid "CL_STEP3_POPUP_TECHNICAL_FEE_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
-msgid "Sales bundle"
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_SALES_BUNDLE_POPUP_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
@@ -1598,6 +1611,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_ADD_SALES_BUNDLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+msgid "CL_STEP1_LABEL_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js

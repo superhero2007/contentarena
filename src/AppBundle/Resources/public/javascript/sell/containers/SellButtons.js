@@ -74,12 +74,13 @@ class SellButtons extends React.Component {
      */
     reviewAndSignEnabled = () =>{
 
-        const {expiresAt, vat, vatPercentage, salesPackages, company, name, law, jurisdiction} = this.props;
+        const {expiresAt, vat, vatPercentage, salesPackages, company, law, jurisdiction} = this.props;
 
         return expiresAt
             && ( vat === "no" || (vatPercentage && vatPercentage != 0 && vatPercentage !== "") )
             && law !== null
             && jurisdiction !== null
+            && jurisdiction !== undefined
             && salesPackages.length > 0
             && companyIsValid(company);
 
@@ -93,7 +94,7 @@ class SellButtons extends React.Component {
         if ( !expiresAt ) message += "<br/>- Select listing expiry.";
         if ( !companyIsValid(company) ) message += "<br/>- Enter company information.";
         if ( law === null) message += "<br/>- Select application law";
-        if ( jurisdiction === null ) message += "<br/>- Select place of jurisdiction";
+        if ( jurisdiction === null || jurisdiction === undefined ) message += "<br/>- Enter place of jurisdiction";
 
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
 

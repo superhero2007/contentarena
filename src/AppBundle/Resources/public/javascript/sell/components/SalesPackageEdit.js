@@ -225,7 +225,7 @@ class SalesPackageEdit extends React.Component {
         >
 
             <div className="modal-title">
-                {this.context.t("Sales bundle")}
+                {this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
                 <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
             </div>
 

@@ -209,7 +209,7 @@ class BidService
         $message = $request->get('message');
         $updatedAt = new \DateTime();
 
-        if ( isset($message) ) {
+        if ( isset($message) && $message != null && $message != "" ) {
             $bid->setMessage($message);
             try{
                 $this->messageService->sendMessageAsOwner($listing, $bid->getBuyerUser(), $message, $user);

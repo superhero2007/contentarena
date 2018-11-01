@@ -27,14 +27,12 @@ class Register extends React.Component {
         const { match } = this.props;
 
         let activationCode = match.params.activationCode;
-        let editCompanyInfo = false;
         let editCompanyNameDisabled = true;
 
         ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done(user=>{
             if (user) {
                 user.activationCode = activationCode;
                 if (!user.company) {
-                    editCompanyInfo = true;
                     editCompanyNameDisabled = false;
                     user.company = {country:{}};
                 }
@@ -42,7 +40,6 @@ class Register extends React.Component {
             this.setState({
                 loading:false,
                 user : user,
-                editCompanyInfo: editCompanyInfo,
                 editCompanyNameDisabled: editCompanyNameDisabled
             });
         });
@@ -119,7 +116,7 @@ class Register extends React.Component {
 
         const {history, match, location} = this.props;
 
-        const { loading, editCompanyInfo, updatingUser, password, updated, editCompanyNameDisabled, terms, privacy } = this.state;
+        const { loading, editCompanyInfo, updatingUser, password, updated, terms, privacy } = this.state;
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
@@ -201,13 +198,6 @@ class Register extends React.Component {
 
                 <div className={"title"}>
                     {this.context.t("SETTINGS_TITLE_COMPANY")}
-                    {!editCompanyInfo &&
-                    <div className={"edit-button"} onClick={e=>{
-                        this.setState({editCompanyInfo : true})
-                    }}>
-                        <img src={editIcon}/>
-                        {this.context.t("SETTINGS_BUTTON_EDIT")}
-                    </div>}
                 </div>
 
                 {user.company && <div className={"setting"}>
@@ -216,7 +206,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_NAME")} *
                             </label>
-                            <input value={user.company.legalName} disabled={editCompanyNameDisabled} onChange={(e)=>{
+                            <input value={user.company.legalName}
+                                   onChange={(e)=>{
                                 user.company.legalName = e.target.value;
                                 this.setState({user});
                             }} />
@@ -225,7 +216,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER")}
                             </label>
-                            <input value={user.company.registrationNumber} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.registrationNumber}
+                                   onChange={(e)=>{
                                 user.company.registrationNumber = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -234,7 +226,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_VAT")}
                             </label>
-                            <input value={user.company.vat} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.vat}
+                                   onChange={(e)=>{
                                 user.company.vat = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -245,7 +238,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")} 1 *
                             </label>
-                            <input value={user.company.address} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.address}
+                                   onChange={(e)=>{
                                 user.company.address = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -255,7 +249,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")} 2
                             </label>
-                            <input value={user.company.address2} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.address2}
+                                   onChange={(e)=>{
                                 user.company.address2 = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -264,7 +259,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_CITY")} *
                             </label>
-                            <input value={user.company.city} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.city}
+                                   onChange={(e)=>{
                                 user.company.city = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -275,7 +271,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_ZIP")} *
                             </label>
-                            <input value={user.company.zip} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.zip}
+                                   onChange={(e)=>{
                                 user.company.zip = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -284,7 +281,8 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_COUNTRY")} *
                             </label>
-                            <CountrySelector multi={false} value={country} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <CountrySelector multi={false} value={country}
+                                             onChange={(e)=>{
                                 if (e && e.value ) user.company.country.name = e.value;
                                 if (e === null) user.company.country = {};
                                 this.setState({user});

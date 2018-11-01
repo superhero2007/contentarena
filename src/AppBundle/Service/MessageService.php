@@ -220,7 +220,7 @@ class MessageService
          * Send notification to involved users
          */
 
-        $notificationMessage = "New message on ".$content->getName();
+        $notificationMessage = "New message: ".$content->getName();
 
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
@@ -281,7 +281,7 @@ class MessageService
          * Send notification to involved users
          */
 
-        $notificationMessage = "New message on ".$content->getName();
+        $notificationMessage = "New message: ".$content->getName();
 
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){

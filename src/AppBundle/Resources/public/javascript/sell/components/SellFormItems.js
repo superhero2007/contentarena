@@ -88,7 +88,9 @@ export class SportSelector extends React.Component {
         return (
             <div style={{maxWidth: 872}}>
                 <div className="base-input">
-                    <label>Sport</label>
+                    <label>
+                        {this.context.t("CL_STEP1_LABEL_SPORT")}
+                    </label>
                     {
                         !this.props.isCustom &&
                         <input type="text"

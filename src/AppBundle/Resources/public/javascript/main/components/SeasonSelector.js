@@ -70,7 +70,7 @@ class SeasonSelector extends React.Component {
                 {!this.props.isCustom &&
                 <div className="base-input">
                     <label>
-                        {this.context.t("Season")}
+                        {this.context.t("CL_STEP1_LABEL_SEASON")}
                     </label>
                     <input
                         type="text"
@@ -144,7 +144,7 @@ class SeasonSelector extends React.Component {
 
         return (
             <div className="base-input duration-date-pickers">
-                <label>Duration</label>
+                <label>{this.context.t("CL_STEP1_ADD_SEASON_DURATION")}</label>
                 <label className={"season-selector-label"}>From</label>
                 <DatePicker
                     showYearDropdown

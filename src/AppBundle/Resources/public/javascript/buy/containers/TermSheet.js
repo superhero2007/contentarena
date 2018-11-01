@@ -67,7 +67,9 @@ class TermSheet extends React.Component {
             }
 
             return <div className='row' key={'list'+i}>
-                <div className="right-name right-definition">{right.name}</div>
+                <div className="right-name right-definition">
+                    {this.context.t("RIGHTS_" + right.key)}
+                    </div>
                 {
                     rightsPackage.map((rp,k)=>{
 

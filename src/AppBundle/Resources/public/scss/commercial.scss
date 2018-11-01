@@ -159,18 +159,17 @@
       .bundle-text {
         display: inline-flex;
         align-items: center;
-
-        padding: 12px 20px;
+        padding: 12px 30px;
 
         border-radius: 5px;
         background: $orange-color;
         color: $font-color-3;
         font-size: 13px;
         font-weight: 600;
-
+        position: relative;
         img {
           position: absolute;
-          right: 20px;
+          right: 10px;
           width: 17px;
           height: 17px;
         }
