@@ -1029,6 +1029,31 @@ msgstr ""
 msgid "RIGHTS_PROGRAM"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_VIDEO_STANDARD_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_GRAPHICS_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CAMERA_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_ASPECT_RATIO_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_COMMENTARY_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION"
+msgstr ""
+
+
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
 msgstr ""
@@ -1497,6 +1522,10 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+msgid "CL3_EDIT_LICENSE_PERIOD_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js

@@ -315,12 +315,13 @@ class SellFormStep3 extends React.Component {
                                     !contentDeliveryConfigured && right.key !== "CONTENT_DELIVERY";
 
                                 let rightKeyPreffix = "RIGHTS_";
+                                let rightKeySuffix = "_DESCRIPTION";
 
                                 return <PopupRight
                                     key={right.key}
                                     id={right.key}
                                     name={this.context.t(rightKeyPreffix + right.key )}
-                                    description={right.description}
+                                    description={this.context.t(rightKeyPreffix + right.key + rightKeySuffix )}
                                     selected={this.props[right.key]}
                                     options={right.options}
                                     multiple={right.multiple}

@@ -457,9 +457,14 @@ class PopupRight extends React.Component {
             <div className="modal-title">
                 <i className="fa fa-edit"/>
                 {name}
-                {description && <i className="fa fa-info-circle tooltip-icon" title={description}/>}
                 <i className="fa fa-times close-icon" onClick={this.closePopupAndRestoreData}/>
             </div>
+
+            {description && (
+                <div style={{padding:"0 15px 15px"}}>
+                    {description}
+                </div>
+            )}
 
             <div className="step-content">
                 <div className="step-content-container">

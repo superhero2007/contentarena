@@ -102,6 +102,12 @@ class HiddenKeys extends React.Component {
                 {this.context.t("RIGHTS_TECHNICAL_DELIVERY_FTP")}
                 {this.context.t("RIGHTS_TECHNICAL_DELIVERY_FIBER")}
                 {this.context.t("RIGHTS_PROGRAM")}
+                {this.context.t("RIGHTS_VIDEO_STANDARD_DESCRIPTION")}
+                {this.context.t("RIGHTS_GRAPHICS_DESCRIPTION")}
+                {this.context.t("RIGHTS_CAMERA_DESCRIPTION")}
+                {this.context.t("RIGHTS_ASPECT_RATIO_DESCRIPTION")}
+                {this.context.t("RIGHTS_COMMENTARY_DESCRIPTION")}
+                {this.context.t("RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION")}
 
             </div>
         );
