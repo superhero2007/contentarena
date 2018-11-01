@@ -54,10 +54,13 @@ class AdminEditAction implements EventSubscriberInterface
             $userStatus = $em->getRepository('AppBundle:UserStatus')->findByName("Active");
             $emailContent = $em->getRepository('AppBundle:EmailContent')->findBySlug("company_registered_owner");
 
-            if ( $userStatus != null ) $owner->setStatus($userStatus);
-            $owner->setApproved(true);
-            $em->persist($owner);
-            $em->flush();
+            if ($owner != null){
+                if ( $userStatus != null) $owner->setStatus($userStatus);
+                $owner->setApproved(true);
+                $em->persist($owner);
+                $em->flush();
+            }
+
 
             /**
              * Send congratulations message
