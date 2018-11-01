@@ -46,7 +46,6 @@ a:hover {
   text-decoration: none;
 }
 
-
 button {
   cursor: pointer;
 }
@@ -388,7 +387,7 @@ button {
           display: none;
         }
       }
-      .sales-package-table{
+      .sales-package-table {
         @extend %sales-package-table;
       }
       .content {
@@ -398,8 +397,6 @@ button {
         .sales-package-container {
           display: flex;
           flex-direction: row;
-
-
 
           .sales-package {
             display: flex;
@@ -616,7 +613,7 @@ button {
       display: flex;
       margin-bottom: 10px;
 
-      &.red-text{
+      &.red-text {
         font-size: 13px;
         height: 30px;
         color: $red-color;
@@ -755,6 +752,7 @@ button {
           height: 35px;
           .Select-value {
             line-height: 34px !important;
+            font-weight: bold;
           }
           .Select-input {
             height: 33.5px;
@@ -822,12 +820,12 @@ button {
           }
         }
 
-        .sales-package-table{
+        .sales-package-table {
           @extend %sales-package-table;
           display: table-row !important;
           overflow: auto;
           height: 250px;
-          .sales-package-container{
+          .sales-package-container {
             display: table !important;
             height: 50px !important;
             width: 100%;
@@ -1128,7 +1126,7 @@ button {
       &.required {
         border-color: $red-color;
 
-        &::placeholder{
+        &::placeholder {
           color: $red-color;
         }
       }
@@ -1617,8 +1615,7 @@ button {
   }
 }
 
-
-%sales-package-table{
+%sales-package-table {
   display: table;
   border-collapse: separate;
   border-spacing: 0 5px;
@@ -1628,37 +1625,37 @@ button {
     max-width: inherit;
   }
 
-  .sales-package-container{
+  .sales-package-container {
     display: table-row;
     height: 45px;
 
-    & .sales-cell{
+    & .sales-cell {
       width: auto;
       display: table-cell;
       cursor: default;
       border: 1px solid $border-color-1;
       vertical-align: middle;
 
-      div{
+      div {
         display: inline-block;
       }
 
-      &.bid, &.license{
+      &.bid, &.license {
         width: 40px;
         border-left: none;
         border-right: none;
         text-align: center;
       }
 
-      &.bid{
+      &.bid {
         border-right: 1px solid $border-color-1;
       }
 
-      &.name{
+      &.name {
         border-right: none;
         padding-left: 10px;
       }
-      &.fee{
+      &.fee {
         text-align: right;
         border-left: none;
         border-right: none;
@@ -1668,7 +1665,7 @@ button {
         white-space: nowrap;
       }
 
-      &.buttons{
+      &.buttons {
         width: 100px;
         text-align: left;
         border: none;
@@ -1678,25 +1675,27 @@ button {
         }
       }
 
-      img{
+      img {
         width: 23px;
         height: 23px;
       }
     }
   }
 }
-.align-to-right{
+
+.align-to-right {
   text-align: right;
 }
 
-.static-page-container{
+.static-page-container {
   max-width: 400px;
   margin: 20px auto;
   input[type=submit] {
     margin: 0;
   }
 }
-.static-page-text-container{
+
+.static-page-text-container {
   max-width: 800px;
   margin: 20px auto;
 }
