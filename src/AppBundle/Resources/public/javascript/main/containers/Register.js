@@ -16,7 +16,6 @@ class Register extends React.Component {
             loading : false,
             updatingUser : false,
             editCompanyInfo : false,
-            editCompanyNameDisabled : true,
             user : {}
         };
     }
@@ -27,20 +26,17 @@ class Register extends React.Component {
         const { match } = this.props;
 
         let activationCode = match.params.activationCode;
-        let editCompanyNameDisabled = true;
 
         ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done(user=>{
             if (user) {
                 user.activationCode = activationCode;
                 if (!user.company) {
-                    editCompanyNameDisabled = false;
                     user.company = {country:{}};
                 }
             }
             this.setState({
                 loading:false,
                 user : user,
-                editCompanyNameDisabled: editCompanyNameDisabled
             });
         });
 
@@ -116,7 +112,7 @@ class Register extends React.Component {
 
         const {history, match, location} = this.props;
 
-        const { loading, editCompanyInfo, updatingUser, password, updated, terms, privacy } = this.state;
+        const { loading, updatingUser, password, updated, terms, privacy } = this.state;
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;

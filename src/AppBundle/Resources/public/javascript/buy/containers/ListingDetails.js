@@ -173,7 +173,10 @@ class ListingDetails extends React.Component {
                         <input
                             type={"text"}
                             style={inputStyle}
-                            disabled={true}
+                            onChange={(e) => {
+                                company.legalName = e.target.value;
+                                this.setState({company});
+                            }}
                             value={company.legalName}/>
                     </div>
 

@@ -14,4 +14,12 @@ export const getDefaultRightsPackage = () => {
         type: commonTypes.GET_DEFAULT_RIGHTS_PACKAGE,
         defaultRightsPackage
     };
+};
+
+
+export const setTotalCountries = totalCountries => {
+    return {
+        type: commonTypes.SET_TOTAL_COUNTRIES,
+        totalCountries
+    };
 }

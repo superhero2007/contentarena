@@ -735,8 +735,8 @@ class ContentService
             $extraData = $content->getExtraData();
             $sData = [];
             foreach ($data->seasons as $key => $seasonData) {
-                $startDate = $seasonData->customStartDate ? $seasonData->customStartDate : $seasonData->startDate;
-                $endDate = $seasonData->customEndDate ? $seasonData->customEndDate : $seasonData->endDate;
+                $startDate = isset($seasonData->customStartDate) ? $seasonData->customStartDate : $seasonData->startDate;
+                $endDate = isset($seasonData->customEndDate) ? $seasonData->customEndDate : $seasonData->endDate;
 
                 if ($startDate && $endDate) {
                     $sData[$seasonData->externalId] = array(
