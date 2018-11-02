@@ -338,7 +338,7 @@
                                     {% if content.fixturesBySeason[loop.index0] is defined %}
                                         {% for round in content.fixturesBySeason[loop.index0]  %}
                                             <div class="license-item-content ">
-                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y - H:i", "UTC") }} UTC {% endif %}
+                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y - H:i", "CET") }} UTC {% endif %}
                                             </div>
                                         {% endfor %}
                                     {% endif %}
@@ -1308,12 +1308,12 @@
                         {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
                             {{ content.owner.fullName }}
                             {% if bid.sellerSignatureDate is defined and bid.sellerSignatureDate is not null%}
-                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i", "UTC") }} UTC
+                                {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i", "CET") }} UTC
                             {% endif %}
                         {% elseif bid is defined and bid.sellerSignature is defined and bid.sellerSignature is null and content.signature is defined and bid.status.name == "APPROVED"  %}
                             {{ content.owner.fullName }}
                             {% if content.sellerSignatureDate is defined and content.sellerSignatureDate is not null%}
-                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i", "UTC") }} UTC
+                                {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i", "CET") }} UTC
                             {% endif %}
                         {% endif %}
                     </td>
@@ -1321,7 +1321,7 @@
                         {% if bid is defined and bid.signature is not null%}
                             {{ bid.buyerUser.fullName }}
                             {% if bid.buyerSignatureDate is defined and bid.buyerSignatureDate is not null%}
-                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i", "UTC") }} UTC
+                                {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i", "CET") }} UTC
                             {% endif %}
                         {% endif %}
                     </td>

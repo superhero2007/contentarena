@@ -30,6 +30,7 @@ security:
         - { path: ^/v1/auth/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user/code, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user/activate, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/search/countries/all, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/generalterms, role: IS_AUTHENTICATED_ANONYMOUSLY }

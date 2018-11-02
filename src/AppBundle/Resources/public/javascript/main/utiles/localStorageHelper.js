@@ -1,8 +1,8 @@
 import localStorageEnums from '../constants/localStorageEnums';
+import store from '../../main/store';
 
 class LocalStorageClass {
     constructor() {
-        this.worldwideCountries = 242;
     }
 
     getRightsCheckboxSelected() {
@@ -44,8 +44,9 @@ class LocalStorageClass {
     getAllCountries() {
         const countriesFromStorage = localStorage.getItem(localStorageEnums.TERRITORIES) &&
             JSON.parse(localStorage.getItem(localStorageEnums.TERRITORIES));
+        const worldwideCountries = store.getState().common.totalCountries;
 
-        return countriesFromStorage && countriesFromStorage.length === this.worldwideCountries;
+        return countriesFromStorage && countriesFromStorage.length === worldwideCountries;
     }
 
     getExclusive () {

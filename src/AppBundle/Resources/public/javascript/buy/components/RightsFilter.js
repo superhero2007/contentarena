@@ -16,7 +16,8 @@ class RightsFilter extends React.Component {
     constructor(props) {
         super(props);
 
-        this.worldwideCountries = 242; // todo: should be global constant
+        this.worldwideCountries = props.totalCountries;
+
     }
 
     componentDidMount() {
@@ -216,6 +217,7 @@ RightsFilter.contextTypes = {
 
 
 const mapStateToProps = state => {
+    state.filter.totalCountries = state.common.totalCountries;
     return state.filter
 };
 

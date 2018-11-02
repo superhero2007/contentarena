@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
-import {getDefaultRightsPackage} from "./actions/commonActions";
+import {getDefaultRightsPackage, setTotalCountries} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
 
 const fakeAuth = {
@@ -143,16 +143,19 @@ class AuthRouter extends React.Component {
 
         if (props.loggedUser) fakeAuth.authenticate(()=>{});
 
+        console.log(props);
+
         this.state = {
             user : props.loggedUserData !== "" ? JSON.parse(props.loggedUserData) : {}
         };
     }
 
     componentWillMount() {
-        const {loggedUserData} = this.props;
+        const {loggedUserData, totalCountries} = this.props;
         this.props.loadUserData(loggedUserData);
         this.props.getDefaultRightsPackage();
         this.props.setLanguage("en");
+        this.props.setTotalCountries(Number(totalCountries));
     }
 
     componentWillReceiveProps(nextProps){
@@ -219,6 +222,7 @@ const mapDispatchToProps = dispatch => {
         }),
         updateProfile : profile =>dispatch(updateProfile(profile)),
         loadUserData : data => dispatch(loadUserData(data)),
+        setTotalCountries : totalCountries => dispatch(setTotalCountries(totalCountries)),
         getDefaultRightsPackage : () => dispatch(getDefaultRightsPackage()),
         setLanguage: lang => dispatch(setLanguage(lang))
     }

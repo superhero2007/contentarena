@@ -271,13 +271,13 @@ class ContentListingEventDetails extends React.Component {
                         </div>
                     )}
 
-                    {this.showProgramInfo() && PROGRAM_YEAR && PROGRAM_YEAR != "Year" && (
+                    {this.showProgramInfo() && PROGRAM_YEAR && (
                         <div className="event">
                             <div className="event-icon">
                                 {seasonReleaseIcon}
                             </div>
                             <div className="event-text">
-                                Release year: {PROGRAM_YEAR}
+                                Release year: {PROGRAM_YEAR === "Year" && "Not available"} {PROGRAM_YEAR !== "Year" && PROGRAM_YEAR}
                             </div>
                         </div>
                     )}

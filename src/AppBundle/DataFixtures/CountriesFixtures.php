@@ -865,13 +865,13 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
     "name": "Armenia",
     "country_code": "ARM",
     "region": "Asia",
-    "region_code": 142
+    "region_code": 150
   },
   {
     "name": "Azerbaijan",
     "country_code": "AZE",
     "region": "Asia",
-    "region_code": 142
+    "region_code": 150
   },
   {
     "name": "Bahrain",
@@ -913,13 +913,13 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
     "name": "Cyprus",
     "country_code": "CYP",
     "region": "Asia",
-    "region_code": 142
+    "region_code": 150
   },
   {
     "name": "Georgia",
     "country_code": "GEO",
     "region": "Asia",
-    "region_code": 142
+    "region_code": 150
   },
   {
     "name": "Hong Kong",
@@ -973,7 +973,7 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
     "name": "Kazakhstan",
     "country_code": "KAZ",
     "region": "Asia",
-    "region_code": 142
+    "region_code": 150
   },
   {
     "name": "Korea (Democratic People\'s Republic of)",
@@ -1529,26 +1529,81 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
   }
 ]');
 
+        $countriesToAdd = array(
+            array("Wake Island", "WAK", "Oceania"),
+            array("Clipperton Island", "PYF", "Americas"),
+            array("Eswatini", "SWZ", "Africa"),
+            array("South Georgia and the South Sandwich Islands", "SGS", "Americas")
+        );
+        $countriesToUpdate = array(
+            array("Turkey", "TUR", "Europe")
 
-        foreach ( $test as $item ){
+        );
+        $countriesToRemove = array(
+            "Faroe Islands",
+            "Gibraltar",
+            "Swaziland",
+            "Guernsey",
+            "Holly See",
+            "French Polynesia",
+            "Isle of Man",
+            "Jersey",
+            "Svalbard and Jan Mayen",
+            "Åland Islands",
+            "Hong Kong",
+            "Macao",
+            "Mayotte",
+            "Western Sahara"
 
-            $country = $manager->getRepository("AppBundle:Country")->findOneBy( array('name' => $item->name ));
+        );
+
+        foreach ($countriesToRemove as $item){
+            $country = $manager->getRepository("AppBundle:Country")->findOneBy( array('name' => $item ));
+
+            if ( $country != null ){
+                $manager->remove($country);
+            }
+        }
+
+        $manager->flush();
+
+        foreach ($countriesToAdd as $item){
+            $country = $manager->getRepository("AppBundle:Country")->findOneBy( array('name' => $item[0] ));
 
             if ( $country == null ){
 
                 $territory = $manager->getRepository("AppBundle:Territory")
-                    ->findOneBy( array('name' => $item->region ));
+                    ->findOneBy( array('name' => $item[2] ));
 
                 if ( $territory != null ){
                     $country = new Country();
-                    $country->setName($item->name);
-                    $country->setCountryCode($item->country_code);
+                    $country->setName($item[0]);
+                    $country->setCountryCode($item[1]);
                     $country->setTerritory($territory);
                     $manager->persist($country);
                 }
             }
-
         }
+
+        $manager->flush();
+
+        foreach ($countriesToUpdate as $item){
+            $country = $manager->getRepository("AppBundle:Country")->findOneBy( array('name' => $item[0] ));
+
+            if ( $country != null ){
+
+                $territory = $manager->getRepository("AppBundle:Territory")
+                    ->findOneBy( array('name' => $item[2] ));
+
+                if ( $territory != null ){
+                    $country->setName($item[0]);
+                    $country->setCountryCode($item[1]);
+                    $country->setTerritory($territory);
+                    $manager->persist($country);
+                }
+            }
+        }
+
 
         $manager->flush();
     }

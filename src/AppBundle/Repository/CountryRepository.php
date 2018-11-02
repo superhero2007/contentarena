@@ -28,4 +28,16 @@ class CountryRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countAll()
+    {
+        return intval($this->createQueryBuilder('c')
+            ->select('COUNT(c)')
+            ->getQuery()->getSingleScalarResult());
+    }
 }
