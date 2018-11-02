@@ -112,7 +112,7 @@ class Register extends React.Component {
 
         const {history, match, location} = this.props;
 
-        const { loading, updatingUser, password, updated, terms, privacy } = this.state;
+        const { loading, updatingUser, password, updated, terms, privacy, passwordCheck } = this.state;
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
@@ -336,6 +336,11 @@ class Register extends React.Component {
                             {!this.validate(password).special&& <img src={cancelIcon}/>}
                             {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
                         </div>
+                        {passwordCheck && <div>
+                            {passwordCheck === password && <img src={blueCheckIcon}/>}
+                            {passwordCheck !== password && <img src={cancelIcon}/>}
+                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
+                        </div>}
 
                     </div>}
 
