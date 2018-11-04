@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Moment from "moment/moment";
-import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {goTo, limitText} from "../../main/actions/utils";
 import {
     blueCheckIcon, clockRoundIcon, exclamationRoundIcon, expiredIcon, playIcon, soldIcon,
@@ -20,15 +19,12 @@ class BoardListing extends React.Component{
             showArchiveConfirm : false,
             showDeactivateConfirm : false
         };
-        this.clockIcon = assetsBaseDir + "app/images/clock.png";
-        this.exclamationIcon = assetsBaseDir + "app/images/exclamation_round.png";
-        this.playIcon = assetsBaseDir + "app/images/play.png";
+
         this.bucketIcon = assetsBaseDir + "app/images/bucket_blue.png";
         this.editIcon = assetsBaseDir + "app/images/edit.png";
         this.duplicateIcon = assetsBaseDir + "app/images/duplicate.png";
         this.viewIcon = assetsBaseDir + "app/images/search.png";
         this.submitIcon = assetsBaseDir + "app/images/submit.png";
-        this.dotsIcon = assetsBaseDir + "app/images/dots.png";
         this.deactivateIcon = assetsBaseDir + "app/images/close_red.png";
     }
 
@@ -269,7 +265,7 @@ class BoardListing extends React.Component{
                 </div>}
 
                 <div  className="menu-icon" onClick={this.toggleOptions}>
-                    <img src={this.dotsIcon} />
+                    <i className="fa fa-bars" />
                 </div>
                 <div className={"name"} title={name}>
                     { name }
