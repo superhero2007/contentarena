@@ -545,6 +545,18 @@ class ListingDetails extends React.Component {
         return titleMap[type] || '';
     };
 
+    getButtonTooltip = (type) => {
+        if (!type) return '';
+
+        const titleMap = {
+            'BUY_NOW': this.context.t("CHECKOUT_BUY_NOW"),
+            'PLACE_BID': this.context.t("CHECKOUT_PLACE_BID"),
+            'RAISE_BID': this.context.t("CHECKOUT_RAISE_BID")
+        };
+
+        return titleMap[type] || '';
+    };
+
     isBidValid = () => {
         const { bid, minimumBid} = this.state;
         const validateMinimumBid = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(bid) > parseFloat(minimumBid) : parseFloat(bid) >= parseFloat(minimumBid);
@@ -856,7 +868,7 @@ class ListingDetails extends React.Component {
                             />
 
                             {!spinner
-                                ? (<button className="standard-button" onClick={this.placeBid} disabled={!this.isPackageValid()}>
+                                ? (<button className="standard-button" onClick={this.placeBid} disabled={!this.isPackageValid()} title={this.getButtonTooltip(checkoutType)}>
                                     {this.getTitlePrefix(checkoutType)}</button>)
                                 : <i className="fa fa-cog fa-spin" />}
                         </div>

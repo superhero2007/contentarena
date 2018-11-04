@@ -300,7 +300,7 @@ class CommercialSalesBundle extends React.Component{
                                     && <img onClick={()=>{
                                         viewLicenseBid(props.value.bid.customId)
                                 }} src={pdfIcon}
-                                title={this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />}
+                                title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />}
                                 {props.value.status === "APPROVED"
                                     && <img onClick={()=>{
                                         if (props.value.status === "APPROVED") {
