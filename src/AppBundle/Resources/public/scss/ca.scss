@@ -154,7 +154,6 @@ button {
     color: #4F4F4F;
     font-weight: 600;
     line-height: 48px;
-    margin-bottom: 20px;
   }
   .step-content-container {
     display: flex;
@@ -246,7 +245,16 @@ button {
       height: 37px;
       padding: 0;
     }
+    .base-container {
+      max-width: 872px;
+    }
     .base-input {
+      padding-bottom: 5px;
+      border-bottom: 4px solid $border-color-1;
+      display: flex;
+      margin-bottom: 20px;
+      position: relative;
+      max-width: 872px;
       &.new-fixture {
         .date-wrapper {
           flex: 210px 0 0;
@@ -258,12 +266,6 @@ button {
           padding: 0 5px 0 0;
         }
       }
-      padding-bottom: 5px;
-      border-bottom: 4px solid $border-color-1;
-      display: flex;
-      margin-bottom: 20px;
-      position: relative;
-      max-width: 872px;
       .fa-edit {
         position: absolute;
         right: 3px;
@@ -349,7 +351,7 @@ button {
         border-left: 1px solid #D4D8DE;
         border-right: 1px solid #D4D8DE;
         margin: 0;
-        padding: 10px;
+        padding: 10px 20px;
       }
       textarea {
         width: auto;
@@ -358,6 +360,7 @@ button {
         font-family: "Open Sans", sans-serif;
         outline: none;
         border: 1px solid #D4D8DE;
+        padding: 10px 20px;
       }
     }
     .small-select {
@@ -695,7 +698,7 @@ button {
     display: flex;
     align-items: baseline;
     border-bottom: 4px solid #D4D8DE;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     padding-bottom: 3px;
     position: relative;
     max-width: 515px;

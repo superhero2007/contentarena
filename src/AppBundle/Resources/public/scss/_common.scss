@@ -286,6 +286,13 @@ i.fa.ca-tooltip {
   justify-content: center !important;
 }
 
+.justify-content-end {
+  justify-content: flex-end;
+}
+.justify-content-start {
+  justify-content: flex-start;
+}
+
 .d-inline-flex {
   display: flex !important;
 }
@@ -308,6 +315,14 @@ i.fa.ca-tooltip {
 
 .text-nowrap {
   white-space: nowrap !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .ca-tabs {

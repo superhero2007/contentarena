@@ -526,7 +526,7 @@ class SellFormStep1 extends React.Component {
 
                 {!this.state.showSearch && <div className="step-content-container">
 
-                    <div className="step-title" style={{marginBottom: 0}}>{this.context.t("CL_STEP1_LABEL_EVENT_TITLE")}</div>
+                    <div className="step-title">{this.context.t("CL_STEP1_LABEL_EVENT_TITLE")}</div>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
                         {this.context.t("CL_STEP1_DESCRIPTION_1")}
@@ -549,12 +549,18 @@ class SellFormStep1 extends React.Component {
                         })
                     }
 
-                    {this.state.sportSelectors.length === 1 && <div className="step-item-description" style={{marginTop: "-15px", maxWidth: 872, display: 'flex'}}>
-                        <div style={{width: 615, textAlign: 'right'}}>{this.context.t("CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION")}</div>
-                        <button className={"standard-button link-button"} onClick={this.addSportSelector} style={{marginLeft: 'auto'}}>
-                            {this.context.t("CL_STEP1_FORM_ADD_SPORT")}
-                        </button>
-                    </div>}
+                    {this.state.sportSelectors.length === 1 && (
+                        <div className="base-container">
+                            <div className="step-item-description d-flex justify-content-end" style={{marginTop:0}}>
+                            <span style={{marginRight:15}}>
+                                {this.context.t("CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION")}
+                            </span>
+                                <button className={"standard-button link-button"} onClick={this.addSportSelector}>
+                                    {this.context.t("CL_STEP1_FORM_ADD_SPORT")}
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
                     {this.state.sportSelectors.length === 1 && !this.hasCustomCategory() &&
                     <div className="base-input">
@@ -621,7 +627,7 @@ class SellFormStep1 extends React.Component {
 
                     { ( this.state.loadingSeasons || this.state.loadingSchedule ) && <div><i className="fa fa-cog fa-spin"/></div>}
 
-                    <div className="step-title" style={{marginBottom: 0}}>{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}</div>
+                    <div className="step-title">{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}</div>
 
                     <div className="step-item-description" style={{marginTop: 0}}>
                         {this.context.t("CL_STEP1_LISTING_DETAILS_TEXT")}

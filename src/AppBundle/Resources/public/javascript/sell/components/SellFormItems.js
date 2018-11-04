@@ -86,7 +86,7 @@ export class SportSelector extends React.Component {
     render(){
         const {sports, index} = this.props;
         return (
-            <div style={{maxWidth: 872}}>
+            <div className="base-container">
                 <div className="base-input">
                     <label>
                         {this.context.t("CL_STEP1_LABEL_SPORT")}
@@ -111,13 +111,19 @@ export class SportSelector extends React.Component {
                     }
 
                     { ( this.props.isCustom || this.props.showClose ) &&
-                        <button className="standard-button" onClick={this.props.remove}>
-                            <i className="fa fa-close"/>
-                        </button>
+                    <button className="standard-button" onClick={this.props.remove}>
+                        <i className="fa fa-close"/>
+                    </button>
                     }
                 </div>
-                {this.props.showAddNew &&
-                <button style={{marginBottom: "25px", marginLeft: 'auto'}} className={"standard-button link-button"} onClick={this.props.addSportSelector}>{this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}</button> }
+                {this.props.showAddNew && (
+                    <button style={{marginBottom: "20px", marginLeft: 'auto'}}
+                            className={"standard-button link-button"}
+                            onClick={this.props.addSportSelector}
+                    >
+                        {this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
+                    </button>
+                )}
             </div>
         )
     }

@@ -10,7 +10,8 @@ CaDatePicker.defaultProps = {
     className: '',
     showYearDropdown: true,
     scrollableYearDropdown: true,
-    yearDropdownItemNumber: 50
+    yearDropdownItemNumber: 50,
+    fixedHeight: true
 };
 
 CaDatePicker.propTypes = {
