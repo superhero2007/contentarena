@@ -584,6 +584,10 @@ msgid "CL5_LICENSE_AGREEMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "CL_STEP1_FIXTURE_TIME_CAPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
 msgid "Fixture"
 msgstr ""
 
@@ -592,15 +596,19 @@ msgid "Enter fixture"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "Add Time"
+msgid "CL_STEP1_FIXTURE_DATE_LABEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "Add date"
+msgid "CL_STEP1_FIXTURE_DATE_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "All fixture times are UTC; please ensure to use this time standard and not the local event time"
+msgid "CL_STEP1_FIXTURE_TIME_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "CL_STEP1_FIXTURE_TIME_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
@@ -1053,7 +1061,6 @@ msgstr ""
 msgid "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION"
 msgstr ""
 
-
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
 msgstr ""
@@ -1164,6 +1171,11 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_4"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1418,10 +1430,6 @@ msgstr ""
 msgid "SETTINGS_LINKS_BUTTON_PRIVACY"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/manage/containers/Watchlist.js
 msgid "WATCHLIST_EMPTY_MESSAGE"
 msgstr ""
@@ -1508,6 +1516,10 @@ msgid "license period"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+msgid "CL3_EDIT_LICENSE_PERIOD_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 msgid "CL_STEP3_LICENSE_POPUP_START"
 msgstr ""
 
@@ -1522,10 +1534,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "CL3_EDIT_LICENSE_PERIOD_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js

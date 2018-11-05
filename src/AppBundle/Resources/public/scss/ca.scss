@@ -255,17 +255,63 @@ button {
       margin-bottom: 20px;
       position: relative;
       max-width: 872px;
-      &.new-fixture {
-        .date-wrapper {
-          flex: 210px 0 0;
-          padding-left: 10px;
-        }
-        .icon {
-          font-size: 21px;
-          color: #4F4F4F;
-          padding: 0 5px 0 0;
+      &.fixture-wrapper{
+        display: block;
+
+        .fixture-item{
+          display: block;
+          width: 100%;
+
+          .fixture-row{
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            &.select-date-time{
+              padding: 5px 0;
+              margin-right: 50px;
+              justify-content: flex-end;
+
+              span{
+                font-weight: bold;
+                padding-right: 15px;
+              }
+
+              .select-date, .select-time{
+                display: flex;
+                flex-direction: row;
+                align-items: baseline;
+              }
+              .select-date{
+                input { width: 120px; }
+                margin-right: 15px;
+              }
+              .select-time{
+                margin-left: 10px;
+                input { width: 100px; }
+              }
+            }
+
+            .new-fixture{
+              flex: 0 1 100%;
+            }
+            .fixture-actions{
+              display: flex;
+              flex: 0 0 50px;
+
+              img{
+                width: 17px;
+                height: 17px;
+                margin: 0 5px;
+
+                cursor: pointer;
+              }
+            }
+          }
         }
       }
+
       .fa-edit {
         position: absolute;
         right: 3px;

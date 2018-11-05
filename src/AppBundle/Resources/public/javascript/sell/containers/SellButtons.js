@@ -101,6 +101,17 @@ class SellButtons extends React.Component {
         return message;
     };
 
+    checkFixturesValidity = (seasons) => {
+        let getAllFixtures = [];
+        seasons.forEach(season => {
+            if (season.fixtures && season.fixtures.length){
+                getAllFixtures = [...getAllFixtures, ...season.fixtures];
+            }
+        });
+
+        return getAllFixtures.length ? getAllFixtures.every(fixtures => fixtures.name.length) : true;
+    };
+
     programIsValid = () => {
         const {
             rightsPackage,
@@ -153,14 +164,17 @@ class SellButtons extends React.Component {
     };
 
     step1Enabled = () => {
-        const {sports, name} = this.props;
-        return sports.length > 0 && name && name !== "";
+        const {sports, name, seasons} = this.props;
+        const isFixturesValid = seasons.length ? this.checkFixturesValidity(seasons) : true;
+        return sports.length > 0 && name && isFixturesValid;
     };
 
     step1GetMessages = () => {
-        const {sports, name} = this.props;
+        const {sports, name, seasons} = this.props;
         let message = "Please complete missing information\n";
+        const isFixturesValid = seasons.length ? this.checkFixturesValidity(seasons) : true;
 
+        if ( !isFixturesValid ) message += "<br/>- Fixture name should not be empty.\n";
         if ( sports.length === 0 ) message += "<br/>- Select a sport.\n";
         if ( !name || name === "") message += "<br/>- Enter a name for the listing.";
 
@@ -170,7 +184,7 @@ class SellButtons extends React.Component {
     step2GetMessages = () => {
         const {programDescription, rightsPackage} = this.props;
         let message = "Please complete missing information\n";
-        let program = this.programIsValid();;
+        let program = this.programIsValid();
         if ( rightsPackage.length === 0 ) message += "<br/>- Select at least one right.\n";
         if ( !programDescription || programDescription.length < MIN_PROGRAM_DESC_LENGTH ) message += "<br/>- Program description must be at least " + MIN_PROGRAM_DESC_LENGTH + " characters length";
         if ( !program ) message += "<br/>-  Enter program information.";

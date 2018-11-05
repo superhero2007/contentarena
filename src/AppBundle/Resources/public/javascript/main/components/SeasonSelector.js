@@ -87,7 +87,7 @@ class SeasonSelector extends React.Component {
                     }
                 </div> }
 
-                { this.props.isCustom && activeSeason
+                {this.props.isCustom && activeSeason
                 && <NewSeason showClose={this.props.showClose}
                               onBlur={this.props.onBlur}
                               index={index}
@@ -117,7 +117,7 @@ class SeasonSelector extends React.Component {
                     </div>
                 )}
 
-                {activeSeason && activeSeason.fixtures && activeSeason.fixtures.length > 0 && <div>
+                {activeSeason && activeSeason.fixtures && activeSeason.fixtures.length > 0 && <div className="base-input fixture-wrapper">
                     {
                         activeSeason.fixtures.map( (fixture, i, list) => {
                             return <NewFixture
