@@ -704,7 +704,7 @@ class SalesPackageForm extends React.Component {
 
                                     {!hideButtons && <div className="sales-cell buttons">
                                         <img src={this.cancelIcon} onClick={() => {onRemove(i)}}/>
-                                        <img src={this.draftIcon} onClick={() => {this.editSalesPackage(salesPackage, i)}}/>
+                                        <i className="fa fa-edit" onClick={() => {this.editSalesPackage(salesPackage, i)}}/>
                                     </div>}
 
                                 </div>

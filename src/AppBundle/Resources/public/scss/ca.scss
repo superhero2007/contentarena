@@ -1642,6 +1642,13 @@ button {
         display: inline-block;
       }
 
+      .fa-edit {
+        padding: inherit;
+        color: #2AAAEC;
+        cursor: pointer;
+        margin: 3px 18px 0 0;
+      }
+
       &.bid, &.license {
         width: 40px;
         border-left: none;
