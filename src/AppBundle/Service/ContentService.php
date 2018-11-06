@@ -1065,6 +1065,7 @@ class ContentService
             $name = ( isset($sportData->name) && $sportData->name != "" ) ? $sportData->name : $sportData->value;
             $sport->setName($name);
             $this->em->persist($sport);
+            sleep(1);
             $time = new \DateTime();
             if (isset($sportData->custom)) {
                 $sport->setExternalId("ca:sport:".$time->getTimestamp());
