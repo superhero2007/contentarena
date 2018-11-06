@@ -120,7 +120,7 @@ class SellButtons extends React.Component {
         return PROGRAM_NAME && PROGRAM_NAME !== "" &&
             PROGRAM_EPISODES && PROGRAM_EPISODES !== "" &&
             PROGRAM_DURATION && PROGRAM_DURATION !== "" &&
-            PROGRAM_TYPE !== "SELECT" &&
+            PROGRAM_TYPE && PROGRAM_TYPE !== "SELECT" &&
             editProgramDescriptionValidation;
     };
 
