@@ -9,7 +9,29 @@ import { formatMomentToServerFormat } from "@utils/time";
 class NewFixture extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            isDatePickerEnabled: !!props.date,
+            isDatePickerWithTimeEnabled: !!props.date ? isStartOfTheDay(props.date) : false,
+        };
     }
+
+    componentWillReceiveProps(nextProps) {
+        const { isDatePickerEnabled } = this.state;
+
+        if (nextProps.date && !isDatePickerEnabled ) {{
+            this.setState({
+                isDatePickerEnabled: true,
+                isDatePickerWithTimeEnabled: isStartOfTheDay(nextProps.date)
+            })
+        }}
+    }
+
+    enablePicker = (type) => {
+        const {id} = this.props;
+        this.setState({[type]:true});
+        setTimeout(()=> jQuery('.date-picker.id'+id).focus(),100);
+    };
 
     onDateSelected = (e) => {
         const { handleDate } = this.props;
@@ -17,26 +39,10 @@ class NewFixture extends Component {
         handleDate(formatted);
     };
 
-    getDatePicker = (placeHolder, isTimeOnly) => {
-        const { id, date } = this.props;
-
-        return <DatePicker
-            className={isTimeOnly ? `date-picker-${id}` : `time-picker-${id}`}
-            onChange={this.onDateSelected}
-            onChangeRaw={undefined}
-            placeholderText={placeHolder}
-            selected={date ? moment(date): undefined}
-            dateFormat={isTimeOnly ? TIME_FORMAT : DATE_FORMAT}
-            timeFormat={TIME_FORMAT}
-            showTimeSelect={isTimeOnly}
-            showTimeSelectOnly={isTimeOnly}
-            timeIntervals={15}
-            disabled={isTimeOnly && !date}
-            timeCaption={this.context.t("CL_STEP1_FIXTURE_TIME_CAPTION")} />
-    };
-
     render() {
-        const {onRemove, onAdd, onChange, value, showAdd } = this.props;
+        const { onRemove, onAdd, onChange, value, showAdd, id, date } = this.props;
+        const { isDatePickerEnabled, isDatePickerWithTimeEnabled } = this.state;
+
         return (
             <div className="fixture-item">
                 <div className="fixture-row">
@@ -56,20 +62,38 @@ class NewFixture extends Component {
                     </div>
                 </div>
 
-                <div className="fixture-row select-date-time">
-                    <div className="select-date">
-                        <span>{this.context.t("CL_STEP1_FIXTURE_DATE_LABEL")}</span>
-                        {this.getDatePicker(this.context.t("CL_STEP1_FIXTURE_DATE_PLACEHOLDER"), false)}
-                    </div>
-                    <div className="select-time">
-                        <span>{this.context.t("CL_STEP1_FIXTURE_TIME_LABEL")}</span>
-                        {this.getDatePicker(this.context.t("CL_STEP1_FIXTURE_TIME_PLACEHOLDER"), true)}
-                    </div>
-
+                <div className="fixture-row select-date-time-wrapper">
+                    {isDatePickerEnabled ? (
+                        <div className="datepicker-wrapper">
+                            {!isDatePickerWithTimeEnabled && (
+                                <a className="ca-link text-nowrap add-time" onClick={() =>this.enablePicker('isDatePickerWithTimeEnabled')}>
+                                    {this.context.t("Add Time")}
+                                </a>
+                            )}
+                            <DatePicker
+                                className={"date-picker id"+id}
+                                selected={(date) ? moment(date) : undefined}
+                                onChange={this.onDateSelected}
+                                onChangeRaw={undefined}
+                                timeIntervals={15}
+                                dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [UTC]` : DATE_FORMAT}
+                                placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT}` : DATE_FORMAT}
+                                timeFormat={TIME_FORMAT}
+                                showTimeSelect={isDatePickerWithTimeEnabled} />
+                        </div>
+                    ) : (
+                        <a className="ca-link text-nowrap" onClick={() => this.enablePicker('isDatePickerEnabled')}>
+                            {this.context.t("Add date")}
+                        </a>
+                    )}
                 </div>
             </div>
         )
     }
+};
+
+const isStartOfTheDay = (date) => {
+    return moment(date).startOf('day').valueOf() !== moment(date).valueOf()
 };
 
 NewFixture.contextTypes = {

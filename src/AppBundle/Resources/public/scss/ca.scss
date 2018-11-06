@@ -268,28 +268,23 @@ button {
             justify-content: flex-start;
             align-items: center;
 
-            &.select-date-time{
+            &.select-date-time-wrapper{
               padding: 5px 0;
               margin-right: 50px;
               justify-content: flex-end;
 
-              span{
-                font-weight: bold;
-                padding-right: 15px;
+              a{
+                &.add-time{ padding-right: 5px; }
+                color: $font-color-7;
               }
 
-              .select-date, .select-time{
+              .datepicker-wrapper{
                 display: flex;
-                flex-direction: row;
                 align-items: baseline;
-              }
-              .select-date{
-                input { width: 120px; }
-                margin-right: 15px;
-              }
-              .select-time{
-                margin-left: 10px;
-                input { width: 100px; }
+                input {
+                  border: 1px solid $grey-color;
+                  margin: 0;
+                }
               }
             }
 

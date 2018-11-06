@@ -138,9 +138,17 @@
         border-bottom: 1px solid $font-color-5;
 
         .payment-installment, .payment-percentage, .payment-date{
+          width: 33%;
           color: $font-color-5;
           font-size: 14px;
         }
+
+        .payment-percentage{
+          text-align: left;
+          position: relative;
+          left: 10%;
+        }
+        .payment-date{ text-align: right; }
 
         .payment-installment, .payment-percentage{
           font-weight: bold;

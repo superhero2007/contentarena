@@ -827,7 +827,7 @@ class ListingDetails extends React.Component {
                         <div className="bid-payment-details">
                             <header>{this.context.t("Payment details")}</header>
                             <div className="bid-payment-table">
-                                {selectedPackage.installments && selectedPackage.installments.map((installment, index) => {
+                                {selectedPackage.installments.length && selectedPackage.installments.map((installment, index) => {
                                     return <div key={`installment-${index}`} className="payment-row">
                                         <div className="payment-installment">{this.ordinal_suffix_of(++index)} {this.context.t("installment")}</div>
                                         <div className="payment-percentage"><i className="fa fa-angle-right" />{` ${installment.value}%`}</div>
