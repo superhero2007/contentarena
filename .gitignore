@@ -29,3 +29,4 @@
 /admin-locales/en.po
 /src/AppBundle/Resources/public/data/translations.json
 /web/admin-uploads
+/web/app.php

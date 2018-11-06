@@ -64,7 +64,7 @@ class SendEmail extends ContainerAwareCommand
         $listingRepository = $entityManager->getRepository('AppBundle:Content');
         $listingStatusRepository = $entityManager->getRepository('AppBundle:ListingStatus');
         $type = $input->getArgument('type');
-        $user = $userRepository->findOneBy(array("username"=>"juancruztalco@gmail.com"));
+        $user = $userRepository->findOneBy(array("email"=>"juancruztalco@gmail.com"));
         $approvedStatus = $listingStatusRepository->findOneBy(array("name"=>"APPROVED"));
         $listing = $listingRepository->findOneBy(
             array('status'=>$approvedStatus),
