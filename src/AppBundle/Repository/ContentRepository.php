@@ -444,20 +444,18 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
      * @param User $user
      * @return array
      */
-    public function getExpiredByDate($user){
+    public function getExpiredByDate(){
 
         $now = date('Y-m-d H:i:s');
 
         return $this->createQueryBuilder('c')
             ->innerJoin("c.status", "status")
-            ->where('c.company = :company')
-            ->andWhere(':now > c.expiresAt')
+            ->where(':now > c.expiresAt')
             ->andWhere('status.name != :archived')
             ->andWhere('status.name != :soldCopy')
             ->setParameter('now',$now)
             ->setParameter('archived',"ARCHIVED")
             ->setParameter('soldCopy',"SOLD_COPY")
-            ->setParameter('company',$user->getCompany())
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();
     }
