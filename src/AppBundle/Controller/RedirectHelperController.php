@@ -46,13 +46,15 @@ class RedirectHelperController extends BaseController
         $bidId = $request->get("bidId");
         $bid = $bidService->getBidById($bidId);
         $customId = '';
+        $buyerCompany = $bid->getBuyerUser()->getCompany();
+        $ownerCompany = $user->getCompany();
 
         if ($bid) {
-            $thread = $messageService->getThreadByListingAndSeller($bid->getContent(), $bid->getBuyerUser(), $user->getCompany());
+            $thread = $messageService->getThreadByListing($bid->getContent(), $buyerCompany, $ownerCompany);
             if ($thread) {
                 $customId = $thread->getCustomId();
             } else {
-                $thread = $messageService->createThread($bid->getContent(), $user);
+                $thread = $messageService->createThread($bid->getContent(), $bid->getBuyerUser());
                 $customId = $thread->getCustomId();
             }
         }

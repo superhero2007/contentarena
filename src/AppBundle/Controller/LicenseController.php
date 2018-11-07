@@ -206,6 +206,7 @@ class LicenseController extends Controller
      * @Route("/license/bid/{customId}", name="contractBid")
      * @param Request $request
      * @param ContentService $contentService
+     * @return BinaryFileResponse
      * @throws \exception
      */
     public function contractBid(Request $request, ContentService $contentService){
