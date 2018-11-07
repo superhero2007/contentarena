@@ -310,7 +310,7 @@ class ApiController extends BaseController
                     'hostUrl' => $this->container->getParameter("carena_host_url")
                 );
 
-                $this->mergeAndSave($content, $viewElements);
+                $this->saveLicenseAgreement($content, $viewElements);
                 $emailService->dealClosed($content, $bid);
                 $emailService->closedDealBuyer($content, $bid);
             } else {
@@ -331,7 +331,7 @@ class ApiController extends BaseController
      * @param $viewElements
      * @throws \exception
      */
-    public function mergeAndSave($content, $viewElements ){
+    public function saveLicenseAgreement($content, $viewElements, $override = true ){
 
         /* @var Content $content  */
         /* @var Bid $bid  */
@@ -526,7 +526,7 @@ class ApiController extends BaseController
             );
 
             try {
-                $this->mergeAndSave($content, $viewElements);
+                $this->saveLicenseAgreement($content, $viewElements);
                 $emailService->bidAccepted($content, $bid);
                 $emailService->dealClosed($content, $bid);
                 if ($soldOut) $emailService->soldOut($content);

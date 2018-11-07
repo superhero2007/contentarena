@@ -28,14 +28,15 @@ class Messages extends React.Component {
 
         ContentArena.ContentApi.getThreads().done(threads=>{
 
-            let selectedThread;
+            let selectedThread, customId = this.props.match.params.customId;
 
-            if (this.props.match.params.customId){
+            threads = threads.filter(t=>t.lastMessageContent !== undefined || (customId && t.customId === customId));
+
+            if (customId){
                 selectedThread = threads.filter(t=>t.customId === this.props.match.params.customId)[0];
             } else if (threads.length > 0) {
                 selectedThread =  threads[0] ;
             }
-
 
             this.setState({
                 threads : threads,
