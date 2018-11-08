@@ -39,6 +39,10 @@ class NewFixture extends Component {
         handleDate(formatted);
     };
 
+    handleDateChangeRaw = (e) => {
+        e.preventDefault();
+    };
+
     render() {
         const {onRemove, onAdd, onChange, value, showAdd, date, id} = this.props;
         const {isDatePickerEnabled, isDatePickerWithTimeEnabled} = this.state;
@@ -61,12 +65,12 @@ class NewFixture extends Component {
                                 className={"date-picker id"+id}
                                 selected={(date) ? moment(date) : undefined}
                                 onChange={this.onDateSelected}
-                                onChangeRaw={undefined}
                                 timeIntervals={15}
                                 dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [UTC]` : DATE_FORMAT}
                                 placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT}` : DATE_FORMAT}
                                 timeFormat={TIME_FORMAT}
                                 showTimeSelect={isDatePickerWithTimeEnabled}
+                                onChangeRaw={this.handleDateChangeRaw}
                             />
 
                             {!isDatePickerWithTimeEnabled && (

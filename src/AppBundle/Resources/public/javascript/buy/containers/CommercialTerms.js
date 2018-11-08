@@ -142,14 +142,14 @@ class CommercialTerms extends React.Component {
                                                 <div className="name">
                                                     {fixture.name}
                                                 </div>
-                                                <div className="actions">
+                                                {fixture.date && <div className="actions">
                                                     <div className="item">
                                                         <i className="fa fa-calendar icon" /> {Moment(fixture.date).format(DATE_FORMAT)}
                                                     </div>
                                                     <div className="item">
                                                         <i className="fa fa-clock-o icon" /> {Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
                                                     </div>
-                                                </div>
+                                                </div>}
                                             </div>
                                         ))}
                                     </div>
