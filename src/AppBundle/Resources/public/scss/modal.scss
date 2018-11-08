@@ -1,19 +1,31 @@
 @import "vars";
 @import "mixins";
 
+// remove second scroll
+.ReactModal__Body--open{
+  overflow: hidden !important;
+}
+// show modal scroll if necessary
+.ReactModal__Overlay{
+  height: 100%;
+  overflow: auto;
+}
+
+
 .ReactModal__Content.modal-wrapper{
   position: absolute;
   top: 50%;
   left: 50%;
   border: none;
   background: $modal-bg !important;
-  overflow: auto;
   border-radius: 5px;
   outline: none;
   padding: 20px;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   width: 650px;
+
+  max-height: 90%;
 
   &.wide{
     width: 920px;
@@ -80,6 +92,10 @@
 
   .modal-footer{
     padding: 25px;
+    background: $modal-bg;
+
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 
     display: flex;
     justify-content: center;

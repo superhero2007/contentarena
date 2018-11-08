@@ -650,7 +650,7 @@ button {
   }
   .left {
     float: left;
-    .modal-input {
+    .modal-input{
       display: flex;
       margin-bottom: 10px;
 
@@ -658,6 +658,17 @@ button {
         font-size: 13px;
         height: 30px;
         color: $red-color;
+      }
+      .radio-box{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        label{
+          display: inline;
+          min-width: 60px;
+          width: 60px;
+          padding-left: 5px;
+        }
       }
       label {
         float: left;

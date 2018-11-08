@@ -39,9 +39,11 @@ class SellFormStep2 extends React.Component {
         });
     };
 
-    handleCheckboxChange = () => {
+    handleCheckboxChange = (flag) => {
         const { changeAllEpisodeFlag, EDIT_PROGRAM_DESCRIPTION_OPTIONAL } = this.props;
-        changeAllEpisodeFlag(!EDIT_PROGRAM_DESCRIPTION_OPTIONAL);
+        if (flag !== EDIT_PROGRAM_DESCRIPTION_OPTIONAL) {
+            changeAllEpisodeFlag(flag);
+        }
     };
 
     updateRight = (rightsPackage) => {
@@ -151,14 +153,23 @@ class SellFormStep2 extends React.Component {
                         <label htmlFor="similar-length">
                             {this.context.t("LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC")}
                         </label>
-                        <input
-                            id="similar-length"
-                            className='ca-checkbox package-selector'
-                            type='checkbox'
-                            checked={EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
-                            onChange={this.handleCheckboxChange}
-                        />
-                        <div className="checkbox-custom" />
+
+                        <div className="radio-box">
+                            <input type="radio"
+                                   checked={EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
+                                   onChange={ e => { this.handleCheckboxChange(true)}}
+                                   id="edit-program-optional"
+                                   className="ca-radio package-selector"
+                            />
+                            <label htmlFor="edit-program-optional">{this.context.t("Yes")}</label>
+                            <input type="radio"
+                                   checked={!EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
+                                   onChange={ e => { this.handleCheckboxChange(false)}}
+                                   id="edit-program"
+                                   className="ca-radio package-selector"
+                            />
+                            <label htmlFor="edit-program">{this.context.t("No")}</label>
+                        </div>
 
                     </div>
                     {!EDIT_PROGRAM_DESCRIPTION_OPTIONAL && <div className="modal-input red-text">
