@@ -710,7 +710,6 @@ class PopupRight extends React.Component {
         let isMultipleValuesSelected = this.isMultipleValuesSelected(id,  rightsPackageFiltered);
         let displayedValue =  '';
 
-        console.log(rightsPackageFiltered)
 
         if (rightsPackageFiltered.length > 0 ){
             const firstPackage = rightsPackageFiltered[0];

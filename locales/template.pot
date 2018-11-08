@@ -746,6 +746,10 @@ msgid "CL_STEP2_RIGHT_DEFINITIONS_LT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "CL_STEP2_RIGHT_DEFINITIONS_LB"
 msgstr ""
 
