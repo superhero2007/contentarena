@@ -83,6 +83,18 @@ msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_BUY_NOW"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_PLACE_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_RAISE_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "MIN_BID"
 msgstr ""
 
@@ -415,6 +427,10 @@ msgid "COMMERCIAL_ACTIVITY_DECLINE_BID_ICON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
+msgid "COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT"
 msgstr ""
 
@@ -427,6 +443,7 @@ msgid "WATCHLIST_REMOVE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Yes"
 msgstr ""
 
@@ -584,10 +601,6 @@ msgid "CL5_LICENSE_AGREEMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "CL_STEP1_FIXTURE_TIME_CAPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
 msgid "Fixture"
 msgstr ""
 
@@ -596,19 +609,11 @@ msgid "Enter fixture"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "CL_STEP1_FIXTURE_DATE_LABEL"
+msgid "Add Time"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "CL_STEP1_FIXTURE_DATE_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "CL_STEP1_FIXTURE_TIME_LABEL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
-msgid "CL_STEP1_FIXTURE_TIME_PLACEHOLDER"
+msgid "Add date"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
@@ -743,10 +748,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "CL_STEP2_RIGHT_DEFINITIONS_LT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_CONTENT_DELIVERY_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -1046,6 +1047,10 @@ msgid "RIGHTS_VIDEO_STANDARD_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_GRAPHICS_DESCRIPTION"
 msgstr ""
 
@@ -1257,8 +1262,7 @@ msgid "Expiry:"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
-#: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js
-msgid "Listing name"
+msgid "CLOSED_DEALS_LISTING_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
@@ -1538,6 +1542,10 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js
+msgid "CL_STEP1_LISTING_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
@@ -1820,6 +1828,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "No"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js

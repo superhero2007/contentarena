@@ -25,7 +25,7 @@ class ListingName extends React.Component {
         return (
             <div className="base-input">
                 <label>
-                    {this.context.t("Listing name")}
+                    {this.context.t("CL_STEP1_LISTING_NAME")}
                 </label>
                 <input
                     type="text"

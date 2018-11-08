@@ -92,14 +92,14 @@ class ClosedDeals extends Component {
                             }, {
                                 Header: () => (
                                     <span>
-                                         {this.context.t("Listing name")} <i className="fa fa-sort" />
+                                         {this.context.t("CLOSED_DEALS_LISTING_NAME")} <i className="fa fa-sort" />
                                     </span>
                                 ),
                                 headerClassName : 'table-header-big',
                                 className : 'table-header-big',
                                 id: 'name',
                                 sortMethod: (a, b) => {
-                                    console.log(a,b)
+                                    console.log(a,b);
                                     if (a.name.length === b.name.length) {
                                         return a > b ? 1 : -1;
                                     }
