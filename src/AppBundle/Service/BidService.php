@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\SoldListing;
 use AppBundle\Entity\User;
@@ -58,7 +59,7 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getClosedDealsBySalesBundle($salesBundle);
     }
 
-    public function saveBidsData($request,$user){
+    public function saveBidsData($request,User $user){
 
         $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
         $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$request->get('salesMethod')));
@@ -91,6 +92,8 @@ class BidService
             "salesPackage" => $salesPackage,
             "buyerUser" => $user
         ));
+        $buyerCompanySnapshot = new CompanySnapshot($user->getCompany());
+        $sellerCompanySnapshot = new CompanySnapshot($content->getCompany());
 
         $updatedAt = new \DateTime();
 
@@ -120,6 +123,8 @@ class BidService
         $bid->setAmount($amount);
         $bid->setTotalFee($request->get('totalFee'));
         $bid->setUpdatedAt($updatedAt);
+        $bid->setBuyerCompanySnapshot($buyerCompanySnapshot);
+        $bid->setSellerCompanySnapshot($sellerCompanySnapshot);
 
         if ( $status->getName() == "APPROVED" ){
             $soldListing = clone ($content);

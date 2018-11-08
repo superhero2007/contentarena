@@ -95,6 +95,8 @@
     </div>
 
     {# COMPANY DATA#}
+    {% set sellerCompany =  bid is defined and bid.sellerCompanySnapshot is not null ? bid.sellerCompanySnapshot : content.company %}
+    {% set buyerCompany =  bid is defined and bid.buyerCompanySnapshot is not null ? bid.buyerCompanySnapshot : bid.buyerUser.company %}
     <div class="license-item">
         <table class="no-border">
             <tr>
@@ -107,7 +109,7 @@
                         <label>
                             Company name:
                         </label>
-                        {{ content.company.legalName }}
+                        {{ sellerCompany.legalName }}
                     </div>
                 </td>
                 <td>
@@ -116,7 +118,7 @@
                             Company name:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.legalName }}
+                            {{ buyerCompany.legalName }}
                         {% else %}
                             -
                         {% endif %}
@@ -129,7 +131,7 @@
                         <label>
                             Street/Number:
                         </label>
-                        {{ content.company.address }}
+                        {{ sellerCompany.address }}
                     </div>
                 </td>
                 <td>
@@ -138,7 +140,7 @@
                             Street/Number:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.address }}
+                            {{ buyerCompany.address }}
                         {% else %}
                             -
                         {% endif %}
@@ -151,7 +153,7 @@
                         <label>
                             City:
                         </label>
-                        {{ content.company.city }}
+                        {{ sellerCompany.city }}
                     </div>
                 </td>
                 <td>
@@ -160,7 +162,7 @@
                             City:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.city }}
+                            {{ buyerCompany.city }}
                         {% else %}
                             -
                         {% endif %}
@@ -173,7 +175,7 @@
                         <label>
                             ZIP code:
                         </label>
-                        {{ content.company.zip }}
+                        {{ sellerCompany.zip }}
                     </div>
                 </td>
                 <td>
@@ -182,7 +184,7 @@
                             ZIP code:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.zip }}
+                            {{ buyerCompany.zip }}
                         {% else %}
                             -
                         {% endif %}
@@ -195,7 +197,7 @@
                         <label>
                             Country:
                         </label>
-                        {{ content.company.country.name }}
+                        {{ sellerCompany.country.name }}
                     </div>
                 </td>
                 <td>
@@ -204,7 +206,7 @@
                             Country:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.country.name }}
+                            {{ buyerCompany.country.name }}
                         {% else %}
                             -
                         {% endif %}
@@ -217,7 +219,7 @@
                         <label>
                             VAT Number:
                         </label>
-                        {{ content.company.vat }}
+                        {{ sellerCompany.vat }}
                     </div>
                 </td>
                 <td>
@@ -226,7 +228,7 @@
                             VAT Number:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.vat }}
+                            {{ buyerCompany.vat }}
                         {% else %}
                             -
                         {% endif %}
@@ -239,7 +241,7 @@
                         <label>
                             Registration Number:
                         </label>
-                        {{ content.company.registrationNumber }}
+                        {{ sellerCompany.registrationNumber }}
                     </div>
                 </td>
                 <td>
@@ -248,7 +250,7 @@
                             Registration Number:
                         </label>
                         {% if bid is defined %}
-                            {{ bid.buyerUser.company.registrationNumber }}
+                            {{ buyerCompany.registrationNumber }}
                         {% else %}
                             -
                         {% endif %}
