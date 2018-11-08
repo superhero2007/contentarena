@@ -93,6 +93,18 @@ class Bid
     private $buyerCompany;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanySnapshot", inversedBy="bid", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $buyerCompanySnapshot;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanySnapshot", inversedBy="bid", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $sellerCompanySnapshot;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial"})
@@ -479,6 +491,38 @@ class Bid
     public function setBuyerCompany($buyerCompany)
     {
         $this->buyerCompany = $buyerCompany;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuyerCompanySnapshot()
+    {
+        return $this->buyerCompanySnapshot;
+    }
+
+    /**
+     * @param mixed $buyerCompanySnapshot
+     */
+    public function setBuyerCompanySnapshot($buyerCompanySnapshot)
+    {
+        $this->buyerCompanySnapshot = $buyerCompanySnapshot;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSellerCompanySnapshot()
+    {
+        return $this->sellerCompanySnapshot;
+    }
+
+    /**
+     * @param mixed $sellerCompanySnapshot
+     */
+    public function setSellerCompanySnapshot($sellerCompanySnapshot)
+    {
+        $this->sellerCompanySnapshot = $sellerCompanySnapshot;
     }
 
 
