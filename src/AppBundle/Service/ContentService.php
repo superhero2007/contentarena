@@ -733,13 +733,15 @@ class ContentService
     private function saveSeasonExtraData($content, $data) {
         if ($data->seasons) {
             $extraData = $content->getExtraData();
+            $seasons = $content->getSeasons();
             $sData = [];
             foreach ($data->seasons as $key => $seasonData) {
                 $startDate = isset($seasonData->customStartDate) ? $seasonData->customStartDate : $seasonData->startDate;
                 $endDate = isset($seasonData->customEndDate) ? $seasonData->customEndDate : $seasonData->endDate;
+                $externalId = ($seasonData->custom) ? $seasons[$key]->getExternalId() : $seasonData->externalId;
 
                 if ($startDate && $endDate) {
-                    $sData[$seasonData->externalId] = array(
+                    $sData[$externalId] = array(
                         'startDate' => $startDate,
                         'endDate' => $endDate
                     );

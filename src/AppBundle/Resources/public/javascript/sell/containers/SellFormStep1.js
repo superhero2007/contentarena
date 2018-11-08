@@ -95,6 +95,8 @@ class SellFormStep1 extends React.Component {
                             this.props.addNewSeason(i);
                             this.props.updateFromMultiple("seasons", i, "from", s.from);
                             this.props.updateFromMultiple("seasons",i, "to", s.to);
+                            this.props.updateFromMultiple("seasons",i, "customStartDate", s.customStartDate);
+                            this.props.updateFromMultiple("seasons",i, "customEndDate", s.customEndDate);
                             if (s.fixtures) this.props.updateFromMultiple("seasons",i, "fixtures", s.fixtures);
                         });
                     } else {
@@ -128,7 +130,11 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.Seasons = seasons;
 
             if (seasons.length === 0 ) {
-                this.props.addNewSeason(0);
+
+
+                if ( this.props.customSeasons === null || this.props.customSeasons === undefined || this.props.customSeasons.length === 0 ){
+                    this.props.addNewSeason(0);
+                }
                 this.setState({
                     loadingSeasons : false,
                     tournamentHasNoSeason : true
