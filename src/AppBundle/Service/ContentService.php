@@ -736,12 +736,10 @@ class ContentService
             $seasons = $content->getSeasons();
             $sData = [];
 
-            $seasons = $content->getSeasons();
-
             foreach ($data->seasons as $key => $seasonData) {
                 $startDate = null;
                 $endDate = null;
-                $externalId = ($seasonData->custom) ? $seasons[$key]->getExternalId() : $seasonData->externalId;
+                $externalId = (isset($seasonData->custom)) ? $seasons[$key]->getExternalId() : $seasonData->externalId;
 
                 if (isset($seasonData->customStartDate)) {
                     $startDate = $seasonData->customStartDate;
