@@ -90,7 +90,7 @@ class BidService
         $bid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
             "content" =>$content,
             "salesPackage" => $salesPackage,
-            "buyerUser" => $user
+            "buyerCompany" => $user->getCompany()
         ));
         $buyerCompanySnapshot = new CompanySnapshot($user->getCompany());
         $sellerCompanySnapshot = new CompanySnapshot($content->getCompany());

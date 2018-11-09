@@ -206,7 +206,7 @@ class ContentController extends Controller
             $bid = $this->getDoctrine()->getRepository("AppBundle:Bid")->findOneBy(array(
                 "status" => $pendingStatus,
                 "salesPackage"=> $salesBundle,
-                "buyerUser" => $user
+                "buyerCompany" => $user->getCompany()
             ));
 
             if ( $bid != null){
