@@ -26,6 +26,7 @@ msgid "INSTALLMENT_CLOSURE_DAYS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "MARKETPLACE_LABEL_FILTER_TERRITORIES"
 msgstr ""
 
@@ -39,6 +40,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 msgid "MARKETPLACE_BUTTON_CLEAR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
+msgid "LISTING_DETAILS_EVENT_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
@@ -184,6 +189,10 @@ msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
+msgid "LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_EPISODES"
 msgstr ""
 
@@ -207,22 +216,6 @@ msgstr ""
 msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
-msgid "Buy now"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
-msgid "Acquired"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
-msgid "Raise bid"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/SalesPackages.js
-msgid "Place bid"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
@@ -238,6 +231,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "RIGHTS_"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
+msgid "LISTING_DETAILS_PROGRAM_DEFINITION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
@@ -284,6 +281,26 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "MARKETPLACE_LABEL_PRICE_MINIMUM_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "Buy now"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "Acquired"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "Raise bid"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "Place bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js

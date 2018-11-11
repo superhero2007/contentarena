@@ -1,16 +1,9 @@
-import React from 'react';
-import { connect } from "react-redux";
-import { test } from "../actions";
-import {customStyles} from "../../main/styles/custom";
-import Modal from 'react-modal';
-import Moment from "moment/moment";
-import LicenseDownloader from '../../main/components/LicenseDownloader'
+import React, { PureComponent } from 'react';
 import {PropTypes} from "prop-types";
 import ExtraTerritories from '../../main/components/ExtraTerritories';
 import Installments from '../components/Installments';
 
-class SalesPackages extends React.Component {
-
+class TerritoriesSalesPackages extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +12,6 @@ class SalesPackages extends React.Component {
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.packageIcon = assetsBaseDir + "app/images/bid.png";
-        this.infoIcon = assetsBaseDir + "app/images/info.png";
     }
 
     getFee = (salesPackage) => {
@@ -32,9 +24,20 @@ class SalesPackages extends React.Component {
     };
 
     render() {
-        const {salesPackages, onSelectPackage, user, listingId, userCanNotBuy, bundlesWithActivity, bundlesSold} = this.props;
+        const {salesPackages, onSelectPackage, profile, listingId, userCanNotBuy, bundlesWithActivity, bundlesSold} = this.props;
         return (
             <div className="sales-packages">
+                <div className="sales-package-header title">
+                    <div className="package-row name">
+                        {this.context.t("MARKETPLACE_LABEL_FILTER_TERRITORIES")}
+                    </div>
+                    <div className="package-row price">
+                        {this.context.t("MARKETPLACE_LABEL_PRICE_MINIMUM_BID")}
+                    </div>
+                    <div className="package-row" />
+                    <div className="package-row" />
+                    <div className="package-row" />
+                </div>
                 { salesPackages.map((item) => {
                     const hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(item.id) !== -1 : false;
 
@@ -89,14 +92,14 @@ class SalesPackages extends React.Component {
 
                             <div className="package-row buttons">
                                 {salesPackage.salesMethod === "FIXED" && <button className="ca-btn primary"
-                                        disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || salesPackage.hasOfferFromUser}
+                                        disabled={profile !== "BUYER" || salesPackage.sold || userCanNotBuy || salesPackage.hasOfferFromUser}
                                         onClick={() => {onSelectPackage(salesPackage, listingId) }}>
                                     {!hasOfferFromUser && this.context.t("Buy now")}
                                     {hasOfferFromUser && this.context.t("Acquired")}
                                 </button>}
 
                                 {salesPackage.salesMethod === "BIDDING" && <button className="ca-btn primary"
-                                    disabled={user.profile !== "BUYER" || salesPackage.sold || userCanNotBuy || hasClosedDeal }
+                                    disabled={profile !== "BUYER" || salesPackage.sold || userCanNotBuy || hasClosedDeal }
                                     onClick={() => {onSelectPackage(salesPackage, listingId) }}>
                                     { hasOfferFromUser && !hasClosedDeal && this.context.t("Raise bid") }
                                     { hasOfferFromUser && hasClosedDeal && this.context.t("Acquired") }
@@ -110,22 +113,8 @@ class SalesPackages extends React.Component {
     }
 }
 
-SalesPackages.contextTypes = {
+TerritoriesSalesPackages.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => {
-    return state
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onClick: id => dispatch(test(id))
-    }
-};
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SalesPackages)
+export default TerritoriesSalesPackages;

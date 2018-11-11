@@ -647,7 +647,7 @@
           display: table;
           width: 100%;
 
-          .sales-package-container {
+          .sales-package-container, .sales-package-header{
             padding: 15px 0;
             display: table-row;
 
@@ -691,6 +691,10 @@
                 width: 145px;
               }
             }
+          }
+
+          .sales-package-header .package-row{
+            border-bottom: 1px solid $black-color;
           }
         }
         .term-sheet {

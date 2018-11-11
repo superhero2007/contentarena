@@ -11,8 +11,13 @@ class ProgramDetails extends Component {
 
     programDescription = (description) => {
         return description && (
-            <div className="spacer-bottom txt description-text">
-                {description}
+            <div className="description-wrapper">
+                <div className="title spacer-bottom">
+                    {this.context.t("LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION")}
+                </div>
+                <div className="spacer-bottom txt description-text">
+                    {description}
+                </div>
             </div>);
     };
 

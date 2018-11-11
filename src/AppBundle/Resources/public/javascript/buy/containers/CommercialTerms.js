@@ -1,9 +1,8 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {test} from "../actions";
-import SalesPackages from "./SalesPackages";
+import TerritoriesSalesPackages  from "./TerritoriesSalesPackages";
 import {PropTypes} from "prop-types";
-import {StaticSchedules} from "../../sell/components/SellFormItems";
 import { pdfIcon } from './../../main/components/Icons';
 import Moment from "moment/moment";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
@@ -23,7 +22,6 @@ class CommercialTerms extends React.Component {
     }
 
     loadSchedule() {
-
         let _this = this;
         const {seasons, schedulesBySeason} = this.props;
 
@@ -77,14 +75,17 @@ class CommercialTerms extends React.Component {
         const {seasons} = this.state;
         return (
             <div>
-
                 {description && !programDetails && (
-                    <div className="txt description-text">
-                        {description}
+                    <div className="description-wrapper">
+                        <div className="spacer-bottom title">
+                            {this.context.t("LISTING_DETAILS_EVENT_DESCRIPTION")}
+                        </div>
+                        <div className="txt description-text">
+                            {description}
+                        </div>
                     </div>
-                )}
 
-                {programDetails && programDetails}
+                )}
 
                 {(website || (attachments && attachments.length > 0)) && (
                     <div className="additional-items">
@@ -128,43 +129,32 @@ class CommercialTerms extends React.Component {
                 )}
 
                 {/*SEASON/FIXTURES*/}
-                {seasons && seasons.length > 0 && (
-                    <div>
-                        {seasons.map((season, key) => (
-                            season.fixtures && season.fixtures.length > 0 && (
-                                <div key={"season-" + key} className="season-details">
-                                    <div className="title">
-                                        {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}
+                {seasons && seasons.length && seasons.map((season, key) => (
+                    <div key={"season-" + key} className="season-details">
+                        <div className="title">
+                            {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between flex-wrap">
+                            {season.fixtures && season.fixtures.length && season.fixtures.map(fixture => (
+                                <div className="row-container" style={{width: '45%'}}>
+                                    <div className="name">
+                                        {fixture.name}
                                     </div>
-                                    <div className="d-flex align-items-center justify-content-between flex-wrap">
-                                        {season.fixtures.map(fixture => (
-                                            <div className="row-container" style={{width: '45%'}}>
-                                                <div className="name">
-                                                    {fixture.name}
-                                                </div>
-                                                {fixture.date && <div className="actions">
-                                                    <div className="item">
-                                                        <i className="fa fa-calendar icon" /> {Moment(fixture.date).format(DATE_FORMAT)}
-                                                    </div>
-                                                    <div className="item">
-                                                        <i className="fa fa-clock-o icon" /> {Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
-                                                    </div>
-                                                </div>}
-                                            </div>
-                                        ))}
-                                    </div>
+                                    {fixture.date && <div className="actions">
+                                        <div className="item">
+                                            <i className="fa fa-calendar icon" /> {Moment(fixture.date).format(DATE_FORMAT)}
+                                        </div>
+                                        <div className="item">
+                                            <i className="fa fa-clock-o icon" /> {Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
+                                        </div>
+                                    </div>}
                                 </div>
-                            )
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                )}
+                ))}
 
-
-                <div className="title">
-                    Territories
-                </div>
-
-                <SalesPackages
+                <TerritoriesSalesPackages
                     listingId={customId}
                     userCanNotBuy={userCanNotBuy}
                     profile={profile}
@@ -191,7 +181,6 @@ const mapDispatchToProps = dispatch => {
         onClick: id => dispatch(test(id))
     }
 };
-
 
 export default connect(
     mapStateToProps,

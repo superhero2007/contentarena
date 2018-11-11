@@ -209,8 +209,13 @@ class TermSheet extends React.Component {
             <div className="term-sheet">
 
                 {programDescription && (
-                    <div className="txt description-text">
-                        {programDescription}
+                    <div className="description-wrapper">
+                        <div className="title spacer-bottom">
+                            {this.context.t("LISTING_DETAILS_PROGRAM_DEFINITION")}
+                        </div>
+                        <div className="txt description-text">
+                            {programDescription}
+                        </div>
                     </div>
                 )}
 
