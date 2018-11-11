@@ -106,7 +106,6 @@ class Login extends React.Component {
         if (hosturl === "https://app.contentarena.com/") window.location = 'https://contentarena.com';
 
         if (redirectToReferrer) {
-            console.log("Redirecting to ", from);
             return <Redirect to={from} />;
         }
 
@@ -142,8 +141,6 @@ class AuthRouter extends React.Component {
         super(props);
 
         if (props.loggedUser) fakeAuth.authenticate(()=>{});
-
-        console.log(props);
 
         this.state = {
             user : props.loggedUserData !== "" ? JSON.parse(props.loggedUserData) : {}

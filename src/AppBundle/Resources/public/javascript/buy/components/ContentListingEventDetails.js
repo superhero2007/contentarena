@@ -222,14 +222,13 @@ class ContentListingEventDetails extends React.Component {
                     )}
 
                     {/*Sport category/Country*/}
-                    {sportCategory && sportCategory.length > 0 ? (
+                    {sportCategory && sportCategory.length > 0 && sportCategory[0].name !== "" ? (
                         <div className="event">
                             <div className="event-icon">
                                 {sportCategoryIcon}
                             </div>
                             <div className="event-text">
-                                {sportCategory[0].name !== "" && sportCategory[0].name}
-                                {sportCategory[0].name === "" && customCategory}
+                                {sportCategory[0].name}
                             </div>
                         </div>
                     ) : (
@@ -238,13 +237,14 @@ class ContentListingEventDetails extends React.Component {
                                 {sportCategoryIcon}
                             </div>
                             <div className="event-text">
-                                {this.context.t("International")}
+                                {customCategory ? (
+                                    customCategory
+                                ):(
+                                    this.context.t("International")
+                                )}
                             </div>
                         </div>
                     )}
-
-                    {/*as is duplicate in sportCategory*/}
-                    {/*{customCategory && <span>{sportCategoryIcon} {customCategory}</span>}*/}
 
                 </div>
 
