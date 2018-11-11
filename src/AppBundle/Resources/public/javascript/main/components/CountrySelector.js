@@ -19,7 +19,7 @@ class CountrySelector extends React.Component {
     }
 
     getOptions = () => {
-        const {filter = [], available, hiddenTerritories} = this.props;
+        const {filter = [], available, exclusiveSoldTerritories} = this.props;
 
         let countries = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
 
@@ -27,29 +27,29 @@ class CountrySelector extends React.Component {
 
         countries = countries.filter(country => filter.indexOf(country.value) === -1);
 
-        countries = hiddenTerritories && hiddenTerritories.length > 0 ? this.getAvailableTerritories(countries) : countries;
+        countries = exclusiveSoldTerritories && exclusiveSoldTerritories.length > 0 ? this.getAvailableTerritories(countries) : countries;
 
         return countries;
     };
 
     getAvailableTerritories = (territories) => {
-        const {hiddenTerritories} = this.props;
+        const {exclusiveSoldTerritories} = this.props;
 
-        if (hiddenTerritories && hiddenTerritories.length > 0) {
-            return territories.filter(t => !hiddenTerritories.some(ht => ht.label === t.label))
+        if (exclusiveSoldTerritories && exclusiveSoldTerritories.length > 0) {
+            return territories.filter(t => !exclusiveSoldTerritories.some(ht => ht.label === t.label))
         } else {
             return territories;
         }
     }
 
     render(){
-        const {onChange, className, multi = true, disabled = false, hiddenTerritories} = this.props;
+        const {onChange, className, multi = true, disabled = false, exclusiveSoldTerritories} = this.props;
         let value = this.props.value;
 
-        if (hiddenTerritories) {
+        if (exclusiveSoldTerritories) {
             const {countries} = this.state;
 
-            if (hiddenTerritories.length > 0) {
+            if (exclusiveSoldTerritories.length > 0) {
 
                 if (value && value.length > 0) {
                     value = this.getAvailableTerritories(value)
@@ -60,7 +60,7 @@ class CountrySelector extends React.Component {
                 }
             }
 
-            if (countries && hiddenTerritories.length === countries.length) {
+            if (countries && exclusiveSoldTerritories.length === countries.length) {
                 return <div style={{padding: '15px 0'}}>{this.context.t("Worldwide includes sold territories and listing is exclusive")}</div>
             }
         }

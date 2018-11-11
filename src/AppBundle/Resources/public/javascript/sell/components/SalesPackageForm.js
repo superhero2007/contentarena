@@ -63,7 +63,16 @@ class SalesPackageForm extends React.Component {
     };
 
     setBundleMethod = (bundleMethod) => {
+        const {territoriesMethod } =  this.state;
         this.setState({bundleMethod});
+
+        if ( territoriesMethod === this.worldwide ) {
+            if (bundleMethod === this.individually) {
+                this.fillTerritories(this.worldwide , this.individually);
+            } else {
+                this.setState({ territories : []})
+            }
+        }
     };
 
     setTerritoriesMethod = (territoriesMethod) => {
@@ -315,27 +324,27 @@ class SalesPackageForm extends React.Component {
         return soldPackages;
     };
 
-    getHiddenTerritories = (soldPackages) => {
+    getExclusiveSoldTerritories = (soldPackages) => {
         const {territoriesMethod, countries} = this.state;
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
         const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
-        let hiddenTerritories = [];
+        let exclusiveSoldTerritories = [];
         soldPackages.forEach(p => {
             p.territories.forEach(t => {
-                hiddenTerritories.push(t)
+                exclusiveSoldTerritories.push(t)
             })
         });
 
         if (isExcludedTerritoriesEnabled && countries) {
-            hiddenTerritories = countries.filter(c => !hiddenTerritories.some(ht => c.name === ht.label))
+            exclusiveSoldTerritories = countries.filter(c => !exclusiveSoldTerritories.some(ht => c.name === ht.label))
         }
 
-        if (isWorldwideEnabled && hiddenTerritories.length > 0 && countries) {
-            hiddenTerritories = countries
+        if (isWorldwideEnabled && exclusiveSoldTerritories.length > 0 && countries) {
+            exclusiveSoldTerritories = countries
         }
 
-        return hiddenTerritories
+        return exclusiveSoldTerritories
     };
 
     renderModal = () => {
@@ -348,11 +357,8 @@ class SalesPackageForm extends React.Component {
         const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding && exclusivity;
         const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
-        let hiddenTerritories = false;
-        if (exclusivity) {
-            let soldPackages = this.getSoldPackages(salesPackages);
-            hiddenTerritories = soldPackages.length > 0 ?  this.getHiddenTerritories(soldPackages) : false;
-        }
+        const soldPackages = this.getSoldPackages(salesPackages);
+        const isExclusiveSoldTerritoriesEnabled = (soldPackages.length > 0 && exclusivity);
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -433,7 +439,7 @@ class SalesPackageForm extends React.Component {
                                 value={territories[0]}
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 multi={false}
-                                hiddenTerritories={hiddenTerritories}
+                                exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
                             />}
                             {isMultipleEnabled && <RegionCountrySelector
                                 className={"small-select"}
@@ -442,7 +448,7 @@ class SalesPackageForm extends React.Component {
                                 value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 disabled={isWorldwideEnabled}
-                                hiddenTerritories={hiddenTerritories}
+                                exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
                             />}
                             {territoriesQuantity === 'multiple' && (
                                 <div>
