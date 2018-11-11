@@ -696,22 +696,27 @@ class SalesPackageForm extends React.Component {
                                         {this.isShowFee(salesPackage) && this.getFee(salesPackage)}
                                     </div>
 
-                                    {hideButtons && <div className="sales-cell license">
-                                        <LicenseDownloader
-                                            type={"BUNDLE"}
-                                            id={salesPackage.id}
-                                            listingId={listingId}
-                                        />
-                                    </div>}
-
                                     <div className="sales-cell bid">
                                         {salesPackage.salesMethod === "BIDDING" && <img src={this.bidIcon} /> }
                                     </div>
 
-                                    {!hideButtons && <div className="sales-cell buttons">
-                                        <img src={this.cancelIcon} onClick={() => {onRemove(i)}}/>
-                                        <i className="fa fa-edit" onClick={() => {this.editSalesPackage(salesPackage, i)}}/>
-                                    </div>}
+                                    {!hideButtons && (
+                                        <div className="sales-cell buttons">
+                                            <img src={this.cancelIcon} onClick={() => {onRemove(i)}}/>
+                                            <i className="fa fa-edit" onClick={() => {this.editSalesPackage(salesPackage, i)}}/>
+                                        </div>
+                                    )}
+
+                                    {hideButtons && (
+                                        <div className="sales-cell license" style={{paddingLeft: 10, border: 0}}>
+                                            <LicenseDownloader
+                                                type={"BUNDLE"}
+                                                id={salesPackage.id}
+                                                listingId={listingId}
+                                                buttonType={true}
+                                            />
+                                        </div>
+                                    )}
 
                                 </div>
                             )

@@ -9,77 +9,98 @@ class Comments extends React.Component {
         super(props);
         this.state = {
             isOpen : false,
+            typedComment:''
         };
+
+        this.commentField = React.createRef();
     }
 
-    closeModal = () => {
-        const {onClose} = this.props;
+    addComment = () => {
+        this.setState({isAddComment: true});
 
-        if ( onClose) onClose();
+        setTimeout(()=>{
+            this.commentField.current.focus();
+        },100)
+    }
 
-        this.setState({ isOpen: false});
+    cancelComment = () => {
+        this.setState({isAddComment: false})
+    }
 
-    };
+    saveComment = () => {
+        const {onClose, propName} = this.props;
+        const {typedComment} = this.state;
 
-    updateContent = (e) => {
+        this.props.updateContentValue(propName, typedComment);
 
-        const {propName} = this.props;
+        this.setState({ isAddComment: false});
+        if ( onClose) onClose()
+    }
 
-        this.props.updateContentValue(propName, e.target.value);
-    };
+    changeComment = (e) => {
+        this.setState({typedComment: e.target.value})
+    }
 
-    addComments = () =>{
-        this.setState({isOpen:true});
-    };
-
-    renderModal = () => {
-
-        const { comments } = this.props;
-
-        return <Modal
-            isOpen={this.state.isOpen}
-            onRequestClose={this.closeModal}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
-        >
-
-            <div className="modal-title">
-                <div style={{ width: "470px"}}>
-                    {this.context.t("CL_STEP3_AMENDMENT")}
-                </div>
-                <i className="fa fa-times close-icon" onClick={this.closeModal}/>
-            </div>
-
-            <div className="step-content" style={{ padding: "0 15px 5px"}}>
-                <div className="step-content-container">
-
-                    <div className="base-full-input">
-                        <textarea
-                            className={"big-textarea"}
-                            onChange={this.updateContent}
-                            value={comments}/>
-                    </div>
-                </div>
-            </div>
-
-            <div className={"buttons popup-buttons"}>
-                <button
-                    className={"standard-button"}
-                    disabled={!comments || comments === ""}
-                    onClick={this.closeModal}>
-                    {this.context.t("Accept")}
-                </button>
-            </div>
-        </Modal>
-    };
 
     render(){
+        const {comments} = this.props;
+        const {isAddComment} = this.state;
+
+        const isCommentsExisted = (comments && comments !== '');
+
+        const commentsView = isCommentsExisted && !isAddComment;
+        const addCommentButton = !isCommentsExisted && !isAddComment;
+
+
         return (
-            <div style={{marginBottom: 20}}>
-                { this.renderModal() }
-                <button onClick={this.addComments} className="standard-button" style={{width: 500}}>
-                    {this.context.t("CL_STEP5_ADD_AMENDMENT")}
-                </button>
+            <div className="amendment-view">
+
+                {addCommentButton && (
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div>
+                            {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+                        </div>
+                        <button className="ca-btn primary" onClick={this.addComment}>
+                            {this.context.t("CL_STEP5_ADD_AMENDMENT")}
+                        </button>
+                    </div>
+                )}
+
+                {commentsView && (
+                    <div>
+                        <div className="cap">
+                            {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+                        </div>
+                        <div className="d-flex">
+                            <textarea value={comments} readOnly disabled/>
+                            <div onClick={this.addComment}>
+                                <i className="fa fa-pencil-square edit-icon" />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {isAddComment && (
+                    <div>
+                        <div className="cap">
+                            {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+                        </div>
+                        <textarea
+                            defaultValue={isCommentsExisted ? comments : ''}
+                            onChange={this.changeComment}
+                            ref={this.commentField}
+                        />
+
+                        <div className="d-flex justify-content-end">
+                            <div className="ca-btn" onClick={this.cancelComment}>
+                                {this.context.t("Cancel")}
+                            </div>
+                            <button className="ca-btn primary" onClick={this.saveComment}>
+                                {this.context.t("Save")}
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         )
     }

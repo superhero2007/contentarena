@@ -13,22 +13,23 @@ class DigitalSignature extends React.Component{
         this.state = {
             ready : (props.ready) ? props.ready :  false
         }
+
+        this.signature = React.createRef();
     }
 
     componentDidMount () {
-        if (!this.state.ready) this.setState({blank:this.refs.signature.toDataURL()});
+        if (!this.state.ready) this.setState({blank: this.signature.current.toDataURL()});
     }
 
     clear = () => {
-        this.refs.signature.clear();
+        this.signature.current.clear();
     };
 
     done = () => {
         const { blank } = this.state;
         const { onReady } = this.props;
-        const { signature } = this.refs;
 
-        let data = signature.toDataURL();
+        let data = this.signature.current.toDataURL();
 
         if ( data === blank ) return;
 
@@ -42,6 +43,12 @@ class DigitalSignature extends React.Component{
         if (onReady) onReady(null);
     };
 
+    disablePlaceholder = () => {
+        const {isPlaceholderDisabled} = this.state;
+
+        if (!isPlaceholderDisabled) this.setState({isPlaceholderDisabled:true})
+    }
+
     render(){
         const {
             signature,
@@ -51,21 +58,46 @@ class DigitalSignature extends React.Component{
             customClass = ''
         } = this.props;
 
-        const { ready } = this.state;
+        const { ready, isPlaceholderDisabled } = this.state;
 
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
-                <div className={"digital-signature-placeholder"}>
-                    <span>{title}</span>
-                    {licenseBidId && <span className="license-bid" onClick={() => {viewLicenseBid(licenseBidId)}}>
-                        <img src={pdfIcon} alt="Licence" /> {this.context.t("LICENSE_AGREEMENT")}
-                    </span>}
-                </div>
-                {signature && ready &&
-                    <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
-                }
 
-                {!ready && <SignaturePad ref="signature" />}
+                <div className="base-full-input" style={{maxWidth: 'none'}}>
+                    <label>{this.context.t('DIGITAL_SIGNATURE_INFO')}</label>
+                </div>
+
+                <div className={"signature-info"}>
+                    <span>{title}</span>
+
+                    {licenseBidId && (
+                        <span className="license-bid" onClick={() => {viewLicenseBid(licenseBidId)}}>
+                            <img src={pdfIcon} alt="Licence" /> {this.context.t("LICENSE_AGREEMENT")}
+                        </span>
+                    )}
+                </div>
+                <div className="signature-wrap" onClick={this.disablePlaceholder}>
+                    {!signature && !isPlaceholderDisabled && (
+                        <div className="placeholder">
+                            <div>
+                                <div className="small-text">
+                                    {this.context.t("DIGITAL_SIGNATURE_PLACEHOLDER_SMALL_TEXT")}
+                                </div>
+                                <div className="big-text">
+                                    {this.context.t("DIGITAL_SIGNATURE_PLACEHOLDER_BIG_TEXT")}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {signature && ready && (
+                        <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature}/>
+                    )}
+
+                    {!ready && (
+                        <SignaturePad ref={this.signature} />
+                    )}
+                </div>
 
                 <div className={"buttons"}>
                     {!ready && <button onClick={this.clear} className="standard-button-small transparent">

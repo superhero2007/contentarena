@@ -29,12 +29,19 @@ class LicenseDownloader extends React.Component {
     };
 
     render(){
-        const {style={}, iconStyle={height: 23}} = this.props;
+        const {style = {}, iconStyle = {height: 23}, buttonType = false} = this.props;
         return (
             <div style={{...style}}
                  onClick={this.getLicense}
                  title={this.context.t("CL5_LICENSE_AGREEMENT")}>
-                <img style={iconStyle} src={pdfIcon}/>
+
+                {buttonType ? (
+                    <div className="ca-btn primary">
+                        {this.context.t("License agreement")}
+                    </div>
+                ) : (
+                    <img style={iconStyle} src={pdfIcon}/>
+                )}
             </div>
         )
     }

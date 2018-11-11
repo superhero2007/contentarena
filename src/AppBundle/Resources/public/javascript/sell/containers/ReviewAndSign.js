@@ -171,12 +171,12 @@ class ReviewAndSign extends React.Component {
         let signatureReady = (signature && status !== undefined && (status.name === "INACTIVE" || status.name === "EDITED" || status.name === "APPROVED")) ? true : false ;
 
         return (
-            <div className="step-content">
+            <div className="step-content review-sign-container">
                 { this.successScreen() }
                 <div className="buttons">
                     <div className={"buttons-container"} style={{ 'display': 'flex',
-                        'flex-direction': 'row',
-                        'justify-content': 'space-between'}}>
+                        'flexDirection': 'row',
+                        'justifyContent': 'space-between'}}>
                         <button className="light-blue-button" onClick={()=>{
                             history.push("/contentlisting/"+ customId + "/4");
                         }}>
@@ -187,35 +187,49 @@ class ReviewAndSign extends React.Component {
                         </div>
                     </div>
                 </div>
-                {!showDetails && <div className="step-title">
-                    {this.context.t("CL_STEP5_TITLE_REVIEW")}
-                </div>}
-                {showDetails && <div className="step-title">
-                    {this.context.t("CL_STEP5_TITLE_PREVIEW")}
-                </div>}
 
-                {
-                    showDetails &&
+                {showDetails && (
                     <div>
+                        <div className="step-title">
+                            {this.context.t("CL_STEP5_TITLE_PREVIEW")}
+                        </div>
                         <ListingDetails
-                        onBack={this.toggleDetails}
-                        company={company}
-                        listing={this.props}
-                        history={history}
-                        content={this.props}/>
+                            onBack={this.toggleDetails}
+                            company={company}
+                            listing={this.props}
+                            history={history}
+                            content={this.props}
+                        />
                     </div>
-                }
+                )}
 
                 {!showDetails && <div className="step-content-container">
 
-                    <div onClick={(e) => {
-                        goToListing(customId, true);
-                        e.preventDefault()
-                    }}>
-                        <div style={{marginBottom:5}}>
-                            {this.context.t('CL_STEP5_PREVIEW_INFO')}
-                        </div>
+                    <div className="step-title" style={{marginBottom: 10}}>
+                        {this.context.t('CL_STEP5_TITLE_REVIEW')}
+                    </div>
+
+                    <div className="base-full-input" style={{maxWidth: 'none'}}>
+                        <label>
+                            {this.context.t("CL_STEP5_PREVIEW_LISTING")}
+                        </label>
+                    </div>
+
+                    <div className="step-item-description" style={{marginTop: 0}}>
+                        {this.context.t('CL_STEP5_PREVIEW_INFO')}
+                    </div>
+
+                    <div onClick={(e) => {e.preventDefault()}}>
                         <ContentListing {...this.props} />
+                    </div>
+
+                    <div className="d-flex justify-content-between align-items-center"  style={{marginBottom: 20}}>
+                        <div>
+                            {this.context.t('CL_STEP5_PREVIEW_LISTING_DETAILS')}
+                        </div>
+                        <div onClick={e => {goToListing(customId, true)}} className="ca-btn primary">
+                            {this.context.t('CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT')}
+                        </div>
                     </div>
 
                     <SalesPackageForm
@@ -227,7 +241,8 @@ class ReviewAndSign extends React.Component {
                         currency={currency}
                         onEdit={this.editSalesPackage}
                         onUpdate={this.updateSalesPackage}
-                        onRemove={this.removeSalesPackage} />
+                        onRemove={this.removeSalesPackage}
+                    />
 
                     {this.state.editOpen && <SalesPackageEdit
                         isOpen={this.state.editOpen}
@@ -241,8 +256,12 @@ class ReviewAndSign extends React.Component {
                         salesPackages={salesPackages}
                     />}
 
-                    <div style={{margin: '20px auto'}}>
-                        <Comments comments={COMMENTS_RIGHTS} propName={"COMMENTS_RIGHTS"} onClose={this.save}/>
+                    <div style={{padding: '20px 0 20px'}}>
+                        <Comments
+                            comments={COMMENTS_RIGHTS}
+                            propName={"COMMENTS_RIGHTS"}
+                            onClose={this.save}
+                        />
                     </div>
 
                     <div className={"terms-confirm"}
@@ -282,6 +301,7 @@ class ReviewAndSign extends React.Component {
                         onReady={(signature) => {
                             updateContentValue("signature", signature);
                         }}
+                        customClass={'review-and-sign'}
                         ready={signatureReady}
                         signature={signature}
                     />

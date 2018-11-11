@@ -927,6 +927,24 @@ button {
   }
 }
 
+.amendment-view {
+  .cap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  i.edit-icon {
+    font-size: 32px;
+    color: #2AAAEC;
+    padding: 0;
+    padding-left: 10px;
+  }
+
+  textarea {
+    margin-bottom: 10px;
+  }
+}
+
 .schedule {
   font-size: 14px;
   z-index: 100;
