@@ -1943,3 +1943,14 @@ msgstr ""
 msgid "CL_STEP4_LABEL_ANNEX"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"
+msgstr ""

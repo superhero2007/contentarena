@@ -222,28 +222,30 @@ class ContentListingEventDetails extends React.Component {
                     )}
 
                     {/*Sport category/Country*/}
-                    {sportCategory && sportCategory.length > 0 && sportCategory[0].name !== "" ? (
-                        <div className="event">
-                            <div className="event-icon">
-                                {sportCategoryIcon}
-                            </div>
-                            <div className="event-text">
-                                {sportCategory[0].name}
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="event">
-                            <div className="event-icon">
-                                {sportCategoryIcon}
-                            </div>
-                            <div className="event-text">
-                                {customCategory ? (
-                                    customCategory
-                                ):(
-                                    this.context.t("International")
-                                )}
-                            </div>
-                        </div>
+                    {sportCategory && sportCategory.length > 0 && (
+                        <React.Fragment>
+                            {sportCategory[0].name !== "" && (
+                                <div className="event">
+                                    <div className="event-icon">
+                                        {sportCategoryIcon}
+                                    </div>
+                                    <div className="event-text">
+                                        {sportCategory[0].name}
+                                        {}
+                                    </div>
+                                </div>
+                            )}
+                            {sportCategory[0].name === "" && customCategory (
+                                <div className="event">
+                                    <div className="event-icon">
+                                        {sportCategoryIcon}
+                                    </div>
+                                    <div className="event-text">
+                                        {customCategory}
+                                    </div>
+                                </div>
+                            )}
+                        </React.Fragment>
                     )}
 
                 </div>

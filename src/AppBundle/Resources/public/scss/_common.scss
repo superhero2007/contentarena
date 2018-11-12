@@ -293,6 +293,10 @@ i.fa.ca-tooltip {
   justify-content: flex-start;
 }
 
+.round-0 {
+  border-radius: 0 !important;
+}
+
 .d-inline-flex {
   display: flex !important;
 }
@@ -303,6 +307,10 @@ i.fa.ca-tooltip {
 
 .align-items-center {
   align-items: center !important;
+}
+
+.align-items-baseline {
+  align-items: baseline !important;
 }
 
 .align-middle {
@@ -425,8 +433,8 @@ i.fa.ca-tooltip {
     .rt-td {
       //color: black;
       border-right: 1px solid #999;
-      a,
-      div {
+      & > div,
+      & > a {
         overflow: hidden;
         text-overflow: ellipsis;
         display: block;

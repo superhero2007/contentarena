@@ -8,6 +8,7 @@ import LicenseDownloader from '../../main/components/LicenseDownloader'
 import {PropTypes} from "prop-types";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
+import SalesPackageTable from "./SalesPackageTable";
 import moment from "moment";
 import { DATE_FORMAT } from "@constants";
 
@@ -655,7 +656,7 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { onRemove, hideButtons, fullSize, sort, listingId } = this.props;
+        const { onRemove, hideButtons, fullSize, sort, listingId, currency } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
 
@@ -674,54 +675,14 @@ class SalesPackageForm extends React.Component {
                         </div>
                     )}
 
-                    <div className="sales-package-table">
-                        { salesPackages.map( (salesPackage, i) => {
-                            let extraTerritories = ( salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
-
-                            if (salesPackage.sold) return;
-                            return (
-                                <div className="sales-package-container" key={`sales-package-${i}`}>
-                                    <div className="sales-cell name">
-                                        {salesPackage.name}
-                                        {extraTerritories && extraTerritories.length > 3 && (
-                                            <div style={{marginLeft: 5}}>
-                                                <ExtraTerritories
-                                                    showAll={salesPackage.regionNamed} extraTerritories={extraTerritories}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="sales-cell fee" title={salesPackage.fee}>
-                                        {this.isShowFee(salesPackage) && this.getFee(salesPackage)}
-                                    </div>
-
-                                    <div className="sales-cell bid">
-                                        {salesPackage.salesMethod === "BIDDING" && <img src={this.bidIcon} /> }
-                                    </div>
-
-                                    {!hideButtons && (
-                                        <div className="sales-cell buttons">
-                                            <img src={this.cancelIcon} onClick={() => {onRemove(i)}}/>
-                                            <i className="fa fa-edit" onClick={() => {this.editSalesPackage(salesPackage, i)}}/>
-                                        </div>
-                                    )}
-
-                                    {hideButtons && (
-                                        <div className="sales-cell license" style={{paddingLeft: 10, border: 0}}>
-                                            <LicenseDownloader
-                                                type={"BUNDLE"}
-                                                id={salesPackage.id}
-                                                listingId={listingId}
-                                                buttonType={true}
-                                            />
-                                        </div>
-                                    )}
-
-                                </div>
-                            )
-                        })}
-                    </div>
+                    <SalesPackageTable
+                        salesPackages={salesPackages}
+                        currency={currency}
+                        listingId={listingId}
+                        onRemove={onRemove}
+                        editSalesPackage={this.editSalesPackage}
+                        hideButtons={hideButtons}
+                    />
                 </div>
 
                 {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
