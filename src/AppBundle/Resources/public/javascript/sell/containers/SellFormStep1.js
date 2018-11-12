@@ -73,7 +73,7 @@ class SellFormStep1 extends React.Component {
 
     loadTournaments (sport, category) {
 
-        if( sport.custom ) return;
+        if( sport.custom || (sport.externalId && sport.externalId.startsWith("ca:")) ) return;
 
         let sportId = sport.externalId;
         let categoryId = ( category ) ? category.externalId : null;
@@ -295,7 +295,7 @@ class SellFormStep1 extends React.Component {
         let response;
 
         this.props.sports.forEach( ( sport ) => {
-            if ( sport.custom ) hasCustomSport = true;
+            if ( sport.custom || (sport.externalId && sport.externalId.startsWith("ca:")) ) hasCustomSport = true;
         });
 
         response = hasCustomSport && this.props.sports.length === 1;

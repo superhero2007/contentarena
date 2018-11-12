@@ -43,6 +43,22 @@ class NewFixture extends Component {
         e.preventDefault();
     };
 
+    handleBegDateBlur = (e) => {
+
+        const { handleDate } = this.props;
+        let date = moment(e.target.value);
+        const formatted = formatMomentToServerFormat(date);
+
+        if (date.isValid() === false) {
+
+        } else {
+            handleDate(formatted);
+        }
+
+        console.log(formatted)
+
+    }
+
     render() {
         const {onRemove, onAdd, onChange, value, showAdd, date, id} = this.props;
         const {isDatePickerEnabled, isDatePickerWithTimeEnabled} = this.state;
@@ -70,7 +86,8 @@ class NewFixture extends Component {
                                 placeholderText={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT}` : DATE_FORMAT}
                                 timeFormat={TIME_FORMAT}
                                 showTimeSelect={isDatePickerWithTimeEnabled}
-                                onChangeRaw={this.handleDateChangeRaw}
+                                onChangeRaw={undefined}
+                                onBlur={this.handleBegDateBlur}
                             />
 
                             {!isDatePickerWithTimeEnabled && (
