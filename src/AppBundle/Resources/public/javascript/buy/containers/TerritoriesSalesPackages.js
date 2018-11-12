@@ -59,12 +59,6 @@ class TerritoriesSalesPackages extends PureComponent {
                                     <img src={this.packageIcon}/>
                                 )}
 
-                                {salesPackage.territories.length > 1 && (
-                                    <b>
-                                        {salesPackage.territories.length}
-                                    </b>
-                                )}
-
                                 <span>
                                     {salesPackage.name}
                                 </span>
