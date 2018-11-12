@@ -569,7 +569,7 @@ class ContentService
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
         if ( isset($data->maxStep) ) {
-            $maxStep = $data->maxStep + 1;
+            $maxStep = $data->step + 1;
             if ( $maxStep > $content->getMaxStep()) $content->setMaxStep($maxStep);
         }
 
