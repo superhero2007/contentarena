@@ -72,6 +72,7 @@ class CommercialTerms extends React.Component {
             description,
             programDetails
         } = this.props;
+
         const {seasons} = this.state;
         return (
             <div>
@@ -84,8 +85,9 @@ class CommercialTerms extends React.Component {
                             {description}
                         </div>
                     </div>
-
                 )}
+
+                {programDetails && programDetails}
 
                 {(website || (attachments && attachments.length > 0)) && (
                     <div className="additional-items">
@@ -129,7 +131,7 @@ class CommercialTerms extends React.Component {
                 )}
 
                 {/*SEASON/FIXTURES*/}
-                {seasons && seasons.length && seasons.map((season, key) => (
+                {seasons && seasons.length > 0 && seasons.map((season, key) => (
                     <div key={"season-" + key} className="season-details">
                         <div className="title">
                             {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}

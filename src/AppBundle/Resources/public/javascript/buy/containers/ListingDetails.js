@@ -731,8 +731,7 @@ class ListingDetails extends React.Component {
 
                             {/*TAB CONTENT*/}
                             <div className={"listing-details-tab"}>
-
-                                { this.state.tab === "bundles" &&
+                                {tab === "bundles" &&
                                 <CommercialTerms
                                     profile={profile}
                                     onSelectPackage={this.selectPackage}
@@ -740,17 +739,15 @@ class ListingDetails extends React.Component {
                                     {...content}
                                 />
                                 }
-                                { this.state.tab === "grantofrights" &&
+                                {tab === "grantofrights" &&
                                 <TermSheet{...content}/>
                                 }
-                                { this.state.tab === "editedprogram" &&
+                                {tab === "editedprogram" &&
                                 <ProgramDetails {...content}/>
                                 }
-                                {this.state.tab === "seller" &&
+                                {tab === "seller" &&
                                 <Seller {...content}/>
                                 }
-
-
                             </div>
                         </div>
                     )}
