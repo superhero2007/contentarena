@@ -96,7 +96,7 @@
 
     {# COMPANY DATA#}
     {% set sellerCompany =  bid is defined and bid.sellerCompanySnapshot is not null ? bid.sellerCompanySnapshot : content.company %}
-    {% set buyerCompany =  bid is defined and bid.buyerCompanySnapshot is not null ? bid.buyerCompanySnapshot : bid.buyerUser.company %}
+    {% set buyerCompany =  bid is defined and bid.buyerCompanySnapshot is not null ? bid.buyerCompanySnapshot : null %}
     <div class="license-item">
         <table class="no-border">
             <tr>
