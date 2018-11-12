@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from "react-redux";
+import {PropTypes} from "prop-types";
+import Modal from 'react-modal';
 import {goTo} from "../../main/actions/utils";
 import BoardListing from '../components/BoardListing';
 import {updateProfile} from "../../main/actions/userActions";
-import {PropTypes} from "prop-types";
 import RightsLegend from "../../main/components/RightsLegend";
+import {customStyles} from "../../main/styles/custom";
 
 class ManageListings extends React.Component {
     constructor(props) {
@@ -108,8 +110,11 @@ class ManageListings extends React.Component {
                 flexDirection: 'column',
                 flex: 1
             }}>
-                <div style={{width: '100%', textAlign: 'right'}}>
+                <div style={{width: '100%', textAlign: 'right'}} className='top-row'>
                     <RightsLegend />
+                    <button className="ca-btn primary" onClick={this.showHelpModal}>
+                        {this.context.t("MANAGE_LISTINGS_HELP")}
+                    </button>
                 </div>
 
                 <div className={"board"}>
@@ -117,6 +122,11 @@ class ManageListings extends React.Component {
                     <div className={"column"}>
                         <div className={"column-title"}>
                             <div>{this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}</div> ({draft.length})
+                            <div>
+                                <a className="ca-btn primary" href="/contentlisting/new">
+                                    {this.context.t("MANAGE_LISTINGS_CREATE_LISTING")}
+                                </a>
+                            </div>
                         </div>
                         {loadingDraft &&
                         <div className="medium-spinner">
@@ -252,10 +262,61 @@ class ManageListings extends React.Component {
                         }
                     </div>
                 </div>
-
+                {this.renderModal()}
             </div>
         )
     }
+
+    renderModal() {
+        const { showHelpModal } = this.state;
+
+        return (
+            <Modal
+                isOpen={showHelpModal}
+                onRequestClose={this.hideHelpModal}
+                bodyOpenClassName={"selector"}
+                style={customStyles}
+                contentLabel=""
+            >
+                <div className='manage-listing-modal'>
+                    <div className="modal-title">
+                        {this.context.t("MANAGE_LISTINGS_HELP_MODAL_TITLE")}
+                        <i className="fa fa-times-circle-o close-icon" onClick={this.hideHelpModal}/>
+                    </div>
+                    <div className='modal-content'>
+                        <div className='help-item'>
+                            <div className='title'>1. {this.context.t("MANAGE_LISTINGS_HELP_MODAL_DRAFTS_TITLE")}</div>
+                            <div className='description'>{this.context.t("MANAGE_LISTINGS_HELP_MODAL_DRAFTS_DESCRIPTION")}</div>
+                        </div>
+                        <div className='help-item'>
+                            <div className='title'>2. {this.context.t("MANAGE_LISTINGS_HELP_MODAL_INACTIVE_TITLE")}</div>
+                            <div className='description'>{this.context.t("MANAGE_LISTINGS_HELP_MODAL_INACTIVE_DESCRIPTION")}</div>
+                        </div>
+                        <div className='help-item'>
+                            <div className='title'>3. {this.context.t("MANAGE_LISTINGS_HELP_MODAL_ACTIVE_TITLE")}</div>
+                            <div className='description'>{this.context.t("MANAGE_LISTINGS_HELP_MODAL_ACTIVE_DESCRIPTION")}</div>
+                        </div>
+                        <div className='help-item'>
+                            <div className='title'>4. {this.context.t("MANAGE_LISTINGS_HELP_MODAL_EXPIRED_TITLE")}</div>
+                            <div className='description'>{this.context.t("MANAGE_LISTINGS_HELP_MODAL_EXPIRED_DESCRIPTION")}</div>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+        );
+    }
+
+    showHelpModal = () => {
+        this.setState({
+            showHelpModal: true
+        });
+    };
+
+    hideHelpModal = () => {
+        this.setState({
+            showHelpModal: false
+        });
+    };
 }
 
 ManageListings.contextTypes = {

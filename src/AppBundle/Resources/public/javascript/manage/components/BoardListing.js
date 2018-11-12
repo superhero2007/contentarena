@@ -70,22 +70,7 @@ class BoardListing extends React.Component{
     };
 
     hideOptions = (e) => {
-        const {defaultAction} = this.props;
-        const {showOptions} = this.state;
         this.setState({showOptions: false});
-        if ( defaultAction && !showOptions ){
-            if ( defaultAction === "EDIT"){
-                this.edit()
-            }
-
-            if ( defaultAction === "VIEW"){
-                this.view()
-            }
-
-            if ( defaultAction === "SUBMIT"){
-                this.submit()
-            }
-        }
 
         e.stopPropagation();
     };
@@ -263,6 +248,12 @@ class BoardListing extends React.Component{
                     {status.name === 'SOLD_OUT' && <img src={soldIcon} />}
                     {hasPendingBids &&  <img src={exclamationRoundIcon} />}
                 </div>}
+
+                { (status.name === 'DRAFT') && (
+                    <div  className="edit-icon" onClick={this.edit}>
+                        <i className="fa fa-pencil" />
+                    </div>
+                )}
 
                 <div  className="menu-icon" onClick={this.toggleOptions}>
                     <i className="fa fa-bars" />

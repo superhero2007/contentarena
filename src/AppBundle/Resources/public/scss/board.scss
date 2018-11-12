@@ -1,5 +1,15 @@
 @import "vars";
 
+.top-row {
+  .RightsLegend {
+    vertical-align: middle;
+  }
+
+  .ca-btn {
+    margin-left: 15px;
+  }
+}
+
 .board {
   display: flex;
   flex-direction: row;
@@ -20,6 +30,10 @@
         font-weight: 600;
         display: inline;
       }
+
+      .ca-btn {
+        margin-top: 5px;
+      }
     }
     .listing {
       border: 1px solid #FFCC33;
@@ -31,12 +45,10 @@
       margin-bottom: 12px;
       position: relative;
       z-index: 1;
-      cursor: pointer;
       border-radius: 5px;
-      .menu-icon {
+
+      .menu-icon, .edit-icon {
         position: absolute;
-        top: 5px;
-        right: 0;
         cursor: pointer;
         height: 45px;
         display: flex;
@@ -47,6 +59,17 @@
         font-size: 22px;
         color: $font-color-5;
       }
+
+      .edit-icon {
+        top: 5px;
+        right: 32px;
+      }
+
+      .menu-icon {
+        top: 5px;
+        right: 0;
+      }
+
       .status-icon {
         position: absolute;
         cursor: pointer;
@@ -143,6 +166,7 @@
     border-top: 1px solid #E7E7E7;
   }
   .option {
+    cursor: pointer;
     font-size: 13px;
     margin: 0 0 15px 0;
     display: flex;
@@ -197,5 +221,24 @@
   }
   .button-confirm {
     background-color: #FFC94B;
+  }
+}
+
+.manage-listing-modal {
+  .modal-content {
+    padding: 15px;
+    padding-top: 0;
+    width: 600px;
+
+    .help-item {
+      .title {
+        font-size: 16px;
+      }
+
+      .description {
+        font-size: 12px;
+        padding-bottom: 8px;
+      }
+    }
   }
 }
