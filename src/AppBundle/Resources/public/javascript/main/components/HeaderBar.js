@@ -127,7 +127,7 @@ class HeaderBar extends  React.Component {
                     {this.context.t("HEADER_LINK_MESSAGES")}
                 </HeaderBarTab>
 
-                <HeaderNotifications />
+                {/*<HeaderNotifications />*/}
 
                 <div className="settings">
                     <i className="fa fa-gear" />
