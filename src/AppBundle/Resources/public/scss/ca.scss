@@ -1662,8 +1662,10 @@ button {
 
   .country {
     flex: 0 0 50%;
-    max-width: 50%;
     margin-bottom: 5px;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
