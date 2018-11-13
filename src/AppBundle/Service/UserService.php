@@ -161,6 +161,7 @@ class UserService
 
             if ( $user->getCompany()->getId() != $company->getId() ) return false;
 
+            if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
             if ( isset($data['vat']) ) $company->setVat($data['vat']);
             if ( isset($data['zip']) ) $company->setZip($data['zip']);
             if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
