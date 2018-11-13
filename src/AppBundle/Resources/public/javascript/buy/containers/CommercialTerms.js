@@ -142,26 +142,17 @@ class CommercialTerms extends React.Component {
                                     <div className="name">
                                         {fixture.name}
                                     </div>
-                                    <div className="d-flex align-items-center justify-content-between flex-wrap">
-                                        {season.fixtures.map(fixture => (
-                                            <div className="row-container" style={{width: '45%'}}>
-                                                <div className="name">
-                                                    {fixture.name}
-                                                </div>
-                                                <div className="actions">
-                                                    <div className="item">
-                                                        <i className="fa fa-calendar icon" />
-                                                        {!fixture.date && "Date N/A"}
-                                                        {fixture.date && Moment(fixture.date).format(DATE_FORMAT)}
-                                                    </div>
-                                                    <div className="item">
-                                                        <i className="fa fa-clock-o icon" />
-                                                        {!fixture.date && "Time N/A"}
-                                                        {fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
+                                    <div className="actions">
+                                        <div className="item">
+                                            <i className="fa fa-calendar icon" />
+                                            {!fixture.date && "Date N/A"}
+                                            {fixture.date && Moment(fixture.date).format(DATE_FORMAT)}
+                                        </div>
+                                        <div className="item">
+                                            <i className="fa fa-clock-o icon" />
+                                            {!fixture.date && "Time N/A"}
+                                            {fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
