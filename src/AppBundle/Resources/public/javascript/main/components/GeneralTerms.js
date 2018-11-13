@@ -17,7 +17,7 @@ class GeneralTerms extends Component {
         } = this.props;
 
         return (
-            <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center'}} className="terms-and-condition-wrapper">
+            <div style={{display: 'flex', marginBottom: 10}} className="terms-and-condition-wrapper">
                 <input
                     type="checkbox"
                     className="ca-checkbox"

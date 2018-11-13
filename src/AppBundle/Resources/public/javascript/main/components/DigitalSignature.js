@@ -3,7 +3,7 @@ import SignaturePad from 'react-signature-pad';
 import {PropTypes} from "prop-types";
 import { pdfIcon } from "./Icons";
 import {viewLicenseBid} from "../actions/utils";
-
+import GeneralTerms from "../../main/components/GeneralTerms";
 import cn from "classnames";
 
 class DigitalSignature extends React.Component{
@@ -59,7 +59,11 @@ class DigitalSignature extends React.Component{
             signaturePosition,
             signatureName,
             onChangeSignatureName,
-            onChangeSignaturePosition
+            onChangeSignaturePosition,
+            showTerms,
+            terms,
+            terms_arena,
+            updateContentValue,
         } = this.props;
 
         const { ready, isPlaceholderDisabled} = this.state;
@@ -67,9 +71,39 @@ class DigitalSignature extends React.Component{
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
 
-                <div className="base-full-input" style={{maxWidth: 'none'}}>
+                <div className="base-full-input" style={{maxWidth: 'none', marginBottom:10}}>
                     <label>{this.context.t('DIGITAL_SIGNATURE_INFO')}</label>
                 </div>
+
+                {showTerms && (
+                    <div className={"terms-confirm"}>
+                        <div style={{display: 'flex', marginBottom: 10}}>
+                            <input
+                                type="checkbox"
+                                className="ca-checkbox"
+                                defaultChecked={terms}
+                                value={terms}
+                                onChange={(e)=>{
+                                    updateContentValue('terms', e.target.checked)
+                                }}
+                                id="terms"
+                                style={{marginRight: 10}}
+                            />
+                            <label htmlFor="terms"/>
+                            {this.context.t("CL_STEP5_TERMS_1")}
+                        </div>
+
+                        <GeneralTerms
+                            defaultChecked={terms_arena}
+                            value={terms_arena}
+                            onChange={(e)=>{
+                                updateContentValue('terms_arena', e.target.checked)
+                            }}
+                            text={this.context.t("CL_STEP5_TERMS_2")}
+                            text2={this.context.t("CL_STEP5_TERMS_3")}
+                        />
+                    </div>
+                )}
 
                 <div className={"signature-info"}>
                     <span>{title}</span>

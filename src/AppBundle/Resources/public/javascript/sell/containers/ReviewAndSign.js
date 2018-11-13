@@ -13,7 +13,6 @@ import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
 import Comments from "../components/Comments";
 import RightsLegend from "../../main/components/RightsLegend";
-import GeneralTerms from "../../main/components/GeneralTerms";
 
 class ReviewAndSign extends React.Component {
 
@@ -266,38 +265,7 @@ class ReviewAndSign extends React.Component {
                         />
                     </div>
 
-                    <div className={"terms-confirm"}
-                         style={{
-                             padding: '40px 0px',
-                             width: '50%',
-                             margin: '0 auto'
-                         }}>
-                        <div style={{display: 'flex', marginBottom: 10}}>
-                            <input
-                                type="checkbox"
-                                className="ca-checkbox"
-                                defaultChecked={terms}
-                                value={terms}
-                                onChange={(e)=>{
-                                    updateContentValue('terms', e.target.checked)
-                                }}
-                                id="terms"
-                                style={{marginRight: 10}}
-                            />
-                            <label htmlFor="terms"/>
-                            {this.context.t("CL_STEP5_TERMS_1")}
-                        </div>
 
-                        <GeneralTerms
-                            defaultChecked={terms_arena}
-                            value={terms_arena}
-                            onChange={(e)=>{
-                                updateContentValue('terms_arena', e.target.checked)
-                            }}
-                            text={this.context.t("CL_STEP5_TERMS_2")}
-                            text2={this.context.t("CL_STEP5_TERMS_3")}
-                        />
-                    </div>
 
                     <DigitalSignature
                         onReady={(signature) => {
@@ -309,6 +277,10 @@ class ReviewAndSign extends React.Component {
                         onChangeSignaturePosition={e=>{
                             updateContentValue("signaturePosition", e.target.value);
                         }}
+                        showTerms={true}
+                        terms={terms}
+                        terms_arena={terms_arena}
+                        updateContentValue={updateContentValue}
                         customClass={'review-and-sign'}
                         ready={signatureReady}
                         signature={signature}
