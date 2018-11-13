@@ -3,6 +3,8 @@
  */
 
 import moment from "moment";
+import store from '../main/store';
+
 
 window.ContentArena = window.ContentArena || {};
 ContentArena.Utils = {
@@ -100,6 +102,10 @@ ContentArena.Utils = {
 
         });
 
+        let user = store.getState().user;
+
+        if (!content.signatureName) content.signatureName = user.firstName + " " + user.lastName;
+        if (!content.signaturePosition) content.signaturePosition = user.title;
 
         content.parsed = true;
 

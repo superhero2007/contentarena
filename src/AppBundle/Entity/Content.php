@@ -53,6 +53,20 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(name="signature_name", type="text", nullable=true)
+     */
+    private $signatureName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="signature_position", type="text", nullable=true)
+     */
+    private $signaturePosition;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @Groups({"listing"})
      */
@@ -1569,6 +1583,38 @@ class Content
     public function setExpiredNotified($expiredNotified)
     {
         $this->expiredNotified = $expiredNotified;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignatureName()
+    {
+        return $this->signatureName;
+    }
+
+    /**
+     * @param string $signatureName
+     */
+    public function setSignatureName($signatureName)
+    {
+        $this->signatureName = $signatureName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignaturePosition()
+    {
+        return $this->signaturePosition;
+    }
+
+    /**
+     * @param string $signaturePosition
+     */
+    public function setSignaturePosition($signaturePosition)
+    {
+        $this->signaturePosition = $signaturePosition;
     }
 
 

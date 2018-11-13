@@ -4,15 +4,21 @@ import Modal from 'react-modal';
 import { GenericModalStyle} from "./../../../main/styles/custom";
 import GeneralTerms from "./../../../main/components/GeneralTerms";
 import DigitalSignature from "./../../../main/components/DigitalSignature";
+import store from "../../../main/store";
 
 class AcceptBidModal extends Component {
     constructor(props) {
         super(props);
+
+        let user = store.getState().user;
+
         this.state = {
             signature: '',
             isFail: false,
             isLoading: false,
-            terms: false
+            terms: false,
+            signatureName: user.firstName + " " + user.lastName,
+            signaturePosition: user.title
         };
     }
 
@@ -20,12 +26,12 @@ class AcceptBidModal extends Component {
     handleAcceptBid = () => {
         this.setState({isLoading: true});
 
-        const {signature} = this.state;
+        const {signature,  signatureName, signaturePosition} = this.state;
         const {contentId, selectedBid, postAction, listingCustomId, onCloseModal} = this.props;
         let payload = selectedBid;
         payload.content = contentId;
 
-        ContentArena.ContentApi.acceptBid(payload, signature)
+        ContentArena.ContentApi.acceptBid(payload, signature, signatureName, signaturePosition)
             .then(
                 () => {
                     onCloseModal();
@@ -37,7 +43,7 @@ class AcceptBidModal extends Component {
 
     render() {
         const { isOpen, onCloseModal, selectedBid } = this.props;
-        const { isFail, isLoading, signature, terms } = this.state;
+        const { isFail, isLoading, signature, terms, signatureName, signaturePosition } = this.state;
 
         return <Modal isOpen={isOpen} className="modal-wrapper wide" style={GenericModalStyle}>
             <header className="modal-header">
@@ -52,6 +58,14 @@ class AcceptBidModal extends Component {
                         title={this.context.t("ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR")}
                         clearBtnText={this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                         signature={signature}
+                        signatureName={signatureName}
+                        signaturePosition={signaturePosition}
+                        onChangeSignatureName={e=>{
+                            this.setState({"signatureName": e.target.value});
+                        }}
+                        onChangeSignaturePosition={e=>{
+                            this.setState({"signaturePosition": e.target.value});
+                        }}
                         onReady={signature => { this.setState({signature}) }} />
                     <GeneralTerms
                         defaultChecked={terms}

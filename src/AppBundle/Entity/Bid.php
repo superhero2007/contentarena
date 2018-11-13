@@ -119,12 +119,39 @@ class Bid
     private $signature;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="signature_name", type="text", nullable=true)
+     */
+    private $signatureName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="signature_position", type="text", nullable=true)
+     */
+    private $signaturePosition;
+
+    /**
      * @var mixed
      *
      * @ORM\Column(name="seller_signature", type="string", nullable=true)
      */
     private $sellerSignature;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seller_signature_name", type="text", nullable=true)
+     */
+    private $sellerSignatureName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seller_signature_position", type="text", nullable=true)
+     */
+    private $sellerSignaturePosition;
 
     /**
      * @var mixed
@@ -166,6 +193,72 @@ class Bid
 
     public function __construct() {
     }
+
+    /**
+     * @return string
+     */
+    public function getSignatureName()
+    {
+        return $this->signatureName;
+    }
+
+    /**
+     * @param string $signatureName
+     */
+    public function setSignatureName($signatureName)
+    {
+        $this->signatureName = $signatureName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignaturePosition()
+    {
+        return $this->signaturePosition;
+    }
+
+    /**
+     * @param string $signaturePosition
+     */
+    public function setSignaturePosition($signaturePosition)
+    {
+        $this->signaturePosition = $signaturePosition;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSellerSignatureName()
+    {
+        return $this->sellerSignatureName;
+    }
+
+    /**
+     * @param string $sellerSignatureName
+     */
+    public function setSellerSignatureName($sellerSignatureName)
+    {
+        $this->sellerSignatureName = $sellerSignatureName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSellerSignaturePosition()
+    {
+        return $this->sellerSignaturePosition;
+    }
+
+    /**
+     * @param string $sellerSignaturePosition
+     */
+    public function setSellerSignaturePosition($sellerSignaturePosition)
+    {
+        $this->sellerSignaturePosition = $sellerSignaturePosition;
+    }
+
+
 
 
     /**

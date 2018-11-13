@@ -1308,12 +1308,32 @@
                 <tr>
                     <td width="50%"class="no-border">
                         {% if bid is defined and bid.sellerSignature is defined and bid.sellerSignature != null  %}
-                            {{ content.owner.fullName }}
+
+
+                            {% if bid.sellerSignatureName is defined and bid.sellerSignatureName is not null%}
+                                {{ bid.signatureName }}
+                                {% if bid.sellerSignaturePosition is defined and bid.sellerSignaturePosition is not null%}
+                                    {{ " - " }} {{ bid.sellerSignaturePosition }}
+                                {% endif %}
+                            {% else %}
+                                {{ content.owner.fullName }}
+                            {% endif %}
+
                             {% if bid.sellerSignatureDate is defined and bid.sellerSignatureDate is not null%}
                                 {{ " - " }} {{ bid.sellerSignatureDate | date("m/d/Y H:i", "CET") }} UTC
                             {% endif %}
                         {% elseif bid is defined and bid.sellerSignature is defined and bid.sellerSignature is null and content.signature is defined and bid.status.name == "APPROVED"  %}
-                            {{ content.owner.fullName }}
+
+                            {% if content.signatureName is defined and content.signatureName is not null%}
+                                {{ content.signatureName }}
+                                {% if content.signaturePosition is defined and content.signaturePosition is not null%}
+                                    {{ " - " }} {{ content.signaturePosition }}
+                                {% endif %}
+                            {% else %}
+                                {{ content.owner.fullName }}
+                            {% endif %}
+
+
                             {% if content.sellerSignatureDate is defined and content.sellerSignatureDate is not null%}
                                 {{ " - " }} {{ content.sellerSignatureDate | date("m/d/Y H:i", "CET") }} UTC
                             {% endif %}
@@ -1321,7 +1341,16 @@
                     </td>
                     <td width="50%" class="no-border">
                         {% if bid is defined and bid.signature is not null%}
-                            {{ bid.buyerUser.fullName }}
+
+                            {% if bid.signatureName is defined and bid.signatureName is not null%}
+                                {{ bid.signatureName }}
+                                {% if bid.signaturePosition is defined and bid.signaturePosition is not null%}
+                                    {{ " - " }} {{ bid.signaturePosition }}
+                                {% endif %}
+                            {% else %}
+                                {{ bid.buyerUser.fullName }}
+                            {% endif %}
+
                             {% if bid.buyerSignatureDate is defined and bid.buyerSignatureDate is not null%}
                                 {{ " - " }} {{ bid.buyerSignatureDate | date("m/d/Y H:i", "CET") }} UTC
                             {% endif %}

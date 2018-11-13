@@ -71,6 +71,17 @@
     }
   }
 
+  .signature-name-container {
+    max-width: 800px;
+    margin: 20px auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    input{
+      margin: 10px 20px 10px 0px;
+    }
+  }
   .signature-wrap {
     max-width: 800px;
     margin: 0 auto;

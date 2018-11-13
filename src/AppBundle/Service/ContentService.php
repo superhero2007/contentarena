@@ -583,6 +583,8 @@ class ContentService
         if ( isset($data->endDateMode) ) $content->setEndDateMode($data->endDateMode);
         if ( isset($data->endDateLimit) ) $content->setEndDateLimit($data->endDateLimit);
         if ( isset($data->programs) ) $content->setPrograms($data->programs);
+        if ( isset($data->signatureName) ) $content->setSignatureName($data->signatureName);
+        if ( isset($data->signaturePosition) ) $content->setSignaturePosition($data->signaturePosition);
         if ( isset($data->attachments) ) $content->setAttachments($data->attachments);
         if ( isset($data->annex) ) $content->setAnnex($data->annex);
         if ( isset($data->law) && isset($data->law->value) ) $content->setLaw($this->getCountry($data->law->value));

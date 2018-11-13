@@ -360,11 +360,13 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
-    acceptBid ( bid, signature ) {
+    acceptBid ( bid, signature, signatureName, signaturePosition ) {
         let deferred = jQuery.Deferred(),
             _this = this;
 
         bid.signature = signature;
+        bid.signatureName = signatureName;
+        bid.signaturePosition = signaturePosition;
 
         $.ajax({
             url: envhosturl + "api/bid/accept",

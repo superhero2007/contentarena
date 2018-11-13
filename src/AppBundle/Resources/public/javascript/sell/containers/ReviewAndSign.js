@@ -156,6 +156,8 @@ class ReviewAndSign extends React.Component {
             salesPackages,
             updateContentValue,
             signature,
+            signatureName,
+            signaturePosition,
             currency,
             company,
             terms_arena,
@@ -301,9 +303,17 @@ class ReviewAndSign extends React.Component {
                         onReady={(signature) => {
                             updateContentValue("signature", signature);
                         }}
+                        onChangeSignatureName={e=>{
+                            updateContentValue("signatureName", e.target.value);
+                        }}
+                        onChangeSignaturePosition={e=>{
+                            updateContentValue("signaturePosition", e.target.value);
+                        }}
                         customClass={'review-and-sign'}
                         ready={signatureReady}
                         signature={signature}
+                        signatureName={signatureName}
+                        signaturePosition={signaturePosition}
                     />
 
                     {<div className="buttons" style={{marginTop: 20}}>

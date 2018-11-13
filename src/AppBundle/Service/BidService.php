@@ -64,6 +64,8 @@ class BidService
         $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
         $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$request->get('salesMethod')));
         $signature = $request->get('signature');
+        $signatureName = $request->get('signatureName');
+        $signaturePosition = $request->get('signaturePosition');
         $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($request->get('salesPackage'));
         if ($request->get('salesMethod') == "FIXED" ) {
             $status = $this->em->getRepository('AppBundle:BidStatus')->find(2);
@@ -112,6 +114,14 @@ class BidService
             $bid->setBuyerSignatureDate($updatedAt);
         }
 
+        if ( isset( $signatureName ) ) {
+            $bid->setSignatureName($signatureName);
+        }
+
+        if ( isset( $signaturePosition ) ) {
+            $bid->setSignaturePosition($signaturePosition);
+        }
+
         $amount = ( $request->get('amount') != null )? $request->get('amount') : $request->get('totalFee');
 
         $bid->setType($type);
@@ -152,6 +162,8 @@ class BidService
         $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
         $rejectedStatus = $this->em->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"REJECTED"));
         $signature = $request->get('signature');
+        $signatureName = $request->get('signatureName');
+        $signaturePosition = $request->get('signaturePosition');
         $salesPackageId = $bid->getSalesPackage()->getId();
         $listingId = $bid->getContent()->getId();
         $listing = $this->em->getRepository('AppBundle:Content')->find($listingId);
@@ -172,6 +184,14 @@ class BidService
             $savedSignature = $this->fileUploader->saveImage($signature, $fileName );
             $bid->setSellerSignature($savedSignature);
             $bid->setSellerSignatureDate($updatedAt);
+        }
+
+        if ( isset( $signatureName ) ) {
+            $bid->setSellerSignatureName($signatureName);
+        }
+
+        if ( isset( $signaturePosition ) ) {
+            $bid->setSellerSignaturePosition($signaturePosition);
         }
 
 

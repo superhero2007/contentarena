@@ -425,6 +425,27 @@ class Settings extends React.Component {
                                     {this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
                             </a>
                         </div>
+
+                        <div className={"title"} style={{marginBottom: 0, marginTop: 50}}>
+                            {this.context.t("SETTINGS_SUPPORT_HEADER")}
+                        </div>
+                        <div className={"subtitle"} style={{marginBottom: 0}}>
+                            {this.context.t("SETTINGS_SUPPORT_TITLE")}
+                        </div>
+
+                        <div>
+                            <a href="https://contentarena.com/web/faq/"
+                               target="_blank"
+                               className="standard-button settings-link">
+                                {this.context.t("SETTINGS_LINKS_BUTTON_FAQ")}
+                            </a>
+                            <a href="/bundles/app/data/Content_Arena_Manual_1.0.pdf"
+                               download
+                               className="standard-button settings-link">
+                                {this.context.t("SETTINGS_LINKS_BUTTON_MANUAL")}
+                            </a>
+
+                        </div>
                     </div>
                 </div>
                 {password && <div className={"password-validation"}>

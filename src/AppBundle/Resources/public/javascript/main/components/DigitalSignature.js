@@ -11,7 +11,7 @@ class DigitalSignature extends React.Component{
         super(props);
 
         this.state = {
-            ready : (props.ready) ? props.ready :  false
+            ready : (props.ready) ? props.ready :  false,
         }
 
         this.signature = React.createRef();
@@ -26,7 +26,7 @@ class DigitalSignature extends React.Component{
     };
 
     done = () => {
-        const { blank } = this.state;
+        const { blank} = this.state;
         const { onReady } = this.props;
 
         let data = this.signature.current.toDataURL();
@@ -55,10 +55,14 @@ class DigitalSignature extends React.Component{
             licenseBidId,
             title = this.context.t("DIGITAL_SIGNATURE_TITLE"),
             clearBtnText = this.context.t("DIGITAL_SIGNATURE_BUTTON_CLEAR"),
-            customClass = ''
+            customClass = '',
+            signaturePosition,
+            signatureName,
+            onChangeSignatureName,
+            onChangeSignaturePosition
         } = this.props;
 
-        const { ready, isPlaceholderDisabled } = this.state;
+        const { ready, isPlaceholderDisabled} = this.state;
 
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
@@ -97,6 +101,17 @@ class DigitalSignature extends React.Component{
                     {!ready && (
                         <SignaturePad ref={this.signature} />
                     )}
+                </div>
+
+                <div className="signature-name-container">
+                    <label>
+                        Signed By
+                    </label>
+                    <div style={{display: "flex"}}>
+                        <input value={signatureName} disabled={ready} onChange={onChangeSignatureName} placeholder={"First Name Last Name"} />
+                        <input value={signaturePosition} disabled={ready} onChange={onChangeSignaturePosition} placeholder={"Position"} />
+                    </div>
+
                 </div>
 
                 <div className={"buttons"}>

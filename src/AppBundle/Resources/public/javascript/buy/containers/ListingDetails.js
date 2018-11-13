@@ -40,6 +40,8 @@ class ListingDetails extends React.Component {
         let listing = ContentArena.Utils.contentParserFromServer(props.listing) || {};
         let company = ContentArena.Utils.filterCompanyInfo(props.company);
 
+        console.log("PROPS", props)
+
         this.state = {
             companyUpdated : false,
             content : listing,
@@ -53,6 +55,8 @@ class ListingDetails extends React.Component {
             editCompanyOpen : false,
             bidApplied : false,
             openContactSellerModal: false,
+            signatureName: props.user.firstName + " " + props.user.lastName,
+            signaturePosition: props.user.title
         };
 
         if ( this.state.selectedPackage ) this.state.minimumBid =  this.state.selectedPackage.fee;
@@ -442,12 +446,14 @@ class ListingDetails extends React.Component {
     };
 
     placeBid = () => {
-        const {selectedPackage, signature, content, companyUpdated, company } = this.state;
+        const {selectedPackage, signature, content, companyUpdated, company , signatureName, signaturePosition} = this.state;
         this.setState({spinner : true});
         let bidObj = {
             amount : parseFloat(selectedPackage.fee),
             salesPackage : selectedPackage.id,
             signature : signature,
+            signatureName: signatureName,
+            signaturePosition: signaturePosition,
             totalFee : this.getTotalFee(),
             content : content.id,
             salesMethod : selectedPackage.salesMethod
@@ -598,6 +604,8 @@ class ListingDetails extends React.Component {
             tab,
             content,
             signature,
+            signatureName,
+            signaturePosition,
             bid,
             company,
             spinner,
@@ -854,6 +862,14 @@ class ListingDetails extends React.Component {
                                 title={this.context.t("PLEASE_SIGN_WITH_YOUR_CURSOR")}
                                 clearBtnText={this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                                 signature={signature}
+                                signatureName={signatureName}
+                                signaturePosition={signaturePosition}
+                                onChangeSignatureName={e=>{
+                                    this.setState({"signatureName": e.target.value});
+                                }}
+                                onChangeSignaturePosition={e=>{
+                                    this.setState({"signaturePosition": e.target.value});
+                                }}
                                 onReady={signature => { this.setState({signature}) }} />
                         </div>
 
