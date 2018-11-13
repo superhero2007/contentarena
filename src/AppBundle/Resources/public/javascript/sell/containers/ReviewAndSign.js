@@ -226,10 +226,10 @@ class ReviewAndSign extends React.Component {
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center"  style={{marginBottom: 20}}>
-                        <div>
+                        <div style={{marginLeft: 'auto'}}>
                             {this.context.t('CL_STEP5_PREVIEW_LISTING_DETAILS')}
                         </div>
-                        <div onClick={e => {goToListing(customId, true)}} className="ca-btn primary">
+                        <div onClick={e => {goToListing(customId, true)}} className="ca-btn primary" style={{marginLeft: 20}}>
                             {this.context.t('CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT')}
                         </div>
                     </div>

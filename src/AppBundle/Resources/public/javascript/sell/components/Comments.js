@@ -57,10 +57,10 @@ class Comments extends React.Component {
 
                 {addCommentButton && (
                     <div className="d-flex align-items-center justify-content-between">
-                        <div>
+                        <div style={{marginLeft: 'auto'}}>
                             {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
                         </div>
-                        <button className="ca-btn primary" onClick={this.addComment}>
+                        <button className="ca-btn primary" onClick={this.addComment} style={{marginLeft: 20}}>
                             {this.context.t("CL_STEP5_ADD_AMENDMENT")}
                         </button>
                     </div>
