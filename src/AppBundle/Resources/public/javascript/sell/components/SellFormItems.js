@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import Textarea from 'react-textarea-autosize';
 import Round from '../components/Round';
 import StaticRound from '../components/StaticRound';
 import {PropTypes} from "prop-types";
@@ -9,6 +9,16 @@ export const Description = ({value, onChange, title= "Enter a description", plac
         <label>{title}</label>
         <textarea onChange={onChange} value={value} placeholder={placeholder}/>
     </div>
+);
+
+export const RepresenationTextArea = ({ value = '' }) => (
+    <Textarea
+        value={value}
+        readOnly
+        minRows={1}
+        maxRows={8}
+        className="representation-textarea"
+        {...this.props} />
 );
 
 export const TitleBar = ({title, subtitle, infoText}) => (

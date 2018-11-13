@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ProgramTypesDefinitions } from "../../main/components/ProgramTypesDefinitions";
 import { PropTypes } from "prop-types";
+import { RepresenationTextArea } from "./../../sell/components/SellFormItems";
 
 class ProgramDetails extends Component {
 
@@ -16,7 +17,7 @@ class ProgramDetails extends Component {
                     {this.context.t("LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION")}
                 </div>
                 <div className="spacer-bottom txt description-text">
-                    {description}
+                    <RepresenationTextArea value={description} />
                 </div>
             </div>);
     };

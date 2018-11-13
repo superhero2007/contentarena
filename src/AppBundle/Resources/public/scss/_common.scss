@@ -73,6 +73,14 @@
   }
 }
 
+textarea.representation-textarea{
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: vertical;
+  min-height: fit-content;
+}
+
 input[type="radio"].ca-radio {
   display: inline-block;
   vertical-align: middle;

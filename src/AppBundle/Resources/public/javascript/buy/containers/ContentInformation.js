@@ -96,12 +96,6 @@ class ContentInformation extends React.Component {
                         </div>
                     </div>
                 )}
-
-
-
-
-
-
             </div>
         );
     }

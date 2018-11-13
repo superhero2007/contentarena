@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {test} from "../actions";
 import TerritoriesSalesPackages  from "./TerritoriesSalesPackages";
+import { RepresenationTextArea } from "./../../sell/components/SellFormItems";
 import {PropTypes} from "prop-types";
 import { pdfIcon } from './../../main/components/Icons';
 import Moment from "moment/moment";
@@ -82,7 +83,7 @@ class CommercialTerms extends React.Component {
                             {this.context.t("LISTING_DETAILS_EVENT_DESCRIPTION")}
                         </div>
                         <div className="txt description-text">
-                            {description}
+                            <RepresenationTextArea value={description} />
                         </div>
                     </div>
                 )}

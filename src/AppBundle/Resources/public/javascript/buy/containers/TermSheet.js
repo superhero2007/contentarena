@@ -5,6 +5,7 @@ import {RightDefinitions} from "../../sell/components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../../sell/components/ProductionStandardsDefinitions";
 import {RightItemsDefinitions} from "../../sell/components/RightItemsDefinitions";
 import {SuperRightProductionDetailsLabels} from "../../sell/components/SuperRightDefinitions";
+import { RepresenationTextArea } from "./../../sell/components/SellFormItems";
 import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
 import { DATE_FORMAT } from "@constants";
@@ -146,7 +147,7 @@ class TermSheet extends React.Component {
                 return true
             }
         });
-    }
+    };
 
     renderTextarea = (definitions) => {
         const {selectedRightsBySuperRight, rightsPackage} = this.props;
@@ -154,11 +155,12 @@ class TermSheet extends React.Component {
             if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
             return (
                 <div key={'textarea_'+i}>
-                    <div className="title spacer">
+                <div className="title spacer">
                         {right.name}
                     </div>
                     <div className="txt description-text">
-                        {selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]}
+                        <RepresenationTextArea
+                            value={selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]} />
                     </div>
                 </div>
             )
@@ -214,7 +216,7 @@ class TermSheet extends React.Component {
                             {this.context.t("LISTING_DETAILS_PROGRAM_DEFINITION")}
                         </div>
                         <div className="txt description-text">
-                            {programDescription}
+                            <RepresenationTextArea value={programDescription} />
                         </div>
                     </div>
                 )}
@@ -293,7 +295,9 @@ class TermSheet extends React.Component {
                             {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
                         </div>
                         <div className="txt description-text">
-                            {COMMENTS_RIGHTS}
+                            <RepresenationTextArea
+                                value={COMMENTS_RIGHTS} />
+
                         </div>
                     </div>
                 )}

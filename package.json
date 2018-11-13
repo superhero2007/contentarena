@@ -26,6 +26,7 @@
     "react-signature-pad": "0.0.6",
     "react-table": "^6.8.2",
     "react-tagsinput": "^3.19.0",
+    "react-textarea-autosize": "^7.1.0-1",
     "react-toggle": "^4.0.2",
     "react-tooltip": "^3.6.1",
     "redux": "^3.7.2",
