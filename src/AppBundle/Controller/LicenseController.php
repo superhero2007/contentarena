@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Service\FileUploader;
 use AppBundle\Service\TestService;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -284,6 +285,7 @@ class LicenseController extends Controller
                 /* @var Company $company */
                 $company = $user->getCompany();
                 $customCompany = $request->query->get("company");
+
                 if (isset($customCompany['address'])) $company->setAddress($customCompany['address']);
                 if (isset($customCompany['address2'])) $company->setAddress2($customCompany['address2']);
                 if (isset($customCompany['legalName'])) $company->setLegalName($customCompany['legalName']);
@@ -298,9 +300,11 @@ class LicenseController extends Controller
                 }
 
                 $user->setCompany($company);
-
+                $buyerCompanySnapshot = new CompanySnapshot($company);
+                $bid->setBuyerCompanySnapshot($buyerCompanySnapshot);
             }
             $bid->setBuyerUser($user);
+
 
             $viewElements['bid'] = $bid;
         }

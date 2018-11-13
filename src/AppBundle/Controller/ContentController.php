@@ -196,15 +196,12 @@ class ContentController extends Controller
             return $response;
         }
 
-        $pendingStatus = $this->getDoctrine()->getRepository("AppBundle:BidStatus")->findOneBy(array("name"=>"PENDING"));
-
         foreach ($content->getSalesPackages() as $salesBundle){
             /**
              * @var SalesPackage $salesBundle
              * @var Bid $bid
              */
             $bid = $this->getDoctrine()->getRepository("AppBundle:Bid")->findOneBy(array(
-                "status" => $pendingStatus,
                 "salesPackage"=> $salesBundle,
                 "buyerCompany" => $user->getCompany()
             ));
