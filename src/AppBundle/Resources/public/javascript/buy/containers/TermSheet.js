@@ -282,7 +282,6 @@ class TermSheet extends React.Component {
                         }
                     </div>
                     }
-
                 </div>
 
                 <div>

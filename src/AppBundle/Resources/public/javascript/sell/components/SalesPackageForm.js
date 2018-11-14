@@ -675,14 +675,18 @@ class SalesPackageForm extends React.Component {
                         </div>
                     )}
 
-                    <SalesPackageTable
-                        salesPackages={salesPackages}
-                        currency={currency}
-                        listingId={listingId}
-                        onRemove={onRemove}
-                        editSalesPackage={this.editSalesPackage}
-                        hideButtons={hideButtons}
-                    />
+
+                    {salesPackages.length > 0 && <div className="territorial-bundles-wrapper">
+                        <SalesPackageTable
+                            salesPackages={salesPackages}
+                            currency={currency}
+                            listingId={listingId}
+                            onRemove={onRemove}
+                            editSalesPackage={this.editSalesPackage}
+                            hideButtons={hideButtons}
+                        />
+                    </div>}
+
                 </div>
 
                 {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>

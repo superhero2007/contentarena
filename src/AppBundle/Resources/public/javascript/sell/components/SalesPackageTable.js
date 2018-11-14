@@ -6,13 +6,9 @@ import LicenseDownloader from '../../main/components/LicenseDownloader'
 
 const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,editSalesPackage,onRemove}, context) => {
 
-    const isShowFee = (salesPackage) => {
-        return salesPackage.salesMethod !== "BIDDING" || (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0);
-    };
-
     const getFee = (salesPackage) => {
         const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber.toLocaleString() + " " + getCurrencySymbol();
+        return feeNumber && feeNumber > 0 ? `${feeNumber.toLocaleString()} ${getCurrencySymbol()}` : '-';
     };
 
     const getCurrencySymbol = () => {
@@ -36,7 +32,6 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                     headerClassName: 'table-header-big',
                     className: 'table-header-big',
                     Cell: props => {
-                        console.log(props);
                         const salesPackage = props.original;
                         if (salesPackage.sold) return null;
                         let extraTerritories = (salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
@@ -58,6 +53,7 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                     Header: context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
                     headerClassName: 'table-header-big',
                     className: 'table-header-big',
+                    width: 200,
                     Cell: props => {
                         const salesPackage = props.original;
                         if (salesPackage.sold) return null;
@@ -70,16 +66,15 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                     Header: context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
                     headerClassName: 'table-header-big',
                     className: 'table-header-big',
+                    width: 200,
                     Cell: props => {
                         const salesPackage = props.original;
                         if (salesPackage.sold) return null;
-                        if (isShowFee(salesPackage)) {
-                            return (
-                                <div title={salesPackage.fee}>
-                                    {getFee(salesPackage)}
-                                </div>
-                            )
-                        }
+                        return (
+                            <div title={salesPackage.fee}>
+                                {getFee(salesPackage)}
+                            </div>
+                        )
                     }
                 },
                 {
