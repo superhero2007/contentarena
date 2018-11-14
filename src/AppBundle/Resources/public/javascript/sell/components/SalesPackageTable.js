@@ -23,7 +23,7 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
     return (
         <ReactTable
             className={"ca-table round-0"}
-            defaultPageSize={30}
+            defaultPageSize={15}
             showPageSizeOptions={false}
             noDataText={null}
             showPagination={true}
