@@ -363,6 +363,10 @@ i.fa.ca-tooltip {
   }
 }
 
+.ReactTable .rt-noData {
+  display: none;
+}
+
 .ReactTable.ca-table {
   font-size: 14px;
   font-weight: 600;

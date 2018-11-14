@@ -25,6 +25,7 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
             className={"ca-table round-0"}
             defaultPageSize={30}
             showPageSizeOptions={false}
+            noDataText={null}
             showPagination={false}
             minRows={0}
             resizable={false}
