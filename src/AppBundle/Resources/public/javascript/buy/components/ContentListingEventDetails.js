@@ -234,7 +234,7 @@ class ContentListingEventDetails extends React.Component {
                                     </div>
                                 </div>
                             )}
-                            {sportCategory[0].name === "" && customCategory (
+                            {sportCategory[0].name === "" && customCategory && (
                                 <div className="event">
                                     <div className="event-icon">
                                         {sportCategoryIcon}
