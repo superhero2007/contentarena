@@ -198,7 +198,7 @@
       padding-right: 10px;
     }
   }
-  .limited-sales-package{
+  .limited-sales-package {
     max-width: 270px;
   }
   .additional {
@@ -222,7 +222,7 @@
       }
 
       .icon {
-        color: #3399FF;
+        color: #EF3020;
         font-size: 26px;
         cursor: pointer;
       }
@@ -383,7 +383,7 @@
       flex: 1;
       font-size: 14px;
 
-      .legend-wrapper{
+      .legend-wrapper {
         margin-bottom: 10px;
       }
 
@@ -415,7 +415,7 @@
         }
       }
 
-        .listing-rights {
+      .listing-rights {
         margin-bottom: 15px;
         padding-bottom: 5px;
         border-bottom: 1px solid $color-grey;
@@ -521,7 +521,7 @@
               margin-bottom: 20px;
             }
 
-            .row-item-wrapper{
+            .row-item-wrapper {
               padding: 20px 0;
               border-top: 1px solid $font-color-2;
 
@@ -557,7 +557,7 @@
         font-size: 13px;
         margin-bottom: 20px;
       }
-      .description-text{
+      .description-text {
         font-size: 16px !important;
       }
 
@@ -575,7 +575,7 @@
             padding: 10px 20px;
             margin-right: 10px;
 
-            .attachment-item a{
+            .attachment-item a {
               line-height: 25px;
 
               img {
@@ -647,7 +647,7 @@
           display: table;
           width: 100%;
 
-          .sales-package-container, .sales-package-header{
+          .sales-package-container, .sales-package-header {
             padding: 15px 0;
             display: table-row;
 
@@ -658,24 +658,26 @@
               padding: 10px 0;
               border-bottom: 1px solid $color-grey-light;
 
-              &.name{
+              &.name {
                 text-align: left;
-                b, span, img{ margin-right: 15px; }
-                img{
+                b, span, img {
+                  margin-right: 15px;
+                }
+                img {
                   height: 23px;
                   width: 26px;
                 }
               }
 
-              &.bid{
+              &.bid {
                 padding-top: 5px;
               }
 
-              &.bid, &.info{
+              &.bid, &.info {
                 width: 40px;
               }
 
-              &.price{
+              &.price {
                 text-align: right;
                 padding-right: 10px;
 
@@ -683,7 +685,7 @@
                 white-space: nowrap;
               }
 
-              &.buttons{
+              &.buttons {
                 width: 150px;
               }
 
@@ -693,7 +695,7 @@
             }
           }
 
-          .sales-package-header .package-row{
+          .sales-package-header .package-row {
             border-bottom: 1px solid $black-color;
           }
         }
