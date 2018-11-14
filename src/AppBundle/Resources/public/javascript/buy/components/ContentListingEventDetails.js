@@ -31,7 +31,7 @@ class ContentListingEventDetails extends React.Component {
     buildSeasonYear = (season) => {
 
         if (season.from !== undefined &&
-            ( season.to === undefined || season.to === "" || season.to === 0 || season.from === season.to)
+            ( season.to === undefined || season.to === "" || season.to === 0 || season.to === "Not applicable" || season.from === season.to)
         ){
             return season.from
         }
@@ -115,7 +115,7 @@ class ContentListingEventDetails extends React.Component {
             }
 
             if (s.from) {
-                if (!s.to) {
+                if (!s.to || s.to === "Not applicable") {
                     s.to = s.from;
                     s.year = s.from
                 } else {

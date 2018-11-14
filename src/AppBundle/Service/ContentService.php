@@ -881,11 +881,11 @@ class ContentService
             if ( isset($seasonData->startDate) ) $season->setStartDate(new \DateTime($seasonData->startDate));
             if ( isset($seasonData->year) ) $season->setYear($seasonData->year);
 
-            if ( isset($seasonData->from) && !isset($seasonData->to) ){
+            if ( isset($seasonData->from) && (!isset($seasonData->to) || $seasonData->to == "Not applicable" ) ){
                 $season->setYear($seasonData->from);
             }
 
-            if ( isset($seasonData->from) && isset($seasonData->to) ){
+            if ( isset($seasonData->from) && isset($seasonData->to) && $seasonData->to != "Not applicable"){
                 $season->setYear( substr($seasonData->from, -2)."/".substr($seasonData->to, -2) );
             }
 
