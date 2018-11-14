@@ -519,7 +519,7 @@ class SalesPackageForm extends React.Component {
                                     </div>
                                     {installment.type !== "DATE" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DATE",i)}}  />}
                                     { installment.type === "DATE" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
-                                    <div className={"title"}>
+                                    <div className={"title"} onClick={() => { this.setInstallmentType("DATE",i)}}>
                                         <DatePicker
                                             disabled={installment.type !== "DATE"}
                                             selected={installment.date}
@@ -531,7 +531,7 @@ class SalesPackageForm extends React.Component {
                                     </div>
                                     { installment.type !== "DAY" && <i style={installmentIconStyle} className="fa fa-circle-thin" onClick={() => { this.setInstallmentType("DAY",i)} }/>}
                                     { installment.type === "DAY" && <i style={installmentIconStyle} className="fa fa-check-circle-o" />}
-                                    <div className={"title"} >
+                                    <div className={"title"} onClick={() => { this.setInstallmentType("DAY",i)} }>
                                         <input
                                             type="number"
                                             min={0}

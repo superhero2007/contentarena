@@ -80,9 +80,11 @@ class LicenseDateSelector extends React.Component {
                                         id={"license-start-contract"}
                                         className="ca-radio package-selector"
                                     />
-                                    {this.context.t("CL_STEP3_LICENSE_POPUP_START_CONCLUSION")}
+                                    <span onClick={() => { this.onDataChange("startDateMode", "LICENSE")}}>
+                                        {this.context.t("CL_STEP3_LICENSE_POPUP_START_CONCLUSION")}
+                                    </span>
                                 </div>
-                                <div className="column">
+                                <div className="column" onClick={() => { this.onDataChange("startDateMode", "DATE")}}>
                                     <input type="radio"
                                         checked={startDateMode === "DATE"}
                                         onChange={ (e) =>{
@@ -108,7 +110,7 @@ class LicenseDateSelector extends React.Component {
                                 {this.context.t("CL_STEP3_LICENSE_POPUP_END")}
                             </label>
                             <div className="row">
-                                <div className="column">
+                                <div className="column" onClick={() => { this.onDataChange("endDateMode", "LIMITED")}}>
                                     <input type="radio"
                                            checked={endDateMode==="LIMITED"}
                                            onChange={ (e) =>{
@@ -127,7 +129,7 @@ class LicenseDateSelector extends React.Component {
                                         {this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
                                     </span>
                                 </div>
-                                <div className="column">
+                                <div className="column" onClick={() => { this.onDataChange("endDateMode", "DATE")}}>
                                     <input type="radio"
                                            checked={endDateMode==="DATE"}
                                            onChange={ (e) =>{
@@ -155,7 +157,7 @@ class LicenseDateSelector extends React.Component {
                                            id={"license-end-unlimited"}
                                            className="ca-radio package-selector"
                                     />
-                                    <span style={{padding: '12px 0'}}>
+                                    <span style={{padding: '12px 0'}} onClick={() => { this.onDataChange("endDateMode", "UNLIMITED")}}>
                                         {this.context.t("Unlimited")}
                                     </span>
                                 </div>
