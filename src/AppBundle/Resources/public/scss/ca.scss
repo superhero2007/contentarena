@@ -163,6 +163,7 @@ button {
       flex-direction: row;
       margin: 0 0 20px 0;
       flex-wrap: wrap;
+
       .rights-box-item {
         min-height: 40px;
         flex-direction: row;
@@ -870,6 +871,13 @@ button {
             align-items: center;
             height: 35px;
           }
+        }
+
+        .territorial-bundles-wrapper{
+          width: 1100px;
+          margin: 0 auto;
+          max-height: 507px; //fit for 10 items
+          overflow: auto;
         }
 
         .sales-package-table {
