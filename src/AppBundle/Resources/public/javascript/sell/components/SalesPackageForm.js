@@ -675,14 +675,14 @@ class SalesPackageForm extends React.Component {
                         </div>
                     )}
 
-                    <SalesPackageTable
+                    {salesPackages.length > 0 && <SalesPackageTable
                         salesPackages={salesPackages}
                         currency={currency}
                         listingId={listingId}
                         onRemove={onRemove}
                         editSalesPackage={this.editSalesPackage}
                         hideButtons={hideButtons}
-                    />
+                    />}
                 </div>
 
                 {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
