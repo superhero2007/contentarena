@@ -63,7 +63,7 @@ class RightsFilter extends React.Component {
         }
 
         this.props.updateCountries(selectedCountry);
-        this.props.updateIncludedCountries(includeAllCountries);
+        //this.props.updateIncludedCountries(includeAllCountries);
 
         this.onApplyFilter();
     };
@@ -151,6 +151,10 @@ class RightsFilter extends React.Component {
                         <PopupCountrySelector ref="countrySelector"
                                               value={countries}
                                               includeAllCountries={includeAllCountries}
+                                              onChangeRadio={(c)=>{
+                                                  console.log("ASDASD",c)
+                                                  this.props.updateIncludedCountries(c);
+                                              }}
                                               onSelect={this.selectTerritory}
                         />
 

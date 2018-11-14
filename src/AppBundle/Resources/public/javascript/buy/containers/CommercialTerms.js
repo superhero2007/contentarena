@@ -143,13 +143,13 @@ class CommercialTerms extends React.Component {
                                     <div className="name">
                                         {fixture.name}
                                     </div>
-                                    <div className="actions">
-                                        <div className="item">
+                                    <div className="actions" style={{minWidth: 230}}>
+                                        <div className="item" style={{width: "50%", marginLeft: 0}}>
                                             <i className="fa fa-calendar icon" />
                                             {!fixture.date && "Date N/A"}
                                             {fixture.date && Moment(fixture.date).format(DATE_FORMAT)}
                                         </div>
-                                        <div className="item">
+                                        <div className="item" style={{width: "50%", marginLeft: 0}}>
                                             <i className="fa fa-clock-o icon" />
                                             {!fixture.date && "Time N/A"}
                                             {fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
