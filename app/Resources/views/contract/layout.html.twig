@@ -370,7 +370,7 @@
             <label>
                 Program Description:
             </label>
-            <textarea>{{ content.programDescription }}</textarea>
+                {{ content.programDescription }}
         </div>
     </div>
     {% if content.rightsPackage| has_right("PR") and content.extraData.PROGRAM_NAME is defined %}
@@ -384,7 +384,7 @@
                 {% if content.extraData.PROGRAM_DESCRIPTION is defined %}
                     <div class="license-item-content">
                         <label>Edited Program Description</label>
-                        <textarea>{{ content.extraData.PROGRAM_DESCRIPTION }}</textarea>
+                        {{ content.extraData.PROGRAM_DESCRIPTION }}
                     </div>
                 {% endif %}
 
@@ -499,9 +499,7 @@
                 <td>Right to Sublicense</td>
                 {% for right in content.rightsPackage %}
                     <td>
-                        <textarea>
-                            {{ content.selectedRightsBySuperRight[right.id].items["SUBLICENSE"] | right_definitions_label}}
-                        </textarea>
+                        {{ content.selectedRightsBySuperRight[right.id].items["SUBLICENSE"] | right_definitions_label}}
                     </td>
                 {% endfor %}
             </tr>
@@ -509,9 +507,7 @@
                 <td>Reserved Rights</td>
                 {% for right in content.rightsPackage %}
                     <td>
-                        <textarea>
                             {{ content.selectedRightsBySuperRight[right.id].items["RESERVED_RIGHTS"] | right_definitions_label}}
-                        </textarea>
                     </td>
                 {% endfor %}
             </tr>
@@ -552,9 +548,7 @@
                 <label>
                     Transmission Form Details:
                 </label>
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
@@ -565,9 +559,7 @@
                 <label>
                     Transmission Means Details:
                 </label>
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
@@ -578,9 +570,7 @@
                 <label>
                     Right to Sublicense Details:
                 </label>
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
@@ -591,9 +581,7 @@
                 <label>
                     Number of Runs Details:
                 </label>
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
@@ -604,9 +592,7 @@
                 <label>
                     Exploitation Window Details:
                 </label>
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
@@ -617,9 +603,7 @@
                 <label>
                     Reserved Right Details:
                 </label>
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
@@ -683,9 +667,7 @@
     {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["LICENSED_LANGUAGES_TEXTAREA"] is defined%}
         <div class="license-item">
             <div class="license-item-content">
-                <textarea>
                     {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["LICENSED_LANGUAGES_TEXTAREA"] }}
-                </textarea>
             </div>
         </div>
     {% endif %}
