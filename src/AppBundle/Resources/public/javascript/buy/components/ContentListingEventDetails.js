@@ -231,7 +231,6 @@ class ContentListingEventDetails extends React.Component {
                                     </div>
                                     <div className="event-text">
                                         {sportCategory[0].name}
-                                        {}
                                     </div>
                                 </div>
                             )}
