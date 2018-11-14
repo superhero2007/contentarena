@@ -37,9 +37,13 @@ class PopupCountrySelector extends React.Component {
     };
 
     handleOptionChange = (changeEvent) => {
+        const {
+            onChangeRadio
+        } = this.props;
         this.setState({
             selectedOption: changeEvent.target.value
         });
+        onChangeRadio(changeEvent.target.value ==="multiple")
     };
 
     handleCountryChange = (value) => {

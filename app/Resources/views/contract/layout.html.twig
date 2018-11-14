@@ -1216,6 +1216,7 @@
                     {% for installment in bundle.installments %}
                         <div class="license-item-content">
                             <label>{{ loop.index }} installment:</label>
+                            {{ installment.value }}{{ "% - " }}
                             {% if installment.type == "DATE" %}
                                 {{ installment.date | date(("d/m/Y"))  }}
                             {% elseif installment.type == "DAY" %}

@@ -257,8 +257,8 @@ class BidService
         $bid = $this->em->getRepository('AppBundle:Bid')->find($request->get('id'));
 
         /* @var $buyerUser User */
-        $buyerUser = $bid->getBuyerUser();
-        if ( $buyerUser->getId() == $user->getId() || $bid->getContent()->isOwner($user) ){
+        $buyerCompany = $bid->getBuyerCompany();
+        if ( $buyerCompany->getId() == $user->getCompany()->getId() || $bid->getContent()->isOwner($user) ){
             $this->em->remove($bid);
             $this->em->flush();
             return true;

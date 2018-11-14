@@ -81,6 +81,7 @@ class SellButtons extends React.Component {
             && law !== null
             && jurisdiction !== null
             && jurisdiction !== undefined
+            && jurisdiction !== ""
             && salesPackages.length > 0
             && companyIsValid(company);
 
@@ -94,7 +95,7 @@ class SellButtons extends React.Component {
         if ( !expiresAt ) message += "<br/>- Select listing expiry.";
         if ( !companyIsValid(company) ) message += "<br/>- Enter company information.";
         if ( law === null) message += "<br/>- Select application law";
-        if ( jurisdiction === null || jurisdiction === undefined ) message += "<br/>- Enter place of jurisdiction";
+        if ( jurisdiction === null || jurisdiction === undefined || jurisdiction === "" ) message += "<br/>- Enter place of jurisdiction";
 
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
 
