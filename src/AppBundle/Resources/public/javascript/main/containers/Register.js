@@ -277,12 +277,19 @@ class Register extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_COUNTRY")} *
                             </label>
-                            <CountrySelector multi={false} value={country}
-                                             onChange={(e)=>{
-                                if (e && e.value ) user.company.country.name = e.value;
-                                if (e === null) user.company.country = {};
-                                this.setState({user});
-                            }}/>
+                            <CountrySelector
+                                multi={false}
+                                value={country}
+                                onChange={(e)=>{
+                                    user.company.country = {};
+                                    if (e && e.value ) {
+                                        if (!user.company.country ) user.company.country = {};
+                                        user.company.country.name = e.value;
+                                    }
+                                    if (e === null) user.company.country = {};
+                                    this.setState({user});
+                                }}
+                            />
                         </div>
                     </div>
                 </div>}
