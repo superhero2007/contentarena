@@ -6,6 +6,8 @@ import DatePicker from '@components/DatePicker';
 import {PropTypes} from "prop-types";
 import moment from "moment";
 import { DATE_FORMAT } from "@constants";
+import NumberFormat from 'react-number-format';
+import {getCurrencySymbol} from "../../main/actions/utils";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -213,7 +215,7 @@ class SalesPackageEdit extends React.Component {
 
     render = () => {
 
-        const {salesPackages, salesPackageId} = this.props;
+        const {salesPackages, salesPackageId, currency} = this.props;
         let salesPackage = salesPackages[salesPackageId] || {};
 
         return <Modal
@@ -288,13 +290,16 @@ class SalesPackageEdit extends React.Component {
                                     {this.state.salesMethod === this.fixed && "Fixed fee"}
                                     {this.state.salesMethod !== this.fixed && "Minimum bid (optional)"}
                                 </span>
-                                <input
-                                    type="number"
-                                    min={0}
-                                    onChange={this.updateFee}
+                                <NumberFormat
+                                    thousandSeparator={true}
                                     value={this.state.fee}
-                                    style={{ height: "26px", width: "80px" }}/>
-                                <span style={{width: 'auto', padding: '0 10px'}}>{ this.getCurrencySymbol() }</span>
+                                    onValueChange={(values) => {
+                                        const {value} = values;
+                                        this.setState({fee : value})
+                                    }}
+                                    min={0}
+                                    style={{ height: "26px", width: "100px" }}
+                                    prefix={getCurrencySymbol(currency)+ " "} />
                             </div>
                         </div>
                     </div>
@@ -397,14 +402,6 @@ class SalesPackageEdit extends React.Component {
 
     };
 
-    getFee = (salesPackage) => {
-        return salesPackage.fee + " " + this.getCurrencySymbol();
-    };
-
-    getCurrencySymbol = () => {
-        const {currency} = this.props;
-        return (currency === "EUR" ? "€" : "$");
-    };
 
 }
 

@@ -28,6 +28,7 @@ import { getListingImage } from "./../../common/utils/listing";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
 import GeneralTerms from "../../main/components/GeneralTerms";
+import NumberFormat from 'react-number-format';
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -496,8 +497,8 @@ class ListingDetails extends React.Component {
         return activeTab === tab ? 'active': '';
     };
 
-    onBidChange = () => {
-        this.setState({bid: +this.bidInput.value});
+    onBidChange = (value) => {
+        this.setState({bid: value});
     };
 
     getTechnicalFeeLabel = () => {
@@ -587,9 +588,12 @@ class ListingDetails extends React.Component {
         if (!parseFloat(minimumBid)) return;
 
         let bidValue = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(minimumBid) + 1 : parseFloat(minimumBid);
-        bidValue = `${bidValue + getCurrencySymbol(selectedPackage.currency.code)}`;
 
-        return <i>({this.context.t("MIN_BID")} {bidValue})</i>;
+        return <i>({this.context.t("MIN_BID")} <NumberFormat
+            thousandSeparator={true}
+            value={bidValue}
+            displayType={'text'}
+            prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "} />)</i>;
     };
 
     handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
@@ -788,17 +792,19 @@ class ListingDetails extends React.Component {
                                     <span className="bid-label">
                                         {this.context.t("Bid")}
                                         {this.getMinBid()}
-
                                     </span>
                                     <span className="bid-value right-section">
                                         <div className="bid-change-value">
-                                            <input
+                                            <NumberFormat
+                                                thousandSeparator={true}
                                                 ref={bidInput => {this.bidInput = bidInput}}
-                                                type="number"
                                                 value={bid}
-                                                onChange={this.onBidChange}
-                                                min={selectedPackage.fee} />
-                                            {` ${getCurrencySymbol(selectedPackage.currency.code)}`}
+                                                onValueChange={(values) => {
+                                                    const {value} = values;
+                                                    this.onBidChange(value)
+                                                }}
+                                                min={selectedPackage.fee}
+                                                prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "} />
                                         </div>
                                         <div className="bid-apply-changes"
                                              data-tip
@@ -823,7 +829,11 @@ class ListingDetails extends React.Component {
                                 <div className="bid-total">
                                     <span className="bid-label">{this.context.t("Total")}</span>
                                     <span className={cn('bid-value', {'padding-right': checkoutType !== 'BUY_NOW'})}>
-                                        <span>{this.getTotalFee()}</span> {getCurrencySymbol(selectedPackage.currency.code)}
+                                        <NumberFormat
+                                            thousandSeparator={true}
+                                            value={this.getTotalFee()}
+                                            displayType={'text'}
+                                            prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "} />
                                     </span>
                                 </div>
                             </div>

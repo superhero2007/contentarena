@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import {PropTypes} from "prop-types";
 import ExtraTerritories from '../../main/components/ExtraTerritories';
 import Installments from '../components/Installments';
+import NumberFormat from 'react-number-format';
+import {getCurrencySymbol} from "../../main/actions/utils";
 
 class TerritoriesSalesPackages extends PureComponent {
     constructor(props) {
@@ -16,7 +18,11 @@ class TerritoriesSalesPackages extends PureComponent {
 
     getFee = (salesPackage) => {
         const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol(salesPackage.currency.code);
+        return <NumberFormat
+            thousandSeparator={true}
+            value={feeNumber}
+            displayType={'text'}
+            prefix={getCurrencySymbol(salesPackage.currency.code)+ " "} />
     };
 
     getCurrencySymbol = (currency) => {

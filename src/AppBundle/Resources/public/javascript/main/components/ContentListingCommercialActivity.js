@@ -10,6 +10,8 @@ import {plusGreyIcon, minusGreyIcon, coinIcon} from "./Icons";
 import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
 import { DATE_FORMAT } from "@constants";
+import NumberFormat from 'react-number-format';
+
 
 class ContentListingCommercialActivity extends ContentListing {
     constructor(props){
@@ -135,7 +137,11 @@ class ContentListingCommercialActivity extends ContentListing {
                         {bids.length > 0 && <div className={"total-wrapper"}>
                             <span className={"bid-total"}>{this.context.t("Revenue")}</span>
                             <span className={"bid-currency"}>
-                                {total.toLocaleString("en", { maximumFractionDigits: 2 })} {getCurrencySymbol(salesPackages[0].currency.code)}
+                                <NumberFormat
+                                    thousandSeparator={true}
+                                    value={total}
+                                    displayType={'text'}
+                                    prefix={getCurrencySymbol(salesPackages[0].currency.code)+ " "} />
                             </span>
                         </div>}
 

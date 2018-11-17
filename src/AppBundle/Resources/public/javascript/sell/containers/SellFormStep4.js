@@ -131,6 +131,7 @@ class SellFormStep4 extends React.Component {
                                 editOpen: false
                             })
                         }}
+                        currency={currency}
                         exclusivity={this.exclusivity()}
                         onUpdate={this.updateSalesPackage}
                         salesPackageId={this.state.salesPackageToEdit}

@@ -20,6 +20,7 @@ import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import {PropTypes} from "prop-types";
 import ExtraTerritories from "./ExtraTerritories";
+import NumberFormat from 'react-number-format';
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -210,7 +211,13 @@ class CommercialSalesBundle extends React.Component{
                     </div>
 
                     {totalFee && <div className="sales-bundle-item-right">
-                        <span>{totalFee} {getCurrencySymbol(salesBundle.currency.code)}</span>
+                        <span>
+                            <NumberFormat
+                                thousandSeparator={true}
+                                value={totalFee}
+                                displayType={'text'}
+                                prefix={getCurrencySymbol(salesBundle.currency.code)+ " "} />
+                        </span>
                     </div>}
 
                     {salesBundle.bids.length > 0 &&
@@ -246,7 +253,12 @@ class CommercialSalesBundle extends React.Component{
                             id: "price",
                             accessor: d => {return {fee: d.totalFee, currency: salesBundle.currency.code}},
                             Cell: props => <div className={"blue"} style={{width: '100%', textAlign: 'right'}}>
-                                {parseFloat(props.value.fee).toLocaleString() + " " + getCurrencySymbol(props.value.currency)}
+                                <NumberFormat
+                                    thousandSeparator={true}
+                                    value={parseFloat(props.value.fee)}
+                                    displayType={'text'}
+                                    prefix={getCurrencySymbol(props.value.currency)+ " "} />
+
                             </div>
                         },{
                             Header: headers.lastAction(),

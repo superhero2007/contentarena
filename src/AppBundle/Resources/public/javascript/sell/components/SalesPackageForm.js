@@ -11,6 +11,8 @@ import ExtraTerritories from "../../main/components/ExtraTerritories";
 import SalesPackageTable from "./SalesPackageTable";
 import moment from "moment";
 import { DATE_FORMAT } from "@constants";
+import NumberFormat from 'react-number-format';
+import {getCurrencySymbol} from "../../main/actions/utils";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -350,7 +352,7 @@ class SalesPackageForm extends React.Component {
 
     renderModal = () => {
 
-        const {onClose, exclusivity, salesPackages} = this.props;
+        const {onClose, exclusivity, salesPackages, currency} = this.props;
         const {territoriesQuantity, territoriesMethod, territories} = this.state;
 
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
@@ -492,13 +494,17 @@ class SalesPackageForm extends React.Component {
                                     {this.state.salesMethod === this.fixed && "Fixed fee"}
                                     {this.state.salesMethod !== this.fixed && "Minimum bid (optional)"}
                                 </span>
-                                <input
-                                    type="number"
-                                    min={0}
-                                    onChange={this.updateFee}
+                                <NumberFormat
+                                    thousandSeparator={true}
                                     value={this.state.fee}
-                                    style={{ height: "26px", width: "100px" }}/>
-                                <span style={{width: 'auto', padding: '0 10px'}}>{ this.getCurrencySymbol() }</span>
+                                    onValueChange={(values) => {
+                                        const {value} = values;
+                                        this.setState({fee : value})
+                                    }}
+                                    min={0}
+                                    style={{ height: "26px", width: "100px" }}
+                                    prefix={getCurrencySymbol(currency)+ " "} />
+
                             </div>
                         </div>
                     </div>
@@ -624,16 +630,6 @@ class SalesPackageForm extends React.Component {
 
         return total !== 100;
 
-    };
-
-    getFee = (salesPackage) => {
-        const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber.toLocaleString() + " " + this.getCurrencySymbol();
-    };
-
-    getCurrencySymbol = () => {
-        const {currency} = this.props;
-        return (currency === "EUR" ? "€" : "$");
     };
 
     sortSalesPackages = (a, b) => {

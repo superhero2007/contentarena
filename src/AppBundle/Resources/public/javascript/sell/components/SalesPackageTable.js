@@ -3,18 +3,10 @@ import PropTypes from 'prop-types';
 import ReactTable from "react-table";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import LicenseDownloader from '../../main/components/LicenseDownloader'
+import NumberFormat from 'react-number-format';
+import {getCurrencySymbol} from "../../main/actions/utils";
 
 const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,editSalesPackage,onRemove}, context) => {
-
-    const getFee = (salesPackage) => {
-        const feeNumber = parseFloat(salesPackage.fee);
-        return feeNumber && feeNumber > 0 ? `${feeNumber.toLocaleString()} ${getCurrencySymbol()}` : '-';
-    };
-
-    const getCurrencySymbol = () => {
-        return (currency === "EUR" ? "€" : "$");
-    };
-
 
     return (
         <ReactTable
@@ -72,7 +64,14 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                         if (salesPackage.sold) return null;
                         return (
                             <div title={salesPackage.fee}>
-                                {getFee(salesPackage)}
+
+                                {salesPackage.fee && salesPackage.fee > 0 &&
+                                <NumberFormat
+                                    thousandSeparator={true}
+                                    value={parseFloat(salesPackage.fee)}
+                                    displayType={'text'}
+                                    prefix={getCurrencySymbol(currency)+ " "} />}
+                                {parseFloat(salesPackage.fee) === 0 && "-"}
                             </div>
                         )
                     }
