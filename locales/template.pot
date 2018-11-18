@@ -2079,3 +2079,9 @@ msgstr ""
 msgid "CL_STEP4_LABEL_ANNEX"
 msgstr ""
 
+msgid "CL4_TERRITORIES_BUNDLE_SALES_INFO"
+msgstr ""
+
+msgid "CL4_TERRITORIES_BUNDLE_PAYMENT_INFO"
+msgstr ""
+

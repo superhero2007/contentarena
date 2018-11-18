@@ -366,7 +366,7 @@ button {
         min-width: 275px;
         box-sizing: border-box;
       }
-      input, select {
+      input:not([type="radio"]), select {
         width: 100%;
         margin: 0 0 0 5px;
         height: 35px;

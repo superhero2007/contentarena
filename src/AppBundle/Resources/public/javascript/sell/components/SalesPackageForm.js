@@ -9,6 +9,7 @@ import {PropTypes} from "prop-types";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import SalesPackageTable from "./SalesPackageTable";
+import cn from 'classnames';
 import moment from "moment";
 import { DATE_FORMAT } from "@constants";
 import NumberFormat from 'react-number-format';
@@ -454,26 +455,34 @@ class SalesPackageForm extends React.Component {
                                 exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
                             />}
                             {territoriesQuantity === 'multiple' && (
-                                <div>
-                                    <input type="checkbox"
-                                           className="ca-checkbox"
-                                           style={{width:'inherit', height: '20px'}}
-                                           defaultChecked={this.state.bundleMethod === this.asBundle}
-                                           onChange={(e)=>{this.setBundleMethod(e.target.checked ? this.asBundle: this.individually)}}
-                                    />
-                                    <span style={{verticalAlign:'middle', marginLeft: '5px', fontSize: '14px'}}>
+                                <div className="d-flex align-items-center" onChange={(e) => {
+                                    this.setBundleMethod(e.target.value)
+                                }}>
+                                    <div style={{margin: '15px 15px 10px 0', fontSize: '14px'}}>
                                         {this.context.t("CL_STEP4_EDIT_BUNDLE_AS_PACKAGE")}
-                                    </span>
-                                    <Tooltip
-                                        id="offer_info"
-                                        text="Test text"
-                                    />
+                                    </div>
+                                    <div className={cn({ 'font-weight-bold': this.state.bundleMethod === this.asBundle })} style={{marginRight:20}}>
+                                        <input className="ca-radio" type="radio" value={this.asBundle}
+                                               checked={this.state.bundleMethod === this.asBundle} style={{marginRight:5}}
+                                        />
+                                        {this.context.t('Yes')}
+                                    </div>
+                                    <div className={cn({ 'font-weight-bold': this.state.bundleMethod === this.individually })}>
+                                        <input className="ca-radio" type="radio" value={this.individually}
+                                               checked={this.state.bundleMethod === this.individually} style={{marginRight:5}}
+                                        />
+                                        {this.context.t('No')}
+                                    </div>
+
                                 </div>
                             )}
                         </div>
                     </div>
                     <div className="base-full-input">
                         <label style={labelStyle}>Sales method</label>
+                        <div style={{padding: '10px 18px 0px', fontSize: '14px'}}>
+                            {this.context.t("CL4_TERRITORIES_BUNDLE_SALES_INFO")}
+                        </div>
                         <div className={"content"}>
                             <div className={"item"} onClick={() => { this.setSalesMethod(this.fixed) } }>
                                 {this.state.salesMethod !== this.fixed && <i className="fa fa-circle-thin"/>}
@@ -511,7 +520,9 @@ class SalesPackageForm extends React.Component {
 
                     <div className="base-full-input">
                         <label style={labelStyle}>Payment details</label>
-
+                        <div style={{padding: '10px 18px 0px', fontSize: '14px'}}>
+                            {this.context.t("CL4_TERRITORIES_BUNDLE_PAYMENT_INFO")}
+                        </div>
                         { this.state.installments.map( (installment, i, list) => {
                             return <div className="content">
                                 <div className={"item"} style={{
