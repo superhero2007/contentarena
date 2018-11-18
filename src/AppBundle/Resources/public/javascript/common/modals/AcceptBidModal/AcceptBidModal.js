@@ -56,7 +56,6 @@ class AcceptBidModal extends Component {
                         customClass='for-modal'
                         licenseBidId={selectedBid.customId}
                         title={this.context.t("ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR")}
-                        clearBtnText={this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                         signature={signature}
                         signatureName={signatureName}
                         signaturePosition={signaturePosition}
