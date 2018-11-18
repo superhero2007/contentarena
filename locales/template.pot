@@ -337,6 +337,65 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+msgid "CL_STEP1_SELECTOR_ADD_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "CL_STEP1_SELECTOR_ADD_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_SPORT_CATEGORY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_SEASONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "International"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "Popular"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_APPLY"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
 msgid "ENTER_MESSAGE"
 msgstr ""
@@ -530,6 +589,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -745,31 +816,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_SEASON_DURATION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Popular"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "International"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
-msgid "CL_STEP1_SELECTOR_ADD_SPORT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_SEASON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Selector.js
@@ -1818,18 +1864,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TERMS_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TERMS_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TERMS_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js

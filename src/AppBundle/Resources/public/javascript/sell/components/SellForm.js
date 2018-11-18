@@ -7,9 +7,8 @@ import SellFormStep2 from "../containers/SellFormStep2";
 import SellFormStep3 from "../containers/SellFormStep3";
 import SellFormStep4 from "../containers/SellFormStep4";
 import ReviewAndSign from "../containers/ReviewAndSign";
-import Selector from "../../main/components/Selector";
+import SelectorModal from './../../common/modals/SelectorModal/SelectorModal';
 import { connect } from "react-redux";
-import store from '../../main/store';
 import ReactTooltip from 'react-tooltip';
 import {updateProfile} from "../../main/actions/userActions";
 
@@ -42,10 +41,6 @@ class SellForm extends React.Component {
             showSearch : props.match.params.customId === "new",
             editProgramDescriptionOptional: true
         };
-
-        store.subscribe((a) => {
-            //console.log(store.getState());
-        });
     }
 
     componentDidMount = () =>{
@@ -59,7 +54,7 @@ class SellForm extends React.Component {
 
         return (
             <div className="manager-content">
-                <Selector style={{zIndex: 100}}/>
+                <SelectorModal />
                 <SellFormSteps history={history} />
                 <SellFormStep1 history={history} showSearch={this.state.showSearch} />
                 <SellFormStep2 packages={this.props.packages} />
@@ -90,7 +85,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SellForm)
+)(SellForm);
 
 
 

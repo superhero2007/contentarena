@@ -35,6 +35,12 @@
       border-color: transparent;
     }
   }
+  
+  &.yellow-border{
+    background: transparent;
+    border: $orange-color 1px solid;
+    border-radius: 5px;
+  }
 
   &.primary {
     color: #333;

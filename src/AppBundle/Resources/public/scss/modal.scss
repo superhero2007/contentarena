@@ -27,7 +27,8 @@
   max-height: 90%;
 
   &.wide{
-    width: 920px;
+    max-width: 870px;
+    width: 870px;
   }
 
   .modal-header{
@@ -41,8 +42,14 @@
       font-size: 22px;
       font-weight: 600;
 
+      text-transform: none;
+
       margin: 0;
       padding: 0;
+    }
+
+    .modal-sub-title{
+      margin-bottom: 0;
     }
 
     i{

@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import store from '../../main/store';
 import Modal from 'react-modal';
-import { SelectorModalStyle } from "../styles/custom";
-import {PropTypes} from "prop-types";
+import cn from 'classnames';
+import { GenericModalStyle} from "./../../../main/styles/custom";
 
 Modal.setAppElement('#home-wrapper');
 
 const SelectorItem = ({label, selected, onClick, disabled}) => (
-    <div className={"selector-item " + ((selected) ?"selector-item-selected ": "") + (disabled && "selector-item-disabled") } onClick={(!disabled) ? onClick : undefined}>
-        {label}
+    <div
+        title={label}
+        className={cn('selector-item ca-btn yellow-border', {'selected': selected}, {'disabled': disabled})}
+        onClick={disabled ? undefined : onClick}>
+        <span className="selector-item-text">{label}</span>
     </div>
 );
 
-
-class Selector extends React.Component {
-
+class SelectorModal extends Component {
     constructor(props) {
         super(props);
 
@@ -39,13 +40,9 @@ class Selector extends React.Component {
             selectedItems : new Map(),
             disabled : new Map(),
         };
-
-        store.subscribe((a) => {
-        });
     }
 
     componentWillReceiveProps(nextProps){
-
         let disabled = new Map(), selectedItems = new Map();
 
         if ( nextProps.disabled ) disabled = nextProps.disabled;
@@ -67,9 +64,6 @@ class Selector extends React.Component {
         this.props.openSelector();
     };
 
-    afterOpenModal = () => {
-    };
-
     closeModal = () => {
         this.setState({ updated: false, filterUpdated : false, customCountry :false });
         this.props.closeSelector();
@@ -81,7 +75,11 @@ class Selector extends React.Component {
     };
 
     getActiveFilterName = () => {
-        return ( this.props.activeFilter && !this.state.filterUpdated ) ? this.props.activeFilter : this.state.activeFilter;
+        return (this.props.activeFilter && !this.state.filterUpdated) ? this.props.activeFilter : this.state.activeFilter;
+    };
+
+    isFilterActive = (selectedFilter) => {
+        return this.getActiveFilterName() === selectedFilter;
     };
 
     shouldShowFilters = () =>{
@@ -89,24 +87,15 @@ class Selector extends React.Component {
     };
 
     shouldShowInternationalFilter = () => {
-
-        let show = false;
-
-        this.state.selectorItems.some( ( item) => {
-            show = item.name.match(/international/gi) !== null;
-            return show;
-        });
-
-        return show;
-
+        const {selectorItems} = this.state;
+        return selectorItems.some(item => item.name.match(/international/gi) !== null);
     };
 
     setActiveFilter = ( filterName ) =>{
-      this.setState({ activeFilter: filterName,filterUpdated : true})
+        this.setState({ activeFilter: filterName,filterUpdated : true})
     };
 
     applySelection = () => {
-
         let extended = false,
             clean = this.props.clean,
             selectedItems = this.state.selectedItems,
@@ -165,24 +154,16 @@ class Selector extends React.Component {
     };
 
     selectItem = ( item ) => {
-
-        let _this = this;
-
         this.setState((prevState) => {
-
             if ( prevState.selectedItems.has(item.externalId)){
-                if ( _this.props.multiple ) {
+                if ( this.props.multiple ) {
                     prevState.selectedItems.delete(item.externalId);
                 }
-
             } else {
-
-                if (  !_this.props.multiple ) {
+                if (  !this.props.multiple ) {
                     prevState.selectedItems.clear();
                 }
-
                 prevState.selectedItems.set(item.externalId, item);
-
             }
 
             return {
@@ -197,14 +178,11 @@ class Selector extends React.Component {
     };
 
     isItemDisabled = ( item ) => {
-
         return this.state.disabled.has(item.externalId);
     };
 
     showAllCountries = () => {
-
         if ( !ContentArena.Data.Countries || ContentArena.Data.Countries.length ===0 ) return;
-
         this.setState((prevState) => ({
             prevCountries : new Map(prevState.selectorItems.map(i=>[i.externalId, i])) ,
             selectorItems : [...ContentArena.Data.Countries,{
@@ -233,107 +211,136 @@ class Selector extends React.Component {
         if ( filter.type === "origin" ){
             if (this.props[filter.value]) return this.props[filter.value];
             if ( !this.shouldShowFilters() ) return this.state.selectorItems;
-
             return this.state.selectorItems.filter(this.filterLetter);
         }
 
         if ( filter.type === "international" ) return this.state.selectorItems.filter(this.filterInternational);
-
         if ( filter.type === "firstLetter") {
-
             if ( !this.shouldShowFilters() ) return this.state.selectorItems;
-
             let filteredItems = this.state.selectorItems.filter(this.filterLetter);
-
             if ( filteredItems.length === 0 ) return this.state.selectorItems;
-
             return filteredItems;
-
         }
     };
 
-    render() {
-        let _this = this;
+    getRightHeaderBtn = () => {
+        const { showNewSeason, index, showNewSport, showAllCountries, showNewTournament } = this.props;
+
         return (
-            <Modal
-                isOpen={this.props.open}
-                onAfterOpen={this.afterOpenModal}
-                onRequestClose={this.closeModal}
-                bodyOpenClassName={"selector"}
-                style={SelectorModalStyle}
-                className="ReactModal__Selector"
-                contentLabel="Example Modal"
-            >
-                <div>
-                    { this.props.popularItems &&
-                    <button className={"selector-filter " + (this.getActiveFilterName() === "popular" && "selector-filter-active")}
-                            onClick={()=>{ this.setActiveFilter("popular")}}>
-                        {this.context.t("Popular")}
-                    </button>}
-                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "ag" && "selector-filter-active")}
-                                                          onClick={()=>{ this.setActiveFilter("ag")}}>A-G</button>}
-                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "hn" && "selector-filter-active")}
-                                                          onClick={()=>{ this.setActiveFilter("hn")}}>H-N</button>}
-                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "ot" && "selector-filter-active")}
-                                                          onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>}
-                    { this.shouldShowFilters() && <button className={"selector-filter " + (this.getActiveFilterName() === "uz" && "selector-filter-active")}
-                                                          onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>}
-                    {  this.shouldShowInternationalFilter() &&
-                    <button className={"selector-filter " + (this.getActiveFilterName() === "international" && "selector-filter-active")}
-                            onClick={()=>{ this.setActiveFilter("international")}}>
+            <React.Fragment>
+                {showNewSport && <button className="ca-btn yellow-border" onClick={() => { this.addNewSport(index) } } >
+                    {this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
+                </button>}
+
+                {showNewSeason && <button className="ca-btn yellow-border" onClick={() => { this.addNewSeason(index) } } >
+                    {this.context.t("CL_STEP1_SELECTOR_ADD_SEASON")}
+                </button>}
+
+                {showNewTournament && <button className="ca-btn yellow-border" onClick={() => { this.addNewTournament(index ) } } >
+                    {this.context.t("CL_STEP1_SELECTOR_ADD_TOURNAMENT")}
+                </button>}
+
+                {showAllCountries && <button className="ca-btn yellow-border" onClick={this.showAllCountries} >
+                    {this.context.t("CL_STEP1_SELECTOR_COUNTRIES_ALL")}
+                </button>}
+            </React.Fragment>
+        );
+    };
+
+    getModalTitle = () => {
+        const { selectorType } = this.props;
+        let title = '';
+
+        switch (selectorType) {
+            case 'sports':
+                title = this.context.t("CL_STEP1_SELECTOR_TITLE_SPORT");
+                break;
+            case 'sportCategory':
+                title = this.context.t("CL_STEP1_SELECTOR_TITLE_SPORT_CATEGORY");
+                break;
+            case 'tournament':
+                title = this.context.t("CL_STEP1_SELECTOR_TITLE_TOURNAMENT");
+                break;
+            case 'seasons':
+                title = this.context.t("CL_STEP1_SELECTOR_TITLE_SEASONS");
+                break;
+            default:
+                title = 'provide title for this case';
+        }
+        return <h3 className="modal-title">{title}</h3>;
+    };
+
+    render() {
+        const { open } = this.props;
+
+        return <Modal
+            isOpen={open}
+            className="modal-wrapper wide"
+            onRequestClose={this.closeModal}
+            style={GenericModalStyle}
+        >
+            <header className="modal-header selection-header">
+                <div className="title-left">
+                    {this.getModalTitle()}
+                    <p className="modal-sub-title">{this.context.t("CL_STEP1_SELECTOR_SUB_TITLE")}</p>
+                </div>
+
+                <div className="title-right">
+                    {this.getRightHeaderBtn()}
+                    <i className="fa fa-times" onClick={this.closeModal} />
+                </div>
+            </header>
+            <section className="modal-body selection-body">
+                <div className="navigation-section">
+                    {this.shouldShowFilters() && <React.Fragment>
+                        <button
+                            className={cn({'active': this.isFilterActive('ag')})}
+                            onClick={()=>{ this.setActiveFilter("ag")}}>A-G</button>
+                        <button
+                            className={cn({'active': this.isFilterActive('hn')})}
+                            onClick={()=>{ this.setActiveFilter("hn")}}>H-N</button>
+                        <button
+                            className={cn({'active': this.isFilterActive('ot')})}
+                            onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>
+                        <button
+                            className={cn({'active': this.isFilterActive('uz')})}
+                            onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>
+                    </React.Fragment>}
+
+                    {this.shouldShowInternationalFilter() && <button
+                        className={cn({'active': this.isFilterActive('international')})}
+                        onClick={()=>{ this.setActiveFilter("international")}}>
                         {this.context.t("International")}
                     </button>}
+                    {this.props.popularItems && this.props.popularItems.length > 0 && <button
+                        className={cn({'active': this.isFilterActive('popular')})}
+                        onClick={()=>{ this.setActiveFilter("popular")}}>
+                        {this.context.t("Popular")}
+                    </button>}
                 </div>
+
                 <div className="selector-content">
-                    { this.getItems().map(function(item, i){
-                        return <SelectorItem key={i}
-                                             label={item.name}
-                                             onClick={ () => _this.selectItem(item)}
-                                             selected={ _this.isItemSelected(item) }
-                                             disabled={ _this.isItemDisabled(item) }
+                    {this.getItems().map((item, i) => {
+                        return <SelectorItem
+                            key={`${item}-${i}`}
+                            label={item.name}
+                            onClick={ () => this.selectItem(item)}
+                            selected={ this.isItemSelected(item) }
+                            disabled={ this.isItemDisabled(item) }
                         />;
                     })}
                 </div>
-
-                {this.props.showNewSport && <div className={"extras"}>
-                    <button className={"standard-button link-button"} onClick={() => { this.addNewSport(this.props.index) } } >
-                        {this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
-                    </button>
-                </div>}
-
-                {this.props.showNewSeason && <div className={"extras"}>
-                    <button className={"standard-button link-button"} onClick={() => { this.addNewSeason(this.props.index) } } >
-                        {this.context.t("CL_STEP1_SELECTOR_ADD_SEASON")}
-                    </button>
-                </div>}
-
-                {this.props.showNewTournament && <div className={"extras"}>
-                    <button className={"standard-button link-button"} onClick={ () => { this.addNewTournament(this.props.index ) } } >
-                        {this.context.t("CL_STEP1_SELECTOR_ADD_TOURNAMENT")}
-                    </button>
-                </div>}
-
-                {this.props.showAllCountries&& <div className={"extras"}>
-                    <button className={"standard-button link-button"} onClick={this.showAllCountries } >
-                        {this.context.t("CL_STEP1_SELECTOR_COUNTRIES_ALL")}
-                    </button>
-                </div>}
-
-                <div className={"buttons"}>
-                    <button className={"light-blue-button"} style={{backgroundColor: SelectorModalStyle.content.backgroundColor}} onClick={this.closeModal}>
-                        {this.context.t("Cancel")}
-                    </button>
-                    <button className={"standard-button"} onClick={this.applySelection} disabled={!this.state.updated}>
-                        {this.context.t("Apply")}
-                    </button>
-                </div>
-
-            </Modal>
-        );
-    }
-}
-Selector.contextTypes = {
-    t: PropTypes.func.isRequired
+            </section>
+            <footer className="modal-footer">
+                <button className="cancel-btn" onClick={this.closeModal}>
+                    {this.context.t("CL_STEP1_SELECTOR_CANCEL")}
+                </button>
+                <button className="standard-button" onClick={this.applySelection} disabled={!this.state.updated}>
+                    {this.context.t("CL_STEP1_SELECTOR_APPLY")}
+                </button>
+            </footer>
+        </Modal>
+    };
 };
 
 const mapStateToProps = ( state ) => {
@@ -383,7 +390,11 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
+SelectorModal.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Selector)
+)(SelectorModal);
