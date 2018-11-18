@@ -6,6 +6,31 @@ msgstr ""
 msgid "LISTING_DETAILS_MULTIPLE_SPORTS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_CATEGORY_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_SEASON_RELEASE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_FIXTURES_EPISODES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
+msgid "International"
+msgstr ""
+
 #. Marketplace - Placeholder for Search input
 #: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
 msgid "Search"

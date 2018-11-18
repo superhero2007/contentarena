@@ -20,6 +20,24 @@ class ContentListingEventDetails extends React.Component {
         this.state = {};
     }
 
+    componentDidMount() {
+        const {setRawContent} = this.props;
+
+        if (setRawContent) setRawContent(this.getRawContent())
+    }
+
+    getRawContent = () => {
+        let rawContent = `\n`;
+
+        jQuery('.listing-attributes .event-text').each(function () {
+            let title = $(this).attr('title')
+            let text = $(this).text();
+            rawContent += `\n${title}: ${text}`;
+        });
+
+        return rawContent;
+    }
+
     buildSeasonString = (season) => {
         const { showSeasonDuration } = this.props;
         
@@ -170,7 +188,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {tournamentIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_TOURNAMENT")}>
                                 {tournamentArray[0].name}
                             </div>
                         </div>
@@ -180,7 +198,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {tournamentIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_TOURNAMENT")}>
                                 {customTournament}
                             </div>
                         </div>
@@ -190,7 +208,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {tournamentIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_TOURNAMENT")}>
                                 {this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
                             </div>
                         </div>
@@ -204,7 +222,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {sportIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_SPORT")}>
                                 {sports[0].name !== "" && sports[0].name}
                                 {sports[0].name === "" &&  sports[0].value !== "" && sports[0].value}
                             </div>
@@ -215,7 +233,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {sportIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_SPORT")}>
                                 {this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}
                             </div>
                         </div>
@@ -229,7 +247,7 @@ class ContentListingEventDetails extends React.Component {
                                     <div className="event-icon">
                                         {sportCategoryIcon}
                                     </div>
-                                    <div className="event-text">
+                                    <div className="event-text" title={this.context.t("EVENT_CATEGORY_COUNTRY")}>
                                         {sportCategory[0].name}
                                     </div>
                                 </div>
@@ -239,7 +257,7 @@ class ContentListingEventDetails extends React.Component {
                                     <div className="event-icon">
                                         {sportCategoryIcon}
                                     </div>
-                                    <div className="event-text">
+                                    <div className="event-text" title={this.context.t("EVENT_CATEGORY_COUNTRY")}>
                                         {customCategory}
                                     </div>
                                 </div>
@@ -256,7 +274,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {seasonReleaseIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
                                 {showFullSeasons && seasons.map(season => {
                                 return <span>
                                         {this.buildSeasonYear(season)} {this.buildSeasonString(season)}
@@ -277,7 +295,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {seasonReleaseIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
                                 Release year: {PROGRAM_YEAR === "Year" && "Not available"} {PROGRAM_YEAR !== "Year" && PROGRAM_YEAR}
                             </div>
                         </div>
@@ -292,7 +310,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {fixturesEpisodeIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
                                 {this.getFixtures().length} fixtures
                             </div>
                         </div>
@@ -302,7 +320,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {fixturesEpisodeIcon}
                             </div>
-                            <div className="event-text">
+                            <div className="event-text" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
                                 {this.getFixtures()[0].name} {this.getFixtures()[0].date !== undefined && "(" + moment(this.getFixtures()[0].date).format(DATE_FORMAT)+")"}
                             </div>
                         </div>
@@ -312,7 +330,7 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {fixturesEpisodeIcon}
                             </div>
-                            <div className="event-icon">
+                            <div className="event-icon" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
                                 {PROGRAM_EPISODES} {episodesText}
                             </div>
                         </div>
