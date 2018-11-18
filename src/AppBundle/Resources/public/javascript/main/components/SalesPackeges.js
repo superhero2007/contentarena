@@ -58,13 +58,21 @@ class SalesPackages extends PureComponent{
                     )
                 })}
                 {salesPackages.length > 3 && (
-                    <div className="sales-package show-all">
+                    <div className="sales-package show-all" onClick={this.onShowAllClick}>
                         <b> + {salesPackages.length - 3} </b>
                     </div>
                 )}
             </React.Fragment>
         )
     };
+
+    onShowAllClick = () => {
+        const { onShowAllClick } = this.props;
+
+        if (onShowAllClick) {
+            onShowAllClick();
+        }
+    }
 }
 
 SalesPackages.propTypes = {
