@@ -388,7 +388,10 @@ class Register extends React.Component {
 
                     {updatingUser && <Spinner/>}
 
-                    {updated && <a href="/marketplace">
+                    {updated && <a
+                        className={"standard-button"}
+                        style={{maxWidth: 300}}
+                        href="/marketplace">
                         {this.context.t("REGISTER_SUCCESS_MESSAGE")}
                     </a>}
                 </div>
