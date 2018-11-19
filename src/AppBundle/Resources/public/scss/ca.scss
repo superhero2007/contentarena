@@ -1235,6 +1235,10 @@ button {
     }
   }
   .popup-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
     .cancel-button {
       border: none;
       background: none;
@@ -1300,6 +1304,10 @@ button {
   padding: 20px !important;
   position: absolute;
   .buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
     .standard-button {
       min-width: 130px;
       padding: 0 25px;

@@ -495,6 +495,12 @@ a.ca-link {
     z-index: 9999;
   }
 
+  .buttons{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
   .ca-modal-overlay {
     position: fixed;
     top: 0px;

@@ -62,16 +62,15 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                     Cell: props => {
                         const salesPackage = props.original;
                         if (salesPackage.sold) return null;
-                        return (
-                            <div title={salesPackage.fee}>
+                        const fee = parseFloat(salesPackage.fee);
 
-                                {salesPackage.fee && salesPackage.fee > 0 &&
-                                <NumberFormat
-                                    thousandSeparator={true}
-                                    value={parseFloat(salesPackage.fee)}
-                                    displayType={'text'}
-                                    prefix={getCurrencySymbol(currency)+ " "} />}
-                                {parseFloat(salesPackage.fee) === 0 && "-"}
+                        return (
+                            <div title={fee}>
+                                {fee ? (<NumberFormat
+                                thousandSeparator={true}
+                                value={fee}
+                                displayType={'text'}
+                                prefix={getCurrencySymbol(currency)+ " "} />) : '-'}
                             </div>
                         )
                     }
@@ -114,7 +113,6 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
         />
     );
 };
-
 
 SalesPackageTable.contextTypes = {
     t: PropTypes.func.isRequired
