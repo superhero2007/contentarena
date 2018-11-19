@@ -308,6 +308,14 @@ button {
         }
       }
 
+      .comment-icon {
+        color: #2AAAEC;
+        font-size: 26px;
+        position: absolute;
+        right: 40px;
+        bottom: 7px;
+      }
+
       .fa-edit {
         position: absolute;
         right: 3px;
@@ -1727,7 +1735,6 @@ button {
       div {
         display: inline-block;
       }
-
       .fa-edit {
         padding: inherit;
         color: #2AAAEC;

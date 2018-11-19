@@ -754,6 +754,7 @@ class PopupRight extends React.Component {
         }
 
         const value = (isMultipleValuesSelected) ? "Multiple values selected" : displayedValue;
+        const isCommentAdded = rightsPackage[0].selectedRights[id + "_TEXTAREA"];
 
         return (
             <div className={cn("base-input", { "disabled": disabled })} style={{width: "49%"}}>
@@ -764,6 +765,9 @@ class PopupRight extends React.Component {
                 >
                     {value || 'Select'}
                 </div>
+                {isCommentAdded && (
+                    <i className="fa fa-commenting-o comment-icon" />
+                )}
                 <i className="fa fa-edit" onClick={this.togglePopup} />
                 { this.renderModal() }
             </div>
