@@ -71,6 +71,18 @@ class FeedController extends FOSRestController
         return $this->handleView($view);
     }
 
+    public function makeRequest($url, $method = 'GET', $params = array())
+    {
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        $api_response = curl_exec($ch);
+        return json_decode($api_response, true);
+    }
+
     /**
      * Returns the list of tournaments available for a sport from the SportRadar API
      * @param Request $request
@@ -81,15 +93,29 @@ class FeedController extends FOSRestController
 
         $id = $request->get('id');
         $ttl = $this->getParameter('sportradar_api_cache_ttl');
+        $externalApi = 'http://api.contentarena.com/';
 
         $parsedId = str_replace(":", "", $id);
         $cached = $this->get('cache.app')->getItem('tournaments-'.$parsedId);
+        $env = $this->container->get('kernel')->getEnvironment();
 
         if (!$cached->isHit()) {
-            $response = $this->sportRadarService->makeRequest('/sports/en/sports/'.$id.'/tournaments.xml');
-            $cached->set($response);
-            $cached->expiresAfter($ttl);
-            $this->get('cache.app')->save($cached);
+
+            if ( $env == "dev"){
+                /**
+                 * If dev environment we should call content arena instead of sport radar
+                 */
+                $response = $this->makeRequest($externalApi. 'v1/feed/tournaments', "POST", array( "id"=> $id) );
+            } else {
+                $response = $this->sportRadarService->makeRequest('/sports/en/sports/'.$id.'/tournaments.xml');
+            }
+
+            if ($response){
+                $cached->set($response);
+                $cached->expiresAfter($ttl);
+                $this->get('cache.app')->save($cached);
+            }
+
         } else {
             $response = $cached->get();
         }
@@ -135,17 +161,61 @@ class FeedController extends FOSRestController
     {
         $id = $request->get('id');
         $ttl = $this->getParameter('sportradar_api_cache_ttl');
-
+        $env = $this->container->get('kernel')->getEnvironment();
         $parsedId = str_replace(":", "", $id);
         $cachedCategories = $this->get('cache.app')->getItem('seasons-'.$parsedId);
+        $externalApi = 'http://api.contentarena.com/';
 
-        if (!$cachedCategories->isHit()) {
-            $response = $this->sportRadarService->makeRequest('/sports/en/tournaments/'.$id.'/seasons.xml');
+        if (!$cachedCategories->isHit() || $env == "dev") {
+
+            if ( $env == "dev"){
+                /**
+                 * If dev environment we should call content arena instead of sport radar
+                 */
+                $response = $this->makeRequest($externalApi. 'v1/feed/seasons', "POST", array( "id"=> $id) );
+            } else {
+                $response = $this->sportRadarService->makeRequest('/sports/en/tournaments/'.$id.'/seasons.xml');
+            }
+
+
             $cachedCategories->set($response);
             $cachedCategories->expiresAfter($ttl);
             $this->get('cache.app')->save($cachedCategories);
         } else {
             $response = $cachedCategories->get();
+        }
+
+
+        /**
+         * After getting SportRadar response we attempt to merge seasons stored in our database.
+         * Season year and tournament id are used to compare
+         */
+        $tournamentsRepo = $this->getDoctrine()->getRepository("AppBundle:Tournament");
+        $tournament = $tournamentsRepo->findOneBy(array("externalId"=>$id));
+
+        if ( $tournament != null && $response != null && $response["seasons"] != null && $response["seasons"]["season"] != null ){
+            $seasonYears = array();
+
+            foreach ( $response["seasons"]["season"] as $season){
+                $seasonYears[] = $season["@attributes"]["year"];
+            }
+            $seasonsRepo = $this->getDoctrine()->getRepository("AppBundle:Season");
+            $caSeasons = $seasonsRepo->findBy(array("tournament"=>$tournament));
+
+            if (  $caSeasons != null ){
+                foreach ($caSeasons as $caSeason ){
+                    if (!in_array($caSeason->getYear(), $seasonYears)) {
+                        $response["seasons"]["season"][] = array("@attributes" => array(
+                            "id" => $caSeason->getExternalId(),
+                            "name" => $caSeason->getName(),
+                            "year" => $caSeason->getYear(),
+                            "tournament_id" => $caSeason->getTournament()->getId(),
+                            "start_date" => $caSeason->getStartDate(),
+                            "end_date" => $caSeason->getEndDate(),
+                        ));
+                    }
+                }
+            }
         }
 
         $view = $this->view($response);
