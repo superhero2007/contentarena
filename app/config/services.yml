@@ -46,6 +46,7 @@ services:
             $entityManager : '@doctrine.orm.entity_manager'
             $sportradarApiToken: '%sportradar_api_token%'
             $sportradarApiHost: '%sportradar_api_host%'
+        public: true
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
