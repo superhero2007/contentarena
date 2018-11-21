@@ -31,6 +31,10 @@ class UpdateSeasons extends ContainerAwareCommand
         ;
     }
 
+    private function isConsecutive($array) {
+        return ((int)max($array)-(int)min($array) == (count($array)-1));
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
@@ -59,27 +63,58 @@ class UpdateSeasons extends ContainerAwareCommand
                 $year = explode("/" ,$season->getYear() );
 
                 if ( count($year) > 1 ){
-                    echo "This season has split years " . PHP_EOL;
+                    //echo "This season has split years " . PHP_EOL;
                     $hasSplittedSeason = true;
                     $seasonYears[] = $season->getYear();
                 } else {
-                    echo "This season has a plain year" . PHP_EOL;
+                    //echo "This season has a plain year" . PHP_EOL;
                     $seasonYears[] = $year[0];
                 }
             }
 
-            for ( $i = $currentYear; $i< $currentYear+5; $i++ ){
-                if ($hasSplittedSeason){
-                    $splittedSeason = substr($i, -2);
-                    $splittedSeason = $splittedSeason . "/". ($splittedSeason + 1);
+            $consecutive =  ( count($seasonYears) > 1 ) ? $this->isConsecutive($seasonYears) : false;
 
+            if ( $consecutive ){
+                echo "Seasons are consecutive" . PHP_EOL;
+                for ( $i = $currentYear; $i< $currentYear+5; $i++ ){
+                    $time = new \DateTime();
 
-                    if (!in_array($splittedSeason, $seasonYears)) echo "Custom season " . $splittedSeason . " should be created". PHP_EOL;
-                } else {
-                    if (!in_array($i, $seasonYears)) echo "Custom season " . $i . " should be created". PHP_EOL;
+                    if ($hasSplittedSeason){
+                        $splittedSeason = substr($i, -2);
+                        $splittedSeason = $splittedSeason . "/". ($splittedSeason + 1);
+
+                        if (!in_array($splittedSeason, $seasonYears)){
+                            echo "Custom season " . $splittedSeason . " will be created". PHP_EOL;
+                            $newSeason = new Season();
+                            $newSeason->setTournament($tournament);
+                            $newSeason->setName($tournament->getName(). " " . $splittedSeason);
+                            $newSeason->setYear($splittedSeason);
+                            $newSeason->setExternalId("ca:season:".$time->getTimestamp());
+                            $entityManager->persist($newSeason);
+                            sleep(1);
+                        }
+                    } else {
+                        if (!in_array($i, $seasonYears)){
+                            echo "Custom season " . $i . " will be created". PHP_EOL;
+                            $newSeason = new Season();
+                            $newSeason->setTournament($tournament);
+                            $newSeason->setName($tournament->getName(). " " . $i);
+                            $newSeason->setYear($i);
+                            $newSeason->setExternalId("ca:season:".$time->getTimestamp());
+                            $entityManager->persist($newSeason);
+                            sleep(1);
+                        }
+                    }
+
                 }
 
+                $entityManager->flush();
+
+            } else {
+                //echo "Seasons are NOT consecutive" . PHP_EOL;
             }
+
+
         }
 
         echo "Starting year: " . $currentYear;

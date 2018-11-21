@@ -99,7 +99,7 @@ class FeedController extends FOSRestController
         $cached = $this->get('cache.app')->getItem('tournaments-'.$parsedId);
         $env = $this->container->get('kernel')->getEnvironment();
 
-        if (!$cached->isHit()) {
+        if (!$cached->isHit() || $env == "dev") {
 
             if ( $env == "dev"){
                 /**
