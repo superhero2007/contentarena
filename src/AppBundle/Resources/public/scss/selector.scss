@@ -1,76 +1,112 @@
 @import "vars";
 
 .selector {
-  .selector-filter {
-    margin: 0 5px;
-    border: none;
-    background-color: $blue-color;
-    padding: 8px 20px;
-    font-size: 16px;
-    font-weight: normal;
-    color: #48C0FE;
-
-  }
-  .selector-filter-active {
-    color: white;
-    font-weight: 600;
-  }
   .selector-content {
     display: flex;
     min-width: 700px;
     max-height: 401px;
     flex-wrap: wrap;
     flex-direction: row;
-    overflow: overlay;
     max-width: 900px;
     margin-top: 20px;
-    .selector-item {
-      color: #4F4F4F;
-      font-size: 16px;
-      padding: 3px;
-      border: 1px solid lightgrey;
-      margin: 2px;
-      width: 200px;
-      height: 35px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      text-align: center;
-      line-height: 16px;
-    }
-    .selector-item-selected {
-      background-color: $blue-color;
-      color: white;
-    }
-    .selector-item-disabled {
-      background-color: #888;
-      color: white;
-    }
-  }
-
-  .buttons {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-  }
-
-  .extras {
-    display: flex;
-    .message {
-      color: #4F4F4F;
-      font-size: 14px;
-    }
-    .standard-button {
-      margin: 20px auto 0;
-      &:last-child {
-        margin: 10px auto -5px;
-      }
-    }
   }
 }
 
+.ReactModal__Content.modal-wrapper{
+  .modal-header.selection-header{
+    padding: 20px 0;
+    margin: 0 20px;
+    border-bottom: 0.1px solid $border-color-1;
 
+    .modal-sub-title{
+      font-weight: bold;
+    }
+
+    .title-right button{
+      margin-right: 10px;
+    }
+  }
+
+  .modal-body.selection-body{
+    width: 100%;
+    flex-direction: column;
+
+    background: $modal-bg;
+    padding: 0 20px;
+
+    .navigation-section{
+      width: 100%;
+      padding: 10px 0;
+
+      button{
+        padding: 0;
+        margin-right: 15px;
+        outline: 0;
+        border: 0;
+        line-height: 3;
+        background: transparent;
+
+        font-size: 15px;
+        color: $black-color;
+        text-transform: uppercase;
+
+        &.active{
+          font-weight: bold;
+          border-radius: 0;
+          border-bottom: 2px solid $orange-color;
+        }
+      }
+    }
+    .selector-content{
+      height: 270px;
+      width: 100%;
+      margin: 10px 0;
+      overflow-y: auto;
+
+      &::-webkit-scrollbar{ width: 1em; }
+      &::-webkit-scrollbar-track{ background: $border-color-3; }
+      &::-webkit-scrollbar-thumb{
+        background-color: $border-color-2;
+        outline: 1px solid slategrey;
+      }
+
+      .selector-item{
+        width: 190px;
+        height: 60px;
+        margin: 10px 10px 0 0;
+
+        background: transparent;
+        color: $black-color;
+
+        font-size: 13px;
+
+        &.selected{
+          background-color: $orange-color;
+          font-weight: bold;
+          transition: background-color 0.5s linear;
+        }
+        &.disabled{
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .selector-item-text{
+          height: 50px;
+
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: pre-line;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .modal-footer button.cancel-btn{
+    padding: 15px;
+  }
+}
 

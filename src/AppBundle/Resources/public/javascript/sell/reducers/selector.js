@@ -1,4 +1,3 @@
-
 export const selectorType= {
     TEST:'TEST',
     OPEN_SELECTOR: 'OPEN_SELECTOR',

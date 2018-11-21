@@ -4,7 +4,7 @@ import cn from 'classnames';
 import store from '../../main/store';
 import {updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
 import {PropTypes} from 'prop-types';
 

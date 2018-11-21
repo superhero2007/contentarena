@@ -35,6 +35,12 @@
       border-color: transparent;
     }
   }
+  
+  &.yellow-border{
+    background: transparent;
+    border: $orange-color 1px solid;
+    border-radius: 5px;
+  }
 
   &.primary {
     color: #333;
@@ -463,6 +469,10 @@ i.fa.ca-tooltip {
   color: #dc3545;
 }
 
+.font-weight-bold {
+  font-weight: bold;
+}
+
 //todo: apply to all urls
 a.ca-link {
   color: #3399FF;
@@ -483,6 +493,12 @@ a.ca-link {
     margin: 20px auto;
     outline: none;
     z-index: 9999;
+  }
+
+  .buttons{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
   }
 
   .ca-modal-overlay {

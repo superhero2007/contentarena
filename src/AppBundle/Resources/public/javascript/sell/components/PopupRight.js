@@ -428,7 +428,31 @@ class PopupRight extends React.Component {
 
     getNumberFieldKey(rightItemDefinition, id) {
         return rightItemDefinition.numberFieldValue || (id + "_NUMBER");
-    }
+    };
+
+    getPlaceholderMsg = () => {
+        const {id, textAreaRequired, rightsPackage} = this.props;
+        if (this.hasSelection(id, textAreaRequired, rightsPackage)) {
+            let placeholder = '';
+            switch (id) {
+                case 'BROADCASTING':
+                    placeholder = this.context.t("CL3_COMMENTS_TRANSMISSION_PLACEHOLDER");
+                    break;
+                case 'RESERVED_RIGHTS':
+                    placeholder = this.context.t("CL3_COMMENTS_RESERVED_PLACEHOLDER");
+                    break;
+                case 'EXPLOITATION_WINDOW':
+                    placeholder = this.context.t("CL3_COMMENTS_EXPLOITATION_WINDOW_PLACEHOLDER");
+                    break;
+                default:
+                    placeholder = this.context.t("CL3_COMMENTS_PLACEHOLDER");
+            };
+
+            return placeholder;
+        }
+
+        return this.context.t("CL3_COMMENTS_PLACEHOLDER");
+    };
 
     renderModal = () => {
         const {
@@ -493,56 +517,6 @@ class PopupRight extends React.Component {
                             onChange={(value) => { onUpdateListing("LICENSED_LANGUAGES", value) }}
                             value={languages}/>}
 
-                        {/*{deliveryViaLiveFeed && checkContentDelivery
-                        && <div className="row">
-                            <div className="column" style={{justifyContent:"flex-start", flex: 3}}>
-                                Live Transmission
-                            </div>
-                            {options.map((option, i ,list)=> {
-                                let flex = (list.length > 2 ) ? 2 : 3;
-                                let disabled = false;
-                                let definition = RightItemsDefinitions[option];
-                                if (definition.language) flex = flex+ 2;
-                                if (definition.hideIf && definition.hideIf.filter(sl=>{return packagesAvailable.indexOf(sl) !== -1}).length > 0) return null;
-
-                                let customId = "LIVE_FEED_" + id;
-                                let customProp = rightsPackage[0].selectedRights[customId];
-
-                                return <div className="column" style={{ flex: flex }}>
-                                    <input
-                                        defaultChecked={customProp === option}
-                                        type="radio"
-                                        className="ca-radio"
-                                        disabled={disabled}
-                                        onChange={(e) => { this.updateSelection(e.target.value, customId,rightsPackage[0])} }
-                                        name={customId + "_" + id} value={option}/>
-
-                                    {definition.language &&
-                                    <LanguageSelector
-                                        onChange={(value) => { this.updateSelection(value, customId+ "_LANGUAGES",rightsPackage[0])} }
-                                        value={rightsPackage[0].selectedRights[customId+ "_LANGUAGES"]}/>}
-                                    {definition.textField &&
-                                    <input
-                                        onChange={(e) => { this.updateSelection(e.target.value, customId+ "_TEXT",rightsPackage[0])} }
-                                        value={rightsPackage[0].selectedRights[customId+ "_TEXT"]}
-                                        className="text-field"
-                                        type="text"/>
-                                    }
-                                    {
-                                        definition.numberField &&
-                                        <input
-                                            className="text-field"
-                                            style={numberFieldStyle}
-                                            type="number"
-                                            onChange={(e) => { this.updateSelection(e.target.value, this.getNumberFieldKey(definition, customId),rightsPackage[0])} }
-                                            value={rightsPackage[0].selectedRights[this.getNumberFieldKey(definition, customId)]}
-                                            min={0}/>
-                                    }
-                                </div>
-                            })}
-                        </div>}*/}
-
-
                         {deliveryViaLiveFeed
                             && checkContentDelivery
                             && id !== "CONTENT_DELIVERY"
@@ -568,7 +542,7 @@ class PopupRight extends React.Component {
                             className={cn('popup-rights-text-area', {
                                 'required': this.hasSelection(id, textAreaRequired, rightsPackage) && !rightsPackage[0].selectedRights[id+ "_TEXTAREA"]
                             })}
-                            placeholder={this.context.t("CL3_COMMENTS_PLACEHOLDER")}
+                            placeholder={this.getPlaceholderMsg()}
                             onChange={(e) => { this.updateSelectionInAllPackages(e.target.value, id+ "_TEXTAREA")}}
                             value={rightsPackage[0].selectedRights[id+ "_TEXTAREA"]}/>}
 
@@ -654,14 +628,6 @@ class PopupRight extends React.Component {
             }
         }
 
-        /*if ( id === "CONTENT_DELIVERY"){
-            rightsPackage.forEach(rp => {
-                if ( rp.selectedRights[id] === "CONTENT_DELIVERY_LIVE" ) contentDeliveryCounter++;
-            })
-            if ( rightsPackage.length === contentDeliveryCounter ) response = false;
-
-        }*/
-
         if (rightsPackage && rightsPackage[0] && rightsPackage[0].selectedRights){
             rightsPackage.forEach(right => {
                 if(RightItemsDefinitions[right.selectedRights[id]] &&
@@ -701,7 +667,6 @@ class PopupRight extends React.Component {
     };
 
     render(){
-
         const {name, rightsPackage, programName, languages, checkContentDelivery, disabled} = this.props;
         let id = this.props.id;
 
@@ -754,6 +719,7 @@ class PopupRight extends React.Component {
         }
 
         const value = (isMultipleValuesSelected) ? "Multiple values selected" : displayedValue;
+        const isCommentAdded = rightsPackage[0].selectedRights[id + "_TEXTAREA"];
 
         return (
             <div className={cn("base-input", { "disabled": disabled })} style={{width: "49%"}}>
@@ -764,6 +730,9 @@ class PopupRight extends React.Component {
                 >
                     {value || 'Select'}
                 </div>
+                {isCommentAdded && (
+                    <i className="fa fa-commenting-o comment-icon" />
+                )}
                 <i className="fa fa-edit" onClick={this.togglePopup} />
                 { this.renderModal() }
             </div>

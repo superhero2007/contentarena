@@ -95,7 +95,7 @@ class ContentListingCommercialActivity extends ContentListing {
         return (
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
                 <div className="listing-list-view commercial-activity">
-                    <div className={"left"}>
+                    <div className={"left"} onClick={this.onSelect}>
                         {getListingImage(this.props)}
                     </div>
                     <div className={"right"}>
@@ -111,7 +111,7 @@ class ContentListingCommercialActivity extends ContentListing {
                         </div>
 
                         <div className="sales-and-exp-wrapper">
-                            <SalesPackages salesPackages={salesPackages} />
+                            <SalesPackages salesPackages={salesPackages} onShowAllClick={this.onSelect} />
                             {expiresAt && (
                                 <div className="expires">
                                     Expiry: <b>{Moment(expiresAt).format(DATE_FORMAT)}</b>

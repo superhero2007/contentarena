@@ -308,6 +308,14 @@ button {
         }
       }
 
+      .comment-icon {
+        color: #2AAAEC;
+        font-size: 26px;
+        position: absolute;
+        right: 40px;
+        bottom: 7px;
+      }
+
       .fa-edit {
         position: absolute;
         right: 3px;
@@ -366,7 +374,7 @@ button {
         min-width: 275px;
         box-sizing: border-box;
       }
-      input, select {
+      input:not([type="radio"]), select {
         width: 100%;
         margin: 0 0 0 5px;
         height: 35px;
@@ -1235,6 +1243,10 @@ button {
     }
   }
   .popup-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
     .cancel-button {
       border: none;
       background: none;
@@ -1300,6 +1312,10 @@ button {
   padding: 20px !important;
   position: absolute;
   .buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
     .standard-button {
       min-width: 130px;
       padding: 0 25px;
@@ -1719,7 +1735,6 @@ button {
       div {
         display: inline-block;
       }
-
       .fa-edit {
         padding: inherit;
         color: #2AAAEC;

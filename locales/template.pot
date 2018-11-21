@@ -1,9 +1,29 @@
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
 msgid "LISTING_DETAILS_GENERAL_CONTENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
 msgid "LISTING_DETAILS_MULTIPLE_SPORTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_CATEGORY_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_SEASON_RELEASE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ContentListingEventDetails.js
+msgid "EVENT_FIXTURES_EPISODES"
 msgstr ""
 
 #. Marketplace - Placeholder for Search input
@@ -175,11 +195,6 @@ msgstr ""
 msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
-msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
 msgid "MARKETPLACE_NO_RESULTS"
 msgstr ""
@@ -337,6 +352,59 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+msgid "CL_STEP1_SELECTOR_ADD_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_ADD_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_SPORT_CATEGORY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_TITLE_SEASONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "International"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "Popular"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_APPLY"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
 msgid "ENTER_MESSAGE"
 msgstr ""
@@ -456,12 +524,12 @@ msgid "WATCHLIST_REMOVE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "Yes"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
 #: src/AppBundle/Resources/public/javascript/sell/components/Comments.js
 msgid "Cancel"
 msgstr ""
@@ -530,6 +598,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -745,35 +825,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_SEASON_DURATION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Popular"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "International"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
-msgid "CL_STEP1_SELECTOR_ADD_SPORT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_SEASON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_ADD_TOURNAMENT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "CL_STEP1_SELECTOR_COUNTRIES_ALL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/Selector.js
-msgid "Apply"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -1643,11 +1694,23 @@ msgid "CL3_LANGUAGE_SELECTOR_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-msgid "CL3_LICENSED_LANGUAGE_SELECTOR_PLACEHOLDER"
+msgid "CL3_COMMENTS_TRANSMISSION_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_COMMENTS_RESERVED_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_COMMENTS_EXPLOITATION_WINDOW_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
 msgid "CL3_COMMENTS_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_LICENSED_LANGUAGE_SELECTOR_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
@@ -1725,11 +1788,24 @@ msgid "CL_STEP4_EDIT_BUNDLE_AS_PACKAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "No"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL4_TERRITORIES_BUNDLE_SALES_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_EDIT_BUNDLE_TYPE_FIXED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL4_TERRITORIES_BUNDLE_PAYMENT_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
@@ -1818,18 +1894,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TERMS_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TERMS_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TERMS_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
@@ -1942,10 +2006,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
-msgid "No"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js

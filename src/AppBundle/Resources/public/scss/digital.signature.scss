@@ -28,28 +28,6 @@
       border-right: 0;
       background: $primary-color;
     }
-
-    .buttons{
-      margin-top: 30px;
-      button{
-        color: $black-color;
-        font-weight: bold;
-
-        &.standard-button-small, &.standard-button-big{
-          font-size: 14px;
-          background: $color-grey-light;
-          padding: 15px 50px;
-          border: 1px solid $orange-color;
-          border-radius: 5px;
-
-          &.transparent {
-            width: 60px;
-            border: none;
-            padding: 15px 5px;
-          }
-        }
-      }
-    }
   }
 
   &.for-modal{
@@ -61,14 +39,6 @@
       border: none;
       border-radius: 0;
     }
-
-    .buttons button{
-      padding: 10px 50px;
-
-      &.transparent{
-        background: transparent;
-      }
-    }
   }
 
   .signature-name-container {
@@ -79,7 +49,7 @@
     flex-direction: column;
     width: 100%;
     input{
-      margin: 10px 20px 10px 0px;
+      margin: 10px 20px 10px 0;
     }
   }
   .signature-wrap {

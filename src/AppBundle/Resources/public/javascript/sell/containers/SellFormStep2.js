@@ -6,6 +6,7 @@ import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 import { stepChangeReset, changeAllEpisodeFlag} from "../actions/contentActions";
 import {editedProgramSelected} from "../../main/actions/utils";
+import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {PropTypes} from "prop-types";
 
 class SellFormStep2 extends React.Component {
@@ -25,6 +26,8 @@ class SellFormStep2 extends React.Component {
             rights : RightDefinitions,
             productionStandards : ProductionStandardsDefinitions
         };
+
+        this.defaultValue = ''
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,6 +67,12 @@ class SellFormStep2 extends React.Component {
         }
     };
 
+    getProgramDescriptionDefaultValue = (value) => {
+        if (!this.defaultValue && value) {
+            this.defaultValue = value;
+        }
+    }
+
     render() {
         const {
             programDescription,
@@ -86,6 +95,8 @@ class SellFormStep2 extends React.Component {
 
         let editedProgram = editedProgramSelected(rightsPackage);
 
+        const defaultValue = programDescription ? programDescription : this.defaultValue;
+
         this.scroll();
         return (
 
@@ -107,8 +118,13 @@ class SellFormStep2 extends React.Component {
                         </div>
                         <textarea
                             onChange={ (e) => updateContentValue("programDescription", e.target.value)}
-                            defaultValue={programDescription}
-                            placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}/>
+                            value={defaultValue}
+                            placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}
+                            style={{minHeight:150}}
+                        />
+                        <div className="is-hidden">
+                            <ContentListingEventDetails{...this.props} setRawContent={this.getProgramDescriptionDefaultValue}/>
+                        </div>
                     </div>
                 </div>
 

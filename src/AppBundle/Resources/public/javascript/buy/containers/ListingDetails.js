@@ -870,7 +870,6 @@ class ListingDetails extends React.Component {
                             <DigitalSignature
                                 customClass='for-listing'
                                 title={this.context.t("PLEASE_SIGN_WITH_YOUR_CURSOR")}
-                                clearBtnText={this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_CANCEL")}
                                 signature={signature}
                                 signatureName={signatureName}
                                 signaturePosition={signaturePosition}

@@ -129,7 +129,7 @@ class SearchCompetition extends  React.Component {
                     </button>
                 </div>
 
-                {this.state.searchDone && this.state.results.length > 0 && <div>
+                {this.state.searchDone && this.state.results.length > 0 && <div style={{color: '#4F4F4F'}}>
                     {this.state.resultMessage}
                 </div>}
 
