@@ -52,14 +52,14 @@ class UpdateSeasons extends ContainerAwareCommand
 
         foreach ($tournaments as $tournament){
             /* @var Tournament $tournament */
-            echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
+            //echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
             $seasons = $seasonRepository->findBy(array("tournament"=>$tournament));
             $seasonYears = [];
             $hasSplittedSeason = false;
             foreach ($seasons as $season){
                 /* @var Season $season */
 
-                echo "Season: " . $season->getYear() . PHP_EOL;
+                //echo "Season: " . $season->getYear() . PHP_EOL;
                 $year = explode("/" ,$season->getYear() );
 
                 if ( count($year) > 1 ){
@@ -76,6 +76,8 @@ class UpdateSeasons extends ContainerAwareCommand
 
             if ( $consecutive ){
                 echo "Seasons are consecutive" . PHP_EOL;
+                echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
+                echo "Season: " . $season->getYear() . PHP_EOL;
                 for ( $i = $currentYear; $i< $currentYear+5; $i++ ){
                     $time = new \DateTime();
 
