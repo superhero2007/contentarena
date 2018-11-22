@@ -64,7 +64,6 @@ class MessageService
                 $thread->setLastMessageContent($lastMessageContent);
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
-                $thread->setLastMessageAttachment($lastMessage[0]->isAttachment());
                 $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
                 $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
             } else if ($thread->getCreatedAt() != null) {
