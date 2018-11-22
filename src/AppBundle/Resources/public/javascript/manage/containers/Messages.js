@@ -5,6 +5,8 @@ import Moment from "moment/moment";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
 import { DATE_TIME_FORMAT } from "@constants";
+import ChatMessage from "../../main/components/ChatMessage";
+import AttachmentUploader from "../../main/components/AttachmentUploader";
 
 class Messages extends React.Component {
     constructor(props) {
@@ -17,6 +19,7 @@ class Messages extends React.Component {
             inputMessage : null,
             messages : []
         };
+        this.attachmentUploader = React.createRef();
     }
 
     componentDidMount () {
@@ -94,6 +97,29 @@ class Messages extends React.Component {
         });
     };
 
+    sendAttachment = (fileUrl,fileName, fileSize, fileExtension ) => {
+        const {
+            selectedThread,
+            messages
+        } = this.state;
+
+        let message = {
+            attachment : true,
+            fileName: fileName,
+            fileSize: fileSize,
+            fileExtension : fileExtension,
+            content : fileUrl,
+            thread : selectedThread.id,
+            listing : selectedThread.listing.id
+        };
+
+        this.setState({saving : true});
+
+        ContentArena.ContentApi.sendMessage(message).done(r=>{
+            this.setState({saving : false, showSuccess : true,  messages: [...messages, r]})
+        });
+    };
+
     render () {
         const {
             loadingThreads,
@@ -106,6 +132,10 @@ class Messages extends React.Component {
             </div>
         )
     }
+
+    openAttachmentUploader = () => {
+        this.attachmentUploader.current.openFileSelector();
+    };
 
     renderNoMessages() {
         return (
@@ -121,7 +151,7 @@ class Messages extends React.Component {
             threads,
             inputMessage,
             messages,
-            saving
+            saving,
         } = this.state;
 
         const {user} = this.props;
@@ -184,41 +214,42 @@ class Messages extends React.Component {
                             {!loadingMessages && messages.map((m, i) => {
                                 const ownCompanyMessage = user.company.id === m.sender.company.id;
                                 const ownMessage = user.id === m.sender.id;
-
-                                return <div key={i} className={cn("message", {
-                                    "own-message": ownMessage,
-                                    'own-company': ownCompanyMessage
-                                })}>
-                                    <div className={"message-sender"}>
-                                        {getFullName(m.sender)}
-                                    </div>
-                                    <div className={"message-date"}>
-                                        {Moment(m.createdAt).format(`${DATE_TIME_FORMAT}`)}
-                                    </div>
-                                    <div className={"message-content"}>
-                                        {m.content}
-                                    </div>
-                                </div>
+                                return <ChatMessage
+                                    key={i}
+                                    ownMessage={ownMessage}
+                                    ownCompanyMessage={ownCompanyMessage}
+                                    message={m} />
                             }).reverse()}
 
                         </div>
+                        <AttachmentUploader
+                            ref={this.attachmentUploader}
+                            onFinish={this.sendAttachment}
+                        />
                         <div className={"message-input"}>
                             <div className={"message-input-title"}>
                                 {this.context.t("MESSAGES_TITLE")}
                             </div>
                             <div className="d-flex align-items-center">
-                              <textarea
-                                  value={inputMessage}
-                                  onChange={(e) => {
+                                <textarea
+                                    value={inputMessage}
+                                    onChange={(e) => {
                                       this.setState({inputMessage: e.target.value})
-                                  }}
-                                  className={"message-content"}
-                              />
+                                    }}
+                                    className={"message-content"}
+                                />
                                 <button className={"standard-button"} onClick={this.send}
                                         disabled={!inputMessage || inputMessage === "" || saving}>
                                     {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
                                     {saving && <i className="fa fa-cog fa-spin"/>}
                                 </button>
+                            </div>
+                            <div className="attachment-icon"
+                                 onClick={()=>{
+                                     this.openAttachmentUploader();
+                                 }}
+                            >
+                                <i className="fa fa-paperclip icon"/>
                             </div>
                         </div>
                     </div>

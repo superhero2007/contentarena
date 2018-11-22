@@ -67,6 +67,38 @@ class Message
     private $readers;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="attachment", type="boolean", nullable=true)
+     * @Groups({"messages"})
+     *
+     */
+    private $attachment = false;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_size", type="text", nullable=true)
+     * @Groups({"messages"})
+     */
+    private $fileSize;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="text", nullable=true)
+     * @Groups({"messages"})
+     */
+    private $fileName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_extension", type="text", nullable=true)
+     * @Groups({"messages"})
+     */
+    private $fileExtension;
+
+    /**
      * @return mixed
      */
     public function getReaders()
@@ -182,6 +214,72 @@ class Message
     {
         $this->thread = $thread;
     }
+
+    /**
+     * @return bool
+     */
+    public function isAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * @param bool $attachment
+     */
+    public function setAttachment($attachment)
+    {
+        $this->attachment = $attachment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileSize()
+    {
+        return $this->fileSize;
+    }
+
+    /**
+     * @param string $fileSize
+     */
+    public function setFileSize($fileSize)
+    {
+        $this->fileSize = $fileSize;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * @param string $fileName
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileExtension()
+    {
+        return $this->fileExtension;
+    }
+
+    /**
+     * @param string $fileExtension
+     */
+    public function setFileExtension($fileExtension)
+    {
+        $this->fileExtension = $fileExtension;
+    }
+
+
 
 
 }

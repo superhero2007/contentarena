@@ -60,9 +60,11 @@ class MessageService
 
 
             if ( $lastMessage != null && count($lastMessage) > 0 ){
-                $thread->setLastMessageContent($lastMessage[0]->getContent());
+                $lastMessageContent = ($lastMessage[0]->isAttachment()) ? $lastMessage[0]->getFileName() : $lastMessage[0]->getContent();
+                $thread->setLastMessageContent($lastMessageContent);
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
+                $thread->setLastMessageAttachment($lastMessage[0]->isAttachment());
                 $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
                 $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
             } else if ($thread->getCreatedAt() != null) {
@@ -95,7 +97,8 @@ class MessageService
 
 
             if ( $lastMessage != null && count($lastMessage) > 0 ){
-                $thread->setLastMessageContent($lastMessage[0]->getContent());
+                $lastMessageContent = ($lastMessage[0]->isAttachment()) ? $lastMessage[0]->getFileName() : $lastMessage[0]->getContent();
+                $thread->setLastMessageContent($lastMessageContent);
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
                 $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
@@ -252,7 +255,10 @@ class MessageService
         $message->setContent($request->get('content'));
         $message->setThread($thread);
         $message->setSender($user);
-
+        $message->setAttachment($request->get("attachment"));
+        $message->setFileName($request->get("fileName"));
+        $message->setFileSize($request->get("fileSize"));
+        $message->setFileExtension($request->get("fileExtension"));
         $this->em->persist($message);
         $this->em->flush();
         return $message;
