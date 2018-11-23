@@ -183,11 +183,7 @@
       background: #EFEFEF;
       padding: 30px;
       .attachment-icon{
-        .fa {
-          padding-right: 10px;
-          color: #2AAAEC;
-          cursor: pointer;
-        }
+        cursor: pointer;
       }
       .message-input-title {
         font-weight: bold;
@@ -244,7 +240,28 @@
       align-items: center;
       text-transform: uppercase;
     }
-
+    .attachment-uploader-close{
+      position: absolute;
+      right: 20px;
+      top: 32px;
+      cursor: pointer;
+    }
+    .attachment-uploader-success {
+      position: absolute;
+      left: 80px;
+      bottom: 16px;
+      color: #333333;
+      font-size: 13px;
+      font-weight: 400;
+    }
+    .attachment-uploader-error {
+      position: absolute;
+      left: 80px;
+      bottom: 16px;
+      color: red;
+      font-size: 13px;
+      font-weight: 400;
+    }
     @keyframes changewidth {
       from {
         width: 0;

@@ -880,6 +880,7 @@ class ContentService
             if ( isset($seasonData->endDate) ) $season->setEndDate(new \DateTime($seasonData->endDate));
             if ( isset($seasonData->startDate) ) $season->setStartDate(new \DateTime($seasonData->startDate));
             if ( isset($seasonData->year) ) $season->setYear($seasonData->year);
+            $season->setUserSeason(true);
 
             if ( isset($seasonData->from) && (!isset($seasonData->to) || $seasonData->to == "Not applicable" ) ){
                 $season->setYear($seasonData->from);

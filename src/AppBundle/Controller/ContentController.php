@@ -74,6 +74,21 @@ class ContentController extends Controller
         ));
     }
 
+    /**
+     * @Route("/content/save/attachment", name="saveAttachmentFile")
+     */
+    public function saveAttachmentFile(Request $request, ContentService $contentService  )
+    {
+        $success = true;
+        $file = $contentService->saveTmpFiles($request);
+
+        return new JsonResponse(array(
+            "success" => $success,
+            "file" => $file,
+            'name' => $request->files->get("file")->getClientOriginalName()
+        ));
+    }
+
     private function testPdf( $file ){
 
         $pdf = new PDFMerger();

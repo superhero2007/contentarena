@@ -7,6 +7,7 @@ import cn from "classnames";
 import { DATE_TIME_FORMAT } from "@constants";
 import ChatMessage from "../../main/components/ChatMessage";
 import AttachmentUploader from "../../main/components/AttachmentUploader";
+import {attachmentClipIcon} from "../../main/components/Icons";
 
 class Messages extends React.Component {
     constructor(props) {
@@ -15,6 +16,7 @@ class Messages extends React.Component {
             threads : [],
             loadingThreads : false,
             loadingMessages : false,
+            attachmentReady : false,
             selectedThread : null,
             inputMessage : null,
             messages : []
@@ -80,11 +82,13 @@ class Messages extends React.Component {
     send = () => {
         const {
             selectedThread,
+            attachmentReady,
+            attachmentMessage,
             inputMessage,
             messages
         } = this.state;
 
-        let message = {
+        let message = (attachmentReady) ? attachmentMessage : {
             content : inputMessage,
             thread : selectedThread.id,
             listing : selectedThread.listing.id
@@ -93,30 +97,43 @@ class Messages extends React.Component {
         this.setState({inputMessage : "", saving : true});
 
         ContentArena.ContentApi.sendMessage(message).done(r=>{
-            this.setState({saving : false, showSuccess : true,  messages: [...messages, r]})
+            this.setState({
+                saving : false,
+                attachmentMessage : null,
+                attachmentReady : false,
+                showSuccess : true,
+                messages: [...messages, r]
+            });
+            this.closeAttachmentUploader();
+        });
+
+    };
+
+    cancelAttachment = () => {
+        this.setState({
+            attachmentReady : false,
+            attachmentMessage : null
         });
     };
 
-    sendAttachment = (fileUrl,fileName, fileSize, fileExtension ) => {
+    prepareAttachment = (fileUrl,fileName, fileSize, fileExtension ) => {
         const {
             selectedThread,
-            messages
         } = this.state;
 
-        let message = {
-            attachment : true,
-            fileName: fileName,
-            fileSize: fileSize,
-            fileExtension : fileExtension,
-            content : fileUrl,
-            thread : selectedThread.id,
-            listing : selectedThread.listing.id
-        };
+        if (!this.attachmentUploader.current.state.show) return;
 
-        this.setState({saving : true});
-
-        ContentArena.ContentApi.sendMessage(message).done(r=>{
-            this.setState({saving : false, showSuccess : true,  messages: [...messages, r]})
+        this.setState({
+            attachmentReady : true,
+            attachmentMessage : {
+                attachment : true,
+                fileName: fileName,
+                fileSize: fileSize,
+                fileExtension : fileExtension,
+                content : fileUrl,
+                thread : selectedThread.id,
+                listing : selectedThread.listing.id
+            }
         });
     };
 
@@ -137,6 +154,10 @@ class Messages extends React.Component {
         this.attachmentUploader.current.openFileSelector();
     };
 
+    closeAttachmentUploader = () => {
+        this.attachmentUploader.current.close();
+    };
+
     renderNoMessages() {
         return (
             <div className='no-messages'>{this.context.t("MESSAGES_NO_MESSAGES_YET")}</div>
@@ -148,6 +169,7 @@ class Messages extends React.Component {
             loadingThreads,
             loadingMessages,
             selectedThread,
+            attachmentReady,
             threads,
             inputMessage,
             messages,
@@ -224,7 +246,8 @@ class Messages extends React.Component {
                         </div>
                         <AttachmentUploader
                             ref={this.attachmentUploader}
-                            onFinish={this.sendAttachment}
+                            onFinish={this.prepareAttachment}
+                            onCancel={this.cancelAttachment}
                         />
                         <div className={"message-input"}>
                             <div className={"message-input-title"}>
@@ -236,10 +259,11 @@ class Messages extends React.Component {
                                     onChange={(e) => {
                                       this.setState({inputMessage: e.target.value})
                                     }}
+                                    disabled={attachmentReady}
                                     className={"message-content"}
                                 />
                                 <button className={"standard-button"} onClick={this.send}
-                                        disabled={!inputMessage || inputMessage === "" || saving}>
+                                        disabled={( !inputMessage || inputMessage === "" || saving) && !attachmentReady}>
                                     {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
                                     {saving && <i className="fa fa-cog fa-spin"/>}
                                 </button>
@@ -249,7 +273,7 @@ class Messages extends React.Component {
                                      this.openAttachmentUploader();
                                  }}
                             >
-                                <i className="fa fa-paperclip icon"/>
+                                {attachmentClipIcon}
                             </div>
                         </div>
                     </div>

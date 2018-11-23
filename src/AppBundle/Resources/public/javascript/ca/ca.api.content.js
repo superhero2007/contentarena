@@ -457,6 +457,33 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    saveAttachmentFile ( files ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        const data = new FormData();
+        data.append('file', files[0]);
+
+        $.ajax({
+            url: envhosturl + "content/save/attachment",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                console.log("FAILED")
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getByCustomId ( customId ) {
         var deferred = jQuery.Deferred(),
             _this = this;

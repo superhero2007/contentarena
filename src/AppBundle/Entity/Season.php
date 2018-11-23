@@ -65,6 +65,13 @@ class Season
      */
     private $tournament;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="user_season", type="boolean")
+     *
+     */
+    private $userSeason = false;
+
 
     /**
      * Get id
@@ -192,6 +199,24 @@ class Season
     {
         $this->tournament = $tournament;
     }
+
+    /**
+     * @return bool
+     */
+    public function isUserSeason()
+    {
+        return $this->userSeason;
+    }
+
+    /**
+     * @param bool $userSeason
+     */
+    public function setUserSeason($userSeason)
+    {
+        $this->userSeason = $userSeason;
+    }
+
+
 
 
 }

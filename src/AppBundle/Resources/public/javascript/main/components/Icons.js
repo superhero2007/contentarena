@@ -38,6 +38,9 @@ export const sportCategoryIcon = <img src={assetsBaseDir + "app/images/listing/f
 export const eventTimeIcon = <img src={assetsBaseDir + "app/images/listing/calendar-clock.svg"} alt=""/>;
 export const coinIcon = <img src={assetsBaseDir + "app/images/listing/coin.svg"} alt=""/>;
 
+//messages
+export const attachmentClipIcon = <img src={assetsBaseDir + "app/images/attachment-clip.svg"} alt=""/>;
+
 
 export const Spinner = ({test}) => (
     <div><i className="fa fa-cog fa-spin"/></div>

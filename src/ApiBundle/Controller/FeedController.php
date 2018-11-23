@@ -200,7 +200,10 @@ class FeedController extends FOSRestController
                 $seasonYears[] = $season["@attributes"]["year"];
             }
             $seasonsRepo = $this->getDoctrine()->getRepository("AppBundle:Season");
-            $caSeasons = $seasonsRepo->findBy(array("tournament"=>$tournament));
+            $caSeasons = $seasonsRepo->findBy(array("tournament"=>$tournament, "userSeason"=>false));
+
+            usort($caSeasons, array($this,'caSeasonSort'));
+            array_reverse($caSeasons);
 
             if (  $caSeasons != null ){
                 foreach ($caSeasons as $caSeason ){
@@ -220,6 +223,11 @@ class FeedController extends FOSRestController
 
         $view = $this->view($response);
         return $this->handleView($view);
+    }
+
+    private function caSeasonSort($a, $b)
+    {
+        return strcmp($a->getYear(), $b->getYear());
     }
 
     /**
