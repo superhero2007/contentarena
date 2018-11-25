@@ -58,6 +58,7 @@ class SellFormStep1 extends React.Component {
             sportCategoryExtended : false,
             tournamentHasNoSeason: false,
             nameSet: !!props.name,
+            disableSaveWebsiteButton: true,
         };
     }
 
@@ -670,13 +671,23 @@ class SellFormStep1 extends React.Component {
                             {this.context.t("CL_STEP1_LABEL_WEBSITE")}
                         </label>
                         <TagsInput
-                            inputProps={{placeholder: websitePlaceholder}}
+                            inputProps={{
+                                onChange: this.onWebsiteInputChange,
+                                placeholder: websitePlaceholder
+                            }}
                             value={websites}
-                            ref='tagsinput'
+                            ref={e => this.tagsInput = e}
                             onChange={this.websitesUpdated}
                             inputValue={website}
                             onChangeInput={this.handleWebsiteChange}
                         />
+                        <button
+                            className="standard-button"
+                            disabled={this.state.disableSaveWebsiteButton}
+                            onClick={this.onSiteSaveClicked}
+                        >
+                            {this.context.t("CL_STEP5_BUTTON_SAVE")}
+                        </button>
                     </div>
 
                     <FileSelector
@@ -695,6 +706,22 @@ class SellFormStep1 extends React.Component {
             </div>
         );
     }
+
+    onSiteSaveClicked = () => {
+        this.tagsInput.accept();
+
+        this.setState({
+            disableSaveWebsiteButton:  true
+        });
+    };
+
+    onWebsiteInputChange = (e) => {
+        const disableSaveWebsiteButton = !e.target.value.trim();
+
+        this.setState({
+            disableSaveWebsiteButton
+        });
+    };
 }
 
 SellFormStep1.contextTypes = {
