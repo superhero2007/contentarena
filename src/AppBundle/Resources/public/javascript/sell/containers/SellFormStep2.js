@@ -69,8 +69,10 @@ class SellFormStep2 extends React.Component {
     };
 
     getProgramDescriptionDefaultValue = (value) => {
-        if (!this.defaultValue && value) {
-            this.defaultValue = value;
+        const {updateContentValue} = this.props;
+        if (value && !this.userDescriptionAdded) {
+            this.userDescriptionAdded = false;
+            updateContentValue("programDescription", value)
         }
     }
 
@@ -99,8 +101,6 @@ class SellFormStep2 extends React.Component {
 
         let editedProgram = editedProgramSelected(rightsPackage);
 
-        const defaultValue = programDescription ? programDescription : this.defaultValue;
-
         this.scroll();
         return (
 
@@ -121,14 +121,19 @@ class SellFormStep2 extends React.Component {
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TEXT")}
                         </div>
                         <textarea
-                            onChange={ (e) => updateContentValue("programDescription", e.target.value)}
-                            value={defaultValue}
+                            onChange={e => {
+                                updateContentValue("programDescription", e.target.value);
+                                this.userDescriptionAdded = true
+                            }}
+                            value={programDescription}
                             placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}
                             style={{minHeight:150}}
                         />
-                        <div className="is-hidden">
-                            <ContentListingEventDetails{...this.props} setRawContent={this.getProgramDescriptionDefaultValue}/>
-                        </div>
+                        {!this.userDescriptionAdded && (
+                            <div className="is-hidden">
+                                <ContentListingEventDetails{...this.props} setRawContent={this.getProgramDescriptionDefaultValue}/>
+                            </div>
+                        )}
                     </div>
                 </div>
 

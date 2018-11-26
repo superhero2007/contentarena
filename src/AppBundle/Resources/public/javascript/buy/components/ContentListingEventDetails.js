@@ -23,17 +23,48 @@ class ContentListingEventDetails extends React.Component {
     componentDidMount() {
         const {setRawContent} = this.props;
 
-        if (setRawContent) setRawContent(this.getRawContent())
+        if (setRawContent) setRawContent(this.getRawEventDetails())
     }
 
-    getRawContent = () => {
-        let rawContent = `\n`;
+    componentDidUpdate() {
+        const {setRawContent} = this.props;
+
+        if (setRawContent) setRawContent(this.getRawEventDetails())
+    }
+
+    getRawEventDetails = () => {
+        let rawContent = ``;
+        let content = [];
+        let order = [
+            'EVENT_SPORT',
+            'EVENT_CATEGORY_COUNTRY',
+            'EVENT_TOURNAMENT',
+            'EVENT_SEASON_RELEASE',
+            'EVENT_FIXTURES_EPISODES',
+        ]
 
         jQuery('.listing-attributes .event-text').each(function () {
             let title = $(this).attr('title')
             let text = $(this).text();
-            rawContent += `\n${title}: ${text}`;
+            let detail = {
+                title,
+                text
+            }
+
+            content.push(detail)
         });
+
+        content = content.concat().sort((a,b)=>{
+            return order.indexOf(a.title) - order.indexOf(b.title)
+        })
+
+        content.forEach(el => {
+            if (el.title === 'EVENT_FIXTURES_EPISODES') {
+                rawContent += `${el.text}\n`;
+            } else {
+                rawContent += `${el.title}: ${el.text}\n`;
+            }
+        })
 
         return rawContent;
     }
@@ -160,6 +191,7 @@ class ContentListingEventDetails extends React.Component {
             showCustomId,
             PROGRAM_YEAR,
             PROGRAM_EPISODES,
+            setRawContent
         } = this.props;
 
         let schedules = this.getSchedules();
@@ -172,11 +204,7 @@ class ContentListingEventDetails extends React.Component {
         let roundsTitle = (rounds.length > 1) ? "Rounds: " : "Round: ";
         let roundsName = roundsTitle + rounds.join(", ");
         let seasonsWithYear = seasons.filter(season => (season.year !== undefined));
-
-        let tournamentArray = [];
-        if (tournament) {
-            tournamentArray = Array.isArray(tournament) ? tournament : [tournament]
-        }
+        let tournamentArray = tournament ? Array.isArray(tournament) ? tournament : [tournament] : [];
 
         return (
             <div className="listing-attributes col">
@@ -310,9 +338,17 @@ class ContentListingEventDetails extends React.Component {
                             <div className="event-icon">
                                 {fixturesEpisodeIcon}
                             </div>
-                            <div className="event-text" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
-                                {this.getFixtures().length} fixtures
-                            </div>
+                            {setRawContent ? (
+                                <div className="event-text" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
+                                    {this.getFixtures().map(f =>(
+                                        <React.Fragment>{f.name} {f.date !== undefined && "(" + moment(f.date).format(DATE_FORMAT)+")"}{"\n"}</React.Fragment>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="event-text" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
+                                    {this.getFixtures().length} fixtures
+                                </div>
+                            )}
                         </div>
                     )}
                     {!this.showProgramInfo() && this.getFixtures().length === 1 && this.getFixtures()[0].name && (
