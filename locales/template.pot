@@ -386,6 +386,22 @@ msgid "CL_STEP1_SELECTOR_TITLE_SEASONS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_SUB_TITLE_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_SUB_TITLE_SPORT_CATEGORY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_SUB_TITLE_TOURNAMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
+msgid "CL_STEP1_SELECTOR_SUB_TITLE_SEASONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
 msgid "CL_STEP1_SELECTOR_SUB_TITLE"
 msgstr ""
 

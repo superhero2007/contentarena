@@ -270,6 +270,29 @@ class SelectorModal extends Component {
         return <h3 className="modal-title">{title}</h3>;
     };
 
+    getModalSubTitle = () => {
+        const { selectorType } = this.props;
+        let subTitle = '';
+
+        switch (selectorType) {
+            case 'sports':
+                subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_SPORT");
+                break;
+            case 'sportCategory':
+                subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_SPORT_CATEGORY");
+                break;
+            case 'tournament':
+                subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_TOURNAMENT");
+                break;
+            case 'seasons':
+                subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_SEASONS");
+                break;
+            default:
+                subTitle = 'provide sub title for this case';
+        }
+        return <p className="modal-sub-title">{subTitle}</p>;
+    };
+
     render() {
         const { open } = this.props;
 
@@ -282,7 +305,7 @@ class SelectorModal extends Component {
             <header className="modal-header selection-header">
                 <div className="title-left">
                     {this.getModalTitle()}
-                    <p className="modal-sub-title">{this.context.t("CL_STEP1_SELECTOR_SUB_TITLE")}</p>
+                    {this.getModalSubTitle()}
                 </div>
 
                 <div className="title-right">
