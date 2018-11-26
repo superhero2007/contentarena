@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <style>
+        html{
+            font-family: Arial;
+            font-size: 14px;
+        }
         .license-content{
             margin: 0 auto;
             width: 800px;
@@ -77,7 +81,7 @@
     </style>
 </head>
 <body class="license {% if watermark %}watermark{% endif %}">
-<div class="license-content">
+<tr class="license-content">
     <div class="license-title">LICENSE AGREEMENT</div>
 
     {# DATE #}
@@ -279,86 +283,68 @@
 
     {# EVENT #}
     <div class="license-item">
-        <div class="license-item-column">
+
+        <table>
             {% if content.sports is not empty %}
-                <div class="license-item-content">
-                    <label>Sport(s):</label>
-                    {% for sport in content.sports %}
-                        {{ sport.name }}
-                    {% endfor %}
-                </div>
+                <tr>
+                    <td>
+                        Sport(s)
+                    </td>
+                    <td>
+                        {% for sport in content.sports %}
+                            {{ sport.name }}
+                        {% endfor %}
+                    </td>
+                </tr>
             {% endif %}
-
             {% if content.tournament is not empty %}
-                <div class="license-item-content">
-                    <label>Competition:</label>
-                    {{ content.tournament.name }}
-                </div>
+                <tr>
+                    <td>
+                        Competition
+                    </td>
+                    <td>
+                        {{ content.tournament.name }}
+                    </td>
+                </tr>
             {% endif %}
-
             {% if content.sportCategory is not empty %}
-                <div class="license-item-content">
-                    <label>Country of origin/Category:</label>
-                    {{ content.sportCategory.name }}
+                <tr>
+                    <td>
+                        Country of origin/Category
+                    </td>
+                    <td>
+                        {{ content.sportCategory.name }}
+                    </td>
                 </div>
             {% endif %}
-
             {% if content.seasons is not empty %}
                 {% for season in content.seasons %}
-                    <div class="license-item-content">
-                        <label>Season: </label>
-                        {{ season.name }}
-                    </div>
+                    <tr>
+                        <td>Season </td>
+                        <td>
+                            {{ season.name }}
+                        </td>
+                    </tr>
 
                     {% if content.fixturesBySeason[loop.index0] is defined %}
-                        <div class="license-item-content">
-                            <label>Fixtures: </label>
-                            <div class="license-item-content">
-                                <div class="license-item-column">
-                                    {#{% if content.schedulesBySeason[loop.index0] is defined %}
-                                        {% for round in content.schedulesBySeason[loop.index0] | cast_to_array %}
-                                            <div class="license-item-content license-fixture-item">
-                                                <strong>{{ round[0] }}</strong>
-                                                <div class="license-item-content license-fixture-item">
-                                                    {% for games in round[1] | cast_to_array%}
-                                                        {% for game in games[1] %}
-                                                            <div class="license-item-content">
-                                                                {% if game.competitors[0] is defined %}
-                                                                    {{ game.competitors[0].name }}
-                                                                {% endif %}
-                                                                {% if game.competitors[1] is defined %}
-                                                                    vs {{ game.competitors[1].name }}
-                                                                {% endif %}
-                                                            </div>
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}#}
-
-                                    {% if content.fixturesBySeason[loop.index0] is defined %}
-                                        {% for round in content.fixturesBySeason[loop.index0]  %}
-                                            <div class="license-item-content ">
-                                                {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y - H:i", "CET") }} UTC {% endif %}
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+                        <tr>
+                            <td rowspan={{ (content.fixturesBySeason[loop.index0] | length) + 1 }}>
+                                Fixtures
+                            </td>
+                        </tr>
+                        {% for round in content.fixturesBySeason[loop.index0]  %}
+                            <tr>
+                                <td>
+                                    {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y - H:i", "CET") }} UTC {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
                     {% endif %}
-
                 {% endfor %}
             {% endif %}
 
-           {# {% if content.description is defined and content.description is not empty %}
-                <div class="license-item-content">
-                    <label>Description:</label>
-                    {{ content.description }}
-                </div>
-            {% endif %}#}
-        </div>
+        </table>
+
     </div>
 
     {# PROGRAM TITLE#}
@@ -512,6 +498,17 @@
                 {% endfor %}
             </tr>
 
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] is defined %}
+                <tr>
+                    <td>
+                        Reserved Rights Details:
+                    </td>
+                    <td>
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
+                    </td>
+                </tr>
+            {% endif %}
+
             {% if content.rightsPackage| has_right("NA") or content.rightsPackage| has_right("HL") %}
 
                 <tr>
@@ -532,14 +529,15 @@
                         </td>
                     {% endfor %}
                 </tr>
-
-
             {% endif %}
         </table>
     </div>
 
     <div class="license-item">
         All rights not expressly granted under this License Agreement remain exclusively with the Licensor.
+        {% if content.rightsPackage| has_not_right("LB")  %}
+            For the avoidance of doubt: (Live) Betting Rights or any rights for the purpose of sports betting/gambling are excluded and not granted.
+        {% endif %}
     </div>
 
     {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"] is defined%}
@@ -597,35 +595,33 @@
         </div>
     {% endif %}
 
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] is defined %}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Reserved Right Details:
-                </label>
-                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
-            </div>
-        </div>
-    {% endif %}
-
     {# EXCLUSIVITY TITLE#}
     <div class="license-item-title">4. Exclusivity of the Grant of Rights:</div>
 
     {# EXCLUSIVITY#}
-    <div class="license-item">
-        <div class="license-item-content">
-
-            {% if exclusiveRights|length >0 %}
-                The following Audio-visual Right(s) shall be granted exclusively to the Licensee:
-                {% for right in exclusiveRights %}
-                    {{ right }}{% if not loop.last %},{% endif %}
-                {% endfor %}
-                <br/><br/>All rights, which are not explicitly granted exclusively are granted on a non-exclusive basis.
-            {% else %}
-                None
-            {% endif %}
+    {% if exclusiveRights|length >0 %}
+        <div class="license-item">
+            The following Audio-visual Right(s) shall be granted exclusively to the Licensee:
         </div>
-    </div>
+        <div class="license-item">
+            <ul>
+                {% for right in exclusiveRights %}
+                    <li>
+                        {{ right }}{% if not loop.last %},{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="license-item">
+            All rights, which are not explicitly granted exclusively are granted on a non-exclusive basis.
+        </div>
+
+    {% else %}
+        <div class="license-item">
+            None
+        </div>
+    {% endif %}
+
 
     {# TERRITORY TITLE#}
     <div class="license-item-title">5. Territory:</div>

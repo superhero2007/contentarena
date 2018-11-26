@@ -14,11 +14,11 @@ const ProgressBar = (props) => {
             <Filler percentage={props.percentage} />
         </div>
     )
-}
+};
 
 const Filler = (props) => {
     return <div className="filler" style={{ width: `${props.percentage}%` }} />
-}
+};
 
 class AttachmentUploader extends Component {
 
@@ -39,7 +39,8 @@ class AttachmentUploader extends Component {
             fileExtension: "",
             accept : props.accept || [".png", ".jpg", ".pdf", "xls", "doc", "docx", "xlsx", "ppt"],
             sizeLimit : 1e+7,
-            errorMessage : "Error"
+            errorMessage : "Error",
+            savedFileUri : null
         };
 
     };
@@ -63,9 +64,7 @@ class AttachmentUploader extends Component {
                 fileSize : fileSize,
                 fileName: fileName,
                 fileExtension: fileExtension
-
             });
-
             return
         }
 
@@ -81,7 +80,11 @@ class AttachmentUploader extends Component {
         ContentArena.ContentApi.saveAttachmentFile(event.target.files).then((response)=>{
 
             if (response.success){
-                this.setState({ uploading : false, success : true});
+                this.setState({
+                    uploading : false,
+                    success : true,
+                    savedFileUri: response.file
+                });
                 if (onFinish) onFinish(response.file, fileName, fileSize, fileExtension);
             } else {
                 this.setState((prev) => {
@@ -93,16 +96,13 @@ class AttachmentUploader extends Component {
                     }
                 });
             }
-        }).fail((e)=>{
-            this.setState((prev) => {
-                return {
-                    uploading : false,
-                    success : false,
-                    errorMessage : "Ooops.. There was a problem uploading this file. Please, try again."
-                }
+        }).fail(()=>{
+            this.setState({
+                uploading : false,
+                success : false,
+                errorMessage : "Ooops.. There was a problem uploading this file. Please, try again."
             });
         });
-
     };
 
     openFileSelector = () => {
@@ -113,10 +113,18 @@ class AttachmentUploader extends Component {
         this.setState({ show : false});
     };
 
+    removeFile = (savedFileUri) => {
+        ContentArena.ContentApi.removeAttachmentFile(savedFileUri).then((response)=>{
+
+        });
+    };
+
     cancel = () => {
         const {onCancel} = this.props;
+        const {savedFileUri} = this.state;
         this.close();
         if (onCancel) onCancel();
+        if (savedFileUri) this.removeFile(savedFileUri);
     };
 
     render() {

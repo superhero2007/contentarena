@@ -89,6 +89,18 @@ class ContentController extends Controller
         ));
     }
 
+    /**
+     * @Route("/content/remove/attachment", name="removeAttachmentFile")
+     */
+    public function removeAttachmentFile(Request $request, ContentService $contentService  )
+    {
+        $success = $contentService->removeTmpFiles($request);
+
+        return new JsonResponse(array(
+            "success" => $success,
+        ));
+    }
+
     private function testPdf( $file ){
 
         $pdf = new PDFMerger();

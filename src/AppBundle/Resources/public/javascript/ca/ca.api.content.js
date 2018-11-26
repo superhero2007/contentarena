@@ -484,6 +484,30 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    removeAttachmentFile ( file ) {
+        let deferred = jQuery.Deferred();
+
+
+        $.ajax({
+            url: envhosturl + "content/remove/attachment",
+            type: "POST",
+            data: {
+                file : file
+            },
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                console.log("FAILED")
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getByCustomId ( customId ) {
         var deferred = jQuery.Deferred(),
             _this = this;

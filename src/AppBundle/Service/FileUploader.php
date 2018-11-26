@@ -55,6 +55,17 @@ class FileUploader
         return $this->uploadsTmpUriPrefix. "/" . $extension . "/" . $fileName;
     }
 
+    public function removeFile( $file )
+    {
+        if (file_exists($file)) {
+            unlink($file);
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
     public function getTargetDir()
     {
         return $this->targetDir;

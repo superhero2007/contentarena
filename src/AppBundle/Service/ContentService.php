@@ -857,6 +857,19 @@ class ContentService
 
     }
 
+    public function removeTmpFiles( Request $request ){
+
+        $success = false;
+        $file = $request->get("file");
+
+        if ( $file != null ) {
+            $success = $this->fileUploader->removeFile($file);
+        }
+
+        return $success;
+
+    }
+
     private function getSeason($seasonData, $tournament, $key){
         if ( isset($seasonData->externalId) ) {
             $season = $this->em

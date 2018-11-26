@@ -29,6 +29,7 @@ class AppExtension extends AbstractExtension
         return array(
             new TwigFilter('price', array($this, 'priceFilter')),
             new TwigFilter('has_right', array($this, 'hasRight')),
+            new TwigFilter('has_not_right', array($this, 'hasNotRight')),
             new TwigFilter('percentage', array($this, 'percentage')),
             new TwigFilter('rightItem', array($this, 'rightItemFilter')),
             new TwigFilter('idSort', array($this, 'idSortFilter')),
@@ -206,6 +207,10 @@ class AppExtension extends AbstractExtension
         }
 
         return $has;
+    }
+
+    public function hasNotRight($rights, $shortLabel){
+        return !$this->hasRight($rights, $shortLabel);
     }
 
     public function hasDedicatedHighlights($selectedRights,$rights){
