@@ -10,6 +10,7 @@ import {RightItemsDefinitions} from "./RightItemsDefinitions";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
 import {SuperRightProductionDetailsLabels} from "./SuperRightDefinitions";
 import {PropTypes} from "prop-types";
+import {commentIcon} from "@icons"
 
 const numberFieldStyle = { width: '30px', paddingLeft: '10px'};
 
@@ -731,7 +732,7 @@ class PopupRight extends React.Component {
                     {value || 'Select'}
                 </div>
                 {isCommentAdded && (
-                    <i className="fa fa-commenting-o comment-icon" />
+                    <img src={commentIcon} alt="" className="comment-icon" />
                 )}
                 <i className="fa fa-edit" onClick={this.togglePopup} />
                 { this.renderModal() }
