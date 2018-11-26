@@ -92,15 +92,6 @@ export const ProductionStandardsDefinitions = [
         showTextArea:"ALL",
         technicalFee : "TECHNICAL_DELIVERY_SATELLITE",
         checkDelivery: true
-    },
-    {
-        name: "Program Details",
-        key: "PROGRAM",
-        superRights: ['PR'],
-        options : [
-        ],
-        showTextArea: "ALL",
-        multiple : false
     }
 
 ];

@@ -662,66 +662,76 @@ button {
       }
     }
   }
-  .left {
-    float: left;
-    .modal-input{
-      display: flex;
-      margin-bottom: 10px;
-
-      &.red-text {
-        font-size: 13px;
-        height: 30px;
-        color: $red-color;
-      }
-      .radio-box{
+  .program-container {
+    display: flex;
+    .left {
+      //float: left;
+      width: 40%;
+      .modal-input{
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        label{
-          display: inline;
-          min-width: 60px;
-          width: 60px;
-          padding-left: 5px;
+        margin-bottom: 10px;
+
+        &.red-text {
+          font-size: 13px;
+          height: 30px;
+          color: $red-color;
+        }
+        .radio-box{
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          label{
+            display: inline;
+            min-width: 60px;
+            width: 60px;
+            padding-left: 5px;
+          }
+        }
+        label {
+          float: left;
+        }
+        input,
+        select,
+        .select,
+        .radio-box {
+          &[type='checkbox'] {
+            width: 20px;
+          }
+          width: 215px;
         }
       }
-      label {
-        float: left;
-      }
-      input, select {
-        &[type='checkbox'] {
-          width: 20px;
-        }
-        width: 215px;
+      .Select-control {
+        border-radius: 0;
       }
     }
-  }
-  .right {
-    padding: inherit;
-    float: right;
-    width: 60%;
-    @media screen and (max-width: 1460px) {
-      float: none;
-    }
-    .modal-input {
-      border-bottom: 4px solid #D4D8DE;
-      margin-bottom: inherit;
-      display: block;
-      width: 100%;
-      label {
-        text-transform: uppercase;
-        background-color: #1a4b63;
-        padding: 0 20px;
-        color: white;
+    .right {
+      padding: inherit;
+      //float: right;
+      width: 60%;
+      @media screen and (max-width: 1460px) {
+        float: none;
+      }
+      .modal-input {
+        border-bottom: 4px solid #D4D8DE;
+        margin-bottom: inherit;
+        display: block;
         width: 100%;
-        height: 35px;
-      }
-      textarea {
-        outline: none;
-        border: 1px solid #DADADA;
-        font-family: 'Open Sans', sans-serif;
-        resize: none;
-        font-size: 14px;
-        min-height: 166px;
+        label {
+          text-transform: uppercase;
+          background-color: #1a4b63;
+          padding: 0 20px;
+          color: white;
+          width: 100%;
+          height: 35px;
+        }
+        textarea {
+          outline: none;
+          border: 1px solid #DADADA;
+          font-family: 'Open Sans', sans-serif;
+          resize: none;
+          font-size: 14px;
+          min-height: 166px;
+        }
       }
     }
   }
@@ -1585,7 +1595,7 @@ button {
     height: 36px;
     padding: 0 8px;
     font-size: 16px;
-    border: 1px solid lightgrey;
+    border-color: lightgrey;
   }
   select, input[type=number] {
     text-align: right;

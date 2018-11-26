@@ -32,7 +32,6 @@ class SellFormStep3 extends React.Component {
         super(props);
 
         this.state = {
-            programPopupActive: false,
             licensePopup : false,
             rights : RightDefinitions,
             productionStandards : ProductionStandardsDefinitions,
@@ -62,10 +61,6 @@ class SellFormStep3 extends React.Component {
         ContentArena.Api.getRights(rightsPackage.map((p)=> (p.id)), group).done((rights)=>{
             _this.setState({rights});
         });
-    };
-
-    closeProgramsPopup = () => {
-        this.setState({programPopupActive:false}) ;
     };
 
     closeLicensePopup = () => {
@@ -114,72 +109,6 @@ class SellFormStep3 extends React.Component {
 
     };
 
-    renderProgramPopup(){
-
-        const {
-            updateContentValue,
-            PROGRAM_SUBTITLES,
-            PROGRAM_SCRIPT,
-            PROGRAM_LANGUAGE
-        } = this.props;
-        return (
-            <Modal
-                isOpen={this.state.programPopupActive}
-                onRequestClose={this.closeProgramsPopup}
-                bodyOpenClassName={"selector"}
-                style={customStyles}
-                contentLabel="Example Modal"
-            >
-
-                <div className="modal-title">
-                    {this.context.t("CL_STEP3_PROGRAM_MODAL_TITLE")}
-                    <i className="fa fa-times close-icon" onClick={this.closeProgramsPopup}/>
-                </div>
-
-                <div className="step-content custom">
-                    <div className="step-content-container" style={{minWidth:500}}>
-
-                        <div className="modal-input">
-                            <label>
-                                {this.context.t("CL_STEP3_PROGRAM_MODAL_LANGUAGE")}
-                            </label>
-                            <LanguageSelector
-                                value={PROGRAM_LANGUAGE}
-                                onChange={(value)=>{updateContentValue('PROGRAM_LANGUAGE', value)}}/>
-                        </div>
-
-                        <div className="modal-input">
-                            <label>
-                                {this.context.t("CL_STEP3_PROGRAM_MODAL_SUBTITLES")}
-                            </label>
-                            <LanguageSelector
-                                value={PROGRAM_SUBTITLES}
-                                onChange={(value)=>{updateContentValue('PROGRAM_SUBTITLES', value)}}/>
-                        </div>
-
-                        <div className="modal-input">
-                            <label>
-                                {this.context.t("CL_STEP3_PROGRAM_MODAL_SCRIPT")}
-                            </label>
-                            <LanguageSelector
-                                value={PROGRAM_SCRIPT}
-                                onChange={(value)=>{updateContentValue('PROGRAM_SCRIPT', value)}}/>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className={"buttons popup-buttons"}>
-                    <button
-                        className={"standard-button"}
-                        onClick={this.closeProgramsPopup}>
-                        {this.context.t("CL_STEP3_PROGRAM_MODAL_BUTTON_OK")}
-                    </button>
-                </div>
-            </Modal>
-        )
-    }
-
     render() {
 
         const {
@@ -194,7 +123,6 @@ class SellFormStep3 extends React.Component {
                 <div style={{width: '100%', textAlign: 'right', marginBottom: 10}}>
                     <RightsLegend />
                 </div>
-                { this.renderProgramPopup() }
 
                 {/*SUMMARY*/}
                 <div className="listing-summary">
