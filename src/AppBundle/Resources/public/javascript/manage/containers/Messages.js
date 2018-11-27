@@ -250,24 +250,23 @@ class Messages extends React.Component {
                             onCancel={this.cancelAttachment}
                         />
                         <div className={"message-input"}>
-                            <div className={"message-input-title"}>
-                                {this.context.t("MESSAGES_TITLE")}
-                            </div>
+                            {/*<div className={"message-input-title"}>
+
+                            </div>*/}
                             <div className="d-flex align-items-center">
                                 <textarea
                                     value={inputMessage}
+                                    placeholder={this.context.t("MESSAGES_TITLE")}
                                     onChange={(e) => {
                                       this.setState({inputMessage: e.target.value})
                                     }}
                                     disabled={attachmentReady}
                                     className={"message-content"}
                                 />
-                                <button className={"standard-button"} onClick={this.send}
-                                        disabled={( !inputMessage || inputMessage === "" || saving) && !attachmentReady}>
-                                    {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
-                                    {saving && <i className="fa fa-cog fa-spin"/>}
-                                </button>
+
                             </div>
+                        </div>
+                        <div className="message-input-tools">
                             <div className="attachment-icon"
                                  onClick={()=>{
                                      this.openAttachmentUploader();
@@ -275,6 +274,11 @@ class Messages extends React.Component {
                             >
                                 {attachmentClipIcon}
                             </div>
+                            <button className={"standard-button"} onClick={this.send}
+                                    disabled={( !inputMessage || inputMessage === "" || saving) && !attachmentReady}>
+                                {!saving && this.context.t("MESSAGES_SEND_BUTTON")}
+                                {saving && <i className="fa fa-cog fa-spin"/>}
+                            </button>
                         </div>
                     </div>
                 )}
