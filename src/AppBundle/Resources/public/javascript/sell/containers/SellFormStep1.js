@@ -635,7 +635,7 @@ class SellFormStep1 extends React.Component {
                                 showClose={ i > 0 || ( !this.forceCustomSeason() && this.hasCustomSeason() ) }
                                 onBlur={ (e) => this.updateContentValue(e, "customSeason")}
                                 isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : this.forceCustomSeason()}
-                                showAddNew={this.state.seasonSelectors.length === i + 1}
+                                showAddNew={this.props.seasons.length > 0}
                                 openSelector={()=>this.props.openSeasonSelector(i, this.props.seasons)}/>
                         })
                     }

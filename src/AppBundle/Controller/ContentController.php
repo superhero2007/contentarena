@@ -192,6 +192,7 @@ class ContentController extends Controller
 
         $isMember = $content->userIsCompanyMember($user);
         $content->setUserCanNotBuy($isMember);
+        $content->setUserCanEdit($isMember);
 
         $bids = $bidService->getAllBidsByContentAndUser($content, $company);
         $bundlesWithActivity = array();

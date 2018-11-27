@@ -452,6 +452,12 @@ class Content
 
     /**
      * @var boolean;
+     * @Groups({"details"})
+     */
+    private $userCanEdit = false;
+
+    /**
+     * @var boolean;
      * @ORM\Column(name="content_delivery_configured", type="boolean")
      * @Groups({"listing"})
      */
@@ -1615,6 +1621,22 @@ class Content
     public function setSignaturePosition($signaturePosition)
     {
         $this->signaturePosition = $signaturePosition;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUserCanEdit()
+    {
+        return $this->userCanEdit;
+    }
+
+    /**
+     * @param bool $userCanEdit
+     */
+    public function setUserCanEdit($userCanEdit)
+    {
+        $this->userCanEdit = $userCanEdit;
     }
 
 

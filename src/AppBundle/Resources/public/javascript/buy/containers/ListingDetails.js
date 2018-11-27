@@ -29,6 +29,7 @@ import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
 import GeneralTerms from "../../main/components/GeneralTerms";
 import NumberFormat from 'react-number-format';
+import EditButton from "../components/EditButton";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -651,6 +652,8 @@ class ListingDetails extends React.Component {
                                 </span>
                             </a>
                         )}
+
+                        {<EditButton {...content}/>}
 
                         {profile === "BUYER" && (
                             <a onClick={this.watchlist}>
