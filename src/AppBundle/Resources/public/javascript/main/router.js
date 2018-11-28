@@ -148,11 +148,15 @@ class AuthRouter extends React.Component {
     }
 
     componentWillMount() {
-        const {loggedUserData, totalCountries} = this.props;
+        const {loggedUserData, totalCountries, isOwner} = this.props;
+
+        console.log("IS OWNER", this);
+
         this.props.loadUserData(loggedUserData);
         this.props.getDefaultRightsPackage();
         this.props.setLanguage("en");
         this.props.setTotalCountries(Number(totalCountries));
+        if( isOwner) this.props.updateProfile("SELLER");
     }
 
     componentWillReceiveProps(nextProps){

@@ -67,7 +67,6 @@ class TermSheet extends React.Component {
         let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
         let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
 
-
         return definitions.map( (right, i) => {
 
             if (right.key === 'CONTENT_DELIVERY') return;
@@ -166,18 +165,22 @@ class TermSheet extends React.Component {
         });
     };
 
-    renderTextarea = (definitions) => {
+    renderTextarea = (definitions, length) => {
         const {selectedRightsBySuperRight, rightsPackage} = this.props;
         return definitions.map( (right,i) => {
-            if (right.key === 'RESERVED_RIGHTS' || right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
+            if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
             return (
-                <div key={'textarea_'+i}>
-                <div className="title spacer">
-                        {right.name}
+                <div className={'row'} key={'reserved-rights-details'}>
+                    <div className="right-name  right-definition">
+                        <div className="right-definition-content">
+                            {right.name}
+                        </div>
                     </div>
-                    <div className="txt description-text">
-                        <RepresenationTextArea
-                            value={selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]} />
+                    <div  className="right-definition" key={'list_childs'+i} style={{flex: length}}>
+                        <div className="right-definition-content">
+                            <RepresenationTextArea
+                                value={selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]} />
+                        </div>
                     </div>
                 </div>
             )
@@ -196,6 +199,25 @@ class TermSheet extends React.Component {
                     }
                 </div>
             </div>
+        })
+    };
+
+    getProductionDetailsColumns = () => {
+
+        const {
+            rightsPackage,
+        } = this.props;
+
+        let highlightRight = rightsPackage.filter(rp =>rp.shortLabel === "HL");
+        let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+
+        return rightsPackage.filter((rp, i)=>{
+            if ( ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                    || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) ) &&
+                rp.shortLabel !== "PR" &&
+                rp.shortLabel !== "LT" ) return false;
+
+            return true;
         })
     };
 
@@ -287,24 +309,7 @@ class TermSheet extends React.Component {
                     </div>
                     { this.renderList(RightDefinitions, false) }
 
-                    <div className={'row'} key={'reserved-rights-details'}>
-                        <div className="right-name  right-definition">
-                            <div className="right-definition-content">
-                                Reserved Rights Details
-                            </div>
-                        </div>
-                        {
-                            rightsPackage.map((rp,k, list)=>{
-
-                                if (rp.selectedRights.RESERVED_RIGHTS === "RESERVED_RIGHTS_NO") return null;
-                                return <div  className="right-definition" key={'list_childs'+k} style={{flex:list.length}}>
-                                    <div className="right-definition-content">
-                                        {rp.selectedRights.RESERVED_RIGHTS_TEXTAREA}
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
+                    { this.renderTextarea(RightDefinitions, rightsPackage.length) }
 
                     { ( this.hasRight("NA") && this.hasRight("HL") ) &&
                     <div className={'row'} key={'transmission'}>
@@ -326,10 +331,6 @@ class TermSheet extends React.Component {
                         }
                     </div>
                     }
-                </div>
-
-                <div>
-                    { this.renderTextarea(RightDefinitions) }
                 </div>
 
                 { COMMENTS_RIGHTS && (
@@ -383,15 +384,13 @@ class TermSheet extends React.Component {
                         }
                     </div>
                     { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
+                    { this.renderTextarea(ProductionStandardsDefinitions, this.getProductionDetailsColumns().length + 1) }
 
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
                     { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
                 </div>
 
-                <div>
-                    { this.renderTextarea(ProductionStandardsDefinitions) }
-                </div>
 
                 {
                     selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&(

@@ -303,7 +303,7 @@ class SelectorModal extends Component {
             style={GenericModalStyle}
         >
             <header className="modal-header selection-header">
-                <div className="title-left">
+                <div className="title-left" style={{ maxWidth: '75%' }}>
                     {this.getModalTitle()}
                     {this.getModalSubTitle()}
                 </div>

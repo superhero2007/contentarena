@@ -79,6 +79,7 @@ class DefaultController extends BaseController
 
     private function getInternalParams($listingId = null){
         $user = $this->getUser();
+        $isOwner = false;
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
         $packages = $this->getDoctrine()
             ->getRepository('AppBundle:RightsPackage')
@@ -86,7 +87,10 @@ class DefaultController extends BaseController
 
         if ($listingId && $listingId != "new" && $listingId != "1"){
             $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $listingId]);
-            if ($content != null ) $content->setUserCanNotView(!$content->userIsCompanyMember($user));
+            if ($content != null ){
+                $content->setUserCanNotView(!$content->userIsCompanyMember($user));
+                $isOwner = $content->userIsCompanyMember($user);
+            }
 
         } else{
             $content = new Content();
@@ -101,6 +105,7 @@ class DefaultController extends BaseController
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'     =>  $serializer->serialize($content, 'json'),
             'loggedUser'     => $user,
+            'isOwner'        => $isOwner,
             'totalCountries' => $this->getDoctrine()->getRepository("AppBundle:Country")->countAll(),
             'loggedUserData' => ($user) ? $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings'))): null,
             'company'        => ($user) ? $serializer->serialize($user->getCompany(), 'json',SerializationContext::create()->enableMaxDepthChecks()): null,

@@ -14,9 +14,9 @@ class EditButton extends React.Component {
     }
 
     edit = () => {
-        const {content} = this.state;
+        const {customId} = this.props;
 
-        goTo("contentlisting/"+ content.customId + "/1");
+        goTo("contentlisting/"+  customId + "/1");
     };
 
     editableStatus = ( status ) => {
