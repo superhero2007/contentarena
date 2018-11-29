@@ -78,8 +78,8 @@ class UpdateSeasons extends ContainerAwareCommand
             $seasonYears = array_slice($seasonYears, -10);
             //echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
             //foreach ($seasonYears as $year){
-                echo "Season: " . $year . PHP_EOL;
-            }
+                //echo "Season: " . $year . PHP_EOL;
+            //}
             //echo PHP_EOL;
 
             $consecutive =  ( count($seasonYears) > 1 ) ? $this->isConsecutive($seasonYears) : false;
