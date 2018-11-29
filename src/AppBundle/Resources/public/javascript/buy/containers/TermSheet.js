@@ -271,7 +271,7 @@ class TermSheet extends React.Component {
                                 rightsPackage.map((rp,k)=>{
                                     let label = (rp.shortLabel === "NA") ? NA_INPUT + " seconds" : rp.shortLabel === "HL" ? HL_INPUT + " minutes" : "-";
                                     return <RightTableItem
-                                        key={"rp-list_childs" + i }
+                                        key={"rp-list_childs" + k }
                                         className="right-definition-title"
                                         value={label}/>
                                 })
