@@ -59,6 +59,8 @@ class UpdateSeasons extends ContainerAwareCommand
             foreach ($seasons as $season){
                 /* @var Season $season */
 
+                if ($season->isUserSeason()) continue;
+
                 //echo "Season: " . $season->getYear() . PHP_EOL;
                 $year = explode("/" ,$season->getYear() );
 
