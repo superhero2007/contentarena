@@ -61,7 +61,7 @@ class UpdateSeasons extends ContainerAwareCommand
 
                 if ($season->isUserSeason()) continue;
 
-                //echo "Season: " . $season->getYear() . PHP_EOL;
+
                 $year = explode("/" ,$season->getYear() );
 
                 if ( count($year) > 1 ){
@@ -74,12 +74,19 @@ class UpdateSeasons extends ContainerAwareCommand
                 }
             }
 
+            sort($seasonYears);
+            $seasonYears = array_slice($seasonYears, -10);
+            //echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
+            //foreach ($seasonYears as $year){
+                echo "Season: " . $year . PHP_EOL;
+            }
+            //echo PHP_EOL;
+
             $consecutive =  ( count($seasonYears) > 1 ) ? $this->isConsecutive($seasonYears) : false;
 
             if ( $consecutive ){
-                echo "Seasons are consecutive" . PHP_EOL;
-                echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
-                echo "Season: " . $season->getYear() . PHP_EOL;
+                //echo "Seasons are consecutive" . PHP_EOL;
+                //echo "Season: " . $season->getYear() . PHP_EOL;
                 for ( $i = $currentYear; $i< $currentYear+5; $i++ ){
                     $time = new \DateTime();
 
@@ -88,6 +95,7 @@ class UpdateSeasons extends ContainerAwareCommand
                         $splittedSeason = $splittedSeason . "/". ($splittedSeason + 1);
 
                         if (!in_array($splittedSeason, $seasonYears)){
+                            echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
                             echo "Custom season " . $splittedSeason . " will be created". PHP_EOL;
                             $newSeason = new Season();
                             $newSeason->setTournament($tournament);
@@ -99,6 +107,7 @@ class UpdateSeasons extends ContainerAwareCommand
                         }
                     } else {
                         if (!in_array($i, $seasonYears)){
+                            echo PHP_EOL. "Tournament: " . $tournament->getName() . PHP_EOL;
                             echo "Custom season " . $i . " will be created". PHP_EOL;
                             $newSeason = new Season();
                             $newSeason->setTournament($tournament);
