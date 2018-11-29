@@ -731,12 +731,15 @@
             border: 1px solid #999;
             border-radius: 5px 5px 0 0;
             padding: 1px; //prevent hide borders
+            table{
+              width: 100%;
+              border-collapse: collapse;
+            }
 
             & > div:only-child {
               display: none; //means if only table title is rendered, and no data is rendered, we hide full block
             }
             .row {
-              display: flex;
               border-bottom: 1px solid #999;
               &:nth-child(odd) {
                 background-color: #efefef;
@@ -751,13 +754,12 @@
                 border-right: 1px solid #999;
                 font-weight: bold;
                 color: #1A4B63;
+                width: 275px;
               }
               .right-definition {
                 border-right: 1px solid #999;
-                flex: 1;
                 justify-content: flex-start;
                 align-items: center;
-                display: flex;
                 text-align: left;
                 .right-definition-content {
                   padding: 10px 10px;

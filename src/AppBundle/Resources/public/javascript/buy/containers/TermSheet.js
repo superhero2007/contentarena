@@ -9,6 +9,7 @@ import { RepresenationTextArea } from "./../../sell/components/SellFormItems";
 import {PropTypes} from "prop-types";
 import Moment from "moment/moment";
 import { DATE_FORMAT } from "@constants";
+import RightTableItem from "../components/RightTableItem";
 
 class TermSheet extends React.Component {
 
@@ -25,12 +26,10 @@ class TermSheet extends React.Component {
 
     renderProgramInfo = (values, name, deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) => {
         const { rightsPackage } = this.props;
-        return <div className='row' key={'program-'+ name}>
-                <div className="right-name right-definition">
-                    <div className="right-definition-content">
-                        {name}
-                    </div>
-                </div>
+        return <tr className='row' key={'program-'+ name}>
+                <RightTableItem
+                    className="right-name"
+                    value={name}/>
                 {
                     rightsPackage.map((rp,k)=>{
 
@@ -41,21 +40,14 @@ class TermSheet extends React.Component {
                             )
                             && !liveFeedColumn
                             && rp.shortLabel !== "LT") return;
-                        if ( rp.shortLabel !== 'PR' ) return <div className="right-definition">
-                            <div className="right-definition-content">
-                                -
-                            </div>
-                        </div>;
 
-                        return <div  className="right-definition" key={"program_child"+k}>
-                            <div className="right-definition-content">
-                                { values && values.length === 0 && "No" }
-                                { values && values.length > 0 && values.map(l=>l.label).join(", ") }
-                            </div>
-                        </div>
+                        if ( rp.shortLabel !== 'PR' || ! values ) return <RightTableItem value={"-"}/>;
+
+                        return <RightTableItem value={values.length === 0 ? "No" : values.map(l=>l.label).join(", ") }/>;
+
                     })
                 }
-            </div>
+            </tr>
     };
 
     renderList = (definitions, checkContentDelivery, deliveryViaLiveFeed, liveFeedPackages) => {
@@ -76,77 +68,79 @@ class TermSheet extends React.Component {
                 if (!LICENSED_LANGUAGES || LICENSED_LANGUAGES.length === 0) return false;
             }
 
-            return <div className='row' key={'list'+i}>
-                <div className="right-name right-definition">
-                    <div className="right-definition-content">{this.context.t("RIGHTS_" + right.key)}</div>
-                    </div>
-                {
-                    rightsPackage.map((rp,k)=>{
+            return <React.Fragment>
+                <tr className='row' key={'list'+i}>
+                    <RightTableItem
+                        className="right-name"
+                        value={this.context.t("RIGHTS_" + right.key)}/>
+                    {
+                        rightsPackage.map((rp,k)=>{
 
-                        let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+                            let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
 
-                        if ( checkContentDelivery
-                            && !liveFeedColumn
-                            &&  ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
-                                || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) )
-                            && rp.shortLabel !== "LT"
-                            && rp.shortLabel !== "PR" ) return;
+                            if ( checkContentDelivery
+                                && !liveFeedColumn
+                                &&  ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                    || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) )
+                                && rp.shortLabel !== "LT"
+                                && rp.shortLabel !== "PR" ) return;
 
-                        if ( right.key === 'LICENSED_LANGUAGES' ) return <div className="right-definition">
-                            <div className="right-definition-content">
-                                {LICENSED_LANGUAGES.map(l=>l.label).join(", ")}
-                            </div>
-                        </div>;
+                            if ( right.key === 'LICENSED_LANGUAGES' ) return <RightTableItem
+                                value={LICENSED_LANGUAGES.map(l=>l.label).join(", ")}/>;
 
+                            if ( right.superRights.length > 0
+                                && right.superRights.indexOf(rp.shortLabel) === -1 ) return <RightTableItem value={"-"}/>;
 
-                        if ( right.superRights.length > 0
-                            && right.superRights.indexOf(rp.shortLabel) === -1 ) return <div className="right-definition">
-                            <div className="right-definition-content">
-                                -
-                            </div>
-                        </div>;
+                            const defItems = selectedRightsBySuperRight[rp.id].items;
+                            let definition = defItems[right.key];
+                            let label = '';
 
-                        const defItems = selectedRightsBySuperRight[rp.id].items;
-                        let definition = defItems[right.key];
-                        let label = '';
-
-                        if (right.multiple) {
-                            if (Array.isArray(defItems[right.key])) {
-                                label = defItems[right.key].map(item => RightItemsDefinitions[item].label).join(", ");
+                            if (right.multiple) {
+                                if (Array.isArray(defItems[right.key])) {
+                                    label = defItems[right.key].map(item => RightItemsDefinitions[item].label).join(", ");
+                                } else {
+                                    label = defItems[right.key];
+                                }
                             } else {
-                                label = defItems[right.key];
+                                const dynKey = `${right.key}_TEXT`;
+                                if (defItems[dynKey]) {
+                                    label = defItems[dynKey];
+                                } else {
+                                    label = definition && RightItemsDefinitions[definition].label;
+                                }
                             }
-                        } else {
-                            const dynKey = `${right.key}_TEXT`;
-                            if (defItems[dynKey]) {
-                                label = defItems[dynKey];
-                            } else {
-                                label = definition && RightItemsDefinitions[definition].label;
+
+                            if (right.key === 'RUNS' && defItems["RUNS_NUMBER"]) {
+                                label = defItems["RUNS_NUMBER"];
                             }
-                        }
-
-                        if (right.key === 'RUNS' && defItems["RUNS_NUMBER"]) {
-                            label = defItems["RUNS_NUMBER"];
-                        }
 
 
-                        if (right.key === 'GRAPHICS' && defItems["GRAPHICS_LANGUAGES"]) {
-                            label = defItems["GRAPHICS_LANGUAGES"].map(l=>l.label).join(", ");
-                        }
+                            if (right.key === 'GRAPHICS' && defItems["GRAPHICS_LANGUAGES"]) {
+                                label = defItems["GRAPHICS_LANGUAGES"].map(l=>l.label).join(", ");
+                            }
 
-                        if (right.key === 'COMMENTARY' && defItems["COMMENTARY_LANGUAGES"]) {
-                            label = defItems["COMMENTARY_LANGUAGES"].map(l=>l.label).join(", ");
-                        }
+                            if (right.key === 'COMMENTARY' && defItems["COMMENTARY_LANGUAGES"]) {
+                                label = defItems["COMMENTARY_LANGUAGES"].map(l=>l.label).join(", ");
+                            }
 
-                        return <div  className="right-definition" key={'list_child'+k}>
-                            <div className="right-definition-content">
-                                {label}
-                                {right.key === 'CAMERA' && <span style={{marginLeft: 5}}>{defItems["CAMERAS"]}</span>}
-                            </div>
-                        </div>
-                    })
-                }
-            </div>
+                            if (right.key === 'CAMERA') {
+                                label += " " + defItems["CAMERAS"];
+                            }
+
+                            return <RightTableItem key={'list_child'+k} value={label}/>
+                        })
+                    }
+                </tr>
+                {selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"] &&
+                <tr className={'row'} key={'reserved-rights-details'}>
+                    <RightTableItem value={right.name + " Details"} className={"right-name"}/>
+                    <RightTableItem
+                        key={'details-'+ i }
+                        textarea
+                        length={checkContentDelivery ? this.getProductionDetailsColumns().length + 1 : rightsPackage.length}
+                        value={selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]}/>
+                </tr>}
+            </React.Fragment>
         })
     };
 
@@ -163,43 +157,6 @@ class TermSheet extends React.Component {
                 return true
             }
         });
-    };
-
-    renderTextarea = (definitions, length) => {
-        const {selectedRightsBySuperRight, rightsPackage} = this.props;
-        return definitions.map( (right,i) => {
-            if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]) return;
-            return (
-                <div className={'row'} key={'reserved-rights-details'}>
-                    <div className="right-name  right-definition">
-                        <div className="right-definition-content">
-                            {right.name}
-                        </div>
-                    </div>
-                    <div  className="right-definition" key={'list_childs'+i} style={{flex: length}}>
-                        <div className="right-definition-content">
-                            <RepresenationTextArea
-                                value={selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"]} />
-                        </div>
-                    </div>
-                </div>
-            )
-        })
-    };
-
-    renderDetails= (definitions) => {
-        const {selectedRightsBySuperRight, rightsPackage} = this.props;
-        return definitions.map( (right) => {
-            if (right.key === 'PROGRAM' || !selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_DETAILS"]) return;
-            return <div className="full-item-box">
-                <label>{right.name}</label>
-                <div  className="full-item-content">
-                    {
-                        selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_DETAILS"]
-                    }
-                </div>
-            </div>
-        })
     };
 
     getProductionDetailsColumns = () => {
@@ -289,48 +246,38 @@ class TermSheet extends React.Component {
                 </div>
 
                 <div className="term-sheet-items">
-                    <div className="row">
-                        <div className="right-definition right-definition-title">
-                            <div className="right-definition-content">
-                                {this.context.t("LISTING_DETAILS_RIGHTS_HEADER_RIGHTS")}
-                            </div>
-                        </div>
-                        {
-                            rightsPackage.map((rp, i)=>{
-                                return <div key={"rp-grant" + i } className="right-definition right-definition-title">
-                                    <div className="right-definition-content">
-                                        {
-                                            rp.name
-                                        }
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
-                    { this.renderList(RightDefinitions, false) }
+                    <table>
+                        <tr className="row">
+                            <RightTableItem
+                                className="right-definition-title"
+                                value={this.context.t("LISTING_DETAILS_RIGHTS_HEADER_RIGHTS")}/>
+                            {
+                                rightsPackage.map((rp, i)=>{
+                                    return <RightTableItem
+                                        key={"rp-grant" + i }
+                                        className="right-definition-title"
+                                        value={rp.name}/>
 
-                    { this.renderTextarea(RightDefinitions, rightsPackage.length) }
-
-                    { ( this.hasRight("NA") && this.hasRight("HL") ) &&
-                    <div className={'row'} key={'transmission'}>
-                        <div className="right-name right-definition">
-                            <div className="right-definition-content">
-                                {this.context.t("LISTING_DETAILS_RIGHTS_HEADER_GRANTED_TIME")}
-                            </div>
-                        </div>
-                        {
-                            rightsPackage.map((rp,k)=>{
-                                return <div  className="right-definition" key={'list_childs'+k}>
-                                    <div className="right-definition-content">
-                                        {rp.shortLabel === "NA" && NA_INPUT + " seconds" }
-                                        {rp.shortLabel === "HL" && HL_INPUT + " minutes" }
-                                        {rp.shortLabel !== "NA" && rp.shortLabel !== "HL" && "-" }
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
-                    }
+                                })
+                            }
+                        </tr>
+                        { this.renderList(RightDefinitions, false) }
+                        { ( this.hasRight("NA") && this.hasRight("HL") ) &&
+                        <tr className={'row'} key={'transmission'}>
+                            <RightTableItem
+                                className="right-name"
+                                value={this.context.t("LISTING_DETAILS_RIGHTS_HEADER_GRANTED_TIME")}/>
+                            {
+                                rightsPackage.map((rp,k)=>{
+                                    let label = (rp.shortLabel === "NA") ? NA_INPUT + " seconds" : rp.shortLabel === "HL" ? HL_INPUT + " minutes" : "-";
+                                    return <RightTableItem
+                                        key={"rp-list_childs" + i }
+                                        className="right-definition-title"
+                                        value={label}/>
+                                })
+                            }
+                        </tr>}
+                    </table>
                 </div>
 
                 { COMMENTS_RIGHTS && (
@@ -347,50 +294,41 @@ class TermSheet extends React.Component {
                 )}
 
                 <div className="term-sheet-items">
-                    <div className="row">
-                        <div className="right-definition right-definition-title">
-                            <div className="right-definition-content">
-                                {this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}
-                            </div>
-                        </div>
+                    <table>
+                        <tr className="row">
+                            <RightTableItem
+                                className="right-definition-title"
+                                value={this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}/>
 
-                        {deliveryViaLiveFeed
-                        && <div key={"rp-prod-live" } className="right-definition right-definition-title">
-                            <div className="right-definition-content">
-                                Live Feed
-                            </div>
+                            {deliveryViaLiveFeed &&
+                            <RightTableItem
+                                className="right-definition-title"
+                                value={"Live Feed"}/>}
 
-                        </div>
-                        }
-                        {
-                            rightsPackage.map((rp, i)=>{
-                                if ( ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
-                                        || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) ) &&
-                                    rp.shortLabel !== "PR" &&
-                                    rp.shortLabel !== "LT" ) return;
+                            {
+                                rightsPackage.map((rp, i)=>{
+                                    if ( ( rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
+                                            || ( highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT" ) ) &&
+                                        rp.shortLabel !== "PR" &&
+                                        rp.shortLabel !== "LT" ) return;
+                                    let label = (rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT")
+                                        ? SuperRightProductionDetailsLabels['HL']
+                                        : SuperRightProductionDetailsLabels[rp.shortLabel];
+                                    return <RightTableItem
+                                        key={"rp-grant" + i }
+                                        className="right-definition-title"
+                                        value={label}/>
 
-                                return (
-                                    <div key={"rp-prod" + i } className="right-definition right-definition-title">
-                                        <div className="right-definition-content">
-                                            {rp.selectedRights['CONTENT_DELIVERY_NA']==="CONTENT_DELIVERY_NA_HIGHLIGHT" &&
-                                            SuperRightProductionDetailsLabels['HL']}
+                                })
+                            }
+                        </tr>
+                        { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
+                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
 
-                                            {rp.selectedRights['CONTENT_DELIVERY_NA']!=="CONTENT_DELIVERY_NA_HIGHLIGHT" &&
-                                            SuperRightProductionDetailsLabels[rp.shortLabel]}
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                    { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
-                    { this.renderTextarea(ProductionStandardsDefinitions, this.getProductionDetailsColumns().length + 1) }
-
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
-                    { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                    </table>
                 </div>
-
 
                 {
                     selectedRightsBySuperRight[rightsPackage[0].id].items["TECHNICAL_FEE_DETAILS"] &&(

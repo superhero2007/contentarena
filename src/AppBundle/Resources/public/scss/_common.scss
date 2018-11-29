@@ -86,6 +86,9 @@ textarea.representation-textarea{
   min-height: fit-content;
   background: transparent;
   resize: none;
+  text-transform: none;
+  font-size: 14px;
+  font-family: $font-stack;
 }
 
 input[type="radio"].ca-radio {
