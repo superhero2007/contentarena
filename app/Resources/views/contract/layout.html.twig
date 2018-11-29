@@ -503,7 +503,7 @@
                     <td>
                         Reserved Rights Details:
                     </td>
-                    <td>
+                    <td colspan="{{ content.rightsPackage | length }}">
                         {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
                     </td>
                 </tr>
