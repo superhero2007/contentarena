@@ -272,7 +272,6 @@ class TermSheet extends React.Component {
                                     let label = (rp.shortLabel === "NA") ? NA_INPUT + " seconds" : rp.shortLabel === "HL" ? HL_INPUT + " minutes" : "-";
                                     return <RightTableItem
                                         key={"rp-list_childs" + k }
-                                        className="right-definition-title"
                                         value={label}/>
                                 })
                             }
