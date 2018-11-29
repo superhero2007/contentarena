@@ -6,6 +6,7 @@
   width: 100%;
   min-height: 500px;
   flex-direction: column;
+
   fieldset {
     color: #000;
   }
@@ -15,12 +16,13 @@
   flex: 240px 0 0;
   margin-right: 20px;
   font-size: 14px;
+
   .box {
     background-color: transparent;
     margin: 0 0 20px;
     color: $black-color;
 
-    &.right-checkboxes{
+    &.right-checkboxes {
       margin-bottom: 5px;
     }
 
@@ -29,12 +31,15 @@
       font-weight: 600;
       margin-bottom: 10px;
     }
+
     input {
       margin: initial;
     }
+
     .search-input {
       padding-right: 50px;
     }
+
     .search-btn {
       position: absolute;
       cursor: pointer;
@@ -43,23 +48,27 @@
       padding-left: 10px;
       height: 30px;
       margin-top: 7px;
+
       img {
         width: 25px;
         height: 25px;
       }
     }
+
     .territories-placeholder {
       background: white;
       padding: 15px;
       border: 1px solid lightgrey;
       min-width: 165px;
     }
+
     .territories-icon {
       cursor: pointer;
       height: 20px;
       width: 20px;
       margin-left: 5px;
     }
+
     .filter-btn {
       background: $orange-color;
       font-size: 18px;
@@ -69,15 +78,19 @@
       margin-left: 5px;
       cursor: pointer;
     }
+
     .base-input-select {
       width: 100%;
     }
+
     .checkbox-item {
       margin-right: 10px;
+
       &:checked + label {
         font-weight: bold;
       }
     }
+
     .filter-rights {
       .filter-right {
         margin: 15px 0;
@@ -87,12 +100,19 @@
 
     }
   }
+
+  .box {
+    .ca-btn {
+      font-size: 14px;
+    }
+  }
 }
 
 .buy-container-right {
   width: 100%;
   flex: 1;
   min-width: 0;
+
   .no-results {
     font-size: 25px;
     text-align: center;
