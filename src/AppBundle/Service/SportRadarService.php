@@ -201,4 +201,30 @@ class SportRadarService
         return;
     }
 
+    public function syncAllSeasons( )
+    {
+
+
+        $tournaments = $this->em->getRepository("AppBundle:Tournament")->findAll();
+
+        foreach ($tournaments as $tournament){
+            /* @var Tournament $tournament */
+            $data =  $this->makeRequest('/sports/en/tournaments/'.$tournament->getExternalId().'/seasons.xml');
+
+            foreach ( $data["sport"] as $sportData ){
+                $sport = $sportData["@attributes"];
+                $dbSport = $this->em->getRepository("AppBundle:Sport")->findOneBy(array ( "externalId"=> $sport['id']));
+                if ( $dbSport == null ){
+                    $dbSport = new Sport();
+                    $dbSport->setName($sport["name"]);
+                    $dbSport->setExternalId($sport["id"]);
+                    $this->em->persist($dbSport);
+                    $this->em->flush();
+                }
+            }
+        }
+
+        return;
+    }
+
 }
