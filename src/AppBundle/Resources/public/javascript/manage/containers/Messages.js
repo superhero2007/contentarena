@@ -181,10 +181,6 @@ class Messages extends React.Component {
         return (
             <React.Fragment>
                 <div className={"threads"}>
-                    <div className={'thread-title'}>
-                        {this.context.t("Messages")}
-                    </div>
-
                     <div className="thread-wrapper ca-overflow">
                         {loadingThreads && threads.length === 0 && <i className="fa fa-cog fa-spin"/>}
                         {!loadingThreads && threads.length === 0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
