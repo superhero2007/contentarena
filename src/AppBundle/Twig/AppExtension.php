@@ -223,6 +223,16 @@ class AppExtension extends AbstractExtension
         return $has;
     }
 
+    public function getProductionDetailsColumns($selectedRights,$rights){
+        $has = false;
+        foreach ($rights as $key => $right){
+            /* @var RightsPackage $right*/
+            if ( $right->getShortLabel() == "HL" && $selectedRights[$right->getId()]['items']["CONTENT_DELIVERY"] === 'CONTENT_DELIVERY_DEDICATED' ) $has = true;
+        }
+
+        return $has;
+    }
+
 
     public function getCustomLive($selectedRights,$rights){
         $custom = null;
