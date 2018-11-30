@@ -110,17 +110,19 @@ class LicenseController extends Controller
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
         $htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
+        $snappy = $this->get('knp_snappy.pdf');
+        $snappy->setOption('disable-smart-shrinking', true);
 
         $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
 
         // Use $this->get('knp_snappy.pdf')->getOutputFromHtml($html) to generate
 
-        $this->get('knp_snappy.pdf')->generateFromHtml(
+        $snappy->generateFromHtml(
             $html,
             $this->container->getParameter("uploads_main_folder") . "/" . $fileName
         );
 
-        $this->get('knp_snappy.pdf')->generateFromHtml(
+        $snappy->generateFromHtml(
             $htmlGeneralTerms,
             $this->container->getParameter("uploads_main_folder") . "/general-terms.pdf",
             array(),
