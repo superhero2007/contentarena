@@ -1308,7 +1308,7 @@
 
 
                             {% if bid.sellerSignatureName is defined and bid.sellerSignatureName is not null%}
-                                {{ bid.signatureName }}
+                                {{ bid.sellerSignatureName }}
                                 {% if bid.sellerSignaturePosition is defined and bid.sellerSignaturePosition is not null%}
                                     {{ " - " }} {{ bid.sellerSignaturePosition }}
                                 {% endif %}
