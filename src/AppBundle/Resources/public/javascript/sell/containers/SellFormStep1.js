@@ -237,7 +237,7 @@ class SellFormStep1 extends React.Component {
         }
 
         if (tournaments.length === 1 && !loadingSeasons) {
-            if (!tournaments[0].custom) {
+            if (!tournaments[0].custom && !tournaments[0].externalId.startsWith("ca:")) {
                 this.loadSeasons(tournaments);
             }
         }
