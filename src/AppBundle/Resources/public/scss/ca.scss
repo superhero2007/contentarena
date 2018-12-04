@@ -1155,87 +1155,30 @@ button {
 
 .box-header {
   display: flex;
-  flex-direction: row;
-  text-transform: none;
-  font-size: $font-size-medium-small;
-  background-color: $blue-color;
-  border-bottom: 5px solid $orange-color;
-  color: white;
-  i.fa {
-    padding: 5px;
-  }
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #333333;
+  font-size: 15px;
+  margin-bottom: 10px;
 
   .step {
-    padding: 19px 20px 16px 75px;
-    text-align: left;
-    display: inline-block;
-    line-height: 14px;
-    position: relative;
-    width: 25%;
+    margin-right: 45px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+    &.step-active {
+      padding-bottom: 10px;
+      border-bottom: 2px solid $color-primary;
+      font-weight: bold;
+    }
 
     &.visited {
       cursor: pointer;
-    }
-
-    .step-label {
-      text-transform: uppercase;
-      font-size: 16px;
-    }
-    .step-title {
-      font-size: 14px;
       font-weight: bold;
-      color: #5E9EBF;
-      margin-top: 5px;
     }
-    .step-icon {
-      position: absolute;
-      border-radius: 50%;
-      width: 31px;
-      height: 31px;
-      left: 32px;
-      top: 17px;
-      border: 2px solid rgba(119, 174, 202, 0.34);
-      background-color: #296380;
-      .fa {
-        display: none;
-        text-align: center;
-        margin-top: 3px;
-        font-size: 11px;
-        color: #FFCD34;
-      }
-    }
-  }
-  .step-active {
-    background-color: $orange-color;
-    .step-title {
-      color: #896614;
-      margin-top: 9px;
-    }
-    .step-icon {
-      height: 35px;
-      width: 35px;
-      left: 28px;
-      top: 19px;
-      border: 2px solid rgba(126, 95, 24, 0.34);
-      background-color: #DFAB30;
-      .fa {
-        color: #FFFFFF;
-        margin-top: 5px;
-      }
-      .fa-ellipsis-h {
-        display: block;
-        margin-top: 6px;
-      }
-    }
-  }
-  .finished {
-    .step-icon {
-      .fa {
-        display: block;
-      }
-      .fa-ellipsis-h {
-        display: none;
-      }
+    &:not(.visited) {
+      color: #999999;
     }
   }
 }

@@ -6,15 +6,8 @@ import {PropTypes} from "prop-types";
 
 const SellFormStep = ({step, active, title, onClick, stepVisited, stepFinished}) => (
     <div  className={cn("step", {"step-active" : active, "visited": stepVisited, "finished": stepFinished})} onClick={() => {onClick(step)}}>
-        <div className="step-label">
-            Step { step }
-        </div>
         <div className="step-title">
-            {title}
-        </div>
-        <div className="step-icon">
-            <i className="fa fa-check"/>
-            <i className="fa fa-ellipsis-h"/>
+            <b>Step { step }</b> - {title}
         </div>
     </div>
 );
