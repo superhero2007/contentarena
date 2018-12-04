@@ -193,7 +193,7 @@ class FeedController extends FOSRestController
         $tournamentsRepo = $this->getDoctrine()->getRepository("AppBundle:Tournament");
         $tournament = $tournamentsRepo->findOneBy(array("externalId"=>$id));
 
-        if ( $tournament != null && $response != null && $response["seasons"] != null && $response["seasons"]["season"] != null ){
+        if ( $tournament != null && $response != null && isset($response["seasons"]) && $response["seasons"] != null && $response["seasons"]["season"] != null ){
             $seasonYears = array();
 
             foreach ( $response["seasons"]["season"] as $season){

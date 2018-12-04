@@ -221,7 +221,7 @@ class ContentListingEventDetails extends React.Component {
                             </div>
                         </div>
                     )}
-                    {customTournament && tournamentArray[0].name === "" && (
+                    {customTournament && tournamentArray.length > 0 && tournamentArray[0].name === "" && (
                         <div className="event">
                             <div className="event-icon">
                                 {tournamentIcon}
