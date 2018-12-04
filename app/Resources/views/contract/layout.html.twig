@@ -81,7 +81,7 @@
     </style>
 </head>
 <body class="license {% if watermark %}watermark{% endif %}">
-<tr class="license-content">
+<div class="license-content">
     <div class="license-title">LICENSE AGREEMENT</div>
 
     {# DATE #}
@@ -315,7 +315,7 @@
                     <td>
                         {{ content.sportCategory.name }}
                     </td>
-                </div>
+                </tr>
             {% endif %}
             {% if content.seasons is not empty %}
                 {% for season in content.seasons %}
@@ -356,7 +356,7 @@
             <label>
                 Program Description:
             </label>
-                {{ content.programDescription }}
+                {{ content.programDescription | nl2br}}
         </div>
     </div>
     {% if content.rightsPackage| has_right("PR") and content.extraData.PROGRAM_NAME is defined %}
@@ -370,7 +370,7 @@
                 {% if content.extraData.PROGRAM_DESCRIPTION is defined %}
                     <div class="license-item-content">
                         <label>Edited Program Description</label>
-                        {{ content.extraData.PROGRAM_DESCRIPTION }}
+                        {{ content.extraData.PROGRAM_DESCRIPTION | nl2br }}
                     </div>
                 {% endif %}
 
@@ -440,6 +440,16 @@
                     </td>
                 {% endfor %}
             </tr>
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"] is defined%}
+                    <tr>
+                        <td>
+                            Transmission Form Details:
+                        </td>
+                        <td colspan="100">
+                            {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"]|nl2br }}
+                        </td>
+                    </tr>
+            {% endif %}
             <tr>
                 <td>Transmission Means</td>
                 {% for right in content.rightsPackage %}
@@ -450,6 +460,16 @@
                     </td>
                 {% endfor %}
             </tr>
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"] is defined%}
+                <tr>
+                    <td>
+                        Transmission Means Details:
+                    </td>
+                    <td colspan="100">
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"]|nl2br }}
+                    </td>
+                </tr>
+            {% endif %}
             {% if "EXPLOITATION_WINDOW" in rightDefinitions %}
                 <tr>
                     <td>Exploitation Window</td>
@@ -463,6 +483,16 @@
                         </td>
                     {% endfor %}
                 </tr>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] is defined%}
+                    <tr>
+                        <td>
+                            Exploitation Window Details:
+                        </td>
+                        <td colspan="100">
+                            {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"]|nl2br }}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endif %}
             {% if "RUNS" in rightDefinitions %}
                 <tr>
@@ -480,6 +510,16 @@
                         </td>
                     {% endfor %}
                 </tr>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"] is defined%}
+                    <tr>
+                        <td>
+                            Number of Runs Details:
+                        </td>
+                        <td colspan="100">
+                            {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"]|nl2br }}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endif %}
             <tr>
                 <td>Right to Sublicense</td>
@@ -489,6 +529,16 @@
                     </td>
                 {% endfor %}
             </tr>
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] is defined%}
+                <tr>
+                    <td>
+                        Right to Sublicense Details:
+                    </td>
+                    <td colspan="100">
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] |nl2br}}
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <td>Reserved Rights</td>
                 {% for right in content.rightsPackage %}
@@ -504,7 +554,7 @@
                         Reserved Rights Details:
                     </td>
                     <td colspan="{{ content.rightsPackage | length }}">
-                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] }}
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RESERVED_RIGHTS_TEXTAREA"] | nl2br}}
                     </td>
                 </tr>
             {% endif %}
@@ -540,61 +590,6 @@
         {% endif %}
     </div>
 
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Transmission Form Details:
-                </label>
-                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_FORM_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Transmission Means Details:
-                </label>
-                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TRANSMISSION_MEANS_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Right to Sublicense Details:
-                </label>
-                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["SUBLICENSE_TEXTAREA"] |nl2br}}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Number of Runs Details:
-                </label>
-                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["RUNS_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Exploitation Window Details:
-                </label>
-                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["EXPLOITATION_WINDOW_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
     {# EXCLUSIVITY TITLE#}
     <div class="license-item-title">4. Exclusivity of the Grant of Rights:</div>
 
@@ -621,7 +616,6 @@
             None
         </div>
     {% endif %}
-
 
     {# TERRITORY TITLE#}
     <div class="license-item-title">5. Territory:</div>
@@ -734,6 +728,16 @@
                     {% endif %}
                 {% endfor %}
             </tr>
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CONTENT_DELIVERY_TEXTAREA"] is defined%}
+            <tr>
+                <td>
+                    Content Delivery Details:
+                </td>
+                <td colspan="100">
+                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CONTENT_DELIVERY_TEXTAREA"]|nl2br }}
+                </td>
+            </tr>
+            {% endif %}
             {#{% if content.selectedRightsBySuperRight | has_content_dedicated_length > 1 or (content.rightsPackage|length==1 ) %}#}
                 <tr>
                     <td>Graphics</td>
@@ -768,6 +772,16 @@
                         {% endif %}
                     {% endfor %}
                 </tr>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["GRAPHICS_TEXTAREA"] is defined%}
+                    <tr>
+                        <td>
+                            Graphics Details:
+                        </td>
+                        <td colspan="100">
+                            {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["GRAPHICS_TEXTAREA"] |nl2br}}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td>Commentary</td>
                     {% for right in content.rightsPackage %}
@@ -801,6 +815,16 @@
                         {% endif %}
                     {% endfor %}
                 </tr>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["COMMENTARY_TEXTAREA"] is defined%}
+                <tr>
+                    <td>
+                        Commentary Details:
+                    </td>
+                    <td colspan="100">
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["COMMENTARY_TEXTAREA"] |nl2br}}
+                    </td>
+                </tr>
+                {% endif %}
                 <tr>
                     <td>Camera Standards</td>
                     {% for right in content.rightsPackage %}
@@ -830,6 +854,16 @@
                         {% endif %}
                     {% endfor %}
                 </tr>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CAMERA_TEXTAREA"] is defined %}
+                    <tr>
+                        <td>
+                            Camera Standards Details:
+                        </td>
+                        <td colspan="100">
+                            {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CAMERA_TEXTAREA"]|nl2br }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td>Aspect Ratio</td>
                     {% for right in content.rightsPackage %}
@@ -859,6 +893,16 @@
                         {% endif %}
                     {% endfor %}
                 </tr>
+                {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["ASPECT_RATIO_TEXTAREA"] is defined %}
+                    <tr>
+                        <td>
+                            Aspect Ratio Details:
+                        </td>
+                        <td colspan="100">
+                            {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["ASPECT_RATIO_TEXTAREA"] |nl2br}}
+                        </td>
+                    </tr>
+                {% endif %}
             {#{%  endif %}#}
             {% if content.rightsPackage| has_right("PR") and content.extraData.PROGRAM_NAME is defined %}
                 <tr>
@@ -980,6 +1024,16 @@
                     {% endif %}
                 {% endfor %}
             </tr>
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["VIDEO_STANDARD_TEXTAREA"] is defined%}
+                <tr>
+                    <td>
+                        Video Standards Details:
+                    </td>
+                    <td colspan="100">
+                        {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["VIDEO_STANDARD_TEXTAREA"] |nl2br}}
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <td>Technical delivery method</td>
                 {% for right in content.rightsPackage %}
@@ -1002,85 +1056,18 @@
                     {% endif %}
                 {% endfor %}
             </tr>
+            {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_DELIVERY_TEXTAREA"] is defined%}
+            <tr>
+                <td>
+                    Technical Delivery Method Details:
+                </td>
+                <td colspan="100">
+                    {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_DELIVERY_TEXTAREA"]|nl2br }}
+                </td>
+            </tr>
+            {% endif %}
         </table>
     </div>
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CONTENT_DELIVERY_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Content Delivery Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CONTENT_DELIVERY_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["VIDEO_STANDARD_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Video Standards Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["VIDEO_STANDARD_TEXTAREA"] |nl2br}}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_DELIVERY_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Technical Delivery Method Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["TECHNICAL_DELIVERY_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["GRAPHICS_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Graphics Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["GRAPHICS_TEXTAREA"] |nl2br}}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["COMMENTARY_TEXTAREA"] is defined%}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Commentary Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["COMMENTARY_TEXTAREA"] |nl2br}}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CAMERA_TEXTAREA"] is defined %}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Camera Standards Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["CAMERA_TEXTAREA"]|nl2br }}
-            </div>
-        </div>
-    {% endif %}
-
-    {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["ASPECT_RATIO_TEXTAREA"] is defined %}
-        <div class="license-item">
-            <div class="license-item-content">
-                <label>
-                    Aspect Ratio Details:
-                </label>
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["ASPECT_RATIO_TEXTAREA"] |nl2br}}
-            </div>
-        </div>
-    {% endif %}
 
     {# TRANSMISSION TITLE#}
     <div class="license-item-title">9. Transmission Obligation:</div>
@@ -1106,7 +1093,7 @@
     {% if content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] is defined%}
         <div class="license-item">
             <div class="license-item-content">
-                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"] }}
+                {{ content.selectedRightsBySuperRight[content.rightsPackage[0].id].items["BROADCASTING_TEXTAREA"]| nl2br }}
             </div>
         </div>
     {% endif %}
@@ -1264,7 +1251,7 @@
     {% if content.extraData.COMMENTS_RIGHTS is defined %}
         <div class="license-item">
             <div class="license-item-content">
-                {{ content.extraData.COMMENTS_RIGHTS }}
+                {{ content.extraData.COMMENTS_RIGHTS | nl2br}}
             </div>
         </div>
     {% else %}
@@ -1308,7 +1295,7 @@
 
 
                             {% if bid.sellerSignatureName is defined and bid.sellerSignatureName is not null%}
-                                {{ bid.signatureName }}
+                                {{ bid.sellerSignatureName }}
                                 {% if bid.sellerSignaturePosition is defined and bid.sellerSignaturePosition is not null%}
                                     {{ " - " }} {{ bid.sellerSignaturePosition }}
                                 {% endif %}

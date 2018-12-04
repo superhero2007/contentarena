@@ -69,8 +69,8 @@ class SellFormStep2 extends React.Component {
     };
 
     getProgramDescriptionDefaultValue = (value) => {
-        const {updateContentValue} = this.props;
-        if (value && !this.userDescriptionAdded) {
+        const {updateContentValue, programDescription} = this.props;
+        if (value && !this.userDescriptionAdded && ( !programDescription || programDescription === "") ) {
             this.userDescriptionAdded = false;
             updateContentValue("programDescription", value)
         }
@@ -129,6 +129,7 @@ class SellFormStep2 extends React.Component {
                             placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}
                             style={{minHeight:150}}
                         />
+                        {/* TODO: Remove this hidden div and replace default value fro a proper fn */}
                         {!this.userDescriptionAdded && (
                             <div className="is-hidden">
                                 <ContentListingEventDetails{...this.props} setRawContent={this.getProgramDescriptionDefaultValue}/>
