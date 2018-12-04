@@ -402,10 +402,6 @@ msgid "CL_STEP1_SELECTOR_SUB_TITLE_SEASONS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
-msgid "CL_STEP1_SELECTOR_SUB_TITLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
 msgid "International"
 msgstr ""
 
@@ -1504,10 +1500,6 @@ msgid "MESSAGES_NO_MESSAGES_YET"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
-msgid "Messages"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "MESSAGES_NO_THREADS_YET"
 msgstr ""
 
@@ -1658,6 +1650,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CurrencySelector.js
 msgid "Currency"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CustomPagination.js
+msgid "CUSTOM_PAGINATION_CL_4_5_PREV_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CustomPagination.js
+msgid "CUSTOM_PAGINATION_CL_4_5_NEXT_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
@@ -1917,6 +1917,7 @@ msgid "CL_STEP5_BUTTON_SUBMIT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP5_BUTTON_SAVE"
 msgstr ""
 
@@ -2037,31 +2038,23 @@ msgid "CL_STEP2_PROGRAM_YEAR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "CL_STEP3_PROGRAM_MODAL_LANGUAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "CL_STEP3_PROGRAM_MODAL_SUBTITLES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "CL_STEP3_PROGRAM_MODAL_SCRIPT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "CL_STEP3_PROGRAM_MODAL_TITLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "CL_STEP3_PROGRAM_MODAL_LANGUAGE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "CL_STEP3_PROGRAM_MODAL_SUBTITLES"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "CL_STEP3_PROGRAM_MODAL_SCRIPT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
-msgid "CL_STEP3_PROGRAM_MODAL_BUTTON_OK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js

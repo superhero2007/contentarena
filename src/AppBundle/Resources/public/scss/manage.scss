@@ -198,18 +198,12 @@ $icon-color: #00769A;
   }
 }
 
-.review-sign-container,
 .watch-list-container{
   .listing-list-view{
     cursor: default;
     .ca-title {
       cursor: default;
     }
-  }
-
-  .territorial-bundles-wrapper{
-    max-height: 617px; //fit for 10 items
-    overflow: auto;
   }
 }
 

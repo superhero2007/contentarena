@@ -1,0 +1,69 @@
+@import "vars";
+
+.Table-pagination {
+  display: flex;
+  justify-content: center;
+  padding: 20px 10px;
+
+  .pagination-btn{
+    font-size: 12px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-weight: normal;
+  }
+  .pagination-btn-active{
+    color: $color-blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .pagination-btn-disabled{
+    text-decoration: none;
+    cursor: not-allowed;
+    color: $font-color-5;
+  }
+
+  .Table-visiblePagesWrapper{
+    display: flex;
+    align-items: center;
+
+    .Table-pageButton {
+      @extend .pagination-btn;
+
+      &.active {
+        color: $primary-color;
+        background: $color-blue;
+      }
+      &.vertical{}
+    }
+  }
+
+  .Table-nextPageWrapper, .Table-prevPageWrapper{
+    span {
+      display: flex;
+      padding: 0 20px;
+    }
+    i{
+      @extend .pagination-btn-disabled;
+      font-size: 19px;
+    }
+
+    &.active i{
+      @extend .pagination-btn-active;
+      text-decoration: none;
+    }
+    .Table-pageButton-next, .Table-pageButton-back{
+      @extend .pagination-btn;
+      @extend .pagination-btn-active;
+
+      &:disabled{
+        @extend .pagination-btn-disabled;
+      }
+    }
+  }
+}
+
+
+
+

@@ -6,6 +6,12 @@
   box-shadow: $property;
 }
 
+@mixin borderRadius($property) {
+  -webkit-border-radius: $property;
+  -moz-border-radius: $property;
+  border-radius: $property;
+}
+
 @mixin placeholder{
   &::-webkit-input-placeholder {@content}
   &:-ms-input-placeholder      {@content}

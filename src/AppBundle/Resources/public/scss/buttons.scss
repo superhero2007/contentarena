@@ -21,10 +21,23 @@
   text-decoration: underline;
 }
 
+.license-agreement-button{
+  background: transparent;
+  border: 1px solid $color-primary;
+  border-radius: 5px;
+  color: $black-color;
+  padding: 3px 10px;
+
+  font-size: 13px;
+  font-weight: normal;
+
+  cursor: pointer;
+}
+
 .blue-button {
   color: white;
   font-size: 16px;
-  padding: 10px 0px;
+  padding: 10px 0;
   margin: -7px 0;
   border: none;
   display: inline-flex;
@@ -58,7 +71,7 @@
   text-decoration: none;
   cursor: pointer;
   outline: none;
-  background-color: #FFC94B;
+  background-color: $color-primary;
 
   &.transparent {
     background-color: transparent;
