@@ -814,7 +814,6 @@ class ContentService
         if ( $request->request->get("name") != null )$filter->setName($request->get("name"));
 
         return $filter;
-
     }
 
     /**
