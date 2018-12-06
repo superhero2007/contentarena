@@ -110,7 +110,8 @@ class Register extends React.Component {
 
     render () {
 
-        const {history, match, location} = this.props;
+        const {history, match, location, common} = this.props;
+
 
         const { loading, updatingUser, password, updated, terms, privacy, passwordCheck } = this.state;
         let user = this.state.user;
@@ -203,6 +204,7 @@ class Register extends React.Component {
                                 {this.context.t("SETTINGS_LABEL_COMPANY_NAME")} *
                             </label>
                             <input value={user.company.legalName}
+                                   disabled={common.testStageMode}
                                    onChange={(e)=>{
                                 user.company.legalName = e.target.value;
                                 this.setState({user});

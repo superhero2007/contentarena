@@ -663,6 +663,10 @@ msgid "GENERIC_TERMS_TEXT_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_TEST_STAGE_MODE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_MARKETPLACE"
 msgstr ""
 

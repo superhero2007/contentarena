@@ -10,6 +10,15 @@ $icon-color: #00769A;
   //overflow: auto;
 }
 
+.manager-header-test-mode{
+  height: 40px;
+  background-color: #FFC94B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+}
 .manager-header {
   margin-left: -20px;
   margin-right: -20px;

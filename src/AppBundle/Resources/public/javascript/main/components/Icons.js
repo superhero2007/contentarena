@@ -23,6 +23,7 @@ export const filterIcon = assetsBaseDir + "app/images/filter.png";
 export const searchIcon = assetsBaseDir + "app/images/search.svg";
 export const hammerIcon = assetsBaseDir + "app/images/listing/hammer.svg";
 export const pdfIcon = assetsBaseDir + "app/images/file-pdf.svg";
+export const disabledPdfIcon = assetsBaseDir + "app/images/file-pdf-disabled.svg";
 export const commentIcon = assetsBaseDir + "app/images/comment-icon.svg";
 
 //rights

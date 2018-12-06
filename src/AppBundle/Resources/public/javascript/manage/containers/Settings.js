@@ -2,9 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import cloneDeep from "lodash/cloneDeep";
-import {getCurrencySymbol, getFullName, goTo, limitText} from "../../main/actions/utils";
 import CountrySelector from '../../main/components/CountrySelector'
-import Moment from "moment/moment";
 import {blueCheckIcon, cancelIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 
@@ -97,9 +95,9 @@ class Settings extends React.Component {
 
     render () {
 
-        const {history} = this.props;
+        const {history, common} = this.props;
 
-        const { loading, editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers,
+        const { editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers,
             updatingCompany, updatingUser, updatingPassword, password, passwordCheck, passwordUpdated } = this.state;
         let user = this.state.user;
 
@@ -127,7 +125,7 @@ class Settings extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
                             </label>
-                            <input value={user.company.legalName} disabled={!editCompanyInfo} onChange={(e)=>{
+                            <input value={user.company.legalName} disabled={common.testStageMode || !editCompanyInfo} onChange={(e)=>{
                                 user.company.legalName = e.target.value;
                                 this.setState({user});
                             }}/>

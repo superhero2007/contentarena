@@ -6,7 +6,7 @@ import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
-import { blueCheckIcon, yellowCheckIcon, pdfIcon } from "../../main/components/Icons";
+import {blueCheckIcon, yellowCheckIcon, pdfIcon, disabledPdfIcon} from "../../main/components/Icons";
 import RightsLegend from "../../main/components/RightsLegend";
 
 const rightImageStyle = {
@@ -45,6 +45,8 @@ class ClosedDeals extends Component {
 
     render () {
         const { loading, bids } = this.state;
+
+        const {common} = this.props;
 
         document.title = "Content Arena - Closed Deals";
 
@@ -326,7 +328,14 @@ class ClosedDeals extends Component {
                                     customId : d.customId
                                 }},
                                 Cell: props => <div className="actions-col">
-                                    <img onClick={()=>{ viewLicenseBid(props.value.customId)} } src={pdfIcon} title={this.context.t("CLOSED_DEALS_LICENSE_AGREEMENT_ICON")} />
+                                    { !common.testStageMode &&
+                                        <img onClick={()=>{ viewLicenseBid(props.value.customId)} } src={pdfIcon} title={this.context.t("CLOSED_DEALS_LICENSE_AGREEMENT_ICON")} />
+                                    }
+
+                                    { common.testStageMode &&
+                                    <img src={disabledPdfIcon} />
+                                    }
+
                                     <img onClick={()=>{
                                         window.location.href = `/redirect-integration/messages-by-bid/${props.value.id}`;
                                     }} src={this.blueEnvelopeIcon} title={this.context.t("CLOSED_DEALS_MESSAGE_ICON")} />

@@ -102,6 +102,7 @@ class DefaultController extends BaseController
 
         return [
             'hostUrl'           => $this->container->getParameter('local_host'),
+            'testStageMode'     => $this->container->getParameter('test_stage_mode'),
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'     =>  $serializer->serialize($content, 'json'),
             'loggedUser'     => $user,

@@ -22,4 +22,11 @@ export const setTotalCountries = totalCountries => {
         type: commonTypes.SET_TOTAL_COUNTRIES,
         totalCountries
     };
-}
+};
+
+export const setTestStageMode = testStageMode => {
+    return {
+        type: commonTypes.SET_TEST_STAGE_MODE,
+        testStageMode
+    };
+};

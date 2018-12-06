@@ -14,13 +14,14 @@ import {
     pdfIcon,
     fixedIcon,
     plusYellowIcon,
-    minusYellowIcon, bucketIcon
+    minusYellowIcon, bucketIcon, disabledPdfIcon
 } from "./Icons";
 import {customStyles, GenericModalStyle} from "../styles/custom";
 import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import {PropTypes} from "prop-types";
 import ExtraTerritories from "./ExtraTerritories";
 import NumberFormat from 'react-number-format';
+import {connect} from "react-redux";
 
 class CommercialSalesBundle extends React.Component{
     constructor(props){
@@ -127,7 +128,7 @@ class CommercialSalesBundle extends React.Component{
     };
 
     render(){
-        const { salesBundle, onDelete, contentId, onUpdate, onApprove, listingCustomId } = this.props;
+        const { salesBundle, onDelete, contentId, onUpdate, onApprove, listingCustomId, common } = this.props;
         const { showBids, rejectModalIsOpen, approveModalIsOpen, selectedBid, openContactSellerModal, selectedCompany } = this.state;
 
         let closedDeals = salesBundle.bids.filter(b=>b.status.name === "APPROVED");
@@ -308,11 +309,19 @@ class CommercialSalesBundle extends React.Component{
                                     && <i className="fa fa-times-circle-o red-icon" style={{color: '#990000', fontSize: 26}} onClick={()=>{
                                     this.setState({selectedBid : props.value.bid}, this.openRejectModal);
                                 }} title={this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_ICON")} />}
-                                { (props.value.status === "APPROVED" || props.value.status === "PENDING")
-                                    && <img onClick={()=>{
-                                        viewLicenseBid(props.value.bid.customId)
-                                }} src={pdfIcon}
-                                title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />}
+                                { (props.value.status === "APPROVED" || props.value.status === "PENDING") && !common.testStageMode &&
+                                    <img src={pdfIcon}
+                                         onClick={()=>{
+                                            viewLicenseBid(props.value.bid.customId)
+                                         }}
+                                         title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />
+                                }
+
+                                { (props.value.status === "APPROVED" || props.value.status === "PENDING") && common.testStageMode &&
+                                    <img src={disabledPdfIcon} />
+                                }
+
+
                                 {props.value.status === "APPROVED"
                                     && <img onClick={()=>{
                                         if (props.value.status === "APPROVED") {
@@ -358,4 +367,16 @@ CommercialSalesBundle.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-export default CommercialSalesBundle;
+const mapStateToProps = ( state ) => {
+    return state;
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CommercialSalesBundle)

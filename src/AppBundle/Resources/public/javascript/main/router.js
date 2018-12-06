@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
-import {getDefaultRightsPackage, setTotalCountries} from "./actions/commonActions";
+import {getDefaultRightsPackage, setTestStageMode, setTotalCountries} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
 
 const fakeAuth = {
@@ -148,12 +148,13 @@ class AuthRouter extends React.Component {
     }
 
     componentWillMount() {
-        const {loggedUserData, totalCountries, isOwner} = this.props;
+        const {loggedUserData, totalCountries, isOwner, testStageMode} = this.props;
 
         this.props.loadUserData(loggedUserData);
         this.props.getDefaultRightsPackage();
         this.props.setLanguage("en");
         this.props.setTotalCountries(Number(totalCountries));
+        this.props.setTestStageMode(!!+testStageMode);
         if( isOwner) this.props.updateProfile("SELLER");
     }
 
@@ -222,6 +223,7 @@ const mapDispatchToProps = dispatch => {
         updateProfile : profile =>dispatch(updateProfile(profile)),
         loadUserData : data => dispatch(loadUserData(data)),
         setTotalCountries : totalCountries => dispatch(setTotalCountries(totalCountries)),
+        setTestStageMode : testStageMode => dispatch(setTestStageMode(testStageMode)),
         getDefaultRightsPackage : () => dispatch(getDefaultRightsPackage()),
         setLanguage: lang => dispatch(setLanguage(lang))
     }

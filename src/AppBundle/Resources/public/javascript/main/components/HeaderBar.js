@@ -3,6 +3,11 @@ import {goTo} from "../actions/utils";
 import {Link} from "react-router-dom";
 import {PropTypes} from 'prop-types';
 import HeaderNotifications from './HeaderNotifications';
+import {
+    addRight, clearFilter, removeRight, updateAllFilters, updateCountries, updateExclusive,
+    updateIncludedCountries
+} from "../../buy/actions/filterActions";
+import {connect} from "react-redux";
 
 const HeaderBarTab = ({match, children, route, className = '', linkClass = ''}) => {
     return (
@@ -31,121 +36,126 @@ class HeaderBar extends  React.Component {
     }
 
     render(){
-        const {tab, profile, match} = this.props;
+        const {tab, profile, match, common} = this.props;
         const logoUrl = this.getLogoUrl(tab);
 
         return(
-            <div className="manager-header">
-                <div className="logo" onClick={()=>goTo(logoUrl)}>
-                    <img src={assetsBaseDir + "app/images/logo.svg"} alt=""/>
-                </div>
+            <React.Fragment>
+                {common.testStageMode && <div className="manager-header-test-mode">
+                    {this.context.t("HEADER_TEST_STAGE_MODE")}
+                </div>}
+                <div className="manager-header">
+                    <div className="logo" onClick={()=>goTo(logoUrl)}>
+                        <img src={assetsBaseDir + "app/images/logo.svg"} alt=""/>
+                    </div>
 
-                {profile === "BUYER" && (
-                    <HeaderBarTab
-                        match={match.url === "/marketplace"}
-                        route={"/marketplace"}
-                    >
-                        {this.context.t("HEADER_LINK_MARKETPLACE")}
+                    {profile === "BUYER" && (
+                        <HeaderBarTab
+                            match={match.url === "/marketplace"}
+                            route={"/marketplace"}
+                        >
+                            {this.context.t("HEADER_LINK_MARKETPLACE")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "BUYER" && (
+                        <HeaderBarTab match={match.url === "/watchlist"} route={"/watchlist"}>
+                            {this.context.t("HEADER_LINK_WATCHLIST")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "BUYER" && (
+                        <HeaderBarTab
+                            match={
+                                match.url === "/bids/activebids" ||
+                                match.url === "/bids/declinedbids"
+                            }
+                            route={"/bids/activebids"}
+                        >
+                            {this.context.t("HEADER_LINK_BIDS")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "BUYER" && (
+                        <HeaderBarTab
+                            match={match.url === "/closeddeals"}
+                            route={"/closeddeals"}
+                        >
+                            {this.context.t("HEADER_LINK_CLOSED_DEALS")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "SELLER" && (
+                        <HeaderBarTab
+                            match={match.url === "/managelistings"}
+                            route={"/managelistings"}
+                        >
+                            {this.context.t("HEADER_LINK_MANAGE_LISTINGS")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "SELLER" && (
+                        <HeaderBarTab
+                            match={
+                                match.url === "/commercialoverview" ||
+                                match.url === "/commercialoverview/filter/withactivity" ||
+                                match.url === "/commercialoverview/filter/openbids" ||
+                                match.url === "/commercialoverview/filter/closeddeals"
+                            }
+                            route={"/commercialoverview"}
+                        >
+                            {this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "SELLER" && (
+                        <CustomLink
+                            match={match.path === "/contentlisting/:customId?/:step?"}
+                            route={"/contentlisting/new"}
+                        >
+                            {this.context.t("HEADER_LINK_CREATE_LISTING")}
+                        </CustomLink>
+                    )}
+
+                    <div className="spacer" />
+
+                    {profile === "BUYER" && (
+                        <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/managelistings">
+                            {this.context.t("HEADER_LINK_SELLING_MODE")}
+                        </HeaderBarTab>
+                    )}
+
+                    {profile === "SELLER" && (
+                        <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/marketplace">
+                            {this.context.t("HEADER_LINK_BUYING_MODE")}
+                        </HeaderBarTab>
+                    )}
+
+                    <HeaderBarTab className="tab baseline messages" route="/messages">
+                        <i className="fa fa-envelope" />
+                        {this.context.t("HEADER_LINK_MESSAGES")}
                     </HeaderBarTab>
-                )}
 
-                {profile === "BUYER" && (
-                    <HeaderBarTab match={match.url === "/watchlist"} route={"/watchlist"}>
-                        {this.context.t("HEADER_LINK_WATCHLIST")}
-                    </HeaderBarTab>
-                )}
+                    {/*<HeaderNotifications />*/}
 
-                {profile === "BUYER" && (
-                    <HeaderBarTab
-                        match={
-                            match.url === "/bids/activebids" ||
-                            match.url === "/bids/declinedbids"
-                        }
-                        route={"/bids/activebids"}
-                    >
-                        {this.context.t("HEADER_LINK_BIDS")}
-                    </HeaderBarTab>
-                )}
+                    <div className="settings">
+                        <i className="fa fa-gear" />
 
-                {profile === "BUYER" && (
-                    <HeaderBarTab
-                        match={match.url === "/closeddeals"}
-                        route={"/closeddeals"}
-                    >
-                        {this.context.t("HEADER_LINK_CLOSED_DEALS")}
-                    </HeaderBarTab>
-                )}
-
-                {profile === "SELLER" && (
-                    <HeaderBarTab
-                        match={match.url === "/managelistings"}
-                        route={"/managelistings"}
-                    >
-                        {this.context.t("HEADER_LINK_MANAGE_LISTINGS")}
-                    </HeaderBarTab>
-                )}
-
-                {profile === "SELLER" && (
-                    <HeaderBarTab
-                        match={
-                            match.url === "/commercialoverview" ||
-                            match.url === "/commercialoverview/filter/withactivity" ||
-                            match.url === "/commercialoverview/filter/openbids" ||
-                            match.url === "/commercialoverview/filter/closeddeals"
-                        }
-                        route={"/commercialoverview"}
-                    >
-                        {this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
-                    </HeaderBarTab>
-                )}
-
-                {profile === "SELLER" && (
-                    <CustomLink
-                        match={match.path === "/contentlisting/:customId?/:step?"}
-                        route={"/contentlisting/new"}
-                    >
-                        {this.context.t("HEADER_LINK_CREATE_LISTING")}
-                    </CustomLink>
-                )}
-
-                <div className="spacer" />
-
-                {profile === "BUYER" && (
-                    <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/managelistings">
-                        {this.context.t("HEADER_LINK_SELLING_MODE")}
-                    </HeaderBarTab>
-                )}
-
-                {profile === "SELLER" && (
-                    <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/marketplace">
-                        {this.context.t("HEADER_LINK_BUYING_MODE")}
-                    </HeaderBarTab>
-                )}
-
-                <HeaderBarTab className="tab baseline messages" route="/messages">
-                    <i className="fa fa-envelope" />
-                    {this.context.t("HEADER_LINK_MESSAGES")}
-                </HeaderBarTab>
-
-                {/*<HeaderNotifications />*/}
-
-                <div className="settings">
-                    <i className="fa fa-gear" />
-
-                    <div className="popup">
-                        <div className="wrap">
-                            <HeaderBarTab
-                                route="/settings"
-                                className="tab" >
-                                {this.context.t("HEADER_LINK_SETTINGS")}
-                            </HeaderBarTab>
-                            <a href="/logout" className="tab">
-                                {this.context.t("HEADER_LINK_LOGOUT")}
-                            </a>
+                        <div className="popup">
+                            <div className="wrap">
+                                <HeaderBarTab
+                                    route="/settings"
+                                    className="tab" >
+                                    {this.context.t("HEADER_LINK_SETTINGS")}
+                                </HeaderBarTab>
+                                <a href="/logout" className="tab">
+                                    {this.context.t("HEADER_LINK_LOGOUT")}
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 
@@ -165,5 +175,18 @@ HeaderBar.contextTypes = {
 };
 
 
-export default HeaderBar;
+const mapStateToProps = state => {
+    return {
+        common : state.common
+    }
+};
 
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HeaderBar)
