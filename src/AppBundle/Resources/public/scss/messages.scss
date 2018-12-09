@@ -60,10 +60,16 @@
         color: #999999;
       }
     }
+    .has-unread-messages {
+      background-color: #eee;
+    }
     .thread-selected {
       background-color: #03547C;
       color: #FFFFFF;
       .last-message {
+        color: #FFFFFF;
+      }
+      .user {
         color: #FFFFFF;
       }
     }

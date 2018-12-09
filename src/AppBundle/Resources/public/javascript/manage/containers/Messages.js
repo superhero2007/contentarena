@@ -185,8 +185,12 @@ class Messages extends React.Component {
                         {loadingThreads && threads.length === 0 && <i className="fa fa-cog fa-spin"/>}
                         {!loadingThreads && threads.length === 0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
                         {!loadingThreads && threads.map((t, i) => {
+
                             return <div
-                                className={(selectedThread && selectedThread.id === t.id) ? "thread thread-selected" : "thread"}
+                                className={cn("thread", {
+                                    'thread-selected': selectedThread && selectedThread.id === t.id,
+                                    'has-unread-messages': t.unreadMessagesForCurrentUser
+                                })}
                                 key={"thread-" + i}
                                 onClick={() => {
                                     this.selectThread(t)
