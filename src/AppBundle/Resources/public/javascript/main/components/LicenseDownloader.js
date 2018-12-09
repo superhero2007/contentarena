@@ -34,7 +34,7 @@ class LicenseDownloader extends Component {
             </div>
         )
     };
-};
+}
 
 LicenseDownloader.contextTypes = {
     t: PropTypes.func.isRequired

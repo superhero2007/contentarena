@@ -3,7 +3,6 @@ export const getCurrencySymbol = code => {
 };
 
 export const goTo = (route, openNew) => {
-
     if (openNew) {
         window.open(envhosturl + route, "_blank");
     } else {
@@ -28,7 +27,7 @@ export const viewLicenseBid = id => {
 };
 
 export const viewLicenseBundle = (id, listingId) => {
-    goTo("license/bundle/"+ id + "/" + listingId)
+    goTo("license/bundle/"+ id + "/" + listingId, true)
 };
 
 export const viewLicenseCustom = (listingId, bundleId, bid, company) => {
