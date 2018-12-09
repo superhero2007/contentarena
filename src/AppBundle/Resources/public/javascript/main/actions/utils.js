@@ -24,7 +24,7 @@ export const viewLicense = id => {
 };
 
 export const viewLicenseBid = id => {
-    goTo("license/bid/"+ id, true)
+    goTo("license/bid/"+ id)
 };
 
 export const viewLicenseBundle = (id, listingId) => {
