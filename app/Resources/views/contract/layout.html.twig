@@ -28,7 +28,7 @@
 
         .no-border, .no-border td{
             border: none;
-            padding: 0px;
+            padding: 0;
         }
         .license-item-column{
             flex: 1;
@@ -36,7 +36,12 @@
 
         .license-title{
             text-align: center;
-            font-size: 150%;
+            font-size: 160%;
+        }
+
+        .license-sub-title{
+            text-align: center;
+            font-size: 120%;
         }
 
         .license-item-title{
@@ -97,6 +102,8 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="license-sub-title">Schedule</div>
 
     {# COMPANY DATA#}
     {% set sellerCompany =  bid is defined and bid.sellerCompanySnapshot is not null ? bid.sellerCompanySnapshot : content.company %}
