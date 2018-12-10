@@ -44,12 +44,12 @@ class SellForm extends React.Component {
     };
 
     componentDidMount = () => {
-        jQuery('body, .manager-container').css({"background-color": "#eee"}); //todo: remove this when other page redesign ready
+        jQuery('body, .marketplace-container').css('background-color', '#eee'); //todo: remove this when other page redesign ready
         this.props.contentListingInit( this.state.content );
     };
 
     componentWillUnmount(){
-        jQuery('body, .manager-container').removeAttr('style'); //todo: remove this when other page redesign ready
+        jQuery('body, .marketplace-container').removeAttr('style'); //todo: remove this when other page redesign ready
     };
 
     render() {

@@ -83,7 +83,15 @@ class SuperRightList extends React.Component {
         return !rightsPackage.has(id);
     };
 
+    hasSalesPackagesSold = () => {
+        const { salesPackages } = this.props;
+        return salesPackages.some( salesPackage => salesPackage.sold);
+    };
+
     render() {
+        console.log(this.props);
+        const hasSoldAnyPackage = this.hasSalesPackagesSold();
+
         return (
             <div className="right-selector package-selector">
                 <header>
@@ -93,6 +101,10 @@ class SuperRightList extends React.Component {
                 <div className="right-description">
                     {this.context.t("CL_STEP2_RIGHTS_TEXT")}
                 </div>
+
+                {hasSoldAnyPackage && <div className="right-error-message">
+                    {this.context.t("CL_STEP2_RIGHTS_ERROR_MESSAGE")}
+                </div>}
 
                 <div className="package-selector-container">
                     <ReactTable
@@ -138,7 +150,7 @@ class SuperRightList extends React.Component {
                                     const exclusiveIdAttr = `exc-id-${shortLabel}`;
                                     const nonExclusiveIdAttr = `non-exc-id-${shortLabel}`;
                                     const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
-                                    const isDisabled = this.isInputBoxDisabled(id);
+                                    const isDisabled = hasSoldAnyPackage || this.isInputBoxDisabled(id);
 
                                     return (
                                         <React.Fragment>

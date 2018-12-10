@@ -159,7 +159,6 @@ export const content = (state = EmptyListing, action) => {
             newState[action.selectorType][action.index][action.key] = action.value;
             return Object.assign({}, state, newState);
         case contentType.SUPER_RIGHTS_UPDATED:
-            console.log(action.rightsPackage.values());
             return Object.assign({}, state, {
                 rightsPackage : Array.from(action.rightsPackage.values())
             });
