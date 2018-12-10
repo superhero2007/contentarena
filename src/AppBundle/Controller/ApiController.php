@@ -383,7 +383,7 @@ class ApiController extends BaseController
         $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
 
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
-        $pdf->merge('file', $pathForTheMergedPdf);
+        $pdf->merge('browser', $pathForTheMergedPdf);
 
         if ( isset($bid)){
             $license = new LicenseAgreement();
