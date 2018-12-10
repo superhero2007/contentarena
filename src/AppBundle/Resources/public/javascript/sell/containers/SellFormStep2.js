@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import PackageSelector from "../containers/PackageSelector";
-import {SummaryText} from "../components/SellFormItems";
+import SuperRightList from "../containers/SuperRightList";
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 import { stepChangeReset, changeAllEpisodeFlag} from "../actions/contentActions";
@@ -74,7 +73,7 @@ class SellFormStep2 extends React.Component {
             this.userDescriptionAdded = false;
             updateContentValue("programDescription", value)
         }
-    }
+    };
 
     render() {
         const {
@@ -95,7 +94,8 @@ class SellFormStep2 extends React.Component {
             sports,
             sportCategory,
             tournament,
-            seasons
+            seasons,
+            name
         } = this.props;
         if ( step !== 2) return (null);
 
@@ -107,17 +107,16 @@ class SellFormStep2 extends React.Component {
             <div className="step-content step-2">
                 {(sports.length || sportCategory.length || tournament.length ||  seasons.length) && (
                     <div className="listing-summary">
-                        <SummaryText {...this.props}/>
+                        {name}
                     </div>
                 )}
 
-                {/*PROGRAM DESCRIPTION*/}
                 <div className="step-content-container">
-                    <div className="textarea-input">
-                        <label>
+                    <div className="textarea-input-wrapper">
+                        <header>
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TITLE")}
-                        </label>
-                        <div className='textarea-input-text'>
+                        </header>
+                        <div className='textarea-input-description'>
                             {this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TEXT")}
                         </div>
                         <textarea
@@ -127,8 +126,8 @@ class SellFormStep2 extends React.Component {
                             }}
                             value={programDescription}
                             placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}
-                            style={{minHeight:150}}
                         />
+
                         {/* TODO: Remove this hidden div and replace default value fro a proper fn */}
                         {!this.userDescriptionAdded && (
                             <div className="is-hidden">
@@ -136,10 +135,9 @@ class SellFormStep2 extends React.Component {
                             </div>
                         )}
                     </div>
-                </div>
 
-                {/*SUPER RIGHTS*/}
-                <PackageSelector packages={this.props.packages}/>
+                    <SuperRightList packages={this.props.packages} />
+                </div>
 
                 {/* PROGRAM DETAILS*/}
                 {editedProgram && (

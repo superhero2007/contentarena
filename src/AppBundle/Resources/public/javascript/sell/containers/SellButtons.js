@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import cn from 'classnames';
 import store from '../../main/store';
 import {updateContentValue, goToStep} from "../actions/contentActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip';
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
-import {PropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 
 const MIN_PROGRAM_DESC_LENGTH = 30;
 
-class SellButtons extends React.Component {
+class SellButtons extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,15 +21,14 @@ class SellButtons extends React.Component {
         };
     }
 
-    componentWillReceiveProps ( props ) {
-
+    componentWillReceiveProps (props) {
         if ( this.state.visited.indexOf(props.step) === -1 ){
             this.setState({
                 visited : [...this.state.visited, props.step]
             })
         }
         ReactTooltip.rebuild()
-    }
+    };
 
     saveAndGoNext = () => {
         const {history, goToStep} = this.props;
@@ -208,14 +206,6 @@ class SellButtons extends React.Component {
         if ( step === 4 && !this.reviewAndSignEnabled()) return this.reviewAndSignGetMessages();
     };
 
-    onClickStep = (stepSelected) => {
-        const { maxStep } = this.props;
-
-        if (stepSelected <= maxStep) {
-            this.goToStep(stepSelected);
-        }
-    };
-
     goToReviewAndSign = () => {
         const {history, goToStep} = this.props;
         let savePromise = null;
@@ -269,42 +259,37 @@ class SellButtons extends React.Component {
     };
 
     render() {
-        const { step, maxStep } = this.props;
+        const { step } = this.props;
         const { lastStep, saving } = this.state;
         const cantReviewAndSign = (step === 4 && !this.reviewAndSignEnabled());
 
         return (
             <div className="buttons">
-                { this.props.step < lastStep && <div className="buttons-container step-1 step-2" >
-                    { this.props.step !== 1 &&
-                    <button className="standard-button prev"
-                            onClick={ this.goToPreviousStep }>
-                        <i className="fa fa-arrow-left"/> {this.context.t("Back")}
-                    </button> }
-                    {
-                        [1,2,3,4].map((v,k)=>(
-                            <div className={cn("step", { 'step-active': this.props.step === v, 'step-visited': v <= maxStep})}
-                                 onClick={() => {this.onClickStep(v)}}
-                                 key={k}>{v}</div>
-                        ))
-                    }
-                    { <div data-tip={cantReviewAndSign ? this.getReviewButtonTooltipMessages() : this.getTooltipMessages()} >
-                            <button
-                                id="next-step"
-                                className="standard-button"
-                                disabled={
-                                    ( step === 1 && !this.step1Enabled()) ||
-                                    ( step === 2 && !this.step2Enabled()) ||
-                                    ( step === 3 && !this.step3Enabled()) ||
-                                    ( cantReviewAndSign )
-                                }
-                                onClick={ () => step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext()}>
-                                {this.context.t("Next")}
-                                    {saving ?
-                                        <i className="fa fa-cog fa-spin"/> :
-                                        <i className="fa fa-arrow-right"/>}
-                            </button>
-                        </div>}
+                {step < lastStep && <div className="buttons-container">
+                    <button
+                        className="yellow-border-button"
+                        disabled={step <= 1}
+                        onClick={ this.goToPreviousStep }>
+                            <i className="fa fa-angle-left"/>
+                            {this.context.t("Back")}
+                    </button>
+
+                    <div data-tip={cantReviewAndSign ? this.getReviewButtonTooltipMessages() : this.getTooltipMessages()} >
+                        <button
+                            className="yellow-button"
+                            disabled={
+                                ( step === 1 && !this.step1Enabled()) ||
+                                ( step === 2 && !this.step2Enabled()) ||
+                                ( step === 3 && !this.step3Enabled()) ||
+                                ( cantReviewAndSign )
+                            }
+                            onClick={ () => step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext()}>
+                            {this.context.t("Next")}
+                                {saving ?
+                                    <i className="fa fa-cog fa-spin"/> :
+                                    <i className="fa fa-angle-right"/>}
+                        </button>
+                    </div>
                 </div>}
             </div>
         );
@@ -335,4 +320,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SellButtons)
+)(SellButtons);

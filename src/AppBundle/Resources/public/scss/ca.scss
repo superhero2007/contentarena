@@ -96,14 +96,11 @@ button {
     margin: 0;
   }
 
-  .duration-date-pickers .date-picker {
-    border: 1px solid lightgray;
-    margin-left: inherit !important;
-  }
-
   .buttons {
     display: flex;
     flex-direction: column;
+    margin: 30px;
+
     i.fa {
       padding: 5px;
     }
@@ -111,48 +108,6 @@ button {
       margin: 0 0 8px;
       display: inline-flex;
       justify-content: center;
-      .light-blue-button {
-        min-width: 212px;
-        margin-right: 5px;
-      }
-      .step {
-        height: 43px;
-        width: 46px;
-        border: 1px solid #D4D8DE;
-        background-color: #F4F6F9;
-        color: #9DA4B0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 5px;
-
-        &.step-visited {
-          cursor: pointer;
-        }
-      }
-      .step-active {
-        background-color: #1A4B63;
-        color: white;
-      }
-    }
-    .step-1 {
-      .step {
-        height: 46px;
-      }
-    }
-    .step-2 {
-      .standard-button {
-        margin-left: inherit;
-      }
-      .prev {
-        background-color: #1DA9EF;
-        color: #fff;
-      }
-      .step {
-        &:first-of-type {
-          margin-left: 35px;
-        }
-      }
     }
   }
 }
@@ -163,6 +118,10 @@ button {
   text-align: left;
   i.fa {
     padding: 5px;
+  }
+
+  .buttons{
+    margin: 0;
   }
 
   .listing-summary {
@@ -665,33 +624,108 @@ button {
   }
 }
 
-.step-2 {
-  .step-content-container {
-    .textarea-input {
-      max-width: 100%;
-      margin-bottom: 20px;
+.sell-form-steps-wrapper{
+  background: $background-3;
+  border: 1px solid $border-color-1;
+  @include shadow(0 1px 9px rgba(0,0,0,0.21));
+}
+
+.step-2{
+  .listing-summary{
+    border-bottom: 1px $color-grey solid;
+    color: $font-color-6;
+    font-size: 21px;
+    font-weight: bold;
+
+    margin-bottom: 0;
+    padding-bottom: 20px;
+  }
+  .step-content-container{
+    .textarea-input-wrapper, .right-selector{
+      header{
+        color: $black-color;
+        font-weight: bold;
+        font-size: 18px;
+        margin: 20px 0 10px;
+      }
+      .textarea-input-description, .right-description{
+        color: $font-color-1;
+        font-size: 13px;
+        line-height: 25px;
+
+        margin-bottom: 20px;
+      }
+      textarea{
+        height: 300px;
+        padding: 25px 20px;
+
+        border: 1px solid $font-color-2;
+        background: $color-grey-light;
+
+        @include placeholder {
+          color: $black-color;
+          font-weight: normal;
+          font-size: 16px;
+          font-style: italic;
+        }
+      }
+      .right-selection-table{
+
+        .table-right-selection-header{
+          background: transparent;
+          border-bottom: 2px solid $color-primary;
+        }
+        .rt-tr{
+          &.-odd{
+            background: transparent;
+          }
+
+          .rt-td{
+            display: flex;
+            align-items: center;
+
+            padding: 15px 10px;
+
+            input[type=radio]{
+              margin-left: 10px;
+            }
+            
+            label{
+              font-size: 13px;
+              font-weight: 600;
+              color: $black-color;
+              cursor: pointer;
+
+              padding-left: 10px;
+            }
+            p{
+              font-size: 13px;
+              color: $font-color-5;
+              font-weight: normal;
+
+              margin: 0;
+
+              text-wrap: normal;
+              white-space: normal;
+              overflow: visible;
+
+              input[type=number] {
+                margin: 0 5px;
+                width: 65px;
+                border: 1.2px solid $color-primary;
+              }
+            }
+          }
+        }
+      }
     }
   }
-  .table {
-    border-bottom: 4px solid #D5D9DF;
-    background-color: inherit;
-    margin-bottom: 20px;
-    .react-toggle--checked {
-      .react-toggle-track {
-        background-color: #17AAEF !important;
-        height: 26px !important;
-      }
-      .react-toggle-thumb {
-        border-color: #17AAEF !important;
-        left: 25px !important;
-        top: 2px !important;
-      }
-    }
-  }
+
   .program-container {
     display: flex;
+    margin-top: 20px;
+
     .left {
-      //float: left;
       width: 40%;
       .modal-input{
         display: flex;
@@ -732,7 +766,6 @@ button {
     }
     .right {
       padding: inherit;
-      //float: right;
       width: 60%;
       @media screen and (max-width: 1460px) {
         float: none;
@@ -1155,11 +1188,9 @@ button {
 
 .box-header {
   display: flex;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #333333;
+  padding: 20px 20px 0 20px;
+  color: $black-color;
   font-size: 15px;
-  margin-bottom: 10px;
 
   .step {
     margin-right: 45px;

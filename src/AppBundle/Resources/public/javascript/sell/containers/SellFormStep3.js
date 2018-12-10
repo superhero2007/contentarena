@@ -1,20 +1,12 @@
 import React from 'react';
 import { connect } from "react-redux";
-import Modal from 'react-modal';
 import Moment from "moment";
-
-import PackageSelector from "../containers/PackageSelector";
 import PopupRight from "../components/PopupRight";
-import Comments from "../components/Comments";
 import LicenseDateSelector from "../components/LicenseDateSelector";
-
 import {RightDefinitions} from "../components/RightDefinitions";
 import {ProductionStandardsDefinitions} from "../components/ProductionStandardsDefinitions";
 import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {stepChangeReset} from "../actions/contentActions";
-import {LanguageSelector} from "../../main/components/LanguageSelector";
-
-import {customStyles} from "../../main/styles/custom";
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
@@ -341,4 +333,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SellFormStep3)
+)(SellFormStep3);

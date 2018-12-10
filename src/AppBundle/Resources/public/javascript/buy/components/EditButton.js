@@ -1,5 +1,5 @@
 import React from 'react';
-import {PropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {goTo} from "../../main/actions/utils";
 
 class EditButton extends React.Component {

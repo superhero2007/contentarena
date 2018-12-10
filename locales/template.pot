@@ -1877,7 +1877,23 @@ msgid "CL_STEP2_RIGHTS_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
-msgid "Exclusive"
+msgid "RIGHT_SELECTION_AUDIO_VISUAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
+msgid "RIGHT_SELECTION_OFFER_EXCLUSIVELY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
+msgid "RIGHT_SELECTION_OFFER_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
+msgid "RIGHT_SELECTION_OFFER_NON_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/PackageSelector.js
+msgid "SALES_PACKAGE_TABLE_DEFINITION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
