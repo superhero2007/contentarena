@@ -24,11 +24,11 @@ export const viewLicense = id => {
 };
 
 export const viewLicenseBid = id => {
-    goTo("license/bid/"+ id, true)
+    goTo("license/bid/"+ id)
 };
 
 export const viewLicenseBundle = (id, listingId) => {
-    goTo("license/bundle/"+ id + "/" + listingId)
+    goTo("license/bundle/"+ id + "/" + listingId, true)
 };
 
 export const viewLicenseCustom = (listingId, bundleId, bid, company) => {
