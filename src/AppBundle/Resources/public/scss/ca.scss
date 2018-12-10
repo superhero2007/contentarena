@@ -66,6 +66,48 @@ button {
   padding: 0;
   font-weight: normal;
 
+  .rt-thead, .rt-tbody{
+    overflow-y: hidden;
+  }
+
+  &.showScroll{
+    .rt-tbody{
+      overflow-y: scroll;
+      &::-webkit-scrollbar{ width: 5px; }
+      &::-webkit-scrollbar-track{ background: $border-color-1; }
+      &::-webkit-scrollbar-thumb{
+        background-color: $border-color-2;
+        outline: 1px solid slategrey;
+      }
+    }
+    .rt-thead{
+      overflow-y: scroll;
+      &::-webkit-scrollbar{ width: 5px; }
+      &::-webkit-scrollbar-track{ background: transparent; }
+      &::-webkit-scrollbar-thumb{
+        background-color: transparent;
+        outline: 1px solid transparent;
+      }
+    }
+  }
+
+  .table-header-big{ border-bottom: none }
+
+  .rt-tbody{
+    max-height: 690px;
+
+    .rt-tr{
+      align-items: center;
+
+      .rt-td{
+        height: 45px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+
   .rt-table{
     border: 1px solid $border-color-3;
     @include borderRadius(5px);
@@ -74,6 +116,7 @@ button {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
 
       font-weight: bold;
     }
