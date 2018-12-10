@@ -102,7 +102,7 @@ class LicenseController extends Controller
 
         if ( isset($license) && $license != null && $license->getUpdatedAt() != null && $license->getUpdatedAt() > $bid->getUpdatedAt() ){
             $pdf->addPDF($license->getFile(), 'all');
-            if ($download) $pdf->merge('browser', "License Agreement.pdf");
+            if ($download) $pdf->merge('browser', "1License Agreement.pdf");
             return;
         }
 
