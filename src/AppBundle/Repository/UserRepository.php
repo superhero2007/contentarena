@@ -48,4 +48,22 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findByRangeAndLastLogin($rangeStart, $rangeEnd, $lastLogin)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where( 'u.registeredAt >= :rangeStart')
+            ->andWhere( 'u.registeredAt <= :rangeEnd')
+            ->setParameter('rangeStart', $rangeStart)
+            ->setParameter('rangeEnd', $rangeEnd);
+
+        if ( $lastLogin !== null ){
+            $queryString = ($lastLogin) ? "u.lastLogin IS NOT NULL": "u.lastLogin is NULL";
+            $qb->andWhere( $queryString );
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

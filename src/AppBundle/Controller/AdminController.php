@@ -8,10 +8,16 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Service\EmailService;
+use AppBundle\Entity\Company;
 use AppBundle\Service\FileUploader;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use AppBundle\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -22,6 +28,27 @@ class AdminController extends BaseAdminController
 
     use \AppBundle\Helper\EmailHelper;
 
+    static $IMPORT_DATA = array(
+        "First Name",
+        "Last Name",
+        "Email",
+        "Company",
+        "Profile",
+        "Country",
+        "Auto Publish",
+        "Status"
+    );
+
+    static $EXPORT_DATA = array(
+        "First Name",
+        "Last Name",
+        "Email",
+        "Company",
+        "Country",
+        "Status",
+        "Last Login",
+        "Date of Creation"
+    );
 
     public function utilsAction(){
 
@@ -142,9 +169,11 @@ class AdminController extends BaseAdminController
 
     /**
      * @Route("/generalterms/upload", name="uploadGeneralTermsPage")
-     * @throws \exception
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return Response
      */
-    public function uploadGeneralTermsPage(Request $request, FileUploader $fileUploader){
+    public function uploadGeneralTermsPage(Request $request ){
 
         $user = $this->getUser();
         $data = null;
@@ -186,6 +215,253 @@ class AdminController extends BaseAdminController
 
 
         return $this->render('contract/upload.form.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/users/import", name="importUsersPage")
+     * @param Request $request
+     * @return Response
+     */
+    public function importUsersPage(Request $request){
+
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository('AppBundle:User');
+        $userStatusRepo = $doctrine->getRepository('AppBundle:UserStatus');
+        $companyRepo = $doctrine->getRepository('AppBundle:Company');
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+        $user = $this->getUser();
+        $now = new \DateTime();
+        $data = null;
+        $usersCreated = array();
+        $usersSkipped = array();
+        $usersSkippedByError = array();
+        $rows = array();
+
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('csvFile', FileType::class)
+            ->add('send', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-primary action-new'),
+                'label' => 'Import'
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /* @var File $file*/
+            $data = $form->getData();
+            $file = $data['csvFile'];
+            $ignoreFirstLine = true;
+            $rows = array();
+            if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+                $i = 0;
+                while (($data = fgetcsv($handle, null, ";")) !== FALSE) {
+                    $i++;
+                    if ($ignoreFirstLine && $i == 1) { continue; }
+                    $rows[] = explode(",", $data[0]);
+                }
+                fclose($handle);
+            }
+
+            foreach ( $rows as $row){
+                $user = $repo->findOneBy(array("email" => $row[2]));
+                if ( $user == null ) {
+
+                    try {
+                        $usersCreated[] = $row;
+                        $user = new User();
+                        $user->setFirstName($row[0]);
+                        $user->setLastName($row[1]);
+                        $user->setEmail($row[2]);
+                        $user->setProfile($row[4]);
+                        $user->setCountry($row[5]);
+                        $user->setAutoPublish($row[6]);
+                        $user->setConfirmationToken($tokenGenerator->generateToken());
+                        $user->setRegisteredAt($now);
+                        if ($row[7] != null ) $user->setStatus($userStatusRepo->findByName($row[7]));
+                        if ( $row[3] ){
+                            $company = $companyRepo->findOneBy( array( "legalName" => $row[3] ) );
+                            if ($company != null){
+
+                            } else {
+                                $company = new Company();
+                                $company->setLegalName( $row[3] );
+                                $doctrine->getManager()->persist($company);
+                            }
+                            $user->setCompany($company);
+                        }
+                        $doctrine->getManager()->persist($user);
+                    }
+                    catch(\Exception $exception) {
+                        $usersSkippedByError[] = $row;
+                    }
+
+
+                } else {
+                    $usersSkipped[] = $row;
+                }
+            }
+            $doctrine->getManager()->flush();
+        }
+
+        $viewElements = array(
+            'user' => $user,
+            'form' => $form->createView(),
+            'usersCreated' => $usersCreated,
+            'usersSkipped' => $usersSkipped,
+            'usersSkippedByError' => $usersSkippedByError,
+            'usersProcessed' => count($rows),
+            'watermark' => true,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('users/import.form.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/users/export", name="exportUsersPage")
+     * @param Request $request
+     * @return Response
+     */
+    public function exportUsersPage(Request $request){
+
+        $user = $this->getUser();
+        $repo = $this->getDoctrine()->getRepository('AppBundle:User');
+        $data = null;
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('createdAtStart', DateType::class, array(
+                'widget' => 'choice',
+                'label' => "Date of creation (start)",
+                'attr' => array('class' => 'fieldClass')
+            ))
+            ->add('createdAtEnd', DateType::class, array(
+                'widget' => 'choice',
+                'label' => "Date of creation (end)",
+                'data' => new \DateTime()
+            ))
+            ->add('lastLogin', ChoiceType::class, array(
+                'choices'  => array(
+                    'NULL' => false,
+                    'not NULL ' => true,
+                    'Both' => null,
+                ),
+                'label' => "Last Login"
+            ))
+            ->add('send', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-primary action-new'),
+                "label" => "Download"
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $users = $repo->findByRangeAndLastLogin($data['createdAtStart'],$data['createdAtEnd'],$data['lastLogin']);
+            $content = $this->usersToCsvExport($users);
+            return $this->csvResponse($content, "export-users.csv");
+        }
+
+
+        $viewElements = array(
+            'user' => $user,
+            //'message' => $message,
+            'form' => $form->createView(),
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('users/export.form.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/users/import/example", name="importUsersExample")
+     * @throws \exception
+     */
+    public function importUsersExample( ){
+
+        $data = array(
+            "First Name" ,
+            "Last Name",
+            "Email",
+            "Company",
+            "Profile",
+            "Country",
+            "Auto Publish",
+            "Status");
+
+        //$response = $this->render('users/import.example.html.twig',array( "data" => $data ));
+        $rows[] = implode(',', $data);
+        $content = implode("\n", $rows);
+        $response = new Response($content);
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="import-users.csv"');
+
+        return $response;
+    }
+
+    /**
+     * @Route("/users/export/all", name="exportAllUsers")
+     * @return Response
+     */
+    public function exportAllUsers( ){
+
+        $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
+        $content = $this->usersToCsv($users);
+        return $this->csvResponse($content);
+    }
+
+    private function csvResponse($content, $name = "import-users.csv"){
+        $response = new Response($content);
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$name.'"');
+
+        return $response;
+    }
+
+    private function usersToCsv(array $users){
+        $rows[] = implode(',', $this::$IMPORT_DATA);
+
+        foreach ( $users as $user ){
+            /* @var User $user*/
+            $rows[] = implode(',', array(
+                $user->getFirstName(),
+                $user->getLastName(),
+                $user->getEmail(),
+                ($user->getCompany() != null) ? $user->getCompany()->getLegalName() : "",
+                $user->getProfile(),
+                $user->getCountry(),
+                $user->isAutoPublish(),
+                ( $user->getStatus() != null ) ? $user->getStatus()->getName() : ""
+
+            ));
+        }
+
+        return implode("\n", $rows);
+    }
+
+    private function usersToCsvExport(array $users){
+        $rows[] = implode(',', $this::$EXPORT_DATA);
+
+        foreach ( $users as $user ){
+            /* @var User $user*/
+            $rows[] = implode(',', array(
+                $user->getFirstName(),
+                $user->getLastName(),
+                $user->getEmail(),
+                ($user->getCompany() != null) ? $user->getCompany()->getLegalName() : "",
+                $user->getCountry(),
+                ( $user->getStatus() != null ) ? $user->getStatus()->getName() : "",
+                ( $user->getLastLogin() != null ) ? $user->getLastLogin()->format('Y-m-d H:i:s'): "",
+                ( $user->getRegisteredAt() != null ) ? $user->getRegisteredAt()->format('Y-m-d H:i:s'): ""
+
+            ));
+        }
+
+        return implode("\n", $rows);
     }
 
 

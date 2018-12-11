@@ -4,7 +4,12 @@ easy_admin:
         menu:
             - Content
             - label: 'User Information'
-              children: ['User', 'Company', 'Status']
+              children:
+                  - User
+                  - Company
+                  - Status
+                  - {label: 'Import', icon: 'file-new', route: 'importUsersPage'}
+                  - {label: 'Export', icon: 'file-new', route: 'exportUsersPage'}
             - Deals
             - RightsPackage
             - label: 'Sports'
