@@ -11,10 +11,11 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
     return (
         <ReactTable
             className={cn("ca-table round-0", {showScroll: salesPackages.length > 15})}
+            defaultPageSize={242} // max number of possible Territorial Bundles
             showPageSizeOptions={false}
             noDataText={null}
-            minRows={0}
             showPagination={false}
+            minRows={0}
             resizable={false}
             data={salesPackages}
             columns={[
