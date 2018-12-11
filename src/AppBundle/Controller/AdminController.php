@@ -409,8 +409,8 @@ class AdminController extends BaseAdminController
     public function exportAllUsers( ){
 
         $users = $this->getDoctrine()->getRepository('AppBundle:User')->findAll();
-        $content = $this->usersToCsv($users);
-        return $this->csvResponse($content);
+        $content = $this->usersToCsvExport($users);
+        return $this->csvResponse($content, "export-users.csv");
     }
 
     private function csvResponse($content, $name = "import-users.csv"){
