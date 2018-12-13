@@ -300,6 +300,22 @@ class EmailContentFixtures extends Fixture
                 "section and re-publish the content."
             ),
 
+            array(
+                "email_subject_buyer_listing_match",
+                "",
+                "New content was listed that matches your buying interest."
+            ),
+            array(
+                "email_content_buyer_listing_match",
+                "",
+                "New content was listed that matches your buying interest."
+            ),
+            array(
+                "email_content_buyer_listing_match_2",
+                "",
+                "Please click on the Listing Name to review the listing."
+            ),
+
 
         );
 

@@ -8,15 +8,21 @@ import {blueCheckIcon, cancelIcon, editIcon, Spinner} from "../../main/component
 import {PropTypes} from "prop-types";
 import GeneralTerms from "../components/GeneralTerms";
 import PrivacyPolicy from "../components/PrivacyPolicy";
+import PreferredUserProfile from "../../manage/components/PreferredUserProfile";
+import PreferredSportSeller from "../../manage/components/PreferredSportSeller";
+import PreferredTerritoriesBuyer from "../../manage/components/PreferredTerritoriesBuyer";
+import PreferredSportBuyer from "../../manage/components/PreferredSportBuyer";
 
 class Register extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             loading : false,
             updatingUser : false,
             editCompanyInfo : false,
-            user : {}
+            user : {},
+            step: 1
         };
     }
 
@@ -108,12 +114,42 @@ class Register extends React.Component {
 
     };
 
+    updateUser = (prop, value) => {
+        let user  = this.state.user;
+        user[prop] = value;
+        this.setState({user});
+
+    };
+
+    handleSellerSports = ( sports, allSports) => {
+        let user  = this.state.user;
+        user.preferredSellerSports = sports;
+        user.preferredSellerAllSports = allSports;
+        this.setState({user});
+    };
+
+    handleBuyerSports = ( sports, allSports) => {
+        let user  = this.state.user;
+        user.preferredBuyerSports = sports;
+        user.preferredBuyerAllSports = allSports;
+        this.setState({user});
+    };
+
+    completeButtonDisabled = () => {
+        const { user } = this.state;
+        return (user.preferredProfile !== "SELLER"
+            && ( (!user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
+                || user.preferredBuyerCountries.length === 0 ) )
+        || (user.preferredProfile !== "BUYER"
+                && ( !user.preferredSellerAllSports && user.preferredSellerSports.length === 0) )
+    };
+
     render () {
 
         const {history, match, location, common} = this.props;
 
 
-        const { loading, updatingUser, password, updated, terms, privacy, passwordCheck } = this.state;
+        const { loading, updatingUser, password, updated, terms, privacy, passwordCheck, step } = this.state;
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
@@ -131,6 +167,69 @@ class Register extends React.Component {
 
         if (!user) return <div className={"settings-container"}>
             {this.context.t("REGISTER_ACTIVATION_CODE_NOT_FOUND")}
+        </div>;
+
+
+        if ( step === 1 ) return <div className="settings-container settings-container-welcome">
+
+            <div className={"big-title"}>
+                {this.context.t("SETTINGS_WELCOME")}
+            </div>
+            <div className="title justify-content-center">
+                {this.context.t("SETTINGS_WELCOME_TEXT")}
+            </div>
+
+            <div className={"setting"}>
+                <PreferredUserProfile profile={user.preferredProfile}
+                                      centered={true}
+                                      onChange={ profile => this.updateUser("preferredProfile", profile) }/>
+                <div className={"buttons"}>
+                    <div>
+                        <button
+                            onClick={() => {
+                                this.setState({step: 2})
+                            }}
+                            disabled={ updatingUser }
+                            className={"standard-button"}>
+                            {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>;
+
+        if ( step === 2 ) return <div className="settings-container">
+
+            <div className={"setting"}>
+                {user.preferredProfile !== "BUYER" &&
+                <PreferredSportSeller sports={user.preferredSellerSports}
+                                      allSports={user.preferredSellerAllSports}
+                                      onChange={this.handleSellerSports}/>}
+
+                {user.preferredProfile !== "SELLER" &&
+                <PreferredTerritoriesBuyer territories={user.preferredBuyerCountries}
+                                           onChange={ territories => this.updateUser("preferredBuyerCountries", territories) }/>}
+
+                {user.preferredProfile !== "SELLER" &&
+                <PreferredSportBuyer sports={user.preferredBuyerSports}
+                                     allSports={user.preferredBuyerAllSports}
+                                     onChange={this.handleBuyerSports}/>}
+
+                <div className={"buttons"}>
+                    <div>
+                        <button
+                            onClick={() => {
+                                this.setState({step: 3})
+                            }}
+                            disabled={ this.completeButtonDisabled() }
+                            className={"standard-button"}>
+                            {this.context.t("SETTINGS_BUTTON_COMPLETE")}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>;
 
         return (

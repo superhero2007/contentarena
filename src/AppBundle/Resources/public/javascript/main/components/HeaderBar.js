@@ -144,6 +144,11 @@ class HeaderBar extends  React.Component {
                         <div className="popup">
                             <div className="wrap">
                                 <HeaderBarTab
+                                    route="/preferences"
+                                    className="tab" >
+                                    {this.context.t("HEADER_LINK_PREFERENCES")}
+                                </HeaderBarTab>
+                                <HeaderBarTab
                                     route="/settings"
                                     className="tab" >
                                     {this.context.t("HEADER_LINK_SETTINGS")}

@@ -19,7 +19,7 @@ class Sport
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "settings"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Sport
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "settings"})
      */
     private $name;
 

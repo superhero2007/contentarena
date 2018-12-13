@@ -13,6 +13,7 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Model\User;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
@@ -413,6 +414,30 @@ class EmailService
         }
 
         $this->sendEmails("email/email.seller.listing-deactivated.twig", $subject->getContent(), $recipients, $parameters );
+
+    }
+
+    /**
+     * @param Content $listing
+     * @param User $user
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function listingMatch( Content $listing, User $user){
+
+        $emailContentRepository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $emailContentRepository->findBySlug("email_subject_buyer_listing_match");
+        $content = $emailContentRepository->findBySlug("email_content_buyer_listing_match");
+        $content2 = $emailContentRepository->findBySlug("email_content_buyer_listing_match_2");
+
+        $parameters = array(
+            "content" => $content->getContent(),
+            "content2" => $content2->getContent(),
+            "listing" => $listing,
+            "user" => $user
+        );
+        $this->sendEmail("email/email.buyer.listing-match.twig", $subject->getContent(), $user->getEmail(), $parameters );
 
     }
 

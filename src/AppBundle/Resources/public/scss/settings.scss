@@ -82,6 +82,18 @@
     font-weight: bold;
     line-height: 24px;
   }
+  .big-title{
+    @extend .title;
+    color: #000;
+    font-size: 40px;
+    justify-content: center;
+    margin: 20px 0 10px;
+    line-height: 40px;
+  }
+  .preferences-title{
+    @extend .title;
+    margin-bottom: 10px;
+  }
   .subtitle {
     margin-bottom: 20px;
     font-size: 14px;
@@ -180,7 +192,13 @@
           }
         }
       }
+      .preferences-item{
+        @extend .item;
+        width: 100%;
+        max-width: 800%;
+      }
     }
+
   }
   .password-validation {
     display: flex;
@@ -211,4 +229,9 @@
     margin: 20px;
     flex-direction: column;
   }
+}
+.settings-container-welcome{
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }

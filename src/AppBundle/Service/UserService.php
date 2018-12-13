@@ -57,6 +57,12 @@ class UserService
 
         if ( isset($data['id']) ) {
 
+            $countryRepo = $userStatus = $this->em
+                ->getRepository('AppBundle:Country');
+
+            $sportsRepo = $userStatus = $this->em
+                ->getRepository('AppBundle:Sport');
+
             $user = $this->em
                 ->getRepository('AppBundle:User')
                 ->findOneBy(array('id' => $data['id']));
@@ -70,6 +76,40 @@ class UserService
             if ( isset($data['title']) ) $user->setTitle($data['title']);
             if ( isset($data['email']) ) $user->setEmail($data['email']);
             if ( isset($data['phone']) ) $user->setPhone($data['phone']);
+            if ( isset($data['preferredProfile']) ) $user->setPreferredProfile($data['preferredProfile']);
+            if ( isset($data['preferredSellerAllSports']) ) $user->setPreferredSellerAllSports($data['preferredSellerAllSports']);
+            if ( isset($data['preferredBuyerAllSports']) ) $user->setPreferredBuyerAllSports($data['preferredBuyerAllSports']);
+            if ( isset($data['receivePreferenceNotifications']) ) $user->setReceivePreferenceNotifications($data['receivePreferenceNotifications']);
+
+            if ( isset($data['preferredBuyerCountries']) && is_array($data['preferredBuyerCountries']) ) {
+                $preferredBuyerCountries = [];
+                foreach ($data['preferredBuyerCountries'] as $countryData){
+                    $country = $countryRepo->findOneBy(array("name" => $countryData["name"]));
+                    if ( $country != null) $preferredBuyerCountries[] = $country;
+                }
+                $user->setPreferredBuyerCountries($preferredBuyerCountries);
+            }
+
+            if ( isset($data['preferredSellerSports']) && is_array($data['preferredSellerSports']) ) {
+                $preferredSellerSports = [];
+                foreach ($data['preferredSellerSports'] as $sportData){
+                    $sport = $sportsRepo->findOneBy(array("id" => $sportData["id"]));
+                    if ( $sport != null) $preferredSellerSports[] = $sport;
+                }
+                $user->setPreferredSellerSports($preferredSellerSports);
+            }
+
+            if ( isset($data['preferredBuyerSports']) && is_array($data['preferredBuyerSports']) ) {
+                $preferredBuyerSports = [];
+                foreach ($data['preferredBuyerSports'] as $sportData){
+                    $sport = $sportsRepo->findOneBy(array("id" => $sportData["id"]));
+                    if ( $sport != null) $preferredBuyerSports[] = $sport;
+                }
+                $user->setPreferredBuyerSports($preferredBuyerSports);
+            }
+
+            $user->setPreferredProfile($data['preferredProfile']);
+
             $user->setConfirmationToken(null);
             $user->setEnabled(true);
             $user->setStatus($userStatus);
