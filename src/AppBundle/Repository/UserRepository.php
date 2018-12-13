@@ -48,6 +48,19 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findMatchingTerritoriesAndSportBuyer($territories, $sports)
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.preferredBuyerCountries', 'c')
+            ->innerJoin('u.preferredBuyerSports', 's')
+            ->where('c.id IN (:territories)')
+            ->andWhere('s.id IN (:sports)')
+            ->setParameter('territories',$territories)
+            ->setParameter('sports',$sports)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByRangeAndLastLogin($rangeStart, $rangeEnd, $lastLogin)
     {
         $qb = $this->_em->createQueryBuilder();

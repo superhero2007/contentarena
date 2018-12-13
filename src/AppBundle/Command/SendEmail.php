@@ -9,6 +9,10 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Content;
+use AppBundle\Entity\SalesPackage;
+use AppBundle\Entity\Sport;
+use AppBundle\Entity\User;
+use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\UserService;
 use Gettext\Translations;
@@ -20,6 +24,7 @@ use AppBundle\Repository\UserRepository;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Country;
 
 class SendEmail extends ContainerAwareCommand
 {
@@ -36,11 +41,14 @@ class SendEmail extends ContainerAwareCommand
 
     private $userService;
 
-    public function __construct(EmailService $emailService, UserService $userService)
+    private $contentService;
+
+    public function __construct(EmailService $emailService, UserService $userService, ContentService $contentService)
     {
         parent::__construct();
         $this->emailService = $emailService;
         $this->userService = $userService;
+        $this->contentService = $contentService;
     }
 
     /**
@@ -72,7 +80,7 @@ class SendEmail extends ContainerAwareCommand
         );
         $expiredListings = $listingRepository->getExpiredByDate($user);
         $expireTomorrowListings = $listingRepository->getExpireTomorrow($user);
-        $confirmationUrl = $this->getContainer()->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $confirmationUrl = ($user->getConfirmationToken()) ? $this->getContainer()->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
         $params = array(
             "hostUrl" => $hostUrl,
             "user" => $user,
@@ -133,6 +141,43 @@ class SendEmail extends ContainerAwareCommand
 
             case "listing_deactivated":
                 $this->emailService->listingDeactivated($listing);
+                break;
+
+            case "listing_match":
+                $this->emailService->listingMatch($listing, $user);
+                break;
+
+            case "listing_find_match":
+
+                $territories = array();
+                $sports = array();
+                $listing = $listingRepository->findOneBy(
+                    array('customId'=>"NQM4M")
+                );
+
+                foreach ( $listing->getSalesPackages() as $bundle){
+                    /* @var SalesPackage $bundle */
+                    foreach ( $bundle->getTerritories() as $territory ){
+                        /* @var \AppBundle\Entity\Country $territory */
+                        if ( !in_array($territory->getId(), $territories, TRUE) ) {
+                            $territories[] = $territory->getId();
+                            $output->writeln('Territory: '.$territory->getName() );
+                        }
+                    }
+                }
+
+                foreach ($listing->getSports() as $sport){
+                    /* @var Sport $sport */
+                    $sports[] = $sport->getId();
+                }
+
+
+                $users = $userRepository->findMatchingTerritoriesAndSportBuyer($territories, $sports);
+                foreach ( $users as $user ){
+                    /* @var User $user */
+                    $output->writeln('User: '.$user->getEmail() );
+                }
+
                 break;
 
         }

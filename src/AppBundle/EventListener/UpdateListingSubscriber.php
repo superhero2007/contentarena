@@ -11,6 +11,7 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ListingStatus;
+use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use Doctrine\Common\EventSubscriber;
 // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -24,12 +25,13 @@ class UpdateListingSubscriber implements EventSubscriber
     protected $mailer;
     protected $em;
     protected $container;
+    protected $contentService;
 
-    public function __construct(EmailService $mailer, EntityManager $em, ContainerInterface $container)
+    public function __construct(ContentService $contentService, EmailService $mailer, EntityManager $em, ContainerInterface $container)
     {
         $this->mailer = $mailer;
         $this->em = $em;
-        $this->container = $container;
+        $this->contentService = $contentService;
     }
 
     public function getSubscribedEvents()
@@ -76,6 +78,23 @@ class UpdateListingSubscriber implements EventSubscriber
                 if ( $changed["status"][0]->getName() !== "INACTIVE" && $changed["status"][1]->getName() === "INACTIVE"  ){
                     $this->mailer->listingDeactivated($entity);
                 }
+                if ( $changed["status"][0]->getName() !== "INACTIVE" && $changed["status"][1]->getName() === "INACTIVE"  ){
+                    $this->mailer->listingDeactivated($entity);
+                }
+
+                if ( ($changed["status"][0]->getName() === "DRAFT" || $changed["status"][0]->getName() === "AUTO_INACTIVE" ||  $changed["status"][0]->getName() === "PENDING" )
+                    && $changed["status"][1]->getName() === "APPROVED"  ){
+
+                    $users = $this->contentService->getUsersToNotify($entity);
+
+                    foreach ($users as $user){
+                        $this->mailer->listingMatch($entity, $user);
+                    }
+
+
+                }
+
+
             }
 
         }
