@@ -298,12 +298,12 @@ class AdminController extends BaseAdminController
                         $usersSkippedByError[] = $row;
                     }
 
-
+                    $doctrine->getManager()->flush();
                 } else {
                     $usersSkipped[] = $row;
                 }
             }
-            $doctrine->getManager()->flush();
+
         }
 
         $viewElements = array(
