@@ -11,6 +11,7 @@ import SellForm from "../sell/components/SellForm";
 import TestPage from "./containers/TestPage";
 import Register from "./containers/Register";
 import PublicHeaderBar from "./components/PulbicHeaderBar";
+import Preferences from "../manage/containers/Preferences";
 
 export const routes = [
     {
@@ -93,6 +94,12 @@ export const routes = [
         path: "/settings/:filter?",
         header: HeaderBar,
         main: Settings,
+        updateByPath : true
+    },
+    {
+        path: "/preferences/:mode?",
+        header: HeaderBar,
+        main: Preferences,
         updateByPath : true
     },
     {

@@ -166,6 +166,68 @@ class User extends BaseUser
     protected $registeredAt;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport")
+     * @ORM\JoinTable(name="user_preferred_buyer_sports",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_preferred_buyer_sport_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"commercial", "settings"})
+     */
+    protected $preferredBuyerSports;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport")
+     * @ORM\JoinTable(name="user_preferred_seller_sports",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_preferred_seller_sport_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"commercial", "settings"})
+     */
+    protected $preferredSellerSports;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country")
+     * @ORM\JoinTable(name="user_preferred_buyer_countries",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_preferred_buyer_country_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"commercial", "settings"})
+     */
+    protected $preferredBuyerCountries;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preferred_profile", type="string", nullable=true)
+     * @Groups({"commercial", "settings"})
+     */
+    protected $preferredProfile;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="preferred_seller_all_sports", type="boolean", nullable=true)
+     * @Groups({"commercial", "settings"})
+     */
+    protected $preferredSellerAllSports = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="preferred_buyer_all_sports", type="boolean", nullable=true)
+     * @Groups({"commercial", "settings"})
+     */
+    protected $preferredBuyerAllSports = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="receive_preference_notifications", type="boolean", nullable=true)
+     * @Groups({"commercial", "settings"})
+     */
+    protected $receivePreferenceNotifications = true;
+
+    /**
      * @return mixed
      */
     public function getRegisteredAt()
@@ -483,6 +545,118 @@ class User extends BaseUser
     public function setApplicationCompany($applicationCompany)
     {
         $this->applicationCompany = $applicationCompany;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreferredBuyerSports()
+    {
+        return $this->preferredBuyerSports;
+    }
+
+    /**
+     * @param mixed $preferredBuyerSports
+     */
+    public function setPreferredBuyerSports($preferredBuyerSports)
+    {
+        $this->preferredBuyerSports = $preferredBuyerSports;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreferredSellerSports()
+    {
+        return $this->preferredSellerSports;
+    }
+
+    /**
+     * @param mixed $preferredSellerSports
+     */
+    public function setPreferredSellerSports($preferredSellerSports)
+    {
+        $this->preferredSellerSports = $preferredSellerSports;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPreferredBuyerCountries()
+    {
+        return $this->preferredBuyerCountries;
+    }
+
+    /**
+     * @param mixed $preferredBuyerCountries
+     */
+    public function setPreferredBuyerCountries($preferredBuyerCountries)
+    {
+        $this->preferredBuyerCountries = $preferredBuyerCountries;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreferredProfile()
+    {
+        return $this->preferredProfile;
+    }
+
+    /**
+     * @param string $preferredProfile
+     */
+    public function setPreferredProfile($preferredProfile)
+    {
+        $this->preferredProfile = $preferredProfile;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPreferredSellerAllSports()
+    {
+        return $this->preferredSellerAllSports;
+    }
+
+    /**
+     * @param bool $preferredSellerAllSports
+     */
+    public function setPreferredSellerAllSports($preferredSellerAllSports)
+    {
+        $this->preferredSellerAllSports = $preferredSellerAllSports;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPreferredBuyerAllSports()
+    {
+        return $this->preferredBuyerAllSports;
+    }
+
+    /**
+     * @param bool $preferredBuyerAllSports
+     */
+    public function setPreferredBuyerAllSports($preferredBuyerAllSports)
+    {
+        $this->preferredBuyerAllSports = $preferredBuyerAllSports;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReceivePreferenceNotifications()
+    {
+        return $this->receivePreferenceNotifications;
+    }
+
+    /**
+     * @param bool $receivePreferenceNotifications
+     */
+    public function setReceivePreferenceNotifications($receivePreferenceNotifications)
+    {
+        $this->receivePreferenceNotifications = $receivePreferenceNotifications;
     }
 
 

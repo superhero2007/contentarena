@@ -707,6 +707,10 @@ msgid "HEADER_LINK_MESSAGES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_PREFERENCES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_SETTINGS"
 msgstr ""
 
@@ -1172,6 +1176,22 @@ msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_WELCOME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_WELCOME_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_BUTTON_CONTINUE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_BUTTON_COMPLETE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_TITLE_INFO"
 msgstr ""
@@ -1358,6 +1378,64 @@ msgstr ""
 msgid "Expiry:"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
+msgid "PREFERENCES_SPORT_BUYER_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
+msgid "PREFERENCES_SPORT_BUYER_SUBTITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
+msgid "PREFERENCES_SELECTED_SPORTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
+msgid "PREFERENCES_ALL_SPORTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
+msgid "PREFERENCES_SPORT_SELLER_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
+msgid "PREFERENCES_SPORT_SELLER_SUBTITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
+msgid "PREFERENCES_TERRITORIES_BUYER_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
+msgid "PREFERENCES_TERRITORIES_BUYER_SUBTITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
+msgid "PREFERENCES_TERRITORIES_BUYER_SINGLE_TERRITORY_OPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
+msgid "PREFERENCES_TERRITORIES_BUYER_MULTIPLE_TERRITORY_OPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+msgid "PREFERENCES_PROFILE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+msgid "PREFERENCES_TERRITORIES_PROFILE_BUYER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+msgid "PREFERENCES_TERRITORIES_PROFILE_SELLER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+msgid "PREFERENCES_TERRITORIES_PROFILE_BOTH"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "CLOSED_DEALS_LISTING_NAME"
 msgstr ""
@@ -1529,6 +1607,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/PendingDeals.js
 msgid "PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
+msgid "PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js

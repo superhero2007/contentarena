@@ -35,7 +35,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="register|landing|test|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings"},
+     *     requirements={"reactRouting"="register|landing|test|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage", defaults={"reactRouting": null})
      */
     public function indexAction(Request $request)
@@ -46,7 +46,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="register|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings"},
+     *     requirements={"reactRouting"="register|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      */
     public function indexParamsAction(Request $request)

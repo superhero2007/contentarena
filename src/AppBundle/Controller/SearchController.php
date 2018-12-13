@@ -59,6 +59,27 @@ class SearchController extends BaseController
     }
 
     /**
+     * @Route("/api/search/sports/all", name="getAllSports")
+     */
+    public function getAllSports(Request $request){
+
+        //Take Repositories
+        $repo = $this->getDoctrine()->getRepository("AppBundle:Sport");
+
+        //Get results
+        $tournaments = $repo->findAll();
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($tournaments, 'json',SerializationContext::create());
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
      * @Route("/api/search/countries/all", name="searchAllCountries")
      */
     public function searchAllCountries(Request $request){
