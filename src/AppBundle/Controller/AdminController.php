@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Company;
+use AppBundle\Entity\Sport;
 use AppBundle\Service\FileUploader;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use AppBundle\Entity\User;
@@ -48,7 +49,11 @@ class AdminController extends BaseAdminController
         "Status",
         "Last Login",
         "Date of Creation",
-        "Activation Link"
+        "Activation Link",
+        "Preferred Profile",
+        "Selling Preferred Sports",
+        "Buying Preferred Sports",
+        "Buying Preferred Territories",
     );
 
     public function utilsAction(){
@@ -449,8 +454,36 @@ class AdminController extends BaseAdminController
 
         foreach ( $users as $user ){
 
+            $preferredSellerSports = "";
+            $preferredBuyerSports = "";
+            $preferredBuyerCountries = "";
             $confirmationUrl =  ( $user->getConfirmationToken() != null ) ?
                 $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
+
+            if ($user->getPreferredSellerSports() != null){
+                $preferredSellerSports = array_map(function($obj) {
+                    /* @var Sport $obj */
+                    return $obj->getName();
+                    }, iterator_to_array($user->getPreferredSellerSports()));
+                $preferredSellerSports = implode("- ", $preferredSellerSports);
+            }
+
+            if ($user->getPreferredBuyerSports() != null){
+                $preferredBuyerSports = array_map(function($obj) {
+                    /* @var Sport $obj */
+                    return $obj->getName();
+                }, iterator_to_array($user->getPreferredBuyerSports()));
+                $preferredBuyerSports = implode("- ", $preferredBuyerSports);
+            }
+
+            if ($user->getPreferredBuyerCountries() != null){
+                $preferredBuyerCountries = array_map(function($obj) {
+                    /* @var Sport $obj */
+                    return $obj->getName();
+                }, iterator_to_array($user->getPreferredBuyerCountries()));
+                $preferredBuyerCountries = implode("- ", $preferredBuyerCountries);
+            }
+
 
             /* @var User $user*/
             $rows[] = implode(',', array(
@@ -463,6 +496,10 @@ class AdminController extends BaseAdminController
                 ( $user->getLastLogin() != null ) ? $user->getLastLogin()->format('Y-m-d H:i:s'): "",
                 ( $user->getRegisteredAt() != null ) ? $user->getRegisteredAt()->format('Y-m-d H:i:s'): "",
                 ( $user->getConfirmationToken() != null ) ? $confirmationUrl : "",
+                ( $user->getPreferredProfile() != null ) ? $user->getPreferredProfile() : "",
+                ( $user->getPreferredSellerSports() != null ) ? $preferredSellerSports : "",
+                ( $user->getPreferredBuyerSports() != null ) ? $preferredBuyerSports : "",
+                ( $user->getPreferredBuyerCountries() != null ) ? $preferredBuyerCountries : "",
 
 
             ));
