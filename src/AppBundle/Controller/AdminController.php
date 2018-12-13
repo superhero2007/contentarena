@@ -47,7 +47,8 @@ class AdminController extends BaseAdminController
         "Country",
         "Status",
         "Last Login",
-        "Date of Creation"
+        "Date of Creation",
+        "Activation Link"
     );
 
     public function utilsAction(){
@@ -447,6 +448,10 @@ class AdminController extends BaseAdminController
         $rows[] = implode(',', $this::$EXPORT_DATA);
 
         foreach ( $users as $user ){
+
+            $confirmationUrl =  ( $user->getConfirmationToken() != null ) ?
+                $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
+
             /* @var User $user*/
             $rows[] = implode(',', array(
                 $user->getFirstName(),
@@ -456,7 +461,9 @@ class AdminController extends BaseAdminController
                 $user->getCountry(),
                 ( $user->getStatus() != null ) ? $user->getStatus()->getName() : "",
                 ( $user->getLastLogin() != null ) ? $user->getLastLogin()->format('Y-m-d H:i:s'): "",
-                ( $user->getRegisteredAt() != null ) ? $user->getRegisteredAt()->format('Y-m-d H:i:s'): ""
+                ( $user->getRegisteredAt() != null ) ? $user->getRegisteredAt()->format('Y-m-d H:i:s'): "",
+                ( $user->getConfirmationToken() != null ) ? $confirmationUrl : "",
+
 
             ));
         }
