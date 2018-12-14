@@ -41,11 +41,16 @@ class SellForm extends React.Component {
             showSearch : props.match.params.customId === "new",
             editProgramDescriptionOptional: true
         };
-    }
+    };
 
-    componentDidMount = () =>{
+    componentDidMount = () => {
+        jQuery('body, .marketplace-container').css('background-color', '#eee'); //todo: remove this when other page redesign ready
         this.props.contentListingInit( this.state.content );
-    } ;
+    };
+
+    componentWillUnmount(){
+        jQuery('body, .marketplace-container').removeAttr('style'); //todo: remove this when other page redesign ready
+    };
 
     render() {
         const {history} = this.props;
@@ -55,12 +60,16 @@ class SellForm extends React.Component {
         return (
             <div className="manager-content">
                 <SelectorModal />
-                <SellFormSteps history={history} />
-                <SellFormStep1 history={history} showSearch={this.state.showSearch} />
-                <SellFormStep2 packages={this.props.packages} />
-                <SellFormStep3 packages={this.props.packages} />
-                <SellFormStep4 packages={this.props.packages} />
-                <ReviewAndSign history={history} />
+
+                <div className="sell-form-steps-wrapper">
+                    <SellFormSteps history={history} />
+                    <SellFormStep1 history={history} showSearch={this.state.showSearch} />
+                    <SellFormStep2 packages={this.props.packages} />
+                    <SellFormStep3 packages={this.props.packages} />
+                    <SellFormStep4 packages={this.props.packages} />
+                    <ReviewAndSign history={history} />
+                </div>
+
                 <SellButtons history={history}/>
                 <ReactTooltip html={true} />
             </div>

@@ -1,0 +1,60 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}
+    Import users
+{% endblock %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+
+    <div class="form-group  field-text">
+        {{ form_label(form.csvFile) }}
+        {{ form_errors(form.csvFile) }}
+        {{ form_widget(form.csvFile) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(form.send) }}
+        {{ form_widget(form.send) }}
+        <a class="btn btn-primary action-new" href="/admin/users/import/example" target="_self">
+             Get example file
+        </a>
+    </div>
+
+    {{ form_end(form) }}
+
+    {% if usersProcessed > 0 %}
+        <div><strong>Total users processed: {{ usersProcessed }}</strong></div>
+        </br>
+    {% endif %}
+
+    {% if usersCreated | length > 0 %}
+        <div><strong>Users created: </strong></div>
+        {% for row in usersCreated %}
+            <div>
+                {{ row[0] }} {{ row[1] }} - {{ row[2] }}
+            </div>
+        {% endfor %}
+        </br>
+    {% endif %}
+
+    {% if usersSkipped | length > 0 %}
+        <div> <strong>Users skipped (Already in database): </strong></div>
+        {% for row in usersSkipped %}
+            <div>
+                {{ row[0] }} {{ row[1] }} - {{ row[2] }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if usersSkippedByError | length > 0 %}
+        <div> <strong>Users skipped (Malformed data): </strong></div>
+        {% for row in usersSkippedByError %}
+            <div>
+                {{ row[0] }} {{ row[1] }} - {{ row[2] }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

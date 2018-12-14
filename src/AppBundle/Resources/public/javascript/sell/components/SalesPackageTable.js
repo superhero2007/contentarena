@@ -1,29 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from "react-table";
+import cn from 'classnames';
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import LicenseDownloader from '../../main/components/LicenseDownloader';
-import CustomPagination from '../components/CustomPagination';
 import NumberFormat from 'react-number-format';
 import {getCurrencySymbol} from "../../main/actions/utils";
 
 const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,editSalesPackage,onRemove}, context) => {
-    const defaultItemPerPage = 15;
     return (
         <ReactTable
-            className={"ca-table round-0"}
-            defaultPageSize={defaultItemPerPage}
+            className={cn("ca-table round-0", {showScroll: salesPackages.length > 15})}
+            defaultPageSize={242} // max number of possible Territorial Bundles
             showPageSizeOptions={false}
             noDataText={null}
-            PaginationComponent={CustomPagination}
-            showPagination={salesPackages.length > defaultItemPerPage}
+            showPagination={false}
             minRows={0}
             resizable={false}
             data={salesPackages}
             columns={[
                 {
                     Header: context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
-                    headerClassName: 'table-header-big',
+                    headerClassName: salesPackages.length > 15 ? 'table-header-big scroll' : 'table-header-big',
                     Cell: props => {
                         const salesPackage = props.original;
                         if (salesPackage.sold) return null;

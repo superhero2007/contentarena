@@ -32,10 +32,18 @@ class ContentService
 
     private $fileUploader;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader) {
+    private $emailService;
+
+    public function __construct(
+        EntityManager $entityManager,
+        RandomIdGenerator $idGenerator,
+        FileUploader $fileUploader,
+        EmailService $emailService
+    ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
+        $this->emailService = $emailService;
     }
 
     public function getContent( Request $request){
@@ -284,6 +292,31 @@ class ContentService
 
     }
 
+    public function getUsersToNotify( Content $listing){
+        $territories = array();
+        $sports = array();
+        $userRepository = $this->em->getRepository('AppBundle:User');
+
+        foreach ( $listing->getSalesPackages() as $bundle){
+            /* @var SalesPackage $bundle */
+            foreach ( $bundle->getTerritories() as $territory ){
+                /* @var \AppBundle\Entity\Country $territory */
+                if ( !in_array($territory->getId(), $territories, TRUE) ) {
+                    $territories[] = $territory->getId();
+                }
+            }
+        }
+
+        foreach ($listing->getSports() as $sport){
+            /* @var Sport $sport */
+            $sports[] = $sport->getId();
+        }
+
+        $users = $userRepository->findMatchingTerritoriesAndSportBuyer($territories, $sports);
+        return $users;
+
+    }
+
     /**
      * @param User $user
      * @param Request $request
@@ -307,7 +340,7 @@ class ContentService
             $newStatus = "EDITED";
             $lastAction = "EDITED";
         }
-        
+
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=> $newStatus)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
         $content->setLastActionUser($user);
@@ -369,6 +402,12 @@ class ContentService
         $currentStatus = $content->getStatus();
         $newStatus = ($user->isAutoPublish()) ? "APPROVED": "PENDING";
         $lastAction = "SUBMITTED";
+
+        if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
+                || $currentStatus->getName() === 'EDITED' ) ){
+            $newStatus = "EDITED";
+            $lastAction = "EDITED";
+        }
 
         if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
                 || $currentStatus->getName() === 'EDITED' ) ){
@@ -1004,9 +1043,9 @@ class ContentService
 
     private function getCurrency($currency){
 
-            return $this->em
-                ->getRepository('AppBundle:Currency')
-                ->findOneBy(array('code' => $currency));
+        return $this->em
+            ->getRepository('AppBundle:Currency')
+            ->findOneBy(array('code' => $currency));
     }
 
     private function getSalesMethod($method){

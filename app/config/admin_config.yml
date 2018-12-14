@@ -4,7 +4,12 @@ easy_admin:
         menu:
             - Content
             - label: 'User Information'
-              children: ['User', 'Company', 'Status']
+              children:
+                  - User
+                  - Company
+                  - Status
+                  - {label: 'Import', icon: 'file-new', route: 'importUsersPage'}
+                  - {label: 'Export', icon: 'file-new', route: 'exportUsersPage'}
             - Deals
             - RightsPackage
             - label: 'Sports'
@@ -46,6 +51,10 @@ easy_admin:
                         - { property: 'country' }
                         - { property: 'company' }
                         - { property: 'applicationCompany' }
+                        - { property: 'preferredProfile' }
+                        - { property: 'preferredBuyerCountries' }
+                        - { property: 'preferredBuyerSports' }
+                        - { property: 'preferredSellerSports' }
                         #- { property: 'confirmationToken', label: 'Activation Code' }
                         - { property: 'confirmationToken', template: ':easy_admin:activation.code.list.html.twig', base_path: '%carena_host_url%' }
                         - { property: 'autoPublish' }
@@ -60,6 +69,10 @@ easy_admin:
                         - { property: 'country' }
                         - { property: 'company' }
                         - { property: 'applicationCompany' }
+                        - { property: 'preferredProfile' }
+                        - { property: 'preferredBuyerCountries' }
+                        - { property: 'preferredBuyerSports' }
+                        - { property: 'preferredSellerSports' }
                         - { property: 'confirmationToken', label: 'Activation Code' }
                         #- { property: 'confirmationToken', template: ':easy_admin:activation.code.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'autoPublish' }

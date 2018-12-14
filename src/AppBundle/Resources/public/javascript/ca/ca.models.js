@@ -89,9 +89,6 @@ $(function () {
         this.installments = {};
 
         this.getTitle = () => {
-
-            console.log(this);
-
             var title = "";
 
             if ( this.sports.length > 0 ){

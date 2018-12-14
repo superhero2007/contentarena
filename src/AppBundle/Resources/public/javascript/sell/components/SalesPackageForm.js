@@ -348,7 +348,6 @@ class SalesPackageForm extends React.Component {
     };
 
     renderModal = () => {
-
         const {onClose, exclusivity, salesPackages, currency} = this.props;
         const {territoriesQuantity, territoriesMethod, territories} = this.state;
 
@@ -519,7 +518,7 @@ class SalesPackageForm extends React.Component {
                         <div style={{padding: '10px 18px 0px', fontSize: '14px'}}>
                             {this.context.t("CL4_TERRITORIES_BUNDLE_PAYMENT_INFO")}
                         </div>
-                        { this.state.installments.map( (installment, i, list) => {
+                        {this.state.installments.map( (installment, i, list) => {
                             return <div className="content">
                                 <div className={"item"} style={{
                                     marginRight: 55,
@@ -599,11 +598,9 @@ class SalesPackageForm extends React.Component {
                     onClick={this.applySelection}>Ok</button>
             </div>
         </Modal>
-
     };
 
     territoriesIncomplete = () => {
-
         const {territoriesMethod, territories} = this.state;
 
         if ( territoriesMethod === this.selectedTerritories && territories.length === 0 ) return true;

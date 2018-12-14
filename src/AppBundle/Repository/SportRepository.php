@@ -21,4 +21,9 @@ class SportRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    public function findAll()
+    {
+        return $this->findBy(array(), array('name' => 'ASC'));
+    }
 }

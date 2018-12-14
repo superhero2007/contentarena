@@ -28,7 +28,7 @@
 
         .no-border, .no-border td{
             border: none;
-            padding: 0px;
+            padding: 0;
         }
         .license-item-column{
             flex: 1;
@@ -36,7 +36,12 @@
 
         .license-title{
             text-align: center;
-            font-size: 150%;
+            font-size: 170%;
+        }
+
+        .license-sub-title{
+            text-align: center;
+            font-size: 140%;
         }
 
         .license-item-title{
@@ -83,6 +88,8 @@
 <body class="license {% if watermark %}watermark{% endif %}">
 <div class="license-content">
     <div class="license-title">LICENSE AGREEMENT</div>
+
+    <div class="license-sub-title">Schedule</div>
 
     {# DATE #}
     <div class="license-item">
