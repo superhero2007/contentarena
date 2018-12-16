@@ -18,7 +18,7 @@ class PreferredTerritoriesBuyer extends React.Component {
     componentWillReceiveProps (nextProps) {
         if (nextProps.territories){
             this.setState({
-                isMultipleEnabled : nextProps.territories.length > 1,
+                //isMultipleEnabled : nextProps.territories.length > 1,
                 territories : nextProps.territories.map(t=>({value : t.name , label : t.name }))
             });
         }
@@ -93,6 +93,8 @@ class PreferredTerritoriesBuyer extends React.Component {
                             onChange={this.setTerritories}
                             onSelectRegion={(c) =>{ }}
                             value={territories}
+                            multiple={true}
+                            worldwide={true}
                             filter={[]}
                             exclusiveSoldTerritories={ false}
                         />}

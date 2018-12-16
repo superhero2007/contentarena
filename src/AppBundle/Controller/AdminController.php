@@ -30,14 +30,18 @@ class AdminController extends BaseAdminController
     use \AppBundle\Helper\EmailHelper;
 
     static $IMPORT_DATA = array(
-        "First Name",
-        "Last Name",
-        "Email",
-        "Company",
-        "Profile",
-        "Country",
-        "Auto Publish",
-        "Status"
+        "First Name", //0
+        "Last Name", //1
+        "Email", //2
+        "Company", //3
+        "Profile", //4
+        "Country", //5
+        "Auto Publish", //6
+        "Status", //7
+        "Preferred Profile", //8
+        "Selling Preferred Sports", //9
+        "Buying Preferred Sports", //10
+        "Buying Preferred Territories", //11
     );
 
     static $EXPORT_DATA = array(
@@ -234,6 +238,8 @@ class AdminController extends BaseAdminController
         $repo = $doctrine->getRepository('AppBundle:User');
         $userStatusRepo = $doctrine->getRepository('AppBundle:UserStatus');
         $companyRepo = $doctrine->getRepository('AppBundle:Company');
+        $sportsRepo = $doctrine->getRepository('AppBundle:Sport');
+        $countryRepo = $doctrine->getRepository('AppBundle:Country');
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $user = $this->getUser();
         $now = new \DateTime();
@@ -286,6 +292,43 @@ class AdminController extends BaseAdminController
                         $user->setConfirmationToken($tokenGenerator->generateToken());
                         $user->setRegisteredAt($now);
                         if ($row[7] != null ) $user->setStatus($userStatusRepo->findByName($row[7]));
+                        if ($row[8] != null ) $user->setPreferredProfile(($row[8]));
+                        if ($row[9] != null ) {
+                            if ($row[9] === "All"){
+                                $user->setPreferredSellerAllSports(true);
+                            } else {
+
+                                $sports = explode("-", $row[9]);
+                                $sportsObj = array();
+                                foreach ($sports as $sport){
+                                    $sportObj = $sportsRepo->findOneBy(array("name" => trim($sport)));
+                                    if ( $sportObj != null ) $sportsObj[] = $sportObj;
+                                }
+                                $user->setPreferredSellerSports($sportsObj);
+                            }
+                        }
+                        if ($row[10] != null ) {
+                            if ($row[10] === "All"){
+                                $user->setPreferredBuyerAllSports(true);
+                            } else {
+                                $sports = explode("-", $row[10]);
+                                $sportsObj = array();
+                                foreach ($sports as $sport){
+                                    $sportObj = $sportsRepo->findOneBy(array("name" => trim($sport)));
+                                    if ( $sportObj != null ) $sportsObj[] = $sportObj;
+                                }
+                                $user->setPreferredBuyerSports($sportsObj);
+                            }
+                        }
+                        if ($row[11] != null ) {
+                            $countries = explode("-", $row[11]);
+                            $sportsObj = array();
+                            foreach ($countries as $sport){
+                                $sportObj = $countryRepo->findOneBy(array("name" => trim($sport)));
+                                if ( $sportObj != null ) $sportsObj[] = $sportObj;
+                            }
+                            $user->setPreferredBuyerCountries($sportsObj);
+                        }
                         if ( $row[3] ){
                             $company = $companyRepo->findOneBy( array( "legalName" => $row[3] ) );
                             if ($company != null){
@@ -387,18 +430,7 @@ class AdminController extends BaseAdminController
      */
     public function importUsersExample( ){
 
-        $data = array(
-            "First Name" ,
-            "Last Name",
-            "Email",
-            "Company",
-            "Profile",
-            "Country",
-            "Auto Publish",
-            "Status");
-
-        //$response = $this->render('users/import.example.html.twig',array( "data" => $data ));
-        $rows[] = implode(',', $data);
+        $rows[] = implode(',', $this::$IMPORT_DATA);
         $content = implode("\n", $rows);
         $response = new Response($content);
 
@@ -453,14 +485,14 @@ class AdminController extends BaseAdminController
         $rows[] = implode(',', $this::$EXPORT_DATA);
 
         foreach ( $users as $user ){
-
+            /* @var User $user */
             $preferredSellerSports = "";
             $preferredBuyerSports = "";
             $preferredBuyerCountries = "";
             $confirmationUrl =  ( $user->getConfirmationToken() != null ) ?
                 $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
 
-            if ($user->getPreferredSellerSports() != null){
+            if ($user->getPreferredSellerSports() != null && !$user->isPreferredSellerAllSports()){
                 $preferredSellerSports = array_map(function($obj) {
                     /* @var Sport $obj */
                     return $obj->getName();
@@ -468,7 +500,11 @@ class AdminController extends BaseAdminController
                 $preferredSellerSports = implode("- ", $preferredSellerSports);
             }
 
-            if ($user->getPreferredBuyerSports() != null){
+            if ($user->isPreferredSellerAllSports()){
+                $preferredSellerSports = "All";
+            }
+
+            if ($user->getPreferredBuyerSports() != null && !$user->isPreferredBuyerAllSports() ){
                 $preferredBuyerSports = array_map(function($obj) {
                     /* @var Sport $obj */
                     return $obj->getName();
@@ -476,7 +512,11 @@ class AdminController extends BaseAdminController
                 $preferredBuyerSports = implode("- ", $preferredBuyerSports);
             }
 
-            if ($user->getPreferredBuyerCountries() != null){
+            if ( $user->isPreferredBuyerAllSports() ){
+                $preferredBuyerSports = "All";
+            }
+
+            if ($user->getPreferredBuyerCountries() != null ){
                 $preferredBuyerCountries = array_map(function($obj) {
                     /* @var Sport $obj */
                     return $obj->getName();

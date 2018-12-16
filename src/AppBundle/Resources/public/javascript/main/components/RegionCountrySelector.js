@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import CountrySelector from "./CountrySelector";
+import cn from "classnames";
 
 class RegionCountrySelector extends React.Component {
 
@@ -11,7 +12,10 @@ class RegionCountrySelector extends React.Component {
             selection: props.value,
             territories : [],
             regions: [],
-            activeTerritory : null
+            activeTerritory : null,
+            activeRegions : [],
+            activeTerritories : [],
+            worldwideSelected : false
         };
     }
 
@@ -48,23 +52,62 @@ class RegionCountrySelector extends React.Component {
         const {
             filter = [],
             onChange,
-            onSelectRegion
+            onSelectRegion,
+            multiple
         } = this.props;
         const {countries} = this.state;
-        let selection = countries.filter(c=>c.territoryId === region.id && filter.indexOf(c.name) === -1).map((i,k)=>({value : i.name , label : i.name }));
-        this.setState({ selection });
+        let activeRegions = this.state.activeRegions,
+            activeTerritories = this.state.activeTerritories,
+            worldwideSelected = this.state.worldwideSelected,
+            index,
+            selection;
+
+        if ( multiple ){
+            index = activeTerritories.indexOf(region.id);
+
+            if (  index === -1 ){
+                activeTerritories.push(region.id);
+            } else {
+                activeTerritories.splice(index, 1);
+            }
+            worldwideSelected = false;
+            selection = countries.filter(c=> ( this.countryHasRegions( c,activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1 ) && filter.indexOf(c.name) === -1);
+        } else {
+            selection = countries.filter(c=>c.territoryId === region.id && filter.indexOf(c.name) === -1);
+        }
+
+        selection = selection.map((i,k)=>({value : i.name , label : i.name }));
+
+        this.setState({ selection, activeTerritories, worldwideSelected });
         if (onChange) onChange(selection);
-        if (onSelectRegion) onSelectRegion(region, selection)
+        if (onSelectRegion) onSelectRegion(region, selection);
     }
 
     selectWorldwide = () => {
         const {
-            onChange
+            onChange,
+            multiple
         } = this.props;
         const {countries} = this.state;
+        let activeRegions = this.state.activeRegions,
+            activeTerritories = this.state.activeTerritories,
+            worldwideSelected = this.state.worldwideSelected;
+
         let selection = countries.map((i,k)=>({value : i.name , label : i.name }));
-        this.setState({ selection });
+
+        if ( multiple ){
+            activeRegions = [];
+            activeTerritories = [];
+            worldwideSelected = true
+        }
+
+        this.setState({ selection, activeRegions, activeTerritories, worldwideSelected });
         if (onChange) onChange(selection);
+    };
+
+    countryHasRegions = (country, regions) => {
+        regions = regions.filter(r=> country.regions.indexOf(r) !== -1);
+        return regions.length > 0;
     };
 
     selectRegion = (region) => {
@@ -72,13 +115,33 @@ class RegionCountrySelector extends React.Component {
         const {
             filter = [],
             onChange,
-            onSelectRegion
+            onSelectRegion,
+            multiple
         } = this.props;
-        let selection = countries.filter(c=>c.regions.indexOf(region.id) !== -1 && filter.indexOf(c.name) === -1).map((i,k)=>({value : i.name , label : i.name }));
-        this.setState({ selection });
+        let activeRegions = this.state.activeRegions,
+            activeTerritories = this.state.activeTerritories,
+            worldwideSelected = this.state.worldwideSelected,
+            index,
+            selection;
+
+        if ( multiple ){
+            index = activeRegions.indexOf(region.id);
+
+            if (  index === -1 ){
+                activeRegions.push(region.id);
+            } else {
+                activeRegions.splice(index, 1);
+            }
+            worldwideSelected = false;
+            selection = countries.filter( c=> ( this.countryHasRegions( c,activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1 ) && filter.indexOf(c.name) === -1);
+        } else {
+            selection = countries.filter(c=>c.regions.indexOf(region.id) !== -1 && filter.indexOf(c.name) === -1);
+        }
+        selection = selection.map((i,k)=>({value : i.name , label : i.name }));
+        this.setState({ selection, activeRegions, worldwideSelected });
         if (onChange) onChange(selection);
         if (onSelectRegion) onSelectRegion(region, selection)
-    }
+    };
 
     handleChange = (selection) => {
 
@@ -99,7 +162,7 @@ class RegionCountrySelector extends React.Component {
             worldwide
         } = this.props;
 
-        const {territories, regions} = this.state;
+        const {territories, regions, activeTerritories, activeRegions, worldwideSelected} = this.state;
         const {exclusiveSoldTerritories} = this.props;
 
         return (
@@ -107,7 +170,10 @@ class RegionCountrySelector extends React.Component {
                 { !disabled && <div>
                     <div className="regions">
                         {territories.map((territory,i)=>{
-                            return <button className={"region"}
+                            return <button className={cn({
+                                               "region" : true,
+                                                'region-selected': activeTerritories.indexOf(territory.id) !== -1
+                                            })}
                                            key={"territory-" + i}
                                            onClick={()=>{
                                                this.selectTerritory(territory)
@@ -115,13 +181,20 @@ class RegionCountrySelector extends React.Component {
                                 {territory.name}
                             </button>
                         })}
-                        {worldwide && <button className={"region"} onClick={this.selectWorldwide}>
+                        {worldwide && <button className={cn({
+                                                    "region" : true,
+                                                    'region-selected': worldwideSelected
+                                                })}
+                                              onClick={this.selectWorldwide}>
                             Worldwide
                         </button>}
                     </div>
                     <div className="regions">
                         {regions.map((region,i)=>{
-                            return <button className={"region"}
+                            return <button className={cn({
+                                                "region" : true,
+                                                'region-selected': activeRegions.indexOf(region.id) !== -1
+                                            })}
                                            key={"region-" + i}
                                            onClick={()=>{
                                                this.selectRegion(region)
