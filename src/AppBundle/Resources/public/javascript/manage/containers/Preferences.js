@@ -122,16 +122,6 @@ class Preferences extends React.Component {
 
                     <div className={"buttons"}>
                         <div>
-                           {/* <button
-                                onClick={() => {
-                                    this.setState({
-                                        user: { ...this.originalUser },
-                                        editPersonalInfo: false
-                                    });
-
-                                }}
-                                className={"cancel-button"}>Cancel
-                            </button>*/}
                             <button
                                 onClick={this.saveUser}
                                 disabled={ updatingUser }

@@ -39,7 +39,7 @@ class ChatMessage extends Component {
                     {message.content}
                 </div>}
                 {message.attachment &&
-                <a className="attachment-uploader attachment-uploader-file" href={message.content} download={message.fileName}>
+                <a className="attachment-uploader attachment-uploader-file" href={hosturl + message.content} download={message.fileName}>
                     <div className="attachment-uploader-extension">{message.fileExtension}</div>
                     <div className="attachment-uploader-name">{message.fileName}</div>
                     <div className="attachment-uploader-name"> . </div>

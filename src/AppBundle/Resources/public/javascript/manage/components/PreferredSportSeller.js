@@ -52,7 +52,7 @@ class PreferredSportSeller extends React.Component {
                                        checked={allSports === false}
                                        style={{marginRight:5, width: 20,padding: 0}}
                                 />
-                                {this.context.t('PREFERENCES_SELECTED_SPORTS')}
+                                {this.context.t('PREFERENCES_SELLER_SELECTED_SPORTS')}
                             </div>
                             <div className={cn({
                                 'font-weight-bold': allSports === true,
@@ -65,7 +65,7 @@ class PreferredSportSeller extends React.Component {
                                        checked={allSports === true}
                                        style={{marginRight:5, width: 20,padding: 0}}
                                 />
-                                {this.context.t('PREFERENCES_ALL_SPORTS')}
+                                {this.context.t('PREFERENCES_SELLER_ALL_SPORTS')}
                             </div>
                         </div>
                     </div>
