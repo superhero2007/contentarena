@@ -1387,13 +1387,11 @@ msgid "PREFERENCES_SPORT_BUYER_SUBTITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
-msgid "PREFERENCES_SELECTED_SPORTS"
+msgid "PREFERENCES_BUYER_SELECTED_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
-msgid "PREFERENCES_ALL_SPORTS"
+msgid "PREFERENCES_BUYER_ALL_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
@@ -1404,12 +1402,16 @@ msgstr ""
 msgid "PREFERENCES_SPORT_SELLER_SUBTITLE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
-msgid "PREFERENCES_TERRITORIES_BUYER_TITLE"
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
+msgid "PREFERENCES_SELLER_SELECTED_SPORTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
+msgid "PREFERENCES_SELLER_ALL_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
-msgid "PREFERENCES_TERRITORIES_BUYER_SUBTITLE"
+msgid "PREFERENCES_TERRITORIES_BUYER_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
