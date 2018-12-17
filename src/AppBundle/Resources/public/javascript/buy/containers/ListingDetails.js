@@ -30,6 +30,7 @@ import RightsLegend from "../../main/components/RightsLegend";
 import GeneralTerms from "../../main/components/GeneralTerms";
 import NumberFormat from 'react-number-format';
 import EditButton from "../components/EditButton";
+import {goToStep, scrollTopMainContent} from "../../sell/actions/contentActions";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -101,7 +102,7 @@ class ListingDetails extends React.Component {
     };
 
     selectPackage = ( selectedPackage, customId ) => {
-        const { history } = this.props;
+        const { history, scrollTopMainContent } = this.props;
 
         history.push('/listing/'+customId+'/checkout/'+selectedPackage.id);
         this.setState({
@@ -110,6 +111,8 @@ class ListingDetails extends React.Component {
             bid: selectedPackage.fee,
             minimumBid : selectedPackage.fee
         })
+
+        scrollTopMainContent();
     };
 
     ordinal_suffix_of = (i) => {
@@ -915,7 +918,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onClick: id => dispatch(test(id))
+        onClick: id => dispatch(test(id)),
+        scrollTopMainContent : () => dispatch(scrollTopMainContent()),
     }
 };
 
