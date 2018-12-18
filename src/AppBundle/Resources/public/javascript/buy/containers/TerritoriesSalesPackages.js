@@ -13,7 +13,7 @@ class TerritoriesSalesPackages extends PureComponent {
             installments : []
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
-        this.packageIcon = assetsBaseDir + "app/images/bid.png";
+        this.packageIcon = assetsBaseDir + "app/images/package.svg";
     }
 
     getFee = (salesPackage) => {

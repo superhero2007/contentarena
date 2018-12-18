@@ -3,7 +3,6 @@ export const getCurrencySymbol = code => {
 };
 
 export const goTo = (route, openNew) => {
-
     if (openNew) {
         window.open(envhosturl + route, "_blank");
     } else {

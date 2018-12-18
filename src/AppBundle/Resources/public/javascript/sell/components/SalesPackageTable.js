@@ -28,6 +28,7 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                         let extraTerritories = (salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
                         return (
                             <div className="d-flex align-items-center">
+                                <img src={assetsBaseDir + "app/images/package.svg"} style={{marginRight: 5}} />
                                 {salesPackage.name}
                                 {extraTerritories && extraTerritories.length > 3 && (
                                     <div style={{marginLeft: 5}}>
