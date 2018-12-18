@@ -168,7 +168,7 @@ class HeaderBar extends  React.Component {
         const { profile } = this.props;
 
         if (profile === "SELLER") {
-            return "managelistings";
+            return "marketplace";
         } else {
             return "marketplace";
         }
