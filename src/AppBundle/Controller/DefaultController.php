@@ -57,7 +57,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
-     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialoverview"},
+     *     requirements={"reactRouting"="register|marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      */
     public function indexParams2Action(Request $request)

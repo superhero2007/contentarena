@@ -283,16 +283,16 @@ class AdminController extends BaseAdminController
                     try {
                         $usersCreated[] = $row;
                         $user = new User();
-                        $user->setFirstName($row[0]);
-                        $user->setLastName($row[1]);
-                        $user->setEmail($row[2]);
-                        $user->setProfile($row[4]);
+                        $user->setFirstName(trim($row[0]));
+                        $user->setLastName(trim($row[1]));
+                        $user->setEmail(trim($row[2]));
+                        $user->setProfile(trim($row[4]));
                         $user->setCountry($row[5]);
-                        $user->setAutoPublish($row[6]);
+                        $user->setAutoPublish(trim($row[6]));
                         $user->setConfirmationToken($tokenGenerator->generateToken());
                         $user->setRegisteredAt($now);
                         if ($row[7] != null ) $user->setStatus($userStatusRepo->findByName($row[7]));
-                        if ($row[8] != null ) $user->setPreferredProfile(($row[8]));
+                        if ($row[8] != null ) $user->setPreferredProfile(trim($row[8]));
                         if ($row[9] != null ) {
                             if ($row[9] === "All"){
                                 $user->setPreferredSellerAllSports(true);

@@ -12,6 +12,7 @@ import PreferredUserProfile from "../../manage/components/PreferredUserProfile";
 import PreferredSportSeller from "../../manage/components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../../manage/components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../../manage/components/PreferredSportBuyer";
+import ReactTooltip from "react-tooltip";
 
 class Register extends React.Component {
 
@@ -22,37 +23,74 @@ class Register extends React.Component {
             updatingUser : false,
             editCompanyInfo : false,
             user : {},
-            step: 1
+            step: "welcome"
         };
     }
 
     componentDidMount () {
         this.setState({loading:true});
 
-        const { match } = this.props;
+        const { history, match } = this.props;
 
         let activationCode = match.params.activationCode;
+        let step = match.params.step;
+        let sessionUser = this.getUserObj();
 
-        ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done(user=>{
-            if (user) {
-                user.activationCode = activationCode;
-                if (!user.company) {
-                    user.company = {country:{}};
+        //Redirect to welcome step if none
+        if (!step) {
+            history.push( "/register/" + activationCode + "/welcome" );
+            return;
+        }
+
+        if ( (step === "welcome" && !sessionUser) || sessionUser.activationCode !== activationCode ){
+            ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done(user=>{
+                if (user) {
+                    user.activationCode = activationCode;
+                    if (!user.company) {
+                        user.company = {country:{}};
+                    }
                 }
-            }
+                this.storeUserObj(user);
+                this.setState({
+                    loading:false,
+                    user : user,
+                    step : step
+                });
+            });
+        } else {
             this.setState({
                 loading:false,
-                user : user,
+                user: sessionUser,
+                step : step
             });
-        });
-
+        }
     }
+
+    /**
+     * Saves user object in session storage. Object must be converted to string
+     * @param user
+     */
+    storeUserObj = (user) => {
+        sessionStorage.setItem('registering_user', JSON.stringify(user));
+    };
+
+    /**
+     * Gets user object from session storage
+     * @returns {*}
+     */
+    getUserObj = () => {
+
+        let user = sessionStorage.getItem('registering_user');
+        if (!user) return user;
+        return JSON.parse(user);
+    };
 
     updateInfo = () => {
 
         const {user, password} = this.state;
         this.setState({updatingUser:true});
         ContentArena.ContentApi.activateUser(user, password).done(()=>{
+            sessionStorage.setItem('registering_user', null);
             this.setState({updated:true, updatingUser:false});
         })
     };
@@ -117,6 +155,7 @@ class Register extends React.Component {
     updateUser = (prop, value) => {
         let user  = this.state.user;
         user[prop] = value;
+        this.storeUserObj(user);
         this.setState({user});
 
     };
@@ -125,6 +164,7 @@ class Register extends React.Component {
         let user  = this.state.user;
         user.preferredSellerSports = sports;
         user.preferredSellerAllSports = allSports;
+        this.storeUserObj(user);
         this.setState({user});
     };
 
@@ -132,6 +172,7 @@ class Register extends React.Component {
         let user  = this.state.user;
         user.preferredBuyerSports = sports;
         user.preferredBuyerAllSports = allSports;
+        this.storeUserObj(user);
         this.setState({user});
     };
 
@@ -144,12 +185,17 @@ class Register extends React.Component {
                 && ( !user.preferredSellerAllSports && user.preferredSellerSports.length === 0) )
     };
 
+    goToNextStep = ( step ) => {
+        const {history, match} = this.props;
+        let activationCode = match.params.activationCode;
+        history.push( "/register/" + activationCode + "/" + step );
+    };
+
     render () {
 
-        const {history, match, location, common} = this.props;
-
-
+        const {match, location, common} = this.props;
         const { loading, updatingUser, password, updated, terms, privacy, passwordCheck, step } = this.state;
+
         let user = this.state.user;
         let activationCode = match.params.activationCode;
         let country = (user && user.company && user.company.country) ? {label: user.company.country.name, value: user.company.country.name} : null;
@@ -170,7 +216,7 @@ class Register extends React.Component {
         </div>;
 
 
-        if ( step === 1 ) return <div className="settings-container settings-container-welcome">
+        if ( step === "welcome" ) return <div className="settings-container settings-container-welcome">
 
             <div className={"big-title"}>
                 {this.context.t("SETTINGS_WELCOME")}
@@ -187,7 +233,7 @@ class Register extends React.Component {
                     <div>
                         <button
                             onClick={() => {
-                                this.setState({step: 2})
+                                this.goToNextStep("questionnaire")
                             }}
                             disabled={ updatingUser }
                             className={"standard-button"}>
@@ -199,7 +245,7 @@ class Register extends React.Component {
 
         </div>;
 
-        if ( step === 2 ) return <div className="settings-container">
+        if ( step === "questionnaire" ) return <div className="settings-container">
 
             <div className={"setting"}>
                 {user.preferredProfile !== "BUYER" &&
@@ -220,7 +266,7 @@ class Register extends React.Component {
                     <div>
                         <button
                             onClick={() => {
-                                this.setState({step: 3})
+                                this.goToNextStep("wall")
                             }}
                             disabled={ this.completeButtonDisabled() }
                             className={"standard-button"}>

@@ -47,6 +47,13 @@ export const routes = [
         isPublic : true
     },
     {
+        path: "/register/:activationCode/:step?",
+        updateByPath: true,
+        header: PublicHeaderBar,
+        main: Register,
+        isPublic : true
+    },
+    {
         path: "/marketplace/filter/:filterName/:filterValue?",
         header: HeaderBar,
         main: Marketplace,
