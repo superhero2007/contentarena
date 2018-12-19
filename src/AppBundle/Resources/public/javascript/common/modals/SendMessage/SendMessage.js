@@ -57,7 +57,6 @@ class SendMessage extends Component {
         return <Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle}>
             <header className="modal-header">
                 <h3 className="modal-title">{title}</h3>
-                <i className="fa fa-times" onClick={onCloseModal} />
             </header>
             <section className="modal-body">
                 {!isLoading && !isFail && !isSuccess && <textarea

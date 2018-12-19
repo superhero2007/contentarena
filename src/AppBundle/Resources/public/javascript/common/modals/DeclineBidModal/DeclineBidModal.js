@@ -39,7 +39,6 @@ class DeclineBidModal extends Component {
         return <Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle}>
             <header className="modal-header">
                 <h3 className="modal-title">{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REJECT")}</h3>
-                <i className="fa fa-times" onClick={onCloseModal} />
             </header>
             <section className="modal-body">
                 {!isLoading && !isFail && <textarea

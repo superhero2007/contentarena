@@ -65,7 +65,7 @@ class SelectorModal extends Component {
     };
 
     closeModal = () => {
-        this.setState({ updated: false, filterUpdated : false, customCountry :false });
+        this.setState({ updated: false, filterUpdated : false, customCountry : false });
         this.props.closeSelector();
     };
 
@@ -299,7 +299,6 @@ class SelectorModal extends Component {
         return <Modal
             isOpen={open}
             className="modal-wrapper wide"
-            onRequestClose={this.closeModal}
             style={GenericModalStyle}
         >
             <header className="modal-header selection-header">
@@ -310,7 +309,6 @@ class SelectorModal extends Component {
 
                 <div className="title-right">
                     {this.getRightHeaderBtn()}
-                    <i className="fa fa-times" onClick={this.closeModal} />
                 </div>
             </header>
             <section className="modal-body selection-body">
@@ -364,7 +362,7 @@ class SelectorModal extends Component {
             </footer>
         </Modal>
     };
-};
+}
 
 const mapStateToProps = ( state ) => {
     return state.selector
