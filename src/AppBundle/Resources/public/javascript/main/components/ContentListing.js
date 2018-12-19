@@ -150,7 +150,8 @@ class ContentListing extends Component{
             status,
             declined,
             onDelete,
-            customId
+            customId,
+            nameCursor = 'pointer'
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
 
@@ -173,7 +174,7 @@ class ContentListing extends Component{
                 </div>
                 <div className={"right"} >
                     <div className="name-wrapper">
-                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"ca-title text-truncate small"} style={{cursor: "pointer"}} onClick={() => { if (onSelectName) onSelectName() }}>
+                        { (!checkExpired || status.name === "EDITED" || status.name === "APPROVED"  ) && <div className={"ca-title text-truncate small"} style={{cursor: nameCursor}} onClick={() => { if (onSelectName) onSelectName() }}>
                             {name}
                         </div>}
 

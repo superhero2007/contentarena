@@ -221,7 +221,7 @@ class ReviewAndSign extends React.Component {
                     </div>
 
                     <div onClick={(e) => {e.preventDefault()}}>
-                        <ContentListing {...this.props} />
+                        <ContentListing {...this.props} nameCursor={"normal"} />
                     </div>
 
                     <div className="d-flex justify-content-between align-items-center"  style={{marginBottom: 20}}>
