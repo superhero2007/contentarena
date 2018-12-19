@@ -898,11 +898,10 @@ button {
     }
     .currency-selector {
       .current {
-        padding: 6px 30px;
+        padding: 4px 16px 3px;
         width: 100px;
-        text-align: center;
         border: 1px solid #DADADA;
-        margin-top: 1px;
+        text-align: right;
       }
       .dropdown {
         right: 0;
@@ -911,7 +910,7 @@ button {
         display: none;
         width: 100px;
         .currency-item {
-          padding: 7px 0;
+          padding: 5px 5px 5px 0;
           color: #000;
           background: #FFFFFF;
           border: 1px solid #DADADA;

@@ -21,7 +21,7 @@ class CurrencySelector extends React.Component {
                     {this.context.t("Currency")}
                 </div>
                 <div className='currency-selector'>
-                    <div className='current'>{selected}</div>
+                    <div className='current'>{selected}<i className="fa fa-angle-down" /></div>
                     <div className='dropdown'>
                         {CURRENCIES.filter(currency => currency !== selected).map((currency) => {
                             return (
