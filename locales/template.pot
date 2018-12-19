@@ -2197,3 +2197,51 @@ msgstr ""
 msgid "CL_STEP2_RIGHT_DEFINITIONS_"
 msgstr ""
 
+#: validation
+msgid "LAW_EMPTY"
+msgstr ""
+
+msgid "COMPANY_INFORMATION_EMPTY"
+msgstr ""
+
+msgid "LICENSE_NOT_CHECKED"
+msgstr ""
+
+msgid "TERMS_NOT_CHECKED"
+msgstr ""
+
+msgid "SIGNATURE_NAME_EMPTY"
+msgstr ""
+
+msgid "SIGNATURE_POSITION_EMPTY"
+msgstr ""
+
+msgid "LISTING_EXPIRY_EMPTY"
+msgstr ""
+
+msgid "JURISDICTION_EMPTY"
+msgstr ""
+
+msgid "LISTING_NAME_EMPTY"
+msgstr ""
+
+msgid "FEE_EMPTY"
+msgstr ""
+
+msgid "INSTALMENTS_EMPTY"
+msgstr ""
+
+msgid "TERRITORIES_EMPTY"
+msgstr ""
+
+msgid "SPORT_EMPTY"
+msgstr ""
+
+msgid "PROGRAM_DESCRIPTION_EMPTY"
+msgstr ""
+
+msgid "LICENSE_PERIOD_EMPTY"
+msgstr ""
+
+msgid "CONTENT_DELIVERY_EMPTY"
+msgstr ""

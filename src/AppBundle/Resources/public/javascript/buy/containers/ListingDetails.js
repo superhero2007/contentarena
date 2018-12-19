@@ -31,6 +31,7 @@ import GeneralTerms from "../../main/components/GeneralTerms";
 import NumberFormat from 'react-number-format';
 import EditButton from "../components/EditButton";
 import {goToStep, scrollTopMainContent} from "../../sell/actions/contentActions";
+import {disableValidation, enableValidation} from "../../main/actions/validationActions";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -89,6 +90,11 @@ class ListingDetails extends React.Component {
 
     componentWillUnmount(){
         jQuery('body,.manager-container,.marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
+
+        const {validation, disableValidation} = this.props;
+
+        if (validation) disableValidation()
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -452,6 +458,7 @@ class ListingDetails extends React.Component {
 
     placeBid = () => {
         const {selectedPackage, signature, content, companyUpdated, company , signatureName, signaturePosition} = this.state;
+        this.props.disableValidation();
         this.setState({spinner : true});
         let bidObj = {
             amount : parseFloat(selectedPackage.fee),
@@ -601,11 +608,12 @@ class ListingDetails extends React.Component {
     };
 
     handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
+
     handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
     render() {
         ReactTooltip.rebuild();
-        const { profile,history, listing } = this.props;
+        const {profile, history, listing, validation} = this.props;
         const {
             buyingMode,
             selectedPackage,
@@ -625,6 +633,9 @@ class ListingDetails extends React.Component {
 
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
         const isEditedProgramShownInFirstTab = content.rightsPackage.length === 1 && content.rightsPackage.some(e => e.shortLabel === 'PR');
+
+        const isBidInvalid = !bid && validation;
+        const isTermsInvalid = !terms && validation;
 
         return (
             <div className="listing-details">
@@ -800,6 +811,10 @@ class ListingDetails extends React.Component {
                                         {this.getMinBid()}
                                     </span>
                                     <span className="bid-value right-section">
+
+                                        {isBidInvalid && (
+                                            <span className="is-invalid" style={{marginRight:10}}>{this.context.t('BID_EMPTY')}</span>
+                                        )}
                                         <div className="bid-change-value">
                                             <NumberFormat
                                                 thousandSeparator={true}
@@ -810,7 +825,9 @@ class ListingDetails extends React.Component {
                                                     this.onBidChange(value)
                                                 }}
                                                 min={selectedPackage.fee}
-                                                prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "} />
+                                                prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "}
+                                                className={isBidInvalid ? 'is-invalid' : ''}
+                                            />
                                         </div>
                                         <div className="bid-apply-changes"
                                              data-tip
@@ -885,7 +902,10 @@ class ListingDetails extends React.Component {
                                 onChangeSignaturePosition={e=>{
                                     this.setState({"signaturePosition": e.target.value});
                                 }}
-                                onReady={signature => { this.setState({signature}) }} />
+                                onReady={signature => {
+                                    this.setState({signature})
+                                }}
+                            />
                         </div>
 
                         <div className="bid-signature-btns">
@@ -893,12 +913,28 @@ class ListingDetails extends React.Component {
                                 defaultChecked={terms}
                                 value={terms}
                                 onChange={e => this.setTermsAndConditions(e) }
+                                isInvalid={isTermsInvalid}
                             />
 
-                            {!spinner
-                                ? (<button className="standard-button" onClick={this.placeBid} disabled={!this.isPackageValid()} title={this.getButtonTooltip(checkoutType)}>
-                                    {this.getTitlePrefix(checkoutType)}</button>)
-                                : <i className="fa fa-cog fa-spin" />}
+                            {!this.isPackageValid() ? (
+                                <button className="ca-btn primary disabled"
+                                        onClick={this.props.enableValidation}
+                                        title={this.getButtonTooltip(checkoutType)}
+                                >
+                                    {this.getTitlePrefix(checkoutType)}
+                                </button>
+                            ) : (
+                                !spinner ? (
+                                    <button className="ca-btn primary"
+                                            onClick={this.placeBid}
+                                            title={this.getButtonTooltip(checkoutType)}
+                                    >
+                                        {this.getTitlePrefix(checkoutType)}
+                                    </button>
+                                ) : (
+                                    <i className="fa fa-cog fa-spin"/>
+                                )
+                            )}
                         </div>
                     </div>}
                 </div>
@@ -920,9 +956,10 @@ const mapDispatchToProps = dispatch => {
     return {
         onClick: id => dispatch(test(id)),
         scrollTopMainContent : () => dispatch(scrollTopMainContent()),
+        enableValidation: () => dispatch(enableValidation()),
+        disableValidation: () => dispatch(disableValidation()),
     }
 };
-
 
 export default connect(
     mapStateToProps,

@@ -94,7 +94,8 @@ export class SportSelector extends React.Component {
     };
 
     render(){
-        const {sports, index} = this.props;
+        const {sports, index, value, isInvalid} = this.props;
+
         return (
             <div className="base-container">
                 <div className="base-input">
@@ -104,10 +105,12 @@ export class SportSelector extends React.Component {
                     {
                         !this.props.isCustom &&
                         <input type="text"
-                               value={this.props.value}
+                               value={value}
                                readOnly={true}
                                onClick={this.props.onClick}
-                               placeholder={"e.g. Soccer"}  />
+                               placeholder={isInvalid ? this.context.t("SPORT_EMPTY") : 'e.g. Soccer'}
+                               className={isInvalid ? "is-invalid" : ''}
+                        />
                     }
 
                     {

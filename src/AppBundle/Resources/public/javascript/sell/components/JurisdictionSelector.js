@@ -15,7 +15,9 @@ class JurisdictionSelector extends React.Component {
     };
 
     render(){
-        const { jurisdiction } = this.props;
+        const { jurisdiction, validation } = this.props;
+        const isInvalid = !jurisdiction && validation;
+
         return (
             <div className="base-input">
                 <label>
@@ -25,7 +27,8 @@ class JurisdictionSelector extends React.Component {
                     type="text"
                     value={jurisdiction}
                     onChange={this.selectTerritory}
-                    placeholder={this.context.t("CL_STEP4_PLACEHOLDER_JURISDICTION")}
+                    placeholder={isInvalid ? this.context.t('JURISDICTION_EMPTY') : this.context.t("CL_STEP4_PLACEHOLDER_JURISDICTION")}
+                    className={isInvalid ? 'is-invalid' : ''}
                     maxLength={250}
                 />
 
@@ -39,7 +42,10 @@ JurisdictionSelector.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

@@ -104,10 +104,20 @@ class SellFormStep3 extends React.Component {
     render() {
 
         const {
-            step, rightsPackage, startDateMode, endDateMode, endDate, updateContentValue, PROGRAM_NAME, LICENSED_LANGUAGES
+            step,
+            rightsPackage,
+            startDateMode,
+            endDateMode,
+            endDate,
+            updateContentValue,
+            PROGRAM_NAME,
+            LICENSED_LANGUAGES,
+            validation
         } = this.props;
         if ( step !== 3) return (null);
         this.scroll();
+
+        const isLicenseInvalid = !endDateMode && validation;
 
         return (
 
@@ -171,11 +181,19 @@ class SellFormStep3 extends React.Component {
                                 <div className="column right-name">
                                     {this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_END")}
                                 </div>
-                                <div className="column right-item-content"  style={licenseStyles} onClick={this.showLicensePopup}>
-                                    { endDateMode === "LIMITED"  && this.props.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
-                                    { endDateMode === "DATE"  && Moment(this.props.endDate).format(DATE_FORMAT)}
-                                    { endDateMode === "UNLIMITED"  && this.context.t("Unlimited")}
-                                    { !endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
+                                <div className={`column right-item-content ${isLicenseInvalid ? 'is-invalid' : ''}`}  style={licenseStyles} onClick={this.showLicensePopup}>
+
+                                    {isLicenseInvalid ? (
+                                        this.context.t('LICENSE_PERIOD_EMPTY')
+                                    ) : (
+                                        <span>
+                                            {endDateMode === "LIMITED" && this.props.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
+                                            {endDateMode === "DATE"  && Moment(this.props.endDate).format(DATE_FORMAT)}
+                                            {endDateMode === "UNLIMITED"  && this.context.t("Unlimited")}
+                                            {!endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
+                                        </span>
+                                    )}
+
                                     <div className="column right-item-content edit-item" onClick={this.showLicensePopup}>
                                         <i className="fa fa-edit"/>
                                     </div>
@@ -263,6 +281,8 @@ class SellFormStep3 extends React.Component {
                                     onUpdateListing={(k, v)=>{updateContentValue(k,v)}}
                                     rightsPackage={this.props.rightsPackage}
                                     disabled={rightDisabled}
+                                    contentDeliveryConfigured={this.props.contentDeliveryConfigured}
+                                    validation={validation}
                                 />
                             })
                         }
@@ -301,7 +321,10 @@ SellFormStep3.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

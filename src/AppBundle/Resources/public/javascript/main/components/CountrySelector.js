@@ -43,8 +43,9 @@ class CountrySelector extends React.Component {
     }
 
     render(){
-        const {onChange, className, multi = true, disabled = false, exclusiveSoldTerritories} = this.props;
+        const {onChange, className, multi = true, disabled = false, exclusiveSoldTerritories, placeholder, isInvalid} = this.props;
         let value = this.props.value;
+
 
         if (exclusiveSoldTerritories) {
             const {countries} = this.state;
@@ -68,10 +69,10 @@ class CountrySelector extends React.Component {
         return (
 
             <Select
-                className={className }
+                className={isInvalid ? 'is-invalid' : className}
                 name="form-field-name"
                 onChange={onChange}
-                placeholder={disabled ? 'Disabled' : 'Select...'}
+                placeholder={placeholder ? placeholder : disabled ? 'Disabled' : 'Select...'}
                 disabled={disabled}
                 value={value}
                 multi={multi}

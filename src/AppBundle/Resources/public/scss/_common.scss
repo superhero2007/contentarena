@@ -497,7 +497,26 @@ i.fa.ca-tooltip {
   font-weight: bold;
 }
 
-//todo: apply to all urls
+.is-invalid {
+  border-color: #CC0000 !important;
+  color: #CC0000;
+  &::placeholder {
+    color: #CC0000 !important;
+  }
+}
+
+.Select {
+  &.is-invalid {
+    .Select-control {
+      border-color: #CC0000 !important;
+    }
+    .Select-placeholder {
+      color: #CC0000;
+    }
+  }
+}
+
+  //todo: apply to all urls
 a.ca-link {
   color: #3399FF;
   text-decoration: none;

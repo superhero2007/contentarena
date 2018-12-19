@@ -5,6 +5,8 @@ import { GenericModalStyle} from "./../../../main/styles/custom";
 import GeneralTerms from "./../../../main/components/GeneralTerms";
 import DigitalSignature from "./../../../main/components/DigitalSignature";
 import store from "../../../main/store";
+import {disableValidation, enableValidation} from "../../../main/actions/validationActions";
+import {connect} from "react-redux";
 
 class AcceptBidModal extends Component {
     constructor(props) {
@@ -22,9 +24,17 @@ class AcceptBidModal extends Component {
         };
     }
 
+    componentWillUnmount() {
+        const {validation, disableValidation} = this.props;
+
+        if (validation) disableValidation()
+    }
+
     handleTermsAndConditions = (event) => { this.setState({terms: event.target.checked}) };
+
     handleAcceptBid = () => {
         this.setState({isLoading: true});
+        this.props.disableValidation();
 
         const {signature,  signatureName, signaturePosition} = this.state;
         const {contentId, selectedBid, postAction, listingCustomId, onCloseModal} = this.props;
@@ -42,8 +52,11 @@ class AcceptBidModal extends Component {
     };
 
     render() {
-        const { isOpen, onCloseModal, selectedBid } = this.props;
-        const { isFail, isLoading, signature, terms, signatureName, signaturePosition } = this.state;
+        const {isOpen, onCloseModal, selectedBid, validation} = this.props;
+        const {isFail, isLoading, signature, terms, signatureName, signaturePosition} = this.state;
+
+        const isAcceptDisabled = !signature || !terms;
+        const isTermsInvalid = !terms && validation;
 
         return <Modal isOpen={isOpen} className="modal-wrapper wide" style={GenericModalStyle}>
             <header className="modal-header">
@@ -64,11 +77,14 @@ class AcceptBidModal extends Component {
                         onChangeSignaturePosition={e=>{
                             this.setState({"signaturePosition": e.target.value});
                         }}
-                        onReady={signature => { this.setState({signature}) }} />
+                        onReady={signature => { this.setState({signature}) }}
+                    />
                     <GeneralTerms
                         defaultChecked={terms}
                         value={terms}
-                        onChange={e => this.handleTermsAndConditions(e) }/>
+                        onChange={e => this.handleTermsAndConditions(e) }
+                        isInvalid={isTermsInvalid}
+                    />
                 </div>
                 }
                 {isLoading && <i className="fa fa-cog fa-spin" />}
@@ -77,21 +93,53 @@ class AcceptBidModal extends Component {
                 }
             </section>
             <footer className="modal-footer">
-                {isFail || isLoading
-                    ? (<button className="cancel-btn" onClick={onCloseModal}>
+                {isFail || isLoading ? (
+                    <button className="cancel-btn" onClick={onCloseModal}>
                         {this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
-                        </button>)
-                    : (<React.Fragment>
-                        <button className="cancel-btn" onClick={onCloseModal}>
-                            {this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+                    </button>
+                ) : (
+                    <React.Fragment>
+                        <button
+                            className="cancel-btn"
+                            onClick={onCloseModal}
+                        >
+                            {this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}>
                         </button>
-                        <button className="standard-button" onClick={this.handleAcceptBid} disabled={!signature || !terms}>
-                            {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}</button>
-                        </React.Fragment>)
-                }
+                        {isAcceptDisabled ? (
+                            <button
+                                className="standard-button disabled"
+                                onClick={this.props.enableValidation}
+                            >
+                                {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
+                            </button>
+                        ) : (
+                            <button
+                                className="standard-button"
+                                onClick={this.handleAcceptBid}
+                                disabled={!signature || !terms}
+                            >
+                                {this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
+                            </button>
+                        )}
+
+                    </React.Fragment>
+                )}
             </footer>
         </Modal>
     };
+};
+
+const mapStateToProps = state => {
+    return {
+        validation: state.validation
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        enableValidation: () => dispatch(enableValidation()),
+        disableValidation: () => dispatch(disableValidation()),
+    }
 };
 
 AcceptBidModal.propTypes = {
@@ -105,4 +153,8 @@ AcceptBidModal.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-export default AcceptBidModal;
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AcceptBidModal)

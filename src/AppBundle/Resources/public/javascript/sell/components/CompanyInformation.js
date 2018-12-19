@@ -171,7 +171,9 @@ class CompanyInformation extends React.Component {
     };
 
     render(){
-        const { company } = this.props;
+        const { company, validation } = this.props;
+        const isInvalid = !company && validation;
+
         return (
             <div className="base-input">
                 { this.renderModal() }
@@ -182,7 +184,9 @@ class CompanyInformation extends React.Component {
                     type="text"
                     value={company.legalName + ", " + company.address}
                     onClick={()=>{this.setState({isOpen:true})}}
-                    placeholder=""/>
+                    placeholder={isInvalid ? this.context.t('COMPANY_INFORMATION_EMPTY') : ''}
+                    className={`${isInvalid ? 'is-invalid' : ''}`}
+                />
                 <i className="fa fa-edit" onClick={()=>{this.setState({isOpen:true})}}/>
             </div>
         )
@@ -210,7 +214,10 @@ CompanyInformation.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

@@ -15,7 +15,9 @@ class ApplicableLaw extends React.Component {
     };
 
     render(){
-        const { law } = this.props;
+        const {law, validation} = this.props;
+        const isInvalid = !law && validation;
+
         return (
             <div className="base-input">
                 <label>
@@ -24,8 +26,10 @@ class ApplicableLaw extends React.Component {
                 <CountrySelector
                     value={law}
                     multi={false}
-                    placeholder={this.context.t("CL_STEP4_PLACEHOLDER_APPLICABLE_LAW")}
-                    onChange={this.select}/>
+                    onChange={this.select}
+                    placeholder={isInvalid ? this.context.t('LAW_EMPTY') : this.context.t("CL_STEP4_PLACEHOLDER_APPLICABLE_LAW")}
+                    className={isInvalid ? 'is-invalid':''}
+                />
             </div>
         )
     }
@@ -36,7 +40,10 @@ ApplicableLaw.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

@@ -55,12 +55,10 @@ class NewFixture extends Component {
             handleDate(formatted);
         }
 
-        console.log(formatted)
-
     }
 
     render() {
-        const { onRemove, onAdd, onChange, value, showAdd, id, date } = this.props;
+        const { onRemove, onAdd, onChange, value, showAdd, id, date, isInvalid } = this.props;
         const { isDatePickerEnabled, isDatePickerWithTimeEnabled } = this.state;
 
         return (
@@ -70,9 +68,9 @@ class NewFixture extends Component {
                         {this.context.t("Fixture")}
                     </label>
                     <input
-                        className="new-fixture"
+                        className={`new-fixture ${isInvalid ? 'is-invalid' : ''}`}
                         type="text"
-                        placeholder={this.context.t("Enter fixture")}
+                        placeholder={isInvalid ? this.context.t('FIXTURE_NAME_EMPTY') :this.context.t("Enter fixture")}
                         onChange={onChange}
                         value={value} />
 

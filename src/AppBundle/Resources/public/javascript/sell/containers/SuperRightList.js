@@ -89,8 +89,9 @@ class SuperRightList extends React.Component {
     };
 
     render() {
-        console.log(this.props);
         const hasSoldAnyPackage = this.hasSalesPackagesSold();
+        const {validation, rightsPackage} = this.props;
+        const isInvalid = rightsPackage.length === 0 && validation;
 
         return (
             <div className="right-selector package-selector">
@@ -106,7 +107,7 @@ class SuperRightList extends React.Component {
                     {this.context.t("CL_STEP2_RIGHTS_ERROR_MESSAGE")}
                 </div>}
 
-                <div className="package-selector-container">
+                <div className={`package-selector-container ${isInvalid ? 'is-invalid' : ''}`}>
                     <ReactTable
                         minRows={0}
                         resizable={false}
@@ -208,7 +209,10 @@ SuperRightList.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content;
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

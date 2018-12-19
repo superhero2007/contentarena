@@ -60,7 +60,7 @@
     @include shadow(none);
     border: none;
     background-color: lightgray;
-    cursor: not-allowed;
+    //cursor: not-allowed;
   }
 
   &.transparent{
@@ -128,4 +128,12 @@
     width: 140px;
     margin-left: 10px;
     padding: 7px 40px;
+}
+
+.standard-button {
+  &:disabled,
+  &.disabled {
+    background-color: lightgray;
+    cursor: default;
+  }
 }
