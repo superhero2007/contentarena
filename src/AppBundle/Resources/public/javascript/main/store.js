@@ -10,6 +10,7 @@ import {marketplace} from "../buy/reducers/marketplace";
 import {manage} from "../manage/reducers/manage";
 import {user} from "./reducers/user";
 import {common} from "./reducers/common";
+import {validation} from "./reducers/validation";
 
 const reducers = combineReducers({
     content,
@@ -19,6 +20,7 @@ const reducers = combineReducers({
     manage,
     user,
     common,
+    validation,
     i18nState
 });
 

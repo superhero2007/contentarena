@@ -719,6 +719,9 @@ button {
           font-style: italic;
         }
       }
+      .package-selector-container {
+        border: 1px solid transparent;
+      }
       .right-selection-table{
 
         .table-right-selection-header{
@@ -898,11 +901,10 @@ button {
     }
     .currency-selector {
       .current {
-        padding: 6px 30px;
+        padding: 4px 16px 3px;
         width: 100px;
-        text-align: center;
         border: 1px solid #DADADA;
-        margin-top: 1px;
+        text-align: right;
       }
       .dropdown {
         right: 0;
@@ -911,7 +913,7 @@ button {
         display: none;
         width: 100px;
         .currency-item {
-          padding: 7px 0;
+          padding: 5px 5px 5px 0;
           color: #000;
           background: #FFFFFF;
           border: 1px solid #DADADA;
@@ -964,6 +966,7 @@ button {
         right: 0;
         left: 0;
         padding-top: 35px;
+        border: 1px solid transparent;
         .add-item {
           margin-left: 0 !important;
           font-size: 30px;
@@ -1053,7 +1056,7 @@ button {
       max-width: 872px;
       .base-input {
         float: left;
-        max-width: 435px;
+        //max-width: 435px;
         &:nth-child(2) {
           margin-left: 31px;
         }

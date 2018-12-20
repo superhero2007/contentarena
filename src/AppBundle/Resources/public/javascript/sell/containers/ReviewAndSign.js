@@ -13,6 +13,7 @@ import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
 import Comments from "../components/Comments";
 import RightsLegend from "../../main/components/RightsLegend";
+import {disableValidation, enableValidation} from "../../main/actions/validationActions";
 
 class ReviewAndSign extends React.Component {
 
@@ -56,10 +57,13 @@ class ReviewAndSign extends React.Component {
     };
 
     submit = () => {
-        const {updateContentValue} = this.props;
+        const {updateContentValue, disableValidation} = this.props;
+
         let content = store.getState().content;
         let _this = this;
         content = parseSeasons(content);
+
+        disableValidation()
         this.setState({showSubmitting: true});
         ContentArena.ContentApi.saveContentAsActive(content).done(function ( response ) {
 
@@ -148,6 +152,18 @@ class ReviewAndSign extends React.Component {
         this.setState({showDetails: !this.state.showDetails});
     };
 
+    getStatus = () => {
+        const {status} = this.props;
+
+        if ((!status || status.name === "DRAFT" || status.name === "INACTIVE" || status.name === "AUTO_INACTIVE")) {
+            return this.context.t("CL_STEP5_BUTTON_SUBMIT")
+        }
+
+        if (status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED")) {
+            return this.context.t("CL_STEP5_BUTTON_SAVE")
+        }
+    }
+
     render() {
         if ( this.props.step !== 5) return (null);
         this.scroll();
@@ -164,12 +180,13 @@ class ReviewAndSign extends React.Component {
             history,
             customId,
             status,
-            COMMENTS_RIGHTS
+            COMMENTS_RIGHTS,
         } = this.props;
 
         const {showDetails, showSubmitting} = this.state;
 
-        let signatureReady = (signature && status !== undefined && (status.name === "INACTIVE" || status.name === "EDITED" || status.name === "APPROVED")) ? true : false ;
+        let signatureReady = (signature && status !== undefined && (status.name === "INACTIVE" || status.name === "EDITED" || status.name === "APPROVED")) ;
+        const isButtonDisabled = !(terms && terms_arena && signature && signatureName && signaturePosition);
 
         return (
             <div className="step-content review-sign-container">
@@ -288,15 +305,23 @@ class ReviewAndSign extends React.Component {
                         signaturePosition={signaturePosition}
                     />
 
-                    {<div className="buttons" style={{marginTop: 20}}>
-                        <div className="buttons-container"  >
-                            {!showSubmitting && <button disabled={!(terms && terms_arena && signature)} id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
-                                {(!status || status.name === "DRAFT" || status.name === "INACTIVE" || status.name === "AUTO_INACTIVE" ) && this.context.t("CL_STEP5_BUTTON_SUBMIT") }
-                                {status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED") && this.context.t("CL_STEP5_BUTTON_SAVE")}
-                            </button>}
-                            {showSubmitting && <i className="fa fa-cog fa-spin" />}
+                    <div className="buttons" style={{marginTop: 20}}>
+                        <div className="buttons-container" >
+                            {isButtonDisabled ? (
+                                <button id="draft-listing" className="standard-button-big steps disabled" onClick={this.props.enableValidation}>
+                                    {this.getStatus()}
+                                </button>
+                            ) : (
+                                showSubmitting ? (
+                                    <i className="fa fa-cog fa-spin"/>
+                                ) : (
+                                    <button  id="draft-listing" className="standard-button-big steps" onClick={this.submit}>
+                                        {this.getStatus()}
+                                    </button>
+                                )
+                            )}
                         </div>
-                    </div>}
+                    </div>
                 </div>}
             </div>
         );
@@ -324,7 +349,9 @@ const mapDispatchToProps = dispatch => {
             salesPackage : salesPackage,
             name: name
         }),
-        stepChangeReset : () => dispatch(stepChangeReset())
+        stepChangeReset : () => dispatch(stepChangeReset()),
+        enableValidation: () => dispatch(enableValidation()),
+        disableValidation: () => dispatch(disableValidation()),
     }
 };
 

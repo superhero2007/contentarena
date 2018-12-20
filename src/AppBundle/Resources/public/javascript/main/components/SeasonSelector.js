@@ -62,7 +62,7 @@ class SeasonSelector extends React.Component {
     };
 
     render(){
-        const {index, season, seasons} = this.props;
+        const {index, season, seasons, validation} = this.props;
         let activeSeason = seasons[season];
 
         return (
@@ -130,6 +130,7 @@ class SeasonSelector extends React.Component {
                                 onChange={(e) => this.onChangeFixture(i, e.target.value)}
                                 onRemove={() => this.removeFixture(i)}
                                 showAdd={i === list.length - 1}
+                                isInvalid={!fixture.name && validation}
                             />
                         })
                     }
@@ -184,7 +185,10 @@ NewFixture.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

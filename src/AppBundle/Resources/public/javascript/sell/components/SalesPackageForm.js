@@ -7,9 +7,11 @@ import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import SalesPackageTable from "./SalesPackageTable";
 import cn from 'classnames';
 import moment from "moment";
+import {connect} from "react-redux";
 import { DATE_FORMAT } from "@constants";
 import NumberFormat from 'react-number-format';
 import {getCurrencySymbol} from "../../main/actions/utils";
+import {disableValidation, enableValidation} from "../../main/actions/validationActions";
 
 const labelStyle = { height: "30px", fontSize: "12px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
@@ -50,6 +52,12 @@ class SalesPackageForm extends React.Component {
         ContentArena.Api.getCountries().done( (countries ) => {
             this.setState({countries})
         });
+    }
+
+    componentWillUnmount() {
+        const {validation, disableValidation} = this.props;
+
+        if (validation) disableValidation()
     }
 
     editSalesPackage = ( salesPackage, index ) => {
@@ -152,6 +160,7 @@ class SalesPackageForm extends React.Component {
 
     applySelection  = () => {
         this.setState({ isOpen: false});
+        this.props.disableValidation()
 
         const { bundleMethod, territoriesMethod, fee, salesMethod, installments, selectedRegion, selectedRegionCountries } = this.state;
         const {exclusivity} = this.props;
@@ -348,8 +357,8 @@ class SalesPackageForm extends React.Component {
     };
 
     renderModal = () => {
-        const {onClose, exclusivity, salesPackages, currency} = this.props;
-        const {territoriesQuantity, territoriesMethod, territories} = this.state;
+        const {onClose, exclusivity, salesPackages, currency, validation} = this.props;
+        const {territoriesQuantity, territoriesMethod, territories, fee} = this.state;
 
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
@@ -359,9 +368,15 @@ class SalesPackageForm extends React.Component {
         const soldPackages = this.getSoldPackages(salesPackages);
         const isExclusiveSoldTerritoriesEnabled = (soldPackages.length > 0 && exclusivity);
 
+        const isOkButtonDisabled = (this.state.salesMethod === this.fixed && Number(this.state.fee) === 0) ||
+            this.territoriesIncomplete() ||
+            this.installmentsIncomplete()
+
+        const isTerritoriesEmpty = territories.length === 0 && validation;
+        const isFeeEmpty = !fee && validation;
+
         return <Modal
             isOpen={this.state.isOpen}
-            onRequestClose={this.closeModal}
             bodyOpenClassName={"selector ca-modal-open"}
             className={"ca-modal"}
             overlayClassName={"ca-modal-overlay"}
@@ -439,6 +454,8 @@ class SalesPackageForm extends React.Component {
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 multi={false}
                                 exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
+                                placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
+                                isInvalid={isTerritoriesEmpty}
                             />}
                             {isMultipleEnabled && <RegionCountrySelector
                                 className={"small-select"}
@@ -448,6 +465,8 @@ class SalesPackageForm extends React.Component {
                                 filter={isFilterEnabled ? this.getFilterTerritories() : []}
                                 disabled={isWorldwideEnabled}
                                 exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
+                                placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
+                                isInvalid={isTerritoriesEmpty}
                             />}
                             {territoriesQuantity === 'multiple' && (
                                 <div className="d-flex align-items-center" onChange={(e) => {
@@ -500,14 +519,17 @@ class SalesPackageForm extends React.Component {
                                 </span>
                                 <NumberFormat
                                     thousandSeparator={true}
-                                    value={this.state.fee}
+                                    value={fee}
                                     onValueChange={(values) => {
                                         const {value} = values;
                                         this.setState({fee : value})
                                     }}
                                     min={0}
                                     style={{ height: "26px", width: "100px" }}
-                                    prefix={getCurrencySymbol(currency)+ " "} />
+                                    prefix={getCurrencySymbol(currency)+ " "}
+                                    placeholder={isFeeEmpty ? this.context.t('FEE_EMPTY') : ''}
+                                    className={isFeeEmpty ? 'is-invalid' : ''}
+                                />
 
                             </div>
                         </div>
@@ -524,8 +546,14 @@ class SalesPackageForm extends React.Component {
                                     marginRight: 55,
                                     paddingLeft: 10
                                 }}>
-                                    <div className={"title"} >
-                                        {i+1} Installment(s) <input onChange={(e) => {this.setInstallmentValue(e.target.value,i)}} style={{ height: "26px", width: "70px" }} type="number" max={100} value={installment.value}/>
+                                    <div className={"title"}>
+                                        {i + 1} Installment(s)
+                                        <input onChange={(e) => {this.setInstallmentValue(e.target.value, i)}}
+                                               style={{height: "26px", width: "70px"}} type="number" max={100}
+                                               value={installment.value}
+                                               placeholder={validation && !installment.value ? this.context.t('INSTALMENTS_EMPTY') : ''}
+                                               className={validation && !installment.value ? 'is-invalid' : ''}
+                                        />
                                         {" "}
                                         {this.context.t("CL_STEP4_INSTALLMENTS_PERCENTAGE")}
                                     </div>
@@ -588,14 +616,15 @@ class SalesPackageForm extends React.Component {
             </div>
 
             <div className={"buttons"}>
-                <button
-                    className="standard-button"
-                    disabled={
-                        ( this.state.salesMethod === this.fixed && Number( this.state.fee ) === 0 ) ||
-                        this.territoriesIncomplete() ||
-                        this.installmentsIncomplete()
-                    }
-                    onClick={this.applySelection}>Ok</button>
+                {isOkButtonDisabled ? (
+                    <button className='standard-button disabled' onClick={this.props.enableValidation}>
+                        Ok
+                    </button>
+                ) : (
+                    <button className='standard-button' onClick={this.applySelection}>
+                        Ok
+                    </button>
+                )}
             </div>
         </Modal>
     };
@@ -656,9 +685,11 @@ class SalesPackageForm extends React.Component {
     };
 
     render(){
-        const { onRemove, hideButtons, fullSize, sort, listingId, currency } = this.props;
+        const { onRemove, hideButtons, fullSize, sort, listingId, currency, validation } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
+
+        const isBundlesInvalid = salesPackages.length === 0 && validation;
 
         if (sort) salesPackages.sort(this.sortSalesPackages);
         return (
@@ -670,7 +701,7 @@ class SalesPackageForm extends React.Component {
                     </label>
 
                     {!salesPackages.length && this.addBundlesAvailable() && (
-                        <div className='sales-bundles-placeholder'>
+                        <div className={`sales-bundles-placeholder ${isBundlesInvalid ? 'is-invalid':''}`}>
                             {this.renderAddSalesBundleButton()}
                         </div>
                     )}
@@ -708,8 +739,24 @@ class SalesPackageForm extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        validation: state.validation
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        enableValidation: () => dispatch(enableValidation()),
+        disableValidation: () => dispatch(disableValidation()),
+    }
+};
+
 SalesPackageForm.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-export default SalesPackageForm;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SalesPackageForm)

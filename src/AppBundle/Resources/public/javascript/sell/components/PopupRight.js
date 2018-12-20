@@ -482,7 +482,6 @@ class PopupRight extends React.Component {
             <div className="modal-title">
                 <i className="fa fa-edit"/>
                 {name}
-                <i className="fa fa-times close-icon" onClick={this.closePopupAndRestoreData}/>
             </div>
 
             {description && (
@@ -668,7 +667,16 @@ class PopupRight extends React.Component {
     };
 
     render(){
-        const {name, rightsPackage, programName, languages, checkContentDelivery, disabled} = this.props;
+        const {
+            name,
+            rightsPackage,
+            programName,
+            languages,
+            checkContentDelivery,
+            disabled,
+            contentDeliveryConfigured,
+            validation,
+        } = this.props;
         let id = this.props.id;
 
         const rightsPackageFiltered = this.filterRightsPackage(id, rightsPackage);
@@ -721,15 +729,20 @@ class PopupRight extends React.Component {
 
         const value = (isMultipleValuesSelected) ? "Multiple values selected" : displayedValue;
         const isCommentAdded = rightsPackage[0].selectedRights[id + "_TEXTAREA"];
+        const isContentDeliveryInvalid = id === 'CONTENT_DELIVERY' && !contentDeliveryConfigured && !disabled && validation;
 
         return (
             <div className={cn("base-input", { "disabled": disabled })} style={{width: "49%"}}>
                 <label>{name}</label>
                 <div
-                    className='display-label'
+                    className={`display-label ${isContentDeliveryInvalid ? 'is-invalid' : ''} `}
                     onClick={this.togglePopup}
                 >
-                    {value || 'Select'}
+                    {isContentDeliveryInvalid ? (
+                        this.context.t("CONTENT_DELIVERY_EMPTY")
+                    ) : (
+                        value || 'Select'
+                    )}
                 </div>
                 {isCommentAdded && (
                     <img src={commentIcon} alt="" className="comment-icon" />

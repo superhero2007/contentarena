@@ -75,6 +75,12 @@ class SellFormStep2 extends React.Component {
         }
     };
 
+    isInvalid = (type) => {
+        const {validation} = this.props;
+
+        return !type && validation
+    }
+
     render() {
         const {
             programDescription,
@@ -95,11 +101,15 @@ class SellFormStep2 extends React.Component {
             sportCategory,
             tournament,
             seasons,
+            packages,
+            validation,
             name
         } = this.props;
         if ( step !== 2) return (null);
 
         let editedProgram = editedProgramSelected(rightsPackage);
+
+        const isProgramDescriptionInvalid = !programDescription && validation;
 
         this.scroll();
         return (
@@ -125,7 +135,9 @@ class SellFormStep2 extends React.Component {
                                 this.userDescriptionAdded = true
                             }}
                             value={programDescription}
-                            placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}
+                            placeholder={isProgramDescriptionInvalid ? this.context.t('PROGRAM_DESCRIPTION_EMPTY') : this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER")}
+                            style={{minHeight:150}}
+                            className={isProgramDescriptionInvalid ? 'is-invalid' : ''}
                         />
 
                         {/* TODO: Remove this hidden div and replace default value fro a proper fn */}
@@ -136,7 +148,7 @@ class SellFormStep2 extends React.Component {
                         )}
                     </div>
 
-                    <SuperRightList packages={this.props.packages} />
+                    <SuperRightList packages={packages}/>
                 </div>
 
                 {/* PROGRAM DETAILS*/}
@@ -150,7 +162,9 @@ class SellFormStep2 extends React.Component {
                                 <input
                                     type="text"
                                     value={PROGRAM_NAME}
-                                    onChange={(e)=>{updateContentValue("PROGRAM_NAME", e.target.value)}}/>
+                                    onChange={(e)=>{updateContentValue("PROGRAM_NAME", e.target.value)}}
+                                    className={`${this.isInvalid(PROGRAM_NAME) ? 'is-invalid' : ''}`}
+                                />
                             </div>
 
                             <div className="modal-input">
@@ -160,7 +174,9 @@ class SellFormStep2 extends React.Component {
                                 <input
                                     type="number"
                                     value={PROGRAM_EPISODES}
-                                    onChange={(e)=>{updateContentValue("PROGRAM_EPISODES", Number(e.target.value))}}/>
+                                    onChange={(e)=>{updateContentValue("PROGRAM_EPISODES", Number(e.target.value))}}
+                                    className={`${this.isInvalid(PROGRAM_EPISODES) ? 'is-invalid' : ''}`}
+                                />
                             </div>
 
                             <div className="modal-input">
@@ -170,7 +186,9 @@ class SellFormStep2 extends React.Component {
                                 <input
                                     type="number"
                                     value={PROGRAM_DURATION}
-                                    onChange={(e)=>{updateContentValue("PROGRAM_DURATION", Number(e.target.value))}}/>
+                                    onChange={(e)=>{updateContentValue("PROGRAM_DURATION", Number(e.target.value))}}
+                                    className={`${this.isInvalid(PROGRAM_DURATION) ? 'is-invalid' : ''}`}
+                                />
                             </div>
 
                             <div className="modal-input">
@@ -205,8 +223,10 @@ class SellFormStep2 extends React.Component {
                                 </label>
                                 <select
                                     value={PROGRAM_TYPE}
-                                    onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}>
-                                    <option value="SELECT">Select</option>
+                                    onChange={(e)=>{updateContentValue("PROGRAM_TYPE", e.target.value)}}
+                                    className={`${this.isInvalid(PROGRAM_TYPE) ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">Select</option>
                                     <option value="HIGHLIGHT_SHOW">Highlight show</option>
                                     <option value="DOCUMENTARY">Documentary</option>
                                     <option value="PREVIEW">Preview</option>
@@ -277,7 +297,8 @@ class SellFormStep2 extends React.Component {
                                 </label>
                                 <textarea
                                     onChange={(e)=>{updateContentValue("PROGRAM_DESCRIPTION", e.target.value)}}
-                                    placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER")}>
+                                    placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER")}
+                                >
                             {PROGRAM_DESCRIPTION}
                         </textarea>
                             </div>
@@ -294,7 +315,10 @@ SellFormStep2.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

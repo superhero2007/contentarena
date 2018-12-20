@@ -21,7 +21,8 @@ class ListingName extends React.Component {
     };
 
     render() {
-        const {name} = this.props;
+        const {name, validation} = this.props;
+        const isInvalid = !name && validation;
         return (
             <div className="base-input">
                 <label>
@@ -31,7 +32,8 @@ class ListingName extends React.Component {
                     type="text"
                     value={name}
                     onChange={this.updateName}
-                    placeholder=""
+                    placeholder={isInvalid ? this.context.t("LISTING_NAME_EMPTY") : ''}
+                    className={isInvalid ? 'is-invalid' : ''}
                     maxLength={70}
                 />
             </div>
@@ -44,7 +46,10 @@ ListingName.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {

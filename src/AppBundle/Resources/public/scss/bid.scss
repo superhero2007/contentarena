@@ -223,22 +223,5 @@
       color: $font-color-5;
       font-size: 12px;
     }
-
-    button{
-      font-size: 18px;
-      font-weight: bold;
-      text-transform: uppercase;
-
-      color: $black-color;
-      background: $orange-color;
-      border-radius: 5px;
-
-      padding: 20px 40px;
-      margin: 15px 0 0 0;
-
-      &:disabled{
-        background: lightgray;
-      }
-    }
   }
 }

@@ -220,7 +220,6 @@ class SalesPackageEdit extends React.Component {
 
         return <Modal
             isOpen={this.state.isOpen}
-            onRequestClose={this.closeModal}
             bodyOpenClassName={"selector"}
             style={customStyles}
             contentLabel="Example Modal"

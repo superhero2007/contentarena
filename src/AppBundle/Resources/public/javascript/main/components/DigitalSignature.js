@@ -5,6 +5,7 @@ import { pdfIcon } from "./Icons";
 import {viewLicenseBid} from "../actions/utils";
 import GeneralTerms from "../../main/components/GeneralTerms";
 import cn from "classnames";
+import { connect } from "react-redux";
 
 class DigitalSignature extends React.Component{
     constructor(props){
@@ -64,9 +65,14 @@ class DigitalSignature extends React.Component{
             terms,
             terms_arena,
             updateContentValue,
+            validation,
         } = this.props;
 
         const { ready, isPlaceholderDisabled} = this.state;
+
+        const isSignatureNotAdded = !signature && validation;
+        const isSignatureNameEmpty = !signatureName && validation;
+        const isSignaturePositionEmpty = !signaturePosition && validation;
 
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
@@ -91,17 +97,25 @@ class DigitalSignature extends React.Component{
                             />
                             <label htmlFor="terms"/>
                             {this.context.t("CL_STEP5_TERMS_1")}
+                            {!terms && validation && (
+                                <span className='is-invalid' style={{marginLeft:15}}>{this.context.t("LICENSE_NOT_CHECKED")}</span>
+                            )}
                         </div>
 
-                        <GeneralTerms
-                            defaultChecked={terms_arena}
-                            value={terms_arena}
-                            onChange={(e)=>{
-                                updateContentValue('terms_arena', e.target.checked)
-                            }}
-                            text={this.context.t("CL_STEP5_TERMS_2")}
-                            text2={this.context.t("CL_STEP5_TERMS_3")}
-                        />
+                        <div className="d-flex">
+                            <GeneralTerms
+                                defaultChecked={terms_arena}
+                                value={terms_arena}
+                                onChange={(e)=>{
+                                    updateContentValue('terms_arena', e.target.checked)
+                                }}
+                                text={this.context.t("CL_STEP5_TERMS_2")}
+                                text2={this.context.t("CL_STEP5_TERMS_3")}
+                            />
+                            {!terms_arena && validation && (
+                                <span className='is-invalid' style={{marginLeft:15}}>{this.context.t('TERMS_NOT_CHECKED')}</span>
+                            )}
+                        </div>
                     </div>
                 )}
 
@@ -114,7 +128,7 @@ class DigitalSignature extends React.Component{
                         </span>
                     )}
                 </div>
-                <div className="signature-wrap" onClick={this.disablePlaceholder}>
+                <div className={`signature-wrap ${isSignatureNotAdded ? 'is-invalid':''}`} onClick={this.disablePlaceholder}>
                     {!signature && !isPlaceholderDisabled && (
                         <div className="placeholder">
                             <div>
@@ -142,8 +156,18 @@ class DigitalSignature extends React.Component{
                         Signed By
                     </label>
                     <div style={{display: "flex"}}>
-                        <input value={signatureName} disabled={ready} onChange={onChangeSignatureName} placeholder={"First Name Last Name"} />
-                        <input value={signaturePosition} disabled={ready} onChange={onChangeSignaturePosition} placeholder={"Position"} />
+                        <input value={signatureName}
+                               disabled={ready}
+                               onChange={onChangeSignatureName}
+                               placeholder={isSignatureNameEmpty ? this.context.t('SIGNATURE_NAME_EMPTY') : "First Name Last Name"}
+                               className={`${isSignatureNameEmpty ? 'is-invalid' : ''}`}
+                        />
+                        <input value={signaturePosition}
+                               disabled={ready}
+                               onChange={onChangeSignaturePosition}
+                               placeholder={isSignatureNameEmpty ? this.context.t('SIGNATURE_POSITION_EMPTY') : "Position"}
+                               className={`${isSignaturePositionEmpty ? 'is-invalid' : ''}`}
+                        />
                     </div>
 
                 </div>
@@ -163,7 +187,17 @@ class DigitalSignature extends React.Component{
         )
     }
 }
+
 DigitalSignature.contextTypes = {
     t: PropTypes.func.isRequired
 };
-export default DigitalSignature;
+
+const mapStateToProps = state => {
+    return {
+        validation: state.validation
+    }
+};
+
+export default connect(
+    mapStateToProps
+)(DigitalSignature)

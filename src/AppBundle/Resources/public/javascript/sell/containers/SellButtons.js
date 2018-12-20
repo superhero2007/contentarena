@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import store from '../../main/store';
 import {updateContentValue, goToStep} from "../actions/contentActions";
+import {enableValidation, disableValidation} from "../../main/actions/validationActions";
 import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip';
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
@@ -30,8 +31,15 @@ class SellButtons extends Component {
         ReactTooltip.rebuild()
     };
 
+    componentWillUnmount() {
+        const {validation, disableValidation} = this.props;
+
+        if (validation) disableValidation()
+    }
+
     saveAndGoNext = () => {
         const {history, goToStep} = this.props;
+        this.props.disableValidation()
         this.setState({ saving : true });
 
         let content = store.getState().content;
@@ -130,7 +138,7 @@ class SellButtons extends Component {
         return PROGRAM_NAME && PROGRAM_NAME !== "" &&
             PROGRAM_EPISODES && PROGRAM_EPISODES !== "" &&
             PROGRAM_DURATION && PROGRAM_DURATION !== "" &&
-            PROGRAM_TYPE && PROGRAM_TYPE !== "SELECT" &&
+            PROGRAM_TYPE && PROGRAM_TYPE !== "" &&
             editProgramDescriptionValidation;
     };
 
@@ -208,6 +216,8 @@ class SellButtons extends Component {
 
     goToReviewAndSign = () => {
         const {history, goToStep} = this.props;
+        this.props.disableValidation()
+
         let savePromise = null;
         let content = store.getState().content;
         content = parseSeasons(content);
@@ -262,33 +272,38 @@ class SellButtons extends Component {
         const { step } = this.props;
         const { lastStep, saving } = this.state;
         const cantReviewAndSign = (step === 4 && !this.reviewAndSignEnabled());
+        const isButtonDisabled = (step === 1 && !this.step1Enabled()) || (step === 2 && !this.step2Enabled()) || (step === 3 && !this.step3Enabled()) || (cantReviewAndSign)
 
         return (
             <div className="buttons">
-                {step < lastStep && <div className="buttons-container">
+                { step < lastStep && <div className="buttons-container step-1 step-2" >
                     <button
                         className="yellow-border-button"
                         disabled={step <= 1}
                         onClick={ this.goToPreviousStep }>
-                            <i className="fa fa-angle-left"/>
-                            {this.context.t("Back")}
+                        <i className="fa fa-angle-left"/>
+                        {this.context.t("Back")}
                     </button>
 
                     <div data-tip={cantReviewAndSign ? this.getReviewButtonTooltipMessages() : this.getTooltipMessages()} >
-                        <button
-                            className="yellow-button"
-                            disabled={
-                                ( step === 1 && !this.step1Enabled()) ||
-                                ( step === 2 && !this.step2Enabled()) ||
-                                ( step === 3 && !this.step3Enabled()) ||
-                                ( cantReviewAndSign )
-                            }
-                            onClick={ () => step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext()}>
-                            {this.context.t("Next")}
-                                {saving ?
-                                    <i className="fa fa-cog fa-spin"/> :
-                                    <i className="fa fa-angle-right"/>}
-                        </button>
+                        {isButtonDisabled ? (
+                            <button
+                                onClick={this.props.enableValidation}
+                                className="yellow-button disabled"
+                                id="next-step"
+                            >
+                                {this.context.t("Next")}  <i className="fa fa-arrow-right"/>
+                            </button>
+                        ) : (
+                            <button
+                                id="next-step"
+                                className="yellow-button"
+                                onClick={() => step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext()}
+                            >
+                                {this.context.t("Next")}
+                                {saving ? <i className="fa fa-cog fa-spin"/> : <i className="fa fa-arrow-right"/>}
+                            </button>
+                        )}
                     </div>
                 </div>}
             </div>
@@ -314,6 +329,8 @@ const mapDispatchToProps = dispatch => {
             salesPackage : salesPackage,
             name: name
         }),
+        enableValidation: () => dispatch(enableValidation()),
+        disableValidation: () => dispatch(disableValidation()),
     }
 };
 

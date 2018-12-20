@@ -13,7 +13,8 @@ class GeneralTerms extends Component {
             activationCode,
             defaultChecked,
             value,
-            onChange
+            onChange,
+            isInvalid
         } = this.props;
 
         return (
@@ -32,6 +33,7 @@ class GeneralTerms extends Component {
                     <a href={(activationCode) ? "/generalterms?activationCode=" + activationCode : "/generalterms"} target={"_blank"}> Terms & Conditions </a>
                     {text2}
                 </div>
+                {isInvalid && <span className={'is-invalid'} style={{marginLeft:15}}>{this.context.t('TERMS_NOT_CHECKED')}</span>}
             </div>
         )
     }

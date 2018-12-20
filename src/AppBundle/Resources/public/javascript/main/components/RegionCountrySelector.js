@@ -163,7 +163,7 @@ class RegionCountrySelector extends React.Component {
         } = this.props;
 
         const {territories, regions, activeTerritories, activeRegions, worldwideSelected} = this.state;
-        const {exclusiveSoldTerritories} = this.props;
+        const {exclusiveSoldTerritories, placeholder, isInvalid} = this.props;
 
         return (
             <div className="country-selector">
@@ -211,6 +211,8 @@ class RegionCountrySelector extends React.Component {
                     onChange={this.handleChange}
                     value={this.state.selection}
                     exclusiveSoldTerritories={exclusiveSoldTerritories}
+                    placeholder={placeholder}
+                    isInvalid={isInvalid}
                 />
             </div>
         )

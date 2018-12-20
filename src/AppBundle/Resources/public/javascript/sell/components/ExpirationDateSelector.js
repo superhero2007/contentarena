@@ -18,7 +18,8 @@ class ExpirationDateSelector extends React.Component {
     };
 
     render(){
-        const { expiresAt } = this.props;
+        const { expiresAt, validation } = this.props;
+        const isInvalid = !expiresAt && validation;
 
         return (
             <div className="base-input">
@@ -26,7 +27,7 @@ class ExpirationDateSelector extends React.Component {
                     {this.context.t("CL_STEP4_TITLE_EXPIRY")}
                 </label>
                 <DatePicker
-                    className={"date-picker"}
+                    className={`date-picker ${isInvalid ? 'is-invalid':''}`}
                     selected={(expiresAt)? moment(expiresAt): undefined}
                     onChange={this.handleStartDate}
                     minDate={moment()}
@@ -34,6 +35,11 @@ class ExpirationDateSelector extends React.Component {
                     dateFormat={DATE_FORMAT}
                     placeholderText={DATE_FORMAT.toLowerCase()}
                 />
+                {isInvalid && (
+                    <span className="is-invalid" style={{marginLeft:15}}>
+                        {this.context.t('LISTING_EXPIRY_EMPTY')}
+                    </span>
+                )}
             </div>
         )
     }
@@ -44,7 +50,10 @@ ExpirationDateSelector.contextTypes = {
 };
 
 const mapStateToProps = state => {
-    return state.content
+    return {
+        ...state.content,
+        validation: state.validation
+    }
 };
 
 const mapDispatchToProps = dispatch => {
