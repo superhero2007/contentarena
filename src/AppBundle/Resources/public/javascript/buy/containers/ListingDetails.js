@@ -14,7 +14,7 @@ import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {
-    getCurrencySymbol, getFullName, goTo, goToClosedDeals, goToListing,
+    getCurrencySymbol, getCustomLicenseUrl, getFullName, goTo, goToClosedDeals, goToListing,
     goToMarketplace, viewLicense, viewLicenseCustom
 } from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
@@ -866,10 +866,13 @@ class ListingDetails extends React.Component {
                                 <span>{this.getCompanyAddress()}</span>
                                 <i className="fa fa-pencil-square-o" onClick={() => this.openEditCompany()} />
                             </div>
-                            <div className="bid-license" onClick={()=> viewLicenseCustom(content.customId, selectedPackage.id, bid, company)} title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
+                            <a className="bid-license"
+                               target={"_blank"}
+                               href={getCustomLicenseUrl(content.customId, selectedPackage.id, bid, company)}
+                               title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
                                 <span>{this.context.t("License agreement")}</span>
                                 <img src={pdfIcon} alt="Licence"/>
-                            </div>
+                            </a>
                         </div>
 
                         <div className="bid-signature">

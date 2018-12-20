@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
-import {getCurrencySymbol, goTo, viewLicenseBid} from "../../main/actions/utils";
+import {getCurrencySymbol, goTo} from "../../main/actions/utils";
 import Moment from "moment/moment";
 import ReactTooltip from 'react-tooltip';
 import {PropTypes} from "prop-types";
@@ -329,7 +329,9 @@ class ClosedDeals extends Component {
                                 }},
                                 Cell: props => <div className="actions-col">
                                     { !common.testStageMode &&
-                                        <img onClick={()=>{ viewLicenseBid(props.value.customId)} } src={pdfIcon} title={this.context.t("CLOSED_DEALS_LICENSE_AGREEMENT_ICON")} />
+                                        <a href={"/license/bid/"+ props.value.customId} target="_blank">
+                                            <img  src={pdfIcon} title={this.context.t("CLOSED_DEALS_LICENSE_AGREEMENT_ICON")} />
+                                        </a>
                                     }
 
                                     { common.testStageMode &&

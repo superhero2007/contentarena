@@ -5,12 +5,10 @@ import Modal from 'react-modal';
 import { DATE_FORMAT } from "@constants";
 import DeclineBidModal from "./../../common/modals/DeclineBidModal/DeclineBidModal";
 import AcceptBidModal from "./../../common/modals/AcceptBidModal/AcceptBidModal";
-import {getCurrencySymbol, getFee, limitText, viewLicenseBid} from "../actions/utils";
+import {getCurrencySymbol, getFee} from "../actions/utils";
 import {
     bidIcon,
-    blueCheckIcon,
     blueEnvelopeIcon,
-    cancelIcon,
     pdfIcon,
     fixedIcon,
     plusYellowIcon,
@@ -310,11 +308,10 @@ class CommercialSalesBundle extends React.Component{
                                     this.setState({selectedBid : props.value.bid}, this.openRejectModal);
                                 }} title={this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_ICON")} />}
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING") && !common.testStageMode &&
-                                    <img src={pdfIcon}
-                                         onClick={()=>{
-                                            viewLicenseBid(props.value.bid.customId)
-                                         }}
-                                         title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />
+                                    <a href={"/license/bid/"+ props.value.bid.customId} target="_blank">
+                                        <img src={pdfIcon}
+                                             title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")} />
+                                    </a>
                                 }
 
                                 { (props.value.status === "APPROVED" || props.value.status === "PENDING") && common.testStageMode &&

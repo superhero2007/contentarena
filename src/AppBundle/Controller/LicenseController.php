@@ -102,7 +102,7 @@ class LicenseController extends Controller
 
         if ( isset($license) && $license != null && $license->getUpdatedAt() != null && $license->getUpdatedAt() > $bid->getUpdatedAt() ){
             $pdf->addPDF($license->getFile(), 'all');
-            if ($download) $pdf->merge('download', "License Agreement.pdf");
+            if ($download) $pdf->merge('browser', "License Agreement.pdf");
             return;
         }
 
@@ -156,10 +156,10 @@ class LicenseController extends Controller
 
         if ($download){
             $response = new BinaryFileResponse($pathForTheMergedPdf);
-            $response->headers->set('Content-Type', 'application/x-download');
+            $response->headers->set('Content-Type', 'application/pdf');
 
             $response->setContentDisposition(
-                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                ResponseHeaderBag::DISPOSITION_INLINE,
                 $fileName
             );
             return $response;

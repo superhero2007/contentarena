@@ -19,11 +19,11 @@ export const goToListing = (id, openNew) => {
 };
 
 export const viewLicense = id => {
-    goTo("license/preview/"+ id)
+    goTo("license/preview/"+ id, true)
 };
 
 export const viewLicenseBid = id => {
-    goTo("license/bid/"+ id)
+    goTo("license/bid/"+ id, true)
 };
 
 export const viewLicenseBundle = (id, listingId) => {
@@ -31,6 +31,10 @@ export const viewLicenseBundle = (id, listingId) => {
 };
 
 export const viewLicenseCustom = (listingId, bundleId, bid, company) => {
+    goTo(getCustomLicenseUrl(listingId, bundleId, bid, company), true);
+};
+
+export const getCustomLicenseUrl = (listingId, bundleId, bid, company) => {
 
     const serialize = function(obj, prefix) {
         var str = [],
@@ -47,8 +51,7 @@ export const viewLicenseCustom = (listingId, bundleId, bid, company) => {
         return str.join("&");
     };
 
-    //let queryString = Object.keys(bundle).map(key => key + '=' + bundle[key]).join('&');
-    goTo("license/custom/" + listingId + "/" + bundleId + "?" + serialize({bid: bid, company}) );
+    return "/license/custom/" + listingId + "/" + bundleId + "?" + serialize({bid: bid, company}) ;
 };
 
 export const goToMarketplace = () => {
