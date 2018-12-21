@@ -632,8 +632,8 @@ class ListingDetails extends React.Component {
         const checkoutType = this.getCheckoutType();
 
         let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
-        const isEditedProgramShownInFirstTab = content.rightsPackage.length === 1 && content.rightsPackage.some(e => e.shortLabel === 'PR');
-
+        const isEditedProgramShown =  content.rightsPackage.some(e => e.shortLabel === 'PR');
+        const isEditedProgramShownInFirstTab = content.rightsPackage.length === 1 && isEditedProgramShown;
         const isBidInvalid = !bid && validation;
         const isTermsInvalid = !terms && validation;
 
@@ -732,7 +732,7 @@ class ListingDetails extends React.Component {
                                     {this.context.t("LISTING_DETAILS_TAB_BUNDLES")}
                                 </div>
 
-                                {content.PROGRAM_NAME && !isEditedProgramShownInFirstTab &&(
+                                {content.PROGRAM_NAME && !isEditedProgramShownInFirstTab && isEditedProgramShown &&(
                                     <div className={'tab '+ this.isActiveTab(tab, 'editedprogram')} onClick={()=>{
                                         history.push('/listing/'+content.customId+'/editedprogram');
                                         this.showTab("editedprogram")
@@ -764,7 +764,7 @@ class ListingDetails extends React.Component {
                                 <CommercialTerms
                                     profile={profile}
                                     onSelectPackage={this.selectPackage}
-                                    programDetails={(content.PROGRAM_NAME && isEditedProgramShownInFirstTab) ? <ProgramDetails {...content}/> : false}
+                                    programDetails={(content.PROGRAM_NAME && isEditedProgramShownInFirstTab && isEditedProgramShown) ? <ProgramDetails {...content}/> : false}
                                     {...content}
                                 />
                                 }

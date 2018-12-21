@@ -11,6 +11,7 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Content;
 use AppBundle\Entity\ListingStatus;
+use AppBundle\Entity\User;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use Doctrine\Common\EventSubscriber;
@@ -88,7 +89,10 @@ class UpdateListingSubscriber implements EventSubscriber
                     $users = $this->contentService->getUsersToNotify($entity);
 
                     foreach ($users as $user){
-                        $this->mailer->listingMatch($entity, $user);
+                        /* @var User $user */
+                        if($user->isReceivePreferenceNotifications() != null && $user->isReceivePreferenceNotifications() ) {
+                            $this->mailer->listingMatch($entity, $user);
+                        }
                     }
 
 

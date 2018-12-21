@@ -32,6 +32,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->profile = "BUYER";
+        if ($this->getRegisteredAt() == null) $this->setRegisteredAt(new \DateTime());
     }
 
     public function __toString()

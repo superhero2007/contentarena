@@ -155,7 +155,7 @@ class AuthRouter extends React.Component {
         this.props.setLanguage("en");
         this.props.setTotalCountries(Number(totalCountries));
         this.props.setTestStageMode(!!+testStageMode);
-        if( isOwner) this.props.updateProfile("SELLER");
+        //if( isOwner) this.props.updateProfile("SELLER");
     }
 
     componentWillReceiveProps(nextProps){
