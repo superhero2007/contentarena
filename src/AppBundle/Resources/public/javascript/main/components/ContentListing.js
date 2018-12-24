@@ -347,10 +347,6 @@ class ContentListing extends Component{
                                 onDelete(bid.id);
 
                             }}>remove</div>}
-
-                            {/*<div className="icon" title="Some title">
-                                <i className="fa fa-question-circle" aria-hidden="true"/>
-                            </div>*/}
                         </div>
                     </div>
                 )}

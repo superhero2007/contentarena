@@ -32,7 +32,7 @@ class ClosedDeals extends Component {
         ContentArena.ContentApi.getClosedDeals().done((bids) => {
             _this.setState({bids: bids, loading : false});
         });
-        jQuery('body, #home-wrapper').css('background-color', '#efefef') //todo: remove this when other page redesign ready
+        jQuery('body, #home-wrapper').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
 
     componentWillUnmount() {
@@ -101,7 +101,6 @@ class ClosedDeals extends Component {
                                 className : 'table-header-big',
                                 id: 'name',
                                 sortMethod: (a, b) => {
-                                    console.log(a,b);
                                     if (a.name.length === b.name.length) {
                                         return a > b ? 1 : -1;
                                     }

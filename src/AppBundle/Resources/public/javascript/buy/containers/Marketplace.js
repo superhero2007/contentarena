@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
 import EventFilter from '../components/EventFilter';
 import RightsFilter from '../components/RightsFilter';
 import ContentListing from '../../main/components/ContentListing';
+import ContentListingTable from '../../main/components/ContentListingTable';
 import ListingDetails from './ListingDetails';
 import {
     addRight, clearUpdateFilter, removeRight, updateCountries, updateExclusive,
     updateMany
 } from "../actions/filterActions";
+import { CONTENT_LISTING_VIEW } from "@constants";
 import {updateEvent, updateSport} from "../actions/filterActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from '../../main/utiles/localStorageHelper';
 import first from 'lodash/first';
+import cn from 'classnames';
 import {PropTypes} from "prop-types";
 const queryString = require('query-string');
 
-class Marketplace extends React.Component {
+class Marketplace extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,7 +32,8 @@ class Marketplace extends React.Component {
             countries : [],
             territories: [],
             profile : props.user.profile,
-            errorMessage: ''
+            errorMessage: '',
+            listingView: CONTENT_LISTING_VIEW.LIST
         };
     }
 
@@ -48,7 +52,7 @@ class Marketplace extends React.Component {
                     this.props.selectSport({value:match.params.filterValue, label : match.params.filterValue });
                     return;
                 case "search":
-                    this.props.updateEvent( match.params.filterValue);
+                    this.props.updateEvent(match.params.filterValue);
                     return;
                 case "territory":
                     this.props.updateFilters( {countries: [match.params.filterValue]});
@@ -223,6 +227,10 @@ class Marketplace extends React.Component {
         history.push('/listing/' + customId );
     };
 
+    setListingViewType = (type) => {
+        this.setState({listingView: type});
+    };
+
     render () {
         const { filter, salesPackage ,history, location, match } = this.props;
         const {
@@ -234,7 +242,9 @@ class Marketplace extends React.Component {
             company,
             sortSalesPackages,
             profile,
-            errorMessage
+            errorMessage,
+            listingView,
+            defaultRightsPackage
         } = this.state;
 
         if (errorMessage) {
@@ -246,62 +256,81 @@ class Marketplace extends React.Component {
         return (
             <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                {!showDetails && !loadingListingDetails && (
-                    <div style={{width: '100%', textAlign: 'right'}}>
-                        <RightsLegend />
+                {!showDetails && (<Fragment>
+                    <div className="buy-container-left">
+                        <EventFilter
+                            onFilter={this.filter}/>
+                        <RightsFilter
+                            onFilter={this.filterByRoute}
+                            rightsPackage={defaultRightsPackage}/>
                     </div>
-                )}
+                    <div className="buy-container-right">
+                        <div className="content-listing-header">
+                            <div className="content-listing-switcher">
+                                <button
+                                    className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.LIST})}
+                                    onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.LIST)}>
+                                    <i className="fa fa-list-ul" />
+                                </button>
+                                <button
+                                    className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.TABLE})}
+                                    onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.TABLE)}>
+                                    <i className="fa fa-th" />
+                                </button>
+                            </div>
 
-                {!showDetails && <div className="buy-container-left">
-                    <EventFilter
-                        onFilter={this.filter}/>
-                    <RightsFilter
-                        onFilter={this.filterByRoute}
-                        rightsPackage={this.state.defaultRightsPackage}/>
-                </div>}
+                            <div className="sort-by-wrapper">
+                                <span>Sort By</span>
+                                <select name="sortBy" id="sort">
+                                    <option value="test">test</option>
+                                </select>
+                            </div>
 
-                {
-                    !showDetails && (
-                        <div className="buy-container-right">
-
-                            {listings.length > 0 &&
-                            listings.map(listing => {
-                                return (
-                                    <ContentListing
-                                        onSelect={() => this.goToListing(listing.customId)}
-                                        key={listing.customId}
-                                        filter={filter}
-                                        sortSalesPackages={sortSalesPackages}
-                                        {...listing}
-                                    />
-                                );
-                            })}
-
-                            {listings.length === 0 &&
-                            loadingListing && (
-                                <div className={"big-spinner"}>
-                                    <i className="fa fa-cog fa-spin" />
-                                </div>
-                            )}
-
-                            {listings.length === 0 &&
-                            !loadingListing && (
-                                <span className={"no-results"}>
-                                    {this.context.t(
-                                        "MARKETPLACE_NO_RESULTS"
-                                    )}
-                                </span>
-                            )}
+                            <div className="right-legend-wrapper">
+                                <RightsLegend />
+                            </div>
                         </div>
-                    )
-                }
+                        {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.TABLE &&
+                            <ContentListingTable
+                                listings={listings}
+                                history={history}
+                            />
+                        }
+                        {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && listings.map(listing => {
+                            return (
+                                <ContentListing
+                                    onSelect={() => this.goToListing(listing.customId)}
+                                    key={listing.customId}
+                                    filter={filter}
+                                    sortSalesPackages={sortSalesPackages}
+                                    {...listing}
+                                />
+                            );
+                        })}
+
+                        {listings.length === 0 && loadingListing && (
+                            <div className={"big-spinner"}>
+                                <i className="fa fa-cog fa-spin" />
+                            </div>
+                        )}
+
+                        {listings.length === 0 && !loadingListing && (
+                            <span className={"no-results"}>
+                            {this.context.t(
+                                "MARKETPLACE_NO_RESULTS"
+                            )}
+                        </span>
+                        )}
+                    </div>
+                </Fragment>)}
+
                 {loadingListingDetails && <div className={"big-spinner"}>
                         <i className="fa fa-cog fa-spin"/>
                     </div>
                 }
 
-                {
-                    showDetails && !loadingListingDetails && <ListingDetails
+                {showDetails && !loadingListingDetails &&
+                    <ListingDetails
                         key={location.pathname}
                         tab={match.params.tab}
                         bundle={match.params.bundle}
@@ -323,7 +352,7 @@ Marketplace.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ( state, ownProps) => {
+const mapStateToProps = (state) => {
     return state;
 };
 
@@ -345,4 +374,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Marketplace)
+)(Marketplace);

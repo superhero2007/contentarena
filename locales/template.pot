@@ -592,6 +592,26 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_LISTING_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_COMPETITION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_SEASON_RELEASE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/CountrySelector.js
 msgid "All territories are sold and listing is exclusive"
 msgstr ""
