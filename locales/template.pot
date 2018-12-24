@@ -163,6 +163,10 @@ msgid "Bid"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "BID_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "MARKETPLACE_BUTTON_APPLY"
 msgstr ""
 
@@ -637,11 +641,20 @@ msgid "CL_STEP5_TERMS_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "LICENSE_NOT_CHECKED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "CL_STEP5_TERMS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "CL_STEP5_TERMS_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+#: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
+msgid "TERMS_NOT_CHECKED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -654,6 +667,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_PLACEHOLDER_BIG_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "SIGNATURE_NAME_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "SIGNATURE_POSITION_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
@@ -748,6 +769,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
 msgid "Fixture"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
+msgid "FIXTURE_NAME_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewFixture.js
@@ -1704,6 +1729,10 @@ msgid "CL_STEP4_LABEL_APPLICABLE_LAW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
+msgid "LAW_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/ApplicableLaw.js
 msgid "CL_STEP4_PLACEHOLDER_APPLICABLE_LAW"
 msgstr ""
 
@@ -1756,6 +1785,10 @@ msgstr ""
 msgid "Company address"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "COMPANY_INFORMATION_EMPTY"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/CurrencySelector.js
 msgid "Currency"
 msgstr ""
@@ -1772,8 +1805,16 @@ msgstr ""
 msgid "CL_STEP4_TITLE_EXPIRY"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
+msgid "LISTING_EXPIRY_EMPTY"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
 msgid "CL_STEP4_LABEL_JURISDICTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
+msgid "JURISDICTION_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
@@ -1813,6 +1854,10 @@ msgstr ""
 msgid "CL_STEP1_LISTING_NAME"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js
+msgid "LISTING_NAME_EMPTY"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
 msgid "CL3_LANGUAGE_SELECTOR_PLACEHOLDER"
 msgstr ""
@@ -1847,6 +1892,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
 msgid "CL_STEP3_POPUP_TECHNICAL_FEE_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CONTENT_DELIVERY_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageEdit.js
@@ -1908,6 +1957,10 @@ msgid "CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "TERRITORIES_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_EDIT_BUNDLE_AS_PACKAGE"
 msgstr ""
 
@@ -1929,7 +1982,15 @@ msgid "CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "FEE_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL4_TERRITORIES_BUNDLE_PAYMENT_INFO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "INSTALMENTS_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
@@ -1968,6 +2029,10 @@ msgstr ""
 msgid "CL_STEP1_LABEL_SPORT"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
+msgid "SPORT_EMPTY"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_MODAL_SUCCESS_MESSAGE_1"
 msgstr ""
@@ -1978,6 +2043,15 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_MODAL_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+msgid "CL_STEP5_BUTTON_SUBMIT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
+msgid "CL_STEP5_BUTTON_SAVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
@@ -2002,15 +2076,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_BUTTON_SUBMIT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP5_BUTTON_SAVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellButtons.js
@@ -2098,6 +2163,10 @@ msgid "CL_STEP2_PROGRAM_DESCRIPTION_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
+msgid "PROGRAM_DESCRIPTION_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep2.js
 msgid "CL_STEP2_PROGRAM_DESCRIPTION_PLACEHOLDER"
 msgstr ""
 
@@ -2155,6 +2224,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "CL_STEP3_TITLE_LICENSE_PERIOD_END"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
+msgid "LICENSE_PERIOD_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
@@ -2217,51 +2290,3 @@ msgstr ""
 msgid "CL_STEP2_RIGHT_DEFINITIONS_"
 msgstr ""
 
-#: validation
-msgid "LAW_EMPTY"
-msgstr ""
-
-msgid "COMPANY_INFORMATION_EMPTY"
-msgstr ""
-
-msgid "LICENSE_NOT_CHECKED"
-msgstr ""
-
-msgid "TERMS_NOT_CHECKED"
-msgstr ""
-
-msgid "SIGNATURE_NAME_EMPTY"
-msgstr ""
-
-msgid "SIGNATURE_POSITION_EMPTY"
-msgstr ""
-
-msgid "LISTING_EXPIRY_EMPTY"
-msgstr ""
-
-msgid "JURISDICTION_EMPTY"
-msgstr ""
-
-msgid "LISTING_NAME_EMPTY"
-msgstr ""
-
-msgid "FEE_EMPTY"
-msgstr ""
-
-msgid "INSTALMENTS_EMPTY"
-msgstr ""
-
-msgid "TERRITORIES_EMPTY"
-msgstr ""
-
-msgid "SPORT_EMPTY"
-msgstr ""
-
-msgid "PROGRAM_DESCRIPTION_EMPTY"
-msgstr ""
-
-msgid "LICENSE_PERIOD_EMPTY"
-msgstr ""
-
-msgid "CONTENT_DELIVERY_EMPTY"
-msgstr ""
