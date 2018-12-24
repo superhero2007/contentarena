@@ -63,7 +63,7 @@ class PrivateRoute extends React.Component {
                 return props.match.path === "/" ? (
                     <Redirect
                         to={{
-                            pathname: profile === "SELLER" ? "/managelistings" : "/marketplace",
+                            pathname: "/marketplace",
                             state: {from: props.location}
                         }}
                     />
