@@ -147,6 +147,9 @@ class SellFormStep4 extends React.Component {
                     <JurisdictionSelector/>
 
                     <TitleBar title={this.context.t("CL_STEP4_ANNEX_INFO")}/>
+                    <div>
+                        {this.context.t("CL_STEP4_LABEL_ANNEX_DESCRIPTION")}
+                    </div>
 
                     <FileSelector
                         label={this.context.t('CL_STEP4_LABEL_ANNEX')}

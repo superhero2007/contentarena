@@ -2006,6 +2006,10 @@ msgid "CL_STEP4_SALES_BUNDLES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "CL_STEP4_TERRITORIAL_BUNDLES_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
 msgid "CL_STEP4_REMOVE_ALL_BUNDLES"
 msgstr ""
 

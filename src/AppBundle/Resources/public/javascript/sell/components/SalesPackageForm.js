@@ -695,6 +695,9 @@ class SalesPackageForm extends React.Component {
                     <label>
                         {this.context.t("CL_STEP4_SALES_BUNDLES")}
                     </label>
+                    <div>
+                        {this.context.t("CL_STEP4_TERRITORIAL_BUNDLES_DESCRIPTION")}
+                    </div>
 
                     {!salesPackages.length && this.addBundlesAvailable() && (
                         <div className={`sales-bundles-placeholder`}>
