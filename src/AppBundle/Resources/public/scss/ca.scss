@@ -997,6 +997,14 @@ button {
       border-bottom: none;
     }
     .sales-package-form {
+      &.is-invalid {
+        .base-full-input label {
+          border-bottom: 1px solid #CC0000;
+        }
+        .sales-bundles-placeholder {
+          border: 1px solid #CC0000;
+        }
+      }
       .base-full-input {
         max-width: inherit;
         margin-bottom: inherit;

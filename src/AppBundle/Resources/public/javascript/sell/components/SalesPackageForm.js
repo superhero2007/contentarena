@@ -373,7 +373,6 @@ class SalesPackageForm extends React.Component {
             this.installmentsIncomplete()
 
         const isTerritoriesEmpty = territories.length === 0 && validation;
-        const isFeeEmpty = !fee && validation;
 
         return <Modal
             isOpen={this.state.isOpen}
@@ -527,10 +526,7 @@ class SalesPackageForm extends React.Component {
                                     min={0}
                                     style={{ height: "26px", width: "100px" }}
                                     prefix={getCurrencySymbol(currency)+ " "}
-                                    placeholder={isFeeEmpty ? this.context.t('FEE_EMPTY') : ''}
-                                    className={isFeeEmpty ? 'is-invalid' : ''}
                                 />
-
                             </div>
                         </div>
                     </div>
@@ -693,7 +689,7 @@ class SalesPackageForm extends React.Component {
 
         if (sort) salesPackages.sort(this.sortSalesPackages);
         return (
-            <div className="sales-package-form">
+            <div className={`sales-package-form ${isBundlesInvalid ? 'is-invalid':''}`}>
                 { this.renderModal() }
                 <div className="base-full-input" style={inputStyle}>
                     <label>
@@ -701,7 +697,7 @@ class SalesPackageForm extends React.Component {
                     </label>
 
                     {!salesPackages.length && this.addBundlesAvailable() && (
-                        <div className={`sales-bundles-placeholder ${isBundlesInvalid ? 'is-invalid':''}`}>
+                        <div className={`sales-bundles-placeholder`}>
                             {this.renderAddSalesBundleButton()}
                         </div>
                     )}
