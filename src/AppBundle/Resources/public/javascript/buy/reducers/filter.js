@@ -1,4 +1,3 @@
-
 export const filterTypes= {
     ADD_RIGHT:'ADD_RIGHT',
     REMOVE_RIGHT : 'REMOVE_RIGHT',
@@ -10,7 +9,9 @@ export const filterTypes= {
     CLEAR : 'CLEAR',
     CLEAR_UPDATE : 'CLEAR_UPDATE',
     UPDATE_MANY : 'UPDATE_MANY',
-    UPDATE_FILTERS_CONFIG: "UPDATE_ALL"
+    UPDATE_FILTERS_CONFIG: "UPDATE_ALL",
+    UPDATE_EVENT_DATE_FROM: "UPDATE_FROM",
+    UPDATE_EVENT_DATE_TO: "UPDATE_TO",
 };
 
 const defaultFilter = {
@@ -24,11 +25,11 @@ const defaultFilter = {
     },
     event : "",
     forceUpdate : true,
-    syncWithLocalStorage: false
+    eventDateFrom: "",
+    eventDateTo: ""
 };
 
 export const filter = (state = defaultFilter, action) => {
-
     switch (action.type) {
         case filterTypes.UPDATE_INCLUDED_COUNTRIES:
             return Object.assign({}, state, {
@@ -45,7 +46,6 @@ export const filter = (state = defaultFilter, action) => {
                 rights: [...state.rights, action.id]
             });
         case filterTypes.REMOVE_RIGHT:
-
             let index = state.rights.indexOf(action.id);
             state.rights.splice(index, 1);
             return Object.assign({}, state, {
@@ -55,6 +55,10 @@ export const filter = (state = defaultFilter, action) => {
             return Object.assign({}, state, {
                 countries: action.countries.map(c=>c.value)
             });
+        case filterTypes.UPDATE_EVENT_DATE_FROM:
+            return Object.assign({}, state, {eventDateFrom: action.date});
+        case filterTypes.UPDATE_EVENT_DATE_TO:
+            return Object.assign({}, state, {eventDateTo: action.date});
         case filterTypes.UPDATE_EXCLUSIVE:
             return Object.assign({}, state, {
                 exclusive: action.exclusive
@@ -72,7 +76,7 @@ export const filter = (state = defaultFilter, action) => {
         case filterTypes.UPDATE_MANY:
             action.filters.forceUpdate = true;
             if (action.filters.rights) action.filters.rights = action.filters.rights.map(r=>Number(r));
-            return Object.assign({}, defaultFilter, action.filters);
+            return Object.assign({}, state, action.filters);
         default:
             return state;
     }

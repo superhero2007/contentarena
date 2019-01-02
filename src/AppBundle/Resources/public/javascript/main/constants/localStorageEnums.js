@@ -7,7 +7,9 @@ const localStorageEnums = Object.freeze({
     'PR': 'PRfilter',
     'TERRITORIES': 'territoryFilter',
     'SPORTS': 'sportsFilter',
-    'EXCLUSIVE': 'exclusiveFilter'
+    'EXCLUSIVE': 'exclusiveFilter',
+    'EVENT_DATE_FROM': 'eventDateFrom',
+    'EVENT_DATE_TO': 'eventDateTo',
 });
 
 export default localStorageEnums;

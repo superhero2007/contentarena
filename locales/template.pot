@@ -40,6 +40,22 @@ msgstr ""
 msgid "INSTALLMENT_CLOSURE_DAYS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
+msgid "MARKETPLACE_UPCOMING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
+msgid "MARKETPLACE_EXPIRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
+msgid "MARKETPLACE_EVENT_DATE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
+msgid "MARKETPLACE_PUBLISH"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "MARKETPLACE_LABEL_FILTER_TERRITORIES"

@@ -56,6 +56,21 @@
       }
     }
 
+    .event-date-wrapper{
+      .event-date-row{
+        display: flex;
+        justify-content: space-between;
+        width: 75%;
+        margin-bottom: 10px;
+
+        input { width: 85px; }
+
+        & div{
+          display: inline-block;
+        }
+      }
+    }
+
     .territories-placeholder {
       background: white;
       padding: 15px;
@@ -118,20 +133,26 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: baseline;
     margin-bottom: 10px;
 
     .right-legend-wrapper{
       margin-left: auto;
+      position: relative;
+      bottom: -4px;
     }
 
     .sort-by-wrapper{
-      margin-left: 10px;
       span{
         font-weight: bold;
+        font-size: 15px;
       }
-      select{
-        width:100px;
-        margin: 0 0 0 5px;
+      label{
+        font-size: 14px;
+        cursor: pointer;
+      }
+      input[type="radio"]{
+        margin: 0 5px;
       }
     }
 

@@ -282,7 +282,33 @@ class ContentFilter
         $this->territories = $territories;
     }
 
+    /**
+     * @param string $sortBy
+     * @return string
+     */
+    public function getSortByKey($sortBy = null)
+    {
+        if($sortBy === 'expiry') {
+            $this->setSortOrder('ASC');
+            return $this->getSortOrder();
+        } else {
+            $this->setSortOrder('DESC');
+            return $this->getSortOrder();
+        }
+    }
 
-
-
+    /**
+     * @param string $sortBy
+     * @return string
+     */
+    public function getOrderByKey($sortBy = null)
+    {
+        if($sortBy === 'expiry') {
+            $this->setOrderBy('expiresAt');
+            return $this->getOrderBy();
+        } else {
+            $this->setOrderBy('createdAt');
+            return $this->getOrderBy();
+        }
+    }
 }

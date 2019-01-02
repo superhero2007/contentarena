@@ -75,7 +75,12 @@ class ContentService
             $includeAllCountries = $request->request->get("includeAllCountries");
         }
 
-        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term, $exclusive, $includeAllCountries);
+        $sortBy = null;
+        if($request->request->get("sortBy")){
+            $sortBy = $request->request->get("sortBy");
+        }
+
+        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term, $exclusive, $includeAllCountries, $sortBy);
 
         return $content;
 

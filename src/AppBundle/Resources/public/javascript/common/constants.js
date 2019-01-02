@@ -8,6 +8,13 @@ export const CONTENT_LISTING_VIEW = {
     TABLE: 'table'
 };
 
+export const LISTING_SORT_OPTIONS = {
+    PUBLISH_DATE: 'publishing',
+    UPCOMING_EVENT: 'upcoming',
+    EVENT_DATE: 'event',
+    EXPIRY_DATE: 'expiry'
+};
+
 export const REGIONS_ENUMS = {
     "Algeria":"DZA",
     "Angola":"AGO",

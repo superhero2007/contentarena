@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { test } from "../actions";
 import EventFilter from '../components/EventFilter';
 import RightsFilter from '../components/RightsFilter';
+import SortByListing from "../components/ListingSorting";
 import ContentListing from '../../main/components/ContentListing';
 import ContentListingTable from '../../main/components/ContentListingTable';
 import ListingDetails from './ListingDetails';
@@ -10,7 +11,7 @@ import {
     addRight, clearUpdateFilter, removeRight, updateCountries, updateExclusive,
     updateMany
 } from "../actions/filterActions";
-import { CONTENT_LISTING_VIEW } from "@constants";
+import { CONTENT_LISTING_VIEW, LISTING_SORT_OPTIONS } from "@constants";
 import {updateEvent, updateSport} from "../actions/filterActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from '../../main/utiles/localStorageHelper';
@@ -33,7 +34,8 @@ class Marketplace extends Component {
             territories: [],
             profile : props.user.profile,
             errorMessage: '',
-            listingView: CONTENT_LISTING_VIEW.LIST
+            listingView: CONTENT_LISTING_VIEW.LIST,
+            sortBy: LISTING_SORT_OPTIONS.PUBLISH_DATE,
         };
     }
 
@@ -62,7 +64,6 @@ class Marketplace extends Component {
                     this.props.updateFilters(customFilter);
                     return;
             }
-
         }
 
         this.filter();
@@ -86,11 +87,9 @@ class Marketplace extends Component {
     }
 
     selectListing = (id) => {
-
         const {history} = this.props;
 
         let _this = this;
-
         if ( id === _this.state.id ){
             _this.setState({
                 showDetails : true
@@ -125,45 +124,26 @@ class Marketplace extends Component {
         });
     };
 
-    parseFilter = (filter) => {
-        const sports = LocalStorageHelper.getSportsSelected();
-        const sportsFromStorege = sports ? [{name: sports.value}] : null;
-        const sportsFromProps = filter.sport ? [{name: filter.sport.value}] : null;
-        const exclusiveFromStorege = LocalStorageHelper.getExclusive();
-        const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
-        const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
-
-        let response = {
-            rights: filter.rights,
-            countries: countriesFromStorage || filter.countries,
-        };
-
-        if ( filter.event ) response.event = filter.event;
-
-        if(exclusiveFromStorege || filter.exclusive) {
-            response.exclusive = exclusiveFromStorege || filter.exclusive;
-        }
-        if (sportsFromStorege || first(sportsFromProps.name)) {
-            response.sports = (sportsFromStorege || sportsFromProps).filter(s => s.name || s.value);
-        }
-        if(allCountriesFromStorage || filter.includeAllCountries) {
-            response.includeAllCountries = allCountriesFromStorage || filter.includeAllCountries;
-        }
-
-        return response;
+    handleSortBy = (type) => {
+        this.setState({sortBy: type}, this.filter);
     };
 
-    parseFilterForUrl = (filter) =>{
+    isEventTimeActive = () => {
+        const { sortBy } = this.state;
+        return sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT;
+    };
 
+    parseFilter = (filter) => {
         const sports = LocalStorageHelper.getSportsSelected();
         const sportsFromStorage = sports ? [{name: sports.value}] : null;
         const sportsFromProps = filter.sport ? [{name: filter.sport.value}] : null;
         const exclusiveFromStorage = LocalStorageHelper.getExclusive();
+        const rightsFromStorage = LocalStorageHelper.getRightsCheckboxSelected();
         const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
         const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
 
         let response = {
-            rights: filter.rights,
+            rights: filter.rights.length ? filter.rights : rightsFromStorage,
             countries: countriesFromStorage || filter.countries,
         };
 
@@ -172,8 +152,8 @@ class Marketplace extends Component {
         if(exclusiveFromStorage || filter.exclusive) {
             response.exclusive = exclusiveFromStorage || filter.exclusive;
         }
-        if (sportsFromStorage || sportsFromProps) {
-            response.sports = sportsFromStorage || sportsFromProps;
+        if (sportsFromStorage || first(sportsFromProps.name)) {
+            response.sports = (sportsFromStorage || sportsFromProps).filter(s => s.name || s.value);
         }
         if(allCountriesFromStorage || filter.includeAllCountries) {
             response.includeAllCountries = allCountriesFromStorage || filter.includeAllCountries;
@@ -189,6 +169,8 @@ class Marketplace extends Component {
             loadingListing : true,
             listings: []
         });
+
+        filter.sortBy = this.state.sortBy;
 
         ContentArena.Api.getJsonContent(filter).done((listings) => {
 
@@ -219,7 +201,7 @@ class Marketplace extends Component {
             }
             return str.join("&");
         };
-        history.push("/marketplace/filter/multi?"+serialize(this.parseFilterForUrl(filter)));
+        history.push("/marketplace/filter/multi?"+serialize(this.parseFilter(filter)));
     };
 
     goToListing = (customId) => {
@@ -233,6 +215,7 @@ class Marketplace extends Component {
 
     render () {
         const { filter, salesPackage ,history, location, match } = this.props;
+
         const {
             listings,
             loadingListing,
@@ -244,12 +227,15 @@ class Marketplace extends Component {
             profile,
             errorMessage,
             listingView,
-            defaultRightsPackage
+            defaultRightsPackage,
+            sortBy
         } = this.state;
 
         if (errorMessage) {
             return <h2 className="text-center">{errorMessage}</h2>
         }
+
+        console.log(this.props);
 
         document.title = "Content Arena - Marketplace";
 
@@ -262,7 +248,8 @@ class Marketplace extends Component {
                             onFilter={this.filter}/>
                         <RightsFilter
                             onFilter={this.filterByRoute}
-                            rightsPackage={defaultRightsPackage}/>
+                            rightsPackage={defaultRightsPackage}
+                            timeEventActive={this.isEventTimeActive()} />
                     </div>
                     <div className="buy-container-right">
                         <div className="content-listing-header">
@@ -279,12 +266,7 @@ class Marketplace extends Component {
                                 </button>
                             </div>
 
-                            <div className="sort-by-wrapper">
-                                <span>Sort By</span>
-                                <select name="sortBy" id="sort">
-                                    <option value="test">test</option>
-                                </select>
-                            </div>
+                            <SortByListing sortBy={sortBy} onSelect={this.handleSortBy} />
 
                             <div className="right-legend-wrapper">
                                 <RightsLegend />
@@ -366,7 +348,7 @@ const mapDispatchToProps = dispatch => {
         removeRight: id => dispatch(removeRight(id)),
         updateCountries: countries => dispatch(updateCountries(countries)),
         updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
-        updateFilters: filters => dispatch(updateMany(filters)),
+        updateFilters: filters => dispatch(updateMany(filters))
     }
 };
 

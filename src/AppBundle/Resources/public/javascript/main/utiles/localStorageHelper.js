@@ -2,8 +2,7 @@ import localStorageEnums from '../constants/localStorageEnums';
 import store from '../../main/store';
 
 class LocalStorageClass {
-    constructor() {
-    }
+    constructor() {}
 
     getRightsCheckboxSelected() {
         const LTFromStorage = localStorage.getItem(localStorageEnums.LT) &&
@@ -49,21 +48,28 @@ class LocalStorageClass {
         return countriesFromStorage && countriesFromStorage.length === worldwideCountries;
     }
 
-    getExclusive () {
+    getExclusive() {
         const exclusiveFromStorage = localStorage.getItem(localStorageEnums.EXCLUSIVE) &&
             JSON.parse(localStorage.getItem(localStorageEnums.EXCLUSIVE));
 
         return exclusiveFromStorage || false;
     }
 
-    getSportsSelected () {
+    getSportsSelected() {
         const sports = localStorage.getItem(localStorageEnums.SPORTS) &&
             JSON.parse(localStorage.getItem(localStorageEnums.SPORTS));
 
         return sports || null;
     }
+
+    getEventDateFrom() {
+        return localStorage.getItem(localStorageEnums.EVENT_DATE_FROM) || undefined;
+    }
+
+    getEventDateTo() {
+        return localStorage.getItem(localStorageEnums.EVENT_DATE_TO) || undefined;
+    }
 }
 
 const LocalStorageHelper = new LocalStorageClass();
-
 export default LocalStorageHelper;

@@ -78,10 +78,9 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
             return $query;
         }
-
     }
 
-    public function getFilteredContent( ContentFilter $filter, $term = null, $exclusive = null, $includeAllCountries = null ){
+    public function getFilteredContent( ContentFilter $filter, $term = null, $exclusive = null, $includeAllCountries = null, $sortBy = null ){
 
         $query = $this->createQueryBuilder('content');
 
@@ -186,8 +185,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
-
-
         $now = date('Y-m-d H:i:s');
 
         /**
@@ -204,12 +201,11 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('isApproved','APPROVED')
             ->setParameter('isEdited','EDITED');
 
-        $query->orderBy('content.'.$filter->getOrderBy(), $filter->getSortOrder());
+        $query->orderBy('content.'.$filter->getOrderByKey($sortBy), $filter->getSortByKey($sortBy));
 
         $result = $query->getQuery()->getResult();
 
         return $result;
-
     }
 
     public function getActiveSports(  ){

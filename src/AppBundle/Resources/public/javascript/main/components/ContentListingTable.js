@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import ReactTable from "react-table";
 import ReactTooltip from 'react-tooltip';
 import PropTypes from "prop-types";
@@ -9,7 +9,7 @@ import { YEAR_FORMAT, REGIONS_ENUMS } from "@constants";
 import Moment from "moment/moment";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 
-class ContentListingTable extends PureComponent {
+class ContentListingTable extends Component {
     constructor (props) {
         super(props);
         this.state = {};
