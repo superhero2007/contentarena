@@ -16,13 +16,19 @@ class SellFormSteps extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            steps: [
-                {step: 1, title: "Event selection"},
-                {step: 2, title: "Program & Rights Selection"},
-                {step: 3, title: "Grant of Rights & Production Details"},
-                {step: 4, title: "Commercial Details"}
-            ]
+            steps: []
         };
+    }
+
+    componentDidMount() {
+        this.setState({
+            steps: [
+                {step: 1, title: this.context.t("CL_STEP_EVENT_SECTION")},
+                {step: 2, title: this.context.t("CL_STEP_PROGRAM_RIGHT_SELECTION")},
+                {step: 3, title: this.context.t("CL_STEP_GRANT_OF_RIGHT")},
+                {step: 4, title: this.context.t("CL_STEP_COMMERCIAL_DETAILS")}
+            ]
+        });
     }
 
     onClick = (stepSelected) => {

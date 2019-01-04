@@ -40,20 +40,19 @@ const SalesPackageTable = ({salesPackages, currency, listingId, hideButtons,edit
                             </div>
                         )
                     }
-                },
-                {
+                },{
                     Header: context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
                     headerClassName: 'table-header-big',
                     width: 300,
                     Cell: props => {
                         const salesPackage = props.original;
                         if (salesPackage.sold) return null;
-                        return (
-                            salesPackage.salesMethod
-                        )
+
+                        return salesPackage.salesMethod === 'BIDDING'
+                            ? context.t('CL4_5_SALES_METHOD_BIDDING')
+                            : context.t('CL4_5_SALES_METHOD_FIXED');
                     }
-                },
-                {
+                },{
                     Header: context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
                     headerClassName: 'table-header-big',
                     width: 400,

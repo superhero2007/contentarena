@@ -166,7 +166,7 @@ class SellFormStep3 extends React.Component {
                         onClose={this.closeLicensePopup}
                     />
 
-                    <TitleBar title={"License period"} />
+                    <TitleBar title={this.context.t("CL3_LICENSE_PERIOD")} />
 
                     <div className={"license-date-container"}>
                         <div className="table-right">
@@ -175,7 +175,7 @@ class SellFormStep3 extends React.Component {
                                     {this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_START")}
                                 </div>
                                 <div className="column right-item-content" style={licenseStyles} onClick={this.showLicensePopup}>
-                                    { this.props.startDateMode === "LICENSE"  && " contract conclusion"}
+                                    { this.props.startDateMode === "LICENSE"  && this.context.t("CL3_CONTRACT_CONCLUSION")}
                                     { this.props.startDateMode === "DATE"  && Moment(this.props.startDate).format(DATE_FORMAT)}
                                 </div>
                                 <div className="column right-name">

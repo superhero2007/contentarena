@@ -15,9 +15,30 @@ class TermSheet extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
     }
+
+    getDetailsByKey = (key, name) => {
+        const translations = {
+            'SUBLICENSE': this.context.t('RIGHTS_SUBLICENSE_DETAILS'),
+            'BROADCASTING': this.context.t('RIGHTS_BROADCASTING_DETAILS'),
+            'TRANSMISSION_MEANS': this.context.t('RIGHTS_TRANSMISSION_MEANS_DETAILS'),
+            'EXPLOITATION_FORM': this.context.t('RIGHTS_EXPLOITATION_FORM_DETAILS'),
+            'LICENSED_LANGUAGES': this.context.t('RIGHTS_LICENSED_LANGUAGES_DETAILS'),
+            'RUNS': this.context.t('RIGHTS_RUNS_DETAILS'),
+            'EXPLOITATION_WINDOW': this.context.t('RIGHTS_EXPLOITATION_WINDOW_DETAILS'),
+            'RESERVED_RIGHTS': this.context.t('RIGHTS_RESERVED_RIGHTS_DETAILS'),
+            'VIDEO_STANDARD': this.context.t('RIGHTS_VIDEO_STANDARD_DETAILS'),
+            'ASPECT_RATIO': this.context.t('RIGHTS_ASPECT_RATIO_DETAILS'),
+            'COMMENTARY': this.context.t('RIGHTS_COMMENTARY_DETAILS'),
+            'TECHNICAL_DELIVERY': this.context.t('RIGHTS_TECHNICAL_DELIVERY_DETAILS'),
+            'GRAPHICS': this.context.t('RIGHTS_GRAPHICS_DETAILS'),
+            'CAMERA': this.context.t('RIGHTS_CAMERA_DETAILS'),
+            'CONTENT_DELIVERY': this.context.t('RIGHTS_CONTENT_DELIVERY_DETAILS'),
+        };
+
+        return typeof translations[key] !== 'undefined' ? translations[key] : `${name} Details`;
+    };
 
     hasRight = (shortLabel) => {
         const {rightsPackage} = this.props;
@@ -133,7 +154,7 @@ class TermSheet extends React.Component {
                 </tr>
                 {selectedRightsBySuperRight[rightsPackage[0].id].items[right.key+"_TEXTAREA"] &&
                 <tr className={'row'} key={'reserved-rights-details'}>
-                    <RightTableItem value={right.name + " Details"} className={"right-name"}/>
+                    <RightTableItem value={this.getDetailsByKey(right.key, right.name)} className={"right-name"}/>
                     <RightTableItem
                         key={'details-'+ i }
                         textarea
@@ -302,7 +323,7 @@ class TermSheet extends React.Component {
                             {deliveryViaLiveFeed &&
                             <RightTableItem
                                 className="right-definition-title"
-                                value={"Live Feed"}/>}
+                                value={this.context.t("LISTING_DETAILS_RIGHTS_LIVE_FEED")}/>}
 
                             {
                                 rightsPackage.map((rp, i)=>{
@@ -322,9 +343,9 @@ class TermSheet extends React.Component {
                             }
                         </tr>
                         { this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages) }
-                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, "Languages", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
-                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, "Subtitles", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
-                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, "Script", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, this.context.t('RIGHTS_LANGUAGES'), deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, this.context.t('RIGHTS_SUBTITLES'), deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
+                        { packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, this.context.t('RIGHTS_SCRIPT'), deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated) }
 
                     </table>
                 </div>

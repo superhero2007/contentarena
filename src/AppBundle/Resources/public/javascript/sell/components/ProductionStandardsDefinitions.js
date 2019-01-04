@@ -93,5 +93,4 @@ export const ProductionStandardsDefinitions = [
         technicalFee : "TECHNICAL_DELIVERY_SATELLITE",
         checkDelivery: true
     }
-
 ];

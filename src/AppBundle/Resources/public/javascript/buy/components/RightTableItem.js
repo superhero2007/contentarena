@@ -1,15 +1,13 @@
 import React from 'react';
-import { PropTypes } from "prop-types";
-import cn from "classnames";
-import {RepresenationTextArea} from "../../sell/components/SellFormItems";
+import { PropTypes } from 'prop-types';
+import cn from 'classnames';
+import {RepresenationTextArea} from '../../sell/components/SellFormItems';
 
 class RightTableItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.state = {};
     }
-
 
     render() {
         const {
@@ -20,7 +18,7 @@ class RightTableItem extends React.Component {
         } = this.props;
 
         return (
-            <td className={cn('right-definition', className)} colspan={length}>
+            <td className={cn('right-definition', className)} colSpan={length}>
                 <div className="right-definition-content">
                     {!textarea && value}
                     {textarea && <RepresenationTextArea value={value}/>}
