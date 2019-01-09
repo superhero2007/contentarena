@@ -360,6 +360,28 @@ ContentArena.ContentApi= {
 
         return deferred.promise();
     },
+    placeBids ( bid ) {
+        let deferred = jQuery.Deferred(),
+            _this = this;
+
+        $.ajax({
+            url: envhosturl + "api/bids/place",
+            type: "POST",
+            data: JSON.stringify(bid),
+            contentType: "application/json",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     acceptBid ( bid, signature, signatureName, signaturePosition ) {
         let deferred = jQuery.Deferred(),
             _this = this;

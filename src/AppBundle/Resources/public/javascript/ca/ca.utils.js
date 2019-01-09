@@ -45,8 +45,8 @@ ContentArena.Utils = {
         if ( content.salesPackages ) {
             content.salesPackages.forEach((sp) => {
                 if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
-                if (sp.excludedCountries) sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name}})
-                if (sp.territories) sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name}})
+                if (sp.excludedCountries) sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name, regions:t.regions, territoryId:t.territoryId}})
+                if (sp.territories) sp.territories = sp.territories.map(t=>{return{label:t.name, value:t.name, regions:t.regions, territoryId:t.territoryId}})
                 if (!sp.territories) sort = false
 
                 try {

@@ -303,8 +303,8 @@ class ContentListingEventDetails extends React.Component {
                                 {seasonReleaseIcon}
                             </div>
                             <div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
-                                {showFullSeasons && seasons.map(season => {
-                                return <span>
+                                {showFullSeasons && seasons.map((season,i) => {
+                                return <span key={i}>
                                         {this.buildSeasonYear(season)} {this.buildSeasonString(season)}
                                     </span>
                                 })}
@@ -340,8 +340,10 @@ class ContentListingEventDetails extends React.Component {
                             </div>
                             {setRawContent ? (
                                 <div className="event-text" title={this.context.t("EVENT_FIXTURES_EPISODES")}>
-                                    {this.getFixtures().map(f =>(
-                                        <React.Fragment>{f.name} {f.date !== undefined && "(" + moment(f.date).format(DATE_FORMAT)+")"}{"\n"}</React.Fragment>
+                                    {this.getFixtures().map((f,i) =>(
+                                        <React.Fragment key={i}>
+                                            {f.name} {f.date !== undefined && "(" + moment(f.date).format(DATE_FORMAT)+")"}{"\n"}
+                                        </React.Fragment>
                                     ))}
                                 </div>
                             ) : (

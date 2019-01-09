@@ -17,14 +17,18 @@ class EventFilter extends React.Component {
         this.searchIcon = searchIcon;
     }
 
+    componentWillUnmount() {
+        this.isCancelled = true;
+    }
+
     componentDidMount () {
         if ( ContentArena.Data.ActiveSports.length === 0) {
             ContentArena.Api.getActiveSports().done( (sports ) => {
                 ContentArena.Data.ActiveSports = sports;
-                this.setState({sports});
+                !this.isCancelled && this.setState({sports});
             });
         } else {
-            this.setState({sports: ContentArena.Data.ActiveSports});
+            !this.isCancelled && this.setState({sports: ContentArena.Data.ActiveSports});
         }
 
         this.syncPropsWithLocalStorage();

@@ -60,14 +60,6 @@ class CommercialTerms extends React.Component {
 
     render() {
         const {
-            salesPackages,
-            onSelectPackage,
-            programDescription,
-            profile,
-            customId,
-            userCanNotBuy,
-            bundlesWithActivity,
-            bundlesSold,
             website,
             attachments,
             description,
@@ -75,6 +67,7 @@ class CommercialTerms extends React.Component {
         } = this.props;
 
         const {seasons} = this.state;
+
         return (
             <div>
                 {description && !programDetails && (
@@ -161,15 +154,7 @@ class CommercialTerms extends React.Component {
                     </div>
                 ))}
 
-                <TerritoriesSalesPackages
-                    listingId={customId}
-                    userCanNotBuy={userCanNotBuy}
-                    profile={profile}
-                    onSelectPackage={onSelectPackage}
-                    bundlesWithActivity={bundlesWithActivity}
-                    bundlesSold={bundlesSold}
-                    salesPackages={salesPackages}
-                />
+                <TerritoriesSalesPackages {...this.props} />
             </div>
         );
     }

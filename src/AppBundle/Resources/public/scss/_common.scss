@@ -371,6 +371,14 @@ i.fa.ca-tooltip {
   text-align: left;
 }
 
+.no-border{
+  border: none !important;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
 .ca-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -396,6 +404,7 @@ i.fa.ca-tooltip {
 .ReactTable .rt-noData {
   display: none;
 }
+
 
 .ReactTable.ca-table {
   font-size: 14px;

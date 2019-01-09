@@ -36,8 +36,11 @@ msgid "MARKETPLACE_LABEL_FILTER_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/Installments.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "INSTALLMENT_CLOSURE_DAYS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/Installments.js
+msgid "PAYMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
@@ -80,124 +83,102 @@ msgstr ""
 msgid "MARKETPLACE_BUTTON_CLEAR"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_RIGHT_TO_SUBLICENSE"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_CONGRATULATIONS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_RIGHT_TO_SUBLICENSE_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_FIXED_SUCCESS_MESSAGE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_TRANSMISSION_OBLIGATION"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_BID_SUCCESS_MESSAGE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_TRANSMISSION_OBLIGATION_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_FIXED_GO_TO_CLOSED_DEALS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_TRANSMISSION_MEANS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_FIXED_GO_TO_BIDS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_TRANSMISSION_MEANS_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_EXPLOITATION_FORM"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_BUY_NOW"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_TRANSMISSION_FORM_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_PLACE_BID"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_LICENSED_LANGUAGES"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_RAISE_BID"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_LICENSED_LANGUAGES_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_NUMBER_OF_RUNS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_DETAILS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_NUMBER_OF_RUNS_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "CHECKOUT_LICENSE_AGREEMENT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_EXPLOITATION_WINDOW"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/main/components/LicenseDownloader.js
+msgid "License agreement"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_EXPLOITATION_WINDOW_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_RESERVED_RIGHTS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_PRICE_YOUR_BID"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_RESERVED_RIGHTS_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_TECHNICAL_FEE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_GRANTED_TRANSMISSION_TIME"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_TOTAL"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_VIDEO_STANDARD"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_HEADER"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_MINIMUM_VIDEO_STANDARD_DETAILS"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_COMPANY_ADDRESS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_ASPECT_RATIO"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_ASPECT_RATIO_DETAILS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_GRAPHICS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_COMMENTARY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_COMMENTARY_DETAILS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_CAMERA"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_TECHNICAL_DELIVERY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_DELIVERY_METHOD_DETAILS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_LANGUAGES"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_SUBTITLES"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightTableItem.js
-msgid "LISTING_DETAILS_GRANT_OF_RIGHT_SCRIPT"
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "CHECKOUT_COMPLETE_TRANSACTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/CommercialTerms.js
@@ -219,46 +200,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_CONGRATULATIONS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_FIXED_SUCCESS_MESSAGE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_BID_SUCCESS_MESSAGE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_FIXED_GO_TO_CLOSED_DEALS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_FIXED_GO_TO_BIDS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_BUY_NOW"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_PLACE_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_RAISE_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "MIN_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -295,51 +236,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "LISTING_DETAILS_TAB_SELLER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "License fee"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Bid"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "BID_EMPTY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "MARKETPLACE_BUTTON_APPLY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Technical fee:"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Total"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Payment details"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "installment"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_LICENSE_AGREEMENT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-#: src/AppBundle/Resources/public/javascript/main/components/LicenseDownloader.js
-msgid "License agreement"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
@@ -518,23 +414,36 @@ msgid "LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "MARKETPLACE_LABEL_PRICE_MINIMUM_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "Buy now"
+msgid "MARKETPLACE_NO_FILTERED_TERRITORIES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "Acquired"
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "Raise bid"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "Place bid"
+msgid "MARKETPLACE_CHECKOUT_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
@@ -2228,23 +2137,11 @@ msgid "CL_STEP4_ADD_SALES_BUNDLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
-msgid "SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
-msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "CL4_5_SALES_METHOD_BIDDING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "CL4_5_SALES_METHOD_FIXED"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
-msgid "SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js

@@ -25,6 +25,7 @@ export const hammerIcon = assetsBaseDir + "app/images/listing/hammer.svg";
 export const pdfIcon = assetsBaseDir + "app/images/file-pdf.svg";
 export const disabledPdfIcon = assetsBaseDir + "app/images/file-pdf-disabled.svg";
 export const commentIcon = assetsBaseDir + "app/images/comment-icon.svg";
+export const packageIcon = assetsBaseDir + "app/images/package.svg";
 
 //rights
 export const yellowCheckIcon = assetsBaseDir + "app/images/rights/exclusive.svg";

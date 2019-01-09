@@ -11,10 +11,14 @@ class CountrySelector extends React.Component {
         };
     }
 
+    componentWillUnmount() {
+        this.isCancelled = true;
+    }
+
     componentDidMount () {
         let _this = this;
         ContentArena.Api.getCountries().done( (countries ) => {
-            _this.setState({countries});
+            !_this.isCancelled && _this.setState({countries});
         });
     }
 

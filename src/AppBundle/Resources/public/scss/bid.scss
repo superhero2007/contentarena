@@ -5,25 +5,84 @@
   flex: 4;
   display: flex;
   flex-direction: column;
-  padding: 30px 15px;
-  background-color: $primary-color;
-
+  padding: 10px;
   @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
 
   .bid-header {
-    margin-bottom: 30px;
+    margin: 5px;
     .name{
       font-size: 21px;
       font-weight: bold;
       color: $font-color-6;
     }
   }
+  .bid-title{
+    font-weight: 600;
+    border-bottom: 1px solid #666;
+    font-size: 16px;
+    color: #333333;
+    padding: 0 0 8px;
+  }
+  .radio-selector-container{
+    border-top: 1px solid #cccc;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  .bid-list-mode{
+    font-size: 13px;
+    margin: 15px 50px 15px 0;
+  }
 
   .bid-info-wrapper{
     width: 100%;
-    background: $color-grey-light;
-    padding: 25px 20px;
-    margin-bottom: 30px;
+    padding: 30px 20px;
+    margin: 15px 0;
+    background-color: #E7E7E7;
+
+    .total-fee{
+      height: 60px;
+      border: 1px solid #999999;
+      background-color: #FFFFFF;
+      margin: 20px 0;
+      border-radius: 5px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 20px;
+      color: #07416C;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .bundles-table{
+      .rt-td{
+        height: 50px;
+        align-items: center;
+        display: flex;
+      }
+      .price-action-center{
+        width: 100%;
+        text-align: center;
+      }
+      .price-invalid{
+        color : red
+      }
+
+    }
+    .bundles-table-checkout{
+      .details-wrapper{
+        display: flex !important;
+        .bid-license{
+          margin-right: 20px;
+        }
+        img{
+          height: 13px;
+          margin: -3px 2px 0 3px;
+        }
+
+      }
+    }
 
     .bid-location{
       display: flex;
@@ -166,15 +225,14 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
-    margin-bottom: 20px;
+    margin: 10px 20px;
+    flex-direction: column;
 
     .bid-address, .bid-license{
-      flex: 0 1 49%;
-      background: $color-grey-light;
-
+      flex: 1;
       font-size: 13px;
-      padding: 15px 20px;
+      padding: 15px 0px;
+      font-weight: 600;
 
       i{
         font-size: 23px;
@@ -207,8 +265,16 @@
   }
 
   .bid-signature{
-    background: $color-grey-light;
-    padding: 25px 20px 30px;
+    .signature-wrap{
+      /*max-width: 100%;*/
+    }
+    .signature-name-container{
+      /*max-width: 100%;
+      margin: 0;*/
+    }
+    .buttons{
+      /*margin: 0;*/
+    }
   }
 
   .bid-signature-btns{

@@ -32,9 +32,7 @@ import NumberFormat from 'react-number-format';
 import EditButton from "../components/EditButton";
 import {goToStep, scrollTopMainContent} from "../../sell/actions/contentActions";
 import {disableValidation, enableValidation} from "../../main/actions/validationActions";
-
-const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
-const inputStyle = { width: '380px', margin: 0, height: "30px"};
+import Checkout from "./Checkout";
 
 class ListingDetails extends React.Component {
 
@@ -43,8 +41,7 @@ class ListingDetails extends React.Component {
 
         let listing = ContentArena.Utils.contentParserFromServer(props.listing) || {};
         let company = ContentArena.Utils.filterCompanyInfo(props.company);
-
-        console.log("PROPS", props)
+        let bundles = ( props.bundles )? props.bundles.split("&").map(b=>Number(b)) : [];
 
         this.state = {
             companyUpdated : false,
@@ -54,10 +51,7 @@ class ListingDetails extends React.Component {
             tab : props.tab || "bundles",
             buyingMode : props.tab && props.tab === "checkout",
             soldOut  : false,
-            selectedPackage : ( props.tab && props.tab === "checkout") ? listing.salesPackages.find(sp=>sp.id==props.bundle) : {},
-            territoriesList: [],
-            editCompanyOpen : false,
-            bidApplied : false,
+            selectedPackages : ( props.tab && props.tab === "checkout") ? listing.salesPackages.filter(sp=>bundles.indexOf(sp.id) >= 0) : {},
             openContactSellerModal: false,
             signatureName: props.user.firstName + " " + props.user.lastName,
             signaturePosition: props.user.title
@@ -107,17 +101,10 @@ class ListingDetails extends React.Component {
         this.setState({buyingMode: !this.state.buyingMode});
     };
 
-    selectPackage = ( selectedPackage, customId ) => {
-        const { history, scrollTopMainContent } = this.props;
+    selectPackage = ( bundles, customId ) => {
+        const { history } = this.props;
 
-        history.push('/listing/'+customId+'/checkout/'+selectedPackage.id);
-        this.setState({
-            selectedPackage: selectedPackage,
-            buyingMode : true,
-            bid: selectedPackage.fee,
-            minimumBid : selectedPackage.fee
-        })
-
+        history.push('/listing/'+customId+'/checkout/'+bundles.join("&"));
         scrollTopMainContent();
     };
 
@@ -149,202 +136,16 @@ class ListingDetails extends React.Component {
 
     };
 
-    closeModal = () => {
-        this.setState({ editCompanyOpen: false, companyUpdated : true});
-    };
-
-    closeTerritoriesModal = () => {
-        this.setState({ showAllTerritories: false});
-    };
-
     closeSuccessScreen = () => {
         const {history} = this.props;
         history.push("/marketplace");
     };
 
-    editCompany = () => {
-        const { company } = this.state;
-
-        return <Modal
-            isOpen={this.state.editCompanyOpen}
-            onRequestClose={this.closeModal}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
-            contentLabel="Example Modal"
-        >
-
-            <div className="modal-title">
-                Company Information
-                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
-            </div>
-
-            <div className="step-content">
-                <div className="step-content-container">
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            Legal name
-                        </label>
-                        <input
-                            type={"text"}
-                            style={inputStyle}
-                            onChange={(e) => {
-                                company.legalName = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.legalName}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            Registration number
-                        </label>
-                        <input
-                            style={inputStyle}
-                            type={"text"}
-                            onChange={(e) => {
-                                company.registrationNumber = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.registrationNumber}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            VAT ID number
-                        </label>
-                        <input
-                            style={inputStyle}
-                            type={"text"}
-                            onChange={(e) => {
-                                company.vat = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.vat}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            Address 1
-                        </label>
-                        <input
-                            style={inputStyle}
-                            type={"text"}
-                            onChange={(e) => {
-                                company.address = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.address}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            Address 2
-                        </label>
-                        <input
-                            style={inputStyle}
-                            type={"text"}
-                            onChange={(e) => {
-                                company.address2 = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.address2}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            City
-                        </label>
-                        <input
-                            style={inputStyle}
-                            type={"text"}
-                            onChange={(e) => {
-                                company.city = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.city}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            ZIP code
-                        </label>
-                        <input
-                            style={inputStyle}
-                            type={"text"}
-                            onChange={(e) => {
-                                company.zip = e.target.value;
-                                this.setState({company});
-                            }}
-                            value={company.zip}/>
-                    </div>
-
-                    <div className="base-full-input">
-                        <label style={labelStyle} >
-                            Country
-                        </label>
-                        <CountrySelector
-                            multi={false}
-                            onChange={(value) => {
-                                company.country.name = value.label;
-                                this.setState({company});
-                            }}
-                            value={{value: company.country.name, label: company.country.name}}/>
-                    </div>
-
-
-                </div>
-            </div>
-
-            <div className={"buttons"}>
-                { companyIsValid(company) &&<button
-                    className={"standard-button"}
-                    onClick={this.closeModal}>Ok</button>}
-
-                { !companyIsValid(company) &&<button
-                    className={"standard-button"}
-                    disabled
-                >Ok</button>}
-            </div>
-        </Modal>
-    };
-
-    showAllTerritories = (extraTerritories) => {
-        this.setState({
-            showAllTerritories : true,
-            territoriesList : extraTerritories
-        })
-    };
-
-    allTerritories = () => {
-        return <Modal
-            isOpen={this.state.showAllTerritories}
-            onRequestClose={this.closeTerritoriesModal}
-            bodyOpenClassName={"selector"}
-            style={customStyles}
-        >
-
-            <div style={{
-                color: 'grey',
-                padding: 20,
-                display: 'flex',
-                flexWrap: 'wrap',
-            }}>
-                {
-                    this.state.territoriesList.map(territory =>{
-                        return <div className="country-modal">
-                            {territory.label}
-                        </div>
-                    })
-                }
-            </div>
-
-        </Modal>
-    };
-
     successScreen = () => {
         const { selectedPackage } = this.state;
         const { history } = this.props;
+
+        if (!selectedPackage) return undefined;
         return <Modal
             isOpen={this.state.showSuccessScreen}
             onRequestClose={this.closeSuccessScreen}
@@ -508,49 +309,6 @@ class ListingDetails extends React.Component {
         return activeTab === tab ? 'active': '';
     };
 
-    onBidChange = (value) => {
-        this.setState({bid: value});
-    };
-
-    getTechnicalFeeLabel = () => {
-        const technicalFee = this.getTechnicalFee();
-
-        return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
-            ? ` ${technicalFee.TECHNICAL_FEE_PERCENTAGE}%`
-            : ' Included';
-    };
-
-    getTechnicalFeeValue = () => {
-        const technicalFee = this.getTechnicalFee();
-        const { bid, selectedPackage } = this.state;
-        const currency = getCurrencySymbol(selectedPackage.currency.code);
-
-        if (!bid) return '';
-
-        return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
-            ? (<React.Fragment><span>{bid*technicalFee.TECHNICAL_FEE_PERCENTAGE/100}</span> {currency}</React.Fragment>)
-            : '-';
-    };
-
-    getCheckoutType = () => {
-        const { salesMethod, id } = this.state.selectedPackage;
-        const { bundlesWithActivity, bundlesSold } = this.props.listing;
-
-        const hasOfferFromUser = bundlesWithActivity && bundlesWithActivity.length && bundlesWithActivity.includes(id);
-        const hasClosedDeal = bundlesSold && bundlesSold.length && bundlesSold.includes(id);
-
-        if (salesMethod === 'FIXED' && !hasOfferFromUser) {
-            return 'BUY_NOW';
-        }
-        if (salesMethod === 'BIDDING' && hasOfferFromUser && !hasClosedDeal){
-            return 'RAISE_BID';
-        }
-        if(salesMethod === 'BIDDING' && !hasOfferFromUser) {
-            return 'PLACE_BID';
-        }
-        return '';
-    };
-
     getTitlePrefix = (type) => {
         if (!type) return '';
 
@@ -575,67 +333,24 @@ class ListingDetails extends React.Component {
         return titleMap[type] || '';
     };
 
-    isBidValid = () => {
-        const { bid, minimumBid} = this.state;
-        const validateMinimumBid = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(bid) > parseFloat(minimumBid) : parseFloat(bid) >= parseFloat(minimumBid);
-        return bid && parseFloat(bid) !== 0 && validateMinimumBid;
-    };
-
-    getCompanyAddress = () => {
-        const { company } = this.state;
-        return [company.legalName, company.address, company.zip, company.country.name].join(", ");
-    };
-
-    openEditCompany = () => {
-        this.setState({editCompanyOpen: true});
-    };
-
-    setTermsAndConditions = (e) => {
-        this.setState({terms: e.target.checked})
-    };
-
-    getMinBid = () => {
-        const { minimumBid, selectedPackage } = this.state;
-        if (!parseFloat(minimumBid)) return;
-
-        let bidValue = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(minimumBid) + 1 : parseFloat(minimumBid);
-
-        return <i>({this.context.t("MIN_BID")} <NumberFormat
-            thousandSeparator={true}
-            value={bidValue}
-            displayType={'text'}
-            prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "} />)</i>;
-    };
-
     handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
 
     handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
     render() {
         ReactTooltip.rebuild();
-        const {profile, history, listing, validation} = this.props;
+        const {profile, history, listing} = this.props;
         const {
             buyingMode,
-            selectedPackage,
+            selectedPackages,
             tab,
             content,
-            signature,
-            signatureName,
-            signaturePosition,
-            bid,
             company,
-            spinner,
-            minimumBid,
-            terms,
             openContactSellerModal
         } = this.state;
-        const checkoutType = this.getCheckoutType();
 
-        let extraTerritories = ( selectedPackage.territoriesMethod === "WORLDWIDE_EXCLUDING") ? selectedPackage.excludedTerritories : selectedPackage.territories;
         const isEditedProgramShown =  content.rightsPackage.some(e => e.shortLabel === 'PR');
         const isEditedProgramShownInFirstTab = content.rightsPackage.length === 1 && isEditedProgramShown;
-        const isBidInvalid = !bid && validation;
-        const isTermsInvalid = !terms && validation;
 
         return (
             <div className="listing-details">
@@ -646,8 +361,6 @@ class ListingDetails extends React.Component {
                     recipient={content.company.id}
                     onCloseModal={this.handleCloseContactSellerModal}
                 />}
-                { this.editCompany() }
-                { this.allTerritories() }
                 { this.successScreen() }
                 {!buyingMode && (
                     <div className="listing-details-top-info">
@@ -780,166 +493,12 @@ class ListingDetails extends React.Component {
                             </div>
                         </div>
                     )}
-
-                    {buyingMode && <div className="bid-wrapper">
-                        <div className="bid-header">
-                            <div className="name">
-                                {checkoutType && `${this.getTitlePrefix(checkoutType)} -`} {listing.name}
-                            </div>
-                        </div>
-
-                        <div className="bid-info-wrapper">
-                            <div className="bid-location">
-                                <img className="bid-location-icon" src={this.packageIcon} />
-                                {selectedPackage.territories.length > 1 && <div className="bid-location-number">{selectedPackage.territories.length}</div>}
-                                <span className="bid-location-name">{selectedPackage.name}</span>
-                                {extraTerritories && extraTerritories.length > 3 &&
-                                    <span className="bid-extra-territories"
-                                        onClick={() => this.showAllTerritories(extraTerritories)}> +{extraTerritories.length - 3}</span>
-                                }
-                            </div>
-                            <div className="bid-fee">
-
-                                {checkoutType === 'BUY_NOW' && <div className="bid-license">
-                                    <span className="bid-label">{this.context.t("License fee")}</span>
-                                    <span className="bid-value">{selectedPackage.fee} {getCurrencySymbol(selectedPackage.currency.code)}</span>
-                                </div>}
-
-                                {checkoutType !== 'BUY_NOW' && <div className="bid-technical">
-                                    <span className="bid-label">
-                                        {this.context.t("Bid")}
-                                        {this.getMinBid()}
-                                    </span>
-                                    <span className="bid-value right-section">
-
-                                        {isBidInvalid && (
-                                            <span className="is-invalid" style={{marginRight:10}}>{this.context.t('BID_EMPTY')}</span>
-                                        )}
-                                        <div className="bid-change-value">
-                                            <NumberFormat
-                                                thousandSeparator={true}
-                                                ref={bidInput => {this.bidInput = bidInput}}
-                                                value={bid}
-                                                onValueChange={(values) => {
-                                                    const {value} = values;
-                                                    this.onBidChange(value)
-                                                }}
-                                                min={selectedPackage.fee}
-                                                prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "}
-                                                className={isBidInvalid ? 'is-invalid' : ''}
-                                            />
-                                        </div>
-                                        <div className="bid-apply-changes"
-                                             data-tip
-                                             data-for='apply-bid'
-                                             data-tip-disable={parseFloat(bid) >= parseFloat(minimumBid)}>
-                                            <button
-                                                onClick={this.setBid}
-                                                className="ca-btn primary"
-                                                disabled={!this.isBidValid()}>{this.context.t("MARKETPLACE_BUTTON_APPLY")}</button>
-                                        </div>
-                                    </span>
-                                </div>}
-
-                                <div className="bid-technical">
-                                    <span className="bid-label">
-                                        {this.context.t("Technical fee:")}
-                                        <span className="bid-value">{this.getTechnicalFeeLabel()}</span>
-                                    </span>
-                                    <span className={cn('bid-value', {'padding-right': checkoutType !== 'BUY_NOW'})}>{this.getTechnicalFeeValue()}</span>
-                                </div>
-
-                                <div className="bid-total">
-                                    <span className="bid-label">{this.context.t("Total")}</span>
-                                    <span className={cn('bid-value', {'padding-right': checkoutType !== 'BUY_NOW'})}>
-                                        <NumberFormat
-                                            thousandSeparator={true}
-                                            value={this.getTotalFee()}
-                                            displayType={'text'}
-                                            prefix={getCurrencySymbol(selectedPackage.currency.code)+ " "} />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bid-payment-details">
-                            <header>{this.context.t("Payment details")}</header>
-                            <div className="bid-payment-table">
-                                {selectedPackage.installments.length && selectedPackage.installments.map((installment, index) => {
-                                    return <div key={`installment-${index}`} className="payment-row">
-                                        <div className="payment-installment">{this.ordinal_suffix_of(++index)} {this.context.t("installment")}</div>
-                                        <div className="payment-percentage"><i className="fa fa-angle-right" />{` ${installment.value}%`}</div>
-                                        <div className="payment-date">
-                                            {installment.type === "DAY" && installment.days + this.context.t("INSTALLMENT_CLOSURE_DAYS")}
-                                            {installment.type === "DATE" && ` ${Moment(installment.date).format(DATE_FORMAT)}`}
-                                        </div>
-                                    </div>
-                                })}
-                            </div>
-                        </div>
-
-                        <div className="bid-address-license">
-                            <div className="bid-address">
-                                <span>{this.getCompanyAddress()}</span>
-                                <i className="fa fa-pencil-square-o" onClick={() => this.openEditCompany()} />
-                            </div>
-                            <a className="bid-license"
-                               target={"_blank"}
-                               href={getCustomLicenseUrl(content.customId, selectedPackage.id, bid, company)}
-                               title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
-                                <span>{this.context.t("License agreement")}</span>
-                                <img src={pdfIcon} alt="Licence"/>
-                            </a>
-                        </div>
-
-                        <div className="bid-signature">
-                            <DigitalSignature
-                                customClass='for-listing'
-                                title={this.context.t("PLEASE_SIGN_WITH_YOUR_CURSOR")}
-                                signature={signature}
-                                signatureName={signatureName}
-                                signaturePosition={signaturePosition}
-                                onChangeSignatureName={e=>{
-                                    this.setState({"signatureName": e.target.value});
-                                }}
-                                onChangeSignaturePosition={e=>{
-                                    this.setState({"signaturePosition": e.target.value});
-                                }}
-                                onReady={signature => {
-                                    this.setState({signature})
-                                }}
-                            />
-                        </div>
-
-                        <div className="bid-signature-btns">
-                            <GeneralTerms
-                                defaultChecked={terms}
-                                value={terms}
-                                onChange={e => this.setTermsAndConditions(e) }
-                                isInvalid={isTermsInvalid}
-                            />
-
-                            {!this.isPackageValid() ? (
-                                <button className="ca-btn primary disabled"
-                                        onClick={this.props.enableValidation}
-                                        title={this.getButtonTooltip(checkoutType)}
-                                >
-                                    {this.getTitlePrefix(checkoutType)}
-                                </button>
-                            ) : (
-                                !spinner ? (
-                                    <button className="ca-btn primary"
-                                            onClick={this.placeBid}
-                                            title={this.getButtonTooltip(checkoutType)}
-                                    >
-                                        {this.getTitlePrefix(checkoutType)}
-                                    </button>
-                                ) : (
-                                    <i className="fa fa-cog fa-spin"/>
-                                )
-                            )}
-                        </div>
-                    </div>}
+                    {buyingMode &&
+                    <Checkout
+                        listing={listing}
+                        history={history}
+                        selectedPackages={selectedPackages}
+                        company={company}/>}
                 </div>
             </div>
 

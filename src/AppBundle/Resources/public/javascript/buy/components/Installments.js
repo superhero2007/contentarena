@@ -4,6 +4,7 @@ import CaTooltip from '../../main/components/CaTooltip';
 import uniqueId from 'lodash/uniqueid';
 import Moment from "moment/moment";
 import { DATE_FORMAT } from "@constants";
+import {pdfIcon} from "../../main/components/Icons";
 
 const Installments = ({installments},context) => {
     const tooltipId = uniqueId();
@@ -45,6 +46,9 @@ const Installments = ({installments},context) => {
                         </div>
                     ))
                 }>
+                <a data-tip data-for={tooltipId}>
+                    <i className="fa fa-money"/> {context.t("PAYMENT")}
+                </a>
             </CaTooltip>
         </div>
     );

@@ -81,7 +81,7 @@ export const routes = [
         profile : "SELLER"
     },
     {
-        path: "/listing/:customId/:tab?/:bundle?",
+        path: "/listing/:customId/:tab?/:bundles?",
         header: HeaderBar,
         main: Marketplace
     },

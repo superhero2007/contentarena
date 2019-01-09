@@ -315,7 +315,7 @@ class Marketplace extends Component {
                     <ListingDetails
                         key={location.pathname}
                         tab={match.params.tab}
-                        bundle={match.params.bundle}
+                        bundles={match.params.bundles}
                         history={history}
                         onBack={() => {
                             this.setState({showDetails: false})

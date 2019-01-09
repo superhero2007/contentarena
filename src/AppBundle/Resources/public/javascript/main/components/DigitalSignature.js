@@ -62,6 +62,8 @@ class DigitalSignature extends React.Component{
             onChangeSignatureName,
             onChangeSignaturePosition,
             showTerms,
+            noLabel,
+            noInfo,
             terms,
             terms_arena,
             updateContentValue,
@@ -77,9 +79,11 @@ class DigitalSignature extends React.Component{
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
 
-                <div className="base-full-input" style={{maxWidth: 'none', marginBottom:10}}>
+                {!noLabel && <div
+                    className="base-full-input"
+                    style={{maxWidth: 'none', marginBottom:10}}>
                     <label>{this.context.t('DIGITAL_SIGNATURE_INFO')}</label>
-                </div>
+                </div>}
 
                 {showTerms && (
                     <div className={"terms-confirm"}>
@@ -119,7 +123,7 @@ class DigitalSignature extends React.Component{
                     </div>
                 )}
 
-                <div className={"signature-info"}>
+                {!noInfo && <div className={"signature-info"}>
                     <span>{title}</span>
 
                     {licenseBidId && (
@@ -127,7 +131,7 @@ class DigitalSignature extends React.Component{
                             <img src={pdfIcon} alt="Licence" /> {this.context.t("LICENSE_AGREEMENT")}
                         </span>
                     )}
-                </div>
+                </div>}
                 <div className={`signature-wrap ${isSignatureNotAdded ? 'is-invalid':''}`} onClick={this.disablePlaceholder}>
                     {!signature && !isPlaceholderDisabled && (
                         <div className="placeholder">

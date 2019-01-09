@@ -606,6 +606,12 @@
           font-weight: bold;
           padding-bottom: 15px;
         }
+
+        .filter-description{
+          border-top: 1px grey dotted;
+          padding: 10px 0;
+          font-size: 14px;
+        }
         .row-container {
           display: flex;
           border-bottom: 1px solid $color-grey-light;
@@ -652,7 +658,7 @@
         .sales-packages {
           display: table;
           width: 100%;
-
+          margin-bottom: 30px;
           .sales-package-container, .sales-package-header {
             padding: 15px 0;
             display: table-row;
@@ -704,6 +710,37 @@
           .sales-package-header .package-row {
             border-bottom: 1px solid $black-color;
           }
+
+          .ReactTable{
+            input{
+
+            }
+            .ca-checkbox {
+              margin: 0 10px 0 0 !important;
+              width: 15px !important;
+              height: 15px !important;
+              flex: 15px 0 0 !important;
+            }
+            .rt-table{
+              .rt-th{
+                padding: 9px 20px;
+              }
+              .rt-td {
+                padding: 9px 20px;
+              }
+              .rt-tbody{
+                font-size: 13px;
+                font-weight: 600;
+                line-height: 32px;
+              }
+            }
+          }
+
+
+        }
+        .sales-packages-filters{
+          font-size: 13px;
+          margin: 15px 50px 25px 0;
         }
         .term-sheet {
           .term-sheet-rights {
@@ -784,6 +821,14 @@
             }
           }
         }
+        .checkout-button{
+          margin: 20px 0;
+          button{
+            font-size: 20px;
+            font-weight: 600;
+            padding: 13px 20px;
+          }
+        }
       }
       .sales-bundles {
         display: flex;
@@ -833,6 +878,19 @@
           flex: 1;
         }
       }
+    }
+  }
+
+  .bundles-countries{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 0;
+    .bundles-countries-title{
+      color: #333333;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 15px 0 25px;
     }
   }
 }

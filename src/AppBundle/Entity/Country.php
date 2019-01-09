@@ -49,7 +49,7 @@ class Country
      * @var integer
      *
      * @ORM\Column(name="territory_id", type="integer", nullable=true)
-     * @Groups({"countryList"})
+     * @Groups({"listing", "countryList"})
      */
 
     private $territoryId;
@@ -61,7 +61,7 @@ class Country
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="region_id", referencedColumnName="id")}
      *      )
-     * @Groups({"countryList"})
+     * @Groups({"listing", "countryList"})
      */
     private $regions;
 

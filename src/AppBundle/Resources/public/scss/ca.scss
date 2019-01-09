@@ -117,10 +117,8 @@ button {
       justify-content: space-between;
       align-items: center;
       width: 100%;
-
       font-weight: bold;
     }
-
     .rt-thead.-header{
       border-bottom: 2px solid $color-primary;
       outline-offset: -4px;
@@ -1811,7 +1809,7 @@ button {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-
+    max-width: 380px;
     .info {
       max-width: 100px;
     }

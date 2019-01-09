@@ -151,6 +151,25 @@ class ContentService
 
     }
 
+    public function listingIsSoldOut (Content $listing ){
+        $soldOut = true;
+
+        foreach ( $listing->getSalesPackages() as $bundle ){
+            /* @var $bundle SalesPackage */
+            if ( !$bundle->isSold() ) $soldOut = false;
+
+        }
+
+        if ( $soldOut ){
+            $listing->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"SOLD_OUT")));
+            $this->em->persist($listing);
+            $this->em->flush();
+        }
+
+        return $soldOut;
+
+    }
+
     public function removeListing($customId){
 
         if ($customId == null) return false;

@@ -15,6 +15,7 @@ use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Bid;
 use AppBundle\Doctrine\RandomIdGenerator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class BidService
@@ -59,15 +60,15 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getClosedDealsBySalesBundle($salesBundle);
     }
 
-    public function saveBidsData($request,User $user){
+    public function saveBidsData($bidData, Request $request, User $user){
 
+        $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$bidData['salesMethod']));
         $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
-        $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$request->get('salesMethod')));
         $signature = $request->get('signature');
         $signatureName = $request->get('signatureName');
         $signaturePosition = $request->get('signaturePosition');
-        $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($request->get('salesPackage'));
-        if ($request->get('salesMethod') == "FIXED" ) {
+        $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($bidData['salesPackage']);
+        if ($bidData['salesMethod'] == "FIXED" ) {
             $status = $this->em->getRepository('AppBundle:BidStatus')->find(2);
         } else {
             $status = $this->em->getRepository('AppBundle:BidStatus')->find(1);
@@ -122,7 +123,7 @@ class BidService
             $bid->setSignaturePosition($signaturePosition);
         }
 
-        $amount = ( $request->get('amount') != null )? $request->get('amount') : $request->get('totalFee');
+        $amount = ( $bidData['amount'] != null )? $bidData['amount'] : $bidData['totalFee'];
 
         $bid->setType($type);
         $bid->setStatus($status);
@@ -131,7 +132,7 @@ class BidService
         $bid->setBuyerUser($user);
         $bid->setBuyerCompany($user->getCompany());
         $bid->setAmount($amount);
-        $bid->setTotalFee($request->get('totalFee'));
+        $bid->setTotalFee($bidData['totalFee']);
         $bid->setUpdatedAt($updatedAt);
         $bid->setBuyerCompanySnapshot($buyerCompanySnapshot);
         $bid->setSellerCompanySnapshot($sellerCompanySnapshot);

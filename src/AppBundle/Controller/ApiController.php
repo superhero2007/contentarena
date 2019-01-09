@@ -327,6 +327,65 @@ class ApiController extends BaseController
     }
 
     /**
+     * @Route("/api/bids/place", name="apiPlaceBids")
+     * @param Request $request
+     * @param BidService $bidService
+     * @param ContentService $contentService
+     * @param EmailService $emailService
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @throws \exception
+     */
+    public function contentPlaceBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService)
+    {
+        $user = $this->getUser();
+        $bidsData = $request->get("bids");
+        $bids = [];
+        $soldOut = false;
+        $success = true;
+
+        foreach ( $bidsData as $bidData){
+            $bid = $bidService->saveBidsData($bidData, $request, $user);
+            $bids[] = $bid;
+            $content = $bid->getContent();
+
+            if ($bid != null){
+                $soldOut = $contentService->listingIsSoldOut($content);
+                if ($bid->getStatus()->getName() == 'APPROVED'){
+                    $license_service = $this->get('license_service');
+                    $viewElements = array(
+                        'user' => $user,
+                        'bid' => $bid,
+                        'watermark' => false,
+                        'bundle' => $bid->getSalesPackage(),
+                        'content' => $content,
+                        'rightDefinitions' => $license_service->getRightDefinitions($content),
+                        'exclusiveRights' => $license_service->getExclusiveRights($content),
+                        'hostUrl' => $this->container->getParameter("carena_host_url")
+                    );
+
+                    $this->saveLicenseAgreement($content, $viewElements);
+                    $emailService->dealClosed($content, $bid);
+                    $emailService->closedDealBuyer($content, $bid);
+                } else {
+                    $emailService->bidReceived($content, $bid);
+                    $emailService->bidPlaced($content, $bid);
+                }
+
+                if ($soldOut) $emailService->soldOut($content);
+            } else {
+                $success = false;
+            }
+        }
+
+        return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
+    }
+
+
+    /**
      * @param $content
      * @param $viewElements
      * @throws \exception
