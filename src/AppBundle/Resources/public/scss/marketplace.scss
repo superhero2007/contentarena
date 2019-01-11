@@ -142,16 +142,16 @@
       bottom: -4px;
     }
 
-    .sort-by-wrapper{
-      span{
+    .sort-by-wrapper {
+      span {
         font-weight: bold;
         font-size: 15px;
       }
-      label{
+      label {
         font-size: 14px;
         cursor: pointer;
       }
-      input[type="radio"]{
+      input[type="radio"] {
         margin: 0 5px;
       }
     }
@@ -187,24 +187,30 @@
   }
 
   .content-listing-table{
-    .rt-tr-group { height: 45px; }
     .rt-th{
       span{
         display: flex;
         justify-content: space-between;
       }
     }
-    .rt-tr{
-      @include boxSizing(border-box);
+    .rt-tbody{
+      .rt-tr-group { height: 45px; }
+      .rt-tr{
+        @include boxSizing(border-box);
 
-      &.-even, &.-odd{
-        cursor: pointer;
-        background-color: $primary-color !important;
-      }
+        &.-even, &.-odd{
+          cursor: pointer;
+          background-color: $primary-color !important;
+        }
 
-      &:hover{
-        @include shadow(inset 0 0 0 1px $orange-color);
-        @include transition(box-shadow 300ms ease-out);
+        &:hover{
+          @include shadow(inset 0 0 0 1px $orange-color);
+          @include transition(box-shadow 300ms ease-out);
+
+          & span{
+            text-decoration: underline;
+          }
+        }
       }
     }
   }

@@ -83,6 +83,7 @@ class ContentListingTable extends Component {
             className : 'table-header-big',
             id: 'name',
             accessor: 'name',
+            width: 300,
             sortMethod: (a, b) => a.length >= b.length ? 1 : -1,
             Cell: props => this.getCell(props.value),
         },{
@@ -91,6 +92,7 @@ class ContentListingTable extends Component {
             className : 'table-header-big',
             id: 'sport',
             accessor: 'sports',
+            width: 150,
             sortMethod: (a,b) => this.getSort(a, b),
             Cell: props => this.getCell(props.value),
         },{

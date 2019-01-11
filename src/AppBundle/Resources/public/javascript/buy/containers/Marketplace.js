@@ -17,7 +17,7 @@ import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from '../../main/utiles/localStorageHelper';
 import first from 'lodash/first';
 import cn from 'classnames';
-import {PropTypes} from "prop-types";
+import PropTypes from "prop-types";
 const queryString = require('query-string');
 
 class Marketplace extends Component {
