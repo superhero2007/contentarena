@@ -176,12 +176,15 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
-    getAllSports () {
+    getAllSports (flags) {
         let deferred = jQuery.Deferred();
         let _this = this;
         $.ajax({
             url: envhosturl + "api/search/sports/all",
             type: "POST",
+            data: {
+                flags: flags,
+            },
             /**
              * @param {array} response
              */

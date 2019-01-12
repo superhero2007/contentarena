@@ -38,6 +38,30 @@ class Sport
      */
     private $externalId;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="shown_in_create", type="boolean", options={"default":"1"})
+     * @Groups({"listing", "commercial", "settings"})
+     *
+     */
+     private $shownInCreate;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="shown_in_wall", type="boolean", options={"default":"0"})
+     * @Groups({"listing", "commercial", "settings"})
+     *
+     */
+    private $shownInWall;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="top_sport", type="boolean", options={"default":"0"})
+     * @Groups({"listing", "commercial", "settings"})
+     *
+     */
+    private $topSport;
+
 
     /**
      * Get id
@@ -101,5 +125,56 @@ class Sport
     {
         return $this->name;
     }
+
+    /**
+     * @return bool
+     */
+    public function isShownInCreate()
+    {
+        return $this->shownInCreate;
+    }
+
+    /**
+     * @param bool $shownInCreate
+     */
+    public function setShownInCreate($shownInCreate)
+    {
+        $this->shownInCreate = $shownInCreate;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShownInWall()
+    {
+        return $this->shownInWall;
+    }
+
+    /**
+     * @param bool $shownInWall
+     */
+    public function setShownInWall($shownInWall)
+    {
+        $this->shownInWall = $shownInWall;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTopSport()
+    {
+        return $this->topSport;
+    }
+
+    /**
+     * @param bool $topSport
+     */
+    public function setTopSport($topSport)
+    {
+        $this->topSport = $topSport;
+    }
+
+
+
 }
 

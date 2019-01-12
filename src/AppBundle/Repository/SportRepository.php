@@ -26,4 +26,17 @@ class SportRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->findBy(array(), array('name' => 'ASC'));
     }
+
+    public function findAllByFlag( $flags )
+    {
+        $criteria = array();
+
+        if ( $flags != null && is_array($flags)){
+            if (in_array("create", $flags)) $criteria["shownInCreate"] = true;
+            if (in_array("wall", $flags)) $criteria["shownInWall"] = true;
+            if (in_array("top", $flags)) $criteria["topSport"] = true;
+        }
+
+        return $this->findBy($criteria, array('name' => 'ASC'));
+    }
 }

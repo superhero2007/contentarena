@@ -234,4 +234,104 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
+  background: url('../images/email-bg.jpg' ) no-repeat;
+  background-size: contain;
+  background-color: #eee;
+  margin: -20px;
+
+  .terms-and-condition-wrapper{
+    justify-content: normal !important;
+  }
+  .buttons{
+    margin: 50px auto;
+    display: flex;
+    flex-direction: row;
+    button{
+      color: #062E44;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 46px;
+      border-radius: 5px;
+      height: 68px;
+      width: 236px;
+      margin: 0 10px;
+    }
+    .back{
+      border: 1px solid #FFC94B;
+      background-color: transparent;
+    }
+  }
+  .steps {
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 20px;
+
+    .step {
+      height: 4px;
+      width: 39px;
+      background-color: #DAD4D4;
+      margin: 0 1px;
+    }
+    .active-step {
+      background-color: #FFC94B;
+    }
+  }
+  .title {
+    display: flex;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: center;
+    color: #F7F7F7;
+  }
+  .big-title{
+    @extend .title;
+    color: #fff;
+    font-size: 60px;
+    justify-content: center;
+    margin: 70px auto 10px;
+    line-height: 60px;
+    font-weight: 600;
+  }
+
+  .setting{
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    padding: 25px 100px;
+    position: relative;
+    .password-validation {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 10px solid #CCCCCC;
+      height: 250px;
+      width: 385px;
+      margin-left: 10%;
+      position: absolute;
+      right: 50px;
+      bottom: 30px;
+    }
+    .title {
+      color: #03547C;
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 24px;
+      width: 800px;
+    }
+    .row{
+      .row-content{
+        justify-content: space-between;
+        width: 100%;
+      }
+
+    }
+  }
 }

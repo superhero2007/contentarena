@@ -166,7 +166,7 @@ class RegionCountrySelector extends React.Component {
         const {exclusiveSoldTerritories, placeholder, isInvalid} = this.props;
 
         return (
-            <div className="country-selector">
+            <div className="country-selector region-filter">
                 { !disabled && <div>
                     <div className="regions">
                         {territories.map((territory,i)=>{

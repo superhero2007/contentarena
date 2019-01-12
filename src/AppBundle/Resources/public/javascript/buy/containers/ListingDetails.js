@@ -2,33 +2,20 @@ import React from 'react';
 import { connect } from "react-redux";
 import { test } from "../actions";
 import CommercialTerms from "./CommercialTerms";
-import cn from "classnames";
-import ContentInformation from "./ContentInformation";
-import { pdfIcon } from "./../../main/components/Icons";
 import TermSheet from "./TermSheet";
 import ProgramDetails from "./ProgramDetails";
 import Seller from "./Seller";
 import Moment from "moment/moment";
-import {Link, Route} from 'react-router-dom';
 import SendMessage from "./../../common/modals/SendMessage/SendMessage";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
-import DigitalSignature from "../../main/components/DigitalSignature";
-import {
-    getCurrencySymbol, getCustomLicenseUrl, getFullName, goTo, goToClosedDeals, goToListing,
-    goToMarketplace, viewLicense, viewLicenseCustom
-} from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
-import {companyIsValid} from "../../sell/actions/validationActions";
 import Modal from 'react-modal';
-import CountrySelector from "../../main/components/CountrySelector";
 import ReactTooltip from 'react-tooltip'
 import {PropTypes} from "prop-types";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import { getListingImage } from "./../../common/utils/listing";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
-import GeneralTerms from "../../main/components/GeneralTerms";
-import NumberFormat from 'react-number-format';
 import EditButton from "../components/EditButton";
 import {goToStep, scrollTopMainContent} from "../../sell/actions/contentActions";
 import {disableValidation, enableValidation} from "../../main/actions/validationActions";

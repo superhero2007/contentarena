@@ -17,7 +17,6 @@ require ("../ca/ca.data");
 require ("../ca/ca.api.content");
 require ("../ca/ca.api");
 require ("../ca/ca.utils");
-require ("../ca/ca.models");
 
 const homeWrapper = document.getElementById('home-wrapper');
 

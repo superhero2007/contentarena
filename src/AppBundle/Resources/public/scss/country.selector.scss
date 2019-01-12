@@ -73,3 +73,21 @@
   }
 
 }
+
+.sports-selector{
+  .regions{
+    flex-wrap: wrap;
+    flex-direction: row;
+    .region{
+      min-width: 150px;
+      max-width: 150px;
+    }
+    .region:first-child{
+      margin-left: 5px !important;
+    }
+    .region:last-child{
+      margin-right: 5px !important;
+    }
+  }
+
+}

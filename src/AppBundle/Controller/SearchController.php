@@ -65,9 +65,10 @@ class SearchController extends BaseController
 
         //Take Repositories
         $repo = $this->getDoctrine()->getRepository("AppBundle:Sport");
+        $flags = $request->get("flags");
 
         //Get results
-        $tournaments = $repo->findAll();
+        $tournaments = $repo->findAllByFlag($flags);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();

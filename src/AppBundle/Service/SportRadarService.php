@@ -80,6 +80,7 @@ class SportRadarService
                 $dbSport = new Sport();
                 $dbSport->setName($sport["name"]);
                 $dbSport->setExternalId($sport["id"]);
+                $dbSport->setShownInCreate(false);
                 $this->em->persist($dbSport);
                 $this->em->flush();
             }
@@ -193,6 +194,7 @@ class SportRadarService
                 $dbSport = new Sport();
                 $dbSport->setName($sport["name"]);
                 $dbSport->setExternalId($sport["id"]);
+                $dbSport->setShownInCreate(false);
                 $this->em->persist($dbSport);
                 $this->em->flush();
             }
@@ -218,6 +220,7 @@ class SportRadarService
                     $dbSport = new Sport();
                     $dbSport->setName($sport["name"]);
                     $dbSport->setExternalId($sport["id"]);
+                    $dbSport->setShownInCreate(false);
                     $this->em->persist($dbSport);
                     $this->em->flush();
                 }

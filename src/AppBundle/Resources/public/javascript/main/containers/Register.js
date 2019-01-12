@@ -13,6 +13,27 @@ import PreferredSportSeller from "../../manage/components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../../manage/components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../../manage/components/PreferredSportBuyer";
 import ReactTooltip from "react-tooltip";
+import cn from "classnames";
+
+const Steps = ({ steps = []}) => {
+
+    let colors = [
+        "#FFC94B",
+        "#F7C349",
+        "#EFBD47",
+        "#E8B745",
+        "#E1B143"
+    ];
+
+    return(
+        <div
+            className="steps"
+            {...this.props} >
+            {steps.map((step, i) => (<div style={{backgroundColor: (step) ? colors[i] : ""}} key={i} className="step" />))}
+
+
+        </div>
+)};
 
 class Register extends React.Component {
 
@@ -127,6 +148,7 @@ class Register extends React.Component {
             user.email === "" ||
             user.email === null ||
             user.phone === null ||
+            user.phone === undefined ||
             user.phone === "";
 
     };
@@ -160,18 +182,20 @@ class Register extends React.Component {
 
     };
 
-    handleSellerSports = ( sports, allSports) => {
+    handleSellerSports = ( selection) => {
         let user  = this.state.user;
-        user.preferredSellerSports = sports;
-        user.preferredSellerAllSports = allSports;
+        user.preferredSellerSports = selection.sports;
+        user.preferredSellerAllSports = selection.all;
+        user.preferredSellerOtherSport = selection.other;
         this.storeUserObj(user);
         this.setState({user});
     };
 
-    handleBuyerSports = ( sports, allSports) => {
+    handleBuyerSports = ( selection) => {
         let user  = this.state.user;
-        user.preferredBuyerSports = sports;
-        user.preferredBuyerAllSports = allSports;
+        user.preferredBuyerSports = selection.sports;
+        user.preferredBuyerAllSports = selection.all;
+        user.preferredBuyerOtherSport = selection.other;
         this.storeUserObj(user);
         this.setState({user});
     };
@@ -179,10 +203,10 @@ class Register extends React.Component {
     completeButtonDisabled = () => {
         const { user } = this.state;
         return (user.preferredProfile !== "SELLER"
-            && ( (!user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
+            && ( (!user.preferredBuyerOtherSport &&!user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
                 || user.preferredBuyerCountries.length === 0 ) )
         || (user.preferredProfile !== "BUYER"
-                && ( !user.preferredSellerAllSports && user.preferredSellerSports.length === 0) )
+                && ( !user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0) )
     };
 
     goToNextStep = ( step ) => {
@@ -221,128 +245,168 @@ class Register extends React.Component {
             <div className={"big-title"}>
                 {this.context.t("SETTINGS_WELCOME")}
             </div>
-            <div className="title justify-content-center">
+            <div className="title">
                 {this.context.t("SETTINGS_WELCOME_TEXT")}
             </div>
 
             <div className={"setting"}>
+                <Steps steps={[1,0,0,0,0]}/>
                 <PreferredUserProfile profile={user.preferredProfile}
-                                      centered={true}
+                                      style={{
+                                          border: '1px solid lightgray',
+                                          padding: '30px 20px'
+                                      }}
                                       onChange={ profile => this.updateUser("preferredProfile", profile) }/>
-                <div className={"buttons"}>
-                    <div>
-                        <button
-                            onClick={() => {
-                                this.goToNextStep("questionnaire")
-                            }}
-                            disabled={ updatingUser }
-                            className={"standard-button"}>
-                            {this.context.t("SETTINGS_BUTTON_CONTINUE")}
-                        </button>
-                    </div>
-                </div>
+            </div>
+            <div className={"buttons"}>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("questionnaire")
+                    }}
+                    disabled={ updatingUser }
+                    className={"standard-button"}>
+                    {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+                </button>
             </div>
 
         </div>;
 
-        if ( step === "questionnaire" ) return <div className="settings-container">
+        if ( step === "questionnaire" ) return <div className="settings-container settings-container-welcome">
 
-            <div className={"setting"}>
+            <div className={"setting"} style={{margin : '60px auto 0'}}>
+                <Steps steps={[1,1,0,0,0]}/>
                 {user.preferredProfile !== "BUYER" &&
                 <PreferredSportSeller sports={user.preferredSellerSports}
-                                      allSports={user.preferredSellerAllSports}
+                                      style={{
+                                          border: '1px solid lightgray',
+                                          padding: '30px 20px'
+                                      }}
+                                      other={user.preferredSellerOtherSport}
+                                      all={user.preferredSellerAllSports}
                                       onChange={this.handleSellerSports}/>}
 
                 {user.preferredProfile !== "SELLER" &&
                 <PreferredTerritoriesBuyer territories={user.preferredBuyerCountries}
+                                           style={{
+                                               border: '1px solid lightgray',
+                                               padding: '30px 20px'
+                                           }}
                                            onChange={ territories => this.updateUser("preferredBuyerCountries", territories) }/>}
 
                 {user.preferredProfile !== "SELLER" &&
                 <PreferredSportBuyer sports={user.preferredBuyerSports}
-                                     allSports={user.preferredBuyerAllSports}
+                                     all={user.preferredBuyerAllSports}
+                                     other={user.preferredBuyerOtherSport}
+                                     style={{
+                                         border: '1px solid lightgray',
+                                         padding: '30px 20px'
+                                     }}
                                      onChange={this.handleBuyerSports}/>}
 
-                <div className={"buttons"}>
-                    <div>
-                        <button
-                            onClick={() => {
-                                this.goToNextStep("wall")
-                            }}
-                            disabled={ this.completeButtonDisabled() }
-                            className={"standard-button"}>
-                            {this.context.t("SETTINGS_BUTTON_COMPLETE")}
-                        </button>
-                    </div>
-                </div>
             </div>
-
+            <div className={"buttons"}>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("welcome")
+                    }}
+                    className="standard-button back">
+                    {this.context.t("SETTINGS_BUTTON_BACK")}
+                </button>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("personal")
+                    }}
+                    disabled={ this.completeButtonDisabled() }
+                    className={"standard-button"}>
+                    {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+                </button>
+            </div>
         </div>;
 
-        return (
-            <div className={"settings-container"}>
+        if ( step === "personal" ) return <div className="settings-container settings-container-welcome">
 
+            <div className={"setting"} style={{margin : '60px auto 0'}}>
+                <Steps steps={[1,1,1,0,0]}/>
                 <div className={"title"}>
                     {this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
                 </div>
-
-                <div className={"setting"}>
-                    <div className={"row"}>
-                        <div className={"item"}>
-                            <label>
-                                {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")} *
-                            </label>
-                            <input value={user.firstName} onChange={(e)=>{
-                                user.firstName = e.target.value;
-                                this.setState({user});
-                            }}/>
-                        </div>
-                        <div className={"item"}>
-                            <label>
-                                {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")} *
-                            </label>
-                            <input value={user.lastName} onChange={(e)=>{
-                                user.lastName = e.target.value;
-                                this.setState({user});
-                            }}/>
-                        </div>
-                        <div className={"item"}>
-                            <label>
-                                {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")}
-                            </label>
-                            <input value={user.title} onChange={(e)=>{
-                                user.title = e.target.value;
-                                this.setState({user});
-                            }}/>
-                        </div>
+                <div className={"row"}>
+                    <div className={"item"}>
+                        <label>
+                            {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")} *
+                        </label>
+                        <input value={user.firstName} onChange={(e)=>{
+                            user.firstName = e.target.value;
+                            this.setState({user});
+                        }}/>
                     </div>
-                    <div className={"row"}>
-                        <div className={"item"}>
-                            <label>
-                                {this.context.t("SETTINGS_LABEL_USER_EMAIL")} *
-                            </label>
-                            <input value={user.email} onChange={(e)=>{
-                                user.email = e.target.value;
-                                this.setState({user});
-                            }}/>
-                        </div>
-                        <div className={"item"}>
-                            <label>
-                                {this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")} *
-                            </label>
-                            <input value={user.phone} onChange={(e)=>{
-                                user.phone = e.target.value;
-                                this.setState({user});
-                            }}/>
-                        </div>
+                    <div className={"item"}>
+                        <label>
+                            {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")} *
+                        </label>
+                        <input value={user.lastName} onChange={(e)=>{
+                            user.lastName = e.target.value;
+                            this.setState({user});
+                        }}/>
                     </div>
-
+                    <div className={"item"}>
+                        <label>
+                            {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")}
+                        </label>
+                        <input value={user.title} onChange={(e)=>{
+                            user.title = e.target.value;
+                            this.setState({user});
+                        }}/>
+                    </div>
                 </div>
-
-                <div className={"title"}>
-                    {this.context.t("SETTINGS_TITLE_COMPANY")}
+                <div className={"row"}>
+                    <div className={"item"}>
+                        <label>
+                            {this.context.t("SETTINGS_LABEL_USER_EMAIL")} *
+                        </label>
+                        <input value={user.email} onChange={(e)=>{
+                            user.email = e.target.value;
+                            this.setState({user});
+                        }}/>
+                    </div>
+                    <div className={"item"}>
+                        <label>
+                            {this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")} *
+                        </label>
+                        <input value={user.phone} onChange={(e)=>{
+                            user.phone = e.target.value;
+                            this.setState({user});
+                        }}/>
+                    </div>
                 </div>
+            </div>
+            <div className={"buttons"}>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("questionnaire")
+                    }}
+                    className="standard-button back">
+                    {this.context.t("SETTINGS_BUTTON_BACK")}
+                </button>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("company")
+                    }}
+                    disabled={ this.invalidUser() }
+                    className={"standard-button"}>
+                    {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+                </button>
+            </div>
+        </div>;
 
-                {user.company && <div className={"setting"}>
+        if ( step === "company" ) return <div className="settings-container settings-container-welcome">
+
+            <div className={"setting"} style={{margin : '60px auto 0'}}>
+                <Steps steps={[1,1,1,1,0]}/>
+                {user.company && <React.Fragment>
+                    <div className={"title"} style={{marginTop: 20}}>
+                        {this.context.t("SETTINGS_TITLE_COMPANY")}
+                    </div>
                     <div className={"row"}>
                         <div className={"item"}>
                             <label>
@@ -351,9 +415,9 @@ class Register extends React.Component {
                             <input value={user.company.legalName}
                                    disabled={common.testStageMode}
                                    onChange={(e)=>{
-                                user.company.legalName = e.target.value;
-                                this.setState({user});
-                            }} />
+                                       user.company.legalName = e.target.value;
+                                       this.setState({user});
+                                   }} />
                         </div>
                         <div className={"item"}>
                             <label>
@@ -361,9 +425,9 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.registrationNumber}
                                    onChange={(e)=>{
-                                user.company.registrationNumber = e.target.value;
-                                this.setState({user});
-                            }}/>
+                                       user.company.registrationNumber = e.target.value;
+                                       this.setState({user});
+                                   }}/>
                         </div>
                         <div className={"item"}>
                             <label>
@@ -371,9 +435,9 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.vat}
                                    onChange={(e)=>{
-                                user.company.vat = e.target.value;
-                                this.setState({user});
-                            }}/>
+                                       user.company.vat = e.target.value;
+                                       this.setState({user});
+                                   }}/>
                         </div>
                     </div>
                     <div className={"row"}>
@@ -383,9 +447,9 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.address}
                                    onChange={(e)=>{
-                                user.company.address = e.target.value;
-                                this.setState({user});
-                            }}/>
+                                       user.company.address = e.target.value;
+                                       this.setState({user});
+                                   }}/>
                         </div>
 
                         <div className="item">
@@ -394,9 +458,9 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.address2}
                                    onChange={(e)=>{
-                                user.company.address2 = e.target.value;
-                                this.setState({user});
-                            }}/>
+                                       user.company.address2 = e.target.value;
+                                       this.setState({user});
+                                   }}/>
                         </div>
                         <div className={"item"}>
                             <label>
@@ -404,9 +468,9 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.city}
                                    onChange={(e)=>{
-                                user.company.city = e.target.value;
-                                this.setState({user});
-                            }}/>
+                                       user.company.city = e.target.value;
+                                       this.setState({user});
+                                   }}/>
                         </div>
                     </div>
                     <div className={"row"}>
@@ -416,9 +480,9 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.zip}
                                    onChange={(e)=>{
-                                user.company.zip = e.target.value;
-                                this.setState({user});
-                            }}/>
+                                       user.company.zip = e.target.value;
+                                       this.setState({user});
+                                   }}/>
                         </div>
                         <div className={"item"}>
                             <label>
@@ -439,36 +503,63 @@ class Register extends React.Component {
                             />
                         </div>
                     </div>
-                </div>}
+                </React.Fragment>}
+            </div>
+            <div className={"buttons"}>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("personal")
+                    }}
+                    className="standard-button back">
+                    {this.context.t("SETTINGS_BUTTON_BACK")}
+                </button>
+                <button
+                    onClick={() => {
+                        this.goToNextStep("password")
+                    }}
+                    disabled={ this.invalidCompany()}
+                    className={"standard-button"}>
+                    {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+                </button>
+            </div>
+        </div>;
 
-                <div className={"title"}>
-                    {this.context.t("REGISTER_LABEL_SELECT_PASSWORD")}
-                </div>
-                <div className={"subtitle"}>
-                    {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
-                </div>
-                <div className={"setting"} style={{display: 'flex'}}>
-                    <div className={"password"}>
+        return (
+            <div className={"settings-container settings-container-welcome"}>
 
-                        <label>
-                            {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
-                        </label>
-                        <input type={"password"} onChange={(e)=>{
-                            this.setState({
-                                password : e.target.value
-                            })
-                        }}/>
+                <div className={"setting"} style={{margin : '60px auto 0'}}>
 
-                        <label>
-                            {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
-                        </label>
-                        <input type={"password"} onChange={(e)=>{
-                            this.setState({
-                                passwordCheck : e.target.value
-                            })
-                        }}/>
+                    <Steps steps={[1,1,1,1,1]}/>
+                    <div className="setting-password">
+                        <div className={"title"} style={{marginTop: 20}}>
+                            {this.context.t("REGISTER_LABEL_SELECT_PASSWORD")}
+                        </div>
+                        <div className={"subtitle"}>
+                            {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
+                        </div>
+                        <div className={"password"}>
 
+                            <label>
+                                {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
+                            </label>
+                            <input type={"password"} onChange={(e)=>{
+                                this.setState({
+                                    password : e.target.value
+                                })
+                            }}/>
+
+                            <label>
+                                {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
+                            </label>
+                            <input type={"password"} onChange={(e)=>{
+                                this.setState({
+                                    passwordCheck : e.target.value
+                                })
+                            }}/>
+
+                        </div>
                     </div>
+
                     {password && <div className={"password-validation"}>
                         <div>
                             {this.validate(password).length && <img src={blueCheckIcon}/>}
@@ -497,15 +588,12 @@ class Register extends React.Component {
                         </div>}
 
                     </div>}
-
                 </div>
 
-                <div className="setting save-button-container">
-
+                <div className="setting" style={{margin : '20px auto 0'}}>
                     <div className={"terms-confirm"}
                          style={{
                              padding: '20px 0px',
-                             width: '50%',
                              margin: '0 auto'
                          }}>
                         <GeneralTerms
@@ -524,12 +612,21 @@ class Register extends React.Component {
                             }}/>
                     </div>
 
+                </div>
 
-
-                    {!updatingUser && !updated && <button onClick={this.updateInfo}
-                            disabled={this.invalidPassword() || this.invalidUser() || this.invalidCompany() || !privacy || !terms}
+                <div className="buttons">
+                    <button
+                        onClick={() => {
+                            this.goToNextStep("company")
+                        }}
+                        className="standard-button back">
+                        {this.context.t("SETTINGS_BUTTON_BACK")}
+                    </button>
+                    {!updatingUser && !updated &&
+                    <button onClick={this.updateInfo}
+                            disabled={this.invalidPassword() || !privacy || !terms}
                             className={"standard-button"}
-                            style={{maxWidth: 300}}>
+                            style={{maxWidth: 300, lineHeight: "22px"}}>
                         {this.context.t("REGISTER_BUTTON_SAVE")}
                     </button>}
 
@@ -537,7 +634,7 @@ class Register extends React.Component {
 
                     {updated && <a
                         className={"standard-button"}
-                        style={{maxWidth: 300}}
+                        style={{maxWidth: 300, lineHeight: "22px"}}
                         href="/marketplace">
                         {this.context.t("REGISTER_SUCCESS_MESSAGE")}
                     </a>}

@@ -1356,7 +1356,7 @@ msgid "SETTINGS_BUTTON_CONTINUE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_BUTTON_COMPLETE"
+msgid "SETTINGS_BUTTON_BACK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1554,28 +1554,12 @@ msgstr ""
 msgid "PREFERENCES_SPORT_BUYER_SUBTITLE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
-msgid "PREFERENCES_BUYER_SELECTED_SPORTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
-msgid "PREFERENCES_BUYER_ALL_SPORTS"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
 msgid "PREFERENCES_SPORT_SELLER_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
 msgid "PREFERENCES_SPORT_SELLER_SUBTITLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
-msgid "PREFERENCES_SELLER_SELECTED_SPORTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportSeller.js
-msgid "PREFERENCES_SELLER_ALL_SPORTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js

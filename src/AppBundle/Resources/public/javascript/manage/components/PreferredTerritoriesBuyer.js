@@ -35,7 +35,7 @@ class PreferredTerritoriesBuyer extends React.Component {
     };
 
     render() {
-        const {  status } = this.props;
+        const { style } = this.props;
         const { isMultipleEnabled, territories } = this.state;
 
         return (
@@ -45,7 +45,7 @@ class PreferredTerritoriesBuyer extends React.Component {
                 </div>
                 <div className={"subtitle"}>
                 </div>
-                <div className={"row"}>
+                <div className={"row"} style={style}>
                     <div className={"preferences-item"}>
                         <div className="d-flex align-items-center" style={{marginBottom:5}}>
                             <div className={cn({

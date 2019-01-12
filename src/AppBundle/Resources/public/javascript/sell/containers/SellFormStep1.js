@@ -64,8 +64,12 @@ class SellFormStep1 extends React.Component {
 
     componentDidMount () {
         if (this.props.step !== 1) return;
-        ContentArena.Api.getSports().done( (sports ) => {
+        ContentArena.Api.getAllSports(["create"]).done( (sports ) => {
             ContentArena.Data.FullSports = sports;
+        });
+
+        ContentArena.Api.getAllSports(["top"]).done( (sports ) => {
+            ContentArena.Data.TopSports = sports;
         });
 
         ContentArena.Api.getCountries().done( (countries ) => {

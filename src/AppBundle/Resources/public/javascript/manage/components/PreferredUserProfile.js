@@ -28,7 +28,7 @@ class PreferredUserProfile extends React.Component {
     };
 
     render() {
-        const { status, centered } = this.props;
+        const { status, centered, style = {}} = this.props;
         const { profile } = this.state;
 
         return (
@@ -36,40 +36,38 @@ class PreferredUserProfile extends React.Component {
                 <div className={cn({ 'title': true, "justify-content-center": centered })}>
                     {this.context.t("PREFERENCES_PROFILE_TITLE")}
                 </div>
-                <div  className={cn({ 'row': true, "justify-content-center": centered })} style={{marginBottom:50}}>
-                    <div className={"item"}>
-                        <div className={cn({ 'd-flex align-items-center': true, "justify-content-center": centered })}>
-                            <div className={cn({ 'font-weight-bold': profile === "BUYER" })}
-                                 style={{marginRight:20}}>
-                                <input className="ca-radio"
-                                       type="radio"
-                                       value={"BUYER"}
-                                       onChange={ () => { this.handleRadioChange("BUYER")}}
-                                       checked={profile === "BUYER"}
-                                       style={{marginRight:5, width: 20,padding: 0}}
-                                />
-                                {this.context.t('PREFERENCES_TERRITORIES_PROFILE_BUYER')}
-                            </div>
-                            <div className={cn({ 'font-weight-bold': profile === "SELLER" })} style={{marginRight:20}}>
-                                <input className="ca-radio"
-                                       type="radio"
-                                       value={"SELLER"}
-                                       onChange={ () => { this.handleRadioChange("SELLER")}}
-                                       checked={profile === "SELLER"}
-                                       style={{marginRight:5, width: 20,padding: 0}}
-                                />
-                                {this.context.t('PREFERENCES_TERRITORIES_PROFILE_SELLER')}
-                            </div>
-                            <div className={cn({ 'font-weight-bold': profile === "BOTH" })}>
-                                <input className="ca-radio"
-                                       type="radio"
-                                       value={"BOTH"}
-                                       onChange={ () => { this.handleRadioChange("BOTH")}}
-                                       checked={profile === "BOTH"}
-                                       style={{marginRight:5, width: 20,padding: 0}}
-                                />
-                                {this.context.t('PREFERENCES_TERRITORIES_PROFILE_BOTH')}
-                            </div>
+                <div  className={cn({ 'row': true, "justify-content-center": centered })} style={style}>
+                    <div className={cn({ 'row-content d-flex align-items-center': true, "justify-content-center": centered })}>
+                        <div className={cn({ 'font-weight-bold': profile === "BUYER" })}
+                             style={{marginRight:20}}>
+                            <input className="ca-radio"
+                                   type="radio"
+                                   value={"BUYER"}
+                                   onChange={ () => { this.handleRadioChange("BUYER")}}
+                                   checked={profile === "BUYER"}
+                                   style={{marginRight:5, width: 20,padding: 0}}
+                            />
+                            {this.context.t('PREFERENCES_TERRITORIES_PROFILE_BUYER')}
+                        </div>
+                        <div className={cn({ 'font-weight-bold': profile === "SELLER" })} style={{marginRight:20}}>
+                            <input className="ca-radio"
+                                   type="radio"
+                                   value={"SELLER"}
+                                   onChange={ () => { this.handleRadioChange("SELLER")}}
+                                   checked={profile === "SELLER"}
+                                   style={{marginRight:5, width: 20,padding: 0}}
+                            />
+                            {this.context.t('PREFERENCES_TERRITORIES_PROFILE_SELLER')}
+                        </div>
+                        <div className={cn({ 'font-weight-bold': profile === "BOTH" })}>
+                            <input className="ca-radio"
+                                   type="radio"
+                                   value={"BOTH"}
+                                   onChange={ () => { this.handleRadioChange("BOTH")}}
+                                   checked={profile === "BOTH"}
+                                   style={{marginRight:5, width: 20,padding: 0}}
+                            />
+                            {this.context.t('PREFERENCES_TERRITORIES_PROFILE_BOTH')}
                         </div>
                     </div>
                 </div>

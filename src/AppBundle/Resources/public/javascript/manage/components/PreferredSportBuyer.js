@@ -9,8 +9,9 @@ class PreferredSportBuyer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sports : (props.sports) ? props.sports.map(s=>({value : s.id , label : s.name })) : [],
-            allSports : (props.allSports) ? props.allSports : false
+            sports : (props.sports) ? props.sports : [],
+            all : (props.all) ? props.all : false,
+            other : (props.other) ? props.other : false
         };
     }
 
@@ -22,12 +23,13 @@ class PreferredSportBuyer extends React.Component {
 
     setSports = ( sports) => {
         const { onChange } = this.props;
-        if (onChange) onChange(sports.map(t=>({id : t.value, name: t.label})), false);
+        if (onChange) onChange(sports);
         this.setState({sports: sports });
     };
 
     render() {
-        const { sports, allSports } = this.state;
+        const { sports,all, other } = this.state;
+        const { style } = this.props;
         return (
             <React.Fragment>
                 <div className={"preferences-title"}>
@@ -36,47 +38,14 @@ class PreferredSportBuyer extends React.Component {
                 <div className={"subtitle"}>
                     {this.context.t("PREFERENCES_SPORT_BUYER_SUBTITLE")}
                 </div>
-                <div className={"row"}>
-                    <div className={"preferences-item"}>
-                        <div className="d-flex align-items-center" style={{marginBottom:5}}>
-                            <div className={cn({
-                                'font-weight-bold': allSports === false ,
-                                "d-flex align-items-center" : true
-                            })}
-                                 style={{marginRight:20}}>
-                                <input className="ca-radio"
-                                       type="radio"
-                                       value={false}
-                                       onChange={ e => { this.handleRadioChange(false)}}
-                                       checked={allSports === false}
-                                       style={{marginRight:5, width: 20,padding: 0}}
-                                />
-                                {this.context.t('PREFERENCES_BUYER_SELECTED_SPORTS')}
-                            </div>
-                            <div className={cn({
-                                'font-weight-bold': allSports === true,
-                                "d-flex align-items-center" : true
-                            })}>
-                                <input className="ca-radio"
-                                       type="radio"
-                                       value={true}
-                                       onChange={ e => { this.handleRadioChange(true)}}
-                                       checked={allSports === true}
-                                       style={{marginRight:5, width: 20,padding: 0}}
-                                />
-                                {this.context.t('PREFERENCES_BUYER_ALL_SPORTS')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div className={"row"} style={{marginBottom:50}}>
                     <div className={"preferences-item"}>
                         <SportSelector
-                            className={"small-select"}
-                            disabled={allSports}
                             onChange={this.setSports}
-                            value={sports}
-                            multi={true}
+                            flags={["wall"]}
+                            sports={sports}
+                            all={all}
+                            other={other}
                         />
                     </div>
                 </div>
