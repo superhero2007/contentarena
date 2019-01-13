@@ -35,6 +35,14 @@ const Steps = ({ steps = []}) => {
         </div>
 )};
 
+const BackButton = ({onClick}, context) => (
+    <button
+        onClick={onClick}
+        className="standard-button back">
+        <i className="fa fa-chevron-left" /> {context.t("SETTINGS_BUTTON_BACK")}
+    </button>
+);
+
 class Register extends React.Component {
 
     constructor(props) {
@@ -305,13 +313,7 @@ class Register extends React.Component {
 
             </div>
             <div className={"buttons"}>
-                <button
-                    onClick={() => {
-                        this.goToNextStep("welcome")
-                    }}
-                    className="standard-button back">
-                    {this.context.t("SETTINGS_BUTTON_BACK")}
-                </button>
+                <BackButton onClick={() => { this.goToNextStep("welcome") }}/>
                 <button
                     onClick={() => {
                         this.goToNextStep("personal")
@@ -381,13 +383,7 @@ class Register extends React.Component {
                 </div>
             </div>
             <div className={"buttons"}>
-                <button
-                    onClick={() => {
-                        this.goToNextStep("questionnaire")
-                    }}
-                    className="standard-button back">
-                    {this.context.t("SETTINGS_BUTTON_BACK")}
-                </button>
+                <BackButton onClick={() => { this.goToNextStep("questionnaire") }}/>
                 <button
                     onClick={() => {
                         this.goToNextStep("company")
@@ -506,13 +502,7 @@ class Register extends React.Component {
                 </React.Fragment>}
             </div>
             <div className={"buttons"}>
-                <button
-                    onClick={() => {
-                        this.goToNextStep("personal")
-                    }}
-                    className="standard-button back">
-                    {this.context.t("SETTINGS_BUTTON_BACK")}
-                </button>
+                <BackButton onClick={() => { this.goToNextStep("personal") }}/>
                 <button
                     onClick={() => {
                         this.goToNextStep("password")
@@ -615,13 +605,7 @@ class Register extends React.Component {
                 </div>
 
                 <div className="buttons">
-                    <button
-                        onClick={() => {
-                            this.goToNextStep("company")
-                        }}
-                        className="standard-button back">
-                        {this.context.t("SETTINGS_BUTTON_BACK")}
-                    </button>
+                    <BackButton onClick={() => { this.goToNextStep("company") }}/>
                     {!updatingUser && !updated &&
                     <button onClick={this.updateInfo}
                             disabled={this.invalidPassword() || !privacy || !terms}
@@ -645,6 +629,10 @@ class Register extends React.Component {
 }
 
 Register.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
+BackButton.contextTypes = {
     t: PropTypes.func.isRequired
 };
 

@@ -234,7 +234,7 @@
   justify-content: center;
   display: flex;
   flex-direction: column;
-  background: url('../images/email-bg.jpg' ) no-repeat;
+  background: url('../images/bg-questionnarie.png' ) no-repeat;
   background-size: contain;
   background-color: #eee;
   margin: -20px;
@@ -259,6 +259,12 @@
     .back{
       border: 1px solid #FFC94B;
       background-color: transparent;
+      position: relative;
+      i {
+        position: absolute;
+        left: 10px;
+        top: 19px;
+      }
     }
   }
   .steps {

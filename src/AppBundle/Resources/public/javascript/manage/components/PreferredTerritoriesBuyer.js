@@ -94,6 +94,7 @@ class PreferredTerritoriesBuyer extends React.Component {
                             onSelectRegion={(c) =>{ }}
                             value={territories}
                             multiple={true}
+                            hideCountrySelector={true}
                             worldwide={true}
                             filter={[]}
                             exclusiveSoldTerritories={ false}

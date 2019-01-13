@@ -159,7 +159,8 @@ class RegionCountrySelector extends React.Component {
         const {
             filter,
             disabled,
-            worldwide
+            worldwide,
+            hideCountrySelector
         } = this.props;
 
         const {territories, regions, activeTerritories, activeRegions, worldwideSelected} = this.state;
@@ -205,7 +206,7 @@ class RegionCountrySelector extends React.Component {
                     </div>
 
                 </div>}
-                <CountrySelector
+                {!hideCountrySelector && <CountrySelector
                     filter={filter}
                     disabled={disabled}
                     onChange={this.handleChange}
@@ -213,7 +214,7 @@ class RegionCountrySelector extends React.Component {
                     exclusiveSoldTerritories={exclusiveSoldTerritories}
                     placeholder={placeholder}
                     isInvalid={isInvalid}
-                />
+                />}
             </div>
         )
     }
