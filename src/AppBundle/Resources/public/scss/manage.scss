@@ -20,17 +20,16 @@ $icon-color: #00769A;
   font-weight: 600;
 }
 .manager-header {
-  margin-left: -20px;
-  margin-right: -20px;
   $barHeight: 74px;
   display: flex;
   align-items: center;
   padding: 0 15px;
   min-height: $barHeight;
-  margin-bottom: 20px;
   box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
   background-color: $content-bg;
   color: $color-blue-dark;
+  margin: 0 auto 20px;
+
   .logo {
     cursor: pointer;
     flex: 150px 0 0;
