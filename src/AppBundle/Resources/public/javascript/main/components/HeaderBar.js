@@ -131,12 +131,12 @@ class HeaderBar extends  React.Component {
                         </HeaderBarTab>
                     )}
 
+                    <HeaderNotifications />
+
                     <HeaderBarTab className="tab baseline messages" route="/messages">
                         <i className="fa fa-envelope" />
                         {this.context.t("HEADER_LINK_MESSAGES")}
                     </HeaderBarTab>
-
-                    {/*<HeaderNotifications />*/}
 
                     <div className="settings">
                         <i className="fa fa-gear" />
