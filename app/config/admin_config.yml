@@ -23,6 +23,8 @@ easy_admin:
                 - {label: 'Upload LA General Terms', icon: 'file-new', route: 'uploadGeneralTerms'}
                 - {label: 'Upload Localization File', icon: 'file-new', route: 'uploadLocales'}
             - Country
+            - Terms
+            - TermItems
 
         form_theme:
             - 'horizontal'
@@ -176,6 +178,14 @@ easy_admin:
                 class: AppBundle\Entity\Tournament
             Season:
                 class: AppBundle\Entity\Season
+            Terms:
+                class: AppBundle\Entity\SourceLicenseTerm
+            TermItems:
+                class: AppBundle\Entity\SourceLicenseTermItem
+                label: 'Term Items'
+                list:
+                    fields: ['term', 'position', 'editable', 'content']
+
 knp_paginator:
     page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
     default_options:

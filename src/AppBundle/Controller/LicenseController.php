@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Service\FileUploader;
+use AppBundle\Service\TermsService;
 use AppBundle\Service\TestService;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -343,21 +344,24 @@ class LicenseController extends Controller
 
     /**
      * @Route("/license/test/{customId}", name="contractTest")
-     * @throws \exception
+     * @param Request $request
+     * @param TermsService $termsService
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function contractTestAction(Request $request){
+    public function contractTestAction(Request $request, TermsService $termsService){
 
         $user = $this->getUser();
         $content = $this->getDoctrine()
             ->getRepository('AppBundle:Content')
             ->findOneBy(['customId' => $request->get("customId")]);
-
+        $terms = $termsService->getSourceTerms();
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
 
         $viewElements = array(
             'user' => $user,
             'content' => $content,
+            'terms' => $terms,
             'watermark' => true,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
@@ -381,6 +385,28 @@ class LicenseController extends Controller
         );
 
         return $this->render('contract/la-general-terms-base.html.twig', $viewElements);
+    }
+
+    /**
+     * @Route("/license/test-general-source", name="contractTestGeneralSource")
+     * @throws \exception
+     */
+    public function contractTestGeneralSourceAction(Request $request){
+
+        $user = $this->getUser();
+
+        $terms = $this->getDoctrine()
+            ->getRepository('AppBundle:SourceLicenseTerm')
+            ->findAll();
+
+        $viewElements = array(
+            'user' => $user,
+            'terms' => $terms,
+            'watermark' => true,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('contract/la-general-terms-source.html.twig', $viewElements);
     }
 
     /**

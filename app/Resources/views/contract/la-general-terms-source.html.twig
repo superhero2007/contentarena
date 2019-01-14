@@ -1,0 +1,19 @@
+<div class="license-content">
+
+    <div class="license-sub-title">General Terms and Conditions</div>
+
+    {% for term in terms %}
+        <div class="license-item-title">{{ term.position }}. {{ term.name }}:</div>
+
+        {% for item in term.items %}
+            <div class="license-item">
+                <strong> {{ term.position }}.{{ item.position }} </strong> {{ item.content|nl2br }}
+            </div>
+        {% endfor %}
+
+    {% endfor %}
+
+
+</div>
+
+

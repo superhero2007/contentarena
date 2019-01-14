@@ -230,6 +230,34 @@
     flex-direction: column;
   }
 }
+
+.terms-edit-container{
+  .setting{
+    .terms-edit-item{
+      margin: 5px 0;
+      display: flex;
+      .terms-edit-item-content{
+        border: 1px solid #CCCCCC;
+        background-color: #F5F5F5;
+        padding: 20px;
+        color: #555555;
+        font-size: 13px;
+        line-height: 25px;
+        width: 95%;
+        min-height: 122px;
+      }
+      .terms-edit-item-disabled{
+        background-color: rgba(204,204,204,0.21);
+        color: #999999;
+      }
+      .terms-edit-item-actions{
+        width: 5%;
+        display: flex;
+      }
+    }
+  }
+}
+
 .settings-container-welcome{
   justify-content: center;
   display: flex;

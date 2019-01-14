@@ -12,6 +12,7 @@ import TestPage from "./containers/TestPage";
 import Register from "./containers/Register";
 import PublicHeaderBar from "./components/PulbicHeaderBar";
 import Preferences from "../manage/containers/Preferences";
+import Terms from "../manage/containers/Terms";
 
 export const routes = [
     {
@@ -107,6 +108,12 @@ export const routes = [
         path: "/preferences/:mode?",
         header: HeaderBar,
         main: Preferences,
+        updateByPath : true
+    },
+    {
+        path: "/terms",
+        header: HeaderBar,
+        main: Terms,
         updateByPath : true
     },
     {

@@ -10,6 +10,7 @@ use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\MessageService;
 use AppBundle\Service\NotificationService;
+use AppBundle\Service\TermsService;
 use AppBundle\Service\UserService;
 use PDFMerger;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -906,5 +907,19 @@ class ApiController extends BaseController
         return new JsonResponse(array("success"=>true));
     }
 
+    /**
+     * @Route("/api/terms/company", name="getUserInfo")
+     */
+    public function getCompanyTerms(Request $request, TermsService $termsService)
+    {
+        $terms = $termsService->getSourceTerms();
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($terms, 'json',SerializationContext::create());
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
 
 }

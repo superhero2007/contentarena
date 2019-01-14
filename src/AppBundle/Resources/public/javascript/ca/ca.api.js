@@ -59,6 +59,25 @@ ContentArena.Api= {
 
         return list;
     },
+    getCompanyTerms ( ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/terms/company",
+            type: "POST",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getContent ( filter) {
         let deferred = jQuery.Deferred();
 

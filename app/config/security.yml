@@ -41,6 +41,7 @@ security:
         - { path: ^/contract, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
         - { path: ^/listing, role: ROLE_USER }
+        - { path: ^/terms, role: ROLE_USER }
         - { path: ^/license, role: ROLE_USER }
         - { path: ^/settings, role: ROLE_USER }
         - { path: ^/messages, role: ROLE_USER }
