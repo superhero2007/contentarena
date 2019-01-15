@@ -48,8 +48,8 @@ class SportsGroupFixtures extends Fixture
                 $item->setName($content[$i][0]);
                 $sports = $content[$i][1];
                 $sportsList = [];
-                for ($i = 0; $i < count($sports); $i++) {
-                    $sport = $manager->getRepository("AppBundle:Sport")->findOneBy( array('name' => $sports[$i] ));
+                for ($k = 0; $k < count($sports); $k++) {
+                    $sport = $manager->getRepository("AppBundle:Sport")->findOneBy( array('name' => $sports[$k] ));
                     if ( $sport != null ) $sportsList[] = $sport;
                 }
                 $item->setSports($sportsList);
