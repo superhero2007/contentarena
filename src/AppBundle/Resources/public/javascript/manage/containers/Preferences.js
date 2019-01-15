@@ -94,6 +94,7 @@ class Preferences extends React.Component {
 
                     {user.preferredProfile !== "BUYER" &&
                     <PreferredSportSeller sports={user.preferredSellerSports}
+                                          parse={true}
                                           allSports={user.preferredSellerAllSports}
                                           onChange={this.handleSellerSports}/>}
 
@@ -103,6 +104,7 @@ class Preferences extends React.Component {
 
                     {user.preferredProfile !== "SELLER" &&
                     <PreferredSportBuyer sports={user.preferredBuyerSports}
+                                         parse={true}
                                          allSports={user.preferredBuyerAllSports}
                                          onChange={this.handleBuyerSports}/>}
 

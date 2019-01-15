@@ -26,9 +26,22 @@ class SportSelector extends React.Component {
 
     componentDidMount () {
         let _this = this;
+        let activeSports = this.state.activeSports;
+        const { parse, sports } = this.props;
+        let ids =  sports.map(s=>s.id);
+        ContentArena.Api.getSportsGroups().done( (sportGroups ) => {
 
-        ContentArena.Api.getSportsGroups().done( (sports ) => {
-            _this.setState({sports});
+            if (parse){
+                activeSports.clear();
+
+                sportGroups.forEach(sportGroup => {
+
+                   if (sportGroup.sports.some(sport => ids.indexOf(sport.id) !== -1) && !activeSports.has(sportGroup) ){
+                       activeSports.set(sportGroup.id, sportGroup)
+                   }
+                });
+            }
+            _this.setState({sports : sportGroups, activeSports});
         });
     }
 
@@ -36,7 +49,7 @@ class SportSelector extends React.Component {
 
         let sports = [];
         activeSports.forEach(sportGroup => {
-            sports = [...sports, ...sportGroup.sports];
+            if (sportGroup.sports) sports = [...sports, ...sportGroup.sports];
         });
 
         return sports;

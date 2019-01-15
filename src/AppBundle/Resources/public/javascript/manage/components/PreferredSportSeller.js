@@ -30,7 +30,7 @@ class PreferredSportSeller extends React.Component {
 
     render() {
         const { sports, all, other } = this.state;
-        const { style } = this.props;
+        const { parse } = this.props;
         return (
             <React.Fragment>
                 <div className={"preferences-title"}>
@@ -46,6 +46,7 @@ class PreferredSportSeller extends React.Component {
                             sports={sports}
                             all={all}
                             other={other}
+                            parse={parse}
                             flags={["wall"]}
                         />
                     </div>
