@@ -1428,7 +1428,8 @@ button {
 
     &.visited {
       cursor: pointer;
-      font-weight: bold;
+      font-weight: normal;
+      color: #333;
     }
 
     &:not(.visited) {
