@@ -54,7 +54,7 @@ class SendMessage extends Component {
 
         const {isLoading, isFail, isSuccess} = this.state;
 
-        return <Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle}>
+        return <Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle} onRequestClose={onCloseModal}>
             <header className="modal-header">
                 <h3 className="modal-title">{title}</h3>
             </header>

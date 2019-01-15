@@ -603,7 +603,9 @@ class PopupRight extends React.Component {
                 <button
                     disabled={!this.showOkButton()}
                     className={"standard-button"}
-                    onClick={this.onOKClicked}>Accept
+                    onClick={this.onOKClicked}
+                >
+                    {this.context.t("MODAL_APPLY")}
                 </button>
             </div>
 

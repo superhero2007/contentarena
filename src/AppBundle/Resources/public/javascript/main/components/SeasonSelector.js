@@ -53,12 +53,12 @@ class SeasonSelector extends React.Component {
 
     setDurationStart = (e) => {
         const {index} = this.props;
-        this.props.updateFromMultiple("seasons", index, 'customStartDate', e.format());
+        this.props.updateFromMultiple("seasons", index, 'customStartDate', e ? e.format() : '');
     };
 
     setDurationEnd = (e) => {
         const {index} = this.props;
-        this.props.updateFromMultiple("seasons", index, 'customEndDate', e.format());
+        this.props.updateFromMultiple("seasons", index, 'customEndDate', e ? e.format() : '');
     };
 
     render(){

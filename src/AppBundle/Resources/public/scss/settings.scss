@@ -77,14 +77,13 @@
   .title {
     display: flex;
     margin-bottom: 30px;
-    color: #03547C;
-    font-size: 21px;
+    color: #333;
+    font-size: 18px;
     font-weight: bold;
     line-height: 24px;
   }
   .big-title{
     @extend .title;
-    color: #000;
     font-size: 40px;
     justify-content: center;
     margin: 20px 0 10px;
@@ -96,21 +95,22 @@
   }
   .subtitle {
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 13px;
+    color: #666;
   }
   textarea {
     display: flex;
     box-sizing: border-box;
     margin-top: 10px;
     min-height: 220px;
-    font-weight: bold;
-    font-size: 15px;
+    font-weight: normal;
+    font-size: 16px;
     background: #F5F5F5;
     border-color: #E6E6E6;
     &:disabled {
       background: #EDEDED;
       border-color: #E3E3E3;
-      color: #999999;
+      color: #333;
     }
   }
   .setting {
@@ -164,8 +164,8 @@
           margin-bottom: inherit;
           background: #F5F5F5;
           border-color: #E6E6E6;
-          font-weight: bold;
-          font-size: 15px;
+          font-weight: normal;
+          font-size: 16px;
           &:disabled {
             background: #EDEDED;
             border-color: #E3E3E3;

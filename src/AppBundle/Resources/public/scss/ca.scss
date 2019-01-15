@@ -14,11 +14,12 @@ body {
   color: #333333;
 }
 
-body{
+body {
   @media only screen and (max-width: 1280px) {
     width: 1280px;
     overflow: auto;
   }
+
   &.page-home {
     .manager-container {
       @media only screen and (min-width: 1920px) {
@@ -61,45 +62,62 @@ button {
   margin: 20px;
 }
 
-.table-for-cl4-cl5{
+.table-for-cl4-cl5 {
   border: none;
   padding: 0;
   font-weight: normal;
 
-  .rt-thead, .rt-tbody{
+  .rt-thead, .rt-tbody {
     overflow-y: hidden;
   }
 
-  &.showScroll{
-    .rt-tbody{
+  &.showScroll {
+    .rt-tbody {
       overflow-y: scroll;
-      &::-webkit-scrollbar{ width: 5px; }
-      &::-webkit-scrollbar-track{ background: $border-color-1; }
-      &::-webkit-scrollbar-thumb{
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $border-color-1;
+      }
+
+      &::-webkit-scrollbar-thumb {
         background-color: $border-color-2;
         outline: 1px solid slategrey;
       }
     }
-    .rt-thead{
+
+    .rt-thead {
       overflow-y: scroll;
-      &::-webkit-scrollbar{ width: 5px; }
-      &::-webkit-scrollbar-track{ background: transparent; }
-      &::-webkit-scrollbar-thumb{
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
         background-color: transparent;
         outline: 1px solid transparent;
       }
     }
   }
 
-  .table-header-big{ border-bottom: none }
+  .table-header-big {
+    border-bottom: none
+  }
 
-  .rt-tbody{
+  .rt-tbody {
     max-height: 690px;
 
-    .rt-tr{
+    .rt-tr {
       align-items: center;
 
-      .rt-td{
+      .rt-td {
         height: 45px;
         display: flex;
         justify-content: space-between;
@@ -108,22 +126,25 @@ button {
     }
   }
 
-  .rt-table{
+  .rt-table {
     border: 1px solid $border-color-3;
     @include borderRadius(5px);
 
-    .price-action-wrapper{
+    .price-action-wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
       font-weight: bold;
     }
-    .rt-thead.-header{
+
+    .rt-thead.-header {
       border-bottom: 2px solid $color-primary;
       outline-offset: -4px;
 
-      .table-header-big{ background: transparent; }
+      .table-header-big {
+        background: transparent;
+      }
     }
   }
 }
@@ -145,6 +166,7 @@ button {
     i.fa {
       padding: 5px;
     }
+
     .buttons-container {
       margin: 0 0 8px;
       display: inline-flex;
@@ -157,11 +179,12 @@ button {
   color: #1a1a1a;
   padding: 20px;
   text-align: left;
+
   i.fa {
     padding: 5px;
   }
 
-  .buttons{
+  .buttons {
     margin: 0;
   }
 
@@ -169,6 +192,7 @@ button {
     border-bottom: 4px solid #D4D8DE;
     margin-bottom: 30px;
     padding-bottom: 3px;
+
     span {
       text-transform: uppercase;
       background-color: #1a4b63;
@@ -181,15 +205,18 @@ button {
       display: flex;
     }
   }
+
   .step-title {
     font-size: $font-size-extra-large;
     color: #4F4F4F;
     font-weight: 600;
     line-height: 48px;
   }
+
   .step-content-container {
     display: flex;
     flex-direction: column;
+
     .rights-box {
       display: flex;
       flex-direction: row;
@@ -204,6 +231,7 @@ button {
         min-width: 33%;
       }
     }
+
     .rights-container {
       display: flex;
       flex-direction: row;
@@ -231,10 +259,12 @@ button {
         }
       }
     }
+
     .license-date-container {
       display: flex;
       justify-content: space-between;
       max-width: 872px;
+
       input[type="number"] {
         width: 100%;
         border: none;
@@ -244,12 +274,14 @@ button {
         outline: none;
         margin: 0;
       }
+
       input[type="number"]::placeholder {
         font-size: 11px;
         color: grey;
 
       }
     }
+
     .react-tagsinput {
       width: 100%;
       height: 35px;
@@ -259,11 +291,13 @@ button {
       flex-direction: row;
       padding-top: inherit;
       padding-left: 8px;
+
       input.react-tagsinput-input {
         border: 0;
         margin: inherit;
         padding: inherit;
       }
+
       .react-tagsinput-tag {
         background-color: #FFC94B;
         color: #062E44;
@@ -273,14 +307,17 @@ button {
         margin: 3px;
       }
     }
+
     .react-tagsinput > span {
       display: flex;
       height: 37px;
       padding: 0;
     }
+
     .base-container {
       max-width: 872px;
     }
+
     .base-input {
       padding-bottom: 5px;
       border-bottom: 4px solid $border-color-1;
@@ -288,32 +325,37 @@ button {
       margin-bottom: 20px;
       position: relative;
       max-width: 872px;
-      &.fixture-wrapper{
+
+      &.fixture-wrapper {
         display: block;
 
-        .fixture-item{
+        .fixture-item {
           display: block;
           width: 100%;
 
-          .fixture-row{
+          .fixture-row {
             display: flex;
             flex-wrap: nowrap;
             justify-content: flex-start;
             align-items: center;
 
-            &.select-date-time-wrapper{
+            &.select-date-time-wrapper {
               padding: 5px 0;
               margin-right: 50px;
               justify-content: flex-end;
 
-              a{
-                &.add-time{ padding-right: 5px; }
+              a {
+                &.add-time {
+                  padding-right: 5px;
+                }
+
                 color: $font-color-7;
               }
 
-              .datepicker-wrapper{
+              .datepicker-wrapper {
                 display: flex;
                 align-items: baseline;
+
                 input {
                   border: 1px solid $grey-color;
                   margin: 0;
@@ -321,14 +363,15 @@ button {
               }
             }
 
-            .new-fixture{
+            .new-fixture {
               flex: 0 1 100%;
             }
-            .fixture-actions{
+
+            .fixture-actions {
               display: flex;
               flex: 0 0 50px;
 
-              img{
+              img {
                 width: 17px;
                 height: 17px;
                 margin: 0 5px;
@@ -353,11 +396,13 @@ button {
         color: #2AAAEC;
         font-size: 26px;
       }
+
       .fa-cog {
         position: absolute;
         right: 10px;
         top: 10px
       }
+
       .currency-item {
         display: flex;
         justify-content: center;
@@ -369,6 +414,7 @@ button {
         background: $light-background-color;
         color: $font-color-1;
         margin: 0 0 0 5px;
+
         .currency-icon {
           width: 26px;
           height: 26px;
@@ -378,6 +424,7 @@ button {
           justify-content: center;
           margin: 0 5px 0;
           align-items: center;
+
           i {
             font-size: 32px;
             color: $blue-color;
@@ -386,25 +433,28 @@ button {
         }
 
       }
+
       .custom {
         font-size: 16px;
         font-weight: bold;
         color: red;
       }
+
       label {
-        text-transform: uppercase;
+        text-transform: capitalize;
         background-color: $blue-color;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         padding: 0 20px;
         height: 35px;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
-        color: white;
+        color: #F7F7F7;
         min-width: 275px;
         box-sizing: border-box;
       }
+
       input:not([type="radio"]), select {
         width: 100%;
         margin: 0 0 0 5px;
@@ -413,6 +463,7 @@ button {
         font-size: 16px;
         outline: none;
       }
+
       .season-selector-label {
         background-color: white !important;
         color: black !important;
@@ -421,17 +472,21 @@ button {
         font-size: 15px !important;
       }
     }
+
     .textarea-input {
       flex-direction: column;
       @extend .base-input;
+
       label {
         width: 100%;
         box-sizing: border-box;
       }
+
       .textarea-input-text {
         margin: 0;
         padding: 10px 20px;
       }
+
       textarea {
         width: auto;
         box-sizing: border-box;
@@ -442,39 +497,50 @@ button {
         color: #343434;
       }
     }
+
     .small-select {
       margin: 0 0 5px;
       height: auto;
+
       .Select-control {
         height: 34px;
+
         .Select-placeholder {
           line-height: 34px;
         }
       }
     }
+
     .base-full-input {
       flex-direction: column;
       margin-bottom: 5px;
+
       .big-textarea {
         width: 500px !important;
         min-height: 170px;
         border: 1.1px solid #A9A9A9;
       }
+
       @extend .base-input;
+
       label {
         width: 100%;
         box-sizing: border-box;
+
         .select-currency {
           display: none;
         }
       }
+
       .sales-package-table {
         @extend %sales-package-table;
       }
+
       .content {
         display: flex;
         flex-direction: row;
         position: relative;
+
         .sales-package-container {
           display: flex;
           flex-direction: row;
@@ -499,9 +565,11 @@ button {
           flex: 1;
           display: flex;
           align-items: center;
+
           Select {
             margin: 0;
           }
+
           span {
             display: flex;
             font-size: 13px;
@@ -509,25 +577,30 @@ button {
             font-weight: 600;
             justify-content: flex-end;
           }
+
           i {
             font-size: 26px;
             position: absolute;
             left: 10px;
             color: lightgray;
           }
+
           .fa-check-circle-o {
             color: $blue-color;
           }
+
           .title {
             font-weight: 600;
             font-size: 13px;
             color: $font-color-1;
+
             .small-datepicker {
               width: 110px;
               height: 26px;
             }
 
           }
+
           .description {
             font-size: 16px;
             color: $font-color-1;
@@ -537,10 +610,12 @@ button {
           }
         }
       }
+
       .Select--single > .Select-control .Select-value {
         line-height: 34px !important;
       }
     }
+
     .title-bar {
       background-color: #D4D8DE;
       display: flex;
@@ -549,6 +624,7 @@ button {
       align-items: center;
       flex-direction: row;
       margin-bottom: 20px;
+
       hr {
         width: 20px;
         display: block;
@@ -558,11 +634,13 @@ button {
         margin: 1em;
         padding: 0;
       }
+
       .title {
         color: $font-color-1;
         font-size: 18px;
         font-weight: 600;
       }
+
       .subtitle {
         color: $font-color-1;
         font-size: 16px;
@@ -570,6 +648,7 @@ button {
         padding-top: 4px;
       }
     }
+
     .step-item-description {
       font-size: $font-size-medium-large;
       margin: 20px 0;
@@ -577,6 +656,7 @@ button {
       font-weight: normal;
       align-items: baseline;
     }
+
     .schedule {
       font-size: 14px;
       margin-top: -30px;
@@ -585,6 +665,7 @@ button {
       position: relative;
       padding: 20px;
       column-count: 3;
+
       .matchday {
         padding: 10px;
         border: 1px solid lightgray;
@@ -601,22 +682,26 @@ button {
           color: grey;
           cursor: pointer;
         }
+
         .match-group {
           border-top: 1px solid lightgray;
           padding: 5px 0;
           margin: 10px 0 0;
           max-height: 400px;
           overflow: auto;
+
           .match {
             padding: 1px;
             font-size: 12px;
             line-height: 12px;
             cursor: pointer;
+
             span {
               display: contents;
               float: none;
               color: #4F4F4F;
             }
+
             .select {
               display: block;
               float: right;
@@ -631,6 +716,7 @@ button {
         color: white;
       }
     }
+
     .add-item {
       color: #2AAAEC;
       font-size: 18px;
@@ -644,20 +730,24 @@ button {
 .step-content-custom {
   .modal-input {
     margin-bottom: 50px;
+
     label {
       float: left;
       min-width: inherit;
       width: inherit;
       color: #4F4F4F;;
     }
+
     .row {
       float: right;
       margin-top: -10px;
+
       .small-label {
         color: #4F4F4F;
         font-size: 14px;
         font-weight: bold;
       }
+
       input[type=number] {
         width: 95px;
       }
@@ -665,14 +755,14 @@ button {
   }
 }
 
-.sell-form-steps-wrapper{
+.sell-form-steps-wrapper {
   background: $background-3;
   border: 1px solid $border-color-1;
-  @include shadow(0 1px 9px rgba(0,0,0,0.21));
+  @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
 }
 
-.step-2{
-  .listing-summary{
+.step-2 {
+  .listing-summary {
     border-bottom: 1px $color-grey solid;
     color: $font-color-6;
     font-size: 21px;
@@ -681,21 +771,23 @@ button {
     margin-bottom: 0;
     padding-bottom: 20px;
   }
-  .step-content-container{
-    .textarea-input-wrapper, .right-selector{
-      header{
+
+  .step-content-container {
+    .textarea-input-wrapper, .right-selector {
+      header {
         color: $black-color;
         font-weight: bold;
         font-size: 18px;
         margin: 20px 0 10px;
       }
-      .textarea-input-description, .right-description{
-        color: $font-color-1;
+
+      .textarea-input-description, .right-description {
+        color: #666;
         font-size: 13px;
         line-height: 25px;
-
         margin-bottom: 20px;
       }
+
       .right-error-message {
         font-size: 13px;
         line-height: 25px;
@@ -703,7 +795,8 @@ button {
 
         margin-bottom: 20px;
       }
-      textarea{
+
+      textarea {
         height: 300px;
         padding: 25px 20px;
 
@@ -717,31 +810,34 @@ button {
           font-style: italic;
         }
       }
+
       .package-selector-container {
         border: 1px solid transparent;
       }
-      .right-selection-table{
 
-        .table-right-selection-header{
+      .right-selection-table {
+
+        .table-right-selection-header {
           background: transparent;
           border-bottom: 2px solid $color-primary;
         }
-        .rt-tr{
-          &.-odd{
+
+        .rt-tr {
+          &.-odd {
             background: transparent;
           }
 
-          .rt-td{
+          .rt-td {
             display: flex;
             align-items: center;
 
             padding: 15px 10px;
 
-            input[type=radio]{
+            input[type=radio] {
               margin-left: 10px;
             }
-            
-            label{
+
+            label {
               font-size: 13px;
               font-weight: 600;
               color: $black-color;
@@ -749,7 +845,8 @@ button {
 
               padding-left: 10px;
             }
-            p{
+
+            p {
               font-size: 13px;
               color: $font-color-5;
               font-weight: normal;
@@ -778,7 +875,8 @@ button {
 
     .left {
       width: 40%;
-      .modal-input{
+
+      .modal-input {
         display: flex;
         margin-bottom: 10px;
 
@@ -787,20 +885,24 @@ button {
           height: 30px;
           color: $red-color;
         }
-        .radio-box{
+
+        .radio-box {
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
-          label{
+
+          label {
             display: inline;
             min-width: 60px;
             width: 60px;
             padding-left: 5px;
           }
         }
+
         label {
           float: left;
         }
+
         input,
         select,
         .select,
@@ -808,24 +910,29 @@ button {
           &[type='checkbox'] {
             width: 20px;
           }
+
           width: 215px;
         }
       }
+
       .Select-control {
         border-radius: 0;
       }
     }
+
     .right {
       padding: inherit;
       width: 60%;
       @media screen and (max-width: 1460px) {
         float: none;
       }
+
       .modal-input {
         border-bottom: 4px solid #D4D8DE;
         margin-bottom: inherit;
         display: block;
         width: 100%;
+
         label {
           text-transform: uppercase;
           background-color: #1a4b63;
@@ -834,6 +941,7 @@ button {
           width: 100%;
           height: 35px;
         }
+
         textarea {
           outline: none;
           border: 1px solid #DADADA;
@@ -853,21 +961,29 @@ button {
     margin-bottom: 0;
     padding-bottom: 0;
   }
+
   .step-content-container {
     .rights-box {
       background: #F4F6F9;
       border-bottom: 4px solid #26ABED;
       padding: 10px 15px;
     }
+
     .license-date-container {
       .right-name {
         flex: 1;
         height: 35px;
         padding-top: 6px;
         padding-bottom: 6px;
+        font-size: 15px;
+        text-transform: capitalize;
+        font-weight: 600;
+        color: #F7F7F7;
       }
+
       .right-item-content {
         height: 35px;
+
         &:last-of-type {
           margin-right: 0;
           justify-content: flex-end;
@@ -886,17 +1002,20 @@ button {
     padding-bottom: 3px;
     position: relative;
     max-width: 515px;
+
     .select-text {
-      text-transform: uppercase;
       background-color: #1a4b63;
       align-items: center;
       padding: 0 20px;
       height: 35px;
-      color: #fff;
-      font-weight: 600;
       display: flex;
       width: 100%;
+      font-size: 15px;
+      text-transform: capitalize;
+      font-weight: 600;
+      color: #F7F7F7;
     }
+
     .currency-selector {
       .current {
         padding: 4px 16px 3px;
@@ -904,12 +1023,14 @@ button {
         border: 1px solid #DADADA;
         text-align: right;
       }
+
       .dropdown {
         right: 0;
         position: absolute;
         top: 34px;
         display: none;
         width: 100px;
+
         .currency-item {
           padding: 5px 5px 5px 0;
           color: #000;
@@ -918,11 +1039,13 @@ button {
           text-align: center;
         }
       }
+
       &:hover > .dropdown {
         display: block;
       }
     }
   }
+
   .step-content-container {
     .base-input {
       input {
@@ -930,34 +1053,40 @@ button {
         font-size: 15px;
         color: #333;
       }
+
       .Select {
         margin-left: 5px;
         width: 100%;
+
         .Select-control {
           height: 35px;
+
           .Select-value {
             line-height: 34px !important;
             font-weight: bold;
           }
+
           .Select-input {
             height: 33.5px;
           }
         }
       }
     }
+
     .base-full-input {
       margin-bottom: 20px;
       max-width: 1163px;
       flex-direction: row;
       position: relative;
 
-      .ca-table.round-0{
+      .ca-table.round-0 {
         @extend .table-for-cl4-cl5;
       }
 
       label {
         max-width: 851px;
       }
+
       .sales-bundles-placeholder {
         height: 100%;
         position: absolute;
@@ -965,6 +1094,7 @@ button {
         left: 0;
         padding-top: 35px;
         border: 1px solid transparent;
+
         .add-item {
           margin-left: 0 !important;
           font-size: 30px;
@@ -975,6 +1105,7 @@ button {
         }
       }
     }
+
     .radio-tab {
       background: #F4F6F9;
       height: 35px;
@@ -985,25 +1116,30 @@ button {
       display: flex;
       align-items: center;
       margin-left: 3px;
+
       input[type="radio"].ca-radio {
         width: 20px;
         height: 20px;
         margin-right: 10px;
       }
     }
+
     .custom-selector {
       border-bottom: none;
       margin-top: 20px;
     }
+
     .sales-package-form {
       &.is-invalid {
         .base-full-input label {
           border-bottom: 1px solid #CC0000;
         }
+
         .sales-bundles-placeholder {
           border: 1px solid #CC0000;
         }
       }
+
       .base-full-input {
         max-width: inherit;
         margin-bottom: inherit;
@@ -1034,6 +1170,7 @@ button {
           display: table-row !important;
           overflow: auto;
           height: 250px;
+
           .sales-package-container {
             display: table !important;
             height: 50px !important;
@@ -1042,31 +1179,38 @@ button {
         }
 
       }
+
       .add-item {
         margin-bottom: 0;
+
         &:last-child {
           margin-left: 10px;
         }
       }
     }
+
     .title-bar {
       background: none;
       color: #4F4F4F;
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 10px;
+
       hr {
         display: none;
       }
     }
+
     .row {
       max-width: 872px;
+
       .base-input {
         float: left;
         //max-width: 435px;
         &:nth-child(2) {
           margin-left: 31px;
         }
+
         .react-datepicker-wrapper {
           input {
             border: 1px solid #CDCDCD;
@@ -1074,19 +1218,21 @@ button {
           }
         }
       }
+
       .custom-selector {
         border-bottom: 4px solid #D4D8DE;
       }
     }
   }
+
   .Select-placeholder {
     line-height: 34px;
   }
 }
 
-.review-sign-container{
-  .sales-package-form{
-    .base-full-input{
+.review-sign-container {
+  .sales-package-form {
+    .base-full-input {
       label {
         display: flex;
         max-width: inherit;
@@ -1100,7 +1246,7 @@ button {
         font-size: 21px;
       }
 
-      .ca-table.round-0{
+      .ca-table.round-0 {
         @extend .table-for-cl4-cl5;
       }
     }
@@ -1113,6 +1259,7 @@ button {
     align-items: center;
     margin-bottom: 10px;
   }
+
   i.edit-icon {
     font-size: 32px;
     color: #2AAAEC;
@@ -1131,6 +1278,7 @@ button {
   position: relative;
   padding: 5px 0;
   column-count: 2;
+
   .matchday {
     background-color: #FAFBFC;
     padding: 10px;
@@ -1149,22 +1297,26 @@ button {
       color: grey;
       cursor: pointer;
     }
+
     .match-group {
       border-top: 1px solid lightgray;
       padding: 5px 0;
       margin: 10px 0 0;
       max-height: 400px;
       overflow: auto;
+
       .match {
         padding: 1px;
         font-size: 12px;
         line-height: 12px;
         cursor: pointer;
+
         span {
           display: contents;
           float: none;
           color: #4F4F4F;
         }
+
         .select {
           display: block;
           float: right;
@@ -1182,6 +1334,7 @@ button {
 
 .season-details {
   margin-bottom: 30px;
+
   .season-name {
     background-color: $blue-color;
     color: white;
@@ -1199,6 +1352,7 @@ button {
   margin-bottom: 20px;
   position: relative;
   flex-direction: column;
+
   .fa-edit {
     position: absolute;
     right: 3px;
@@ -1206,11 +1360,13 @@ button {
     color: lightgrey;
     font-size: 26px;
   }
+
   .fa-cog {
     position: absolute;
     right: 10px;
     top: 10px
   }
+
   label {
     text-transform: uppercase;
     background-color: $blue-color;
@@ -1226,6 +1382,7 @@ button {
     min-width: 232px;
     box-sizing: border-box;
   }
+
   .full-item-content {
     padding: 15px 10px 30px;
     font-size: 14px;
@@ -1237,6 +1394,7 @@ button {
 
 .term-sheet-full-item-box {
   @extend .full-item-box;
+
   label {
     margin-top: 20px;
     padding: 0 10px;
@@ -1254,10 +1412,13 @@ button {
 
   .step {
     margin-right: 45px;
+    font-size: 15px;
+    font-weight: normal;
 
     &:last-child {
       margin-right: 0;
     }
+
     &.step-active {
       padding-bottom: 10px;
       border-bottom: 2px solid $color-primary;
@@ -1266,10 +1427,12 @@ button {
 
     &.visited {
       cursor: pointer;
-      font-weight: bold;
+      font-weight: normal;
+      color: #333;
     }
+
     &:not(.visited) {
-      color: #999999;
+      color: #CCC;
     }
   }
 }
@@ -1278,25 +1441,29 @@ button {
   padding: 0 !important;
   overflow: visible !important;
   max-width: 840px;
-  background: #F5F6FA !important;
   border-bottom: none !important;
   border-radius: 5px !important;
+
   .modal-title {
     background: none;
-    text-transform: uppercase;
-    color: #3399FE;
-    font-size: 20px;
+    text-transform: capitalize;
+    color: #1a4b63;
+    font-size: 15px;
+    font-weight: bold;
     height: inherit;
-    padding: 15px;
+    padding: 20px;
     line-height: 1;
+
     .fa-edit {
       font-size: 30px;
       padding-right: 5px;
     }
+
     .fa-times {
-      color: #CBCBCB;
+      color: #CCC;
       cursor: pointer;
     }
+
     .fa-comments {
       background: #3399FE;
       color: #fff;
@@ -1306,6 +1473,7 @@ button {
       cursor: pointer;
     }
   }
+
   .modal-table {
     textarea {
       margin: 20px 20px 0;
@@ -1322,6 +1490,7 @@ button {
         }
       }
     }
+
     div {
       textarea {
         margin: inherit;
@@ -1329,28 +1498,34 @@ button {
       }
     }
   }
+
   .step-content {
     padding: inherit;
+
     .row-header {
-      background: #E4E5E7;
+      background: #E5E5E5;
       border-bottom: none;
       font-size: 14px;
     }
+
     .row {
       padding: 15px 20px;
+
       .column {
         margin-left: inherit;
         margin-right: 10px;
       }
     }
+
     .big-textarea {
       width: 100% !important;
     }
   }
+
   .popup-buttons {
     display: flex;
     justify-content: center;
-    margin: 10px 0;
+    margin: 10px 0 20px;
 
     .cancel-button {
       border: none;
@@ -1361,6 +1536,7 @@ button {
       outline: none;
       font-size: 15px;
     }
+
     .standard-button {
       border-radius: 5px;
       text-transform: uppercase;
@@ -1371,32 +1547,39 @@ button {
       box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.09);
     }
   }
+
   .step-content-custom {
     padding: 10px 15px;
+
     .row {
       padding: 8px 0;
       margin-left: 10px;
+
       .column {
         margin-right: inherit;
       }
     }
   }
+
   .custom {
     .step-content-container {
       .modal-input {
         margin-bottom: 15px;
         padding: 0 16px;
+
         label {
           float: left;
           min-width: inherit;
           max-width: 170px;
           color: #4F4F4F;
         }
+
         div.Select {
           float: right;
           max-width: 280px;
           width: 100%;
           margin-top: -5px;
+
           .Select-input {
             input {
               border: none;
@@ -1404,6 +1587,7 @@ button {
           }
         }
       }
+
       .base-full-input {
         input {
           width: inherit !important;
@@ -1416,6 +1600,7 @@ button {
 .ReactModal__Selector {
   padding: 20px !important;
   position: absolute;
+
   .buttons {
     display: flex;
     justify-content: center;
@@ -1440,6 +1625,7 @@ button {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+
   button {
     border: none;
     padding: 15px 20px;
@@ -1448,6 +1634,7 @@ button {
     margin: 0px 0 10px;
     max-width: 80px;
   }
+
   .definition-container {
     height: 42px;
     margin: 10px 0px;
@@ -1457,11 +1644,13 @@ button {
     padding: 0 15px;
     width: 100%;
     box-sizing: border-box;
+
     label {
       font-size: 16px;
       font-weight: 600;
       margin-right: 40px;
     }
+
     input[type="text"] {
       border: none;
       background: none;
@@ -1494,7 +1683,7 @@ button {
   .close-icon {
     position: absolute;
     font-size: 23px;
-    right: 10px;
+    right: 20px;
     cursor: pointer;
   }
 
@@ -1515,6 +1704,7 @@ button {
 .modal-table {
   display: flex;
   flex-direction: column;
+
   .row {
     display: flex;
     flex-direction: row;
@@ -1525,6 +1715,7 @@ button {
     align-items: center;
     min-height: 40px;
   }
+
   .row-header {
     height: 55px;
     background-color: #D4D8DE;
@@ -1533,6 +1724,7 @@ button {
     font-weight: 600;
     line-height: 16px;
   }
+
   .column {
     display: flex;
     flex: 2;
@@ -1543,6 +1735,7 @@ button {
     text-align: left;
     position: relative;
     font-weight: bold;
+
     input.text-field {
       margin-left: 10px;
       height: 24px;
@@ -1550,9 +1743,11 @@ button {
       width: 85px;
       min-width: 50px;
     }
+
     input[type="checkbox"] {
       width: 50px;
     }
+
     input[type="checkbox"] {
       position: absolute;
       height: 20px;
@@ -1560,24 +1755,30 @@ button {
       opacity: 0;
       z-index: 100;
       margin-top: 0;
+
       &:focus ~ label {
         background: #F4F6F9;
       }
+
       &:checked ~ label {
         background: #F4F6F9;
+
         &:after {
           display: block;
         }
       }
+
       &:disabled ~ label {
         background: #F4F6F9;
         opacity: 0.6;
         pointer-events: none;
+
         &:after {
           border-color: #7b7b7b;
         }
       }
     }
+
     label {
       position: absolute;
       height: 20px;
@@ -1585,6 +1786,7 @@ button {
       background: #F4F6F9;
       border: 1px solid #bbc2cf;
       border-radius: 4px;
+
       &:after {
         box-sizing: unset;
         content: '';
@@ -1604,19 +1806,24 @@ button {
       width: 100%;
       min-height: 31px;
       height: auto;
+
       .Select-control {
         min-height: 31px;
         height: auto;
+
         .Select-value {
           margin-top: 2px;
         }
+
         .Select-multi-value-wrapper {
           text-align: left;
           width: 100%;
         }
+
         .Select-placeholder {
           line-height: 30px;
         }
+
         .Select-input {
           height: 31px;
         }
@@ -1631,10 +1838,13 @@ button {
   margin-bottom: 30px;
   position: relative;
   max-width: 872px;
+
   &:last-child {
     margin-bottom: 0;
+
     .row {
       padding-top: inherit;
+
       .column {
         &:first-child {
           margin-top: 0;
@@ -1648,17 +1858,21 @@ button {
     right: 10px;
     top: 10px
   }
+
   .row {
     padding-left: 20px;
   }
+
   .column {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 4px 0;
+
     .package-selector {
       margin-right: 10px;
     }
+
     .small-label {
       font-size: 13px;
       width: 100px;
@@ -1667,6 +1881,7 @@ button {
       line-height: 14px;
     }
   }
+
   label {
     display: flex;
     justify-content: flex-start;
@@ -1680,6 +1895,7 @@ button {
     font-size: 16px;
     font-weight: 600;
   }
+
   input, select {
     margin: 0;
     height: 36px;
@@ -1687,10 +1903,12 @@ button {
     font-size: 16px;
     border-color: lightgrey;
   }
+
   select, input[type=number] {
     text-align: right;
     text-align-last: right;
   }
+
   input::placeholder {
     color: #000;
   }
@@ -1747,14 +1965,17 @@ button {
 .generic-modal-container {
   color: #4F4F4F;
   padding: 40px;
+
   .title {
     font-size: 25px;
     font-weight: 600;
     margin-bottom: 20px;
   }
+
   .container {
     display: flex;
     flex-direction: column;
+
     textarea {
       display: flex;
       box-sizing: border-box;
@@ -1764,9 +1985,11 @@ button {
       border: 1px solid lightgray;
     }
   }
+
   .buttons {
     display: flex;
     justify-content: center;
+
     button {
       margin: 20px;
       min-height: 45px;
@@ -1778,6 +2001,7 @@ button {
       align-items: center;
       background-color: white;
     }
+
     .confirm {
       background-color: #48C0FE;
       color: white;
@@ -1810,6 +2034,7 @@ button {
     justify-content: space-between;
     width: 100%;
     max-width: 380px;
+
     .info {
       max-width: 100px;
     }
@@ -1840,6 +2065,7 @@ button {
       div {
         display: inline-block;
       }
+
       .fa-edit {
         padding: inherit;
         color: #2AAAEC;
@@ -1862,6 +2088,7 @@ button {
         border-right: none;
         padding-left: 10px;
       }
+
       &.fee {
         text-align: right;
         border-left: none;
@@ -1876,10 +2103,12 @@ button {
         width: 100px;
         text-align: left;
         border: none;
+
         img {
           margin-left: 15px;
           cursor: pointer;
         }
+
         .fa-edit {
           position: static;
           vertical-align: middle;
@@ -1902,6 +2131,7 @@ button {
 .static-page-container {
   max-width: 400px;
   margin: 20px auto;
+
   input[type=submit] {
     margin: 0;
   }

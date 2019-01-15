@@ -380,6 +380,7 @@ class SalesPackageForm extends React.Component {
             className={"ca-modal"}
             overlayClassName={"ca-modal-overlay"}
             contentLabel="Example Modal"
+            onRequestClose={this.closeModal}
         >
 
             <div className="modal-title">
