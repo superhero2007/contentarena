@@ -170,37 +170,40 @@ class AuthRouter extends React.Component {
 
         return (
             <Router>
-                <div className="manager-container">
-
-                    <Route path="/landing" component={Login} />
-                    <Route path="/logout" component={Logout} />
-
+                <React.Fragment>
                     {routes.map((route, index) => (
-                        <HeaderRoute
-                            key={index}
-                            path={route.path}
-                            exact={route.exact}
-                            component={route.header}
-                            profile={user.profile}
-                        />
-                    ))}
+                        <React.Fragment>
+                            <HeaderRoute
+                                key={index}
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.header}
+                                profile={user.profile}
+                            />
 
-                    {routes.map((route, index) => (
-                        <PrivateRoute
-                            key={index}
-                            path={route.path}
-                            exact={route.exact}
-                            updateByPath={route.updateByPath}
-                            component={route.main}
-                            profile={user.profile}
-                            routeProfile={route.profile}
-                            title={route.title}
-                            isPublic={route.isPublic}
-                            updateProfile={this.props.updateProfile}
-                            {...this.props}
-                        />
+                            <Route path="/landing" component={Login} />
+                            <Route path="/logout" component={Logout} />
+                        </React.Fragment>
                     ))}
-                </div>
+                    <div className="manager-container">
+                        {routes.map((route, index) => (
+                            <PrivateRoute
+                                key={index}
+                                path={route.path}
+                                exact={route.exact}
+                                updateByPath={route.updateByPath}
+                                component={route.main}
+                                profile={user.profile}
+                                routeProfile={route.profile}
+                                title={route.title}
+                                isPublic={route.isPublic}
+                                updateProfile={this.props.updateProfile}
+                                {...this.props}
+                            />
+                        ))}
+                    </div>
+                </React.Fragment>
+
             </Router>
         );
     }
