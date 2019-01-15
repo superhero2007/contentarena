@@ -374,7 +374,8 @@ class Checkout extends React.Component {
             company ,
             signatureName,
             signaturePosition,
-            bundles
+            bundles,
+            bidMethod
         } = this.state;
 
         this.props.disableValidation();
@@ -395,7 +396,8 @@ class Checkout extends React.Component {
             signaturePosition: signaturePosition,
             totalFee : this.getTotalFee(),
             content : content.id,
-            bids : bids
+            bids : bids,
+            multiple : bidMethod === this.all
         };
 
         if ( companyUpdated ){

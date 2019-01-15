@@ -60,7 +60,7 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getClosedDealsBySalesBundle($salesBundle);
     }
 
-    public function saveBidsData($bidData, Request $request, User $user){
+    public function saveBidsData($bidData, Request $request, User $user, $multiple){
 
         $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$bidData['salesMethod']));
         $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
@@ -103,9 +103,14 @@ class BidService
         if ( $bid == null) {
             $bid = new Bid();
             $customId = $this->idGenerator->generate($content);
+
             $createdAt = new \DateTime();
             $bid->setCustomId($customId);
             $bid->setCreatedAt($createdAt);
+            if ($multiple) {
+                $multipleCustomId = $this->idGenerator->generate($content);
+                $bid->setMultiple($multipleCustomId);
+            }
         }
 
         if ( isset( $signature ) ) {

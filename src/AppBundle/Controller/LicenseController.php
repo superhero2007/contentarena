@@ -220,10 +220,16 @@ class LicenseController extends Controller
         $bid = $this->getDoctrine()
             ->getRepository('AppBundle:Bid')
             ->findOneBy(['customId' => $request->get("customId")]);
+        $bids = [];
         $content = $bid->getStatus()->getName() != 'APPROVED' ? $bid->getContent() : $bid->getSoldListing();
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $bid->getSalesPackage()->getCurrency()->getName();
+        if ( $bid->getMultiple() !== null ){
+            $bids = $this->getDoctrine()
+                ->getRepository('AppBundle:Bid')
+                ->findBy(['multiple' => $bid->getMultiple()]);
+        }
         $bundle = $bid->getSalesPackage();
         $bundle->getSalesMethod()->getName();
         $terms = $termsService->getSourceTerms();
@@ -233,6 +239,7 @@ class LicenseController extends Controller
             'watermark' => $bid->getStatus()->getName() != 'APPROVED',
             'bundle' => $bundle,
             'content' => $content,
+            'bids' => $bids,
             'terms' => $terms,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,

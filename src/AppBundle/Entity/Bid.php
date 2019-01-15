@@ -34,6 +34,14 @@ class Bid
     /**
      * @var int
      *
+     * @ORM\Column(name="multiple", type="string", nullable=true)
+     * @Groups({"closed", "commercial"})
+     */
+    private $multiple;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="amount", type="decimal", precision=12, scale=2)
      * @Groups({"closed", "commercial"})
      */
@@ -616,6 +624,22 @@ class Bid
     public function setSellerCompanySnapshot($sellerCompanySnapshot)
     {
         $this->sellerCompanySnapshot = $sellerCompanySnapshot;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMultiple()
+    {
+        return $this->multiple;
+    }
+
+    /**
+     * @param int $multiple
+     */
+    public function setMultiple($multiple)
+    {
+        $this->multiple = $multiple;
     }
 
 

@@ -34,11 +34,20 @@ class TerritoriesSalesPackages extends PureComponent {
             salesPackages
         } = this.props;
         let checkedItems = this.state.checkedItems;
+        let filteredIndividualBundles = this.filterIndividualBundles();
+        let filteredTerritorialBundles = this.filterTerritorialBundles();
+
+        let total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
 
         if ( salesPackages.length === 1 ){
             checkedItems.set(salesPackages[0].id, salesPackages[0]);
-            this.setState({ checkedItems });
+
+        } else if (total === 1){
+            if (filteredIndividualBundles.length === 1) checkedItems.set(filteredIndividualBundles[0].id, filteredIndividualBundles[0]);
+            if (filteredTerritorialBundles.length === 1) checkedItems.set(filteredTerritorialBundles[0].id, filteredTerritorialBundles[0]);
         }
+
+        this.setState({ checkedItems });
     }
 
     getFee = (salesPackage) => {
@@ -54,7 +63,6 @@ class TerritoriesSalesPackages extends PureComponent {
         let selected = ( response.all ) ? [] : response.selected,
             selectedName = response.name;
         this.setState({selected, selectedName});
-        console.log(response)
     };
 
     filterBundles = () => {
@@ -175,7 +183,7 @@ class TerritoriesSalesPackages extends PureComponent {
 
         let filteredIndividualBundles = this.filterIndividualBundles();
         let filteredTerritorialBundles = this.filterTerritorialBundles();
-
+        let total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
         return (
             <React.Fragment>
 
@@ -216,7 +224,7 @@ class TerritoriesSalesPackages extends PureComponent {
                 }
 
                 {/* BUNDLE AVAILABILITY SELECTOR */}
-                {salesPackages.length > 1 && <div className="bundles-countries">
+                {salesPackages.length > 1 && total > 1 && <div className="bundles-countries">
                     <div className="bundles-countries-title">
                         {selectedName} Countries
                     </div>
@@ -234,13 +242,14 @@ class TerritoriesSalesPackages extends PureComponent {
                 </div>}
 
 
+
                 {/*{this.context.t("MARKETPLACE_LABEL_PRICE_MINIMUM_BID")}*/}
-                {filteredTerritorialBundles.length === 0
+                {/*{filteredTerritorialBundles.length === 0
                 && filteredTerritorialBundles.length === 0
                 && territorySelector === this.filtered
                 && <div className="sales-packages">
                     {this.context.t("MARKETPLACE_NO_FILTERED_TERRITORIES")}
-                </div>}
+                </div>}*/}
 
                 {filteredTerritorialBundles.length > 0 && <div className="sales-packages">
 

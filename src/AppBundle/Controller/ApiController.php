@@ -345,12 +345,13 @@ class ApiController extends BaseController
     {
         $user = $this->getUser();
         $bidsData = $request->get("bids");
+        $multiple = $request->get("multiple");
         $bids = [];
         $soldOut = false;
         $success = true;
 
         foreach ( $bidsData as $bidData){
-            $bid = $bidService->saveBidsData($bidData, $request, $user);
+            $bid = $bidService->saveBidsData($bidData, $request, $user,$multiple);
             $bids[] = $bid;
             $content = $bid->getContent();
             $terms = $termsService->getSourceTerms();
