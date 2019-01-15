@@ -782,10 +782,9 @@ button {
       }
 
       .textarea-input-description, .right-description {
-        color: $font-color-1;
+        color: #666;
         font-size: 13px;
         line-height: 25px;
-
         margin-bottom: 20px;
       }
 
@@ -1447,10 +1446,10 @@ button {
 
   .modal-title {
     background: none;
-    text-transform: uppercase;
-    color: #3399FF;
-    font-size: 22px;
-    font-weight: 600;
+    text-transform: capitalize;
+    color: #1a4b63;
+    font-size: 15px;
+    font-weight: bold;
     height: inherit;
     padding: 20px;
     line-height: 1;
