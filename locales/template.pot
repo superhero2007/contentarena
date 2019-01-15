@@ -892,10 +892,6 @@ msgid "NOTIFICATIONS_LOADING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
-msgid "NOTIFICATIONS_SEE_ALL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
 msgid "NOTIFICATIONS_EMPTY"
 msgstr ""
 

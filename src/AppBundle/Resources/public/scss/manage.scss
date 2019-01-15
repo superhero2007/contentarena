@@ -153,14 +153,15 @@ $icon-color: #00769A;
     }
 
     .expanded-list {
-      position: absolute;
       width: 250px;
-      right: 0;
-      background-color: #fff;
-      z-index: 1000;
-      @include shadow(0px 0px 6px 2px rgba(0,0,0,0.13));
+      max-height: 430px;
+      overflow: auto;
 
-      border: 1px solid lightgray;
+      position: absolute;
+      right: 0;
+      z-index: 1000;
+
+      background-color: $background-3;
       border-radius: 4px;
 
       .items {
@@ -180,33 +181,23 @@ $icon-color: #00769A;
             }
           }
 
-          &.unread {
-            .notification-time{ color: $black-color; }
-
-            background-color: $background-4;
-          }
-
           &:last-child {
             border-bottom: none;
           }
 
           &:hover {
-            background-color: #ddd;
+            background-color: $font-color-2;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+
+            .notification-time{
+              color: $black-color;
+            }
           }
 
           &.loading{
+            &:hover{ background-color: $background-3; }
             padding: 5px 10px;
-          }
-
-          &.see-all-notifications{
-            padding: 15px 0;
-            text-align: center;
-            color: $font-color-7;
-            font-weight: 600;
-
-            &:hover{
-              background: transparent;
-            }
           }
         }
       }
