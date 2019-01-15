@@ -171,7 +171,7 @@ class LicenseController extends Controller
      * @Route("/license/bundle/{id}/{listingId}", name="contractBundle")
      * @throws \exception
      */
-    public function contractBundle(Request $request, ContentService $contentService){
+    public function contractBundle(Request $request, ContentService $contentService, TermsService $termsService){
 
         $user = $this->getUser();
         /* @var SalesPackage $bundle  */
@@ -184,10 +184,11 @@ class LicenseController extends Controller
         $bundle->getSalesMethod()->getName();
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
-
+        $terms = $termsService->getSourceTerms();
         $viewElements = array(
             'user' => $user,
             'bundle' => $bundle,
+            'terms' => $terms,
             'content' => $content,
             'watermark' => true,
             'rightDefinitions' => $rightDefinitions,
@@ -211,7 +212,7 @@ class LicenseController extends Controller
      * @return BinaryFileResponse
      * @throws \exception
      */
-    public function contractBid(Request $request, ContentService $contentService){
+    public function contractBid(Request $request, ContentService $contentService, TermsService $termsService){
         /* @var SalesPackage $bundle  */
         /* @var Content $content  */
 
@@ -225,13 +226,14 @@ class LicenseController extends Controller
         $bid->getSalesPackage()->getCurrency()->getName();
         $bundle = $bid->getSalesPackage();
         $bundle->getSalesMethod()->getName();
-
+        $terms = $termsService->getSourceTerms();
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
             'watermark' => $bid->getStatus()->getName() != 'APPROVED',
             'bundle' => $bundle,
             'content' => $content,
+            'terms' => $terms,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
@@ -245,7 +247,7 @@ class LicenseController extends Controller
      * @Route("/license/custom/{customId}/{bundleId}", name="customLicense")
      * @throws \exception
      */
-    public function customLicense(Request $request, ContentService $contentService){
+    public function customLicense(Request $request, ContentService $contentService, TermsService $termsService){
         /* @var SalesPackage $bundle  */
         $user = $this->getUser();
         $time = new \DateTime();
@@ -259,11 +261,12 @@ class LicenseController extends Controller
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $bidStatus = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"PENDING"));
-
+        $terms = $termsService->getSourceTerms();
         $viewElements = array(
             'user' => $user,
             'watermark' => true,
             'bundle' => $bundle,
+            'terms' => $terms,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
@@ -320,7 +323,7 @@ class LicenseController extends Controller
      * @Route("/license/preview/{customId}", name="contractPreview")
      * @throws \exception
      */
-    public function contractPreviewAction(Request $request){
+    public function contractPreviewAction(Request $request, TermsService $termsService){
 
         $user = $this->getUser();
         $content = $this->getDoctrine()
@@ -329,11 +332,12 @@ class LicenseController extends Controller
 
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
-
+        $terms = $termsService->getSourceTerms();
         $viewElements = array(
             'user' => $user,
             'content' => $content,
             'watermark' => true,
+            'terms' => $terms,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
