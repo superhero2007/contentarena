@@ -912,7 +912,7 @@ class ApiController extends BaseController
     }
 
     /**
-     * @Route("/api/terms/company", name="getUserInfo")
+     * @Route("/api/terms/company", name="getCompanyTerms")
      */
     public function getCompanyTerms(Request $request, TermsService $termsService)
     {

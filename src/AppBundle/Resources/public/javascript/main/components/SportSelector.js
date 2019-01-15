@@ -59,7 +59,6 @@ class SportSelector extends React.Component {
         if (onChange) onChange({
             sports : this.getSelectedSports(activeSports),
             all: false,
-            other : false
         })
     };
 
