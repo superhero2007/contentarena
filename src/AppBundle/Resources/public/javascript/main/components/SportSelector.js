@@ -25,13 +25,23 @@ class SportSelector extends React.Component {
     }
 
     componentDidMount () {
-        const {flags} = this.props;
         let _this = this;
 
-        ContentArena.Api.getAllSports(flags).done( (sports ) => {
+        ContentArena.Api.getSportsGroups().done( (sports ) => {
             _this.setState({sports});
         });
     }
+
+    getSelectedSports = (activeSports) => {
+
+        let sports = [];
+        activeSports.forEach(sportGroup => {
+            sports = [...sports, ...sportGroup.sports];
+        });
+
+        return sports;
+
+    };
 
     selectSport = (sport) => {
 
@@ -47,9 +57,8 @@ class SportSelector extends React.Component {
 
         this.setState({ activeSports, all: false, other : false });
         if (onChange) onChange({
-            sports : Array.from(activeSports.values()),
+            sports : this.getSelectedSports(activeSports),
             all: false,
-            other : false
         })
     };
 
@@ -68,7 +77,7 @@ class SportSelector extends React.Component {
         });
 
         if (onChange) onChange({
-            sports : Array.from(activeSports.values()),
+            sports : this.getSelectedSports(activeSports),
             all: all,
             other : other
         })
@@ -81,8 +90,6 @@ class SportSelector extends React.Component {
         let activeSports = this.state.activeSports;
         let all = (other) ? false : this.state.all;
 
-        if (other) activeSports.clear();
-
         this.setState({
             all : all,
             other : other,
@@ -90,7 +97,7 @@ class SportSelector extends React.Component {
         });
 
         if (onChange) onChange({
-            sports : Array.from(activeSports.values()),
+            sports : this.getSelectedSports(activeSports),
             all: all,
             other : other
         })

@@ -540,6 +540,12 @@ class Checkout extends React.Component {
 
     handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
+    removeBundle = ( index ) => {
+        let bundles = this.state.selectedPackages;
+        bundles.splice(index, 1);
+        this.setState({ bundles: bundles});
+    };
+
     render() {
         ReactTooltip.rebuild();
         const { listing, validation} = this.props;
@@ -599,14 +605,14 @@ class Checkout extends React.Component {
                     const bundle = props.original;
                     return (
                         <div className="details-wrapper">
-                            {!bundle.all && <a className="bid-license"
+                            <a className="bid-license"
                                target={"_blank"}
                                href={getCustomLicenseUrl(content.customId, bundle.id, bid, company)}
                                title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
                                 <img src={pdfIcon} alt="Licence"/>
                                 <span>{this.context.t("License agreement")}</span>
-                            </a>}
-                            {!bundle.all && <Installments installments={bundle.installments} />}
+                            </a>
+                            <Installments installments={bundle.installments} />
                         </div>
                     )
                 }
@@ -618,7 +624,7 @@ class Checkout extends React.Component {
                     const bundle = props.original;
                     return (
                         <div className={cn("price-action-wrapper", {"price-action-center" : bundle.salesMethod === "FIXED" || !bundle.minimumBid  })}>
-                            <div title={bundle.fee} className={cn( {"price-invalid" : bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee)})}>
+                            <div title={bundle.fee} className={cn( {"price-invalid" : !bundle.all && bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee)})}>
                                 { this.getMinBid(bundle) }
                             </div>
                         </div>
@@ -709,6 +715,7 @@ class Checkout extends React.Component {
                                     displayType={'text'}
                                     prefix={getCurrencySymbol(selectedPackages[0].currency.code)+ " "} />}
                             </div>
+                            {!bundle.all && <i className="fa fa-minus-circle" onClick={() => this.removeBundle(props.index)} />}
                         </div>
                     )
                 }
@@ -759,6 +766,7 @@ class Checkout extends React.Component {
                             fee: 0,
                             currency : selectedPackages[0].currency,
                             salesMethod : "BIDDING",
+                            minimumBid: Math.max.apply(Math, selectedPackages.map(function(o) { return o.minimumBid; })),
                             all: true
                         }]}
                         TheadComponent={TheadComponent}

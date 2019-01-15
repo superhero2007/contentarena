@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from '@components/DatePicker';
 import { SERVER_DATE_TIME_FORMAT } from "@constants";
 import moment from 'moment';
+import max from 'lodash/max';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
@@ -31,6 +32,7 @@ class ExpirationDateSelector extends React.Component {
                     selected={(expiresAt)? moment(expiresAt): undefined}
                     onChange={this.handleStartDate}
                     minDate={moment()}
+                    maxDate={this.getMaxDate()}
                     fixedHeight={true}
                     dateFormat={DATE_FORMAT}
                     placeholderText={DATE_FORMAT.toLowerCase()}
@@ -42,6 +44,38 @@ class ExpirationDateSelector extends React.Component {
                 )}
             </div>
         )
+    }
+
+    getMaxDate() {
+        const { rightsPackage } = this.props;
+        const hasLiveTransmission = !!rightsPackage.find(item => item.shortLabel === 'LT');
+        let date = null;
+        
+        if (hasLiveTransmission) {
+            const { seasons } = this.props;
+            let maxFixtureDate = null;
+            let maxSeasonDate = null;
+
+            if (seasons) {
+                const fixtureDates = [];
+                const dates = seasons.map(season => {
+                    if(season.fixtures) {
+                        season.fixtures.forEach(fixture => {
+                            fixtureDates.push(moment(fixture.date));
+                        });
+                    }
+
+                    return moment(season.customEndDate);
+                });
+
+                maxFixtureDate = max(fixtureDates);
+                maxSeasonDate = max(dates);
+            }
+
+            date = max([maxFixtureDate, maxSeasonDate]);
+        }
+
+        return date;
     }
 }
 

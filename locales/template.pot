@@ -876,6 +876,10 @@ msgid "HEADER_LINK_MESSAGES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_PREFERENCES"
 msgstr ""
 
@@ -889,10 +893,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
 msgid "NOTIFICATIONS_LOADING"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
-msgid "NOTIFICATIONS_SEE_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
@@ -1348,6 +1348,10 @@ msgid "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_BUTTON_BACK"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
 msgstr ""
 
@@ -1361,10 +1365,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "SETTINGS_BUTTON_CONTINUE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_BUTTON_BACK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1478,10 +1478,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "REGISTER_BUTTON_SAVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1962,7 +1958,8 @@ msgid "Unlimited"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "Accept"
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "MODAL_APPLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js

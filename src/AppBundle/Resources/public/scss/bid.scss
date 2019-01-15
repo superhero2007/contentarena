@@ -71,6 +71,18 @@
 
     }
     .bundles-table-checkout{
+      .price-action-wrapper{
+        display: flex !important;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        .fa-minus-circle {
+          color: #FFC94B;
+          font-size: 20px;
+          margin: 0 5px;
+          cursor: pointer;
+        }
+      }
       .details-wrapper{
         display: flex !important;
         .bid-license{
@@ -82,6 +94,7 @@
         }
 
       }
+
     }
 
     .bid-location{

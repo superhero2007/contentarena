@@ -36,7 +36,7 @@ class DeclineBidModal extends Component {
         const { isOpen, onCloseModal } = this.props;
         const { isLoading, isFail } = this.state;
 
-        return <Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle}>
+        return <Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle} onRequestClose={onCloseModal}>
             <header className="modal-header">
                 <h3 className="modal-title">{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REJECT")}</h3>
             </header>

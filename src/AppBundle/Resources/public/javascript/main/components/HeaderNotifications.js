@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import uniqBy from 'lodash/uniqBy';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -12,8 +11,6 @@ class HeaderNotifications extends  React.Component {
         this.state = {
             dataLoading: true,
             notifications: [],
-            isMoreThanFive: false,
-            seeAll: false,
             showList: false
         }
     }
@@ -38,18 +35,11 @@ class HeaderNotifications extends  React.Component {
     };
 
     getCreatedTime = (createdAt) =>  moment(createdAt).format(TIME_FORMAT);
-    handleShowAllNotifications = () => this.setState({seeAll: true});
     handleShowNotificationList = () => this.setState({showList: true});
-    handleHideNotificationList = () => this.setState({showList: false, seeAll: false});
+    handleHideNotificationList = () => this.setState({showList: false});
 
     render(){
-        const { notifications, dataLoading, unseenNotificationsCount, isMoreThanFive, seeAll, showList } = this.state;
-
-        let notificationList = [...notifications];
-        if (isMoreThanFive && !seeAll) {
-            notificationList.length = 5;
-        }
-
+        const { notifications, dataLoading, unseenNotificationsCount, showList } = this.state;
         return(
             <div className='notifications'
                  onMouseOver={this.handleShowNotificationList}
@@ -60,23 +50,17 @@ class HeaderNotifications extends  React.Component {
                 {showList && <div className='expanded-list'>
                     <div className='items'>
                         {dataLoading && <div className='item loading'>{this.context.t("NOTIFICATIONS_LOADING")}</div>}
-                        {!dataLoading && notificationList.map((item) => {
-                            const { id, seen, text, createdAt } = item;
+                        {!dataLoading && notifications.map((item) => {
+                            const { id, text, createdAt } = item;
                             return (
                                 <div key={`notification-${id}`}
-                                     className={cn('item', {'unread': !seen })}
+                                     className='item'
                                      onClick={() => this.onNotificationClicked(item)}>
                                         <span>{text}</span>
                                         {createdAt && <span className="notification-time">{`${this.getPassedTime(createdAt)} - ${this.getCreatedTime(createdAt)}`}</span>}
                                 </div>
                             );
                         })}
-                        {isMoreThanFive && !seeAll &&
-                            (<div className='item see-all-notifications'
-                                 onClick={this.handleShowAllNotifications}>
-                                {this.context.t("NOTIFICATIONS_SEE_ALL")}
-                            </div>)
-                        }
                     </div>
                     {!dataLoading && !notifications.length && (
                         <div className='no-notifications'>
@@ -106,12 +90,10 @@ class HeaderNotifications extends  React.Component {
 
             const uniqNotifications = uniqBy(data, 'referenceId');
             const unseenNotificationsCount = uniqNotifications.filter(item => !item.seen).length;
-            const isMoreThanFive = uniqNotifications.length > 5;
 
             this.setState({
                 dataLoading: false,
                 unseenNotificationsCount,
-                isMoreThanFive,
                 notifications: uniqNotifications
             });
         });

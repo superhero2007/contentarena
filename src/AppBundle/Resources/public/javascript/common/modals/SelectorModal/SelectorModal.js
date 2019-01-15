@@ -300,6 +300,7 @@ class SelectorModal extends Component {
             isOpen={open}
             className="modal-wrapper wide"
             style={GenericModalStyle}
+            onRequestClose={this.closeModal}
         >
             <header className="modal-header selection-header">
                 <div className="title-left" style={{ maxWidth: '65%' }}>

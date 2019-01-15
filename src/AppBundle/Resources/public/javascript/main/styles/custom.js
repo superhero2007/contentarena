@@ -6,13 +6,14 @@ export const customStyles = {
         bottom                : 'auto',
         marginRight           : '-50%',
         transform             : 'translate(-50%, -50%)',
-        backgroundColor       : '#F4F6F9',
+        backgroundColor       : '#FFFFFF',
         border                : 'none',
         borderRadius          : 0,
         borderBottom          : '4px solid #2AAAEC',
     },
     overlay : {
-        zIndex                : 100
+        zIndex                : 100,
+        backgroundColor       : 'rgba(0, 0, 0, 0.7)'
     }
 };
 
@@ -24,14 +25,15 @@ export const SelectorModalStyle = {
         bottom                : 'auto',
         marginRight           : '-50%',
         transform             : 'translate(-50%, -50%)',
-        backgroundColor       : '#F4F6F9',
+        backgroundColor       : '#FFFFFF',
         border                : 'none',
         borderRadius          : 0,
         borderBottom          : '4px solid #2AAAEC',
         padding               : "20px"
     },
     overlay : {
-        zIndex                : 100
+        zIndex                : 100,
+        backgroundColor       : 'rgba(0, 0, 0, 0.7)'
     }
 };
 
@@ -50,6 +52,6 @@ export const GenericModalStyle = {
     },
     overlay : {
         zIndex                : 100,
-        backgroundColor       : 'rgba(0, 0, 0, 0.6)'
+        backgroundColor       : 'rgba(0, 0, 0, 0.7)'
     }
 };

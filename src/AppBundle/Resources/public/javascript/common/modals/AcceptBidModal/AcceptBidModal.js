@@ -58,7 +58,7 @@ class AcceptBidModal extends Component {
         const isAcceptDisabled = !signature || !terms;
         const isTermsInvalid = !terms && validation;
 
-        return <Modal isOpen={isOpen} className="modal-wrapper wide" style={GenericModalStyle}>
+        return <Modal isOpen={isOpen} className="modal-wrapper wide" style={GenericModalStyle} onRequestClose={onCloseModal}>
             <header className="modal-header">
                 <h3 className="modal-title">{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT")}</h3>
             </header>
