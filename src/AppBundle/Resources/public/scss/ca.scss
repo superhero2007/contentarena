@@ -1278,23 +1278,23 @@ button {
   padding: 0 !important;
   overflow: visible !important;
   max-width: 840px;
-  background: #F5F6FA !important;
   border-bottom: none !important;
   border-radius: 5px !important;
   .modal-title {
     background: none;
     text-transform: uppercase;
-    color: #3399FE;
-    font-size: 20px;
+    color: #3399FF;
+    font-size: 22px;
+    font-weight: 600;
     height: inherit;
-    padding: 15px;
+    padding: 20px;
     line-height: 1;
     .fa-edit {
       font-size: 30px;
       padding-right: 5px;
     }
     .fa-times {
-      color: #CBCBCB;
+      color: #CCC;
       cursor: pointer;
     }
     .fa-comments {
@@ -1332,7 +1332,7 @@ button {
   .step-content {
     padding: inherit;
     .row-header {
-      background: #E4E5E7;
+      background: #E5E5E5;
       border-bottom: none;
       font-size: 14px;
     }
@@ -1350,7 +1350,7 @@ button {
   .popup-buttons {
     display: flex;
     justify-content: center;
-    margin: 10px 0;
+    margin: 10px 0 20px;
 
     .cancel-button {
       border: none;
@@ -1494,7 +1494,7 @@ button {
   .close-icon {
     position: absolute;
     font-size: 23px;
-    right: 10px;
+    right: 20px;
     cursor: pointer;
   }
 

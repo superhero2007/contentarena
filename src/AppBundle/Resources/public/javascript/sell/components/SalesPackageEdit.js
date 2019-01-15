@@ -223,6 +223,7 @@ class SalesPackageEdit extends React.Component {
             bodyOpenClassName={"selector"}
             style={customStyles}
             contentLabel="Example Modal"
+            onRequestClose={this.closeModal}
         >
 
             <div className="modal-title">

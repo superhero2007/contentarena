@@ -59,6 +59,7 @@ class PopupCountrySelector extends React.Component {
             isOpen={this.state.isOpen}
             bodyOpenClassName={"selector"}
             style={customStyles}
+            onRequestClose={this.cancelModal}
         >
 
             <div className="modal-title">

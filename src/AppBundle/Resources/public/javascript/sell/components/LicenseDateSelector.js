@@ -172,7 +172,7 @@ class LicenseDateSelector extends React.Component {
                         disabled={!!saveButtonTooltip}
                         className={"standard-button"}
                         onClick={this.onOKClick}>
-                        {this.context.t("Accept")}
+                        {this.context.t("MODAL_APPLY")}
                     </button>
                 </div>
 
