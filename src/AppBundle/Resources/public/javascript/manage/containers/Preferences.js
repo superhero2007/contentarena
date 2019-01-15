@@ -55,17 +55,17 @@ class Preferences extends React.Component {
 
     };
 
-    handleSellerSports = ( sports, allSports) => {
+    handleSellerSports = ( response ) => {
         let user  = this.state.user;
-        user.preferredSellerSports = sports;
-        user.preferredSellerAllSports = allSports;
+        user.preferredSellerSports = response.sports;
+        user.preferredSellerAllSports = response.all;
         this.setState({user});
     };
 
-    handleBuyerSports = ( sports, allSports) => {
+    handleBuyerSports = ( response) => {
         let user  = this.state.user;
-        user.preferredBuyerSports = sports;
-        user.preferredBuyerAllSports = allSports;
+        user.preferredBuyerSports = response.sports;
+        user.preferredBuyerAllSports = response.all;
         this.setState({user});
     };
 
