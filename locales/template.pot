@@ -1481,10 +1481,6 @@ msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "REGISTER_BUTTON_SAVE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "REGISTER_SUCCESS_MESSAGE"
 msgstr ""
 
@@ -1962,7 +1958,8 @@ msgid "Unlimited"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-msgid "Accept"
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "MODAL_APPLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js
