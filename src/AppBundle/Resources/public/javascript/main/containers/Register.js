@@ -121,6 +121,7 @@ class Register extends React.Component {
         ContentArena.ContentApi.activateUser(user, password).done(()=>{
             sessionStorage.setItem('registering_user', null);
             this.setState({updated:true, updatingUser:false});
+            location.href = '/marketplace';
         })
     };
 
@@ -606,22 +607,16 @@ class Register extends React.Component {
 
                 <div className="buttons">
                     <BackButton onClick={() => { this.goToNextStep("company") }}/>
+
                     {!updatingUser && !updated &&
                     <button onClick={this.updateInfo}
                             disabled={this.invalidPassword() || !privacy || !terms}
                             className={"standard-button"}
                             style={{maxWidth: 300, lineHeight: "22px"}}>
-                        {this.context.t("REGISTER_BUTTON_SAVE")}
+                        {this.context.t("REGISTER_SUCCESS_MESSAGE")}
                     </button>}
 
                     {updatingUser && <Spinner/>}
-
-                    {updated && <a
-                        className={"standard-button"}
-                        style={{maxWidth: 300, lineHeight: "22px"}}
-                        href="/marketplace">
-                        {this.context.t("REGISTER_SUCCESS_MESSAGE")}
-                    </a>}
                 </div>
             </div>
         )

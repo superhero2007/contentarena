@@ -511,7 +511,9 @@ i.fa.ca-tooltip {
   color: #CC0000;
   &::placeholder {
     color: #CC0000 !important;
-    font-family: monospace;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 13px;
   }
 }
 
@@ -522,9 +524,13 @@ i.fa.ca-tooltip {
     }
     .Select-placeholder {
       color: #CC0000;
+      font-style: italic;
+      font-weight: normal;
+      font-size: 13px;
     }
   }
 }
+
 
   //todo: apply to all urls
 a.ca-link {
