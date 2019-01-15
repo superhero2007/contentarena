@@ -77,14 +77,13 @@
   .title {
     display: flex;
     margin-bottom: 30px;
-    color: #03547C;
-    font-size: 21px;
+    color: #333;
+    font-size: 18px;
     font-weight: bold;
     line-height: 24px;
   }
   .big-title{
     @extend .title;
-    color: #000;
     font-size: 40px;
     justify-content: center;
     margin: 20px 0 10px;

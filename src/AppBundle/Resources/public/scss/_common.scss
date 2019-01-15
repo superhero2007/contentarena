@@ -513,7 +513,10 @@ i.fa.ca-tooltip {
     .rt-td {
       //color: black;
       border-right: 1px solid #999;
-
+      div a {
+        font-size: 13px;
+        color: #07a7f9;
+      }
       & > div,
       & > a {
         overflow: hidden;
