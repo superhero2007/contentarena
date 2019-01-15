@@ -13,7 +13,7 @@ easy_admin:
             - Deals
             - RightsPackage
             - label: 'Sports'
-              children: ['Sport', 'SportCategory', 'Tournament', 'Season']
+              children: ['Sport', 'SportCategory', 'SportsGroup', 'Tournament', 'Season']
             - label: 'Custom Text'
               children: ['EmailContent']
             - label: 'Utils'
@@ -174,6 +174,8 @@ easy_admin:
                 class: AppBundle\Entity\Sport
             SportCategory:
                 class: AppBundle\Entity\SportCategory
+            SportsGroup:
+                class: AppBundle\Entity\SportsGroup
             Tournament:
                 class: AppBundle\Entity\Tournament
             Season:

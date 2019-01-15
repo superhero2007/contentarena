@@ -110,7 +110,7 @@ class LicenseController extends Controller
         /* @var Content $content  */
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        $htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
+        //$htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
 
         $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
 
@@ -121,12 +121,12 @@ class LicenseController extends Controller
             $this->container->getParameter("uploads_main_folder") . "/" . $fileName
         );
 
-        $this->get('knp_snappy.pdf')->generateFromHtml(
+        /*$this->get('knp_snappy.pdf')->generateFromHtml(
             $htmlGeneralTerms,
             $this->container->getParameter("uploads_main_folder") . "/general-terms.pdf",
             array(),
             true
-        );
+        );*/
 
         $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/" . $fileName, 'all');
 
@@ -136,7 +136,7 @@ class LicenseController extends Controller
             }
         }
 
-        $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
+        //$pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
 
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
         $pdf->merge('file', $pathForTheMergedPdf);

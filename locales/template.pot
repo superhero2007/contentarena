@@ -876,6 +876,10 @@ msgid "HEADER_LINK_MESSAGES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_PREFERENCES"
 msgstr ""
 
@@ -1348,6 +1352,10 @@ msgid "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_BUTTON_BACK"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
 msgstr ""
 
@@ -1361,10 +1369,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "SETTINGS_BUTTON_CONTINUE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_BUTTON_BACK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js

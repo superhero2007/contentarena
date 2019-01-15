@@ -288,13 +288,14 @@ class ApiController extends BaseController
      * @throws \Twig_Error_Syntax
      * @throws \exception
      */
-    public function contentPlaceBid(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService)
+    public function contentPlaceBid(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService, TermsService $termsService)
     {
         $user = $this->getUser();
         $bid = $bidService->saveBidsData($request,$user);
         $content = $bid->getContent();
         $soldOut = false;
         $success = false;
+        $terms = $termsService->getSourceTerms();
         if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
             $success = true;
@@ -340,7 +341,7 @@ class ApiController extends BaseController
      * @throws \Twig_Error_Syntax
      * @throws \exception
      */
-    public function contentPlaceBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService)
+    public function contentPlaceBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService, TermsService $termsService)
     {
         $user = $this->getUser();
         $bidsData = $request->get("bids");
@@ -352,7 +353,7 @@ class ApiController extends BaseController
             $bid = $bidService->saveBidsData($bidData, $request, $user);
             $bids[] = $bid;
             $content = $bid->getContent();
-
+            $terms = $termsService->getSourceTerms();
             if ($bid != null){
                 $soldOut = $contentService->listingIsSoldOut($content);
                 if ($bid->getStatus()->getName() == 'APPROVED'){
@@ -360,6 +361,7 @@ class ApiController extends BaseController
                     $viewElements = array(
                         'user' => $user,
                         'bid' => $bid,
+                        'terms' => $terms,
                         'watermark' => false,
                         'bundle' => $bid->getSalesPackage(),
                         'content' => $content,
@@ -415,14 +417,14 @@ class ApiController extends BaseController
 
         $time = new \DateTime();
         $html = $this->renderView('contract/layout.html.twig', $viewElements);
-        $htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
+        //$htmlGeneralTerms = $this->renderView('contract/la-general-terms-base.html.twig', $viewElements);
 
-        $this->get('knp_snappy.pdf')->generateFromHtml(
+       /* $this->get('knp_snappy.pdf')->generateFromHtml(
             $htmlGeneralTerms,
             $this->container->getParameter("uploads_main_folder") . "/general-terms.pdf",
             array(),
             true
-        );
+        );*/
 
         $fileName = 'License_Agreement_' . $content->getCompany()->getDisplayName(). '_' . $time->getTimestamp()  . '.pdf';
 
@@ -440,7 +442,7 @@ class ApiController extends BaseController
             }
         }
 
-        $pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
+        //$pdf->addPDF($this->container->getParameter("uploads_main_folder") . "/general-terms.pdf", 'all');
 
         $pathForTheMergedPdf = $this->container->getParameter("uploads_main_folder") . "/" . $fileName;
         $pdf->merge('file', $pathForTheMergedPdf);
@@ -561,7 +563,7 @@ class ApiController extends BaseController
      * @return JsonResponse
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function acceptBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService)
+    public function acceptBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService, TermsService $termsService)
     {
         $user = $this->getUser();
 
@@ -569,6 +571,7 @@ class ApiController extends BaseController
         $content = $bid->getContent();
         $soldOut = false;
         $success = false;
+        $terms = $termsService->getSourceTerms();
 
         if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
@@ -578,6 +581,7 @@ class ApiController extends BaseController
                 'user' => $user,
                 'bid' => $bid,
                 'watermark' => false,
+                'terms' => $terms,
                 'bundle' => $bid->getSalesPackage(),
                 'content' => $content,
                 'rightDefinitions' => $license_service->getRightDefinitions($content),
