@@ -119,6 +119,12 @@ class SellButtons extends Component {
         return getAllFixtures.length ? getAllFixtures.every(fixtures => fixtures.name.length) : true;
     };
 
+    checkSeasonsValidity = (seasons) => {
+        return seasons.every((season) => {
+            return season.customStartDate && season.customEndDate;
+        });
+    };
+
     programIsValid = () => {
         const {
             rightsPackage,
@@ -173,17 +179,22 @@ class SellButtons extends Component {
     step1Enabled = () => {
         const {sports, name, seasons} = this.props;
         const isFixturesValid = seasons.length ? this.checkFixturesValidity(seasons) : true;
-        return sports.length > 0 && name && isFixturesValid;
+        const isSeasonsValid = seasons.length ? this.checkSeasonsValidity(seasons) : true;
+
+        return sports.length > 0 && name && isFixturesValid && isSeasonsValid;
     };
 
     step1GetMessages = () => {
         const {sports, name, seasons} = this.props;
         let message = "Please complete missing information\n";
         const isFixturesValid = seasons.length ? this.checkFixturesValidity(seasons) : true;
+        const isSeasonsValid = seasons.length ? this.checkSeasonsValidity(seasons) : true;
 
         if ( !isFixturesValid ) message += "<br/>- Fixture name should not be empty.\n";
+        if ( !isSeasonsValid ) message += "<br/>- Season duration is required.\n";
         if ( sports.length === 0 ) message += "<br/>- Select a sport.\n";
         if ( !name || name === "") message += "<br/>- Enter a name for the listing.";
+
 
         return message;
     };
