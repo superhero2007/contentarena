@@ -1,0 +1,38 @@
+{% extends "layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block main_content %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    {#test#}
+    <form action="{{ path("fos_user_security_check") }}" method="post" class="login-form">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
+
+        <h3>Login to Content Arena</h3>
+
+        <div class="email">
+            <label for="username">Email</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+        </div>
+
+        <div class="password">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+        </div>
+
+        <input type="submit" id="_submit" class="yellow-btn" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+        <p class="forgot-password-wrapper">
+            <span class="forgot-password">Forgot your password?</span>
+        </p>
+
+        <div class="create-account">
+            <h3>Not account yet?</h3>
+        </div>
+
+        <button class="yellow-btn">Register</button>
+    </form>
+{% endblock main_content %}
