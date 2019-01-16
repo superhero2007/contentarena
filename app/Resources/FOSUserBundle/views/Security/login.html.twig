@@ -2,37 +2,54 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block main_content %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    {#test#}
-    <form action="{{ path("fos_user_security_check") }}" method="post" class="login-form">
-        {% if csrf_token %}
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-        {% endif %}
-
-        <h3>Login to Content Arena</h3>
-
-        <div class="email">
-            <label for="username">Email</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+    <div class="login-page">
+        <div class="header">
+            <div class="logo">
+                <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}">
+            </div>
+            <div class="content">
+                <p class="uk-margin">
+                    <span> <a href="https://contentarena.com/" target="_blank">home</a></span>
+                    <span> <a href="https://contentarena.com/web/privacy-policy/" target="_blank">Privacy Policy</a></span>
+                    <span> <a href="https://contentarena.com/web/terms-of-use/" target="_blank">Terms of Use</a></span>
+                    <span> <a href="https://contentarena.com/web/faq/" target="_blank">Cookie Policy</a></span>
+                    <span> <a href="https://contentarena.com/web/privacy-policy/" target="_blank">faq</a></span>
+                </p>
+            </div>
         </div>
 
-        <div class="password">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
-        </div>
+        <form action="{{ path("fos_user_security_check") }}" method="post" class="login-form">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            {% endif %}
 
-        <input type="submit" id="_submit" class="yellow-btn" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+            <h3>Login to Content Arena</h3>
 
-        <p class="forgot-password-wrapper">
-            <span class="forgot-password">Forgot your password?</span>
-        </p>
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-        <div class="create-account">
-            <h3>Not account yet?</h3>
-        </div>
+            <div class="email">
+                <label for="username">Email</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+            </div>
 
-        <button class="yellow-btn">Register</button>
-    </form>
+            <div class="password">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="_password" required="required" autocomplete="current-password" />
+            </div>
+
+            <input type="submit" id="_submit" class="yellow-btn" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+            <p class="forgot-password-wrapper">
+                <span class="forgot-password">Forgot your password?</span>
+            </p>
+
+            <div class="create-account">
+                <h3>Not account yet?</h3>
+            </div>
+
+            <button class="yellow-btn">Register</button>
+        </form>
+    </div>
 {% endblock main_content %}
