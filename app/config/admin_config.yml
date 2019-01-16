@@ -25,6 +25,7 @@ easy_admin:
             - Country
             - Terms
             - TermItems
+            - Definitions
 
         form_theme:
             - 'horizontal'
@@ -182,6 +183,8 @@ easy_admin:
                 class: AppBundle\Entity\Season
             Terms:
                 class: AppBundle\Entity\SourceLicenseTerm
+            Definitions:
+                class: AppBundle\Entity\SourceDefinitions
             TermItems:
                 class: AppBundle\Entity\SourceLicenseTermItem
                 label: 'Term Items'
