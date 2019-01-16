@@ -355,7 +355,8 @@ class ApiController extends BaseController
             $bid = $bidService->saveBidsData($bidData, $request, $user,$multiple);
             $bids[] = $bid;
             $content = $bid->getContent();
-            $terms = $termsService->getCompanyTerms();
+            $terms = $termsService->getCompanyTerms($user->getCompany());
+            $definitions = $termsService->getCompanyDefinitions($user->getCompany());
             if ($bid != null){
                 $soldOut = $contentService->listingIsSoldOut($content);
                 if ($bid->getStatus()->getName() == 'APPROVED'){
@@ -364,6 +365,7 @@ class ApiController extends BaseController
                         'user' => $user,
                         'bid' => $bid,
                         'terms' => $terms,
+                        'definitions' => $definitions,
                         'watermark' => false,
                         'bundle' => $bid->getSalesPackage(),
                         'content' => $content,
@@ -573,7 +575,8 @@ class ApiController extends BaseController
         $content = $bid->getContent();
         $soldOut = false;
         $success = false;
-        $terms = $termsService->getCompanyTerms();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
 
         if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
@@ -584,6 +587,7 @@ class ApiController extends BaseController
                 'bid' => $bid,
                 'watermark' => false,
                 'terms' => $terms,
+                'definitions' => $definitions,
                 'bundle' => $bid->getSalesPackage(),
                 'content' => $content,
                 'rightDefinitions' => $license_service->getRightDefinitions($content),

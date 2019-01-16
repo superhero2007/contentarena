@@ -185,10 +185,12 @@ class LicenseController extends Controller
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'bundle' => $bundle,
             'terms' => $terms,
+            'definitions' => $definitions,
             'content' => $content,
             'watermark' => true,
             'rightDefinitions' => $rightDefinitions,
@@ -233,6 +235,7 @@ class LicenseController extends Controller
         $bundle = $bid->getSalesPackage();
         $bundle->getSalesMethod()->getName();
         $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
@@ -241,6 +244,7 @@ class LicenseController extends Controller
             'content' => $content,
             'bids' => $bids,
             'terms' => $terms,
+            'definitions' => $definitions,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
@@ -269,11 +273,13 @@ class LicenseController extends Controller
         $exclusiveRights = $this->getExclusiveRights($content);
         $bidStatus = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"PENDING"));
         $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'watermark' => true,
             'bundle' => $bundle,
             'terms' => $terms,
+            'definitions' => $definitions,
             'content' => $content,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
@@ -340,11 +346,13 @@ class LicenseController extends Controller
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'content' => $content,
             'watermark' => true,
             'terms' => $terms,
+            'definitions' => $definitions,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,
             'hostUrl' => $this->container->getParameter("carena_host_url")
