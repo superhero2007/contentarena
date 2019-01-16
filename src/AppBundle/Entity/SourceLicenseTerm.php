@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * SourceLicenseTerm
@@ -18,6 +19,7 @@ class SourceLicenseTerm
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"terms"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class SourceLicenseTerm
      * @var int
      *
      * @ORM\Column(name="position", type="integer", unique=true)
+     * @Groups({"terms"})
      */
     private $position;
 
@@ -32,11 +35,13 @@ class SourceLicenseTerm
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"terms"})
      */
     private $name;
 
     /**
      * @var array;
+     * @Groups({"terms"})
      */
     private $items = array();
 

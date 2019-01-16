@@ -184,7 +184,7 @@ class LicenseController extends Controller
         $bundle->getSalesMethod()->getName();
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'bundle' => $bundle,
@@ -232,7 +232,7 @@ class LicenseController extends Controller
         }
         $bundle = $bid->getSalesPackage();
         $bundle->getSalesMethod()->getName();
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
@@ -268,7 +268,7 @@ class LicenseController extends Controller
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
         $bidStatus = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"PENDING"));
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'watermark' => true,
@@ -339,7 +339,7 @@ class LicenseController extends Controller
 
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
         $viewElements = array(
             'user' => $user,
             'content' => $content,
@@ -365,7 +365,8 @@ class LicenseController extends Controller
         $content = $this->getDoctrine()
             ->getRepository('AppBundle:Content')
             ->findOneBy(['customId' => $request->get("customId")]);
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
 
@@ -373,6 +374,7 @@ class LicenseController extends Controller
             'user' => $user,
             'content' => $content,
             'terms' => $terms,
+            'definitions' => $definitions,
             'watermark' => true,
             'rightDefinitions' => $rightDefinitions,
             'exclusiveRights' => $exclusiveRights,

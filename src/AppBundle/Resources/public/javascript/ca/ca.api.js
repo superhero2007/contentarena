@@ -78,6 +78,90 @@ ContentArena.Api= {
 
         return deferred.promise();
     },
+
+    getCompanyDefinitions ( ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/definitions/company",
+            type: "POST",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+
+    restoreCompanyTerms ( ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/terms/restore",
+            type: "POST",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+
+    restoreDefinitions ( ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/definitions/restore",
+            type: "POST",
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+
+    updateTerms ( terms, definitions ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/terms/update",
+            type: "POST",
+            data : {
+                terms : terms,
+                definitions : definitions
+            },
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
     getContent ( filter) {
         let deferred = jQuery.Deferred();
 

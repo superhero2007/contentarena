@@ -6,6 +6,7 @@ use AppBundle\Entity\Bid;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\LicenseAgreement;
 use AppBundle\Entity\SalesPackage;
+use AppBundle\Entity\User;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\MessageService;
@@ -295,7 +296,7 @@ class ApiController extends BaseController
         $content = $bid->getContent();
         $soldOut = false;
         $success = false;
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms();
         if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
             $success = true;
@@ -354,7 +355,7 @@ class ApiController extends BaseController
             $bid = $bidService->saveBidsData($bidData, $request, $user,$multiple);
             $bids[] = $bid;
             $content = $bid->getContent();
-            $terms = $termsService->getSourceTerms();
+            $terms = $termsService->getCompanyTerms();
             if ($bid != null){
                 $soldOut = $contentService->listingIsSoldOut($content);
                 if ($bid->getStatus()->getName() == 'APPROVED'){
@@ -572,7 +573,7 @@ class ApiController extends BaseController
         $content = $bid->getContent();
         $soldOut = false;
         $success = false;
-        $terms = $termsService->getSourceTerms();
+        $terms = $termsService->getCompanyTerms();
 
         if ($bid != null){
             $soldOut = $contentService->checkIfSoldOut($request);
@@ -917,13 +918,88 @@ class ApiController extends BaseController
      */
     public function getCompanyTerms(Request $request, TermsService $termsService)
     {
-        $terms = $termsService->getSourceTerms();
+
+        /* @var User $user*/
+        $user = $this->getUser();
+        $terms = $termsService->getCompanyTerms($user->getCompany());
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json',SerializationContext::create());
+        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+
+    }
+
+    /**
+     * @Route("/api/definitions/company", name="getCompanyDefinitions")
+     */
+    public function getCompanyDefinitions(Request $request, TermsService $termsService)
+    {
+
+        /* @var User $user*/
+        $user = $this->getUser();
+        $terms = $termsService->getCompanyDefinitions($user->getCompany());
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/terms/restore", name="restoreCompanyTerms")
+     */
+    public function restoreCompanyTerms(Request $request, TermsService $termsService)
+    {
+
+        /* @var User $user*/
+        $user = $this->getUser();
+        $termsService->restoreTermItems($user->getCompany());
+        $terms = $termsService->getCompanyTerms($user->getCompany());
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/definitions/restore", name="restoreDefinitions")
+     */
+    public function restoreDefinitions(Request $request, TermsService $termsService)
+    {
+
+        /* @var User $user*/
+        $user = $this->getUser();
+        $termsService->restoreDefinitions($user->getCompany());
+        $terms = $termsService->getCompanyDefinitions($user->getCompany());
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+
+    }
+
+    /**
+     * @Route("/api/terms/update", name="updateCompanyTerms")
+     */
+    public function updateCompanyTerms(Request $request, TermsService $termsService)
+    {
+
+        /* @var User $user*/
+        $user = $this->getUser();
+        $newTerms = $request->get('terms');
+        $newDef = $request->get('definitions');
+        $termsService->updateTermItems($user->getCompany(),$newTerms );
+        if ($newDef != null )$termsService->updateDefinitions($user->getCompany(),$newDef );
+        return new JsonResponse(array("success"=>true));
 
     }
 

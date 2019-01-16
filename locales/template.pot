@@ -1594,6 +1594,10 @@ msgstr ""
 msgid "PREFERENCES_TERRITORIES_PROFILE_BOTH"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/manage/components/TermItem.js
+msgid "TERMS_EDIT_NON_EDITABLE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/manage/containers/ClosedDeals.js
 msgid "CLOSED_DEALS_LISTING_NAME"
 msgstr ""
@@ -1829,6 +1833,26 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LINKS_BUTTON_MANUAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_BUTTON_RESTORE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_TITLE_DEFINITIONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_TITLE_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_BUTTON_UPDATE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Watchlist.js

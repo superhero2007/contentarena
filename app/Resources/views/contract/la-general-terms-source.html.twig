@@ -5,6 +5,22 @@
     {% for term in terms %}
         <div class="license-item-title">{{ term.position }}. {{ term.name }}:</div>
 
+        {% if term.position == 1 and definitions is defined %}
+            <table>
+                {% for definition in definitions %}
+                    <tr>
+                        <td>
+                            {{ definition.name|nl2br }}
+                        </td>
+                        <td>
+                            {{ definition.content|nl2br }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        {% endif %}
+
         {% for item in term.items %}
             <div class="license-item">
                 <strong> {{ term.position }}.{{ item.position }} </strong> {{ item.content|nl2br }}
