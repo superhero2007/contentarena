@@ -191,6 +191,14 @@ class Register extends React.Component {
 
     };
 
+    updateCompany = (prop, value) => {
+        let user  = this.state.user;
+        user.company[prop] = value;
+        this.storeUserObj(user);
+        this.setState({user});
+
+    };
+
     handleSellerSports = ( selection) => {
         let user  = this.state.user;
         user.preferredSellerSports = selection.sports;
@@ -339,8 +347,7 @@ class Register extends React.Component {
                             {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")} *
                         </label>
                         <input value={user.firstName} onChange={(e)=>{
-                            user.firstName = e.target.value;
-                            this.setState({user});
+                            this.updateUser("firstName", e.target.value)
                         }}/>
                     </div>
                     <div className={"item"}>
@@ -348,8 +355,7 @@ class Register extends React.Component {
                             {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")} *
                         </label>
                         <input value={user.lastName} onChange={(e)=>{
-                            user.lastName = e.target.value;
-                            this.setState({user});
+                            this.updateUser("lastName", e.target.value)
                         }}/>
                     </div>
                     <div className={"item"}>
@@ -357,8 +363,7 @@ class Register extends React.Component {
                             {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")}
                         </label>
                         <input value={user.title} onChange={(e)=>{
-                            user.title = e.target.value;
-                            this.setState({user});
+                            this.updateUser("title", e.target.value)
                         }}/>
                     </div>
                 </div>
@@ -368,8 +373,7 @@ class Register extends React.Component {
                             {this.context.t("SETTINGS_LABEL_USER_EMAIL")} *
                         </label>
                         <input value={user.email} onChange={(e)=>{
-                            user.email = e.target.value;
-                            this.setState({user});
+                            this.updateUser("email", e.target.value)
                         }}/>
                     </div>
                     <div className={"item"}>
@@ -377,8 +381,7 @@ class Register extends React.Component {
                             {this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")} *
                         </label>
                         <input value={user.phone} onChange={(e)=>{
-                            user.phone = e.target.value;
-                            this.setState({user});
+                            this.updateUser("phone", e.target.value)
                         }}/>
                     </div>
                 </div>
@@ -412,8 +415,7 @@ class Register extends React.Component {
                             <input value={user.company.legalName}
                                    disabled={common.testStageMode}
                                    onChange={(e)=>{
-                                       user.company.legalName = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("legalName", e.target.value);
                                    }} />
                         </div>
                         <div className={"item"}>
@@ -422,8 +424,7 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.registrationNumber}
                                    onChange={(e)=>{
-                                       user.company.registrationNumber = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("registrationNumber", e.target.value);
                                    }}/>
                         </div>
                         <div className={"item"}>
@@ -432,8 +433,7 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.vat}
                                    onChange={(e)=>{
-                                       user.company.vat = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("vat", e.target.value);
                                    }}/>
                         </div>
                     </div>
@@ -444,8 +444,7 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.address}
                                    onChange={(e)=>{
-                                       user.company.address = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("address", e.target.value);
                                    }}/>
                         </div>
 
@@ -455,8 +454,7 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.address2}
                                    onChange={(e)=>{
-                                       user.company.address2 = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("address2", e.target.value);
                                    }}/>
                         </div>
                         <div className={"item"}>
@@ -465,8 +463,7 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.city}
                                    onChange={(e)=>{
-                                       user.company.city = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("city", e.target.value);
                                    }}/>
                         </div>
                     </div>
@@ -477,8 +474,7 @@ class Register extends React.Component {
                             </label>
                             <input value={user.company.zip}
                                    onChange={(e)=>{
-                                       user.company.zip = e.target.value;
-                                       this.setState({user});
+                                       this.updateCompany("zip", e.target.value);
                                    }}/>
                         </div>
                         <div className={"item"}>
@@ -489,13 +485,13 @@ class Register extends React.Component {
                                 multi={false}
                                 value={country}
                                 onChange={(e)=>{
-                                    user.company.country = {};
+                                    let country = {};
                                     if (e && e.value ) {
                                         if (!user.company.country ) user.company.country = {};
-                                        user.company.country.name = e.value;
+                                        country.name = e.value;
                                     }
-                                    if (e === null) user.company.country = {};
-                                    this.setState({user});
+                                    if (e === null) country = {};
+                                    this.updateCompany("country", country);
                                 }}
                             />
                         </div>

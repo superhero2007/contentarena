@@ -25,9 +25,9 @@ class CountrySelector extends React.Component {
     getOptions = () => {
         const {filter = [], available, exclusiveSoldTerritories} = this.props;
 
-        let countries = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
+        let countries = Object.values(ContentArena.Data.Countries).map(i=>{i.value = i.name; i.label = i.name; return i});
 
-        if (available && available.length > 0 ) countries = available.map((i,k)=>({value : i , label : i }));
+        if (available && available.length > 0 ) countries = available.map(i=>{i.value = i.name; i.label = i.name; return i});
 
         countries = countries.filter(country => filter.indexOf(country.value) === -1);
 

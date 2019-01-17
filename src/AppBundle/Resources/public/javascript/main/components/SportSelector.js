@@ -68,7 +68,7 @@ class SportSelector extends React.Component {
             activeSports.delete(sport.id);
         }
 
-        this.setState({ activeSports, all: false, other : false });
+        this.setState({ activeSports, all: false });
         if (onChange) onChange({
             sports : this.getSelectedSports(activeSports),
             all: false,

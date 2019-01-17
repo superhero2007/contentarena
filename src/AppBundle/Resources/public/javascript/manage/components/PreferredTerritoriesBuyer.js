@@ -4,6 +4,7 @@ import {goTo} from "../../main/actions/utils";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import CountrySelector from "../../main/components/CountrySelector";
 import cn from "classnames";
+import NewRegionCountrySelector from "../../main/components/NewRegionCountrySelector";
 
 class PreferredTerritoriesBuyer extends React.Component {
 
@@ -11,7 +12,11 @@ class PreferredTerritoriesBuyer extends React.Component {
         super(props);
         this.state = {
             isMultipleEnabled: (props.territories) ? props.territories.length > 1 : false,
-            territories : (props.territories) ? props.territories.map(t=>({value : t.name , label : t.name })) : []
+            territories : (props.territories) ? props.territories.map(item=>{
+                item.value = item.name;
+                item.label = item.name;
+                return item;
+            }) : []
         };
     }
 
@@ -19,7 +24,11 @@ class PreferredTerritoriesBuyer extends React.Component {
         if (nextProps.territories){
             this.setState({
                 //isMultipleEnabled : nextProps.territories.length > 1,
-                territories : nextProps.territories.map(t=>({value : t.name , label : t.name }))
+                territories : nextProps.territories.map(item=>{
+                    item.value = item.name;
+                    item.label = item.name;
+                    return item;
+                })
             });
         }
     }
@@ -31,7 +40,11 @@ class PreferredTerritoriesBuyer extends React.Component {
     setTerritories = ( territories) => {
         const { onChange } = this.props;
         this.setState({territories });
-        if (onChange) onChange(territories.map(t=>({name : t.value})));
+        if (onChange) onChange(territories.map(item=>{
+            item.value = item.name;
+            item.label = item.name;
+            return item;
+        }));
     };
 
     render() {
@@ -88,13 +101,12 @@ class PreferredTerritoriesBuyer extends React.Component {
                             multi={false}
                             exclusiveSoldTerritories={ false}
                         />}
-                        {isMultipleEnabled && <RegionCountrySelector
+                        {isMultipleEnabled && <NewRegionCountrySelector
                             className={"small-select"}
                             onChange={this.setTerritories}
                             onSelectRegion={(c) =>{ }}
                             value={territories}
                             multiple={true}
-                            hideCountrySelector={true}
                             worldwide={true}
                             filter={[]}
                             exclusiveSoldTerritories={ false}
