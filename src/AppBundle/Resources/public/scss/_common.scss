@@ -606,3 +606,19 @@ a.ca-link {
     z-index: 9998;
   }
 }
+
+.icon-circle-background{
+  height: 24px;
+  width: 24px;
+  background-color: #FFC94B;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  cursor: pointer;
+  img {
+    width: 60%;
+    height: 60%;
+  }
+}

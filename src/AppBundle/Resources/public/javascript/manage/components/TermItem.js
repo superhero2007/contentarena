@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Spinner} from "../../main/components/Icons";
+import {IconYellowCircle, minusIcon, pencilIcon, reloadIcon, Spinner, trashIcon} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
 
@@ -33,15 +33,10 @@ class TermItem extends React.Component {
         if (onUpdate) onUpdate(restoreValue);
     };
 
-    clear = (  ) => {
-        const {onUpdate} = this.props;
-        if (onUpdate) onUpdate("");
-    };
-
     render () {
 
-        const { position, content, termPosition, editable } = this.props;
-        const { editing,value } = this.state;
+        const { position, content, termPosition, editable, onRemove } = this.props;
+        const { editing,value, showRemoveConfirm } = this.state;
 
         return (
             <React.Fragment>
@@ -54,12 +49,31 @@ class TermItem extends React.Component {
                         {editing && <textarea  value={value} onChange={this.handleChange}/>}
                     </div>
                     <div className="terms-edit-item-actions" >
-                        {!editing && editable && <i className="fa fa-pencil" onClick={() => this.setState({editing: true})} />}
-                        {!editing && editable && <i className="fa fa-refresh" onClick={this.restore} />}
-                        {!editing && editable && <i className="fa fa-minus-circle" onClick={this.clear} />}
-                        {editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} />}
-                        {editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} />}
+                        {!editing && editable && <IconYellowCircle icon={pencilIcon} onClick={() => this.setState({editing: true})} />}
+                        {!editing && editable && <IconYellowCircle icon={reloadIcon} onClick={this.restore} />}
+                        {!editing && editable && <IconYellowCircle icon={minusIcon} onClick={() => this.setState({showRemoveConfirm: true})}/>}
+                        {editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} style={{color: 'green'}} />}
+                        {editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} style={{color: 'red'}} />}
+
                     </div>
+                    {showRemoveConfirm && <div className="confirmation-tooltip">
+                        <div className={"confirmation-text"}>
+                            {this.context.t("TERMS_DEFINITIONS_REMOVE_CONFIRMATION")}
+                        </div>
+                        <button className={"button button-confirm"} onClick={(e)=>{
+                            this.setState({showRemoveConfirm: false});
+                            if (onRemove) onRemove();
+                            e.stopPropagation();
+                        }}>
+                            {this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
+                        </button>
+                        <button className={"button"} onClick={(e)=>{
+                            this.setState({showRemoveConfirm: false});
+                            e.stopPropagation();
+                        }}>
+                            {this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL")}
+                        </button>
+                    </div>}
                 </div>
             </React.Fragment>
         )

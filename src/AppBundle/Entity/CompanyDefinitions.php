@@ -32,7 +32,7 @@ class CompanyDefinitions
     /**
      * @var int
      *
-     * @ORM\Column(name="position", type="integer", unique=true)
+     * @ORM\Column(name="position", type="integer")
      * @Groups({"terms"})
      */
     private $position;
@@ -60,6 +60,14 @@ class CompanyDefinitions
      *
      */
     private $editable;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="custom", type="boolean", options={"default":"0"})
+     * @Groups({"terms"})
+     *
+     */
+    private $custom;
 
 
     /**
@@ -151,6 +159,23 @@ class CompanyDefinitions
     {
         $this->editable = $editable;
     }
+
+    /**
+     * @return bool
+     */
+    public function isCustom()
+    {
+        return $this->custom;
+    }
+
+    /**
+     * @param bool $custom
+     */
+    public function setCustom($custom)
+    {
+        $this->custom = $custom;
+    }
+
 
 
 }

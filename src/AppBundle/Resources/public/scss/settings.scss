@@ -265,9 +265,31 @@
     font-style: italic;
     margin-bottom: -10px;
   }
+  .terms-add-definition-button{
+    margin: 20px 0 !important;
+    border-radius: 5px;
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+  }
+  .terms-restore-button{
+    margin: 20px 0px 20px 10px !important;
+    border-radius: 5px;
+    padding: 10px 15px !important;
+    font-size: 13px !important;
+    i{
+      margin: 0 5px 0 10px;
+      color: #FFC94B;
+    }
+    &:disabled{
+      i{
+        color: #333;
+      }
+    }
+  }
   .terms-edit-item{
     margin: 5px 0;
     display: flex;
+    position: relative;
     .terms-edit-item-name{
       display: flex;
       justify-content: center;
@@ -280,6 +302,9 @@
       font-weight: bold;
       line-height: 25px;
       background-color: #DDDFE2;
+      textarea{
+        margin: 0 15px !important;
+      }
     }
     .terms-edit-item-content{
       border: 1px solid #CCCCCC;
@@ -290,17 +315,18 @@
       line-height: 25px;
       width: 95%;
       min-height: 122px;
-      textarea{
-        border: none;
-        background: white;
-        min-height: 100px;
-        margin: 0;
-        padding: 0;
-        font-size: 13px;
-        line-height: 25px;
-        font-family: 'Open Sans', sans-serif;
-        outline: none;
-      }
+
+    }
+    textarea{
+      border: none;
+      background: white;
+      min-height: 100px;
+      margin: 0;
+      padding: 0;
+      font-size: 13px;
+      line-height: 25px;
+      font-family: 'Open Sans', sans-serif;
+      outline: none;
     }
     .terms-edit-item-disabled{
       background-color: rgba(204,204,204,0.21);

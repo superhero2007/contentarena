@@ -37,21 +37,40 @@ class Terms extends React.Component {
 
     }
 
-    onUpdateDefinition = (index, content) => {
+    onUpdateDefinition = (index, content, name) => {
 
         let definitions = this.state.definitions;
-
         definitions[index].content = content;
+        definitions[index].name = name;
+        this.setState({definitions})
+    };
 
+    onUpdateDefinitionName= (index, name) => {
+
+        let definitions = this.state.definitions;
+        definitions[index].name = name;
+        this.setState({definitions})
+    };
+
+    onRemoveDefinition = (index) => {
+
+        let definitions = this.state.definitions;
+        definitions[index].removed = true;
         this.setState({definitions})
     };
 
     onUpdateTermItem = (termIndex, termItemIndex, content) => {
 
         let terms = this.state.terms;
-
         terms[termIndex].items[termItemIndex].content = content;
+        this.setState({terms})
+    };
 
+    onRemoveTerm = (termIndex, termItemIndex) => {
+
+        let terms = this.state.terms;
+        terms[termIndex].items[termItemIndex].removed = true;
+        terms[termIndex].items[termItemIndex].content = "";
         this.setState({terms})
     };
 
@@ -90,6 +109,22 @@ class Terms extends React.Component {
         });
     };
 
+    addDefinition = () => {
+
+        let definitions = this.state.definitions;
+        let definition = {
+            name: "",
+            content : "",
+            custom:true,
+            editable : true,
+            editing: true,
+            position : definitions.length + 1
+        };
+
+        definitions.push(definition);
+        this.setState({definitions})
+    };
+
     render () {
 
         const { history } = this.props;
@@ -106,16 +141,20 @@ class Terms extends React.Component {
                     <button
                         onClick={this.restoreDefaultDefinitions}
                         disabled={restoringDefinitions}
-                        className="standard-button license-agreement-button"
+                        className="standard-button license-agreement-button terms-restore-button"
                     >
-                        {this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}{restoringDefinitions && <Spinner/>}
+                        {this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}
+                        {restoringDefinitions && <Spinner/>}
+                        {!restoringDefinitions && <div><i className="fa fa-refresh"/></div>}
                     </button>
                     <button
                         onClick={this.restoreDefaultTerms}
                         disabled={restoring}
-                        className="standard-button license-agreement-button"
+                        className="standard-button license-agreement-button terms-restore-button"
                     >
-                        {this.context.t("TERMS_EDIT_BUTTON_RESTORE")}{restoring && <Spinner/>}
+                        {this.context.t("TERMS_EDIT_BUTTON_RESTORE")}
+                        {restoring && <Spinner/>}
+                        {!restoring && <div><i className="fa fa-refresh"/></div>}
                     </button>
 
                 </div>
@@ -127,14 +166,22 @@ class Terms extends React.Component {
                         definitions.map((definition, i) => {
                             return (
                                 <div>
-                                    <DefinitionItem
-                                        onUpdate={content => this.onUpdateDefinition(i, content)}
+                                    {!definition.removed && <DefinitionItem
+                                        onUpdate={(content,name) => this.onUpdateDefinition(i, content,name)}
+                                        onRemove={() => this.onRemoveDefinition(i)}
                                         {...definition}
-                                    />
+                                    />}
                                 </div>
                             )
                         })
                     }
+
+                    <button
+                        onClick={this.addDefinition}
+                        className="standard-button terms-add-definition-button"
+                    >
+                        {this.context.t("TERMS_EDIT_BUTTON_ADD_DEFINITIONS")}
+                    </button>
                 </div>
                 <div className="terms-edit-title" style={{borderTop: "none"}}>
                     {this.context.t("TERMS_EDIT_TITLE_TERMS")}
@@ -145,8 +192,10 @@ class Terms extends React.Component {
                             return (
                                 <div>
                                     { term.items.map((item,k) => {
+                                        if (item.removed) return undefined;
                                         return <TermItem
                                             onUpdate={content => this.onUpdateTermItem(i,k,content)}
+                                            onRemove={() => this.onRemoveTerm(i, k)}
                                             {...item}
                                             termPosition={term.position}
                                         />

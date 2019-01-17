@@ -44,6 +44,15 @@ export const coinIcon = <img src={assetsBaseDir + "app/images/listing/coin.svg"}
 //messages
 export const attachmentClipIcon = <img src={assetsBaseDir + "app/images/attachment-clip.svg"} alt=""/>;
 
+//terms
+export const pencilIcon = assetsBaseDir + "app/images/pencil-edit-button.svg";
+export const reloadIcon = assetsBaseDir + "app/images/reload.svg";
+export const minusIcon = assetsBaseDir + "app/images/minus.svg";
+export const trashIcon = assetsBaseDir + "app/images/trash-gray.svg";
+
+export const IconYellowCircle = ({icon, onClick}) => (
+    <div onClick={onClick} className="icon-circle-background"><img src={icon} alt=""/></div>
+);
 
 export const Spinner = ({test}) => (
     <div><i className="fa fa-cog fa-spin"/></div>

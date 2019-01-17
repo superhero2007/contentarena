@@ -175,14 +175,33 @@ class TermsService
 
         foreach ( $definitions as $definition){
 
-            $criteria= array(
-                'id' => $definition['id'],
-                'company' => $company,
-            );
-            $companyItem = $companyItemsRepo->findOneBy($criteria);
+            if ( !isset($definition['id']) ){
+                $companyItem = new CompanyDefinitions();
+                if (isset( $definition['content'])) $companyItem->setContent($definition['content']);
+                if (isset( $definition['name'])) $companyItem->setName($definition['name']);
+                if (isset( $definition['custom'])) $companyItem->setCustom($definition['custom']);
+                if (isset( $definition['position'])) $companyItem->setPosition($definition['position']);
+                $companyItem->setCompany($company);
+                $companyItem->setEditable(true);
+                $companyItem->setCustom(true);
+            } else {
+                $criteria= array(
+                    'id' => $definition['id'],
+                    'company' => $company,
+                );
+                $companyItem = $companyItemsRepo->findOneBy($criteria);
+                if (isset( $definition['content'])) $companyItem->setContent($definition['content']);
+            }
+            if ($companyItem != null){
+                if ( isset($definition['removed']) ){
+                    $this->em->remove($companyItem);
+                } else {
+                    $this->em->persist($companyItem);
+                }
+            }
 
-            if ($companyItem != null && isset( $definition['content'])) $companyItem->setContent($definition['content']);
-            $this->em->persist($companyItem);
+
+
 
 
         }
