@@ -172,7 +172,7 @@ class AuthRouter extends React.Component {
             <Router>
                 <React.Fragment>
                     {routes.map((route, index) => (
-                        <React.Fragment>
+                        <React.Fragment key={index}>
                             <HeaderRoute
                                 key={index}
                                 path={route.path}

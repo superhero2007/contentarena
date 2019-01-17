@@ -121,7 +121,7 @@ class SellButtons extends Component {
 
     checkSeasonsValidity = (seasons) => {
         return seasons.every((season) => {
-            return season.customStartDate && season.customEndDate;
+            return (season.startDate || season.customStartDate) && (season.endDate || season.customEndDate);
         });
     };
 
