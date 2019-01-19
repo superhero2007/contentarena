@@ -22,32 +22,21 @@ class TerritoriesSalesPackages extends PureComponent {
             installments : [],
             selected : [],
             availabilitySelector : this.all,
+            filteredIndividualBundles : [],
+            filteredTerritorialBundles : [],
             selectedName : "All",
             sorted : false,
             checkedItems: new Map(),
-            territorySelector : (props.filter && props.filter.countries.length > 0 ) ? this.filtered : this.all
+            territories : (props.filter && props.filter.countries.length > 0 ) ? this.filtered : this.all
         };
     }
 
     componentDidMount (){
         const {
-            salesPackages
-        } = this.props;
-        let checkedItems = this.state.checkedItems;
-        let filteredIndividualBundles = this.filterIndividualBundles();
-        let filteredTerritorialBundles = this.filterTerritorialBundles();
-
-        let total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
-
-        if ( salesPackages.length === 1 ){
-            checkedItems.set(salesPackages[0].id, salesPackages[0]);
-
-        } else if (total === 1){
-            if (filteredIndividualBundles.length === 1) checkedItems.set(filteredIndividualBundles[0].id, filteredIndividualBundles[0]);
-            if (filteredTerritorialBundles.length === 1) checkedItems.set(filteredTerritorialBundles[0].id, filteredTerritorialBundles[0]);
-        }
-
-        this.setState({ checkedItems });
+            selected,
+            territories
+        } = this.state;
+        this.filterBundles(territories, selected, false);
     }
 
     getFee = (salesPackage) => {
@@ -60,12 +49,17 @@ class TerritoriesSalesPackages extends PureComponent {
     };
 
     onFilter = ( response ) => {
+        const {
+            territories
+        } = this.state;
         let selected = ( response.all ) ? [] : response.selected,
             selectedName = response.name;
         this.setState({selected, selectedName});
+        console.log("ON FILTER");
+        this.filterBundles(territories, selected,true);
     };
 
-    filterBundles = () => {
+    filterBundles = (territories,selected,clear) => {
         const {
             salesPackages = [],
             bundlesWithActivity,
@@ -74,9 +68,7 @@ class TerritoriesSalesPackages extends PureComponent {
         } = this.props;
 
         const {
-            selected,
             availabilitySelector,
-            territorySelector,
             sorted
         } = this.state;
 
@@ -93,7 +85,7 @@ class TerritoriesSalesPackages extends PureComponent {
 
         filteredBundles = filteredBundles.filter( bundle => !bundle.sold );
 
-        if ( territorySelector === this.filtered ){
+        if ( territories === this.filtered ){
             filteredBundles = filteredBundles.filter( bundle => {
                 return bundle.territories.filter( territory => filter.countries.indexOf(territory.label) !== -1 ).length > 0
             });
@@ -112,16 +104,11 @@ class TerritoriesSalesPackages extends PureComponent {
             this.setState({sorted: true});
         }
 
-        return filteredBundles;
+        let filteredIndividualBundles =  filteredBundles.filter( bundle => bundle.bundleMethod !== "SELL_AS_BUNDLE");
+        let filteredTerritorialBundles =  filteredBundles.filter( bundle => bundle.bundleMethod === "SELL_AS_BUNDLE");
 
-    };
+        this.setDefaultSelection(territories, filteredIndividualBundles, filteredTerritorialBundles, clear);
 
-    filterIndividualBundles = () => {
-        return this.filterBundles().filter( bundle => bundle.bundleMethod !== "SELL_AS_BUNDLE");
-    };
-
-    filterTerritorialBundles = () => {
-        return this.filterBundles().filter( bundle => bundle.bundleMethod === "SELL_AS_BUNDLE");
     };
 
     selectTerritory = (e, bundle) => {
@@ -129,13 +116,43 @@ class TerritoriesSalesPackages extends PureComponent {
         let checkedItems = this.state.checkedItems;
 
         if (isChecked) {
-             checkedItems.set(bundle.id, bundle);
+            checkedItems.set(bundle.id, bundle);
         } else {
             checkedItems.delete(bundle.id);
         }
 
         this.setState({ checkedItems });
         this.forceUpdate();
+    };
+
+    handleTerritorySelector = (territories) => {
+
+        const {
+            selected,
+        } = this.state;
+        this.filterBundles(territories, selected, true);
+    };
+
+    setDefaultSelection = (territories, filteredIndividualBundles, filteredTerritorialBundles, clear) => {
+
+        const {
+            salesPackages
+        } = this.props;
+
+        let checkedItems = this.state.checkedItems;
+        let total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
+
+        if( clear ) checkedItems.clear();
+
+        if ( salesPackages.length === 1 ){
+            checkedItems.set(salesPackages[0].id, salesPackages[0]);
+
+        } else if (total === 1){
+            if (filteredIndividualBundles.length === 1) checkedItems.set(filteredIndividualBundles[0].id, filteredIndividualBundles[0]);
+            if (filteredTerritorialBundles.length === 1) checkedItems.set(filteredTerritorialBundles[0].id, filteredTerritorialBundles[0]);
+        }
+
+        this.setState({territories, checkedItems, filteredIndividualBundles, filteredTerritorialBundles});
     };
 
     selectAllTerritories = (e, bundles) => {
@@ -175,14 +192,14 @@ class TerritoriesSalesPackages extends PureComponent {
         } = this.props;
 
         const {
-            territorySelector,
+            territories,
             availabilitySelector,
+            filteredIndividualBundles,
+            filteredTerritorialBundles,
             selectedName,
             checkedItems
         } = this.state;
 
-        let filteredIndividualBundles = this.filterIndividualBundles();
-        let filteredTerritorialBundles = this.filterTerritorialBundles();
         let total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
         return (
             <React.Fragment>
@@ -194,8 +211,8 @@ class TerritoriesSalesPackages extends PureComponent {
 
                 {/* TERRITORY MODE SELECTOR */}
                 {salesPackages.length > 1 && <RadioSelector
-                    value={territorySelector}
-                    onChange={territorySelector=>this.setState({territorySelector})}
+                    value={territories}
+                    onChange={this.handleTerritorySelector}
                     className="sales-packages-filters"
                     items={[
                         {value: this.filtered, label: "Show Filter Territories" },
@@ -205,19 +222,18 @@ class TerritoriesSalesPackages extends PureComponent {
 
                 {/* SELECTOR DESCRIPTION */}
                 {salesPackages.length > 1 && <div className="spacer-bottom filter-description">
-                    {territorySelector === this.filtered && <span>
+                    {territories === this.filtered && <span>
                         <strong>{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}: </strong>
                         {this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
                     </span>}
-                    {territorySelector === this.all && <span>
+                    {territories === this.all && <span>
                         <strong>{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL")}: </strong>
                         {this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL")}
                     </span>}
                 </div>}
 
                 {/* REGION FILTER */}
-                {territorySelector === this.all && salesPackages.length > 1 &&
-                <RegionFilter
+                {territories === this.all && salesPackages.length > 1 && <RegionFilter
                         bundles={salesPackages}
                         onChange={ this.onFilter }
                     />
@@ -229,7 +245,7 @@ class TerritoriesSalesPackages extends PureComponent {
                         {selectedName} Countries
                     </div>
 
-                    <RadioSelector
+                    {/*<RadioSelector
                         value={availabilitySelector}
                         onChange={availabilitySelector=>this.setState({availabilitySelector})}
                         className="sales-packages-filters"
@@ -238,15 +254,14 @@ class TerritoriesSalesPackages extends PureComponent {
                             {value: this.available, label: "Available for sale" },
                             {value: this.notAvailable, label: "Not Available for sale" }
                         ]}
-                    />
+                    />*/}
                 </div>}
 
-
-
                 {/*{this.context.t("MARKETPLACE_LABEL_PRICE_MINIMUM_BID")}*/}
+
                 {/*{filteredTerritorialBundles.length === 0
                 && filteredTerritorialBundles.length === 0
-                && territorySelector === this.filtered
+                && territories === this.filtered
                 && <div className="sales-packages">
                     {this.context.t("MARKETPLACE_NO_FILTERED_TERRITORIES")}
                 </div>}*/}
@@ -281,7 +296,7 @@ class TerritoriesSalesPackages extends PureComponent {
                                     const bundle = props.original;
                                     return (
                                         <div className="d-flex align-items-center">
-                                            {filteredTerritorialBundles.length > 1 && <input
+                                            { total > 1 && <input
                                                 checked={checkedItems.get(bundle.id)}
                                                 className={"ca-checkbox"}
                                                 type="checkbox"
@@ -367,7 +382,7 @@ class TerritoriesSalesPackages extends PureComponent {
                                     const bundle = props.original;
                                     return (
                                         <div className="d-flex align-items-center">
-                                            {filteredIndividualBundles.length > 1 && !(bundle.hasOfferFromUser && bundle.hasClosedDeal) &&
+                                            {total > 1 && !(bundle.hasOfferFromUser && bundle.hasClosedDeal) &&
                                             <input
                                                 checked={checkedItems.get(bundle.id)}
                                                 className={"ca-checkbox"}

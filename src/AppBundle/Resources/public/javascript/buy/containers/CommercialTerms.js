@@ -131,8 +131,8 @@ class CommercialTerms extends React.Component {
                             {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")} {season.name}
                         </div>
                         <div className="d-flex align-items-center justify-content-between flex-wrap">
-                            {season.fixtures && season.fixtures.length && season.fixtures.map(fixture => (
-                                <div className="row-container" style={{width: '45%'}}>
+                            {season.fixtures && season.fixtures.length && season.fixtures.map((fixture,i) => (
+                                <div className="row-container" style={{width: '45%'}} key={i}>
                                     <div className="name">
                                         {fixture.name}
                                     </div>

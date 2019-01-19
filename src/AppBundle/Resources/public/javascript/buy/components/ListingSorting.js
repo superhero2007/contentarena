@@ -22,8 +22,8 @@ class ListingSorting extends PureComponent {
         return <div className="sort-by-wrapper">
             <span className="sort-by-title">Sort By</span>
 
-            {sortOptions.map(sortItem => {
-                return <Fragment>
+            {sortOptions.map((sortItem,i) => {
+                return <Fragment key={i}>
                     <input className="ca-radio"
                            id={sortItem}
                            type="radio"

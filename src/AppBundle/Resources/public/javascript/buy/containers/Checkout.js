@@ -28,14 +28,18 @@ const inputStyle = { width: '380px', margin: 0, height: "30px"};
 class Checkout extends React.Component {
 
     constructor(props) {
+        super(props);
 
         let selectedPackages = props.selectedPackages.map( b => {
-            if ( b.salesMethod === "BIDDING" && b.fee !== 0 && b.fee !== "0" && b.fee !== "") b.minimumBid = b.fee;
-            b.fee = parseFloat(b.fee) + 1
+            if ( b.salesMethod === "BIDDING" && b.fee !== 0 && b.fee !== "0" && b.fee !== "") {
+                b.minimumBid = b.fee;
+                b.fee = parseFloat(b.fee) + 1;
+            }
             return b;
         });
 
-        super(props);
+        let allowMultiple = selectedPackages.filter(b=>b.salesMethod==="BIDDING" ).length > 1;
+
         this.baseDir = assetsBaseDir + "../";
         this.single = "SINGLE";
         this.all = "ALL";
@@ -43,10 +47,11 @@ class Checkout extends React.Component {
             companyUpdated : false,
             content : props.listing,
             company: props.company,
+            allowMultiple: allowMultiple,
             spinner : false,
             tab : props.tab || "bundles",
             buyingMode : props.tab && props.tab === "checkout",
-            bidMethod : (selectedPackages.length === 1) ? this.single : this.all,
+            bidMethod : (selectedPackages.length === 1 || !allowMultiple ) ? this.single : this.all,
             soldOut  : false,
             selectedPackages : selectedPackages || {},
             bundles: selectedPackages,
@@ -57,15 +62,6 @@ class Checkout extends React.Component {
             signaturePosition: props.user.title,
             showSuccessScreen: false
         };
-    }
-
-    componentDidMount (){
-    }
-
-    componentWillUnmount(){
-    }
-
-    componentWillReceiveProps(nextProps) {
     }
 
     ordinal_suffix_of = (i) => {
@@ -90,6 +86,19 @@ class Checkout extends React.Component {
     closeSuccessScreen = () => {
         const {history} = this.props;
         history.push("/marketplace");
+    };
+
+    getInstallments = () => {
+        const { selectedPackages } = this.state;
+
+        let result = selectedPackages.filter(b=>b.salesMethod === "BIDDING").sort((a,b) =>
+            selectedPackages.filter(v => v.installments.length===a.installments.length).length
+            - selectedPackages.filter(v => v.installments.length===b.installments.length).length
+        ).pop();
+
+       if ( !result ) return;
+
+       return result.installments;
     };
 
     editCompany = () => {
@@ -562,6 +571,7 @@ class Checkout extends React.Component {
             spinner,
             bidMethod,
             terms,
+            allowMultiple
         } = this.state;
 
         let selectedPackages = this.state.selectedPackages;
@@ -607,14 +617,18 @@ class Checkout extends React.Component {
                     const bundle = props.original;
                     return (
                         <div className="details-wrapper">
+                            {(bundle.salesMethod === "FIXED" || bidMethod !== this.all || bundle.all) &&
                             <a className="bid-license"
                                target={"_blank"}
                                href={getCustomLicenseUrl(content.customId, bundle.id, bid, company)}
                                title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
                                 <img src={pdfIcon} alt="Licence"/>
                                 <span>{this.context.t("License agreement")}</span>
-                            </a>
-                            <Installments installments={bundle.installments} />
+                            </a>}
+                            {bundle.all &&
+                                <Installments installments={this.getInstallments()} />}
+                            {!bundle.all && (bundle.salesMethod === "FIXED" || bidMethod !== this.all) &&
+                                <Installments installments={bundle.installments} />}
                         </div>
                     )
                 }
@@ -664,7 +678,6 @@ class Checkout extends React.Component {
                                     value={asd}
                                     onValueChange={(values) => {
                                         const {value} = values;
-                                        console.log(99)
                                         let bundles = this.state.selectedPackages;
                                         bundles = bundles.map(b=>{
                                             if (b.salesMethod === "BIDDING"){
@@ -717,7 +730,8 @@ class Checkout extends React.Component {
                                     displayType={'text'}
                                     prefix={getCurrencySymbol(selectedPackages[0].currency.code)+ " "} />}
                             </div>
-                            {!bundle.all && <i className="fa fa-minus-circle" onClick={() => this.removeBundle(props.index)} />}
+                            {!bundle.all && selectedPackages.length > 1 &&
+                            <i className="fa fa-minus-circle" onClick={() => this.removeBundle(props.index)} />}
                         </div>
                     )
                 }
@@ -738,7 +752,7 @@ class Checkout extends React.Component {
                     <div className="bid-title no-border uppercase">
                         {this.context.t("SALES_PACKAGE_TABLE_HEADER")}
                     </div>
-                    {selectedPackages.length > 1 && <RadioSelector
+                    {selectedPackages.length > 1 && allowMultiple && <RadioSelector
                         value={bidMethod}
                         onChange={bidMethod=>this.setState({bidMethod})}
                         className="bid-list-mode"
@@ -760,7 +774,7 @@ class Checkout extends React.Component {
                         columns={columns}
                     />
 
-                    {bidMethod === this.all && <ReactTable
+                    {bidMethod === this.all && selectedPackages.length > 1 && <ReactTable
                         className="ca-table round-0 bundles-table bundles-table-checkout"
                         style={{marginTop: 20}}
                         data={[{
