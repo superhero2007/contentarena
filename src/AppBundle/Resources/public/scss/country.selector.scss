@@ -8,6 +8,9 @@
     min-height: 42px;
     max-height: 200px;
   }
+  .Select--multi .Select-input {
+    overflow: hidden;
+  }
   .regions{
     display: flex;
     .region{
