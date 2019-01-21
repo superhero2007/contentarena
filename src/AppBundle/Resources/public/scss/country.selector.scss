@@ -54,6 +54,11 @@
       line-height: 18px;
       background-color: transparent;
       outline: none;
+      &.remain {
+        display: inline-block;
+        width: inherit;
+        background-color: #FFC94B;
+      }
     }
     .region:first-child{
       margin-left: 0 !important;

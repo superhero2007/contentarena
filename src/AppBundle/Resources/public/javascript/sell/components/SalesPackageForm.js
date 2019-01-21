@@ -41,7 +41,8 @@ class SalesPackageForm extends React.Component {
             fee : 0,
             isNew : true,
             territoriesQuantity: 'single',
-            countries: ContentArena.Data.Countries
+            countries: ContentArena.Data.Countries,
+            remainCountries: []
         };
         this.bidIcon = assetsBaseDir + "app/images/hammer.png";
         this.draftIcon = assetsBaseDir + "app/images/draft.png";
@@ -161,17 +162,22 @@ class SalesPackageForm extends React.Component {
     applySelection  = () => {
         this.setState({ isOpen: false});
         this.props.disableValidation()
-
-        const { bundleMethod, territoriesMethod, fee, salesMethod, installments, selectedRegion, selectedRegionCountries } = this.state;
+        const { bundleMethod, territoriesMethod, fee, salesMethod, installments, selectedRegion, selectedRegionCountries, territoriesQuantity } = this.state;
         const {exclusivity} = this.props;
 
         const territoriesAsArray = Array.isArray(this.state.territories) ? this.state.territories : [this.state.territories];
         let salesPackagesList = [], name= "";
         let excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : territoriesAsArray;
         let territories = territoriesAsArray;
-        let allTerritories = Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
+        let allTerritories = this.getAllCountries();
         let territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
         let regionNamed = false;
+
+        if (territoriesQuantity === 'multiple' && exclusivity) {
+            this.setState({
+                remainCountries: this.getRemainCountries(selectedRegionCountries)
+            })
+        }
         if ( this.state.isNew ) {
 
             if ( bundleMethod === this.individually ){
@@ -356,9 +362,36 @@ class SalesPackageForm extends React.Component {
         return exclusiveSoldTerritories
     };
 
+    getAlreadySelectedCountries = () => {
+        const {salesPackages} = this.props
+        let selected = [];
+
+        salesPackages.forEach(sp => {
+            sp.territories.forEach(t =>{
+                selected.push(t)
+            })
+        })
+
+        return selected
+    }
+
+    getRemainCountries = (selectedTerritories) => {
+        const {remainCountries} = this.state;
+        const currentCountries = remainCountries && remainCountries.length > 0 ? remainCountries : this.getAllCountries();
+        if (selectedTerritories.length > 0) {
+            return currentCountries.filter(cc => !selectedTerritories.some(src => src.value === cc.value));
+        } else {
+            return []
+        }
+    }
+
+    getAllCountries = () => {
+        return Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
+    }
+
     renderModal = () => {
         const {onClose, exclusivity, salesPackages, currency, validation} = this.props;
-        const {territoriesQuantity, territoriesMethod, territories, fee} = this.state;
+        const {territoriesQuantity, territoriesMethod, territories, fee, remainCountries} = this.state;
 
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
         const isMultipleEnabled = territoriesQuantity === 'multiple';
@@ -437,13 +470,15 @@ class SalesPackageForm extends React.Component {
                                         </div>
                                     </div>
                                 )}
-                                {this.worldwideAvailable() && <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwideExcluding) } }>
-                                    {territoriesMethod !== this.worldwideExcluding && <i className="fa fa-circle-thin"/>}
-                                    {territoriesMethod === this.worldwideExcluding && <i className="fa fa-check-circle-o"/>}
-                                    <div className={"title"}>
-                                        {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
+                                {this.worldwideAvailable() && (
+                                    <div className={"item"} onClick={() => { this.setTerritoriesMethod(this.worldwideExcluding) } }>
+                                        {territoriesMethod !== this.worldwideExcluding && <i className="fa fa-circle-thin"/>}
+                                        {territoriesMethod === this.worldwideExcluding && <i className="fa fa-check-circle-o"/>}
+                                        <div className={"title"}>
+                                            {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
+                                        </div>
                                     </div>
-                                </div>}
+                                )}
                             </div>
                         )}
                         <div style={{marginTop: '10px', padding: "0 15px"}}>
@@ -467,6 +502,7 @@ class SalesPackageForm extends React.Component {
                                 exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
                                 placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
                                 isInvalid={isTerritoriesEmpty}
+                                remainCountries={exclusivity ? this.getRemainCountries(this.getAlreadySelectedCountries()) : []}
                             />}
                             {territoriesQuantity === 'multiple' && (
                                 <div className="d-flex align-items-center" onChange={(e) => {
