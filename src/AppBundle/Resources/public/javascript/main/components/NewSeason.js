@@ -23,12 +23,12 @@ class NewSeason extends React.Component{
             values.push(Number(seasons[index].from));
             values.push(Number(seasons[index].from)+1);
 
-            return values.map(value => {
-                return<option selected={Number(seasons[index].from) === value} value={value}>{value}</option>
+            return values.map((value, i) => {
+                return<option key={`option-${i}`} selected={Number(seasons[index].from) === value} value={value}>{value}</option>
             });
         }
 
-        return (<option>Year</option>)
+        return (<option key='placeholder'>Year</option>)
     };
 
     setDate = (key, value) => {

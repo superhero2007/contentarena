@@ -63,6 +63,10 @@
         width: 75%;
         margin-bottom: 10px;
 
+        button.apply-date{
+          padding-left: 22px;
+          padding-right: 22px;
+        }
         input { width: 85px; }
 
         & div{
@@ -115,13 +119,19 @@
       }
 
     }
-  }
 
-  .box {
     .ca-btn {
       font-size: 14px;
     }
+
+    .clear-filter{
+      padding-left: 35px;
+      padding-right: 35px;
+      font-size: 16px;
+    }
   }
+
+
 }
 
 .buy-container-right {
@@ -137,19 +147,22 @@
     margin-bottom: 10px;
 
     .right-legend-wrapper{
+      width: 425px;
       margin-left: auto;
       position: relative;
       bottom: -4px;
     }
 
     .sort-by-wrapper {
+      width: 100%;
       span {
         font-weight: bold;
         font-size: 15px;
       }
       label {
-        font-size: 14px;
+        font-size: 13px;
         cursor: pointer;
+        color: #333;
       }
       input[type="radio"] {
         margin: 0 5px;
@@ -157,6 +170,8 @@
     }
 
     .content-listing-switcher{
+      width: 125px;
+
       .content-view-tab{
         display: inline-block;
         font-weight: 400;
@@ -191,6 +206,7 @@
       span{
         display: flex;
         justify-content: space-between;
+        text-transform: capitalize;
       }
     }
     .rt-tbody{

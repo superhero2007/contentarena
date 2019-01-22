@@ -94,7 +94,7 @@ textarea.representation-textarea {
   background: transparent;
   resize: none;
   text-transform: none;
-  font-size: 14px;
+  font-size: 13px;
   font-family: $font-stack;
 }
 
@@ -410,13 +410,14 @@ i.fa.ca-tooltip {
     cursor: pointer;
     font-size: 15px;
     color: #333;
+    font-weight: normal;
 
     &:last-child {
       margin-right: 0;
     }
 
     &.active {
-      font-weight: normal;
+      font-weight: bold;
       border-bottom: 2px solid $color-primary;
     }
   }
@@ -513,10 +514,13 @@ i.fa.ca-tooltip {
     .rt-td {
       //color: black;
       border-right: 1px solid #999;
+
       div a {
         font-size: 13px;
         color: #07a7f9;
+        font-weight: normal;
       }
+
       & > div,
       & > a {
         overflow: hidden;
@@ -607,7 +611,7 @@ a.ca-link {
   }
 }
 
-.icon-circle-background{
+.icon-circle-background {
   height: 24px;
   width: 24px;
   background-color: #FFC94B;
@@ -617,6 +621,7 @@ a.ca-link {
   align-items: center;
   margin: 5px;
   cursor: pointer;
+
   img {
     width: 60%;
     height: 60%;

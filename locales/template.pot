@@ -74,9 +74,15 @@ msgid "MARKETPLACE_LABEL_FILTER_EXCLUSIVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "To"
+msgid "EVENT_DATE_FROM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
+msgid "EVENT_DATE_TO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
+msgid "MARKETPLACE_APPLY_EVENT_DATE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
@@ -917,6 +923,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
 msgid "Year"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
+#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
+msgid "To"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js

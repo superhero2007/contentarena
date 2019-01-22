@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
 addRight, clearFilter, removeRight, updateCountries, updateExclusive,
-updateIncludedCountries, updateAllFilters, updateEventDateFrom, updateEventDateTo
+updateIncludedCountries, updateAllFilters, updateEventDatesFilter
 } from "../actions/filterActions";
 import CountrySelector from "../../main/components/CountrySelector";
 import PopupCountrySelector from "../../main/components/PopupCountrySelector";
@@ -18,6 +18,11 @@ import { DATE_FORMAT } from "@constants";
 class RightsFilter extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            eventDateFrom: this.props.eventDateFrom,
+            eventDateTo: this.props.eventDateTo
+        };
 
         this.worldwideCountries = props.totalCountries;
     }
@@ -44,6 +49,7 @@ class RightsFilter extends React.Component {
             eventDateTo: eventDateToFromStorage || '',
         };
 
+        this.setState({ eventDateFrom: config.eventDateFrom, eventDateTo: config.eventDateTo });
         this.props.updateAllFilters(config);
     };
 
@@ -97,16 +103,20 @@ class RightsFilter extends React.Component {
     };
 
     handleUpdateEventDateFrom = (date) => {
-        localStorage.setItem(localStorageEnums.EVENT_DATE_FROM, date);
-        this.props.updateEventDateFrom(date);
-
-        // this.onApplyFilter(); need to discuss this behavior
+        this.setState({eventDateFrom: date});
     };
     handleUpdateEventDateTo = (date) => {
-        localStorage.setItem(localStorageEnums.EVENT_DATE_TO, date);
-        this.props.updateEventDateTo(date);
+        this.setState({eventDateTo: date});
+    };
 
-        // this.onApplyFilter(); same issue here
+    onApplyDateFilter = () => {
+        const { eventDateTo, eventDateFrom } = this.state;
+
+        localStorage.setItem(localStorageEnums.EVENT_DATE_FROM, eventDateFrom);
+        localStorage.setItem(localStorageEnums.EVENT_DATE_TO, eventDateTo);
+
+        this.props.updateEventDatesFilter(eventDateFrom, eventDateTo);
+        this.onApplyFilter();
     };
 
     render() {
@@ -116,10 +126,10 @@ class RightsFilter extends React.Component {
             countries,
             exclusive,
             includeAllCountries,
-            eventDateFrom,
-            eventDateTo,
             timeEventActive
         } = this.props;
+
+        const { eventDateFrom, eventDateTo } = this.state;
 
         let countriesValue  = first(countries) ? {label: first(countries), value: first(countries)} : '';
 
@@ -223,20 +233,19 @@ class RightsFilter extends React.Component {
 
                     <div className="event-date-wrapper">
                         <div className="event-date-row">
-                            <label htmlFor='date-picker-event-from'>From</label>
+                            <label htmlFor='date-picker-event-from'>{this.context.t("EVENT_DATE_FROM")}</label>
                             <DatePicker
                                 id='date-picker-event-from'
                                 showYearDropdown
                                 className='date-picker'
-                                selected={eventDateFrom ? moment(eventDateFrom) : undefined}
+                                selected={eventDateFrom ? moment(eventDateFrom) : moment.utc()}
                                 onChange={date => this.handleUpdateEventDateFrom(date.format())}
                                 dateFormat={DATE_FORMAT}
-                                placeholderText='TODAY'
                                 disabled={!timeEventActive}
                             />
                         </div>
                         <div className="event-date-row">
-                            <label htmlFor='date-picker-event-to'>{this.context.t('To')}</label>
+                            <label htmlFor='date-picker-event-to'>{this.context.t("EVENT_DATE_TO")}</label>
                             <DatePicker
                                 id='date-picker-event-to'
                                 showYearDropdown
@@ -248,8 +257,13 @@ class RightsFilter extends React.Component {
                                 disabled={!timeEventActive}
                             />
                         </div>
+                        <div className="event-date-row">
+                            <label />
+                            <button className="ca-btn primary apply-date" onClick={this.onApplyDateFilter}>
+                                {this.context.t("MARKETPLACE_APPLY_EVENT_DATE")}
+                            </button>
+                        </div>
                     </div>
-
                 </div>
                 <div className="box">
                     <div style={{
@@ -257,7 +271,7 @@ class RightsFilter extends React.Component {
                         alignItems: 'center',
                         flexDirection: 'column'
                     }}>
-                        <button className="ca-btn primary small" onClick={this.onClearFilter}>
+                        <button className="ca-btn primary clear-filter" onClick={this.onClearFilter}>
                             {this.context.t("MARKETPLACE_BUTTON_CLEAR")}
                         </button>
                     </div>
@@ -286,8 +300,7 @@ const mapDispatchToProps = dispatch => {
         updateIncludedCountries: includeAllCountries => dispatch(updateIncludedCountries(includeAllCountries)),
         clearFilter : () => dispatch(clearFilter()),
         updateAllFilters: filters => dispatch(updateAllFilters(filters)),
-        updateEventDateFrom: date => dispatch(updateEventDateFrom(date)),
-        updateEventDateTo: date => dispatch(updateEventDateTo(date)),
+        updateEventDatesFilter: (from, to) => dispatch(updateEventDatesFilter(from, to))
     }
 };
 

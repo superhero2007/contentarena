@@ -11,7 +11,7 @@ $icon-color: #00769A;
   //overflow: auto;
 }
 
-.manager-header-test-mode{
+.manager-header-test-mode {
   height: 40px;
   background-color: #FFC94B;
   display: flex;
@@ -20,6 +20,7 @@ $icon-color: #00769A;
   font-size: 18px;
   font-weight: 600;
 }
+
 .manager-header {
   $barHeight: 74px;
   display: flex;
@@ -36,6 +37,7 @@ $icon-color: #00769A;
     flex: 150px 0 0;
     margin-right: 40px;
   }
+
   a {
     display: flex;
     justify-content: center;
@@ -43,7 +45,8 @@ $icon-color: #00769A;
     min-height: $barHeight;
     font: inherit;
     font-size: 16px;
-    color: #03547C;
+    color: #1a4b63;
+    font-weight: 600;
     margin-bottom: 3px;
     margin-right: 3px;
     cursor: pointer;
@@ -53,12 +56,15 @@ $icon-color: #00769A;
     outline: none;
     text-decoration: none;
     padding: 15px 20px 0;
+
     &:hover {
       opacity: .7;
     }
   }
+
   .baseline {
     padding-top: 15px;
+
     a {
       padding-top: 0;
     }
@@ -74,16 +80,18 @@ $icon-color: #00769A;
     a {
       height: 34px;
       min-height: auto;
+      text-transform: uppercase;
     }
   }
 
   .spacer {
     margin-right: auto;
   }
+
   .active-tab {
     a {
       position: relative;
-      font-weight: bold;
+
       &:after {
         content: "";
         position: absolute;
@@ -95,10 +103,12 @@ $icon-color: #00769A;
     }
 
   }
+
   .settings {
     margin-top: 15px;
     position: relative;
     cursor: pointer;
+
     .popup {
       display: none;
       z-index: 99;
@@ -106,19 +116,23 @@ $icon-color: #00769A;
       position: absolute;
       right: -15px;
     }
+
     &:hover .popup {
       display: block;
+
       .wrap {
         min-width: 125px;
         text-align: center;
         background-color: #ffffff;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
         color: #1A4B63;
+
         .tab {
           width: 100%;
           margin: 0;
           padding: 0;
           border-bottom: 1px solid #cccccc;
+
           &:last-child {
             border-bottom: none;
           }
@@ -134,7 +148,7 @@ $icon-color: #00769A;
 
     cursor: pointer;
 
-    &:hover > i{
+    &:hover > i {
       opacity: .7;
     }
 
@@ -175,7 +189,7 @@ $icon-color: #00769A;
             padding: 4px 7px;
             display: block;
 
-            &.notification-time{
+            &.notification-time {
               padding-top: 0;
               color: $border-color-3;
             }
@@ -190,13 +204,16 @@ $icon-color: #00769A;
             border-bottom-left-radius: 3px;
             border-bottom-right-radius: 3px;
 
-            .notification-time{
+            .notification-time {
               color: $black-color;
             }
           }
 
-          &.loading{
-            &:hover{ background-color: $background-3; }
+          &.loading {
+            &:hover {
+              background-color: $background-3;
+            }
+
             padding: 5px 10px;
           }
         }
@@ -215,9 +232,10 @@ $icon-color: #00769A;
   }
 }
 
-.watch-list-container{
-  .listing-list-view{
+.watch-list-container {
+  .listing-list-view {
     cursor: default;
+
     .ca-title {
       cursor: default;
     }
@@ -281,7 +299,7 @@ $icon-color: #00769A;
       }
     }
 
-    .reset-listing-filter{
+    .reset-listing-filter {
       width: 145px;
       cursor: pointer;
       padding: 0 5px;
@@ -289,12 +307,14 @@ $icon-color: #00769A;
       img {
         margin-bottom: 3px;
       }
-      span{
+
+      span {
         color: $border-color-2;
         padding-left: 5px;
       }
     }
   }
+
   .status-filter {
     display: flex;
     justify-content: flex-end;
@@ -312,10 +332,11 @@ $icon-color: #00769A;
       font-size: 13px;
       font-weight: normal;
 
-      &.active{
+      &.active {
         font-weight: bold;
         color: $black-color;
       }
+
       img {
         margin: 0 10px 3px;
       }

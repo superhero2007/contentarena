@@ -227,7 +227,7 @@ class ReviewAndSign extends React.Component {
                         {this.context.t('CL_STEP5_TITLE_REVIEW')}
                     </div>
 
-                    <div className="base-full-input" style={{maxWidth: 'none'}}>
+                    <div className="base-full-input" style={{maxWidth: 'none', borderBottom: 'none'}}>
                         <label>
                             {this.context.t("CL_STEP5_PREVIEW_LISTING")}
                         </label>
