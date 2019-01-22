@@ -53,12 +53,8 @@ export const clearUpdateFilter = () => ({
     type: filterTypes.CLEAR_UPDATE
 });
 
-export const updateEventDateFrom = (date) => ({
-    type: filterTypes.UPDATE_EVENT_DATE_FROM,
-    date
-});
-
-export const updateEventDateTo = (date) => ({
-    type: filterTypes.UPDATE_EVENT_DATE_TO,
-    date
+export const updateEventDatesFilter = (from, to) => ({
+    type: filterTypes.UPDATE_EVENT_DATE_FROM_TO,
+    from,
+    to
 });
