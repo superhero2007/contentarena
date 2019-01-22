@@ -40,7 +40,10 @@ class TerritoriesSalesPackages extends PureComponent {
     }
 
     getFee = (salesPackage) => {
-        const feeNumber = parseFloat(salesPackage.fee);
+        let feeNumber = parseFloat(salesPackage.fee);
+
+        if (feeNumber === 0) feeNumber = 1;
+
         return <NumberFormat
             thousandSeparator={true}
             value={feeNumber}
@@ -110,7 +113,7 @@ class TerritoriesSalesPackages extends PureComponent {
         this.setDefaultSelection(territories, filteredIndividualBundles, filteredTerritorialBundles, clear);
 
     };
-
+s
     selectTerritory = (e, bundle) => {
         const isChecked = e.target.checked;
         let checkedItems = this.state.checkedItems;
@@ -186,14 +189,44 @@ class TerritoriesSalesPackages extends PureComponent {
         if (onSelectPackage) onSelectPackage([...checkedItems.keys()], customId);
     };
 
+    getCheckedTerritoriesSize = () => {
+
+        const {
+            checkedItems
+        } = this.state;
+
+        return Array.from(checkedItems.values()).map(item=>{return item.territories.length}).reduce((a, b) => a + b, 0);
+
+    };
+
+    renderCheckoutButton = () => {
+        const {
+            userCanNotBuy
+        } = this.props;
+
+        const {
+            checkedItems
+        } = this.state;
+
+        return (
+            <button className="ca-btn primary"
+                    disabled={checkedItems.size === 0 || userCanNotBuy}
+                    onClick={this.goToCheckout}
+                    title={this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
+            >
+                {this.context.t("MARKETPLACE_CHECKOUT_BUTTON")} ({this.getCheckedTerritoriesSize()}) <i className="fa fa-chevron-right" />
+            </button>
+        );
+    };
+
     render() {
         const {
-            salesPackages
+            salesPackages,
+            userCanNotBuy
         } = this.props;
 
         const {
             territories,
-            availabilitySelector,
             filteredIndividualBundles,
             filteredTerritorialBundles,
             selectedName,
@@ -245,6 +278,8 @@ class TerritoriesSalesPackages extends PureComponent {
                         {selectedName} Countries
                     </div>
 
+                    {total > 3 && this.renderCheckoutButton()}
+
                     {/*<RadioSelector
                         value={availabilitySelector}
                         onChange={availabilitySelector=>this.setState({availabilitySelector})}
@@ -256,15 +291,6 @@ class TerritoriesSalesPackages extends PureComponent {
                         ]}
                     />*/}
                 </div>}
-
-                {/*{this.context.t("MARKETPLACE_LABEL_PRICE_MINIMUM_BID")}*/}
-
-                {/*{filteredTerritorialBundles.length === 0
-                && filteredTerritorialBundles.length === 0
-                && territories === this.filtered
-                && <div className="sales-packages">
-                    {this.context.t("MARKETPLACE_NO_FILTERED_TERRITORIES")}
-                </div>}*/}
 
                 {filteredTerritorialBundles.length > 0 && <div className="sales-packages">
 
@@ -282,7 +308,7 @@ class TerritoriesSalesPackages extends PureComponent {
                                 Header: () => {
                                     return (
                                         <div>
-                                            {filteredTerritorialBundles.length > 1 &&<input
+                                            {filteredTerritorialBundles.length > 1 && !userCanNotBuy && <input
                                                 className={"ca-checkbox"}
                                                 onChange={e => this.selectAllTerritories(e, filteredTerritorialBundles)}
                                                 type="checkbox"/>}
@@ -296,7 +322,7 @@ class TerritoriesSalesPackages extends PureComponent {
                                     const bundle = props.original;
                                     return (
                                         <div className="d-flex align-items-center">
-                                            { total > 1 && <input
+                                            { total > 1 && !userCanNotBuy && <input
                                                 checked={checkedItems.get(bundle.id)}
                                                 className={"ca-checkbox"}
                                                 type="checkbox"
@@ -327,8 +353,9 @@ class TerritoriesSalesPackages extends PureComponent {
                                 headerClassName: 'table-header-big',
                                 Cell: props => {
                                     const bundle = props.original;
+                                    let key = "CHECKOUT_METHOD_" + bundle.salesMethod;
                                     return (
-                                        bundle.salesMethod
+                                        this.context.t(key)
                                     )
                                 }
                             },
@@ -340,7 +367,7 @@ class TerritoriesSalesPackages extends PureComponent {
                                     return (
                                         <div className="price-action-wrapper">
                                             <div title={bundle.fee}>
-                                                {+bundle.fee > 0 && this.getFee(bundle)}
+                                                {this.getFee(bundle)}
                                             </div>
                                         </div>
                                     )
@@ -367,7 +394,7 @@ class TerritoriesSalesPackages extends PureComponent {
                                 Header: () => {
                                     return (
                                         <div>
-                                            {filteredIndividualBundles.length > 1 &&
+                                            {filteredIndividualBundles.length > 1 && !userCanNotBuy &&
                                             <input
                                                 className={"ca-checkbox"}
                                                 onChange={e => this.selectAllTerritories(e, filteredIndividualBundles)}
@@ -382,7 +409,9 @@ class TerritoriesSalesPackages extends PureComponent {
                                     const bundle = props.original;
                                     return (
                                         <div className="d-flex align-items-center">
-                                            {total > 1 && !(bundle.hasOfferFromUser && bundle.hasClosedDeal) &&
+                                            {total > 1 &&
+                                            !(bundle.hasOfferFromUser && bundle.hasClosedDeal) &&
+                                            !userCanNotBuy &&
                                             <input
                                                 checked={checkedItems.get(bundle.id)}
                                                 className={"ca-checkbox"}
@@ -414,8 +443,9 @@ class TerritoriesSalesPackages extends PureComponent {
                                 headerClassName: 'table-header-big',
                                 Cell: props => {
                                     const bundle = props.original;
+                                    let key = "CHECKOUT_METHOD_" + bundle.salesMethod;
                                     return (
-                                        bundle.salesMethod
+                                        this.context.t(key)
                                     )
                                 }
                             },
@@ -438,16 +468,9 @@ class TerritoriesSalesPackages extends PureComponent {
 
                 </div>}
 
-                {/* BUTTON */}
+                {/* SECOND CHECKOUT BUTTON */}
                 <div className="d-flex justify-content-end checkout-button">
-                    <button className="ca-btn primary"
-                            disabled={checkedItems.size === 0}
-                            onClick={this.goToCheckout}
-                            title={this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
-                    >
-                        {this.context.t("MARKETPLACE_CHECKOUT_BUTTON")} <i className="fa fa-chevron-right" />
-                    </button>
-
+                    {this.renderCheckoutButton()}
                 </div>
             </React.Fragment>
         );

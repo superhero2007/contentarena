@@ -8,6 +8,9 @@
     min-height: 42px;
     max-height: 200px;
   }
+  .Select--multi .Select-input {
+    overflow: hidden;
+  }
   .regions{
     display: flex;
     .region{
@@ -54,6 +57,11 @@
       line-height: 18px;
       background-color: transparent;
       outline: none;
+      &.remain {
+        display: inline-block;
+        width: inherit;
+        background-color: #FFC94B;
+      }
     }
     .region:first-child{
       margin-left: 0 !important;

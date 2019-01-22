@@ -414,6 +414,10 @@ msgid "LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "MARKETPLACE_CHECKOUT_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED"
 msgstr ""
 
@@ -430,20 +434,8 @@ msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "MARKETPLACE_LABEL_PRICE_MINIMUM_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "MARKETPLACE_NO_FILTERED_TERRITORIES"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
-msgid "MARKETPLACE_CHECKOUT_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
@@ -943,6 +935,10 @@ msgstr ""
 msgid "MARKETPLACE_FILTER_ALL_TERRITORIES"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/RegionCountrySelector.js
+msgid "CL4_REMAIN_COUNTRIES"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/RightsLegend.js
 msgid "MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE"
 msgstr ""
@@ -1347,6 +1343,14 @@ msgstr ""
 msgid "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CHECKOUT_METHOD_FIXED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "CHECKOUT_METHOD_BIDDING"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "SETTINGS_BUTTON_BACK"
 msgstr ""
@@ -1503,6 +1507,8 @@ msgid "View"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+#: src/AppBundle/Resources/public/javascript/manage/components/DefinitionItem.js
+#: src/AppBundle/Resources/public/javascript/manage/components/TermItem.js
 msgid "MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM"
 msgstr ""
 
@@ -1535,6 +1541,8 @@ msgid "MANAGE_LISTINGS_REMOVE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
+#: src/AppBundle/Resources/public/javascript/manage/components/DefinitionItem.js
+#: src/AppBundle/Resources/public/javascript/manage/components/TermItem.js
 msgid "MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL"
 msgstr ""
 
@@ -1548,6 +1556,11 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 msgid "Expiry:"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/DefinitionItem.js
+#: src/AppBundle/Resources/public/javascript/manage/components/TermItem.js
+msgid "TERMS_DEFINITIONS_REMOVE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
@@ -1845,6 +1858,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_TITLE_DEFINITIONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_BUTTON_ADD_DEFINITIONS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js

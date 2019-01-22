@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import CountrySelector from "./CountrySelector";
+import PropTypes from "prop-types";
 import cn from "classnames";
 
 class RegionCountrySelector extends React.Component {
@@ -143,6 +144,12 @@ class RegionCountrySelector extends React.Component {
         if (onSelectRegion) onSelectRegion(region, selection)
     };
 
+    selectRemainCountries = (countries) => {
+        const {onChange} = this.props;
+        this.setState({selection: countries})
+        if (onChange) onChange(countries);
+    }
+
     handleChange = (selection) => {
 
         const {
@@ -164,12 +171,20 @@ class RegionCountrySelector extends React.Component {
         } = this.props;
 
         const {territories, regions, activeTerritories, activeRegions, worldwideSelected} = this.state;
-        const {exclusiveSoldTerritories, placeholder, isInvalid} = this.props;
+        const {exclusiveSoldTerritories, placeholder, isInvalid, remainCountries} = this.props;
 
         return (
             <div className="country-selector region-filter">
                 { !disabled && <div>
                     <div className="regions">
+                        {remainCountries && remainCountries.length > 0 && (
+                            <button
+                                className="region remain"
+                                onClick={() => this.selectRemainCountries(remainCountries)}
+                            >
+                                {this.context.t("CL4_REMAIN_COUNTRIES")}
+                            </button>
+                        )}
                         {territories.map((territory,i)=>{
                             return <button className={cn({
                                                "region" : true,
@@ -219,5 +234,10 @@ class RegionCountrySelector extends React.Component {
         )
     }
 }
+
+RegionCountrySelector.contextTypes = {
+    t: PropTypes.func.isRequired
+};
+
 
 export default RegionCountrySelector;
