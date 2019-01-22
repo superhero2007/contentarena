@@ -160,8 +160,9 @@
         font-size: 15px;
       }
       label {
-        font-size: 14px;
+        font-size: 13px;
         cursor: pointer;
+        color: #333;
       }
       input[type="radio"] {
         margin: 0 5px;
@@ -205,6 +206,7 @@
       span{
         display: flex;
         justify-content: space-between;
+        text-transform: capitalize;
       }
     }
     .rt-tbody{

@@ -418,7 +418,7 @@ class ListingDetails extends React.Component {
                     {!buyingMode && (
                         <div className={"right"} >
                             <div className="listings-details-title">
-                                <div className="ca-title">
+                                <div className="ca-title small">
                                     {content.name}
                                 </div>
                             </div>

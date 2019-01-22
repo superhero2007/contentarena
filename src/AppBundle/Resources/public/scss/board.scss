@@ -26,8 +26,10 @@
     width: 24%;
     .column-title {
       margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
       div {
-        font-weight: 600;
         display: inline;
       }
 
@@ -95,6 +97,7 @@
         width: 310px;
         color: #07a7f9;
         font-size: 13px;
+        font-weight: normal;
       }
       .tournament {
         display: flex;

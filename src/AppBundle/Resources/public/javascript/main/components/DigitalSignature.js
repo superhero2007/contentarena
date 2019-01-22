@@ -81,7 +81,7 @@ class DigitalSignature extends React.Component{
 
                 {!noLabel && <div
                     className="base-full-input"
-                    style={{maxWidth: 'none', marginBottom:10}}>
+                    style={{maxWidth: 'none', marginBottom:10, borderBottom: 'none'}}>
                     <label>{this.context.t('DIGITAL_SIGNATURE_INFO')}</label>
                 </div>}
 
