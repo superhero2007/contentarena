@@ -66,7 +66,7 @@ class SeasonSelector extends React.Component {
         let activeSeason = seasons[season];
 
         return (
-            <div style={{zIndex: 1}} className="base-container">
+            <div className="base-container">
                 {!this.props.isCustom &&
                 <div className="base-input">
                     <label>

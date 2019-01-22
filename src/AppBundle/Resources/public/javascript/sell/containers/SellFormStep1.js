@@ -150,9 +150,8 @@ class SellFormStep1 extends React.Component {
             ContentArena.Data.Seasons = seasons;
 
             if (seasons.length === 0 ) {
-
-
-                if ( this.props.customSeasons === null || this.props.customSeasons === undefined || this.props.customSeasons.length === 0 ){
+                const hasSeasons = this.props.seasons && this.props.seasons.length;
+                if (  !hasSeasons && (this.props.customSeasons === null || this.props.customSeasons === undefined || this.props.customSeasons.length === 0) ){
                     this.props.addNewSeason(0);
                 }
                 this.setState({
