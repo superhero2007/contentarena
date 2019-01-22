@@ -19,6 +19,7 @@ import first from 'lodash/first';
 import cn from 'classnames';
 import PropTypes from "prop-types";
 const queryString = require('query-string');
+import Loader from '../../common/components/Loader'
 
 class Marketplace extends Component {
     constructor(props) {
@@ -252,57 +253,50 @@ class Marketplace extends Component {
                             timeEventActive={this.isEventTimeActive()} />
                     </div>
                     <div className="buy-container-right">
-                        <div className="content-listing-header">
-                            <div className="content-listing-switcher">
-                                <button
-                                    className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.LIST})}
-                                    onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.LIST)}>
-                                    <i className="fa fa-list-ul" />
-                                </button>
-                                <button
-                                    className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.TABLE})}
-                                    onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.TABLE)}>
-                                    <i className="fa fa-th" />
-                                </button>
-                            </div>
+                        <Loader loading={listings.length === 0 && loadingListing}>
 
-                            <SortByListing sortBy={sortBy} onSelect={this.handleSortBy} />
+                            <div className="content-listing-header">
+                                <div className="content-listing-switcher">
+                                    <button
+                                        className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.LIST})}
+                                        onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.LIST)}>
+                                        <i className="fa fa-list-ul" />
+                                    </button>
+                                    <button
+                                        className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.TABLE})}
+                                        onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.TABLE)}>
+                                        <i className="fa fa-th" />
+                                    </button>
+                                </div>
 
-                            <div className="right-legend-wrapper">
-                                <RightsLegend />
+                                <SortByListing sortBy={sortBy} onSelect={this.handleSortBy} />
+
+                                <div className="right-legend-wrapper">
+                                    <RightsLegend />
+                                </div>
                             </div>
-                        </div>
-                        {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.TABLE &&
+                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.TABLE &&
                             <ContentListingTable
                                 listings={listings}
                                 history={history}
                             />
-                        }
-                        {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && listings.map(listing => {
-                            return (
-                                <ContentListing
-                                    onSelect={() => this.goToListing(listing.customId)}
-                                    key={listing.customId}
-                                    filter={filter}
-                                    sortSalesPackages={sortSalesPackages}
-                                    {...listing}
-                                />
-                            );
-                        })}
+                            }
+                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && listings.map(listing => {
+                                return (
+                                    <ContentListing
+                                        onSelect={() => this.goToListing(listing.customId)}
+                                        key={listing.customId}
+                                        filter={filter}
+                                        sortSalesPackages={sortSalesPackages}
+                                        {...listing}
+                                    />
+                                );
+                            })}
 
-                        {listings.length === 0 && loadingListing && (
-                            <div className={"big-spinner"}>
-                                <i className="fa fa-cog fa-spin" />
-                            </div>
-                        )}
-
-                        {listings.length === 0 && !loadingListing && (
-                            <span className={"no-results"}>
-                            {this.context.t(
-                                "MARKETPLACE_NO_RESULTS"
+                            {listings.length === 0 && (
+                                <span className={"no-results"}>{this.context.t("MARKETPLACE_NO_RESULTS")}</span>
                             )}
-                        </span>
-                        )}
+                        </Loader>
                     </div>
                 </Fragment>)}
 
@@ -311,8 +305,9 @@ class Marketplace extends Component {
                     </div>
                 }
 
-                {showDetails && !loadingListingDetails &&
-                    <ListingDetails
+                <Loader loading={loadingListingDetails}>
+                    {showDetails &&
+                        <ListingDetails
                         key={location.pathname}
                         tab={match.params.tab}
                         bundles={match.params.bundles}
@@ -324,7 +319,8 @@ class Marketplace extends Component {
                         company={company}
                         profile={profile}
                         listing={content}/>
-                }
+                    }
+                </Loader>
             </div>
         )
     }
