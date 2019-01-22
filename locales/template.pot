@@ -447,6 +447,10 @@ msgstr ""
 msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js
+msgid "LOADER_DEFAULT_TEXT"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT"
 msgstr ""
@@ -1979,6 +1983,10 @@ msgstr ""
 msgid "LISTING_EXPIRY_EMPTY"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
+msgid "LISTING_MUST_EXPIRE_BEFORE_EVENT_END"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
 msgid "CL_STEP4_LABEL_JURISDICTION"
 msgstr ""
@@ -2485,8 +2493,3 @@ msgstr ""
 msgid "CL_STEP2_RIGHT_DEFINITIONS_"
 msgstr ""
 
-msgid "CL4_REMAIN_COUNTRIES"
-msgstr ""
-
-msgid "LOADER_DEFAULT_TEXT"
-msgstr ""
