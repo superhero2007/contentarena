@@ -2,10 +2,10 @@ import React from 'react';
 import DatePicker from '@components/DatePicker';
 import { SERVER_DATE_TIME_FORMAT } from "@constants";
 import moment from 'moment';
-import max from 'lodash/max';
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
+import { getMaxDate } from "@utils/listing";
 
 class ExpirationDateSelector extends React.Component {
     constructor(props) {
@@ -21,6 +21,8 @@ class ExpirationDateSelector extends React.Component {
     render(){
         const { expiresAt, validation } = this.props;
         const isInvalid = !expiresAt && validation;
+        const maxDate = this.getMaxDate();
+        const currentDate = (expiresAt)? moment(expiresAt): undefined;
 
         return (
             <div className="base-input">
@@ -29,10 +31,9 @@ class ExpirationDateSelector extends React.Component {
                 </label>
                 <DatePicker
                     className={`date-picker ${isInvalid ? 'is-invalid':''}`}
-                    selected={(expiresAt)? moment(expiresAt): undefined}
+                    selected={currentDate}
                     onChange={this.handleStartDate}
                     minDate={moment()}
-                    maxDate={this.getMaxDate()}
                     fixedHeight={true}
                     dateFormat={DATE_FORMAT}
                     placeholderText={DATE_FORMAT.toLowerCase()}
@@ -42,40 +43,19 @@ class ExpirationDateSelector extends React.Component {
                         {this.context.t('LISTING_EXPIRY_EMPTY')}
                     </span>
                 )}
+                {maxDate && currentDate && currentDate > maxDate && (
+                    <span className="is-invalid" style={{marginLeft:15}}>
+                        {this.context.t('LISTING_MUST_EXPIRE_BEFORE_EVENT_END')}
+                    </span>
+                )}
             </div>
         )
     }
 
     getMaxDate() {
-        const { rightsPackage } = this.props;
-        const hasLiveTransmission = !!rightsPackage.find(item => item.shortLabel === 'LT');
-        let date = null;
+        const { rightsPackage, seasons } = this.props;
         
-        if (hasLiveTransmission) {
-            const { seasons } = this.props;
-            let maxFixtureDate = null;
-            let maxSeasonDate = null;
-
-            if (seasons) {
-                const fixtureDates = [];
-                const dates = seasons.map(season => {
-                    if(season.fixtures) {
-                        season.fixtures.forEach(fixture => {
-                            fixtureDates.push(moment(fixture.date));
-                        });
-                    }
-
-                    return moment(season.customEndDate);
-                });
-
-                maxFixtureDate = max(fixtureDates);
-                maxSeasonDate = max(dates);
-            }
-
-            date = max([maxFixtureDate, maxSeasonDate]);
-        }
-
-        return date;
+        return getMaxDate(rightsPackage, seasons);
     }
 }
 
