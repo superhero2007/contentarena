@@ -290,7 +290,7 @@ class Settings extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
                             </label>
-                            <input value={user.firstName} disabled={true || !editPersonalInfo} onChange={(e)=>{
+                            <input value={user.firstName} disabled={common.testStageMode || !editPersonalInfo} onChange={(e)=>{
                                 user.firstName = e.target.value;
                                 this.setState({user});
                             }}/>
@@ -299,7 +299,7 @@ class Settings extends React.Component {
                             <label>
                                 {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
                             </label>
-                            <input value={user.lastName} disabled={true || !editPersonalInfo} onChange={(e)=>{
+                            <input value={user.lastName} disabled={common.testStageMode || !editPersonalInfo} onChange={(e)=>{
                                 user.lastName = e.target.value;
                                 this.setState({user});
                             }}/>
