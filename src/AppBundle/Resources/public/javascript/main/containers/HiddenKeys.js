@@ -109,6 +109,8 @@ class HiddenKeys extends React.Component {
                 {this.context.t("RIGHTS_ASPECT_RATIO_DESCRIPTION")}
                 {this.context.t("RIGHTS_COMMENTARY_DESCRIPTION")}
                 {this.context.t("RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION")}
+                {this.context.t("CHECKOUT_METHOD_FIXED")}
+                {this.context.t("CHECKOUT_METHOD_BIDDING")}
 
             </div>
         );

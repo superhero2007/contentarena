@@ -34,6 +34,8 @@ class Checkout extends React.Component {
             if ( b.salesMethod === "BIDDING" && b.fee !== 0 && b.fee !== "0" && b.fee !== "") {
                 b.minimumBid = b.fee;
                 b.fee = parseFloat(b.fee) + 1;
+            } else {
+                b.minimumBid = 1;
             }
             return b;
         });
@@ -538,7 +540,7 @@ class Checkout extends React.Component {
 
         //let bidValue = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(minimumBid) + 1 : parseFloat(minimumBid);
 
-        if (bundle.salesMethod === "FIXED" || !bundle.minimumBid  ) return <span>{"-"}</span>;
+        if ( !bundle.minimumBid  ) return <span>{"-"}</span>;
 
         return  <NumberFormat
             thousandSeparator={true}
@@ -576,8 +578,6 @@ class Checkout extends React.Component {
 
         let selectedPackages = this.state.selectedPackages;
 
-        // const checkoutType = this.getCheckoutType();
-        //const isBidInvalid = !bid && validation;
         const isTermsInvalid = !terms && validation;
         const total = this.getTotalFee();
         const TheadComponent = props => null; // a component returning null (to hide) or you could write as per your requirement

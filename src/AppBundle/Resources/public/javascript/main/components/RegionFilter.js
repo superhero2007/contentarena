@@ -5,6 +5,16 @@ class RegionFilter extends React.Component {
 
     constructor(props) {
         super(props);
+
+        let totalItems = 0;
+
+        if ( props.bundles ){
+            props.bundles.forEach(b=>{
+                totalItems += b.territories.length
+            })
+        }
+
+
         this.state = {
             territories : [],
             regions: [],
@@ -13,7 +23,7 @@ class RegionFilter extends React.Component {
             territoryItems : {},
             regionItems : [],
             allSelected : true,
-            totalItems: (props.bundles) ? props.bundles.length : 0
+            totalItems: totalItems
         };
     }
 
@@ -60,8 +70,8 @@ class RegionFilter extends React.Component {
                 if (territoryItems[t.territoryId] === undefined){
                     territoryItems[t.territoryId] = [];
                 }
+                territoryItems[t.territoryId].push(b.id);
                 if (includedInTerritories.indexOf(t.territoryId) === -1){
-                    territoryItems[t.territoryId].push(b.id);
                     includedInTerritories.push(t.territoryId);
                 }
             });
@@ -81,8 +91,8 @@ class RegionFilter extends React.Component {
                     if (regionItems[region.id] === undefined){
                         regionItems[region.id] = [];
                     }
+                    regionItems[region.id].push(b.id);
                     if (includedInRegions.indexOf(region.id) === -1){
-                        regionItems[region.id].push(b.id);
                         includedInRegions.push(region.id);
                     }
                 });
