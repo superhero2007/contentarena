@@ -5,6 +5,7 @@ import DatePicker from '@components/DatePicker';
 import {PropTypes} from "prop-types";
 import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import SalesPackageTable from "./SalesPackageTable";
+import EmptySalesPackageTable from "./EmptySalesPackageTable";
 import cn from 'classnames';
 import moment from "moment";
 import {connect} from "react-redux";
@@ -713,34 +714,35 @@ class SalesPackageForm extends React.Component {
         return (a > b) ? 1 : ((b > a) ? -1 : 0);
     };
 
-    isShowFee = (salesPackage) => {
-        return salesPackage.salesMethod !== "BIDDING" || (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0);
-    };
-
     render(){
-        const { onRemove, hideButtons, fullSize, sort, listingId, currency, validation } = this.props;
+        const { onRemove, hideButtons, fullSize, sort, listingId, currency } = this.props;
         let inputStyle = (fullSize) ? { maxWidth: 'none'} : null ;
         let salesPackages = this.props.salesPackages;
 
-        const isBundlesInvalid = salesPackages.length === 0 && validation;
-
         if (sort) salesPackages.sort(this.sortSalesPackages);
         return (
-            <div className={`sales-package-form ${isBundlesInvalid ? 'is-invalid':''}`}>
+            <div className='sales-package-form sales-bundle-wrapper'>
                 { this.renderModal() }
                 <div className="base-full-input" style={inputStyle}>
                     <label>
                         {this.context.t("CL_STEP4_SALES_BUNDLES")}
                     </label>
-                    <div>
+                    <span>
                         {this.context.t("CL_STEP4_TERRITORIAL_BUNDLES_DESCRIPTION")}
-                    </div>
+                    </span>
 
-                    {!salesPackages.length && this.addBundlesAvailable() && (
-                        <div className={`sales-bundles-placeholder`}>
-                            {this.renderAddSalesBundleButton()}
-                        </div>
-                    )}
+                    {!hideButtons && <div className="sales-bundle-actions">
+                        <button className="ca-btn primary" onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
+                            <i className="fa fa-plus-circle" />
+                            {this.context.t("CL_STEP4_ADD_SALES_BUNDLE")}
+                        </button>
+                        {salesPackages.length > 0 && <button className="ca-btn primary remove-all" onClick={this.props.onRemoveAll}>
+                            <i className="fa fa-minus-circle" />
+                            {this.context.t("CL_STEP4_REMOVE_ALL_BUNDLES")}
+                        </button>}
+                    </div>}
+
+                    {salesPackages.length === 0 && <EmptySalesPackageTable />}
 
                     {salesPackages.length > 0 && <SalesPackageTable
                         salesPackages={salesPackages}
@@ -751,27 +753,8 @@ class SalesPackageForm extends React.Component {
                         hideButtons={hideButtons}
                     />}
                 </div>
-
-                {!hideButtons && <div style={{display : "flex", justifyContent: "flex-end"}}>
-                    {this.addBundlesAvailable() && this.renderAddSalesBundleButton() }
-                    {salesPackages.length > 0 && <div className={"add-item"} onClick={this.props.onRemoveAll}>
-                        <i className="fa fa-minus-circle"/>
-                        {this.context.t("CL_STEP4_REMOVE_ALL_BUNDLES")}
-                    </div>}
-                </div>}
-
             </div>
         )
-
-    }
-
-    renderAddSalesBundleButton() {
-        return (
-            <div className={"add-item"} onClick={()=>{this.setState({isOpen:true, isNew : true})}}>
-                <i className="fa fa-plus-circle"/>
-                {this.context.t("CL_STEP4_ADD_SALES_BUNDLE")}
-            </div>
-        );
     }
 }
 
