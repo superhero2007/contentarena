@@ -138,6 +138,9 @@ class Terms extends React.Component {
             <div className="settings-container terms-edit-container">
 
                 <div className="terms-edit-header">
+                    <div className="terms-edit-header-title">
+                        {this.context.t("TERMS_EDIT_HEADER")}
+                    </div>
                     <button
                         onClick={this.restoreDefaultDefinitions}
                         disabled={restoringDefinitions}
