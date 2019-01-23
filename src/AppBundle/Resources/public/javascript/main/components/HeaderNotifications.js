@@ -1,5 +1,4 @@
 import React from 'react';
-import uniqBy from 'lodash/uniqBy';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { TIME_FORMAT } from "@constants";
@@ -64,6 +63,7 @@ class HeaderNotifications extends  React.Component {
     };
 
     getCreatedTime = (createdAt) =>  moment(createdAt).format(TIME_FORMAT);
+    isDateValid = (createdAt) => moment(createdAt).isValid();
     handleShowNotificationList = () => this.setState({showList: true});
     handleHideNotificationList = () => this.setState({showList: false});
 
@@ -82,11 +82,15 @@ class HeaderNotifications extends  React.Component {
                         {!dataLoading && notifications.map((item) => {
                             const { id, text, createdAt } = item;
                             return (
-                                <div key={`notification-${id}`}
-                                     className='item'
-                                     onClick={() => this.handleNotificationClick(item)}>
+                                <div
+                                    key={`notification-${id}`}
+                                    className='item'
+                                    onClick={() => this.handleNotificationClick(item)}>
                                         <span>{text}</span>
-                                        {createdAt && <span className="notification-time">{`${this.getPassedTime(createdAt)} - ${this.getCreatedTime(createdAt)}`}</span>}
+
+                                        {createdAt && this.isDateValid(createdAt) &&
+                                            (<span className="notification-time">{`${this.getPassedTime(createdAt)} - ${this.getCreatedTime(createdAt)}`}</span>)
+                                        }
                                 </div>
                             );
                         })}
@@ -106,14 +110,12 @@ class HeaderNotifications extends  React.Component {
             if ( data === undefined ) return;
 
             data.sort((a, b) => b.id - a.id);
-
-            const uniqNotifications = uniqBy(data, 'referenceId');
-            const unseenNotificationsCount = uniqNotifications.filter(item => !item.seen).length;
+            const unseenNotificationsCount = data.filter(item => !item.seen).length;
 
             this.setState({
                 dataLoading: false,
                 unseenNotificationsCount,
-                notifications: uniqNotifications
+                notifications: data
             });
         });
     }
