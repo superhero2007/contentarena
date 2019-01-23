@@ -5,7 +5,7 @@ import { pdfIcon } from "./../../main/components/Icons";
 import Installments from '../components/Installments';
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {
-    getCurrencySymbol, getCustomLicenseUrl
+    getCurrencySymbol, getCustomLicenseUrl, getCustomLicenseUrlBids
 } from "../../main/actions/utils";
 import {customStyles} from "../../main/styles/custom";
 import {companyIsValid} from "../../sell/actions/validationActions";
@@ -617,7 +617,7 @@ class Checkout extends React.Component {
                     const bundle = props.original;
                     return (
                         <div className="details-wrapper">
-                            {(bundle.salesMethod === "FIXED" || bidMethod !== this.all || bundle.all) &&
+                            {(bundle.salesMethod === "FIXED" || bidMethod !== this.all) &&
                             <a className="bid-license"
                                target={"_blank"}
                                href={getCustomLicenseUrl(content.customId, bundle.id, bid, company)}
@@ -625,6 +625,16 @@ class Checkout extends React.Component {
                                 <img src={pdfIcon} alt="Licence"/>
                                 <span>{this.context.t("License agreement")}</span>
                             </a>}
+
+                            {bundle.all &&
+                            <a className="bid-license"
+                               target={"_blank"}
+                               href={getCustomLicenseUrlBids(content.customId, selectedPackages, asd, company)}
+                               title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
+                                <img src={pdfIcon} alt="Licence"/>
+                                <span>{this.context.t("License agreement")}</span>
+                            </a>}
+
                             {bundle.all &&
                                 <Installments installments={this.getInstallments()} />}
                             {!bundle.all && (bundle.salesMethod === "FIXED" || bidMethod !== this.all) &&

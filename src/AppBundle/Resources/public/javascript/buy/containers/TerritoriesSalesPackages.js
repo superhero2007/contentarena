@@ -254,10 +254,14 @@ s
                 />}
 
                 {/* SELECTOR DESCRIPTION */}
-                {salesPackages.length > 1 && <div className="spacer-bottom filter-description">
-                    {territories === this.filtered && <span>
+                {<div className="spacer-bottom filter-description">
+                    {territories === this.filtered && salesPackages.length > 1 && <span>
                         <strong>{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}: </strong>
                         {this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
+                    </span>}
+                    {territories === this.filtered && salesPackages.length === 0 && <span>
+                        <strong>{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY")}: </strong>
+                        {this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY")}
                     </span>}
                     {territories === this.all && <span>
                         <strong>{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL")}: </strong>
@@ -457,7 +461,7 @@ s
                                     return (
                                         <div className="price-action-wrapper">
                                             <div title={bundle.fee}>
-                                                {+bundle.fee > 0 && this.getFee(bundle)}
+                                                {this.getFee(bundle)}
                                             </div>
                                         </div>
                                     )

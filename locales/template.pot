@@ -434,6 +434,14 @@ msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL"
 msgstr ""
 
