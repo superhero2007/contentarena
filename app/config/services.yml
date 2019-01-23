@@ -105,6 +105,6 @@ services:
         arguments: ['@AppBundle\Service\SportRadarService']
 
     AppBundle\EventListener\UpdateListingSubscriber:
-        arguments: ['@AppBundle\Service\ContentService','@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container']
+        arguments: ['@AppBundle\Service\ContentService','@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container', '@AppBundle\Service\NotificationService']
         tags:
             - { name: doctrine.event_subscriber, connection: default }

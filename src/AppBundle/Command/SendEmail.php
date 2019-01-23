@@ -14,6 +14,7 @@ use AppBundle\Entity\Sport;
 use AppBundle\Entity\User;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
+use AppBundle\Service\NotificationService;
 use AppBundle\Service\UserService;
 use Gettext\Translations;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -43,12 +44,20 @@ class SendEmail extends ContainerAwareCommand
 
     private $contentService;
 
-    public function __construct(EmailService $emailService, UserService $userService, ContentService $contentService)
+    private $notificationService;
+
+    public function __construct(
+        EmailService $emailService,
+        UserService $userService,
+        ContentService $contentService,
+        NotificationService $notificationService
+    )
     {
         parent::__construct();
         $this->emailService = $emailService;
         $this->userService = $userService;
         $this->contentService = $contentService;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -98,6 +107,7 @@ class SendEmail extends ContainerAwareCommand
                     if ( !$expiredListing->isExpiryNotified() ){
                         $output->writeln('Listing'.$expiredListing->getCustomId()."-".$expiredListing->getExpiresAt()->format('H:i:s \O\n Y-m-d'));
                         $this->emailService->listingExpiry($expiredListing);
+                        $this->notificationService->listingExpiryNotifications($expiredListing);
                         $expiredListing->setExpiryNotified(true);
                         $entityManager->persist($expiredListing);
                     }
@@ -111,6 +121,7 @@ class SendEmail extends ContainerAwareCommand
                     /*  @var Content $expiredListing */
                     if ( !$expiredListing->isExpiredNotified() ){
                         $this->emailService->listingExpired($expiredListing);
+                        $this->notificationService->listingExpiredNotifications($expiredListing);
                         $expiredListing->setExpiredNotified(true);
                         $entityManager->persist($expiredListing);
                     }
