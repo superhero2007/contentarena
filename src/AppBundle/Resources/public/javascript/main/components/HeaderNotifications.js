@@ -32,7 +32,7 @@ class HeaderNotifications extends  React.Component {
         }
     };
 
-    getRedirectUrl = (type, id) => {
+    getRedirectUrl = (type, id = '') => {
         const notifications = {
             SELLER_LISTING_APPROVED: (id) => `/listing/${id}`,
             SELLER_LISTING_EXPIRING: (id) => `/contentlisting/${id}/4/`,
@@ -49,7 +49,7 @@ class HeaderNotifications extends  React.Component {
             BUYER_BID_PLACED: () => `/bids/activebids`
         };
 
-        return notifications[type]();
+        return notifications[type](id);
     };
 
     handleNotificationClick = (item) => {
