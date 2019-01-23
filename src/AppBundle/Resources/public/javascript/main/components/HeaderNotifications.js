@@ -31,7 +31,36 @@ class HeaderNotifications extends  React.Component {
             const months = moment.utc().diff(moment(createdAt), "month");
             return `${months}m`;
         }
-        return '';
+    };
+
+    getRedirectUrl = (type, id) => {
+        const notifications = {
+            SELLER_LISTING_APPROVED: (id) => `/listing/${id}`,
+            SELLER_LISTING_EXPIRING: (id) => `/contentlisting/${id}/4/`,
+            SELLER_LISTING_EXPIRED: () => `/managelistings`,
+            SELLER_LISTING_DEACTIVATED: () => `/managelistings`,
+            SELLER_BID_RECEIVED: (id) => `/commercialoverview/filter/${id}&openbids`,
+            SELLER_BID_CLOSED: (id) => `/commercialoverview/filter/${id}&closeddeals`,
+            SELLER_BID_ACCEPTED: (id) => `/commercialoverview/filter/${id}&closeddeals`,
+            SELLER_LISTING_SOLD: (id) => `/commercialoverview/filter/${id}&closeddeals`,
+            MESSAGE: (id) => `/messages/${id}`,
+            BUYER_LISTING_MATCH: () => (id) => `/listing/${id}`,
+            BUYER_BID_CLOSED: () => `closeddeals`,
+            BUYER_BID_DECLINED: () => `/bids/declinedbids`,
+            BUYER_BID_PLACED: () => `/bids/activebids`
+        };
+
+        return notifications[type]();
+    };
+
+    handleNotificationClick = (item) => {
+        const { name } = item.type;
+        const urlTo = this.getRedirectUrl(name, item.referenceId);
+
+        if (urlTo) {
+            ContentArena.Api.markNotificationAsSeen(item.id);
+            document.location.href = urlTo;
+        }
     };
 
     getCreatedTime = (createdAt) =>  moment(createdAt).format(TIME_FORMAT);
@@ -55,7 +84,7 @@ class HeaderNotifications extends  React.Component {
                             return (
                                 <div key={`notification-${id}`}
                                      className='item'
-                                     onClick={() => this.onNotificationClicked(item)}>
+                                     onClick={() => this.handleNotificationClick(item)}>
                                         <span>{text}</span>
                                         {createdAt && <span className="notification-time">{`${this.getPassedTime(createdAt)} - ${this.getCreatedTime(createdAt)}`}</span>}
                                 </div>
@@ -72,21 +101,11 @@ class HeaderNotifications extends  React.Component {
         )
     }
 
-    onNotificationClicked = (item) => {
-        const typeName = item.type.name;
-        if (typeName === 'MESSAGE') {
-            ContentArena.Api.markNotificationAsSeen(item.id);
-            document.location.href = `/messages/${item.referenceId}`
-        }
-    };
-
     loadNotifications() {
         ContentArena.Api.getNotifications().then(({data}) => {
             if ( data === undefined ) return;
 
             data.sort((a, b) => b.id - a.id);
-            // should be sort by createdAt after add this props
-            // suppose that each notification has createdAt property
 
             const uniqNotifications = uniqBy(data, 'referenceId');
             const unseenNotificationsCount = uniqNotifications.filter(item => !item.seen).length;

@@ -236,8 +236,6 @@ class Marketplace extends Component {
             return <h2 className="text-center">{errorMessage}</h2>
         }
 
-        console.log(this.props);
-
         document.title = "Content Arena - Marketplace";
 
         return (
@@ -299,11 +297,6 @@ class Marketplace extends Component {
                         </Loader>
                     </div>
                 </Fragment>)}
-
-                {loadingListingDetails && <div className={"big-spinner"}>
-                        <i className="fa fa-cog fa-spin"/>
-                    </div>
-                }
 
                 <Loader loading={loadingListingDetails}>
                     {showDetails &&
