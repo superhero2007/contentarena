@@ -1867,6 +1867,10 @@ msgid "SETTINGS_LINKS_BUTTON_MANUAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_HEADER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS"
 msgstr ""
 
