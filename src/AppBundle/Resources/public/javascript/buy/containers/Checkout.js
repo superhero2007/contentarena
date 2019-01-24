@@ -555,8 +555,14 @@ class Checkout extends React.Component {
 
     removeBundle = ( index ) => {
         let bundles = this.state.selectedPackages;
+
         bundles.splice(index, 1);
-        this.setState({ bundles: bundles});
+
+        let allowMultiple = bundles.filter(b=>b.salesMethod==="BIDDING" ).length > 1;
+        let bidMethod = (bundles.length === 1 || !allowMultiple ) ? this.single : this.all;
+
+
+        this.setState({ bundles: bundles, bidMethod, allowMultiple});
     };
 
     render() {

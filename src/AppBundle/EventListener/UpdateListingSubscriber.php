@@ -75,7 +75,7 @@ class UpdateListingSubscriber implements EventSubscriber
 
         $entity = $args->getObject();
 
-        if ( isset($this->preStatus) && isset($this->postStatus) ) {
+        if ( $entity instanceof Content && isset($this->preStatus) && isset($this->postStatus) ) {
 
             if ($this->preStatus->getName() !== "APPROVED" && $this->postStatus->getName() === "APPROVED") {
                 $this->notificationService->createSingleNotification("SELLER_LISTING_APPROVED", $entity->getCustomId(),$entity->getOwner(), array(
