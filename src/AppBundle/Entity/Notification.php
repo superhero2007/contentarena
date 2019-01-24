@@ -60,6 +60,32 @@ class Notification
      */
     private $text;
 
+    /**
+     * @var mixed
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Groups({"notification"})
+     */
+    private $createdAt;
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+
+
 
     /**
      * Get id

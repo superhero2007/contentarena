@@ -21,6 +21,7 @@ body {
   }
 
   &.page-home {
+    .manager-header,
     .manager-container {
       @media only screen and (min-width: 1920px) {
         width: 1600px;
@@ -1127,6 +1128,53 @@ button {
     }
 
     .sales-package-form {
+      &.sales-bundle-wrapper{
+        label{ margin-bottom: 7px !important; }
+        label + span {
+          font-size: 13px;
+          color: $black-color;
+          margin-bottom: 15px;
+        }
+        & .sales-bundle-actions{
+          margin-bottom: 20px;
+
+          button{
+            display: inline-flex;
+            align-items: baseline;
+
+            padding-left: 15px;
+            padding-right: 15px;
+
+            text-transform: uppercase;
+            color: $blue-color;
+
+            &.remove-all{
+              margin-left: 10px;
+              background: transparent;
+              border: 1px solid $color-primary;
+            }
+
+            i {
+              padding-right: 5px;
+              font-size: 17px;
+              color: $black-color;
+            }
+          }
+        }
+
+        .bundle-validation-error{
+          color: #CC0000;
+          font-style: italic;
+          font-size: 13px;
+          font-weight: 600;
+          margin-bottom: 0;
+          margin-top: 10px;
+        }
+
+        .is-invalid-table{
+          .rt-table{ border: 1px solid #CC0000; }
+        }
+      }
       &.is-invalid {
         .base-full-input label {
           border-bottom: 1px solid #CC0000;
@@ -1245,11 +1293,17 @@ button {
         max-width: inherit;
         background: transparent;
         padding: 0;
-        margin-bottom: 20px;
-        color: #333;
+        margin-bottom: 7px;
+
+        color: $background-2;
         font-weight: bold;
         text-transform: none;
         font-size: 18px;
+      }
+      label + span {
+        font-size: 13px;
+        color: $black-color;
+        margin-bottom: 15px;
       }
 
       .ca-table.round-0 {

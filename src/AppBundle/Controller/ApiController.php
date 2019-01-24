@@ -324,8 +324,6 @@ class ApiController extends BaseController
             if ($soldOut) $emailService->soldOut($content);
         }
 
-
-
         return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
     }
 
@@ -335,14 +333,22 @@ class ApiController extends BaseController
      * @param BidService $bidService
      * @param ContentService $contentService
      * @param EmailService $emailService
+     * @param TermsService $termsService
+     * @param NotificationService $notificationService
      * @return JsonResponse
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      * @throws \exception
      */
-    public function contentPlaceBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService, TermsService $termsService)
+    public function contentPlaceBids(
+        Request $request,
+        BidService $bidService,
+        ContentService $contentService,
+        EmailService $emailService,
+        TermsService $termsService,
+        NotificationService $notificationService
+    )
     {
         $user = $this->getUser();
         $bidsData = $request->get("bids");
@@ -377,12 +383,19 @@ class ApiController extends BaseController
                     $this->saveLicenseAgreement($content, $viewElements);
                     $emailService->dealClosed($content, $bid);
                     $emailService->closedDealBuyer($content, $bid);
+                    $notificationService->listingBidClosedNotifications($content);
+                    $notificationService->listingBidClosedBuyerNotifications($content, $user);
                 } else {
                     $emailService->bidReceived($content, $bid);
                     $emailService->bidPlaced($content, $bid);
+                    $notificationService->listingBidReceivedNotifications($content);
+                    $notificationService->listingBidPlacedNotifications($content, $user);
                 }
 
-                if ($soldOut) $emailService->soldOut($content);
+                if ($soldOut) {
+                    $emailService->soldOut($content);
+                    $notificationService->listingSoldOutNotifications($content);
+                }
             } else {
                 $success = false;
             }
@@ -564,10 +577,18 @@ class ApiController extends BaseController
      * @param BidService $bidService
      * @param ContentService $contentService
      * @param EmailService $emailService
+     * @param TermsService $termsService
+     * @param NotificationService $notificationService
      * @return JsonResponse
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function acceptBids(Request $request, BidService $bidService, ContentService $contentService, EmailService $emailService, TermsService $termsService)
+    public function acceptBids(
+        Request $request, BidService $bidService,
+        ContentService $contentService,
+        EmailService $emailService,
+        TermsService $termsService,
+        NotificationService $notificationService
+    )
     {
         $user = $this->getUser();
 
@@ -599,14 +620,16 @@ class ApiController extends BaseController
                 $this->saveLicenseAgreement($content, $viewElements);
                 $emailService->bidAccepted($content, $bid);
                 $emailService->dealClosed($content, $bid);
-                if ($soldOut) $emailService->soldOut($content);
+                $notificationService->listingBidClosedNotifications($content);
+                $notificationService->listingBidAcceptedBuyerNotifications($content);
+                if ($soldOut) {
+                    $emailService->soldOut($content);
+                    $notificationService->listingSoldOutNotifications($content);
+                }
             }
             catch (\Exception $exception){
 
             }
-
-
-
         }
 
         return new JsonResponse(array("success"=>$success, "soldOut"=>$soldOut));
@@ -618,12 +641,18 @@ class ApiController extends BaseController
      * @param Request $request
      * @param BidService $bidService
      * @param EmailService $emailService
+     * @param NotificationService $notificationService
      * @return JsonResponse
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function rejectBid(Request $request, BidService $bidService, EmailService $emailService)
+    public function rejectBid(
+        Request $request,
+        BidService $bidService,
+        EmailService $emailService,
+        NotificationService $notificationService
+    )
     {
         $user = $this->getUser();
 
@@ -631,6 +660,7 @@ class ApiController extends BaseController
         $listing = $bid->getContent();
         $bundle = $bid->getSalesPackage();
         $emailService->bidDeclined($listing, $bid);
+        $notificationService->listingBidDeclinedBuyerNotifications($listing);
 
         return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
 
@@ -703,6 +733,14 @@ class ApiController extends BaseController
 
     /**
      * @Route("/api/messages/send", name="sendMessage")
+     * @param Request $request
+     * @param MessageService $messageService
+     * @return Response
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function sendMessage(Request $request, MessageService $messageService)
     {

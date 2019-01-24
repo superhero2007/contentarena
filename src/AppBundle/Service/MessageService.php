@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Bid;
 use AppBundle\Doctrine\RandomIdGenerator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class MessageService
@@ -142,8 +143,6 @@ class MessageService
         return $messages;
     }
 
-
-
     public function getThreadByListingAndSeller(Content $content, User $user, Company $company){
         return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
             "listing" => $content,
@@ -221,17 +220,18 @@ class MessageService
         /**
          * Send notification to involved users
          */
-
-        $notificationMessage = "New message: ".$content->getName();
+        $params = array(
+            "%listingName%" => $content->getName()
+        );
 
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
             }
         }
         foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
             }
         }
 
@@ -285,17 +285,18 @@ class MessageService
         /**
          * Send notification to involved users
          */
-
-        $notificationMessage = "New message: ".$content->getName();
+        $params = array(
+            "%listingName%" => $content->getName()
+        );
 
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
             }
         }
         foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $notificationMessage );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
             }
         }
 

@@ -331,6 +331,88 @@ class LicenseController extends Controller
         return $this->mergeAndSave($content,$viewElements, true, false);
     }
 
+    /**
+     * @Route("/license/custom-bids/{customId}", name="customBidsLicense")
+     * @throws \exception
+     */
+    public function customBidsLicense(Request $request, ContentService $contentService, TermsService $termsService){
+        /* @var SalesPackage $bundle  */
+        $user = $this->getUser();
+        $time = new \DateTime();
+
+        $content = $this->getDoctrine()
+            ->getRepository('AppBundle:Content')
+            ->findOneBy(['customId' => $request->get("customId")]);
+
+        $bundles = $this->getDoctrine()->getRepository('AppBundle:SalesPackage')->findBy(["id"=>$request->get("bundleIds")]);
+
+        $rightDefinitions = $this->getRightDefinitions($content);
+        $exclusiveRights = $this->getExclusiveRights($content);
+        $bidStatus = $this->getDoctrine()->getRepository('AppBundle:BidStatus')->findOneBy(array("name"=>"PENDING"));
+        $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
+        $viewElements = array(
+            'user' => $user,
+            'watermark' => true,
+            'bundles' => $bundles,
+            'terms' => $terms,
+            'definitions' => $definitions,
+            'content' => $content,
+            'rightDefinitions' => $rightDefinitions,
+            'exclusiveRights' => $exclusiveRights,
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        foreach ($bundles as $bundle){
+            if ($bundle->getSalesMethod()->getName() != "FIXED"){
+                $bid = new Bid();
+
+                $fee = $request->query->get("bid");
+                $fee = $fee == "undefined" ? 0 : $fee;
+
+                $bid->setTotalFee($fee);
+                $bid->setSalesPackage($bundle);
+
+                $bid->setCreatedAt($time);
+                $bid->setStatus($bidStatus);
+
+                if ($request->query->get("company") != null){
+                    /* @var Company $company */
+                    $company = $user->getCompany();
+                    $customCompany = $request->query->get("company");
+
+                    if (isset($customCompany['address'])) $company->setAddress($customCompany['address']);
+                    if (isset($customCompany['address2'])) $company->setAddress2($customCompany['address2']);
+                    if (isset($customCompany['legalName'])) $company->setLegalName($customCompany['legalName']);
+                    if (isset($customCompany['registrationNumber'])) $company->setRegistrationNumber($customCompany['registrationNumber']);
+                    if (isset($customCompany['vat'])) $company->setVat($customCompany['vat']);
+                    if (isset($customCompany['city'])) $company->setCity($customCompany['city']);
+                    if (isset($customCompany['zip'])) $company->setZip($customCompany['zip']);
+                    if (isset($customCompany['country']) && isset($customCompany['country']['name'])){
+                        $country = $this->getDoctrine()->getRepository('AppBundle:Country')
+                            ->findOneBy(array('name' => $customCompany['country']['name']));
+                        $company->setCountry($country);
+                    }
+
+                    $user->setCompany($company);
+                    $buyerCompanySnapshot = new CompanySnapshot($company);
+                    $bid->setBuyerCompanySnapshot($buyerCompanySnapshot);
+                }
+                $bid->setBuyerUser($user);
+
+                if (!isset($viewElements['bid'])) $viewElements['bids'] = array();
+
+                $viewElements['bids'][] = $bid;
+            }
+        }
+
+
+
+        //return $this->render('contract/layout.html.twig', $viewElements);
+
+        return $this->mergeAndSave($content,$viewElements, true, false);
+    }
+
 
     /**
      * @Route("/license/preview/{customId}", name="contractPreview")

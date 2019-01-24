@@ -30,6 +30,30 @@ class NotificationType
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="translation_key", type="string", length=255)
+     */
+    private $translationKey;
+
+    /**
+     * @return string
+     */
+    public function getTranslationKey()
+    {
+        return $this->translationKey;
+    }
+
+    /**
+     * @param string $translationKey
+     */
+    public function setTranslationKey($translationKey)
+    {
+        $this->translationKey = $translationKey;
+    }
+
+
 
     /**
      * Get id

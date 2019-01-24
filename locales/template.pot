@@ -136,6 +136,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+#: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"
 msgstr ""
@@ -155,6 +156,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+#: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"
 msgstr ""
@@ -432,6 +434,14 @@ msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL"
 msgstr ""
 
@@ -440,8 +450,13 @@ msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+#: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js
+msgid "LOADER_DEFAULT_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
@@ -1860,6 +1875,10 @@ msgid "SETTINGS_LINKS_BUTTON_MANUAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_HEADER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS"
 msgstr ""
 
@@ -1964,12 +1983,20 @@ msgstr ""
 msgid "CUSTOM_PAGINATION_CL_4_5_NEXT_TEXT"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
+msgid "SALES_PACKAGE_TABLE_VALIDATION_MESSAGE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
 msgid "CL_STEP4_TITLE_EXPIRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
 msgid "LISTING_EXPIRY_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
+msgid "LISTING_MUST_EXPIRE_BEFORE_EVENT_END"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js
@@ -2170,11 +2197,11 @@ msgid "CL_STEP4_TERRITORIAL_BUNDLES_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
-msgid "CL_STEP4_REMOVE_ALL_BUNDLES"
+msgid "CL_STEP4_ADD_SALES_BUNDLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
-msgid "CL_STEP4_ADD_SALES_BUNDLE"
+msgid "CL_STEP4_REMOVE_ALL_BUNDLES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js

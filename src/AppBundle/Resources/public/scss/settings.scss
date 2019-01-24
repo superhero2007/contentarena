@@ -272,6 +272,8 @@
 }
 
 .terms-edit-container {
+  /*max-width: 1024px;
+  margin: 0 auto;*/
   .buttons {
     align-items: center;
 
@@ -285,7 +287,16 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin: 20px 0;
+    margin: 10px 0 0;
+    .terms-edit-header-title{
+      color: #03547C;
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 24px;
+      align-self: center;
+      margin-right: auto;
+    }
+
   }
 
   .terms-edit-box {
@@ -367,7 +378,7 @@
       font-size: 13px;
       line-height: 25px;
       width: 95%;
-      min-height: 122px;
+      min-height: 70px;
 
     }
 
@@ -398,10 +409,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
 
       i {
         cursor: pointer;
         margin: 5px 0;
+        font-size: 27px;
       }
     }
   }

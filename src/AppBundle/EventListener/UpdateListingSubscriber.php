@@ -14,10 +14,12 @@ use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\User;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
+use AppBundle\Service\NotificationService;
 use Doctrine\Common\EventSubscriber;
 // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Events;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UpdateListingSubscriber implements EventSubscriber
@@ -27,18 +29,30 @@ class UpdateListingSubscriber implements EventSubscriber
     protected $em;
     protected $container;
     protected $contentService;
+    protected $notificationService;
 
-    public function __construct(ContentService $contentService, EmailService $mailer, EntityManager $em, ContainerInterface $container)
+    private $preStatus;
+    private $postStatus;
+
+    public function __construct(
+        ContentService $contentService,
+        EmailService $mailer,
+        EntityManager $em,
+        ContainerInterface $container,
+        NotificationService $notificationService
+    )
     {
         $this->mailer = $mailer;
         $this->em = $em;
         $this->contentService = $contentService;
+        $this->notificationService = $notificationService;
     }
 
     public function getSubscribedEvents()
     {
         return array(
-            'preUpdate',
+            Events::preUpdate,
+            Events::postUpdate
         );
     }
 
@@ -53,6 +67,52 @@ class UpdateListingSubscriber implements EventSubscriber
         $this->index($args);
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+
+        $entity = $args->getObject();
+
+        if ( $entity instanceof Content && isset($this->preStatus) && isset($this->postStatus) ) {
+
+            if ($this->preStatus->getName() !== "APPROVED" && $this->postStatus->getName() === "APPROVED") {
+                $this->notificationService->createSingleNotification("SELLER_LISTING_APPROVED", $entity->getCustomId(),$entity->getOwner(), array(
+                    "%listingName%" => $entity->getName()
+                ));
+            }
+            if ( $this->preStatus->getName() !== "REJECTED" && $this->postStatus->getName() === "REJECTED"  ){
+                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity->getCustomId(),$entity->getOwner(), array(
+                    "%listingName%" => $entity->getName()
+                ));
+            }
+            if ( $this->preStatus->getName() !== "INACTIVE" && $this->postStatus->getName() === "INACTIVE"  ){
+                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity->getCustomId(),$entity->getOwner(), array(
+                    "%listingName%" => $entity->getName()
+                ));
+            }
+            if ( $this->preStatus->getName() !== "INACTIVE" && $this->postStatus->getName() === "INACTIVE"  ){
+                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity->getCustomId(),$entity->getOwner(), array(
+                    "%listingName%" => $entity->getName()
+                ));
+            }
+
+            if ( ($this->preStatus->getName() === "DRAFT" || $this->preStatus->getName() === "AUTO_INACTIVE" ||  $this->preStatus->getName() === "PENDING" )
+                && $this->postStatus->getName() === "APPROVED"  ){
+
+                $users = $this->contentService->getUsersToNotify($entity);
+
+                foreach ($users as $user){
+                    /* @var User $user */
+                    $this->notificationService->createSingleNotification("BUYER_LISTING_MATCH", $entity->getCustomId(),$user, array(
+                        "%listingName%" => $entity->getName()
+                    ));
+                }
+            }
+            
+        }
+    }
 
     /**
      * @param LifecycleEventArgs $args
@@ -70,8 +130,13 @@ class UpdateListingSubscriber implements EventSubscriber
             $changed = $args->getEntityChangeSet();
 
             if ( isset($changed) && isset($changed["status"]) ){
+
+                $this->preStatus = $changed["status"][0];
+                $this->postStatus = $changed["status"][1];
+
                 if ( $changed["status"][0]->getName() !== "APPROVED" && $changed["status"][1]->getName() === "APPROVED"  ){
                     $this->mailer->listingApproved($entity);
+
                 }
                 if ( $changed["status"][0]->getName() !== "REJECTED" && $changed["status"][1]->getName() === "REJECTED"  ){
                     $this->mailer->listingDeactivated($entity);
@@ -94,13 +159,8 @@ class UpdateListingSubscriber implements EventSubscriber
                             $this->mailer->listingMatch($entity, $user);
                         }
                     }
-
-
                 }
-
-
             }
-
         }
     }
 }

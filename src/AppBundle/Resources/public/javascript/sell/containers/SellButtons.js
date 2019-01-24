@@ -7,6 +7,8 @@ import {companyIsValid} from "../actions/validationActions";
 import ReactTooltip from 'react-tooltip';
 import {editedProgramSelected, parseSeasons} from "../../main/actions/utils";
 import PropTypes from 'prop-types';
+import { getMaxDate } from "@utils/listing";
+import moment from "moment";
 
 const MIN_PROGRAM_DESC_LENGTH = 30;
 
@@ -73,13 +75,20 @@ class SellButtons extends Component {
         });
     };
 
+    expireDateIsValid = () => {
+        const {expiresAt, rightsPackage, seasons} = this.props;
+        const maxDate = getMaxDate(rightsPackage, seasons);
+        const expireDateValid = (expiresAt && maxDate) ? (moment(expiresAt) <= maxDate) : true;
+
+        return expireDateValid;
+    };
+
     /**
      * if currency selected, listing image inserted, expiry date selected, sales bundles added,
      * company address complete, place of jurisdiction selected and if vat = yes, percentage is inserted
      * @returns {boolean}
      */
     reviewAndSignEnabled = () =>{
-
         const {expiresAt, vat, vatPercentage, salesPackages, company, law, jurisdiction} = this.props;
 
         return expiresAt
@@ -89,6 +98,7 @@ class SellButtons extends Component {
             && jurisdiction !== undefined
             && jurisdiction !== ""
             && salesPackages.length > 0
+            && this.expireDateIsValid()
             && companyIsValid(company);
 
     };
@@ -104,6 +114,10 @@ class SellButtons extends Component {
         if ( jurisdiction === null || jurisdiction === undefined || jurisdiction === "" ) message += "<br/>- Enter place of jurisdiction";
 
         if ( vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "") ) message += "<br/>- Enter VAT percentage.";
+
+        if (!this.expireDateIsValid()) {
+            message += "<br/>- The listing must expire before the end of the event."
+        }
 
         return message;
     };

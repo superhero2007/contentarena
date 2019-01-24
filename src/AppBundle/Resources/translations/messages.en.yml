@@ -7,3 +7,30 @@ sell:
         event:
             description:
                 placeholder: 'Describe your sports event(s) here. E.g. competition details, history, viewing rates - anything that potential buyers may find interesting(5000 characters maximum)'
+
+
+notifications:
+    general:
+        message:
+            new: You have received a new message on %listingName%.
+    seller:
+        listing:
+            approved: The listing %listingName% was published.
+            expiring: The listing %listingName% will expire soon.
+            expired: The listing %listingName% has expired.
+            deactivated: The listing %listingName% was deactivated.
+            sold: The listing %listingName% has sold out.
+        bid:
+            received: You received a new bid on listing %listingName%.
+            accepted: '%userFullName% accepted a bid on listing %listingName%.'
+            closed: A new deal was closed on listing %listingName%.
+    buyer:
+        listing:
+            matcth: 'A new listing was published that matches your preferences: %listingName%'
+        bid:
+            placed: '%userFullName% placed a bid on %listingName%.'
+            declined: A bid on listing %listingName% was declined.
+            accepted: A bid on listing %listingName% was accepted.
+            closed: '%userFullName% closed a deal on listing %listingName%.'
+
+
