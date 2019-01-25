@@ -162,6 +162,7 @@ class TermsService
             $companyItem->setEditable($sourceItem->isEditable());
             $companyItem->setContent($sourceItem->getContent());
             $companyItem->setCompany($company);
+            $companyItem->setCustom(false);
             $this->em->persist($companyItem);
 
         }
