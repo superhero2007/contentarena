@@ -70,7 +70,6 @@ class Preferences extends React.Component {
     };
 
     onChangeReceiveNotifications= ( e ) => {
-        console.log(e.target.value)
         let user  = this.state.user;
         user.receivePreferenceNotifications = e.target.checked;
         this.setState({user});
