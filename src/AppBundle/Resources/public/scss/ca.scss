@@ -33,6 +33,12 @@ body {
       }
     }
   }
+
+  .manager-container {
+    @media only screen and (min-width: 1920px) {
+      padding-top: 20px;
+    }
+  }
 }
 
 *,
@@ -1128,17 +1134,21 @@ button {
     }
 
     .sales-package-form {
-      &.sales-bundle-wrapper{
-        label{ margin-bottom: 7px !important; }
+      &.sales-bundle-wrapper {
+        label {
+          margin-bottom: 7px !important;
+        }
+
         label + span {
           font-size: 13px;
           color: $black-color;
           margin-bottom: 15px;
         }
-        & .sales-bundle-actions{
+
+        & .sales-bundle-actions {
           margin-bottom: 20px;
 
-          button{
+          button {
             display: inline-flex;
             align-items: baseline;
 
@@ -1148,7 +1158,7 @@ button {
             text-transform: uppercase;
             color: $blue-color;
 
-            &.remove-all{
+            &.remove-all {
               margin-left: 10px;
               background: transparent;
               border: 1px solid $color-primary;
@@ -1162,7 +1172,7 @@ button {
           }
         }
 
-        .bundle-validation-error{
+        .bundle-validation-error {
           color: #CC0000;
           font-style: italic;
           font-size: 13px;
@@ -1171,10 +1181,13 @@ button {
           margin-top: 10px;
         }
 
-        .is-invalid-table{
-          .rt-table{ border: 1px solid #CC0000; }
+        .is-invalid-table {
+          .rt-table {
+            border: 1px solid #CC0000;
+          }
         }
       }
+
       &.is-invalid {
         .base-full-input label {
           border-bottom: 1px solid #CC0000;
@@ -1286,6 +1299,7 @@ button {
       }
     }
   }
+
   .sales-package-form {
     .base-full-input {
       label {
@@ -1300,6 +1314,7 @@ button {
         text-transform: none;
         font-size: 18px;
       }
+
       label + span {
         font-size: 13px;
         color: $black-color;
