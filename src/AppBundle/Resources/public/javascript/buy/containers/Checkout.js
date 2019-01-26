@@ -30,13 +30,11 @@ class Checkout extends React.Component {
     constructor(props) {
         super(props);
 
-
-
         let minimumBidBundles = 0;
         let allowMultiple = props.selectedPackages.filter(b=>b.salesMethod==="BIDDING" ).length > 1;
 
         props.selectedPackages.forEach(b=>{
-            if ( parseFloat(b.fee) > minimumBidBundles ) minimumBidBundles = parseFloat(b.fee)
+            minimumBidBundles += parseFloat(b.fee)
         });
 
         minimumBidBundles = minimumBidBundles / 2;
@@ -777,7 +775,9 @@ class Checkout extends React.Component {
                 </div>
                 <div className="bid-info-wrapper">
                     <div className="bid-title no-border uppercase">
-                        {this.context.t("SALES_PACKAGE_TABLE_HEADER")}
+                        <div className="bid-title-content">
+                            {this.context.t("SALES_PACKAGE_TABLE_HEADER")}
+                        </div>
                     </div>
                     {selectedPackages.length > 1 && allowMultiple && <RadioSelector
                         value={bidMethod}

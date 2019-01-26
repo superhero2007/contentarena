@@ -35,7 +35,7 @@ class ListingDetails extends React.Component {
         if ( props.tab && props.tab === "checkout") {
 
             let listingBundles = listing.salesPackages.filter(sp => bundles.indexOf(sp.id) >= 0);
-            let customBundles = listing.customBundles.filter(sp => bundles.indexOf(sp.id) >= 0);
+            let customBundles = ( listing.customBundles) ? listing.customBundles.filter(sp => bundles.indexOf(sp.id) >= 0) : [];
 
             selectedPackages = [...listingBundles,...customBundles];
         }
