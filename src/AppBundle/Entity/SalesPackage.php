@@ -112,6 +112,14 @@ class SalesPackage
     /**
      * @var bool
      *
+     * @ORM\Column(name="custom", type="boolean", options={"default":"0"})
+     * @Groups({"listing", "closed", "commercial"})
+     */
+    private $custom = false;
+
+    /**
+     * @var bool
+     *
      * @ORM\Column(name="region_named", type="boolean")
      * @Groups({"listing", "closed", "commercial"})
      */
@@ -337,5 +345,23 @@ class SalesPackage
     {
         $this->bids = $bids;
     }
+
+    /**
+     * @return bool
+     */
+    public function isCustom()
+    {
+        return $this->custom;
+    }
+
+    /**
+     * @param bool $custom
+     */
+    public function setCustom($custom)
+    {
+        $this->custom = $custom;
+    }
+
+
 
 }

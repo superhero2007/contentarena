@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\CompanySnapshot;
+use AppBundle\Service\BundleService;
 use AppBundle\Service\FileUploader;
 use AppBundle\Service\TermsService;
 use AppBundle\Service\TestService;
@@ -333,18 +334,51 @@ class LicenseController extends Controller
 
     /**
      * @Route("/license/custom-bids/{customId}", name="customBidsLicense")
+     * @param Request $request
+     * @param TermsService $termsService
+     * @param BundleService $bundleService
+     * @return BinaryFileResponse
      * @throws \exception
      */
-    public function customBidsLicense(Request $request, ContentService $contentService, TermsService $termsService){
+    public function customBidsLicense(
+        Request $request,
+        TermsService $termsService,
+        BundleService $bundleService
+    ){
         /* @var SalesPackage $bundle  */
         $user = $this->getUser();
         $time = new \DateTime();
+        $multiple =  $request->get("multiple");
 
         $content = $this->getDoctrine()
             ->getRepository('AppBundle:Content')
             ->findOneBy(['customId' => $request->get("customId")]);
 
         $bundles = $this->getDoctrine()->getRepository('AppBundle:SalesPackage')->findBy(["id"=>$request->get("bundleIds")]);
+
+        if ($multiple){
+            $refBundle = $bundles[0];
+            $bundle = new SalesPackage();
+            $bundle->setSold(false);
+            $bundle->setCustom(true);
+            $bundle->setName($refBundle->getName());
+            $bundle->setCurrency($refBundle->getCurrency());
+            $bundle->setSalesMethod($this->getDoctrine()->getRepository('AppBundle:BidType')->findOneBy(array('name' => "BIDDING")));
+            $bundle->setBundleMethod("SELL_AS_BUNDLE");
+            $bundle->setTerritoriesMethod("SELECTED_TERRITORIES");
+            $bundle->setFee($refBundle->getFee());
+            $bundle->setInstallments($bundleService->getInstallments($bundles));
+            $countries = array();
+
+            foreach ( $bundles as $refBundle){
+                foreach( $refBundle->getTerritories() as $territory ){
+                    $countries[] = $territory;
+                }
+            }
+            $bundle->setTerritories($countries);
+            $bundles = array($bundle);
+        }
+
 
         $rightDefinitions = $this->getRightDefinitions($content);
         $exclusiveRights = $this->getExclusiveRights($content);
@@ -355,6 +389,7 @@ class LicenseController extends Controller
             'user' => $user,
             'watermark' => true,
             'bundles' => $bundles,
+            'bundle' => ($bundle) ? $bundle : $bundles[0],
             'terms' => $terms,
             'definitions' => $definitions,
             'content' => $content,
@@ -400,9 +435,7 @@ class LicenseController extends Controller
                 }
                 $bid->setBuyerUser($user);
 
-                if (!isset($viewElements['bid'])) $viewElements['bids'] = array();
-
-                $viewElements['bids'][] = $bid;
+                $viewElements['bid'] = $bid;
             }
         }
 

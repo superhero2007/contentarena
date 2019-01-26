@@ -54,7 +54,7 @@ export const getCustomLicenseUrl = (listingId, bundleId, bid, company) => {
     return "/license/custom/" + listingId + "/" + bundleId + "?" + serialize({bid: bid, company}) ;
 };
 
-export const getCustomLicenseUrlBids = (listingId, bundles, bid, company) => {
+export const getCustomLicenseUrlBids = (listingId, bundles, bid, company, multiple) => {
 
     const serialize = function(obj, prefix) {
         var str = [],
@@ -73,7 +73,7 @@ export const getCustomLicenseUrlBids = (listingId, bundles, bid, company) => {
 
     let bundleIds = bundles.map(b=>b.id);
 
-    return "/license/custom-bids/" + listingId + "?" + serialize({bid: bid, company, bundleIds}) ;
+    return "/license/custom-bids/" + listingId + "?" + serialize({bid: bid, company, bundleIds, multiple}) ;
 };
 
 export const goToMarketplace = () => {

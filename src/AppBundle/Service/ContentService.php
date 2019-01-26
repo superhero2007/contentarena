@@ -46,6 +46,10 @@ class ContentService
         $this->emailService = $emailService;
     }
 
+    public function findContent( Request $request ){
+        return $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
+    }
+
     public function getContent( Request $request){
 
         $filterId = $request->request->get("id");
@@ -244,6 +248,7 @@ class ContentService
             foreach ($modelListing->getSalesPackages() as $item){
                 $salesBundle = new SalesPackage();
                 $salesBundle->setName($item->getName());
+                $salesBundle->setCustom(false);
                 $salesBundle->setExcludedCountries($item->getExcludedCountries());
                 $salesBundle->setInstallments($item->getInstallments());
                 $salesBundle->setTerritoriesMethod($item->getTerritoriesMethod());
@@ -687,6 +692,7 @@ class ContentService
                     }
 
                     $package->setName($salesPackage->name);
+                    $package->setCustom(false);
                     $package->setCurrency($this->getCurrency($data->currency));
 
                     if ( is_string($salesPackage->salesMethod )){
