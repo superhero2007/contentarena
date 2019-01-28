@@ -587,7 +587,7 @@ class ApiController extends BaseController
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($listings, 'json',SerializationContext::create()->setGroups(array('commercial')));
+        $data = $serializer->serialize($listings, 'json',SerializationContext::create()->enableMaxDepthChecks()->setGroups(array('commercial')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
