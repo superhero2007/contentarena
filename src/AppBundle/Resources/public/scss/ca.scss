@@ -569,7 +569,6 @@ button {
         }
 
         .item {
-          background-color: $light-background-color;
           margin: 5px 2px 0;
           padding: 5px 20px 10px 50px;
           position: relative;
@@ -1525,11 +1524,11 @@ button {
   .modal-title {
     background: none;
     text-transform: capitalize;
-    color: #1a4b63;
-    font-size: 15px;
+    color: #03547c;
+    font-size: 19px;
     font-weight: bold;
     height: inherit;
-    padding: 20px;
+    padding: 20px 20px 5px 20px;
     line-height: 1;
 
     .fa-edit {
@@ -1581,6 +1580,21 @@ button {
   .step-content {
     padding: inherit;
 
+    .base-full-input {
+      padding-bottom: inherit;
+      margin-bottom: inherit;
+      border-bottom: none;
+
+      .content {
+        .item {
+          .title {
+            font-size: 14px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
     .row-header {
       background: #E5E5E5;
       border-bottom: none;
@@ -1628,7 +1642,7 @@ button {
   }
 
   .step-content-custom {
-    padding: 10px 15px;
+    padding: 10px 20px;
 
     .row {
       padding: 8px 0;
@@ -1668,8 +1682,13 @@ button {
       }
 
       .base-full-input {
-        input {
-          width: inherit !important;
+        min-width: 500px;
+
+        .Select-value {
+          padding-left: 20px;
+        }
+        .Select-arrow-zone {
+          padding-right: 20px;
         }
       }
     }

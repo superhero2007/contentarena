@@ -195,7 +195,7 @@ class PopupRight extends React.Component {
         const rightsPackage = this.state.rightsPackage;
         let index = rightPackage.selectedRights[id].indexOf(val);
         let all = RightItemsDefinitions[val].all;
-        let alls = RightItemsDefinitions
+        let alls = RightItemsDefinitions;
 
         if ( index === -1 ){
 
@@ -447,7 +447,7 @@ class PopupRight extends React.Component {
                     break;
                 default:
                     placeholder = this.context.t("CL3_COMMENTS_PLACEHOLDER");
-            };
+            }
 
             return placeholder;
         }
@@ -482,10 +482,11 @@ class PopupRight extends React.Component {
             <div className="modal-title">
                 <i className="fa fa-edit"/>
                 {name}
+                <i className="fa fa-times close-icon" onClick={this.closePopupAndRestoreData}/>
             </div>
 
             {description && (
-                <div style={{padding:"0 15px 15px"}}>
+                <div style={{padding:"0 20px 15px"}}>
                     {description}
                 </div>
             )}

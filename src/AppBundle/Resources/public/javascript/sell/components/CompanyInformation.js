@@ -6,8 +6,8 @@ import CountrySelector from "../../main/components/CountrySelector";
 import {companyIsValid} from "../actions/validationActions";
 import {PropTypes} from "prop-types";
 
-const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
-const inputStyle = { width: '380px', margin: 0, height: "30px"};
+const labelStyle = { height: "35px", fontSize: "14px", width: '100%', padding: '0 20px'};
+const inputStyle = { width: '100%', margin: 0, height: "40px", padding: '0 20px'};
 
 class CompanyInformation extends React.Component {
     constructor(props) {
@@ -56,7 +56,7 @@ class CompanyInformation extends React.Component {
 
             <div className="modal-title">
                 {this.context.t("Company Information")}
-                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
+                <i className="fa fa-times close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content custom">
@@ -153,20 +153,25 @@ class CompanyInformation extends React.Component {
                 </div>
             </div>
 
-            <div className={"buttons"}>
+            <div className={"buttons popup-buttons"}>
+                <button
+                    className={"cancel-button"}
+                    onClick={this.closeModal}>Cancel
+                </button>
                 { companyIsValid(company) &&<button
                     className={"standard-button"}
                     onClick={this.onOKClick}>
-                    {this.context.t("Ok")}
+                    {this.context.t("MODAL_APPLY")}
                 </button>}
 
                 { !companyIsValid(company) &&<button
                     className={"standard-button"}
                     disabled
-                    >
-                    {this.context.t("Ok")}
+                >
+                    {this.context.t("MODAL_APPLY")}
                 </button>}
             </div>
+
         </Modal>
     };
 

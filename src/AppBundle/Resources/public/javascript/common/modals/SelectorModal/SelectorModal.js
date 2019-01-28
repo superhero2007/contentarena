@@ -307,40 +307,43 @@ class SelectorModal extends Component {
                     {this.getModalTitle()}
                     {this.getModalSubTitle()}
                 </div>
-
                 <div className="title-right">
-                    {this.getRightHeaderBtn()}
+                    <i className="fa fa-times close-icon" onClick={this.closeModal}/>
                 </div>
             </header>
             <section className="modal-body selection-body">
                 <div className="navigation-section">
-                    {this.shouldShowFilters() && <React.Fragment>
-                        <button
-                            className={cn({'active': this.isFilterActive('ag')})}
-                            onClick={()=>{ this.setActiveFilter("ag")}}>A-G</button>
-                        <button
-                            className={cn({'active': this.isFilterActive('hn')})}
-                            onClick={()=>{ this.setActiveFilter("hn")}}>H-N</button>
-                        <button
-                            className={cn({'active': this.isFilterActive('ot')})}
-                            onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>
-                        <button
-                            className={cn({'active': this.isFilterActive('uz')})}
-                            onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>
-                    </React.Fragment>}
+                    <div style={{width: '85%'}}>
+                        {this.shouldShowFilters() && <React.Fragment>
+                            <button
+                                className={cn({'active': this.isFilterActive('ag')})}
+                                onClick={()=>{ this.setActiveFilter("ag")}}>A-G</button>
+                            <button
+                                className={cn({'active': this.isFilterActive('hn')})}
+                                onClick={()=>{ this.setActiveFilter("hn")}}>H-N</button>
+                            <button
+                                className={cn({'active': this.isFilterActive('ot')})}
+                                onClick={()=>{ this.setActiveFilter("ot")}}>O-T</button>
+                            <button
+                                className={cn({'active': this.isFilterActive('uz')})}
+                                onClick={()=>{ this.setActiveFilter("uz")}}>U-Z</button>
+                        </React.Fragment>}
 
-                    {this.shouldShowInternationalFilter() && <button
-                        className={cn({'active': this.isFilterActive('international')})}
-                        onClick={()=>{ this.setActiveFilter("international")}}>
-                        {this.context.t("International")}
-                    </button>}
-                    {this.props.popularItems && this.props.popularItems.length > 0 && <button
-                        className={cn({'active': this.isFilterActive('popular')})}
-                        onClick={()=>{ this.setActiveFilter("popular")}}>
-                        {this.context.t("Popular")}
-                    </button>}
+                        {this.shouldShowInternationalFilter() && <button
+                            className={cn({'active': this.isFilterActive('international')})}
+                            onClick={()=>{ this.setActiveFilter("international")}}>
+                            {this.context.t("International")}
+                        </button>}
+                        {this.props.popularItems && this.props.popularItems.length > 0 && <button
+                            className={cn({'active': this.isFilterActive('popular')})}
+                            onClick={()=>{ this.setActiveFilter("popular")}}>
+                            {this.context.t("Popular")}
+                        </button>}
+                    </div>
+                    <div className="navigation-section-single-btn">
+                        {this.getRightHeaderBtn()}
+                    </div>
                 </div>
-
                 <div className="selector-content">
                     {this.getItems().map((item, i) => {
                         return <SelectorItem

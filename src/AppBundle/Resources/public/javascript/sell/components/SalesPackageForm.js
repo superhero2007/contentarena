@@ -13,8 +13,9 @@ import { DATE_FORMAT } from "@constants";
 import NumberFormat from 'react-number-format';
 import {getCurrencySymbol} from "../../main/actions/utils";
 import {disableValidation, enableValidation} from "../../main/actions/validationActions";
+import {customStyles} from "../../main/styles/custom";
 
-const labelStyle = { height: "30px", fontSize: "12px"};
+const labelStyle = { height: "30px", fontSize: "16px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
 
 class SalesPackageForm extends React.Component {
@@ -372,17 +373,17 @@ class SalesPackageForm extends React.Component {
     };
 
     getAlreadySelectedCountries = () => {
-        const {salesPackages} = this.props
+        const {salesPackages} = this.props;
         let selected = [];
 
         salesPackages.forEach(sp => {
             sp.territories.forEach(t =>{
                 selected.push(t)
             })
-        })
+        });
 
         return selected
-    }
+    };
 
     getRemainCountries = (selectedTerritories) => {
         const {remainCountries} = this.state;
@@ -392,14 +393,14 @@ class SalesPackageForm extends React.Component {
         } else {
             return []
         }
-    }
+    };
 
     getAllCountries = () => {
         return Object.values(ContentArena.Data.Countries).map((i,k)=>({value : i.name , label : i.name }));
-    }
+    };
 
     renderModal = () => {
-        const {onClose, exclusivity, salesPackages, currency, validation} = this.props;
+        const {exclusivity, salesPackages, currency, validation} = this.props;
         const {territoriesQuantity, territoriesMethod, territories, fee, remainCountries} = this.state;
 
         const isFilterEnabled = territoriesMethod === this.selectedTerritories;
@@ -420,6 +421,7 @@ class SalesPackageForm extends React.Component {
             isOpen={this.state.isOpen}
             bodyOpenClassName={"selector ca-modal-open"}
             className={"ca-modal"}
+            style={customStyles}
             overlayClassName={"ca-modal-overlay"}
             contentLabel="Example Modal"
             onRequestClose={this.closeModal}
@@ -427,7 +429,7 @@ class SalesPackageForm extends React.Component {
 
             <div className="modal-title">
                 {this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
-                <i className="fa fa-times-circle-o close-icon" onClick={this.closeModal}/>
+                <i className="fa fa-times close-icon" onClick={this.closeModal}/>
             </div>
 
             <div className="step-content">
@@ -490,7 +492,7 @@ class SalesPackageForm extends React.Component {
                                 )}
                             </div>
                         )}
-                        <div style={{marginTop: '10px', padding: "0 15px"}}>
+                        <div style={{margin: '10px 0', padding: "0 15px"}}>
                             {!isMultipleEnabled && <CountrySelector
                                 className={"small-select"}
                                 onChange={(c) =>{this.selectTerritories([c])}}
@@ -657,17 +659,22 @@ class SalesPackageForm extends React.Component {
                 { this.installmentsIncomplete() && this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING")}
             </div>
 
-            <div className={"buttons"}>
+            <div className={"buttons popup-buttons"}>
+                <button
+                    className={"cancel-button"}
+                    onClick={this.closeModal}>Cancel
+                </button>
                 {isOkButtonDisabled ? (
                     <button className='standard-button disabled' onClick={this.props.enableValidation}>
-                        Ok
+                        {this.context.t("MODAL_APPLY")}
                     </button>
                 ) : (
                     <button className='standard-button' onClick={this.applySelection}>
-                        Ok
+                        {this.context.t("MODAL_APPLY")}
                     </button>
                 )}
             </div>
+
         </Modal>
     };
 

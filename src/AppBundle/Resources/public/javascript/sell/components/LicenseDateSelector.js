@@ -60,7 +60,7 @@ class LicenseDateSelector extends React.Component {
                     {this.context.t("license period")}
                     <i className="fa fa-times close-icon" onClick={onClose}/>
                 </div>
-                <div style={{padding: '0 15px 15px'}}>
+                <div style={{padding: '0 20px 15px'}}>
                     {this.context.t("CL3_EDIT_LICENSE_PERIOD_DESCRIPTION")}
                 </div>
 

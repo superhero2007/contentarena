@@ -27,22 +27,21 @@
   .modal-body.selection-body {
     width: 100%;
     flex-direction: column;
-
     background: $modal-bg;
     padding: 0 20px;
 
     .navigation-section {
       width: 100%;
       padding: 10px 0;
+      display: flex;
 
-      button {
+      button:not(.ca-btn) {
         padding: 0;
         margin-right: 15px;
         outline: 0;
         border: 0;
         line-height: 3;
         background: transparent;
-
         font-size: 15px;
         color: $black-color;
         text-transform: uppercase;
@@ -52,6 +51,9 @@
           border-radius: 0;
           border-bottom: 2px solid $orange-color;
         }
+      }
+      .navigation-section-single-btn {
+        align-self: center;
       }
     }
 
