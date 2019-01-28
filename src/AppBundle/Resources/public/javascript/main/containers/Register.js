@@ -78,6 +78,10 @@ class Register extends React.Component {
                     if (!user.company) {
                         user.company = {country:{}};
                     }
+
+                    if(user.preferredProfile === undefined){
+                        user.preferredProfile = "BOTH"
+                    }
                 }
                 this.storeUserObj(user);
                 this.setState({
