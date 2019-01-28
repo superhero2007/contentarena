@@ -17,6 +17,7 @@ class Preferences extends React.Component {
         this.state = {
             loading : false,
             updatingUser : false,
+            userUpdated : false,
             companyUsers : [],
             user : {}
         };
@@ -44,7 +45,7 @@ class Preferences extends React.Component {
 
         this.originalUser = cloneDeep(user);
         ContentArena.ContentApi.updateUser(user).done(()=>{
-            this.setState({updatingUser: false});
+            this.setState({updatingUser: false, userUpdated : true});
         })
     };
 
@@ -75,10 +76,22 @@ class Preferences extends React.Component {
         this.setState({user});
     };
 
+    completeButtonDisabled = () => {
+        const { user } = this.state;
+
+        if (!user.preferredProfile && !user.preferredBuyerCountries && !user.preferredSellerSports) return false;
+
+        return (user.preferredProfile !== "SELLER"
+            && ( (!user.preferredBuyerOtherSport &&!user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
+                || user.preferredBuyerCountries.length === 0 ) )
+            || (user.preferredProfile !== "BUYER"
+                && ( !user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0) )
+    };
+
     render () {
 
         const {history, common} = this.props;
-        const { updatingUser, loading, user, privacy } = this.state;
+        const { updatingUser, loading, user, privacy, userUpdated } = this.state;
 
         document.title = "Content Arena - Preferences";
 
@@ -125,11 +138,14 @@ class Preferences extends React.Component {
                         <div>
                             <button
                                 onClick={this.saveUser}
-                                disabled={ updatingUser }
+                                disabled={ updatingUser || this.completeButtonDisabled() }
                                 className={"standard-button"}>
                                 Save
                             </button>
                         </div>
+                        {userUpdated && <div>
+                            {this.context.t("PREFERENCES_USER_UPDATED_MESSAGE")}
+                        </div>}
                     </div>
                 </div>
             </div>

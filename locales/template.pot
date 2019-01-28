@@ -450,6 +450,14 @@ msgid "LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 #: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
 msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
@@ -1812,6 +1820,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
+msgid "PREFERENCES_USER_UPDATED_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
