@@ -277,23 +277,13 @@ s
                 }
 
                 {/* BUNDLE AVAILABILITY SELECTOR */}
-                {salesPackages.length > 1 && total > 1 && <div className="bundles-countries">
+                {<div className="bundles-countries">
                     <div className="bundles-countries-title">
-                        {selectedName} Countries
+                        {filteredTerritorialBundles.length > 0 && this.context.t("SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES")}
+                        {filteredTerritorialBundles.length === 0 && this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
                     </div>
 
                     {total > 3 && this.renderCheckoutButton()}
-
-                    {/*<RadioSelector
-                        value={availabilitySelector}
-                        onChange={availabilitySelector=>this.setState({availabilitySelector})}
-                        className="sales-packages-filters"
-                        items={[
-                            {value: this.all, label: "All" },
-                            {value: this.available, label: "Available for sale" },
-                            {value: this.notAvailable, label: "Not Available for sale" }
-                        ]}
-                    />*/}
                 </div>}
 
                 {filteredTerritorialBundles.length > 0 && <div className="sales-packages">
@@ -379,6 +369,15 @@ s
                             },
                         ]}
                     />
+                </div>}
+
+
+                {filteredTerritorialBundles.length > 0 &&
+                filteredIndividualBundles.length > 0 &&
+                <div className="bundles-countries">
+                    <div className="bundles-countries-title">
+                        {this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
+                    </div>
                 </div>}
 
                 {/* INDIVIDUAL BUNDLES */}

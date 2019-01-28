@@ -30,17 +30,26 @@ class Checkout extends React.Component {
     constructor(props) {
         super(props);
 
+        let minimumBidBundles = 0;
+        let allowMultiple = props.selectedPackages.filter(b=>b.salesMethod==="BIDDING" ).length > 1;
+
+        props.selectedPackages.forEach(b=>{
+            minimumBidBundles += parseFloat(b.fee)
+        });
+
+        minimumBidBundles = minimumBidBundles / 2;
+
         let selectedPackages = props.selectedPackages.map( b => {
             if ( b.salesMethod === "BIDDING" && b.fee !== 0 && b.fee !== "0" && b.fee !== "") {
-                b.minimumBid = b.fee;
-                b.fee = parseFloat(b.fee) + 1;
+                b.minimumBid = minimumBidBundles;
+                b.fee = minimumBidBundles + 1;
             } else {
                 b.minimumBid = 1;
             }
             return b;
         });
 
-        let allowMultiple = selectedPackages.filter(b=>b.salesMethod==="BIDDING" ).length > 1;
+
 
         this.baseDir = assetsBaseDir + "../";
         this.single = "SINGLE";
@@ -635,7 +644,7 @@ class Checkout extends React.Component {
                             {bundle.all &&
                             <a className="bid-license"
                                target={"_blank"}
-                               href={getCustomLicenseUrlBids(content.customId, selectedPackages, asd, company)}
+                               href={getCustomLicenseUrlBids(content.customId, selectedPackages, asd, company,  true)}
                                title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
                                 <img src={pdfIcon} alt="Licence"/>
                                 <span>{this.context.t("License agreement")}</span>
@@ -675,7 +684,7 @@ class Checkout extends React.Component {
                                 {bundle.salesMethod === "BIDDING" && !bundle.all &&
                                 <NumberFormat
                                     thousandSeparator={true}
-                                    value={bundle.fee}
+                                    value={bidMethod === this.all && !bundle.all ? undefined : bundle.fee}
                                     onValueChange={(values) => {
                                         const {value} = values;
                                         let bundles = this.state.selectedPackages;
@@ -766,7 +775,9 @@ class Checkout extends React.Component {
                 </div>
                 <div className="bid-info-wrapper">
                     <div className="bid-title no-border uppercase">
-                        {this.context.t("SALES_PACKAGE_TABLE_HEADER")}
+                        <div className="bid-title-content">
+                            {this.context.t("SALES_PACKAGE_TABLE_HEADER")}
+                        </div>
                     </div>
                     {selectedPackages.length > 1 && allowMultiple && <RadioSelector
                         value={bidMethod}

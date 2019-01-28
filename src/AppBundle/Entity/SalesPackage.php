@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * SalesPackage
@@ -98,6 +99,7 @@ class SalesPackage
 
     /**
      * @Groups({"commercial"})
+     * @MaxDepth(4)
      */
     private $bids;
 
@@ -108,6 +110,14 @@ class SalesPackage
      * @Groups({"listing", "closed", "commercial"})
      */
     private $sold = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="custom", type="boolean", options={"default":"0"})
+     * @Groups({"listing", "closed", "commercial"})
+     */
+    private $custom = false;
 
     /**
      * @var bool
@@ -337,5 +347,23 @@ class SalesPackage
     {
         $this->bids = $bids;
     }
+
+    /**
+     * @return bool
+     */
+    public function isCustom()
+    {
+        return $this->custom;
+    }
+
+    /**
+     * @param bool $custom
+     */
+    public function setCustom($custom)
+    {
+        $this->custom = $custom;
+    }
+
+
 
 }

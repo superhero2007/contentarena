@@ -30,6 +30,17 @@ class ListingDetails extends React.Component {
         let company = ContentArena.Utils.filterCompanyInfo(props.company);
         let bundles = ( props.bundles )? props.bundles.split("&").map(b=>Number(b)) : [];
 
+        let selectedPackages = {};
+
+        if ( props.tab && props.tab === "checkout") {
+
+            let listingBundles = listing.salesPackages.filter(sp => bundles.indexOf(sp.id) >= 0);
+            let customBundles = ( listing.customBundles) ? listing.customBundles.filter(sp => bundles.indexOf(sp.id) >= 0) : [];
+
+            selectedPackages = [...listingBundles,...customBundles];
+        }
+
+
         this.state = {
             companyUpdated : false,
             content : listing,
@@ -38,7 +49,7 @@ class ListingDetails extends React.Component {
             tab : props.tab || "bundles",
             buyingMode : props.tab && props.tab === "checkout",
             soldOut  : false,
-            selectedPackages : ( props.tab && props.tab === "checkout") ? listing.salesPackages.filter(sp=>bundles.indexOf(sp.id) >= 0) : {},
+            selectedPackages : selectedPackages,
             openContactSellerModal: false,
             signatureName: props.user.firstName + " " + props.user.lastName,
             signaturePosition: props.user.title

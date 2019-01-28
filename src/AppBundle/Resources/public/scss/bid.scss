@@ -39,7 +39,12 @@
     padding: 30px 20px;
     margin: 15px 0;
     background-color: #E7E7E7;
-
+    .bid-title-content{
+      display: inline-block;
+      border-bottom: 2px solid #ffc94b;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
     .total-fee{
       height: 60px;
       border: 1px solid #999999;

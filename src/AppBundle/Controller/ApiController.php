@@ -7,6 +7,7 @@ use AppBundle\Entity\Content;
 use AppBundle\Entity\LicenseAgreement;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\User;
+use AppBundle\Service\BundleService;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\MessageService;
@@ -331,6 +332,7 @@ class ApiController extends BaseController
      * @Route("/api/bids/place", name="apiPlaceBids")
      * @param Request $request
      * @param BidService $bidService
+     * @param BundleService $bundleService
      * @param ContentService $contentService
      * @param EmailService $emailService
      * @param TermsService $termsService
@@ -344,6 +346,7 @@ class ApiController extends BaseController
     public function contentPlaceBids(
         Request $request,
         BidService $bidService,
+        BundleService $bundleService,
         ContentService $contentService,
         EmailService $emailService,
         TermsService $termsService,
@@ -353,19 +356,39 @@ class ApiController extends BaseController
         $user = $this->getUser();
         $bidsData = $request->get("bids");
         $multiple = $request->get("multiple");
-        $bids = [];
+
+        $terms = $termsService->getCompanyTerms($user->getCompany());
+        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
+        $content = $contentService->findContent($request);
         $soldOut = false;
         $success = true;
+        $bids = [];
+        $bundles = [];
+        $isMultiple = count($bidsData) > 1 && $multiple;
+        $salesMethod = $bidService->findBidType($bidsData[0]['salesMethod']);
 
-        foreach ( $bidsData as $bidData){
-            $bid = $bidService->saveBidsData($bidData, $request, $user,$multiple);
+        if ($isMultiple) {
+            $bundle = $bundleService->getCustomBundle($bidsData);
+            $bid = $bidService->saveBidsData($bidsData[0], $request, $user, $content, $salesMethod, $bundle, $multiple);
             $bids[] = $bid;
-            $content = $bid->getContent();
-            $terms = $termsService->getCompanyTerms($user->getCompany());
-            $definitions = $termsService->getCompanyDefinitions($user->getCompany());
+            foreach ($bidsData as $bidData){
+                $bundle = $bundleService->findBundle($bidData['salesPackage']);
+                $bundles[] = $bundle;
+            }
+
+        } else {
+            foreach ($bidsData as $bidData){
+                $bundle = $bundleService->findBundle($bidData['salesPackage']);
+                $bid = $bidService->saveBidsData($bidData, $request, $user, $content, $salesMethod, $bundle, $multiple);
+                $bids[] = $bid;
+            }
+        }
+
+        foreach ($bids as $bid){
             if ($bid != null){
-                $soldOut = $contentService->listingIsSoldOut($content);
+
                 if ($bid->getStatus()->getName() == 'APPROVED'){
+                    if ($isMultiple) $bundleService->setSoldCustomBundles($bundles, $content);
                     $license_service = $this->get('license_service');
                     $viewElements = array(
                         'user' => $user,
@@ -379,7 +402,6 @@ class ApiController extends BaseController
                         'exclusiveRights' => $license_service->getExclusiveRights($content),
                         'hostUrl' => $this->container->getParameter("carena_host_url")
                     );
-
                     $this->saveLicenseAgreement($content, $viewElements);
                     $emailService->dealClosed($content, $bid);
                     $emailService->closedDealBuyer($content, $bid);
@@ -392,6 +414,8 @@ class ApiController extends BaseController
                     $notificationService->listingBidPlacedNotifications($content, $user);
                 }
 
+
+                $soldOut = $contentService->listingIsSoldOut($content);
                 if ($soldOut) {
                     $emailService->soldOut($content);
                     $notificationService->listingSoldOutNotifications($content);
@@ -563,7 +587,7 @@ class ApiController extends BaseController
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($listings, 'json',SerializationContext::create()->setGroups(array('commercial')));
+        $data = $serializer->serialize($listings, 'json',SerializationContext::create()->enableMaxDepthChecks()->setGroups(array('commercial')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');

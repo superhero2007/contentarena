@@ -8,8 +8,10 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\BidType;
 use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SoldListing;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -29,11 +31,20 @@ class BidService
 
     private $messageService;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, MessageService $messageService) {
+    private $bundleService;
+
+    public function __construct(
+        EntityManager $entityManager,
+        RandomIdGenerator $idGenerator,
+        FileUploader $fileUploader,
+        MessageService $messageService,
+        BundleService $bundleService
+    ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
         $this->messageService = $messageService;
+        $this->bundleService = $bundleService;
     }
 
     public function getClosedDeals($request){
@@ -60,15 +71,24 @@ class BidService
         return $this->em->getRepository('AppBundle:Bid')->getClosedDealsBySalesBundle($salesBundle);
     }
 
-    public function saveBidsData($bidData, Request $request, User $user, $multiple){
+    public function findBidType($salesMethod){
+        return $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$salesMethod));
+    }
 
-        $type = $this->em->getRepository('AppBundle:BidType')->findOneBy(array("name" =>$bidData['salesMethod']));
-        $content = $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
+    public function saveBidsData(
+        $bidData,
+        Request $request,
+        User $user,
+        Content $content,
+        BidType $type,
+        SalesPackage $salesPackage,
+        $multiple
+    ){
+
         $signature = $request->get('signature');
         $signatureName = $request->get('signatureName');
         $signaturePosition = $request->get('signaturePosition');
-        $salesPackage = $this->em->getRepository('AppBundle:SalesPackage')->find($bidData['salesPackage']);
-        if ($bidData['salesMethod'] == "FIXED" ) {
+        if ($type->getName() == "FIXED" ) {
             $status = $this->em->getRepository('AppBundle:BidStatus')->find(2);
         } else {
             $status = $this->em->getRepository('AppBundle:BidStatus')->find(1);
@@ -81,7 +101,6 @@ class BidService
                 $exclusive = true;
             }
         }
-
 
         try {
             if ( $request->get("company") != null ){
@@ -212,6 +231,7 @@ class BidService
         $this->em->flush();
         if ($exclusive){
             $salesPackage->setSold(true);
+
             $pendingBids = $this->getPendingBidsByContent($listing);
 
             foreach ($pendingBids as $pendingBid){

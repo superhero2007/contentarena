@@ -267,7 +267,7 @@ class Marketplace extends Component {
                                     </button>
                                 </div>
 
-                                <SortByListing sortBy={sortBy} onSelect={this.handleSortBy} />
+                                {/*<SortByListing sortBy={sortBy} onSelect={this.handleSortBy} />*/}
 
                                 <div className="right-legend-wrapper">
                                     <RightsLegend />

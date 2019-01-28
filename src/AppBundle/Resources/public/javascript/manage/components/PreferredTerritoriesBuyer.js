@@ -40,10 +40,11 @@ class PreferredTerritoriesBuyer extends React.Component {
     setTerritories = ( territories) => {
         const { onChange } = this.props;
         this.setState({territories });
-        if (onChange) onChange(territories.map(item=>{
+        if (onChange) onChange(territories.filter(i=>i).map(item=>{
             item.value = item.name;
             item.label = item.name;
             return item;
+
         }));
     };
 

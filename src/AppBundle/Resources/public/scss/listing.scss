@@ -10,6 +10,15 @@
   text-decoration: none;
   position: relative;
   cursor: default;
+  height: 240px;
+
+  @media screen and (min-width: 1400px) {
+    //border-top: 3px solid $orange-color;
+  }
+
+  @media screen and (min-width: 1800px) {
+    border-top: 3px solid $orange-color;
+  }
 
   a:hover {
     color: inherit;
@@ -62,6 +71,7 @@
     flex: 1;
     min-width: 0;
     overflow: auto;
+    border: 1px solid white;
     .ca-title {
       padding-right: 15px;
     }
@@ -903,7 +913,7 @@
       color: #333333;
       font-size: 16px;
       font-weight: bold;
-      padding: 15px 0 25px;
+      padding: 15px 0 10px;
     }
   }
 }

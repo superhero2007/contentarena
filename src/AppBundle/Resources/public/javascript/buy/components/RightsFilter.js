@@ -228,7 +228,7 @@ class RightsFilter extends React.Component {
                     </div>
 
                 </div>
-                <div className="box">
+                {/*<div className="box">
                     <div className="title">{this.context.t('MARKETPLACE_EVENT_DATE')}</div>
 
                     <div className="event-date-wrapper">
@@ -264,7 +264,7 @@ class RightsFilter extends React.Component {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>*/}
                 <div className="box">
                     <div style={{
                         display: 'flex',

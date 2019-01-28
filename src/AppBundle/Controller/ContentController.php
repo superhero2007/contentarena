@@ -196,19 +196,23 @@ class ContentController extends Controller
 
         $bids = $bidService->getAllBidsByContentAndUser($content, $company);
         $bundlesWithActivity = array();
+        $customBundles = array();
         $closedDeals = array();
         if ($bids != null){
             foreach ($bids as $bid){
                 /* @var Bid $bid*/
-                $bundlesWithActivity[] = $bid->getSalesPackage()->getId();
+                /* @var SalesPackage $bundle*/
+                $bundle = $bid->getSalesPackage();
+                $bundlesWithActivity[] = $bundle->getId();
 
-                if ( $bid->getStatus()->getName() == "APPROVED") $closedDeals[] = $bid->getSalesPackage()->getId();
-
+                if ( $bid->getStatus()->getName() == "APPROVED") $closedDeals[] = $bundle->getId();
+                if ( $bundle->isCustom() ) $customBundles[] = $bundle;
             }
+
             $content->setBundlesWithActivity($bundlesWithActivity);
             $content->setBundlesSold($closedDeals);
+            $content->setCustomBundles($customBundles);
         }
-
 
         if (!$isMember
             && (in_array($content->getStatus()->getName(),$statusesForbiddenForNonMembers)

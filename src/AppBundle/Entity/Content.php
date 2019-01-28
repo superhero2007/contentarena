@@ -129,6 +129,13 @@ class Content
     private $salesPackages;
 
     /**
+     * @var array
+     *
+     * @Groups({"listing", "board", "commercial"})
+     */
+    private $customBundles;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
@@ -1639,7 +1646,33 @@ class Content
         $this->userCanEdit = $userCanEdit;
     }
 
+    /**
+     * @return array
+     */
+    public function getCustomBundles()
+    {
+        return $this->customBundles;
+    }
 
+    /**
+     * @param array $customBundles
+     */
+    public function setCustomBundles($customBundles)
+    {
+        $this->customBundles = $customBundles;
+    }
+
+    public function isExclusive(){
+        $exclusive = false;
+        foreach ($this->getSelectedRightsBySuperRight() as $val)
+        {
+            if( $val['exclusive'] ) {
+                $exclusive = true;
+            }
+        }
+
+        return $exclusive;
+    }
 
 
 }
