@@ -1,15 +1,11 @@
 import React from 'react';
 import { connect } from "react-redux";
-import ReactTable from "react-table";
 import cloneDeep from "lodash/cloneDeep";
-import CountrySelector from '../../main/components/CountrySelector'
-import {blueCheckIcon, cancelIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import PreferredUserProfile from "../components/PreferredUserProfile";
 import PreferredSportSeller from "../components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../components/PreferredSportBuyer";
-import PrivacyPolicy from "../../main/components/PrivacyPolicy";
 import Loader from "../../common/components/Loader";
 
 class Preferences extends React.Component {
@@ -71,12 +67,6 @@ class Preferences extends React.Component {
         this.setState({user});
     };
 
-    onChangeReceiveNotifications= ( e ) => {
-        let user  = this.state.user;
-        user.receivePreferenceNotifications = e.target.checked;
-        this.setState({user});
-    };
-
     completeButtonDisabled = () => {
         const { user } = this.state;
 
@@ -99,8 +89,16 @@ class Preferences extends React.Component {
         if (loading) return <Loader loading={true}/>;
 
         return (
-            <div className={"settings-container"}>
+            <div className={"settings-container preferences"}>
                 <div className={"setting"}>
+
+                    <div className="title">
+                        {this.context.t("PREFERENCES_HEADLINE")}
+                    </div>
+
+                    <div className="subtitle">
+                        {this.context.t("PREFERENCES_HEADLINE_EXPLANATION_TEXT")}
+                    </div>
 
                     <PreferredUserProfile profile={user.preferredProfile}
                                           onChange={ profile => this.updateUser("preferredProfile", profile) }/>
@@ -108,6 +106,7 @@ class Preferences extends React.Component {
                     {user.preferredProfile !== "BUYER" &&
                     <PreferredSportSeller sports={user.preferredSellerSports}
                                           parse={true}
+                                          showSubtitle={false}
                                           allSports={user.preferredSellerAllSports}
                                           onChange={this.handleSellerSports}/>}
 
@@ -118,22 +117,9 @@ class Preferences extends React.Component {
                     {user.preferredProfile !== "SELLER" &&
                     <PreferredSportBuyer sports={user.preferredBuyerSports}
                                          parse={true}
+                                         showSubtitle={false}
                                          allSports={user.preferredBuyerAllSports}
                                          onChange={this.handleBuyerSports}/>}
-
-                    <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center', fontSize: 14}}
-                         className="terms-and-condition-wrapper">
-                        <input
-                            type="checkbox"
-                            className="ca-checkbox"
-                            defaultChecked={user.receivePreferenceNotifications}
-                            onChange={this.onChangeReceiveNotifications}
-                            style={{marginRight: 10}}
-                        />
-                        <div>
-                            {this.context.t("PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE")}
-                        </div>
-                    </div>
 
                     <div className={"buttons"}>
                         <div>

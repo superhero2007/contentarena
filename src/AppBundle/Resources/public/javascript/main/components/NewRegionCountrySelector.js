@@ -260,6 +260,9 @@ class NewRegionCountrySelector extends React.Component {
             <div className="country-selector region-filter">
                 { !disabled && <div>
                     <div className="regions">
+                        {worldwide && <button className={cn("region", {"region-selected": worldwideSelected})} onClick={this.selectWorldwide}>
+                            Worldwide
+                        </button>}
                         {territories.map((territory,i)=>{
                             return <button className={cn({
                                                "region" : true,
@@ -276,13 +279,6 @@ class NewRegionCountrySelector extends React.Component {
                                 {")"}
                             </button>
                         })}
-                        {worldwide && <button className={cn({
-                                                    "region" : true,
-                                                    'region-selected': worldwideSelected
-                                                })}
-                                              onClick={this.selectWorldwide}>
-                            Worldwide
-                        </button>}
                     </div>
                     <div className="regions">
                         {regions.map((region,i)=>{

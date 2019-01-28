@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {goTo} from "../../main/actions/utils";
-import RegionCountrySelector from "../../main/components/RegionCountrySelector";
 import CountrySelector from "../../main/components/CountrySelector";
 import cn from "classnames";
 import NewRegionCountrySelector from "../../main/components/NewRegionCountrySelector";
@@ -49,15 +47,13 @@ class PreferredTerritoriesBuyer extends React.Component {
     };
 
     render() {
-        const { style } = this.props;
+        const { style }  = this.props;
         const { isMultipleEnabled, territories } = this.state;
 
         return (
             <React.Fragment>
                 <div className={"preferences-title"}>
                     {this.context.t("PREFERENCES_TERRITORIES_BUYER_TITLE")}
-                </div>
-                <div className={"subtitle"}>
                 </div>
                 <div className={"row"} style={style}>
                     <div className={"preferences-item"}>

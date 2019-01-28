@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {goTo} from "../../main/actions/utils";
 import SportSelector from "../../main/components/SportSelector";
-import cn from "classnames";
 
 class PreferredSportSeller extends React.Component {
 
@@ -30,15 +28,15 @@ class PreferredSportSeller extends React.Component {
 
     render() {
         const { sports, all, other } = this.state;
-        const { parse } = this.props;
+        const { parse, showSubtitle = true } = this.props;
         return (
             <React.Fragment>
                 <div className={"preferences-title"}>
                     {this.context.t("PREFERENCES_SPORT_SELLER_TITLE")}
                 </div>
-                <div className={"subtitle"}>
+                {showSubtitle && <div className={"subtitle"}>
                     {this.context.t("PREFERENCES_SPORT_SELLER_SUBTITLE")}
-                </div>
+                </div>}
                 <div className={"row"} style={{marginBottom:50}}>
                     <div className={"preferences-item"}>
                         <SportSelector

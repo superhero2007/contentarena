@@ -1819,7 +1819,11 @@ msgid "PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
-msgid "PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE"
+msgid "PREFERENCES_HEADLINE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
+msgid "PREFERENCES_HEADLINE_EXPLANATION_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
@@ -1884,6 +1888,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LINKS_BUTTON_MANUAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js

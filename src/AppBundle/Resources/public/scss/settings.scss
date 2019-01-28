@@ -93,6 +93,17 @@
     }
   }
 
+  &.preferences{
+    .title, .subtitle, .row{ margin-bottom: 15px !important; }
+    .Select--multi{ margin-top: 15px; }
+    .region-filter{
+      margin-bottom: 0;
+      margin-left: -5px;
+    }
+    .Select-control{ margin-top: 0; }
+    .d-flex{ margin-bottom: 0 !important; }
+  }
+
   .edit-button {
     cursor: pointer;
     color: $border-color-2;
@@ -250,6 +261,8 @@
         @extend .item;
         width: 100%;
         max-width: 800%;
+
+        .Select-placeholder, .Select-value{ background-color: #fff; }
       }
     }
 

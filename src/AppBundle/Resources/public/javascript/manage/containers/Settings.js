@@ -69,6 +69,12 @@ class Settings extends React.Component {
         })
     };
 
+    onChangeReceiveNotifications= ( e ) => {
+        let user  = this.state.user;
+        user.receivePreferenceNotifications = e.target.checked;
+        this.setState({user});
+    };
+
     validate = (pass) => {
         return {
             length : ( pass.length >= 8 ),
@@ -90,8 +96,6 @@ class Settings extends React.Component {
                 !valid.digit ||
                 !valid.upper ||
                 !valid.special;
-
-
     };
 
     render () {
@@ -476,6 +480,21 @@ class Settings extends React.Component {
                         {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
                     </div>}
                 </div>}
+
+                <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center', fontSize: 14}}
+                     className="terms-and-condition-wrapper">
+                    <input
+                        type="checkbox"
+                        className="ca-checkbox"
+                        defaultChecked={user.receivePreferenceNotifications}
+                        onChange={this.onChangeReceiveNotifications}
+                        style={{marginRight: 10}}
+                    />
+                    <div>
+                        {this.context.t("PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE")}
+                    </div>
+                </div>
+
             </div>
         )
     }
