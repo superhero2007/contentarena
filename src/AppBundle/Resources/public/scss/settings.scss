@@ -23,7 +23,7 @@
 
       .rt-thead {
         box-shadow: none;
-        border-bottom: 1px solid #999999;
+        border-bottom: 2px solid #ffc94b;
 
         .table-header {
           color: #0C4772;
@@ -31,11 +31,29 @@
           font-weight: bold;
           text-align: left;
           outline: none;
+          text-transform: uppercase;
         }
       }
 
-      .rt-tr-group {
-        border-bottom: 1px solid #999999;
+      .rt-tbody {
+        border-radius: 0 0 5px 5px;
+
+        .rt-tr-group {
+          border-bottom: 1px solid #999999;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+
+        .rt-tr {
+          background-color: #ffffff;
+
+          &.-even {
+            background-color: #efefef;
+          }
+        }
+
       }
 
       .table-header {
@@ -288,7 +306,8 @@
     flex-direction: row;
     justify-content: flex-end;
     margin: 10px 0 0;
-    .terms-edit-header-title{
+
+    .terms-edit-header-title {
       color: #03547C;
       font-size: 21px;
       font-weight: bold;
