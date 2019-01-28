@@ -15,7 +15,7 @@ import {getCurrencySymbol} from "../../main/actions/utils";
 import {disableValidation, enableValidation} from "../../main/actions/validationActions";
 import {customStyles} from "../../main/styles/custom";
 
-const labelStyle = { height: "30px", fontSize: "16px"};
+const labelStyle = { height: "35px", fontSize: "16px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
 
 class SalesPackageForm extends React.Component {
@@ -427,7 +427,7 @@ class SalesPackageForm extends React.Component {
             onRequestClose={this.closeModal}
         >
 
-            <div className="modal-title">
+            <div className="modal-title" style={{paddingBottom: 15}}>
                 {this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
                 <i className="fa fa-times close-icon" onClick={this.closeModal}/>
             </div>
@@ -439,7 +439,7 @@ class SalesPackageForm extends React.Component {
                         <label style={labelStyle} >
                             {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES_MODE")}
                         </label>
-                        <div className={"content"}>
+                        <div className={"content"} style={{padding: '5px 0'}}>
                             <div className={"item"} onClick={()=>this.handleTerritories('single')}>
                                 {territoriesQuantity === 'single' ?
                                     <i className="fa fa-check-circle-o"/> :
@@ -588,7 +588,7 @@ class SalesPackageForm extends React.Component {
                             return <div className="content">
                                 <div className={"item"} style={{
                                     marginRight: 55,
-                                    paddingLeft: 10
+                                    paddingLeft: 15
                                 }}>
                                     <div className={"title"}>
                                         {i + 1} Installment(s)
