@@ -12,7 +12,7 @@ class SalesPackages extends PureComponent{
     };
 
     render() {
-        const { salesPackages, limitedSize } = this.props;
+        const { salesPackages, limitedSize, hideFee } = this.props;
         let salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages];
         return (
             <React.Fragment>
@@ -42,7 +42,7 @@ class SalesPackages extends PureComponent{
                                 </div>
                             )}
 
-                            {(salesPackage.salesMethod !== "BIDDING" ||  (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0)) && (
+                            {!hideFee && (salesPackage.salesMethod !== "BIDDING" ||  (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0)) && (
                                 <div className="fee">
                                     {this.getFee(salesPackage)}
                                 </div>

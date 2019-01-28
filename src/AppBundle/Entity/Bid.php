@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Bid
@@ -59,6 +60,7 @@ class Bid
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid")
      * @ORM\JoinColumn(name="content_id",referencedColumnName="id",nullable=true)
      * @Groups({"closed", "commercial"})
+     * @MaxDepth(1)
      */
     private $content;
 

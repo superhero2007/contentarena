@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * SalesPackage
@@ -98,6 +99,7 @@ class SalesPackage
 
     /**
      * @Groups({"commercial"})
+     * @MaxDepth(4)
      */
     private $bids;
 
