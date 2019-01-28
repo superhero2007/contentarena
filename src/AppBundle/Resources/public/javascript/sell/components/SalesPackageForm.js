@@ -142,7 +142,14 @@ class SalesPackageForm extends React.Component {
     };
 
     setSalesMethod = (salesMethod) => {
-        this.setState({salesMethod});
+        const { fee } = this.state;
+        const newFee = (salesMethod === this.bidding && parseInt(fee, 10) === 0) ? 1
+            : parseInt(fee, 10) === 1 ? 0 : fee;
+
+        this.setState({
+            salesMethod,
+            fee: newFee
+        });
     };
 
     closeModal = () => {
@@ -262,6 +269,7 @@ class SalesPackageForm extends React.Component {
 
         this.setState({
             fee: 0,
+            salesMethod: this.fixed,
             territories: [],
             territoriesMethod : this.selectedTerritories,
             // territoriesMethod: (this.worldwideAvailable()) ? this.worldwide : this.selectedTerritories
@@ -330,13 +338,13 @@ class SalesPackageForm extends React.Component {
 
     handleTerritories = (type) => {
         this.setState({territoriesQuantity: type});
-    }
+    };
 
     getSoldPackages = (salesPackages) => {
         let soldPackages = [];
         salesPackages.forEach(p => {
             if (p.sold) soldPackages.push(p);
-        })
+        });
         return soldPackages;
     };
 
@@ -402,9 +410,9 @@ class SalesPackageForm extends React.Component {
         const soldPackages = this.getSoldPackages(salesPackages);
         const isExclusiveSoldTerritoriesEnabled = (soldPackages.length > 0 && exclusivity);
 
-        const isOkButtonDisabled = (this.state.salesMethod === this.fixed && Number(this.state.fee) === 0) ||
+        const isOkButtonDisabled = (Number(this.state.fee) === 0) ||
             this.territoriesIncomplete() ||
-            this.installmentsIncomplete()
+            this.installmentsIncomplete();
 
         const isTerritoriesEmpty = territories.length === 0 && validation;
 
