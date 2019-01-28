@@ -19,7 +19,7 @@ import first from 'lodash/first';
 import cn from 'classnames';
 import PropTypes from "prop-types";
 const queryString = require('query-string');
-import Loader from '../../common/components/Loader'
+import Loader from '../../common/components/Loader';
 
 class Marketplace extends Component {
     constructor(props) {

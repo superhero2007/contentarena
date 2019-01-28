@@ -5,6 +5,7 @@ import cloneDeep from "lodash/cloneDeep";
 import CountrySelector from '../../main/components/CountrySelector'
 import {blueCheckIcon, cancelIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
+import Loader from '../../common/components/Loader';
 
 class Settings extends React.Component {
     constructor(props) {
@@ -118,7 +119,7 @@ class Settings extends React.Component {
                         }}>
                             <i className="fa fa-edit"/>
                         </div>}
-                        {updatingCompany && <Spinner/>}
+                        {updatingCompany && <Loader loading={true} small/>}
                     </div>
                     <div className={"row"}>
                         <div className={"item"}>
@@ -229,7 +230,7 @@ class Settings extends React.Component {
                 <div className={'setting'}>
                     {/*ACTIVE USERS*/}
                     <div className={'title'}>Active Users</div>
-                    {loadingCompanyUsers && companyUsers.length === 0 && <Spinner/>}
+                    {loadingCompanyUsers && companyUsers.length === 0 && <Loader loading={true} small/>}
                     {!loadingCompanyUsers && companyUsers.length > 0 && <div>
                         <ReactTable
                             className={"closed-deals-table"}
@@ -283,7 +284,7 @@ class Settings extends React.Component {
                         }}>
                             <i className="fa fa-edit"/>
                         </div>}
-                        {updatingUser && <Spinner/>}
+                        {updatingUser && <Loader loading={true} small/>}
                     </div>
                     <div className={"row"}>
                         <div className={"item"}>
@@ -399,7 +400,7 @@ class Settings extends React.Component {
                                     className={"standard-button"}>
                                 {this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
                             </button>}
-                            {updatingPassword && <Spinner/>}
+                            {updatingPassword && <Loader loading={true} small/>}
                             {passwordUpdated && <div>
                                 {this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
                             </div>}

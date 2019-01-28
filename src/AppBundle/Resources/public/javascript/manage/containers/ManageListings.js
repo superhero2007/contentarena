@@ -7,6 +7,7 @@ import BoardListing from '../components/BoardListing';
 import {updateProfile} from "../../main/actions/userActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import {customStyles} from "../../main/styles/custom";
+import Loader from "../../common/components/Loader";
 
 class ManageListings extends React.Component {
     constructor(props) {
@@ -128,12 +129,9 @@ class ManageListings extends React.Component {
                                 </a>
                             </div>
                         </div>
-                        {loadingDraft &&
-                        <div className="medium-spinner">
-                            <i className="fa fa-cog fa-spin"/>
-                        </div>}
-                        {
-                            draft.length > 0 && draft.map((listing, i, list) => {
+
+                        <Loader loading={loadingDraft} small>
+                            {draft.length > 0 && draft.map((listing, i, list) => {
                                 return <BoardListing
                                     key={"draft-" + i}
                                     className="listing"
@@ -151,21 +149,20 @@ class ManageListings extends React.Component {
                                         ContentArena.ContentApi.removeListing(listing.customId)
                                     }}
                                     onDuplicate={this.duplicate}
-                                    {...listing}/>
-                            })
-                        }
+                                    {...listing}
+                                />
+                            })}
+                        </Loader>
+
                     </div>
                     {/*INACTIVE*/}
                     <div className={"column"}>
                         <div className={"column-title"}>
                             <div>{this.context.t("MANAGE_LISTINGS_TITLE_INACTIVE")}</div> ({inactive.length})
                         </div>
-                        {loadingInactive &&
-                        <div className="medium-spinner">
-                            <i className="fa fa-cog fa-spin"/>
-                        </div>}
-                        {
-                            inactive.length > 0 && inactive.map((listing, i, list) => {
+
+                        <Loader loading={loadingInactive} small>
+                            {inactive.length > 0 && inactive.map((listing, i, list) => {
                                 return <BoardListing
                                     key={"inactive-" + i}
                                     className="listing"
@@ -190,20 +187,16 @@ class ManageListings extends React.Component {
                                     }}
                                     onDuplicate={this.duplicate}
                                     {...listing}/>
-                            })
-                        }
+                            })}
+                        </Loader>
                     </div>
                     {/*ACTIVE*/}
                     <div className={"column"}>
                         <div className={"column-title"}>
                             <div>{this.context.t("MANAGE_LISTINGS_TITLE_ACTIVE")}</div> ({active.length})
                         </div>
-                        {active.length === 0 && loadingActive &&
-                        <div className="medium-spinner">
-                            <i className="fa fa-cog fa-spin"/>
-                        </div>}
-                        {
-                            active.length > 0 && active.map((listing, i, list) => {
+                        <Loader loading={loadingActive} small>
+                            {active.length > 0 && active.map((listing, i, list) => {
                                 return <BoardListing
                                     key={"active-" + i}
                                     className="listing"
@@ -228,38 +221,34 @@ class ManageListings extends React.Component {
                                     }}
                                     onDuplicate={this.duplicate}
                                     {...listing}/>
-                            })
-                        }
+                            })}
+                        </Loader>
                     </div>
                     {/*EXPIRED*/}
                     <div className={"column"}>
                         <div className={"column-title"}>
                             <div>{this.context.t("MANAGE_LISTINGS_TITLE_EXPIRED")}</div> ({expired.length})
                         </div>
-                        {expired.length === 0 && loadingExpired &&
-                        <div className="medium-spinner">
-                            <i className="fa fa-cog fa-spin"/>
-                        </div>}
-                        {
-                            expired.length > 0 && expired.map((listing, i, list) => {
+                        <Loader loading={loadingExpired} small>
+                            {expired.length > 0 && expired.map((listing, i, list) => {
                                 return <BoardListing
                                     key={"expired-" + i}
                                     className="listing"
                                     style={{
-                                        zIndex : list.length - i
+                                        zIndex: list.length - i
                                     }}
                                     showDuplicate={true}
                                     showArchive={true}
                                     showView={true}
-                                    onArchive={()=>{
-                                        list.splice(i,1);
+                                    onArchive={() => {
+                                        list.splice(i, 1);
                                         this.setState({expired: list});
                                         ContentArena.ContentApi.archiveListing(listing.customId)
                                     }}
                                     onDuplicate={this.duplicate}
                                     {...listing}/>
-                            })
-                        }
+                            })}
+                        </Loader>
                     </div>
                 </div>
                 {this.renderModal()}

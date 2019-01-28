@@ -6,6 +6,7 @@ import { goToListing } from "../../main/actions/utils";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
 import RightsLegend from "../../main/components/RightsLegend";
+import Loader from "../../common/components/Loader";
 
 class CommercialActivity extends Component {
     constructor(props) {
@@ -205,45 +206,33 @@ class CommercialActivity extends Component {
                     <RightsLegend />
                 </div>
 
-                {
-                    listings.length > 0 && listings.map((listing, i, list) => {
-                        return <ContentListingCommercialActivity
-                            onUpdate={this.update}
-                            onDelete={this.deleteBid}
-                            onApprove={this.approve}
-                            bidsOpen={list.length === 1 || this.state.filter !== "ALL"}
-                            bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
-                            hideWithoutBids={this.state.filter === "withactivity"}
-                            filterByOpenBids={this.state.filter === "openbids"}
-                            filterByClosedDeals={this.state.filter === "closeddeals"}
-                            onSelect={id => goToListing(id, true)}
-                            key={i + "-" + listing.customId}
-                            {...listing}
-                        />
-                    })
-                }
-
-                {
-                    listings.length === 0 &&
-                    <div className="manager-content-message">
-                        {
-                            loading && <div className="big-spinner">
-                                <i className="fa fa-cog fa-spin"/>
-                            </div>
-                        }
-
-                        {
-                            !loading && <div className="big-spinner" style={{
-                                fontSize: 30
-                            }}>
-                                {this.state.filter === "ALL" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE")}
-                                {this.state.filter === "withactivity" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_WITH_ACTIVITY")}
-                                {this.state.filter === "openbids" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_OPEN_BIDS")}
-                                {this.state.filter === "closeddeals" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS")}
-                            </div>
-                        }
-                    </div>
-                }
+                <Loader loading={loading}>
+                    {listings.length === 0 && (
+                        <div className={'manager-content-message'}>
+                            {this.state.filter === "ALL" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE")}
+                            {this.state.filter === "withactivity" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_WITH_ACTIVITY")}
+                            {this.state.filter === "openbids" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_OPEN_BIDS")}
+                            {this.state.filter === "closeddeals" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS")}
+                        </div>
+                    )}
+                    {listings.length > 0 && listings.map((listing, i, list) => {
+                        return (
+                            <ContentListingCommercialActivity
+                                onUpdate={this.update}
+                                onDelete={this.deleteBid}
+                                onApprove={this.approve}
+                                bidsOpen={list.length === 1 || this.state.filter !== "ALL"}
+                                bundlesOpen={list.length === 1 || this.state.filter !== "ALL"}
+                                hideWithoutBids={this.state.filter === "withactivity"}
+                                filterByOpenBids={this.state.filter === "openbids"}
+                                filterByClosedDeals={this.state.filter === "closeddeals"}
+                                onSelect={id => goToListing(id, true)}
+                                key={i + "-" + listing.customId}
+                                {...listing}
+                            />
+                        );
+                    })}
+                </Loader>
             </div>
         )
     }

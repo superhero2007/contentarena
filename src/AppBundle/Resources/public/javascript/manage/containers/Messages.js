@@ -8,6 +8,7 @@ import { DATE_TIME_FORMAT } from "@constants";
 import ChatMessage from "../../main/components/ChatMessage";
 import AttachmentUploader from "../../main/components/AttachmentUploader";
 import {attachmentClipIcon} from "../../main/components/Icons";
+import Loader from "../../common/components/Loader";
 
 class Messages extends React.Component {
     constructor(props) {
@@ -182,38 +183,39 @@ class Messages extends React.Component {
             <React.Fragment>
                 <div className={"threads"}>
                     <div className="thread-wrapper ca-overflow">
-                        {loadingThreads && threads.length === 0 && <i className="fa fa-cog fa-spin"/>}
-                        {!loadingThreads && threads.length === 0 && <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>}
-                        {!loadingThreads && threads.map((t, i) => {
-
-                            return <div
-                                className={cn("thread", {
-                                    'thread-selected': selectedThread && selectedThread.id === t.id,
-                                    'has-unread-messages': t.unreadMessagesForCurrentUser
-                                })}
-                                key={"thread-" + i}
-                                onClick={() => {
-                                    this.selectThread(t)
-                                }}>
-                                <div className={"date"}>
-                                    {Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
+                        <Loader loading={loadingThreads}>
+                            {threads.length === 0 && (
+                                <div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>
+                            )}
+                            {threads.length > 0 && threads.map((t, i) => {
+                                return <div
+                                    className={cn("thread", {
+                                        'thread-selected': selectedThread && selectedThread.id === t.id,
+                                        'has-unread-messages': t.unreadMessagesForCurrentUser
+                                    })}
+                                    key={"thread-" + i}
+                                    onClick={() => {
+                                        this.selectThread(t)
+                                    }}>
+                                    <div className={"date"}>
+                                        {Moment(t.lastMessageDate).format(`${DATE_TIME_FORMAT}`)}
+                                    </div>
+                                    <div className={"listing-name"}>
+                                        {t.listing.name}
+                                    </div>
+                                    <div className={"company"}>
+                                        {t.oppositeParty.legalName}
+                                    </div>
+                                    <div className={"user"}>
+                                        {t.lastMessageUser ? getFullName(t.lastMessageUser) : ''}
+                                    </div>
+                                    <div className={"last-message"}>
+                                        {t.lastMessageContent && limitText(t.lastMessageContent)}
+                                    </div>
                                 </div>
-                                <div className={"listing-name"}>
-                                    {t.listing.name}
-                                </div>
-                                <div className={"company"}>
-                                    {t.oppositeParty.legalName}
-                                </div>
-                                <div className={"user"}>
-                                    {t.lastMessageUser ? getFullName(t.lastMessageUser) : ''}
-                                </div>
-                                <div className={"last-message"}>
-                                    {t.lastMessageContent && limitText(t.lastMessageContent)}
-                                </div>
-                            </div>
-                        })}
+                            })}
+                        </Loader>
                     </div>
-
                 </div>
 
                 {selectedThread && (
@@ -230,19 +232,17 @@ class Messages extends React.Component {
                             </div>
                         </div>
                         <div className={"messages ca-overflow"}>
-                            {loadingMessages && messages.length === 0 && <div>
-                                <i className="fa fa-cog fa-spin"/>
-                            </div>}
-                            {!loadingMessages && messages.map((m, i) => {
-                                const ownCompanyMessage = user.company.id === m.sender.company.id;
-                                const ownMessage = user.id === m.sender.id;
-                                return <ChatMessage
-                                    key={i}
-                                    ownMessage={ownMessage}
-                                    ownCompanyMessage={ownCompanyMessage}
-                                    message={m} />
-                            }).reverse()}
-
+                            <Loader loading={loadingMessages && messages.length === 0}>
+                                {!loadingMessages && messages.map((m, i) => {
+                                    const ownCompanyMessage = user.company.id === m.sender.company.id;
+                                    const ownMessage = user.id === m.sender.id;
+                                    return <ChatMessage
+                                        key={i}
+                                        ownMessage={ownMessage}
+                                        ownCompanyMessage={ownCompanyMessage}
+                                        message={m} />
+                                }).reverse()}
+                            </Loader>
                         </div>
                         <AttachmentUploader
                             ref={this.attachmentUploader}
@@ -267,11 +267,7 @@ class Messages extends React.Component {
                             </div>
                         </div>
                         <div className="message-input-tools">
-                            <div className="attachment-icon"
-                                 onClick={()=>{
-                                     this.openAttachmentUploader();
-                                 }}
-                            >
+                            <div className="attachment-icon" onClick={this.openAttachmentUploader}>
                                 {attachmentClipIcon}
                             </div>
                             <button className={"standard-button"} onClick={this.send}

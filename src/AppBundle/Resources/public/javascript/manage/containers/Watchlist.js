@@ -4,6 +4,8 @@ import ContentListing from '../../main/components/ContentListing';
 import {goTo} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
 import RightsLegend from "../../main/components/RightsLegend";
+import Loader from "../../common/components/Loader";
+
 
 class Watchlist extends React.Component {
     constructor(props) {
@@ -48,8 +50,13 @@ class Watchlist extends React.Component {
                 <div style={{textAlign: 'right'}}>
                     <RightsLegend />
                 </div>
-                {
-                    listings.length > 0 && listings.map((listing) => {
+                <Loader loading={loading}>
+                    {listings.length === 0 && (
+                        <div className="manager-content-message">
+                            {this.context.t("WATCHLIST_EMPTY_MESSAGE")}
+                        </div>
+                    )}
+                    {listings.length > 0 && listings.map((listing) => {
                         return <ContentListing
                             onSelect={this.selectListing}
                             key={listing.customId}
@@ -58,28 +65,8 @@ class Watchlist extends React.Component {
                             watchlistRemove={true}
                             onWatchlistRemove={this.remove}
                         />
-                    })
-                }
-
-                {
-                    listings.length === 0 &&
-                    <div className="manager-content-message">
-                        {
-                            loading && <div className="big-spinner">
-                                <i className="fa fa-cog fa-spin"/>
-                            </div>
-                        }
-
-                        {
-                            !loading && <div className="big-spinner" style={{
-                                fontSize: 30
-                            }}>
-                                {this.context.t("WATCHLIST_EMPTY_MESSAGE")}
-                            </div>
-                        }
-                    </div>
-                }
-
+                    })}
+                </Loader>
             </div>
         )
     }

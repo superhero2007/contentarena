@@ -12,8 +12,7 @@ import PreferredUserProfile from "../../manage/components/PreferredUserProfile";
 import PreferredSportSeller from "../../manage/components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../../manage/components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../../manage/components/PreferredSportBuyer";
-import ReactTooltip from "react-tooltip";
-import cn from "classnames";
+import Loader from "../../common/components/Loader";
 
 const Steps = ({ steps = []}) => {
 
@@ -253,7 +252,7 @@ class Register extends React.Component {
         />;
 
         if (loading) return <div className={"settings-container"}>
-            <Spinner/>
+            <Loader loading={true}/>
         </div>;
 
         if (!user) return <div className={"settings-container"}>
@@ -608,15 +607,16 @@ class Register extends React.Component {
                 <div className="buttons">
                     <BackButton onClick={() => { this.goToNextStep("company") }}/>
 
-                    {!updatingUser && !updated &&
-                    <button onClick={this.updateInfo}
-                            disabled={this.invalidPassword() || !privacy || !terms}
-                            className={"standard-button"}
-                            style={{maxWidth: 300, lineHeight: "22px"}}>
-                        {this.context.t("REGISTER_SUCCESS_MESSAGE")}
-                    </button>}
-
-                    {updatingUser && <Spinner/>}
+                    <Loader loading={updatingUser} small>
+                        {!updatingUser && !updated && (
+                            <button onClick={this.updateInfo}
+                                    disabled={this.invalidPassword() || !privacy || !terms}
+                                    className={"standard-button"}
+                                    style={{maxWidth: 300, lineHeight: "22px"}}>
+                                {this.context.t("REGISTER_SUCCESS_MESSAGE")}
+                            </button>
+                        )}
+                    </Loader>
                 </div>
             </div>
         )

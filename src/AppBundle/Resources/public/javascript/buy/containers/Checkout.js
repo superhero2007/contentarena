@@ -21,6 +21,7 @@ import ExtraTerritories from "../../main/components/ExtraTerritories";
 import {packageIcon} from "../../main/components/Icons";
 import ReactTable from "react-table";
 import RadioSelector from "../../main/components/RadioSelector";
+import Loader from "../../common/components/Loader";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: '400px'};
 const inputStyle = { width: '380px', margin: 0, height: "30px"};
@@ -873,18 +874,15 @@ class Checkout extends React.Component {
                         isInvalid={isTermsInvalid}
                     />
 
-                    {(
-                        !spinner ? (
-                            <button className="ca-btn primary"
-                                    disabled={this.buttonDisabled()}
-                                    onClick={this.placeBid}
-                            >
-                                {this.context.t("CHECKOUT_COMPLETE_TRANSACTION")}
-                            </button>
-                        ) : (
-                            <i className="fa fa-cog fa-spin"/>
-                        )
-                    )}
+                    <Loader loading={spinner} small>
+                        <button
+                            className="ca-btn primary"
+                            disabled={this.buttonDisabled()}
+                            onClick={this.placeBid}
+                        >
+                            {this.context.t("CHECKOUT_COMPLETE_TRANSACTION")}
+                        </button>
+                    </Loader>
                 </div>
             </div>
         );

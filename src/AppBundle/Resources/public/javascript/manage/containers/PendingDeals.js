@@ -5,6 +5,7 @@ import {goTo} from "../../main/actions/utils";
 import {PropTypes} from "prop-types";
 import ContentListing from "../../main/components/ContentListing";
 import RightsLegend from "../../main/components/RightsLegend";
+import Loader from "../../common/components/Loader";
 
 class PendingDeals extends React.Component {
     constructor(props) {
@@ -97,9 +98,9 @@ class PendingDeals extends React.Component {
                 </div>
 
                 {tab === "activebids" && (
-                    bids.length > 0 ? (
-                        bids.map((bid, i) => {
-                            return (
+                    <Loader loading={loading}>
+                        {bids.length > 0 ? (
+                            bids.map((bid, i) => (
                                 <ContentListing
                                     onSelect={this.selectListing}
                                     onDelete={this.deleteBid}
@@ -107,25 +108,18 @@ class PendingDeals extends React.Component {
                                     bid={bid}
                                     {...bid.content}
                                 />
-                            )
-                        })
-                    ) : (
-                        <div className="manager-content-message">
-                            {loading && <div className="big-spinner"><i className="fa fa-cog fa-spin"/></div>}
-
-                            {!loading && (
-                                <div className="big-spinner" style={{fontSize: 30}}>
-                                    {this.context.t("PENDING_BIDS_MADE_EMPTY_MESSAGE")}
-                                </div>
-                            )}
-                        </div>
-                    )
+                            ))
+                        ) : (
+                            <div className="manager-content-message">
+                                {this.context.t("PENDING_BIDS_MADE_EMPTY_MESSAGE")}
+                            </div>
+                        )}
+                    </Loader>
                 )}
-
                 {tab === "declinedbids" && (
-                    declinedBids.length > 0 ? (
-                        declinedBids.map((bid, i) => {
-                            return (
+                    <Loader loading={loadingDeclined}>
+                        {declinedBids.length > 0 ? (
+                            declinedBids.map((bid, i) => (
                                 <ContentListing
                                     onSelect={this.selectListing}
                                     onDelete={this.deleteBid}
@@ -135,19 +129,13 @@ class PendingDeals extends React.Component {
                                     declined={true}
                                     {...bid.content}
                                 />
-                            )
-                        })
-                    ) : (
-                        <div className="manager-content-message">
-                            {loadingDeclined && <div className="big-spinner"><i className="fa fa-cog fa-spin"/></div>}
-
-                            {!loadingDeclined && (
-                                <div className="big-spinner" style={{fontSize: 30}}>
-                                    {this.context.t("PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE")}
-                                </div>
-                            )}
-                        </div>
-                    )
+                            ))
+                        ) : (
+                            <div className="manager-content-message">
+                                {this.context.t("PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE")}
+                            </div>
+                        )}
+                    </Loader>
                 )}
 
             </div>

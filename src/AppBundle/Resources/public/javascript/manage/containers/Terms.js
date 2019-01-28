@@ -5,6 +5,7 @@ import {PropTypes} from "prop-types";
 import TermItem from "../components/TermItem";
 import cn from "classnames";
 import DefinitionItem from "../components/DefinitionItem";
+import Loader from "../../common/components/Loader";
 
 class Terms extends React.Component {
     constructor(props) {
@@ -132,7 +133,7 @@ class Terms extends React.Component {
 
         document.title = "Content Arena - Terms";
 
-        if (loading) return(<Spinner/>);
+        if (loading) return <Loader loading={true} small/>;
 
         return (
             <div className="settings-container terms-edit-container">
@@ -147,7 +148,7 @@ class Terms extends React.Component {
                         className="standard-button license-agreement-button terms-restore-button"
                     >
                         {this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}
-                        {restoringDefinitions && <Spinner/>}
+                        {restoringDefinitions && <Loader loading={true} small/>}
                         {!restoringDefinitions && <div><i className="fa fa-refresh"/></div>}
                     </button>
                     <button
@@ -156,7 +157,7 @@ class Terms extends React.Component {
                         className="standard-button license-agreement-button terms-restore-button"
                     >
                         {this.context.t("TERMS_EDIT_BUTTON_RESTORE")}
-                        {restoring && <Spinner/>}
+                        {restoring && <Loader loading={true} small/>}
                         {!restoring && <div><i className="fa fa-refresh"/></div>}
                     </button>
 

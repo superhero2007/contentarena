@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { GenericModalStyle} from "./../../../main/styles/custom";
+import Loader from "../../../common/components/Loader";
 
 class DeclineBidModal extends Component {
     constructor(props) {
@@ -41,15 +42,20 @@ class DeclineBidModal extends Component {
                 <h3 className="modal-title">{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REJECT")}</h3>
             </header>
             <section className="modal-body">
-                {!isLoading && !isFail && <textarea
-                    placeholder={this.context.t("COMMERCIAL_ACTIVITY_BID_REJECT_PLACEHOLDER")}
-                    onChange={this.handleMsgChange}
-                    name="messageBox"
-                    value={this.state.message} />}
-                {isLoading && <i className="fa fa-cog fa-spin" />}
-                {isFail && <div className="body-msg">
-                    {this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_FAILED")}</div>
-                }
+                <Loader loading={isLoading}>
+                    {!isFail ? (
+                        <textarea
+                            placeholder={this.context.t("COMMERCIAL_ACTIVITY_BID_REJECT_PLACEHOLDER")}
+                            onChange={this.handleMsgChange}
+                            name="messageBox"
+                            value={this.state.message}
+                        />
+                    ) : (
+                        <div className="body-msg">
+                            {this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_FAILED")}
+                        </div>
+                    )}
+                </Loader>
             </section>
             <footer className="modal-footer">
                 {isFail || isLoading

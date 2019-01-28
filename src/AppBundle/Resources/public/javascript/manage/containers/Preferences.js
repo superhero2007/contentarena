@@ -10,6 +10,7 @@ import PreferredSportSeller from "../components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../components/PreferredSportBuyer";
 import PrivacyPolicy from "../../main/components/PrivacyPolicy";
+import Loader from "../../common/components/Loader";
 
 class Preferences extends React.Component {
     constructor(props) {
@@ -95,7 +96,7 @@ class Preferences extends React.Component {
 
         document.title = "Content Arena - Preferences";
 
-        if (loading) return(<Spinner/>);
+        if (loading) return <Loader loading={true}/>;
 
         return (
             <div className={"settings-container"}>

@@ -7,6 +7,7 @@ import DigitalSignature from "./../../../main/components/DigitalSignature";
 import store from "../../../main/store";
 import {disableValidation, enableValidation} from "../../../main/actions/validationActions";
 import {connect} from "react-redux";
+import Loader from "../../../common/components/Loader";
 
 class AcceptBidModal extends Component {
     constructor(props) {
@@ -64,34 +65,37 @@ class AcceptBidModal extends Component {
                 <i className="fa fa-times" onClick={onCloseModal} />
             </header>
             <section className="modal-body">
-                {!isLoading && !isFail && <div>
-                    <DigitalSignature
-                        customClass='for-modal'
-                        licenseBidId={selectedBid.customId}
-                        title={this.context.t("ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR")}
-                        signature={signature}
-                        signatureName={signatureName}
-                        signaturePosition={signaturePosition}
-                        onChangeSignatureName={e=>{
-                            this.setState({"signatureName": e.target.value});
-                        }}
-                        onChangeSignaturePosition={e=>{
-                            this.setState({"signaturePosition": e.target.value});
-                        }}
-                        onReady={signature => { this.setState({signature}) }}
-                    />
-                    <GeneralTerms
-                        defaultChecked={terms}
-                        value={terms}
-                        onChange={e => this.handleTermsAndConditions(e) }
-                        isInvalid={isTermsInvalid}
-                    />
-                </div>
-                }
-                {isLoading && <i className="fa fa-cog fa-spin" />}
-                {isFail && <div className="body-msg">
-                    {this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_FAILED")}</div>
-                }
+                <Loader
+                    loading={isLoading}
+                >
+                    {!isFail ? (
+                        <div>
+                            <DigitalSignature
+                                customClass='for-modal'
+                                licenseBidId={selectedBid.customId}
+                                title={this.context.t("ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR")}
+                                signature={signature}
+                                signatureName={signatureName}
+                                signaturePosition={signaturePosition}
+                                onChangeSignatureName={e=>{
+                                    this.setState({"signatureName": e.target.value});
+                                }}
+                                onChangeSignaturePosition={e=>{
+                                    this.setState({"signaturePosition": e.target.value});
+                                }}
+                                onReady={signature => { this.setState({signature}) }}
+                            />
+                            <GeneralTerms
+                                defaultChecked={terms}
+                                value={terms}
+                                onChange={e => this.handleTermsAndConditions(e) }
+                                isInvalid={isTermsInvalid}
+                            />
+                        </div>
+                    ) : (
+                        <div className="body-msg">{this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_FAILED")}</div>
+                    )}
+                </Loader>
             </section>
             <footer className="modal-footer">
                 {isFail || isLoading ? (
