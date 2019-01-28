@@ -1891,6 +1891,10 @@ msgid "TERMS_EDIT_HEADER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_HEADER_TWO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS"
 msgstr ""
 
@@ -1972,7 +1976,10 @@ msgid "Country"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Ok"
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "MODAL_APPLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
@@ -2046,11 +2053,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep3.js
 msgid "Unlimited"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-msgid "MODAL_APPLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ListingName.js

@@ -141,6 +141,9 @@ class Terms extends React.Component {
                 <div className="terms-edit-header">
                     <div className="terms-edit-header-title">
                         {this.context.t("TERMS_EDIT_HEADER")}
+                        <div className="subtitle">
+                            {this.context.t("TERMS_EDIT_HEADER_TWO")}
+                        </div>
                     </div>
                     <button
                         onClick={this.restoreDefaultDefinitions}

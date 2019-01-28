@@ -48,6 +48,7 @@ export const attachmentClipIcon = <img src={assetsBaseDir + "app/images/attachme
 export const pencilIcon = assetsBaseDir + "app/images/pencil-edit-button.svg";
 export const reloadIcon = assetsBaseDir + "app/images/reload.svg";
 export const minusIcon = assetsBaseDir + "app/images/minus.svg";
+export const trashIconRed = assetsBaseDir + "app/images/trash-red.svg";
 export const trashIcon = assetsBaseDir + "app/images/trash-gray.svg";
 
 export const IconYellowCircle = ({icon, onClick}) => (
