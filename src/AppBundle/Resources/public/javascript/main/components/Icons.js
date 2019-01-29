@@ -49,6 +49,7 @@ export const pencilIcon = assetsBaseDir + "app/images/pencil-edit-button.svg";
 export const reloadIcon = assetsBaseDir + "app/images/reload.svg";
 export const minusIcon = assetsBaseDir + "app/images/minus.svg";
 export const trashIcon = assetsBaseDir + "app/images/trash-gray.svg";
+export const trashIconWhite = assetsBaseDir + "app/images/trash-white.svg";
 
 export const IconYellowCircle = ({icon, onClick}) => (
     <div onClick={onClick} className="icon-circle-background"><img src={icon} alt=""/></div>
