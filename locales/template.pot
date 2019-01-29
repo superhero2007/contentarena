@@ -426,6 +426,14 @@ msgid "MARKETPLACE_CHECKOUT_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
+msgid "LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED"
 msgstr ""
 

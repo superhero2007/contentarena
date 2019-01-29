@@ -248,8 +248,8 @@ s
                     onChange={this.handleTerritorySelector}
                     className="sales-packages-filters"
                     items={[
-                        {value: this.filtered, label: "Show Filter Territories" },
-                        {value: this.all, label: "Show All Territories" }
+                        {value: this.filtered, label: this.context.t("LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED") },
+                        {value: this.all, label: this.context.t("LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES") }
                     ]}
                 />}
 
