@@ -58,7 +58,6 @@ class TerritoriesSalesPackages extends PureComponent {
         let selected = ( response.all ) ? [] : response.selected,
             selectedName = response.name;
         this.setState({selected, selectedName});
-        console.log("ON FILTER");
         this.filterBundles(territories, selected,true);
     };
 
@@ -113,7 +112,7 @@ class TerritoriesSalesPackages extends PureComponent {
         this.setDefaultSelection(territories, filteredIndividualBundles, filteredTerritorialBundles, clear);
 
     };
-s
+
     selectTerritory = (e, bundle) => {
         const isChecked = e.target.checked;
         let checkedItems = this.state.checkedItems;
@@ -222,7 +221,8 @@ s
     render() {
         const {
             salesPackages,
-            userCanNotBuy
+            userCanNotBuy,
+            filter
         } = this.props;
 
         const {
@@ -248,7 +248,11 @@ s
                     onChange={this.handleTerritorySelector}
                     className="sales-packages-filters"
                     items={[
-                        {value: this.filtered, label: this.context.t("LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED") },
+                        {
+                            value: this.filtered,
+                            label: this.context.t("LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED"),
+                            disabled: !filter.countries || filter.countries.length === 0
+                        },
                         {value: this.all, label: this.context.t("LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES") }
                     ]}
                 />}
