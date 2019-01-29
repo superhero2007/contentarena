@@ -33,23 +33,21 @@ class Checkout extends React.Component {
         let minimumBidBundles = 0;
         let allowMultiple = props.selectedPackages.filter(b=>b.salesMethod==="BIDDING" ).length > 1;
 
-        props.selectedPackages.forEach(b=>{
-            minimumBidBundles += parseFloat(b.fee)
-        });
-
-        minimumBidBundles = minimumBidBundles / 2;
-
         let selectedPackages = props.selectedPackages.map( b => {
             if ( b.salesMethod === "BIDDING" && b.fee !== 0 && b.fee !== "0" && b.fee !== "") {
-                b.minimumBid = minimumBidBundles;
-                b.fee = minimumBidBundles + 1;
+                b.minimumBid = parseFloat(b.fee);
+                b.fee = parseFloat(b.fee) + 1;
             } else {
                 b.minimumBid = 1;
             }
             return b;
         });
 
+        selectedPackages.forEach(b=>{
+            minimumBidBundles += b.minimumBid
+        });
 
+        minimumBidBundles = minimumBidBundles / 2;
 
         this.baseDir = assetsBaseDir + "../";
         this.single = "SINGLE";
@@ -66,6 +64,7 @@ class Checkout extends React.Component {
             soldOut  : false,
             selectedPackages : selectedPackages || {},
             bundles: selectedPackages,
+            minimumBidBundles : minimumBidBundles,
             editCompanyOpen : false,
             bidApplied : false,
             openContactSellerModal: false,
@@ -332,42 +331,27 @@ class Checkout extends React.Component {
         </Modal>
     };
 
-    getTechnicalFee = () => {
-        const {content} = this.state;
-
-        let response = {
-            TECHNICAL_FEE :"",
-            TECHNICAL_FEE_PERCENTAGE : 0
-        };
-
-        let selected = (content.rightsPackage && content.rightsPackage[0] && content.rightsPackage[0].selectedRights) ? content.rightsPackage[0].selectedRights : null;
-
-        if ( selected ){
-            response["TECHNICAL_FEE"] = selected["TECHNICAL_FEE"];
-            response["TECHNICAL_FEE_PERCENTAGE"] = selected["TECHNICAL_FEE_PERCENTAGE"];
-        }
-
-        return selected;
-
-    };
-
-    getBundleTotalFee = (selectedPackage) => {
-        let total = parseFloat(selectedPackage.fee);
+    getBundleTotalFee = (fee) => {
+        let total = parseFloat(fee);
         return total + this.getTechnicalFeeValue(total);
     };
 
     getTotalFee = () => {
 
         const {
-            selectedPackages
+            selectedPackages,
+            multipleBidValue,
+            bidMethod,
         } = this.state;
 
-        let total = selectedPackages.reduce((a,b)=>{
+        let total = selectedPackages.filter(b=> !(b.salesMethod === "BIDDING" && bidMethod === this.all) ).reduce((a,b)=>{
             if (a.fee === undefined && b.fee=== undefined) return {fee:0};
             if (a.fee=== undefined) return {fee:parseFloat(b.fee)};
             if (b.fee=== undefined) return {fee:parseFloat(a.fee)};
             return {fee: parseFloat(b.fee) +  parseFloat(a.fee)};
         },{fee: 0});
+
+        if (bidMethod === this.all) total.fee += multipleBidValue;
 
         total.withTechnical = total.fee +  this.getTechnicalFeeValue(total.fee);
 
@@ -395,6 +379,7 @@ class Checkout extends React.Component {
             signatureName,
             signaturePosition,
             bundles,
+            multipleBidValue,
             bidMethod
         } = this.state;
 
@@ -403,10 +388,10 @@ class Checkout extends React.Component {
 
         let bids = bundles.map(bundle => {
             return {
-                amount: parseFloat(bundle.fee),
+                amount: (bidMethod === this.all && bundle.salesMethod === "BIDDING") ? multipleBidValue : parseFloat(bundle.fee),
                 salesPackage: bundle.id,
                 salesMethod: bundle.salesMethod,
-                totalFee : this.getBundleTotalFee(bundle)
+                totalFee : (bidMethod === this.all && bundle.salesMethod === "BIDDING") ?  this.getBundleTotalFee(multipleBidValue) : this.getBundleTotalFee(bundle.fee)
             }
         });
 
@@ -450,7 +435,35 @@ class Checkout extends React.Component {
             : ' Included';
     };
 
+    getTechnicalFee = () => {
+        const {content} = this.state;
+
+        let response = {
+            TECHNICAL_FEE :"",
+            TECHNICAL_FEE_PERCENTAGE : 0
+        };
+
+        let selected = (content.rightsPackage && content.rightsPackage[0] && content.rightsPackage[0].selectedRights) ? content.rightsPackage[0].selectedRights : null;
+
+        if ( selected ){
+            response["TECHNICAL_FEE"] = selected["TECHNICAL_FEE"];
+            response["TECHNICAL_FEE_PERCENTAGE"] = selected["TECHNICAL_FEE_PERCENTAGE"];
+        }
+
+        return selected;
+
+    };
+
     getTechnicalFeeValue = ( bid) => {
+        const technicalFee = this.getTechnicalFee();
+        if (!bid) return 0;
+
+        return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
+            ? bid*(technicalFee.TECHNICAL_FEE_PERCENTAGE/100)
+            : 0;
+    };
+
+    getTechnicalFeeValueForAll = ( bid) => {
         const technicalFee = this.getTechnicalFee();
         if (!bid) return 0;
 
@@ -517,7 +530,10 @@ class Checkout extends React.Component {
             signature,
             signatureName,
             signaturePosition,
-            bundles
+            bundles,
+            bidMethod,
+            multipleBidValue,
+            minimumBidBundles
         } = this.state;
         //const validateMinimumBid = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(bid) > parseFloat(minimumBid) : parseFloat(bid) >= parseFloat(minimumBid);
         //return bid && parseFloat(bid) !== 0 && validateMinimumBid;
@@ -527,8 +543,10 @@ class Checkout extends React.Component {
             || signaturePosition === ""
             || bundles.filter(b => {
                 let fee = parseFloat(b.fee);
-                return b.salesMethod === "BIDDING" && fee <= b.minimumBid
+                return  bidMethod !== this.all === b.salesMethod === "BIDDING" && fee <= b.minimumBid
             }).length > 0
+            || (bidMethod === this.all && !multipleBidValue)
+            || (bidMethod === this.all && multipleBidValue < minimumBidBundles)
     }; 
 
     getCompanyAddress = () => {
@@ -545,15 +563,14 @@ class Checkout extends React.Component {
     };
 
     getMinBid = ( bundle ) => {
-        //if (!parseFloat(bundle.minimumBid)) return;
 
-        //let bidValue = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(minimumBid) + 1 : parseFloat(minimumBid);
+        const {minimumBidBundles, bidMethod} = this.state;
 
-        if ( !bundle.minimumBid  ) return <span>{"-"}</span>;
+        if ( !bundle.minimumBid || (bidMethod === this.all && !bundle.all) ) return <span>{"-"}</span>;
 
         return  <NumberFormat
             thousandSeparator={true}
-            value={parseFloat(bundle.minimumBid)}
+            value={bundle.all ? minimumBidBundles : parseFloat(bundle.minimumBid)}
             displayType={'text'}
             prefix={getCurrencySymbol(bundle.currency.code)+ " "} />;
     };
@@ -574,6 +591,11 @@ class Checkout extends React.Component {
         this.setState({ bundles: bundles, bidMethod, allowMultiple});
     };
 
+    isBundleDisabled = (bundle) => {
+        const {bidMethod} = this.state;
+        return bidMethod === this.all && !bundle.all && bundle.salesMethod === "BIDDING";
+    };
+
     render() {
         ReactTooltip.rebuild();
         const { listing, validation} = this.props;
@@ -583,7 +605,7 @@ class Checkout extends React.Component {
             signatureName,
             signaturePosition,
             bid,
-            asd,
+            multipleBidValue,
             company,
             spinner,
             bidMethod,
@@ -644,7 +666,7 @@ class Checkout extends React.Component {
                             {bundle.all &&
                             <a className="bid-license"
                                target={"_blank"}
-                               href={getCustomLicenseUrlBids(content.customId, selectedPackages, asd, company,  true)}
+                               href={getCustomLicenseUrlBids(content.customId, selectedPackages, multipleBidValue, company,  true)}
                                title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}>
                                 <img src={pdfIcon} alt="Licence"/>
                                 <span>{this.context.t("License agreement")}</span>
@@ -664,8 +686,8 @@ class Checkout extends React.Component {
                 Cell: props => {
                     const bundle = props.original;
                     return (
-                        <div className={cn("price-action-wrapper", {"price-action-center" : bundle.salesMethod === "FIXED" || !bundle.minimumBid  })}>
-                            <div title={bundle.fee} className={cn( {"price-invalid" : !bundle.all && bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee)})}>
+                        <div className={cn("price-action-wrapper", {"price-action-center" : bundle.salesMethod === "FIXED" || this.isBundleDisabled(bundle) })}>
+                            <div title={bundle.fee} className={cn( {"price-invalid" : !bundle.all && bidMethod !== this.all && bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee)})}>
                                 { this.getMinBid(bundle) }
                             </div>
                         </div>
@@ -677,6 +699,8 @@ class Checkout extends React.Component {
                 headerClassName: 'table-header-big',
                 Cell: props => {
                     const bundle = props.original;
+                    let style = { height: "28px", width: "100%" };
+                    if (bidMethod === this.all && !bundle.all) style.backgroundColor = "#666";
                     return (
                         <div className={cn("price-action-wrapper" )}>
                             <div title={bundle.fee}>
@@ -694,27 +718,19 @@ class Checkout extends React.Component {
                                     }}
                                     disabled = {bidMethod === this.all && !bundle.all}
                                     min={bundle.minimumBid}
-                                    style={{ height: "28px", width: "100%" }}
+                                    style={style}
                                     prefix={getCurrencySymbol(bundle.currency)+ " "}
                                 />}
                                 {bundle.all &&
                                 <NumberFormat
                                     thousandSeparator={true}
-                                    value={asd}
+                                    value={multipleBidValue}
                                     onValueChange={(values) => {
                                         const {value} = values;
-                                        let bundles = this.state.selectedPackages;
-                                        bundles = bundles.map(b=>{
-                                            if (b.salesMethod === "BIDDING"){
-                                                b.fee=value;
-                                                b.fee = (b.minimumBid && Number(b.minimumBid) > Number(value) )? b.minimumBid : value;
-                                            }
-                                            return b;
-                                        });
-                                        this.setState({asd: value, bundles: bundles});
+                                        this.setState({multipleBidValue: parseFloat(value)});
                                     }}
                                     min={0}
-                                    style={{ height: "28px", width: "100%" }}
+                                    style={style}
                                     prefix={getCurrencySymbol(bundle.currency)+ " "}
                                 />}
                             </div>
@@ -731,11 +747,12 @@ class Checkout extends React.Component {
                     return (
                         <div className="price-action-wrapper">
                             <div title={bundle.fee}>
-                                <NumberFormat
+                                {this.isBundleDisabled(bundle) && <span>-</span>}
+                                {!this.isBundleDisabled(bundle) && <NumberFormat
                                     thousandSeparator={true}
-                                    value={this.getTechnicalFeeValue(bundle.fee) }
+                                    value={this.getTechnicalFeeValue(bundle.all ? multipleBidValue : bundle.fee) }
                                     displayType={'text'}
-                                    prefix={getCurrencySymbol(selectedPackages[0].currency.code)+ " "} />
+                                    prefix={getCurrencySymbol(selectedPackages[0].currency.code)+ " "} />}
                             </div>
                         </div>
                     )
@@ -749,9 +766,9 @@ class Checkout extends React.Component {
                     return (
                         <div className="price-action-wrapper">
                             <div title={bundle.fee}>
-                                {+bundle.fee > 0 && <NumberFormat
+                                {!this.isBundleDisabled(bundle) && <NumberFormat
                                     thousandSeparator={true}
-                                    value={this.getBundleTotalFee(bundle) }
+                                    value={this.getBundleTotalFee(bundle.all ? multipleBidValue : bundle.fee) }
                                     displayType={'text'}
                                     prefix={getCurrencySymbol(selectedPackages[0].currency.code)+ " "} />}
                             </div>

@@ -81,6 +81,19 @@ class BidRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function getAllCustomBidsByContent($content){
+        $query = $this->createQueryBuilder('b')
+            ->join('b.salesPackage', 'bundle')
+            ->orderBy("b.createdAt", "DESC")
+            ->where('b.content = :content')
+            ->andWhere('bundle.custom = :custom')
+            ->setParameter('content', $content)
+            ->setParameter('custom', true)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getAllBidsByContentAndUser($content, $company){
         $query = $this->createQueryBuilder('b')
             ->orderBy("b.createdAt", "DESC")

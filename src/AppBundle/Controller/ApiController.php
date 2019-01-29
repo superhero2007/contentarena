@@ -373,13 +373,18 @@ class ApiController extends BaseController
             $bids[] = $bid;
             foreach ($bidsData as $bidData){
                 $bundle = $bundleService->findBundle($bidData['salesPackage']);
+
+                if ($bundle->getSalesMethod() === "FIXED"){
+                    $bid = $bidService->saveBidsData($bidData, $request, $user, $content, $bundle->getSalesMethod(), $bundle, $multiple);
+                    $bids[] = $bid;
+                }
                 $bundles[] = $bundle;
             }
 
         } else {
             foreach ($bidsData as $bidData){
                 $bundle = $bundleService->findBundle($bidData['salesPackage']);
-                $bid = $bidService->saveBidsData($bidData, $request, $user, $content, $salesMethod, $bundle, $multiple);
+                $bid = $bidService->saveBidsData($bidData, $request, $user, $content, $bundle->getSalesMethod(), $bundle, $multiple);
                 $bids[] = $bid;
             }
         }
@@ -578,6 +583,17 @@ class ApiController extends BaseController
 
                 /* @var $salesBundle SalesPackage */
                 $salesBundle->setBids($bids);
+            }
+
+            $customBids = $bidService->getAllCustomBidsByContent($listing);
+
+            foreach ($customBids as $customBid){
+                /* @var Bid $customBid */
+                /* @var SalesPackage $bundle */
+                $bundle = $customBid->getSalesPackage();
+                $bundle->setBids(array($customBid));
+                $listing->addSalesPackage($bundle);
+                $totalBids += 1;
             }
 
             if ( $totalBids == 0 && $listing->getStatus()->getName() == "EXPIRED" ) unset($listings[$key]);

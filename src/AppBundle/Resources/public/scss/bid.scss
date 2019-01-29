@@ -81,6 +81,11 @@
         flex-direction: row;
         width: 100%;
         justify-content: space-between;
+        input{
+          :disabled{
+            background-color: #333333;
+          }
+        }
         .fa-minus-circle {
           color: #FFC94B;
           font-size: 20px;
