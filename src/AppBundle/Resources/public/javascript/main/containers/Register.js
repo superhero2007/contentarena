@@ -96,6 +96,11 @@ class Register extends React.Component {
                 step : step
             });
         }
+        jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+    }
+
+    componentWillUnmount(){
+        jQuery('body, .marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     /**

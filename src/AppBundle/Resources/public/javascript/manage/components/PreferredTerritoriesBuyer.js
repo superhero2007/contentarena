@@ -55,6 +55,9 @@ class PreferredTerritoriesBuyer extends React.Component {
                 <div className={"preferences-title"}>
                     {this.context.t("PREFERENCES_TERRITORIES_BUYER_TITLE")}
                 </div>
+                <div className={"subtitle"}>
+                    {this.context.t("PREFERENCES_TERRITORIES_BUYER_SUBTITLE")}
+                </div>
                 <div className={"row"} style={style}>
                     <div className={"preferences-item"}>
                         <div className="d-flex align-items-center" style={{marginBottom:5}}>
