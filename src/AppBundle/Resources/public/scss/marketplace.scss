@@ -206,7 +206,7 @@
       span{
         display: flex;
         justify-content: space-between;
-        text-transform: none;
+        text-transform: uppercase;
       }
     }
     .rt-tbody{
@@ -216,7 +216,6 @@
 
         &.-even, &.-odd{
           cursor: pointer;
-          background-color: $primary-color !important;
         }
 
         &:hover{
