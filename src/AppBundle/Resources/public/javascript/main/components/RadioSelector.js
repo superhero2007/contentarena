@@ -30,6 +30,7 @@ class RadioSelector extends React.Component {
                         }, className)}>
                             <input className="ca-radio"
                                    type="radio"
+                                   disabled={item.disabled}
                                    value={item.value}
                                    onChange={this.handleRadioChange}
                                    checked={value === item.value}
