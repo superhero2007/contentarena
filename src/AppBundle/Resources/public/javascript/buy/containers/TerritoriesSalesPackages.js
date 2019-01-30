@@ -281,7 +281,7 @@ class TerritoriesSalesPackages extends PureComponent {
                 }
 
                 {/* BUNDLE AVAILABILITY SELECTOR */}
-                {<div className="bundles-countries">
+                {<div className="bundles-countries checkout-button">
                     <div className="bundles-countries-title">
                         {filteredTerritorialBundles.length > 0 && this.context.t("SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES")}
                         {filteredTerritorialBundles.length === 0 && this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}

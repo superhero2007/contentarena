@@ -680,7 +680,7 @@
         .sales-packages {
           display: table;
           width: 100%;
-          margin-bottom: 30px;
+          margin-bottom: 15px;
           .sales-package-container, .sales-package-header {
             padding: 15px 0;
             display: table-row;
@@ -846,9 +846,9 @@
           }
         }
         .checkout-button{
-          margin: 20px 0;
+          margin: 15px 0;
           button{
-            font-size: 20px;
+            /*font-size: 20px;*/
             font-weight: 600;
             padding: 13px 20px;
           }

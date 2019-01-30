@@ -42,6 +42,23 @@ ContentArena.Utils = {
             content.law.value = content.law.name;
         }
 
+        if ( content.customBundles ) {
+            content.customBundles.forEach((sp) => {
+                if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
+                if (sp.excludedCountries) sp.excludedTerritories = sp.excludedCountries.map(t=>{return{label:t.name, value:t.name, regions:t.regions, territoryId:t.territoryId}})
+                if (sp.territories) sp.territories = sp.territories.map(t=>{return{name:t.name,label:t.name, value:t.name, regions:t.regions, territoryId:t.territoryId}})
+                if (!sp.territories) sort = false;
+
+                try {
+                    if (sp.installments){
+                        sp.installments.forEach(i=>{
+                            if (i.date) i.date = moment(i.date);
+                        })
+                    }
+                } catch (e){}
+            });
+        }
+
         if ( content.salesPackages ) {
             content.salesPackages.forEach((sp) => {
                 if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
