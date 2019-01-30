@@ -26,6 +26,11 @@ api_rest:
     resource: ApiBundle\Controller\LoginController
     prefix:   /v1/auth
 
+api_rest_user:
+    type: rest
+    resource: AppBundle\Controller\UserController
+    prefix:   /api/users
+
 api_rest_utils:
     type: rest
     resource: ApiBundle\Controller\UtilsController

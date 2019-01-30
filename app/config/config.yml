@@ -111,6 +111,7 @@ fos_user:
             template:   email/password_resetting.email.twig
 
 fos_rest:
+    param_fetcher_listener: force
     routing_loader:
         default_format: json                            # All responses should be JSON formated
         include_format: false                           # We do not include format in request, so that all responses
