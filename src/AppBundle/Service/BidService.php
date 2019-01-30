@@ -153,6 +153,10 @@ class BidService
 
         $amount = ( $bidData['amount'] != null )? $bidData['amount'] : $bidData['totalFee'];
 
+        if ( $salesPackage->isCustom() ){
+            $salesPackage->setFee($amount);
+        }
+
         $bid->setType($type);
         $bid->setStatus($status);
         $bid->setContent($content);

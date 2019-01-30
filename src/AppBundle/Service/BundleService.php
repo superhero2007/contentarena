@@ -62,7 +62,7 @@ class BundleService
         return $bundle;
     }
 
-    public function getCustomBundle($bidsData){
+    public function getCustomBundle($bidsData, $fee){
         $refBundle = $this->findBundle($bidsData[0]['salesPackage']);
         $bundles = array();
         $bundle = new SalesPackage();
@@ -72,7 +72,7 @@ class BundleService
         $bundle->setSalesMethod($this->em->getRepository('AppBundle:BidType')->findOneBy(array('name' => "BIDDING")));
         $bundle->setBundleMethod("SELL_AS_BUNDLE");
         $bundle->setTerritoriesMethod("SELECTED_TERRITORIES");
-        $bundle->setFee($refBundle->getFee());
+        $bundle->setFee($fee);
 
         $countries = array();
 

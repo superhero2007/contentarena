@@ -368,7 +368,8 @@ class ApiController extends BaseController
         $salesMethod = $bidService->findBidType($bidsData[0]['salesMethod']);
 
         if ($isMultiple) {
-            $bundle = $bundleService->getCustomBundle($bidsData);
+            $fee = $request->get("totalFee")["fee"];
+            $bundle = $bundleService->getCustomBundle($bidsData, $fee);
             $bid = $bidService->saveBidsData($bidsData[0], $request, $user, $content, $salesMethod, $bundle, $multiple);
             $bids[] = $bid;
             foreach ($bidsData as $bidData){

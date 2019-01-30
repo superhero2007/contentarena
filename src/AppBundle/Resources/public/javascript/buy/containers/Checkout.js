@@ -570,7 +570,7 @@ class Checkout extends React.Component {
 
         return  <NumberFormat
             thousandSeparator={true}
-            value={bundle.all ? minimumBidBundles : parseFloat(bundle.minimumBid)}
+            value={bundle.all ? minimumBidBundles : bundle.salesMethod === "FIXED" ? parseFloat(bundle.fee) : parseFloat(bundle.minimumBid)}
             displayType={'text'}
             prefix={getCurrencySymbol(bundle.currency.code)+ " "} />;
     };
