@@ -184,7 +184,7 @@ class SalesPackageForm extends React.Component {
 
         if (territoriesQuantity === 'multiple' && exclusivity) {
             this.setState({
-                remainCountries: this.getRemainCountries(selectedRegionCountries)
+                remainCountries: this.getRemainCountries(territories)
             })
         }
         if ( this.state.isNew ) {
