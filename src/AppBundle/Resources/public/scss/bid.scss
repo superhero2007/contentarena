@@ -1,7 +1,7 @@
 @import "vars";
 @import "mixins";
 
-.bid-wrapper{
+.bid-wrapper {
   flex: 4;
   display: flex;
   flex-direction: column;
@@ -10,42 +10,47 @@
 
   .bid-header {
     margin: 5px;
-    .name{
+
+    .name {
       font-size: 21px;
       font-weight: bold;
       color: $font-color-6;
     }
   }
-  .bid-title{
+
+  .bid-title {
     font-weight: 600;
     border-bottom: 1px solid #666;
     font-size: 16px;
     color: #333333;
     padding: 0 0 8px;
   }
-  .radio-selector-container{
+
+  .radio-selector-container {
     border-top: 1px solid #cccc;
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
   }
 
-  .bid-list-mode{
+  .bid-list-mode {
     font-size: 13px;
     margin: 15px 50px 15px 0;
   }
 
-  .bid-info-wrapper{
+  .bid-info-wrapper {
     width: 100%;
     padding: 30px 20px;
     margin: 15px 0;
     background-color: #E7E7E7;
-    .bid-title-content{
+
+    .bid-title-content {
       display: inline-block;
       border-bottom: 2px solid #ffc94b;
       padding-bottom: 5px;
       margin-bottom: 10px;
     }
-    .total-fee{
+
+    .total-fee {
       height: 60px;
       border: 1px solid #999999;
       background-color: #FFFFFF;
@@ -60,32 +65,37 @@
       font-weight: bold;
     }
 
-    .bundles-table{
-      .rt-td{
+    .bundles-table {
+      .rt-td {
         height: 50px;
         align-items: center;
         display: flex;
       }
-      .price-action-center{
+
+      .price-action-center {
         width: 100%;
         text-align: center;
       }
-      .price-invalid{
-        color : red
+
+      .price-invalid {
+        color: red
       }
 
     }
-    .bundles-table-checkout{
-      .price-action-wrapper{
+
+    .bundles-table-checkout {
+      .price-action-wrapper {
         display: flex !important;
         flex-direction: row;
         width: 100%;
         justify-content: space-between;
-        input{
-          :disabled{
+
+        input {
+          :disabled {
             background-color: #333333;
           }
         }
+
         .fa-minus-circle {
           color: #FFC94B;
           font-size: 20px;
@@ -93,12 +103,15 @@
           cursor: pointer;
         }
       }
-      .details-wrapper{
+
+      .details-wrapper {
         display: flex !important;
-        .bid-license{
+
+        .bid-license {
           margin-right: 20px;
         }
-        img{
+
+        img {
           height: 13px;
           margin: -3px 2px 0 3px;
         }
@@ -107,20 +120,20 @@
 
     }
 
-    .bid-location{
+    .bid-location {
       display: flex;
       justify-content: flex-start;
       align-items: center;
 
       padding-bottom: 20px;
 
-      .bid-location-icon{
+      .bid-location-icon {
         width: 26px;
         height: 23px;
         margin-right: 5px;
       }
 
-      .bid-location-number{
+      .bid-location-number {
         display: inline-block;
         font-size: 16px;
         font-weight: bold;
@@ -128,11 +141,11 @@
         margin-right: 5px;
       }
 
-      .bid-location-name{
+      .bid-location-name {
         @extend .bid-location-number;
       }
 
-      .bid-extra-territories{
+      .bid-extra-territories {
         color: $blue-secondary-color;
         text-decoration: underline;
         margin-left: 5px;
@@ -140,28 +153,30 @@
       }
     }
 
-    .bid-fee{
-      .bid-license, .bid-technical, .bid-total{
+    .bid-fee {
+      .bid-license, .bid-technical, .bid-total {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
 
-        & .bid-value{
+        & .bid-value {
           font-weight: bold;
 
-          &.padding-right{
+          &.padding-right {
             padding-right: 116px;
-            span{
+
+            span {
               padding-right: 10px;
             }
           }
-          &.right-section{
+
+          &.right-section {
             display: flex;
             align-items: center;
 
-            .bid-change-value{
-              input{
+            .bid-change-value {
+              input {
                 width: 80%;
                 margin: 0;
                 padding: 15px 5px;
@@ -173,31 +188,31 @@
           }
         }
 
-        & .bid-label{
+        & .bid-label {
           font-size: 14px;
         }
       }
 
-      .bid-license{
+      .bid-license {
         padding: 25px 0 20px;
         border-top: 1px solid $font-color-2;
       }
 
-      .bid-technical{
+      .bid-technical {
         padding: 5px 0 25px 0;
       }
 
-      .bid-total{
+      .bid-total {
         border-top: 1px solid $font-color-2;
         padding-top: 25px;
       }
     }
   }
 
-  .bid-payment-details{
+  .bid-payment-details {
     margin-bottom: 35px;
 
-    header{
+    header {
       font-size: 16px;
       font-weight: bold;
 
@@ -206,11 +221,12 @@
 
       padding-bottom: 15px;
     }
-    .bid-payment-table{
+
+    .bid-payment-table {
       display: flex;
       flex-direction: column;
 
-      .payment-row{
+      .payment-row {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -219,23 +235,26 @@
         padding: 20px;
         border-bottom: 1px solid $font-color-5;
 
-        .payment-installment, .payment-percentage, .payment-date{
+        .payment-installment, .payment-percentage, .payment-date {
           width: 33%;
           color: $font-color-5;
           font-size: 14px;
         }
 
-        .payment-percentage{
+        .payment-percentage {
           text-align: left;
           position: relative;
           left: 10%;
         }
-        .payment-date{ text-align: right; }
 
-        .payment-installment, .payment-percentage{
+        .payment-date {
+          text-align: right;
+        }
+
+        .payment-installment, .payment-percentage {
           font-weight: bold;
 
-          i{
+          i {
             font-size: 20px;
             color: $orange-color;
           }
@@ -244,26 +263,27 @@
     }
   }
 
-  .bid-address-license{
+  .bid-address-license {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 10px 20px;
     flex-direction: column;
 
-    .bid-address, .bid-license{
+    .bid-address, .bid-license {
       flex: 1;
       font-size: 13px;
       padding: 15px 0px;
       font-weight: 600;
 
-      i{
+      i {
         font-size: 23px;
         color: $color-blue;
         float: right;
         cursor: pointer;
       }
-      span{
+
+      span {
         display: inline-block;
         width: 90%;
 
@@ -273,44 +293,50 @@
         vertical-align: middle;
       }
     }
-    .bid-license{
+
+    .bid-license {
       cursor: pointer;
 
-      span{
+      span {
         width: auto;
         color: $color-blue;
       }
 
-      img{
+      img {
         float: right;
       }
     }
   }
 
-  .bid-signature{
-    .signature-wrap{
+  .bid-signature {
+    .signature-wrap {
       /*max-width: 100%;*/
     }
-    .signature-name-container{
+
+    .signature-name-container {
       /*max-width: 100%;
       margin: 0;*/
     }
-    .buttons{
+
+    .buttons {
       /*margin: 0;*/
     }
   }
 
-  .bid-signature-btns{
+  .bid-signature-btns {
     display: flex;
     flex-direction: column;
     align-items: center;
-
     margin-top: 25px;
 
-    label{
+    label {
       padding-left: 5px;
       color: $font-color-5;
       font-size: 12px;
+    }
+
+    .ca-btn.primary {
+      font-size: 26px;
     }
   }
 }

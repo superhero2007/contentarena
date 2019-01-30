@@ -93,15 +93,17 @@
     }
   }
 
-  &.preferences{
-    .title, .subtitle, .row{ margin-bottom: 15px !important; }
+  &.preferences, &.settings-container-welcome{
+    .title, .subtitle{ margin-bottom: 15px !important; }
     .Select--multi{ margin-top: 15px; }
     .region-filter{
       margin-bottom: 0;
-      margin-left: -5px;
+      .regions .region{ margin-left: 0 !important; }
     }
-    .Select-control{ margin-top: 0; }
+    .Select-control{ margin-top: 0 !important; }
     .d-flex{ margin-bottom: 0 !important; }
+    .row{ margin-bottom: 15px !important; }
+    .preferences-title{ margin-top: 25px !important; }
   }
 
   .edit-button {
@@ -265,7 +267,7 @@
         width: 100%;
         max-width: 800%;
 
-        .Select-placeholder, .Select-value{ background-color: #fff; }
+        .Select-placeholder, .Select-value, .Select-control{ background-color: #fff; }
       }
     }
 
@@ -510,7 +512,7 @@
     height: 50px;
     justify-content: center;
     align-items: center;
-    margin: 0 0 20px;
+    margin: 0;
 
     .step {
       height: 4px;

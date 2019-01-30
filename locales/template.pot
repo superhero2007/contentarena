@@ -1626,6 +1626,10 @@ msgid "PREFERENCES_TERRITORIES_BUYER_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
+msgid "PREFERENCES_TERRITORIES_BUYER_SUBTITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredTerritoriesBuyer.js
 msgid "PREFERENCES_TERRITORIES_BUYER_SINGLE_TERRITORY_OPTION"
 msgstr ""
 
@@ -1635,6 +1639,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
 msgid "PREFERENCES_PROFILE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+msgid "PREFERENCES_PROFILE_SUBTITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
@@ -1832,10 +1840,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_HEADLINE_EXPLANATION_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
-msgid "PREFERENCES_USER_UPDATED_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js

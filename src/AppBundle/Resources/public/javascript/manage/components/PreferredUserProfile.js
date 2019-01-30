@@ -33,10 +33,13 @@ class PreferredUserProfile extends React.Component {
 
         return (
             <React.Fragment>
-                <div className={cn({ 'title': true, "justify-content-center": centered })}>
+                <div className={cn("preferences-title", {"justify-content-center": centered })}>
                     {this.context.t("PREFERENCES_PROFILE_TITLE")}
                 </div>
-                <div  className={cn({ 'row': true, "justify-content-center": centered })} style={style}>
+                <div className={"subtitle"}>
+                    {this.context.t("PREFERENCES_PROFILE_SUBTITLE")}
+                </div>
+                <div  className={cn("row", {"justify-content-center": centered })} style={style}>
                     <div className={cn({ 'row-content d-flex align-items-center': true, "justify-content-center": centered })}>
                         <div className={cn({ 'font-weight-bold': profile === "BUYER" })}
                              style={{marginRight:20}}>

@@ -792,11 +792,6 @@ class Checkout extends React.Component {
                     </div>
                 </div>
                 <div className="bid-info-wrapper">
-                    <div className="bid-title no-border uppercase">
-                        <div className="bid-title-content">
-                            {this.context.t("SALES_PACKAGE_TABLE_HEADER")}
-                        </div>
-                    </div>
                     {selectedPackages.length > 1 && allowMultiple && <RadioSelector
                         value={bidMethod}
                         onChange={bidMethod=>this.setState({bidMethod})}
