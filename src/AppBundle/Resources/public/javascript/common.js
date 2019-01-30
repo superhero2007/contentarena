@@ -22,3 +22,4 @@ require('../scss/country.selector.scss');
 require('../scss/modal.scss');
 require('../scss/custom.pagination.scss');
 require('../scss/login.scss');
+require('../scss/error-page.scss');
