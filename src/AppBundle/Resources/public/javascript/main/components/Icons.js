@@ -1,5 +1,7 @@
 import React from 'react';
 
+export const contentWhiteLogo = <img src={`${assetsBaseDir}app/img/logo_contentarena.png`} alt="Content Arena" />;
+
 export const cancelIcon = assetsBaseDir + "app/images/cancel.png";
 export const bucketIcon = assetsBaseDir + "app/images/bucket.png";
 export const addIcon = assetsBaseDir + "app/images/add.png";

@@ -748,6 +748,24 @@ ContentArena.Api= {
             id
         });
     },
+
+    signInUser(username, password) {
+        return axios.post(`${envhosturl}api/users/login`, {
+            username, password
+        });
+    },
+
+    recoverPassword(email) {
+        return axios.post(`${envhosturl}api/users/password/recover`, {
+            email
+        });
+    },
+
+    signUpUser(firstName, lastName, email, companyLegalName, phone) {
+        return axios.post(`${envhosturl}api/users/register`, {
+            firstName, lastName, email, companyLegalName, phone
+        });
+    }
 };
 
 

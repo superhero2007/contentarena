@@ -174,10 +174,6 @@ msgid "SALES_PACKAGE_TABLE_TOTAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
-msgid "SALES_PACKAGE_TABLE_HEADER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 msgid "SALES_PACKAGE_COMPANY_ADDRESS"
 msgstr ""
 
@@ -597,6 +593,152 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Messages.js
 msgid "MESSAGES_SEND_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ChangePassword.js
+#: src/AppBundle/Resources/public/javascript/login/components/ReviewEmail.js
+msgid "LOGIN_REVIEW_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/RecoverPassword.js
+msgid "RECOVER_PASSWORD_ERROR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/RecoverPassword.js
+msgid "LOGIN_RECOVER_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/RecoverPassword.js
+msgid "LOGIN_YOUR_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/RecoverPassword.js
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "LOGIN_EMAIL_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/RecoverPassword.js
+msgid "LOGIN_REQUEST_NEW_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ReviewEmail.js
+msgid "LOGIN_REVIEW_EMAIL_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_ERROR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_TO_CONTENT_ARENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_EMAIL_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_SUBMIT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_FORGOT_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_NOT_ACCOUNT_YET"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_SIGN_UP_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_FIELD_ERROR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_FOR_ACCOUNT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_NAME_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_LAST_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_LAST_NAME_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_COMPANY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_COMPANY_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_PHONE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_PHONE_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
+msgid "SIGN_UP_SUBMIT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpSuccessfully.js
+msgid "SIGN_UP_SUCCESSFULLY_HEADER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpSuccessfully.js
+msgid "SIGN_UP_SUCCESSFULLY_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignUpSuccessfully.js
+msgid "LOGIN_SIGN_UP_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+msgid "LOGIN_BAR_HOME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+msgid "LOGIN_BAR_PRIVACY_POLICY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+msgid "LOGIN_BAR_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+msgid "LOGIN_BAR_COOKIE_POLICY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+msgid "LOGIN_BAR_FAQ"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
@@ -1840,6 +1982,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_HEADLINE_EXPLANATION_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
+msgid "PREFERENCES_USER_UPDATED_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js

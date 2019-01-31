@@ -15,6 +15,23 @@ export const LISTING_SORT_OPTIONS = {
     EXPIRY_DATE: 'expiry'
 };
 
+export const LOGIN_VIEW_TYPE = {
+    LOGIN: 'login',
+    RECOVER: 'recover',
+    REVIEW: 'review',
+    REGISTER: 'register',
+    REGISTERED: 'registered',
+    CHANGE_PASSWORD: 'change_password'
+};
+
+export const SIGN_UP_FIELDS ={
+    NAME: 'name',
+    LAST_NAME: 'lastName',
+    EMAIL: 'email',
+    PHONE: 'phone',
+    COMPANY: 'company'
+};
+
 export const REGIONS_ENUMS = {
     "Algeria":"DZA",
     "Angola":"AGO",

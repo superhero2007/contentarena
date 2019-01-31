@@ -1,7 +1,8 @@
 import React from "react";
 import {routes} from "./routes";
-import {PropTypes} from 'prop-types';
-import store  from './store';
+import PropTypes from "prop-types";
+import { LOGIN_VIEW_TYPE } from "@constants";
+import store  from "./store";
 import {
     BrowserRouter as Router,
     Route,
@@ -13,6 +14,7 @@ import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
 import {getDefaultRightsPackage, setTestStageMode, setTotalCountries} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
+import SignInUpWrapper from './../login/containers/SignInUpWrapper';
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -30,9 +32,6 @@ class PrivateRoute extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-        };
     }
 
     updateProfile() {
@@ -40,7 +39,7 @@ class PrivateRoute extends React.Component {
 
         if ( routeProfile && profile !== routeProfile ){
             store.dispatch(updateProfile(routeProfile));
-            ContentArena.ContentApi.updateUserProfile(routeProfile)
+            ContentArena.ContentApi.updateUserProfile(routeProfile);
         }
     }
 
@@ -88,26 +87,11 @@ const HeaderRoute = ({ component: Component, ...rest }) => (
 );
 
 
-class Login extends React.Component {
-    state = {
-        redirectToReferrer: false
-    };
-
-    login = () => {
-        fakeAuth.authenticate(() => {
-            this.setState({ redirectToReferrer: true });
-        });
-    };
-
+class Landing extends React.Component {
     render() {
         const { from } = this.props.location.state || { from: { pathname: "/" } };
-        const { redirectToReferrer } = this.state;
 
         if (hosturl === "https://app.contentarena.com/") window.location = 'https://contentarena.com';
-
-        if (redirectToReferrer) {
-            return <Redirect to={from} />;
-        }
 
         return (
             <div>
@@ -165,8 +149,9 @@ class AuthRouter extends React.Component {
     }
 
     render() {
-
         const {user} = this.state;
+        const SignUp = withRouter(({history}) => <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.REGISTER} history={history} />);
+        const SignIn = withRouter(({history}) => <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.LOGIN} history={history} fakeAuth={fakeAuth} />);
 
         return (
             <Router>
@@ -180,9 +165,6 @@ class AuthRouter extends React.Component {
                                 component={route.header}
                                 profile={user.profile}
                             />
-
-                            <Route path="/landing" component={Login} />
-                            <Route path="/logout" component={Logout} />
                         </React.Fragment>
                     ))}
                     <div className="manager-container">
@@ -202,8 +184,11 @@ class AuthRouter extends React.Component {
                             />
                         ))}
                     </div>
+                    <Route path="/landing" component={Landing} />
+                    <Route path="/logout" component={Logout} />
+                    <Route path="/login" component={SignIn} />
+                    <Route path="/registration" component={SignUp} />
                 </React.Fragment>
-
             </Router>
         );
     }
@@ -235,4 +220,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AuthRouter)
+)(AuthRouter);
