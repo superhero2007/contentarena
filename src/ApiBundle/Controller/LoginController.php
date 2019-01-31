@@ -12,12 +12,18 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Validator\Constraints\DateTime;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 class LoginController extends FOSRestController
 {
     use \ApiBundle\Helper\ControllerHelper;
     use \ApiBundle\Helper\EmailHelper;
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Rest\Post("/auth/logins")
+     */
     public function postLoginAction(Request $request)
     {
         $username = $request->request->get('username');
