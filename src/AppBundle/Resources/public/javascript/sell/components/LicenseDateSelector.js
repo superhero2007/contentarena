@@ -53,6 +53,7 @@ class LicenseDateSelector extends React.Component {
                 isOpen={this.state.isOpen}
                 bodyOpenClassName={"selector"}
                 style={customStyles}
+                onRequestClose={onClose}
             >
 
                 <div className="modal-title">

@@ -477,6 +477,7 @@ class PopupRight extends React.Component {
             isOpen={this.state.isOpen}
             bodyOpenClassName={"selector"}
             style={customStyles}
+            onRequestClose={this.closePopupAndRestoreData}
         >
 
             <div className="modal-title">
