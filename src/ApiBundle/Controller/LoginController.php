@@ -22,6 +22,7 @@ class LoginController extends FOSRestController
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Rest\Post("/auth/logins")
      */
     public function postLoginAction(Request $request)
     {

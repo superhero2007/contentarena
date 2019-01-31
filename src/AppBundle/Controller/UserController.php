@@ -26,7 +26,7 @@ class UserController extends FOSRestController
      * @return Response
      * @Rest\Post("/login")
      */
-    public function loginTest(Request $request)
+    public function postLoginAction(Request $request)
     {
         $username = $request->request->get('username');
         $password = $request->request->get('password');
