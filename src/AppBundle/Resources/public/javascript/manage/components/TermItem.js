@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {IconYellowCircle, trashIconWhite, pencilIcon, reloadIcon, Spinner, trashIcon} from "../../main/components/Icons";
+import {IconYellowCircle, trashIconWhite, pencilIcon, reloadIcon} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import {
-    IconYellowCircle, minusIcon, minusYellowIcon, pencilIcon, reloadIcon, Spinner,
-    trashIcon
+    IconYellowCircle, pencilIcon, reloadIcon, trashIconWhite
 } from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
@@ -60,7 +59,7 @@ class DefinitionItem extends React.Component {
                 <div className="terms-edit-item-actions" >
                     {!editing && editable && <IconYellowCircle icon={pencilIcon} onClick={() => this.setState({editing: true})} />}
                     {!editing && !custom && editable && <IconYellowCircle icon={reloadIcon} onClick={this.restore} />}
-                    {!editing && custom && <IconYellowCircle icon={minusIcon} onClick={() => this.setState({showRemoveConfirm: true})}/>}
+                    {!editing && custom && <IconYellowCircle icon={trashIconWhite} onClick={() => this.setState({showRemoveConfirm: true})}/>}
 
                     {editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} style={{color: 'green'}} />}
                     {editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} style={{color: 'red'}} />}
