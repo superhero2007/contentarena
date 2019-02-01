@@ -148,7 +148,7 @@ $icon-color: #00769A;
 
     cursor: pointer;
 
-    &:hover > i {
+    &:hover .icon-bell-wrapper {
       opacity: .7;
     }
 
@@ -180,7 +180,7 @@ $icon-color: #00769A;
 
       .items {
         .item {
-          border-bottom: 1px solid lightgray;
+          border-bottom: 1px solid #b1b1b1;
           color: $black-color;
           cursor: pointer;
           font-size: 11px;
@@ -195,18 +195,19 @@ $icon-color: #00769A;
             }
           }
 
+          &.unread {
+            background-color: $font-color-2;
+            .notification-time{ color: $black-color; }
+          }
+
           &:last-child {
             border-bottom: none;
           }
 
           &:hover {
-            background-color: $font-color-2;
+            background-color: #ddd;
             border-bottom-left-radius: 3px;
             border-bottom-right-radius: 3px;
-
-            .notification-time {
-              color: $black-color;
-            }
           }
 
           &.loading {

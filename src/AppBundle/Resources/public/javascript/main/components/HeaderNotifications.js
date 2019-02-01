@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 import moment from 'moment';
 import { TIME_FORMAT } from "@constants";
 
@@ -10,11 +11,17 @@ class HeaderNotifications extends  React.Component {
         this.state = {
             dataLoading: true,
             notifications: [],
+            unseenNotificationsCount: 0,
             showList: false
         }
     }
 
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleHideNotificationList);
+    }
+
     componentDidMount(){
+        document.addEventListener('mousedown', this.handleHideNotificationList);
         this.loadNotifications();
     }
 
@@ -44,9 +51,10 @@ class HeaderNotifications extends  React.Component {
             SELLER_LISTING_SOLD: (id) => `/commercialoverview/filter/${id}&closeddeals`,
             MESSAGE: (id) => `/messages/${id}`,
             BUYER_LISTING_MATCH: () => (id) => `/listing/${id}`,
-            BUYER_BID_CLOSED: () => `closeddeals`,
+            BUYER_BID_CLOSED: () => `/closeddeals`,
             BUYER_BID_DECLINED: () => `/bids/declinedbids`,
-            BUYER_BID_PLACED: () => `/bids/activebids`
+            BUYER_BID_PLACED: () => `/bids/activebids`,
+            BUYER_BID_ACCEPTED: () => `/closeddeals`
         };
 
         return notifications[type](id);
@@ -57,34 +65,51 @@ class HeaderNotifications extends  React.Component {
         const urlTo = this.getRedirectUrl(name, item.referenceId);
 
         if (urlTo) {
-            ContentArena.Api.markNotificationAsSeen(item.id);
+            ContentArena.Api.markNotificationAsVisited(item.id);
             document.location.href = urlTo;
         }
+        this.setState({showList: false});
     };
 
+    isClickedOnBellIcon = (element) => this.bell === element;
     getCreatedTime = (createdAt) =>  moment(createdAt).format(TIME_FORMAT);
     isDateValid = (createdAt) => moment(createdAt).isValid();
-    handleShowNotificationList = () => this.setState({showList: true});
-    handleHideNotificationList = () => this.setState({showList: false});
+    handleBellIconClick = () => this.setState((state) => ({showList: !state.showList}));
+
+    handleHideNotificationList = (e) => {
+        const { showList, unseenNotificationsCount } = this.state;
+
+        if(showList && this.list && !this.list.contains(e.target) && !this.isClickedOnBellIcon(e.target.parentElement)) {
+            if(unseenNotificationsCount) {
+                ContentArena.Api.markNotificationAsSeen();
+            }
+            this.setState({
+                showList: false,
+                unseenNotificationsCount: 0
+            });
+        }
+    };
 
     render(){
         const { notifications, dataLoading, unseenNotificationsCount, showList } = this.state;
         return(
-            <div className='notifications'
-                 onMouseOver={this.handleShowNotificationList}
-                 onMouseLeave={this.handleHideNotificationList}>
+            <div className='notifications'>
+                <div className="icon-bell-wrapper" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
+                    <i className="fa fa-bell" title='Notifications'/>
+                    {!!unseenNotificationsCount &&
+                        <div className='counter'>{unseenNotificationsCount}</div>
+                    }
+                </div>
 
-                <i className="fa fa-bell" title='Notifications' />
-                {!!unseenNotificationsCount && <div className='counter'>{unseenNotificationsCount}</div>}
                 {showList && <div className='expanded-list'>
-                    <div className='items'>
+                    <div className='items' ref={list => this.list = list}>
                         {dataLoading && <div className='item loading'>{this.context.t("NOTIFICATIONS_LOADING")}</div>}
                         {!dataLoading && notifications.map((item) => {
-                            const { id, text, createdAt } = item;
+                            const { id, text, visited, createdAt } = item;
                             return (
                                 <div
                                     key={`notification-${id}`}
-                                    className='item'
+                                    className={cn('item', {'unread': !visited })}
                                     onClick={() => this.handleNotificationClick(item)}>
                                         <span>{text}</span>
 

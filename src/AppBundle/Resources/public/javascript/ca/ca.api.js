@@ -743,24 +743,24 @@ ContentArena.Api= {
     getNotifications() {
         return axios.get(`${envhosturl}api/notifications/`);
     },
-    markNotificationAsSeen(id) {
-        return axios.post(`${envhosturl}api/notifications/seen`, {
+    markNotificationAsVisited(id) {
+        return axios.post(`${envhosturl}api/notifications/visited`, {
             id
         });
     },
-
+    markNotificationAsSeen() {
+        return axios.get(`${envhosturl}api/notifications/seen`);
+    },
     signInUser(username, password) {
         return axios.post(`${envhosturl}api/users/login`, {
             username, password
         });
     },
-
     recoverPassword(email) {
         return axios.post(`${envhosturl}api/users/password/recover`, {
             email
         });
     },
-
     signUpUser(firstName, lastName, email, companyLegalName, phone) {
         return axios.post(`${envhosturl}api/users/register`, {
             firstName, lastName, email, companyLegalName, phone

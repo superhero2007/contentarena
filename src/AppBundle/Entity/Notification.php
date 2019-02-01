@@ -45,6 +45,14 @@ class Notification
     private $seen = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="visited", type="boolean")
+     * @Groups({"notification"})
+     */
+    private $visited = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="referenceId", type="string")
@@ -85,8 +93,6 @@ class Notification
     }
 
 
-
-
     /**
      * Get id
      *
@@ -97,6 +103,29 @@ class Notification
         return $this->id;
     }
 
+    /**
+     * Set visited
+     *
+     * @param boolean $visited
+     *
+     * @return Notification
+     */
+    public function setVisited($visited)
+    {
+        $this->visited = $visited;
+
+        return $this;
+    }
+
+    /**
+     * Get visited
+     *
+     * @return bool
+     */
+    public function getVisited()
+    {
+        return $this->visited;
+    }
 
     /**
      * Set seen
@@ -188,4 +217,3 @@ class Notification
 
 
 }
-

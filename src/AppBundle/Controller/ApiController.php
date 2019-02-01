@@ -985,13 +985,25 @@ class ApiController extends BaseController
     }
 
     /**
+     * @Route("/api/notifications/visited", name="markNotificationAsVisited")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function markNotificationAsVisited(Request $request, NotificationService $notificationService){
+        $id = $request->request->get('id');
+        $notificationService->markNotificationAsVisited($id);
+
+        return new JsonResponse(array("success"=>true));
+    }
+
+    /**
      * @Route("/api/notifications/seen", name="markNotificationAsSeen")
      * @param Request $request
      * @return JsonResponse
      */
     public function markNotificationAsSeen(Request $request, NotificationService $notificationService){
-        $id = $request->request->get('id');
-        $notificationService->markNotificationAsSeen($id);
+        $user = $this->getUser();
+        $notificationService->markNotificationAsSeen($user);
 
         return new JsonResponse(array("success"=>true));
     }
@@ -1001,7 +1013,6 @@ class ApiController extends BaseController
      */
     public function getCompanyTerms(Request $request, TermsService $termsService)
     {
-
         /* @var User $user*/
         $user = $this->getUser();
         $terms = $termsService->getCompanyTerms($user->getCompany());

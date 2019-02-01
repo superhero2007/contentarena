@@ -221,14 +221,30 @@ class NotificationService
     }
 
 
-    public function markNotificationAsSeen($notificationId) {
+    public function markNotificationAsVisited($notificationId) {
         $notification = $this->em->getRepository('AppBundle:Notification')->findOneBy(array(
             "id" => $notificationId
         ));
 
-        $notification->setSeen(true);
+        $notification->setVisited(true);
 
         $this->em->persist($notification);
+        $this->em->flush();
+    }
+
+    public function markNotificationAsSeen($user) {
+        $notifications = $this->em->getRepository('AppBundle:Notification')->findBy(array(
+            "user" => $user,
+            "seen" => false
+        ));
+
+        if(!empty($notifications)) {
+            foreach ($notifications as $notification){
+                $notification->setSeen(true);
+                $this->em->persist($notification);
+            }
+        }
+
         $this->em->flush();
     }
 }
