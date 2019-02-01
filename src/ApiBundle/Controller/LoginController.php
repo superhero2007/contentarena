@@ -83,8 +83,7 @@ class LoginController extends FOSRestController
         if ($user) {
 
             $data = array("success" => true, "user_exists" => true);
-            $view = $this->view($data);
-            return $this->handleView($view);
+            return $this->getSerializedResponse($data, array("auth"));
         }
 
         /** @var $userManager UserManagerInterface */
@@ -96,15 +95,12 @@ class LoginController extends FOSRestController
         $user = $userManager->createUser();
         $user->setEnabled(true);
         $user->setEmail($request->get("email"));
-        $user->setTitle($request->get("title"));
-        $user->setCountry($request->get("country"));
-        $user->setUsername($request->get("username"));
+        $user->setUsername($request->get("email"));
         $user->setFirstName($request->get("firstName"));
         $user->setLastName($request->get("lastName"));
         $user->setPhone($request->get("phone"));
         $user->setRegisteredAt(new \DateTime());
         $user->setApplicationCompany($request->get("companyLegalName"));
-        $user->setCompanyWebsite($request->get("companyWebsite"));
         $user->setPlainPassword('');
         if (null === $user->getConfirmationToken()) {
             $user->setConfirmationToken($tokenGenerator->generateToken());
@@ -135,8 +131,7 @@ class LoginController extends FOSRestController
         //}
 
         $data = array("success" => true, "user" => $user, "user_exists" => false);
-        $view = $this->view($data);
-        return $this->handleView($view);
+        return $this->getSerializedResponse($data, array("auth"));
     }
 
 }
