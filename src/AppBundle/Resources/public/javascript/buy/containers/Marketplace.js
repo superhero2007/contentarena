@@ -20,6 +20,7 @@ import cn from 'classnames';
 import PropTypes from "prop-types";
 const queryString = require('query-string');
 import Loader from '../../common/components/Loader';
+import {FetchMarketplaceListings} from "../../api/marketplace";
 
 class Marketplace extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class Marketplace extends Component {
             territories: [],
             profile : props.user.profile,
             errorMessage: '',
+            page: 1,
             listingView: CONTENT_LISTING_VIEW.LIST,
             sortBy: LISTING_SORT_OPTIONS.PUBLISH_DATE,
         };
@@ -70,7 +72,7 @@ class Marketplace extends Component {
         this.filter();
         clearUpdateFilter();
 
-        jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
+        //jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
 
     componentWillUnmount(){
@@ -82,7 +84,7 @@ class Marketplace extends Component {
 
         this.setState({sortSalesPackages : false});
         if ( filter.forceUpdate ) {
-            this.getContent(this.parseFilter(filter));
+            this.filter();
             clearUpdateFilter();
         }
     }
@@ -146,9 +148,11 @@ class Marketplace extends Component {
         let response = {
             rights: filter.rights.length ? filter.rights : rightsFromStorage,
             countries: countriesFromStorage || filter.countries,
+            page : filter.page || this.state.page
         };
 
         if ( filter.event ) response.event = filter.event;
+        response.sortBy = this.state.sortBy;
 
         if(exclusiveFromStorage || filter.exclusive) {
             response.exclusive = exclusiveFromStorage || filter.exclusive;
@@ -163,27 +167,10 @@ class Marketplace extends Component {
         return response;
     };
 
-    getContent = ( filter ) => {
-        let _this = this;
-
-        _this.setState({
-            loadingListing : true,
-            listings: []
-        });
-
-        filter.sortBy = this.state.sortBy;
-
-        ContentArena.Api.getJsonContent(filter).done((listings) => {
-
-            listings = listings.map( listing => ContentArena.Utils.contentParserFromServer(listing) );
-            _this.setState({listings: listings, loadingListing : false, sortSalesPackages : true});
-        });
-    };
-
     filter = () => {
         const { filter } = this.props;
         let parsedFilter = this.parseFilter(filter);
-        this.getContent(parsedFilter);
+        this.setState({parsedFilter: parsedFilter, loadingListing: true});
     };
 
     filterByRoute = () => {
@@ -214,6 +201,14 @@ class Marketplace extends Component {
         this.setState({listingView: type});
     };
 
+    onFetchResponse = ( listings ) => {
+        this.setState({
+            listings: listings,
+            loadingListing: false,
+            sortSalesPackages : true
+        });
+    };
+
     render () {
         const { filter, salesPackage ,history, location, match } = this.props;
 
@@ -229,7 +224,7 @@ class Marketplace extends Component {
             errorMessage,
             listingView,
             defaultRightsPackage,
-            sortBy
+            parsedFilter
         } = this.state;
 
         if (errorMessage) {
@@ -251,6 +246,9 @@ class Marketplace extends Component {
                             timeEventActive={this.isEventTimeActive()} />
                     </div>
                     <div className="buy-container-right">
+
+                        {parsedFilter && <FetchMarketplaceListings onResponse={this.onFetchResponse} filter={parsedFilter}/>}
+
                         <Loader loading={listings.length === 0 && loadingListing}>
 
                             <div className="content-listing-header">

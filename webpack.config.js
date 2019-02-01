@@ -1,6 +1,12 @@
 // webpack.config.js
-var Encore = require('@symfony/webpack-encore');
+//var Encore = require('@symfony/webpack-encore');
 var path = require('path');
+
+const Encore = require('@symfony/webpack-encore')
+
+if (!Encore.runtimeIsConfigured()) {
+    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+}
 
 Encore
 // the project directory where all compiled assets will be stored
@@ -48,9 +54,7 @@ Encore
         'react-dom',
         'prop-types',
         'query-string',
-        'uikit',
         'moment',
-        'uikit/dist/css/uikit.min.css',
         "react-datepicker",
         "react-modal",
         "react-popup",
@@ -64,6 +68,7 @@ Encore
         "react-tagsinput",
         "redux-i18n",
         "redux",
+        "babel-polyfill"
     ])
 
     .enableSourceMaps(!Encore.isProduction())

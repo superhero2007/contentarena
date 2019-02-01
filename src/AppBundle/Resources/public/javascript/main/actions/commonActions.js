@@ -30,3 +30,8 @@ export const setTestStageMode = testStageMode => {
         testStageMode
     };
 };
+
+export const setEnvHostUrl = envHostUrl => ({
+    type: commonTypes.SET_ENV_HOST_URL,
+    envHostUrl
+});
