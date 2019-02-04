@@ -72,7 +72,7 @@ class Marketplace extends Component {
             }
         }
 
-        //this.filter();
+        this.filter();
         clearUpdateFilter();
 
         //jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
