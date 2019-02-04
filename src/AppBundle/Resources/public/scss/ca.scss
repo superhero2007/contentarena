@@ -165,6 +165,36 @@ button {
   }
 }
 
+.listing-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #D4D8DE;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #D4D8DE;
+
+  .summary-text {
+    color: $font-color-6;
+    font-size: 21px;
+    font-weight: bold;
+    display: block;
+  }
+
+  .rights-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+
+    .rights-list-item {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+      font-size: 14px;
+    }
+  }
+}
+
 .marketplace-container {
   .date-picker {
     width: 65px;
@@ -204,24 +234,6 @@ button {
     margin: 0;
   }
 
-  .listing-summary {
-    border-bottom: 4px solid #D4D8DE;
-    margin-bottom: 30px;
-    padding-bottom: 3px;
-
-    span {
-      text-transform: uppercase;
-      background-color: #1a4b63;
-      align-items: center;
-      padding: 0 20px;
-      height: 35px;
-      font-size: 16px;
-      color: #fff;
-      font-weight: 600;
-      display: flex;
-    }
-  }
-
   .step-title {
     font-size: 18px;
     color: #333;
@@ -232,21 +244,6 @@ button {
   .step-content-container {
     display: flex;
     flex-direction: column;
-
-    .rights-box {
-      display: flex;
-      flex-direction: row;
-      margin: 0 0 20px 0;
-      flex-wrap: wrap;
-
-      .rights-box-item {
-        min-height: 40px;
-        flex-direction: row;
-        display: flex;
-        align-items: center;
-        min-width: 33%;
-      }
-    }
 
     .rights-container {
       display: flex;
@@ -776,16 +773,6 @@ button {
 }
 
 .step-2 {
-  .listing-summary {
-    border-bottom: 1px $color-grey solid;
-    color: $font-color-6;
-    font-size: 21px;
-    font-weight: bold;
-
-    margin-bottom: 0;
-    padding-bottom: 20px;
-  }
-
   .step-content-container {
     .textarea-input-wrapper, .right-selector {
       header {
@@ -968,19 +955,7 @@ button {
 }
 
 .step-3 {
-  .listing-summary {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
   .step-content-container {
-    .rights-box {
-      background: #F4F6F9;
-      border-bottom: 4px solid #26ABED;
-      padding: 10px 15px;
-    }
-
     .license-date-container {
       .right-name {
         flex: 1;

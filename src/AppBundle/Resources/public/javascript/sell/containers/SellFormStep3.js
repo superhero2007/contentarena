@@ -11,6 +11,7 @@ import {PropTypes} from "prop-types";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
 import {blueCheckIcon, yellowCheckIcon} from "../../main/components/Icons";
+import RightsList from "../../main/components/RightsList";
 
 const licenseStyles = {
     fontSize: "15px",
@@ -122,39 +123,19 @@ class SellFormStep3 extends React.Component {
         return (
 
             <div className="step-content step-3">
-                <div style={{width: '100%', textAlign: 'right', marginBottom: 10}}>
-                    <RightsLegend />
-                </div>
 
                 {/*SUMMARY*/}
                 <div className="listing-summary">
-                    <SummaryText {...this.props}/>
+                    <div>
+                        <SummaryText {...this.props}/>
+                        <RightsList rightsPackage={rightsPackage} />
+                    </div>
+                    <div>
+                        <RightsLegend />
+                    </div>
                 </div>
 
                 <div className="step-content-container">
-
-                    {/* RIGHTS*/}
-                    <div className={"rights-box"}>
-                        {
-                            rightsPackage.map(( sr,i )=>{
-                                return <div key={i}  className={"rights-box-item"}>
-                                    {!sr.exclusive &&
-                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={blueCheckIcon}/>}
-
-                                    {sr.exclusive &&
-                                    <img style={{width: 23, height: 22, margin: '0 5px'}} src={yellowCheckIcon}/>}
-
-                                    <div style={{display: 'flex', flexDirection: "row"  }}>
-                                        { sr.shortLabel !== "PR" && sr.name }
-                                        { sr.shortLabel === "PR" && content.PROGRAM_NAME &&
-                                        "Edited Program"
-                                        }
-                                    </div>
-                                </div>
-                            })
-                        }
-                    </div>
-
                     <LicenseDateSelector
                         isOpen={this.state.licensePopup}
                         onUpdate={this.selectLicenseDates}

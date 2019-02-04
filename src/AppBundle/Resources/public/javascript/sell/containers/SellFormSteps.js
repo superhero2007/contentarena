@@ -26,7 +26,8 @@ class SellFormSteps extends React.Component {
                 {step: 1, title: this.context.t("CL_STEP_EVENT_SECTION")},
                 {step: 2, title: this.context.t("CL_STEP_PROGRAM_RIGHT_SELECTION")},
                 {step: 3, title: this.context.t("CL_STEP_GRANT_OF_RIGHT")},
-                {step: 4, title: this.context.t("CL_STEP_COMMERCIAL_DETAILS")}
+                {step: 4, title: this.context.t("CL_STEP_COMMERCIAL_DETAILS")},
+                {step: 5, title: this.context.t("CL_STEP_REVIEW_AND_SIGN")}
             ]
         });
     }

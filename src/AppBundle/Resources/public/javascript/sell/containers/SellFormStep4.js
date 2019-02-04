@@ -13,6 +13,8 @@ import {SummaryText, TitleBar} from "../components/SellFormItems";
 import {PropTypes} from "prop-types";
 import ApplicableLaw from "../components/ApplicableLaw";
 import CurrencySelector from "../components/CurrencySelector";
+import RightsLegend from "../../main/components/RightsLegend";
+import RightsList from "../../main/components/RightsList";
 
 class SellFormStep4 extends React.Component {
 
@@ -107,7 +109,13 @@ class SellFormStep4 extends React.Component {
             <div className="step-content step-4">
                 {(sports.length || sportCategory.length || tournament.length ||  seasons.length) && (
                     <div className="listing-summary">
-                        <SummaryText {...this.props}/>
+                        <div>
+                            <SummaryText {...this.props}/>
+                            <RightsList rightsPackage={this.props.rightsPackage}/>
+                        </div>
+                        <div>
+                            <RightsLegend />
+                        </div>
                     </div>
                 )}
                 <CurrencySelector onClick={this.selectCurrency} selected={currency} />

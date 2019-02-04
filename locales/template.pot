@@ -2661,6 +2661,10 @@ msgstr ""
 msgid "CL_STEP_COMMERCIAL_DETAILS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormSteps.js
+msgid "CL_STEP_REVIEW_AND_SIGN"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
 msgid "CL_STEP2_RIGHTS_TITLE"
 msgstr ""

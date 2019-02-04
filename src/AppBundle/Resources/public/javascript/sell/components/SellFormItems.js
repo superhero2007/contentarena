@@ -33,7 +33,7 @@ export const TitleBar = ({title, subtitle, infoText}) => (
 );
 
 export const SummaryText = ({name}) => {
-    return <span>{name}</span>;
+    return <span className={'summary-text'}>{name}</span>;
 };
 
 export const NewCategory = ({onClick, showClose, onBlur, value}) => (

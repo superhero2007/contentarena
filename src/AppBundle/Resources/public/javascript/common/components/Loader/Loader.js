@@ -9,7 +9,7 @@ const Loader = ({loading, children, text, error, small, xSmall}, context) => {
         return (
             <div className={'ca-loader'}>
                 <div className={cn('spinner', {'small': small, 'x-small': xSmall})}/>
-                {(!small && !xSmall) && <b>{text ? text : context.t('LOADER_DEFAULT_TEXT')} ...</b>}
+                {(!small && !xSmall) && <b>{text ? text : context.t('LOADER_DEFAULT_TEXT')}</b>}
             </div>
         );
     } else if (children) {

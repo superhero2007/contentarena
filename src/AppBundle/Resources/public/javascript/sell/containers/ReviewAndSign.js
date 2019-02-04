@@ -12,8 +12,10 @@ import {customStyles} from "../../main/styles/custom";
 import Modal from 'react-modal';
 import {PropTypes} from "prop-types";
 import Comments from "../components/Comments";
+import {SummaryText} from "../components/SellFormItems";
 import RightsLegend from "../../main/components/RightsLegend";
 import {disableValidation, enableValidation} from "../../main/actions/validationActions";
+import RightsList from "../../main/components/RightsList";
 
 class ReviewAndSign extends React.Component {
 
@@ -191,15 +193,12 @@ class ReviewAndSign extends React.Component {
         return (
             <div className="step-content review-sign-container">
                 { this.successScreen() }
-                <div className="buttons">
-                    <div className={"buttons-container"} style={{ 'display': 'flex',
-                        'flexDirection': 'row',
-                        'justifyContent': 'space-between'}}>
-                        <button className="light-blue-button" onClick={()=>{
-                            history.push("/contentlisting/"+ customId + "/4");
-                        }}>
-                            <i className="fa fa-chevron-left"/> {this.context.t("Edit")}
-                        </button>
+                <div className="summary-text">
+                    <div className="listing-summary">
+                        <div>
+                            <SummaryText {...this.props}/>
+                            <RightsList rightsPackage={this.props.rightsPackage} />
+                        </div>
                         <div>
                             <RightsLegend />
                         </div>
@@ -222,10 +221,6 @@ class ReviewAndSign extends React.Component {
                 )}
 
                 {!showDetails && <div className="step-content-container">
-
-                    <div className="step-title" style={{marginBottom: 10}}>
-                        {this.context.t('CL_STEP5_TITLE_REVIEW')}
-                    </div>
 
                     <div className="base-full-input" style={{maxWidth: 'none', borderBottom: 'none'}}>
                         <label>

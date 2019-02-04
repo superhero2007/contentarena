@@ -8,6 +8,7 @@ import {editedProgramSelected} from "../../main/actions/utils";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import {PropTypes} from "prop-types";
 import {LanguageSelector} from "../../main/components/LanguageSelector";
+import {SummaryText} from "../components/SellFormItems";
 
 class SellFormStep2 extends React.Component {
 
@@ -117,7 +118,7 @@ class SellFormStep2 extends React.Component {
             <div className="step-content step-2">
                 {(sports.length || sportCategory.length || tournament.length ||  seasons.length) && (
                     <div className="listing-summary">
-                        {name}
+                        <SummaryText {...this.props}/>
                     </div>
                 )}
 
