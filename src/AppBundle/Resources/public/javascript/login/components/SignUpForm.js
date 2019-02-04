@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
-import { Spinner } from "./../../main/components/Icons";
+import Loader from "../../common/components/Loader";
 
 class SignUpForm extends PureComponent {
     constructor (props) {
@@ -140,7 +140,7 @@ class SignUpForm extends PureComponent {
 
                 <button className="yellow-btn" onClick={this.handleSignUpUser}>
                     {this.context.t("SIGN_UP_SUBMIT")}
-                    {this.state.isLoading && <Spinner /> }
+                    {this.state.isLoading && <Loader loading={true} xSmall /> }
                 </button>
 
             </section>

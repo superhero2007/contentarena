@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE } from "@constants";
-import { Spinner } from "./../../main/components/Icons";
+import Loader from "../../common/components/Loader";
 
 class RecoverPassword extends PureComponent {
     constructor (props) {
@@ -59,7 +59,7 @@ class RecoverPassword extends PureComponent {
                 </div>
                 <button className="yellow-button" onClick={this.handleRecoverPassword}>
                     {this.context.t("LOGIN_REQUEST_NEW_PASSWORD")}
-                    {this.state.isLoading && <Spinner />}
+                    {this.state.isLoading && <Loader loading={true} xSmall /> }
                 </button>
             </section>
         );

@@ -68,7 +68,13 @@ class HeaderNotifications extends  React.Component {
             ContentArena.Api.markNotificationAsVisited(item.id);
             document.location.href = urlTo;
         }
-        this.setState({showList: false});
+        if(this.state.unseenNotificationsCount) {
+            ContentArena.Api.markNotificationAsSeen();
+        }
+        this.setState({
+            showList: false,
+            unseenNotificationsCount: 0
+        });
     };
 
     isClickedOnBellIcon = (element) => this.bell === element;

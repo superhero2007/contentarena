@@ -120,6 +120,12 @@
       outline: none;
     }
 
+    .yellow-button{
+      @extend .yellow-button;
+      & .ca-loader { width: 40px; }
+      & .spinner{ margin: 0; }
+    }
+
     .yellow-btn{
       @extend .yellow-button;
       margin: 0 auto;

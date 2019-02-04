@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import TermItem from "../components/TermItem";
 import cn from "classnames";

@@ -6,7 +6,7 @@ class SignUpSuccessfully extends PureComponent {
         super(props);
     };
 
-    handleLoginClick = () => this.props.history.push("/testlogin");
+    handleLoginClick = () => this.props.history.push("/login");
 
     render() {
         return (
