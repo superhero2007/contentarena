@@ -38,9 +38,9 @@
     padding: 20px;
 
     .modal-title {
-      color: $font-color-7;
-      font-size: 22px;
-      font-weight: 600;
+      color: $font-color-6;
+      font-size: 19px;
+      font-weight: 700;
       text-transform: none;
       margin: 0;
       padding: 0;
@@ -59,7 +59,7 @@
   }
 
   .modal-body {
-    background: $container-background-color;
+    background: inherit;
     min-height: 100px;
     display: flex;
     justify-content: center;

@@ -15,7 +15,7 @@ import {getCurrencySymbol} from "../../main/actions/utils";
 import {disableValidation, enableValidation} from "../../main/actions/validationActions";
 import {customStyles} from "../../main/styles/custom";
 
-const labelStyle = { height: "35px", fontSize: "16px"};
+const labelStyle = { height: "35px", fontSize: "15px"};
 const installmentIconStyle = { margin: "0 10px", position: "relative"};
 
 class SalesPackageForm extends React.Component {

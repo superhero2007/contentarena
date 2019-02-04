@@ -54,7 +54,7 @@ class CompanyInformation extends React.Component {
             contentLabel="Example Modal"
         >
 
-            <div className="modal-title">
+            <div className="modal-title" style={{paddingBottom: 15}}>
                 {this.context.t("Company Information")}
                 <i className="fa fa-times close-icon" onClick={this.closeModal}/>
             </div>

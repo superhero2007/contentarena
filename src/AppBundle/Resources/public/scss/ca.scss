@@ -601,7 +601,7 @@ button {
           }
 
           .fa-check-circle-o {
-            color: $blue-color;
+            color: $font-color-6;
           }
 
           .title {
@@ -1589,7 +1589,11 @@ button {
       padding-bottom: inherit;
       margin-bottom: inherit;
       border-bottom: none;
-
+      label {
+        background: #E6E8EA;
+        color: #000;
+        font-weight: 700;
+      }
       .content {
         .item {
           .title {

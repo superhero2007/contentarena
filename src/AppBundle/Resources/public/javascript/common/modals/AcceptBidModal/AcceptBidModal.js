@@ -132,13 +132,13 @@ class AcceptBidModal extends Component {
             </footer>
         </Modal>
     };
-};
+}
 
 const mapStateToProps = state => {
     return {
         validation: state.validation
     }
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
