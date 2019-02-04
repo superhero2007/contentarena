@@ -81,7 +81,6 @@ class TermsService
 
     public function restoreTermItems(Company $company)
     {
-
         $sourceTermItemsRepo = $this->em->getRepository('AppBundle:SourceLicenseTermItem');
         $companyTermItemsRepo = $this->em->getRepository('AppBundle:CompanyLicenseTermItem');
 
@@ -100,6 +99,7 @@ class TermsService
             $companyItem->setPosition($sourceItem->getPosition());
             $companyItem->setEditable($sourceItem->isEditable());
             $companyItem->setContent($sourceItem->getContent());
+            $companyItem->setEdited(false);
             $companyItem->setCompany($company);
             $this->em->persist($companyItem);
 
@@ -109,7 +109,6 @@ class TermsService
 
     public function updateTermItems(Company $company,$terms)
     {
-
         $companyTermItemsRepo = $this->em->getRepository('AppBundle:CompanyLicenseTermItem');
 
         foreach ( $terms as $term){
@@ -121,18 +120,18 @@ class TermsService
                 );
                 $companyItem = $companyTermItemsRepo->findOneBy($criteria);
 
-                if ($companyItem != null && isset( $item['content'])) $companyItem->setContent($item['content']);
+                if ($companyItem != null && isset( $item['content'])) {
+                    $companyItem->setContent($item['content']);
+                    $companyItem->setEdited(json_decode($item['edited']));
+                }
                 $this->em->persist($companyItem);
-
             }
-
         }
         $this->em->flush();
     }
 
     public function getCompanyDefinitions(Company $company)
     {
-
         $repo = $this->em->getRepository('AppBundle:CompanyDefinitions');
         $definitions = $repo->findBy(array('company' => $company));
 
@@ -143,7 +142,6 @@ class TermsService
 
     public function restoreDefinitions(Company $company)
     {
-
         $sourceRepo = $this->em->getRepository('AppBundle:SourceDefinitions');
         $companyRepo = $this->em->getRepository('AppBundle:CompanyDefinitions');
 
@@ -162,16 +160,15 @@ class TermsService
             $companyItem->setEditable($sourceItem->isEditable());
             $companyItem->setContent($sourceItem->getContent());
             $companyItem->setCompany($company);
+            $companyItem->setEdited(false);
             $companyItem->setCustom(false);
             $this->em->persist($companyItem);
-
         }
         $this->em->flush();
     }
 
-    public function updateDefinitions(Company $company,$definitions)
+    public function updateDefinitions(Company $company, $definitions)
     {
-
         $companyItemsRepo = $this->em->getRepository('AppBundle:CompanyDefinitions');
 
         foreach ( $definitions as $definition){
@@ -185,13 +182,17 @@ class TermsService
                 $companyItem->setCompany($company);
                 $companyItem->setEditable(true);
                 $companyItem->setCustom(true);
+                $companyItem->setEdited(false);
             } else {
                 $criteria= array(
                     'id' => $definition['id'],
                     'company' => $company,
                 );
                 $companyItem = $companyItemsRepo->findOneBy($criteria);
-                if (isset( $definition['content'])) $companyItem->setContent($definition['content']);
+                if (isset( $definition['content'])) {
+                    $companyItem->setEdited(json_decode($definition['edited']));
+                    $companyItem->setContent($definition['content']);
+                }
             }
             if ($companyItem != null){
                 if ( isset($definition['removed']) ){
@@ -200,11 +201,6 @@ class TermsService
                     $this->em->persist($companyItem);
                 }
             }
-
-
-
-
-
         }
         $this->em->flush();
     }

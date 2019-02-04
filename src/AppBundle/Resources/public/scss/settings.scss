@@ -376,6 +376,8 @@
     min-width: 200px;
     max-height: 43px;
 
+    .ca-loader{ width: 40px; }
+
     i {
       margin: 0 5px 0 10px;
       color: #FFC94B;
@@ -443,6 +445,10 @@
     .terms-edit-item-editing {
       border: 2px solid #FFC94B !important;
       background-color: #fff !important;
+    }
+
+    .edited {
+      border: 2px solid #FFC94B !important;
     }
 
     .terms-edit-item-actions {

@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
 import {
     IconYellowCircle, pencilIcon, reloadIcon, trashIconWhite
 } from "../../main/components/Icons";
-import {PropTypes} from "prop-types";
+import PropTypes from "prop-types";
 import cn from "classnames";
 
 class DefinitionItem extends React.Component {
@@ -14,7 +13,6 @@ class DefinitionItem extends React.Component {
             value : props.content || "",
             name : props.name || "",
             restoreValue : props.content || "",
-
         };
     }
 
@@ -31,19 +29,18 @@ class DefinitionItem extends React.Component {
     onUpdate = (  ) => {
         const {onUpdate} = this.props;
         const {value, name} = this.state;
-        if (onUpdate) onUpdate(value, name);
+        if (onUpdate) onUpdate(value, name, true);
         this.setState({editing: false})
     };
 
     restore = (  ) => {
         const {onUpdate} = this.props;
         const {restoreValue} = this.state;
-        if (onUpdate) onUpdate(restoreValue);
+        if (onUpdate) onUpdate(restoreValue, false);
     };
 
     render () {
-
-        const { custom, content, editable, onRemove } = this.props;
+        const { custom, content, editable, onRemove, edited } = this.props;
         const { editing,value, name, showRemoveConfirm } = this.state;
 
         return (
@@ -52,7 +49,7 @@ class DefinitionItem extends React.Component {
                     {(!editing || !custom)&& name}
                     {editing && custom && <textarea  value={name} onChange={this.handleName}/>}
                 </div>
-                <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing })}>
+                <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing, "edited": edited  })}>
                     {!editing && content}
                     {editing && <textarea  value={value} onChange={this.handleChange}/>}
                 </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from "react-redux";
 import {IconYellowCircle, trashIconWhite, pencilIcon, reloadIcon} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
@@ -14,8 +13,6 @@ class TermItem extends React.Component {
         };
     }
 
-    componentDidMount () { }
-
     handleChange = ( e ) => {
         this.setState({value:e.target.value})
     };
@@ -23,19 +20,19 @@ class TermItem extends React.Component {
     onUpdate = (  ) => {
         const {onUpdate} = this.props;
         const {value} = this.state;
-        if (onUpdate) onUpdate(value);
+        if (onUpdate) onUpdate(value, true);
         this.setState({editing: false})
     };
 
     restore = (  ) => {
         const {onUpdate} = this.props;
         const {restoreValue} = this.state;
-        if (onUpdate) onUpdate(restoreValue);
+        if (onUpdate) onUpdate(restoreValue, false);
     };
 
     render () {
 
-        const { position, content, termPosition, editable, onRemove } = this.props;
+        const { position, content, termPosition, editable, onRemove, edited } = this.props;
         const { editing,value, showRemoveConfirm } = this.state;
 
         return (
@@ -44,7 +41,7 @@ class TermItem extends React.Component {
                     * {this.context.t("TERMS_EDIT_NON_EDITABLE")}
                 </div>}
                 <div className="terms-edit-item">
-                    <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing })}>
+                    <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing, "edited": edited })}>
                         {!editing && <strong>{termPosition}.{position}</strong>} {!editing && content}
                         {editing && <textarea  value={value} onChange={this.handleChange}/>}
                     </div>

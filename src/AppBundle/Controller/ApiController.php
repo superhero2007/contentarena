@@ -1000,7 +1000,7 @@ class ApiController extends BaseController
         $terms = $termsService->getCompanyTerms($user->getCompany());
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
+        $data = $serializer->serialize($terms, 'json', SerializationContext::create()->setGroups(array('terms')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
@@ -1018,7 +1018,7 @@ class ApiController extends BaseController
         $terms = $termsService->getCompanyDefinitions($user->getCompany());
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
+        $data = $serializer->serialize($terms, 'json', SerializationContext::create()->setGroups(array('terms')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

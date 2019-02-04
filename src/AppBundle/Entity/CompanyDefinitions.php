@@ -63,6 +63,14 @@ class CompanyDefinitions
 
     /**
      * @var boolean
+     * @ORM\Column(name="edited", type="boolean")
+     * @Groups({"terms"})
+     *
+     */
+    private $edited = false;
+
+    /**
+     * @var boolean
      * @ORM\Column(name="custom", type="boolean", options={"default":"0"})
      * @Groups({"terms"})
      *
@@ -176,7 +184,50 @@ class CompanyDefinitions
         $this->custom = $custom;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEdited()
+    {
+        return $this->edited;
+    }
+
+    /**
+     * @param bool $edited
+     */
+    public function setEdited($edited)
+    {
+        $this->edited = $edited;
+    }
 
 
+    /**
+     * Get editable
+     *
+     * @return boolean
+     */
+    public function getEditable()
+    {
+        return $this->editable;
+    }
+
+    /**
+     * Get edited
+     *
+     * @return boolean
+     */
+    public function getEdited()
+    {
+        return $this->edited;
+    }
+
+    /**
+     * Get custom
+     *
+     * @return boolean
+     */
+    public function getCustom()
+    {
+        return $this->custom;
+    }
 }
-

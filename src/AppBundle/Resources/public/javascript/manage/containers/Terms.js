@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from "react-redux";
 import {PropTypes} from "prop-types";
 import TermItem from "../components/TermItem";
-import cn from "classnames";
 import DefinitionItem from "../components/DefinitionItem";
 import Loader from "../../common/components/Loader";
 
@@ -24,46 +23,40 @@ class Terms extends React.Component {
         ContentArena.Api.getCompanyTerms().done(terms=>{
             this.setState({
                 loading:false,
-                terms : terms,
+                terms
             });
         });
 
         ContentArena.Api.getCompanyDefinitions().done(definitions=>{
             this.setState({
                 loadingDefinitions:false,
-                definitions : definitions,
+                definitions
             });
         });
-
     }
 
-    onUpdateDefinition = (index, content, name) => {
+    onUpdateDefinition = (index, content, name, edited) => {
 
         let definitions = this.state.definitions;
         definitions[index].content = content;
         definitions[index].name = name;
-        this.setState({definitions})
-    };
-
-    onUpdateDefinitionName= (index, name) => {
-
-        let definitions = this.state.definitions;
-        definitions[index].name = name;
-        this.setState({definitions})
+        definitions[index].edited = edited;
+        this.setState({definitions});
     };
 
     onRemoveDefinition = (index) => {
 
         let definitions = this.state.definitions;
         definitions[index].removed = true;
-        this.setState({definitions})
+        this.setState({definitions});
     };
 
-    onUpdateTermItem = (termIndex, termItemIndex, content) => {
+    onUpdateTermItem = (termIndex, termItemIndex, content, edited) => {
 
         let terms = this.state.terms;
         terms[termIndex].items[termItemIndex].content = content;
-        this.setState({terms})
+        terms[termIndex].items[termItemIndex].edited = edited;
+        this.setState({terms});
     };
 
     onRemoveTerm = (termIndex, termItemIndex) => {
@@ -71,35 +64,33 @@ class Terms extends React.Component {
         let terms = this.state.terms;
         terms[termIndex].items[termItemIndex].removed = true;
         terms[termIndex].items[termItemIndex].content = "";
-        this.setState({terms})
+        //terms[termIndex].items[termItemIndex].isEdited = false;
+        this.setState({terms});
     };
 
     restoreDefaultTerms = () => {
-
         this.setState({restoring:true });
 
         ContentArena.Api.restoreCompanyTerms().done(terms=>{
             this.setState({
                 restoring:false,
-                terms : terms,
+                terms
             });
         });
     };
 
     restoreDefaultDefinitions = () => {
-
         this.setState({restoringDefinitions:true });
 
         ContentArena.Api.restoreDefinitions().done(definitions=>{
             this.setState({
                 restoringDefinitions:false,
-                definitions : definitions,
+                definitions
             });
         });
     };
 
     updateTerms = () => {
-
         this.setState({updating:true });
 
         ContentArena.Api.updateTerms(this.state.terms, this.state.definitions).done(()=>{
@@ -110,24 +101,22 @@ class Terms extends React.Component {
     };
 
     addDefinition = () => {
-
-        let definitions = this.state.definitions;
+        let { definitions } = this.state;
         let definition = {
             name: "",
             content : "",
             custom:true,
             editable : true,
             editing: true,
+            edited: false,
             position : definitions.length + 1
         };
 
         definitions.push(definition);
-        this.setState({definitions})
+        this.setState({definitions});
     };
 
     render () {
-
-        const { history } = this.props;
         const { loading, terms,restoring, updating, definitions, restoringDefinitions } = this.state;
 
         document.title = "Content Arena - Terms";
@@ -150,7 +139,7 @@ class Terms extends React.Component {
                         className="standard-button license-agreement-button terms-restore-button"
                     >
                         {this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}
-                        {restoringDefinitions && <Loader loading={true} small/>}
+                        {restoringDefinitions && <Loader loading={true} xSmall />}
                         {!restoringDefinitions && <div><i className="fa fa-refresh"/></div>}
                     </button>
                     <button
@@ -159,7 +148,7 @@ class Terms extends React.Component {
                         className="standard-button license-agreement-button terms-restore-button"
                     >
                         {this.context.t("TERMS_EDIT_BUTTON_RESTORE")}
-                        {restoring && <Loader loading={true} small/>}
+                        {restoring && <Loader loading={true} xSmall />}
                         {!restoring && <div><i className="fa fa-refresh"/></div>}
                     </button>
 
@@ -168,18 +157,16 @@ class Terms extends React.Component {
                     {this.context.t("TERMS_EDIT_TITLE_DEFINITIONS")}
                 </div>
                 <div className="terms-edit-box">
-                    {
-                        definitions.map((definition, i) => {
-                            return (
-                                <div>
-                                    {!definition.removed && <DefinitionItem
-                                        onUpdate={(content,name) => this.onUpdateDefinition(i, content,name)}
-                                        onRemove={() => this.onRemoveDefinition(i)}
-                                        {...definition}
-                                    />}
-                                </div>
-                            )
-                        })
+                    {definitions.map((definition, i) => {
+                        return (
+                            <div>
+                                {!definition.removed && <DefinitionItem
+                                    onUpdate={(content, name, edited) => this.onUpdateDefinition(i, content, name, edited)}
+                                    onRemove={() => this.onRemoveDefinition(i)}
+                                    {...definition}
+                                />}
+                            </div>
+                        )})
                     }
 
                     <button
@@ -193,22 +180,20 @@ class Terms extends React.Component {
                     {this.context.t("TERMS_EDIT_TITLE_TERMS")}
                 </div>
                 <div className="terms-edit-box">
-                    {
-                        terms.map((term, i) => {
-                            return (
-                                <div>
-                                    { term.items.map((item,k) => {
-                                        if (item.removed) return undefined;
-                                        return <TermItem
-                                            onUpdate={content => this.onUpdateTermItem(i,k,content)}
-                                            onRemove={() => this.onRemoveTerm(i, k)}
-                                            {...item}
-                                            termPosition={term.position}
-                                        />
-                                    }) }
-                                </div>
-                            )
-                        })
+                    {terms.map((term, i) => {
+                        return (
+                            <div>
+                                { term.items.map((item,k) => {
+                                    if (item.removed) return undefined;
+                                    return <TermItem
+                                        onUpdate={(content, edited) => this.onUpdateTermItem(i,k,content, edited)}
+                                        onRemove={() => this.onRemoveTerm(i, k)}
+                                        {...item}
+                                        termPosition={term.position}
+                                    />
+                                }) }
+                            </div>
+                        )})
                     }
                 </div>
                 <div className="buttons">

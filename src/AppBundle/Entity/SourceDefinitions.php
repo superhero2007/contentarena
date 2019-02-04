@@ -52,6 +52,28 @@ class SourceDefinitions
      */
     private $editable;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="edited", type="boolean")
+     * @Groups({"terms"})
+     */
+    private $edited = false;
+
+    /**
+     * @return bool
+     */
+    public function getEdited()
+    {
+        return $this->edited;
+    }
+
+    /**
+     * @param bool $edited
+     */
+    public function setEdited($edited)
+    {
+        $this->edited = $edited;
+    }
 
     /**
      * Get id
@@ -128,5 +150,13 @@ class SourceDefinitions
     }
 
 
+    /**
+     * Get editable
+     *
+     * @return boolean
+     */
+    public function getEditable()
+    {
+        return $this->editable;
+    }
 }
-

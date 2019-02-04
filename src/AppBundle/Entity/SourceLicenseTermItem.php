@@ -43,6 +43,13 @@ class SourceLicenseTermItem
     private $editable;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="edited", type="boolean")
+     *
+     */
+    private $edited = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SourceLicenseTerm" )
      * @ORM\JoinColumn(nullable=true)
      */
@@ -145,5 +152,38 @@ class SourceLicenseTermItem
     {
         return $this->content;
     }
-}
 
+    /**
+     * Get editable
+     *
+     * @return boolean
+     */
+    public function getEditable()
+    {
+        return $this->editable;
+    }
+
+    /**
+     * Set edited
+     *
+     * @param boolean $edited
+     *
+     * @return SourceLicenseTermItem
+     */
+    public function setEdited($edited)
+    {
+        $this->edited = $edited;
+
+        return $this;
+    }
+
+    /**
+     * Get edited
+     *
+     * @return boolean
+     */
+    public function getEdited()
+    {
+        return $this->edited;
+    }
+}
