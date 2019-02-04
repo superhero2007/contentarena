@@ -130,10 +130,6 @@ class Marketplace extends Component {
         });
     };
 
-    handleSortBy = (type) => {
-        this.setState({sortBy: type}, this.filter);
-    };
-
     isEventTimeActive = () => {
         const { sortBy } = this.state;
         return sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT;
@@ -152,6 +148,7 @@ class Marketplace extends Component {
         const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
         const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
         const pageSize = LocalStorageHelper.getPageSize();
+        const sortBy = LocalStorageHelper.getSortBy();
 
         let customFilter = this.getQueryString();
 
@@ -167,7 +164,9 @@ class Marketplace extends Component {
         if( pageSize ) response.pageSize = pageSize;
 
         if ( filter.event ) response.event = filter.event;
-        response.sortBy = this.state.sortBy;
+
+
+        response.sortBy = sortBy || this.state.sortBy;
 
         if(exclusiveFromStorage || filter.exclusive) {
             response.exclusive = exclusiveFromStorage || filter.exclusive;
@@ -198,6 +197,11 @@ class Marketplace extends Component {
     selectPageSize = (pageSize) => {
 
         localStorage.setItem(localStorageEnums.PAGE_SIZE, pageSize);
+        this.filterByRoute();
+    };
+
+    handleSortBy = (type) => {
+        localStorage.setItem(localStorageEnums.SORT_BY, type);
         this.filterByRoute();
     };
 
@@ -288,7 +292,7 @@ class Marketplace extends Component {
                                     </button>
                                 </div>
 
-                                {/*<SortByListing sortBy={sortBy} onSelect={this.handleSortBy} />*/}
+                                <SortByListing sortBy={customFilter.sortBy} onSelect={this.handleSortBy} />
 
                                 <div className="right-legend-wrapper">
                                     <RightsLegend />

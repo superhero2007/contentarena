@@ -73,6 +73,10 @@ class LocalStorageClass {
     getPageSize() {
         return localStorage.getItem(localStorageEnums.PAGE_SIZE) || undefined;
     }
+
+    getSortBy() {
+        return localStorage.getItem(localStorageEnums.SORT_BY) || undefined;
+    }
 }
 
 const LocalStorageHelper = new LocalStorageClass();

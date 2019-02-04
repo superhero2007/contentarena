@@ -482,6 +482,11 @@ class Content
      */
     private $bundlesSold = array();
 
+    /**
+     * @Groups({"listing"})
+     */
+    private $referenceDate;
+
 
     public function __construct() {
         $this->rightsPackage = new ArrayCollection();
@@ -1672,6 +1677,21 @@ class Content
         }
 
         return $exclusive;
+    }
+
+    /**
+     */
+    public function getReferenceDate() {
+        /* @var Season $season */
+        $seasons = $this->getSeasons();
+
+        if ( count( $seasons ) > 0 ){
+            $season = $seasons->first();
+            return $season->getStartDate();
+        }
+
+        return null;
+
     }
 
 

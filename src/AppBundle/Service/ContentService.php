@@ -13,6 +13,7 @@ use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
+use AppBundle\Repository\ContentRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
@@ -34,6 +35,9 @@ class ContentService
 
     private $emailService;
 
+    const SORT_REFERENCE_EVENT = "event";
+    const SORT_REFERENCE_UPCOMING = "upcoming";
+
     public function __construct(
         EntityManager $entityManager,
         RandomIdGenerator $idGenerator,
@@ -52,7 +56,11 @@ class ContentService
 
     public function getContent( Request $request){
 
+        /* @var ContentRepository $listingRepository */
+
         $filterId = $request->request->get("id");
+        $listingRepository = $this->em->getRepository('AppBundle:Content');
+        $now = new \DateTime();
 
         if ( isset($filterId)){
             $filter = $this->em->getRepository('AppBundle:ContentFilter')->findOneBy(array('id' => $filterId));
@@ -84,7 +92,35 @@ class ContentService
             $sortBy = $request->request->get("sortBy");
         }
 
-        $content = $this->em->getRepository('AppBundle:Content')->getFilteredContent($filter, $term, $exclusive, $includeAllCountries, $sortBy);
+        $content = $listingRepository->getFilteredContent($filter, $term, $exclusive, $includeAllCountries, $sortBy);
+
+        if ( $sortBy == $this::SORT_REFERENCE_EVENT || $sortBy == $this::SORT_REFERENCE_UPCOMING ){
+
+            $sortByReferenceEvent = function($listingA, $listingB) use ($now){
+                /* @var Content $listingA */
+                /* @var Content $listingB */
+
+                $dateA = $listingA->getReferenceDate();
+                $dateB = $listingB->getReferenceDate();
+
+                if ($dateA == null && $dateB != null) return 1;
+                if ($dateA != null && $dateB == null) return -1;
+                if ($dateA == null && $dateB == null) return 0;
+
+                return ($listingA->getReferenceDate() < $listingB->getReferenceDate()) ? -1 : 1;
+
+            };
+            usort($content, $sortByReferenceEvent);
+
+            if ( $sortBy == $this::SORT_REFERENCE_UPCOMING ) {
+
+                $content = array_filter($content, function ($listing) use ( $now ) {
+                    /* @var Content $listing */
+                    $date = $listing->getReferenceDate();
+                    return $date != null && $date > $now;
+                });
+            }
+        }
 
         return $content;
 
