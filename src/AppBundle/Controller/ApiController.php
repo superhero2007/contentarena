@@ -127,24 +127,6 @@ class ApiController extends BaseController
     }
 
     /**
-     * @Route("/listings/marketplace", name="marketplaceListings")
-     */
-    public function marketplaceListings(Request $request, ContentService $contentService)
-    {
-        $contents = $contentService->getContent($request);
-        $paginate = $this->get('knp_paginator');
-        $contents = $paginate->paginate($contents,$request->query->getInt('page',1),50);
-        $context = SerializationContext::create()->setGroups(array('listing'));
-
-        $data = $this->serialize($contents->getItems(),$context);
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
      * @Route("/api/listings/draft", name="listingsDrafts")
      */
     public function listingsDrafts(Request $request, ContentService $contentService)

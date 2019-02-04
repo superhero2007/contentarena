@@ -69,6 +69,10 @@ class LocalStorageClass {
     getEventDateTo() {
         return localStorage.getItem(localStorageEnums.EVENT_DATE_TO) || undefined;
     }
+
+    getPageSize() {
+        return localStorage.getItem(localStorageEnums.PAGE_SIZE) || undefined;
+    }
 }
 
 const LocalStorageHelper = new LocalStorageClass();

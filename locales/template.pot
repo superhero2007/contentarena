@@ -1107,6 +1107,18 @@ msgstr ""
 msgid "Not applicable"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
+msgid "PAGINATION_PREV"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
+msgid "PAGINATION_NEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
+msgid "PAGINATION_PAGE_SIZE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
 msgid "Country Selector"
 msgstr ""

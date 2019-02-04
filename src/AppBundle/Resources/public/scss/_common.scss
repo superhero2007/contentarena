@@ -400,6 +400,14 @@ i.fa.ca-tooltip {
   text-transform: uppercase;
 }
 
+.disabled-link {
+  pointer-events: none;
+}
+
+a[disabled] {
+  pointer-events: none;
+}
+
 .ca-tabs {
   display: flex;
   flex-wrap: wrap;
