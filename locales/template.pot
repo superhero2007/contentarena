@@ -174,10 +174,6 @@ msgid "SALES_PACKAGE_TABLE_TOTAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
-msgid "SALES_PACKAGE_TABLE_HEADER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 msgid "SALES_PACKAGE_COMPANY_ADDRESS"
 msgstr ""
 
@@ -963,6 +959,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
 msgid "Not applicable"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
+msgid "PAGINATION_PREV"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
+msgid "PAGINATION_NEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
+msgid "PAGINATION_PAGE_SIZE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
@@ -1840,6 +1848,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_HEADLINE_EXPLANATION_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
+msgid "PREFERENCES_USER_UPDATED_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js

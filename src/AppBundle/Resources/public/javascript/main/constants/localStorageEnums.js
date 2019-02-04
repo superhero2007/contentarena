@@ -10,6 +10,7 @@ const localStorageEnums = Object.freeze({
     'EXCLUSIVE': 'exclusiveFilter',
     'EVENT_DATE_FROM': 'eventDateFrom',
     'EVENT_DATE_TO': 'eventDateTo',
+    'PAGE_SIZE' : 'pageSize'
 });
 
 export default localStorageEnums;

@@ -35,7 +35,7 @@ class MarketplaceController extends Controller
 
     use ControllerHelper;
 
-    const MARKETPLACE_PAGE_SIZE = 2;
+    const MARKETPLACE_PAGE_SIZE = 10;
 
     public function __construct()
     {
@@ -44,15 +44,27 @@ class MarketplaceController extends Controller
 
     /**
      * @Route("/api/marketplace/listings", name="marketplaceListings")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @return mixed|string|\Symfony\Component\HttpFoundation\Response
      */
     public function marketplaceListings(Request $request, ContentService $contentService)
     {
+
         $contents = $contentService->getContent($request);
         $page = $request->get("page");
+        $pageSize = $request->get("pageSize");
         $paginate = $this->get('knp_paginator');
-        $contents = $paginate->paginate($contents,$request->query->getInt('page',$page),$this::MARKETPLACE_PAGE_SIZE);
-        return $this->getSerializedResponse($contents->getItems(), array('listing') );
+        $totalItems = count($contents);
 
+        if ($pageSize == null) $pageSize = $this::MARKETPLACE_PAGE_SIZE;
+
+        $contents = $paginate->paginate($contents,$request->query->getInt('page',$page),$pageSize );
+        $response = array(
+            "listings" => $contents->getItems(),
+            "totalItems" => $totalItems
+        );
+        return $this->getSerializedResponse($response, array('listing') );
 
     }
 

@@ -1,0 +1,78 @@
+@import "vars";
+@import "mixins";
+
+
+.pagination{
+  position: relative;
+  padding: 14px 0;
+  .pagination-page-size {
+    width: 210px;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    color: $font-color-5;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+  .Select{
+      width: 50px;
+      .Select-clear{
+        display: none;
+      }
+    }
+  }
+  .pagination-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    a{
+      color: $font-color-5;
+      font-size: 12px;
+    }
+    .pagination-button{
+      color: $blue-secondary-color;
+      text-decoration: underline;
+    }
+    .disabled-link{
+      color: $font-color-5;
+      text-decoration: none;
+    }
+    .pagination-pages{
+      display: flex;
+      list-style: none;
+      margin: 0 20px;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      li {
+        width: 20px;
+        height: 20px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        a{
+          border-right: 1px solid $font-color-5;
+          height: 14px;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          padding: 0 6px;
+        }
+        &:last-of-type{
+          a{
+            border-right: none;
+          }
+        }
+      }
+      .pagination-pages-active{
+        a{
+          color: white;
+          border-right: none;
+        }
+        background-color: $blue-secondary-color;
+      }
+    }
+  }
+}

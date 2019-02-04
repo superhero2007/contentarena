@@ -21,6 +21,9 @@ import PropTypes from "prop-types";
 const queryString = require('query-string');
 import Loader from '../../common/components/Loader';
 import {FetchMarketplaceListings} from "../../api/marketplace";
+import Pagination from "../../main/components/Pagination";
+import {serialize} from "../../common/utils/listing";
+import localStorageEnums from "../../main/constants/localStorageEnums";
 
 class Marketplace extends Component {
     constructor(props) {
@@ -36,7 +39,7 @@ class Marketplace extends Component {
             territories: [],
             profile : props.user.profile,
             errorMessage: '',
-            page: 1,
+            totalItems: 1,
             listingView: CONTENT_LISTING_VIEW.LIST,
             sortBy: LISTING_SORT_OPTIONS.PUBLISH_DATE,
         };
@@ -63,20 +66,20 @@ class Marketplace extends Component {
                     this.props.updateFilters( {countries: [match.params.filterValue]});
                     return;
                 case "multi":
-                    let customFilter = queryString.parse( location.search,{arrayFormat: 'index'});
+                    let customFilter = this.getQueryString();
                     this.props.updateFilters(customFilter);
                     return;
             }
         }
 
-        this.filter();
+        //this.filter();
         clearUpdateFilter();
 
         //jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
     }
 
     componentWillUnmount(){
-        jQuery('body, .marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
+        //jQuery('body, .marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     componentWillReceiveProps ( props ) {
@@ -136,7 +139,11 @@ class Marketplace extends Component {
         return sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT;
     };
 
-    parseFilter = (filter) => {
+    getQueryString = () => {
+        return queryString.parse( location.search,{arrayFormat: 'index'});
+    };
+
+    parseFilter = (filter, excludePage) => {
         const sports = LocalStorageHelper.getSportsSelected();
         const sportsFromStorage = sports ? [{name: sports.value}] : null;
         const sportsFromProps = filter.sport ? [{name: filter.sport.value}] : null;
@@ -144,12 +151,20 @@ class Marketplace extends Component {
         const rightsFromStorage = LocalStorageHelper.getRightsCheckboxSelected();
         const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
         const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
+        const pageSize = LocalStorageHelper.getPageSize();
+
+        let customFilter = this.getQueryString();
 
         let response = {
             rights: filter.rights.length ? filter.rights : rightsFromStorage,
-            countries: countriesFromStorage || filter.countries,
-            page : filter.page || this.state.page
+            countries: countriesFromStorage || filter.countries
         };
+
+        if (!excludePage){
+            response.page = customFilter.page || 1
+        }
+
+        if( pageSize ) response.pageSize = pageSize;
 
         if ( filter.event ) response.event = filter.event;
         response.sortBy = this.state.sortBy;
@@ -170,26 +185,25 @@ class Marketplace extends Component {
     filter = () => {
         const { filter } = this.props;
         let parsedFilter = this.parseFilter(filter);
+        console.log(parsedFilter);
         this.setState({parsedFilter: parsedFilter, loadingListing: true});
     };
 
     filterByRoute = () => {
-        const {history, filter} = this.props;
-        const serialize = function(obj, prefix) {
-            var str = [],
-                p;
-            for (p in obj) {
-                if (obj.hasOwnProperty(p)) {
-                    var k = prefix ? prefix + "[" + p + "]" : p,
-                        v = obj[p];
-                    str.push((v !== null && typeof v === "object") ?
-                        serialize(v, k) :
-                        encodeURIComponent(k) + "=" + encodeURIComponent(v));
-                }
-            }
-            return str.join("&");
-        };
-        history.push("/marketplace/filter/multi?"+serialize(this.parseFilter(filter)));
+        const {history} = this.props;
+        let url = this.getFilterUrl(true);
+        history.push(url);
+    };
+
+    selectPageSize = (pageSize) => {
+
+        localStorage.setItem(localStorageEnums.PAGE_SIZE, pageSize);
+        this.filterByRoute();
+    };
+
+    getFilterUrl = (excludePage) => {
+        const { filter } = this.props;
+        return "/marketplace/filter/multi?"+serialize(this.parseFilter(filter,excludePage));
     };
 
     goToListing = (customId) => {
@@ -201,9 +215,10 @@ class Marketplace extends Component {
         this.setState({listingView: type});
     };
 
-    onFetchResponse = ( listings ) => {
+    onFetchResponse = ( response ) => {
         this.setState({
-            listings: listings,
+            listings: response.listings,
+            totalItems: response.totalItems,
             loadingListing: false,
             sortSalesPackages : true
         });
@@ -220,6 +235,7 @@ class Marketplace extends Component {
             content,
             company,
             sortSalesPackages,
+            totalItems,
             profile,
             errorMessage,
             listingView,
@@ -232,6 +248,8 @@ class Marketplace extends Component {
         }
 
         document.title = "Content Arena - Marketplace";
+
+        let customFilter = this.getQueryString();
 
         return (
             <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -247,7 +265,12 @@ class Marketplace extends Component {
                     </div>
                     <div className="buy-container-right">
 
-                        {parsedFilter && <FetchMarketplaceListings onResponse={this.onFetchResponse} filter={parsedFilter}/>}
+                        {parsedFilter && (
+                            <FetchMarketplaceListings
+                                onResponse={this.onFetchResponse}
+                                filter={parsedFilter}
+                            />
+                        )}
 
                         <Loader loading={listings.length === 0 && loadingListing}>
 
@@ -288,6 +311,17 @@ class Marketplace extends Component {
                                     />
                                 );
                             })}
+
+                            {listings.length > 0 && (
+                                <Pagination
+                                    page={Number(customFilter.page)}
+                                    totalItems={totalItems}
+                                    url={this.getFilterUrl(true)}
+                                    pageSize={Number(customFilter.pageSize)}
+                                    onSelectPageSize={this.selectPageSize}
+                                />
+                            )}
+                            
 
                             {listings.length === 0 && (
                                 <span className={"no-results"}>{this.context.t("MARKETPLACE_NO_RESULTS")}</span>
