@@ -1684,10 +1684,40 @@ class Content
     public function getReferenceDate() {
         /* @var Season $season */
         $seasons = $this->getSeasons();
-
+        $extraData = $this->getExtraData();
+        $fixtures = $this->getFixturesBySeason();
         if ( count( $seasons ) > 0 ){
             $season = $seasons->first();
-            return $season->getStartDate();
+            $date = $season->getStartDate();
+
+            if ( $fixtures != null && count($fixtures) > 0){
+                $seasonFixtures = $fixtures[0];
+
+                if ( $seasonFixtures != null && count($seasonFixtures) == 1 ){
+                    if ( $seasonFixtures[0]->date != null ){
+                        $date = new \DateTime($seasonFixtures[0]->date);
+                        return $date;
+                    }
+                }
+            }
+
+            if ($date != null ) return $date;
+
+            if ($date == null && $extraData != null){
+                $customDates = $extraData['seasonDurations'];
+
+                if ($customDates != null){
+                    $seasonData = $customDates[$season->getExternalId()];
+                    if ($seasonData != null){
+                        $startDate = $seasonData['startDate'];
+                        if ($startDate != null){
+                            $startDate = $seasonData['startDate'];
+                            $date = new \DateTime($startDate);
+                            return $date;
+                        }
+                    }
+                }
+            }
         }
 
         return null;

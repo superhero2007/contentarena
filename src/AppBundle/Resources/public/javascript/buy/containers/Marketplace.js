@@ -292,7 +292,9 @@ class Marketplace extends Component {
                                     </button>
                                 </div>
 
-                                <SortByListing sortBy={customFilter.sortBy} onSelect={this.handleSortBy} />
+                                {listings.length > 0 && (
+                                    <SortByListing sortBy={parsedFilter.sortBy} onSelect={this.handleSortBy} />
+                                )}
 
                                 <div className="right-legend-wrapper">
                                     <RightsLegend />
@@ -326,7 +328,6 @@ class Marketplace extends Component {
                                 />
                             )}
                             
-
                             {listings.length === 0 && (
                                 <span className={"no-results"}>{this.context.t("MARKETPLACE_NO_RESULTS")}</span>
                             )}
