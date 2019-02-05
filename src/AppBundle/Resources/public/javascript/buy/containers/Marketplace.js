@@ -321,7 +321,7 @@ class Marketplace extends Component {
                                     page={Number(customFilter.page)}
                                     totalItems={totalItems}
                                     url={this.getFilterUrl(true)}
-                                    pageSize={Number(customFilter.pageSize)}
+                                    pageSize={Number(parsedFilter.pageSize)}
                                     onSelectPageSize={this.selectPageSize}
                                 />
                             )}

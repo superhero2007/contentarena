@@ -33,7 +33,7 @@ class Pagination extends Component {
             totalItems
         } = this.state;
 
-        return Math.round(totalItems / pageSize);
+        return Math.ceil(totalItems / pageSize);
     };
 
     getLink = ( page ) => {
