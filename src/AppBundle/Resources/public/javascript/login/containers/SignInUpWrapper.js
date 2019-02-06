@@ -4,7 +4,7 @@ import SignInForm from './../components/SignInForm';
 import RecoverPassword from './../components/RecoverPassword';
 import ReviewEmail from './../components/ReviewEmail';
 import SignUpForm from './../components/SignUpForm';
-import ChangePassword from './../components/ChangePassword';
+import ResetPassword from './../components/ResetPassword';
 import SignUpSuccessfully from './../components/SignUpSuccessfully';
 import { LOGIN_VIEW_TYPE } from "@constants";
 import { contentWhiteLogo } from "./../../main/components/Icons";
@@ -59,7 +59,7 @@ SignInUpWrapper.defaultProps = {
         [LOGIN_VIEW_TYPE.REVIEW]: ReviewEmail,
         [LOGIN_VIEW_TYPE.REGISTER]: SignUpForm,
         [LOGIN_VIEW_TYPE.REGISTERED]: SignUpSuccessfully,
-        [LOGIN_VIEW_TYPE.CHANGE_PASSWORD]: ChangePassword
+        [LOGIN_VIEW_TYPE.RESET_PASSWORD]: ResetPassword
     },
     minHeight: {
         [LOGIN_VIEW_TYPE.LOGIN]: 770,
@@ -67,7 +67,7 @@ SignInUpWrapper.defaultProps = {
         [LOGIN_VIEW_TYPE.REVIEW]: 500,
         [LOGIN_VIEW_TYPE.REGISTER]: 900,
         [LOGIN_VIEW_TYPE.REGISTERED]: 500,
-        [LOGIN_VIEW_TYPE.CHANGE_PASSWORD]: 550
+        [LOGIN_VIEW_TYPE.RESET_PASSWORD]: 550
     }
 };
 

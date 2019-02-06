@@ -21,14 +21,13 @@ export const LOGIN_VIEW_TYPE = {
     REVIEW: 'review',
     REGISTER: 'register',
     REGISTERED: 'registered',
-    CHANGE_PASSWORD: 'change_password'
+    RESET_PASSWORD: 'reset_password'
 };
 
 export const SIGN_UP_FIELDS ={
     NAME: 'name',
     LAST_NAME: 'lastName',
     EMAIL: 'email',
-    PHONE: 'phone',
     COMPANY: 'company'
 };
 

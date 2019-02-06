@@ -13,7 +13,6 @@ import Register from "./containers/Register";
 import PublicHeaderBar from "./components/PulbicHeaderBar";
 import Preferences from "../manage/containers/Preferences";
 import Terms from "../manage/containers/Terms";
-import LoginWrapper from "../login/containers/SignInUpWrapper";
 
 export const routes = [
     {

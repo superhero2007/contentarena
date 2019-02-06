@@ -761,9 +761,14 @@ ContentArena.Api= {
             email
         });
     },
-    signUpUser(firstName, lastName, email, companyLegalName, phone) {
+    resetPassword(password) {
+        return axios.post(`${envhosturl}api/users/password/reset`, {
+            password
+        });
+    },
+    signUpUser(firstName, lastName, email, companyLegalName) {
         return axios.post(`${envhosturl}api/users/register`, {
-            firstName, lastName, email, companyLegalName, phone
+            firstName, lastName, email, companyLegalName
         });
     }
 };
