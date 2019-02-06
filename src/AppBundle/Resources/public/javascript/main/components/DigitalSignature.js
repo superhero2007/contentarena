@@ -13,7 +13,7 @@ class DigitalSignature extends React.Component{
 
         this.state = {
             ready : (props.ready) ? props.ready :  false,
-        }
+        };
 
         this.signature = React.createRef();
     }
@@ -48,7 +48,7 @@ class DigitalSignature extends React.Component{
         const {isPlaceholderDisabled} = this.state;
 
         if (!isPlaceholderDisabled) this.setState({isPlaceholderDisabled:true})
-    }
+    };
 
     render(){
         const {
@@ -78,12 +78,6 @@ class DigitalSignature extends React.Component{
 
         return (
             <div className={cn('digital-signature', {[`${customClass}`]: customClass})}>
-
-                {!noLabel && <div
-                    className="base-full-input"
-                    style={{maxWidth: 'none', marginBottom:10, borderBottom: 'none'}}>
-                    <label>{this.context.t('DIGITAL_SIGNATURE_INFO')}</label>
-                </div>}
 
                 {showTerms && (
                     <div className={"terms-confirm"}>
@@ -147,7 +141,7 @@ class DigitalSignature extends React.Component{
                     )}
 
                     {signature && ready && (
-                        <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature}/>
+                        <img style={{width: 800, height: 300, margin: '0 auto'}} src={signature} />
                     )}
 
                     {!ready && (
