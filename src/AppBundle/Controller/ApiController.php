@@ -811,23 +811,6 @@ class ApiController extends BaseController
     }
 
     /**
-     * @Route("/api/company/users", name="getCompanyUsers")
-     */
-    public function getCompanyUsers(Request $request)
-    {
-        $user = $this->getUser();
-        $users = $user->getCompany()->getUsers();
-
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($users, 'json',SerializationContext::create()->setGroups(array('settings')));
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
      * @Route("/api/user/update", name="updateUser")
      */
     public function updateUser(Request $request, UserService $userService)
@@ -910,24 +893,6 @@ class ApiController extends BaseController
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
-     * @Route("/api/company/update", name="updateCompany")
-     */
-    public function updateCompany(Request $request, UserService $userService)
-    {
-        $user = $this->getUser();
-
-        $company = $userService->updateCompany($request->get("company"), $user);
-
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($company, 'json',SerializationContext::create()->setGroups(array('settings')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

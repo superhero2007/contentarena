@@ -1,7 +1,11 @@
 @import "vars";
 
 .settings-container {
+  .yellow-button{
+    margin-left: 0;
+  }
   .setting {
+
     .settings-link {
       margin: 20px 0;
       border-radius: 5px;
@@ -27,7 +31,7 @@
 
         .table-header {
           color: #0C4772;
-          font-size: 19px;
+          font-size: 16px;
           font-weight: bold;
           text-align: left;
           outline: none;
@@ -63,9 +67,14 @@
         color: #666;
         font-weight: normal;
       }
+
+      .setting-table-icon{
+        font-size: 20px;
+      }
     }
 
     .buttons {
+      margin: 0;
       div {
         display: flex;
         margin: 20px auto 0;
@@ -124,8 +133,8 @@
   .title {
     display: flex;
     margin-bottom: 30px;
-    color: #333;
-    font-size: 18px;
+    color: #03547C;
+    font-size: 21px;
     font-weight: bold;
     line-height: 24px;
   }
@@ -170,15 +179,14 @@
   }
 
   .setting {
+    label {
+      color: #333333;
+      font-size: 16px;
+      font-weight: 600;
+    }
     .password {
       display: flex;
       flex-direction: column;
-
-      label {
-        color: #333333;
-        font-size: 16px;
-        font-weight: 600;
-      }
 
       input {
         width: 380px;
@@ -216,11 +224,7 @@
           margin-right: inherit;
         }
 
-        label {
-          color: #333333;
-          font-size: 16px;
-          font-weight: 600;
-        }
+
 
         input {
           width: auto;

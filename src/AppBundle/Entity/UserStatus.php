@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Rol
@@ -18,6 +19,7 @@ class UserStatus
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"companyUsers"})
      */
     private $id;
 
@@ -25,6 +27,7 @@ class UserStatus
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Groups({"companyUsers"})
      */
     private $name;
 

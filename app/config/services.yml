@@ -88,7 +88,7 @@ services:
 
     app_bundle.user_service:
         class: AppBundle\Service\UserService
-        arguments: ['@fos_user.user_manager']
+        arguments: ['@doctrine.orm.entity_manager','@AppBundle\Doctrine\RandomIdGenerator', '@AppBundle\Service\FileUploader', '@fos_user.user_manager', '@fos_user.util.token_generator','@AppBundle\Service\EmailService']
 
     twig.app_extension:
         class: AppBundle\Twig\AppExtension

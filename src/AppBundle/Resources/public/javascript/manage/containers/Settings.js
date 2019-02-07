@@ -6,6 +6,7 @@ import CountrySelector from '../../main/components/CountrySelector'
 import {blueCheckIcon, cancelIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import Loader from '../../common/components/Loader';
+import InviteUsers from "./InviteUsers";
 
 class Settings extends React.Component {
     constructor(props) {
@@ -24,17 +25,23 @@ class Settings extends React.Component {
     }
 
     componentDidMount () {
-        this.setState({loading:true, loadingCompanyUsers: true});
+        this.setState({loading:true});
 
         ContentArena.ContentApi.getUserInfo().done(user=>{
             this.originalUser = cloneDeep(user);
             this.setState({loading:false, user : user});
         });
 
+        this.loadCompanyUsers();
+
+    }
+
+    loadCompanyUsers = () => {
+        this.setState({loadingCompanyUsers: true});
         ContentArena.ContentApi.getCompanyUsers().done(companyUsers=>{
             this.setState({loadingCompanyUsers:false, companyUsers : companyUsers});
         });
-    }
+    };
 
     updateCompany = () => {
         const {history} = this.props;
@@ -212,8 +219,8 @@ class Settings extends React.Component {
                             this.setState({user});
                         }}/>
                     </div>
-                    <div className={"buttons"}>
-                        {editCompanyInfo && !updatingCompany && <div>
+                    {editCompanyInfo && !updatingCompany && <div className={"buttons"}>
+                        <div>
                             <button
                                 onClick={() => {
                                     this.setState({
@@ -226,18 +233,18 @@ class Settings extends React.Component {
                             </button>
                             <button
                                 onClick={this.updateCompany}
-                                className={"standard-button"}>Save
+                                className={"yellow-button"}>Save
                             </button>
-                        </div>}
-                    </div>
+                        </div>
+                    </div>}
                 </div>}
                 <div className={'setting'}>
                     {/*ACTIVE USERS*/}
                     <div className={'title'}>Active Users</div>
-                    {loadingCompanyUsers && companyUsers.length === 0 && <Loader loading={true} small/>}
+
                     {!loadingCompanyUsers && companyUsers.length > 0 && <div>
                         <ReactTable
-                            className={"closed-deals-table"}
+                            className="closed-deals-table"
                             defaultPageSize={30}
                             showPageSizeOptions={false}
                             showPagination={false}
@@ -271,11 +278,34 @@ class Settings extends React.Component {
                                 accessor: 'title',
                                 headerClassName: 'table-header',
                                 className: 'table-header',
+                            }, {
+                                Header: this.context.t("SETTINGS_LABEL_USER_STATUS"),
+                                accessor: 'status',
+                                headerClassName: 'table-header',
+                                className: 'table-header d-flex justify-content-center',
+                                Cell: props => {
+                                    const user = props.original;
+
+                                    if ( user.status && user.status.name === "Active" ) return (
+                                        <i className="fa fa-check-circle setting-table-icon" style={{color: 'green'}} />
+                                    );
+
+                                    return (
+                                        <i className="fa fa-minus-circle setting-table-icon" style={{color: 'orange'}} />
+                                    )
+                                }
                             }
 
                             ]}
                         />
                     </div>}
+                    {loadingCompanyUsers && <Loader loading={true} small/>}
+                </div>
+                <div className={"setting"}>
+                    <div className={"title"}>
+                        {this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES")}
+                    </div>
+                    <InviteUsers onInvite={this.loadCompanyUsers} />
                 </div>
                 <div className={"setting"}>
                     <div className={"title"}>
@@ -319,7 +349,7 @@ class Settings extends React.Component {
                             }}/>
                         </div>
                     </div>
-                    <div className={"row"}>
+                    <div className={"row"} style={{marginBottom: 0}}>
                         <div className={"item"}>
                             <label>
                                 {this.context.t("SETTINGS_LABEL_USER_EMAIL")}
@@ -339,8 +369,8 @@ class Settings extends React.Component {
                             }}/>
                         </div>
                     </div>
-                    <div className={"buttons"}>
-                        {editPersonalInfo && !updatingUser && <div>
+                    {editPersonalInfo && !updatingUser && <div className={"buttons"}>
+                        <div>
                             <button
                                 onClick={() => {
                                     this.setState({
@@ -353,10 +383,10 @@ class Settings extends React.Component {
                             </button>
                             <button
                                 onClick={this.updateUser}
-                                className={"standard-button"}>Save
+                                className={"yellow-button"}>Save
                             </button>
-                        </div>}
-                    </div>
+                        </div>
+                    </div>}
                 </div>
                 <div style={{
                     position: 'relative',
@@ -401,7 +431,7 @@ class Settings extends React.Component {
                             {!updatingPassword && !passwordUpdated &&
                             <button onClick={this.updatePassword}
                                     disabled={this.invalidPassword()}
-                                    className={"standard-button"}>
+                                    className={"yellow-button"}>
                                 {this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
                             </button>}
                             {updatingPassword && <Loader loading={true} small/>}

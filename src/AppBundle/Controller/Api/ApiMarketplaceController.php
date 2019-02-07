@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\CompanySnapshot;
 use AppBundle\Helper\ControllerHelper;
@@ -30,7 +30,7 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PDFMerger;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class MarketplaceController extends Controller
+class ApiMarketplaceController extends Controller
 {
 
     use ControllerHelper;

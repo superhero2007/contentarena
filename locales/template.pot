@@ -509,6 +509,30 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_FAILED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_SENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_BUTTON_CLOSE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_BUTTON_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_SEND_BUTTON"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SellFormItems.js
 msgid "CL_STEP1_SELECTOR_ADD_SPORT"
@@ -1032,6 +1056,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_CREATE_LISTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_INVITE_USERS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
@@ -1573,11 +1601,13 @@ msgid "SETTINGS_LABEL_USER_TITLE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_FIRST_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_FAMILY_NAME"
 msgstr ""
@@ -1587,6 +1617,7 @@ msgid "SETTINGS_LABEL_COMPANY_POSITION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_EMAIL"
 msgstr ""
@@ -1690,7 +1721,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
 #: src/AppBundle/Resources/public/javascript/sell/components/Definition.js
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "Edit"
 msgstr ""
 
@@ -1757,6 +1787,18 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/manage/components/DefinitionItem.js
 #: src/AppBundle/Resources/public/javascript/manage/components/TermItem.js
 msgid "TERMS_DEFINITIONS_REMOVE_CONFIRMATION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
+msgid "SETTINGS_INVITE_PLACEHOLDER_FIRST_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
+msgid "SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
+msgid "SETTINGS_INVITE_PLACEHOLDER_EMAIL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js
@@ -1896,6 +1938,18 @@ msgstr ""
 msgid "COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/manage/containers/InviteUsers.js
+msgid "SETTINGS_SEND_INVITE_SUCCESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/InviteUsers.js
+msgid "SETTINGS_SEND_INVITE_FAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/InviteUsers.js
+msgid "SETTINGS_BUTTON_SEND_INVITE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/manage/containers/ManageListings.js
 msgid "MANAGE_LISTINGS_HELP"
 msgstr ""
@@ -2006,6 +2060,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_COMPANY_POSITION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_STATUS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_INVITE_COLLEAGUES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -2435,10 +2497,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
 msgid "CL_STEP5_TITLE_PREVIEW"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js
-msgid "CL_STEP5_TITLE_REVIEW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/ReviewAndSign.js

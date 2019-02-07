@@ -508,6 +508,27 @@ class EmailService
 
     }
 
+    public function sendUserInvite($params){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_user_invite");
+        $content = $repository->findBySlug("email_content_user_invite");
+        $content2 = $repository->findBySlug("email_content_user_invite_2");
+        $content3 = $repository->findBySlug("email_content_user_invite_3");
+        $content4 = $repository->findBySlug("email_content_user_invite_4");
+        $parameters = array_merge(
+            $params,
+            array(
+                "content" => $content->getContent(),
+                "content2" => $content2->getContent(),
+                "content3" => $content3->getContent(),
+                "content4" => $content4->getContent()
+            )
+        );
+        $this->sendEmail("email/email.user.invite.twig", $subject->getContent(), $params['user']->getEmail(), $parameters );
+
+    }
+
     /**
      * @param $params
      * @throws \Twig_Error_Loader

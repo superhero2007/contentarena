@@ -36,6 +36,8 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 20px;
 
     .modal-title {
       color: $font-color-6;
@@ -122,3 +124,22 @@
   }
 }
 
+.ReactModal__Content.modal-wrapper-invite{
+  @extend .modal-wrapper;
+  width: 900px;
+  .modal-body{
+    flex-direction: column;
+    .row{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 20px;
+    }
+    input{
+      background-color: rgba(204,204,204,0.21);
+      padding: 14px 10px;
+      border: 1px solid rgba(204,204,204,0.48);
+    }
+  }
+
+}

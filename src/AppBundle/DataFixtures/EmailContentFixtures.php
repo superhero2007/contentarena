@@ -54,6 +54,31 @@ class EmailContentFixtures extends Fixture
                 "This link can only be used once to validate your account."
             ),
             array(
+                "email_subject_user_invite",
+                "Email subject invite",
+                "Your colleague invited you to join Content Arena"
+            ),
+            array(
+                "email_content_user_invite",
+                "Email invite",
+                "Your colleague "
+            ),
+            array(
+                "email_content_user_invite_2",
+                "Email invite",
+                "invited you to join Content Arena."
+            ),
+            array(
+                "email_content_user_invite_3",
+                "Email invite",
+                "Content Arena is the first of its kind B2B marketplace for sports media rights trading."
+            ),
+            array(
+                "email_content_user_invite_4",
+                "Email invite",
+                "To enter your account, please:"
+            ),
+            array(
                 "email_subject_user_forgot_password",
                 "Email subject when requesting new password",
                 "Reset password request for Content Arena"

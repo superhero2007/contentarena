@@ -93,6 +93,7 @@ class SendEmail extends ContainerAwareCommand
         $params = array(
             "hostUrl" => $hostUrl,
             "user" => $user,
+            "colleague" => $user,
             "confirmationUrl" => $confirmationUrl,
             "listing" => $listing
         );
@@ -156,6 +157,10 @@ class SendEmail extends ContainerAwareCommand
 
             case "listing_match":
                 $this->emailService->listingMatch($listing, $user);
+                break;
+
+            case "invite_user":
+                $this->emailService->sendUserInvite($params);
                 break;
 
             case "listing_find_match":

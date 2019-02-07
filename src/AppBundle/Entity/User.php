@@ -47,12 +47,12 @@ class User extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"settings", "messages", "thread", "auth"})
+     * @Groups({"settings", "messages", "thread", "auth", "companyUsers"})
      */
     protected $id;
 
     /**
-     * @Groups({"settings","messages", "thread", "auth"})
+     * @Groups({"settings","messages", "thread", "auth", "companyUsers"})
      */
     protected $email;
 
@@ -60,7 +60,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread", "auth"})
+     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread", "auth", "companyUsers"})
      *
      */
     protected $firstName;
@@ -69,7 +69,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread", "auth"})
+     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread", "auth", "companyUsers"})
      */
     protected $lastName;
 
@@ -91,7 +91,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
-     * @Groups({"settings"})
+     * @Groups({"settings", "companyUsers"})
      */
     protected $phone;
 
@@ -99,7 +99,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
-     * @Groups({"settings"})
+     * @Groups({"settings", "companyUsers"})
      */
     protected $title;
 
@@ -136,6 +136,7 @@ class User extends BaseUser
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UserStatus")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"companyUsers"})
      */
     private $status;
 

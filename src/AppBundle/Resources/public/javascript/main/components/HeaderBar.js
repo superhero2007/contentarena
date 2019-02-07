@@ -8,6 +8,7 @@ import {
     updateIncludedCountries
 } from "../../buy/actions/filterActions";
 import {connect} from "react-redux";
+import InviteUsersModal from "../../common/modals/InviteUsersModal";
 
 const HeaderBarTab = ({match, children, route, className = '', linkClass = ''}) => {
     return (
@@ -30,13 +31,15 @@ class HeaderBar extends  React.Component {
         super(props);
 
         this.state = {
+            inviteModalOpen: false
         }
 
 
     }
 
     render(){
-        const {tab, profile, match, common} = this.props;
+        const { tab, profile, match, common } = this.props;
+        const { inviteModalOpen } = this.state;
         const logoUrl = this.getLogoUrl(tab);
 
         return(
@@ -119,6 +122,13 @@ class HeaderBar extends  React.Component {
 
                     <div className="spacer" />
 
+                    <div className="tab">
+                        <a onClick={e =>{ this.setState({inviteModalOpen:true}); e.preventDefault(); }}>
+                            <i className="fa fa-user-circle" style={{fontSize: 24}} />
+                            {this.context.t("HEADER_INVITE_USERS")}
+                        </a>
+                    </div>
+
                     {profile === "BUYER" && (
                         <HeaderBarTab className="tab baseline switch-mode" linkClass="ca-btn primary" route="/managelistings">
                             {this.context.t("HEADER_LINK_SELLING_MODE")}
@@ -165,6 +175,7 @@ class HeaderBar extends  React.Component {
                         </div>
                     </div>
                 </div>
+                <InviteUsersModal common={common} isOpen={inviteModalOpen} onCloseModal={()=>{this.setState({inviteModalOpen:false})}} />
             </React.Fragment>
         )
     }

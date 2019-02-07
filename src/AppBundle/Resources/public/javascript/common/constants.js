@@ -32,6 +32,10 @@ export const SIGN_UP_FIELDS ={
     COMPANY: 'company'
 };
 
+export const API_URLS = {
+    INVITE_USERS : "api/company/invite"
+};
+
 export const REGIONS_ENUMS = {
     "Algeria":"DZA",
     "Angola":"AGO",

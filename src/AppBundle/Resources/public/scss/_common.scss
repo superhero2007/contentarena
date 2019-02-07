@@ -98,6 +98,13 @@ textarea.representation-textarea {
   font-family: $font-stack;
 }
 
+input {
+  &::placeholder{
+    font-style: italic ;
+    color: #CCCCCC;
+  }
+}
+
 input[type="radio"].ca-radio {
   display: inline-block;
   vertical-align: middle;
@@ -577,6 +584,25 @@ a[disabled] {
     }
   }
 }
+.result-message{
+  color: #333333;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  margin: 10px 0 20px;
+  display: flex;
+  i{
+    font-size: 26px;
+    margin: 0 5px;
+  }
+  .fa-check-circle{
+    color: green;
+  }
+
+  .fa-close{
+    color: red;
+  }
+}
 
 //todo: apply to all urls
 a.ca-link {
@@ -626,6 +652,7 @@ a.ca-link {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 0 10px;
 
   .spinner {
     border: 12px solid #E7C254;
@@ -634,7 +661,10 @@ a.ca-link {
     width: 90px;
     height: 90px;
     animation: spin 1.5s linear infinite;
-    margin: 0 auto 10px;
+    margin: 0 auto 0;
+    b{
+      margin-top: 10px;
+    }
 
     &.small {
       width: 55px;
@@ -673,5 +703,31 @@ a.ca-link {
   img {
     width: 60%;
     height: 60%;
+  }
+}
+
+.hideMe {
+  -moz-animation: hideMeAnimation 0s ease-in 5s forwards;
+  /* Firefox */
+  -webkit-animation: hideMeAnimation 0s ease-in 5s forwards;
+  /* Safari and Chrome */
+  -o-animation: hideMeAnimation 0s ease-in 5s forwards;
+  /* Opera */
+  animation: hideMeAnimation 0s ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes hideMeAnimation {
+  to {
+    width:0;
+    height:0;
+    overflow:hidden;
+  }
+}
+@-webkit-keyframes hideMeAnimation {
+  to {
+    width:0;
+    height:0;
+    visibility:hidden;
   }
 }

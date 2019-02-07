@@ -13,6 +13,8 @@ use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
+use FOS\UserBundle\Doctrine\UserManager;
+use FOS\UserBundle\Util\TokenGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\User;
@@ -33,13 +35,27 @@ class UserService
 
     private $fileUploader;
 
+    private $emailService;
+
     protected $fosUserManager;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, \FOS\UserBundle\Doctrine\UserManager $fosUserManager) {
+    protected $tokenGenerator;
+
+    public function __construct(
+        EntityManager $entityManager,
+        RandomIdGenerator $idGenerator,
+        FileUploader $fileUploader,
+        UserManager $fosUserManager,
+        TokenGenerator $tokenGenerator,
+        EmailService $emailService
+    ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
         $this->fosUserManager = $fosUserManager;
+        $this->tokenGenerator = $tokenGenerator;
+        $this->emailService = $emailService;
+
     }
 
     public function getUserByActivationCode( $activationCode )
@@ -51,6 +67,16 @@ class UserService
             ->findOneBy(array('confirmationToken' => $activationCode));
 
         return $user;
+    }
+
+    public function getUserByEmail( string $email )
+    {
+        if( $email == null ) return null;
+
+        return $this->em
+            ->getRepository('AppBundle:User')
+            ->findOneBy(array('email' => $email));
+
     }
 
     public function updateUser($data){
@@ -242,6 +268,38 @@ class UserService
 
     }
 
+    public function inviteCompanyUsers(array $users, Company $company)
+    {
+        $userRepository = $this->em->getRepository('AppBundle:User');
+        $invitedUsers = [];
+
+        foreach ( $users as $userData ){
+            $user = $userRepository->findOneBy(['email' => $userData["email"]]);
+
+            if ( $user != null ) continue;
+
+            /** @var User $user */
+            $user = $this->fosUserManager->createUser();
+            $user->setEnabled(true);
+            $user->setEmail($userData["email"]);
+            $user->setUsername($userData["email"]);
+            $user->setFirstName($userData["firstName"]);
+            $user->setLastName($userData["lastName"]);
+            $user->setRegisteredAt(new \DateTime());
+            $user->setCompany($company);
+            $user->setPlainPassword('');
+
+            if (null === $user->getConfirmationToken()) {
+                $user->setConfirmationToken($this->tokenGenerator->generateToken());
+            }
+
+            $this->fosUserManager->updateUser($user);
+            $invitedUsers[] = $user;
+
+        }
+
+        return $invitedUsers;
+    }
 
     private function getCountry($country){
 
