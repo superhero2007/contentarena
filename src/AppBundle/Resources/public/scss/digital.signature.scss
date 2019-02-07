@@ -1,41 +1,42 @@
 @import "vars";
 @import url('https://fonts.googleapis.com/css?family=La+Belle+Aurore');
 
-.digital-signature{
+.digital-signature {
   flex-shrink: 0;
   flex-direction: column;
   display: flex;
 
-  &.for-listing, &.for-modal{
-    .digital-signature-placeholder{
+  &.for-listing, &.for-modal {
+    .digital-signature-placeholder {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
 
-      .title{
+      .title {
         font-weight: bold;
         color: $black-color;
         font-size: 16px;
       }
 
-      .license-bid{
+      .license-bid {
         color: $font-color-7;
         font-size: 13px;
         cursor: pointer;
       }
     }
-    #signature-pad .m-signature-pad--body{
+
+    #signature-pad .m-signature-pad--body {
       border-right: 0;
       background: $primary-color;
     }
   }
 
-  &.for-modal{
+  &.for-modal {
     width: 100%;
     margin: 20px 0;
     padding: 0 20px;
 
-    #signature-pad .m-signature-pad--body{
+    #signature-pad .m-signature-pad--body {
       border: none;
       border-radius: 0;
     }
@@ -48,10 +49,12 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    input{
+
+    input {
       margin: 10px 20px 10px 0;
     }
   }
+
   .signature-wrap {
     max-width: 800px;
     margin: 0 auto;
@@ -97,13 +100,12 @@
   }
 
   .signature-info {
-    margin-top: 30px;
     margin-bottom: 10px;
   }
 
-  .m-signature-pad{
-    .m-signature-pad--footer{
-      button{
+  .m-signature-pad {
+    .m-signature-pad--footer {
+      button {
         color: $border-color-2;
         border: none;
         background: none;
@@ -113,7 +115,8 @@
       }
     }
   }
-  .buttons{
+
+  .buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;

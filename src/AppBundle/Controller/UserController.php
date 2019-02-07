@@ -77,9 +77,6 @@ class UserController extends FOSRestController
      * @Rest\RequestParam(name="email", nullable=false,strict=true)
      * @Rest\RequestParam(name="firstName", nullable=false,strict=true)
      * @Rest\RequestParam(name="lastName", nullable=false,strict=true)
-     * @Rest\RequestParam(name="title", nullable=false,strict=true)
-     * @Rest\RequestParam(name="country", nullable=false,strict=true)
-     * @Rest\RequestParam(name="phone", nullable=false,strict=true)
      * @Rest\RequestParam(name="companyLegalName", nullable=false,strict=true)
      */
     public function postRegisterAction(Request $request)
@@ -102,12 +99,12 @@ class UserController extends FOSRestController
         $user = $userManager->createUser();
         $user->setEnabled(true);
         $user->setEmail($request->get("email"));
-        $user->setTitle($request->get("title"));
-        $user->setCountry($request->get("country"));
+        // $user->setTitle($request->get("title"));
+        // $user->setCountry($request->get("country"));
+        // $user->setPhone($request->get("phone"));
         $user->setUsername($request->get("email"));
         $user->setFirstName($request->get("firstName"));
         $user->setLastName($request->get("lastName"));
-        $user->setPhone($request->get("phone"));
         $user->setRegisteredAt(new \DateTime());
         $user->setApplicationCompany($request->get("companyLegalName"));
         $user->setPlainPassword('');

@@ -619,11 +619,6 @@ msgstr ""
 msgid "MESSAGES_SEND_BUTTON"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/login/components/ChangePassword.js
-#: src/AppBundle/Resources/public/javascript/login/components/ReviewEmail.js
-msgid "LOGIN_REVIEW_EMAIL"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/login/components/RecoverPassword.js
 msgid "RECOVER_PASSWORD_ERROR"
 msgstr ""
@@ -645,8 +640,36 @@ msgstr ""
 msgid "LOGIN_REQUEST_NEW_PASSWORD"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
+msgid "RESET_PASSWORD_ERROR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
+msgid "RESET_PASSWORD_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
+msgid "RESET_NEW_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
+msgid "RESET_REPEAT_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
+msgid "RESET_PASSWORD_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ReviewEmail.js
+msgid "LOGIN_REVIEW_EMAIL"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/login/components/ReviewEmail.js
 msgid "LOGIN_REVIEW_EMAIL_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ReviewEmail.js
+msgid "LOGIN_REVIEW_EMAIL_NOTE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
@@ -719,14 +742,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
 msgid "SIGN_UP_COMPANY_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
-msgid "SIGN_UP_PHONE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js
-msgid "SIGN_UP_PHONE_PLACEHOLDER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/login/components/SignUpForm.js

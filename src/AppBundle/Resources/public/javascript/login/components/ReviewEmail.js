@@ -6,7 +6,10 @@ class ReviewEmail extends PureComponent {
         return (
             <section className="review-wrapper">
                 <h3>{this.context.t("LOGIN_REVIEW_EMAIL")}</h3>
-                <span>{this.context.t("LOGIN_REVIEW_EMAIL_SUB_TITLE")}</span>
+                <b>{this.context.t("LOGIN_REVIEW_EMAIL_SUB_TITLE")}</b>
+                <span className="note">
+                    <b>**Note: </b>{this.context.t("LOGIN_REVIEW_EMAIL_NOTE")}
+                </span>
             </section>
         );
     }

@@ -13,6 +13,10 @@ class SignInForm extends PureComponent {
         };
     };
 
+    componentDidMount() {
+        this.name.focus();
+    }
+
     isFieldsInvalid = () => {
         return !this.name.value || !this.pass.value;
     };
@@ -48,17 +52,21 @@ class SignInForm extends PureComponent {
                 });
             });
     };
+    handleEnterPress = (event) => {
+        if(event.key === 'Enter') {
+            this.handleSignIn();
+        }
+    };
 
     render() {
         return (
-            <section className="login-wrapper">
+            <section className="login-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("SIGN_IN_TO_CONTENT_ARENT")}</h3>
 
                 {this.state.error && <span className="sign-error">{this.state.error}</span>}
                 <div className="username">
                     <label htmlFor="username">{this.context.t("SIGN_IN_EMAIL")}</label>
                     <input
-                        autoFocus
                         ref={(name) => this.name = name}
                         type="text"
                         id="username"
@@ -95,7 +103,9 @@ class SignInForm extends PureComponent {
                     <h3>{this.context.t("SIGN_IN_NOT_ACCOUNT_YET")}</h3>
                 </div>
 
-                <button className="yellow-btn" onClick={this.handleSignUpClick}>{this.context.t("SIGN_IN_SIGN_UP_LABEL")}</button>
+                <button className="yellow-btn" onClick={this.handleSignUpClick}>
+                    {this.context.t("SIGN_IN_SIGN_UP_LABEL")}
+                </button>
             </section>
         );
     }

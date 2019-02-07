@@ -10,31 +10,32 @@ class SignUpForm extends PureComponent {
             [SIGN_UP_FIELDS.NAME]: { value: '', error: '' },
             [SIGN_UP_FIELDS.LAST_NAME]: { value: '', error: '' },
             [SIGN_UP_FIELDS.EMAIL]: { value: '', error: '' },
-            [SIGN_UP_FIELDS.PHONE]: { value: '', error: '' },
             [SIGN_UP_FIELDS.COMPANY]: { value: '', error: '' },
             generalError: '',
             isLoading: false
         };
     };
 
+    componentDidMount() {
+        this.username.focus();
+    }
+
     isFieldsInValid = () => {
-        const { name, lastName, company, email, phone } = this.state;
-        return !name.value || !lastName.value || !email.value || !phone.value || !company.value;
+        const { name, lastName, company, email } = this.state;
+        return !name.value || !lastName.value || !email.value || !company.value;
     };
 
     showError = () => {
         const error = this.context.t("SIGN_UP_FIELD_ERROR");
-        const { name, lastName, company, email, phone } = this.state;
+        const { name, lastName, company, email } = this.state;
 
         const nameError = name.value ? '' : error;
         const lastNameError = lastName.value ? '' : error;
         const companyError = company.value ? '' : error;
         const emailError = email.value ? '' : error;
-        const phoneError = phone.value ? '' : error;
 
         this.setState((state) => ({
             [SIGN_UP_FIELDS.LAST_NAME]: { ...state[SIGN_UP_FIELDS.LAST_NAME], error: lastNameError },
-            [SIGN_UP_FIELDS.PHONE]: { ...state[SIGN_UP_FIELDS.PHONE], error: phoneError },
             [SIGN_UP_FIELDS.COMPANY]: { ...state[SIGN_UP_FIELDS.COMPANY], error: companyError },
             [SIGN_UP_FIELDS.NAME]: { ...state[SIGN_UP_FIELDS.NAME], error: nameError },
             [SIGN_UP_FIELDS.EMAIL]: { ...state[SIGN_UP_FIELDS.EMAIL], error: emailError },
@@ -48,21 +49,25 @@ class SignUpForm extends PureComponent {
             return;
         }
         this.setState({ isLoading: true });
+        const { name, lastName, email, company } = this.state;
 
-        ContentArena.Api.signUpUser(this.name.value, this.lastName.value, this.email.value, this.company.value, this.phone.value)
-            .then(() => {
-                this.props.onViewUpdate(LOGIN_VIEW_TYPE.REGISTERED);
+        ContentArena.Api.signUpUser(name.value, lastName.value, email.value, company.value)
+            .then(({data}) => {
+                if (data.success){
+                    this.props.onViewUpdate(LOGIN_VIEW_TYPE.REGISTERED);
+                }
             })
-            .catch(error => {
-                this.setState({ error });  //check error here
+            .catch(({response}) => {
+                this.setState({ generalError: response.data.message });
             })
-            .always(() => {
+            .finally(() => {
                 this.setState({ isLoading: false });
             });
     };
 
     handleInputChange = (field, value) => {
         this.setState((prevState) => ({
+            generalError: '',
             [field]: {
                 value: value,
                 error: ''
@@ -70,16 +75,22 @@ class SignUpForm extends PureComponent {
         }));
     };
 
+    handleEnterPress = (event) => {
+        if(event.key === 'Enter') {
+            this.handleSignUpUser();
+        }
+    };
+
     render() {
         return (
-            <section className="sign-up-wrapper">
+            <section className="sign-up-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("SIGN_UP_FOR_ACCOUNT")}</h3>
 
-                {this.state.error && <span className="sign-error">{this.state.error}</span>}
+                {this.state.generalError && <span className="sign-error">{this.state.generalError}</span>}
                 <div className="username">
                     <label htmlFor="username">{this.context.t("SIGN_UP_NAME")}</label>
                     <input
-                        autoFocus
+                        ref={(name) => this.username = name}
                         type="text"
                         id="username"
                         name="_username"
@@ -124,18 +135,6 @@ class SignUpForm extends PureComponent {
                         required="required"
                         autoComplete="company" />
                     {this.state[SIGN_UP_FIELDS.COMPANY].error && <span className="sign-error">{this.state[SIGN_UP_FIELDS.COMPANY].error}</span>}
-                </div>
-
-                <div className="phone">
-                    <label htmlFor="phone">{this.context.t("SIGN_UP_PHONE")}</label>
-                    <input
-                        onChange={(e) => this.handleInputChange(SIGN_UP_FIELDS.PHONE, e.target.value)}
-                        type="text"
-                        placeholder={this.context.t("SIGN_UP_PHONE_PLACEHOLDER")}
-                        id="phone"
-                        required="required"
-                        autoComplete="phone" />
-                    {this.state[SIGN_UP_FIELDS.PHONE].error && <span className="sign-error">{this.state[SIGN_UP_FIELDS.PHONE].error}</span>}
                 </div>
 
                 <button className="yellow-btn" onClick={this.handleSignUpUser}>

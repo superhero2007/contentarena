@@ -13,6 +13,10 @@ class RecoverPassword extends PureComponent {
         };
     };
 
+    componentDidMount() {
+        this.email.focus();
+    }
+
     isFieldInvalid = () => !this.email.value;
     handleChange = () => this.setState({ error: '' });
 
@@ -33,14 +37,17 @@ class RecoverPassword extends PureComponent {
             .catch(({response}) => {
                 this.setState({error: response.data.message});
             })
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
+            .finally(() => this.setState({ isLoading: false }));
+    };
+    handleEnterPress = (event) => {
+        if(event.key === 'Enter') {
+            this.handleRecoverPassword();
+        }
     };
 
     render() {
         return (
-            <section className="recover-wrapper">
+            <section className="recover-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("LOGIN_RECOVER_PASSWORD")}</h3>
 
                 {this.state.error && <span className="sign-error">{this.state.error}</span>}

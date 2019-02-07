@@ -62,7 +62,7 @@
 
     display: flex;
 
-    .login-wrapper, .sign-up-wrapper{
+    .login-wrapper, .sign-up-wrapper, .reset-wrapper{
       width: 100%;
       flex-direction: column;
       justify-content: center;
@@ -76,12 +76,20 @@
       padding-bottom: 35px;
     }
 
-    .review-wrapper{ width: 100%; }
+    .review-wrapper{
+      width: 100%;
+      h3{ padding-bottom: 10px; }
+      b{
+        font-size: 13px;
+      }
+    }
 
     .recover-wrapper{
       width: 100%;
       button{ margin: 0; }
     }
+
+    .reset-wrapper h3{ text-align: left; }
 
     .done-icon-wrapper{
       margin-bottom: -10px;
@@ -167,11 +175,19 @@
       }
     }
 
-    .username, .password, .phone, .company, .email, .lastname{
+    .username, .password, .repeat-password, .phone, .company, .email, .lastname{
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
       padding-bottom: 25px;
+    }
+
+    .note{
+      b{ display: inline; }
+      display: block;
+      margin-top: 30px;
+      font-size: 13px;
+      color: $font-color-5;
     }
   }
 }
