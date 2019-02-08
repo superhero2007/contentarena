@@ -1,10 +1,8 @@
 <?php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Country;
-use AppBundle\Entity\RightsPackage;
+use AppBundle\Controller\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +11,7 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
-class SearchController extends BaseController
+class ApiSearchController extends BaseController
 {
     /**
      * @Route("/api/search/tournament", name="searchTournament")

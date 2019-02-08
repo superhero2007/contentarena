@@ -213,14 +213,14 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->createQueryBuilder('content');
 
         $query
-            ->select('sports.name', 'sports.id')
+            ->select('sports.name', 'sports.id', 'COUNT(sports.id) AS idCount')
             ->leftJoin('content.sports', 'sports')
             ->leftJoin('content.status', 'status')
             ->andWhere('status.name = :approvedStatusName OR status.name = :editedStatusName')
             ->setParameter('approvedStatusName',"APPROVED")
-            ->setParameter('editedStatusName',"EDITED");
-
-        $query->groupBy("sports.name");
+            ->setParameter('editedStatusName',"EDITED")
+            ->addOrderBy('idCount', 'DESC');
+        $query->groupBy("sports.id");
 
         $result = $query->getQuery()->getResult();
 
