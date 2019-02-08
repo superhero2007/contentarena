@@ -21,6 +21,8 @@ class UserController extends FOSRestController
     use \ApiBundle\Helper\ControllerHelper;
     use \ApiBundle\Helper\EmailHelper;
 
+    const PASSWORD_REQUEST_TTL = 86400;
+
     /**
      * @param Request $request
      * @return Response
@@ -156,7 +158,7 @@ class UserController extends FOSRestController
         if (null === $user->getConfirmationToken()) {
             $user->setConfirmationToken($tokenGenerator->generateToken());
         }
-
+        $user->setPasswordRequestedAt(new \DateTime());
         $userManager->updateUser($user);
         $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $hostUrl = $this->container->getParameter("carena_host_url");
@@ -167,6 +169,52 @@ class UserController extends FOSRestController
         );
 
         $emailService->forgotPassword($params);
+
+        $response = array("success" => true, "user" => $user);
+        return $this->getSerializedResponse($response, array("auth"));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @Rest\Post("/password/update")
+     * @Rest\RequestParam(name="password", nullable=false,strict=true)
+     * @Rest\RequestParam(name="confirmationToken", nullable=false,strict=true)
+     */
+    public function postPasswordUpdateAction(Request $request)
+    {
+        /** @var $userManager UserManagerInterface */
+        /** @var User $user */
+
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->findOneBy(['confirmationToken' => $request->get("confirmationToken")]);
+
+        if (!$user) {
+            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_NOT_EXISTS);
+        }
+
+        if (!$user->isPasswordRequestNonExpired($this::PASSWORD_REQUEST_TTL)) {
+            return $this->getErrorResponse(UserErrors::class, UserErrors::PASSWORD_REQUEST_EXPIRED);
+        }
+
+        $userManager = $this->get('fos_user.user_manager');
+        $tokenGenerator = $this->get('fos_user.util.token_generator');
+        $emailService = $this->container->get("AppBundle\Service\EmailService");
+
+        $user->setConfirmationToken(null);
+        $user->setPlainPassword($request->get("password"));
+        $userManager->updateUser($user);
+        $hostUrl = $this->container->getParameter("carena_host_url");
+        $params = array(
+            "hostUrl" => $hostUrl,
+            "user" => $user,
+        );
+
+        //$emailService->forgotPassword($params);
 
         $response = array("success" => true, "user" => $user);
         return $this->getSerializedResponse($response, array("auth"));
