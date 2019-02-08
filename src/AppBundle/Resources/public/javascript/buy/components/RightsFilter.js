@@ -93,7 +93,7 @@ class RightsFilter extends React.Component {
 
     onClearFilter = () => {
         localStorage.clear();
-        this.props.clearFilter();
+        this.setState({eventDateFrom: '', eventDateTo: ''}, this.props.clearFilter);
     };
 
     onApplyFilter = () => {
@@ -228,7 +228,7 @@ class RightsFilter extends React.Component {
                     </div>
 
                 </div>
-                {/*<div className="box">
+                <div className="box">
                     <div className="title">{this.context.t('MARKETPLACE_EVENT_DATE')}</div>
 
                     <div className="event-date-wrapper">
@@ -259,12 +259,12 @@ class RightsFilter extends React.Component {
                         </div>
                         <div className="event-date-row">
                             <label />
-                            <button className="ca-btn primary apply-date" onClick={this.onApplyDateFilter}>
+                            <button className="ca-btn primary apply-date" disabled={!timeEventActive} onClick={this.onApplyDateFilter}>
                                 {this.context.t("MARKETPLACE_APPLY_EVENT_DATE")}
                             </button>
                         </div>
                     </div>
-                </div>*/}
+                </div>
                 <div className="box">
                     <div style={{
                         display: 'flex',

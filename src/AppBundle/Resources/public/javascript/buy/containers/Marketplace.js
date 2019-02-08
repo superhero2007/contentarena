@@ -11,12 +11,13 @@ import {
     addRight, clearUpdateFilter, removeRight, updateCountries, updateExclusive,
     updateMany
 } from "../actions/filterActions";
-import { CONTENT_LISTING_VIEW, LISTING_SORT_OPTIONS } from "@constants";
+import { CONTENT_LISTING_VIEW, LISTING_SORT_OPTIONS, SERVER_DATE_TIME_FORMAT } from "@constants";
 import {updateEvent, updateSport} from "../actions/filterActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from '../../main/utiles/localStorageHelper';
 import first from 'lodash/first';
 import cn from 'classnames';
+import moment from 'moment';
 import PropTypes from "prop-types";
 const queryString = require('query-string');
 import Loader from '../../common/components/Loader';
@@ -74,12 +75,6 @@ class Marketplace extends Component {
 
         this.filter();
         clearUpdateFilter();
-
-        //jQuery('body, .marketplace-container').css('background-color', '#eee') //todo: remove this when other page redesign ready
-    }
-
-    componentWillUnmount(){
-        //jQuery('body, .marketplace-container').removeAttr('style') //todo: remove this when other page redesign ready
     }
 
     componentWillReceiveProps ( props ) {
@@ -131,8 +126,8 @@ class Marketplace extends Component {
     };
 
     isEventTimeActive = () => {
-        const { sortBy } = this.state;
-        return sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT;
+        const { parsedFilter } = this.state;
+        return parsedFilter.sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT;
     };
 
     getQueryString = () => {
@@ -149,6 +144,8 @@ class Marketplace extends Component {
         const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
         const pageSize = LocalStorageHelper.getPageSize();
         const sortBy = LocalStorageHelper.getSortBy();
+        const dateFrom = LocalStorageHelper.getEventDateFrom();
+        const dateTo = LocalStorageHelper.getEventDateTo();
 
         let customFilter = this.getQueryString();
 
@@ -165,8 +162,18 @@ class Marketplace extends Component {
 
         if ( filter.event ) response.event = filter.event;
 
-
         response.sortBy = sortBy || this.state.sortBy;
+
+        if(response.sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT) {
+            if(dateTo || filter.eventDateTo) {
+                response.to = dateTo || filter.eventDateTo;
+                response.to = moment(response.to).format(SERVER_DATE_TIME_FORMAT);
+            }
+            if(dateFrom || filter.eventDateFrom) {
+                response.from = dateFrom || filter.eventDateFrom;
+                response.from = moment(response.from).format(SERVER_DATE_TIME_FORMAT);
+            }
+        }
 
         if(exclusiveFromStorage || filter.exclusive) {
             response.exclusive = exclusiveFromStorage || filter.exclusive;
@@ -247,6 +254,8 @@ class Marketplace extends Component {
             parsedFilter
         } = this.state;
 
+        if(!parsedFilter) return null;
+
         if (errorMessage) {
             return <h2 className="text-center">{errorMessage}</h2>
         }
@@ -292,9 +301,7 @@ class Marketplace extends Component {
                                     </button>
                                 </div>
 
-                                {listings.length > 0 && (
-                                    <SortByListing sortBy={parsedFilter.sortBy} onSelect={this.handleSortBy} />
-                                )}
+                                <SortByListing sortBy={parsedFilter.sortBy} onSelect={this.handleSortBy} />
 
                                 <div className="right-legend-wrapper">
                                     <RightsLegend />

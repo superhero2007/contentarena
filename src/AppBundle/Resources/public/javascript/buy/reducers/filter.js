@@ -35,7 +35,7 @@ export const filter = (state = defaultFilter, action) => {
                 includeAllCountries: action.includeAllCountries
             });
         case filterTypes.CLEAR:
-            return Object.assign({}, state, defaultFilter);
+            return Object.assign({}, defaultFilter);
         case filterTypes.CLEAR_UPDATE:
             return Object.assign({}, state, {
                 forceUpdate: false
