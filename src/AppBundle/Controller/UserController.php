@@ -21,7 +21,7 @@ class UserController extends FOSRestController
     use \ApiBundle\Helper\ControllerHelper;
     use \ApiBundle\Helper\EmailHelper;
 
-    const PASSWORD_REQUEST_TTL = 86400;
+    const PASSWORD_REQUEST_TTL = 7200;
 
     /**
      * @param Request $request
