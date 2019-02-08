@@ -1,6 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Loader from "../../common/components/Loader";
+import { showSuccessResetPass } from "./../actions/landingActions";
+import { LOGIN_VIEW_TYPE } from "@constants";
 
 class ResetPassword extends PureComponent {
     constructor (props) {
@@ -8,13 +11,17 @@ class ResetPassword extends PureComponent {
 
         this.state = {
             error: '',
+            resetToken: props.match.params.resetToken,
             isLoading: false
         };
     };
 
     componentDidMount() {
+        if (!this.state.resetToken) {
+            this.props.history.push('/login');
+        }
         this.newPass.focus();
-    }
+    };
 
     handleChangePassword = () => {
         if(this.state.isLoading) return;
@@ -24,9 +31,12 @@ class ResetPassword extends PureComponent {
         }
 
         this.setState({ isLoading: true});
-        ContentArena.Api.resetPassword(this.newPass.value)
+        ContentArena.Api.resetPassword(this.newPass.value, this.state.resetToken)
             .then(({data}) => {
-                if(data.success) {} //should be updated
+                if(data.success) {
+                    this.props.showSuccessResetPass();
+                    this.props.history.push('/login');
+                }
             })
             .catch(({response}) => {
                 this.setState({error: response.data.message});
@@ -67,6 +77,10 @@ class ResetPassword extends PureComponent {
                         required="required" />
                 </div>
 
+                <span className="note">
+                    <b>**Note: </b>{this.context.t("RESET_PASSWORD_NOTE")}
+                </span>
+
                 <button className="yellow-btn" onClick={this.handleChangePassword}>
                     {this.context.t("RESET_PASSWORD_BUTTON")}
                     {this.state.isLoading && <Loader loading={true} xSmall /> }
@@ -84,4 +98,17 @@ ResetPassword.propsType = {
     onViewUpdate: PropTypes.func.isRequired
 };
 
-export default ResetPassword;
+const mapStateToProps = ({landing}) => {
+    return landing;
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        showSuccessResetPass: () => dispatch(showSuccessResetPass()),
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ResetPassword);

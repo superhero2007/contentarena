@@ -49,7 +49,7 @@
     }
   }
 
-  .login-form{
+  .action-form{
     position: absolute;
     left: 50%;
     top: 50%;
@@ -62,7 +62,7 @@
 
     display: flex;
 
-    .login-wrapper, .sign-up-wrapper, .reset-wrapper{
+    .sign-in-wrapper, .sign-up-wrapper{
       width: 100%;
       flex-direction: column;
       justify-content: center;
@@ -70,8 +70,17 @@
       text-align: center;
     }
 
+    .reset-wrapper{
+      @extend .sign-in-wrapper;
+      .note{
+        margin: 0;
+        padding-bottom: 25px;
+        text-align: left;
+      }
+    }
+
     .sign-up-successfully-wrapper{
-      @extend .login-wrapper;
+      @extend .sign-in-wrapper;
       padding-top: 60px;
       padding-bottom: 35px;
     }
@@ -188,6 +197,16 @@
       margin-top: 30px;
       font-size: 13px;
       color: $font-color-5;
+    }
+
+    .reset-success-password{
+      margin-top: -25px;
+      p{
+        i{ color: #3ecc57d9; }
+        margin: 5px;
+        font-size: 13px;
+        color: $black-color;
+      }
     }
   }
 }

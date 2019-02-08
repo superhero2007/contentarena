@@ -35,7 +35,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="terms|register|registration|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
+     *     requirements={"reactRouting"="terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage", defaults={"reactRouting": null})
      */
     public function indexAction(Request $request)
@@ -46,7 +46,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="register|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
+     *     requirements={"reactRouting"="register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      */
     public function indexParamsAction(Request $request)
@@ -57,7 +57,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
-     *     requirements={"reactRouting"="register|marketplace|listing|contentlisting|commercialoverview"},
+     *     requirements={"reactRouting"="register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      */
     public function indexParams2Action(Request $request)

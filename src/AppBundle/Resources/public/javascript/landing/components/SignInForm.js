@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { hideSuccessResetPass } from "./../actions/landingActions";
 import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE } from "@constants";
 import Loader from "../../common/components/Loader";
@@ -31,6 +33,7 @@ class SignInForm extends PureComponent {
     };
     handleInputChange = () => this.setState({error: ''});
     handleSignIn = () => {
+        if(this.props.resetPasswordSuccess) this.props.hideSuccessResetPass();
         if(this.state.isLoading) return;
         if (this.isFieldsInvalid()) {
             this.setState({error: this.context.t("SIGN_IN_ERROR")});
@@ -60,9 +63,15 @@ class SignInForm extends PureComponent {
 
     render() {
         return (
-            <section className="login-wrapper" onKeyPress={this.handleEnterPress}>
+            <section className="sign-in-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("SIGN_IN_TO_CONTENT_ARENT")}</h3>
 
+                {this.props.resetPasswordSuccess && (
+                    <div className="reset-success-password">
+                        <p><i className="fa fa-chevron-circle-down" />{this.context.t("SIGN_IN_RESET_MESSAGE")}</p>
+                        <p>{this.context.t("SIGN_IN_RESET_LOGIN_MESSAGE")}</p>
+                    </div>
+                )}
                 {this.state.error && <span className="sign-error">{this.state.error}</span>}
                 <div className="username">
                     <label htmlFor="username">{this.context.t("SIGN_IN_EMAIL")}</label>
@@ -119,4 +128,18 @@ SignInForm.propsType = {
     onViewUpdate: PropTypes.func.isRequired
 };
 
-export default SignInForm;
+
+const mapStateToProps = ({landing}) => {
+    return landing;
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        hideSuccessResetPass: () => dispatch(hideSuccessResetPass()),
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SignInForm);

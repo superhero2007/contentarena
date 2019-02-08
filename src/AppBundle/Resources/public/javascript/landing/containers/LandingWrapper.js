@@ -9,7 +9,7 @@ import SignUpSuccessfully from './../components/SignUpSuccessfully';
 import { LOGIN_VIEW_TYPE } from "@constants";
 import { contentWhiteLogo } from "./../../main/components/Icons";
 
-class SignInUpWrapper extends Component {
+class LandingWrapper extends Component {
     constructor(props) {
         super(props);
 
@@ -40,19 +40,24 @@ class SignInUpWrapper extends Component {
                     </div>
                 </div>
     
-                <section className="login-form">
-                    <Component fakeAuth={this.props.fakeAuth} onViewUpdate={this.handleUpdateView} history={this.props.history}/>
+                <section className="action-form">
+                    <Component
+                        fakeAuth={this.props.fakeAuth}
+                        onViewUpdate={this.handleUpdateView}
+                        history={this.props.history}
+                        match={this.props.match}
+                    />
                 </section>
             </div>
         );
     }
 }
 
-SignInUpWrapper.contextTypes = {
+LandingWrapper.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
-SignInUpWrapper.defaultProps = {
+LandingWrapper.defaultProps = {
     views: {
         [LOGIN_VIEW_TYPE.LOGIN]: SignInForm,
         [LOGIN_VIEW_TYPE.RECOVER]: RecoverPassword,
@@ -71,4 +76,4 @@ SignInUpWrapper.defaultProps = {
     }
 };
 
-export default SignInUpWrapper;
+export default LandingWrapper;

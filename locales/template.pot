@@ -657,6 +657,10 @@ msgid "RESET_REPEAT_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
+msgid "RESET_PASSWORD_NOTE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/ResetPassword.js
 msgid "RESET_PASSWORD_BUTTON"
 msgstr ""
 
@@ -678,6 +682,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
 msgid "SIGN_IN_TO_CONTENT_ARENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_RESET_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
+msgid "SIGN_IN_RESET_LOGIN_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/login/components/SignInForm.js
@@ -760,23 +772,23 @@ msgstr ""
 msgid "LOGIN_SIGN_UP_BUTTON"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+#: src/AppBundle/Resources/public/javascript/login/containers/LandingWrapper.js
 msgid "LOGIN_BAR_HOME"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+#: src/AppBundle/Resources/public/javascript/login/containers/LandingWrapper.js
 msgid "LOGIN_BAR_PRIVACY_POLICY"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+#: src/AppBundle/Resources/public/javascript/login/containers/LandingWrapper.js
 msgid "LOGIN_BAR_TERMS"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+#: src/AppBundle/Resources/public/javascript/login/containers/LandingWrapper.js
 msgid "LOGIN_BAR_COOKIE_POLICY"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/login/containers/SignInUpWrapper.js
+#: src/AppBundle/Resources/public/javascript/login/containers/LandingWrapper.js
 msgid "LOGIN_BAR_FAQ"
 msgstr ""
 
@@ -968,10 +980,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_BUTTON_CLEAR"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "DIGITAL_SIGNATURE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js

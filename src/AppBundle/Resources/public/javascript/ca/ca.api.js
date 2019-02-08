@@ -761,9 +761,9 @@ ContentArena.Api= {
             email
         });
     },
-    resetPassword(password) {
-        return axios.post(`${envhosturl}api/users/password/reset`, {
-            password
+    resetPassword(password, confirmationToken) {
+        return axios.post(`${envhosturl}api/users/password/update`, {
+            password, confirmationToken
         });
     },
     signUpUser(firstName, lastName, email, companyLegalName) {

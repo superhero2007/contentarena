@@ -14,7 +14,7 @@ import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
 import {getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
-import SignInUpWrapper from './../login/containers/SignInUpWrapper';
+import LandingWrapper from './../landing/containers/LandingWrapper';
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -150,8 +150,13 @@ class AuthRouter extends React.Component {
 
     render() {
         const {user} = this.state;
-        const SignUp = withRouter(({history}) => <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.REGISTER} history={history} />);
-        const SignIn = withRouter(({history}) => <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.LOGIN} history={history} fakeAuth={fakeAuth} />);
+
+        const SignUp = withRouter(({history}) =>
+            <LandingWrapper currentView={LOGIN_VIEW_TYPE.REGISTER} history={history} />);
+        const SignIn = withRouter(({history}) =>
+            <LandingWrapper currentView={LOGIN_VIEW_TYPE.LOGIN} history={history} fakeAuth={fakeAuth} />);
+        const ResetPassword = withRouter(({history, match}) =>
+            <LandingWrapper currentView={LOGIN_VIEW_TYPE.RESET_PASSWORD} history={history} match={match} />);
 
         return (
             <Router>
@@ -186,6 +191,7 @@ class AuthRouter extends React.Component {
                     </div>
                     <Route path="/landing" component={Landing} />
                     <Route path="/logout" component={Logout} />
+                    <Route path="/reset-password/:resetToken" component={ResetPassword} />
                     <Route path="/login" component={SignIn} />
                     <Route path="/registration" component={SignUp} />
                 </React.Fragment>

@@ -11,6 +11,7 @@ import {manage} from "../manage/reducers/manage";
 import {user} from "./reducers/user";
 import {common} from "./reducers/common";
 import {validation} from "./reducers/validation";
+import {landing} from "./../landing/reducers/landing";
 
 const reducers = combineReducers({
     content,
@@ -21,6 +22,7 @@ const reducers = combineReducers({
     user,
     common,
     validation,
+    landing,
     i18nState
 });
 
