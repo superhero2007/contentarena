@@ -89,6 +89,7 @@ easy_admin:
                 controller: AppBundle\Controller\Admin\CompanyController
             Content:
                 class: AppBundle\Entity\Content
+                controller: AppBundle\Controller\Admin\AdminContentController
                 form:
                     fields:
                         - { property: 'name' }
@@ -97,7 +98,10 @@ easy_admin:
                         - { property: 'rightsPackage' }
                         - { property: 'status' }
                         - { property: 'expiresAt' }
+                        - { property: 'featured' }
+                        - { property: 'featuredPosition' }
                 list:
+                    dql_filter: "status.name != 'SOLD_COPY'"
                     fields:
                         - { property: 'id' }
                         - { property: 'customId' }
@@ -105,6 +109,8 @@ easy_admin:
                         - { property: 'name' }
                         - { property: 'createdAt' }
                         - { property: 'expiresAt' }
+                        - { property: 'featured' }
+                        - { property: 'featuredPosition' }
                         - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
                         #- { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'status' }

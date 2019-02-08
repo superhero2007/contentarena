@@ -286,6 +286,22 @@ class Content
 
     /**
      * @var boolean
+     * @ORM\Column(name="featured", type="boolean", options={"default":"0"})
+     * @Groups({"listing"})
+     *
+     */
+    private $featured = false;
+
+    /**
+     * @var int
+     * @ORM\Column(name="featured_position", type="smallint", nullable=true)
+     * @Groups({"listing"})
+     *
+     */
+    private $featuredPosition = false;
+
+    /**
+     * @var boolean
      * @ORM\Column(name="expiry_notified", type="boolean")
      * @Groups({"listing"})
      *
@@ -462,6 +478,11 @@ class Content
      * @Groups({"details"})
      */
     private $userCanEdit = false;
+
+    /**
+     * @var boolean;
+     */
+    private $active = false;
 
     /**
      * @var boolean;
@@ -835,9 +856,21 @@ class Content
     /**
      * @return bool
      */
-    public function isActive(){
-        return true;
+    public function isActive()
+    {
+        /* @var ListingStatus $status */
+        $status = $this->status;
+        return $status != null && $status->getName() != "SOLD_COPY";
     }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
 
     /**
      * @return mixed
@@ -1667,6 +1700,8 @@ class Content
         $this->customBundles = $customBundles;
     }
 
+
+
     public function isExclusive(){
         $exclusive = false;
         foreach ($this->getSelectedRightsBySuperRight() as $val)
@@ -1677,6 +1712,38 @@ class Content
         }
 
         return $exclusive;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFeatured()
+    {
+        return $this->featured;
+    }
+
+    /**
+     * @param bool $featured
+     */
+    public function setFeatured($featured)
+    {
+        $this->featured = $featured;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeaturedPosition()
+    {
+        return $this->featuredPosition;
+    }
+
+    /**
+     * @param int $featuredPosition
+     */
+    public function setFeaturedPosition($featuredPosition)
+    {
+        $this->featuredPosition = $featuredPosition;
     }
 
     /**

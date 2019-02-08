@@ -94,6 +94,7 @@ class ContentService
 
         $content = $listingRepository->getFilteredContent($filter, $term, $exclusive, $includeAllCountries, $sortBy);
 
+
         if ( $sortBy == $this::SORT_REFERENCE_EVENT || $sortBy == $this::SORT_REFERENCE_UPCOMING ){
 
             $sortByReferenceEvent = function($listingA, $listingB) use ($now){
@@ -121,6 +122,30 @@ class ContentService
                 });
             }
         }
+
+        /**
+         * Sort by featured
+         * @param $listingA
+         * @param $listingB
+         * @return int
+         */
+        $sortByFeatured = function($listingA, $listingB) use ($now){
+            /* @var Content $listingA */
+            /* @var Content $listingB */
+
+            $featuredA = $listingA->isFeatured();
+            $featuredB = $listingB->isFeatured();
+            $positionA = $listingA->getFeaturedPosition();
+            $positionB = $listingB->getFeaturedPosition();
+
+            if ( !$featuredA  && $featuredB ) return 1;
+            if ($featuredA && !$featuredB ) return -1;
+            if ($featuredA == $featuredB) {
+                return ($positionA > $positionB ) ? -1 : ($positionA < $positionB ) ? 1 : 0;
+            };
+
+        };
+        usort($content, $sortByFeatured);
 
         return $content;
 
