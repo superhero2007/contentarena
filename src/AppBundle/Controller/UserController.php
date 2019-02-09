@@ -160,7 +160,9 @@ class UserController extends FOSRestController
         }
         $user->setPasswordRequestedAt(new \DateTime());
         $userManager->updateUser($user);
-        $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        $router = $this->container->get('router');
+        $confirmationUrl = $router->generate('app_reset_password', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+
         $hostUrl = $this->container->getParameter("carena_host_url");
         $params = array(
             "hostUrl" => $hostUrl,
