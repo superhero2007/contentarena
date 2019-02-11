@@ -37,6 +37,8 @@ class ContentService
 
     const SORT_REFERENCE_EVENT = "event";
     const SORT_REFERENCE_UPCOMING = "upcoming";
+    const SORT_REFERENCE_EXPIRY = "expiry";
+    const SORT_REFERENCE_PUBLISHING = "publishing";
 
     public function __construct(
         EntityManager $entityManager,
@@ -56,6 +58,22 @@ class ContentService
 
     public function findContent( Request $request ){
         return $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
+    }
+
+    private function isFeaturedSortActive( $filter, $term, $exclusive, $includeAllCountries, $sortBy ){
+
+        /* @var ContentFilter $filter */
+
+        return ( $sortBy == null || $sortBy == $this::SORT_REFERENCE_PUBLISHING )
+            && $exclusive == null
+            && $includeAllCountries == null
+            && $term == null
+            && $filter->getId() == null
+            && ( $filter->getSuperRights() == null || count($filter->getSuperRights()) == 0 )
+            && ( $filter->getCountries() == null || count ($filter->getCountries() ) == 0 )
+            && ( $filter->getSports() == null || count ($filter->getSports() ) == 0 )
+            && ( $filter->getTerritories() == null || count ($filter->getTerritories() ) == 0 ) ;
+
     }
 
     public function getContent( Request $request){
@@ -102,6 +120,7 @@ class ContentService
         }
 
         $content = $listingRepository->getFilteredContent($filter, $term, $exclusive, $includeAllCountries, $sortBy);
+        $featuredSortActive = $this->isFeaturedSortActive($filter, $term, $exclusive, $includeAllCountries, $sortBy);
 
         /**
          * Filter by event date using Listing reference Date
@@ -165,7 +184,11 @@ class ContentService
             };
 
         };
-        usort($content, $sortByFeatured);
+
+        /**
+         * Sorting featured listings in the top must be applied only if there are no other filters active
+         */
+        if ($featuredSortActive) usort($content, $sortByFeatured);
 
         return $content;
 
