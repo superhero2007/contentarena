@@ -223,6 +223,10 @@ msgid "Publishing date"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "FEATURED_LISTING_BADGE_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "Expiry"
 msgstr ""
 

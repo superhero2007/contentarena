@@ -151,7 +151,8 @@ class ContentListing extends Component{
             declined,
             onDelete,
             customId,
-            nameCursor = 'pointer'
+            nameCursor = 'pointer',
+            featured,
         } = this.props;
         const {confirmWatchlistRemove} = this.state;
 
@@ -170,6 +171,11 @@ class ContentListing extends Component{
         return (
             <a href={listingHref} className="listing-list-view">
                 <div className={"left"}  >
+                    {featured && (
+                        <div className={'featured-badge'}>
+                            <span>{this.context.t('FEATURED_LISTING_BADGE_TEXT')}</span>
+                        </div>
+                    )}
                     {getListingImage(this.props)}
                 </div>
                 <div className={"right"} >

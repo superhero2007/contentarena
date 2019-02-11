@@ -264,6 +264,7 @@ class Marketplace extends Component {
 
         let customFilter = this.getQueryString();
 
+        const sortedListings = listings.sort((a, b) => a.featuredPosition - b.featuredPosition);
         return (
             <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
 
@@ -313,7 +314,7 @@ class Marketplace extends Component {
                                 history={history}
                             />
                             }
-                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && listings.map(listing => {
+                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && sortedListings.map(listing => {
                                 return (
                                     <ContentListing
                                         onSelect={() => this.goToListing(listing.customId)}
