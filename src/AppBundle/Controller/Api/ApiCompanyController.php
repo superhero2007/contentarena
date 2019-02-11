@@ -37,11 +37,15 @@ class ApiCompanyController extends Controller
         $hostUrl = $this->container->getParameter("carena_host_url");
         $filteredUsers = $userService->inviteCompanyUsers($users, $user->getCompany());
 
+
         foreach ($filteredUsers["invitedUsers"] as $invitedUser){
+
+            $confirmationUrl = $this->container->get('router')->generate('fos_user_registration_confirm_new', array('token' => $invitedUser->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
             $params = array(
                 "hostUrl" => $hostUrl,
                 "user" => $invitedUser,
-                "colleague" => $user
+                "colleague" => $user,
+                "confirmationUrl" => $confirmationUrl
             );
 
             $emailService->sendUserInvite($params);
