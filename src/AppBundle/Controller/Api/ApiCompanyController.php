@@ -35,9 +35,9 @@ class ApiCompanyController extends Controller
         $user = $this->getUser();
         $users = $request->get("users");
         $hostUrl = $this->container->getParameter("carena_host_url");
-        $invitedUsers = $userService->inviteCompanyUsers($users, $user->getCompany());
+        $filteredUsers = $userService->inviteCompanyUsers($users, $user->getCompany());
 
-        foreach ($invitedUsers as $invitedUser){
+        foreach ($filteredUsers["invitedUsers"] as $invitedUser){
             $params = array(
                 "hostUrl" => $hostUrl,
                 "user" => $invitedUser,
@@ -47,7 +47,7 @@ class ApiCompanyController extends Controller
             $emailService->sendUserInvite($params);
         }
 
-        return $this->getSerializedResponse($invitedUsers, array('companyUsers') );
+        return $this->getSerializedResponse($filteredUsers, array('companyUsers') );
     }
 
 

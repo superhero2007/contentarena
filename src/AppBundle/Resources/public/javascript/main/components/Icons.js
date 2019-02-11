@@ -46,6 +46,9 @@ export const coinIcon = <img src={assetsBaseDir + "app/images/listing/coin.svg"}
 //messages
 export const attachmentClipIcon = <img src={assetsBaseDir + "app/images/attachment-clip.svg"} alt=""/>;
 
+//header
+export const inviteIcon = assetsBaseDir + "app/images/invite-icon-3.svg";
+
 //terms
 export const pencilIcon = assetsBaseDir + "app/images/pencil-edit-button.svg";
 export const reloadIcon = assetsBaseDir + "app/images/reload.svg";

@@ -272,11 +272,15 @@ class UserService
     {
         $userRepository = $this->em->getRepository('AppBundle:User');
         $invitedUsers = [];
+        $skippedUsers = [];
 
         foreach ( $users as $userData ){
             $user = $userRepository->findOneBy(['email' => $userData["email"]]);
 
-            if ( $user != null ) continue;
+            if ( $user != null ) {
+                $skippedUsers[] = $user;
+                continue;
+            }
 
             /** @var User $user */
             $user = $this->fosUserManager->createUser();
@@ -298,7 +302,7 @@ class UserService
 
         }
 
-        return $invitedUsers;
+        return array ( "invitedUsers" => $invitedUsers, "skippedUsers" => $skippedUsers );
     }
 
     private function getCountry($country){

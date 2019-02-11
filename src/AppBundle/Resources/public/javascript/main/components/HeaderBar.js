@@ -9,6 +9,7 @@ import {
 } from "../../buy/actions/filterActions";
 import {connect} from "react-redux";
 import InviteUsersModal from "../../common/modals/InviteUsersModal";
+import {inviteIcon} from '../../main/components/Icons';
 
 const HeaderBarTab = ({match, children, route, className = '', linkClass = ''}) => {
     return (
@@ -33,8 +34,6 @@ class HeaderBar extends  React.Component {
         this.state = {
             inviteModalOpen: false
         }
-
-
     }
 
     render(){
@@ -124,7 +123,7 @@ class HeaderBar extends  React.Component {
 
                     <div className="tab">
                         <a onClick={e =>{ this.setState({inviteModalOpen:true}); e.preventDefault(); }}>
-                            <i className="fa fa-user-circle" style={{fontSize: 24}} />
+                            <img src={inviteIcon} alt="Invite users" style={{ height: 24, marginRight: 5 }}/>
                             {this.context.t("HEADER_INVITE_USERS")}
                         </a>
                     </div>

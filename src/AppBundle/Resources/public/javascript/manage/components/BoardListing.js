@@ -269,7 +269,7 @@ class BoardListing extends React.Component{
                 />
 
                 <div className={"expiry"}>
-                    <div>{ salesPackages.length } territorial bundle{ salesPackages.length > 1 && "s"}</div>
+                    { salesPackages &&  <div>{ salesPackages.length } territorial bundle{salesPackages.length > 1 && "s"}</div>}
                     <div><div style={{fontWeight: 500}}>{this.context.t("Expiry:")}</div> {expiresAt ? Moment(expiresAt).format(DATE_FORMAT) : 'Not set'}</div>
                 </div>
 

@@ -15,8 +15,12 @@ class InviteUsersModal extends Component {
             isFail: false,
             isSuccess: false,
             users: [],
-            items: [1,2,3]
+            items: [1,2,3],
+            invitedUsers : [],
+            skippedUsers : []
         };
+
+        this.messageStyle = { marginLeft: 15, marginBottom: 10};
     }
 
     inviteUsers = async () => {
@@ -40,7 +44,10 @@ class InviteUsersModal extends Component {
         this.setState({
             loading: false,
             isSuccess : !!response,
-            isFail : !response
+            isFail : !response,
+            skippedUsers : (response) ? response.skippedUsers : [],
+            invitedUsers : (response) ? response.invitedUsers : [],
+            users: []
         });
 
     };
@@ -48,14 +55,8 @@ class InviteUsersModal extends Component {
     onUpdateUsers = ( user, index ) => {
 
         let users = this.state.users;
-
-        if ( users.indexOf(index) !== -1){
-            users[index] = user;
-        } else {
-            users.push(user);
-        }
-
-        this.setState({users});
+        users[index] = user;
+        this.setState({users, isFail: false, isSuccess : false});
     };
 
     isButtonDisabled = ( ) => {
@@ -66,14 +67,14 @@ class InviteUsersModal extends Component {
 
     close = () => {
         const {
-            isOpen,
             onCloseModal
         } = this.props;
 
         this.setState({
             loading: false,
             isSuccess : false,
-            isFail : false
+            isFail : false,
+            users : []
         });
 
         if (onCloseModal) onCloseModal();
@@ -82,44 +83,57 @@ class InviteUsersModal extends Component {
 
     render() {
         const {
-            isOpen,
-            onCloseModal
+            isOpen
         } = this.props;
 
-        const {loading, isFail, isSuccess, items} = this.state;
+        const {loading, isFail, isSuccess, items, invitedUsers, skippedUsers} = this.state;
 
         return <Modal isOpen={isOpen} className="modal-wrapper-invite" style={GenericModalStyle} onRequestClose={this.close}>
             <header className="modal-header">
                 <h3 className="modal-title">{this.context.t("INVITE_USERS_MODAL_TITLE")}</h3>
-                <i className="fa fa-times" onClick={onCloseModal} />
+                <i className="fa fa-times" onClick={this.close} />
             </header>
             <section className="modal-body">
-                {!loading && !isFail && !isSuccess && (
-                    items.map((item, i)=> <InviteUserForm key={i} onUpdate={(user) => {this.onUpdateUsers(user, i)}}/>)
+
+                { isSuccess && invitedUsers.length > 0 && (
+                    <div className="result-message" style={this.messageStyle}>
+                        <i className="fa fa-check-circle" /> {this.context.t("INVITE_USERS_MODAL_SENT")}
+                    </div>
                 )}
-                {loading && <Loader loading={true} small={true} />}
-                {(isFail || isSuccess) && <div className="body-msg">
-                    {isFail ? this.context.t("INVITE_USERS_MODAL_FAILED") : this.context.t("INVITE_USERS_MODAL_SENT")}
-                </div>}
+
+                { isSuccess && skippedUsers.length > 0 && (
+                    skippedUsers.map(skippedUser => (
+                        <div className="result-message" style={this.messageStyle}>
+                                <i className="fa fa-close" /> {skippedUser.email} {this.context.t("INVITE_USERS_MODAL_EMAIL_ALREADY_INVITED")}
+                        </div>
+                        )
+                    )
+                )}
+
+                { isFail && (
+                    <div className="result-message" style={this.messageStyle}>
+                        <i className="fa fa-close" /> {this.context.t("INVITE_USERS_MODAL_FAILED")}
+                    </div>
+                )}
+
+                {isOpen && (
+                    items.map((item, i)=> <InviteUserForm key={i} onUpdate={(user) => {this.onUpdateUsers(user, i)}} disabled={loading}/>)
+                )}
             </section>
             <footer className="modal-footer">
-                {isFail || isSuccess
-                    ? <button className="standard-button" onClick={this.close}>
-                        {this.context.t("INVITE_USERS_MODAL_BUTTON_CLOSE")}</button>
-                    : (<React.Fragment>
-                            <button className="cancel-btn" onClick={this.close}>
-                                {this.context.t("INVITE_USERS_MODAL_BUTTON_CANCEL")}</button>
-                            <button
-                                className="standard-button"
-                                disabled={this.isButtonDisabled()}
-                                onClick={this.inviteUsers}
-                            >
+                {(<React.Fragment>
+                    <button className="cancel-btn" onClick={this.close}>
+                        {this.context.t("INVITE_USERS_MODAL_BUTTON_CANCEL")}</button>
+                    <button
+                        className="standard-button"
+                        disabled={this.isButtonDisabled()}
+                        onClick={this.inviteUsers}
+                    >
 
-                                {this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")}
+                        {this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")} <Loader loading={loading} xSmall={true}/>
 
-                            </button>
-                        </React.Fragment>)
-                }
+                    </button>
+                </React.Fragment>)}
             </footer>
         </Modal>;
     }

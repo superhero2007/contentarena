@@ -597,6 +597,8 @@ a[disabled] {
   line-height: 24px;
   margin: 10px 0 20px;
   display: flex;
+  align-items: center;
+  align-self: flex-start;
   i{
     font-size: 26px;
     margin: 0 5px;

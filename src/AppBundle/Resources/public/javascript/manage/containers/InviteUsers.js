@@ -9,7 +9,9 @@ class InviteUsers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading : false
+            loading : false,
+            invitedUsers : [],
+            skippedUsers : []
         };
     }
 
@@ -29,11 +31,11 @@ class InviteUsers extends React.Component {
             response = false;
         }
 
-        console.log(!!response)
-
         this.setState({
             loading: false,
             invitationSent : true,
+            skippedUsers : (response) ? response.skippedUsers : [],
+            invitedUsers : (response) ? response.invitedUsers : [],
             success : !!response
         });
 
@@ -53,16 +55,33 @@ class InviteUsers extends React.Component {
 
     render () {
 
-        const { loading, success, invitationSent } = this.state;
+        const { loading, success, invitationSent, skippedUsers, invitedUsers } = this.state;
 
         return (
             <div className="settings-invite-users">
-                {invitationSent && (
-                    <div className="result-message">
-                        {(success) ? <i className="fa fa-check-circle" /> : <i className="fa fa-close" />}
-                        {(success) ? this.context.t("SETTINGS_SEND_INVITE_SUCCESS") : this.context.t("SETTINGS_SEND_INVITE_FAIL")}
+
+                { invitationSent && success && invitedUsers.length > 0 && (
+                    <div className="result-message" >
+                        <i className="fa fa-check-circle" /> {this.context.t("SETTINGS_SEND_INVITE_SUCCESS")}
                     </div>
-                ) }
+                )}
+
+                { invitationSent && success && skippedUsers.length > 0 && (
+                    skippedUsers.map(skippedUser => (
+                            <div className="result-message" >
+                                <i className="fa fa-close" /> {skippedUser.email} {this.context.t("SETTINGS_SEND_INVITE_EMAIL_ALREADY_INVITED")}
+                            </div>
+                        )
+                    )
+                )}
+
+                { invitationSent && !success && (
+                    <div className="result-message">
+                        <i className="fa fa-close" /> {this.context.t("SETTINGS_SEND_INVITE_FAIL")}
+                    </div>
+                )}
+
+
                 <InviteUserForm onUpdate={this.onUpdateUsers} disabled={loading}/>
                 <button onClick={this.inviteUser} className="yellow-button" disabled={this.isButtonDisabled()}>
                     {this.context.t("SETTINGS_BUTTON_SEND_INVITE")} <Loader loading={loading} xSmall={true}/>
