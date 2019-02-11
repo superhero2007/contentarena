@@ -65,6 +65,11 @@ class ContentService
         $filterId = $request->request->get("id");
         $listingRepository = $this->em->getRepository('AppBundle:Content');
         $now = new \DateTime();
+        $from = $request->get("from");
+        $to = $request->get("to");
+
+        if ( $from != null ) $from = new \DateTime($from);
+        if ( $to != null ) $to = new \DateTime($to);
 
         if ( isset($filterId)){
             $filter = $this->em->getRepository('AppBundle:ContentFilter')->findOneBy(array('id' => $filterId));
@@ -97,6 +102,17 @@ class ContentService
         }
 
         $content = $listingRepository->getFilteredContent($filter, $term, $exclusive, $includeAllCountries, $sortBy);
+
+        /**
+         * Filter by event date using Listing reference Date
+         */
+        if ( $from != null && $to != null ){
+            $content = array_filter($content, function ($listing) use ( $from, $to ) {
+                /* @var Content $listing */
+                $date = $listing->getReferenceDate();
+                return $date != null && $date > $from && $date < $to;
+            });
+        }
 
 
         if ( $sortBy == $this::SORT_REFERENCE_EVENT || $sortBy == $this::SORT_REFERENCE_UPCOMING ){
