@@ -11,7 +11,7 @@ export const CONTENT_LISTING_VIEW = {
 export const LISTING_SORT_OPTIONS = {
     PUBLISH_DATE: 'publishing',
     UPCOMING_EVENT: 'upcoming',
-    EVENT_DATE: 'event',
+    /*EVENT_DATE: 'event',*/
     EXPIRY_DATE: 'expiry'
 };
 
