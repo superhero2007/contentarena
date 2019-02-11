@@ -2,24 +2,23 @@
 
 namespace AppBundle\Controller;
 
+use ApiBundle\Helper\ControllerHelper;
+use ApiBundle\Helper\EmailHelper;
 use AppBundle\Entity\User;
 use AppBundle\Error\UserErrors;
-use AppBundle\Service\EmailService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class UserController extends FOSRestController
 {
-    use \ApiBundle\Helper\ControllerHelper;
-    use \ApiBundle\Helper\EmailHelper;
+    use ControllerHelper;
+    use EmailHelper;
 
     const PASSWORD_REQUEST_TTL = 7200;
 
@@ -179,9 +178,6 @@ class UserController extends FOSRestController
     /**
      * @param Request $request
      * @return Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      * @Rest\Post("/password/update")
      * @Rest\RequestParam(name="password", nullable=false,strict=true)
      * @Rest\RequestParam(name="confirmationToken", nullable=false,strict=true)

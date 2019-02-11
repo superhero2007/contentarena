@@ -42,6 +42,7 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/generalterms, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/test, role: ROLE_ADMIN }
         - { path: ^/contract, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
         - { path: ^/listing, role: ROLE_USER }

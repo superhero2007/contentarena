@@ -1,0 +1,39 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+	{% include 'email/email.header.1.twig' %}
+{% endblock %}
+
+{# @var listing \AppBundle\Entity\Content #}
+{% block content %}
+	<tr>
+		<td style="text-align: left">
+			{{ content }}
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: left">
+			<p style="border-top: 1px dashed #999; padding: 10px 0; width:97%; margin: 10px 0; color: #666;">
+                <strong>Name: </strong> <a href="{{ hostUrl }}listing/{{ listing.customId }}" style="color:#2aaaec">{{ listing.name }}</a>
+				<br/>
+				<strong>Sport: </strong> {% for sport in listing.sports %}{{ sport.name }}{% if loop.last == false %}, {% endif %} {% endfor %}
+				<br/>
+				<strong>Country: </strong> {{ listing.sportCategory.name }}
+				<br/>
+				<strong>Competition: </strong> {{ listing.tournament.name }}
+				<br/>
+				<strong>Season: </strong> {% for season in listing.seasons %}{{ season.name }}{% if loop.last == false %}, {% endif %} {% endfor %}
+			</p>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: left">
+			<p style="border-top: 1px dashed #999; padding: 10px 0; width:97%; margin: 10px 0; color: #666; border-bottom: 1px dashed #999;">
+                {{ content2 }} <a href="{{ hostUrl }}managelistings" style="color:#2aaaec">Manage Listings</a> section.
+			</p>
+		</td>
+	</tr>
+
+{% endblock %}
