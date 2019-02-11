@@ -531,6 +531,32 @@ class EmailService
 
     /**
      * @param $params
+     * @param $email
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function shareListing($params, $email){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_share_listing");
+        $content = $repository->findBySlug("email_content_share_listing");
+        $content2 = $repository->findBySlug("email_content_share_listing_2");
+        $content3 = $repository->findBySlug("email_content_share_listing_3");
+        $parameters = array_merge(
+            $params,
+            array(
+                "content" => $content->getContent(),
+                "content2" => $content2->getContent(),
+                "content3" => $content3->getContent(),
+            )
+        );
+        $this->sendEmail("email/email.share.listing.twig", $subject->getContent(), $email, $parameters );
+
+    }
+
+    /**
+     * @param $params
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax

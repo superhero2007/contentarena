@@ -25,6 +25,8 @@ class TestController extends BaseController
     public function testEmail(Request $request)
     {
         $user = $this->getUser();
+        $listingId = $request->get("listingId");
+        $message = $request->get("message");
         $container = $this->container;
         $hostUrl = $container->getParameter("carena_host_url");
         $entityManager = $container->get('doctrine')->getManager();
@@ -35,8 +37,9 @@ class TestController extends BaseController
         $type = $request->get('type');
         $approvedStatus = $listingStatusRepository->findOneBy(array("name"=>"APPROVED"));
         $router = $container->get('router');
+        $listingCriteria = ($listingId == null ) ? array('status'=>$approvedStatus) : array('customId'=>$listingId);
         $listing = $listingRepository->findOneBy(
-            array('status'=>$approvedStatus),
+            $listingCriteria,
             array('id' => 'DESC')
         );
         $confirmationUrl = ($user->getConfirmationToken()) ? $router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
@@ -45,7 +48,8 @@ class TestController extends BaseController
             "user" => $user,
             "colleague" => $user,
             "confirmationUrl" => $confirmationUrl,
-            "listing" => $listing
+            "listing" => $listing,
+            "message" => $message
         );
 
         switch ($type){
@@ -78,13 +82,15 @@ class TestController extends BaseController
                 $template = "email/email.user.forgot-password.twig";
                 break;
             case "share_listing":
-                $content = $emailContentRepository->findBySlug("email_content_user_forgot_password");
-                $content2 = $emailContentRepository->findBySlug("email_content_user_forgot_password_2");
+                $content = $emailContentRepository->findBySlug("email_content_share_listing");
+                $content2 = $emailContentRepository->findBySlug("email_content_share_listing_2");
+                $content3 = $emailContentRepository->findBySlug("email_content_share_listing_3");
                 $parameters = array_merge(
                     $params,
                     array(
                         "content" => $content->getContent(),
-                        "content2" => $content2->getContent()
+                        "content2" => $content2->getContent(),
+                        "content3" => $content3->getContent()
                     )
                 );
                 $template = "email/email.share.listing.twig";

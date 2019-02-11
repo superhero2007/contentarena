@@ -46,10 +46,14 @@ trait ControllerHelper
      * @param $groups
      * @return mixed|string|Response
      */
-    private function getSerializedResponse ($data, $groups){
+    private function getSerializedResponse ($data, $groups = null){
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $response = $serializer->serialize($data, 'json',SerializationContext::create()->setGroups($groups));
+        $context = SerializationContext::create();
+
+        if ( $groups != null ) $context->setGroups($groups);
+
+        $response = $serializer->serialize($data, 'json',$context);
         $response = new Response($response);
         $response->headers->set('Content-Type', 'application/json');
         return $response;

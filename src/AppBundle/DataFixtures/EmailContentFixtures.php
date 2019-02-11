@@ -79,6 +79,26 @@ class EmailContentFixtures extends Fixture
                 "To enter your account, please:"
             ),
             array(
+                "email_subject_share_listing",
+                "",
+                "You have been invited to review a listing on Content Arena"
+            ),
+            array(
+                "email_content_share_listing",
+                "",
+                " invited you to review a listing on Content Arena"
+            ),
+            array(
+                "email_content_share_listing_2",
+                "",
+                "Please click on the Listing Name link below to review the listing."
+            ),
+            array(
+                "email_content_share_listing_3",
+                "",
+                " has left you this message"
+            ),
+            array(
                 "email_subject_user_forgot_password",
                 "Email subject when requesting new password",
                 "Reset password request for Content Arena"

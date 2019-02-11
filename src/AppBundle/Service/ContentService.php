@@ -50,6 +50,10 @@ class ContentService
         $this->emailService = $emailService;
     }
 
+    public function findByCustomId( $customId ){
+        return $this->em->getRepository('AppBundle:Content')->findOneBy(array ( "customId" => $customId ) );
+    }
+
     public function findContent( Request $request ){
         return $this->em->getRepository('AppBundle:Content')->find($request->get('content'));
     }
