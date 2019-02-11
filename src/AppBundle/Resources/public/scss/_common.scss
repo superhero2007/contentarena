@@ -531,7 +531,9 @@ a[disabled] {
     }
 
     .rt-td {
-      //color: black;
+      font-size: 13px;
+      color: #666;
+      font-weight: normal;
       border-right: 1px solid #999;
 
       div a {

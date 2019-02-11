@@ -197,7 +197,10 @@ $icon-color: #00769A;
 
           &.unread {
             background-color: $font-color-2;
-            .notification-time{ color: $black-color; }
+
+            .notification-time {
+              color: $black-color;
+            }
           }
 
           &:last-child {
@@ -298,6 +301,11 @@ $icon-color: #00769A;
         color: $font-color-2;
         font-style: italic;
         border-radius: 0;
+
+        .Select-placeholder {
+          color: $black-color;
+          font-size: 13px;
+        }
       }
     }
 
@@ -305,6 +313,7 @@ $icon-color: #00769A;
       width: 145px;
       cursor: pointer;
       padding: 0 5px;
+      display: flex;
 
       img {
         margin-bottom: 3px;
@@ -328,11 +337,12 @@ $icon-color: #00769A;
 
     .status-filter-item {
       margin: 0 20px;
-
       cursor: pointer;
       color: $font-color-1;
       font-size: 13px;
       font-weight: normal;
+      display: flex;
+      line-height: 1.7;
 
       &.active {
         font-weight: bold;

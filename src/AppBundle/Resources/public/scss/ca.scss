@@ -307,8 +307,8 @@ button {
 
       input.react-tagsinput-input {
         border: 0;
-        margin: inherit;
-        padding: inherit;
+        padding-left: inherit !important;
+        margin-left: inherit !important;
       }
 
       .react-tagsinput-tag {
@@ -473,8 +473,9 @@ button {
         margin: 0 0 0 5px;
         height: 35px;
         padding: 0 8px;
-        font-size: 16px;
+        font-size: 15px;
         outline: none;
+        color: #333;
       }
 
       .season-selector-label {
@@ -503,7 +504,7 @@ button {
       textarea {
         width: auto;
         box-sizing: border-box;
-        font-size: 13px;
+        font-size: 15px;
         outline: none;
         border: 1px solid #D4D8DE;
         padding: 10px 20px;
@@ -661,9 +662,9 @@ button {
     }
 
     .step-item-description {
-      font-size: $font-size-medium-large;
+      font-size: 13px;
       margin: 20px 0;
-      color: #4F4F4F;
+      color: #666;
       font-weight: normal;
       align-items: baseline;
     }
@@ -801,14 +802,13 @@ button {
       textarea {
         height: 300px;
         padding: 25px 20px;
-
         border: 1px solid $font-color-2;
-        background: $color-grey-light;
+        background: $primary-color;
+        font-weight: normal;
+        font-size: 15px;
+        color: $black-color;
 
         @include placeholder {
-          color: $black-color;
-          font-weight: normal;
-          font-size: 16px;
           font-style: italic;
         }
       }
@@ -1564,11 +1564,13 @@ button {
       padding-bottom: inherit;
       margin-bottom: inherit;
       border-bottom: none;
+
       label {
         background: #E6E8EA;
         color: #000;
         font-weight: 700;
       }
+
       .content {
         .item {
           .title {

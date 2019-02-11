@@ -33,6 +33,7 @@
       font-size: 13px;
       font-weight: bold;
     }
+
     .sales-bundle-item-right {
       @extend .sales-bundle-item;
     }
@@ -72,23 +73,27 @@
         font-size: 19px;
         font-weight: bold;
       }
+
       & .custom-id {
         border-radius: 5px;
         border: 1px solid $orange-color;
         background: $background-3;
       }
     }
+
     & .listing-wrapper {
       .listing-item.tournament {
         font-size: 13px;
         font-weight: bold;
         color: $font-color-1;
       }
+
       .listing-item {
         color: $font-color-1;
         font-size: 13px;
       }
     }
+
     & .sales-and-exp-wrapper {
       display: flex;
       align-items: center;
@@ -134,18 +139,19 @@
       align-content: stretch;
       align-items: center;
       min-width: 150px;
-
       margin-bottom: 5px;
 
       span {
         justify-content: center;
         display: flex;
-
         color: $font-color-3;
 
         &.bid-total {
-          font-size: 12px;
+          font-size: 13px;
+          color: #666;
+          font-weight: normal;
         }
+
         &.bid-currency {
           font-size: 24px;
           font-weight: bold;
@@ -167,6 +173,7 @@
         font-size: 13px;
         font-weight: 600;
         position: relative;
+
         img {
           position: absolute;
           right: 10px;
@@ -187,6 +194,7 @@
   flex-direction: column;
   padding: 20px 0;
   justify-content: space-evenly;
+
   .item {
     background-color: #fff;
     border: 1px solid lightgrey;
@@ -194,6 +202,7 @@
     min-width: 150px;
     text-align: center;
   }
+
   .show-bundle {
     cursor: pointer;
     color: #48C0FE;
@@ -201,6 +210,7 @@
     font-weight: 600;
     display: flex;
     align-items: center;
+
     img {
       width: 17px;
       height: 17px;
