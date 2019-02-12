@@ -508,6 +508,8 @@ class Content
      */
     private $referenceDate;
 
+    private $shareId;
+
 
     public function __construct() {
         $this->rightsPackage = new ArrayCollection();
@@ -524,6 +526,15 @@ class Content
     {
         $this->id = null;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getShareId()
+    {
+        return $this->customId;
+    }
+
 
     /**
      * @return bool

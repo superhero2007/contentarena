@@ -20,6 +20,7 @@ security:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: /
+                use_referer : true
 
             logout:       true
             anonymous:    true
@@ -41,6 +42,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/generalterms, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/public/listing, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/test, role: ROLE_ADMIN }
         - { path: ^/contract, role: ROLE_USER }

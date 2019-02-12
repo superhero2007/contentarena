@@ -20,7 +20,7 @@
 	<tr>
 		<td style="text-align: left">
 			<p style="border-top: 1px dashed #999; padding: 10px 0 0; width:97%; margin: 10px 0 0; color: #666;">
-                <strong>Name: </strong> <a href="{{ hostUrl }}listing/{{ listing.customId }}" style="color:#2aaaec">{{ listing.name }}</a>
+                <strong>Name: </strong> <a href="{{ hostUrl }}public/listing/{{ listing.customId }}" style="color:#2aaaec">{{ listing.name }}</a>
 				<br/>
 				<strong>Sport: </strong> {% for sport in listing.sports %}{{ sport.name }}{% if loop.last == false %}, {% endif %} {% endfor %}
                 {% if listing.sportCategory is not null  %}

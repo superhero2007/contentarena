@@ -15,6 +15,7 @@ import {updateProfile, loadUserData} from "./actions/userActions";
 import {getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
 import LandingWrapper from './../landing/containers/LandingWrapper';
+import {setRefererData, setRefererEmail} from "../landing/actions/landingActions";
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -132,7 +133,7 @@ class AuthRouter extends React.Component {
     }
 
     componentWillMount() {
-        const {loggedUserData, totalCountries, testStageMode, envHostUrl} = this.props;
+        const {loggedUserData, totalCountries, testStageMode, envHostUrl, refererEmail, refererListingId} = this.props;
 
         this.props.loadUserData(loggedUserData);
         this.props.getDefaultRightsPackage();
@@ -140,6 +141,7 @@ class AuthRouter extends React.Component {
         this.props.setTotalCountries(Number(totalCountries));
         this.props.setTestStageMode(!!+testStageMode);
         this.props.setEnvHostUrl(envHostUrl);
+        this.props.setRefererData(refererEmail, refererListingId);
     }
 
     componentWillReceiveProps(nextProps){
@@ -220,7 +222,8 @@ const mapDispatchToProps = dispatch => {
         setTestStageMode : testStageMode => dispatch(setTestStageMode(testStageMode)),
         getDefaultRightsPackage : () => dispatch(getDefaultRightsPackage()),
         setLanguage: lang => dispatch(setLanguage(lang)),
-        setEnvHostUrl : envHostUrl => dispatch(setEnvHostUrl(envHostUrl))
+        setEnvHostUrl : envHostUrl => dispatch(setEnvHostUrl(envHostUrl)),
+        setRefererData: (refererEmail, refererListingId) => dispatch(setRefererData(refererEmail, refererListingId))
     }
 };
 

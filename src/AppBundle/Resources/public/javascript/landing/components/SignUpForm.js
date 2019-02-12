@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
 import Loader from "../../common/components/Loader";
+import {hideSuccessResetPass} from "../actions/landingActions";
+import {connect} from "react-redux";
 
 class SignUpForm extends PureComponent {
     constructor (props) {
@@ -82,9 +84,16 @@ class SignUpForm extends PureComponent {
     };
 
     render() {
+        const { refererEmail } = this.props;
         return (
             <section className="sign-up-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("SIGN_UP_FOR_ACCOUNT")}</h3>
+
+                { refererEmail && refererEmail !== "" && (
+                    <p className="sign-in-error-message">
+                        {this.context.t("SIGN_UP_FROM_PUBLIC_LISTING_MESSAGE")}
+                    </p>
+                )}
 
                 {this.state.generalError && <span className="sign-error">{this.state.generalError}</span>}
                 <div className="username">
@@ -155,4 +164,16 @@ SignUpForm.propsType = {
     onViewUpdate: PropTypes.func.isRequired
 };
 
-export default SignUpForm;
+const mapStateToProps = ({landing}) => {
+    return landing;
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SignUpForm);

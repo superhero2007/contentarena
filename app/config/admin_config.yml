@@ -33,7 +33,9 @@ easy_admin:
             # it can also be added to the twig.form_themes option to use it in the
             # entire application, not only the backend
             - 'easy_admin/basic.form.html.twig'
-
+        assets:
+            js:
+                - 'bundles/app/admin/javascript/admin.js'
     entities:
             User:
                 class: AppBundle\Entity\User
@@ -112,8 +114,8 @@ easy_admin:
                         - { property: 'featured' }
                         - { property: 'featuredPosition' }
                         - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
-                        #- { property: 'ownLicense', template: ':easy_admin:license.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'status' }
+                        - { property: 'shareId', template: 'share.listing.list.html.twig', base_path: '%carena_host_url%', label: "Share" }
                     actions:
                         - { name: 'show', icon: 'eye', label: '' }
                         - { name: 'edit', icon: 'pencil', label: '' }

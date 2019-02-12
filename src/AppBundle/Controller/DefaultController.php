@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
+use AppBundle\Service\UserService;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -33,6 +35,35 @@ class DefaultController extends BaseController
     }
 
     /**
+     * @Route("/public/listing/{customId}", name="publicListing")
+     * @param Request $request
+     * @param UserService $userService
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function publicListing(Request $request, UserService $userService)
+    {
+        $user = $this->getUser();
+        $email = $request->get("email");
+        $customId = $request->get("customId");
+
+        if ( $email == null || $customId == null ) throw $this->createNotFoundException("That page doesn't exists, sorry!");
+
+        if ( $user != null ){
+            return $this->redirect("/listing/". $customId);
+        } else {
+
+            $user = $userService->getUserByEmail($email);
+
+            if ( $user != null ) {
+                return $this->redirect("/login?email=". $email."&listingId=".$customId);
+            } else {
+                return $this->redirect("/registration?email=". $email);
+            }
+        }
+
+    }
+
+    /**
      * @Route(
      *     "/{reactRouting}",
      *     requirements={"reactRouting"="terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
@@ -40,7 +71,7 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams());
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
     /**
@@ -51,7 +82,7 @@ class DefaultController extends BaseController
      */
     public function indexParamsAction(Request $request)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request->get('reactParam')));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
     /**
@@ -62,7 +93,7 @@ class DefaultController extends BaseController
      */
     public function indexParams2Action(Request $request)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request->get('reactParam')));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
     /**
@@ -74,12 +105,15 @@ class DefaultController extends BaseController
      */
     public function indexParams3Action(Request $request)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams());
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
-    private function getInternalParams($listingId = null){
+    private function getInternalParams(Request $request){
         $user = $this->getUser();
         $isOwner = false;
+        $refererEmail = $request->get("email");
+        $refererListingId = $request->get("listingId");
+        $listingId = $request->get('reactParam');
         $rights = $this->getDoctrine()->getRepository('AppBundle:RightsPackage')->findAll();
         $packages = $this->getDoctrine()
             ->getRepository('AppBundle:RightsPackage')
@@ -106,6 +140,8 @@ class DefaultController extends BaseController
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'     =>  $serializer->serialize($content, 'json'),
             'loggedUser'     => $user,
+            'refererEmail'      => $refererEmail,
+            'refererListingId' => $refererListingId,
             'isOwner'        => $isOwner,
             'totalCountries' => $this->getDoctrine()->getRepository("AppBundle:Country")->countAll(),
             'loggedUserData' => ($user) ? $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings'))): null,

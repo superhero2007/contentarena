@@ -1,6 +1,6 @@
 // webpack.config.js
-var Encore = require('@symfony/webpack-encore');
-var path = require('path');
+const Encore = require('@symfony/webpack-encore');
+const path = require('path');
 
 
 Encore

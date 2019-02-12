@@ -59,9 +59,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/iwantdev/content-arena-api.git"
+    "url": "git+ssh://git@bitbucket.org/contentarena/content-arena-api.git"
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/iwantdev/content-arena-api#readme"
+  "homepage": "https://bitbucket.org/contentarena/content-arena-api#readme"
 }

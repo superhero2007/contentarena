@@ -33,6 +33,9 @@ class SignInForm extends PureComponent {
     };
     handleInputChange = () => this.setState({error: ''});
     handleSignIn = () => {
+
+        const { refererEmail, refererListingId } = this.props;
+
         if(this.props.resetPasswordSuccess) this.props.hideSuccessResetPass();
         if(this.state.isLoading) return;
         if (this.isFieldsInvalid()) {
@@ -45,7 +48,12 @@ class SignInForm extends PureComponent {
             .then(({data}) => {
                 if(data.success) {
                     this.props.fakeAuth.authenticate(() => {});
-                    window.location.href = 'marketplace';
+
+                    if ( refererEmail !== null && refererListingId !== null){
+                        window.location.href = 'listing/' + refererListingId;
+                    } else{
+                        window.location.href = 'marketplace';
+                    }
                 }
             })
             .catch(({response}) => {
@@ -62,9 +70,18 @@ class SignInForm extends PureComponent {
     };
 
     render() {
+
+        const { refererEmail } = this.props;
+
         return (
             <section className="sign-in-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("SIGN_IN_TO_CONTENT_ARENT")}</h3>
+
+                { refererEmail && refererEmail !== "" && (
+                    <p className="sign-in-error-message">
+                        {this.context.t("SIGN_IN_FROM_PUBLIC_LISTING_MESSAGE")}
+                    </p>
+                )}
 
                 {this.props.resetPasswordSuccess && (
                     <div className="reset-success-password">
