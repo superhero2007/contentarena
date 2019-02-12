@@ -31,7 +31,7 @@ class DefaultController extends BaseController
      */
     public function homeAction(Request $request)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams());
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
     /**
