@@ -49,7 +49,7 @@ class SignInForm extends PureComponent {
                 if(data.success) {
                     this.props.fakeAuth.authenticate(() => {});
 
-                    if ( refererEmail !== null && refererListingId !== null){
+                    if ( refererEmail !== null && refererEmail !== "" && refererListingId !== null && refererListingId !== ""){
                         window.location.href = 'listing/' + refererListingId;
                     } else{
                         window.location.href = 'marketplace';
