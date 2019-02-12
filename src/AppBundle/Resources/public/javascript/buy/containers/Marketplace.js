@@ -25,6 +25,7 @@ import {FetchMarketplaceListings} from "../../api/marketplace";
 import Pagination from "../../main/components/Pagination";
 import {serialize} from "../../common/utils/listing";
 import localStorageEnums from "../../main/constants/localStorageEnums";
+import {fetchListings} from '../actions/marketplaceActions'
 
 class Marketplace extends Component {
     constructor(props) {
@@ -136,8 +137,8 @@ class Marketplace extends Component {
 
     parseFilter = (filter, excludePage) => {
         const sports = LocalStorageHelper.getSportsSelected();
-        const sportsFromStorage = sports ? [{name: sports.value}] : null;
-        const sportsFromProps = filter.sport ? [{name: filter.sport.value}] : null;
+        const sportsFromStorage = sports ? sports.map(s => ({name: s.value})) : null;
+        const sportsFromProps = filter.sport ? filter.sport.map(s => ({name: s.value})) : null;
         const exclusiveFromStorage = LocalStorageHelper.getExclusive();
         const rightsFromStorage = LocalStorageHelper.getRightsCheckboxSelected();
         const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
@@ -189,10 +190,13 @@ class Marketplace extends Component {
     };
 
     filter = () => {
-        const { filter } = this.props;
+        const { filter, fetchListings } = this.props;
         let parsedFilter = this.parseFilter(filter);
-        console.log(parsedFilter);
-        this.setState({parsedFilter: parsedFilter, loadingListing: true});
+        fetchListings(parsedFilter);
+        this.setState({
+            sortSalesPackages : true,
+            parsedFilter: parsedFilter
+        })
     };
 
     filterByRoute = () => {
@@ -226,27 +230,22 @@ class Marketplace extends Component {
         this.setState({listingView: type});
     };
 
-    onFetchResponse = ( response ) => {
-        this.setState({
-            listings: response.listings,
-            totalItems: response.totalItems,
-            loadingListing: false,
-            sortSalesPackages : true
-        });
-    };
-
     render () {
-        const { filter, salesPackage ,history, location, match } = this.props;
+        const {
+            filter,
+            salesPackage,
+            history,
+            location,
+            match,
+            listingsData
+        } = this.props;
 
         const {
-            listings,
-            loadingListing,
             loadingListingDetails,
             showDetails,
             content,
             company,
             sortSalesPackages,
-            totalItems,
             profile,
             errorMessage,
             listingView,
@@ -264,6 +263,8 @@ class Marketplace extends Component {
 
         let customFilter = this.getQueryString();
 
+        const {error, loading, listings, totalItems} = listingsData;
+
         const sortedListings = listings.sort((a, b) => a.featuredPosition - b.featuredPosition);
         return (
             <div className="manager-content" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -279,14 +280,7 @@ class Marketplace extends Component {
                     </div>
                     <div className="buy-container-right">
 
-                        {parsedFilter && (
-                            <FetchMarketplaceListings
-                                onResponse={this.onFetchResponse}
-                                filter={parsedFilter}
-                            />
-                        )}
-
-                        <Loader loading={listings.length === 0 && loadingListing}>
+                        <Loader loading={loading}>
 
                             <div className="content-listing-header">
                                 <div className="content-listing-switcher">
@@ -308,12 +302,12 @@ class Marketplace extends Component {
                                     <RightsLegend />
                                 </div>
                             </div>
-                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.TABLE &&
-                            <ContentListingTable
-                                listings={listings}
-                                history={history}
-                            />
-                            }
+                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.TABLE && (
+                                <ContentListingTable
+                                    listings={listings}
+                                    history={history}
+                                />
+                            )}
                             {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && sortedListings.map(listing => {
                                 return (
                                     <ContentListing
@@ -369,7 +363,10 @@ Marketplace.contextTypes = {
 };
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        ...state,
+        listingsData: state.marketplace.listingsData
+    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -382,7 +379,8 @@ const mapDispatchToProps = dispatch => {
         removeRight: id => dispatch(removeRight(id)),
         updateCountries: countries => dispatch(updateCountries(countries)),
         updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
-        updateFilters: filters => dispatch(updateMany(filters))
+        updateFilters: filters => dispatch(updateMany(filters)),
+        fetchListings: (filter, method) => dispatch(fetchListings(filter, method))
     }
 };
 

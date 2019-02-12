@@ -5,13 +5,16 @@ import {updateEvent, updateSport} from "../actions/filterActions";
 import {searchIcon} from "../../main/components/Icons";
 import localStorageEnums from '../../main/constants/localStorageEnums';
 import {PropTypes} from 'prop-types';
+import uniqBy from 'lodash/uniqBy'
 
 class EventFilter extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            sports:[]
+            sports:[],
+            checkedSports: this.getActiveSport(),
+            seeAll: false
         };
 
         this.searchIcon = searchIcon;
@@ -53,9 +56,28 @@ class EventFilter extends React.Component {
         this.setState({tab});
     };
 
-    onSelectSport = (selectedSport) => {
-        localStorage.setItem(localStorageEnums.SPORTS, JSON.stringify(selectedSport));
-        this.props.selectSport(selectedSport);
+    setSport = (sports) => {
+        localStorage.setItem(localStorageEnums.SPORTS, JSON.stringify(sports));
+        this.props.selectSport(sports);
+
+        this.setState({
+            checkedSports: sports
+        })
+    }
+
+    onSelectSport = (e, sp) => {
+        const checked = e.target.checked;
+        const checkedSports = this.state.checkedSports;
+        const selectedSport = sp;
+
+        if (checked) {
+            selectedSport.value
+                ? this.setSport(uniqBy([...checkedSports, selectedSport], "value"))
+                : this.setSport([]);
+        } else {
+            this.setSport([...checkedSports.filter(e => e.value !== selectedSport.value)]);
+        }
+
         this.handleFilter();
     };
 
@@ -73,11 +95,25 @@ class EventFilter extends React.Component {
         }
     };
 
-    render() {
-        const { sport, event } = this.props;
+    getActiveSport = () => {
         const sportFromStorage = localStorage.getItem(localStorageEnums.SPORTS) &&
             JSON.parse(localStorage.getItem(localStorageEnums.SPORTS));
-        const sportValue = sportFromStorage ? sportFromStorage : sport;
+        const sportValue = sportFromStorage ? sportFromStorage : this.props.sport;
+        return sportValue
+    }
+
+    isSportChecked = (sp) => {
+        const {checkedSports} = this.state;
+        if (checkedSports.length === 0 && sp.value === null) {
+            return true
+        } else {
+            return checkedSports.some(s => s.value === sp.value)
+        }
+    }
+
+    render() {
+        const { event } = this.props;
+        const {seeAll} = this.state;
         return (
             <div>
                 <div className="box">
@@ -102,14 +138,31 @@ class EventFilter extends React.Component {
                         {this.context.t("MARKETPLACE_LABEL_FILTER_SPORT")}
                     </div>
 
-                    <Select
-                        name="form-field-name"
-                        multi={false}
-                        className="sport-input-filter"
-                        onChange={this.onSelectSport}
-                        value={sportValue}
-                        options={this.getOptions()}
-                    />
+                    {this.getOptions().slice(0, seeAll ? -1 : 6).map(sp => {
+                        return (
+                            <div style={{margin: '7px 0 '}} key={sp.label}>
+                                <label className={'d-flex'}>
+                                    <input
+                                        type="checkbox"
+                                        onChange={e => this.onSelectSport(e, sp)}
+                                        className={'ca-checkbox checkbox-item'}
+                                        defaultChecked={this.isSportChecked(sp)}
+                                    />
+                                    <span>{sp.label}</span>
+                                </label>
+                            </div>
+                        )
+                    })}
+                    <hr />
+                    <div className="text-center">
+                        <a onClick={()=>this.setState({seeAll: !seeAll})}>
+                            {seeAll ? (
+                                this.context.t('SEE_LESS')
+                            ) : (
+                                this.context.t('SEE_ALL')
+                            )}
+                        </a>
+                    </div>
                 </div>
             </div>
         );

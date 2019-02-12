@@ -32,6 +32,7 @@
     "react-tooltip": "^3.6.1",
     "redux": "^3.7.2",
     "redux-i18n": "^1.5.13",
+    "redux-thunk": "^2.3.0",
     "uikit": "^3.0.0-beta.42",
     "webpack-jquery-ui": "^1.0.0",
     "webpack-preset": "^0.2.0",

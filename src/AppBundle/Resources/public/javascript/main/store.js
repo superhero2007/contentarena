@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import {combineReducers} from 'redux'
 import {i18nState} from "redux-i18n";
-
+import thunk from 'redux-thunk';
 import {content} from "../sell/reducers/content";
 import {selector} from "../sell/reducers/selector";
 import {filter} from "../buy/reducers/filter";
@@ -26,4 +26,4 @@ const reducers = combineReducers({
     i18nState
 });
 
-export default createStore(reducers);
+export default createStore(reducers, applyMiddleware(thunk));

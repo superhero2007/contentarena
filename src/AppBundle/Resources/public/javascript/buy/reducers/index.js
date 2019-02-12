@@ -1,4 +1,3 @@
-
 import {combineReducers} from 'redux'
 import {marketplace} from "./marketplace";
 import {filter} from "./filter";

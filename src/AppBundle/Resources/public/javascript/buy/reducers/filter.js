@@ -18,10 +18,10 @@ const defaultFilter = {
     countries: [],
     exclusive : false,
     includeAllCountries : false,
-    sport: {
+    sport: [{
         value : null,
         label : "All sports"
-    },
+    }],
     event : "",
     forceUpdate : true,
     eventDateFrom: "",
@@ -62,7 +62,7 @@ export const filter = (state = defaultFilter, action) => {
             });
         case filterTypes.UPDATE_SPORT:
             return Object.assign({}, state, {
-                sport: action.sport
+                sport: [...state.sport, ...action.sport]
             });
         case filterTypes.UPDATE_FILTERS_CONFIG:
             return Object.assign({}, state, action.filters);
