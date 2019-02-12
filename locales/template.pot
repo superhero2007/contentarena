@@ -685,6 +685,10 @@ msgid "SIGN_IN_TO_CONTENT_ARENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/SignInForm.js
+msgid "SIGN_IN_FROM_PUBLIC_LISTING_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/SignInForm.js
 msgid "SIGN_IN_RESET_MESSAGE"
 msgstr ""
 
@@ -726,6 +730,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/SignUpForm.js
 msgid "SIGN_UP_FOR_ACCOUNT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/SignUpForm.js
+msgid "SIGN_UP_FROM_PUBLIC_LISTING_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/SignUpForm.js
