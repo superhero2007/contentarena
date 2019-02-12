@@ -1,0 +1,25 @@
+
+{% include 'contract/la-general-terms.html.twig' %}
+
+{% if watermark %}
+ <style>
+
+  body {
+   display: block;
+   position: relative;
+  }
+
+  body::after {
+   content: "";
+   background:url({{ hostUrl }}bundles/app/images/watermark.png);
+   /*background-size: 50%;*/
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   position: absolute;
+   z-index: -1;
+  }
+ </style>
+{% endif %}
+

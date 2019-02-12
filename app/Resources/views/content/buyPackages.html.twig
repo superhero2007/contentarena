@@ -1,0 +1,91 @@
+{% if buyPackages|length > 0 %}
+    <div class="box buy-package-box">
+        <div class="box-title">
+            Buy Packages
+        </div>
+        {% for buyPackage in buyPackages %}
+            <div class="box-content" data-type="{{ loop.index }}">
+
+                <div class="right">
+                    <div class="uk-width-1-1 buy-package-heading uk-background-muted uk-light buy-package-name">
+                        Package {{ loop.index }} :  {{  buyPackage.salesPackage.name }}
+                    </div>
+                </div>
+                <div class="right uk-margin-remove">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading buy-package-method">
+                        {% if buyPackage.salesPackage.salesMethod == 'OPEN' %}
+                            Open Bid
+                        {% elseif buyPackage.salesPackage.salesMethod == 'CLOSED'  %}
+                            Closed Bid
+                        {% else %}
+                            Fixed price
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="right uk-margin-remove">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
+                        {% if buyPackage.salesPackage.salesMethod == 'FIXED' %}
+                            Fee : <span class="buy-package-price">{{ buyPackage.salesPackage.amount }}</span>(<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
+                        {% else %}
+                            Minimum Bid: <span class="buy-package-price">{{ buyPackage.salesPackage.amount }}</span> (<span class="buy-package-currency">{{ buyPackage.salesPackage.currency }}</span>)
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="right uk-margin-remove">
+                    <div class="uk-width-1-1 uk-background-primary uk-light buy-package-heading">
+                        Availibility:
+                        <span class="buy-availibility">
+                            {% if buyPackage.salesPackage.isWorldwide %}
+                                Worldwide
+                            {% elseif buyPackage.salesPackage.selectedCountries | length > 0 %}
+                                Only in Selected {{ buyPackage.countries | length }} Countries
+                            {% else %}
+                                Worldwide excluding {{ buyPackage.countries | length }} Countries
+                            {% endif %}
+                        </span>
+
+                    </div>
+                </div>
+                {% if buyPackage.countries | length > 0 %}
+                    <div class="right uk-grid uk-padding-small uk-margin-remove-bottom uk-padding-remove-bottom uk-padding-remove-top">
+                        {% set i = 0 %}
+                        {% for country in buyPackage.countries %}
+                            {% set i= i + 1 %}
+                            <div class="uk-width-1-2 country-wrapper">{{ i }}. {{ country.name }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% set ids = [] %}
+                {% for country in buyPackage.countries %}
+                   {% set ids = ids | merge([country.id])%}
+                {% endfor %}
+                {% if buyPackage.salesPackage.salesMethod == 'FIXED'  %}
+                    <div class="uk-grid uk-margin-remove-top">
+                        <div class="uk-width-1-2">
+                            <input type="hidden" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
+                        </div>
+                        {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
+                            <div class="uk-width-1-2">
+                                <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}" data-country="{{ ids|json_encode }}" data-amount="{{ buyPackage.salesPackage.amount }}" data-pricing-type="{{ buyPackage.salesPackage.salesMethod.id }}" data-type="buy-puckages" data-id="{{ loop.index }}" data-currency="{{ buyPackage.salesPackage.currency.id }}">Add to cart</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="uk-grid uk-margin-remove-top">
+
+                        {% if not content.isOwner(user) and content.isActive() and not content.isExpired() %}
+                            <div class="uk-width-1-2">
+                                <input type="text" placeholder="Enter bid here minimum {{ buyPackage.salesPackage.amount }}" class="uk-input buy-package-input" data-price="{{ buyPackage.salesPackage.amount }}">
+                            </div>
+                            <div class="uk-width-1-2">
+                                <button class="uk-button uk-button-secondary uk-width-1-1 add-to-cart" data-rand="{{ random(1000000)~"now"|date("mdYHis")  }}" data-country="{{ ids|json_encode }}" data-amount="{{ buyPackage.salesPackage.amount }}" data-pricing-type="{{ buyPackage.salesPackage.salesMethod.id }}" data-type="buy-puckages" data-id="{{ loop.index }}" data-currency="{{ buyPackage.salesPackage.currency.id }}">Add to cart</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+

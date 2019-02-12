@@ -1,0 +1,17 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body_text %}
+{% autoescape false %}
+A new user has completed the registration form and confirmed the email address
+
+Name: {{ user.firstName }} {{ user.lastName }}
+Email: {{ user.email }}
+Company: {{ user.companyLegalName }}
+Phone: {{ user.phone }}
+Title: {{ user.title }}
+Act as: {{ user.companyLegalName }}
+Company website: {{ user.companyWebsite }}
+
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

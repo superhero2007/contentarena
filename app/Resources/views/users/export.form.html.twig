@@ -1,0 +1,39 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}
+    Export users
+{% endblock %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+
+    <div class="form-group  field-text">
+        {{ form_label(form.createdAtStart) }}
+        {{ form_errors(form.createdAtStart) }}
+        {{ form_widget(form.createdAtStart) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(form.createdAtEnd) }}
+        {{ form_errors(form.createdAtEnd) }}
+        {{ form_widget(form.createdAtEnd) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(form.lastLogin) }}
+        {{ form_errors(form.lastLogin) }}
+        {{ form_widget(form.lastLogin) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(form.send) }}
+        {{ form_widget(form.send) }}
+        <a class="btn btn-primary action-new" href="/admin/users/export/all" target="_self">
+            Download All
+        </a>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

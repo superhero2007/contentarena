@@ -1,0 +1,353 @@
+@import "vars";
+
+.messages-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: -20px;
+
+  .no-messages {
+    width: 100%;
+    padding-top: 100px;
+    text-align: center;
+    font-size: 28px;
+  }
+
+  .threads {
+    width: 300px;
+    .thread-title {
+      text-align: center;
+      font-weight: bold;
+      height: 2vh;
+    }
+    .thread-wrapper {
+      overflow-y: scroll;
+      height: calc(98vh - 112px);
+      .thread {
+        border-bottom: 1px solid lightgrey;
+        &:first-child {
+          border-top: 1px solid lightgrey;
+        }
+      }
+    }
+    .thread {
+      background-color: white;
+      line-height: 20px;
+      padding: 15px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      min-height: 105px;
+      font-size: 13px;
+      .date {
+        margin-left: auto;
+        font-size: 12px;
+      }
+      .listing-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 175px;
+        margin-top: -21px;
+        font-weight: 600;
+      }
+      .user {
+        color: #999999;
+        font-size: 12px;
+      }
+      .last-message {
+        font-size: 12px;
+        font-weight: normal;
+        color: #999999;
+      }
+    }
+    .has-unread-messages {
+      background-color: #eee;
+    }
+    .thread-selected {
+      background-color: #03547C;
+      color: #FFFFFF;
+      .last-message {
+        color: #FFFFFF;
+      }
+      .user {
+        color: #FFFFFF;
+      }
+    }
+  }
+  .ca-overflow {
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #CDCDCD;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #2AAAEC;
+    }
+  }
+  .thread-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1;
+    height: calc(100vh - 112px);
+    .thread-title {
+      color: #48C0FE;
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      margin-bottom: 20px;
+      flex: 0 0 auto;
+
+      .listing-name {
+        cursor: pointer;
+        max-width: 620px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .company-name {
+        color: #333333;
+        font-size: 13px;
+        .fa {
+          padding-right: 10px;
+          color: #2AAAEC;
+        }
+      }
+    }
+    .messages-wrapper {
+      flex: 1 1 auto;
+      height: 100%;
+      position: relative;
+      overflow-y: auto;
+    }
+    .messages {
+      display: flex;
+      flex-direction: column-reverse;
+      flex: 1 1 auto;
+      height: 100%;
+      overflow-y: auto;
+      padding: 0 30px 20px;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+      .message {
+        color: #4F4F4F;
+        font-size: 16px;
+        max-width: 60%;
+        margin-left: 0;
+        margin-right: auto;
+        margin-top: 20px;
+
+        &:last-child {
+          margin-top: auto;
+        }
+
+        .message-sender {
+          font-weight: 600;
+          font-size: 13px;
+        }
+        .message-content {
+          background: #EFEFEF;
+          padding: 10px 30px 10px 20px;
+          color: #333333;
+          border-radius: 0 25px 25px 0;
+        }
+        .message-date {
+          font-size: 11px;
+          margin-bottom: 5px;
+        }
+        .message-sender,
+        .message-date {
+          text-align: left;
+          color: #333333;
+        }
+      }
+      .own-company {
+        .message-content {
+          background: #00537D;
+          color: #F7F7F7;
+          border-radius: 25px 0 0 25px;
+          padding: 10px 20px 10px 30px;
+        }
+        .message-sender,
+        .message-date {
+          text-align: right;
+        }
+      }
+      .own-message,
+      .own-company {
+        margin-right: 0;
+        margin-left: auto;
+      }
+    }
+    .message-input {
+      border: 2px solid #efefef;
+      padding: 30px 20px;
+      .attachment-icon{
+        cursor: pointer;
+      }
+      .message-input-title {
+        font-weight: 400;
+        font-size: 15px;
+      }
+
+      .message-content {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        min-height: 70px;
+        outline: none;
+        border: none;
+        resize: none;
+        font-weight: 400;
+        font-size: 15px;
+        font-family: inherit;
+      }
+      textarea:disabled {
+        background: white;
+      }
+      textarea::-webkit-input-placeholder {
+        font-weight: 400;
+        font-size: 15px;
+        font-family: $font-stack;
+        color: #333;
+        font-style: normal;
+
+      }
+
+      textarea:-moz-placeholder { /* Firefox 18- */
+        font-weight: 400;
+        font-size: 15px;
+        font-family: $font-stack;
+        color: #333;
+        font-style: normal;
+      }
+
+      textarea::-moz-placeholder {  /* Firefox 19+ */
+        font-weight: 400;
+        font-size: 15px;
+        font-family: $font-stack;
+        color: #333;
+        font-style: normal;
+      }
+
+      textarea:-ms-input-placeholder {
+        font-weight: 400;
+        font-size: 15px;
+        font-family: $font-stack;
+        color: #333;
+        font-style: normal;
+      }
+
+    }
+    .message-input-tools{
+      background-color: #efefef;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 10px 20px;
+      min-height: 70px;
+      .standard-button {
+        margin-left: 0;
+        border-radius: 8px;
+        height: 38px;
+        display: flex;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .attachment-uploader{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid lightgrey;
+    padding: 20px;
+    width: 100%;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 600;
+    position: relative;
+    .attachment-uploader-name{
+      align-items: center;
+      display: flex;
+      margin: 0 10px;
+    }
+    .attachment-uploader-size{
+      font-weight: 400;
+      align-items: center;
+      display: flex;
+      margin: 0 10px;
+    }
+    .attachment-uploader-extension{
+      height: 49px;
+      width: 49px;
+      background-color: #2AAAEC;
+      color: #F7F7F7;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+    }
+    .attachment-uploader-close{
+      position: absolute;
+      right: 20px;
+      top: 32px;
+      cursor: pointer;
+    }
+    .attachment-uploader-success {
+      position: absolute;
+      left: 80px;
+      bottom: 16px;
+      color: #333333;
+      font-size: 13px;
+      font-weight: 400;
+    }
+    .attachment-uploader-error {
+      position: absolute;
+      left: 80px;
+      bottom: 16px;
+      color: red;
+      font-size: 13px;
+      font-weight: 400;
+    }
+    @keyframes changewidth {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    .progress-bar {
+      position: absolute;
+      height: 5px;
+      width: 90%;
+      bottom: 20px;
+      left: 80px;
+    }
+
+    .filler {
+      background: #2AAAEC;
+      height: 100%;
+      animation-duration: 10s;
+      animation-name: changewidth;
+      animation-iteration-count: infinite;
+    }
+
+  }
+  .attachment-uploader-file{
+    padding: 0;
+  }
+}

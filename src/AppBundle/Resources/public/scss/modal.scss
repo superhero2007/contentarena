@@ -1,0 +1,148 @@
+@import "vars";
+@import "mixins";
+
+// remove second scroll
+.ReactModal__Body--open {
+  overflow: hidden !important;
+}
+
+// show modal scroll if necessary
+.ReactModal__Overlay {
+  height: 100%;
+  overflow: auto;
+}
+
+.ReactModal__Content.modal-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: none;
+  background: $modal-bg !important;
+  border-radius: 5px;
+  outline: none;
+  padding: 20px;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+
+  max-height: 90%;
+
+  &.wide {
+    max-width: 870px;
+    width: 870px;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 20px;
+
+    .modal-title {
+      color: $font-color-6;
+      font-size: 19px;
+      font-weight: 700;
+      text-transform: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .modal-sub-title {
+      margin-bottom: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    i {
+      color: $font-color-2;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+
+  .modal-body {
+    background: inherit;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    textarea {
+      width: 100%;
+      height: 270px;
+      padding: 30px;
+      border: none;
+      outline: none;
+      font-weight: bold;
+      background: $container-background-color;
+      @include placeholder {
+        color: $black-color;
+        font-weight: normal;
+        font-size: 16px;
+        font-style: normal;
+      }
+    }
+
+    i {
+      font-size: 30px;
+    }
+
+    .body-msg {
+      font-size: 22px;
+    }
+
+    .terms-and-condition-wrapper {
+      font-size: 14px;
+      padding-bottom: 20px;
+      justify-content: center;
+    }
+  }
+
+  .modal-footer {
+    padding: 25px;
+    background: $modal-bg;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    button {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 16px;
+      outline: none;
+      color: $black-color;
+      border-radius: 5px;
+      padding: 15px 50px;
+
+      &.cancel-btn {
+        border: none;
+        background: transparent;
+      }
+    }
+  }
+}
+
+.ReactModal__Content.modal-wrapper-invite{
+  @extend .modal-wrapper;
+  width: 900px;
+  .modal-body{
+    flex-direction: column;
+    .row{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 10px 20px;
+    }
+    input{
+      background-color: rgba(204,204,204,0.21);
+      padding: 14px 10px;
+      border: 1px solid rgba(204,204,204,0.48);
+    }
+  }
+
+}

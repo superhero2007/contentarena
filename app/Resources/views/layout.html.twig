@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        {% block stylesheets %}
+            <link href="{{ asset('assets/vendor.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/app/css/jquery-ui.theme.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/common.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/main.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+
+        <script>
+            var envhosturl = "{{ path('homepage')|escape('js') }}";
+
+            {% if hostUrl is defined %}
+                var hosturl = "{{ hostUrl }}";
+            {% endif %}
+
+            {% if externalApiUrl is defined %}
+                var externalApiUrl = "{{ externalApiUrl }}";
+            {% endif %}
+
+
+            var assetsBaseDir = "{{ asset('bundles/') }}";
+        </script>
+        <title>Content Arena</title>
+
+    </head>
+    <body class="page-home">
+
+        <div class="main-content">
+            {% block main_content %}
+            {% endblock main_content %}
+        </div>
+
+    {% block javascripts %}
+
+        <script type="text/javascript" src="{{ asset('assets/manifest.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/vendor.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/main.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/common.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/ca.js') }}"></script>
+
+    {% endblock %}
+    </body>
+</html>

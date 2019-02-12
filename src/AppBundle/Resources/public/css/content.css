@@ -1,0 +1,74 @@
+.modal-head-div {
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    width: 100% !important;
+    min-height: 100px;
+    padding: 7px;
+    font-size: 100%;
+}
+
+.full-width {
+    width: 100%
+}
+
+.modal-thin-div {
+    min-width: 200px;
+    color: black;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.resolution {
+    margin: 0 5px;
+    padding: 2px;
+}
+.continent-name{
+    padding:10px;
+    margin: 0 20px;
+    background: #DDDDDD;
+    cursor:pointer;
+}
+
+.continent-name-color{
+    background: #38799F;
+    color: #fff;
+}
+
+.hide-item{
+    display: none!important;
+}
+
+.view-all{
+    cursor:pointer;
+}
+
+.buy-package-heading{
+    color:#fff;
+    padding: 5px;
+    text-transform: capitalize;
+}
+
+.country-wrapper{
+    padding: 5px;
+    padding-left: 35px;
+}
+
+.sub-total-row{
+    text-align: right;
+}
+
+.total-sum{
+    color:#fff;
+}
+
+.delete-item {
+    cursor: pointer;
+    color: red;
+}
+
+.license-btn{
+    display: none;
+}
+

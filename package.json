@@ -1,0 +1,67 @@
+{
+  "name": "content-arena-api",
+  "version": "1.0.0",
+  "description": "Symfony Standard Edition\r ========================",
+  "main": "webpack.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-datepicker": "^1.4.1",
+    "react-dom": "^16.4.2",
+    "react-image-crop": "^6.0.0",
+    "react-modal": "^3.3.2",
+    "react-number-format": "^4.0.4",
+    "react-popup": "^0.9.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-select": "^1.2.1",
+    "react-signature": "^1.2.4",
+    "react-signature-pad": "0.0.6",
+    "react-table": "^6.8.2",
+    "react-tagsinput": "^3.19.0",
+    "react-textarea-autosize": "^7.1.0-1",
+    "react-toggle": "^4.0.2",
+    "react-tooltip": "^3.6.1",
+    "redux": "^3.7.2",
+    "redux-i18n": "^1.5.13",
+    "uikit": "^3.0.0-beta.42",
+    "webpack-jquery-ui": "^1.0.0",
+    "webpack-preset": "^0.2.0",
+    "webpack-preset-babel": "^0.2.0",
+    "webpack-preset-babel-stage-2": "^0.2.0"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.19.0",
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7",
+    "webpack": "^3.6.0",
+    "webpack-preset-babel-stage-2": "^0.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": ".\\node_modules\\.bin\\encore dev",
+    "webpack": ".\\node_modules\\.bin\\encore dev --watch",
+    "prod": ".\\node_modules\\.bin\\encore production",
+    "extract": "i18n_extract",
+    "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations",
+    "import-admin": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations --locales=admin-locales"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/contentarena/content-arena-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/contentarena/content-arena-api#readme"
+}

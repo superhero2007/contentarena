@@ -1,0 +1,357 @@
+@import "vars";
+@import "mixins";
+
+$icon-color: #00769A;
+
+.manager-container {
+  padding: 0 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  //overflow: auto;
+}
+
+.manager-header-test-mode {
+  height: 40px;
+  background-color: #FFC94B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.manager-header {
+  $barHeight: 74px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  min-height: $barHeight;
+  box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
+  background-color: $content-bg;
+  color: $color-blue-dark;
+  margin: 0 auto 20px;
+
+  .logo {
+    cursor: pointer;
+    flex: 150px 0 0;
+    margin-right: 40px;
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: $barHeight;
+    font: inherit;
+    font-size: 16px;
+    color: #1a4b63;
+    font-weight: 600;
+    margin-bottom: 3px;
+    margin-right: 3px;
+    cursor: pointer;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    outline: none;
+    text-decoration: none;
+    padding: 15px 20px 0;
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
+  .baseline {
+    padding-top: 15px;
+
+    a {
+      padding-top: 0;
+    }
+  }
+
+  .messages {
+    a {
+      color: #1A4B63;
+    }
+  }
+
+  .switch-mode {
+    a {
+      height: 34px;
+      min-height: auto;
+      text-transform: uppercase;
+    }
+  }
+
+  .spacer {
+    margin-right: auto;
+  }
+
+  .active-tab {
+    a {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        border-bottom: 4px solid #296380;
+        bottom: -10px;
+      }
+    }
+
+  }
+
+  .settings {
+    margin-top: 15px;
+    position: relative;
+    cursor: pointer;
+
+    .popup {
+      display: none;
+      z-index: 99;
+      padding-top: 20px;
+      position: absolute;
+      right: -15px;
+    }
+
+    &:hover .popup {
+      display: block;
+
+      .wrap {
+        min-width: 125px;
+        text-align: center;
+        background-color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        color: #1A4B63;
+
+        .tab {
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          border-bottom: 1px solid #cccccc;
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+
+  .notifications {
+    margin-top: 15px;
+    margin-left: 20px;
+    position: relative;
+
+    cursor: pointer;
+
+    &:hover .icon-bell-wrapper {
+      opacity: .7;
+    }
+
+    .counter {
+      position: absolute;
+      right: -1px;
+      top: 1px;
+      border-radius: 50%;
+      background-color: $color-primary;
+      font-size: 10px;
+      width: 15px;
+      height: 15px;
+      color: $black-color;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .expanded-list {
+      width: 250px;
+      max-height: 430px;
+      overflow: auto;
+
+      position: absolute;
+      right: 0;
+      z-index: 1000;
+
+      background-color: $background-3;
+      border-radius: 4px;
+
+      .items {
+        .item {
+          border-bottom: 1px solid #b1b1b1;
+          color: $black-color;
+          cursor: pointer;
+          font-size: 11px;
+
+          span {
+            padding: 4px 7px;
+            display: block;
+
+            &.notification-time {
+              padding-top: 0;
+              color: $border-color-3;
+            }
+          }
+
+          &.unread {
+            background-color: $font-color-2;
+
+            .notification-time {
+              color: $black-color;
+            }
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          &:hover {
+            background-color: #ddd;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+          }
+
+          &.loading {
+            &:hover {
+              background-color: $background-3;
+            }
+
+            padding: 5px 10px;
+          }
+        }
+      }
+    }
+
+    .no-notifications {
+      padding: 5px 10px;
+    }
+  }
+
+  .fa {
+    color: $icon-color;
+    padding-right: 5px;
+    font-size: 1.6em;
+  }
+}
+
+.watch-list-container {
+  .listing-list-view {
+    cursor: default;
+
+    .ca-title {
+      cursor: default;
+    }
+  }
+}
+
+.manager-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+.manager-content-message {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-size: 30px;
+}
+
+.new-listing-button {
+  background-color: #2AAAEC;
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 0 20px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: -15px;
+  height: 46px;
+}
+
+.new-listing-button:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.manager-filter-container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin-top: -20px;
+  height: 60px;
+
+  .listing-filter {
+    flex: 1;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    .Select {
+      width: 100%;
+
+      .Select-control {
+        color: $font-color-2;
+        font-style: italic;
+        border-radius: 0;
+
+        .Select-placeholder {
+          color: $black-color;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .reset-listing-filter {
+      width: 145px;
+      cursor: pointer;
+      padding: 0 5px;
+      display: flex;
+
+      img {
+        margin-bottom: 3px;
+      }
+
+      span {
+        color: $border-color-2;
+        padding-left: 5px;
+      }
+    }
+  }
+
+  .status-filter {
+    display: flex;
+    justify-content: flex-end;
+    color: #4F4F4F;
+    font-size: 14px;
+    font-weight: 600;
+    flex: 2;
+    align-items: center;
+
+    .status-filter-item {
+      margin: 0 20px;
+      cursor: pointer;
+      color: $font-color-1;
+      font-size: 13px;
+      font-weight: normal;
+      display: flex;
+      line-height: 1.7;
+
+      &.active {
+        font-weight: bold;
+        color: $black-color;
+      }
+
+      img {
+        margin: 0 10px 3px;
+      }
+    }
+  }
+}

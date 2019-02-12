@@ -1,0 +1,248 @@
+@import "vars";
+
+.top-row {
+  .RightsLegend {
+    vertical-align: middle;
+  }
+
+  .ca-btn {
+    margin-left: 15px;
+  }
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  padding: 0 0 20px;
+  margin-top: 10px;
+  .column {
+    margin-right: 5px;
+    padding: 15px 10px 20px;
+    flex: 1;
+    background-color: #E8E8E8;
+    border: 1px solid #DADADA;
+    border-radius: 5px;
+    height: 100%;
+    width: 24%;
+    .column-title {
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+      div {
+        display: inline;
+      }
+
+      .ca-btn {
+        margin-top: 5px;
+        width: 100%;
+      }
+    }
+    .listing {
+      border: 1px solid #FFCC33;
+      box-shadow: 0 1px 4px 1px rgba(51, 51, 51, 0.34);
+      padding: 18px 12px 12px;
+      background-color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+      border-radius: 5px;
+
+      .menu-icon, .edit-icon {
+        position: absolute;
+        cursor: pointer;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        width: 45px;
+        justify-content: center;
+
+        font-size: 22px;
+        color: $font-color-5;
+      }
+
+      .edit-icon {
+        top: 5px;
+        right: 32px;
+      }
+
+      .menu-icon {
+        top: 5px;
+        right: 0;
+      }
+
+      .status-icon {
+        position: absolute;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        right: 45px;
+        top: 20px;
+        &:empty {
+          display: none;
+        }
+        img {
+          width: 18px;
+          height: 18px;
+        }
+      }
+      .name {
+        margin-bottom: 10px;
+        max-width: 80%;
+        width: 310px;
+        color: #07a7f9;
+        font-size: 13px;
+        font-weight: normal;
+      }
+      .tournament {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        font-size: 14px;
+        margin-bottom: 10px;
+        .item {
+          margin-right: 5px;
+        }
+      }
+      .col {
+        $col-height: 60px;
+        display: inline-flex;
+        flex-flow: column wrap;
+        max-height: $col-height;
+        width: 100%;
+        .listing-item {
+          line-height: $col-height / 2;
+          max-height: $col-height / 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        &.listing-rights {
+          flex: 0 0 300px;
+          margin-left: auto;
+          .listing-item {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            img,
+            .fa {
+              margin-right: 5px;
+            }
+          }
+        }
+      }
+      .expiry {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        margin-top: 10px;
+        line-height: 2;
+        div {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+
+.options-tooltip {
+  position: absolute;
+  z-index: 20;
+  background: white;
+  border: 1px solid lightgray;
+  padding: 20px 15px 30px;
+  min-width: 250px;
+  right: 10px;
+  top: 45px;
+  border-radius: 5px;
+  box-shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.21);
+  .last-action {
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    max-width: 220px;
+    padding-top: 10px;
+    border-top: 1px solid #E7E7E7;
+  }
+  .option {
+    cursor: pointer;
+    font-size: 13px;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 8px;
+    }
+  }
+}
+
+.status-tooltip {
+  @extend .options-tooltip;
+  top: 40px;
+  color: $font-color-3;
+  font-size: 14px;
+  font-weight: 600;
+  max-width: 250px;
+  padding-bottom: 20px;
+  .option {
+    text-align: center;
+    display: block;
+    margin-bottom: inherit;
+  }
+}
+
+.confirmation-tooltip {
+  @extend .options-tooltip;
+  color: #4F4F4F;
+  font-size: 14px;
+  font-weight: 600;
+  max-width: 235px;
+  top: 25px;
+  .confirmation-text {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  .button {
+    border: 1px solid lightgrey;
+    font-weight: 600;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    min-width: 100px;
+    margin: 8px auto;
+    outline: none;
+    text-transform: uppercase;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  .button-confirm {
+    background-color: #FFC94B;
+  }
+}
+
+.manage-listing-modal {
+  .modal-content {
+    padding: 15px;
+    padding-top: 0;
+    width: 600px;
+
+    .help-item {
+      .title {
+        font-size: 16px;
+      }
+
+      .description {
+        font-size: 12px;
+        padding-bottom: 8px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{% extends "layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block main_content %}
+
+<div class="manager-header">
+    <div class="logo" style="margin: 0 auto">
+        <img src={{ asset('bundles/app/images/logo.svg') }} alt=""/>
+    </div>
+</div>
+<div class="manager-content">
+    <div class="static-page-text-container">
+        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+    </div>
+</div>
+
+{% endblock main_content %}

@@ -1,0 +1,30 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+{% block main %}
+
+    <section class="content-header">
+        <h1 class="title">Translation files</h1>
+    </section>
+    <section id="main" class="content">
+
+        <div class="form-group">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+        <div class="uk-padding">
+            {#<a class="btn btn-primary" href="{{ path('getLocalesDevFile') }}" >Download DEV en.po file</a>#}
+            <a class="btn btn-primary" href="{{ path('getLocalesFile') }}" >Download en.po file</a>
+            <a class="btn btn-primary" href="{{ path('getLocalesTemplates') }}" >Download template.pot file</a>
+        </div>
+
+        <div class="alert alert-primary">
+            {{ message }}
+        </div>
+
+    </section>
+
+
+
+{% endblock %}

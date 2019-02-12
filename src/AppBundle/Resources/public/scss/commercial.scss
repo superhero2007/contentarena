@@ -1,0 +1,220 @@
+@import "vars";
+@import "mixins";
+
+.commercial-sales-bundles {
+  display: flex;
+  flex-direction: column;
+  background: $background-3;
+  @include shadow(0px 2px 10px 1px rgba(0, 0, 0, 0.25));
+  border-top: 0;
+  margin: 10px 0;
+  padding: 10px;
+
+  .commercial-sales-bundles-container {
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    align-items: center;
+    cursor: pointer;
+
+    .sales-bundle-item {
+      height: 35px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      margin: 0 4px;
+      padding: 8px 10px;
+
+      border: 1px solid $orange-color;
+      border-radius: 5px;
+
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .sales-bundle-item-right {
+      @extend .sales-bundle-item;
+    }
+
+    .sales-bundle-show-bids {
+      @extend .sales-bundle-item-right;
+      padding-left: 0;
+      padding-right: 0;
+      margin-right: 10px;
+      border: none;
+      cursor: pointer;
+
+      & img {
+        width: 17px;
+      }
+    }
+  }
+}
+
+.listing-list-view.commercial-activity {
+  @include shadow(0px 4px 10px -6px rgba(0, 0, 0, 0.75));
+  padding: 0;
+  margin-bottom: 5px;
+
+  .right {
+    padding: 15px 20px 10px;
+
+    & .name-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 0 10px 10px 0;
+
+      & .listing-name {
+        cursor: pointer;
+        color: $font-color-6;
+        font-size: 19px;
+        font-weight: bold;
+      }
+
+      & .custom-id {
+        border-radius: 5px;
+        border: 1px solid $orange-color;
+        background: $background-3;
+      }
+    }
+
+    & .listing-wrapper {
+      .listing-item.tournament {
+        font-size: 13px;
+        font-weight: bold;
+        color: $font-color-1;
+      }
+
+      .listing-item {
+        color: $font-color-1;
+        font-size: 13px;
+      }
+    }
+
+    & .sales-and-exp-wrapper {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+
+      .expires {
+        white-space: nowrap;
+        font-size: 12px;
+        margin-left: auto;
+      }
+    }
+  }
+
+  .bid-listing-details {
+    flex: 0.25 1 0;
+    background-color: #F7F7F7;
+    border-left: 1px solid #E6E6E6;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    padding: 15px 0;
+
+    .item {
+      border-radius: 5px;
+      border: 1px solid $orange-color;
+      background-color: #fff;
+
+      padding: 8px 10px;
+      min-width: 135px;
+
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .total-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-content: stretch;
+      align-items: center;
+      min-width: 150px;
+      margin-bottom: 5px;
+
+      span {
+        justify-content: center;
+        display: flex;
+        color: $font-color-3;
+
+        &.bid-total {
+          font-size: 13px;
+          color: #666;
+          font-weight: normal;
+        }
+
+        &.bid-currency {
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .show-bundle-wrapper {
+      cursor: pointer;
+
+      .bundle-text {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 30px;
+
+        border-radius: 5px;
+        background: $orange-color;
+        color: $font-color-3;
+        font-size: 13px;
+        font-weight: 600;
+        position: relative;
+
+        img {
+          position: absolute;
+          right: 10px;
+          width: 17px;
+          height: 17px;
+        }
+      }
+    }
+  }
+}
+
+.bid-listing-details {
+  flex: 1.5 1 0;
+  background-color: #FAFBFC;
+  border-left: 1px solid #E6E6E6;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  justify-content: space-evenly;
+
+  .item {
+    background-color: #fff;
+    border: 1px solid lightgrey;
+    padding: 5px 10px;
+    min-width: 150px;
+    text-align: center;
+  }
+
+  .show-bundle {
+    cursor: pointer;
+    color: #48C0FE;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 17px;
+      height: 17px;
+      margin-left: 5px;
+    }
+  }
+}

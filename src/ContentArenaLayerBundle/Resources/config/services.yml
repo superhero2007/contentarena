@@ -1,0 +1,4 @@
+services:
+#    content_arena_layer.example:
+#        class: ContentArenaLayerBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

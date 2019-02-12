@@ -1,0 +1,51 @@
+@import "vars";
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+  background: $header-background-color;
+
+  img {
+    max-height: 47px;
+  }
+
+  .uk-navbar-item {
+    height: 67px;
+  }
+  .uk-navbar-item, .uk-navbar-nav>li>a, .uk-navbar-toggle{
+    height: 67px;
+    color: $text-color-1;
+    font-size: 20px;
+    padding: 0;
+  }
+
+  .uk-navbar-nav>li{
+    margin: 0 20px;
+  }
+
+  .uk-navbar-dropdown-nav>li>a{
+    color: $text-color-1;
+  }
+
+  [class*=uk-navbar-dropdown-bottom] {
+    margin-top: 0;
+  }
+  .uk-navbar-dropdown {
+    background: $header-background-color;
+    color: $text-color-1;
+    width: 100%;
+    padding: 0 25px 25px;
+  }
+
+  .uk-navbar-name{
+    text-transform: none;
+  }
+
+  .uk-active {
+    border-bottom: 3px solid #2AAAEC;
+    a {
+      color: #2AAAEC !important;
+      font-weight: 600;
+    }
+  }
+
+
+}

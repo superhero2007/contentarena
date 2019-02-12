@@ -1,3 +1,50 @@
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   /v1
+
+content_arena_layer:
+    resource: "@ContentArenaLayerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+app_helper:
+    resource: '@AppBundle/Resources/config/routing/all.xml'
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+easy_admin_bundle:
+    resource: "@AppBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /admin
+
+
+api_rest:
+    type: rest
+    resource: ApiBundle\Controller\LoginController
+    prefix:   /v1/auth
+
+api_rest_user:
+    type: rest
+    resource: AppBundle\Controller\UserController
+    prefix:   /api/users
+
+api_rest_utils:
+    type: rest
+    resource: ApiBundle\Controller\UtilsController
+    prefix:   /v1/utils
+
+api_rest_feed:
+    type: rest
+    resource: api.feed_controller
+    prefix:   /v1/feed
+
+api_rest_contract:
+    type: rest
+    resource: ApiBundle\Controller\ContractController
+    prefix:   /v1/contract

@@ -1,5 +1,12 @@
 imports:
     - { resource: config.yml }
+    - { resource: parameters.yml }
+
+parameters:
+    locale: en
+    sportradar_api_token: dqahyKSX6u5J1vNHMp
+    sportradar_api_host: https://api.betradar.com/v1
+    carena_host_url : '%local_host%'
 
 framework:
     router:
@@ -10,6 +17,16 @@ framework:
 web_profiler:
     toolbar: true
     intercept_redirects: false
+
+twig:
+    globals:
+        frontend_url : 'http://localhost:8200/content-arena-pwire/'
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     'C:/wkhtmltopdf/bin/wkhtmltopdf.exe'
+        options:    []
 
 monolog:
     handlers:

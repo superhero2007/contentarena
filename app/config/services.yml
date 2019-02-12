@@ -29,7 +29,82 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    AppBundle\DataFixtures\:
+        resource: '../../src/AppBundle/DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
+
+    AppBundle\Service\FileUploader:
+        arguments:
+            $targetDir: '%uploads_main_folder%'
+            $tmpTargetDir: '%uploads_tmp_folder%'
+            $uploadsUriPrefix: '%uploads_uri_prefix%'
+            $uploadsTmpUriPrefix: '%uploads_tmp_uri_prefix%'
+
+    AppBundle\Service\SportRadarService:
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $sportradarApiToken: '%sportradar_api_token%'
+            $sportradarApiHost: '%sportradar_api_host%'
+        public: true
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    AppBundle\Service\EmailService:
+        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%carena_host_url%']
+
+    app.command.send_email:
+            class: AppBundle\Command\SendEmail
+            tags:
+                -  { name: console.command }
+
+    app.form.registration:
+            class: AppBundle\Form\RegistrationFormType
+            tags:
+                - { name: form.type }
+
+    app_bundle.registration_confirmed:
+        class: AppBundle\EventListener\RegisterConfirmationSuccess
+        arguments: ['@twig','@mailer', '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app_bundle.resettin_password_completed:
+        class: AppBundle\EventListener\ResetPasswordSuccess
+        arguments: ['@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    app_bundle.admin_edit_action:
+        class: AppBundle\EventListener\AdminEditAction
+        arguments: ['@twig','@mailer']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    license_service:
+            class: AppBundle\Controller\LicenseController
+
+    app_bundle.user_service:
+        class: AppBundle\Service\UserService
+        arguments: ['@doctrine.orm.entity_manager','@AppBundle\Doctrine\RandomIdGenerator', '@AppBundle\Service\FileUploader', '@fos_user.user_manager', '@fos_user.util.token_generator','@AppBundle\Service\EmailService']
+
+    twig.app_extension:
+        class: AppBundle\Twig\AppExtension
+        tags:
+            - { name: twig.extension }
+
+    api.contract_controller:
+        class: ApiBundle\Controller\ContractController
+        calls:
+            - [setContainer, ["@service_container"]]
+
+    api.feed_controller:
+        class: ApiBundle\Controller\FeedController
+        arguments: ['@AppBundle\Service\SportRadarService']
+
+    AppBundle\EventListener\UpdateListingSubscriber:
+        arguments: ['@AppBundle\Service\ContentService','@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container', '@AppBundle\Service\NotificationService']
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

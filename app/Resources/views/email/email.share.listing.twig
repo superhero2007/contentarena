@@ -1,0 +1,55 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+	Hello,
+{% endblock %}
+
+{# @var listing \AppBundle\Entity\Content #}
+{% block content %}
+	<tr>
+		<td style="text-align: left">
+            {{ user.fullName }} {{ content }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+            {{ content2 }}
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: left">
+			<p style="border-top: 1px dashed #999; padding: 10px 0 0; width:97%; margin: 10px 0 0; color: #666;">
+                <strong>Name: </strong> <a href="{{ hostUrl }}public/listing/{{ listing.customId }}" style="color:#2aaaec">{{ listing.name }}</a>
+				<br/>
+				<strong>Sport: </strong> {% for sport in listing.sports %}{{ sport.name }}{% if loop.last == false %}, {% endif %} {% endfor %}
+                {% if listing.sportCategory is not null  %}
+				<br/>
+				<strong>Country: </strong> {{ listing.sportCategory.name }}
+                {% endif %}
+                {% if listing.tournament is not null %}
+				<br/>
+				<strong>Competition: </strong> {{ listing.tournament.name }}
+                {% endif %}
+				{% if listing.seasons | length > 0 %}
+				<br/>
+				<strong>Season: </strong> {% for season in listing.seasons %}{{ season.name }}{% if loop.last == false %}, {% endif %} {% endfor %}
+				{% endif %}
+			</p>
+		</td>
+	</tr>
+
+	{% if message is defined and message is not null %}
+	<tr>
+		<td style="text-align: left">
+			<p style="border-top: 1px dashed #999; padding: 10px; width:97%; margin: 10px 0 0; color: #666;">
+				{{ user.firstName }} {{ content3 }}
+			</p>
+			<p style="padding: 10px; width:97%; margin: 10px 0 20px; color: #666; background-color: #eee; font-style: italic">
+                ¨{{ message }}¨
+			</p>
+		</td>
+	</tr>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,38 @@
+<div class="license-content">
+
+    <div class="license-sub-title">General Terms and Conditions</div>
+
+    {% for term in terms %}
+        <div class="license-item-title">{{ term.position }}. {{ term.name }}:</div>
+
+        {% if term.position == 1 and definitions is defined %}
+            <table>
+                {% for definition in definitions %}
+                    <tr>
+                        <td>
+                            {{ definition.name|nl2br }}
+                        </td>
+                        <td>
+                            {{ definition.content|nl2br }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        {% endif %}
+        {% set counter = 1 %}
+        {% for item in term.items %}
+            {% if item.content != "" %}
+                <div class="license-item">
+                    <strong> {{ term.position }}.{{ counter }} </strong> {{ item.content|nl2br }}
+                </div>
+                {% set counter = counter + 1 %}
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+
+
+</div>
+
+

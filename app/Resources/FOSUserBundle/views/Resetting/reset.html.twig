@@ -1,0 +1,24 @@
+{% extends "layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block main_content %}
+
+    <div class="manager-header">
+        <div class="logo" style="margin: 0 auto">
+            <img src={{ asset('bundles/app/images/logo.svg') }} alt=""/>
+        </div>
+    </div>
+    <div class="manager-content">
+        <div class="static-page-container">
+        {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+        {{ form_widget(form) }}
+
+            <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+        {{ form_end(form) }}
+        </div>
+
+    </div>
+
+{% endblock main_content %}
+
+
