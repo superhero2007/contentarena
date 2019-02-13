@@ -160,7 +160,7 @@ class SalesPackageEdit extends React.Component {
             fee : fee,
             salesMethod : salesMethod,
             territoriesMethod : territoriesMethod,
-            bundleMethod : bundleMethod,
+            bundleMethod : (territories.length === 1 ) ? this.individually : bundleMethod,
             installments : installments,
             id: this.state.salesPackageId,
             edited : true
