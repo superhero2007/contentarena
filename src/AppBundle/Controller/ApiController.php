@@ -687,46 +687,6 @@ class ApiController extends BaseController
     }
 
     /**
-     * @Route("/api/notifications/", name="getNotifications")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function getNotifications(Request $request, NotificationService $notificationService){
-
-        $user = $this->getUser();
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($notificationService->getNotifications($user), 'json',SerializationContext::create()->setGroups(array('notification')));
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-    }
-
-    /**
-     * @Route("/api/notifications/visited", name="markNotificationAsVisited")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function markNotificationAsVisited(Request $request, NotificationService $notificationService){
-        $id = $request->request->get('id');
-        $notificationService->markNotificationAsVisited($id);
-
-        return new JsonResponse(array("success"=>true));
-    }
-
-    /**
-     * @Route("/api/notifications/seen", name="markNotificationAsSeen")
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function markNotificationAsSeen(Request $request, NotificationService $notificationService){
-        $user = $this->getUser();
-        $notificationService->markNotificationAsSeen($user);
-
-        return new JsonResponse(array("success"=>true));
-    }
-
-    /**
      * @Route("/api/terms/company", name="getCompanyTerms")
      */
     public function getCompanyTerms(Request $request, TermsService $termsService)

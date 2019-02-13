@@ -216,8 +216,11 @@ class NotificationService
 
     public function getNotifications(User $user){
         return $this->em->getRepository('AppBundle:Notification')->findBy(array(
-            "user" => $user
-        ), null, 10);
+            "user" => $user,
+            "visited" => false
+        ), array(
+            "createdAt" => "DESC"
+        ));
     }
 
 
