@@ -12,7 +12,7 @@ sell:
 notifications:
     general:
         message:
-            new: You have received a new message on %listingName%.
+            new: You have received a new message for %listingName%.
     seller:
         listing:
             approved: The listing %listingName% was published.
@@ -21,16 +21,16 @@ notifications:
             deactivated: The listing %listingName% was deactivated.
             sold: The listing %listingName% has sold out.
         bid:
-            received: You received a new bid on listing %listingName%.
-            accepted: '%userFullName% accepted a bid on listing %listingName%.'
-            closed: A new deal was closed on listing %listingName%.
+            received: You received a new bid for listing %listingName%.
+            accepted: '%userFullName% accepted a bid for listing %listingName%.'
+            closed: A new deal was closed for listing %listingName%.
     buyer:
         listing:
-            matcth: 'A new listing was published that matches your preferences: %listingName%'
+            match: 'A new listing was published that matches your preferences: %listingName%'
         bid:
-            placed: '%userFullName% placed a bid on %listingName%.'
-            declined: A bid on listing %listingName% was declined.
-            accepted: A bid on listing %listingName% was accepted.
-            closed: '%userFullName% closed a deal on listing %listingName%.'
+            placed: '%userFullName% placed a bid for %listingName%.'
+            declined: A bid for listing %listingName% was declined.
+            accepted: A bid for listing %listingName% was accepted.
+            closed: '%userFullName% closed a deal for listing %listingName%.'
 
 
