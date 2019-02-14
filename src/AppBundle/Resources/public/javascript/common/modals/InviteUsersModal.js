@@ -91,6 +91,9 @@ class InviteUsersModal extends Component {
         return <Modal isOpen={isOpen} className="modal-wrapper-invite" style={GenericModalStyle} onRequestClose={this.close}>
             <header className="modal-header">
                 <h3 className="modal-title">{this.context.t("INVITE_USERS_MODAL_TITLE")}</h3>
+                <h4 className={"modal-subtitle"}>
+                    {this.context.t("INVITE_USERS_MODAL_TITLE_EXPLANATION")}
+                </h4>
                 <i className="fa fa-times" onClick={this.close} />
             </header>
             <section className="modal-body">

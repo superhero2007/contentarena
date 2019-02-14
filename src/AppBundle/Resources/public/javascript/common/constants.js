@@ -35,6 +35,10 @@ export const API_URLS = {
     INVITE_USERS : "api/company/invite"
 };
 
+export const SITE_URLS = {
+    HOME_URL : "https://www.contentarena.com"
+};
+
 export const REGIONS_ENUMS = {
     "Algeria":"DZA",
     "Angola":"AGO",

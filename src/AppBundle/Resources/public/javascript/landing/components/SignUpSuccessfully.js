@@ -1,12 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from "prop-types";
+import {SITE_URLS} from "../../common/constants";
 
 class SignUpSuccessfully extends PureComponent {
     constructor (props) {
         super(props);
     };
 
-    handleLoginClick = () => this.props.history.push("/login");
+    handleLoginClick = () => this.props.history.push(SITE_URLS.HOME_URL);
 
     render() {
         return (
