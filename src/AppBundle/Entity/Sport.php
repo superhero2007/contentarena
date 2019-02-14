@@ -44,7 +44,7 @@ class Sport
      * @Groups({"listing", "commercial", "settings"})
      *
      */
-     private $shownInCreate;
+     private $shownInCreate = false;
 
     /**
      * @var boolean
@@ -52,7 +52,7 @@ class Sport
      * @Groups({"listing", "commercial", "settings"})
      *
      */
-    private $shownInWall;
+    private $shownInWall = false;
 
     /**
      * @var boolean
@@ -60,7 +60,7 @@ class Sport
      * @Groups({"listing", "commercial", "settings"})
      *
      */
-    private $topSport;
+    private $topSport = false;
 
 
     /**

@@ -1268,6 +1268,8 @@ class ContentService
             $name = ( isset($sportData->name) && $sportData->name != "" ) ? $sportData->name : $sportData->value;
             $sport->setName($name);
             $sport->setShownInCreate(false);
+            $sport->setShownInWall(false);
+            $sport->setTopSport(false);
             $this->em->persist($sport);
             sleep(1);
             $time = new \DateTime();
