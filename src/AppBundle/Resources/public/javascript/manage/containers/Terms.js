@@ -57,6 +57,7 @@ class Terms extends React.Component {
         terms[termIndex].items[termItemIndex].content = content;
         terms[termIndex].items[termItemIndex].edited = edited;
         this.setState({terms});
+        this.updateTerms();
     };
 
     onRemoveTerm = (termIndex, termItemIndex) => {
@@ -66,6 +67,7 @@ class Terms extends React.Component {
         terms[termIndex].items[termItemIndex].content = "";
         //terms[termIndex].items[termItemIndex].isEdited = false;
         this.setState({terms});
+        this.updateTerms();
     };
 
     restoreDefaultTerms = () => {
