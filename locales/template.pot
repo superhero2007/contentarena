@@ -514,6 +514,10 @@ msgid "INVITE_USERS_MODAL_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
+msgid "INVITE_USERS_MODAL_TITLE_EXPLANATION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
 msgid "INVITE_USERS_MODAL_SENT"
 msgstr ""
 
@@ -2107,6 +2111,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_INVITE_COLLEAGUES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_INVITE_COLLEAGUES_EXPLANATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
