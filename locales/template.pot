@@ -635,6 +635,54 @@ msgstr ""
 msgid "MESSAGES_SEND_BUTTON"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_HOME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LOGIN_BAR_PRIVACY_POLICY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LOGIN_BAR_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LOGIN_BAR_COOKIE_POLICY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LOGIN_BAR_FAQ"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_HOW_TO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_TEAM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_REFERENCES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_REGISTER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_CONTACT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_LOGIN"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
 msgid "RECOVER_PASSWORD_ERROR"
 msgstr ""
@@ -700,6 +748,7 @@ msgstr ""
 msgid "SIGN_IN_TO_CONTENT_ARENT"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/landing/components/SignInForm.js
 #: src/AppBundle/Resources/public/javascript/landing/components/SignInForm.js
 msgid "SIGN_IN_FROM_PUBLIC_LISTING_MESSAGE"
 msgstr ""
@@ -794,6 +843,30 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/SignUpSuccessfully.js
 msgid "LOGIN_SIGN_UP_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_SELL_BUY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_SPORTS_RIGHTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_EMAIL_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_REGISTER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LENDING_GET_IN_TOUCH"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_COMPANY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js

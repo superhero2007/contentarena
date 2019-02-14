@@ -16,10 +16,11 @@ export const LISTING_SORT_OPTIONS = {
 };
 
 export const LOGIN_VIEW_TYPE = {
+    LANDING: 'landing',
     LOGIN: 'login',
     RECOVER: 'recover',
     REVIEW: 'review',
-    REGISTER: 'register',
+    REGISTRATION: 'registration',
     REGISTERED: 'registered',
     RESET_PASSWORD: 'reset_password'
 };
@@ -29,6 +30,14 @@ export const SIGN_UP_FIELDS ={
     LAST_NAME: 'lastName',
     EMAIL: 'email',
     COMPANY: 'company'
+};
+
+export const LANDING_LINKS = {
+    PRIVACY: "https://contentarena.com/web/privacy-policy/",
+    TERMS: "https://contentarena.com/web/terms-of-use/",
+    FAQ: "https://contentarena.com/web/faq/",
+    COOKIE: "https://contentarena.com/web/cookie-policy/",
+    HOME: "https://contentarena.com/"
 };
 
 export const API_URLS = {

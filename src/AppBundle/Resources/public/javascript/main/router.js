@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import {updateProfile, loadUserData} from "./actions/userActions";
 import {getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries} from "./actions/commonActions";
 import {setLanguage} from "redux-i18n";
+import SignInUpWrapper from './../landing/containers/SignInUpWrapper';
 import LandingWrapper from './../landing/containers/LandingWrapper';
 import {setRefererData, setRefererEmail} from "../landing/actions/landingActions";
 
@@ -87,39 +88,6 @@ const HeaderRoute = ({ component: Component, ...rest }) => (
     />
 );
 
-
-class Landing extends React.Component {
-    render() {
-        const { from } = this.props.location.state || { from: { pathname: "/" } };
-
-        if (hosturl === "https://app.contentarena.com/") window.location = 'https://contentarena.com';
-
-        return (
-            <div>
-                <p>You must log in to view the page at {from.pathname}</p>
-                {/*<button onClick={this.login}>Log in</button>*/}
-                <a href={"/login"}>Log in</a>
-            </div>
-        );
-    }
-}
-
-class Logout extends React.Component {
-
-    logout = () => {
-        fakeAuth.signout(() => history.push("/"));
-    };
-
-    render() {
-        return (
-            <div>
-                <p>Are you sure you want to sign out?</p>
-                <button onClick={this.logout}>Yes, sign out</button>
-            </div>
-        );
-    }
-}
-
 class AuthRouter extends React.Component {
 
     constructor(props) {
@@ -154,11 +122,12 @@ class AuthRouter extends React.Component {
         const {user} = this.state;
 
         const SignUp = withRouter(({history}) =>
-            <LandingWrapper currentView={LOGIN_VIEW_TYPE.REGISTER} history={history} />);
+            <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.REGISTRATION} history={history} />);
         const SignIn = withRouter(({history}) =>
-            <LandingWrapper currentView={LOGIN_VIEW_TYPE.LOGIN} history={history} fakeAuth={fakeAuth} />);
+            <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.LOGIN} history={history} fakeAuth={fakeAuth} />);
         const ResetPassword = withRouter(({history, match}) =>
-            <LandingWrapper currentView={LOGIN_VIEW_TYPE.RESET_PASSWORD} history={history} match={match} />);
+            <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.RESET_PASSWORD} history={history} match={match} />);
+        const Landing = withRouter(({history}) => <LandingWrapper history={history} />);
 
         return (
             <Router>
@@ -192,7 +161,6 @@ class AuthRouter extends React.Component {
                         ))}
                     </div>
                     <Route path="/landing" component={Landing} />
-                    <Route path="/logout" component={Logout} />
                     <Route path="/reset-password/:resetToken" component={ResetPassword} />
                     <Route path="/login" component={SignIn} />
                     <Route path="/registration" component={SignUp} />
