@@ -170,9 +170,9 @@ class ContentListing extends Component{
 
         return (
             <a href={listingHref} className="listing-list-view">
-                <div className={"left"}  >
+                <div className="left">
                     {featured && (
-                        <div className={'featured-badge'}>
+                        <div className='featured-badge'>
                             <span>{this.context.t('FEATURED_LISTING_BADGE_TEXT')}</span>
                         </div>
                     )}

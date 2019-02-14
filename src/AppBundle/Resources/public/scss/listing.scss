@@ -26,6 +26,7 @@
   }
   .left {
     flex: 220px 0 0;
+    position: relative;
     .image {
       background-color: #F7F7F7;
       margin-bottom: 5px;
@@ -398,6 +399,7 @@
     .left {
       flex: 1;
       font-size: 14px;
+      position: relative;
 
       .legend-wrapper {
         margin-bottom: 10px;
