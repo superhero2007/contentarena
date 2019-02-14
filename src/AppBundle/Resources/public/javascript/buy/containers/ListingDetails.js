@@ -394,6 +394,13 @@ class ListingDetails extends React.Component {
                 )}
                 <div className="listing-details-content">
                     <div className={"left"}  >
+
+                        {content.featured && (
+                            <div className='featured-badge'>
+                                <span>{this.context.t('FEATURED_LISTING_BADGE_TEXT')}</span>
+                            </div>
+                        )}
+
                         {getListingImage(content)}
 
                         <ContentListingEventDetails {...this.props.listing} showSeasonDuration={true} showFullSeasons={true}/>

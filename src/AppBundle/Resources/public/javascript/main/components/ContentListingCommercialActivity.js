@@ -78,6 +78,7 @@ class ContentListingCommercialActivity extends ContentListing {
             bidsOpen,
             salesPackages,
             rightsPackage,
+            featured,
             customId,
             company,
             id,
@@ -96,6 +97,11 @@ class ContentListingCommercialActivity extends ContentListing {
             <div style={{display : 'flex', flexDirection: 'column', marginBottom: 20}}>
                 <div className="listing-list-view commercial-activity">
                     <div className={"left"} onClick={this.onSelect}>
+                        {featured && (
+                            <div className='featured-badge'>
+                                <span>{this.context.t('FEATURED_LISTING_BADGE_TEXT')}</span>
+                            </div>
+                        )}
                         {getListingImage(this.props)}
                     </div>
                     <div className={"right"}>

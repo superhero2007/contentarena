@@ -287,7 +287,7 @@ class Content
     /**
      * @var boolean
      * @ORM\Column(name="featured", type="boolean", options={"default":"0"})
-     * @Groups({"listing"})
+     * @Groups({"listing", "commercial"})
      *
      */
     private $featured = false;
