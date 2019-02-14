@@ -82,7 +82,7 @@ class InviteUsers extends React.Component {
                 )}
 
 
-                <InviteUserForm onUpdate={this.onUpdateUsers} disabled={loading}/>
+                <InviteUserForm onUpdate={this.onUpdateUsers} disabled={loading} key={0}/>
                 <button onClick={this.inviteUser} className="yellow-button" disabled={this.isButtonDisabled()}>
                     {this.context.t("SETTINGS_BUTTON_SEND_INVITE")} <Loader loading={loading} xSmall={true}/>
                 </button>

@@ -38,7 +38,7 @@ export const greyMinusIcon = assetsBaseDir + "app/images/rights/non-included.svg
 export const tournamentIcon = <img src={assetsBaseDir + "app/images/listing/trophy.svg"} alt=""/>;
 export const seasonReleaseIcon = <img src={assetsBaseDir + "app/images/listing/calendar.svg"} alt=""/>;
 export const sportIcon = <img src={assetsBaseDir + "app/images/listing/tennis-ball.svg"} alt=""/>;
-export const fixturesEpisodeIcon = <i className="fa fa-play-circle" aria-hidden="true" style={{color: '#2aaaec', fontSize: 18}}/>;
+export const fixturesEpisodeIcon = <i className="fa fa-play-circle" aria-hidden="true" style={{color: '#2aaaec', fontSize: 22}}/>;
 export const sportCategoryIcon = <img src={assetsBaseDir + "app/images/listing/flag.svg"} alt=""/>;
 export const eventTimeIcon = <img src={assetsBaseDir + "app/images/listing/calendar-clock.svg"} alt=""/>;
 export const coinIcon = <img src={assetsBaseDir + "app/images/listing/coin.svg"} alt=""/>;
