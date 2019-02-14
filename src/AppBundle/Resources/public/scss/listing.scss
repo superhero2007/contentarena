@@ -337,19 +337,18 @@
 
 .listing-attributes {
   .event {
-    display: inline;
+    display: inline-flex;
     margin-right: 15px;
     .event-icon {
-      display: inline;
+      display: inline-flex;
       margin-right: 5px;
-      vertical-align: 2px;
-
+      align-items: center;
       .fa {
-        vertical-align: middle;
       }
     }
     .event-text {
-      display: inline;
+      display: inline-flex;
+      align-items: center;
       span {
         margin-right: 5px;
         &:last-child {

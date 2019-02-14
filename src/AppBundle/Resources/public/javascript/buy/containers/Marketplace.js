@@ -179,7 +179,7 @@ class Marketplace extends Component {
         if(exclusiveFromStorage || filter.exclusive) {
             response.exclusive = exclusiveFromStorage || filter.exclusive;
         }
-        if (sportsFromStorage || first(sportsFromProps.name)) {
+        if (sportsFromStorage || sportsFromProps && first(sportsFromProps.name)) {
             response.sports = (sportsFromStorage || sportsFromProps).filter(s => s.name || s.value);
         }
         if(allCountriesFromStorage || filter.includeAllCountries) {
@@ -272,7 +272,7 @@ class Marketplace extends Component {
                 {!showDetails && (<Fragment>
                     <div className="buy-container-left">
                         <EventFilter
-                            onFilter={this.filter}/>
+                            onFilter={this.filterByRoute}/>
                         <RightsFilter
                             onFilter={this.filterByRoute}
                             rightsPackage={defaultRightsPackage}

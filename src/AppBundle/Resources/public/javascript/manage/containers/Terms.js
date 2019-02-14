@@ -42,6 +42,7 @@ class Terms extends React.Component {
         definitions[index].name = name;
         definitions[index].edited = edited;
         this.setState({definitions});
+        this.updateTerms();
     };
 
     onRemoveDefinition = (index) => {
@@ -49,6 +50,7 @@ class Terms extends React.Component {
         let definitions = this.state.definitions;
         definitions[index].removed = true;
         this.setState({definitions});
+        this.updateTerms();
     };
 
     onUpdateTermItem = (termIndex, termItemIndex, content, edited) => {
@@ -57,6 +59,7 @@ class Terms extends React.Component {
         terms[termIndex].items[termItemIndex].content = content;
         terms[termIndex].items[termItemIndex].edited = edited;
         this.setState({terms});
+        this.updateTerms();
     };
 
     onRemoveTerm = (termIndex, termItemIndex) => {
@@ -66,6 +69,7 @@ class Terms extends React.Component {
         terms[termIndex].items[termItemIndex].content = "";
         //terms[termIndex].items[termItemIndex].isEdited = false;
         this.setState({terms});
+        this.updateTerms();
     };
 
     restoreDefaultTerms = () => {
