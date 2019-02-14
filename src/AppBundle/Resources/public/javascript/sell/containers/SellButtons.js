@@ -134,6 +134,11 @@ class SellButtons extends Component {
     };
 
     checkSeasonsValidity = (seasons) => {
+
+        const { sports, customTournament} = this.props;
+
+        if ( sports.some( sport => sport.custom ) && ( customTournament === null ||  customTournament === "") ) return true;
+
         return seasons.every((season) => {
             return (season.startDate || season.customStartDate) && (season.endDate || season.customEndDate);
         });

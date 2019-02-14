@@ -276,7 +276,9 @@ class Marketplace extends Component {
                         <RightsFilter
                             onFilter={this.filterByRoute}
                             rightsPackage={defaultRightsPackage}
-                            timeEventActive={this.isEventTimeActive()} />
+                            timeEventActive={this.isEventTimeActive()}
+
+                        />
                     </div>
                     <div className="buy-container-right">
 

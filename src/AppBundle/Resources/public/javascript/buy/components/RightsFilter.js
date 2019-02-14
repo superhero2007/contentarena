@@ -94,6 +94,7 @@ class RightsFilter extends React.Component {
     onClearFilter = () => {
         localStorage.clear();
         this.setState({eventDateFrom: '', eventDateTo: ''}, this.props.clearFilter);
+        this.onApplyFilter();
     };
 
     onApplyFilter = () => {

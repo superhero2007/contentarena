@@ -239,6 +239,9 @@ $icon-color: #00769A;
 .watch-list-container {
   .listing-list-view {
     cursor: default;
+    .left{
+      position: relative;
+    }
 
     .ca-title {
       cursor: default;

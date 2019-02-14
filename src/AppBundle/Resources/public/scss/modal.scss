@@ -130,6 +130,21 @@
 .ReactModal__Content.modal-wrapper-invite{
   @extend .modal-wrapper;
   width: 900px;
+  .modal-header{
+    flex-direction: column;
+    position: relative;
+    .modal-subtitle {
+      color: $font-color-6;
+      margin: 10px 0 0;
+      font-size: 13px;
+      font-weight: 400;
+    }
+    i{
+      position: absolute;
+      right: 20px;
+      top:15px
+    }
+  }
   .modal-body{
     flex-direction: column;
     .row{

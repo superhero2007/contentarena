@@ -302,9 +302,12 @@ class Settings extends React.Component {
                     {loadingCompanyUsers && <Loader loading={true} small/>}
                 </div>
                 <div className={"setting"}>
-                    <div className={"title"}>
+                    <div className={"title"} style={{marginBottom: 0}}>
                         {this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES")}
                     </div>
+                    <h4 className={"subtitle"}>
+                        {this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES_EXPLANATION")}
+                    </h4>
                     <InviteUsers onInvite={this.loadCompanyUsers} />
                 </div>
                 <div className={"setting"}>

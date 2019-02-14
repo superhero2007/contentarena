@@ -32,13 +32,13 @@ trait ControllerHelper
      *
      * @return string JSON string
      */
-    public function serialize($data)
-    {
-        $context = new SerializationContext();
-        $context->setSerializeNull(true);
+    public function serialize($data, $context = null){
 
-        return $this->get('jms_serializer')
-            ->serialize($data, 'json', $context);
+        if (!isset($context) ) $context = SerializationContext::create()->enableMaxDepthChecks();
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        return $serializer->serialize($data, 'json',$context);
+
     }
 
     /**
