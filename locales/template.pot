@@ -684,6 +684,7 @@ msgid "LOGIN_BAR_LOGIN"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
+#: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
 msgid "RECOVER_PASSWORD_ERROR"
 msgstr ""
 
@@ -887,6 +888,12 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
 msgid "LOGIN_BAR_FAQ"
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LENDING_GET_IN_TOUCH"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_COMPANY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js

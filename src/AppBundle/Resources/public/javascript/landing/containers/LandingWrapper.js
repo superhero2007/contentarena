@@ -4,7 +4,6 @@ import LandingHeader from './../components/LandingHeader';
 import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
 import { contentWhiteLogo } from "./../../main/components/Icons";
 
-
 class LandingWrapper extends Component {
     constructor(props) {
         super(props);

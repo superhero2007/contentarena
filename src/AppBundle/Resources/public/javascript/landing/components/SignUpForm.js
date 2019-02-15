@@ -168,12 +168,4 @@ const mapStateToProps = ({landing}) => {
     return landing;
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SignUpForm);
+export default connect(mapStateToProps, null)(SignUpForm);

@@ -29,16 +29,11 @@ class LandingWrapper extends Component {
 
                 <section className="action-form">
                     <Component
-                        fakeAuth={this.props.fakeAuth}
                         onViewUpdate={this.handleUpdateView}
                         history={this.props.history}
                         match={this.props.match}
                     />
                 </section>
-
-                <main className="landing-main">
-
-                </main>
             </div>
         );
     }
