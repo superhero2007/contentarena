@@ -60,36 +60,6 @@ class DefaultController extends BaseController
                 return $this->redirect("/registration?email=". $email);
             }
         }
-
-    }
-
-    /**
-     * @Route("/public/listing/{customId}", name="publicListing")
-     * @param Request $request
-     * @param UserService $userService
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function publicListing(Request $request, UserService $userService)
-    {
-        $user = $this->getUser();
-        $email = $request->get("email");
-        $customId = $request->get("customId");
-
-        if ( $email == null || $customId == null ) throw $this->createNotFoundException("That page doesn't exists, sorry!");
-
-        if ( $user != null ){
-            return $this->redirect("/listing/". $customId);
-        } else {
-
-            $user = $userService->getUserByEmail($email);
-
-            if ( $user != null ) {
-                return $this->redirect("/login?email=". $email."&listingId=".$customId);
-            } else {
-                return $this->redirect("/registration?email=". $email);
-            }
-        }
-
     }
 
     /**

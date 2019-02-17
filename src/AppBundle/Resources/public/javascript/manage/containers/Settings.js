@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import cloneDeep from "lodash/cloneDeep";
-import CountrySelector from '../../main/components/CountrySelector'
-import {blueCheckIcon, cancelIcon, Spinner} from "../../main/components/Icons";
+import CountrySelector from '../../main/components/CountrySelector';
+import PasswordValidationBox from '../../main/components/PasswordValidationBox';
 import {PropTypes} from "prop-types";
 import Loader from '../../common/components/Loader';
 import InviteUsers from "./InviteUsers";
@@ -20,7 +20,10 @@ class Settings extends React.Component {
             editPersonalInfo: false,
             editCompanyInfo : false,
             companyUsers : [],
-            user : {}
+            user : {},
+            password: "",
+            passwordCheck: "",
+            isPassValid: false
         };
     }
 
@@ -82,34 +85,12 @@ class Settings extends React.Component {
         this.setState({user});
     };
 
-    validate = (pass) => {
-        return {
-            length : ( pass.length >= 8 ),
-            digit : /\d/.test(pass),
-            upper : /[A-Z]/.test(pass),
-            special : /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass),
-        };
-    };
-
-    invalidPassword = () => {
-        const { oldPassword, password, passwordCheck } = this.state;
-
-        if (!oldPassword || !password ||  !passwordCheck ) return true;
-
-        let valid = this.validate(password);
-
-        return  password !== passwordCheck ||
-                !valid.length ||
-                !valid.digit ||
-                !valid.upper ||
-                !valid.special;
-    };
+    handlePasswordValid = (isValid) => this.setState({ isPassValid: isValid });
 
     render () {
-
         const {history, common} = this.props;
 
-        const { editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers,
+        const { editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers, isPassValid,
             updatingCompany, updatingUser, updatingPassword, password, passwordCheck, passwordUpdated } = this.state;
         let user = this.state.user;
 
@@ -433,7 +414,7 @@ class Settings extends React.Component {
 
                             {!updatingPassword && !passwordUpdated &&
                             <button onClick={this.updatePassword}
-                                    disabled={this.invalidPassword()}
+                                    disabled={!isPassValid}
                                     className={"yellow-button"}>
                                 {this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
                             </button>}
@@ -486,33 +467,12 @@ class Settings extends React.Component {
                         </div>
                     </div>
                 </div>
-                {password && <div className={"password-validation"}>
-                    <div>
-                        {this.validate(password).length && <img src={blueCheckIcon}/>}
-                        {!this.validate(password).length&& <img src={cancelIcon}/>}
-                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
-                    </div>
-                    <div>
-                        {this.validate(password).upper && <img src={blueCheckIcon}/>}
-                        {!this.validate(password).upper&& <img src={cancelIcon}/>}
-                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
-                    </div>
-                    <div>
-                        {this.validate(password).digit && <img src={blueCheckIcon}/>}
-                        {!this.validate(password).digit&& <img src={cancelIcon}/>}
-                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
-                    </div>
-                    <div>
-                        {this.validate(password).special && <img src={blueCheckIcon}/>}
-                        {!this.validate(password).special&& <img src={cancelIcon}/>}
-                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
-                    </div>
-                    {passwordCheck && <div>
-                        {passwordCheck === password && <img src={blueCheckIcon}/>}
-                        {passwordCheck !== password && <img src={cancelIcon}/>}
-                        {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
-                    </div>}
-                </div>}
+                {password &&
+                    <PasswordValidationBox
+                        password={password}
+                        passwordCheck={passwordCheck}
+                        onPasswordValid={this.handlePasswordValid} />
+                }
 
                 <div style={{display: 'flex', marginBottom: 10, justifyContent: 'center', fontSize: 14}}
                      className="terms-and-condition-wrapper">

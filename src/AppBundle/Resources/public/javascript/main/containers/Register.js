@@ -1,10 +1,9 @@
 import React from 'react';
-
 import { connect } from "react-redux";
 import {updateProfile} from "../../main/actions/userActions";
 import CountrySelector from "../components/CountrySelector";
+import PasswordValidationBox from "../components/PasswordValidationBox";
 import {Redirect} from "react-router-dom";
-import {blueCheckIcon, cancelIcon, editIcon, Spinner} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import GeneralTerms from "../components/GeneralTerms";
 import PrivacyPolicy from "../components/PrivacyPolicy";
@@ -51,7 +50,10 @@ class Register extends React.Component {
             updatingUser : false,
             editCompanyInfo : false,
             user : {},
-            step: "welcome"
+            step: "welcome",
+            password: "",
+            passwordCheck: "",
+            isPassValid: false
         };
     }
 
@@ -133,28 +135,7 @@ class Register extends React.Component {
         })
     };
 
-    validate = (pass) => {
-        return {
-            length : ( pass.length >= 8 ),
-            digit : /\d/.test(pass),
-            upper : /[A-Z]/.test(pass),
-            special : /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass),
-        };
-    };
-
-    invalidPassword = () => {
-        const { password, passwordCheck } = this.state;
-
-        if (!password ||  !passwordCheck ) return true;
-
-        let valid = this.validate(password);
-
-        return  password !== passwordCheck ||
-            !valid.length ||
-            !valid.digit ||
-            !valid.upper ||
-            !valid.special;
-    };
+    handlePasswordValid = (isValid) => this.setState({ isPassValid: isValid });
 
     invalidUser = () => {
         let user = this.state.user;
@@ -241,9 +222,18 @@ class Register extends React.Component {
     };
 
     render () {
-
         const {match, location, common} = this.props;
-        const { loading, updatingUser, password, updated, terms, privacy, passwordCheck, step } = this.state;
+        const {
+            loading,
+            updatingUser,
+            password,
+            passwordCheck,
+            isPassValid,
+            updated,
+            terms,
+            privacy,
+            step
+        } = this.state;
 
         let user = this.state.user;
         let activationCode = match.params.activationCode;
@@ -260,9 +250,12 @@ class Register extends React.Component {
             <Loader loading={true}/>
         </div>;
 
-        if (!user) return <div className={"settings-container"}>
-            {this.context.t("REGISTER_ACTIVATION_CODE_NOT_FOUND")}
-        </div>;
+        if (!user) return <Redirect
+            to={{
+                pathname: "/login",
+                state: {from: location}
+            }}
+        />;
 
 
         if ( step === "welcome" ) return <div className="settings-container settings-container-welcome">
@@ -555,34 +548,12 @@ class Register extends React.Component {
                         </div>
                     </div>
 
-                    {password && <div className={"password-validation"}>
-                        <div>
-                            {this.validate(password).length && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).length&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
-                        </div>
-                        <div>
-                            {this.validate(password).upper && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).upper&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
-                        </div>
-                        <div>
-                            {this.validate(password).digit && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).digit&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
-                        </div>
-                        <div>
-                            {this.validate(password).special && <img src={blueCheckIcon}/>}
-                            {!this.validate(password).special&& <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
-                        </div>
-                        {passwordCheck && <div>
-                            {passwordCheck === password && <img src={blueCheckIcon}/>}
-                            {passwordCheck !== password && <img src={cancelIcon}/>}
-                            {this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
-                        </div>}
-
-                    </div>}
+                    {password &&
+                        <PasswordValidationBox
+                            password={password}
+                            passwordCheck={passwordCheck}
+                            onPasswordValid={this.handlePasswordValid}
+                        />}
                 </div>
 
                 <div className="setting" style={{margin : '20px auto 0'}}>
@@ -615,7 +586,7 @@ class Register extends React.Component {
                     <Loader loading={updatingUser} small>
                         {!updatingUser && !updated && (
                             <button onClick={this.updateInfo}
-                                    disabled={this.invalidPassword() || !privacy || !terms}
+                                    disabled={!isPassValid || !privacy || !terms}
                                     className={"standard-button"}
                                     style={{maxWidth: 300, lineHeight: "22px"}}>
                                 {this.context.t("REGISTER_SUCCESS_MESSAGE")}

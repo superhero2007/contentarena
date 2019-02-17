@@ -317,6 +317,28 @@
 
     .reset-wrapper h3{ text-align: left; }
 
+    .password-validation {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 10px solid #CCCCCC;
+      padding: 20px;
+      margin-bottom: 20px;
+
+      div {
+        width: 230px;
+        margin: 0 auto;
+        text-align: left;
+        padding: 6px 0;
+
+        img {
+          width: 23px;
+          height: 23px;
+          margin-right: 10px;
+        }
+      }
+    }
+
     .done-icon-wrapper{
       margin-bottom: -10px;
 

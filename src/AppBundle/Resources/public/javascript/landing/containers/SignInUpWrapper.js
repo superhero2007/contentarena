@@ -53,13 +53,12 @@ LandingWrapper.defaultProps = {
         [LOGIN_VIEW_TYPE.RESET_PASSWORD]: ResetPassword,
     },
     minHeight: {
-        [LOGIN_VIEW_TYPE.LOGIN]: 770,
+        [LOGIN_VIEW_TYPE.LOGIN]: 800,
         [LOGIN_VIEW_TYPE.RECOVER]: 500,
         [LOGIN_VIEW_TYPE.REVIEW]: 500,
         [LOGIN_VIEW_TYPE.REGISTRATION]: 900,
         [LOGIN_VIEW_TYPE.REGISTERED]: 500,
-        [LOGIN_VIEW_TYPE.RESET_PASSWORD]: 550,
-        [LOGIN_VIEW_TYPE.LANDING]: 0
+        [LOGIN_VIEW_TYPE.RESET_PASSWORD]: 800,
     }
 };
 

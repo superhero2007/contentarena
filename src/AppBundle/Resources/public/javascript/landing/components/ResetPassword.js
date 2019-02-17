@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Loader from "../../common/components/Loader";
+import PasswordValidationBox from "./../../main/components/PasswordValidationBox";
 import { showSuccessResetPass } from "./../actions/landingActions";
 import { LOGIN_VIEW_TYPE } from "@constants";
 
@@ -11,27 +12,30 @@ class ResetPassword extends PureComponent {
 
         this.state = {
             error: '',
-            resetToken: props.match.params.resetToken,
+            resetToken: '',
+            password: '',
+            passwordCheck: '',
             isLoading: false
         };
     };
 
     componentDidMount() {
-        if (!this.state.resetToken) {
+        const { params } = this.props.match;
+
+        if (params && params.resetToken) {
+            this.setState({resetToken: params.resetToken});
+            this.newPass.focus();
+        } else{
             this.props.history.push('/login');
         }
-        this.newPass.focus();
     };
 
-    handleChangePassword = () => {
-        if(this.state.isLoading) return;
-        if(this.newPass.value !== this.repeatPass.value || !this.newPass.value) {
-            this.setState({ error: this.context.t("RESET_PASSWORD_ERROR") });
-            return;
-        }
+    handleSubmitChangePassword = () => {
+        const { isLoading, password, resetToken } = this.state;
+        if(isLoading) return;
 
         this.setState({ isLoading: true});
-        ContentArena.Api.resetPassword(this.newPass.value, this.state.resetToken)
+        ContentArena.Api.resetPassword(password, resetToken)
             .then(({data}) => {
                 if(data.success) {
                     this.props.showSuccessResetPass();
@@ -46,13 +50,28 @@ class ResetPassword extends PureComponent {
 
     handleEnterPress = (event) => {
         if(event.key === 'Enter') {
-            this.handleChangePassword();
+            this.handleSubmitChangePassword();
         }
     };
 
-    handleChange = () => this.setState({error: ''});
+    handleChangePassword = (e) => {
+        this.setState({
+            error: '',
+            password: e.target.value
+        });
+    };
+
+    handleChangePasswordCheck = (e) => {
+        this.setState({
+            error: '',
+            passwordCheck: e.target.value
+        });
+    };
+
+    handlePasswordValid = (isValid) => this.setState({ isPassValid: isValid });
 
     render() {
+        const { password, passwordCheck, isPassValid } = this.state;
         return (
             <section className="reset-wrapper" onKeyPress={this.handleEnterPress}>
                 <h3>{this.context.t("RESET_PASSWORD_TITLE")}</h3>
@@ -64,24 +83,28 @@ class ResetPassword extends PureComponent {
                         ref={(password) => this.newPass = password}
                         type="password"
                         id="password"
-                        onChange={this.handleChange}
+                        onChange={e => this.handleChangePassword(e)}
                         required="required" />
                 </div>
                 <div className="repeat-password">
                     <label htmlFor="repeat-password">{this.context.t("RESET_REPEAT_PASSWORD")}</label>
                     <input
-                        ref={(password) => this.repeatPass = password}
                         type="password"
                         id="repeat-password"
-                        onChange={this.handleChange}
+                        onChange={e => this.handleChangePasswordCheck(e)}
                         required="required" />
                 </div>
+
+                <PasswordValidationBox
+                    password={password}
+                    passwordCheck={passwordCheck}
+                    onPasswordValid={this.handlePasswordValid} />
 
                 <span className="note">
                     <b>**Note: </b>{this.context.t("RESET_PASSWORD_NOTE")}
                 </span>
 
-                <button className="yellow-btn" onClick={this.handleChangePassword}>
+                <button className="yellow-btn" onClick={this.handleSubmitChangePassword} disabled={!isPassValid}>
                     {this.context.t("RESET_PASSWORD_BUTTON")}
                     {this.state.isLoading && <Loader loading={true} xSmall /> }
                 </button>

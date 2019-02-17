@@ -34,21 +34,9 @@ class PrivateRoute extends React.Component {
         return <Route
             {...rest}
             render={props => {
-
-                this.updateProfile();
-
-                return props.match.path === "/" ? (
-                    <Redirect
-                        to={{
-                            pathname: "/marketplace",
-                            state: {from: props.location}
-                        }}
-                    />
-                ) : (
-                    Component &&
-                    <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search}/>
-                )
-            }
+                    this.updateProfile();
+                    return <Component {...props} {...rest} key={(updateByPath) ? props.location.pathname : props.location.search} />
+                }
             }
         />
     }
