@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
 use AppBundle\Service\UserService;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -17,11 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use Gettext\Translations;
-
-
 
 class DefaultController extends BaseController
 {
@@ -68,9 +63,17 @@ class DefaultController extends BaseController
      *     "/{reactRouting}",
      *     requirements={"reactRouting"="terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage", defaults={"reactRouting": null})
+     *
      */
     public function indexAction(Request $request)
     {
+
+        $ua = htmlentities($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8');
+        if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
+            // do stuff for IE
+            return $this->render('browser.unsupported.html.twig');
+        }
+
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
