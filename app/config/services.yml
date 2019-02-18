@@ -108,3 +108,9 @@ services:
         arguments: ['@AppBundle\Service\ContentService','@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container', '@AppBundle\Service\NotificationService']
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    browser_unsupported.listener:
+          class: AppBundle\EventListener\BrowserUnsupportedExceptionListener
+          tags:
+              - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+          arguments: [ '@router', '@service_container' ]

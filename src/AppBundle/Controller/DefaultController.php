@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
+use AppBundle\Exception\BrowserNotSupportedException;
+use AppBundle\Exception\BrowserUnsupportedException;
 use AppBundle\Service\UserService;
 use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,6 +29,14 @@ class DefaultController extends BaseController
     public function homeAction(Request $request)
     {
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+    }
+
+    /**
+     * @Route("/unsupported", name="unsupported")
+     */
+    public function unsupportedAction()
+    {
+        return $this->render('browser.unsupported.html.twig');
     }
 
     /**
@@ -66,13 +76,6 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
-
-        $ua = htmlentities($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8');
-        if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
-            // do stuff for IE
-            return $this->render('browser.unsupported.html.twig');
-        }
-
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
