@@ -47,8 +47,6 @@ class SignInForm extends PureComponent {
         ContentArena.Api.signInUser(this.name.value, this.pass.value)
             .then(({data}) => {
                 if(data.success) {
-                    this.props.fakeAuth.authenticate(() => {});
-
                     if ( refererEmail !== null && refererEmail !== "" && refererListingId !== null && refererListingId !== ""){
                         window.location.href = 'listing/' + refererListingId;
                     } else{

@@ -55,7 +55,6 @@ class DefaultController extends BaseController
                 return $this->redirect("/registration?email=". $email);
             }
         }
-
     }
 
     /**

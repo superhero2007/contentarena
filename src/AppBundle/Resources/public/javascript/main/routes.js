@@ -13,12 +13,26 @@ import Register from "./containers/Register";
 import PublicHeaderBar from "./components/PulbicHeaderBar";
 import Preferences from "../manage/containers/Preferences";
 import Terms from "../manage/containers/Terms";
+import SignInUpWrapper from './../landing/containers/SignInUpWrapper';
+import LandingWrapper from './../landing/containers/LandingWrapper';
+
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { LOGIN_VIEW_TYPE } from "@constants";
+
+const SignUp = withRouter(({history}) =>
+    <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.REGISTRATION} history={history} />);
+const SignIn = withRouter(({history}) =>
+    <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.LOGIN} history={history} />);
+const ResetPassword = withRouter(({history, match}) =>
+    <SignInUpWrapper currentView={LOGIN_VIEW_TYPE.RESET_PASSWORD} history={history} match={match} />);
+const Landing = withRouter(({history}) => <LandingWrapper history={history} />);
 
 export const routes = [
     {
         path: "/",
         exact: true,
-        main: Marketplace
+        main: Landing
     },
     {
         path: "/marketplace",
@@ -26,6 +40,25 @@ export const routes = [
         header: HeaderBar,
         main: Marketplace,
         profile : "BUYER"
+    },
+    {
+        path: "/landing",
+        exact: true,
+        main: Landing,
+    },
+    {
+        path: "/reset-password/:resetToken",
+        main: ResetPassword,
+    },
+    {
+        path: "/login",
+        exact: true,
+        main: SignIn,
+    },
+    {
+        path: "/registration",
+        exact: true,
+        main: SignUp,
     },
     {
         path: "/test",
@@ -38,21 +71,18 @@ export const routes = [
         exact: true,
         header: PublicHeaderBar,
         main: Register,
-
     },
     {
         path: "/register/:activationCode",
         exact: true,
         header: PublicHeaderBar,
         main: Register,
-        isPublic : true
     },
     {
         path: "/register/:activationCode/:step?",
         updateByPath: true,
         header: PublicHeaderBar,
-        main: Register,
-        isPublic : true
+        main: Register
     },
     {
         path: "/marketplace/filter/:filterName/:filterValue?",
