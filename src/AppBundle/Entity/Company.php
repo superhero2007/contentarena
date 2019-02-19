@@ -353,6 +353,22 @@ class Company
     }
 
     /**
+     * @return Collection|User[]
+     */
+    public function getActiveUsers()
+    {
+
+        return $this->users->filter(
+            function($entry) {
+                /* @var User $entry */
+
+                //TODO: Replace user status for an enum
+                return $entry->getStatus() !== null && $entry->getStatus()->getName() === "Active";
+            }
+        );
+    }
+
+    /**
      * @param mixed $users
      */
     public function setUsers($users)
