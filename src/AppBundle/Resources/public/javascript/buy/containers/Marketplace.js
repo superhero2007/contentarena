@@ -302,13 +302,13 @@ class Marketplace extends Component {
                                     <RightsLegend />
                                 </div>
                             </div>
-                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.TABLE && (
+                            {listings.length > 0 && filter.listType === CONTENT_LISTING_VIEW.TABLE && (
                                 <ContentListingTable
                                     listings={listings}
                                     history={history}
                                 />
                             )}
-                            {listings.length > 0 && listingView === CONTENT_LISTING_VIEW.LIST && sortedListings.map(listing => {
+                            {listings.length > 0 && filter.listType === CONTENT_LISTING_VIEW.LIST && sortedListings.map(listing => {
                                 return (
                                     <ContentListing
                                         onSelect={() => this.goToListing(listing.customId)}
