@@ -133,7 +133,7 @@ class InviteUsersModal extends Component {
                         onClick={this.inviteUsers}
                     >
 
-                        {this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")} <Loader loading={loading} xSmall={true}/>
+                        {this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")} <Loader loading={loading} xSmall={true} />
 
                     </button>
                 </React.Fragment>)}

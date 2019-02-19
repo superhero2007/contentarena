@@ -36,6 +36,10 @@ class HeaderBar extends  React.Component {
         }
     }
 
+    isMarketplaceMatch = (url) => {
+        return url === "/marketplace" || url === "/marketplace/filter/multi"
+    };
+
     render(){
         const { tab, profile, match, common } = this.props;
         const { inviteModalOpen } = this.state;
@@ -52,9 +56,7 @@ class HeaderBar extends  React.Component {
                     </div>
 
                     {profile === "BUYER" && (
-                        <HeaderBarTab
-                            match={match.url === "/marketplace"}
-                            route={"/marketplace"}
+                        <HeaderBarTab match={this.isMarketplaceMatch(match.url)} route={"/marketplace"}
                         >
                             {this.context.t("HEADER_LINK_MARKETPLACE")}
                         </HeaderBarTab>

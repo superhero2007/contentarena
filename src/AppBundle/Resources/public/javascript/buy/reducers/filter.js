@@ -1,3 +1,4 @@
+import { CONTENT_LISTING_VIEW } from "@constants";
 export const filterTypes= {
     ADD_RIGHT:'ADD_RIGHT',
     REMOVE_RIGHT : 'REMOVE_RIGHT',
@@ -11,6 +12,7 @@ export const filterTypes= {
     UPDATE_MANY : 'UPDATE_MANY',
     UPDATE_FILTERS_CONFIG: "UPDATE_ALL",
     UPDATE_EVENT_DATE_FROM_TO: "UPDATE_FROM_TO",
+    UPDATE_LIST_VIEW: "UPDATE_LIST_VIEW"
 };
 
 const defaultFilter = {
@@ -25,7 +27,8 @@ const defaultFilter = {
     event : "",
     forceUpdate : true,
     eventDateFrom: "",
-    eventDateTo: ""
+    eventDateTo: "",
+    listType: CONTENT_LISTING_VIEW.LIST
 };
 
 export const filter = (state = defaultFilter, action) => {
@@ -66,6 +69,8 @@ export const filter = (state = defaultFilter, action) => {
             });
         case filterTypes.UPDATE_FILTERS_CONFIG:
             return Object.assign({}, state, action.filters);
+        case filterTypes.UPDATE_LIST_VIEW:
+            return Object.assign({}, state, { listType: action.listType });
         case filterTypes.UPDATE_EVENT:
             return Object.assign({}, state, {
                 event: action.event

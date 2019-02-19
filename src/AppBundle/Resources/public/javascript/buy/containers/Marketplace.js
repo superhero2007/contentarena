@@ -9,7 +9,7 @@ import ContentListingTable from '../../main/components/ContentListingTable';
 import ListingDetails from './ListingDetails';
 import {
     addRight, clearUpdateFilter, removeRight, updateCountries, updateExclusive,
-    updateMany
+    updateMany, updateListingView
 } from "../actions/filterActions";
 import { CONTENT_LISTING_VIEW, LISTING_SORT_OPTIONS, SERVER_DATE_TIME_FORMAT } from "@constants";
 import {updateEvent, updateSport} from "../actions/filterActions";
@@ -42,7 +42,6 @@ class Marketplace extends Component {
             profile : props.user.profile,
             errorMessage: '',
             totalItems: 1,
-            listingView: CONTENT_LISTING_VIEW.LIST,
             sortBy: LISTING_SORT_OPTIONS.PUBLISH_DATE,
         };
     }
@@ -227,7 +226,7 @@ class Marketplace extends Component {
     };
 
     setListingViewType = (type) => {
-        this.setState({listingView: type});
+        this.props.updateListingView(type);
     };
 
     render () {
@@ -248,7 +247,6 @@ class Marketplace extends Component {
             sortSalesPackages,
             profile,
             errorMessage,
-            listingView,
             defaultRightsPackage,
             parsedFilter
         } = this.state;
@@ -287,12 +285,12 @@ class Marketplace extends Component {
                             <div className="content-listing-header">
                                 <div className="content-listing-switcher">
                                     <button
-                                        className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.LIST})}
+                                        className={cn("content-view-tab", {selected: filter.listType === CONTENT_LISTING_VIEW.LIST})}
                                         onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.LIST)}>
                                         <i className="fa fa-list-ul" />
                                     </button>
                                     <button
-                                        className={cn("content-view-tab", {selected: listingView === CONTENT_LISTING_VIEW.TABLE})}
+                                        className={cn("content-view-tab", {selected: filter.listType === CONTENT_LISTING_VIEW.TABLE})}
                                         onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.TABLE)}>
                                         <i className="fa fa-th" />
                                     </button>
@@ -382,7 +380,8 @@ const mapDispatchToProps = dispatch => {
         updateCountries: countries => dispatch(updateCountries(countries)),
         updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
         updateFilters: filters => dispatch(updateMany(filters)),
-        fetchListings: (filter, method) => dispatch(fetchListings(filter, method))
+        fetchListings: (filter, method) => dispatch(fetchListings(filter, method)),
+        updateListingView: type=> dispatch(updateListingView(type))
     }
 };
 

@@ -58,3 +58,8 @@ export const updateEventDatesFilter = (from, to) => ({
     from,
     to
 });
+
+export const updateListingView = (listType) => ({
+    type: filterTypes.UPDATE_LIST_VIEW,
+    listType
+});

@@ -53,7 +53,6 @@ class InviteUserForm extends React.Component {
                         id={"first-name-" + key}
                         value={user.firstName}
                         disabled={disabled}
-                        autoComplete={"first-name-" + key}
                         placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FIRST_NAME")}
                         onChange={(e)=>{
                             user.firstName = e.target.value;
@@ -69,7 +68,6 @@ class InviteUserForm extends React.Component {
                         id={"last-name-" + key}
                         value={user.lastName}
                         disabled={disabled}
-                        autoComplete={"last-name-" + key}
                         placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME")}
                         onChange={(e)=>{
                             user.lastName = e.target.value;
@@ -85,7 +83,6 @@ class InviteUserForm extends React.Component {
                         id={"email-" + key}
                         value={user.email}
                         disabled={disabled}
-                        autoComplete={"email-" + key}
                         placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_EMAIL")}
                         onChange={(e)=>{
                             user.email = e.target.value;
