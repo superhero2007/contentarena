@@ -200,14 +200,6 @@ class Terms extends React.Component {
                         )})
                     }
                 </div>
-                <div className="buttons">
-                    <button
-                        onClick={this.updateTerms}
-                        disabled={updating}
-                        className={"standard-button"}>
-                        {this.context.t("TERMS_EDIT_BUTTON_UPDATE")}
-                    </button>
-                </div>
             </div>
         )
     }
