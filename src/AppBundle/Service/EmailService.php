@@ -64,7 +64,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -98,7 +98,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -135,7 +135,7 @@ class EmailService
             "thread" => $thread
         );
 
-        foreach ($recipient->getUsers() as $user){
+        foreach ($recipient->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -170,7 +170,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -205,7 +205,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -240,7 +240,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -273,7 +273,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -305,7 +305,7 @@ class EmailService
             "company" => $company,
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -341,7 +341,7 @@ class EmailService
             "bid" => $bid
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -377,7 +377,7 @@ class EmailService
             "bid" => $bid
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
@@ -409,7 +409,7 @@ class EmailService
             "company" => $company
         );
 
-        foreach ($company->getUsers() as $user){
+        foreach ($company->getActiveUsers() as $user){
             $recipients[] = $user->getEmail();
         }
 
