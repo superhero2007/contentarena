@@ -4,22 +4,29 @@ import {
 } from "../../main/components/Icons";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import Loader from "../../common/components/Loader/Loader";
 
 class DefinitionItem extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
             editing : props.editing ||false,
-            value : props.content || "",
+            content : props.content || "",
             name : props.name || "",
             restoreValue : props.content || "",
+            updating: false,
+            edited: props.edited,
+            custom : props.custom,
+            id : props.id,
+            position: props.position || props.index
         };
     }
 
     componentDidMount () { }
 
     handleChange = ( e ) => {
-        this.setState({value:e.target.value})
+        this.setState({content:e.target.value})
     };
 
     handleName = ( e ) => {
@@ -27,21 +34,56 @@ class DefinitionItem extends React.Component {
     };
 
     onUpdate = (  ) => {
-        const {onUpdate} = this.props;
-        const {value, name} = this.state;
-        if (onUpdate) onUpdate(value, name, true);
-        this.setState({editing: false})
+
+        const {content, name, id, custom, position} = this.state;
+
+        let definition = {
+            position: position,
+            content : content,
+            name: name,
+            id : id
+        };
+
+        this.setState({updating:true, editing: false });
+
+        ContentArena.Api.updateDefinition(definition).done(( response )=>{
+
+            this.setState({
+                updating:false,
+                edited: true,
+                content : response.success ? response.definition.content: content,
+                name: response.success ? response.definition.name: name,
+                id : response.success ? response.definition.id: id,
+                custom : response.success ? response.definition.custom: custom,
+            });
+        });
+
+    };
+
+    onRemove = () => {
+        const { onRemove } = this.props;
+        const { id } = this.state;
+
+        let definition = {
+            id : id
+        };
+
+        this.setState({updating:true, editing: false });
+
+        ContentArena.Api.removeDefinition(definition).done(( response )=>{
+            if (response.success && onRemove) onRemove();
+        });
+
     };
 
     restore = (  ) => {
-        const {onUpdate} = this.props;
         const {restoreValue} = this.state;
-        if (onUpdate) onUpdate(restoreValue, false);
+        this.setState({content: restoreValue});
     };
 
     render () {
-        const { custom, content, editable, onRemove, edited } = this.props;
-        const { editing,value, name, showRemoveConfirm } = this.state;
+        const { editable, onRemove } = this.props;
+        const { editing,content, name, showRemoveConfirm, edited, updating, custom } = this.state;
 
         return (
             <div className="terms-edit-item">
@@ -49,17 +91,19 @@ class DefinitionItem extends React.Component {
                     {(!editing || !custom)&& name}
                     {editing && custom && <textarea  value={name} onChange={this.handleName}/>}
                 </div>
-                <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing, "edited": edited  })}>
+                <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing, "edited": edited  || custom })}>
                     {!editing && content}
-                    {editing && <textarea  value={value} onChange={this.handleChange}/>}
+                    {editing && <textarea  value={content} onChange={this.handleChange}/>}
                 </div>
                 <div className="terms-edit-item-actions" >
-                    {!editing && editable && <IconYellowCircle icon={pencilIcon} onClick={() => this.setState({editing: true})} />}
-                    {!editing && !custom && editable && <IconYellowCircle icon={reloadIcon} onClick={this.restore} />}
-                    {!editing && custom && <IconYellowCircle icon={trashIconWhite} onClick={() => this.setState({showRemoveConfirm: true})}/>}
+                    {!updating && !editing && editable && <IconYellowCircle icon={pencilIcon} onClick={() => this.setState({editing: true})} />}
+                    {!updating && !editing && !custom && editable && <IconYellowCircle icon={reloadIcon} onClick={this.restore} />}
+                    {!updating && !editing && custom && <IconYellowCircle icon={trashIconWhite} onClick={() => this.setState({showRemoveConfirm: true})}/>}
 
-                    {editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} style={{color: 'green'}} />}
-                    {editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} style={{color: 'red'}} />}
+                    {!updating && editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} style={{color: 'green'}} />}
+                    {!updating && editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} style={{color: 'red'}} />}
+
+                    {updating && <Loader loading={updating} xSmall={true} /> }
 
                 </div>
                 {showRemoveConfirm && <div className="confirmation-tooltip">
@@ -68,7 +112,7 @@ class DefinitionItem extends React.Component {
                     </div>
                     <button className={"button button-confirm"} onClick={(e)=>{
                         this.setState({showRemoveConfirm: false});
-                        if (onRemove) onRemove();
+                        this.onRemove();
                         e.stopPropagation();
                     }}>
                         {this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}

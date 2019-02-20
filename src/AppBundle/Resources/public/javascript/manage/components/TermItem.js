@@ -2,38 +2,55 @@ import React from 'react';
 import {IconYellowCircle, trashIconWhite, pencilIcon, reloadIcon} from "../../main/components/Icons";
 import {PropTypes} from "prop-types";
 import cn from "classnames";
+import Loader from "../../common/components/Loader/Loader";
 
 class TermItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             editing : false,
-            value : props.content || "",
+            content : props.content || "",
             restoreValue : props.content || "",
+            updating : false
         };
     }
 
     handleChange = ( e ) => {
-        this.setState({value:e.target.value})
+        this.setState({content:e.target.value})
     };
 
     onUpdate = (  ) => {
-        const {onUpdate} = this.props;
-        const {value} = this.state;
-        if (onUpdate) onUpdate(value, true);
-        this.setState({editing: false})
+
+        const { id } = this.props;
+        const {content} = this.state;
+
+        let term = {
+            content : content,
+            id : id
+        };
+
+        this.setState({updating:true, editing: false });
+
+        ContentArena.Api.updateTerm(term).done(( response )=>{
+
+            this.setState({
+                updating:false,
+                edited: true,
+                content : response.success ? response.term.content: content,
+            });
+        });
+
     };
 
     restore = (  ) => {
-        const {onUpdate} = this.props;
         const {restoreValue} = this.state;
-        if (onUpdate) onUpdate(restoreValue, false);
+        this.setState({content: restoreValue});
     };
 
     render () {
 
-        const { position, content, termPosition, editable, onRemove, edited } = this.props;
-        const { editing,value, showRemoveConfirm } = this.state;
+        const { position, termPosition, editable, onRemove, edited } = this.props;
+        const { editing, showRemoveConfirm, updating, content } = this.state;
 
         return (
             <React.Fragment>
@@ -43,15 +60,15 @@ class TermItem extends React.Component {
                 <div className="terms-edit-item">
                     <div className={cn("terms-edit-item-content", {"terms-edit-item-disabled" : !editable, "terms-edit-item-editing": editing, "edited": edited })}>
                         {!editing && <strong>{termPosition}.{position}</strong>} {!editing && content}
-                        {editing && <textarea  value={value} onChange={this.handleChange}/>}
+                        {editing && <textarea  value={content} onChange={this.handleChange}/>}
                     </div>
                     <div className="terms-edit-item-actions" >
-                        {!editing && editable && <IconYellowCircle icon={pencilIcon} onClick={() => this.setState({editing: true})} />}
-                        {!editing && editable && <IconYellowCircle icon={reloadIcon} onClick={this.restore} />}
-                        {!editing && editable && <IconYellowCircle icon={trashIconWhite} onClick={() => this.setState({showRemoveConfirm: true})}/>}
-                        {editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} style={{color: 'green'}} />}
-                        {editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} style={{color: 'red'}} />}
-
+                        {!updating && !editing && editable && <IconYellowCircle icon={pencilIcon} onClick={() => this.setState({editing: true})} />}
+                        {!updating && !editing && editable && <IconYellowCircle icon={reloadIcon} onClick={this.restore} />}
+                        {!updating && !editing && editable && <IconYellowCircle icon={trashIconWhite} onClick={() => this.setState({showRemoveConfirm: true})}/>}
+                        {!updating && editing && editable && <i className="fa fa-check-circle" onClick={this.onUpdate} style={{color: 'green'}} />}
+                        {!updating && editing && editable && <i className="fa fa-times-circle" onClick={() => this.setState({editing: false})} style={{color: 'red'}} />}
+                        {updating && <Loader loading={updating} xSmall={true} /> }
                     </div>
                     {showRemoveConfirm && <div className="confirmation-tooltip">
                         <div className={"confirmation-text"}>
