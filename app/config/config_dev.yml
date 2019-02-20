@@ -22,12 +22,6 @@ twig:
     globals:
         frontend_url : 'http://localhost:8200/content-arena-pwire/'
 
-knp_snappy:
-    pdf:
-        enabled:    true
-        binary:     'C:/wkhtmltopdf/bin/wkhtmltopdf.exe'
-        options:    []
-
 monolog:
     handlers:
         main:

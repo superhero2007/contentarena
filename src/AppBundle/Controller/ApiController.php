@@ -415,14 +415,14 @@ class ApiController extends BaseController
                 $emailService->bidAccepted($content, $bid);
                 $emailService->dealClosed($content, $bid);
                 $notificationService->listingBidClosedNotifications($content);
-                $notificationService->listingBidAcceptedBuyerNotifications($content);
+                $notificationService->listingBidAcceptedBuyerNotifications($content, $bid);
                 if ($soldOut) {
                     $emailService->soldOut($content);
                     $notificationService->listingSoldOutNotifications($content);
                 }
             }
             catch (\Exception $exception){
-
+                $success = false;
             }
         }
 
@@ -454,7 +454,7 @@ class ApiController extends BaseController
         $listing = $bid->getContent();
         $bundle = $bid->getSalesPackage();
         $emailService->bidDeclined($listing, $bid);
-        $notificationService->listingBidDeclinedBuyerNotifications($listing);
+        $notificationService->listingBidDeclinedBuyerNotifications($listing, $bid);
 
         return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
 
