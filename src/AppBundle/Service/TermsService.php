@@ -72,7 +72,7 @@ class TermsService
         if ( count($companyTermItems) == 0 ) $this->restoreTermItems($company);
 
         foreach ( $terms as $term){
-            $items = $companyTermItemsRepo->findBy(array('term' => $term));
+            $items = $companyTermItemsRepo->findBy(array('term' => $term, 'company' => $company));
             $term->setItems($items);
         }
 
