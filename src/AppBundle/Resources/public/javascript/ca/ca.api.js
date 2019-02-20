@@ -139,15 +139,58 @@ ContentArena.Api= {
         return deferred.promise();
     },
 
-    updateTerms ( terms, definitions ) {
+    updateTerm ( term ) {
         let deferred = jQuery.Deferred();
 
         $.ajax({
             url: envhosturl + "api/terms/update",
             type: "POST",
             data : {
-                terms : terms,
-                definitions : definitions
+                term : term
+            },
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    updateDefinition ( definition ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/definitions/update",
+            type: "POST",
+            data : {
+                definition : definition
+            },
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
+
+        return deferred.promise();
+    },
+    removeDefinition ( definition ) {
+        let deferred = jQuery.Deferred();
+
+        $.ajax({
+            url: envhosturl + "api/definitions/remove",
+            type: "POST",
+            data : {
+                definition : definition
             },
             success: function (response) {
                 deferred.resolve(response);
