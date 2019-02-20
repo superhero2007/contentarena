@@ -35,16 +35,6 @@ class Terms extends React.Component {
         });
     }
 
-    onUpdateDefinition = (index, content, name, edited) => {
-
-        let definitions = this.state.definitions;
-        definitions[index].content = content;
-        definitions[index].name = name;
-        definitions[index].edited = edited;
-        this.setState({definitions});
-        this.updateTerms();
-    };
-
     onRemoveDefinition = (index) => {
 
         let definitions = this.state.definitions;
@@ -53,21 +43,11 @@ class Terms extends React.Component {
         this.updateTerms();
     };
 
-    onUpdateTermItem = (termIndex, termItemIndex, content, edited) => {
-
-        let terms = this.state.terms;
-        terms[termIndex].items[termItemIndex].content = content;
-        terms[termIndex].items[termItemIndex].edited = edited;
-        this.setState({terms});
-        this.updateTerms();
-    };
-
     onRemoveTerm = (termIndex, termItemIndex) => {
 
         let terms = this.state.terms;
         terms[termIndex].items[termItemIndex].removed = true;
         terms[termIndex].items[termItemIndex].content = "";
-        //terms[termIndex].items[termItemIndex].isEdited = false;
         this.setState({terms});
         this.updateTerms();
     };
@@ -94,16 +74,6 @@ class Terms extends React.Component {
         });
     };
 
-    updateTerms = () => {
-        this.setState({updating:true });
-
-        ContentArena.Api.updateTerms(this.state.terms, this.state.definitions).done(()=>{
-            this.setState({
-                updating:false
-            });
-        });
-    };
-
     addDefinition = () => {
         let { definitions } = this.state;
         let definition = {
@@ -121,7 +91,7 @@ class Terms extends React.Component {
     };
 
     render () {
-        const { loading, terms,restoring, updating, definitions, restoringDefinitions } = this.state;
+        const { loading, terms, restoring, definitions, restoringDefinitions } = this.state;
 
         document.title = "Content Arena - Terms";
 
@@ -161,11 +131,12 @@ class Terms extends React.Component {
                     {this.context.t("TERMS_EDIT_TITLE_DEFINITIONS")}
                 </div>
                 <div className="terms-edit-box">
-                    {definitions.map((definition, i) => {
+                    {!restoringDefinitions && definitions.map((definition, i) => {
                         return (
                             <div>
                                 {!definition.removed && <DefinitionItem
-                                    onUpdate={(content, name, edited) => this.onUpdateDefinition(i, content, name, edited)}
+                                    key={i}
+                                    index={i}
                                     onRemove={() => this.onRemoveDefinition(i)}
                                     {...definition}
                                 />}
@@ -184,13 +155,12 @@ class Terms extends React.Component {
                     {this.context.t("TERMS_EDIT_TITLE_TERMS")}
                 </div>
                 <div className="terms-edit-box">
-                    {terms.map((term, i) => {
+                    {!restoring && terms.map((term, i) => {
                         return (
                             <div>
                                 { term.items.map((item,k) => {
                                     if (item.removed) return undefined;
                                     return <TermItem
-                                        onUpdate={(content, edited) => this.onUpdateTermItem(i,k,content, edited)}
                                         onRemove={() => this.onRemoveTerm(i, k)}
                                         {...item}
                                         termPosition={term.position}

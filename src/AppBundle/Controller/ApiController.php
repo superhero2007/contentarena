@@ -687,92 +687,45 @@ class ApiController extends BaseController
     }
 
     /**
-     * @Route("/api/terms/company", name="getCompanyTerms")
+     * @Route("/api/notifications/", name="getNotifications")
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getCompanyTerms(Request $request, TermsService $termsService)
-    {
-        /* @var User $user*/
+    public function getNotifications(Request $request, NotificationService $notificationService){
+
         $user = $this->getUser();
-        $terms = $termsService->getCompanyTerms($user->getCompany());
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json', SerializationContext::create()->setGroups(array('terms')));
+        $data = $serializer->serialize($notificationService->getNotifications($user), 'json',SerializationContext::create()->setGroups(array('notification')));
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
-
     }
 
     /**
-     * @Route("/api/definitions/company", name="getCompanyDefinitions")
+     * @Route("/api/notifications/visited", name="markNotificationAsVisited")
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getCompanyDefinitions(Request $request, TermsService $termsService)
-    {
+    public function markNotificationAsVisited(Request $request, NotificationService $notificationService){
+        $id = $request->request->get('id');
+        $notificationService->markNotificationAsVisited($id);
 
-        /* @var User $user*/
-        $user = $this->getUser();
-        $terms = $termsService->getCompanyDefinitions($user->getCompany());
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json', SerializationContext::create()->setGroups(array('terms')));
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
-     * @Route("/api/terms/restore", name="restoreCompanyTerms")
-     */
-    public function restoreCompanyTerms(Request $request, TermsService $termsService)
-    {
-
-        /* @var User $user*/
-        $user = $this->getUser();
-        $termsService->restoreTermItems($user->getCompany());
-        $terms = $termsService->getCompanyTerms($user->getCompany());
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
-     * @Route("/api/definitions/restore", name="restoreDefinitions")
-     */
-    public function restoreDefinitions(Request $request, TermsService $termsService)
-    {
-
-        /* @var User $user*/
-        $user = $this->getUser();
-        $termsService->restoreDefinitions($user->getCompany());
-        $terms = $termsService->getCompanyDefinitions($user->getCompany());
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($terms, 'json',SerializationContext::create()->setGroups(array('terms')));
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
-     * @Route("/api/terms/update", name="updateCompanyTerms")
-     */
-    public function updateCompanyTerms(Request $request, TermsService $termsService)
-    {
-
-        /* @var User $user*/
-        $user = $this->getUser();
-        $newTerms = $request->get('terms');
-        $newDef = $request->get('definitions');
-        $termsService->updateTermItems($user->getCompany(),$newTerms );
-        if ($newDef != null )$termsService->updateDefinitions($user->getCompany(),$newDef );
         return new JsonResponse(array("success"=>true));
-
     }
+
+    /**
+     * @Route("/api/notifications/seen", name="markNotificationAsSeen")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function markNotificationAsSeen(Request $request, NotificationService $notificationService){
+        $user = $this->getUser();
+        $notificationService->markNotificationAsSeen($user);
+
+        return new JsonResponse(array("success"=>true));
+    }
+
+
 
 }
