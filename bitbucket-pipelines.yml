@@ -12,5 +12,5 @@ pipelines:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
-          - npm lint
-          - npm dev
+          - npm run lint
+          - npm run dev
