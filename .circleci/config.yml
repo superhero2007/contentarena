@@ -4,15 +4,9 @@
 #
 version: 2
 jobs:
-  build:
+  build_fe:
     docker:
-      # specify the version you desire here
       - image: circleci/node:7.10
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
 
     steps:
       - checkout
@@ -31,6 +25,53 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run eslint
-      - run: npm run lint
-      - run: npm run dev
+      # Lint FE code
+      - run:
+          name: Linting
+          command: npm run lint
+
+      # TODO Run Tests
+
+      # Build project with different configuration based on
+      # the current branch
+      - run:
+          name: Building
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+                npm run dev
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+                npm run prod
+            else
+                npm run dev
+            fi
+            
+  - save_cache:
+      key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      paths:
+        - web/assets
+
+  # TODO add BE build
+
+  deploy:
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      - run:
+          name: Upload FE files
+          command: echo ${CIRCLE_BRANCH}
+
+workflows:
+  version: 2
+  # The build and deploy workflow
+  build_and_deploy:
+  jobs:
+    - build
+    # The deploy job will only run on the filtered branches and
+    # require the build job to be successful before it starts
+    - deploy:
+        requires:
+          - build_fe
+        filters:
+          branches:
+            only:
+              - development
