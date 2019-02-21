@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Upload FE files over SSH
           command: |
-            scp -r ~/web/assets "hogmorem@sl663.web.hostpoint.ch:/home/hogmorem/www/dev/web/assets"
+            scp -r ~/project/web/assets "hogmorem@sl663.web.hostpoint.ch:/home/hogmorem/www/dev/web/assets"
       - run:
           name: Run ENV deploy task
           command: ssh hogmorem@sl663.web.hostpoint.ch ./deploy-dev
