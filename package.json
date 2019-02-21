@@ -13,6 +13,7 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.4.2",
     "react-datepicker": "^1.4.1",
     "react-dom": "^16.4.2",
@@ -42,8 +43,14 @@
   "devDependencies": {
     "@symfony/webpack-encore": "^0.19.0",
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.3",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
     "webpack": "^3.6.0",
@@ -56,7 +63,9 @@
     "prod": ".\\node_modules\\.bin\\encore production",
     "extract": "i18n_extract",
     "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations",
-    "import-admin": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations --locales=admin-locales"
+    "import-admin": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations --locales=admin-locales",
+    "lint": ".\\node_modules\\.bin\\eslint src/AppBundle/Resources/public/javascript -f unix",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",

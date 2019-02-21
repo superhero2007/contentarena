@@ -1,59 +1,50 @@
-import {contentType} from "../reducers/content";
+import { contentType } from "../reducers/content";
 
 export const scrollTopMainContent = () => {
-    const mainContent = document.querySelectorAll('body > .main-content')[0];
+  const mainContent = document.querySelectorAll("body > .main-content")[0];
 
-    if (mainContent) {
-        mainContent.scrollIntoView();
-    }
+  if (mainContent) {
+    mainContent.scrollIntoView();
+  }
 };
 
-export const goToPreviousStep = () =>{
-    scrollTopMainContent();
+export const goToPreviousStep = () => {
+  scrollTopMainContent();
 
-    return{
-        type: contentType.GO_TO_PREVIOUS_STEP,
-    }
+  return {
+    type: contentType.GO_TO_PREVIOUS_STEP,
+  };
 };
 
-export const goToNextStep = () =>{
-    scrollTopMainContent();
+export const goToNextStep = () => {
+  scrollTopMainContent();
 
-    return{
-        type: contentType.GO_TO_NEXT_STEP,
-    }
+  return {
+    type: contentType.GO_TO_NEXT_STEP,
+  };
 };
 
-export const goToStep = ( step) =>{
-    scrollTopMainContent();
-    
-    return{
-        type: contentType.GO_TO_STEP,
-        step
-    }
+export const goToStep = (step) => {
+  scrollTopMainContent();
+
+  return {
+    type: contentType.GO_TO_STEP,
+    step,
+  };
 };
 
-export const stepChangeReset = () =>{
-    return{
-        type: contentType.STEP_CHANGE_RESET,
-    }
-};
+export const stepChangeReset = () => ({
+  type: contentType.STEP_CHANGE_RESET,
+});
 
 
+export const changeAllEpisodeFlag = flag => ({
+  type: contentType.ALL_EPISODE_UPDATE_FLAG,
+  payload: flag,
+});
 
-export const changeAllEpisodeFlag = (flag) =>{
-    return{
-        type: contentType.ALL_EPISODE_UPDATE_FLAG,
-        payload: flag
-    }
-};
-
-export const updateContentValue = (key, value) => {
-    return{
-        type: 'UPDATE_CONTENT_VALUE',
-        key: key,
-        value : value
-    }
-};
-
-
+export const updateContentValue = (key, value) => ({
+  type: "UPDATE_CONTENT_VALUE",
+  key,
+  value,
+});

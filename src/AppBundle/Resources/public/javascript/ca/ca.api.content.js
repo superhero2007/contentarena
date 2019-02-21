@@ -2,832 +2,830 @@
 * Created by JuanCruz on 4/1/2018.
 */
 
-let __apiStore = {
-    tournaments : {}
+const __apiStore = {
+  tournaments: {},
 };
 
 window.ContentArena = window.ContentArena || {};
-ContentArena.ContentApi = ContentArena.ContentApi|| {};
+ContentArena.ContentApi = ContentArena.ContentApi || {};
 
-ContentArena.ContentApi= {
-    saveContentAsDraft ( content ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+ContentArena.ContentApi = {
+  saveContentAsDraft(content) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "content/draft/save",
-            type: "POST",
-            data: JSON.stringify(content),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}content/draft/save`,
+      type: "POST",
+      data: JSON.stringify(content),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    saveContentAsInactive ( content ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  saveContentAsInactive(content) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listing/save",
-            type: "POST",
-            data: JSON.stringify(content),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listing/save`,
+      type: "POST",
+      data: JSON.stringify(content),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    saveContentAsActive ( content ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  saveContentAsActive(content) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listing/publish",
-            type: "POST",
-            data: JSON.stringify(content),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listing/publish`,
+      type: "POST",
+      data: JSON.stringify(content),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    republishListing ( customId ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  republishListing(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listing/republish",
-            type: "POST",
-            data: JSON.stringify({customId: customId}),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listing/republish`,
+      type: "POST",
+      data: JSON.stringify({ customId }),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    sendMessage ( message ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  sendMessage(message) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/messages/send",
-            type: "POST",
-            data: JSON.stringify(message),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/messages/send`,
+      type: "POST",
+      data: JSON.stringify(message),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getUserInfo ( ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getUserInfo() {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/user/info",
-            type: "POST",
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/user/info`,
+      type: "POST",
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getUserInfoByActivationCode ( activationCode ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getUserInfoByActivationCode(activationCode) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/user/code",
-            type: "POST",
-            contentType: "application/json",
-            data : JSON.stringify({activationCode: activationCode}),
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/user/code`,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ activationCode }),
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getCompanyUsers ( ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getCompanyUsers() {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/company/users",
-            type: "POST",
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/company/users`,
+      type: "POST",
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    updateCompany ( company ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  updateCompany(company) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/company/update",
-            type: "POST",
-            data: JSON.stringify({company:company}),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/company/update`,
+      type: "POST",
+      data: JSON.stringify({ company }),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    updatePassword ( data ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  updatePassword(data) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/user/password",
-            type: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/user/password`,
+      type: "POST",
+      data: JSON.stringify(data),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    updateUser ( user ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  updateUser(user) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/user/update",
-            type: "POST",
-            data: JSON.stringify({user:user}),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/user/update`,
+      type: "POST",
+      data: JSON.stringify({ user }),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    activateUser ( user, password ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  activateUser(user, password) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/user/activate",
-            type: "POST",
-            data: JSON.stringify({user:user,id: user.id, password : password}),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/user/activate`,
+      type: "POST",
+      data: JSON.stringify({ user, id: user.id, password }),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
+    return deferred.promise();
+  },
 
-    updateUserProfile ( profile ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+  updateUserProfile(profile) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/user/profile",
-            type: "POST",
-            data: JSON.stringify({profile:profile}),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/user/profile`,
+      type: "POST",
+      data: JSON.stringify({ profile }),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getThread ( customId ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getThread(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/messages/thread",
-            type: "POST",
-            data: JSON.stringify({customId: customId}),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/messages/thread`,
+      type: "POST",
+      data: JSON.stringify({ customId }),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getThreads (  ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getThreads() {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/messages/threads",
-            type: "POST",
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/messages/threads`,
+      type: "POST",
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    placeBid ( bid ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  placeBid(bid) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/bid/place",
-            type: "POST",
-            data: JSON.stringify(bid),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/place`,
+      type: "POST",
+      data: JSON.stringify(bid),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    placeBids ( bid ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  placeBids(bid) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/bids/place",
-            type: "POST",
-            data: JSON.stringify(bid),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bids/place`,
+      type: "POST",
+      data: JSON.stringify(bid),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    acceptBid ( bid, signature, signatureName, signaturePosition ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  acceptBid(bid, signature, signatureName, signaturePosition) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        bid.signature = signature;
-        bid.signatureName = signatureName;
-        bid.signaturePosition = signaturePosition;
+    bid.signature = signature;
+    bid.signatureName = signatureName;
+    bid.signaturePosition = signaturePosition;
 
-        $.ajax({
-            url: envhosturl + "api/bid/accept",
-            type: "POST",
-            data: JSON.stringify(bid),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/accept`,
+      type: "POST",
+      data: JSON.stringify(bid),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    rejectBid ( bid ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  rejectBid(bid) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/bid/reject",
-            type: "POST",
-            data: JSON.stringify(bid),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/reject`,
+      type: "POST",
+      data: JSON.stringify(bid),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    removeBid ( bid ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  removeBid(bid) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/bid/remove",
-            type: "POST",
-            data: JSON.stringify(bid),
-            contentType: "application/json",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/remove`,
+      type: "POST",
+      data: JSON.stringify(bid),
+      contentType: "application/json",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
+    return deferred.promise();
+  },
 
-    saveTmpFile ( files ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+  saveTmpFile(files) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        const data = new FormData();
-        data.append('file', files[0]);
+    const data = new FormData();
+    data.append("file", files[0]);
 
-        $.ajax({
-            url: envhosturl + "content/save/file",
-            type: "POST",
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}content/save/file`,
+      type: "POST",
+      data,
+      processData: false,
+      contentType: false,
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    saveAttachmentFile ( files ) {
-        let deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  saveAttachmentFile(files) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        const data = new FormData();
-        data.append('file', files[0]);
+    const data = new FormData();
+    data.append("file", files[0]);
 
-        $.ajax({
-            url: envhosturl + "content/save/attachment",
-            type: "POST",
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                console.log("FAILED")
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}content/save/attachment`,
+      type: "POST",
+      data,
+      processData: false,
+      contentType: false,
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        console.log("FAILED");
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    removeAttachmentFile ( file ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  removeAttachmentFile(file) {
+    const deferred = jQuery.Deferred();
 
 
-        $.ajax({
-            url: envhosturl + "content/remove/attachment",
-            type: "POST",
-            data: {
-                file : file
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                console.log("FAILED")
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}content/remove/attachment`,
+      type: "POST",
+      data: {
+        file,
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        console.log("FAILED");
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getByCustomId ( customId ) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getByCustomId(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "listing/details",
-            type: "POST",
-            data: {
-                customId : customId,
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}listing/details`,
+      type: "POST",
+      data: {
+        customId,
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
+    return deferred.promise();
+  },
 
-    getDraftListings ( ) {
-        let deferred = jQuery.Deferred();
+  getDraftListings() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/listings/draft",
-            type: "POST",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/draft`,
+      type: "POST",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getInactiveListings ( ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  getInactiveListings() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/listings/inactive",
-            type: "POST",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/inactive`,
+      type: "POST",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getActiveListings ( ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  getActiveListings() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/listings/active",
-            type: "POST",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/active`,
+      type: "POST",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getExpiredListings ( ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  getExpiredListings() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/listings/expired",
-            type: "POST",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/expired`,
+      type: "POST",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    removeListing( customId ) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  removeListing(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listings/remove",
-            type: "POST",
-            data: {
-                customId : customId,
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/remove`,
+      type: "POST",
+      data: {
+        customId,
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    duplicateListing( customId ) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  duplicateListing(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listings/duplicate",
-            type: "POST",
-            data: {
-                customId : customId,
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/duplicate`,
+      type: "POST",
+      data: {
+        customId,
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    deactivateListing( customId ) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  deactivateListing(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listings/deactivate",
-            type: "POST",
-            data: {
-                customId : customId,
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/deactivate`,
+      type: "POST",
+      data: {
+        customId,
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    archiveListing( customId ) {
-        var deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  archiveListing(customId) {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listings/archive",
-            type: "POST",
-            data: {
-                customId : customId,
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/archive`,
+      type: "POST",
+      data: {
+        customId,
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
+    return deferred.promise();
+  },
 
-    getClosedDeals (  ) {
-        let deferred = jQuery.Deferred();
+  getClosedDeals() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/bid/closed",
-            type: "POST",
-            data: {
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/closed`,
+      type: "POST",
+      data: {
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getAllDeals (  ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  getAllDeals() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/bid/all",
-            type: "POST",
-            data: {
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/all`,
+      type: "POST",
+      data: {
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getPendingDeals (  ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  getPendingDeals() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/bid/pending",
-            type: "POST",
-            data: {
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/pending`,
+      type: "POST",
+      data: {
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getRejectedDeals (  ) {
-        let deferred = jQuery.Deferred();
+    return deferred.promise();
+  },
+  getRejectedDeals() {
+    const deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/bid/rejected",
-            type: "POST",
-            data: {
-            },
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/bid/rejected`,
+      type: "POST",
+      data: {
+      },
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
-    getWatchlistListings (){
-        var deferred = jQuery.Deferred(),
-            _this = this;
+    return deferred.promise();
+  },
+  getWatchlistListings() {
+    const deferred = jQuery.Deferred();
+    const _this = this;
 
-        $.ajax({
-            url: envhosturl + "api/listings/watchlist",
-            type: "POST",
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
+    $.ajax({
+      url: `${envhosturl}api/listings/watchlist`,
+      type: "POST",
+      success(response) {
+        deferred.resolve(response);
+      },
+      error(data, status) {
+        deferred.reject({
+          data,
+          status,
         });
+      },
+    });
 
-        return deferred.promise();
-    },
+    return deferred.promise();
+  },
 
 };
-
-

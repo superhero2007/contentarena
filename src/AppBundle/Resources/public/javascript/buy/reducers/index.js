@@ -1,10 +1,10 @@
-import {combineReducers} from 'redux'
-import {marketplace} from "./marketplace";
-import {filter} from "./filter";
+import { combineReducers } from "redux";
+import { marketplace } from "./marketplace";
+import { filter } from "./filter";
 
 const reducers = combineReducers({
-    marketplace,
-    filter
+  marketplace,
+  filter,
 });
 
-export default reducers
+export default reducers;

@@ -1,65 +1,65 @@
-import { filterTypes } from '../reducers/filter';
+import { filterTypes } from "../reducers/filter";
 
 export const addRight = id => ({
-    type: filterTypes.ADD_RIGHT,
-    id,
+  type: filterTypes.ADD_RIGHT,
+  id,
 });
 
 export const removeRight = id => ({
-    type: filterTypes.REMOVE_RIGHT,
-    id,
+  type: filterTypes.REMOVE_RIGHT,
+  id,
 });
 
 export const updateCountries = countries => ({
-    type: filterTypes.UPDATE_COUNTRIES,
-    countries,
+  type: filterTypes.UPDATE_COUNTRIES,
+  countries,
 });
 
 export const updateExclusive = exclusive => ({
-    type: filterTypes.UPDATE_EXCLUSIVE,
-    exclusive,
+  type: filterTypes.UPDATE_EXCLUSIVE,
+  exclusive,
 });
 
 export const updateIncludedCountries = includeAllCountries => ({
-    type: filterTypes.UPDATE_INCLUDED_COUNTRIES,
-    includeAllCountries,
+  type: filterTypes.UPDATE_INCLUDED_COUNTRIES,
+  includeAllCountries,
 });
 
 export const updateMany = filters => ({
-    type: filterTypes.UPDATE_MANY,
-    filters,
+  type: filterTypes.UPDATE_MANY,
+  filters,
 });
 
 export const updateSport = sport => ({
-    type: filterTypes.UPDATE_SPORT,
-    sport
+  type: filterTypes.UPDATE_SPORT,
+  sport,
 });
 
 export const updateAllFilters = filters => ({
-    type: filterTypes.UPDATE_FILTERS_CONFIG,
-    filters
+  type: filterTypes.UPDATE_FILTERS_CONFIG,
+  filters,
 });
 
 export const updateEvent = event => ({
-    type: filterTypes.UPDATE_EVENT,
-    event
+  type: filterTypes.UPDATE_EVENT,
+  event,
 });
 
 export const clearFilter = () => ({
-    type: filterTypes.CLEAR
+  type: filterTypes.CLEAR,
 });
 
 export const clearUpdateFilter = () => ({
-    type: filterTypes.CLEAR_UPDATE
+  type: filterTypes.CLEAR_UPDATE,
 });
 
 export const updateEventDatesFilter = (from, to) => ({
-    type: filterTypes.UPDATE_EVENT_DATE_FROM_TO,
-    from,
-    to
+  type: filterTypes.UPDATE_EVENT_DATE_FROM_TO,
+  from,
+  to,
 });
 
-export const updateListingView = (listType) => ({
-    type: filterTypes.UPDATE_LIST_VIEW,
-    listType
+export const updateListingView = listType => ({
+  type: filterTypes.UPDATE_LIST_VIEW,
+  listType,
 });
