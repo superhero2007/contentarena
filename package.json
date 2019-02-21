@@ -53,6 +53,9 @@
     "eslint-plugin-react": "^7.12.3",
     "node-sass": "^4.8.3",
     "sass-loader": "^6.0.7",
+    "stylelint": "^9.10.1",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-scss": "^3.5.3",
     "webpack": "^3.6.0",
     "webpack-preset-babel-stage-2": "^0.2.0"
   },
@@ -65,7 +68,9 @@
     "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations",
     "import-admin": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations --locales=admin-locales",
     "lint": ".\\node_modules\\.bin\\eslint src/AppBundle/Resources/public/javascript -f unix",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "style-lint": ".\\node_modules\\.bin\\stylelint src/AppBundle/Resources/public/**/*.scss",
+    "style-lint:fix": "npm run style-lint -- --fix"
   },
   "repository": {
     "type": "git",
