@@ -26,6 +26,8 @@ parameters:
     uploads_uri_prefix: 'uploads'
     uploads_tmp_uri_prefix: 'tmpUploads'
     admin_uploads_uri: ''
+    job_account_incomplete_time: '+2 hours'
+    job_account_incomplete_from_invite_time: '+72 hours'
 
 framework:
     #esi: ~

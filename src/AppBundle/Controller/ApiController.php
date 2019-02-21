@@ -10,6 +10,7 @@ use AppBundle\Entity\User;
 use AppBundle\Service\BundleService;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
+use AppBundle\Service\JobService;
 use AppBundle\Service\MessageService;
 use AppBundle\Service\NotificationService;
 use AppBundle\Service\TermsService;
@@ -569,9 +570,10 @@ class ApiController extends BaseController
     /**
      * @Route("/api/user/code", name="getUserInfoByActivationCode")
      */
-    public function getUserInfoByActivationCode(Request $request, UserService $userService)
+    public function getUserInfoByActivationCode(Request $request, UserService $userService, JobService $jobService)
     {
         $user = $userService->getUserByActivationCode($request->get("activationCode"));
+        $jobService->createAccountIncompleteJob($user);
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $data = $serializer->serialize($user, 'json',SerializationContext::create()->setGroups(array('settings')));
@@ -604,10 +606,18 @@ class ApiController extends BaseController
 
     /**
      * @Route("/api/user/activate", name="activateUser")
+     * @param Request $request
+     * @param UserService $userService
+     * @param EmailService $emailService
+     * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function activateUser(Request $request, UserService $userService)
+    public function activateUser(Request $request, UserService $userService, EmailService $emailService )
     {
         $user = $userService->activateUser($request);
+        $emailService->accountActivated( $user );
 
         $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
 

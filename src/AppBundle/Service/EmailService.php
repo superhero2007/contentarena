@@ -577,6 +577,82 @@ class EmailService
     }
 
     /**
+     * @param User $user
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function accountActivated(User $user){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_account_activated");
+        $content = $repository->findBySlug("email_content_account_activated");
+        $content2 = $repository->findBySlug("email_content_account_activated_2");
+
+        $parameters = array(
+            "content" => $content->getContent(),
+            "content2" => $content2->getContent(),
+            "user" => $user
+        );
+
+        $this->sendEmail("email/email.account.activated.twig", $subject->getContent(), $user->getEmail(), $parameters );
+
+    }
+
+    /**
+     * @param User $user
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function accountIncomplete(User $user){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_account_incomplete");
+        $content = $repository->findBySlug("email_content_account_incomplete");
+        $content2 = $repository->findBySlug("email_content_account_incomplete_2");
+
+        $parameters = array(
+            "content" => $content->getContent(),
+            "content2" => $content2->getContent(),
+            "user" => $user
+        );
+
+        $this->sendEmail("email/email.account.incomplete.twig", $subject->getContent(), $user->getEmail(), $parameters );
+
+    }
+
+    /**
+     * @param User $user
+     * @param User $
+     * @param $colleague
+     * @param $confirmationUrl
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function accountIncompleteFromInvite(User $user, User $colleague, $confirmationUrl){
+
+        $repository = $this->em->getRepository("AppBundle:EmailContent");
+        $subject = $repository->findBySlug("email_subject_account_incomplete_from_invite");
+        $content = $repository->findBySlug("email_content_account_incomplete_from_invite");
+        $content2 = $repository->findBySlug("email_content_account_incomplete_from_invite_2");
+        $content3 = $repository->findBySlug("email_content_account_incomplete_from_invite_3");
+
+        $parameters = array(
+            "content" => $content->getContent(),
+            "content2" => $content2->getContent(),
+            "content3" => $content3->getContent(),
+            "user" => $user,
+            "colleague" => $colleague,
+            "confirmationUrl" => $confirmationUrl
+        );
+
+        $this->sendEmail("email/email.account.incomplete.invite.twig", $subject->getContent(), $user->getEmail(), $parameters );
+
+    }
+
+    /**
      * @param $params
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime

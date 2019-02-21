@@ -55,10 +55,23 @@ services:
     AppBundle\Service\EmailService:
         arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%carena_host_url%']
 
+    AppBundle\Service\JobService:
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $emailService: '@AppBundle\Service\EmailService'
+            $router: '@router'
+            $accountIncompleteTime: '%job_account_incomplete_time%'
+            $accountIncompleteFromInviteTime: '%job_account_incomplete_from_invite_time%'
+
     app.command.send_email:
             class: AppBundle\Command\SendEmail
             tags:
                 -  { name: console.command }
+
+    app.command.jobs:
+                class: AppBundle\Command\JobCommand
+                tags:
+                    -  { name: console.command }
 
     app.form.registration:
             class: AppBundle\Form\RegistrationFormType

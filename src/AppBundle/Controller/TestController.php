@@ -96,6 +96,47 @@ class TestController extends BaseController
                 $template = "email/email.share.listing.twig";
                 break;
 
+            case "account_incomplete":
+                $content = $emailContentRepository->findBySlug("email_content_account_incomplete");
+                $content2 = $emailContentRepository->findBySlug("email_content_account_incomplete_2");
+                $parameters = array_merge(
+                    $params,
+                    array(
+                        "content" => $content->getContent(),
+                        "content2" => $content2->getContent()
+                    )
+                );
+                $template = "email/email.account.incomplete.twig";
+                break;
+
+            case "account_incomplete_from_invite":
+                $content = $emailContentRepository->findBySlug("email_content_account_incomplete_from_invite");
+                $content2 = $emailContentRepository->findBySlug("email_content_account_incomplete_from_invite_2");
+                $content3 = $emailContentRepository->findBySlug("email_content_account_incomplete_from_invite_3");
+                $parameters = array_merge(
+                    $params,
+                    array(
+                        "content" => $content->getContent(),
+                        "content2" => $content2->getContent(),
+                        "content3" => $content3->getContent()
+                    )
+                );
+                $template = "email/email.account.incomplete.invite.twig";
+                break;
+
+            case "account_activated":
+                $content = $emailContentRepository->findBySlug("email_content_account_activated");
+                $content2 = $emailContentRepository->findBySlug("email_content_account_activated_2");
+                $parameters = array_merge(
+                    $params,
+                    array(
+                        "content" => $content->getContent(),
+                        "content2" => $content2->getContent()
+                    )
+                );
+                $template = "email/email.account.activated.twig";
+                break;
+
             case "listing_approved":
                 break;
 

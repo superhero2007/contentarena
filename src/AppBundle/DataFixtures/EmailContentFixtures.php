@@ -360,6 +360,71 @@ class EmailContentFixtures extends Fixture
                 "",
                 "Please click on the Listing Name to review the listing."
             ),
+            array(
+                "email_subject_buyer_listing_match",
+                "",
+                "New content was listed that matches your buying interest."
+            ),
+            array(
+                "email_content_buyer_listing_match",
+                "",
+                "New content was listed that matches your buying interest."
+            ),
+            array(
+                "email_content_buyer_listing_match_2",
+                "",
+                "Please click on the Listing Name to review the listing."
+            ),
+            array(
+                "email_subject_account_incomplete",
+                "",
+                "Complete your registration on Content Arena!"
+            ),
+            array(
+                "email_content_account_incomplete",
+                "",
+                "It looks like you have started activating your Content Arena account, but did not complete it yet. Please kindly let me know if you have faced any problems during the account activation process and I will be at your disposal."
+            ),
+            array(
+                "email_content_account_incomplete_2",
+                "",
+                "Further, I'm more than happy to arrange a meeting with you in order to discuss how you can use the platform to sell and/or acquire rights on Content Arena. If you are interested, please kindly let me know your availability. "
+            ),
+            array(
+                "email_subject_account_activated",
+                "",
+                "Welcome to Content Arena"
+            ),
+            array(
+                "email_content_account_activated",
+                "",
+                "Welcome to Content Arena - great to have you on-board!"
+            ),
+            array(
+                "email_content_account_activated_2",
+                "",
+                "I'm more than happy to arrange a meeting with you in order to discuss how you can use Content Arena to sell and/or acquire rights on Content Arena. If you are interested, please kindly let me know your availability."
+            ),
+            array(
+                "email_subject_account_incomplete_from_invite",
+                "",
+                "Don't forget to activate your Content Arena account"
+            ),
+            array(
+                "email_content_account_incomplete_from_invite",
+                "",
+                "You have been invited by "
+            ),
+            array(
+                "email_content_account_incomplete_from_invite_2",
+                "",
+                " to join his/her team on Content Arena - the first sports media rights trading platform."
+            ),
+            array(
+                "email_content_account_incomplete_from_invite_3",
+                "",
+                "You can login to your account directly. To do so, please click on the link below and follow the on-boarding process."
+            ),
 
 
         );
