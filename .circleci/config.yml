@@ -58,7 +58,12 @@ jobs:
       # dist folder that needs to be deployed
       - restore_cache:
           key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-          
+
+      - run:
+          name: Fix host authenticity for sl663.web.hostpoint.ch
+          command: |
+            ssh-keyscan sl663.web.hostpoint.ch >> ~/.ssh/known_hosts
+
       - add_ssh_keys:
           fingerprints:
             - "12:8d:60:df:e4:7e:04:e8:05:6e:54:67:a5:bd:6b:5d"
