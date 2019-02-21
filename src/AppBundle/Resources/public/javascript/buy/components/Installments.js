@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import uniqueId from "lodash/uniqueid";
+import uniqueId from "lodash/uniqueId";
 import Moment from "moment/moment";
 import CaTooltip from "../../main/components/CaTooltip";
 import { DATE_FORMAT } from "@constants";
