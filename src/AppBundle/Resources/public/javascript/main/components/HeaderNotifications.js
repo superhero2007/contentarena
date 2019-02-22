@@ -49,7 +49,7 @@ class HeaderNotifications extends React.Component {
         SELLER_BID_ACCEPTED: id => `/commercialoverview/filter/${id}&closeddeals`,
         SELLER_LISTING_SOLD: id => `/commercialoverview/filter/${id}&closeddeals`,
         MESSAGE: id => `/messages/${id}`,
-        BUYER_LISTING_MATCH: () => id => `/listing/${id}`,
+        BUYER_LISTING_MATCH: id => `/listing/${id}`,
         BUYER_BID_CLOSED: () => "/closeddeals",
         BUYER_BID_DECLINED: () => "/bids/declinedbids",
         BUYER_BID_PLACED: () => "/bids/activebids",
