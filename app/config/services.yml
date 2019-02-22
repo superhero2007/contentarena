@@ -53,7 +53,15 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Service\EmailService:
-        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%carena_host_url%']
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $twig : '@twig'
+            $mailer: '@mailer'
+            $hostUrl: '%carena_host_url%'
+            $infoAddress : '%app.email_info%'
+            $supportAddress : '%app.email_support%'
+            $bccAlexAddress : '%app.email_bcc_alex%'
+            $bccLasseAddress : '%app.email_bcc_lasse%'
 
     AppBundle\Service\JobService:
         arguments:

@@ -28,14 +28,35 @@ class EmailService
 
     private $hostUrl;
 
+    private $supportAddress;
+
+    private $infoAddress;
+
+    private $bccAlexAddress;
+
+    private $bccLasseAddress;
+
     static private $TEST_EMAIL = "juancruztalco@gmail.com";
     static private $ALERTS_EMAIL = "alerts@contentarena.com";
 
-    public function __construct(EntityManager $entityManager, \Twig_Environment $twig, \Swift_Mailer $mailer, $hostUrl) {
+    public function __construct(
+        EntityManager $entityManager,
+        \Twig_Environment $twig,
+        \Swift_Mailer $mailer,
+        $hostUrl,
+        $supportAddress,
+        $infoAddress,
+        $bccAlexAddress,
+        $bccLasseAddress
+    ) {
         $this->em = $entityManager;
         $this->twig = $twig;
         $this->mailer = $mailer;
         $this->hostUrl = $hostUrl;
+        $this->supportAddress = $supportAddress;
+        $this->infoAddress = $infoAddress;
+        $this->bccAlexAddress = $bccAlexAddress;
+        $this->bccLasseAddress = $bccLasseAddress;
     }
 
     /**
@@ -595,7 +616,16 @@ class EmailService
             "user" => $user
         );
 
-        $this->sendEmail("email/email.account.activated.twig", $subject->getContent(), $user->getEmail(), $parameters );
+        $this->sendEmail(
+            "email/email.account.activated.twig",
+            $subject->getContent(),
+            $user->getEmail(),
+            $parameters,
+            $this->supportAddress,
+            array(
+                $this->bccAlexAddress,
+                $this->bccLasseAddress,
+            ));
 
     }
 
@@ -618,7 +648,16 @@ class EmailService
             "user" => $user
         );
 
-        $this->sendEmail("email/email.account.incomplete.twig", $subject->getContent(), $user->getEmail(), $parameters );
+        $this->sendEmail(
+            "email/email.account.incomplete.twig",
+            $subject->getContent(),
+            $user->getEmail(),
+            $parameters,
+            $this->supportAddress,
+            array(
+                $this->bccAlexAddress,
+                $this->bccLasseAddress,
+            ));
 
     }
 
@@ -648,7 +687,16 @@ class EmailService
             "confirmationUrl" => $confirmationUrl
         );
 
-        $this->sendEmail("email/email.account.incomplete.invite.twig", $subject->getContent(), $user->getEmail(), $parameters );
+        $this->sendEmail(
+            "email/email.account.incomplete.invite.twig",
+            $subject->getContent(),
+            $user->getEmail(),
+            $parameters,
+            $this->supportAddress,
+            array(
+                $this->bccAlexAddress,
+                $this->bccLasseAddress,
+            ));
 
     }
 
@@ -697,12 +745,14 @@ class EmailService
      * @param $subject
      * @param $to
      * @param $params
+     * @param null $fromAddress
+     * @param array $bcc
      * @return bool
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function sendEmail($template, $subject, $to, $params )
+    public function sendEmail($template, $subject, $to, $params, $fromAddress = null, $bcc = array() )
     {
         $parameters = array_merge(
             $params,
@@ -711,15 +761,23 @@ class EmailService
             )
         );
 
+        if ($fromAddress === null) {
+            $fromAddress = $this->infoAddress;
+        }
+
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setContentType("text/html")
-            ->setFrom('info@contentarena.com', "Content Arena")
+            ->setFrom($fromAddress, "Content Arena")
             ->setTo($to)
             ->setBody(
                 $this->twig->render( $template, $parameters )
-            )
-        ;
+            );
+
+        foreach ( $bcc as $bccAddress ){
+            $message->addBcc($bccAddress);
+        }
+
         $this->mailer->send($message);
 
         return true;

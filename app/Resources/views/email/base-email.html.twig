@@ -16,15 +16,17 @@
 
 <body style="margin: 0 !important; padding: 0 !important; background: #eee">
 <table border="0" cellpadding="0" cellspacing="0" width="700px" style="margin-top:20px">
+    {% block tableheader %}
     <thead>
-    <tr>
-        <th>
-            <a href="https://contentarena.com/" title="Content Arena">
-                <img
-                        src="{{ hostUrl }}bundles/app/images/email-bg.jpg"/></a>
-        </th>
-    </tr>
+        <tr>
+            <th>
+                <a href="https://contentarena.com/" title="Content Arena">
+                    <img src="{{ hostUrl }}bundles/app/images/email-bg.jpg"/>
+                </a>
+            </th>
+        </tr>
     </thead>
+    {% endblock %}
     <tbody>
     <tr>
         <td style="background: #FFF; padding:20px; text-align: left; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 24px; color:#666">
