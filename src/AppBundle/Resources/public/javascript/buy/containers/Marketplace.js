@@ -258,7 +258,6 @@ class Marketplace extends Component {
         error, loading, listings, totalItems,
       } = listingsData;
 
-      const sortedListings = listings.sort((a, b) => a.featuredPosition - b.featuredPosition);
       return (
         <div className="manager-content" style={{ flexDirection: "row", flexWrap: "wrap" }}>
 
@@ -306,7 +305,7 @@ class Marketplace extends Component {
                   history={history}
                 />
                 )}
-                {listings.length > 0 && filter.listType === CONTENT_LISTING_VIEW.LIST && sortedListings.map(listing => (
+                {listings.length > 0 && filter.listType === CONTENT_LISTING_VIEW.LIST && listings.map(listing => (
                   <ContentListing
                     onSelect={() => this.goToListing(listing.customId)}
                     key={listing.customId}
