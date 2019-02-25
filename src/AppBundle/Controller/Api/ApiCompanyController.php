@@ -7,7 +7,9 @@ use AppBundle\Service\EmailService;
 use AppBundle\Service\JobService;
 use AppBundle\Service\TestService;
 use AppBundle\Service\UserService;
+use AppBundle\Service\CompanyService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -89,4 +91,16 @@ class ApiCompanyController extends Controller
 
     }
 
+    /**
+     * @Route("/api/company/unique", name="checkIsCompanyUnique")
+     * @return JsonResponse
+     */
+    public function checkIsCompanyUnique(Request $request, CompanyService $companyService)
+    {
+        $companyId = $request->get("companyId");
+        $companyName = $request->get("companyName");
+        $isCompanyUnique = $companyService->checkCompanyUniqueness($companyName, $companyId);
+
+        return new JsonResponse(array("isCompanyValid"=>$isCompanyUnique));
+    }
 }

@@ -30,8 +30,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class ApiController extends BaseController
 {
-
-
     /**
      * @Route("/api/bid/place", name="apiPlaceBid")
      * @param Request $request
@@ -600,7 +598,6 @@ class ApiController extends BaseController
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
-
     }
 
     /**
@@ -760,7 +757,4 @@ class ApiController extends BaseController
 
         return new JsonResponse(array("success"=>true));
     }
-
-
-
 }
