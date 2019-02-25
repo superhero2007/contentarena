@@ -1,0 +1,116 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+	Team!
+{% endblock %}
+
+
+{% block content %}
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>{{ content }}</strong>
+		</td>
+	</tr>
+
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>Listing name:</strong> {{ listing.name }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>Listing Id:</strong> {{ listing.customId }}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Bid:</strong> {{ bid.amount }}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Total fee:</strong> {{ bid.totalFee }}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Territory:</strong> {{ bundle.name }} {{ dump(bundle) }}
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Buyer Company:</strong> {{ user.company.legalName }}
+        </td>
+    </tr>
+
+	<tr>
+		<td style="text-align: left">
+			<strong>Acquired by User:</strong> {{ user.getFullName }}
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: left">
+			<strong>Buyer User Email:</strong> {{ user.email }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Buyer User Phone:</strong> {{ user.phone }}
+		</td>
+	</tr>
+
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Seller Company:</strong> {{ listing.company.legalName }}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Seller User:</strong> {{ listing.owner.getFullName }}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            <strong>Seller User Email:</strong> {{ listing.owner.email }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>Seller User Phone:</strong> {{ listing.owner.phone }}
+        </td>
+    </tr>
+
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

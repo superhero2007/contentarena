@@ -7,6 +7,7 @@ parameters:
     sportradar_api_token: dqahyKSX6u5J1vNHMp
     sportradar_api_host: https://api.betradar.com/v1
     carena_host_url: '%local_host%'
+    app.email_alerts: '%local_email_alert_address%'
     job_account_incomplete_time: '+5 minutes'
     job_account_incomplete_from_invite_time: '+5 minutes'
 

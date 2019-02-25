@@ -8,6 +8,7 @@ use AppBundle\Entity\SalesPackage;
 use AppBundle\Error\ListingErrors;
 use AppBundle\Service\BidService;
 use AppBundle\Service\ContentService;
+use AppBundle\Service\EmailService;
 use AppBundle\Service\WatchlistService;
 use PDFMerger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -126,15 +127,19 @@ class ContentController extends Controller
      * @Route("/content/draft/save", name="saveContentAsDraft")
      * @param Request $request
      * @param ContentService $contentService
+     * @param EmailService $emailService
      * @return JsonResponse
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function saveContentAsDraft(Request $request, ContentService $contentService  )
+    public function saveContentAsDraft(Request $request, ContentService $contentService , EmailService $emailService )
     {
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
 
-
+        if ( $content->getStep() == 1 ) $emailService->internalUserListingDraft($user, $content);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();

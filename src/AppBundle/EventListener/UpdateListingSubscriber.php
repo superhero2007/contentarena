@@ -159,6 +159,9 @@ class UpdateListingSubscriber implements EventSubscriber
                             $this->mailer->listingMatch($entity, $user);
                         }
                     }
+
+                    // Notify admins
+                    $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity);
                 }
             }
         }

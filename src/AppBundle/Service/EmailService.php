@@ -13,8 +13,8 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
-use FOS\UserBundle\Model\User;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Translation\TranslatorInterface;
+use AppBundle\Entity\User;
 
 
 class EmailService
@@ -36,18 +36,21 @@ class EmailService
 
     private $bccLasseAddress;
 
-    static private $TEST_EMAIL = "juancruztalco@gmail.com";
-    static private $ALERTS_EMAIL = "alerts@contentarena.com";
+    private $alertsAddress;
+
+    private $translator;
 
     public function __construct(
         EntityManager $entityManager,
         \Twig_Environment $twig,
         \Swift_Mailer $mailer,
+        TranslatorInterface $translator,
         $hostUrl,
         $supportAddress,
         $infoAddress,
         $bccAlexAddress,
-        $bccLasseAddress
+        $bccLasseAddress,
+        $alertsAddress
     ) {
         $this->em = $entityManager;
         $this->twig = $twig;
@@ -57,6 +60,8 @@ class EmailService
         $this->infoAddress = $infoAddress;
         $this->bccAlexAddress = $bccAlexAddress;
         $this->bccLasseAddress = $bccLasseAddress;
+        $this->alertsAddress = $alertsAddress;
+        $this->translator = $translator;
     }
 
     /**
@@ -502,7 +507,210 @@ class EmailService
                 "content" => $content->getContent()
             )
         );
-        $this->sendEmail("email/email.internal.user-request.twig", $subject->getContent(), $this::$ALERTS_EMAIL, $parameters );
+        $this->sendEmail("email/email.internal.user.request.twig", $subject->getContent(), $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User completes wall / logs in for the first time
+     * @param User $user
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserRegisters( User $user ){
+
+        $subject = $this->translator->trans("email.internal.user.registers.subject");
+        $content = $this->translator->trans("email.internal.user.registers.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user
+        );
+        $this->sendEmail("email/email.internal.user.registers.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     *
+     * User submits a listing
+     *
+     * @param User $user
+     * @param Content $listing
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserListingSubmit( User $user, Content $listing ){
+
+        $subject = $this->translator->trans("email.internal.user.listing.submit.subject");
+        $content = $this->translator->trans("email.internal.user.listing.submit.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $listing
+        );
+        $this->sendEmail("email/email.internal.user.listing.submit.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User deactivates listing
+     *
+     * @param User $user
+     * @param Content $listing
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserListingDeactivate( User $user, Content $listing ){
+
+        $subject = $this->translator->trans("email.internal.user.listing.deactivate.subject");
+        $content = $this->translator->trans("email.internal.user.listing.deactivate.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $listing
+        );
+        $this->sendEmail("email/email.internal.user.listing.deactivate.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User creates a draft (this is done by entering content listing process and proceeding to CL2)
+     *
+     * @param User $user
+     * @param Content $listing
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserListingDraft( User $user, Content $listing ){
+
+        $subject = $this->translator->trans("email.internal.user.listing.draft.subject");
+        $content = $this->translator->trans("email.internal.user.listing.draft.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $listing
+        );
+        $this->sendEmail("email/email.internal.user.listing.draft.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User archives listing
+     *
+     * @param User $user
+     * @param Content $listing
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserListingArchive( User $user, Content $listing ){
+
+        $subject = $this->translator->trans("email.internal.user.listing.archive.subject");
+        $content = $this->translator->trans("email.internal.user.listing.archive.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $listing
+        );
+        $this->sendEmail("email/email.internal.user.listing.archive.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User places a bid
+     *
+     * @param User $user
+     * @param Bid $bid
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserBidPlace( User $user, Bid $bid ){
+
+        $subject = $this->translator->trans("email.internal.user.bid.place.subject");
+        $content = $this->translator->trans("email.internal.user.bid.place.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $bid->getContent(),
+            "bid" => $bid,
+            "bundle" => $bid->getSalesPackage()
+        );
+        $this->sendEmail("email/email.internal.user.bid.place.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User acquired right for fixed fee
+     *
+     * @param User $user
+     * @param Bid $bid
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserFixedClose( User $user, Bid $bid ){
+
+        $subject = $this->translator->trans("email.internal.user.fixed.close.subject");
+        $content = $this->translator->trans("email.internal.user.fixed.close.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $bid->getContent(),
+            "bid" => $bid,
+            "bundle" => $bid->getSalesPackage()
+        );
+        $this->sendEmail("email/email.internal.user.fixed.close.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     *
+     * User accepts a bid
+     * @param User $user
+     * @param Bid $bid
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserBidAccept( User $user, Bid $bid ){
+
+        $subject = $this->translator->trans("email.internal.user.bid.accept.subject");
+        $content = $this->translator->trans("email.internal.user.bid.accept.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $bid->getContent(),
+            "bid" => $bid,
+            "bundle" => $bid->getSalesPackage()
+        );
+        $this->sendEmail("email/email.internal.user.bid.accept.twig", $subject, $this->alertsAddress, $parameters );
+
+    }
+
+    /**
+     * User declines a Bid
+     * @param User $user
+     * @param Bid $bid
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalUserBidDecline( User $user, Bid $bid ){
+
+        $subject = $this->translator->trans("email.internal.user.bid.decline.subject");
+        $content = $this->translator->trans("email.internal.user.bid.decline.content");
+        $parameters = array(
+            "content" => $content,
+            "user" => $user,
+            "listing" => $bid->getContent(),
+            "bid" => $bid,
+            "bundle" => $bid->getSalesPackage()
+        );
+        $this->sendEmail("email/email.internal.user.bid.decline.twig", $subject, $this->alertsAddress, $parameters );
 
     }
 

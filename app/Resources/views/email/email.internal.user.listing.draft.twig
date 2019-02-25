@@ -1,0 +1,71 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+	Team!
+{% endblock %}
+
+
+{% block content %}
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>{{ content }}</strong>
+		</td>
+	</tr>
+
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>Listing name:</strong> {{ listing.name }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>Listing Id:</strong> {{ listing.customId }}
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <br/>
+        </td>
+    </tr>
+
+	<tr>
+		<td style="text-align: left">
+			<strong>Drafted by User:</strong> {{ user.getFullName }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Company:</strong> {{ user.company.legalName }}
+		</td>
+	</tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>Position:</strong> {{ user.title }}
+        </td>
+    </tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Email:</strong> {{ user.email }}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: left">
+			<strong>Phone:</strong> {{ user.phone }}
+		</td>
+	</tr>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -9,6 +9,41 @@ sell:
                 placeholder: 'Describe your sports event(s) here. E.g. competition details, history, viewing rates - anything that potential buyers may find interesting(5000 characters maximum)'
 
 
+email:
+    internal:
+        user:
+            registers:
+                subject: User has logged in for the first time
+                content: User has logged in for the first time.
+            listing:
+                submit:
+                    subject: A listing was submitted
+                    content: A listing was submitted.
+                deactivate:
+                    subject: A listing was deactivated
+                    content: A listing was deactivated.
+                draft:
+                    subject: A listing was drafted
+                    content: A listing was drafted.
+                archive:
+                    subject: A listing was archived
+                    content: A listing was archived.
+            bid:
+                place:
+                    subject: A bid was placed
+                    content: A bid was placed
+                accept:
+                    subject: A bid was accepted - deal closed
+                    content: A bid was accepted - deal closed
+                decline:
+                    subject: A bid was declined
+                    content: A bid was declined
+            fixed:
+                close:
+                    subject: A right was acquired for a fixed fee - deal closed
+                    content: A right was acquired for a fixed fee - deal closed
+
+
 notifications:
     general:
         message:

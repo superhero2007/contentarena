@@ -57,11 +57,13 @@ services:
             $entityManager : '@doctrine.orm.entity_manager'
             $twig : '@twig'
             $mailer: '@mailer'
+            $translator: '@translator'
             $hostUrl: '%carena_host_url%'
             $infoAddress : '%app.email_info%'
             $supportAddress : '%app.email_support%'
             $bccAlexAddress : '%app.email_bcc_alex%'
             $bccLasseAddress : '%app.email_bcc_lasse%'
+            $alertsAddress : '%app.email_alerts%'
 
     AppBundle\Service\JobService:
         arguments:

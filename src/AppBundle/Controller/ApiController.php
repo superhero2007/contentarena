@@ -168,13 +168,22 @@ class ApiController extends BaseController
                     $emailService->closedDealBuyer($content, $bid);
                     $notificationService->listingBidClosedNotifications($content);
                     $notificationService->listingBidClosedBuyerNotifications($content, $user);
-                } else {
-                    $emailService->bidReceived($content, $bid);
-                    $emailService->bidPlaced($content, $bid);
-                    $notificationService->listingBidReceivedNotifications($content);
-                    $notificationService->listingBidPlacedNotifications($content, $user);
-                }
 
+                    //Notify admins
+                    $emailService->internalUserFixedClose($user, $bid);
+
+                } else {
+                    // Notify Seller
+                    $emailService->bidReceived($content, $bid);
+                    $notificationService->listingBidReceivedNotifications($content);
+
+                    // Notify Buyer
+                    $emailService->bidPlaced($content, $bid);
+                    $notificationService->listingBidPlacedNotifications($content, $user);
+
+                    // Notify admins
+                    $emailService->internalUserBidPlace($user, $bid);
+                }
 
                 $soldOut = $contentService->listingIsSoldOut($content);
                 if ($soldOut) {
@@ -413,10 +422,18 @@ class ApiController extends BaseController
 
             try {
                 $this->saveLicenseAgreement($content, $viewElements);
+
+                // Notify Buyer
                 $emailService->bidAccepted($content, $bid);
+                $notificationService->listingBidAcceptedBuyerNotifications($content, $bid);
+
+                // Notify Seller
                 $emailService->dealClosed($content, $bid);
                 $notificationService->listingBidClosedNotifications($content);
-                $notificationService->listingBidAcceptedBuyerNotifications($content, $bid);
+
+                // Notify admins
+                $emailService->internalUserBidAccept($user, $bid);
+
                 if ($soldOut) {
                     $emailService->soldOut($content);
                     $notificationService->listingSoldOutNotifications($content);
@@ -456,6 +473,9 @@ class ApiController extends BaseController
         $bundle = $bid->getSalesPackage();
         $emailService->bidDeclined($listing, $bid);
         $notificationService->listingBidDeclinedBuyerNotifications($listing, $bid);
+
+        // Notify admins
+        $emailService->internalUserBidDecline($user, $bid);
 
         return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
 
@@ -617,7 +637,12 @@ class ApiController extends BaseController
     public function activateUser(Request $request, UserService $userService, EmailService $emailService )
     {
         $user = $userService->activateUser($request);
+
+        // Notify user
         $emailService->accountActivated( $user );
+
+        // Notify administration team
+        $emailService->internalUserRegisters( $user );
 
         $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
 
