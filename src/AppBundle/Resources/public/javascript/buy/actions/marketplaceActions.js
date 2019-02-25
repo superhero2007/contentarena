@@ -1,5 +1,5 @@
 import { marketplaceTypes } from "../reducers/marketplace";
-import { fetchMarketplaceListings } from "../../api";
+import api from "../../api";
 import { contentParserFromServer } from "../../common/utils/listing";
 
 const fetchListingRequest = () => ({
@@ -20,7 +20,7 @@ const fetchListingRequestFailure = error => ({
 export const fetchListings = (filter, method) => async (dispatch) => {
   try {
     dispatch(fetchListingRequest());
-    const res = await fetchMarketplaceListings(filter, method);
+    const res = await api.fetchMarketplaceListings(filter, method);
     dispatch(
       fetchListingRequestSuccess({
         listings: res.data.listings.map(listing => contentParserFromServer(listing)),

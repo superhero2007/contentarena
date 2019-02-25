@@ -5,9 +5,7 @@ import cn from "classnames";
 const Loader = ({
   loading, children, text, error, small, xSmall,
 }, context) => {
-  if (error) {
-    return <div>{error}</div>;
-  } if (loading) {
+  if (loading) {
     return (
       <div className="ca-loader">
         <div className={cn("spinner", { small, "x-small": xSmall })} />

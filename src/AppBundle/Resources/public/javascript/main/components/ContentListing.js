@@ -16,6 +16,7 @@ import { getCurrencySymbol } from "../actions/utils";
 import Tooltip from "./Tooltip";
 import { getListingImage } from "../../common/utils/listing";
 import { DATE_FORMAT } from "@constants";
+import ShareListing from "../../common/components/ShareListing";
 
 class ContentListing extends Component {
   constructor(props) {
@@ -187,6 +188,10 @@ class ContentListing extends Component {
                 {name}
               </div>
               )}
+
+              <ShareListing
+                listingId={customId}
+              />
 
               {company && (
                 <div className="company-name">

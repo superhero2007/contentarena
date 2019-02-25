@@ -33,7 +33,7 @@ class EditButton extends React.Component {
       return (
         <button
           onClick={this.edit}
-          className="ca-btn primary edit-button"
+          className="ca-btn primary small"
         >
                 Edit
         </button>

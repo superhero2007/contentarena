@@ -20,10 +20,10 @@ const ExtraTerritories = ({ extraTerritories, showAll, excluded = false }) => {
                     ))
                 }
       >
-        <a data-tip data-for={tooltipId}>
+        <span className="ca-link" data-tip data-for={tooltipId}>
           {!showAll && `+${extraTerritories.length - 3}`}
           {showAll && `+${extraTerritories.length}`}
-        </a>
+        </span>
       </CaTooltip>
     </div>
   );
