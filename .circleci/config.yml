@@ -133,13 +133,11 @@ workflows:
             filters:
               branches:
                 only:
-                  - master
-        # The deploy job will only run on the filtered branches and
-        # require the build job to be successful before it starts
+                  - release
         - deploy_test:
             requires:
               - build_fe
             filters:
               branches:
                 only:
-                  - master
+                  - release
