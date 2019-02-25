@@ -1,0 +1,30 @@
+{% extends "layout.html.twig" %}
+
+{% block main_content %}
+    <div class="error-page">
+        <div class="header">
+            <div class="logo">
+                <img src="{{ asset('bundles/app/img/logo_contentarena.png') }}">
+            </div>
+            <div class="content">
+                <p class="uk-margin">
+                    <span> <a href="https://contentarena.com/" target="_blank">home</a></span>
+                    <span> <a href="https://contentarena.com/web/privacy-policy/" target="_blank">Privacy Policy</a></span>
+                    <span> <a href="https://contentarena.com/web/terms-of-use/" target="_blank">Terms of Use</a></span>
+                    <span> <a href="https://contentarena.com/web/faq/" target="_blank">Cookie Policy</a></span>
+                    <span> <a href="https://contentarena.com/web/privacy-policy/" target="_blank">faq</a></span>
+                </p>
+            </div>
+        </div>
+
+       <div class="error-form">
+           <div class="code">Ups!</div>
+           <h3>Browser not supported</h3>
+           <h4>Currently Internet Explorer is not supported</h4>
+           <h4>Please use Chrome, Firefox, Safari, Edge or Opera to enter Content Arena</h4>
+           {#<div class="cta-container">
+               <a href="/" class="yellow-btn">GO HOME</a>
+           </div>#}
+       </div>
+    </div>
+{% endblock main_content %}

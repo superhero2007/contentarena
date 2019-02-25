@@ -1,10 +1,10 @@
-import {combineReducers} from 'redux'
-import {content} from "./content";
-import {selector} from "./selector";
+import { combineReducers } from "redux";
+import { content } from "./content";
+import { selector } from "./selector";
 
 const reducers = combineReducers({
-    content,
-    selector
+  content,
+  selector,
 });
 
-export default reducers
+export default reducers;

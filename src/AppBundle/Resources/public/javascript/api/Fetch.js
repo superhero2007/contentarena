@@ -1,68 +1,64 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
-    addRight, clearUpdateFilter, removeRight, updateCountries, updateEvent, updateExclusive,
-    updateMany, updateSport
+  addRight, clearUpdateFilter, removeRight, updateCountries, updateEvent, updateExclusive,
+  updateMany, updateSport,
 } from "../buy/actions/filterActions";
-import {test} from "../buy/actions";
-import {connect} from "react-redux";
+import { test } from "../buy/actions";
 
 class Fetch extends Component {
     static propTypes = {
-        onResponse: PropTypes.func.isRequired,
-        url: PropTypes.string.isRequired,
+      onResponse: PropTypes.func.isRequired,
+      url: PropTypes.string.isRequired,
     };
 
     state = {
-        data: {},
-        isLoading: false,
+      data: {},
+      isLoading: false,
     };
 
     _fetch = async () => {
-        const {
-            common,
-            url,
-            onResponse,
-            data = {},
-            method = 'POST',
-            headers = {
-                'Content-Type': 'application/json'
-            }
-        } = this.props;
-        const res = await fetch(common.envHostUrl + url,{
-            method: method, // or 'PUT'
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers: headers
-        });
-        const json = await res.json();
+      const {
+        common,
+        url,
+        onResponse,
+        data = {},
+        method = "POST",
+        headers = {
+          "Content-Type": "application/json",
+        },
+      } = this.props;
+      const res = await fetch(common.envHostUrl + url, {
+        method, // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers,
+      });
+      const json = await res.json();
 
-        this.setState({
-            isLoading: false,
-        });
+      this.setState({
+        isLoading: false,
+      });
 
-        onResponse(json);
+      onResponse(json);
     };
 
     componentDidMount() {
-        this.setState({ isLoading: true }, this._fetch);
+      this.setState({ isLoading: true }, this._fetch);
     }
 
     render() {
-        return (null);
+      return (null);
     }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-};
+const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => {
-    return {
-    }
-};
+const mapDispatchToProps = dispatch => ({
+});
 
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(Fetch);

@@ -151,14 +151,17 @@ class UpdateListingSubscriber implements EventSubscriber
                 if ( ($changed["status"][0]->getName() === "DRAFT" || $changed["status"][0]->getName() === "AUTO_INACTIVE" ||  $changed["status"][0]->getName() === "PENDING" )
                     && $changed["status"][1]->getName() === "APPROVED"  ){
 
-                    $users = $this->contentService->getUsersToNotify($entity);
+                    //$users = $this->contentService->getUsersToNotify($entity);
 
-                    foreach ($users as $user){
-                        /* @var User $user */
-                        if($user->isReceivePreferenceNotifications() != null && $user->isReceivePreferenceNotifications() ) {
-                            $this->mailer->listingMatch($entity, $user);
-                        }
-                    }
+                    //foreach ($users as $user){
+                    //    /* @var User $user */
+                    //    if($user->isReceivePreferenceNotifications() != null && $user->isReceivePreferenceNotifications() ) {
+                    //        $this->mailer->listingMatch($entity, $user);
+                    //    }
+                    //}
+
+                    // Notify admins
+                    $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity);
                 }
             }
         }

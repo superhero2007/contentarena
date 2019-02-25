@@ -9,10 +9,45 @@ sell:
                 placeholder: 'Describe your sports event(s) here. E.g. competition details, history, viewing rates - anything that potential buyers may find interesting(5000 characters maximum)'
 
 
+email:
+    internal:
+        user:
+            registers:
+                subject: User has logged in for the first time
+                content: User has logged in for the first time.
+            listing:
+                submit:
+                    subject: A listing was submitted
+                    content: A listing was submitted.
+                deactivate:
+                    subject: A listing was deactivated
+                    content: A listing was deactivated.
+                draft:
+                    subject: A listing was drafted
+                    content: A listing was drafted.
+                archive:
+                    subject: A listing was archived
+                    content: A listing was archived.
+            bid:
+                place:
+                    subject: A bid was placed
+                    content: A bid was placed
+                accept:
+                    subject: A bid was accepted - deal closed
+                    content: A bid was accepted - deal closed
+                decline:
+                    subject: A bid was declined
+                    content: A bid was declined
+            fixed:
+                close:
+                    subject: A right was acquired for a fixed fee - deal closed
+                    content: A right was acquired for a fixed fee - deal closed
+
+
 notifications:
     general:
         message:
-            new: You have received a new message on %listingName%.
+            new: You have received a new message for %listingName%.
     seller:
         listing:
             approved: The listing %listingName% was published.
@@ -21,16 +56,16 @@ notifications:
             deactivated: The listing %listingName% was deactivated.
             sold: The listing %listingName% has sold out.
         bid:
-            received: You received a new bid on listing %listingName%.
-            accepted: '%userFullName% accepted a bid on listing %listingName%.'
-            closed: A new deal was closed on listing %listingName%.
+            received: You received a new bid for listing %listingName%.
+            accepted: '%userFullName% accepted a bid for listing %listingName%.'
+            closed: A new deal was closed for listing %listingName%.
     buyer:
         listing:
-            matcth: 'A new listing was published that matches your preferences: %listingName%'
+            match: 'A new listing was published that matches your preferences: %listingName%'
         bid:
-            placed: '%userFullName% placed a bid on %listingName%.'
-            declined: A bid on listing %listingName% was declined.
-            accepted: A bid on listing %listingName% was accepted.
-            closed: '%userFullName% closed a deal on listing %listingName%.'
+            placed: '%userFullName% placed a bid for %listingName%.'
+            declined: A bid for listing %listingName% was declined.
+            accepted: A bid for listing %listingName% was accepted.
+            closed: '%userFullName% closed a deal for listing %listingName%.'
 
 

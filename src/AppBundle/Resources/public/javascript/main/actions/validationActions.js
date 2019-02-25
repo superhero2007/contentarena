@@ -1,23 +1,21 @@
-import {validationTypes} from "../reducers/validation";
+import { validationTypes } from "../reducers/validation";
 
 const scrollToError = () => {
-    setTimeout(() => {
-        const error = document.querySelectorAll('.is-invalid')[0];
-        if (error) error.scrollIntoView({behavior: 'smooth', block: 'start'})
-    }, 1)
+  setTimeout(() => {
+    const error = document.querySelectorAll(".is-invalid")[0];
+    if (error) error.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 1);
 };
 
 
 export const enableValidation = () => {
-    scrollToError();
+  scrollToError();
 
-    return {
-        type: validationTypes.ENABLE_VALIDATION,
-    }
+  return {
+    type: validationTypes.ENABLE_VALIDATION,
+  };
 };
 
-export const disableValidation = () => {
-    return {
-        type: validationTypes.DISABLE_VALIDATION,
-    }
-};
+export const disableValidation = () => ({
+  type: validationTypes.DISABLE_VALIDATION,
+});

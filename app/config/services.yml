@@ -53,12 +53,35 @@ services:
     #         $someArgument: 'some_value'
 
     AppBundle\Service\EmailService:
-        arguments: [ '@doctrine.orm.entity_manager', '@twig','@mailer', '%carena_host_url%']
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $twig : '@twig'
+            $mailer: '@mailer'
+            $translator: '@translator'
+            $hostUrl: '%carena_host_url%'
+            $infoAddress : '%app.email_info%'
+            $supportAddress : '%app.email_support%'
+            $bccAlexAddress : '%app.email_bcc_alex%'
+            $bccLasseAddress : '%app.email_bcc_lasse%'
+            $alertsAddress : '%app.email_alerts%'
+
+    AppBundle\Service\JobService:
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $emailService: '@AppBundle\Service\EmailService'
+            $router: '@router'
+            $accountIncompleteTime: '%job_account_incomplete_time%'
+            $accountIncompleteFromInviteTime: '%job_account_incomplete_from_invite_time%'
 
     app.command.send_email:
             class: AppBundle\Command\SendEmail
             tags:
                 -  { name: console.command }
+
+    app.command.jobs:
+                class: AppBundle\Command\JobCommand
+                tags:
+                    -  { name: console.command }
 
     app.form.registration:
             class: AppBundle\Form\RegistrationFormType
@@ -108,3 +131,9 @@ services:
         arguments: ['@AppBundle\Service\ContentService','@AppBundle\Service\EmailService', '@doctrine.orm.entity_manager', '@service_container', '@AppBundle\Service\NotificationService']
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    browser_unsupported.listener:
+          class: AppBundle\EventListener\BrowserUnsupportedExceptionListener
+          tags:
+              - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+          arguments: [ '@router', '@service_container' ]

@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Content;
 use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\ContentService;
+use AppBundle\Service\EmailService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -206,33 +207,41 @@ class ApiListingController extends Controller
 
     /**
      * @Route("/api/listings/deactivate", name="apiListingsDeactivate")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @param EmailService $emailService
+     * @return mixed|string|Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function apiListingsDeactivate(Request $request, ContentService $contentService){
+    public function apiListingsDeactivate(Request $request, ContentService $contentService, EmailService $emailService){
 
         $user = $this->getUser();
         $listing = $contentService->deactivateListing($request->get('customId'), $user);
-        $context = SerializationContext::create()->setGroups(array('board'));
+        $emailService->internalUserListingDeactivate($user,$listing);
         $data = array('success'=>true, 'listing' => $listing);
-        $serialized = $this->serialize($data,$context);
-        $response = new Response($serialized);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->getSerializedResponse($data, array('board'));
 
     }
 
     /**
      * @Route("/api/listings/archive", name="apiListingsArchive")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @param EmailService $emailService
+     * @return mixed|string|Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function apiListingsArchive(Request $request, ContentService $contentService){
+    public function apiListingsArchive(Request $request, ContentService $contentService, EmailService $emailService){
 
         $user = $this->getUser();
         $listing = $contentService->archiveListing($request->get('customId'), $user);
-        $context = SerializationContext::create()->setGroups(array('board'));
+        $emailService->internalUserListingArchive($user,$listing);
         $data = array('success'=>true, 'listing' => $listing);
-        $serialized = $this->serialize($data,$context);
-        $response = new Response($serialized);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return $this->getSerializedResponse($data, array('board'));
 
     }
 

@@ -1,0 +1,145 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build_fe:
+    docker:
+      - image: circleci/node:7.10
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # Lint FE code
+      - run:
+          name: Linting
+          command: npm run lint
+
+      # TODO Run Tests
+
+      # Build project with different configuration based on
+      # the current branch
+      - run:
+          name: Building
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "development" ]; then
+                npm run dev
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+                npm run prod
+            else
+                npm run dev
+            fi
+      # Cache the dist folder for the deploy job
+      - save_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+              - web/assets
+
+  deploy:
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      # Restore cache from the build job which contains the
+      # dist folder that needs to be deployed
+      - restore_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+
+      - add_ssh_keys:
+          fingerprints:
+            - "12:8d:60:df:e4:7e:04:e8:05:6e:54:67:a5:bd:6b:5d"
+
+      - run:
+          name: Create known_hosts
+          command: cat > ~/.ssh/known_hosts
+
+      - run:
+          name: Keyscan known_hosts
+          command: ssh-keyscan -H sl663.web.hostpoint.ch >> ~/.ssh/known_hosts
+          
+      - run:
+          name: Upload FE files over SSH
+          command: |
+            scp -r ~/project/web/assets "hogmorem@sl663.web.hostpoint.ch:/home/hogmorem/www/dev/web"
+      - run:
+          name: Run ENV deploy task
+          command: ssh hogmorem@sl663.web.hostpoint.ch ./deploy-dev
+
+deploy:
+    docker:
+      - image: circleci/node:7.10
+    steps:
+      # Restore cache from the build job which contains the
+      # dist folder that needs to be deployed
+      - restore_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+
+      - add_ssh_keys:
+          fingerprints:
+            - "12:8d:60:df:e4:7e:04:e8:05:6e:54:67:a5:bd:6b:5d"
+
+      - run:
+          name: Create known_hosts
+          command: cat > ~/.ssh/known_hosts
+
+      - run:
+          name: Keyscan known_hosts
+          command: ssh-keyscan -H sl663.web.hostpoint.ch >> ~/.ssh/known_hosts
+
+      - run:
+          name: Upload FE files over SSH
+          command: |
+            scp -r ~/project/web/assets "hogmorem@sl663.web.hostpoint.ch:/home/hogmorem/www/api/web"
+      - run:
+          name: Run ENV deploy task
+          command: ssh hogmorem@sl663.web.hostpoint.ch ./deploy-api
+
+workflows:
+  version: 2
+  # The build and deploy workflow
+  build_and_deploy_dev:
+    jobs:
+      - build_fe:
+          filters:
+            branches:
+              only:
+                - development
+      # The deploy job will only run on the filtered branches and
+      # require the build job to be successful before it starts
+      - deploy:
+          requires:
+            - build_fe
+          filters:
+            branches:
+              only:
+                - development
+  build_and_deploy_test:
+      jobs:
+        - build_fe:
+            filters:
+              branches:
+                only:
+                  - master
+        # The deploy job will only run on the filtered branches and
+        # require the build job to be successful before it starts
+        - deploy_test:
+            requires:
+              - build_fe
+            filters:
+              branches:
+                only:
+                  - master

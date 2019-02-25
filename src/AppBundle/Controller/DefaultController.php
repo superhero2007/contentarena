@@ -3,8 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Content;
+use AppBundle\Exception\BrowserNotSupportedException;
+use AppBundle\Exception\BrowserUnsupportedException;
 use AppBundle\Service\UserService;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\UserBundle\Model\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -17,11 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use Gettext\Translations;
-
-
 
 class DefaultController extends BaseController
 {
@@ -32,6 +29,14 @@ class DefaultController extends BaseController
     public function homeAction(Request $request)
     {
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+    }
+
+    /**
+     * @Route("/unsupported", name="unsupported")
+     */
+    public function unsupportedAction()
+    {
+        return $this->render('browser.unsupported.html.twig');
     }
 
     /**
@@ -60,7 +65,6 @@ class DefaultController extends BaseController
                 return $this->redirect("/registration?email=". $email);
             }
         }
-
     }
 
     /**
@@ -68,6 +72,7 @@ class DefaultController extends BaseController
      *     "/{reactRouting}",
      *     requirements={"reactRouting"="terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage", defaults={"reactRouting": null})
+     *
      */
     public function indexAction(Request $request)
     {

@@ -1,79 +1,96 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import SignInForm from './../components/SignInForm';
-import RecoverPassword from './../components/RecoverPassword';
-import ReviewEmail from './../components/ReviewEmail';
-import SignUpForm from './../components/SignUpForm';
-import ResetPassword from './../components/ResetPassword';
-import SignUpSuccessfully from './../components/SignUpSuccessfully';
-import { LOGIN_VIEW_TYPE } from "@constants";
-import { contentWhiteLogo } from "./../../main/components/Icons";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import LandingHeader from "../components/LandingHeader";
+import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
+import { contentWhiteLogo } from "../../main/components/Icons";
 
 class LandingWrapper extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            currentView: this.props.currentView || LOGIN_VIEW_TYPE.LOGIN
-        };
-    };
+    this.state = {};
+  }
 
-    getMinHeight = () => this.props.minHeight[this.state.currentView]; //prevent overlapping when reduce height of browser
-    handleUpdateView = (viewType) => this.setState({currentView: viewType});
+    getInTouch = () => console.warn("get in touch not ready");
+
+    handleRegisterClick = () => this.props.history.push("/registration");
 
     render() {
-        const Component = this.props.views[this.state.currentView];
-        return (
-            <div className="login-page" style={{minHeight: this.getMinHeight()}}>
-                <div className="header">
-                    <div className="logo">
-                        {contentWhiteLogo}
-                    </div>
-                    <div className="content">
-                        <p className="uk-margin">
-                            <span> <a href="https://contentarena.com/" target="_blank">{this.context.t("LOGIN_BAR_HOME")}</a></span>
-                            <span> <a href="https://contentarena.com/web/privacy-policy/" target="_blank">{this.context.t("LOGIN_BAR_PRIVACY_POLICY")}</a></span>
-                            <span> <a href="https://contentarena.com/web/terms-of-use/" target="_blank">{this.context.t("LOGIN_BAR_TERMS")}</a></span>
-                            <span> <a href="https://contentarena.com/web/privacy-policy/" target="_blank">{this.context.t("LOGIN_BAR_COOKIE_POLICY")}</a></span>
-                            <span> <a href="https://contentarena.com/web/faq/" target="_blank">{this.context.t("LOGIN_BAR_FAQ")}</a></span>
-                        </p>
-                    </div>
-                </div>
-    
-                <section className="action-form">
-                    <Component
-                        fakeAuth={this.props.fakeAuth}
-                        onViewUpdate={this.handleUpdateView}
-                        history={this.props.history}
-                        match={this.props.match}
-                    />
-                </section>
+      return (
+        <div className="landing-page">
+          <header className="landing-header-wrapper">
+            <LandingHeader currentView={LOGIN_VIEW_TYPE.LANDING} history={this.props.history} />
+
+            <main className="landing-main">
+              <div className="main-text-wrapper">
+                <p className="landing-title">{this.context.t("LANDING_SELL_BUY")}</p>
+                <p className="landing-sub-title">{this.context.t("LANDING_SPORTS_RIGHTS")}</p>
+              </div>
+              <div className="main-registration-wrapper">
+                <input type="text" placeholder={this.context.t("LANDING_EMAIL_ADDRESS")} />
+                <button className="yellow-button" onClick={this.handleRegisterClick}>{this.context.t("LANDING_REGISTER")}</button>
+              </div>
+            </main>
+          </header>
+
+          <section className="landing-content" />
+          <section className="landing-content-with-triangle">
+            <p className="landing-triangle-text">
+              <span onClick={this.getInTouch}>{this.context.t("LENDING_GET_IN_TOUCH")}</span>
+            </p>
+            <div className="outer" />
+          </section>
+
+          <section className="landing-get-in-touch">
+            <a href="mailto:info@contentarena.com">
+              <i className="fa fa-4x fa-envelope-o" />
+              <span className="email">info@contentarena.com</span>
+            </a>
+          </section>
+
+          <footer className="landing-footer">
+            <div className="footer-wrapper">
+              <a className="footer-logo" href={LANDING_LINKS.HOME} target="_self">
+                {contentWhiteLogo}
+              </a>
+              <div className="footer-links">
+                <p>
+                  <span className="footer-company-name">{this.context.t("LANDING_COMPANY")}</span>
+                  <span>
+                    {" "}
+                    <a href={LANDING_LINKS.PRIVACY}>{this.context.t("LOGIN_BAR_PRIVACY_POLICY")}</a>
+                  </span>
+                  <span>
+                    {" "}
+                    <a href={LANDING_LINKS.TERMS}>{this.context.t("LOGIN_BAR_TERMS")}</a>
+                  </span>
+                  <span>
+                    {" "}
+                    <a href={LANDING_LINKS.COOKIE}>{this.context.t("LOGIN_BAR_COOKIE_POLICY")}</a>
+                  </span>
+                  <span>
+                    {" "}
+                    <a href={LANDING_LINKS.FAQ}>{this.context.t("LOGIN_BAR_FAQ")}</a>
+                  </span>
+                </p>
+              </div>
+              <div className="footer-contact">
+                <a href="https://www.linkedin.com/company/11294986/" className="linkedin-icon" target="_blank">
+                  <i className="fa fa-linkedin" />
+                </a>
+                <a href="mailto:info@contentarena.com" className="email-icon" target="_blank">
+                  <i className="fa fa-envelope-o" />
+                </a>
+              </div>
             </div>
-        );
+          </footer>
+        </div>
+      );
     }
 }
 
 LandingWrapper.contextTypes = {
-    t: PropTypes.func.isRequired
-};
-
-LandingWrapper.defaultProps = {
-    views: {
-        [LOGIN_VIEW_TYPE.LOGIN]: SignInForm,
-        [LOGIN_VIEW_TYPE.RECOVER]: RecoverPassword,
-        [LOGIN_VIEW_TYPE.REVIEW]: ReviewEmail,
-        [LOGIN_VIEW_TYPE.REGISTER]: SignUpForm,
-        [LOGIN_VIEW_TYPE.REGISTERED]: SignUpSuccessfully,
-        [LOGIN_VIEW_TYPE.RESET_PASSWORD]: ResetPassword
-    },
-    minHeight: {
-        [LOGIN_VIEW_TYPE.LOGIN]: 770,
-        [LOGIN_VIEW_TYPE.RECOVER]: 500,
-        [LOGIN_VIEW_TYPE.REVIEW]: 500,
-        [LOGIN_VIEW_TYPE.REGISTER]: 900,
-        [LOGIN_VIEW_TYPE.REGISTERED]: 500,
-        [LOGIN_VIEW_TYPE.RESET_PASSWORD]: 550
-    }
+  t: PropTypes.func.isRequired,
 };
 
 export default LandingWrapper;

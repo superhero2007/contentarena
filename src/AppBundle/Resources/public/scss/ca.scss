@@ -168,7 +168,7 @@ button {
 .listing-summary {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   border-bottom: 4px solid #D4D8DE;
   padding-bottom: 20px;
   margin-bottom: 20px;
@@ -1035,11 +1035,6 @@ button {
 
   .step-content-container {
     .base-input {
-      input {
-        font-weight: bold;
-        font-size: 15px;
-        color: #333;
-      }
 
       .Select {
         margin-left: 5px;
@@ -1050,7 +1045,6 @@ button {
 
           .Select-value {
             line-height: 34px !important;
-            font-weight: bold;
           }
 
           .Select-input {
@@ -1246,7 +1240,7 @@ button {
 
       .base-input {
         float: left;
-        //max-width: 435px;
+
         &:nth-child(2) {
           margin-left: 31px;
         }
@@ -1267,6 +1261,9 @@ button {
 
   .Select-placeholder {
     line-height: 34px;
+    font-style: italic;
+    font-size: 15px;
+    color: #ccc;
   }
 }
 

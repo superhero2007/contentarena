@@ -26,6 +26,13 @@ parameters:
     uploads_uri_prefix: 'uploads'
     uploads_tmp_uri_prefix: 'tmpUploads'
     admin_uploads_uri: ''
+    job_account_incomplete_time: '+2 hours'
+    job_account_incomplete_from_invite_time: '+72 hours'
+    app.email_info: 'info@contentarena.com'
+    app.email_support: 'support@contentarena.com'
+    app.email_alerts: 'alerts@contentarena.com'
+    app.email_bcc_alex: 'alexander@contentarena.com'
+    app.email_bcc_lasse: 'lasse@contentarena.com'
 
 framework:
     #esi: ~
@@ -146,3 +153,4 @@ jms_serializer:
             KnpPaginatorBundle:
                 namespace_prefix:  "Knp\\Bundle\\PaginatorBundle"
                 path: '%kernel.root_dir%/Resources/serializer/Knp'
+

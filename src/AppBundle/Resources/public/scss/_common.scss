@@ -3,6 +3,7 @@
 
 body {
   background: #eee;
+  margin: 0;
 }
 
 .ca-btn {
@@ -88,6 +89,38 @@ body {
     font-size: 12px;
     padding: 4px 1rem;
   }
+
+  &.large {
+    padding: 15px 35px;
+    font-size: 16px;
+  }
+}
+
+.ca-form-control {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+  &:focus {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: #e9ecef;
+    opacity: 1
+  }
 }
 
 textarea.representation-textarea {
@@ -102,11 +135,17 @@ textarea.representation-textarea {
   font-family: $font-stack;
 }
 
+textarea,
 input {
   &::placeholder{
     font-style: italic ;
     color: #CCCCCC;
   }
+}
+
+hr {
+  color: rgba(#999999, .5);
+  width: 100%;
 }
 
 input[type="radio"].ca-radio {
@@ -227,33 +266,6 @@ i.fa.ca-tooltip {
   padding: 0 5px;
   font-size: 21px;
   vertical-align: middle;
-}
-
-.ca-form-control {
-  display: block;
-  width: 100%;
-  height: 44px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-
-  &:focus {
-    border-color: #66afe9;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
-  }
-
-  &:disabled,
-  &[readonly] {
-    background-color: #e9ecef;
-    opacity: 1
-  }
 }
 
 .CaTooltip {
@@ -401,6 +413,10 @@ i.fa.ca-tooltip {
 
 .text-left {
   text-align: left;
+}
+
+.text-uppercase {
+  text-transform: uppercase !important;
 }
 
 .no-border {
@@ -556,6 +572,10 @@ a[disabled] {
   }
 }
 
+.text-success {
+  color: #28a745;
+}
+
 .text-danger {
   color: #dc3545;
 }
@@ -613,6 +633,7 @@ a[disabled] {
 }
 
 //todo: apply to all urls
+.ca-link,
 a.ca-link {
   color: #3399FF;
   text-decoration: none;
@@ -633,6 +654,34 @@ a.ca-link {
     margin: 20px auto;
     outline: none;
     z-index: 9999;
+    background-color: rgb(255, 255, 255);
+  }
+
+  .ca-modal-title {
+    display: flex;
+    align-items: center;
+    color: $color-blue;
+    font-size: 22px;
+    padding: 15px;
+    line-height: 1;
+
+    .fa {
+      font-size: 24px;
+
+      &:first-child {
+        margin-right: 15px;
+      }
+    }
+
+    .close-icon {
+      color: #CCCCCC;
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+
+  .ca-modal-body {
+    padding: 0 15px 15px;
   }
 
   .buttons {
@@ -647,7 +696,7 @@ a.ca-link {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(0,0,0, 0.5);
     overflow-y: scroll;
     z-index: 9998;
   }
@@ -655,12 +704,16 @@ a.ca-link {
 
 .ca-loader {
   width: 100%;
-  height: 100%;
+  //height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 0 10px;
+
+  b {
+    margin-top: 10px;
+  }
 
   .spinner {
     border: 12px solid #E7C254;
@@ -670,9 +723,6 @@ a.ca-link {
     height: 90px;
     animation: spin 1.5s linear infinite;
     margin: 0 auto 0;
-    b{
-      margin-top: 10px;
-    }
 
     &.small {
       width: 55px;
@@ -688,6 +738,70 @@ a.ca-link {
       border: 5px solid #E7C254;
       border-top: 5px solid #333;
       animation: spin 1s linear infinite;
+    }
+  }
+}
+
+.ca-share-listing {
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1;
+
+  .fa {
+    color: $color-blue;
+    font-size: 18px;
+    margin-right: 7px;
+  }
+}
+
+.ca-tags-input {
+  height: inherit;
+
+  &.react-tagsinput--focused {
+    border-color:  rgba(204, 204, 204, 0.48);
+  }
+
+  & > span {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .react-tagsinput-input {
+    width: inherit;
+    font-size: 15px;
+  }
+
+  .react-tagsinput-remove {
+    color: #666666;
+    margin-left: 5px;
+    font-size: 21px;
+  }
+
+  .react-tagsinput-tag {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    line-height: 1;
+    height: 30px;
+    border: 1px solid #DFDDD8;
+    background-color: #DFDDD8;
+    font-size: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #666666;
+    border-radius: 3px;
+
+    &:before {
+      content: '\f007';
+      display: inline-block;
+      font: normal normal normal 16px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #666666;
+      margin-right: 10px;
     }
   }
 }

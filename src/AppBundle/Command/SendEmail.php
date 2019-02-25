@@ -163,6 +163,18 @@ class SendEmail extends ContainerAwareCommand
                 $this->emailService->sendUserInvite($params);
                 break;
 
+            case "account_activated":
+                $this->emailService->accountActivated($user);
+                break;
+
+            case "account_incomplete":
+                $this->emailService->accountIncomplete($user);
+                break;
+
+            case "account_incomplete_from_invite":
+                $this->emailService->accountIncompleteFromInvite($user, $user, $confirmationUrl);
+                break;
+
             case "listing_find_match":
 
                 $territories = array();

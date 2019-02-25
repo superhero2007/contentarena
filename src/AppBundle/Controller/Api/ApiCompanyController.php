@@ -4,6 +4,7 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\EmailService;
+use AppBundle\Service\JobService;
 use AppBundle\Service\TestService;
 use AppBundle\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,9 +30,16 @@ class ApiCompanyController extends Controller
      * @param Request $request
      * @param UserService $userService
      * @param EmailService $emailService
+     * @param JobService $jobService
      * @return mixed|string|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function inviteCompanyUsers(Request $request, UserService $userService, EmailService $emailService)
+    public function inviteCompanyUsers(
+        Request $request,
+        UserService $userService,
+        EmailService $emailService,
+        JobService $jobService
+    )
     {
         $user = $this->getUser();
         $users = $request->get("users");
@@ -50,6 +58,7 @@ class ApiCompanyController extends Controller
             );
 
             $emailService->sendUserInvite($params);
+            $jobService->createAccountIncompleteFromInviteJob($invitedUser, $user);
         }
 
         return $this->getSerializedResponse($filteredUsers, array('companyUsers') );

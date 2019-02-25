@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Notification;
@@ -145,7 +146,7 @@ class NotificationService
     public function listingBidPlacedNotifications( Content $listing, User $user ){
 
         /* @var Company $company*/
-        $company = $listing->getCompany();
+        $company = $user->getCompany();
         $parameters = array(
             "%listingName%" => $listing->getName(),
             "%userFullName%" => $user->getFullName()
@@ -174,7 +175,7 @@ class NotificationService
     public function listingBidClosedBuyerNotifications( Content $listing, User $user){
 
         /* @var Company $company*/
-        $company = $listing->getCompany();
+        $company = $user->getCompany();
         $parameters = array(
             "%listingName%" => $listing->getName(),
             "%userFullName%" => $user->getFullName()
@@ -186,10 +187,10 @@ class NotificationService
 
     }
 
-    public function listingBidAcceptedBuyerNotifications( Content $listing){
+    public function listingBidAcceptedBuyerNotifications( Content $listing, Bid $bid){
 
         /* @var Company $company*/
-        $company = $listing->getCompany();
+        $company = $bid->getBuyerCompany();
         $parameters = array(
             "%listingName%" => $listing->getName()
         );
@@ -200,10 +201,10 @@ class NotificationService
 
     }
 
-    public function listingBidDeclinedBuyerNotifications( Content $listing){
+    public function listingBidDeclinedBuyerNotifications( Content $listing, Bid $bid){
 
         /* @var Company $company*/
-        $company = $listing->getCompany();
+        $company = $bid->getBuyerCompany();
         $parameters = array(
             "%listingName%" => $listing->getName()
         );
@@ -216,10 +217,12 @@ class NotificationService
 
     public function getNotifications(User $user){
         return $this->em->getRepository('AppBundle:Notification')->findBy(array(
-            "user" => $user
-        ), null, 10);
+            "user" => $user,
+            "visited" => false
+        ), array(
+            "createdAt" => "DESC"
+        ));
     }
-
 
     public function markNotificationAsVisited($notificationId) {
         $notification = $this->em->getRepository('AppBundle:Notification')->findOneBy(array(
