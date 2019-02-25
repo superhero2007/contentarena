@@ -113,7 +113,11 @@ workflows:
   # The build and deploy workflow
   build_and_deploy_dev:
     jobs:
-      - build_fe
+      - build_fe:
+          filters:
+            branches:
+              only:
+                - development
       # The deploy job will only run on the filtered branches and
       # require the build job to be successful before it starts
       - deploy:
@@ -125,7 +129,11 @@ workflows:
                 - development
   build_and_deploy_test:
       jobs:
-        - build_fe
+        - build_fe:
+            filters:
+              branches:
+                only:
+                  - master
         # The deploy job will only run on the filtered branches and
         # require the build job to be successful before it starts
         - deploy_test:
