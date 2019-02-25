@@ -42,6 +42,7 @@ security:
         - { path: ^/api/users/password/update, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user/code, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/company/unique, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/user/activate, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/search/countries/all, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/search/sports/all, role: IS_AUTHENTICATED_ANONYMOUSLY }
