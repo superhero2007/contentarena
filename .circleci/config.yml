@@ -79,7 +79,7 @@ jobs:
           name: Run ENV deploy task
           command: ssh hogmorem@sl663.web.hostpoint.ch ./deploy-dev
 
-deploy:
+  deploy_test:
     docker:
       - image: circleci/node:7.10
     steps:
