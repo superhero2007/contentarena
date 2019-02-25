@@ -49,7 +49,7 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      userLoading: false,
       updatingUser: false,
       editCompanyInfo: false,
       user: {},
@@ -57,13 +57,52 @@ class Register extends React.Component {
       password: "",
       passwordCheck: "",
       isPassValid: false,
+      isCompanyValid: true,
+      isCompanyLoading: false,
     };
   }
 
-  componentDidMount() {
-    this.setState({ loading: true });
+  storeUserObj = (user) => {
+    sessionStorage.setItem("registering_user", JSON.stringify(user));
+  };
 
-    const { history, match } = this.props;
+  getUserObj = () => {
+    const user = sessionStorage.getItem("registering_user");
+    if (!user) return user;
+    return JSON.parse(user);
+  };
+
+  getUserInfoByActivateKey = async (code, step) => {
+    this.setState({ userLoading: true });
+    try {
+      let user = await ContentArena.ContentApi.getUserInfoByActivationCode(code);
+      if (user) {
+        user.activationCode = code;
+        if (!user.company) {
+          user.company = { country: {} };
+        }
+
+        if (user.preferredProfile === undefined) {
+          user.preferredProfile = "BOTH";
+        }
+      }
+      this.storeUserObj(user);
+      this.setState({
+        userLoading: false,
+        user,
+        step,
+      });
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  componentDidMount() {
+    const {
+      history,
+      match,
+      register,
+    } = this.props;
 
     const { activationCode } = match.params;
     const { step } = match.params;
@@ -75,25 +114,8 @@ class Register extends React.Component {
       return;
     }
 
-    if ((step === "welcome" && !sessionUser) || sessionUser.activationCode !== activationCode) {
-      ContentArena.ContentApi.getUserInfoByActivationCode(activationCode).done((user) => {
-        if (user) {
-          user.activationCode = activationCode;
-          if (!user.company) {
-            user.company = { country: {} };
-          }
-
-          if (user.preferredProfile === undefined) {
-            user.preferredProfile = "BOTH";
-          }
-        }
-        this.storeUserObj(user);
-        this.setState({
-          loading: false,
-          user,
-          step,
-        });
-      });
+    if ((step === "welcome" && !sessionUser) || sessionUser && sessionUser.activationCode !== activationCode) {
+      this.getUserInfoByActivateKey(activationCode, step).catch((err) => {});
     } else {
       this.setState({
         loading: false,
@@ -101,217 +123,214 @@ class Register extends React.Component {
         step,
       });
     }
-    jQuery("body, .marketplace-container").css("background-color", "#eee"); // todo: remove this when other page redesign ready
   }
 
-  componentWillUnmount() {
-    jQuery("body, .marketplace-container").removeAttr("style"); // todo: remove this when other page redesign ready
-  }
+  updateInfo = () => {
+    const { user, password } = this.state;
+    this.setState({ updatingUser: true });
+    ContentArena.ContentApi.activateUser(user, password).done(() => {
+      sessionStorage.setItem("registering_user", null);
+      this.setState({ updated: true, updatingUser: false });
+      location.href = "/marketplace";
+    });
+  };
 
-    /**
-     * Saves user object in session storage. Object must be converted to string
-     * @param user
-     */
-    storeUserObj = (user) => {
-      sessionStorage.setItem("registering_user", JSON.stringify(user));
-    };
+  handlePasswordValid = isValid => this.setState({ isPassValid: isValid });
 
-    /**
-     * Gets user object from session storage
-     * @returns {*}
-     */
-    getUserObj = () => {
-      const user = sessionStorage.getItem("registering_user");
-      if (!user) return user;
-      return JSON.parse(user);
-    };
+  invalidUser = () => {
+    const { user } = this.state;
+    return user.firstName === ""
+          || user.firstName === null
+          || user.lastName === ""
+          || user.lastName === null
+          || user.email === ""
+          || user.email === null
+          || user.phone === null
+          || user.phone === undefined
+          || user.phone === "";
+  };
 
-    updateInfo = () => {
-      const { user, password } = this.state;
-      this.setState({ updatingUser: true });
-      ContentArena.ContentApi.activateUser(user, password).done(() => {
-        sessionStorage.setItem("registering_user", null);
-        this.setState({ updated: true, updatingUser: false });
-        location.href = "/marketplace";
+  invalidCompany = () => {
+    const { user, isCompanyValid } = this.state;
+    return user === null
+          || user.company.city === ""
+          || user.company.city === null
+          || user.company.city === undefined
+          || user.company.address === null
+          || user.company.address === ""
+          || user.company.address === undefined
+          || user.company.zip === null
+          || user.company.zip === ""
+          || user.company.zip === undefined
+          || user.company.country === null
+          || user.company.country === undefined
+          || user.company.country.name === undefined
+          || user.company.legalName === undefined
+          || user.company.legalName === null
+          || user.company.legalName === ""
+          || !isCompanyValid;
+  };
+
+  updateUser = (prop, value) => {
+    const { user } = this.state;
+    user[prop] = value;
+    this.storeUserObj(user);
+    this.setState({ user });
+  };
+
+  updateCompany = (prop, value) => {
+    const { user } = this.state;
+    if (prop === "legalName" && !this.state.isCompanyValid) {
+      this.state.isCompanyValid = true;
+    }
+    user.company[prop] = value;
+    this.storeUserObj(user);
+    this.setState({ user });
+  };
+
+  handleSellerSports = (selection) => {
+    const { user } = this.state;
+    user.preferredSellerSports = selection.sports;
+    user.preferredSellerAllSports = selection.all;
+    user.preferredSellerOtherSport = selection.other;
+    this.storeUserObj(user);
+    this.setState({ user });
+  };
+
+  handleBuyerSports = (selection) => {
+    const { user } = this.state;
+    user.preferredBuyerSports = selection.sports;
+    user.preferredBuyerAllSports = selection.all;
+    user.preferredBuyerOtherSport = selection.other;
+    this.storeUserObj(user);
+    this.setState({ user });
+  };
+
+  completeButtonDisabled = () => {
+    const { user } = this.state;
+    return (user.preferredProfile !== "SELLER"
+      && ((!user.preferredBuyerOtherSport
+        && !user.preferredBuyerAllSports
+        && user.preferredBuyerSports
+        && user.preferredBuyerSports.length === 0)
+      || user.preferredBuyerCountries && user.preferredBuyerCountries.length === 0))
+      || (user.preferredProfile !== "BUYER"
+      && (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0));
+  };
+
+  goToNextStep = (step) => {
+    const { history, match } = this.props;
+    const { activationCode } = match.params;
+    history.push(`/register/${activationCode}/${step}`);
+  };
+
+  handleValidateCompany = () => {
+    this.setState({ isCompanyLoading: true });
+    const { legalName, id = null } = this.state.user.company;
+    ContentArena.Api.isCompanyUnique(legalName, id)
+      .then(({ data }) => {
+        this.setState({ isCompanyValid: data.isCompanyValid, isCompanyLoading: false });
+        if (data.isCompanyValid) {
+          this.goToNextStep("password");
+        }
       });
-    };
+  };
 
-    handlePasswordValid = isValid => this.setState({ isPassValid: isValid });
+  render() {
+    const { match, location, common } = this.props;
+    const {
+      updatingUser,
+      password,
+      passwordCheck,
+      isPassValid,
+      updated,
+      terms,
+      privacy,
+      step,
+      userLoading,
+      isCompanyValid,
+      isCompanyLoading,
+    } = this.state;
 
-    invalidUser = () => {
-      const { user } = this.state;
-      return user.firstName === ""
-            || user.firstName === null
-            || user.lastName === ""
-            || user.lastName === null
-            || user.email === ""
-            || user.email === null
-            || user.phone === null
-            || user.phone === undefined
-            || user.phone === "";
-    };
+    const { user } = this.state;
+    const { activationCode } = match.params;
+    const country = (user && user.company && user.company.country) ? { label: user.company.country.name, value: user.company.country.name } : null;
 
-    invalidCompany = () => {
-      const { user } = this.state;
-      return user === null
-            || user.company.city === ""
-            || user.company.city === null
-            || user.company.city === undefined
-            || user.company.address === null
-            || user.company.address === ""
-            || user.company.address === undefined
-            || user.company.zip === null
-            || user.company.zip === ""
-            || user.company.zip === undefined
-            || user.company.country === null
-            || user.company.country === undefined
-            || user.company.country.name === undefined
-            || user.company.legalName === undefined
-            || user.company.legalName === null
-            || user.company.legalName === "";
-    };
+    if (!activationCode) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/landing",
+            state: { from: location },
+          }}
+        />
+      );
+    }
 
-    updateUser = (prop, value) => {
-      const { user } = this.state;
-      user[prop] = value;
-      this.storeUserObj(user);
-      this.setState({ user });
-    };
+    if (userLoading) {
+      return (
+        <div className="settings-container">
+          <Loader loading />
+        </div>
+      );
+    }
 
-    updateCompany = (prop, value) => {
-      const { user } = this.state;
-      user.company[prop] = value;
-      this.storeUserObj(user);
-      this.setState({ user });
-    };
+    if (!user) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: location },
+          }}
+        />
+      );
+    }
 
-    handleSellerSports = (selection) => {
-      const { user } = this.state;
-      user.preferredSellerSports = selection.sports;
-      user.preferredSellerAllSports = selection.all;
-      user.preferredSellerOtherSport = selection.other;
-      this.storeUserObj(user);
-      this.setState({ user });
-    };
+    if (step === "welcome") {
+      return (
+        <div className="settings-container settings-container-welcome">
 
-    handleBuyerSports = (selection) => {
-      const { user } = this.state;
-      user.preferredBuyerSports = selection.sports;
-      user.preferredBuyerAllSports = selection.all;
-      user.preferredBuyerOtherSport = selection.other;
-      this.storeUserObj(user);
-      this.setState({ user });
-    };
-
-    completeButtonDisabled = () => {
-      const { user } = this.state;
-      return (user.preferredProfile !== "SELLER"
-            && ((!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
-                || user.preferredBuyerCountries.length === 0))
-        || (user.preferredProfile !== "BUYER"
-                && (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0));
-    };
-
-    goToNextStep = (step) => {
-      const { history, match } = this.props;
-      const { activationCode } = match.params;
-      history.push(`/register/${activationCode}/${step}`);
-    };
-
-    render() {
-      const { match, location, common } = this.props;
-      const {
-        loading,
-        updatingUser,
-        password,
-        passwordCheck,
-        isPassValid,
-        updated,
-        terms,
-        privacy,
-        step,
-      } = this.state;
-
-      const { user } = this.state;
-      const { activationCode } = match.params;
-      const country = (user && user.company && user.company.country) ? { label: user.company.country.name, value: user.company.country.name } : null;
-
-      if (!activationCode) {
-        return (
-          <Redirect
-            to={{
-              pathname: "/landing",
-              state: { from: location },
-            }}
-          />
-        );
-      }
-
-      if (loading) {
-        return (
-          <div className="settings-container">
-            <Loader loading />
+          <div className="big-title">
+            {this.context.t("SETTINGS_WELCOME")}
           </div>
-        );
-      }
-
-      if (!user) {
-        return (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        );
-      }
-
-
-      if (step === "welcome") {
-        return (
-          <div className="settings-container settings-container-welcome">
-
-            <div className="big-title">
-              {this.context.t("SETTINGS_WELCOME")}
-            </div>
-            <div className="title">
-              {this.context.t("SETTINGS_WELCOME_TEXT")}
-            </div>
-
-            <div className="setting">
-              <Steps steps={[1, 0, 0, 0, 0]} />
-              <PreferredUserProfile
-                profile={user.preferredProfile}
-                style={{
-                  border: "1px solid lightgray",
-                  padding: "30px 20px",
-                }}
-                onChange={profile => this.updateUser("preferredProfile", profile)}
-              />
-            </div>
-            <div className="buttons">
-              <button
-                onClick={() => {
-                  this.goToNextStep("questionnaire");
-                }}
-                disabled={updatingUser}
-                className="standard-button"
-              >
-                {this.context.t("SETTINGS_BUTTON_CONTINUE")}
-              </button>
-            </div>
-
+          <div className="title">
+            {this.context.t("SETTINGS_WELCOME_TEXT")}
           </div>
-        );
-      }
 
-      if (step === "questionnaire") {
-        return (
-          <div className="settings-container settings-container-welcome">
+          <div className="setting">
+            <Steps steps={[1, 0, 0, 0, 0]} />
+            <PreferredUserProfile
+              profile={user.preferredProfile}
+              style={{
+                border: "1px solid lightgray",
+                padding: "30px 20px",
+              }}
+              onChange={profile => this.updateUser("preferredProfile", profile)}
+            />
+          </div>
+          <div className="buttons">
+            <button
+              onClick={() => {
+                this.goToNextStep("questionnaire");
+              }}
+              disabled={updatingUser}
+              className="standard-button"
+            >
+              {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+            </button>
+          </div>
 
-            <div className="setting" style={{ margin: "60px auto 0" }}>
-              <Steps steps={[1, 1, 0, 0, 0]} />
-              {user.preferredProfile !== "BUYER" && (
+        </div>
+      );
+    }
+
+    if (step === "questionnaire") {
+      return (
+        <div className="settings-container settings-container-welcome">
+
+          <div className="setting" style={{ margin: "60px auto 0" }}>
+            <Steps steps={[1, 1, 0, 0, 0]} />
+            {user.preferredProfile !== "BUYER" && (
               <PreferredSportSeller
                 sports={user.preferredSellerSports}
                 style={{
@@ -322,9 +341,9 @@ class Register extends React.Component {
                 all={user.preferredSellerAllSports}
                 onChange={this.handleSellerSports}
               />
-              )}
+            )}
 
-              {user.preferredProfile !== "SELLER" && (
+            {user.preferredProfile !== "SELLER" && (
               <PreferredTerritoriesBuyer
                 territories={user.preferredBuyerCountries}
                 style={{
@@ -333,9 +352,9 @@ class Register extends React.Component {
                 }}
                 onChange={territories => this.updateUser("preferredBuyerCountries", territories)}
               />
-              )}
+            )}
 
-              {user.preferredProfile !== "SELLER" && (
+            {user.preferredProfile !== "SELLER" && (
               <PreferredSportBuyer
                 sports={user.preferredBuyerSports}
                 all={user.preferredBuyerAllSports}
@@ -346,129 +365,130 @@ class Register extends React.Component {
                 }}
                 onChange={this.handleBuyerSports}
               />
-              )}
+            )}
 
+          </div>
+          <div className="buttons">
+            <BackButton onClick={() => { this.goToNextStep("welcome"); }} />
+            <button
+              onClick={() => {
+                this.goToNextStep("personal");
+              }}
+              disabled={this.completeButtonDisabled()}
+              className="standard-button"
+            >
+              {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    if (step === "personal") {
+      return (
+        <div className="settings-container settings-container-welcome">
+
+          <div className="setting" style={{ margin: "60px auto 0" }}>
+            <Steps steps={[1, 1, 1, 0, 0]} />
+            <div className="title">
+              {this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
             </div>
-            <div className="buttons">
-              <BackButton onClick={() => { this.goToNextStep("welcome"); }} />
-              <button
-                onClick={() => {
-                  this.goToNextStep("personal");
-                }}
-                disabled={this.completeButtonDisabled()}
-                className="standard-button"
-              >
-                {this.context.t("SETTINGS_BUTTON_CONTINUE")}
-              </button>
+            <div className="row">
+              <div className="item">
+                <label>
+                  {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
+                  {" "}
+*
+                </label>
+                <input
+                  value={user.firstName}
+                  onChange={(e) => {
+                    this.updateUser("firstName", e.target.value);
+                  }}
+                />
+              </div>
+              <div className="item">
+                <label>
+                  {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
+                  {" "}
+*
+                </label>
+                <input
+                  value={user.lastName}
+                  onChange={(e) => {
+                    this.updateUser("lastName", e.target.value);
+                  }}
+                />
+              </div>
+              <div className="item">
+                <label>
+                  {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")}
+                </label>
+                <input
+                  value={user.title}
+                  onChange={(e) => {
+                    this.updateUser("title", e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="item">
+                <label>
+                  {this.context.t("SETTINGS_LABEL_USER_EMAIL")}
+                  {" "}
+*
+                </label>
+                <input
+                  value={user.email}
+                  onChange={(e) => {
+                    this.updateUser("email", e.target.value);
+                  }}
+                />
+              </div>
+              <div className="item">
+                <label>
+                  {this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")}
+                  {" "}
+*
+                </label>
+                <input
+                  value={user.phone}
+                  onChange={(e) => {
+                    this.updateUser("phone", e.target.value);
+                  }}
+                />
+              </div>
             </div>
           </div>
-        );
-      }
-
-      if (step === "personal") {
-        return (
-          <div className="settings-container settings-container-welcome">
-
-            <div className="setting" style={{ margin: "60px auto 0" }}>
-              <Steps steps={[1, 1, 1, 0, 0]} />
-              <div className="title">
-                {this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
-              </div>
-              <div className="row">
-                <div className="item">
-                  <label>
-                    {this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
-                    {" "}
-*
-                  </label>
-                  <input
-                    value={user.firstName}
-                    onChange={(e) => {
-                      this.updateUser("firstName", e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="item">
-                  <label>
-                    {this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
-                    {" "}
-*
-                  </label>
-                  <input
-                    value={user.lastName}
-                    onChange={(e) => {
-                      this.updateUser("lastName", e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="item">
-                  <label>
-                    {this.context.t("SETTINGS_LABEL_COMPANY_POSITION")}
-                  </label>
-                  <input
-                    value={user.title}
-                    onChange={(e) => {
-                      this.updateUser("title", e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="item">
-                  <label>
-                    {this.context.t("SETTINGS_LABEL_USER_EMAIL")}
-                    {" "}
-*
-                  </label>
-                  <input
-                    value={user.email}
-                    onChange={(e) => {
-                      this.updateUser("email", e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="item">
-                  <label>
-                    {this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")}
-                    {" "}
-*
-                  </label>
-                  <input
-                    value={user.phone}
-                    onChange={(e) => {
-                      this.updateUser("phone", e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="buttons">
-              <BackButton onClick={() => { this.goToNextStep("questionnaire"); }} />
-              <button
-                onClick={() => {
-                  this.goToNextStep("company");
-                }}
-                disabled={this.invalidUser()}
-                className="standard-button"
-              >
-                {this.context.t("SETTINGS_BUTTON_CONTINUE")}
-              </button>
-            </div>
+          <div className="buttons">
+            <BackButton onClick={() => { this.goToNextStep("questionnaire"); }} />
+            <button
+              onClick={() => {
+                this.goToNextStep("company");
+              }}
+              disabled={this.invalidUser()}
+              className="standard-button"
+            >
+              {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+            </button>
           </div>
-        );
-      }
+        </div>
+      );
+    }
 
-      if (step === "company") {
-        return (
-          <div className="settings-container settings-container-welcome">
+    if (step === "company") {
+      return (
+        <div className="settings-container settings-container-welcome">
 
-            <div className="setting" style={{ margin: "60px auto 0" }}>
-              <Steps steps={[1, 1, 1, 1, 0]} />
-              {user.company && (
+          <div className="setting" style={{ margin: "60px auto 0" }}>
+            <Steps steps={[1, 1, 1, 1, 0]} />
+            {user.company && (
               <React.Fragment>
                 <div className="title" style={{ marginTop: 20 }}>
                   {this.context.t("SETTINGS_TITLE_COMPANY")}
                 </div>
+                {!isCompanyValid && <div className="is-invalid">{this.context.t("SETTINGS_DUPLICATE_COMPANY")}</div>}
                 <div className="row">
                   <div className="item">
                     <label>
@@ -585,67 +605,66 @@ class Register extends React.Component {
                   </div>
                 </div>
               </React.Fragment>
-              )}
+            )}
+          </div>
+          <div className="buttons">
+            <BackButton onClick={() => { this.goToNextStep("personal"); }} />
+            <button
+              onClick={this.handleValidateCompany}
+              disabled={isCompanyLoading || this.invalidCompany()}
+              className="standard-button"
+            >
+              {this.context.t("SETTINGS_BUTTON_CONTINUE")}
+              {isCompanyLoading && <Loader loading xSmall />}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="settings-container settings-container-welcome">
+
+        <div className="setting" style={{ margin: "60px auto 0" }}>
+
+          <Steps steps={[1, 1, 1, 1, 1]} />
+          <div className="setting-password">
+            <div className="title" style={{ marginTop: 20 }}>
+              {this.context.t("REGISTER_LABEL_SELECT_PASSWORD")}
             </div>
-            <div className="buttons">
-              <BackButton onClick={() => { this.goToNextStep("personal"); }} />
-              <button
-                onClick={() => {
-                  this.goToNextStep("password");
+            <div className="subtitle">
+              {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
+            </div>
+            <div className="password">
+
+              <label>
+                {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
+              </label>
+              <input
+                type="password"
+                onChange={(e) => {
+                  this.setState({
+                    password: e.target.value,
+                  });
                 }}
-                disabled={this.invalidCompany()}
-                className="standard-button"
-              >
-                {this.context.t("SETTINGS_BUTTON_CONTINUE")}
-              </button>
+              />
+
+              <label>
+                {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
+              </label>
+              <input
+                type="password"
+                onChange={(e) => {
+                  this.setState({
+                    passwordCheck: e.target.value,
+                  });
+                }}
+              />
+
             </div>
           </div>
-        );
-      }
 
-      return (
-        <div className="settings-container settings-container-welcome">
-
-          <div className="setting" style={{ margin: "60px auto 0" }}>
-
-            <Steps steps={[1, 1, 1, 1, 1]} />
-            <div className="setting-password">
-              <div className="title" style={{ marginTop: 20 }}>
-                {this.context.t("REGISTER_LABEL_SELECT_PASSWORD")}
-              </div>
-              <div className="subtitle">
-                {this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
-              </div>
-              <div className="password">
-
-                <label>
-                  {this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
-                </label>
-                <input
-                  type="password"
-                  onChange={(e) => {
-                    this.setState({
-                      password: e.target.value,
-                    });
-                  }}
-                />
-
-                <label>
-                  {this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
-                </label>
-                <input
-                  type="password"
-                  onChange={(e) => {
-                    this.setState({
-                      passwordCheck: e.target.value,
-                    });
-                  }}
-                />
-
-              </div>
-            </div>
-
-            {password
+          {password
                         && (
                         <PasswordValidationBox
                           password={password}
@@ -653,55 +672,55 @@ class Register extends React.Component {
                           onPasswordValid={this.handlePasswordValid}
                         />
                         )}
-          </div>
-
-          <div className="setting" style={{ margin: "20px auto 0" }}>
-            <div
-              className="terms-confirm"
-              style={{
-                padding: "20px 0px",
-                margin: "0 auto",
-              }}
-            >
-              <GeneralTerms
-                activationCode={activationCode}
-                defaultChecked={terms}
-                value={terms}
-                onChange={(e) => {
-                  this.setState({ terms: e.target.checked });
-                }}
-              />
-
-              <PrivacyPolicy
-                defaultChecked={privacy}
-                value={privacy}
-                onChange={(e) => {
-                  this.setState({ privacy: e.target.checked });
-                }}
-              />
-            </div>
-
-          </div>
-
-          <div className="buttons">
-            <BackButton onClick={() => { this.goToNextStep("company"); }} />
-
-            <Loader loading={updatingUser} small>
-              {!updatingUser && !updated && (
-                <button
-                  onClick={this.updateInfo}
-                  disabled={!isPassValid || !privacy || !terms}
-                  className="standard-button"
-                  style={{ maxWidth: 300, lineHeight: "22px" }}
-                >
-                  {this.context.t("REGISTER_SUCCESS_MESSAGE")}
-                </button>
-              )}
-            </Loader>
-          </div>
         </div>
-      );
-    }
+
+        <div className="setting" style={{ margin: "20px auto 0" }}>
+          <div
+            className="terms-confirm"
+            style={{
+              padding: "20px 0px",
+              margin: "0 auto",
+            }}
+          >
+            <GeneralTerms
+              activationCode={activationCode}
+              defaultChecked={terms}
+              value={terms}
+              onChange={(e) => {
+                this.setState({ terms: e.target.checked });
+              }}
+            />
+
+            <PrivacyPolicy
+              defaultChecked={privacy}
+              value={privacy}
+              onChange={(e) => {
+                this.setState({ privacy: e.target.checked });
+              }}
+            />
+          </div>
+
+        </div>
+
+        <div className="buttons">
+          <BackButton onClick={() => { this.goToNextStep("company"); }} />
+
+          <Loader loading={updatingUser} small>
+            {!updatingUser && !updated && (
+            <button
+              onClick={this.updateInfo}
+              disabled={!isPassValid || !privacy || !terms}
+              className="standard-button"
+              style={{ maxWidth: 300, lineHeight: "22px" }}
+            >
+              {this.context.t("REGISTER_SUCCESS_MESSAGE")}
+            </button>
+            )}
+          </Loader>
+        </div>
+      </div>
+    );
+  }
 }
 
 Register.contextTypes = {
