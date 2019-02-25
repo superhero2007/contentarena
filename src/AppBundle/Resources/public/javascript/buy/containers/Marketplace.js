@@ -21,7 +21,6 @@ import { updateEvent, updateSport } from "../actions/filterActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from "../../main/utiles/localStorageHelper";
 import Loader from "../../common/components/Loader";
-import { FetchMarketplaceListings } from "../../api/marketplace";
 import Pagination from "../../main/components/Pagination";
 import { serialize } from "../../common/utils/listing";
 import localStorageEnums from "../../main/constants/localStorageEnums";

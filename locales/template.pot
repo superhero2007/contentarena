@@ -35,6 +35,14 @@ msgstr ""
 msgid "MARKETPLACE_LABEL_FILTER_SPORT"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
+msgid "SEE_LESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/components/EventFilter.js
+msgid "SEE_ALL"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/buy/components/Installments.js
 msgid "INSTALLMENT_CLOSURE_DAYS"
 msgstr ""
@@ -219,11 +227,13 @@ msgid "Watchlist"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "Publishing date"
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
+msgid "FEATURED_LISTING_BADGE_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "FEATURED_LISTING_BADGE_TEXT"
+msgid "Publishing date"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -248,14 +258,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
 msgid "MARKETPLACE_NO_RESULTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
-msgid "SEE_ALL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Marketplace.js
-msgid "SEE_LESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
@@ -483,6 +485,30 @@ msgstr ""
 msgid "LOADER_DEFAULT_TEXT"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_WITH_OTHER_USERS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_EMAIL_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_COMMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_ADD_COMMENT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_CANCEL"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT"
 msgstr ""
@@ -684,7 +710,6 @@ msgid "LOGIN_BAR_LOGIN"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
-#: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
 msgid "RECOVER_PASSWORD_ERROR"
 msgstr ""
 
@@ -703,10 +728,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
 msgid "LOGIN_REQUEST_NEW_PASSWORD"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/components/ResetPassword.js
-msgid "RESET_PASSWORD_ERROR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/ResetPassword.js
@@ -749,7 +770,6 @@ msgstr ""
 msgid "SIGN_IN_TO_CONTENT_ARENT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/landing/components/SignInForm.js
 #: src/AppBundle/Resources/public/javascript/landing/components/SignInForm.js
 msgid "SIGN_IN_FROM_PUBLIC_LISTING_MESSAGE"
 msgstr ""
@@ -870,32 +890,6 @@ msgstr ""
 msgid "LANDING_COMPANY"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LOGIN_BAR_HOME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LOGIN_BAR_PRIVACY_POLICY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LOGIN_BAR_TERMS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LOGIN_BAR_COOKIE_POLICY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LOGIN_BAR_FAQ"
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LENDING_GET_IN_TOUCH"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LANDING_COMPANY"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE"
 msgstr ""
@@ -987,10 +981,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/CommercialSalesBundle.js
 msgid "COMMERCIAL_ACTIVITY_MESSAGE_ICON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
-msgid "FEATURED_LISTING_BADGE_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
@@ -1276,6 +1266,26 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
 msgid "PAGINATION_PAGE_SIZE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PasswordValidationBox.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PasswordValidationBox.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PasswordValidationBox.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PasswordValidationBox.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_4"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/PasswordValidationBox.js
+msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/PopupCountrySelector.js
@@ -1711,10 +1721,6 @@ msgid "SETTINGS_BUTTON_BACK"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "REGISTER_ACTIVATION_CODE_NOT_FOUND"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "SETTINGS_WELCOME"
 msgstr ""
 
@@ -1815,31 +1821,6 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_RETYPE_NEW_PASSWORD"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_3"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_4"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_VALIDATE_5"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -2291,10 +2272,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_TITLE_TERMS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
-msgid "TERMS_EDIT_BUTTON_UPDATE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Watchlist.js

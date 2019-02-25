@@ -104,18 +104,21 @@
       align-items: center;
       margin-bottom: 10px;
 
-      .company-name {
-        i {
-          padding-right: 5px;
-        }
+      .ca-share-listing {
+        margin-left: auto;
+      }
 
+      .company-name {
         display: flex;
         align-items: center;
         white-space: nowrap;
         color: #2aaaec;
         font-weight: bold;
-        margin-left: auto;
         font-size: 12px;
+        margin-left: 15px;
+        i {
+          padding-right: 5px;
+        }
       }
     }
 
@@ -409,12 +412,6 @@
   }
 
   .info {
-    font-size: 14px;
-  }
-
-  .edit-button {
-    height: 29px;
-    line-height: 1;
     font-size: 14px;
   }
 

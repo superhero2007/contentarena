@@ -6,8 +6,17 @@ const instance = axios.create({
   timeout: 10000,
 });
 
-export const fetchMarketplaceListings = (data = {}, method = "POST") => instance({
-  data,
-  method,
-  url: "marketplace/listings",
-});
+const api = {
+  fetchMarketplaceListings: (data = {}, method = "POST") => instance({
+    data,
+    method,
+    url: "marketplace/listings",
+  }),
+  postShareListing: data => instance({
+    data,
+    method: "POST",
+    url: "share/listing",
+  }),
+};
+
+export default api;

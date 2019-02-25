@@ -8,6 +8,7 @@ import {
 } from "../../main/components/Icons";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
+import ShareListing from "../../common/components/ShareListing";
 
 class BoardListing extends React.Component {
   constructor(props) {
@@ -102,6 +103,7 @@ class BoardListing extends React.Component {
         hasPendingBids,
         onSubmit,
         style,
+        canShare,
       } = this.props;
 
       const {
@@ -109,7 +111,7 @@ class BoardListing extends React.Component {
       } = this.state;
 
       return (
-        <div className={className} style={style} onClick={this.hideOptions}>
+        <div className={className} style={style}>
           {showOptions && (
           <div className="options-tooltip">
             {showSubmit && (
@@ -178,17 +180,25 @@ class BoardListing extends React.Component {
             </div>
             )}
 
-            {lastAction && (
-            <div className="last-action">
-              <div style={{ fontWeight: 500 }}>
-                {this.context.t("MANAGE_LISTINGS_LAST_ACTION")}
-                {" "}
-                {`${lastAction.description} by `}
+            {canShare && (
+              <div className="option">
+                <ShareListing
+                  listingId={customId}
+                />
               </div>
-              {`${lastActionUser.firstName} ${lastActionUser.lastName}` }
-              {" "}
-              {lastActionDate && `- ${Moment(lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}`}
-            </div>
+            )}
+
+            {lastAction && (
+              <div className="last-action">
+                <div style={{ fontWeight: 500 }}>
+                  {this.context.t("MANAGE_LISTINGS_LAST_ACTION")}
+                  {" "}
+                  {`${lastAction.description} by `}
+                </div>
+                {`${lastActionUser.firstName} ${lastActionUser.lastName}` }
+                {" "}
+                {lastActionDate && `- ${Moment(lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}`}
+              </div>
             )}
 
             {owner && (

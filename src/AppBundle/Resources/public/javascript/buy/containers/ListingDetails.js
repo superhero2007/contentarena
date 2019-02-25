@@ -20,6 +20,7 @@ import EditButton from "../components/EditButton";
 import { goToStep, scrollTopMainContent } from "../../sell/actions/contentActions";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import Checkout from "./Checkout";
+import ShareListing from "../../common/components/ShareListing";
 
 class ListingDetails extends React.Component {
   constructor(props) {
@@ -375,6 +376,9 @@ class ListingDetails extends React.Component {
           { this.successScreen() }
           {!buyingMode && (
             <div className="listing-details-top-info">
+              <ShareListing
+                listingId={listing.customId}
+              />
               {profile === "BUYER" && (
               <div className="publisher">
                 <i className="fa fa-user-o icon" />

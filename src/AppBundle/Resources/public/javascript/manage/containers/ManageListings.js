@@ -205,7 +205,7 @@ class ManageListings extends React.Component {
               <div className="column-title">
                 <div>{this.context.t("MANAGE_LISTINGS_TITLE_ACTIVE")}</div>
                 {" "}
-(
+                (
                 {active.length}
 )
               </div>
@@ -234,9 +234,11 @@ class ManageListings extends React.Component {
                       ContentArena.ContentApi.archiveListing(listing.customId);
                     }}
                     onDuplicate={this.duplicate}
+                    canShare
                     {...listing}
                   />
                 ))}
+                {" "}
               </Loader>
             </div>
             {/* EXPIRED */}
@@ -244,7 +246,7 @@ class ManageListings extends React.Component {
               <div className="column-title">
                 <div>{this.context.t("MANAGE_LISTINGS_TITLE_EXPIRED")}</div>
                 {" "}
-(
+                (
                 {expired.length}
 )
               </div>
