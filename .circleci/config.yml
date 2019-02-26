@@ -39,8 +39,8 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
                 npm run dev
-            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
-                npm run dev
+            elif [ "${CIRCLE_BRANCH}" == "release" ]; then
+                npm run prod
             else
                 npm run dev
             fi
