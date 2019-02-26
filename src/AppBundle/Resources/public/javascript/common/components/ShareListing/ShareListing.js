@@ -19,8 +19,8 @@ class ShareListing extends Component {
       this.setState({ emails });
     };
 
-    handleCommentChange = (comment) => {
-      this.setState({ comment });
+    handleCommentChange = (e) => {
+      this.setState({ comment: e.target.value });
     };
 
     handleSubmit = (e) => {
