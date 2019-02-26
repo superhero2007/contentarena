@@ -38,35 +38,23 @@ Encore
     .enableSassLoader()
 
     .configureBabel((config) => {
-        config.presets.push('stage-2');
+        //config.presets.push('@babel/stage-2');
+        //config.presets.push('@babel/env');
+        //config.presets.push('@babel/react');
+        config.plugins.push('@babel/plugin-proposal-class-properties');
+        config.plugins.push('@babel/plugin-transform-regenerator');
+        config.plugins.push(["@babel/plugin-transform-async-to-generator", {
+            "module": "bluebird",
+            "method": "coroutine"
+        }]);
+        config.plugins.push('@babel/plugin-transform-runtime');
     })
 
-    .createSharedEntry('vendor', [
-
-        'jquery',
-        'webpack-jquery-ui',
-        'react',
-        'react-dom',
-        'prop-types',
-        'query-string',
-        'moment',
-        "react-datepicker",
-        "react-modal",
-        "react-popup",
-        "react-router-dom",
-        "react-redux",
-        "react-select",
-        "react-table",
-        "react-toggle",
-        "react-tooltip",
-        "react-signature-pad",
-        "react-tagsinput",
-        "redux-i18n",
-        "redux",
-        "babel-polyfill"
-    ])
+    .createSharedEntry('vendor', './src/AppBundle/Resources/public/javascript/vendor.js')
 
     .enableSourceMaps(!Encore.isProduction())
+
+    .enableSingleRuntimeChunk()
 
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()

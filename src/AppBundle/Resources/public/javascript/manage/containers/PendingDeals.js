@@ -80,23 +80,23 @@ class PendingDeals extends React.Component {
           >
             <div style={{ margin: "0 20px" }}>Bids</div>
             <div
-              style={{ margin: "0 20px", cursor: "pointer" }}
+              style={{ margin: "0 20px", cursor: "pointer", display: "flex", alignItems: "center" }}
               onClick={() => {
                 history.push("/bids/activebids");
               }}
             >
-              {tab === "activebids" && <img style={{ margin: "0px 10px 3px" }} src={this.activeBulletIcon} />}
-              {tab !== "activebids" && <img style={{ margin: "0px 10px 3px" }} src={this.bulletIcon} />}
+              {tab === "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} />}
+              {tab !== "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} />}
               {this.context.t("PENDING_BIDS_FILTER_ACTIVE")}
             </div>
             <div
-              style={{ margin: "0 20px", cursor: "pointer" }}
+              style={{ margin: "0 20px", cursor: "pointer", display: "flex", alignItems: "center" }}
               onClick={() => {
                 history.push("/bids/declinedbids");
               }}
             >
-              {tab === "declinedbids" && <img style={{ margin: "0px 10px 3px" }} src={this.activeBulletIcon} />}
-              {tab !== "declinedbids" && <img style={{ margin: "0px 10px 3px" }} src={this.bulletIcon} />}
+              {tab === "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} />}
+              {tab !== "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} />}
               {this.context.t("PENDING_BIDS_FILTER_DECLINED")}
             </div>
             <div style={{ marginLeft: "auto" }}>
