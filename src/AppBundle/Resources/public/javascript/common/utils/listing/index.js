@@ -297,9 +297,9 @@ export const contentParserFromServer = (content) => {
   return content;
 };
 
-export const sortSalesPackages = function(a, b) {
-    const c = (a, b) => ((a > b) ? 1 : ((b > a) ? -1 : 0));
-    return c(a.territories.length, b.territories.length) || c(b.name, a.name);
+export const sortSalesPackages = function (a, b) {
+  const c = (a, b) => ((a > b) ? 1 : ((b > a) ? -1 : 0));
+  return c(a.territories.length, b.territories.length) || c(b.name, a.name);
 };
 
 export const serialize = function (obj, prefix) {

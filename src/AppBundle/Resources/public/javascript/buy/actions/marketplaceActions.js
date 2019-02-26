@@ -29,7 +29,6 @@ export const fetchListings = (filter, method) => async (dispatch) => {
     );
     return res;
   } catch (error) {
-      console.log(error)
     dispatch(fetchListingRequestFailure(error.response));
     throw error.response;
   }

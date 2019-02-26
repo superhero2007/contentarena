@@ -1,11 +1,10 @@
-require ('jquery');
+require("jquery");
 require("babel-polyfill");
-//require('webpack-jquery-ui');
-require('react');
-require('react-dom');
-require('prop-types');
-require('query-string');
-require('moment');
+require("react");
+require("react-dom");
+require("prop-types");
+require("query-string");
+require("moment");
 require("react-datepicker");
 require("react-modal");
 require("react-popup");
