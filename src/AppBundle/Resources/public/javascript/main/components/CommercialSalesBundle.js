@@ -2,7 +2,6 @@ import React from "react";
 import Moment from "moment/moment";
 import ReactTable from "react-table";
 import Modal from "react-modal";
-import { DATE_FORMAT } from "@constants";
 import { PropTypes } from "prop-types";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
@@ -20,6 +19,7 @@ import {
 import { customStyles, GenericModalStyle } from "../styles/custom";
 import SendMessage from "../../common/modals/SendMessage/SendMessage";
 import ExtraTerritories from "./ExtraTerritories";
+import {BUNDLE_TERRITORIES_METHOD, DATE_FORMAT} from "../../common/constants";
 
 class CommercialSalesBundle extends React.Component {
   constructor(props) {
@@ -145,7 +145,7 @@ class CommercialSalesBundle extends React.Component {
       const closedDeals = salesBundle.bids.filter(b => b.status.name === "APPROVED");
       const openBids = salesBundle.bids.filter(b => b.status.name === "PENDING");
       const totalFee = (closedDeals.length > 0) ? closedDeals.map(b => Number(b.totalFee)).reduce((t, n) => t + n) : null;
-      const extraTerritories = (salesBundle.territoriesMethod === this.worldwideExcluding) ? salesBundle.excludedTerritories : salesBundle.territories;
+      const extraTerritories = (salesBundle.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) ? salesBundle.excludedTerritories : salesBundle.territories;
       const headers = {
         buyer: () => (
           <span>

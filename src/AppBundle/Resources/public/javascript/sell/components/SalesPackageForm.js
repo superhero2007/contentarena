@@ -14,6 +14,7 @@ import CountrySelector from "../../main/components/CountrySelector";
 import { getCurrencySymbol } from "../../main/actions/utils";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import { customStyles } from "../../main/styles/custom";
+import {BUNDLE_TERRITORIES_METHOD} from "../../common/constants";
 
 const labelStyle = { height: "35px", fontSize: "15px" };
 const installmentIconStyle = { margin: "0 10px", position: "relative" };
@@ -134,7 +135,7 @@ class SalesPackageForm extends React.Component {
 
       if (!exclusivity) return true;
 
-      return salesPackages.filter(salesPackage => salesPackage.territoriesMethod === this.worldwideExcluding).length === 0;
+      return salesPackages.filter(salesPackage => salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING).length === 0;
     };
 
     setSalesMethod = (salesMethod) => {
@@ -187,7 +188,7 @@ class SalesPackageForm extends React.Component {
       }
       if (this.state.isNew) {
         if (bundleMethod === this.individually) {
-          if (territoriesMethod === this.worldwideExcluding) {
+          if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) {
             salesPackagesList = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1).map(territory => ({
               name: territory.label,
               territories: [territory],
@@ -225,7 +226,7 @@ class SalesPackageForm extends React.Component {
             } else {
               name = territories.slice(0, 3).map((territory, i) => territory.label).join(", ");
             }
-          } else if (territoriesMethod === this.worldwideExcluding) {
+          } else if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) {
             territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
             name = `Worldwide excl. ${excludedTerritories.slice(0, 3).map((territory, i) => territory.label).join(", ")}`;
           }
@@ -332,7 +333,7 @@ class SalesPackageForm extends React.Component {
 
     getExclusiveSoldTerritories = (soldPackages) => {
       const { territoriesMethod, countries } = this.state;
-      const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding;
+      const isExcludedTerritoriesEnabled = territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING;
       const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
       let exclusiveSoldTerritories = [];
@@ -387,7 +388,7 @@ class SalesPackageForm extends React.Component {
 
       const isFilterEnabled = territoriesMethod === this.selectedTerritories;
       const isMultipleEnabled = territoriesQuantity === "multiple";
-      const isExcludedTerritoriesEnabled = territoriesMethod === this.worldwideExcluding && exclusivity;
+      const isExcludedTerritoriesEnabled = territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING && exclusivity;
       const isWorldwideEnabled = territoriesMethod === this.worldwide;
 
       const soldPackages = this.getSoldPackages(salesPackages);
@@ -465,9 +466,9 @@ class SalesPackageForm extends React.Component {
                   </div>
                   )}
                   {this.worldwideAvailable() && (
-                  <div className="item" onClick={() => { this.setTerritoriesMethod(this.worldwideExcluding); }}>
-                    {territoriesMethod !== this.worldwideExcluding && <i className="fa fa-circle-thin" />}
-                    {territoriesMethod === this.worldwideExcluding && <i className="fa fa-check-circle-o" />}
+                  <div className="item" onClick={() => { this.setTerritoriesMethod(BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING); }}>
+                    {territoriesMethod !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING && <i className="fa fa-circle-thin" />}
+                    {territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING && <i className="fa fa-check-circle-o" />}
                     <div className="title">
                       {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
                     </div>
@@ -709,7 +710,7 @@ Cancel
 
       if (territoriesMethod === this.selectedTerritories && territories.length === 0) return true;
 
-      if (territoriesMethod === this.worldwideExcluding
+      if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
             && territories.length === 0
             && this.getExcludedTerritories().length === 0) return true;
     };
