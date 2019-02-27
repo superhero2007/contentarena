@@ -46,6 +46,9 @@ class NewFixture extends Component {
     };
 
     handleBegDateBlur = (e) => {
+
+      if ( e === undefined ) return;
+
       const { handleDate } = this.props;
       const date = moment(e.target.value);
       const formatted = formatMomentToServerFormat(date);

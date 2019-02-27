@@ -6,6 +6,7 @@ import NumberFormat from "react-number-format";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import LicenseDownloader from "../../main/components/LicenseDownloader";
 import { getCurrencySymbol } from "../../main/actions/utils";
+import {BUNDLE_TERRITORIES_METHOD} from "../../common/constants";
 
 const SalesPackageTable = ({
   salesPackages, currency, listingId, hideButtons, editSalesPackage, onRemove,
@@ -26,7 +27,7 @@ const SalesPackageTable = ({
         Cell: (props) => {
           const salesPackage = props.original;
           if (salesPackage.sold) return null;
-          const extraTerritories = (salesPackage.territoriesMethod === this.worldwideExcluding) ? salesPackage.excludedTerritories : salesPackage.territories;
+          const extraTerritories = (salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) ? salesPackage.excludedTerritories : salesPackage.territories;
           return (
             <div className="d-flex align-items-center">
               <img src={`${assetsBaseDir}app/images/package.svg`} style={{ marginRight: 5 }} />
