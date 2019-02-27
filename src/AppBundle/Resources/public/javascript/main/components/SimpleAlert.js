@@ -2,29 +2,29 @@ import React from "react";
 import Select from "react-select";
 
 class SimpleAlert extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      show: true,
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			show: true,
+		};
+	}
 
-  componentWillReceiveProps(nextProps) {
+	componentWillReceiveProps(nextProps) {
 
-  }
+	}
 
-  componentDidMount() {
-  }
+	componentDidMount() {
+	}
 
 
-  render() {
-    const { children } = this.props;
-    return (
-      <div className="simple-alert">
-        {children}
-      </div>
-    );
-  }
+	render() {
+		const { children } = this.props;
+		return (
+			<div className="simple-alert">
+				{children}
+			</div>
+		);
+	}
 }
 
 export default SimpleAlert;

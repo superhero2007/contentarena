@@ -1,9 +1,8 @@
-
 import { combineReducers } from "redux";
 import { manage } from "./manage";
 
 const reducers = combineReducers({
-  manage,
+	manage,
 });
 
 export default reducers;

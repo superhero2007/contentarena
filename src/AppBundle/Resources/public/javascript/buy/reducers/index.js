@@ -3,8 +3,8 @@ import { marketplace } from "./marketplace";
 import { filter } from "./filter";
 
 const reducers = combineReducers({
-  marketplace,
-  filter,
+	marketplace,
+	filter,
 });
 
 export default reducers;

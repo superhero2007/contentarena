@@ -3,8 +3,8 @@ import { content } from "./content";
 import { selector } from "./selector";
 
 const reducers = combineReducers({
-  content,
-  selector,
+	content,
+	selector,
 });
 
 export default reducers;

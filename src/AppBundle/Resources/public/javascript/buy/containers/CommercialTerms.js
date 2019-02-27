@@ -9,165 +9,172 @@ import Moment from "moment/moment";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 
 class CommercialTerms extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seasons: props.seasons,
-    };
-    this.baseDir = `${assetsBaseDir}../`;
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			seasons: props.seasons,
+		};
+		this.baseDir = `${assetsBaseDir}../`;
+	}
 
-  componentDidMount() {
-    this.loadSchedule();
-  }
+	componentDidMount() {
+		this.loadSchedule();
+	}
 
-  loadSchedule() {
-    const _this = this;
-    const { seasons, schedulesBySeason } = this.props;
+	loadSchedule() {
+		const _this = this;
+		const { seasons, schedulesBySeason } = this.props;
 
-    seasons.forEach((season, index) => {
-      if (!season.schedules && !season.custom) {
-        _this.setState({ loadingSchedule: true });
-        ContentArena.Api.getSchedule(season.externalId).done((schedules) => {
-          _this.setState({ loadingSchedule: false });
-          let keys = [];
-          if (schedulesBySeason && schedulesBySeason[index]) {
-            keys = Object.keys(schedulesBySeason[index]);
-            keys.forEach((k) => {
-              schedulesBySeason[index][k].matches.forEach((m) => {
-                if (m.selected) {
-                  schedules[k].matches.get(m.externalId).selected = true;
-                }
-              });
-              schedules[k].selected = true;
-            });
-          }
+		seasons.forEach((season, index) => {
+			if (!season.schedules && !season.custom) {
+				_this.setState({ loadingSchedule: true });
+				ContentArena.Api.getSchedule(season.externalId).done((schedules) => {
+					_this.setState({ loadingSchedule: false });
+					let keys = [];
+					if (schedulesBySeason && schedulesBySeason[index]) {
+						keys = Object.keys(schedulesBySeason[index]);
+						keys.forEach((k) => {
+							schedulesBySeason[index][k].matches.forEach((m) => {
+								if (m.selected) {
+									schedules[k].matches.get(m.externalId).selected = true;
+								}
+							});
+							schedules[k].selected = true;
+						});
+					}
 
-          const tempSeasons = _this.state.seasons;
-          tempSeasons[index].schedules = schedules;
-          if (keys.length > 0) tempSeasons[index].showchedules = true;
+					const tempSeasons = _this.state.seasons;
+					tempSeasons[index].schedules = schedules;
+					if (keys.length > 0) tempSeasons[index].showchedules = true;
 
-          _this.setState({
-            seasons: tempSeasons,
-          });
-        });
-      }
-    });
-  }
+					_this.setState({
+						seasons: tempSeasons,
+					});
+				});
+			}
+		});
+	}
 
-  render() {
-    const {
-      website,
-      attachments,
-      description,
-      programDetails,
-    } = this.props;
+	render() {
+		const {
+			website,
+			attachments,
+			description,
+			programDetails,
+		} = this.props;
 
-    const { seasons } = this.state;
+		const { seasons } = this.state;
 
-    return (
-      <div>
-        {description && !programDetails && (
-        <div className="description-wrapper">
-          <div className="spacer-bottom title">
-            {this.context.t("LISTING_DETAILS_EVENT_DESCRIPTION")}
-          </div>
-          <div className="txt description-text">
-            <RepresenationTextArea value={description} />
-          </div>
-        </div>
-        )}
+		return (
+			<div>
+				{description && !programDetails && (
+					<div className="description-wrapper">
+						<div className="spacer-bottom title">
+							{this.context.t("LISTING_DETAILS_EVENT_DESCRIPTION")}
+						</div>
+						<div className="txt description-text">
+							<RepresenationTextArea value={description} />
+						</div>
+					</div>
+				)}
 
-        {programDetails && programDetails}
+				{programDetails && programDetails}
 
-        {(website || (attachments && attachments.length > 0)) && (
-        <div className="additional-items">
-          {website && (
-          <div className="item">
-            <i className="fa fa-link icon" />
-            <div className="cap">
-              {this.context.t("LISTING_DETAILS_EVENT_TITLE_WEBSITE")}
-            </div>
-            <div className="d-flex">
-              <b>
-                {website && website.map(website => <a href={ContentArena.Utils.getWebsiteURl(website)} target="_blank">{website}</a>)}
-              </b>
-            </div>
-          </div>
-          )}
+				{(website || (attachments && attachments.length > 0)) && (
+					<div className="additional-items">
+						{website && (
+							<div className="item">
+								<i className="fa fa-link icon" />
+								<div className="cap">
+									{this.context.t("LISTING_DETAILS_EVENT_TITLE_WEBSITE")}
+								</div>
+								<div className="d-flex">
+									<b>
+										{website && website.map(website => (
+											<a
+												href={ContentArena.Utils.getWebsiteURl(website)}
+												target="_blank"
+											>
+												{website}
+											</a>
+										))}
+									</b>
+								</div>
+							</div>
+						)}
 
-          {attachments && attachments.length > 0 && (
-          <div className="item">
-            <i className="fa fa-folder-open-o icon" />
-            <div className="cap">
-              {this.context.t("LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS")}
-            </div>
-            <div className="d-flex">
-              <b>
-                {attachments.map(a => (
-                  <div className="attachment-item">
-                    <a download={a.name} target="_blank" href={this.baseDir + a.file}>
-                      <img src={pdfIcon} />
-                      {a.name}
-                    </a>
-                  </div>
-                ))}
-              </b>
-            </div>
-          </div>
-          )}
-        </div>
-        )}
+						{attachments && attachments.length > 0 && (
+							<div className="item">
+								<i className="fa fa-folder-open-o icon" />
+								<div className="cap">
+									{this.context.t("LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS")}
+								</div>
+								<div className="d-flex">
+									<b>
+										{attachments.map(a => (
+											<div className="attachment-item">
+												<a download={a.name} target="_blank" href={this.baseDir + a.file}>
+													<img src={pdfIcon} />
+													{a.name}
+												</a>
+											</div>
+										))}
+									</b>
+								</div>
+							</div>
+						)}
+					</div>
+				)}
 
-        {/* SEASON/FIXTURES */}
-        {seasons && seasons.length > 0 && seasons.map((season, key) => (
-          <div key={`season-${key}`} className="season-details">
-            <div className="title">
-              {this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")}
-              {" "}
-              {season.name}
-            </div>
-            <div className="d-flex align-items-center justify-content-between flex-wrap">
-              {season.fixtures && season.fixtures.length && season.fixtures.map((fixture, i) => (
-                <div className="row-container" style={{ width: "45%" }} key={i}>
-                  <div className="name">
-                    {fixture.name}
-                  </div>
-                  <div className="actions" style={{ minWidth: 230 }}>
-                    <div className="item" style={{ width: "50%", marginLeft: 0 }}>
-                      <i className="fa fa-calendar icon" />
-                      {!fixture.date && "Date N/A"}
-                      {fixture.date && Moment(fixture.date).format(DATE_FORMAT)}
-                    </div>
-                    <div className="item" style={{ width: "50%", marginLeft: 0 }}>
-                      <i className="fa fa-clock-o icon" />
-                      {!fixture.date && "Time N/A"}
-                      {fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+				{/* SEASON/FIXTURES */}
+				{seasons && seasons.length > 0 && seasons.map((season, key) => (
+					<div key={`season-${key}`} className="season-details">
+						<div className="title">
+							{this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")}
+							{" "}
+							{season.name}
+						</div>
+						<div className="d-flex align-items-center justify-content-between flex-wrap">
+							{season.fixtures && season.fixtures.length && season.fixtures.map((fixture, i) => (
+								<div className="row-container" style={{ width: "45%" }} key={i}>
+									<div className="name">
+										{fixture.name}
+									</div>
+									<div className="actions" style={{ minWidth: 230 }}>
+										<div className="item" style={{ width: "50%", marginLeft: 0 }}>
+											<i className="fa fa-calendar icon" />
+											{!fixture.date && "Date N/A"}
+											{fixture.date && Moment(fixture.date).format(DATE_FORMAT)}
+										</div>
+										<div className="item" style={{ width: "50%", marginLeft: 0 }}>
+											<i className="fa fa-clock-o icon" />
+											{!fixture.date && "Time N/A"}
+											{fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				))}
 
-        <TerritoriesSalesPackages {...this.props} />
-      </div>
-    );
-  }
+				<TerritoriesSalesPackages {...this.props} />
+			</div>
+		);
+	}
 }
 
 CommercialTerms.contextTypes = {
-  t: PropTypes.func.isRequired,
+	t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
-  onClick: id => dispatch(test(id)),
+	onClick: id => dispatch(test(id)),
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
+	mapStateToProps,
+	mapDispatchToProps,
 )(CommercialTerms);

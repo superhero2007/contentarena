@@ -5,122 +5,122 @@ import { PropTypes } from "prop-types";
 import { customStyles } from "../../main/styles/custom";
 
 class Comments extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-      typedComment: "",
-    };
+	constructor(props) {
+		super(props);
+		this.state = {
+			isOpen: false,
+			typedComment: "",
+		};
 
-    this.commentField = React.createRef();
-  }
+		this.commentField = React.createRef();
+	}
 
-    addComment = () => {
-      this.setState({ isAddComment: true });
+	addComment = () => {
+		this.setState({ isAddComment: true });
 
-      setTimeout(() => {
-        this.commentField.current.focus();
-      }, 100);
-    }
+		setTimeout(() => {
+			this.commentField.current.focus();
+		}, 100);
+	}
 
-    cancelComment = () => {
-      this.setState({ isAddComment: false });
-    }
+	cancelComment = () => {
+		this.setState({ isAddComment: false });
+	}
 
-    saveComment = () => {
-      const { onClose, propName } = this.props;
-      const { typedComment } = this.state;
+	saveComment = () => {
+		const { onClose, propName } = this.props;
+		const { typedComment } = this.state;
 
-      this.props.updateContentValue(propName, typedComment);
+		this.props.updateContentValue(propName, typedComment);
 
-      this.setState({ isAddComment: false });
-      if (onClose) onClose();
-    }
+		this.setState({ isAddComment: false });
+		if (onClose) onClose();
+	}
 
-    changeComment = (e) => {
-      this.setState({ typedComment: e.target.value });
-    }
-
-
-    render() {
-      const { comments } = this.props;
-      const { isAddComment } = this.state;
-
-      const isCommentsExisted = (comments && comments !== "");
-
-      const commentsView = isCommentsExisted && !isAddComment;
-      const addCommentButton = !isCommentsExisted && !isAddComment;
+	changeComment = (e) => {
+		this.setState({ typedComment: e.target.value });
+	}
 
 
-      return (
-        <div className="amendment-view">
+	render() {
+		const { comments } = this.props;
+		const { isAddComment } = this.state;
 
-          {addCommentButton && (
-            <div className="d-flex align-items-center justify-content-between">
-              <div style={{ marginLeft: "auto" }}>
-                {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
-              </div>
-              <button className="ca-btn primary" onClick={this.addComment} style={{ marginLeft: 20 }}>
-                {this.context.t("CL_STEP5_ADD_AMENDMENT")}
-              </button>
-            </div>
-          )}
+		const isCommentsExisted = (comments && comments !== "");
 
-          {commentsView && (
-            <div>
-              <div className="cap">
-                {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
-              </div>
-              <div className="d-flex">
-                <textarea value={comments} readOnly disabled />
-                <div onClick={this.addComment}>
-                  <i className="fa fa-pencil-square edit-icon" />
-                </div>
-              </div>
-            </div>
-          )}
+		const commentsView = isCommentsExisted && !isAddComment;
+		const addCommentButton = !isCommentsExisted && !isAddComment;
 
-          {isAddComment && (
-            <div>
-              <div className="cap">
-                {this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
-              </div>
-              <textarea
-                defaultValue={isCommentsExisted ? comments : ""}
-                onChange={this.changeComment}
-                ref={this.commentField}
-              />
 
-              <div className="d-flex justify-content-end">
-                <div className="ca-btn" onClick={this.cancelComment}>
-                  {this.context.t("Cancel")}
-                </div>
-                <button className="ca-btn primary" onClick={this.saveComment}>
-                  {this.context.t("Save")}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
+		return (
+			<div className="amendment-view">
+
+				{addCommentButton && (
+					<div className="d-flex align-items-center justify-content-between">
+						<div style={{ marginLeft: "auto" }}>
+							{this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+						</div>
+						<button className="ca-btn primary" onClick={this.addComment} style={{ marginLeft: 20 }}>
+							{this.context.t("CL_STEP5_ADD_AMENDMENT")}
+						</button>
+					</div>
+				)}
+
+				{commentsView && (
+					<div>
+						<div className="cap">
+							{this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+						</div>
+						<div className="d-flex">
+							<textarea value={comments} readOnly disabled />
+							<div onClick={this.addComment}>
+								<i className="fa fa-pencil-square edit-icon" />
+							</div>
+						</div>
+					</div>
+				)}
+
+				{isAddComment && (
+					<div>
+						<div className="cap">
+							{this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+						</div>
+						<textarea
+							defaultValue={isCommentsExisted ? comments : ""}
+							onChange={this.changeComment}
+							ref={this.commentField}
+						/>
+
+						<div className="d-flex justify-content-end">
+							<div className="ca-btn" onClick={this.cancelComment}>
+								{this.context.t("Cancel")}
+							</div>
+							<button className="ca-btn primary" onClick={this.saveComment}>
+								{this.context.t("Save")}
+							</button>
+						</div>
+					</div>
+				)}
+			</div>
+		);
+	}
 }
 
 Comments.contextTypes = {
-  t: PropTypes.func.isRequired,
+	t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state.content;
 
 const mapDispatchToProps = dispatch => ({
-  updateContentValue: (key, value) => dispatch({
-    type: "UPDATE_CONTENT_VALUE",
-    key,
-    value,
-  }),
+	updateContentValue: (key, value) => dispatch({
+		type: "UPDATE_CONTENT_VALUE",
+		key,
+		value,
+	}),
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
+	mapStateToProps,
+	mapDispatchToProps,
 )(Comments);

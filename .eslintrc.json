@@ -27,7 +27,7 @@
         "import/no-unresolved": [
             "error",
             {
-                "ignore": [ "@constants", "@components", "@utils" ]
+                "ignore": [ "@constants", "@components", "@utils", "@translations" ]
             }
         ],
         "import/no-named-as-default": "off",
@@ -98,7 +98,12 @@
         "jsx-a11y/mouse-events-have-key-events": "off",
         "jsx-a11y/no-autofocus": "off",
         "jsx-a11y/no-static-element-interactions": "off",
-
+        "indent": [2, "tab", { "ObjectExpression": 1 }],
+        "no-tabs": 0,
+        "no-mixed-spaces-and-tabs": 0,
+        "react/jsx-one-expression-per-line" : 0,
+        "react/jsx-indent": [2, "tab", {"checkAttributes": false}],
+        "react/jsx-indent-props" : [2, "tab"],
         "quotes": ["error", "double"]
     }
 }

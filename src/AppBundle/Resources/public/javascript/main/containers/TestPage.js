@@ -7,45 +7,46 @@ import RegionCountrySelector from "../components/RegionCountrySelector";
 import PopupCountrySelector from "../components/PopupCountrySelector";
 
 class TestPage extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-    };
+		this.state = {};
 
-    store.subscribe((a) => {
-      // console.log(store.getState());
-    });
-  }
+		store.subscribe((a) => {
+			// console.log(store.getState());
+		});
+	}
 
-    componentDidMount = () => {
-    } ;
+	componentDidMount = () => {
+	};
 
-    render() {
-      const { history } = this.props;
-      return (
-        <div className="manager-content">
-          <RegionCountrySelector
-            onSelect={(s) => { console.log(s); }}
-          />
+	render() {
+		const { history } = this.props;
+		return (
+			<div className="manager-content">
+				<RegionCountrySelector
+					onSelect={(s) => {
+						console.log(s);
+					}}
+				/>
 
-          <PopupCountrySelector />
-        </div>
-      );
-    }
+				<PopupCountrySelector />
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state, ownProps) => ownProps;
 
 const mapDispatchToProps = dispatch => ({
-  contentListingInit: content => dispatch({
-    type: "CONTENT_INIT",
-    content,
-  }),
-  updateProfile: profile => dispatch(updateProfile(profile)),
+	contentListingInit: content => dispatch({
+		type: "CONTENT_INIT",
+		content,
+	}),
+	updateProfile: profile => dispatch(updateProfile(profile)),
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
+	mapStateToProps,
+	mapDispatchToProps,
 )(TestPage);

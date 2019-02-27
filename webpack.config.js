@@ -28,6 +28,7 @@ Encore
         '@utils': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/utils/'),
         '@constants': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/common/constants.js'),
         '@icons': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/main/components/Icons.js'),
+        '@translations': path.resolve(__dirname, 'src/AppBundle/Resources/public/javascript/translations/translations.js'),
     })
 
     // allow legacy applications to use $/jQuery as a global variable

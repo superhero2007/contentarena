@@ -14,16 +14,16 @@ import { validation } from "./reducers/validation";
 import { landing } from "../landing/reducers/landing";
 
 const reducers = combineReducers({
-  content,
-  selector,
-  marketplace,
-  filter,
-  manage,
-  user,
-  common,
-  validation,
-  landing,
-  i18nState,
+	content,
+	selector,
+	marketplace,
+	filter,
+	manage,
+	user,
+	common,
+	validation,
+	landing,
+	i18nState,
 });
 
 export default createStore(reducers, applyMiddleware(thunk));

@@ -2,21 +2,21 @@ import { userTypes } from "../reducers/user";
 
 
 export const updateProfile = profile => ({
-  type: userTypes.PROFILE,
-  profile,
+	type: userTypes.PROFILE,
+	profile,
 });
 
 export const loadUserData = (loggedUserData) => {
-  let user = {};
+	let user = {};
 
-  try {
-    user = JSON.parse(loggedUserData);
-  } catch (e) {
-    // continue regardless of error
-  }
+	try {
+		user = JSON.parse(loggedUserData);
+	} catch (e) {
+		// continue regardless of error
+	}
 
-  return {
-    type: userTypes.LOAD_USER_DATA,
-    user,
-  };
+	return {
+		type: userTypes.LOAD_USER_DATA,
+		user,
+	};
 };

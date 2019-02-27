@@ -22,12 +22,12 @@ require("../ca/ca.utils");
 const homeWrapper = document.getElementById("home-wrapper");
 
 $.get(`${hosturl}bundles/app/data/translations.json`).done((json) => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <I18n translations={json}>
-        <AuthRouter {...homeWrapper.dataset} />
-      </I18n>
-    </Provider>,
-    homeWrapper,
-  );
+	ReactDOM.render(
+		<Provider store={store}>
+			<I18n translations={json}>
+				<AuthRouter {...homeWrapper.dataset} />
+			</I18n>
+		</Provider>,
+		homeWrapper,
+	);
 });
