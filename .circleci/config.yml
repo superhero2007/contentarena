@@ -40,7 +40,7 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "development" ]; then
                 npm run dev
             elif [ "${CIRCLE_BRANCH}" == "release" ]; then
-                npm run dev
+                npm run prod
             else
                 npm run dev
             fi

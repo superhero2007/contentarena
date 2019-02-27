@@ -20,7 +20,6 @@ export const RepresenationTextArea = ({ value = "" }) => (
     minRows={1}
     maxRows={8}
     className="representation-textarea"
-    {...this.props}
   />
 );
 
