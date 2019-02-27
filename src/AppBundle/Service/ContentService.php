@@ -856,6 +856,10 @@ class ContentService
         $content = $this->saveExtraData($content, $data);
         $content = $this->saveSeasonExtraData($content, $data);
 
+        // Set main event date
+        // TODO: Update filters by main event date to use directly this
+        $content->setMainEventDate($content->getReferenceDate());
+
         if ( isset($data->company) ) $this->saveCompany($data->company);
         return $content;
     }
@@ -1207,15 +1211,6 @@ class ContentService
         return $country;
     }
 
-    private function getCountries($countryIds){
-
-        $countries =  $this->em
-            ->getRepository('AppBundle:Country')
-            ->findBy(array('id' => $countryIds));
-
-        return $countries;
-    }
-
     private function getCountriesByName($countriesName){
 
         $countries =  $this->em
@@ -1281,10 +1276,6 @@ class ContentService
         }
 
         return $sport;
-    }
-
-    private function getSport($data){
-        return $this->sport( $data->sport);
     }
 
     private function getSports($data){

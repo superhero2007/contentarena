@@ -504,11 +504,18 @@ class Content
     private $bundlesSold = array();
 
     /**
+     * @ORM\Column(type="datetime", name="main_event_date", nullable=true)
+     * @Groups({"listing"})
+     */
+    private $mainEventDate;
+
+    /**
      * @Groups({"listing"})
      */
     private $referenceDate;
 
     private $shareId;
+
 
 
     public function __construct() {
@@ -882,7 +889,6 @@ class Content
         $this->active = $active;
     }
 
-
     /**
      * @return mixed
      */
@@ -946,7 +952,6 @@ class Content
     {
         $this->customSport = $customSport;
     }
-
 
     /**
      * Add salesPackage
@@ -1711,8 +1716,6 @@ class Content
         $this->customBundles = $customBundles;
     }
 
-
-
     public function isExclusive(){
         $exclusive = false;
         foreach ($this->getSelectedRightsBySuperRight() as $val)
@@ -1758,14 +1761,35 @@ class Content
     }
 
     /**
+     * @return mixed
+     */
+    public function getMainEventDate()
+    {
+        return $this->mainEventDate;
+    }
+
+    /**
+     * @param mixed $mainEventDate
+     */
+    public function setMainEventDate($mainEventDate)
+    {
+        $this->mainEventDate = $mainEventDate;
+    }
+
+    /**
+     * @return \DateTime|mixed|null
      */
     public function getReferenceDate() {
+
+        if ( $this->mainEventDate != null ) return $this->mainEventDate;
+
         /* @var Season $season */
         $seasons = $this->getSeasons();
         $extraData = $this->getExtraData();
         $fixtures = $this->getFixturesBySeason();
         if ( count( $seasons ) > 0 ){
-            $season = $seasons->first();
+
+            $season = (is_array($seasons)) ? $seasons[0] : $seasons->first();
             $date = $season->getStartDate();
 
             if ( $fixtures != null && count($fixtures) > 0){
