@@ -14,7 +14,7 @@ import CountrySelector from "../../main/components/CountrySelector";
 import { getCurrencySymbol } from "../../main/actions/utils";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import { customStyles } from "../../main/styles/custom";
-import {BUNDLE_TERRITORIES_METHOD} from "../../common/constants";
+import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
 
 const labelStyle = { height: "35px", fontSize: "15px" };
 const installmentIconStyle = { margin: "0 10px", position: "relative" };

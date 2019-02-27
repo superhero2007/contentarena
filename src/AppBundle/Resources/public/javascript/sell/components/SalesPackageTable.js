@@ -6,7 +6,7 @@ import NumberFormat from "react-number-format";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import LicenseDownloader from "../../main/components/LicenseDownloader";
 import { getCurrencySymbol } from "../../main/actions/utils";
-import {BUNDLE_TERRITORIES_METHOD} from "../../common/constants";
+import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
 
 const SalesPackageTable = ({
   salesPackages, currency, listingId, hideButtons, editSalesPackage, onRemove,

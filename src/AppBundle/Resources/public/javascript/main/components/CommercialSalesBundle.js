@@ -19,7 +19,7 @@ import {
 import { customStyles, GenericModalStyle } from "../styles/custom";
 import SendMessage from "../../common/modals/SendMessage/SendMessage";
 import ExtraTerritories from "./ExtraTerritories";
-import {BUNDLE_TERRITORIES_METHOD, DATE_FORMAT} from "../../common/constants";
+import { BUNDLE_TERRITORIES_METHOD, DATE_FORMAT } from "../../common/constants";
 
 class CommercialSalesBundle extends React.Component {
   constructor(props) {

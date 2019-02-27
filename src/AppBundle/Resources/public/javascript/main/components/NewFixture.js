@@ -46,8 +46,7 @@ class NewFixture extends Component {
     };
 
     handleBegDateBlur = (e) => {
-
-      if ( e === undefined ) return;
+      if (e === undefined) return;
 
       const { handleDate } = this.props;
       const date = moment(e.target.value);
@@ -56,7 +55,7 @@ class NewFixture extends Component {
       if (date.isValid()) {
         handleDate(formatted);
       }
-    }
+    };
 
     render() {
       const {
