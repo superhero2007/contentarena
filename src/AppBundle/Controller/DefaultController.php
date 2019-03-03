@@ -143,7 +143,7 @@ class DefaultController extends BaseController
             'hostUrl'           => $this->container->getParameter('local_host'),
             'testStageMode'     => $this->container->getParameter('test_stage_mode'),
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
-            'newListing'        => $serializer->serialize($content, 'json', SerializationContext::create()->setGroups(array('details'))->enableMaxDepthChecks()),
+            'newListing'        => $serializer->serialize($content, 'json', SerializationContext::create()->setGroups(array('home'))->enableMaxDepthChecks()),
             'loggedUser'        => $user,
             'refererEmail'      => $refererEmail,
             'refererListingId'  => $refererListingId,

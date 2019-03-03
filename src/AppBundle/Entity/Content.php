@@ -32,14 +32,14 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $status;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home"})
      */
     protected $customId;
 
@@ -47,6 +47,7 @@ class Content
      * @var mixed
      *
      * @ORM\Column(name="signature", type="string", nullable=true)
+     * @Groups({"home"})
      */
     private $signature;
 
@@ -54,6 +55,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="signature_name", type="text", nullable=true)
+     * @Groups({"home"})
      */
     private $signatureName;
 
@@ -61,6 +63,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="signature_position", type="text", nullable=true)
+     * @Groups({"home"})
      */
     private $signaturePosition;
 
@@ -68,7 +71,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $description;
 
@@ -76,13 +79,13 @@ class Content
      * @var string
      *
      * @ORM\Column(name="program_description", type="text", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $programDescription;
 
     /**
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "home"})
      */
     private $expiresAt;
 
@@ -90,7 +93,7 @@ class Content
      * @var integer
      *
      * @ORM\Column(name="step", type="integer")
-     * @Groups({"board"})
+     * @Groups({"board", "home"})
      */
     protected $step = 1;
 
@@ -98,7 +101,7 @@ class Content
      * @var integer
      *
      * @ORM\Column(name="maxStep", type="smallint")
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "home"})
      */
     protected $maxStep = 1;
 
@@ -113,7 +116,7 @@ class Content
      * @var object
      *
      * @ORM\Column(name="website", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $website;
 
@@ -124,14 +127,14 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sales_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $salesPackages;
 
     /**
      * @var array
      *
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $customBundles;
 
@@ -139,7 +142,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $image;
 
@@ -147,7 +150,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="start_date_mode", type="string", length=50, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $startDateMode;
 
@@ -155,7 +158,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="end_date_mode", type="string", length=50, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $endDateMode;
 
@@ -163,19 +166,19 @@ class Content
      * @var integer
      *
      * @ORM\Column(name="end_date_limit", type="integer", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $endDateLimit;
 
     /**
      * @ORM\Column(type="datetime", name="end_date", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $endDate;
 
     /**
      * @ORM\Column(type="datetime", name="start_date", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $startDate;
 
@@ -183,7 +186,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="vat", type="string", length=5, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $vat;
 
@@ -191,7 +194,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="edited_program_name", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $editedProgramName;
 
@@ -199,6 +202,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="edited_program_year", type="string", length=5, nullable=true)
+     * @Groups({"home"})
      */
     private $editedProgramYear;
 
@@ -206,28 +210,28 @@ class Content
      * @var integer
      *
      * @ORM\Column(name="vat_percentage", type="integer", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $vatPercentage;
 
     /**
      * @var object
      * @ORM\Column(name="programs", type="object", nullable=true)
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "home"})
      */
     private $programs;
 
     /**
      * @var object
      * @ORM\Column(name="attachments", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $attachments;
 
     /**
      * @var object
      * @ORM\Column(name="annex", type="object", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $annex;
 
@@ -235,7 +239,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="custom_tournament", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $customTournament;
 
@@ -243,7 +247,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="custom_category", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $customCategory;
 
@@ -251,7 +255,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="custom_sport", type="string", length=255, nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $customSport;
 
@@ -259,7 +263,7 @@ class Content
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home"})
      */
     private $name;
 
@@ -267,19 +271,21 @@ class Content
      * @var string
      *
      * @ORM\Column(name="brochure", type="string", length=255, nullable=true)
+     * @Groups({"home"})
      */
     private $brochure;
 
     /**
      * @var string
      * @ORM\Column(name="jurisdiction", type="string", length=255, nullable=true)
+     * @Groups({"home"})
      */
     private $jurisdiction;
 
     /**
      * @var boolean
      * @ORM\Column(name="apply_vat_in_jurisdiction", type="boolean")
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      *
      */
     private $applyVatInJurisdiction = false;
@@ -287,7 +293,7 @@ class Content
     /**
      * @var boolean
      * @ORM\Column(name="featured", type="boolean", options={"default":"0"})
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      *
      */
     private $featured = false;
@@ -295,7 +301,7 @@ class Content
     /**
      * @var int
      * @ORM\Column(name="featured_position", type="smallint", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      *
      */
     private $featuredPosition = false;
@@ -303,7 +309,7 @@ class Content
     /**
      * @var boolean
      * @ORM\Column(name="expiry_notified", type="boolean")
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      *
      */
     private $expiryNotified = false;
@@ -311,7 +317,7 @@ class Content
     /**
      * @var boolean
      * @ORM\Column(name="expired_notified", type="boolean")
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      *
      */
     private $expiredNotified = false;
@@ -319,7 +325,7 @@ class Content
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "closed", "commercial"})
+     * @Groups({"listing", "closed", "commercial", "home"})
      */
     private $company;
 
@@ -329,21 +335,21 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sport_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $sports;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $sportCategory;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $tournament;
 
@@ -353,7 +359,7 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $seasons;
 
@@ -364,75 +370,75 @@ class Content
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed", "board", "commercial"})
+     * @Groups({"listing", "closed", "board", "commercial", "home"})
      */
     private $rightsPackage;
 
     /**
      * @var object
      * @ORM\Column(name="selected_rights_by_super_right", type="object", nullable=true)
-     * @Groups({"listing", "board", "commercial", "closed"})
+     * @Groups({"listing", "board", "commercial", "closed", "home"})
      */
     private $selectedRightsBySuperRight;
 
     /**
      * @var object
      * @ORM\Column(name="schedules_by_season", type="object", nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $schedulesBySeason;
 
     /**
      * @var object
      * @ORM\Column(name="fixtures_by_season", type="object", nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $fixturesBySeason;
 
     /**
      * @var object
      * @ORM\Column(name="extra_data", type="object", nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $extraData;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="law", referencedColumnName="id")
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $law;
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", name="last_action_date", nullable=true)
-     * @Groups({"board"})
+     * @Groups({"board", "home"})
      */
     private $lastActionDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingLastAction", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"board"})
+     * @Groups({"board", "home"})
      */
     private $lastAction;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"board"})
+     * @Groups({"board", "home"})
      */
     private $lastActionUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing","board"})
+     * @Groups({"listing","board", "home"})
      */
     private $owner;
 
@@ -440,12 +446,13 @@ class Content
      * @var mixed
      *
      * @ORM\Column(name="seller_signature_date", type="datetime", nullable=true)
+     * @Groups({"home"})
      */
     private $sellerSignatureDate;
 
     /**
      * @var boolean;
-     * @Groups({"board"})
+     * @Groups({"board", "home"})
      */
     private $editable = true;
 
@@ -505,7 +512,7 @@ class Content
 
     /**
      * @ORM\Column(type="datetime", name="main_event_date", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $mainEventDate;
 

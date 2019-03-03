@@ -148,7 +148,7 @@ class Company
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $country;
 
