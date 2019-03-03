@@ -21,7 +21,7 @@ class Company
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"details", "closed", "commercial", "settings","messages", "thread"})
+     * @Groups({"details", "closed", "commercial", "settings","messages", "thread", "home"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="legal_name", type="string", length=255, unique=true)
-     * @Groups({"details", "closed", "commercial", "settings", "listing","messages", "thread"})
+     * @Groups({"details", "closed", "commercial", "settings", "listing","messages", "thread", "home"})
      */
     private $legalName;
 
