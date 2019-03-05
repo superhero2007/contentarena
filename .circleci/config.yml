@@ -30,7 +30,9 @@ jobs:
           name: Linting
           command: npm run lint
 
-      # TODO Run Tests
+      - run:
+          name: Testing FE
+          command: npm run test_fe
 
       # Build project with different configuration based on
       # the current branch
