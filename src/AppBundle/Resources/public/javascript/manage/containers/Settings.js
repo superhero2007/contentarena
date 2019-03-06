@@ -286,7 +286,10 @@ class Settings extends React.Component {
 				)}
 				<div className="setting">
 					{/* ACTIVE USERS */}
-					<div className="title">Active Users</div>
+					<div className="title" style={{ marginBottom: 0 }}>{this.context.t("SETTINGS_LABEL_ACTIVE_USERS")}</div>
+					<h4 className="subtitle">
+						{this.context.t("SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION")}
+					</h4>
 
 					{!loadingCompanyUsers && companyUsers.length > 0 && (
 						<div>

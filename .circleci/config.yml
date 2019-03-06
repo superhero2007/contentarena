@@ -30,7 +30,9 @@ jobs:
           name: Linting
           command: npm run lint
 
-      # TODO Run Tests
+      - run:
+          name: Testing FE
+          command: npm run test_fe
 
       # Build project with different configuration based on
       # the current branch
@@ -116,8 +118,8 @@ workflows:
       - build_fe:
           filters:
             branches:
-              only:
-                - development
+              ignore:
+                - release
       # The deploy job will only run on the filtered branches and
       # require the build job to be successful before it starts
       - deploy:

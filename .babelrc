@@ -1,0 +1,25 @@
+{
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-regenerator",
+    ["@babel/plugin-transform-async-to-generator", {
+      "module": "bluebird",
+      "method": "coroutine"
+    }],
+    "@babel/plugin-transform-runtime"
+  ],
+  "presets": [
+    "@babel/react",
+    [
+      "@babel/preset-env",
+      {
+        "debug": false,
+        "targets": {
+          "browsers": [
+            "last 3 versions"
+          ]
+        }
+      }
+    ]
+  ]
+}

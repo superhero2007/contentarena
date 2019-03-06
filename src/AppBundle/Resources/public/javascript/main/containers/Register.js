@@ -23,14 +23,9 @@ const Steps = ({ steps = [] }) => {
 	];
 
 	return (
-		<div
-			className="steps"
-			{...this.props}
-		>
+		<div className="steps">
 			{steps.map((step, i) => (
 				<div style={{ backgroundColor: (step) ? colors[i] : "" }} key={i} className="step" />))}
-
-
 		</div>
 	);
 };
