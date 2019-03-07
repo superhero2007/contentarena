@@ -486,9 +486,11 @@ class Register extends React.Component {
                 <div className="title" style={{ marginTop: 20 }}>
                   {this.context.t("SETTINGS_TITLE_COMPANY")}
                 </div>
-                {!isCompanyValid && <div className="is-invalid">
+                {!isCompanyValid && (
+                  <div className="is-invalid">
                     {this.context.t("SETTINGS_DUPLICATE_COMPANY")}
-                  </div>}
+                  </div>
+                )}
                 <div className="row">
                   <div className="item">
                     <label>
