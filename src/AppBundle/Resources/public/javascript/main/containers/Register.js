@@ -22,16 +22,12 @@ const Steps = ({ steps = [] }) => {
 		"#E1B143",
 	];
 
-  return (
-    <div
-      className="steps"
-
-    >
-      {steps.map((step, i) => (<div style={{ backgroundColor: (step) ? colors[i] : "" }} key={i} className="step" />))}
-
-
-    </div>
-  );
+	return (
+		<div className="steps">
+			{steps.map((step, i) => (
+				<div style={{ backgroundColor: (step) ? colors[i] : "" }} key={i} className="step" />))}
+		</div>
+	);
 };
 
 const BackButton = ({ onClick }, context) => (
@@ -507,11 +503,7 @@ class Register extends React.Component {
 									{this.context.t("SETTINGS_TITLE_COMPANY")}
 								</div>
 								{!isCompanyValid
-								&& (
-                  <div className="is-invalid">
-                    {this.context.t("SETTINGS_DUPLICATE_COMPANY")}
-                  </div>
-                )}
+								&& <div className="is-invalid">{this.context.t("SETTINGS_DUPLICATE_COMPANY")}</div>}
 								<div className="row">
 									<div className="item">
 										<label>

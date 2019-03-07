@@ -32,7 +32,8 @@ class NewFixture extends Component {
 	enablePicker = (type) => {
 		const { id } = this.props;
 		this.setState({ [type]: true });
-		setTimeout(() => jQuery(`.date-picker.id${id}`).focus(), 100);
+		setTimeout(() => jQuery(`.date-picker.id${id}`)
+			.focus(), 100);
 	};
 
 	onDateSelected = (e) => {
@@ -45,12 +46,12 @@ class NewFixture extends Component {
 		e.preventDefault();
 	};
 
-    handleBegDateBlur = (e) => {
-      if (e === undefined) return;
+	handleBegDateBlur = (e) => {
+		if (e === undefined) return;
 
-      const { handleDate } = this.props;
-      const date = moment(e.target.value);
-      const formatted = formatMomentToServerFormat(date);
+		const { handleDate } = this.props;
+		const date = moment(e.target.value);
+		const formatted = formatMomentToServerFormat(date);
 
 		if (date.isValid()) {
 			handleDate(formatted);
@@ -78,7 +79,9 @@ class NewFixture extends Component {
 					/>
 
 					<div className="fixture-actions">
-						{showAdd && <img src={addIcon} onClick={onAdd} />}
+						{showAdd && (
+						    <img src={addIcon} onClick={onAdd} />
+						)}
 						<img src={cancelIcon} onClick={onRemove} />
 					</div>
 				</div>
@@ -128,7 +131,10 @@ class NewFixture extends Component {
 	}
 }
 
-const isStartOfTheDay = date => moment(date).startOf("day").valueOf() !== moment(date).valueOf();
+const isStartOfTheDay = date => moment(date)
+	.startOf("day")
+	.valueOf() !== moment(date)
+	.valueOf();
 
 NewFixture.contextTypes = {
 	t: PropTypes.func.isRequired,

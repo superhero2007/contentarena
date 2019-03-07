@@ -153,3 +153,4 @@ jms_serializer:
             KnpPaginatorBundle:
                 namespace_prefix:  "Knp\\Bundle\\PaginatorBundle"
                 path: '%kernel.root_dir%/Resources/serializer/Knp'
+

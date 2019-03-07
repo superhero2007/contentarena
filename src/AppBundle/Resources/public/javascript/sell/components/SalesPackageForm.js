@@ -16,8 +16,14 @@ import { disableValidation, enableValidation } from "../../main/actions/validati
 import { customStyles } from "../../main/styles/custom";
 import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
 
-const labelStyle = { height: "35px", fontSize: "15px" };
-const installmentIconStyle = { margin: "0 10px", position: "relative" };
+const labelStyle = {
+	height: "35px",
+	fontSize: "15px",
+};
+const installmentIconStyle = {
+	margin: "0 10px",
+	position: "relative",
+};
 
 class SalesPackageForm extends React.Component {
 	constructor(props) {
@@ -40,7 +46,11 @@ class SalesPackageForm extends React.Component {
 			excludedTerritories: [],
 			filterTerritories: [],
 			territoriesList: [],
-			installments: [{ value: 100, type: "DAY", days: 30 }],
+			installments: [{
+				value: 100,
+				type: "DAY",
+				days: 30,
+			}],
 			fee: 0,
 			isNew: true,
 			territoriesQuantity: "single",
@@ -53,9 +63,10 @@ class SalesPackageForm extends React.Component {
 	}
 
 	componentDidMount() {
-		ContentArena.Api.getCountries().done((countries) => {
-			this.setState({ countries });
-		});
+		ContentArena.Api.getCountries()
+			.done((countries) => {
+				this.setState({ countries });
+			});
 	}
 
 	componentWillUnmount() {
@@ -87,17 +98,21 @@ class SalesPackageForm extends React.Component {
 	};
 
 	setTerritoriesMethod = (territoriesMethod) => {
-		this.setState({ territoriesMethod, territories: [] });
+		this.setState({
+			territoriesMethod,
+			territories: [],
+		});
 		this.fillTerritories(territoriesMethod, this.state.bundleMethod);
 	};
 
 	fillTerritories = (territoriesMethod, bundleMethod) => {
 		if (territoriesMethod === this.worldwide && bundleMethod === this.individually) {
 			this.setState({
-				territories: Object.values(ContentArena.Data.Countries).map((i, k) => ({
-					value: i.name,
-					label: i.name,
-				})),
+				territories: Object.values(ContentArena.Data.Countries)
+					.map((i, k) => ({
+						value: i.name,
+						label: i.name,
+					})),
 			});
 		} else {
 			this.setState({ territories: [] });
@@ -132,7 +147,11 @@ class SalesPackageForm extends React.Component {
 		filter = [...filter, ...selected];
 
 
-		return filter.filter((item, pos, self) => self.indexOf(item) == pos).map(t => ({ value: t, label: t }));
+		return filter.filter((item, pos, self) => self.indexOf(item) == pos)
+			.map(t => ({
+				value: t,
+				label: t,
+			}));
 	};
 
 	worldwideAvailable = () => {
@@ -184,7 +203,8 @@ class SalesPackageForm extends React.Component {
 		const excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : territoriesAsArray;
 		let territories = territoriesAsArray;
 		const allTerritories = this.getAllCountries();
-		const territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
+		const territoriesByLabel = (exclusivity) ? this.getExcludedTerritories()
+			.map(t => t.label) : territories.map(t => t.label);
 		let regionNamed = false;
 
 		if (territoriesQuantity === "multiple" && exclusivity) {
@@ -195,15 +215,16 @@ class SalesPackageForm extends React.Component {
 		if (this.state.isNew) {
 			if (bundleMethod === this.individually) {
 				if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) {
-					salesPackagesList = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1).map(territory => ({
-						name: territory.label,
-						territories: [territory],
-						fee,
-						salesMethod,
-						bundleMethod,
-						territoriesMethod,
-						installments,
-					}));
+					salesPackagesList = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1)
+						.map(territory => ({
+							name: territory.label,
+							territories: [territory],
+							fee,
+							salesMethod,
+							bundleMethod,
+							territoriesMethod,
+							installments,
+						}));
 				} else {
 					salesPackagesList = territories.map(territory => ({
 						name: territory.label,
@@ -226,15 +247,20 @@ class SalesPackageForm extends React.Component {
 							name += " excluding ";
 							const territoriesNames = territories.map(t => t.label);
 							const excludedFromRegion = selectedRegionCountries.filter(c => territoriesNames.indexOf(c.label) === -1);
-							name += excludedFromRegion.map((territory, i) => territory.label).join(", ");
+							name += excludedFromRegion.map((territory, i) => territory.label)
+								.join(", ");
 						}
 						regionNamed = true;
 					} else {
-						name = territories.slice(0, 3).map((territory, i) => territory.label).join(", ");
+						name = territories.slice(0, 3)
+							.map((territory, i) => territory.label)
+							.join(", ");
 					}
 				} else if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) {
 					territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
-					name = `Worldwide excl. ${excludedTerritories.slice(0, 3).map((territory, i) => territory.label).join(", ")}`;
+					name = `Worldwide excl. ${excludedTerritories.slice(0, 3)
+						.map((territory, i) => territory.label)
+						.join(", ")}`;
 				}
 
 				salesPackagesList = [{
@@ -294,7 +320,11 @@ class SalesPackageForm extends React.Component {
 
 	addInstallment = () => {
 		const { installments } = this.state;
-		installments.push({ value: 100, type: "DAY", days: 30 });
+		installments.push({
+			value: 100,
+			type: "DAY",
+			days: 30,
+		});
 		this.setState({ installments });
 	};
 
@@ -383,7 +413,11 @@ class SalesPackageForm extends React.Component {
 		return [];
 	};
 
-	getAllCountries = () => Object.values(ContentArena.Data.Countries).map((i, k) => ({ value: i.name, label: i.name }));
+	getAllCountries = () => Object.values(ContentArena.Data.Countries)
+		.map((i, k) => ({
+			value: i.name,
+			label: i.name,
+		}));
 
 	renderModal = () => {
 		const {
@@ -452,96 +486,128 @@ class SalesPackageForm extends React.Component {
 							</div>
 						</div>
 
-              <div className="base-full-input" style={{ display: "block" }}>
-                <label style={labelStyle}>Select territories</label>
-                {territoriesQuantity === "multiple" && (
-                <div className="content">
-                  <div className="item" onClick={() => { this.setTerritoriesMethod(this.selectedTerritories); }}>
-                    {territoriesMethod !== this.selectedTerritories && <i className="fa fa-circle-thin" />}
-                    {territoriesMethod === this.selectedTerritories && <i className="fa fa-check-circle-o" />}
-                    <div className="title">
-                      {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_SELECTED_TERRITORIES")}
-                    </div>
-                  </div>
-                  {(!exclusivity || (exclusivity && salesPackages.length === 0)) && (
-                  <div className="item" onClick={() => { this.setTerritoriesMethod(this.worldwide);
-                    }}
+						<div className="base-full-input" style={{ display: "block" }}>
+							<label style={labelStyle}>Select territories</label>
+							{territoriesQuantity === "multiple" && (
+								<div className="content">
+									<div
+										className="item"
+										onClick={() => {
+											this.setTerritoriesMethod(this.selectedTerritories);
+										}}
+									>
+										{territoriesMethod !== this.selectedTerritories
+										&& <i className="fa fa-circle-thin" />}
+										{territoriesMethod === this.selectedTerritories
+										&& <i className="fa fa-check-circle-o" />}
+										<div className="title">
+											{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_SELECTED_TERRITORIES")}
+										</div>
+									</div>
+									{(!exclusivity || (exclusivity && salesPackages.length === 0)) && (
+										<div
+											className="item"
+											onClick={() => {
+												this.setTerritoriesMethod(this.worldwide);
+											}}
 										>{territoriesMethod !== this.worldwide && <i className="fa fa-circle-thin" />}
-                    {territoriesMethod === this.worldwide && <i className="fa fa-check-circle-o" />}
-                    <div className="title">
-                      {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE")}
-                    </div>
-                  </div>
-                  )}
-                  {this.worldwideAvailable() && (
-                  <div className="item" onClick={() => { this.setTerritoriesMethod(BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING);
-											}}>
-                    {territoriesMethod !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING && <i className="fa fa-circle-thin" />}
-                    {territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING && <i className="fa fa-check-circle-o" />}
-                    <div className="title">
-                      {this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
-                    </div>
-                  </div>
-                  )}
-                </div>
-                )}
-                <div style={{ margin: "10px 0", padding: "0 15px" }}>
-                  {!isMultipleEnabled && (
-                  <CountrySelector
-                    className="small-select"
-                    onChange={(c) => { this.selectTerritories([c]); }}
-                    value={territories[0]}
-                    filter={isFilterEnabled ? this.getFilterTerritories() : []}
-                    multi={false}
-                    exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
-                    placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
-                    isInvalid={isTerritoriesEmpty}
-                  />
-                  )}
-                  {isMultipleEnabled && (
-                  <RegionCountrySelector
-                    className="small-select"
-                    onChange={this.selectTerritories}
-                    onSelectRegion={this.selectRegion}
-                    value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
-                    filter={isFilterEnabled ? this.getFilterTerritories() : []}
-                    disabled={isWorldwideEnabled}
-                    exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
-                    placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
-                    isInvalid={isTerritoriesEmpty}
-                    remainCountries={exclusivity ? this.getRemainCountries(this.getAlreadySelectedCountries()) : []}
-                  />
-                  )}
-                  {territoriesQuantity === "multiple" && (
-                  <div
-                    className="d-flex align-items-center"
-                    onChange={(e) => {
-                      this.setBundleMethod(e.target.value);
-                    }}
-                  >
-                    <div style={{ margin: "15px 15px 10px 0", fontSize: "14px" }}>
-                      {this.context.t("CL_STEP4_EDIT_BUNDLE_AS_PACKAGE")}
-                    </div>
-                    <div className={cn({ "font-weight-bold": this.state.bundleMethod === this.asBundle })} style={{ marginRight: 20 }}
-                      ><input
-                        className="ca-radio"
-                        type="radio"
-                        value={this.asBundle}
-                        checked={this.state.bundleMethod === this.asBundle}
-                        style={{ marginRight: 5 }}
-                      />
-                      {this.context.t("Yes")}
-                    </div>
-                    <div className={cn({ "font-weight-bold": this.state.bundleMethod === this.individually })}>
-                      <input
-                        className="ca-radio"
-                        type="radio"
-                        value={this.individually}
-                        checked={this.state.bundleMethod === this.individually}
-                        style={{ marginRight: 5 }}
-                      />
-                      {this.context.t("No")}
-                    </div>
+											{territoriesMethod === this.worldwide
+											&& <i className="fa fa-check-circle-o" />}
+											<div className="title">
+												{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE")}
+											</div>
+										</div>
+									)}
+									{this.worldwideAvailable() && (
+										<div
+											className="item"
+											onClick={() => {
+												this.setTerritoriesMethod(BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING);
+											}}
+										>
+											{territoriesMethod !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+											&& <i className="fa fa-circle-thin" />}
+											{territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+											&& <i className="fa fa-check-circle-o" />}
+											<div className="title">
+												{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
+											</div>
+										</div>
+									)}
+								</div>
+							)}
+							<div style={{
+								margin: "10px 0",
+								padding: "0 15px",
+							}}
+							>
+								{!isMultipleEnabled && (
+									<CountrySelector
+										className="small-select"
+										onChange={(c) => {
+											this.selectTerritories([c]);
+										}}
+										value={territories[0]}
+										filter={isFilterEnabled ? this.getFilterTerritories() : []}
+										multi={false}
+										exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
+										placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
+										isInvalid={isTerritoriesEmpty}
+									/>
+								)}
+								{isMultipleEnabled && (
+									<RegionCountrySelector
+										className="small-select"
+										onChange={this.selectTerritories}
+										onSelectRegion={this.selectRegion}
+										value={isExcludedTerritoriesEnabled ? this.getExcludedTerritories() : territories}
+										filter={isFilterEnabled ? this.getFilterTerritories() : []}
+										disabled={isWorldwideEnabled}
+										exclusiveSoldTerritories={isExclusiveSoldTerritoriesEnabled ? this.getExclusiveSoldTerritories(soldPackages) : false}
+										placeholder={isTerritoriesEmpty ? this.context.t("TERRITORIES_EMPTY") : null}
+										isInvalid={isTerritoriesEmpty}
+										remainCountries={exclusivity ? this.getRemainCountries(this.getAlreadySelectedCountries()) : []}
+									/>
+								)}
+								{territoriesQuantity === "multiple" && (
+									<div
+										className="d-flex align-items-center"
+										onChange={(e) => {
+											this.setBundleMethod(e.target.value);
+										}}
+									>
+										<div style={{
+											margin: "15px 15px 10px 0",
+											fontSize: "14px",
+										}}
+										>
+											{this.context.t("CL_STEP4_EDIT_BUNDLE_AS_PACKAGE")}
+										</div>
+										<div
+											className={cn({ "font-weight-bold": this.state.bundleMethod === this.asBundle })}
+											style={{ marginRight: 20 }}
+										>
+											<input
+												className="ca-radio"
+												type="radio"
+												value={this.asBundle}
+												checked={this.state.bundleMethod === this.asBundle}
+												style={{ marginRight: 5 }}
+											/>
+											{this.context.t("Yes")}
+										</div>
+										<div
+											className={cn({ "font-weight-bold": this.state.bundleMethod === this.individually })}
+										>
+											<input
+												className="ca-radio"
+												type="radio"
+												value={this.individually}
+												checked={this.state.bundleMethod === this.individually}
+												style={{ marginRight: 5 }}
+											/>
+											{this.context.t("No")}
+										</div>
 
 									</div>
 								)}
@@ -549,7 +615,11 @@ class SalesPackageForm extends React.Component {
 						</div>
 						<div className="base-full-input">
 							<label style={labelStyle}>Sales method</label>
-							<div style={{ padding: "10px 18px 0px", fontSize: "14px" }}>
+							<div style={{
+								padding: "10px 18px 0px",
+								fontSize: "14px",
+							}}
+							>
 								{this.context.t("CL4_TERRITORIES_BUNDLE_SALES_INFO")}
 							</div>
 							<div className="content">
@@ -577,7 +647,13 @@ class SalesPackageForm extends React.Component {
 										{this.context.t("CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING")}
 									</div>
 								</div>
-								<div className="item" style={{ paddingLeft: 0, paddingRight: 0 }}>
+								<div
+									className="item"
+									style={{
+										paddingLeft: 0,
+										paddingRight: 0,
+									}}
+								>
 									<span>
 										{this.state.salesMethod === this.fixed && "Fixed fee"}
 										{this.state.salesMethod !== this.fixed && "Minimum bid (optional)"}
@@ -590,7 +666,10 @@ class SalesPackageForm extends React.Component {
 											this.setState({ fee: value });
 										}}
 										min={0}
-										style={{ height: "26px", width: "100px" }}
+										style={{
+											height: "26px",
+											width: "100px",
+										}}
 										prefix={`${getCurrencySymbol(currency)} `}
 									/>
 								</div>
@@ -599,7 +678,11 @@ class SalesPackageForm extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>Payment details</label>
-							<div style={{ padding: "10px 18px 0px", fontSize: "14px" }}>
+							<div style={{
+								padding: "10px 18px 0px",
+								fontSize: "14px",
+							}}
+							>
 								{this.context.t("CL4_TERRITORIES_BUNDLE_PAYMENT_INFO")}
 							</div>
 							{this.state.installments.map((installment, i, list) => (
@@ -621,7 +704,10 @@ class SalesPackageForm extends React.Component {
 												onChange={(e) => {
 													this.setInstallmentValue(e.target.value, i);
 												}}
-												style={{ height: "26px", width: "70px" }}
+												style={{
+													height: "26px",
+													width: "70px",
+												}}
 												type="number"
 												max={100}
 												value={installment.value}
@@ -687,7 +773,10 @@ class SalesPackageForm extends React.Component {
 												}}
 												disabled={installment.type !== "DAY"}
 												value={installment.days}
-												style={{ height: "26px", width: "70px" }}
+												style={{
+													height: "26px",
+													width: "70px",
+												}}
 											/>
 											{" "}
 											{this.context.t("CL_STEP4_INSTALLMENTS_DAYS_AFTER")}
@@ -771,9 +860,11 @@ class SalesPackageForm extends React.Component {
 
 		if (territoriesMethod === this.selectedTerritories && territories.length === 0) return true;
 
-		if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+		if (territoriesMethod === this.worldwideExcluding
 			&& territories.length === 0
-			&& this.getExcludedTerritories().length === 0) return true;
+			&& this.getExcludedTerritories().length === 0) {
+			return true;
+		}
 	};
 
 	showAllTerritories = (extraTerritories) => {
@@ -834,7 +925,10 @@ class SalesPackageForm extends React.Component {
 							<button
 								className="ca-btn primary"
 								onClick={() => {
-									this.setState({ isOpen: true, isNew: true });
+									this.setState({
+										isOpen: true,
+										isNew: true,
+									});
 								}}
 							>
 								<i className="fa fa-plus-circle" />
