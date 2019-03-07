@@ -25,10 +25,8 @@ const Steps = ({ steps = [] }) => {
   return (
     <div
       className="steps"
-      {...this.props}
     >
       {steps.map((step, i) => (<div style={{ backgroundColor: (step) ? colors[i] : "" }} key={i} className="step" />))}
-
 
     </div>
   );
@@ -488,7 +486,9 @@ class Register extends React.Component {
                 <div className="title" style={{ marginTop: 20 }}>
                   {this.context.t("SETTINGS_TITLE_COMPANY")}
                 </div>
-                {!isCompanyValid && <div className="is-invalid">{this.context.t("SETTINGS_DUPLICATE_COMPANY")}</div>}
+                {!isCompanyValid && <div className="is-invalid">
+                    {this.context.t("SETTINGS_DUPLICATE_COMPANY")}
+                  </div>}
                 <div className="row">
                   <div className="item">
                     <label>
