@@ -45,17 +45,17 @@ class NewFixture extends Component {
 		e.preventDefault();
 	};
 
-	handleBegDateBlur = (e) => {
-		if (e === undefined) return;
+    handleBegDateBlur = (e) => {
+      if (e === undefined) return;
 
-		const { handleDate } = this.props;
-		const date = moment(e.target.value);
-		const formatted = formatMomentToServerFormat(date);
+      const { handleDate } = this.props;
+      const date = moment(e.target.value);
+      const formatted = formatMomentToServerFormat(date);
 
 		if (date.isValid()) {
 			handleDate(formatted);
 		}
-	}
+	};
 
 	render() {
 		const {
