@@ -13,8 +13,8 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Notification;
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
 use AppBundle\Doctrine\RandomIdGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class NotificationService
@@ -29,7 +29,7 @@ class NotificationService
     private $translator;
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
         TranslatorInterface $translator

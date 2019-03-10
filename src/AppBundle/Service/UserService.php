@@ -9,20 +9,13 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Company;
-use AppBundle\Entity\ContentFilter;
-use AppBundle\Entity\ListingStatus;
-use AppBundle\Entity\SalesPackage;
-use AppBundle\Entity\SportCategory;
 use FOS\UserBundle\Doctrine\UserManager;
-use FOS\UserBundle\Util\TokenGenerator;
+use FOS\UserBundle\Model\UserManagerInterface;
+use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Content;
-use AppBundle\Entity\Season;
-use AppBundle\Entity\Tournament;
-use AppBundle\Entity\Sport;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
@@ -42,11 +35,11 @@ class UserService
     protected $tokenGenerator;
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
-        UserManager $fosUserManager,
-        TokenGenerator $tokenGenerator,
+        UserManagerInterface $fosUserManager,
+        TokenGeneratorInterface $tokenGenerator,
         EmailService $emailService
     ) {
         $this->em = $entityManager;

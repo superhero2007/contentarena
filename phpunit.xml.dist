@@ -10,10 +10,12 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
+        <server name='HTTP_HOST' value='http://localhost' />
+        <server name='HTTP_USER_AGENT' value='chrome' />
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="Content Arena Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

@@ -28,7 +28,7 @@ easy_admin:
             - Definitions
 
         form_theme:
-            - 'horizontal'
+            #- 'horizontal'
             # the following Twig template can be located anywhere in the application.
             # it can also be added to the twig.form_themes option to use it in the
             # entire application, not only the backend

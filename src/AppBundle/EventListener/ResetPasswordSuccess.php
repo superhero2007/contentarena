@@ -9,6 +9,7 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Service\EmailService;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -25,7 +26,7 @@ class ResetPasswordSuccess implements EventSubscriberInterface
     protected $em;
     protected $container;
 
-    public function __construct(EmailService $mailer, EntityManager $em, ContainerInterface $container)
+    public function __construct(EmailService $mailer, EntityManagerInterface $em, ContainerInterface $container)
     {
         $this->mailer = $mailer;
         $this->em = $em;

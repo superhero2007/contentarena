@@ -4,6 +4,78 @@
 #
 version: 2
 jobs:
+  build_be:
+    working_directory: /var/www/html
+    docker:
+      - image: php:7.1-apache
+        environment:
+          APP_ENV: test
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_DB: hogmorem_newcontentarena
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
+
+      - image: circleci/mysql:5.6
+        environment:
+           MYSQL_ROOT_HOST: "%"
+           MYSQL_ROOT_PASSWORD: root
+    steps:
+
+      - run:
+          name: Install Mysql and stuff
+          command: |
+            apt-get update --yes
+            apt-get -y install git --yes
+            apt-get install -y libzip-dev --yes
+            apt-get install -y zlib1g-dev libicu-dev g++ --yes
+            apt-get install mysql-client --yes
+      - run:
+          name: Install PHP exts
+          command: |
+            docker-php-ext-install zip
+            docker-php-ext-configure intl
+            docker-php-ext-install intl
+            docker-php-ext-install pdo_mysql
+      - run:
+          name: Mysql database
+          command: mysql -h 127.0.0.1 -u root  --password=root -e "create database hogmorem_newcontentarena;"
+      - checkout
+      - restore_cache:
+          keys:
+            - composer-v1.1-{{ checksum "composer.lock" }}
+            - composer-v1.1-
+      - run:
+          name: Install Composer
+          command: |
+            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+            php -r "if (hash_file('SHA384', 'composer-setup.php') === trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'Installer verified'; } else { echo 'Installer invalid'; unlink('composer-setup.php'); } echo PHP_EOL;"
+            php composer-setup.php
+            php -r "unlink('composer-setup.php');"
+      - run:
+          name: Display PHP information
+          command: |
+            php -v
+            php composer.phar --version
+      - run:
+          name: Install project dependencies
+          command: php composer.phar install --no-interaction
+      - save_cache: # save composer cache
+          key: composer-v1.1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+
+      - run: php bin/console doctrine:migrations:migrate -n
+      - run: php bin/console doctrine:fixtures:load --append
+      - run:
+          name: Run Unit tests
+          command: vendor/bin/simple-phpunit
+
+      - run:
+          name: Build Failed
+          when: on_fail
+          command: cat var/logs/test.log
+
   build_fe:
     docker:
       - image: circleci/node:7.10
@@ -72,7 +144,7 @@ jobs:
       - run:
           name: Keyscan known_hosts
           command: ssh-keyscan -H sl663.web.hostpoint.ch >> ~/.ssh/known_hosts
-          
+
       - run:
           name: Upload FE files over SSH
           command: |
@@ -115,7 +187,14 @@ workflows:
   # The build and deploy workflow
   build_and_deploy_dev:
     jobs:
+      - build_be:
+          filters:
+            branches:
+              ignore:
+                - release
       - build_fe:
+          requires:
+            - build_be
           filters:
             branches:
               ignore:
@@ -131,6 +210,13 @@ workflows:
                 - development
   build_and_deploy_test:
       jobs:
+        - build_be:
+            requires:
+              - build_fe
+            filters:
+              branches:
+                only:
+                - release
         - build_fe:
             filters:
               branches:

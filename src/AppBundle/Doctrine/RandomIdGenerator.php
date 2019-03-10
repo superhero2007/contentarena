@@ -8,12 +8,12 @@
 
 namespace AppBundle\Doctrine;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class RandomIdGenerator
 {
 
-    public function __construct(EntityManager $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->em = $entityManager;
     }
 

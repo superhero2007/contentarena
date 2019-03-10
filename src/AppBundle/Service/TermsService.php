@@ -11,20 +11,9 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\CompanyDefinitions;
 use AppBundle\Entity\CompanyLicenseTermItem;
-use AppBundle\Entity\ContentFilter;
-use AppBundle\Entity\ListingStatus;
-use AppBundle\Entity\SalesPackage;
-use AppBundle\Entity\SportCategory;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use AppBundle\Doctrine\RandomIdGenerator;
-use AppBundle\Entity\User;
-use AppBundle\Entity\Content;
-use AppBundle\Entity\Season;
-use AppBundle\Entity\Tournament;
-use AppBundle\Entity\Sport;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-
 
 class TermsService
 {
@@ -37,7 +26,7 @@ class TermsService
 
     protected $fosUserManager;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, \FOS\UserBundle\Doctrine\UserManager $fosUserManager) {
+    public function __construct(EntityManagerInterface $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, UserManagerInterface $fosUserManager) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;

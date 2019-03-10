@@ -1,0 +1,17 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: hogmorem_newcontentarena
+    database_user: root
+    database_password: root
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    secret: ThisTokenIsNotSoSecretChangeIt
+    local_host: http://localhost:8200/
+    external_api_url: http://api.contentarena.com/
+    knp_snappy_binary : /usr/local/bin/wkhtmltopdf
+    test_stage_mode: 0
+    local_email_alert_address: juancruztalco@gmail.com
