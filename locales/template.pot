@@ -362,10 +362,6 @@ msgid "RIGHTS_CONTENT_DELIVERY_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
-msgid "RIGHTS_"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
 msgid "LISTING_DETAILS_PROGRAM_DEFINITION"
 msgstr ""
 
@@ -1770,6 +1766,10 @@ msgid "SETTINGS_TITLE_COMPANY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_DUPLICATE_COMPANY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_COMPANY_NAME"
 msgstr ""
@@ -2172,6 +2172,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_COMPANY_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_ACTIVE_USERS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -2869,9 +2877,5 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
 msgid "SALES_PACKAGE_TABLE_DEFINITION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
-msgid "CL_STEP2_RIGHT_DEFINITIONS_"
 msgstr ""
 
