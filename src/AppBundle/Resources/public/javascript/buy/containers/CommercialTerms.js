@@ -135,7 +135,7 @@ class CommercialTerms extends React.Component {
 							{season.name}
 						</div>
 						<div className="d-flex align-items-center justify-content-between flex-wrap">
-							{season.fixtures && season.fixtures.length && season.fixtures.map((fixture, i) => (
+							{season.fixtures && season.fixtures.length > 0 && season.fixtures.map((fixture, i) => (
 								<div className="row-container" style={{ width: "45%" }} key={i}>
 									<div className="name">
 										{fixture.name}
