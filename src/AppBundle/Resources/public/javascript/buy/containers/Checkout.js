@@ -22,6 +22,7 @@ import ExtraTerritories from "../../main/components/ExtraTerritories";
 import { packageIcon } from "../../main/components/Icons";
 import RadioSelector from "../../main/components/RadioSelector";
 import Loader from "../../common/components/Loader";
+import { BUNDLE_SALES_METHOD } from "../../common/constants";
 
 const labelStyle = { height: "30px", fontSize: "12px", width: "400px" };
 const inputStyle = { width: "380px", margin: 0, height: "30px" };
@@ -73,21 +74,6 @@ class Checkout extends React.Component {
 			showSuccessScreen: false,
 		};
 	}
-
-	ordinal_suffix_of = (i) => {
-		const j = i % 10;
-		const k = i % 100;
-		if (j === 1 && k !== 11) {
-			return `${i}st`;
-		}
-		if (j === 2 && k !== 12) {
-			return `${i}nd`;
-		}
-		if (j === 3 && k !== 13) {
-			return `${i}rd`;
-		}
-		return `${i}th`;
-	};
 
 	closeModal = () => {
 		this.setState({ editCompanyOpen: false, companyUpdated: true });
@@ -299,6 +285,10 @@ class Checkout extends React.Component {
 
 	successScreen = () => {
 		const { history } = this.props;
+		const { bundles } = this.state;
+
+		const biddingBundles = bundles.filter(bundle => bundle.salesMethod === BUNDLE_SALES_METHOD.BIDDING).length;
+		const fixedBundles = bundles.filter(bundle => bundle.salesMethod === BUNDLE_SALES_METHOD.FIXED).length;
 
 		return (
 			<Modal
@@ -325,48 +315,53 @@ class Checkout extends React.Component {
 					>
 						{this.context.t("CHECKOUT_CONGRATULATIONS")}
 					</div>
-					{/* {selectedPackage.salesMethod === "FIXED" && <div style={{
-                    fontSize: 20,
-                    width : 600,
-                    margin : 40,
-                    textAlign : 'center'
-                }}>
-                    {this.context.t("CHECKOUT_FIXED_SUCCESS_MESSAGE")}
-                </div>}
-                {selectedPackage.salesMethod === "BIDDING" && <div style={{
-                    fontSize: 20,
-                    width : 600,
-                    margin : 40,
-                    textAlign : 'center'
-                }}>
-                    {this.context.t("CHECKOUT_BID_SUCCESS_MESSAGE")}
-                </div>} */}
-
-					<div style={{
-						fontSize: 20,
-						width: 600,
-						margin: 40,
-						textAlign: "center",
-					}}
-					>
-						{this.context.t("CHECKOUT_BID_SUCCESS_MESSAGE")}
-					</div>
-
-					<div style={{ display: "flex" }}>
-						{/* <button className="standard-button" onClick={() => {
-                        history.push("/closeddeals");
-                    }} >
-                        {this.context.t("CHECKOUT_FIXED_GO_TO_CLOSED_DEALS")}
-                    </button> */}
-
-						<button
-							className="standard-button"
-							onClick={() => {
-								history.push("/bids/activebids");
+					{fixedBundles > 0 && (
+						<div
+							style={{
+								fontSize: 20,
+								width: 600,
+								margin: 40,
+								textAlign: "center",
 							}}
 						>
-							{this.context.t("CHECKOUT_FIXED_GO_TO_BIDS")}
-						</button>
+							{this.context.t("CHECKOUT_FIXED_SUCCESS_MESSAGE")}
+						</div>
+					)}
+					{fixedBundles === 0 && biddingBundles > 0 && (
+						<div
+							style={{
+								fontSize: 20,
+								width: 600,
+								margin: 40,
+								textAlign: "center",
+							}}
+						>
+							{this.context.t("CHECKOUT_BID_SUCCESS_MESSAGE")}
+						</div>
+					)}
+
+					<div style={{ display: "flex" }}>
+						{fixedBundles > 0 && (
+							<button
+								className="standard-button"
+								onClick={() => {
+									history.push("/closeddeals");
+								}}
+							>
+								{this.context.t("CHECKOUT_FIXED_GO_TO_CLOSED_DEALS")}
+							</button>
+						)}
+
+						{fixedBundles === 0 && biddingBundles > 0 && (
+							<button
+								className="standard-button"
+								onClick={() => {
+									history.push("/bids/activebids");
+								}}
+							>
+								{this.context.t("CHECKOUT_FIXED_GO_TO_BIDS")}
+							</button>
+						)}
 
 						<button className="standard-button" onClick={this.closeSuccessScreen}>
 							{this.context.t("CHECKOUT_FIXED_GO_TO_MARKETPLACE")}
@@ -402,17 +397,6 @@ class Checkout extends React.Component {
 		total.withTechnical = total.fee + this.getTechnicalFeeValue(total.fee);
 
 		return total;
-	};
-
-	setBid = () => {
-		const { selectedPackage, bid } = this.state;
-
-		selectedPackage.fee = bid;
-
-		this.setState({
-			selectedPackage,
-			bidApplied: true,
-		});
 	};
 
 	placeBid = () => {
@@ -457,28 +441,6 @@ class Checkout extends React.Component {
 		});
 	};
 
-	isPackageValid = () => {
-		const {
-			signature, terms, selectedPackage, bidApplied,
-		} = this.state;
-		// const isBidValueValid = selectedPackage.salesMethod === 'BIDDING' ? this.getTotalFee() && bidApplied : true;
-
-		// return signature && terms && isBidValueValid;
-		return signature && terms;
-	};
-
-	onBidChange = (value) => {
-		this.setState({ bid: value });
-	};
-
-	getTechnicalFeeLabel = () => {
-		const technicalFee = this.getTechnicalFee();
-
-		return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
-			? ` ${technicalFee.TECHNICAL_FEE_PERCENTAGE}%`
-			: " Included";
-	};
-
 	getTechnicalFee = () => {
 		const { content } = this.state;
 
@@ -504,58 +466,6 @@ class Checkout extends React.Component {
 		return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
 			? bid * (technicalFee.TECHNICAL_FEE_PERCENTAGE / 100)
 			: 0;
-	};
-
-	getTechnicalFeeValueForAll = (bid) => {
-		const technicalFee = this.getTechnicalFee();
-		if (!bid) return 0;
-
-		return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
-			? bid * (technicalFee.TECHNICAL_FEE_PERCENTAGE / 100)
-			: 0;
-	};
-
-	getCheckoutType = (bundle) => {
-		const { salesMethod, id } = bundle;
-		const { bundlesWithActivity, bundlesSold } = this.props.listing;
-
-		const hasOfferFromUser = bundlesWithActivity && bundlesWithActivity.length && bundlesWithActivity.includes(id);
-		const hasClosedDeal = bundlesSold && bundlesSold.length && bundlesSold.includes(id);
-
-		if (salesMethod === "FIXED" && !hasOfferFromUser) {
-			return "BUY_NOW";
-		}
-		if (salesMethod === "BIDDING" && hasOfferFromUser && !hasClosedDeal) {
-			return "RAISE_BID";
-		}
-		if (salesMethod === "BIDDING" && !hasOfferFromUser) {
-			return "PLACE_BID";
-		}
-		return "";
-	};
-
-	getTitlePrefix = (type) => {
-		if (!type) return "";
-
-		const titleMap = {
-			BUY_NOW: "Buy Now",
-			PLACE_BID: "Place Bid",
-			RAISE_BID: "Raise Bid",
-		};
-
-		return titleMap[type] || "";
-	};
-
-	getButtonTooltip = (type) => {
-		if (!type) return "";
-
-		const titleMap = {
-			BUY_NOW: this.context.t("CHECKOUT_BUY_NOW"),
-			PLACE_BID: this.context.t("CHECKOUT_PLACE_BID"),
-			RAISE_BID: this.context.t("CHECKOUT_RAISE_BID"),
-		};
-
-		return titleMap[type] || "";
 	};
 
 	getFee = (salesPackage) => {
@@ -622,10 +532,6 @@ class Checkout extends React.Component {
 			/>
 		);
 	};
-
-	handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
-
-	handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
 	removeBundle = (index) => {
 		const bundles = this.state.selectedPackages;

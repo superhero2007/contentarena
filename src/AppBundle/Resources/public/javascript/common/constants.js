@@ -14,6 +14,12 @@ export const BUNDLE_TERRITORIES_METHOD = {
 	WORLDWIDE: "WORLDWIDE",
 };
 
+export const BUNDLE_SALES_METHOD = {
+	BIDDING: "BIDDING",
+	FIXED: "FIXED",
+	MULTIPLE: "MULTIPLE",
+};
+
 export const LISTING_SORT_OPTIONS = {
 	PUBLISH_DATE: "publishing",
 	UPCOMING_EVENT: "upcoming",
