@@ -20,17 +20,29 @@ const SalesPackageTable = ({
 		minRows={0}
 		resizable={false}
 		data={salesPackages}
+		getTrProps={(state, rowInfo) => {
+			if (rowInfo.original.sold) {
+				return {
+					style: {
+						background: "#ccc",
+					},
+				};
+			}
+			return {};
+		}}
 		columns={[
 			{
 				Header: context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
 				headerClassName: salesPackages.length > 15 ? "table-header-big scroll" : "table-header-big",
 				Cell: (props) => {
 					const salesPackage = props.original;
-					if (salesPackage.sold) return null;
+					// if (salesPackage.sold) return null;
 					const extraTerritories = (salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) ? salesPackage.excludedTerritories : salesPackage.territories;
 					return (
 						<div className="d-flex align-items-center">
-							<img src={`${assetsBaseDir}app/images/package.svg`} style={{ marginRight: 5 }} />
+							{extraTerritories && extraTerritories.length > 1 && (
+								<img src={`${assetsBaseDir}app/images/package.svg`} style={{ marginRight: 5 }} />
+							)}
 							{salesPackage.name}
 							{extraTerritories && extraTerritories.length > 3 && (
 								<div style={{ marginLeft: 5 }}>
@@ -49,7 +61,7 @@ const SalesPackageTable = ({
 				width: 300,
 				Cell: (props) => {
 					const salesPackage = props.original;
-					if (salesPackage.sold) return null;
+					// if (salesPackage.sold) return null;
 
 					return salesPackage.salesMethod === "BIDDING"
 						? context.t("CL4_5_SALES_METHOD_BIDDING")
@@ -61,7 +73,9 @@ const SalesPackageTable = ({
 				width: 400,
 				Cell: (props) => {
 					const salesPackage = props.original;
-					if (salesPackage.sold) return null;
+					if (salesPackage.sold) {
+						return (<b className="d-flex justify-content-end align-items-baseline">SOLD</b>);
+					}
 
 					const i = props.index;
 					const fee = parseFloat(salesPackage.fee);

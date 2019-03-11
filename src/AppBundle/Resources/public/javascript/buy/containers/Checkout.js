@@ -550,6 +550,16 @@ class Checkout extends React.Component {
 		return bidMethod === this.all && !bundle.all && bundle.salesMethod === "BIDDING";
 	};
 
+	componentDidUpdate() {
+		if (this.state.isBidInputEdit) {
+			this.bidInput.focus();
+		}
+
+		if (this.state.isBidMultInputEdit) {
+			this.bidMultInput.focus();
+		}
+	}
+
 	render() {
 		ReactTooltip.rebuild();
 		const { listing, validation } = this.props;
@@ -682,12 +692,14 @@ class Checkout extends React.Component {
 											const bundles = this.state.selectedPackages;
 											bundle.fee = value;
 											bundles[props.index] = bundle;
-											this.setState({ bundles });
+											this.setState({ bundles, isBidInputEdit: true });
 										}}
 										disabled={bidMethod === this.all && !bundle.all}
 										min={bundle.minimumBid}
 										style={style}
 										prefix={`${getCurrencySymbol(bundle.currency)} `}
+										getInputRef={elm => this.bidInput = elm}
+										onBlur={() => this.setState({ isBidInputEdit: false })}
 									/>
 								)}
 								{bundle.all
@@ -697,11 +709,13 @@ class Checkout extends React.Component {
 										value={multipleBidValue}
 										onValueChange={(values) => {
 											const { value } = values;
-											this.setState({ multipleBidValue: parseFloat(value) });
+											this.setState({ multipleBidValue: parseFloat(value), isBidMultInputEdit: true });
 										}}
 										min={0}
 										style={style}
 										prefix={`${getCurrencySymbol(bundle.currency)} `}
+										getInputRef={elm => this.bidMultInput = elm}
+										onBlur={() => this.setState({ isBidMultInputEdit: false })}
 									/>
 								)}
 							</div>
