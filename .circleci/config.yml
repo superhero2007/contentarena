@@ -45,7 +45,6 @@ jobs:
           keys:
             - composer-v1.1-{{ checksum "composer.lock" }}
             - composer-v1.1-
-            - v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Install Composer
           command: |
@@ -68,10 +67,12 @@ jobs:
 
       - run: php bin/console doctrine:migrations:migrate -n
       - run: php bin/console doctrine:fixtures:load --append
+      - restore_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Copy fe files
           command: |
-            cp -r ~/project/web/assets /var/www/html/web
+            cp -r web/assets /var/www/html/web
       - run:
           name: Run Unit tests
           command: vendor/bin/simple-phpunit
