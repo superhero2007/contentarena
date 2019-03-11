@@ -407,10 +407,7 @@ class ListingDetails extends React.Component {
 						)}
 
 						<div className="custom-id">
-							#
-
-
-							{content.customId}
+							#{content.customId}
 						</div>
 					</div>
 				)}

@@ -39,6 +39,8 @@ class ShareListing extends Component {
 		}).then((res) => {
 			this.setState({
 				loading: false,
+				emails: [],
+				comment: "",
 				success: true,
 				error: false,
 			});
@@ -110,18 +112,18 @@ class ShareListing extends Component {
 						</section>
 
 						{success && (
-							<div className="text-center text-success">
-								<p>
-									<i className="fa fa-check fa-3x" />
-								</p>
-							</div>
+							<p className="text-center text-success">
+								<i className="fa fa-check" />
+								{" "}
+								{this.context.t("SHARE_SUCCESS")}
+							</p>
 						)}
 						{error && (
-							<div className="text-center text-danger">
-								<p>
-									<i className="fa fa-exclamation-triangle fa-3x" />
-								</p>
-							</div>
+							<p className="text-center text-danger">
+								<i className="fa fa-exclamation-triangle" />
+								{" "}
+								{this.context.t("SHARE_FAILED")}
+							</p>
 						)}
 
 						{loading ? (

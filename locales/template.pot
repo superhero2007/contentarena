@@ -502,6 +502,14 @@ msgid "SHARE_ADD_COMMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_SUCCESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
+msgid "SHARE_FAILED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
 msgid "SHARE_CANCEL"
 msgstr ""
 
