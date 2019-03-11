@@ -778,6 +778,7 @@ class EmailService
                 "content" => $content->getContent(),
                 "content2" => $content2->getContent(),
                 "content3" => $content3->getContent(),
+                "email" => $email
             )
         );
         $this->sendEmail("email/email.share.listing.twig", $subject->getContent(), $email, $parameters );
