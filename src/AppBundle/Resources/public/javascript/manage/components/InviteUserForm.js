@@ -77,9 +77,11 @@ class InviteUserForm extends React.Component {
 						{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
 					</label>
 					<input
+						name={`email-${key}`}
 						id={`email-${key}`}
 						value={user.email}
 						disabled={disabled}
+						autoComplete="off"
 						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_EMAIL")}
 						onChange={(e) => {
 							user.email = e.target.value;
