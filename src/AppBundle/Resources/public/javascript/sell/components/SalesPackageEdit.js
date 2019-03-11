@@ -222,7 +222,7 @@ class SalesPackageEdit extends React.Component {
 				onRequestClose={this.closeModal}
 			>
 
-				<div className="modal-title">
+				<div className="modal-title" style={{ paddingBottom: 15 }}>
 					{this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
 					<i className="fa fa-times close-icon" onClick={this.closeModal} />
 				</div>
@@ -239,7 +239,7 @@ class SalesPackageEdit extends React.Component {
 						{(this.state.bundleMethod === this.asBundle) && (this.state.territoriesMethod === this.selectedTerritories)
 						&& (
 							<CountrySelector
-								className="small-select"
+								className="small-select country-selector"
 								value={this.state.territories}
 								onChange={this.selectTerritories}
 								filter={this.getFilterTerritories()}
@@ -249,7 +249,7 @@ class SalesPackageEdit extends React.Component {
 						{(this.state.bundleMethod === this.asBundle) && (this.state.territoriesMethod === this.worldwideExcluding)
 						&& (
 							<CountrySelector
-								className="small-select"
+								className="small-select country-selector"
 								value={this.getExcludedTerritories()}
 								onChange={this.selectTerritories}
 							/>
@@ -456,7 +456,7 @@ class SalesPackageEdit extends React.Component {
 					{this.installmentsIncomplete() && this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING")}
 				</div>
 
-				<div className="buttons">
+				<div className="buttons popup-buttons">
 					<button
 						className="standard-button"
 						disabled={

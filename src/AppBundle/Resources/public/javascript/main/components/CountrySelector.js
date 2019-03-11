@@ -52,7 +52,7 @@ class CountrySelector extends React.Component {
 			return territories.filter(t => !exclusiveSoldTerritories.some(ht => ht.label === t.label));
 		}
 		return territories;
-	}
+	};
 
 	render() {
 		const {
