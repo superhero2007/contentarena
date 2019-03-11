@@ -210,6 +210,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
     public function getActiveSports(  ){
 
+        $now = date('Y-m-d H:i:s');
         $query = $this->createQueryBuilder('content');
 
         $query
@@ -217,6 +218,8 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('content.sports', 'sports')
             ->leftJoin('content.status', 'status')
             ->andWhere('status.name = :approvedStatusName OR status.name = :editedStatusName')
+            ->andWhere('content.expiresAt >= :fromDate')
+            ->setParameter('fromDate',$now)
             ->setParameter('approvedStatusName',"APPROVED")
             ->setParameter('editedStatusName',"EDITED")
             ->addOrderBy('idCount', 'DESC');
