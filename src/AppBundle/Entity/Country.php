@@ -18,7 +18,7 @@ class Country
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing","countryList"})
+     * @Groups({"listing","countryList", "home"})
      */
     private $id;
 
@@ -26,7 +26,7 @@ class Country
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Groups({"listing", "closed", "commercial", "settings","countryList"})
+     * @Groups({"listing", "closed", "commercial", "settings","countryList", "home"})
      */
     private $name;
 

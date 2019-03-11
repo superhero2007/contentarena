@@ -228,7 +228,11 @@ class UserService
             if ( isset($data['address2']) ) $company->setAddress2($data['address2']);
             if ( isset($data['city']) ) $company->setCity($data['city']);
             if ( isset($data['description']) ) $company->setDescription($data['description']);
-            if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));
+
+            if ( isset($data['country']) && isset($data['country']['name']) ) {
+                $country = $this->getCountry($data['country']['name']);
+                if ( $country != null ) $company->setCountry($country);
+            }
 
             $this->em->persist($company);
             $this->em->flush();
@@ -251,7 +255,12 @@ class UserService
         if ( isset($data['address2']) ) $company->setAddress2($data['address2']);
         if ( isset($data['city']) ) $company->setCity($data['city']);
         if ( isset($data['description']) ) $company->setDescription($data['description']);
-        if ( isset($data['country']) ) $company->setCountry($this->getCountry($data['country']['name']));
+
+        if ( isset($data['country']) && isset($data['country']['name']) ) {
+            $country = $this->getCountry($data['country']['name']);
+            if ( $country != null ) $company->setCountry($country);
+        }
+
         $company->setUsers(array($user));
         $this->em->persist($company);
         $user->setCompany($company);
