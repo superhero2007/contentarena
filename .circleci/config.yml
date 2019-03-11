@@ -72,7 +72,7 @@ jobs:
       - run:
           name: Copy fe files
           command: |
-            cp -r web/assets /var/www/html/web
+            cp -r /home/circleci/project/web/assets /var/www/html/web
       - run:
           name: Run Unit tests
           command: vendor/bin/simple-phpunit
