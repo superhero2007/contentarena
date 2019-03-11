@@ -84,7 +84,7 @@ class InviteUserForm extends React.Component {
 						autoComplete="off"
 						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_EMAIL")}
 						onChange={(e) => {
-							user.email = e.target.value;
+							user.email = e.target.value.trim();
 							this.handleChange(user);
 						}}
 					/>
