@@ -8,9 +8,8 @@
 
 namespace AppBundle\EventListener;
 
-use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
+use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use AppBundle\Entity\Company;
 
 /**

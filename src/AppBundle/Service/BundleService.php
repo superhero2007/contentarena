@@ -17,6 +17,7 @@ use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Bid;
 use AppBundle\Doctrine\RandomIdGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
 
@@ -31,7 +32,7 @@ class BundleService
 
     private $messageService;
 
-    public function __construct(EntityManager $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, MessageService $messageService) {
+    public function __construct(EntityManagerInterface $entityManager, RandomIdGenerator $idGenerator, FileUploader $fileUploader, MessageService $messageService) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;

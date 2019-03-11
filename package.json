@@ -62,7 +62,7 @@
     "stylelint-scss": "^3.5.3"
   },
   "scripts": {
-    "test_be": "echo \"Error: no test specified\" && exit 1",
+    "test_be": "./vendor/bin/simple-phpunit",
     "test_fe": ".\\node_modules\\.bin\\jest",
     "dev": ".\\node_modules\\.bin\\encore dev",
     "webpack": ".\\node_modules\\.bin\\encore dev --watch",

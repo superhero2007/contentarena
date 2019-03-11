@@ -116,6 +116,7 @@
         font-weight: bold;
         font-size: 12px;
         margin-left: 15px;
+
         i {
           padding-right: 5px;
         }
@@ -334,6 +335,7 @@
     height: 100%;
     background: rgba(black, .7);
     cursor: default;
+    z-index: 100;
 
     .cap {
       font-style: italic;

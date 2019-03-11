@@ -16,6 +16,7 @@ use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Bid;
 use AppBundle\Doctrine\RandomIdGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -34,7 +35,7 @@ class MessageService
     private $emailService;
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         NotificationService $notificationService,
         EmailService $emailService,

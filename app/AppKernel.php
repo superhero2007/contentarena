@@ -21,7 +21,7 @@ class AppKernel extends Kernel
             new ContentArenaLayerBundle\ContentArenaLayerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new ApiBundle\ApiBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),

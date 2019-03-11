@@ -14,6 +14,7 @@ use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use AppBundle\Repository\ContentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
@@ -41,7 +42,7 @@ class ContentService
     const SORT_REFERENCE_PUBLISHING = "publishing";
 
     public function __construct(
-        EntityManager $entityManager,
+        EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
         EmailService $emailService

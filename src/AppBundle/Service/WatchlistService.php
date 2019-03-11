@@ -8,6 +8,7 @@ namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Watchlist;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class WatchlistService
@@ -15,7 +16,7 @@ class WatchlistService
 
     private $em;
 
-    public function __construct(EntityManager $entityManager){
+    public function __construct(EntityManagerInterface $entityManager){
         $this->em = $entityManager;
     }
 

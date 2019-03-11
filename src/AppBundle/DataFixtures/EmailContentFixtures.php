@@ -361,21 +361,6 @@ class EmailContentFixtures extends Fixture
                 "Please click on the Listing Name to review the listing."
             ),
             array(
-                "email_subject_buyer_listing_match",
-                "",
-                "New content was listed that matches your buying interest."
-            ),
-            array(
-                "email_content_buyer_listing_match",
-                "",
-                "New content was listed that matches your buying interest."
-            ),
-            array(
-                "email_content_buyer_listing_match_2",
-                "",
-                "Please click on the Listing Name to review the listing."
-            ),
-            array(
                 "email_subject_account_incomplete",
                 "",
                 "Complete your registration on Content Arena!"
