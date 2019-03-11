@@ -2,12 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        {% set version="1.2" %}
         {% block stylesheets %}
             <link href="{{ asset('bundles/app/css/font-awesome.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/app/css/jquery-ui.theme.css') }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('assets/common.css') }}?v={{ version }}" type="text/css" rel="stylesheet" />
-            <link href="{{ asset('assets/main.css') }}?v={{ version }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/common.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/main.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
 
         <script>
@@ -36,11 +35,11 @@
 
     {% block javascripts %}
 
-        <script type="text/javascript" src="{{ asset('assets/runtime.js') }}?v={{ version }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/vendor.js') }}?v={{ version }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/main.js') }}?v={{ version }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/common.js') }}?v={{ version }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/ca.js') }}?v={{ version }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/runtime.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/vendor.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/main.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/common.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/ca.js') }}"></script>
 
     {% endblock %}
     </body>

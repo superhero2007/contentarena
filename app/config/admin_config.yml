@@ -27,12 +27,6 @@ easy_admin:
             - TermItems
             - Definitions
 
-        form_theme:
-            #- 'horizontal'
-            # the following Twig template can be located anywhere in the application.
-            # it can also be added to the twig.form_themes option to use it in the
-            # entire application, not only the backend
-            - 'easy_admin/basic.form.html.twig'
         assets:
             js:
                 - 'bundles/app/admin/javascript/admin.js'
