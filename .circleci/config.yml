@@ -45,6 +45,7 @@ jobs:
           keys:
             - composer-v1.1-{{ checksum "composer.lock" }}
             - composer-v1.1-
+            - v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Install Composer
           command: |
@@ -204,6 +205,7 @@ workflows:
       - deploy:
           requires:
             - build_fe
+            - build_be
           filters:
             branches:
               only:
@@ -225,6 +227,7 @@ workflows:
         - deploy_test:
             requires:
               - build_fe
+              - build_be
             filters:
               branches:
                 only:
