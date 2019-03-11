@@ -90,7 +90,7 @@ class JobService
             "type" => $type
         ));
 
-        if ( $job == null) $this->createJob($type, $user, null, $this->accountIncompleteTime);
+        if ( $job == null && $user != null) $this->createJob($type, $user, null, $this->accountIncompleteTime);
 
 
     }
