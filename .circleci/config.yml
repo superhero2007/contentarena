@@ -188,13 +188,13 @@ workflows:
   build_and_deploy_dev:
     jobs:
       - build_be:
+          requires:
+            - build_fe
           filters:
             branches:
               ignore:
                 - release
       - build_fe:
-          requires:
-            - build_be
           filters:
             branches:
               ignore:
