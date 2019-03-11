@@ -52,7 +52,9 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.3",
+    "husky": "^1.3.1",
     "jest": "^24.1.0",
+    "lint-staged": "^8.1.5",
     "node-sass": "^4.11.0",
     "react-test-context-provider": "^2.2.0",
     "react-test-renderer": "^16.8.3",
@@ -81,5 +83,15 @@
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/contentarena/content-arena-api#readme"
+  "homepage": "https://bitbucket.org/contentarena/content-arena-api#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && git add"
+    }
+  },
+  "lint-staged": {
+    "src/AppBundle/Resources/public/javascript/**/js": [
+      "npm run lint:fix"
+    ]
+  }
 }

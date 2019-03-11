@@ -439,7 +439,7 @@ class SalesPackageForm extends React.Component {
 			|| this.territoriesIncomplete()
 			|| this.installmentsIncomplete();
 
-		const isTerritoriesEmpty = territories.length === 0 && validation;
+		const isTerritoriesEmpty = (territories.length === 0 && territoriesMethod !== this.worldwide) && validation;
 
 		return (
 			<Modal

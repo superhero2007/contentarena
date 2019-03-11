@@ -906,15 +906,18 @@
             }
           }
         }
+	  	.checkout-button {
+		  display: none;
+		  position: fixed;
+		  bottom: 15px;
+		  text-align: center;
+		  right: 0;
+		  left: 0;
 
-        .checkout-button {
-          margin: 15px 0;
-
-          button {
-            font-weight: 600;
-            padding: 13px 20px;
-          }
-        }
+		  &.active {
+			  display: block;
+		  }
+	  	}
       }
 
       .sales-bundles {

@@ -519,7 +519,7 @@ class TerritoriesSalesPackages extends PureComponent {
 				)}
 
 				{/* SECOND CHECKOUT BUTTON */}
-				<div className="d-flex justify-content-end checkout-button">
+				<div className={cn("checkout-button", { active: checkedItems.size > 0 })}>
 					{this.renderCheckoutButton()}
 				</div>
 			</React.Fragment>

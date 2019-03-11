@@ -138,7 +138,7 @@ class EventFilter extends React.Component {
 						{this.context.t("MARKETPLACE_LABEL_FILTER_SPORT")}
 					</div>
 
-					{this.getOptions().slice(0, seeAll ? -1 : 6).map(sp => (
+					{this.getOptions().slice(0, seeAll ? -1 : 5).map(sp => (
 						<div style={{ margin: "7px 0 " }} key={sp.label}>
 							<label className="d-flex">
 								<input
