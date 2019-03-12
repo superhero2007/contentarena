@@ -241,7 +241,7 @@ class RegionFilter extends React.Component {
 									{!territoryItems[territory.id] && "0"}
 									{territoryItems[territory.id] && territoryItems[territory.id].length}
 									{"/"}
-									{totalItems}
+									{territory.total}
 								</button>
 							))}
 						</div>
@@ -264,7 +264,7 @@ class RegionFilter extends React.Component {
 									{!regionItems[region.id] && "0"}
 									{regionItems[region.id] && regionItems[region.id].length}
 									{"/"}
-									{totalItems}
+									{region.total}
 								</button>
 							))}
 						</div>

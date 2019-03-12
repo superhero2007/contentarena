@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\RightsGroup;
 use JMS\Serializer\SerializerBuilder;
+use AppBundle\Service\CountryRegionService;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 
@@ -138,30 +139,38 @@ class ApiSearchController extends BaseController
 
     /**
      * @Route("/api/search/territories", name="getTerritories")
+     * @return JsonResponse
      */
-    public function getTerritories(Request $request){
+    public function getTerritories(){
 
-        //Take Repositories
         $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:Territory");
+        $countryRepository = $this->getDoctrine()->getRepository("AppBundle:Country");
 
-        //Get results
-        $countries = $sportCategoryRepository->getAll();
+        $territories = $sportCategoryRepository->getAll();
+        foreach ($territories as &$territory)
+        {
+            $territory['total'] = $countryRepository->countTerritoriesByTerritoryId($territory['id']);
+        }
 
-        return new JsonResponse($countries);
+        return new JsonResponse($territories);
     }
 
     /**
      * @Route("/api/search/regions", name="getRegions")
+     * @param CountryRegionService $countryRegionService
+     * @return JsonResponse
      */
-    public function getRegions(Request $request){
+    public function getRegions(CountryRegionService $countryRegionService ){
 
-        //Take Repositories
         $sportCategoryRepository = $this->getDoctrine()->getRepository("AppBundle:Region");
+        $regions = $sportCategoryRepository->getAll();
 
-        //Get results
-        $results = $sportCategoryRepository->getAll();
+        foreach ($regions as &$region)
+        {
+            $region['total'] = $countryRegionService->countRegionsById($region['id']);
+        }
 
-        return new JsonResponse($results);
+        return new JsonResponse($regions);
     }
 
     /**
