@@ -2,14 +2,14 @@
 
 namespace AppBundle\Service;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CountryRegionService
 {
     private $em;
 
     public function __construct(
-        EntityManager $entityManager
+        EntityManagerInterface $entityManager
     ) {
         $this->em = $entityManager;
     }
