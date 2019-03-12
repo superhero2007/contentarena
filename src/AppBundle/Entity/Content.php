@@ -1794,7 +1794,7 @@ class Content
         $seasons = $this->getSeasons();
         $extraData = $this->getExtraData();
         $fixtures = $this->getFixturesBySeason();
-        if ( count( $seasons ) > 0 ){
+        if ( !is_null($seasons) && count( $seasons ) > 0 ){
 
             $season = (is_array($seasons)) ? $seasons[0] : $seasons->first();
             $date = $season->getStartDate();
