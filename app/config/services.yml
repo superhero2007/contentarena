@@ -74,6 +74,7 @@ services:
             $router: '@router'
             $accountIncompleteTime: '%job_account_incomplete_time%'
             $accountIncompleteFromInviteTime: '%job_account_incomplete_from_invite_time%'
+            $hostUrl: '%carena_host_url%'
 
     AppBundle\Service\SwitchUserService:
          arguments:

@@ -33,6 +33,8 @@ class JobService
 
     private $emailService;
 
+    private $hostUrl;
+
     private $router;
 
     const TZ = 'UTC';
@@ -42,13 +44,15 @@ class JobService
         EmailService $emailService,
         Router $router,
         $accountIncompleteTime,
-        $accountIncompleteFromInviteTime
+        $accountIncompleteFromInviteTime,
+        $hostUrl
     ) {
         $this->em = $entityManager;
         $this->router = $router;
         $this->emailService = $emailService;
         $this->accountIncompleteTime = $accountIncompleteTime;
         $this->accountIncompleteFromInviteTime = $accountIncompleteFromInviteTime;
+        $this->hostUrl = $hostUrl;
     }
 
     /**
@@ -146,6 +150,10 @@ class JobService
         date_default_timezone_set($this::TZ);
         $current_date = strtotime((new \DateTime())->format("Y-m-d H:i:s"));
         $expatriation_date = strtotime($job->getRunAt()->format("Y-m-d H:i:s"));
+        $result = parse_url($this->hostUrl);
+        $context = $this->router->getContext();
+        $context->setHost($result['host']);
+        $context->setScheme($result['scheme']);
         if ( $expatriation_date > $current_date ) return;
 
         /* @var User $user */

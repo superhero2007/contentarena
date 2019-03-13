@@ -89,7 +89,15 @@ class SendEmail extends ContainerAwareCommand
         );
         $expiredListings = $listingRepository->getExpiredByDate($user);
         $expireTomorrowListings = $listingRepository->getExpireTomorrow($user);
-        $confirmationUrl = ($user->getConfirmationToken()) ? $this->getContainer()->get('router')->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
+
+        $router = $this->getContainer()->get('router');
+        $result = parse_url($hostUrl);
+        $context = $router->getContext();
+        $context->setHost($result['host']);
+        $context->setScheme($result['scheme']);
+        //$context->setBaseUrl('my/path');
+
+        $confirmationUrl = ($user->getConfirmationToken()) ? $router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL) : "";
         $params = array(
             "hostUrl" => $hostUrl,
             "user" => $user,
