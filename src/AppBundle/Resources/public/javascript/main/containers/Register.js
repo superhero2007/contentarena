@@ -479,7 +479,7 @@ class Register extends React.Component {
 						/>
 						<button
 							onClick={() => {
-								this.goToNextStep("company");
+								this.goToNextStep("password");
 							}}
 							disabled={this.invalidUser()}
 							className="standard-button"
@@ -734,7 +734,7 @@ class Register extends React.Component {
 
 				<div className="buttons">
 					<BackButton onClick={() => {
-						this.goToNextStep("company");
+						this.goToNextStep("personal");
 					}}
 					/>
 
