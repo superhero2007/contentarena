@@ -200,7 +200,7 @@ class CmsSeasonSelector extends React.Component {
 								)}
 								{custom && (
 									<span className="edit-season" onClick={() => { this.editSeason(season); }}>
-										<i className="fa fa-info-circle" />
+										<i className="fa fa-pencil" />
 									</span>
 								)}
 							</div>

@@ -58,6 +58,8 @@ class CmsSeasonsFilter extends React.Component {
 	render() {
 		const { property: { seasons } } = this.props;
 
+		seasons.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
 		return (
 			<>
 				<div className="region-filter-title">
