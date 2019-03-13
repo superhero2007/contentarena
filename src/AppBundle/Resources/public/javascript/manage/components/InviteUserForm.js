@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
+import { TranslatedPlaceholderInput } from "@components/Translator";
 import { validateEmail } from "../../common/utils/listing";
 
 class InviteUserForm extends React.Component {
@@ -47,51 +48,55 @@ class InviteUserForm extends React.Component {
 					<label>
 						<Translate i18nKey="SETTINGS_LABEL_USER_EMAIL" />
 					</label>
-					<input
-						name={`email-${key}`}
-						className="ca-form-control"
-						id={`email-${key}`}
-						value={user.email}
-						disabled={disabled}
-						autoComplete="off"
-						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_EMAIL")}
-						onChange={(e) => {
-							user.email = e.target.value.trim();
-							this.handleChange(user);
-						}}
-					/>
+
+					<Translate i18nKey="SETTINGS_INVITE_PLACEHOLDER_EMAIL">
+						<TranslatedPlaceholderInput
+							name={`email-${key}`}
+							className="ca-form-control"
+							id={`email-${key}`}
+							value={user.email}
+							disabled={disabled}
+							autoComplete="off"
+							onChange={(e) => {
+								user.email = e.target.value.trim();
+								this.handleChange(user);
+							}}
+						/>
+					</Translate>
 				</div>
 				<div className="item">
 					<label>
 						<Translate i18nKey="SETTINGS_LABEL_USER_FIRST_NAME" />
 					</label>
-					<input
-						id={`first-name-${key}`}
-						className="ca-form-control"
-						value={user.firstName}
-						disabled={disabled}
-						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FIRST_NAME")}
-						onChange={(e) => {
-							user.firstName = e.target.value;
-							this.handleChange(user);
-						}}
-					/>
+					<Translate i18nKey="SETTINGS_INVITE_PLACEHOLDER_FIRST_NAME">
+						<TranslatedPlaceholderInput
+							id={`first-name-${key}`}
+							className="ca-form-control"
+							value={user.firstName}
+							disabled={disabled}
+							onChange={(e) => {
+								user.firstName = e.target.value;
+								this.handleChange(user);
+							}}
+						/>
+					</Translate>
 				</div>
 				<div className="item">
 					<label>
 						<Translate i18nKey="SETTINGS_LABEL_USER_FAMILY_NAME" />
 					</label>
-					<input
-						id={`last-name-${key}`}
-						className="ca-form-control"
-						value={user.lastName}
-						disabled={disabled}
-						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME")}
-						onChange={(e) => {
-							user.lastName = e.target.value;
-							this.handleChange(user);
-						}}
-					/>
+					<Translate i18nKey="SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME">
+						<TranslatedPlaceholderInput
+							id={`last-name-${key}`}
+							className="ca-form-control"
+							value={user.lastName}
+							disabled={disabled}
+							onChange={(e) => {
+								user.lastName = e.target.value;
+								this.handleChange(user);
+							}}
+						/>
+					</Translate>
 				</div>
 			</div>
 		);

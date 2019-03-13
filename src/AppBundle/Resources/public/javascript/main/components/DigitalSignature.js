@@ -4,6 +4,7 @@ import { PropTypes } from "prop-types";
 import cn from "classnames";
 import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
+import { TranslatedPlaceholderInput } from "@components/Translator";
 import { pdfIcon } from "./Icons";
 import { viewLicenseBid } from "../actions/utils";
 import GeneralTerms from "./GeneralTerms";
@@ -49,7 +50,7 @@ class DigitalSignature extends React.Component {
 		const {
 			signature,
 			licenseBidId,
-			title = <Translate i18nKey="DIGITAL_SIGNATURE_TITLE" />,
+			title = "DIGITAL_SIGNATURE_TITLE",
 			customClass = "",
 			signaturePosition,
 			signatureName,
@@ -132,7 +133,7 @@ class DigitalSignature extends React.Component {
 								<Translate i18nKey="CL_STEP5_SIGNATURE_HEADLINE" />
 							</label>
 							<span>
-								{title}
+								<Translate i18nKey={title} />
 							</span>
 						</div>
 						{licenseBidId && (
@@ -171,18 +172,22 @@ class DigitalSignature extends React.Component {
 						Signed By
 					</label>
 					<div>
-						<input
-							value={signatureName}
-							onChange={onChangeSignatureName}
-							placeholder={isSignatureNameEmpty ? this.context.t("SIGNATURE_NAME_EMPTY") : "First Name Last Name"}
-							className={`ca-form-control ${isSignatureNameEmpty ? "is-invalid" : ""}`}
-						/>
-						<input
-							value={signaturePosition}
-							onChange={onChangeSignaturePosition}
-							placeholder={isSignatureNameEmpty ? this.context.t("SIGNATURE_POSITION_EMPTY") : "Position"}
-							className={`ca-form-control ${isSignaturePositionEmpty ? "is-invalid" : ""}`}
-						/>
+						<Translate i18nKey="SIGNATURE_NAME_EMPTY">
+							<TranslatedPlaceholderInput
+								style={{ width: "98%" }}
+								value={signatureName}
+								onChange={onChangeSignatureName}
+								className={`ca-form-control ${isSignatureNameEmpty ? "is-invalid" : ""}`}
+							/>
+						</Translate>
+						<Translate i18nKey="SIGNATURE_POSITION_EMPTY">
+							<TranslatedPlaceholderInput
+								style={{ width: "100%" }}
+								value={signaturePosition}
+								onChange={onChangeSignaturePosition}
+								className={`ca-form-control ${isSignaturePositionEmpty ? "is-invalid" : ""}`}
+							/>
+						</Translate>
 					</div>
 				</div>
 			</div>

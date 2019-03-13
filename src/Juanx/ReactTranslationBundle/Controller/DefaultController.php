@@ -68,7 +68,7 @@ class DefaultController extends Controller
     )
     {
         $language = "en";
-        $filename =  "http://dev.contentarena.com/bundles/app/data/translations.json";
+        $filename =  "http://dev.contentarena.com/translations";
         $this->import($filename);
         $json = $this->import($filename);
         $translationService->updateKeys($language, $json[$language]);
@@ -85,7 +85,7 @@ class DefaultController extends Controller
     )
     {
         $language = "en";
-        $filename =  "http://api.contentarena.com/bundles/app/data/translations.json";
+        $filename =  "http://api.contentarena.com/translations";
         $json = $this->import($filename);
         $translationService->updateKeys($language, $json[$language]);
         return $this->redirectToRoute("uploadLocales");

@@ -97,7 +97,7 @@ class SelectorModal extends Component {
 
 	applySelection = () => {
 		let extended = false;
-		let { clean } = this.props;
+		const { clean } = this.props;
 		const { postApplySeasonAction, selectorType } = this.props;
 		const { selectedItems, prevCountries } = this.state;
 
@@ -111,8 +111,8 @@ class SelectorModal extends Component {
 		}
 
 		if (extended) {
-			this.props.addNewSeason(0, []);
-			clean = clean.filter(c => c !== "seasons");
+			// this.props.addNewSeason(0, []);
+			// clean = clean.filter(c => c !== "seasons");
 		}
 
 		this.setState({ updated: false, filterUpdated: false, customCountry: false });

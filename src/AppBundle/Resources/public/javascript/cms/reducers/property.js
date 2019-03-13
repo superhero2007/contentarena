@@ -1,5 +1,6 @@
 
 export const propertyTypes = {
+	RESET_PROPERTY: "RESET_PROPERTY",
 	SET_PROPERTY_CONFIG: "SET_PROPERTY_CONFIG",
 	APPLY_SELECTION: "APPLY_SELECTION",
 	ADD_NEW: "ADD_NEW",
@@ -7,11 +8,14 @@ export const propertyTypes = {
 	SET_CUSTOM_SPORT_NAME: "SET_CUSTOM_SPORT_NAME",
 	SET_CUSTOM_SPORT_CATEGORY_NAME: "SET_CUSTOM_SPORT_CATEGORY_NAME",
 	SET_CUSTOM_TOURNAMENT_NAME: "SET_CUSTOM_TOURNAMENT_NAME",
+
 	SET_CUSTOM_SEASON_NAME: "SET_CUSTOM_SEASON_NAME",
 	ADD_CUSTOM_SEASON: "ADD_CUSTOM_SEASON",
-	REMOVE_SEASON: "REMOVE_SEASON",
-	SELECT_PROPERTY_TOURNAMENT: "SELECT_PROPERTY_TOURNAMENT",
+	REMOVE_CUSTOM_SEASON: "REMOVE_CUSTOM_SEASON",
+	UPDATE_CUSTOM_SEASON: "UPDATE_CUSTOM_SEASON",
 
+	SELECT_PROPERTY_TOURNAMENT: "SELECT_PROPERTY_TOURNAMENT",
+	SET_SEASONS: "SET_SEASONS",
 	SET_RIGHTS: "SET_RIGHTS",
 	SET_SELECTED_RIGHTS: "SET_SELECTED_RIGHTS",
 
@@ -48,6 +52,16 @@ const DEFAULT_STATE = {
 export const property = (state = DEFAULT_STATE, action) => {
 	let newState = {};
 	switch (action.type) {
+	case propertyTypes.RESET_PROPERTY:
+		return Object.assign({}, state, {
+			tournament: [],
+			sportCategory: [],
+			sports: [],
+			seasons: [],
+			rights: [],
+			selectedRights: [],
+			fixtures: [],
+		});
 	case propertyTypes.GET_COUNTRIES_SUCCESS:
 		return Object.assign({}, state, { countries: action.countries, isCountryFetched: true });
 	case propertyTypes.GET_REGIONS_SUCCESS:
@@ -58,6 +72,8 @@ export const property = (state = DEFAULT_STATE, action) => {
 		return Object.assign({}, state, action.config);
 	case propertyTypes.SET_RIGHTS:
 		return Object.assign({}, state, { rights: action.rights });
+	case propertyTypes.SET_SEASONS:
+		return Object.assign({}, state, { seasons: action.seasons });
 	case propertyTypes.SET_SELECTED_RIGHTS:
 		return Object.assign({}, state, { selectedRights: action.selectedRights });
 	case propertyTypes.SET_CUSTOM_SPORT_NAME:
@@ -73,6 +89,13 @@ export const property = (state = DEFAULT_STATE, action) => {
 	case propertyTypes.SET_CUSTOM_TOURNAMENT_NAME:
 		newState = {};
 		newState.tournament = [...state.tournament];
+
+		if (newState.tournament[action.index] === undefined) {
+			newState.tournament[action.index] = {
+				custom: true,
+			};
+		}
+
 		newState.tournament[action.index].name = action.tournamentName;
 		return Object.assign({}, state, newState);
 
@@ -89,7 +112,11 @@ export const property = (state = DEFAULT_STATE, action) => {
 		return Object.assign({}, state, { canFocusSeason: action.isFocus });
 	case propertyTypes.ADD_CUSTOM_SEASON:
 		newState = {};
-		newState.seasons = [...state.seasons, { custom: true, name: "" }];
+		newState.seasons = [...state.seasons, {
+			custom: true,
+			name: "",
+			year: "",
+		}];
 		return Object.assign({}, state, newState);
 	case propertyTypes.SET_CUSTOM_SEASON_NAME:
 		newState = {};
@@ -135,6 +162,26 @@ export const property = (state = DEFAULT_STATE, action) => {
 		}
 
 		return Object.assign({}, state, newState);
+	case propertyTypes.REMOVE_CUSTOM_SEASON:
+		newState = {};
+		newState.seasons = [...state.seasons];
+		newState.seasons.splice(action.index, 1);
+		return Object.assign({}, state, newState);
+
+	case propertyTypes.UPDATE_CUSTOM_SEASON:
+		newState = {};
+		newState.seasons = [...state.seasons];
+
+		if (newState.seasons[action.index] === undefined) {
+			newState.seasons[action.index] = {
+				custom: true,
+				name: "",
+			};
+		}
+
+		newState.seasons[action.index][action.key] = action.value;
+		return Object.assign({}, state, newState);
+
 	case propertyTypes.ADD_NEW:
 		newState = {};
 		newState[action.selectorType] = [...state[action.selectorType]];
@@ -181,5 +228,6 @@ export const getSeasonNames = (state) => {
 
 export const hasCustomSport = state => state.property.sports.filter(sport => sport.custom).length > 0;
 export const hasCustomSportCategory = state => state.property.sportCategory.filter(sportCategory => sportCategory.custom).length > 0;
+export const hasExtendedSportCategory = state => state.property.sportCategory.filter(sportCategory => sportCategory.extended).length > 0;
 export const hasCustomTournament = state => state.property.tournament.filter(tournament => tournament.custom).length > 0;
 export const hasCustomSeason = state => state.property.seasons.filter(season => season.custom).length > 0;

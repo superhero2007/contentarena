@@ -55,6 +55,7 @@
         "consistent-return": "off",
         "max-len": "off",
         "no-underscore-dangle": "off",
+        "import/prefer-default-export": "off",
         "import/no-named-default": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
         "react/destructuring-assignment": "off",

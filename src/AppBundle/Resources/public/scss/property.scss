@@ -14,6 +14,70 @@
     color: #666;
     margin: 20px 30px 0 0;
   }
+
+  .season-selector{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0 10px;
+    .season-selector-item{
+      display: flex;
+      flex-direction: row;
+      min-width: 150px;
+      min-height: 40px;
+      align-items: center;
+      input[type="checkbox"]{
+        margin-right: 5px;
+      }
+    }
+  }
+  .season-buttons{
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+  }
+
+  .remove-season{
+    display: flex;
+    align-items: center;
+    padding-bottom: 21px;
+  }
+  .remove-season, .add-season{
+    cursor: pointer;
+    font-size: 16px;
+    color: $property-blue;
+    i{ margin-right: 5px; }
+  }
+  .season-checkbox {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    label{
+      color: $font-color-5;
+      font-size: 13px;
+    }
+    input{
+      margin-right: 10px;
+    }
+  }
+  .custom-season-container{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    max-width: 600px;
+    margin: 15px 0 0;
+    .custom-season-form{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-right: 20px;
+      .date-select {
+        display: flex;
+        .ca-form-control{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
   .right-selector {
     display: flex;
     flex-wrap: wrap;
@@ -50,6 +114,7 @@
         }
         input {
           margin-right: 11px !important;
+          cursor: pointer;
         }
         label{
 	      cursor: pointer;
@@ -118,6 +183,20 @@
     input[type="radio"].ca-radio {
       background-color: white;
 
+      &.ca-radio-exclusive{
+        &:hover {
+          border-color: $property-yellow;
+        }
+
+        &:checked {
+          border: none;
+
+          &:after {
+            background: url('../images/radio-yellow.png') no-repeat;
+          }
+        }
+      }
+
       &:disabled,
       &.disabled {
         border-color: $grey-color;
@@ -172,6 +251,7 @@
   .property-cancel-button{
     margin: 20px 0 0;
     text-decoration: none;
+    outline: none;
   }
 
   .region-filter{
@@ -724,7 +804,7 @@
       max-width: 60px;
     }
     span{
-      margin: 10px 0;
+      //margin: 10px 0;
       &.title{
         color: #333333;
         font-size: 16px;

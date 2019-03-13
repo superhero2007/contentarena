@@ -1,5 +1,6 @@
 export const DATE_FORMAT = "DD.MM.YYYY";
 export const SERVER_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss";
+export const SERVER_DATE_FORMAT = "YYYY-MM-DD";
 export const TIME_FORMAT = "HH:mm";
 export const YEAR_FORMAT = "YYYY";
 export const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
@@ -21,6 +22,7 @@ export const RIGHT_STATUS = {
 
 export const CMS_PROPERTY_TABS = {
 	RIGHTS: "rightsoverview",
+	EDITED_PROGRAM: "editedprogram",
 	FIXTURES: "fixtures",
 	COMMERCIAL: "commercialoverview",
 	LISTING: "listingoverview",
@@ -145,37 +147,37 @@ export const RIGHTS = [
 		code: "LT",
 		name: "Live Transmission",
 		translationKey: "RIGHT_LIVE_TRANSMISSION_NAME",
-		exclusive: false,
+		exclusive: null,
 	},
 	{
 		code: "DT",
 		name: "Delayed & Archive",
 		translationKey: "RIGHT_DELAYED_ARCHIVE_NAME",
-		exclusive: false,
+		exclusive: null,
 	},
 	{
 		code: "LB",
 		name: "Live Betting",
 		translationKey: "RIGHT_LIVE_BETTING_NAME",
-		exclusive: false,
+		exclusive: null,
 	},
 	{
 		code: "NA",
 		name: "News Footage",
 		translationKey: "RIGHT_NEWS_NAME",
-		exclusive: false,
+		exclusive: null,
 	},
 	{
 		code: "HL",
 		name: "Highlight & Clip",
 		translationKey: "RIGHT_HIGHLIGHTS_NAME",
-		exclusive: false,
+		exclusive: null,
 	},
 	{
 		code: "PR",
 		name: "Edited Program",
 		translationKey: "RIGHT_PROGRAM_NAME",
-		exclusive: false,
+		exclusive: null,
 	},
 
 ];

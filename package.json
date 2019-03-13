@@ -74,7 +74,6 @@
     "prod": ".\\node_modules\\.bin\\encore production",
     "extract": "i18n_extract",
     "import": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations",
-    "import-admin": "i18n_import --translations=src/AppBundle/Resources/public/javascript/translations --locales=admin-locales",
     "lint": ".\\node_modules\\.bin\\eslint src/AppBundle/Resources/public/javascript",
     "lint:fix": "npm run lint -- --fix",
     "style-lint": ".\\node_modules\\.bin\\stylelint src/AppBundle/Resources/public/**/*.scss",

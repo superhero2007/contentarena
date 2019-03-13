@@ -36,7 +36,6 @@ class CmsRightsSelector extends React.Component {
 		if (!rights.has(right.code)) {
 			rights.set(right.code, {
 				...right,
-				exclusive: false,
 			});
 			this.props.rightsUpdated(this.getRightsForProps(rights));
 		}
@@ -56,7 +55,7 @@ class CmsRightsSelector extends React.Component {
 		const { rightsUpdated } = this.props;
 		let rightPackageItem = rights.get(right.code);
 
-		if (rightPackageItem.exclusive === exclusive) return;
+		// if (rightPackageItem.exclusive === exclusive) return;
 
 		rightPackageItem = {
 			...rightPackageItem,
@@ -74,7 +73,8 @@ class CmsRightsSelector extends React.Component {
 	getRadioBoxValue = (code) => {
 		const { rights } = this.state;
 		const right = rights.get(code);
-		return right && right.exclusive || false;
+		if (right && right.exclusive !== null) return right.exclusive;
+		return null;
 	};
 
 	render() {
@@ -88,7 +88,8 @@ class CmsRightsSelector extends React.Component {
 					const idAttr = `checkbox-${code}`;
 					const exclusiveIdAttr = `exc-id-${code}`;
 					const nonExclusiveIdAttr = `non-exc-id-${code}`;
-					const offerValue = this.getRadioBoxValue(code) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
+					const exclusive = this.getRadioBoxValue(code);
+					const offerValue = exclusive === null ? null : exclusive !== null && exclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
 					const checkboxIsDisabled = !this.isCheckBoxChecked(code);
 					return (
 						<div className="right-selector-item" key={`right-${i}`}>
@@ -127,7 +128,7 @@ class CmsRightsSelector extends React.Component {
 										this.onExclusive(right, true);
 									}}
 									id={exclusiveIdAttr}
-									className="ca-radio"
+									className="ca-radio ca-radio-exclusive"
 								/>
 								<label
 									className={cn({ selected: !checkboxIsDisabled && offerValue === offers.EXCLUSIVE })}

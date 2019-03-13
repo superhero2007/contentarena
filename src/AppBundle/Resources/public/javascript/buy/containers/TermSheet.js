@@ -20,21 +20,21 @@ class TermSheet extends React.Component {
 
 	getDetailsByKey = (key, name) => {
 		const translations = {
-			SUBLICENSE: this.context.t("RIGHTS_SUBLICENSE_DETAILS"),
-			BROADCASTING: this.context.t("RIGHTS_BROADCASTING_DETAILS"),
-			TRANSMISSION_MEANS: this.context.t("RIGHTS_TRANSMISSION_MEANS_DETAILS"),
-			EXPLOITATION_FORM: this.context.t("RIGHTS_EXPLOITATION_FORM_DETAILS"),
-			LICENSED_LANGUAGES: this.context.t("RIGHTS_LICENSED_LANGUAGES_DETAILS"),
-			RUNS: this.context.t("RIGHTS_RUNS_DETAILS"),
-			EXPLOITATION_WINDOW: this.context.t("RIGHTS_EXPLOITATION_WINDOW_DETAILS"),
-			RESERVED_RIGHTS: this.context.t("RIGHTS_RESERVED_RIGHTS_DETAILS"),
-			VIDEO_STANDARD: this.context.t("RIGHTS_VIDEO_STANDARD_DETAILS"),
-			ASPECT_RATIO: this.context.t("RIGHTS_ASPECT_RATIO_DETAILS"),
-			COMMENTARY: this.context.t("RIGHTS_COMMENTARY_DETAILS"),
-			TECHNICAL_DELIVERY: this.context.t("RIGHTS_TECHNICAL_DELIVERY_DETAILS"),
-			GRAPHICS: this.context.t("RIGHTS_GRAPHICS_DETAILS"),
-			CAMERA: this.context.t("RIGHTS_CAMERA_DETAILS"),
-			CONTENT_DELIVERY: this.context.t("RIGHTS_CONTENT_DELIVERY_DETAILS"),
+			SUBLICENSE: "RIGHTS_SUBLICENSE_DETAILS",
+			BROADCASTING: "RIGHTS_BROADCASTING_DETAILS",
+			TRANSMISSION_MEANS: "RIGHTS_TRANSMISSION_MEANS_DETAILS",
+			EXPLOITATION_FORM: "RIGHTS_EXPLOITATION_FORM_DETAILS",
+			LICENSED_LANGUAGES: "RIGHTS_LICENSED_LANGUAGES_DETAILS",
+			RUNS: "RIGHTS_RUNS_DETAILS",
+			EXPLOITATION_WINDOW: "RIGHTS_EXPLOITATION_WINDOW_DETAILS",
+			RESERVED_RIGHTS: "RIGHTS_RESERVED_RIGHTS_DETAILS",
+			VIDEO_STANDARD: "RIGHTS_VIDEO_STANDARD_DETAILS",
+			ASPECT_RATIO: "RIGHTS_ASPECT_RATIO_DETAILS",
+			COMMENTARY: "RIGHTS_COMMENTARY_DETAILS",
+			TECHNICAL_DELIVERY: "RIGHTS_TECHNICAL_DELIVERY_DETAILS",
+			GRAPHICS: "RIGHTS_GRAPHICS_DETAILS",
+			CAMERA: "RIGHTS_CAMERA_DETAILS",
+			CONTENT_DELIVERY: "RIGHTS_CONTENT_DELIVERY_DETAILS",
 		};
 
 		return typeof translations[key] !== "undefined" ? translations[key] : `${name} Details`;
@@ -52,6 +52,7 @@ class TermSheet extends React.Component {
 				<RightTableItem
 					className="right-name"
 					value={name}
+					translate
 				/>
 				{
 					rightsPackage.map((rp, k) => {
@@ -171,7 +172,7 @@ class TermSheet extends React.Component {
 					{selectedRightsBySuperRight[rightsPackage[0].id].items[`${right.key}_TEXTAREA`]
 					&& (
 						<tr className="row" key="reserved-rights-details">
-							<RightTableItem value={this.getDetailsByKey(right.key, right.name)} className="right-name" />
+							<RightTableItem value={this.getDetailsByKey(right.key, right.name)} className="right-name" translate />
 							<RightTableItem
 								key={`details-${i}`}
 								textarea
@@ -290,7 +291,8 @@ class TermSheet extends React.Component {
 						<tr className="row">
 							<RightTableItem
 								className="right-definition-title"
-								value={this.context.t("LISTING_DETAILS_RIGHTS_HEADER_RIGHTS")}
+								value="LISTING_DETAILS_RIGHTS_HEADER_RIGHTS"
+								translate
 							/>
 							{
 								rightsPackage.map((rp, i) => (
@@ -308,7 +310,8 @@ class TermSheet extends React.Component {
 							<tr className="row" key="transmission">
 								<RightTableItem
 									className="right-name"
-									value={this.context.t("LISTING_DETAILS_RIGHTS_HEADER_GRANTED_TIME")}
+									value="LISTING_DETAILS_RIGHTS_HEADER_GRANTED_TIME"
+									translate
 								/>
 								{
 									rightsPackage.map((rp, k) => {
@@ -345,14 +348,16 @@ class TermSheet extends React.Component {
 						<tr className="row">
 							<RightTableItem
 								className="right-definition-title"
-								value={this.context.t("LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS")}
+								value="LISTING_DETAILS_RIGHTS_TITLE_PRODUCTION_DETAILS"
+								translate
 							/>
 
 							{deliveryViaLiveFeed
 							&& (
 								<RightTableItem
 									className="right-definition-title"
-									value={this.context.t("LISTING_DETAILS_RIGHTS_LIVE_FEED")}
+									value="LISTING_DETAILS_RIGHTS_LIVE_FEED"
+									traslate
 								/>
 							)}
 
@@ -376,9 +381,19 @@ class TermSheet extends React.Component {
 							}
 						</tr>
 						{this.renderList(ProductionStandardsDefinitions, true, deliveryViaLiveFeed, liveFeedPackages)}
-						{packagesAvailable.indexOf("PR") !== -1 && PROGRAM_LANGUAGE && this.renderProgramInfo(PROGRAM_LANGUAGE, this.context.t("RIGHTS_LANGUAGES"), deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated)}
-						{packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SUBTITLES && this.renderProgramInfo(PROGRAM_SUBTITLES, this.context.t("RIGHTS_SUBTITLES"), deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated)}
-						{packagesAvailable.indexOf("PR") !== -1 && PROGRAM_SCRIPT && this.renderProgramInfo(PROGRAM_SCRIPT, this.context.t("RIGHTS_SCRIPT"), deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated)}
+						{
+							packagesAvailable.indexOf("PR") !== -1
+							&& PROGRAM_LANGUAGE
+							&& this.renderProgramInfo(PROGRAM_LANGUAGE, "RIGHTS_LANGUAGES", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated)
+						}
+						{
+							packagesAvailable.indexOf("PR") !== -1
+							&& PROGRAM_SUBTITLES
+							&& this.renderProgramInfo(PROGRAM_SUBTITLES, "RIGHTS_SUBTITLES", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated)}
+						{
+							packagesAvailable.indexOf("PR") !== -1
+							&& PROGRAM_SCRIPT
+							&& this.renderProgramInfo(PROGRAM_SCRIPT, "RIGHTS_SCRIPT", deliveryViaLiveFeed, liveFeedPackages, highlightIsDedicated)}
 
 					</table>
 				</div>

@@ -104,6 +104,10 @@ class CmsSearchCompetition extends React.Component {
 			searching,
 		} = this.state;
 
+		const {
+			onCreateManually,
+		} = this.props;
+
 		return (
 			<div className="step-content-container search-competition">
 				<div className="base-input search-competition-input">
@@ -131,9 +135,8 @@ class CmsSearchCompetition extends React.Component {
 							{this.context.t("CL_STEP1_SEARCH_NO_RESULTS", { n: this.state.input })}
 							<Translate i18nKey="CMS_SEARCH_TRY" />
 							<a
-								href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}
 								className="standard-button standard-button-big"
-								onClick={this.props.close}
+								onClick={onCreateManually}
 							>
 								<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" />
 							</a>

@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
+import { TranslatedPlaceholderInput } from "@components/Translator";
+
 
 class JurisdictionSelector extends React.Component {
 	constructor(props) {
@@ -16,20 +18,23 @@ class JurisdictionSelector extends React.Component {
 	render() {
 		const { jurisdiction, validation } = this.props;
 		const isInvalid = !jurisdiction && validation;
+		const placeholderKey = isInvalid ? "JURISDICTION_EMPTY" : "CL_STEP4_PLACEHOLDER_JURISDICTION";
 
 		return (
 			<div className="base-input">
 				<label>
 					<Translate i18nKey="CL_STEP4_LABEL_JURISDICTION" />
 				</label>
-				<input
-					type="text"
-					value={jurisdiction}
-					onChange={this.selectTerritory}
-					placeholder={isInvalid ? <Translate i18nKey="JURISDICTION_EMPTY" /> : <Translate i18nKey="CL_STEP4_PLACEHOLDER_JURISDICTION" />}
-					className={isInvalid ? "is-invalid" : ""}
-					maxLength={250}
-				/>
+
+				<Translate i18nKey={placeholderKey}>
+					<TranslatedPlaceholderInput
+						type="text"
+						value={jurisdiction}
+						onChange={this.selectTerritory}
+						className={isInvalid ? "is-invalid" : ""}
+						maxLength={250}
+					/>
+				</Translate>
 
 			</div>
 		);

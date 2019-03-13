@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import { scrollMainContainer } from "@utils/listing";
 import Translate from "@components/Translator/Translate";
 import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
@@ -11,13 +12,14 @@ import {
 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
 } from "../reducers/property";
 import {
-	setSelectedRights, setRights, fetchCountries, fetchTerritories, fetchRegions,
+	setSelectedRights, setRights, fetchCountries, fetchTerritories, fetchRegions, resetProperty,
 } from "../actions/propertyActions";
 import Loader from "../../common/components/Loader/Loader";
-import { DATE_FORMAT, ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD } from "@constants";
+import { ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS } from "@constants";
 import CmsAvailableRightsSelector from "../components/CmsAvailableRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import api from "../../api";
+
 
 class CreatePropertyTerritories extends React.Component {
 	constructor(props) {
@@ -34,6 +36,7 @@ class CreatePropertyTerritories extends React.Component {
 		this.props.getCountries();
 		this.props.getTerritories();
 		this.props.getRegions();
+		scrollMainContainer();
 	}
 
 	onUndoTerritories = (selectedRight) => {
@@ -127,6 +130,7 @@ class CreatePropertyTerritories extends React.Component {
 	createProperty = () => {
 		const {
 			property,
+			resetProperty,
 		} = this.props;
 
 		this.setState({ savingProperty: true });
@@ -141,7 +145,13 @@ class CreatePropertyTerritories extends React.Component {
 			},
 		})
 			.then((response) => {
-				this.setState({ propertySaved: true });
+				const { data } = response;
+
+				this.setState({
+					propertySaved: true,
+					propertyId: data.customId,
+				});
+				resetProperty();
 			})
 			.catch()
 			.finally(() => {
@@ -150,8 +160,13 @@ class CreatePropertyTerritories extends React.Component {
 	};
 
 	render() {
-		const { editMode, propertySaved, savingProperty } = this.state;
-		const { property, history } = this.props;
+		const {
+			editMode,
+			propertySaved,
+			savingProperty,
+			propertyId,
+		} = this.state;
+		const { property, history, resetProperty } = this.props;
 		const { selectedRights, rights } = property;
 
 		let { territories, territoriesMode } = this.state;
@@ -218,7 +233,7 @@ class CreatePropertyTerritories extends React.Component {
 						<h5>
 							<i className="fa fa-check-circle" />
 						</h5>
-						<h5>
+						<h5 className="text-center">
 							<Translate i18nKey="CMS_PROPERTY_CREATION_COMPLETE" />
 						</h5>
 					</DefaultBox>
@@ -250,18 +265,31 @@ class CreatePropertyTerritories extends React.Component {
 					{propertySaved && (
 						<button
 							className="yellow-button"
-							onClick={() => history.push(ROUTE_PATHS.PROPERTIES)}
+							onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${CMS_PROPERTY_TABS.RIGHTS}`)}
 						>
 							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 						</button>
 					)}
 
-					<button
-						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
-						className="link-button property-cancel-button"
-					>
-						<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
-					</button>
+					{!propertySaved && !savingProperty && (
+						<button
+							onClick={() => {
+								resetProperty();
+								history.push(ROUTE_PATHS.CREATE_PROPERTY);
+							}}
+							className="link-button property-cancel-button"
+						>
+							<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
+						</button>
+					)}
+					{!propertySaved && !savingProperty && (
+						<button
+							onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1)}
+							className="link-button property-cancel-button no-margin"
+						>
+							<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
+						</button>
+					)}
 				</VerticalButtonBox>
 			</div>
 		);
@@ -290,6 +318,7 @@ const mapDispatchToProps = dispatch => ({
 	updateFromMultiple: (type, index, key, value) => dispatch(updateFromMultiple(type, index, key, value)),
 	rightsUpdated: rights => dispatch(setRights(rights)),
 	selectedRightsUpdated: selectedRights => dispatch(setSelectedRights(selectedRights)),
+	resetProperty: () => dispatch(resetProperty()),
 	getTerritories: () => dispatch(fetchTerritories()),
 	getCountries: () => dispatch(fetchCountries()),
 	getRegions: () => dispatch(fetchRegions()),

@@ -55,13 +55,20 @@ HeaderBarSeller.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const HeaderBarSellerCms = ({ match }, context) => (
+const HeaderBarSellerCms = ({ match }) => (
 	<React.Fragment>
 		<HeaderBarTab
 			match={match.url === ROUTE_PATHS.PROPERTIES}
 			route={ROUTE_PATHS.PROPERTIES}
 		>
-			<Translate i18nKey="HEADER_LINK_MANAGE_PROPERTIES" />
+			<Translate i18nKey="HEADER_LINK_PROPERTIES" />
+		</HeaderBarTab>
+
+		<HeaderBarTab
+			match={match.url === ROUTE_PATHS.MANAGE_LISTINGS}
+			route={ROUTE_PATHS.MANAGE_LISTINGS}
+		>
+			<Translate i18nKey="HEADER_LINK_MANAGE_LISTINGS" />
 		</HeaderBarTab>
 
 		<HeaderBarTab

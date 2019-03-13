@@ -13,6 +13,7 @@ const inputStyle = {
 const editTranslationStyle = {
 	position: "relative",
 	cursor: "pointer",
+	width: "100%",
 };
 
 const fixedFormStyle = {
@@ -40,6 +41,16 @@ class Translate extends Component {
 			saving: false,
 			value: "",
 			newValue: "",
+		};
+	}
+
+	getChildContext() {
+		const {
+			value,
+		} = this.state;
+
+		return {
+			translation: value,
 		};
 	}
 
@@ -115,6 +126,7 @@ class Translate extends Component {
 
 		const {
 			i18nKey,
+			children,
 		} = this.props;
 
 		if (!isEditEnabled) {
@@ -129,64 +141,59 @@ class Translate extends Component {
 
 		return (
 			<>
-				<span style={editTranslationStyle} data-tip data-for={`${rnd}-${i18nKey}`}>
-					{value}
-				</span>
-				{
-					isOpen
-					&& (
-						<Portal>
-							<div
-								style={fixedFormStyle}
-								onClick={e => e.stopPropagation()}
-							>
-								{"KEY: "}{i18nKey}
-								{
-									!success && !saving
-								&& <input value={newValue} onChange={this.handleInput} style={inputStyle} />
-								}
+				{!children && (
+					<span style={editTranslationStyle} data-tip data-for={`${rnd}-${i18nKey}`}>
+						{value}
+					</span>
+				)}
+				{children && (
+					<section style={editTranslationStyle} data-tip data-for={`${rnd}-${i18nKey}`}>
+						{children}
+					</section>
+				)}
 
-								{
-									saving
-								&& <Loader xSmall loading />
-								}
-								{
-									error
-								&& (
-									<span>
+				{isOpen && (
+					<Portal>
+						<div
+							style={fixedFormStyle}
+							onClick={e => e.stopPropagation()}
+						>
+							{"KEY: "}{i18nKey}
+							{!success && !saving && (
+								<input value={newValue} onChange={this.handleInput} style={inputStyle} />
+							)}
+
+							{saving && (
+								<Loader xSmall loading />
+							)}
+
+							{error && (
+								<span>
 									Something failed, please try again.
-									</span>
-								)
-								}
-								{
-									success
-								&& (
-									<button onClick={this.closeEdit}>
-									Ok
-									</button>
-								)
-								}
-								{
-									!saving && !success
-								&& (
-									<button onClick={this.saveTranslation} disabled={newValue === ""}>
-									Save
-									</button>
-								)
-								}
-								{
-									!saving && !success
-								&& (
-									<button onClick={this.closeEdit}>
-									Cancel
-									</button>
-								)
-								}
+								</span>
+							)}
 
-							</div>
-						</Portal>
-					)
-				}
+							{success && (
+								<button onClick={this.closeEdit}>
+									Ok
+								</button>
+							)}
+
+							{!saving && !success && (
+								<button onClick={this.saveTranslation} disabled={newValue === ""}>
+									Save
+								</button>
+							)}
+
+							{!saving && !success && (
+								<button onClick={this.closeEdit}>
+									Cancel
+								</button>
+							)}
+						</div>
+					</Portal>
+				)}
+
 				<ReactTooltip
 					id={`${rnd}-${i18nKey}`}
 					effect="solid"
@@ -208,6 +215,10 @@ class Translate extends Component {
 
 Translate.contextTypes = {
 	t: PropTypes.func.isRequired,
+};
+
+Translate.childContextTypes = {
+	translation: PropTypes.string,
 };
 
 Translate.propTypes = {

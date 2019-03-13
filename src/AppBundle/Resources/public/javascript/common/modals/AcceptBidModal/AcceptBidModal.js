@@ -86,7 +86,7 @@ class AcceptBidModal extends Component {
 								<DigitalSignature
 									customClass="for-modal"
 									licenseBidId={selectedBid.customId}
-									title={<Translate i18nKey="ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR" />}
+									title="ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR"
 									signature={signature}
 									signatureName={signatureName}
 									signaturePosition={signaturePosition}

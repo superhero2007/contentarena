@@ -75,11 +75,10 @@
   height: 100%;
   /*display: flex;
   flex-direction: column;*/
-  background: url('../images/wall-banner.jpg') no-repeat;
   background-size: auto 360px;
-  background-color: #eee;
+  background: #eee url('../images/wall-banner.jpg') no-repeat;
   &.no-title{
-    padding-top: 70px;
+    padding-top: 30px;
   }
 
   .default-title-box{
@@ -106,7 +105,7 @@
   }
 
   .default-box {
-    max-width: 1200px;
+    /*max-width: 1200px;*/
     margin: 0 auto 30px;
     display: flex;
     flex-direction: column;
@@ -137,9 +136,9 @@
 		  margin-bottom: 10px !important;
 		  &:focus:not([type='checkbox']) {
 	        outline: none;
-	        border: 1px solid $color-primary;
+	        /*border: 1px solid $color-primary;
 		    @include shadow(0px 0px 5px 0px rgba(255,201,75,1));
-	        transition: all .3s ease-out;
+	        transition: all .3s ease-out;*/
 	      }
 	      &:disabled{
 	        outline: none;
@@ -164,32 +163,6 @@
 	        color: $property-blue;
           }
         }
-	    &.season-checkbox {
-		  display: flex;
-		  align-items: center;
-		  padding-top: 20px;
-		  label{
-			color: $font-color-5;
-			font-size: 13px;
-		  }
-		  input{
-			margin-right: 10px;
-		  }
-	    }
-
-	    &.season-buttons{
-		    display: flex;
-		    align-items: center;
-		    padding-top: 15px;
-	    }
-
-	    .remove-season{ margin-right: 15px; }
-	    .remove-season, .add-season{
-		    cursor: pointer;
-		    font-size: 16px;
-		    color: $property-blue;
-		    i{ margin-right: 5px; }
-	    }
         .date-select{
           display: flex;
           justify-content: space-between;
@@ -198,7 +171,7 @@
             margin: 20px 0 30px;
             border-radius: 0;
             -webkit-appearance: none;
-            -webkit-border-radius: 0px;
+            -webkit-border-radius: 0;
           }
         }
         &.small-item{

@@ -824,7 +824,7 @@ class Checkout extends React.Component {
 						customClass="for-listing"
 						noLabel
 						noInfo
-						title={this.context.t("PLEASE_SIGN_WITH_YOUR_CURSOR")}
+						title="PLEASE_SIGN_WITH_YOUR_CURSOR"
 						signature={signature}
 						signatureName={signatureName}
 						signaturePosition={signaturePosition}

@@ -7,6 +7,7 @@ import EmptyFixture from "../components/EmptyScreens/EmptyFixture";
 import FixtureList from "./FixturesList";
 import FixtureForm from "../components/FixtureForm";
 
+
 class CmsFixtures extends React.Component {
 	constructor(props) {
 		super(props);

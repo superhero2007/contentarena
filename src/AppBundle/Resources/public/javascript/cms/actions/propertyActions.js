@@ -8,6 +8,10 @@ export const setConfig = config => ({
 	config,
 });
 
+export const resetProperty = () => ({
+	type: propertyTypes.RESET_PROPERTY,
+});
+
 export const setCustomSportName = (index, sportName) => ({
 	type: propertyTypes.SET_CUSTOM_SPORT_NAME,
 	index,
@@ -36,6 +40,18 @@ export const addCustomSeason = () => ({
 	type: propertyTypes.ADD_CUSTOM_SEASON,
 });
 
+export const removeCustomSeason = index => ({
+	type: propertyTypes.REMOVE_CUSTOM_SEASON,
+	index,
+});
+
+export const updateCustomSeason = (index, key, value) => ({
+	type: propertyTypes.UPDATE_CUSTOM_SEASON,
+	index,
+	key,
+	value,
+});
+
 export const setFocusSeason = isFocus => ({
 	type: propertyTypes.CAN_FOCUS_SEASON,
 	isFocus,
@@ -44,6 +60,11 @@ export const setFocusSeason = isFocus => ({
 export const setRights = rights => ({
 	type: propertyTypes.SET_RIGHTS,
 	rights,
+});
+
+export const setSeasons = seasons => ({
+	type: propertyTypes.SET_SEASONS,
+	seasons,
 });
 
 export const setSelectedRights = selectedRights => ({
@@ -70,12 +91,6 @@ export const removeNewCategory = index => ({
 	index,
 	selectorType: "sportCategory",
 	clean: ["tournament", "seasons"],
-});
-
-export const removeNewSeason = index => ({
-	type: "REMOVE_NEW",
-	index,
-	selectorType: "seasons",
 });
 
 export const selectTournament = tournament => ({
