@@ -10,7 +10,7 @@ export const getYears = (startYear = null, endYear = null, startOffset = 5, endO
 	if (!startYear) startYear = currentYear - startOffset;
 	if (!endYear) endYear = currentYear + endOffset;
 
-	for (let i = startYear; i < endYear; i++) {
+	for (let i = endYear; i >= startYear; i--) {
 		years.push(i);
 	}
 	return years;

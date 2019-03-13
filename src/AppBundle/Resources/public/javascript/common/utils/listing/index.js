@@ -35,6 +35,10 @@ export const SeasonYear = ({
 	);
 };
 
+export const getCustomSeasonYear = (s, e) => (s && e ? s === e ? s : `${s.substr(2)}/${e.substr(2)}` : `${s || e}`);
+
+export const getCustomSeasonFullYear = (s, e) => (s && e ? s === e ? s : `${s}/${e.substr(2)}` : `${s || e}`);
+
 export const getSeasonStartYear = ({ startDate, year }) => {
 	const start = (startDate) ? moment(startDate).format("YYYY") : null;
 
@@ -48,6 +52,17 @@ export const getSeasonStartYear = ({ startDate, year }) => {
 		return null;
 	}
 	return start;
+};
+
+export const getSeasonMonthString = ({ startDate, endDate }) => {
+	if (startDate === null || endDate === null) return null;
+
+	const startMonth = moment(startDate).format("MMM");
+	const endMonth = moment(endDate).format("MMM");
+	const startYear = moment(startDate).format("YYYY");
+	const endYear = moment(endDate).format("YYYY");
+
+	return `${startMonth} ${startYear} - ${endMonth} ${endYear}`;
 };
 
 export const getListingImage = (props) => {

@@ -4,9 +4,10 @@ import moment from "moment";
 import Loader from "@components/Loader/Loader";
 import cn from "classnames";
 import Translate from "@components/Translator/Translate";
-import { getSeasonStartYear, SeasonYear } from "@utils/listing";
+import { getSeasonMonthString, getSeasonStartYear, SeasonYear } from "@utils/listing";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import { setSeasons } from "../actions/propertyActions";
+import CmsCustomSeason from "./CmsCustomSeason";
 
 class CmsSeasonSelector extends React.Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ class CmsSeasonSelector extends React.Component {
 			seasons: this.getSeasonsFromProps(props),
 			loadingSeasons: false,
 			showAll: false,
+			editSeason: null,
 			availableSeasons: [],
 		};
 	}
@@ -45,6 +47,7 @@ class CmsSeasonSelector extends React.Component {
 		this.setState({ loadingSeasons: true });
 		ContentArena.Api.getSeasons(tournamentId)
 			.done((availableSeasons) => {
+				availableSeasons = availableSeasons.filter(season => season.startDate && season.endDate);
 				ContentArena.Data.Seasons = availableSeasons;
 
 				if (availableSeasons.length === 0) {
@@ -62,9 +65,32 @@ class CmsSeasonSelector extends React.Component {
 			});
 	}
 
-	getSeasonsFromProps = props => new Map(props.seasons.filter(season => !season.custom).map(seasonItem => [seasonItem.externalId, seasonItem]));
+	getSeasonsFromProps = props => new Map(props.seasons.map(seasonItem => [seasonItem.externalId, seasonItem]));
 
-	getSeasonsForProps = seasons => [...seasons.values(), ...this.props.seasons.filter(s => s.custom)];
+	getSeasonsForProps = seasons => [...seasons.values()];
+
+	addCustomSeason = (season) => {
+		const { availableSeasons } = this.state;
+		const index = availableSeasons.findIndex(s => s.externalId === season.externalId);
+
+		if (index !== -1) {
+			availableSeasons[index] = season;
+		} else {
+			availableSeasons.push(season);
+		}
+
+		availableSeasons.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+		this.setState({ availableSeasons, editSeason: null }, () => {
+			this.addSeason(season);
+		});
+	};
+
+	removeCustomSeason = (index) => {
+		const { availableSeasons } = this.state;
+		availableSeasons.splice(index, 1);
+		this.setState({ availableSeasons });
+	};
 
 	addSeason = (season) => {
 		const { seasons } = this.state;
@@ -109,7 +135,9 @@ class CmsSeasonSelector extends React.Component {
 		const {
 			loadingSeasons,
 			availableSeasons,
+			showCustomSeason,
 			showAll,
+			editSeason,
 		} = this.state;
 
 		if (loadingSeasons) {
@@ -128,9 +156,10 @@ class CmsSeasonSelector extends React.Component {
 		return (
 			<>
 				<div className="season-selector">
-					{seasons.map((season) => {
+					{seasons.map((season, index) => {
 						const {
 							externalId,
+							custom,
 						} = season;
 
 						const idAttr = `checkbox-${externalId}`;
@@ -147,24 +176,69 @@ class CmsSeasonSelector extends React.Component {
 									}}
 									id={idAttr}
 								/>
-								<label className={cn({ selected: this.isCheckBoxChecked(externalId) })} htmlFor={idAttr}>
+								<label
+									className={cn({ selected: this.isCheckBoxChecked(externalId) })}
+									htmlFor={idAttr}
+									title={getSeasonMonthString(season)}
+								>
 									<SeasonYear {...season} />
 								</label>
+								{custom && (
+									<span className="remove-season" onClick={() => { this.removeCustomSeason(index); }}>
+										<i className="fa fa-times-circle" />
+									</span>
+								)}
+								{custom && (
+									<span className="edit-season" onClick={() => { this.setState({ editSeason: season }); }}>
+										<i className="fa fa-info-circle" />
+									</span>
+								)}
 							</div>
 						);
 					})}
 				</div>
-				{!showAll && futureSeasons.length > 1 && (
-					<div className="season-buttons" style={{ marginBottom: 20 }}>
+
+				<div className="season-buttons" style={{ marginBottom: 20 }}>
+					{!showAll && futureSeasons.length >= 1 && (
 						<span
 							className="add-season"
 							onClick={() => {
 								this.setState({ showAll: true });
 							}}
 						>
+							<i className="fa fa-arrow-circle-down small-icon" />
 							<Translate i18nKey="CMS_SEASONS_SHOW_ALL" />
 						</span>
-					</div>
+					)}
+					{!showCustomSeason && (
+						<span
+							className="add-season"
+							onClick={() => {
+								this.setState({ showCustomSeason: true });
+							}}
+						>
+							<i className="fa fa-plus-circle small-icon" />
+							<Translate i18nKey="CMS_FORM_ADD_SEASON" />
+						</span>
+					)}
+				</div>
+
+				{ showCustomSeason && (
+					<>
+						<h4 style={{ marginTop: 20 }}>
+							<Translate i18nKey="CMS_CREATE_PROPERTY_ADD_SEASON_TITLE" />
+						</h4>
+						<h6>
+							<Translate i18nKey="CMS_CREATE_PROPERTY_ADD_SEASON_SUBTITLE" />
+						</h6>
+						<CmsCustomSeason
+							onDelete={() => {
+								this.setState({ showCustomSeason: false });
+							}}
+							season={editSeason}
+							onConfirm={this.addCustomSeason}
+						/>
+					</>
 				)}
 			</>
 		);

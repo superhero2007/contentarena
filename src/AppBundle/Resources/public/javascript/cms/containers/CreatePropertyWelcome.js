@@ -15,7 +15,7 @@ import {
 	selectTournament,
 	setCustomSportCategoryName,
 	setCustomSportName,
-	setCustomTournamentName,
+	setCustomTournamentName, storePropertyData,
 } from "../actions/propertyActions";
 import CmsSearchCompetition from "../components/CmsSearchCompetition";
 import CmsSearchResults from "../components/CmsSearchResults";
@@ -36,7 +36,7 @@ class CreatePropertyWelcome extends React.Component {
 		super(props);
 		this.state = {
 			loading: false,
-			showCompetitionSelectors: props.property.sports.length > 0,
+			searchDone: false,
 		};
 
 		this.tournamentInput = React.createRef();
@@ -141,26 +141,21 @@ class CreatePropertyWelcome extends React.Component {
 		const { history, selectTournament } = this.props;
 		selectTournament(tournament);
 		history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1);
-
-		/* if (tournament) {
-			setTimeout(() => {
-				selectTournament(tournament);
-			}, 1000);
-		} */
 	};
 
-	onSearch = (results) => {
-		this.setState({ results });
+	onSearch = (searchResults) => {
+		this.setState({ searchDone: true });
+		this.props.storePropertyData("searchResults", searchResults);
 	};
 
 	onCreateManually = () => {
-		this.setState({ showCompetitionSelectors: true });
+		resetProperty();
+		this.props.storePropertyData("showCompetitionSelectors", true);
 	};
 
 	render() {
 		const {
-			results,
-			showCompetitionSelectors,
+			searchDone,
 			loadingSports,
 			loadingCategories,
 			loadingTournaments,
@@ -185,6 +180,8 @@ class CreatePropertyWelcome extends React.Component {
 			removeCustomTournament,
 			hasExtendedSportCategory,
 			resetProperty,
+			searchResults,
+			showCompetitionSelectors,
 		} = this.props;
 
 		return (
@@ -304,10 +301,8 @@ class CreatePropertyWelcome extends React.Component {
 							<HorizontalButtonBox>
 								<button
 									onClick={() => {
-										resetProperty();
-										this.setState({
-											showCompetitionSelectors: false,
-										});
+										this.setState({ searchDone: false });
+										this.props.storePropertyData("showCompetitionSelectors", false);
 									}}
 									className="yellow-button"
 								>
@@ -331,17 +326,19 @@ class CreatePropertyWelcome extends React.Component {
 						/>
 					)}
 
-					{!results && !showCompetitionSelectors && (
+					{!searchDone && searchResults.length === 0 && !showCompetitionSelectors && (
 						<p style={{ marginLeft: 20 }}>
 							<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_1" />{" "}
-							<a onClick={this.onCreateManually}><Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" /></a>
+							<a onClick={this.onCreateManually}>
+								<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" />
+							</a>
 						</p>
 					)}
 				</DefaultBox>
-				{results && results.length > 0 && (
+				{searchResults.length > 0 && (
 					<DefaultBox>
 						<CmsSearchResults
-							results={results}
+							results={searchResults}
 							select={this.selectTournament}
 						/>
 					</DefaultBox>
@@ -356,6 +353,8 @@ CreatePropertyWelcome.contextTypes = {
 };
 
 const mapStateToProps = state => Object.assign({}, state, {
+	searchResults: state.property.searchResults,
+	showCompetitionSelectors: state.property.showCompetitionSelectors,
 	sportValue: getSportName(state),
 	sportCategoryValue: getSportCategoryName(state),
 	seasonValues: getSeasonNames(state),
@@ -368,6 +367,7 @@ const mapStateToProps = state => Object.assign({}, state, {
 });
 
 const mapDispatchToProps = dispatch => ({
+	storePropertyData: (key, value) => dispatch(storePropertyData(key, value)),
 	selectTournament: tournament => dispatch(selectTournament(tournament)),
 	openSportSelector: (index, selectedItems) => dispatch(openSportSelector(index, selectedItems)),
 	openCategorySelector: selectedItems => dispatch(openCategorySelector(selectedItems)),

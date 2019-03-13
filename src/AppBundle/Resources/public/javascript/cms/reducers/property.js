@@ -2,9 +2,11 @@
 export const propertyTypes = {
 	RESET_PROPERTY: "RESET_PROPERTY",
 	SET_PROPERTY_CONFIG: "SET_PROPERTY_CONFIG",
+
 	APPLY_SELECTION: "APPLY_SELECTION",
 	ADD_NEW: "ADD_NEW",
 	REMOVE_NEW: "REMOVE_NEW",
+
 	SET_CUSTOM_SPORT_NAME: "SET_CUSTOM_SPORT_NAME",
 	SET_CUSTOM_SPORT_CATEGORY_NAME: "SET_CUSTOM_SPORT_CATEGORY_NAME",
 	SET_CUSTOM_TOURNAMENT_NAME: "SET_CUSTOM_TOURNAMENT_NAME",
@@ -29,6 +31,8 @@ export const propertyTypes = {
 	GET_TERRITORIES_SUCCESS: "GET_TERRITORIES_SUCCESS",
 
 	CAN_FOCUS_SEASON: "CAN_FOCUS_SEASON",
+
+	STORE_PROPERTY_DATA: "STORE_PROPERTY_DATA",
 };
 
 const DEFAULT_STATE = {
@@ -45,8 +49,10 @@ const DEFAULT_STATE = {
 	regions: [],
 	isRegionsFetched: false,
 	territories: [],
+	searchResults: [],
 	isTerritoriesFetched: false,
 	canFocusSeason: true,
+	showCompetitionSelectors: false,
 };
 
 export const property = (state = DEFAULT_STATE, action) => {
@@ -99,6 +105,10 @@ export const property = (state = DEFAULT_STATE, action) => {
 		newState.tournament[action.index].name = action.tournamentName;
 		return Object.assign({}, state, newState);
 
+	case propertyTypes.STORE_PROPERTY_DATA:
+		newState = {};
+		newState[action.key] = action.value;
+		return Object.assign({}, state, newState);
 	case propertyTypes.SELECT_PROPERTY_TOURNAMENT:
 
 		newState = {};

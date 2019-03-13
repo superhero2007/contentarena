@@ -1,19 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import moment from "moment/moment";
 import { scrollMainContainer } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-import {
-	updateFromMultiple,
-} from "../../sell/actions/stepOneActions";
 import {
 	getSeasonNames, getSportCategoryName, getSportName,
 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
 } from "../reducers/property";
 import {
-	addCustomSeason, removeCustomSeason, resetProperty,
+	resetProperty,
 } from "../actions/propertyActions";
 import { ROUTE_PATHS } from "@constants";
 import CmsRightsSelector from "../components/CmsRightsSelector";
@@ -21,18 +17,12 @@ import { getPropertyName } from "../helpers/PropertyHelper";
 import CmsSeasonSelector from "../components/CmsSeasonSelector";
 import CmsCustomSeason from "../components/CmsCustomSeason";
 
-const AddSeason = ({ onClick }) => (
-	<span className="add-season" onClick={onClick}>
-		<i className="fa fa-plus-circle" />
-		<Translate i18nKey="CMS_FORM_ADD_SEASON" />
-	</span>
-);
-
 class CreatePropertyEvent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isSeasonApplicable: props.property.tournament.length !== 0,
+			showCustomSeason: false,
 		};
 	}
 
@@ -58,10 +48,7 @@ class CreatePropertyEvent extends React.Component {
 		const { property } = this.props;
 		const { seasons } = property;
 
-		if (isSeasonApplicable) {
-			if (seasons.length === 0) return true;
-			if (seasons.filter(s => s.custom && (s.endDate === undefined || s.startDate === undefined)).length > 0) return true;
-		}
+		if (isSeasonApplicable && seasons.length === 0) return true;
 		return false;
 	};
 
@@ -71,17 +58,12 @@ class CreatePropertyEvent extends React.Component {
 		const {
 			history,
 			property,
-			addCustomSeason,
-			removeCustomSeason,
-			resetProperty,
 		} = this.props;
 
 		const {
-			seasons,
 			tournament,
 		} = property;
 
-		const customSeasons = seasons.filter(season => season.custom);
 		const rightsInvalid = this.rightsAreInvalid();
 		const seasonsInvalid = this.seasonsAreInvalid();
 
@@ -103,32 +85,6 @@ class CreatePropertyEvent extends React.Component {
 
 					{isSeasonApplicable && (
 						<CmsSeasonSelector />
-					)}
-
-					{isSeasonApplicable && customSeasons && customSeasons.length > 0 && (
-						<h6>
-							<Translate i18nKey="CMS_CREATE_PROPERTY_CUSTOM_DESCRIPTION" />
-						</h6>
-					)}
-
-					{isSeasonApplicable && customSeasons && customSeasons.length > 0 && seasons.map((season, i) => {
-						if (!season.custom) return (null);
-
-						return (
-							<CmsCustomSeason
-								season={season}
-								key={i}
-								index={i}
-								onDelete={removeCustomSeason}
-								onAdd={addCustomSeason}
-							/>
-						);
-					})}
-
-					{isSeasonApplicable && (
-						<div className="season-buttons">
-							<AddSeason onClick={addCustomSeason} />
-						</div>
 					)}
 
 					<div className="season-checkbox">
@@ -187,9 +143,6 @@ const mapStateToProps = state => Object.assign({}, state, {
 
 const mapDispatchToProps = dispatch => ({
 	resetProperty: () => dispatch(resetProperty()),
-	addCustomSeason: () => dispatch(addCustomSeason()),
-	removeCustomSeason: index => dispatch(removeCustomSeason(index)),
-	updateFromMultiple: (type, index, key, value) => dispatch(updateFromMultiple(type, index, key, value)),
 });
 
 

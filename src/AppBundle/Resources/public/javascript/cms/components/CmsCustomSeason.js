@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { SeasonYear } from "@utils/listing";
+import { getCustomSeasonFullYear, getCustomSeasonYear, SeasonYear } from "@utils/listing";
 import { setCustomSeasonName, setSeasons, updateCustomSeason } from "../actions/propertyActions";
 import cn from "classnames";
 import { getMonths, getYears } from "@utils/time";
@@ -8,107 +8,104 @@ import moment from "moment/moment";
 import Translate from "@components/Translator/Translate";
 import { DATE_FORMAT, SERVER_DATE_FORMAT } from "@constants";
 
-const RemoveSeason = ({ onClick }) => (
-	<span className="remove-season" onClick={onClick}>
-		<i className="fa fa-minus-circle" />
-		<Translate i18nKey="CMS_FORM_REMOVE_SEASON" />
-	</span>
-);
-
-const AddSeason = ({ onClick }) => (
-	<span className="add-season" onClick={onClick}>
-		<i className="fa fa-plus-circle" />
-		<Translate i18nKey="CMS_FORM_ADD_SEASON" />
-	</span>
-);
-
 class CmsCustomSeason extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
+			startMonth: "",
+			startYear: "",
+			endMonth: "",
+			endYear: "",
 		};
 	}
 
-	handleSeasonDateChange = (index, e, dateType, type, season) => {
-		const { tournament } = this.props;
-		let year;
-		let month;
-		const tournamentName = (tournament && tournament.length > 0) ? tournament[0].name : null;
-
-		if (dateType === "YEAR") {
-			year = e.target.value;
-		} else {
-			month = e.target.value;
-		}
-
-		if (!year) {
-			year = ((season[type]) ? moment(season[type]) : moment.utc()).format("YYYY");
-		}
-
-		if (!month) {
-			month = (season[type]) ? moment(season[type]).format("MMM") : "Jan";
-		}
-
-		const theDate = moment(new Date(`${year}-${month}-01`)).utc().format(SERVER_DATE_FORMAT);
-		this.props.updateCustomSeason(index, type, theDate);
-		const finalYear = this.getCustomSeasonYear(season, year, type);
-		this.props.updateCustomSeason(index, "year", finalYear);
-		const seasonName = this.getCustomSeasonName(season, year, month, type, tournamentName);
-		this.props.setCustomSeasonName(index, seasonName);
+	componentWillReceiveProps = (props) => {
+		this.setState({
+			startMonth: (props.season && props.season.startDate) ? moment(props.season.startDate).format("MMM") : "",
+			startYear: (props.season && props.season.startDate) ? moment(props.season.startDate).format("YYYY") : "",
+			endMonth: (props.season && props.season.endDate) ? moment(props.season.endDate).format("MMM") : "",
+			endYear: (props.season && props.season.endDate) ? moment(props.season.endDate).format("YYYY") : "",
+		});
 	};
 
-	getCustomSeasonYear = (season, year, type) => {
-		const startY = type === "startDate" && year
-			? year
-			: season.startDate
-				? moment(season.startDate).format("YYYY")
-				: "";
-		const endY = type === "endDate" && year
-			? year
-			: season.endDate
-				? moment(season.endDate).format("YYYY")
-				: "";
+	confirm = () => {
+		const {
+			onConfirm,
+			tournament,
+			season,
+		} = this.props;
 
-		return startY && endY
-			? startY === endY ? startY : `${startY.substr(2)}/${endY.substr(2)}`
-			: `${startY || endY}`;
+		const {
+			startMonth,
+			startYear,
+			endMonth,
+			endYear,
+		} = this.state;
+
+		const startDate = moment(new Date(`${startYear}-${startMonth}-01`)).utc().format(SERVER_DATE_FORMAT);
+		const endDate = moment(new Date(`${endYear}-${endMonth}-01`)).utc().format(SERVER_DATE_FORMAT);
+		const year = getCustomSeasonYear(startYear, endYear);
+		const fullYear = getCustomSeasonFullYear(startYear, endYear);
+		const tournamentName = tournament.name;
+
+		const newSeason = {
+			custom: true,
+			startDate,
+			endDate,
+			year,
+			fullYear,
+			name: (tournamentName !== null) ? `${tournamentName} ${year}` : year,
+			externalId: (season) ? season.externalId : `ca:season:${new Date().getTime()}`,
+		};
+
+		this.setState({
+			startMonth: "",
+			startYear: "",
+			endMonth: "",
+			endYear: "",
+		});
+
+		onConfirm(newSeason);
 	};
 
-	getCustomSeasonName = (season, year, month, type, tournamentName) => {
-		const startM = type === "startDate" && month
-			? `${month}${season.startDate ? ` ${moment(season.startDate).format("YYYY")}` : ""}`
-			: season.startDate
-				? moment(season.startDate).format("MMM YYYY")
-				: "";
-		const endM = type === "endDate" && month
-			? `${month}${season.startDate ? ` ${moment(season.endDate).format("YYYY")}` : ""}`
-			: season.endDate
-				? moment(season.endDate).format("MMM YYYY")
-				: "";
+	startDateIsValid = () => {
+		const {
+			startMonth,
+			startYear,
+		} = this.state;
 
-		const finalYear = this.getCustomSeasonYear(season, year, type);
-		const finalMonth = startM && endM
-			? `${startM} - ${endM}`
-			: `${startM || endM}`;
-
-		// return `${finalYear} (${finalMonth})`;
-		return (tournamentName !== null) ? `${tournamentName} ${finalYear}` : finalYear;
+		return startYear !== "" && startMonth !== "";
 	};
+
+	endDateIsValid = () => {
+		const {
+			endMonth,
+			endYear,
+			startYear,
+		} = this.state;
+
+		return endMonth !== "" && endYear !== "" && endYear >= startYear;
+	};
+
+	dateIsValid = () => this.startDateIsValid() && this.endDateIsValid();
 
 	render() {
 		const {
-			index,
-			season,
 			onDelete,
-			onAdd,
 		} = this.props;
 
-		const months = getMonths();
-		const startMonth = (season.startDate) ? moment(season.startDate).format("MMM") : "";
-		const startYear = (season.startDate) ? moment(season.startDate).format("YYYY") : "";
-		const endMonth = (season.endDate) ? moment(season.endDate).format("MMM") : "";
-		const endYear = (season.endDate) ? moment(season.endDate).format("YYYY") : "";
+		const {
+			startMonth,
+			startYear,
+			endMonth,
+			endYear,
+		} = this.state;
 
+		const months = getMonths();
+		const dateIsValid = this.dateIsValid();
+		const startDateIsValid = this.startDateIsValid();
+		const fullYear = getCustomSeasonFullYear(startYear, endYear);
 
 		return (
 			<div className="custom-season-container">
@@ -120,7 +117,7 @@ class CmsCustomSeason extends React.Component {
 						<select
 							value={startMonth}
 							className="ca-form-control"
-							onChange={e => this.handleSeasonDateChange(index, e, "MONTH", "startDate", season)}
+							onChange={e => this.setState({ startMonth: e.target.value })}
 						>
 							<option value="" disabled>
 								Month
@@ -133,7 +130,13 @@ class CmsCustomSeason extends React.Component {
 						</select>
 						<select
 							value={startYear}
-							onChange={e => this.handleSeasonDateChange(index, e, "YEAR", "startDate", season)}
+							onChange={(e) => {
+								const value = e.target.value;
+								this.setState({
+									startYear: value,
+									endYear: (endYear !== "" && +endYear < +value) ? value : endYear,
+								});
+							}}
 							className="ca-form-control"
 						>
 							<option value="" disabled>
@@ -155,8 +158,9 @@ class CmsCustomSeason extends React.Component {
 					<div className="date-select">
 						<select
 							value={endMonth}
-							onChange={e => this.handleSeasonDateChange(index, e, "MONTH", "endDate", season)}
+							onChange={e => this.setState({ endMonth: e.target.value })}
 							className="ca-form-control"
+							disabled={!startDateIsValid}
 						>
 							<option value="" disabled>
 								Month
@@ -169,8 +173,9 @@ class CmsCustomSeason extends React.Component {
 						</select>
 						<select
 							value={endYear}
-							onChange={e => this.handleSeasonDateChange(index, e, "YEAR", "endDate", season)}
+							onChange={e => this.setState({ endYear: e.target.value })}
 							className="ca-form-control"
+							disabled={!startDateIsValid}
 						>
 							<option value="" disabled>
 								Year
@@ -184,10 +189,24 @@ class CmsCustomSeason extends React.Component {
 					</div>
 				</div>
 				<div className="custom-season-result">
-					<SeasonYear {...season} showPlaceholder />
+					{!fullYear && (
+						<Translate i18nKey="CMS_CUSTOM_SEASON_YEAR_PLACEHOLDER" style={{ textAlign: "center" }} />
+					)}
+					{fullYear && fullYear}
 				</div>
-				<RemoveSeason onClick={() => onDelete(index)} />
-				{/* <AddSeason onClick={onAdd} /> */}
+				<span className="remove-season" onClick={onDelete}>
+					<i className="fa fa-times-circle" />
+				</span>
+				{!dateIsValid && (
+					<span className="remove-season disabled">
+						<i className="fa fa-check-circle" />
+					</span>
+				)}
+				{dateIsValid && (
+					<span className="remove-season" onClick={this.confirm}>
+						<i className="fa fa-check-circle" />
+					</span>
+				)}
 			</div>
 		);
 	}
@@ -199,8 +218,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	setCustomSeasonName: (index, seasonName) => dispatch(setCustomSeasonName(index, seasonName)),
-	updateCustomSeason: (index, key, value) => dispatch(updateCustomSeason(index, key, value)),
 });
 
 export default connect(

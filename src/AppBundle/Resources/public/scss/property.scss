@@ -24,13 +24,30 @@
   .season-selector{
     display: flex;
     flex-wrap: wrap;
-    margin: 20px 0 10px;
+    margin: 10px 0;
     .season-selector-item{
       display: flex;
       flex-direction: row;
       min-width: 150px;
       min-height: 40px;
       align-items: center;
+      position: relative;
+      .remove-season{
+        position: absolute;
+        right: 41px;
+        top: 12px;
+        i{
+          font-size: 16px;
+        }
+      }
+      .edit-season{
+        position: absolute;
+        right: 23px;
+        top: 9px;
+        i{
+          font-size: 16px;
+        }
+      }
       input[type="checkbox"]{
         margin-right: 5px;
       }
@@ -44,13 +61,26 @@
   .remove-season{
     display: flex;
     align-items: center;
-    padding-bottom: 21px;
+    padding-bottom: 20px;
   }
-  .remove-season, .add-season{
+  .remove-season, .add-season, .edit-season{
     cursor: pointer;
     font-size: 16px;
     color: $property-blue;
-    i{ margin-right: 5px; }
+    i{
+      margin-right: 5px;
+      font-size: 26px;
+      &.small-icon{
+        font-size: 16px;
+      }
+    }
+    &.disabled{
+      color: lightgray !important;
+      cursor: auto !important;
+    }
+  }
+  .add-season{
+    margin-right: 15px;
   }
   .season-checkbox {
     display: flex;
@@ -81,6 +111,10 @@
       width: 100%;
       margin-right: 20px;
       max-width: 300px;
+      label{
+        font-size: 13px;
+        font-weight: normal;
+      }
       .date-select {
         display: flex;
         .ca-form-control{
@@ -96,7 +130,7 @@
       justify-content: center;
       justify-items: center;
       margin: 12px 20px 12px 0;
-      background-color: darkgray;
+      background-color: lightgray;
     }
   }
   .right-selector {

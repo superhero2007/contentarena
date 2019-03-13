@@ -36,6 +36,12 @@ export const setCustomSeasonName = (index, seasonName) => ({
 	seasonName,
 });
 
+export const storePropertyData = (key, value) => ({
+	type: propertyTypes.STORE_PROPERTY_DATA,
+	key,
+	value,
+});
+
 export const addCustomSeason = () => ({
 	type: propertyTypes.ADD_CUSTOM_SEASON,
 });
