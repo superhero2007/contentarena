@@ -56,7 +56,10 @@ class Marketplace extends Component {
 		if (match && match.params && match.params.filterName) {
 			switch (match.params.filterName) {
 			case "sport":
-				this.props.selectSport({ value: match.params.filterValue, label: match.params.filterValue });
+				this.props.selectSport({
+					value: match.params.filterValue,
+					label: match.params.filterValue,
+				});
 				return;
 			case "search":
 				this.props.updateEvent(match.params.filterValue);
@@ -103,21 +106,23 @@ class Marketplace extends Component {
 			showDetails: true,
 		});
 
-		ContentArena.ContentApi.getByCustomId(id).done((content) => {
-			_this.setState({
-				content,
-				loadingListingDetails: false,
-			});
-		}).fail((error) => {
-			const data = error.data.responseJSON;
+		ContentArena.ContentApi.getByCustomId(id)
+			.done((content) => {
+				_this.setState({
+					content,
+					loadingListingDetails: false,
+				});
+			})
+			.fail((error) => {
+				const data = error.data.responseJSON;
 
-			if (data.code === 101) history.push("/marketplace");
+				if (data.code === 101) history.push("/marketplace");
 
-			_this.setState({
-				errorMessage: data.message,
-				loadingListingDetails: false,
+				_this.setState({
+					errorMessage: data.message,
+					loadingListingDetails: false,
+				});
 			});
-		});
 	};
 
 	isEventTimeActive = () => {
@@ -160,11 +165,13 @@ class Marketplace extends Component {
 		if (response.sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT) {
 			if (dateTo || filter.eventDateTo) {
 				response.to = dateTo || filter.eventDateTo;
-				response.to = moment(response.to).format(SERVER_DATE_TIME_FORMAT);
+				response.to = moment(response.to)
+					.format(SERVER_DATE_TIME_FORMAT);
 			}
 			if (dateFrom || filter.eventDateFrom) {
 				response.from = dateFrom || filter.eventDateFrom;
-				response.from = moment(response.from).format(SERVER_DATE_TIME_FORMAT);
+				response.from = moment(response.from)
+					.format(SERVER_DATE_TIME_FORMAT);
 			}
 		}
 
@@ -181,13 +188,16 @@ class Marketplace extends Component {
 		return response;
 	};
 
-    filter = () => {
-        const { filter } = this.props;
-        let parsedFilter = this.parseFilter(filter);
-        console.log(parsedFilter);
-        this.fetchListings(parsedFilter);
-        this.setState({parsedFilter: parsedFilter, loadingListing: true});
-    };
+	filter = () => {
+		const { filter } = this.props;
+		let parsedFilter = this.parseFilter(filter);
+		console.log(parsedFilter);
+		this.fetchListings(parsedFilter);
+		this.setState({
+			parsedFilter,
+			loadingListing: true,
+		});
+	};
 
 	filterByRoute = () => {
 		const { history } = this.props;
@@ -215,20 +225,20 @@ class Marketplace extends Component {
 		history.push(`/listing/${customId}`);
 	};
 
-    setListingViewType = (type) => {
-        this.setState({listingView: type});
-    };
+	setListingViewType = (type) => {
+		this.setState({ listingView: type });
+	};
 
-    fetchListings = (filter) => {
-		ContentArena.Api.getMarketplaceListings(filter).done(response => {
-
-			this.setState({
-				listings: response.listings.map( listing => contentParserFromServer(listing) ),
-				totalItems: response.totalItems,
-				loadingListing: false,
-				sortSalesPackages : true
+	fetchListings = (filter) => {
+		ContentArena.Api.getMarketplaceListings(filter)
+			.done((response) => {
+				this.setState({
+					listings: response.listings.map(listing => contentParserFromServer(listing)),
+					totalItems: response.totalItems,
+					loadingListing: false,
+					sortSalesPackages: true,
+				});
 			});
-		});
 	};
 
 	render() {
@@ -268,7 +278,13 @@ class Marketplace extends Component {
 		} = listingsData;
 
 		return (
-			<div className="manager-content" style={{ flexDirection: "row", flexWrap: "wrap" }}>
+			<div
+				className="manager-content"
+				style={{
+					flexDirection: "row",
+					flexWrap: "wrap",
+				}}
+			>
 
 				{!showDetails && (
 					<Fragment>
@@ -284,14 +300,7 @@ class Marketplace extends Component {
 						</div>
 						<div className="buy-container-right">
 
-                        {/*{parsedFilter && (
-                            <FetchMarketplaceListings
-                                onResponse={this.onFetchResponse}
-                                filter={parsedFilter}
-                            />
-                        )}*/}
-
-                        <Loader loading={listings.length === 0 && loadingListing}>
+							<Loader loading={listings.length === 0 && loadingListing}>
 
 								<div className="content-listing-header">
 									<div className="content-listing-switcher">

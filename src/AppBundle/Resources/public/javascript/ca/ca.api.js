@@ -30,7 +30,10 @@ ContentArena.Api = {
 			// Filter by category
 			if (categoryId && item.category["@attributes"].id != categoryId) return null;
 
-			return { name: item["@attributes"].name, externalId: item["@attributes"].id };
+			return {
+				name: item["@attributes"].name,
+				externalId: item["@attributes"].id,
+			};
 		});
 
 		list.sort(_this.sortByLabel);
@@ -42,15 +45,17 @@ ContentArena.Api = {
 
 		if (sportId === "sr:sport:5") {
 			list = list.map((item) => {
-				item.name = item.name.replace(/ singles/gi, "").replace(/ double/gi, "");
+				item.name = item.name.replace(/ singles/gi, "")
+					.replace(/ double/gi, "");
 				return item;
-			}).filter((item) => {
-				if (names.indexOf(item.name) === -1) {
-					names.push(item.name);
-					return true;
-				}
-				return false;
-			});
+			})
+				.filter((item) => {
+					if (names.indexOf(item.name) === -1) {
+						names.push(item.name);
+						return true;
+					}
+					return false;
+				});
 		}
 
 		return list;
@@ -219,25 +224,25 @@ ContentArena.Api = {
 			},
 		});
 
-        return deferred.promise();
-    },
-    getMarketplaceListings ( filter) {
-        let deferred = jQuery.Deferred();
+		return deferred.promise();
+	},
+	getMarketplaceListings(filter) {
+		let deferred = jQuery.Deferred();
 
-        $.ajax({
-            url: envhosturl + "api/marketplace/listings",
-            type: "POST",
-            data : filter,
-            success: function (response) {
-                deferred.resolve(response);
-            },
-            error : function (data, status) {
-                deferred.reject({
-                    data: data,
-                    status: status
-                });
-            }
-        });
+		$.ajax({
+			url: `${envhosturl}api/marketplace/listings`,
+			type: "POST",
+			data: filter,
+			success: (response) => {
+				deferred.resolve(response);
+			},
+			error: (data, status) => {
+				deferred.reject({
+					data,
+					status,
+				});
+			},
+		});
 
 		return deferred.promise();
 	},
@@ -558,24 +563,25 @@ ContentArena.Api = {
 		let list = [];
 		const cats = [];
 
-		_this.getTournaments(sportId).done(() => {
-			if (!__apiStore.tournaments[sportId]) {
-				deferred.resolve([]);
-				return;
-			}
-
-			list = $.map(__apiStore.tournaments[sportId].tournament, (item) => {
-				const { id } = item.category["@attributes"];
-
-				if (cats.indexOf(id) !== -1) {
-					return null;
+		_this.getTournaments(sportId)
+			.done(() => {
+				if (!__apiStore.tournaments[sportId]) {
+					deferred.resolve([]);
+					return;
 				}
-				cats.push(id);
-				return item.category;
-			});
 
-			deferred.resolve(_this.prepareList(list));
-		});
+				list = $.map(__apiStore.tournaments[sportId].tournament, (item) => {
+					const { id } = item.category["@attributes"];
+
+					if (cats.indexOf(id) !== -1) {
+						return null;
+					}
+					cats.push(id);
+					return item.category;
+				});
+
+				deferred.resolve(_this.prepareList(list));
+			});
 
 
 		return deferred.promise();
@@ -649,7 +655,8 @@ ContentArena.Api = {
 						startDate: item["@attributes"].start_date,
 						tournamentId: item["@attributes"].tournament_id,
 						year: item["@attributes"].year,
-					})).reverse();
+					}))
+						.reverse();
 				} else {
 					list = [{
 						name: response.seasons.season["@attributes"].name,
@@ -732,7 +739,8 @@ ContentArena.Api = {
 			type: "POST",
 			dataType: "json",
 			success(data) {
-				data.filter(item => !!item.sport).sort(_this.sortBySport);
+				data.filter(item => !!item.sport)
+					.sort(_this.sortBySport);
 
 				deferred.resolve(data);
 			},
@@ -779,7 +787,8 @@ ContentArena.Api = {
 	},
 	signInUser(username, password) {
 		return axios.post(`${envhosturl}api/users/login`, {
-			username, password,
+			username,
+			password,
 		});
 	},
 	recoverPassword(email) {
@@ -789,17 +798,22 @@ ContentArena.Api = {
 	},
 	resetPassword(password, confirmationToken) {
 		return axios.post(`${envhosturl}api/users/password/update`, {
-			password, confirmationToken,
+			password,
+			confirmationToken,
 		});
 	},
 	signUpUser(firstName, lastName, email, companyLegalName) {
 		return axios.post(`${envhosturl}api/users/register`, {
-			firstName, lastName, email, companyLegalName,
+			firstName,
+			lastName,
+			email,
+			companyLegalName,
 		});
 	},
 	isCompanyUnique(companyName, companyId) {
 		return axios.post(`${envhosturl}api/company/unique`, {
-			companyName, companyId,
+			companyName,
+			companyId,
 		});
 	},
 };
