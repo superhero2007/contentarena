@@ -128,21 +128,6 @@ msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_BUY_NOW"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_PLACE_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_RAISE_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 #: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
@@ -212,6 +197,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_BUY_NOW"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_PLACE_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+msgid "CHECKOUT_RAISE_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
@@ -1962,10 +1959,12 @@ msgid "PREFERENCES_PROFILE_SUBTITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_TERRITORIES_PROFILE_BUYER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredUserProfile.js
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_TERRITORIES_PROFILE_SELLER"
 msgstr ""
 
@@ -2179,6 +2178,26 @@ msgid "PREFERENCES_USER_UPDATED_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TAB_COMPANY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TAB_USERS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TAB_ACCOUNT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TAB_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TAB_SUPPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_COMPANY_DESCRIPTION"
 msgstr ""
 
@@ -2219,11 +2238,11 @@ msgid "SETTINGS_LABEL_TYPE_CURRENT_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_BUTTON_SAVE_PASSWORD"
+msgid "SETTINGS_LABEL_PASSWORD_UPDATED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_PASSWORD_UPDATED"
+msgid "SETTINGS_BUTTON_SAVE_PASSWORD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
@@ -2271,6 +2290,14 @@ msgid "TERMS_EDIT_HEADER_TWO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_TITLE_DEFINITIONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
+msgid "TERMS_EDIT_TITLE_TERMS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS"
 msgstr ""
 
@@ -2279,15 +2306,7 @@ msgid "TERMS_EDIT_BUTTON_RESTORE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
-msgid "TERMS_EDIT_TITLE_DEFINITIONS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
 msgid "TERMS_EDIT_BUTTON_ADD_DEFINITIONS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js
-msgid "TERMS_EDIT_TITLE_TERMS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Watchlist.js
