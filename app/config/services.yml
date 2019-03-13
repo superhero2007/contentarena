@@ -75,6 +75,12 @@ services:
             $accountIncompleteTime: '%job_account_incomplete_time%'
             $accountIncompleteFromInviteTime: '%job_account_incomplete_from_invite_time%'
 
+    AppBundle\Service\SwitchUserService:
+         arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $tokenStorage: '@security.token_storage'
+
+
     app.command.send_email:
             class: AppBundle\Command\SendEmail
             tags:

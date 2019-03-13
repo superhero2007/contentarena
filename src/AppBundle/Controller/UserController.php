@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Role\SwitchUserRole;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class UserController extends FOSRestController
@@ -75,6 +77,28 @@ class UserController extends FOSRestController
             return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
+    }
+
+    /**
+     * Retrieves roles from user and appends SwitchUserRole if original token contained one.
+     *
+     * @param User $user
+     * @param TokenInterface $token
+     * @return array The user roles
+     */
+    private function getRoles(User $user, TokenInterface $token)
+    {
+        $roles = $user->getRoles();
+
+        foreach ($token->getRoles() as $role) {
+            if ($role instanceof SwitchUserRole) {
+                $roles[] = $role;
+
+                break;
+            }
+        }
+
+        return $roles;
     }
 
     /**

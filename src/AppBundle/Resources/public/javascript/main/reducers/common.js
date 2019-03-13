@@ -8,6 +8,7 @@ export const commonTypes = {
 const commonDefault = {
 	totalCountries: 240,
 	testStageMode: false,
+	ghostMode: false,
 };
 
 export const common = (state = commonDefault, action) => {

@@ -40,6 +40,7 @@ easy_admin:
                         - { name: 'show' }
                         - { name: 'edit' }
                         - { name: 'delete' }
+                        - { name: 'switchUser' }
                 show:
                     fields:
                         - { property: 'email' }

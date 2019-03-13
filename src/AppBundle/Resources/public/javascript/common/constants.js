@@ -38,6 +38,7 @@ export const USER_PROFILES = {
 };
 
 export const ROUTE_PATHS = {
+	ADMIN: "/admin",
 	LANDING: "/landing",
 	RESET_PASSWORD: "/reset-password",
 	LOGIN: "/login",

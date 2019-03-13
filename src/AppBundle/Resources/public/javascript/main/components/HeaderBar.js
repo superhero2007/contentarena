@@ -127,13 +127,13 @@ class HeaderBar extends React.Component {
 
 	render() {
 		const {
-			tab, profile, match, common,
+			tab, profile, match, common, user,
 		} = this.props;
 		const {
 			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount, isDownArrowShown,
 		} = this.state;
 		const logoUrl = this.getLogoUrl(tab);
-		const { testStageMode, cmsEnabled } = common;
+		const { testStageMode, cmsEnabled, ghostMode } = common;
 
 		return (
 			<React.Fragment>
@@ -142,6 +142,24 @@ class HeaderBar extends React.Component {
 						{this.context.t("HEADER_TEST_STAGE_MODE")}
 					</div>
 				)}
+
+				{ghostMode && (
+					<div className="manager-header-ghost-mode">
+						<div className="d-flex">
+							You are logged in as superuser into the account of: <b>{user.email}</b>
+						</div>
+						<div className="d-flex">
+							Do you want to leave superuser mode?
+							<a href={`${ROUTE_PATHS.MARKETPLACE}?_ghost_mode=_exit`}>
+								Return to MarketPlace
+							</a>
+							<a href={`${ROUTE_PATHS.ADMIN}?_ghost_mode=_exit`}>
+								Return to BackOffice
+							</a>
+						</div>
+					</div>
+				)}
+
 				<div className="manager-header">
 					<div className="header-wrapper">
 						<div className="logo" onClick={() => goTo(logoUrl)}>
@@ -229,9 +247,11 @@ class HeaderBar extends React.Component {
 
 						<HeaderBarTab className="tab baseline messages" route="/messages" onClick={this.markMessagesAsSeen}>
 							<i className="fa fa-envelope" />
-							{!!unseenMessagesCount
-								&& <div className="counter">{unseenMessagesCount}</div>
-							}
+							{!!unseenMessagesCount && (
+								<div className="counter">
+									{unseenMessagesCount}
+								</div>
+							)}
 						</HeaderBarTab>
 
 						<div
@@ -319,6 +339,7 @@ HeaderBar.contextTypes = {
 
 const mapStateToProps = state => ({
 	common: state.common,
+	user: state.user,
 });
 
 export default connect(
