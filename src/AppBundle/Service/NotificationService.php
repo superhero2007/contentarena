@@ -13,6 +13,7 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\NotifiableInterface;
 use AppBundle\Entity\Notification;
+use AppBundle\Entity\NotificationType;
 use AppBundle\Entity\User;
 use AppBundle\Doctrine\RandomIdGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -253,6 +254,22 @@ class NotificationService
         $this->em->flush();
     }
 
+    public function removeNotificationsByType(User $user, NotificationType $type)
+    {
+        $notifications = $this->em->getRepository('AppBundle:Notification')->findBy(array(
+            "user" => $user,
+            "type" => $type
+        ));
+
+        if(!empty($notifications)) {
+            foreach ($notifications as $notification){
+                $this->em->remove($notification);
+            }
+        }
+
+        $this->em->flush();
+    }
+
     public function getNotifications(User $user){
 
         $listingRepository = $this->em->getRepository("AppBundle:Content");
@@ -299,7 +316,14 @@ class NotificationService
         );
 
         if ( $type != null ) {
+
             $typeObj = $notificationTypeRepository->findOneBy(array("name" => $type));
+
+            if ($type === "MESSAGE" && $typeObj != null){
+                $this->removeNotificationsByType($user, $typeObj);
+                return;
+            }
+
             if ($typeObj != null) $criteria["type"] = $typeObj;
             $notifications = $notificationRepository->findBy($criteria);
         } else {
