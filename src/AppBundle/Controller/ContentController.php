@@ -139,7 +139,7 @@ class ContentController extends Controller
         $user = $this->getUser();
         $content = $contentService->saveContentAsDraft($user, $request);
 
-        if ( $content->getStep() == 1 ) $emailService->internalUserListingDraft($user, $content);
+        if ( $request->get("id") == null ) $emailService->internalUserListingDraft($user, $content);
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
