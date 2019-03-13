@@ -6,6 +6,7 @@ import PreferredSportSeller from "../components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../components/PreferredSportBuyer";
 import Loader from "../../common/components/Loader";
+import { USER_PROFILES } from "../../common/constants";
 
 class Preferences extends React.Component {
 	constructor(props) {
@@ -16,7 +17,7 @@ class Preferences extends React.Component {
 			userUpdated: false,
 			companyUsers: [],
 			user: {},
-			activeTab: 1,
+			activeTab: USER_PROFILES.BUYER,
 		};
 	}
 
@@ -25,11 +26,10 @@ class Preferences extends React.Component {
 
 		ContentArena.ContentApi.getUserInfo().done((user) => {
 			this.originalUser = cloneDeep(user);
+
 			this.setState({
 				loading: false,
 				user,
-				profile: user.preferredProfile,
-				activeTab: user.preferredProfile === "SELLER" ? 1 : 2,
 			});
 		});
 	}
@@ -66,15 +66,21 @@ class Preferences extends React.Component {
 	};
 
 	completeButtonDisabled = () => {
-		const { user } = this.state;
+		const { user, activeTab, } = this.state;
 
-		if (!user.preferredProfile && !user.preferredBuyerCountries && !user.preferredSellerSports) return false;
+		if (activeTab === USER_PROFILES.SELLER && (
+			!user.preferredSellerOtherSport && !user.preferredSellerAllSports && (
+				!user.preferredSellerSports || user.preferredSellerSports.length === 0)
+			)
+		)  return true;
 
-		return (user.preferredProfile !== "SELLER"
-			&& ((!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
-				|| user.preferredBuyerCountries.length === 0))
-			|| (user.preferredProfile !== "BUYER"
-				&& (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0));
+
+		if (activeTab === USER_PROFILES.BUYER && (
+				(!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && (
+					!user.preferredBuyerSports || user.preferredBuyerSports.length === 0)
+				) || user.preferredBuyerCountries.length === 0)
+		)  return true;
+
 	};
 
 	render() {
@@ -98,25 +104,25 @@ class Preferences extends React.Component {
 
 					<div className="ca-tabs">
 						<div
-							className={`tab lg ${activeTab === 1 ? "active" : ""}`}
+							className={`tab lg ${activeTab === USER_PROFILES.SELLER ? "active" : ""}`}
 							onClick={() => {
-								this.setState({ activeTab: 1 });
+								this.setState({ activeTab: USER_PROFILES.SELLER });
 								this.updateUser("preferredProfile", "SELLER");
 							}}
 						>
 							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_SELLER")}
 						</div>
 						<div
-							className={`tab lg ${activeTab === 2 ? "active" : ""}`}
+							className={`tab lg ${activeTab === USER_PROFILES.BUYER ? "active" : ""}`}
 							onClick={() => {
-								this.setState({ activeTab: 2 });
+								this.setState({ activeTab: USER_PROFILES.BUYER });
 								this.updateUser("preferredProfile", "BUYER");
 							}}
 						>
 							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_BUYER")}
 						</div>
 					</div>
-					{activeTab === 1 && (
+					{activeTab === USER_PROFILES.SELLER && (
 						<PreferredSportSeller
 							sports={user.preferredSellerSports}
 							parse
@@ -125,7 +131,7 @@ class Preferences extends React.Component {
 							onChange={this.handleSellerSports}
 						/>
 					)}
-					{activeTab === 2 && (
+					{activeTab === USER_PROFILES.BUYER && (
 						<>
 							<PreferredTerritoriesBuyer
 								territories={user.preferredBuyerCountries}
