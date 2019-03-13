@@ -21,6 +21,11 @@ class DigitalSignature extends React.Component {
 
 	componentDidMount() {
 		this.setState({ blank: this.signature.current.toDataURL() });
+
+		const canvas = this.signature.current._canvas;
+		setTimeout(() => {
+			canvas.width = canvas.parentElement.offsetWidth;
+		}, 1);
 	}
 
 	clear = (e) => {

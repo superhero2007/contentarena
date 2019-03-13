@@ -131,10 +131,18 @@ class Translate extends Component {
 			style,
 		} = this.props;
 
-		if (!isEditEnabled) {
+		if (!isEditEnabled && !children) {
 			return (
 				<>
 					{value}
+				</>
+			);
+		}
+
+		if (!isEditEnabled && children) {
+			return (
+				<>
+					{children}
 				</>
 			);
 		}
