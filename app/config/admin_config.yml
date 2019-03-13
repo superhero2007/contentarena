@@ -48,7 +48,7 @@ easy_admin:
                         - 'applicationCompany'
                         - 'notes'
                 list:
-                    dql_filter: "status.name != 'Archived'"
+                    dql_filter: "status.name != 'Archived' OR entity.status is NULL"
                     fields: ['id', 'firstName', 'lastName', 'email', 'company', 'status', 'lastLogin']
                     actions:
                         - { name: 'show' }

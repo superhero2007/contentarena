@@ -21,7 +21,8 @@ class UserStatusFixtures extends Fixture
             'Archived',
             'Inactive',
             'Incomplete',
-            'Invited'
+            'Invited',
+            'Pending',
         );
 
         for ($i = 0; $i < count($content); $i++) {
