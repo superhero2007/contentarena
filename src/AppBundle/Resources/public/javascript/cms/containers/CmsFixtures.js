@@ -72,59 +72,61 @@ class CmsFixtures extends React.Component {
 					{this.context.t("CMS_FIXTURES_DESCRIPTION")}
 				</div>
 				<CmsSeasonsFilter property={property} />
-				<div className="region-filter-title">
-					{this.context.t("CMS_FIXTURES")}
-				</div>
-				{
-					fixtures.length === 0 && !create &&
-					<EmptyFixture onCreate={this.showCreateFixture} />
-				}
 
 				{
-					(fixtures.length > 0 || create) &&
-					<section className="fixture-item-wrapper no-border no-padding">
-						<div className="fixture-item-round fixture-title">
-							{this.context.t("CMS_FIXTURES_TABLE_ROUND")}
+					property.seasons.length > 0 &&
+					<>
+						<div className="region-filter-title">
+							{this.context.t("CMS_FIXTURES")}
 						</div>
-						<div className="fixture-item-name fixture-title">
-							{this.context.t("CMS_FIXTURES_TABLE_NAME")}
-						</div>
-						<div className="fixture-item-date fixture-title">
-							{this.context.t("CMS_FIXTURES_TABLE_DATE")}
-						</div>
-						<div className="fixture-item-time fixture-title">
-							{this.context.t("CMS_FIXTURES_TABLE_TIME")}
-						</div>
-						<div className="fixture-item-actions" />
-					</section>
+						{
+							fixtures.length === 0 && !create &&
+							<EmptyFixture onCreate={this.showCreateFixture} />
+						}
 
+						{
+							(fixtures.length > 0 || create) &&
+							<section className="fixture-item-wrapper no-border no-padding">
+								<div className="fixture-item-round fixture-title">
+									{this.context.t("CMS_FIXTURES_TABLE_ROUND")}
+								</div>
+								<div className="fixture-item-name fixture-title">
+									{this.context.t("CMS_FIXTURES_TABLE_NAME")}
+								</div>
+								<div className="fixture-item-date fixture-title">
+									{this.context.t("CMS_FIXTURES_TABLE_DATE")}
+								</div>
+								<div className="fixture-item-time fixture-title">
+									{this.context.t("CMS_FIXTURES_TABLE_TIME")}
+								</div>
+								<div className="fixture-item-actions" />
+							</section>
+						}
+
+						{
+							fixtures.length > 0 &&
+							<FixtureList
+								fixtures={fixtures}
+								onRemoveFixture={this.onRemoveFixture}
+								onUpdateFixture={this.onUpdateFixture}
+							/>
+						}
+
+						{
+							create &&
+							<FixtureForm onUpdate={this.onCreateFixture} />
+						}
+
+						{
+							!create && fixtures.length > 0 &&
+							<div className="empty-property-tab">
+								<a className="ca-btn primary" onClick={this.showCreateFixture}>
+									{this.context.t("CMS_EMPTY_FIXTURE_CREATE_FIXTURE")}
+								</a>
+							</div>
+						}
+					</>
 				}
-
-				{
-					fixtures.length > 0 &&
-					<FixtureList
-						fixtures={fixtures}
-						onRemoveFixture={this.onRemoveFixture}
-						onUpdateFixture={this.onUpdateFixture}
-					/>
-
-				}
-
-				{
-					create &&
-					<FixtureForm onUpdate={this.onCreateFixture} />
-				}
-
-				{
-					!create && fixtures.length > 0 &&
-					<div className="empty-property-tab">
-						<a className="ca-btn primary" onClick={this.showCreateFixture}>
-							{this.context.t("CMS_EMPTY_FIXTURE_CREATE_FIXTURE")}
-						</a>
-					</div>
-				}
-
-
 
 			</section>
 		);

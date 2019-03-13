@@ -131,21 +131,25 @@ class PropertyService
         $sportCategory = $property->getSportCategory();
         $seasons = $property->getSeasons();
 
-        if (!empty($seasons) && !empty($sportCategory) && !empty($tournaments)) {
-            $season = array_values($seasons)[0];
-            return isset($season->name) ? $season->getName() : $season->getYear();
+        if (!empty($tournaments)){
+            $name = array_values($tournaments)[0]->getName();
+
+            if (!empty($seasons)) {
+
+                foreach ($seasons as $season){
+                    $name = $name." - ".$season->getYear();
+                }
+            }
+
+        } else {
+            $name = array_values($sports)[0]->getName();
+
+            if(!empty($sportCategory)){
+                $categoryName = array_values($sportCategory)[0]->getName();
+                $name = $name. " - " .$categoryName;
+            }
         }
 
-        if (empty($seasons) && !empty($sportCategory) && !empty($tournaments)){
-            return array_values($tournaments)[0]->getName();
-        }
-
-        if(empty($seasons) && !empty($sportCategory) && empty($tournaments)){
-            $sportName = array_values($sports)[0]->getName();
-            $categoryName = array_values($sportCategory)[0]->getName();
-            return $sportName. " - " .$categoryName;
-        }
-
-        return array_values($sports)[0]->getName();
+        return $name;
     }
 }

@@ -190,7 +190,6 @@
         margin: 5px;
         overflow: hidden;
         color: #666 !important;
-        background-color: $property-yellow !important;
         height: 40px !important;
         &.excluding{
           border: 1px solid #D0021B;
@@ -206,7 +205,7 @@
       }
       .region-selected{
         &.excluding{
-          background-color: #D0021B !important;
+          background-color: $property-yellow !important;
         }
       }
     }
