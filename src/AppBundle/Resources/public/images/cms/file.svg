@@ -1,0 +1,253 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 69.32 87.23">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-2 {
+        clip-rule: evenodd;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-4 {
+        clip-path: url(#clip-path-2);
+      }
+
+      .cls-5 {
+        isolation: isolate;
+      }
+
+      .cls-6 {
+        clip-path: url(#clip-path-3);
+      }
+
+      .cls-7 {
+        clip-path: url(#clip-path-4);
+      }
+
+      .cls-8 {
+        clip-path: url(#clip-path-5);
+      }
+
+      .cls-9 {
+        fill: #24b8eb;
+      }
+
+      .cls-10 {
+        clip-path: url(#clip-path-6);
+      }
+
+      .cls-11 {
+        clip-path: url(#clip-path-8);
+      }
+
+      .cls-12 {
+        clip-path: url(#clip-path-9);
+      }
+
+      .cls-13 {
+        clip-path: url(#clip-path-11);
+      }
+
+      .cls-14 {
+        clip-path: url(#clip-path-13);
+      }
+
+      .cls-15 {
+        clip-path: url(#clip-path-14);
+      }
+
+      .cls-16 {
+        clip-path: url(#clip-path-15);
+      }
+
+      .cls-17 {
+        clip-path: url(#clip-path-16);
+      }
+
+      .cls-18 {
+        clip-path: url(#clip-path-18);
+      }
+
+      .cls-19 {
+        clip-path: url(#clip-path-20);
+      }
+
+      .cls-20 {
+        clip-path: url(#clip-path-22);
+      }
+
+      .cls-21 {
+        clip-path: url(#clip-path-24);
+      }
+
+      .cls-22 {
+        clip-path: url(#clip-path-26);
+      }
+
+      .cls-23 {
+        clip-path: url(#clip-path-28);
+      }
+
+      .cls-24 {
+        clip-path: url(#clip-path-30);
+      }
+
+      .cls-25 {
+        clip-path: url(#clip-path-32);
+      }
+    </style>
+    <clipPath id="clip-path" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="10.11" y="10.92" width="51.58" height="69.51"/>
+    </clipPath>
+    <clipPath id="clip-path-2" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="-711.89" y="-345.5" width="1500" height="1347"/>
+    </clipPath>
+    <clipPath id="clip-path-3" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="9.11" y="10.5" width="53" height="70"/>
+    </clipPath>
+    <clipPath id="clip-path-4" transform="translate(-5.11 1.8)">
+      <path class="cls-2" d="M10.11,12.21V79.14a1.29,1.29,0,0,0,1.29,1.29h49a1.29,1.29,0,0,0,1.29-1.29V25.08a.24.24,0,0,0,0-.08,1.2,1.2,0,0,0-.06-.33.56.56,0,0,1,0-.12,1.42,1.42,0,0,0-.26-.38L48.41,11.3A1.22,1.22,0,0,0,48,11l-.11,0a1.28,1.28,0,0,0-.34-.07s0,0-.07,0H11.4A1.29,1.29,0,0,0,10.11,12.21ZM57.29,23.79H48.8V15.32ZM12.69,13.5H46.22V25.08a1.29,1.29,0,0,0,1.29,1.29h11.6V77.85H12.69Z"/>
+    </clipPath>
+    <clipPath id="clip-path-5" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="10.11" y="10.5" width="52" height="70"/>
+    </clipPath>
+    <clipPath id="clip-path-6" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="17.85" y="3.2" width="51.58" height="69.51"/>
+    </clipPath>
+    <clipPath id="clip-path-8" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="17.11" y="2.5" width="53" height="71"/>
+    </clipPath>
+    <clipPath id="clip-path-9" transform="translate(-5.11 1.8)">
+      <path class="cls-2" d="M64.27,70.13V72.7h3.87a1.28,1.28,0,0,0,1.29-1.28V4.49A1.29,1.29,0,0,0,68.14,3.2h-49a1.29,1.29,0,0,0-1.29,1.29V8.35h2.58V5.77H66.85V70.13Z"/>
+    </clipPath>
+    <clipPath id="clip-path-11" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="10.11" y="3.2" width="59.32" height="77.23"/>
+    </clipPath>
+    <clipPath id="clip-path-13" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.11" y="20.5" width="32" height="50"/>
+    </clipPath>
+    <clipPath id="clip-path-14" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="28.94" width="30.95" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-15" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="10.11" y="2.5" width="60" height="78"/>
+    </clipPath>
+    <clipPath id="clip-path-16" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="21.22" width="10.32" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-18" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="36.66" width="20.63" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-20" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="43.64" y="36.66" width="7.74" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-22" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="44.39" width="30.95" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-24" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="59.83" width="30.95" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-26" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="32.03" y="52.11" width="19.34" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-28" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="52.11" width="9.03" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-30" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="20.43" y="67.56" width="5.16" height="2.57"/>
+    </clipPath>
+    <clipPath id="clip-path-32" transform="translate(-5.11 1.8)">
+      <rect class="cls-1" x="28.16" y="67.56" width="23.21" height="2.57"/>
+    </clipPath>
+  </defs>
+  <title>file</title>
+  <g class="cls-3">
+    <g class="cls-4">
+      <g class="cls-5">
+        <g class="cls-6">
+          <g class="cls-7">
+            <g class="cls-8">
+              <rect class="cls-9" y="7.72" width="61.58" height="79.51"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g class="cls-10">
+    <g class="cls-4">
+      <g class="cls-5">
+        <g class="cls-11">
+          <g class="cls-12">
+            <g class="cls-11">
+              <rect class="cls-9" x="7.74" width="61.58" height="79.51"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g class="cls-13">
+    <g class="cls-4">
+      <g class="cls-5">
+        <g class="cls-14">
+          <g class="cls-15">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="25.74" width="40.95" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-17">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="18.02" width="20.32" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-18">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="33.47" width="30.63" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-19">
+            <g class="cls-16">
+              <rect class="cls-9" x="33.53" y="33.47" width="17.74" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-20">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="41.19" width="40.95" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-21">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="56.63" width="40.95" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-22">
+            <g class="cls-16">
+              <rect class="cls-9" x="21.92" y="48.91" width="29.34" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-23">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="48.91" width="19.03" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-24">
+            <g class="cls-16">
+              <rect class="cls-9" x="10.32" y="64.36" width="15.16" height="12.57"/>
+            </g>
+          </g>
+          <g class="cls-25">
+            <g class="cls-16">
+              <rect class="cls-9" x="18.05" y="64.36" width="33.21" height="12.57"/>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
