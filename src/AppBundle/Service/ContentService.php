@@ -180,9 +180,10 @@ class ContentService
 
             if ( !$featuredA  && $featuredB ) return 1;
             if ($featuredA && !$featuredB ) return -1;
+            if (!$featuredA && !$featuredB ) return 0;
             if ($featuredA == $featuredB) {
-                if ($positionA === null ) $positionA = 100;
-                if ($positionB === null ) $positionB = 100;
+                if ($positionA === null || !$positionA) $positionA = 100;
+                if ($positionB === null || !$positionB) $positionB = 100;
                 if ($positionA < $positionB ) return -1;
                 if ($positionB < $positionA ) return 1;
                 if ($positionA == $positionB) return 0;
@@ -558,6 +559,7 @@ class ContentService
         $content->setLastActionUser($user);
         $content->setOwner($user);
         $content->setLastActionDate(new \DateTime());
+        $content->setCreatedAt(new \DateTime());
         /**
          * Save files
          */
