@@ -91,7 +91,7 @@ class SignInForm extends PureComponent {
 						<p>{this.context.t("SIGN_IN_RESET_LOGIN_MESSAGE")}</p>
 					</div>
 				)}
-				{this.state.error && <span className="sign-error">{this.state.error}</span>}
+				{this.state.error && <span className="sign-error login-error">{this.state.error}</span>}
 				<div className="username">
 					<label htmlFor="username">{this.context.t("SIGN_IN_EMAIL")}</label>
 					<input
