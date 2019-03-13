@@ -186,7 +186,6 @@ class UserService
         if ($user == null) throw new BadRequestHttpException();
 
         $this->logger->info("USER IS ACTIVATING", array ( $user, $data ) );
-        $this->logger->error("Trigger logging");
 
         $user = $this->updateUser($data);
 

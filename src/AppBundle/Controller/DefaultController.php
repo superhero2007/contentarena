@@ -81,7 +81,12 @@ class DefaultController extends BaseController
 
         $user = $this->getUser();
         $logger = $this->get('logger');
-        $logger->error("USER ENTERED SITE", array( $user, $request->get("reactRouting")) );
+        $route = $request->get("reactRouting");
+        $logger->info("USER ENTERED " . strtoupper($route), array(
+            "User" => $user->getEmail(),
+            "Route" => $request->getRequestUri()
+        ));
+
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
@@ -90,9 +95,21 @@ class DefaultController extends BaseController
      *     "/{reactRouting}/{reactParam}",
      *     requirements={"reactRouting"="register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexParamsAction(Request $request)
     {
+        $user = $this->getUser();
+        $logger = $this->get('logger');
+        $route = $request->get("reactRouting");
+
+        if ( $route == "register") $logger->info("USER ENTERED WALL", array(
+            "User" => $user->getEmail(),
+            "Route" => $request->getRequestUri()
+        ));
+
+
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 
@@ -101,6 +118,8 @@ class DefaultController extends BaseController
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
      *     requirements={"reactRouting"="register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexParams2Action(Request $request)
     {
@@ -113,6 +132,8 @@ class DefaultController extends BaseController
      *     name="homepageParams3",
      *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialoverview"},
      *     defaults={"reactParam3" : null, "reactParam2" : null, "reactRouting": null, "reactParam" : null})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexParams3Action(Request $request)
     {

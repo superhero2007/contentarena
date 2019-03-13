@@ -29,11 +29,14 @@ class UserController extends FOSRestController
      */
     public function postLoginAction(Request $request)
     {
+        $logger = $this->get('logger');
         $username = $request->request->get('username');
         $password = $request->request->get('password');
 
         if(is_null($username) || is_null($password)) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_MISSING_LOGIN_DATA);
+            $errorCode = UserErrors::USER_MISSING_LOGIN_DATA;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "username" => $username));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
         $user_manager = $this->get('fos_user.user_manager');
@@ -42,7 +45,9 @@ class UserController extends FOSRestController
         $user = $user_manager->findUserByUsername($username);
 
         if(is_null($user)) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_NOT_EXISTS);
+            $errorCode = UserErrors::USER_NOT_EXISTS;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "username" => $username));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
         $encoder = $factory->getEncoder($user);
@@ -57,13 +62,17 @@ class UserController extends FOSRestController
             $this->get('session')->set('_security_main',serialize($token));
 
             // Fire the login event
-            // Logging the user in above the way we do it doesn't do this automatically
             $event = new InteractiveLoginEvent($request, $token);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+
+            $logger->info("USER SIGNED IN SUCCESSFULLY", array( "username" => $username));
+
             $response = array("success" => true, "user" => $user);
             return $this->getSerializedResponse($response, array("auth"));
         } else {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_INCORRECT_PASSWORD);
+            $errorCode = UserErrors::USER_INCORRECT_PASSWORD;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "username" => $username));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
     }
@@ -82,13 +91,17 @@ class UserController extends FOSRestController
      */
     public function postRegisterAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $email = $request->get("email");
 
         $user = $this->getDoctrine()
             ->getRepository('AppBundle:User')
-            ->findOneBy(['email' => $request->get("email")]);
+            ->findOneBy(['email' => $email]);
 
         if ($user) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_ALREADY_EXISTS);
+            $errorCode = UserErrors::USER_ALREADY_EXISTS;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "email" => $email));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
         /** @var $userManager UserManagerInterface */
@@ -99,11 +112,8 @@ class UserController extends FOSRestController
         /** @var User $user */
         $user = $userManager->createUser();
         $user->setEnabled(true);
-        $user->setEmail($request->get("email"));
-        // $user->setTitle($request->get("title"));
-        // $user->setCountry($request->get("country"));
-        // $user->setPhone($request->get("phone"));
-        $user->setUsername($request->get("email"));
+        $user->setEmail($email);
+        $user->setUsername($email);
         $user->setFirstName($request->get("firstName"));
         $user->setLastName($request->get("lastName"));
         $user->setRegisteredAt(new \DateTime());
@@ -124,6 +134,8 @@ class UserController extends FOSRestController
         $emailService->userRequestedLogin($params);
         $emailService->welcomeUser($params);
 
+        $logger->info("USER REGISTERED SUCCESSFULLY", array( "email" => $email));
+
         $response = array("success" => true, "user" => $user);
         return $this->getSerializedResponse($response, array("auth"));
     }
@@ -142,12 +154,17 @@ class UserController extends FOSRestController
         /** @var $userManager UserManagerInterface */
         /** @var User $user */
 
+        $logger = $this->get('logger');
+        $email = $request->get("email");
+
         $user = $this->getDoctrine()
             ->getRepository('AppBundle:User')
-            ->findOneBy(['email' => $request->get("email")]);
+            ->findOneBy(['email' => $email]);
 
         if (!$user) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_NOT_EXISTS);
+            $errorCode = UserErrors::USER_NOT_EXISTS;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "email" => $email));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
         $userManager = $this->get('fos_user.user_manager');
@@ -171,6 +188,8 @@ class UserController extends FOSRestController
 
         $emailService->forgotPassword($params);
 
+        $logger->info("USER RECOVERED PASSWORD SUCCESSFULLY", array( "email" => $email));
+
         $response = array("success" => true, "user" => $user);
         return $this->getSerializedResponse($response, array("auth"));
     }
@@ -187,16 +206,23 @@ class UserController extends FOSRestController
         /** @var $userManager UserManagerInterface */
         /** @var User $user */
 
+        $logger = $this->get('logger');
+        $confirmationToken = $request->get("confirmationToken");
+
         $user = $this->getDoctrine()
             ->getRepository('AppBundle:User')
-            ->findOneBy(['confirmationToken' => $request->get("confirmationToken")]);
+            ->findOneBy(['confirmationToken' => $confirmationToken]);
 
         if (!$user) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_NOT_EXISTS);
+            $errorCode = UserErrors::USER_NOT_EXISTS;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "confirmationToken" => $confirmationToken));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
         if (!$user->isPasswordRequestNonExpired($this::PASSWORD_REQUEST_TTL)) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::PASSWORD_REQUEST_EXPIRED);
+            $errorCode = UserErrors::PASSWORD_REQUEST_EXPIRED;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "confirmationToken" => $confirmationToken));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
         }
 
         $userManager = $this->get('fos_user.user_manager');
@@ -213,6 +239,8 @@ class UserController extends FOSRestController
         );
 
         //$emailService->forgotPassword($params);
+
+        $logger->info("USER UPDATED PASSWORD SUCCESSFULLY", array( "email" => $user->getEmail()));
 
         $response = array("success" => true, "user" => $user);
         return $this->getSerializedResponse($response, array("auth"));

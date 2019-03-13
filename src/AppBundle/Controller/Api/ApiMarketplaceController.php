@@ -52,7 +52,7 @@ class ApiMarketplaceController extends Controller
     {
 
         $logger = $this->get('logger');
-        $logger->error("USER REQUESTED LISTINGS", array( $request->getContent()) );
+        $logger->info("USER REQUESTED LISTINGS", array( $request->getContent()) );
 
 
         $contents = $contentService->getContent($request);

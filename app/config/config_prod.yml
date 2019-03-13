@@ -14,13 +14,36 @@ twig:
 monolog:
     handlers:
         main:
-            type: fingers_crossed
+            type:         fingers_crossed
             action_level: error
-            handler: nested
+            handler:      grouped
+        grouped:
+            type:    group
+            members: [nested, deduplicated]
+        deduplicated:
+            type:    deduplication
+            handler: swift
+        swift:
+            type:         swift_mailer
+            from_email:   'error-no-reply@contentarena.com'
+            to_email:     ['juancruztalco@gmail.com']
+            subject:      'An Error Occurred! %%message%%'
+            level:        debug
+            formatter:    monolog.formatter.html
+            content_type: text/html
         nested:
-            type: stream
+            type: rotating_file
             path: '%kernel.logs_dir%/%kernel.environment%.log'
             level: debug
+            max_files: 10
         console:
             type: console
             process_psr_3_messages: false
+        app:
+            # log all messages (since debug is the lowest level)
+            level:    debug
+            type:     stream
+            path:     '%kernel.logs_dir%/app.log'
+            channels: [app]
+
+
