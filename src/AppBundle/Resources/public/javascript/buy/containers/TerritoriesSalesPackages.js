@@ -8,10 +8,14 @@ import { getCurrencySymbol } from "../../main/actions/utils";
 import RadioSelector from "../../main/components/RadioSelector";
 import { packageIcon } from "../../main/components/Icons";
 import RegionFilter from "../../main/components/RegionFilter";
+import LocalStorageHelper from "../../main/utiles/localStorageHelper";
 
 class TerritoriesSalesPackages extends PureComponent {
 	constructor(props) {
 		super(props);
+
+		const countriesFromStorage = LocalStorageHelper.getCountriesSelected();
+
 		this.filtered = "filtered";
 		this.all = "all";
 		this.available = "available";
@@ -24,8 +28,11 @@ class TerritoriesSalesPackages extends PureComponent {
 			filteredTerritorialBundles: [],
 			selectedName: "All",
 			checkedItems: new Map(),
-			territories: (props.filter && props.filter.countries.length > 0) ? this.filtered : this.all,
+			territories: (countriesFromStorage && countriesFromStorage.length > 0) ? this.filtered : this.all,
 			bundles: [],
+			filter : {
+				countries : countriesFromStorage
+			}
 		};
 	}
 
@@ -67,11 +74,14 @@ class TerritoriesSalesPackages extends PureComponent {
 
 	filterBundles = (territories, selected, clear) => {
 		const {
-			filter,
 			salesPackages,
 			bundlesWithActivity,
 			bundlesSold,
 		} = this.props;
+
+		const {
+			filter,
+		} = this.state;
 
 		// Filter sold out bundles
 		let bundles = (salesPackages === null || salesPackages === undefined) ? [] : salesPackages.filter(bundle => !bundle.sold);
@@ -220,7 +230,6 @@ class TerritoriesSalesPackages extends PureComponent {
 	render() {
 		const {
 			userCanNotBuy,
-			filter,
 		} = this.props;
 
 		const {
@@ -230,6 +239,7 @@ class TerritoriesSalesPackages extends PureComponent {
 			selectedName,
 			checkedItems,
 			bundles,
+			filter,
 		} = this.state;
 
 		const total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
@@ -242,7 +252,7 @@ class TerritoriesSalesPackages extends PureComponent {
 				</div>
 
 				{/* TERRITORY MODE SELECTOR */}
-				{bundles.length > 1 && (
+				{(territories === this.filtered || bundles.length > 1) && (
 					<RadioSelector
 						value={territories}
 						onChange={this.handleTerritorySelector}

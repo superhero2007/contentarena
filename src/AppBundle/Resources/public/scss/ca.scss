@@ -354,6 +354,11 @@ button {
       position: relative;
       max-width: 872px;
 
+      .full-disabled {
+        pointer-events: none;
+        background-color: #ccc;
+      }
+
       &.fixture-wrapper {
         display: block;
 
