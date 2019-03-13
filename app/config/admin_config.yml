@@ -55,7 +55,7 @@ easy_admin:
                         - { property: 'preferredBuyerSports' }
                         - { property: 'preferredSellerSports' }
                         #- { property: 'confirmationToken', label: 'Activation Code' }
-                        - { property: 'confirmationToken', template: ':easy_admin:activation.code.list.html.twig', base_path: '%carena_host_url%' }
+                        - { property: 'confirmationToken', template: 'easy_admin/activation.code.list.html.twig', base_path: '%carena_host_url%' }
                         - { property: 'autoPublish' }
                 edit:
                     fields:
