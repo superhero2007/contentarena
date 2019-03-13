@@ -50,11 +50,10 @@ class NewFixture extends Component {
 		if (e === undefined) return;
 
 		const { handleDate } = this.props;
-		const date = moment(e.target.value);
-		const formatted = formatMomentToServerFormat(date);
+		const date = moment(e.target.value, DATE_TIME_FORMAT);
 
 		if (date.isValid()) {
-			handleDate(formatted);
+			handleDate(date);
 		}
 	};
 

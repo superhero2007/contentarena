@@ -12,6 +12,7 @@ use AppBundle\Entity\Company;
 use FOS\UserBundle\Doctrine\UserManager;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Doctrine\RandomIdGenerator;
 use AppBundle\Entity\User;
@@ -34,13 +35,16 @@ class UserService
 
     protected $tokenGenerator;
 
+    private $logger;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
         UserManagerInterface $fosUserManager,
         TokenGeneratorInterface $tokenGenerator,
-        EmailService $emailService
+        EmailService $emailService,
+        LoggerInterface $logger
     ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
@@ -48,6 +52,7 @@ class UserService
         $this->fosUserManager = $fosUserManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->emailService = $emailService;
+        $this->logger = $logger;
 
     }
 
@@ -154,12 +159,17 @@ class UserService
 
         if ($user == null) throw new BadRequestHttpException();
 
+        $this->logger->info("USER IS ACTIVATING", array ( $user, $data ) );
+        $this->logger->error("Trigger logging");
+
         $user = $this->updateUser($data);
-        if ( isset($data['company']) && isset($data['company']['id']) ){
-            $this->updateCompany($data['company'], $user);
-        } else {
-            $this->createCompany($data['company'], $user);
-        }
+        //if ( isset($data['company']) && isset($data['company']['id']) ){
+
+            //$this->updateCompany($data['company'], $user);
+
+        //} else {
+            //$this->createCompany($data['company'], $user);
+        //}
 
         $this->updatePassword($request);
 
@@ -211,6 +221,12 @@ class UserService
 
     }
 
+    /**
+     * @param $data
+     * @param User $user
+     * @return Company|bool|null|object
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function updateCompany($data, User $user){
         if ( isset($data['id']) ) {
 
@@ -246,9 +262,16 @@ class UserService
     public function createCompany($data, User $user){
 
         $company = new Company();
+        $name = $data['legalName'];
+
+        $companies = $this->em->getRepository("AppBundle:Company")->findByLegalName($name);
+
+        if ( $companies != null ) {
+            $name = $name . "-" . $user->getId();
+        }
 
         if ( isset($data['vat']) ) $company->setVat($data['vat']);
-        if ( isset($data['legalName']) ) $company->setLegalName($data['legalName']);
+        if ( isset($data['legalName']) ) $company->setLegalName($name);
         if ( isset($data['zip']) ) $company->setZip($data['zip']);
         if ( isset($data['registrationNumber']) ) $company->setRegistrationNumber($data['registrationNumber']);
         if ( isset($data['address']) ) $company->setAddress($data['address']);
@@ -315,5 +338,6 @@ class UserService
 
         return $country;
     }
+
 
 }

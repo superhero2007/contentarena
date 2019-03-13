@@ -22,7 +22,7 @@ import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from "../../main/utiles/localStorageHelper";
 import Loader from "../../common/components/Loader";
 import Pagination from "../../main/components/Pagination";
-import { serialize } from "../../common/utils/listing";
+import { contentParserFromServer, serialize } from "../../common/utils/listing";
 import localStorageEnums from "../../main/constants/localStorageEnums";
 import { fetchListings } from "../actions/marketplaceActions";
 
@@ -181,15 +181,13 @@ class Marketplace extends Component {
 		return response;
 	};
 
-	filter = () => {
-		const { filter, fetchListings } = this.props;
-		const parsedFilter = this.parseFilter(filter);
-		fetchListings(parsedFilter);
-		this.setState({
-			sortSalesPackages: true,
-			parsedFilter,
-		});
-	};
+    filter = () => {
+        const { filter } = this.props;
+        let parsedFilter = this.parseFilter(filter);
+        console.log(parsedFilter);
+        this.fetchListings(parsedFilter);
+        this.setState({parsedFilter: parsedFilter, loadingListing: true});
+    };
 
 	filterByRoute = () => {
 		const { history } = this.props;
@@ -217,8 +215,20 @@ class Marketplace extends Component {
 		history.push(`/listing/${customId}`);
 	};
 
-	setListingViewType = (type) => {
-		this.props.updateListingView(type);
+    setListingViewType = (type) => {
+        this.setState({listingView: type});
+    };
+
+    fetchListings = (filter) => {
+		ContentArena.Api.getMarketplaceListings(filter).done(response => {
+
+			this.setState({
+				listings: response.listings.map( listing => contentParserFromServer(listing) ),
+				totalItems: response.totalItems,
+				loadingListing: false,
+				sortSalesPackages : true
+			});
+		});
 	};
 
 	render() {
@@ -274,7 +284,14 @@ class Marketplace extends Component {
 						</div>
 						<div className="buy-container-right">
 
-							<Loader loading={loading}>
+                        {/*{parsedFilter && (
+                            <FetchMarketplaceListings
+                                onResponse={this.onFetchResponse}
+                                filter={parsedFilter}
+                            />
+                        )}*/}
+
+                        <Loader loading={listings.length === 0 && loadingListing}>
 
 								<div className="content-listing-header">
 									<div className="content-listing-switcher">

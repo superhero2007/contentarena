@@ -219,25 +219,25 @@ ContentArena.Api = {
 			},
 		});
 
-		return deferred.promise();
-	},
-	getJsonContent(filter) {
-		const deferred = jQuery.Deferred();
+        return deferred.promise();
+    },
+    getMarketplaceListings ( filter) {
+        let deferred = jQuery.Deferred();
 
-		$.ajax({
-			url: `${envhosturl}listings/marketplace`,
-			type: "POST",
-			data: filter,
-			success(response) {
-				deferred.resolve(response);
-			},
-			error(data, status) {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
+        $.ajax({
+            url: envhosturl + "api/marketplace/listings",
+            type: "POST",
+            data : filter,
+            success: function (response) {
+                deferred.resolve(response);
+            },
+            error : function (data, status) {
+                deferred.reject({
+                    data: data,
+                    status: status
+                });
+            }
+        });
 
 		return deferred.promise();
 	},

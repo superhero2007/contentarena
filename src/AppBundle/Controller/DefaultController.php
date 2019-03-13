@@ -7,6 +7,7 @@ use AppBundle\Exception\BrowserNotSupportedException;
 use AppBundle\Exception\BrowserUnsupportedException;
 use AppBundle\Service\UserService;
 use FOS\UserBundle\Model\User;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -72,10 +73,15 @@ class DefaultController extends BaseController
      *     "/{reactRouting}",
      *     requirements={"reactRouting"="terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage", defaults={"reactRouting": null})
-     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction( Request $request )
     {
+
+        $user = $this->getUser();
+        $logger = $this->get('logger');
+        $logger->error("USER ENTERED SITE", array( $user, $request->get("reactRouting")) );
         return $this->render('@App/home.html.twig', $this->getInternalParams($request));
     }
 

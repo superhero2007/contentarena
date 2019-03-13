@@ -51,6 +51,10 @@ class ApiMarketplaceController extends Controller
     public function marketplaceListings(Request $request, ContentService $contentService)
     {
 
+        $logger = $this->get('logger');
+        $logger->error("USER REQUESTED LISTINGS", array( $request->getContent()) );
+
+
         $contents = $contentService->getContent($request);
         $page = $request->get("page");
         $pageSize = $request->get("pageSize");

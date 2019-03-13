@@ -111,7 +111,14 @@ services:
 
     app_bundle.user_service:
         class: AppBundle\Service\UserService
-        arguments: ['@doctrine.orm.entity_manager','@AppBundle\Doctrine\RandomIdGenerator', '@AppBundle\Service\FileUploader', '@fos_user.user_manager', '@fos_user.util.token_generator','@AppBundle\Service\EmailService']
+        arguments:
+            $entityManager : '@doctrine.orm.entity_manager'
+            $idGenerator: '@AppBundle\Doctrine\RandomIdGenerator'
+            $fileUploader: '@AppBundle\Service\FileUploader'
+            $fosUserManager: '@fos_user.user_manager'
+            $tokenGenerator: '@fos_user.util.token_generator'
+            $emailService: '@AppBundle\Service\EmailService'
+            $logger: '@logger'
 
     twig.app_extension:
         class: AppBundle\Twig\AppExtension
