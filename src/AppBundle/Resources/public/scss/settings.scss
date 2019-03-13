@@ -124,6 +124,9 @@
 
     .row {
       margin-bottom: 15px !important;
+      .preferences-item{
+        flex: inherit !important;
+      }
     }
 
     .preferences-title {

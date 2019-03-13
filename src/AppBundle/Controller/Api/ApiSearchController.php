@@ -88,7 +88,7 @@ class ApiSearchController extends BaseController
         $repo = $this->getDoctrine()->getRepository("AppBundle:SportsGroup");
 
         //Get results
-        $sports = $repo->findAll();
+        $sports = $repo->getNonEmptySportsGroups();
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
