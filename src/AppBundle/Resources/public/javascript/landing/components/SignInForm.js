@@ -13,6 +13,8 @@ class SignInForm extends PureComponent {
 			error: "",
 			token: "",
 			isLoading: false,
+			name: null,
+			pass: null,
 		};
 	}
 
@@ -20,7 +22,10 @@ class SignInForm extends PureComponent {
 		this.name.focus();
 	}
 
-	isFieldsInvalid = () => !this.name.value || !this.pass.value;
+	isFieldsInvalid = () => {
+		const { name, pass } = this.state;
+		return !name || !pass || name === "" || pass === "";
+	};
 
 	handleSignUpClick = () => {
 		if (this.state.isLoading) return;
@@ -32,20 +37,15 @@ class SignInForm extends PureComponent {
 		this.props.onViewUpdate(LOGIN_VIEW_TYPE.RECOVER);
 	};
 
-	handleInputChange = () => this.setState({ error: "" });
-
 	handleSignIn = () => {
-		const { refererEmail, refererListingId } = this.props;
+		const { refererEmail, refererListingId, resetPasswordSuccess } = this.props;
+		const { name, pass, isLoading } = this.state;
 
-		if (this.props.resetPasswordSuccess) this.props.hideSuccessResetPass();
-		if (this.state.isLoading) return;
-		if (this.isFieldsInvalid()) {
-			this.setState({ error: this.context.t("SIGN_IN_ERROR") });
-			return;
-		}
+		if (resetPasswordSuccess) this.props.hideSuccessResetPass();
+		if (isLoading) return;
 		this.setState({ isLoading: true });
 
-		ContentArena.Api.signInUser(this.name.value, this.pass.value)
+		ContentArena.Api.signInUser(name, pass)
 			.then(({ data }) => {
 				if (data && data.success) {
 					localStorage.clear();
@@ -72,7 +72,7 @@ class SignInForm extends PureComponent {
 
 	render() {
 		const { refererEmail } = this.props;
-		const { error } = this.state;
+		const { error, name, pass } = this.state;
 
 		return (
 			<section className="sign-in-wrapper" onKeyPress={this.handleEnterPress}>
@@ -95,8 +95,8 @@ class SignInForm extends PureComponent {
 				)}
 
 				{error && (
-					<span className="sign-error">
-						<Translate i18nKey={error} />
+					<span className="sign-error login-error">
+						{error}
 					</span>
 				)}
 
@@ -106,12 +106,13 @@ class SignInForm extends PureComponent {
 					</label>
 					<input
 						ref={name => this.name = name}
+						value={name}
 						type="text"
 						id="username"
 						name="_username"
 						placeholder={this.context.t("SIGN_IN_EMAIL_PLACEHOLDER")}
 						required="required"
-						onChange={this.handleInputChange}
+						onChange={(e) => { this.setState({ name: e.target.value }); }}
 						autoComplete="username"
 					/>
 				</div>
@@ -119,16 +120,16 @@ class SignInForm extends PureComponent {
 				<div className="password">
 					<label htmlFor="password"><Translate i18nKey="SIGN_IN_PASSWORD" /></label>
 					<input
-						ref={password => this.pass = password}
+						value={pass}
 						type="password"
 						id="password"
-						onChange={this.handleInputChange}
 						required="required"
 						autoComplete="current-password"
+						onChange={(e) => { this.setState({ pass: e.target.value }); }}
 					/>
 				</div>
 
-				<button className="yellow-btn" onClick={this.handleSignIn}>
+				<button className="yellow-btn" onClick={this.handleSignIn} disabled={this.isFieldsInvalid()}>
 					<Translate i18nKey="SIGN_IN_SUBMIT" />
 					{this.state.isLoading && <Loader loading xSmall />}
 				</button>
@@ -158,7 +159,6 @@ SignInForm.contextTypes = {
 SignInForm.propsType = {
 	onViewUpdate: PropTypes.func.isRequired,
 };
-
 
 const mapStateToProps = ({ landing }) => landing;
 
