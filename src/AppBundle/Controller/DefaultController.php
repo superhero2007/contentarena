@@ -26,10 +26,23 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/", name="home")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function homeAction(Request $request)
     {
-        return $this->redirect("/marketplace");
+
+        $user = $this->getUser();
+        $logger = $this->get('logger');
+        $logger->info("USER ENTERED HOME" , array(
+            "User" => isset($user) ? $user->getEmail() : "Anonymous",
+            "Route" => $request->getRequestUri()
+        ));
+
+        if ( $user != null ) return $this->redirect("/marketplace");
+
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+
     }
 
     /**
@@ -82,7 +95,7 @@ class DefaultController extends BaseController
         $logger = $this->get('logger');
         $route = $request->get("reactRouting");
         $logger->info("USER ENTERED " . strtoupper($route), array(
-            "User" => isset($user) ? $user->getEmail() : "undefined", // YV: need to take a look here, /login route: $user = null
+            "User" => isset($user) ? $user->getEmail() : "Anonymous",
             "Route" => $request->getRequestUri()
         ));
 
@@ -104,7 +117,7 @@ class DefaultController extends BaseController
         $route = $request->get("reactRouting");
 
         if ( $route == "register") $logger->info("USER ENTERED WALL", array(
-            "User" => isset($user) ? $user->getEmail() : "undefined",
+            "User" => isset($user) ? $user->getEmail() : "Anonymous",
             "Route" => $request->getRequestUri()
         ));
 

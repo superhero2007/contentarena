@@ -40,7 +40,7 @@ export const routes = [
 	{
 		path: "/",
 		exact: true,
-		main: Marketplace,
+		main: Landing,
 	},
 	{
 		path: "/marketplace",

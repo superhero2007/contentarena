@@ -39,7 +39,7 @@ class Country
     private $country_code;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory", inversedBy="country", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="territory_id", referencedColumnName="id")
      */
     private $territory;
