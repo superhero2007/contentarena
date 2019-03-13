@@ -8,6 +8,7 @@ import {
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import ShareListing from "../../common/components/ShareListing";
+import { UserName } from "../../common/utils/listing";
 
 class BoardListing extends React.Component {
 	constructor(props) {
@@ -189,7 +190,7 @@ class BoardListing extends React.Component {
 									{" "}
 									{`${lastAction.description} by `}
 								</div>
-								{`${lastActionUser.firstName} ${lastActionUser.lastName}`}
+								<UserName {...lastActionUser} />
 								{" "}
 								{lastActionDate && `- ${Moment(lastActionDate)
 									.format(`${DATE_FORMAT} ${TIME_FORMAT}`)}`}
