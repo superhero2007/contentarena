@@ -427,8 +427,11 @@ class SellFormStep1 extends React.Component {
 
 	scroll = () => {
 		const { stepChange, stepChangeReset } = this.props;
+		const list = document.getElementsByClassName("main-container");
+
 		if (stepChange) {
 			window.scrollTo(0, 0);
+			if (list.length > 0) list[0].scrollTop = 0;
 			stepChangeReset();
 		}
 	};
@@ -543,7 +546,7 @@ class SellFormStep1 extends React.Component {
 					/>
 				)}
 				{!this.state.showSearch && (
-					<div className="buttons">
+					<div className="buttons no-margin">
 						<div className="buttons-container" style={{ justifyContent: "flex-start" }}>
 							<button className="light-blue-button" onClick={this.clear}>
 								{this.context.t("CL_STEP1_BUTTON_START_OVER")}

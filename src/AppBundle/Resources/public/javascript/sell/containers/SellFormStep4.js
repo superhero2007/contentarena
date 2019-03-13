@@ -73,8 +73,11 @@ class SellFormStep4 extends React.Component {
 	scroll = () => {
 		const { stepChange, stepChangeReset } = this.props;
 
+		const list = document.getElementsByClassName("main-container");
+
 		if (stepChange) {
 			window.scrollTo(0, 0);
+			if (list.length > 0) list[0].scrollTop = 0;
 			stepChangeReset();
 		}
 	};
