@@ -19,7 +19,7 @@ class SportCategory
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class SportCategory
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "commercial"})
+     * @Groups({"listing", "commercial", "home"})
      */
     private $name;
 
@@ -35,6 +35,7 @@ class SportCategory
      * @var string
      *
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
+     * @Groups({"home"})
      */
     private $externalId;
 
@@ -42,6 +43,7 @@ class SportCategory
      * @var string
      *
      * @ORM\Column(name="country_code", type="string", length=255, nullable=true)
+     * @Groups({"home"})
      */
     private $countryCode;
 

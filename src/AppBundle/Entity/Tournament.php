@@ -19,7 +19,7 @@ class Tournament
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "board"})
+     * @Groups({"listing", "board", "home"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Tournament
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $name;
 
@@ -35,18 +35,21 @@ class Tournament
      * @var string
      *
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
+     * @Groups({"home"})
      */
     private $externalId;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SportCategory" )
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"home"})
      */
     private $sportCategory;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sport" )
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"home"})
      */
     private $sport;
 

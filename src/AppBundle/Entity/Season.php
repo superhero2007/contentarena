@@ -19,7 +19,7 @@ class Season
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Season
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $name;
 
@@ -35,19 +35,19 @@ class Season
      * @var string
      *
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $externalId;
 
     /**
      * @ORM\Column(type="datetime", name="start_date", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime", name="end_date", nullable=true)
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $endDate;
 
@@ -55,20 +55,21 @@ class Season
      * @var string
      *
      * @ORM\Column(name="year", type="string", length=255, nullable=true)
-     * @Groups({"listing", "board", "commercial"})
+     * @Groups({"listing", "board", "commercial", "home"})
      */
     private $year;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament" )
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"home"})
      */
     private $tournament;
 
     /**
      * @var boolean
      * @ORM\Column(name="user_season", type="boolean")
-     *
+     * @Groups({"home"})
      */
     private $userSeason = false;
 
