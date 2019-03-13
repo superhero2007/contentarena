@@ -263,7 +263,7 @@ class Marketplace extends Component {
 			parsedFilter,
 			loadingListing,
 			listings,
-			totalItems
+			totalItems,
 		} = this.state;
 
 		if (!parsedFilter) return null;
