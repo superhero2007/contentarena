@@ -67,7 +67,7 @@ class CommercialActivity extends Component {
 		ContentArena.ContentApi.getAllDeals().done((listings) => {
 			listings.forEach(l => ContentArena.Utils.contentParserFromServer(l));
 
-			const openBids =  listings.filter(b => b.salesPackages.filter(sp => sp.bids.filter(b => b.status.name === "PENDING").length > 0).length > 0);
+			const openBids = listings.filter(b => b.salesPackages.filter(sp => sp.bids.filter(b => b.status.name === "PENDING").length > 0).length > 0);
 
 			if (openBids.length > 0) this.openBidsCallback();
 
