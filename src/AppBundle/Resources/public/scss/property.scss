@@ -576,6 +576,25 @@
         height: 100%;
         margin-right: 20px;
 
+        .Select {
+          width: 100%;
+
+          .Select-control {
+            border-radius: 0;
+            .Select-placeholder{
+              color: #666;
+              font-size: 13px;
+              font-family: $font-stack;
+            }
+            .Select-value {
+              margin-left: 0;
+              margin-top: 0;
+              color: #666;
+              font-size: 13px;
+            }
+          }
+        }
+
         .reset-listing-filter {
           width: 75px;
         }
@@ -1202,6 +1221,47 @@
   .property-tab{
     h5 {
       justify-content: left;
+    }
+    .manager-filter-container {
+      margin-top: 10px;
+      align-items: flex-start;
+      height: auto;
+      .listing-filter {
+        height: 100%;
+        margin-right: 20px;
+
+        .Select {
+          width: 100%;
+
+          .Select-control {
+            border-radius: 0;
+            .Select-placeholder{
+              color: #666;
+              font-size: 13px;
+              font-family: $font-stack;
+            }
+            .Select-value {
+              margin-left: 0;
+              margin-top: 0;
+              color: #666;
+              font-size: 13px;
+            }
+          }
+        }
+
+        .reset-listing-filter {
+          width: 75px;
+        }
+
+        &.territories-filter {
+          > * {
+            margin-left: 10px;
+          }
+          .ca-form-control {
+            margin: 0;
+          }
+        }
+      }
     }
   }
   .commercial-overview-tab {
