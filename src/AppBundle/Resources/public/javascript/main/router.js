@@ -51,12 +51,22 @@ class PrivateRoute extends React.Component {
 
 					if (title !== null) document.title = `Content Arena - ${title}`;
 
-					return (
-						<Component
-							{...props}
-							{...rest}
-							key={(updateByPath) ? props.location.pathname : props.location.search}
+					return props.match.path === "/" ? (
+						<Redirect
+							to={{
+								pathname: "/marketplace",
+								state: { from: props.location },
+							}}
 						/>
+					) : (
+						Component
+						&& (
+							<Component
+								{...props}
+								{...rest}
+								key={(updateByPath) ? props.location.pathname : props.location.search}
+							/>
+						)
 					);
 				}
 				}
