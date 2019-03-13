@@ -1,6 +1,11 @@
 @import "vars";
 
 .property{
+  .sales-packages-filters {
+    font-size: 13px;
+    color: #666;
+    margin: 20px 30px 0 0;
+  }
   .right-selector {
     display: flex;
     flex-wrap: wrap;
@@ -87,6 +92,66 @@
   .property-cancel-button{
     margin: 10px 0 0;
     text-decoration: none;
+  }
+
+  .region-filter{
+    .regions{
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-left: -5px;
+      margin-right: -5px;
+      &:after{
+        content: "";
+        flex: 1 1 0;
+      }
+      .region{
+        max-width: 150px;
+        line-height: 15px;
+        margin: 5px;
+        overflow: hidden;
+        &.excluding{
+          border: 1px solid #D0021B;
+        }
+        &:first-child{
+          margin-left: 5px !important;
+        }
+      }
+      .region-selected{
+        &.excluding{
+          background-color: #D0021B !important;
+        }
+      }
+    }
+    .region-filter-title{
+      color: #333333;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 25px 0 17px;
+      border-bottom: 1px solid #333;
+      padding: 0 0 12px;
+    }
+    .region-filter-subtitle{
+      color: #333333;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 17px 0;
+    }
+    .region-filter-selection-box {
+      border: 1px solid #CFCCCC;
+      height: 170px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .region-filter-selection-word {
+        height: 20px;
+        color: #666666;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 20px;
+        text-align: center;
+      }
+    }
   }
 
   .search-competition{

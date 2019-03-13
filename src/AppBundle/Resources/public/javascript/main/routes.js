@@ -50,6 +50,7 @@ export const ROUTE_PATHS = {
 	MANAGE_PROPERTIES: "/manageproperties",
 	CREATE_PROPERTY: "/createproperty",
 	CREATE_PROPERTY_STEP_1: "/createproperty/1",
+	CREATE_PROPERTY_STEP_2: "/createproperty/2",
 };
 
 

@@ -9,7 +9,7 @@ import { DefaultBox } from "../../common/components/Containers";
 import { ROUTE_PATHS } from "../../main/routes";
 import { selectTournament, setCustomSportName } from "../actions/propertyActions";
 
-class CmsWelcome extends React.Component {
+class CreatePropertyWelcome extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -81,7 +81,7 @@ class CmsWelcome extends React.Component {
 
 }
 
-CmsWelcome.contextTypes = {
+CreatePropertyWelcome.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
@@ -95,4 +95,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(CmsWelcome);
+)(CreatePropertyWelcome);

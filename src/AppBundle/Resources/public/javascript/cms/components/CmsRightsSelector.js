@@ -9,7 +9,7 @@ import CaTooltip from "../../main/components/CaTooltip";
 import cn from "classnames";
 
 
-class RightsSelector extends React.Component {
+class CmsRightsSelector extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -81,7 +81,7 @@ class RightsSelector extends React.Component {
 			<div className="right-selector">
 
 				{
-					RIGHTS.map(right => {
+					RIGHTS.map((right, i) => {
 						const { name, shortLabel, id } = right;
 						const idAttr = `checkbox-${shortLabel}`;
 						const { offers } = this.state;
@@ -92,7 +92,7 @@ class RightsSelector extends React.Component {
 						const inputData = defByLabel[1];
 						const checkboxIsDisabled = !this.isCheckBoxChecked(id);
 						return (
-							<div className="right-selector-item">
+							<div className="right-selector-item" key={`right-${i}`}>
 								<div className="right-name">
 									<input
 										type="checkbox"
@@ -161,7 +161,7 @@ class RightsSelector extends React.Component {
 	}
 }
 
-RightsSelector.contextTypes = {
+CmsRightsSelector.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
@@ -181,4 +181,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(RightsSelector);
+)(CmsRightsSelector);

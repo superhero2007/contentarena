@@ -19,14 +19,16 @@ import Loader from "../../common/components/Loader/Loader";
 import moment from "moment/moment";
 import { getMonths, getYears } from "../../common/utils/time";
 import { DATE_FORMAT } from "@constants";
-import RightsSelector from "../components/RightsSelector";
+import CmsRightsSelector from "../components/CmsRightsSelector";
+import CmsTerritorySelector from "../components/CmsTerritorySelector";
+import { ROUTE_PATHS } from "../../main/routes";
 
-class NewProperty extends React.Component {
+class CreatePropertyEvent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			loading: false,
-			seasonsData: [{}]
+			seasonsData: [{}],
 		};
 	}
 
@@ -341,10 +343,11 @@ class NewProperty extends React.Component {
 			loadingCategories,
 			loadingTournaments,
 			loadingSeasons,
-			seasonsData
+			seasonsData,
 		} = this.state;
 
 		const {
+			history,
 			property,
 			sportValue,
 			sportCategoryValue,
@@ -509,28 +512,28 @@ class NewProperty extends React.Component {
 					<h6>
 						{this.context.t("CMS_SELECT_RIGHTS_DESCRIPTION")}
 					</h6>
-
-					<p>
-						<RightsSelector />
-					</p>
+					<CmsRightsSelector />
 				</DefaultBox>
-
 				<VerticalButtonBox>
-					<button className="yellow-button">
+					<button
+						className="yellow-button"
+						onClick={()=>{
+							history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_2);
+						}}
+					>
 						{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
 					</button>
-					<button className="link-button property-cancel-button">
+					<a href={ROUTE_PATHS.CREATE_PROPERTY} className="link-button property-cancel-button">
 						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
-					</button>
+					</a>
 				</VerticalButtonBox>
-
 			</div>
 		);
 	}
 
 }
 
-NewProperty.contextTypes = {
+CreatePropertyEvent.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
@@ -567,4 +570,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(NewProperty);
+)(CreatePropertyEvent);

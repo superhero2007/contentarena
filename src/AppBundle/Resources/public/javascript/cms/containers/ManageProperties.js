@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import CmsWelcome from "./CmsWelcome";
 import RightsOverview from "./RightsOverview";
 import {
 	Redirect
