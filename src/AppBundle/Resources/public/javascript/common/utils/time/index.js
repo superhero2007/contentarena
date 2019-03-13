@@ -10,8 +10,6 @@ export const getYears = (start = null, end = null) => {
 	if (!start) start = currentYear - 5;
 	if (!end) end = currentYear + 5;
 
-	console.log(start, end);
-
 	for (let i = start; i < end; i++) {
 		years.push(i);
 	}

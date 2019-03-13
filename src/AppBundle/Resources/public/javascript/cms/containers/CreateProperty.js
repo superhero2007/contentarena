@@ -21,12 +21,12 @@ class CreateProperty extends React.Component {
 			loading,
 		} = this.state;
 
-		const { common } = this.props;
+		const { common, history } = this.props;
 		const { action, key } = this.props.match.params;
 
 		if (action !== undefined && action === "1") return <NewProperty/>;
 
-		return <CmsWelcome/>;
+		return <CmsWelcome history={history} />;
 	}
 
 }

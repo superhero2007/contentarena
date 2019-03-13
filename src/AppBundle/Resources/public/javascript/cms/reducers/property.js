@@ -12,6 +12,7 @@ export const propertyTypes = {
 	UPDATE_FROM_MULTIPLE: "UPDATE_FROM_MULTIPLE",
 	ADD_SEASON: "ADD_SEASON",
 	REMOVE_SEASON: "REMOVE_SEASON",
+	SELECT_PROPERTY_TOURNAMENT: "SELECT_PROPERTY_TOURNAMENT"
 };
 
 const DEFAULT_STATE = {
@@ -45,6 +46,15 @@ export const property = (state = DEFAULT_STATE, action) => {
 			newState = {};
 			newState.tournament = [...state.tournament];
 			newState.tournament[action.index]["name"] = action.tournamentName;
+			return Object.assign({}, state, newState);
+
+		case propertyTypes.SELECT_PROPERTY_TOURNAMENT:
+
+			newState = {};
+			newState.tournament = [action.tournament];
+			newState.sports = (action.tournament.sport) ? [action.tournament.sport] : [];
+			newState.sportCategory = [action.tournament.sportCategory];
+
 			return Object.assign({}, state, newState);
 		case propertyTypes.SET_CUSTOM_SEASON_NAME:
 			newState = {};

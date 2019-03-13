@@ -55,3 +55,8 @@ export const removeNewSeason = index => ({
 	index,
 	selectorType: "seasons",
 });
+
+export const selectTournament = tournament => ({
+	type: "SELECT_PROPERTY_TOURNAMENT",
+	tournament,
+});

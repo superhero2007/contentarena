@@ -9,3 +9,12 @@ export const DefaultBox = (props) => {
 		</div>
 	);
 };
+
+
+export const VerticalButtonBox = (props) => {
+	return (
+		<div className={cn("vertical-button-box", { mobile: isMobileOnly })}>
+			{props.children}
+		</div>
+	);
+};

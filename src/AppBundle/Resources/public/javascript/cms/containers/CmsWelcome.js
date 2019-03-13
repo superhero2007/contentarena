@@ -7,6 +7,7 @@ import Loader from "../../common/components/Loader";
 import SearchCompetition from "../../main/components/SearchCompetition";
 import { DefaultBox } from "../../common/components/Containers";
 import { ROUTE_PATHS } from "../../main/routes";
+import { selectTournament, setCustomSportName } from "../actions/propertyActions";
 
 class CmsWelcome extends React.Component {
 	constructor(props) {
@@ -20,13 +21,23 @@ class CmsWelcome extends React.Component {
 		const _this = this;
 	}
 
+	selectTournament = (tournament) => {
+		const { history, selectTournament, } = this.props;
+		history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1);
+		if (tournament) {
+			setTimeout(() => {
+				selectTournament(tournament);
+			}, 1000);
+		}
+	};
+
 	render() {
 		const {
 			loading,
 		} = this.state;
 
 		return (
-			<div className="default-container">
+			<div className="default-container property">
 				<div className="default-title-box">
 					<h1 className={cn({ mobile: isMobileOnly, tablet: isTablet })}>
 						{this.context.t("CMS_WELCOME_MAIN_TITLE")}
@@ -42,10 +53,14 @@ class CmsWelcome extends React.Component {
 						{this.context.t("CMS_WELCOME_SEARCH_TITLE")}
 					</h5>
 
-					<SearchCompetition/>
+					<SearchCompetition
+						hideDescription
+						hideEnterManually
+						select={this.selectTournament}
+					/>
 
-					<p>
-						{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}
+					<p className="text-center">
+						{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
 						<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
 					</p>
 				</DefaultBox>
@@ -73,7 +88,7 @@ CmsWelcome.contextTypes = {
 const mapStateToProps = (state, ownProps) => state;
 
 const mapDispatchToProps = dispatch => ({
-	//updateProfile: profile => dispatch(updateProfile(profile)),
+	selectTournament: tournament => dispatch(selectTournament(tournament)),
 });
 
 

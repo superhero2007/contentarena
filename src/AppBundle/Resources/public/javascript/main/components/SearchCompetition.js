@@ -1,6 +1,7 @@
 import React from "react";
 import ReactTable from "react-table";
 import { PropTypes } from "prop-types";
+import Loader from "../../common/components/Loader";
 
 class SearchCompetition extends React.Component {
 	constructor(props) {
@@ -94,12 +95,25 @@ class SearchCompetition extends React.Component {
 	};
 
 	render() {
+
+		const {
+			hideDescription,
+			hideEnterManually,
+		} = this.props;
+
+		const {
+			searching,
+		} = this.state;
+
 		return (
-			<div className="step-content-container">
-				<div className="step-item-description">
-					{this.context.t("CL_STEP1_SEARCH_TITLE")}
-				</div>
-				<div className="base-input" style={{ maxWidth: 935 }}>
+			<div className="step-content-container search-competition">
+				{
+					!hideDescription &&
+					<div className="step-item-description">
+						{this.context.t("CL_STEP1_SEARCH_TITLE")}
+					</div>
+				}
+				<div className="base-input search-competition-input">
 					<input
 						type="text"
 						onKeyPress={this.handleKeyPress}
@@ -110,18 +124,13 @@ class SearchCompetition extends React.Component {
 					<button
 						className="standard-button"
 						disabled={!this.state.valid || this.state.searching}
-						style={{ width: 355 }}
 						onClick={this.search}
 					>
-						Search
-
-
+						Search <Loader loading={searching} xSmall />
 					</button>
 				</div>
 
-				{this.state.searching && <div><i className="fa fa-cog fa-spin" /></div>}
-
-				<div style={{ display: "inline-flex", width: 935, minHeight: 61 }}>
+				<div className="search-competition-messages">
 					{this.state.searchDone && this.state.results.length === 0 && (
 						<div style={{ width: 645, alignSelf: "center" }}>
 							{this.context.t("CL_STEP1_SEARCH_NO_RESULTS", { n: this.state.input })}
@@ -129,19 +138,22 @@ class SearchCompetition extends React.Component {
 						</div>
 					)}
 
-					{this.state.searchDone && this.state.results.length > 0 && (
+					{this.state.searchDone && this.state.results.length > 0 && !hideEnterManually &&(
 						<div className="step-item-description" style={{ margin: "auto", marginRight: -210 }}>
 							{this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
 						</div>
 					)}
 
-					<button
-						className="standard-button standard-button-big"
-						onClick={this.props.close}
-						style={{ marginLeft: "auto", alignSelf: "center" }}
-					>
-						{this.context.t("CL_STEP1_ENTER_MANUALLY")}
-					</button>
+					{
+						!hideEnterManually &&
+						<button
+							className="standard-button standard-button-big"
+							onClick={this.props.close}
+							style={{ marginLeft: "auto", alignSelf: "center" }}
+						>
+							{this.context.t("CL_STEP1_ENTER_MANUALLY")}
+						</button>
+					}
 				</div>
 
 				{this.state.searchDone && this.state.results.length > 0 && (

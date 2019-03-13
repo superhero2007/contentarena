@@ -1,0 +1,15 @@
+@import "vars";
+
+.search-competition{
+  .search-competition-input{
+    max-width: 935px;
+    button{
+      width: 335px;
+    }
+  }
+  .search-competition-messages{
+    display: inline-flex;
+    width: 935px;
+    min-height: 61px;
+  }
+}

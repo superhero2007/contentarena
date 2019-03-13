@@ -90,6 +90,7 @@ class RightsSelector extends React.Component {
 						const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
 						const defByLabel = SuperRightDefinitions[id] || [];
 						const inputData = defByLabel[1];
+						const checkboxIsDisabled = !this.isCheckBoxChecked(id);
 						return (
 							<div className="right-selector-item">
 								<div className="right-name">
@@ -118,7 +119,7 @@ class RightsSelector extends React.Component {
 								</div>
 								<div className="right-exclusivity">
 									<input
-										disabled={!this.isCheckBoxChecked(id)}
+										disabled={checkboxIsDisabled}
 										type="radio"
 										checked={offerValue === offers.EXCLUSIVE}
 										onChange={() => {
@@ -128,13 +129,14 @@ class RightsSelector extends React.Component {
 										className="ca-radio"
 									/>
 									<label
+										className={cn({"selected": !checkboxIsDisabled && offerValue === offers.EXCLUSIVE})}
 										htmlFor={exclusiveIdAttr}
 									>
 										{this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
 									</label>
 									<input
 										type="radio"
-										disabled={!this.isCheckBoxChecked(id)}
+										disabled={checkboxIsDisabled}
 										checked={offerValue === offers.NON_EXCLUSIVE}
 										onChange={() => {
 											this.onExclusive(right, false);
@@ -144,6 +146,7 @@ class RightsSelector extends React.Component {
 									/>
 									<label
 										htmlFor={nonExclusiveIdAttr}
+										className={cn({"selected": !checkboxIsDisabled && offerValue === offers.NON_EXCLUSIVE})}
 									>
 										{this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
 									</label>

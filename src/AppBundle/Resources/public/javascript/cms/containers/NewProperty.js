@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import { DefaultBox } from "../../common/components/Containers";
+import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
 	openCategorySelector, openSeasonSelector, openSportSelector,
 	openTournamentSelector, updateFromMultiple
@@ -374,6 +374,9 @@ class NewProperty extends React.Component {
 					<h4>
 						{this.context.t("CMS_CREATE_PROPERTY_TITLE")}
 					</h4>
+					<h6>
+						{this.context.t("CMS_CREATE_PROPERTY_DESCRIPTION")}
+					</h6>
 					<form>
 						<ul className="form-items">
 							<li>
@@ -398,7 +401,6 @@ class NewProperty extends React.Component {
 										hasCustomSport &&
 										<i className="fa fa-minus-circle" onClick={() => {
 											removeCustomSport(0);
-											console.log(2)
 										}}/>
 									}
 								</div>
@@ -504,11 +506,23 @@ class NewProperty extends React.Component {
 					<h4>
 						{this.context.t("CMS_SELECT_RIGHTS_TITLE")}
 					</h4>
+					<h6>
+						{this.context.t("CMS_SELECT_RIGHTS_DESCRIPTION")}
+					</h6>
 
 					<p>
 						<RightsSelector />
 					</p>
 				</DefaultBox>
+
+				<VerticalButtonBox>
+					<button className="yellow-button">
+						{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+					</button>
+					<button className="link-button property-cancel-button">
+						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
+					</button>
+				</VerticalButtonBox>
 
 			</div>
 		);

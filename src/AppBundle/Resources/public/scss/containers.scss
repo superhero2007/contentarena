@@ -82,6 +82,13 @@
     min-height: 140px;
   }
 
+  .vertical-button-box{
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0px auto 20px;
+  }
+
   .default-box {
     max-width: 1000px;
     margin: 0 auto 30px;
@@ -446,6 +453,18 @@
     color: #03547C;
     font-weight: bold;
     margin: 0;
+    &.mobile{
+      text-align: center;
+    }
+  }
+
+  h6 {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 13px;
+    color: $property-grey;
+    font-weight: 400;
+    margin: 5px 0;
     &.mobile{
       text-align: center;
     }

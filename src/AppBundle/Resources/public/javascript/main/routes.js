@@ -202,6 +202,7 @@ export const routes = [
 		main: CreateProperty,
 		profile: "SELLER",
 		title: "Create Property",
+		updateByPath: true,
 	},
 	{
 		path: "/bids/:tab?",
