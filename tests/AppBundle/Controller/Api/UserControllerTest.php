@@ -57,7 +57,7 @@ class UserControllerTest extends WebTestCase
         $this->assertArrayHasKey('lastName', $user);
     }
 
-    public function testPostRegisterActionWithExistingUser()
+    public function testPostRegisterActionWithExistingButNotLoggedUser()
     {
         $client = static::createClient();
 
@@ -72,13 +72,15 @@ class UserControllerTest extends WebTestCase
 
         $response = $client->getResponse();
         $content = json_decode($response->getContent(), true);
-        $code = UserErrors::USER_ALREADY_EXISTS;
         $this->assertArrayHasKey('success', $content);
-        $this->assertEquals(false, $content["success"]);
-        $this->assertArrayHasKey('message', $content);
-        $this->assertArrayHasKey('code', $content);
-        $this->assertEquals(UserErrors::getErrorMessage($code),$content['message']);
-        $this->assertEquals($code, $content['code']);
+        $success = $content["success"];
+        $this->assertEquals(true, $success);
+        $this->assertArrayHasKey('user', $content);
+        $user = $content["user"];
+        $this->assertArrayHasKey('id', $user);
+        $this->assertArrayHasKey('email', $user);
+        $this->assertArrayHasKey('firstName', $user);
+        $this->assertArrayHasKey('lastName', $user);
 
     }
 
@@ -147,6 +149,31 @@ class UserControllerTest extends WebTestCase
         $this->assertArrayHasKey('email', $user);
         $this->assertArrayHasKey('firstName', $user);
         $this->assertArrayHasKey('lastName', $user);
+    }
+
+    public function testPostRegisterActionWithExistingAndLoggedUser()
+    {
+        $client = static::createClient();
+
+        $params = array(
+            "email" => self::$email,
+            "firstName" => "John",
+            "lastName" => "Doe",
+            "companyLegalName" => "Content Arena"
+        );
+
+        $client->request('POST', '/api/users/register', $params);
+
+        $response = $client->getResponse();
+        $content = json_decode($response->getContent(), true);
+        $code = UserErrors::USER_ALREADY_EXISTS;
+        $this->assertArrayHasKey('success', $content);
+        $this->assertEquals(false, $content["success"]);
+        $this->assertArrayHasKey('message', $content);
+        $this->assertArrayHasKey('code', $content);
+        $this->assertEquals(UserErrors::getErrorMessage($code),$content['message']);
+        $this->assertEquals($code, $content['code']);
+
     }
 
     public function testPostPasswordRecoverActionWithNonExistingUser()

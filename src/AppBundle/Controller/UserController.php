@@ -104,7 +104,7 @@ class UserController extends FOSRestController
             ->getRepository('AppBundle:User')
             ->findOneBy(['email' => $email]);
 
-        if ($user) {
+        if ($user && $user->getLastLogin() != null) {
             $errorCode = UserErrors::USER_ALREADY_EXISTS;
             $logger->info(UserErrors::getErrorMessage($errorCode), array( "email" => $email));
             return $this->getErrorResponse(UserErrors::class, $errorCode);
@@ -116,7 +116,7 @@ class UserController extends FOSRestController
         $tokenGenerator = $this->get('fos_user.util.token_generator');
         $emailService = $this->container->get("AppBundle\Service\EmailService");
         /** @var User $user */
-        $user = $userManager->createUser();
+        if (!$user) $user = $userManager->createUser();
         $user->setEnabled(true);
         $user->setEmail($email);
         $user->setUsername($email);

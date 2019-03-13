@@ -822,6 +822,12 @@
       font-size: 14px;
       font-style: italic;
     }
+    .sign-error-top {
+      @extend .sign-error;
+      text-align: center;
+      display: block;
+      margin-bottom: 30px;
+    }
 
     .forgot-password-wrapper {
       padding: 15px 0 35px 0;

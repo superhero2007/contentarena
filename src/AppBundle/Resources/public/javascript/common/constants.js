@@ -58,6 +58,15 @@ export const API_URLS = {
 
 export const SITE_URLS = {
 	HOME_URL: "https://www.contentarena.com",
+	LOGIN_URL: "https://www.contentarena.com/login",
+};
+
+export const SITE_EMAILS = {
+	SUPPORT: "support@contentarena.com",
+};
+
+export const SERVER_ERROR_CODES = {
+	USER_ALREADY_EXISTS: 1001,
 };
 
 export const REGIONS_ENUMS = {
