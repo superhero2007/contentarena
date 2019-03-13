@@ -221,6 +221,7 @@ class SalesPackageForm extends React.Component {
 							territories: [territory],
 							fee,
 							salesMethod,
+							excludedTerritories,
 							bundleMethod,
 							territoriesMethod,
 							installments,
