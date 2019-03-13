@@ -18,6 +18,7 @@ class CmsSeasonSelector extends React.Component {
 			showAll: false,
 			editSeason: null,
 			availableSeasons: [],
+			customSeasonsAdded: false,
 		};
 	}
 
@@ -81,7 +82,7 @@ class CmsSeasonSelector extends React.Component {
 
 		availableSeasons.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
 
-		this.setState({ availableSeasons, editSeason: null }, () => {
+		this.setState({ availableSeasons, editSeason: null, customSeasonsAdded: true }, () => {
 			this.addSeason(season);
 		});
 	};
@@ -127,7 +128,10 @@ class CmsSeasonSelector extends React.Component {
 	getFutureSeasons = () => {
 		const {
 			availableSeasons,
+			customSeasonsAdded,
 		} = this.state;
+
+		if (customSeasonsAdded) return availableSeasons;
 
 		return availableSeasons.filter((season) => {
 			const seasonStartYear = +getSeasonStartYear(season);
@@ -140,6 +144,7 @@ class CmsSeasonSelector extends React.Component {
 		const {
 			loadingSeasons,
 			availableSeasons,
+			customSeasonsAdded,
 			showCustomSeason,
 			showAll,
 			editSeason,
@@ -204,7 +209,7 @@ class CmsSeasonSelector extends React.Component {
 				</div>
 
 				<div className="season-buttons" style={{ marginBottom: 20 }}>
-					{!showAll && futureSeasons.length >= 1 && (
+					{!showAll && futureSeasons.length >= 1 && !customSeasonsAdded && (
 						<span
 							className="add-season"
 							onClick={() => {

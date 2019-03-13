@@ -18,6 +18,7 @@ class CmsCustomSeason extends React.Component {
 			endMonth: "",
 			endYear: "",
 			seasonExists: false,
+			selectValueSelected: false,
 		};
 	}
 
@@ -50,7 +51,7 @@ class CmsCustomSeason extends React.Component {
 		const endDate = moment(new Date(`${endYear}-${endMonth}-01`)).utc().format(SERVER_DATE_FORMAT);
 		const year = getCustomSeasonYear(startYear, endYear);
 		const fullYear = getCustomSeasonFullYear(startYear, endYear);
-		const tournamentName = tournament.name;
+		const tournamentName = (tournament) ? tournament[0].name : null;
 
 		if (!season && this.seasonAlreadyExists(year)) {
 			this.setState({ seasonExists: true });
@@ -73,6 +74,7 @@ class CmsCustomSeason extends React.Component {
 			endMonth: "",
 			endYear: "",
 			seasonExists: false,
+			selectValueSelected: false,
 		});
 
 		onConfirm(newSeason);
@@ -110,6 +112,7 @@ class CmsCustomSeason extends React.Component {
 			endMonth,
 			endYear,
 			seasonExists,
+			selectValueSelected,
 		} = this.state;
 
 		const months = getMonths();
@@ -153,7 +156,7 @@ class CmsCustomSeason extends React.Component {
 								<option value="" disabled>
 									Year
 								</option>
-								{getYears(null, null, 69, 17).map(year => (
+								{getYears(null, null, 59, 17).map(year => (
 									<option value={year} key={year}>
 										{year}
 									</option>

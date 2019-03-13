@@ -103,12 +103,15 @@ class CmsSearchResults extends React.Component {
 							className="ca-table"
 							columns={[{
 								Header: <Translate i18nKey="CL_STEP1_SEARCH_HEADER_COMPETITION" />,
+								className: "d-flex align-items-center",
 								accessor: "name", // String-based value accessors!
 							}, {
 								Header: <Translate i18nKey="CL_STEP1_SEARCH_HEADER_COUNTRY" />,
+								className: "d-flex align-items-center",
 								accessor: "sportCategory.name",
 							}, {
 								accessor: "sport.name", // Required because our accessor is not a string
+								className: "d-flex align-items-center",
 								Header: <Translate i18nKey="CL_STEP1_SEARCH_HEADER_SPORT" />,
 							}, {
 								Header: "", // Custom header components!
