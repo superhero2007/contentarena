@@ -227,14 +227,14 @@ class Content implements NotifiableInterface
     /**
      * @var object
      * @ORM\Column(name="attachments", type="object", nullable=true)
-     * @Groups({"listing", "home"})
+     * @Groups({"details", "home"})
      */
     private $attachments;
 
     /**
      * @var object
      * @ORM\Column(name="annex", type="object", nullable=true)
-     * @Groups({"listing", "home"})
+     * @Groups({"details", "home"})
      */
     private $annex;
 
@@ -301,7 +301,7 @@ class Content implements NotifiableInterface
     /**
      * @var boolean
      * @ORM\Column(name="apply_vat_in_jurisdiction", type="boolean")
-     * @Groups({"listing", "home"})
+     * @Groups({"details", "home"})
      *
      */
     private $applyVatInJurisdiction = false;

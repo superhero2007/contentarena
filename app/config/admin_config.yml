@@ -66,6 +66,7 @@ easy_admin:
                         - { property: 'phone' }
                         - { property: 'country' }
                         - { property: 'applicationCompany' }
+                        - { property: 'company' }
                         - { property: 'autoPublish' }
                 edit:
                     fields:
@@ -164,15 +165,15 @@ easy_admin:
                     sort: 'createdAt'
                     fields:
                         - { property: 'customId', sortable: false }
+                        - { property: 'content', label: 'Listing', sortable: false }
+                        - { property: 'amount', label: 'License fee' }
+                        - { property: 'totalFee' }
                         - { property: 'createdAt' }
                         - { property: 'status' }
                         - { property: 'salesPackage.name', label: 'Bundle'}
                         - { property: 'content.company', label: 'Seller Company' }
                         - { property: 'buyerCompany', label: 'Buyer Company' }
                         - { property: 'buyerUser', label: 'Buyer User' }
-                        - { property: 'amount', label: 'License fee' }
-                        - { property: 'totalFee' }
-                        - { property: 'content', label: 'Listing', sortable: false }
 
                 class: AppBundle\Entity\Bid
             Country:
