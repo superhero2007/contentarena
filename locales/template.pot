@@ -98,6 +98,36 @@ msgid "MARKETPLACE_BUTTON_CLEAR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "Company Information"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "Legal name"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "Registration number"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "City"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "ZIP code"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "Country"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
 msgid "CHECKOUT_CONGRATULATIONS"
 msgstr ""
@@ -315,11 +345,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ProgramDetails.js
 msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
@@ -1324,18 +1349,6 @@ msgstr ""
 msgid "Add date"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
-msgid "Year"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
-msgid "To"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
-msgid "Not applicable"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/main/components/Pagination.js
 msgid "PAGINATION_PREV"
 msgstr ""
@@ -2252,6 +2265,10 @@ msgid "SETTINGS_LABEL_COMPANY_ADDRESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ADDRESS_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_COMPANY_CITY"
 msgstr ""
 
@@ -2405,31 +2422,35 @@ msgid "Save"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Company Information"
+msgid "POPUP_LABEL_COMPANY_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Legal name"
+msgid "POPUP_LABEL_COMPANY_REGISTRATION_NUMBER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Registration number"
+msgid "POPUP_LABEL_COMPANY_VAT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "VAT ID number"
+msgid "POPUP_LABEL_COMPANY_ADDRESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "City"
+msgid "POPUP_LABEL_COMPANY_ADDRESS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "ZIP code"
+msgid "POPUP_LABEL_COMPANY_CITY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "Country"
+msgid "POPUP_LABEL_COMPANY_ZIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+msgid "POPUP_LABEL_COMPANY_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
