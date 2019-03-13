@@ -35,6 +35,8 @@ easy_admin:
         assets:
             js:
                 - 'bundles/app/admin/javascript/admin.js'
+            css:
+                - 'bundles/app/admin/css/admin.css'
     entities:
             User:
                 class: AppBundle\Entity\User
@@ -89,7 +91,7 @@ easy_admin:
                         - { property: 'phone' }
                         - { property: 'country' }
                         - { property: 'autoPublish' }
-                        - { property: 'notes', type_options: { required: false } }
+                        - { property: 'notes', type_options: { required: false, attr: { class: 'notes-text-area' } } }
                 edit:
                     fields:
                         - { property: 'email' }
@@ -108,7 +110,7 @@ easy_admin:
                         - { property: 'confirmationToken', label: 'Activation Code' }
                         #- { property: 'confirmationToken', template: ':easy_admin:activation.code.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'autoPublish' }
-                        - { property: 'notes', type_options: { required: false } }
+                        - { property: 'notes', type_options: { required: false, attr: { class: 'notes-text-area' } } }
                     actions:
                         - { name: 'sendActivationLink', css_class : 'btn btn-primary' }
                         - { name: 'createActivationLink', css_class : 'btn btn-primary' }
@@ -139,15 +141,20 @@ easy_admin:
                 list:
                     fields:
                         - { property: 'legalName' }
-                        - { property: 'country'}
+                        - { property: 'country', label: 'Company Country'}
                         - { property: 'category' }
                         - { property: 'region' }
                         - { property: 'federation', label: 'Fed/Club/League Sport' }
                         - { property: 'website'}
+                        - { property: 'createdAt'}
+                    actions:
+                        - { name: 'show' }
+                        - { name: 'edit' }
+                        - { name: 'delete' }
                 form:
                     fields:
                         - { property: 'legalName' }
-                        - { property: 'country', type_options: { required: true }}
+                        - { property: 'country', label: 'Company Country', type_options: { required: true }}
                         - { property: 'website', type_options: { required: true } }
                         - { property: 'category' }
                         - { property: 'region' }
@@ -162,6 +169,28 @@ easy_admin:
                         - { property: 'users' }
                         - { property: 'description' }
                         - { property: 'owner' }
+                        - { property: 'notes', type_options: { required: false, attr: { class: 'notes-text-area' } } }
+                show:
+                    fields:
+                        - { property: 'legalName' }
+                        - { property: 'country', label: 'Company Country' }
+                        - { property: 'website' }
+                        - { property: 'category' }
+                        - { property: 'region' }
+                        - { property: 'federation', label: 'Fed/Club/League Sport' }
+                        - { property: 'city' }
+                        - { property: 'address' }
+                        - { property: 'address2' }
+                        - { property: 'zip' }
+                        - { property: 'phone' }
+                        - { property: 'vat' }
+                        - { property: 'registrationNumber' }
+                        - { property: 'users' }
+                        - { property: 'description' }
+                        - { property: 'owner' }
+                        - { property: 'createdAt'}
+                        - { property: 'notes', type_options: { attr: { class: 'notes-text-area' } } }
+
                 controller: AppBundle\Controller\Admin\AdminCompanyController
             Content:
                 class: AppBundle\Entity\Content

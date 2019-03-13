@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Territory
@@ -26,6 +27,7 @@ class Territory
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"settings"})
      */
     private $name;
 

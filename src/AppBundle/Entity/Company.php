@@ -113,6 +113,7 @@ class Company
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyCategory", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"settings"})
      */
     private $category;
 
@@ -161,6 +162,7 @@ class Company
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"settings"})
      */
     private $region;
 
@@ -168,12 +170,25 @@ class Company
      * @var string
      *
      * @ORM\Column(name="federation", type="string", length=255, nullable=true)
+     * @Groups({"settings"})
      */
     private $federation;
+
+    /**
+     * @var string
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    protected $notes;
+
+    /**
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    protected $createdAt;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        if ($this->getCreatedAt() == null) $this->setCreatedAt(new \DateTime());
     }
 
 
@@ -665,6 +680,38 @@ class Company
     public function setRegion($region)
     {
         $this->region = $region;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param string $notes
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
 
