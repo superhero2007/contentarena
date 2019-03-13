@@ -25,6 +25,7 @@ import Pagination from "../../main/components/Pagination";
 import { contentParserFromServer, serialize } from "../../common/utils/listing";
 import localStorageEnums from "../../main/constants/localStorageEnums";
 import { fetchListings } from "../actions/marketplaceActions";
+import { initGA, TrackingEvent } from "../../common/components/Tracking";
 
 class Marketplace extends Component {
 	constructor(props) {
@@ -46,7 +47,7 @@ class Marketplace extends Component {
 	}
 
 	componentDidMount() {
-		const { clearUpdateFilter, match, location } = this.props;
+		const { clearUpdateFilter, match, common, } = this.props;
 
 		if (match && match.params && match.params.customId) {
 			this.selectListing(match.params.customId);
@@ -73,7 +74,8 @@ class Marketplace extends Component {
 				return;
 			}
 		}
-
+		initGA(common.gaTrackingId);
+		this.clearRegisteringUserObj();
 		this.filter();
 		clearUpdateFilter();
 	}
@@ -87,6 +89,16 @@ class Marketplace extends Component {
 			clearUpdateFilter();
 		}
 	}
+
+	clearRegisteringUserObj = () => {
+		let user = sessionStorage.getItem("registering_user");
+		if (!user) return;
+
+		sessionStorage.removeItem("registering_user");
+		user = JSON.parse(user);
+
+		if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Marketplace', user.fullName);
+	};
 
 	selectListing = (id) => {
 		const { history } = this.props;
