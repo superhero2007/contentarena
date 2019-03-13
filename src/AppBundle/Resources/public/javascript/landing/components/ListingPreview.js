@@ -62,7 +62,9 @@ class ListingPreview extends PureComponent {
 
 	getSeasons = () => {
 		const { seasons } = this.state.listing;
-		const filteredSeasons = seasons.filter(season => season.endDate || season.startDate); // filter invalid seasons
+		const filteredSeasons = seasons
+			.filter(season => season.endDate || season.startDate) // filter invalid seasons
+			.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
 		return (
 			<div className="seasons-wrapper">
 				{filteredSeasons.map((season) => {

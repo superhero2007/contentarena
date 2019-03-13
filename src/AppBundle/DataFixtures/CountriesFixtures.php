@@ -1468,12 +1468,6 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
     "region_code": 150
   },
   {
-    "name": "England",
-    "country_code": "ENG",
-    "region": "Europe",
-    "region_code": 150
-  },
-  {
     "name": "Antarctica",
     "country_code": "ATA",
     "region": "",

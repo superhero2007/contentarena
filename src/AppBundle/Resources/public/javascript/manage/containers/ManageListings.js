@@ -138,14 +138,7 @@ class ManageListings extends React.Component {
 				flex: 1,
 			}}
 			>
-				<div
-					style={{
-						width: "100%",
-						textAlign: "right",
-						paddingRight: 15,
-					}}
-					className="top-row"
-				>
+				<div className="top-row">
 					<RightsLegend />
 					<button className="ca-btn primary" onClick={this.showHelpModal}>
 						{this.context.t("MANAGE_LISTINGS_HELP")}
@@ -156,7 +149,9 @@ class ManageListings extends React.Component {
 					{/* DRAFT */}
 					<div className="column">
 						<div className="column-title">
-							<div>{this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}</div>
+							<div>
+								{this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}
+							</div>
 							{" "}
 							(
 
