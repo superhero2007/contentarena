@@ -5,12 +5,15 @@ easy_admin:
             - Content
             - label: 'User Information'
               children:
-                  - User
-                  - Company
-                  - Status
-                  - { entity: 'ArchivedUser', label: 'Archived' }
-                  - {label: 'Import', icon: 'file-new', route: 'importUsersPage'}
-                  - {label: 'Export', icon: 'file-new', route: 'exportUsersPage'}
+                - User
+                - Status
+                - { entity: 'ArchivedUser', label: 'Archived' }
+                - {label: 'Import', icon: 'file-new', route: 'importUsersPage'}
+                - {label: 'Export', icon: 'file-new', route: 'exportUsersPage'}
+            - label: 'Company Information'
+              children:
+                - Company
+                - {label: 'Import data', icon: 'file-new', route: 'importCompaniesPage'}
             - Deals
             - RightsPackage
             - label: 'Sports'
@@ -134,12 +137,21 @@ easy_admin:
             Company:
                 class: AppBundle\Entity\Company
                 list:
-                    fields: ['id', 'legalName', 'vat', 'registrationNumber', 'country', 'city', 'website']
+                    fields:
+                        - { property: 'legalName' }
+                        - { property: 'country'}
+                        - { property: 'category' }
+                        - { property: 'region' }
+                        - { property: 'federation', label: 'Fed/Club/League Sport' }
+                        - { property: 'website'}
                 form:
                     fields:
                         - { property: 'legalName' }
                         - { property: 'country', type_options: { required: true }}
                         - { property: 'website', type_options: { required: true } }
+                        - { property: 'category' }
+                        - { property: 'region' }
+                        - { property: 'federation', label: 'Fed/Club/League Sport' }
                         - { property: 'city' }
                         - { property: 'address' }
                         - { property: 'address2' }
@@ -150,7 +162,7 @@ easy_admin:
                         - { property: 'users' }
                         - { property: 'description' }
                         - { property: 'owner' }
-                controller: AppBundle\Controller\Admin\CompanyController
+                controller: AppBundle\Controller\Admin\AdminCompanyController
             Content:
                 class: AppBundle\Entity\Content
                 controller: AppBundle\Controller\Admin\AdminContentController

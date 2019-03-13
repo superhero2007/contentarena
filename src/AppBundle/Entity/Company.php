@@ -111,6 +111,12 @@ class Company
     private $owner;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyCategory", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $category;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="company", cascade={"persist","remove"})
      * @Groups({"settings"})
      */
@@ -151,6 +157,19 @@ class Company
      * @Groups({"details", "settings", "home"})
      */
     private $country;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $region;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="federation", type="string", length=255, nullable=true)
+     */
+    private $federation;
 
     public function __construct()
     {
@@ -600,6 +619,53 @@ class Company
         $this->address2 = $address2;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFederation()
+    {
+        return $this->federation;
+    }
+
+    /**
+     * @param string $federation
+     */
+    public function setFederation($federation)
+    {
+        $this->federation = $federation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param mixed $region
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+    }
 
 
 

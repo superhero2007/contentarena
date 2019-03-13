@@ -136,7 +136,6 @@ class RegionFixtures extends Fixture
             array("Austria", array("")),
             array("Romania", array("")),
             array("Portugal", array("")),
-            array("Slovenia", array("")),
             array("Slovakia", array("")),
             array("Finland", array("")),
             array("Sweden", array("")),
