@@ -80,6 +80,8 @@ module.exports = {
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
       "@constants": "<rootDir>/src/AppBundle/Resources/public/javascript/common/constants.js",
+	  "@translate": "<rootDir>/src/AppBundle/Resources/public/javascript/common/components/Translator/Translate.js",
+	  "@portal": "<rootDir>/src/AppBundle/Resources/public/javascript/common/components/Portal/Portal.js",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

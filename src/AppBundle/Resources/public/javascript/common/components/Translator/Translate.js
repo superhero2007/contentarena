@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import Portal from "@components/Portal/Portal";
+import Portal from "@portal";
 import axios from "axios";
 import { connect } from "react-redux";
 import Loader from "../Loader";
@@ -213,6 +213,7 @@ Translate.contextTypes = {
 Translate.propTypes = {
 	i18nKey: PropTypes.string.isRequired,
 };
+
 Translate.defaultProps = {};
 
 const mapStateToProps = state => ({

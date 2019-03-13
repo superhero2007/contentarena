@@ -7,6 +7,7 @@ import ExtraTerritories from "../../main/components/ExtraTerritories";
 import LicenseDownloader from "../../main/components/LicenseDownloader";
 import { getCurrencySymbol } from "../../main/actions/utils";
 import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
+import Translate from "@components/Translator/Translate";
 
 const SalesPackageTable = ({
 	salesPackages, currency, listingId, hideButtons, editSalesPackage, onRemove,
@@ -32,7 +33,7 @@ const SalesPackageTable = ({
 		}}
 		columns={[
 			{
-				Header: context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_TERRITORY_BUNDLE" />,
 				headerClassName: salesPackages.length > 15 ? "table-header-big scroll" : "table-header-big",
 				Cell: (props) => {
 					const salesPackage = props.original;
@@ -63,7 +64,7 @@ const SalesPackageTable = ({
 					);
 				},
 			}, {
-				Header: context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_SALES_METHOD" />,
 				headerClassName: "table-header-big",
 				width: 300,
 				Cell: (props) => {
@@ -71,11 +72,11 @@ const SalesPackageTable = ({
 					// if (salesPackage.sold) return null;
 
 					return salesPackage.salesMethod === "BIDDING"
-						? context.t("CL4_5_SALES_METHOD_BIDDING")
-						: context.t("CL4_5_SALES_METHOD_FIXED");
+						? <Translate i18nKey="CL4_5_SALES_METHOD_BIDDING" />
+						: <Translate i18nKey="CL4_5_SALES_METHOD_FIXED" />;
 				},
 			}, {
-				Header: context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />,
 				headerClassName: "table-header-big",
 				width: 400,
 				Cell: (props) => {
