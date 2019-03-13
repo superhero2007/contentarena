@@ -265,7 +265,10 @@ class CreatePropertyTerritories extends React.Component {
 					{propertySaved && (
 						<button
 							className="yellow-button"
-							onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${CMS_PROPERTY_TABS.RIGHTS}`)}
+							onClick={() => {
+								resetProperty();
+								history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${CMS_PROPERTY_TABS.RIGHTS}`)
+							}}
 						>
 							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 						</button>
@@ -274,7 +277,6 @@ class CreatePropertyTerritories extends React.Component {
 					{!propertySaved && !savingProperty && (
 						<button
 							onClick={() => {
-								resetProperty();
 								history.push(ROUTE_PATHS.CREATE_PROPERTY);
 							}}
 							className="link-button property-cancel-button"
