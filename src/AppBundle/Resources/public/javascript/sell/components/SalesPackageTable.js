@@ -36,11 +36,18 @@ const SalesPackageTable = ({
 				headerClassName: salesPackages.length > 15 ? "table-header-big scroll" : "table-header-big",
 				Cell: (props) => {
 					const salesPackage = props.original;
-					// if (salesPackage.sold) return null;
 					const extraTerritories = (salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) ? salesPackage.excludedTerritories : salesPackage.territories;
+
+					const isWorldwide = salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
+					const isWorldwideExcluded = salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+						&& salesPackage.territories.length > salesPackage.excludedTerritories.length;
+
+					const isSelectedTerritories = salesPackage.territoriesMethod === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES
+						&& salesPackage.territories.length > 1;
+
 					return (
 						<div className="d-flex align-items-center">
-							{extraTerritories && extraTerritories.length > 1 && (
+							{(isWorldwide || isWorldwideExcluded || isSelectedTerritories) && (
 								<img src={`${assetsBaseDir}app/images/package.svg`} style={{ marginRight: 5 }} />
 							)}
 							{salesPackage.name}
