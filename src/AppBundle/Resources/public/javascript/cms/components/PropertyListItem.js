@@ -13,7 +13,7 @@ class PropertyListItem extends React.Component {
 
 	render() {
 		const {
-			name, customId, listings = [], history, closedBids, openBids = 0
+			name, customId, listings = [], history, closedBids, openBids = 0,
 		} = this.props; // TODO: YU check listings property
 		return (
 			<section className="property-item-wrapper">

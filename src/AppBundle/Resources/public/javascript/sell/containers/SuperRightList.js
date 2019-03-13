@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import PropTypes from "prop-types";
-import { RightDefaults } from "../components/RightDefaults";
+import RightDefaults from "../components/RightDefaults";
 import { updateContentValue } from "../actions/contentActions";
 import { SuperRightDefinitions } from "../components/SuperRightDefinitions";
-import { RightDefaultsBySuperRight } from "../components/RightDefaultsBySuperRight";
+import RightDefaultsBySuperRight from "../components/RightDefaultsBySuperRight";
 
 class SuperRightList extends React.Component {
 	constructor(props) {

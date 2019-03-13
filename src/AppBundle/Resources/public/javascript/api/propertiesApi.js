@@ -1,5 +1,5 @@
 import request from "../common/request";
-import { API_ENDPOINTS } from "./endpoints";
+import API_ENDPOINTS from "./endpoints";
 
 const propertiesApi = {
 	fetchProperties: data => request.post(API_ENDPOINTS.PROPERTIES_ALL, data),

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import moment from "moment";
-import { TIME_FORMAT } from "@constants";
 import Loader from "../../common/components/Loader";
 import { getListingImage } from "../../common/utils/listing";
 

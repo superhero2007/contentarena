@@ -92,7 +92,7 @@ class SellFormStep1 extends React.Component {
 					lastSportId: sportId,
 				});
 			})
-			.always(()=>{
+			.always(() => {
 				this.setState({
 					loadingCategories: false,
 				});
@@ -138,7 +138,7 @@ class SellFormStep1 extends React.Component {
 					lastCategoryId: categoryId,
 				});
 			})
-			.always(()=>{
+			.always(() => {
 				this.setState({
 					loadingTournaments: false,
 					customSeasonsParsed: true,
@@ -225,10 +225,10 @@ class SellFormStep1 extends React.Component {
 			}
 		}
 
-		if (nextProps.customTournament &&
-			nextProps.customTournament !== "" &&
-			nextProps.seasons.length === 0 &&
-			seasonSelectors.length === 0) this.addSeason();
+		if (nextProps.customTournament
+			&& nextProps.customTournament !== ""
+			&& nextProps.seasons.length === 0
+			&& seasonSelectors.length === 0) this.addSeason();
 
 		if (tournaments.length === 0) {
 			this.setState({ seasons: [], seasonSelectors: [] });
@@ -672,10 +672,10 @@ class SellFormStep1 extends React.Component {
 
 						<ListingName
 							name={name}
-							onChange={e => {
-								this.setState({nameSet: true});
-								this.props.updateContentValue("name", e.target.value)}
-							}
+							onChange={(e) => {
+								this.setState({ nameSet: true });
+								this.props.updateContentValue("name", e.target.value);
+							}}
 						/>
 
 						<Description

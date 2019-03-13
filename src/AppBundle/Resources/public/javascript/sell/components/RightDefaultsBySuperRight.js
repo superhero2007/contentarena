@@ -1,4 +1,6 @@
-export const RightDefaultsBySuperRight = {
+import RightDefaults from "./RightDefaults";
+
+const RightDefaultsBySuperRight = {
 	LT: {
 		CONTENT_DELIVERY: "CONTENT_DELIVERY_LIVE",
 	},
@@ -19,3 +21,5 @@ export const RightDefaultsBySuperRight = {
 	},
 
 };
+
+export default RightDefaultsBySuperRight;

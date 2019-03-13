@@ -7,7 +7,7 @@ import moment from "moment";
 import store from "../../main/store";
 import { updateContentValue, goToStep } from "../actions/contentActions";
 import { enableValidation, disableValidation } from "../../main/actions/validationActions";
-import { companyIsValid } from "../actions/validationActions";
+import companyIsValid from "../actions/validationActions";
 import { editedProgramSelected, parseSeasons } from "../../main/actions/utils";
 
 const MIN_PROGRAM_DESC_LENGTH = 30;

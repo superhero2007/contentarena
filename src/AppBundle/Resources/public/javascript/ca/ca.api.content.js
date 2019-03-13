@@ -2,9 +2,6 @@
  * Created by JuanCruz on 4/1/2018.
  */
 
-const __apiStore = {
-	tournaments: {},
-};
 
 window.ContentArena = window.ContentArena || {};
 ContentArena.ContentApi = ContentArena.ContentApi || {};
@@ -12,7 +9,6 @@ ContentArena.ContentApi = ContentArena.ContentApi || {};
 ContentArena.ContentApi = {
 	saveContentAsDraft(content) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}content/draft/save`,
@@ -34,7 +30,6 @@ ContentArena.ContentApi = {
 	},
 	saveContentAsInactive(content) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listing/save`,
@@ -56,7 +51,6 @@ ContentArena.ContentApi = {
 	},
 	saveContentAsActive(content) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listing/publish`,
@@ -78,7 +72,6 @@ ContentArena.ContentApi = {
 	},
 	republishListing(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listing/republish`,
@@ -100,7 +93,6 @@ ContentArena.ContentApi = {
 	},
 	sendMessage(message) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/messages/send`,
@@ -122,7 +114,6 @@ ContentArena.ContentApi = {
 	},
 	getUserInfo() {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/user/info`,
@@ -143,7 +134,6 @@ ContentArena.ContentApi = {
 	},
 	getUserInfoByActivationCode(activationCode) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/user/code`,
@@ -165,7 +155,6 @@ ContentArena.ContentApi = {
 	},
 	getCompanyUsers() {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/company/users`,
@@ -186,7 +175,6 @@ ContentArena.ContentApi = {
 	},
 	updateCompany(company) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/company/update`,
@@ -208,7 +196,6 @@ ContentArena.ContentApi = {
 	},
 	updatePassword(data) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/user/password`,
@@ -230,7 +217,6 @@ ContentArena.ContentApi = {
 	},
 	updateUser(user) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/user/update`,
@@ -252,7 +238,6 @@ ContentArena.ContentApi = {
 	},
 	activateUser(user, password) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/user/activate`,
@@ -274,7 +259,6 @@ ContentArena.ContentApi = {
 	},
 	updateUserProfile(profile) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/user/profile`,
@@ -296,7 +280,6 @@ ContentArena.ContentApi = {
 	},
 	getThread(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/messages/thread`,
@@ -318,7 +301,6 @@ ContentArena.ContentApi = {
 	},
 	getThreads() {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/messages/threads`,
@@ -339,7 +321,6 @@ ContentArena.ContentApi = {
 	},
 	placeBid(bid) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/bid/place`,
@@ -361,7 +342,6 @@ ContentArena.ContentApi = {
 	},
 	placeBids(bid) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/bids/place`,
@@ -383,7 +363,6 @@ ContentArena.ContentApi = {
 	},
 	acceptBid(bid, signature, signatureName, signaturePosition) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		bid.signature = signature;
 		bid.signatureName = signatureName;
@@ -409,7 +388,6 @@ ContentArena.ContentApi = {
 	},
 	rejectBid(bid) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/bid/reject`,
@@ -431,7 +409,6 @@ ContentArena.ContentApi = {
 	},
 	removeBid(bid) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/bid/remove`,
@@ -454,7 +431,6 @@ ContentArena.ContentApi = {
 
 	saveTmpFile(files) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		const data = new FormData();
 		data.append("file", files[0]);
@@ -480,7 +456,6 @@ ContentArena.ContentApi = {
 	},
 	saveAttachmentFile(files) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		const data = new FormData();
 		data.append("file", files[0]);
@@ -531,7 +506,6 @@ ContentArena.ContentApi = {
 	},
 	getByCustomId(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}listing/details`,
@@ -631,7 +605,6 @@ ContentArena.ContentApi = {
 	},
 	removeListing(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listings/remove`,
@@ -654,7 +627,6 @@ ContentArena.ContentApi = {
 	},
 	duplicateListing(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listings/duplicate`,
@@ -677,7 +649,6 @@ ContentArena.ContentApi = {
 	},
 	deactivateListing(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listings/deactivate`,
@@ -700,7 +671,6 @@ ContentArena.ContentApi = {
 	},
 	archiveListing(customId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listings/archive`,
@@ -804,7 +774,6 @@ ContentArena.ContentApi = {
 	},
 	getWatchlistListings() {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/listings/watchlist`,

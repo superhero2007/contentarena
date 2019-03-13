@@ -112,12 +112,9 @@ InviteUsers.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({});
-
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(InviteUsers);

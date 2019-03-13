@@ -1,4 +1,4 @@
-export const RightItemsDefinitions = {
+const RightItemsDefinitions = {
 	BROADCASTING_YES: {
 		parent: "Transmission Obligation",
 		label: "Yes",
@@ -240,6 +240,6 @@ export const RightItemsDefinitions = {
 		label: "No dedicated content delivery",
 		disabledIf: ["LT", "PR"],
 	},
-
-
 };
+
+export default RightItemsDefinitions;

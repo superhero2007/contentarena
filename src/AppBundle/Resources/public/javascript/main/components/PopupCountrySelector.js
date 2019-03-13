@@ -2,7 +2,6 @@ import React from "react";
 import Modal from "react-modal";
 import { PropTypes } from "prop-types";
 import { customStyles } from "../styles/custom";
-import { cancelIcon, filterIcon } from "./Icons";
 import RegionCountrySelector from "./RegionCountrySelector";
 
 class PopupCountrySelector extends React.Component {
@@ -127,12 +126,6 @@ class PopupCountrySelector extends React.Component {
 
 
 	render() {
-		const {
-			showTerritories = true,
-		} = this.props;
-
-		const { territories, activeTerritory } = this.state;
-
 		return (
 			<div className="popup-country-selector">
 				{this.renderModal()}

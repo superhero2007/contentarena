@@ -130,7 +130,7 @@ class CreatePropertyEvent extends React.Component {
 					loadingCategories: false,
 				}, this.handleCompetitionFocus);
 			})
-			.fail(()=>{
+			.fail(() => {
 				this.setState({
 					loadingCategories: false,
 				});
@@ -169,7 +169,7 @@ class CreatePropertyEvent extends React.Component {
 					lastCategoryId: categoryId,
 				});
 			})
-			.fail(()=>{
+			.fail(() => {
 				this.setState({
 					loadingTournaments: false,
 				});

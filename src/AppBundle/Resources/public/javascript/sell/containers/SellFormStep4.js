@@ -42,7 +42,10 @@ class SellFormStep4 extends React.Component {
 
 	addSalesPackage = (salesPackages) => {
 		const { currency } = this.props;
-		salesPackages.forEach(sp => sp.currency = { code: currency });
+		salesPackages.forEach((sp) => {
+			sp.currency = { code: currency };
+			return sp;
+		});
 		this.props.addSalesPackages(salesPackages);
 	};
 

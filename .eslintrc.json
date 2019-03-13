@@ -41,11 +41,10 @@
         "no-use-before-define": "off",
         "no-prototype-builtins": "off",
         "no-undef": "off",
-        "no-return-await": "off",
         "no-useless-escape": "off", //No need to fix
         "no-plusplus": "off",
         "array-callback-return": "off",
-        "no-nested-ternary": "off",
+        "no-nested-ternary": "off", //No need to fix
         "prefer-destructuring": "off",
         "no-mixed-operators": "off",
         "class-methods-use-this": "off",
@@ -56,7 +55,6 @@
         "consistent-return": "off", //No need to fix
         "max-len": "off",
         "no-underscore-dangle": "off",
-        "import/prefer-default-export": "off",
         "import/no-named-default": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
         "react/destructuring-assignment": "off",

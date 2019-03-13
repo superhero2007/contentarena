@@ -34,7 +34,7 @@ $(() => {
 		};
 	}
 
-	$("#fos_user_resetting_form_plainPassword_first").keyup((e) => {
+	$("#fos_user_resetting_form_plainPassword_first").keyup(() => {
 		const result = checkValues();
 
 		$("#validation-messages").toggle(true);
@@ -60,12 +60,12 @@ $(() => {
 		$("#validation-match .fa-times-circle").toggle(!result.match);
 	});
 
-	$("#fos_user_resetting_form_plainPassword_second").keyup((e) => {
+	$("#fos_user_resetting_form_plainPassword_second").keyup(() => {
 		const result = checkValues();
 		$("#validation-match").toggleClass("valid-field", result.match);
 	});
 
-	$("form").not("#myform").submit((e) => {
+	$("form").not("#myform").submit(() => {
 		const result = checkValues();
 		return result.upper && result.match && result.special && result.digit && result.length;
 	});

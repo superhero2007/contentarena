@@ -3,8 +3,8 @@ import { PropTypes } from "prop-types";
 import { ROUTE_PATHS } from "@constants";
 import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
-import { yellowCheckIcon } from "../../main/components/Icons";
 import Moment from "moment/moment";
+import { yellowCheckIcon } from "../../main/components/Icons";
 import { DATE_FORMAT } from "../../common/constants";
 
 class PropertyListingsTable extends React.Component {
@@ -24,19 +24,20 @@ class PropertyListingsTable extends React.Component {
 		const { value, original } = props;
 		const { customId } = original;
 
-		return <a href={`/listing/${customId}`} title={value}>
-			{value}
-		</a>;
+		return (
+			<a href={`/listing/${customId}`} title={value}>
+				{value}
+			</a>
+		);
 	};
 
 	getRightCell = (props, shortLabel) => {
 		const { value } = props;
+		const rights = value.map(right => right.shortLabel);
 
-		let rights = value.map(right => right.shortLabel);
+		if (rights.indexOf(shortLabel) !== -1) return <img src={yellowCheckIcon} alt={shortLabel} />;
 
-		if (rights.indexOf(shortLabel) !== -1) return <img src={yellowCheckIcon} />;
-
-		return <span></span>;
+		return <span />;
 	};
 
 	getColumns = () => [{
@@ -48,7 +49,7 @@ class PropertyListingsTable extends React.Component {
 		width: 100,
 		Cell: props => (
 			<span>
-				{this.context.t("CMS_LISTING_TABLE_STATUS_"+props.original)}
+				{this.context.t(`CMS_LISTING_TABLE_STATUS_${props.original}`)}
 			</span>
 		),
 	}, {
@@ -63,7 +64,7 @@ class PropertyListingsTable extends React.Component {
 				{props.value}
 			</span>
 		),
-	},{
+	}, {
 		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_NAME"), ""),
 		id: props => `listing-name-${props.customId}-${props.index}`,
 		headerClassName: "table-header-big",
@@ -137,26 +138,31 @@ class PropertyListingsTable extends React.Component {
 		id: props => `ter-${props.original.customId}-${props.index}`,
 		headerClassName: "table-header-small",
 		className: "table-header-small",
-		Cell: props => {
-			const { original : { customId, lastActionDate, owner, lastAction }} = props;
+		Cell: (props) => {
+			const {
+				original: {
+					customId, lastActionDate, owner, lastAction,
+				},
+			} = props;
 			const formattedDate = Moment(lastActionDate).format(DATE_FORMAT);
 			return (
 				<div className="tooltip-container">
 					<span className="" data-tip data-for={customId}>
-						<i className="fa fa-question-circle-o"/>
+						<i className="fa fa-question-circle-o" />
 					</span>
 					<ReactTooltip id={customId} effect="solid" className="CaTooltip " delayHide={400}>
 						<div className="body">
 							{`${this.context.t("CMS_LISTING_TABLE_LAST_ACTION_DATE")}: ${formattedDate}`}
-							<br/>
+							<br />
 							{lastAction && `${this.context.t("CMS_LISTING_TABLE_LAST_ACTION")}: ${lastAction.name}`}
-							<br/>
+							<br />
 							{owner && `${this.context.t("CMS_LISTING_TABLE_OWNER")}: ${owner.firstName}`}
-							<br/>
+							<br />
 						</div>
 					</ReactTooltip>
 				</div>
-			)},
+			);
+		},
 	}];
 
 	render() {

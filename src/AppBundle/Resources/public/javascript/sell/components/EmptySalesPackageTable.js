@@ -14,17 +14,17 @@ class EmptySalesPackageTable extends Component {
 		{
 			Header: this.context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
 			headerClassName: "table-header-big",
-			Cell: props => <div />,
+			Cell: () => <div />,
 		}, {
 			Header: this.context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
 			headerClassName: "table-header-big",
 			width: 300,
-			Cell: props => <div />,
+			Cell: () => <div />,
 		}, {
 			Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
 			headerClassName: "table-header-big",
 			width: 400,
-			Cell: props => <div />,
+			Cell: () => <div />,
 		},
 	];
 

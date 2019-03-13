@@ -47,7 +47,7 @@ const ListingPreview = withRouter(({ history, match }) => (
 	/>
 ));
 
-export const routes = [
+const routes = [
 	{
 		path: "/",
 		exact: true,
@@ -223,3 +223,5 @@ export const routes = [
 		main: TestPage,
 	},
 ];
+
+export default routes;

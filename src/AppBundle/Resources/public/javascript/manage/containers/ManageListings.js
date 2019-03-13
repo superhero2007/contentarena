@@ -419,7 +419,7 @@ ManageListings.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
+const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
 	updateProfile: profile => dispatch(updateProfile(profile)),

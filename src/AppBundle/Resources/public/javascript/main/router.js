@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { setLanguage } from "redux-i18n";
-import { routes } from "./routes";
+import routes from "./routes";
 import { Sentry, sentryDsnUrl } from "./constants/sentry";
 import store from "./store";
 import { updateProfile, loadUserData } from "./actions/userActions";

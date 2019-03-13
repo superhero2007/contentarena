@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Moment from "moment/moment";
-import { test } from "../actions";
+import test from "../actions";
 import { StaticSchedules } from "../../sell/components/SellFormItems";
 import { PropTypes } from "prop-types";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";

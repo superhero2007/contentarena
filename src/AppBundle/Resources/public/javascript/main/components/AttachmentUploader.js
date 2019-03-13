@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
-import cn from "classnames";
-import Moment from "moment/moment";
-import { getFullName } from "../actions/utils";
-import { DATE_TIME_FORMAT } from "@constants";
-import { cancelIcon, Spinner } from "./Icons";
+import { cancelIcon } from "./Icons";
 import { humanFileSize } from "../../common/utils/listing";
 
 
@@ -104,7 +100,7 @@ class AttachmentUploader extends Component {
 	};
 
 	removeFile = (savedFileUri) => {
-		ContentArena.ContentApi.removeAttachmentFile(savedFileUri).then((response) => {
+		ContentArena.ContentApi.removeAttachmentFile(savedFileUri).then(() => {
 
 		});
 	};

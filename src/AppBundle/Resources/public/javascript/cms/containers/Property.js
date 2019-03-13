@@ -68,20 +68,24 @@ class Property extends React.Component {
 
 		if (this.isLoadingRegions()) {
 			return (
-				<DefaultBox>
-					<Loader loading />
-				</DefaultBox>
+				<div className="default-container no-title property">
+					<DefaultBox>
+						<Loader loading />
+					</DefaultBox>
+				</div>
 			);
 		}
 
 		if (error) {
 			return (
-				<DefaultBox>
-					{
-						error === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
-						&& this.context.t("CMS_PROPERTY_DOES_NOT_EXISTS")
-					}
-				</DefaultBox>
+				<div className="default-container no-title property">
+					<DefaultBox>
+						{
+							error === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
+							&& this.context.t("CMS_PROPERTY_DOES_NOT_EXISTS")
+						}
+					</DefaultBox>
+				</div>
 			);
 		}
 
@@ -145,7 +149,7 @@ Property.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
+const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
 	getTerritories: () => dispatch(fetchTerritories()),

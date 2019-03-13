@@ -1,4 +1,4 @@
-export const RightDefaults = {
+const RightDefaults = {
 	CUTS: "CUT_AVAILABLE_NO",
 	BROADCASTING: "BROADCASTING_NO",
 	SUBLICENSE: "SUBLICENSE_YES_APPROVAL",
@@ -31,3 +31,5 @@ export const RightDefaults = {
 		label: "All local languages",
 	}],
 };
+
+export default RightDefaults;

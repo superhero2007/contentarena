@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
-import { DATE_TIME_FORMAT } from "@constants";
 import Select from "react-select";
 
 class Pagination extends Component {

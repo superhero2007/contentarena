@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 import cn from "classnames";
 import { updateContentValue } from "../../sell/actions/contentActions";
-import { SuperRightDefinitions } from "../../sell/components/SuperRightDefinitions";
+import SuperRightDefinitions from "../../sell/components/SuperRightDefinitions";
 import { RIGHTS } from "../../common/constants";
 import { setRights } from "../actions/propertyActions";
 

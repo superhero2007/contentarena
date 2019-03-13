@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import TagsInput from "react-tagsinput";
-import Modal from "../Modal";
-import api from "../../../api";
-import Loader from "../Loader";
 
 class ConfirmationTooltip extends Component {
-
 	constructor(props) {
 		super(props);
 
@@ -15,8 +10,8 @@ class ConfirmationTooltip extends Component {
 		};
 	}
 
-	componentWillReceiveProps(props){
-		this.setState ({
+	componentWillReceiveProps(props) {
+		this.setState({
 			isOpen: props.isOpen,
 		});
 	}

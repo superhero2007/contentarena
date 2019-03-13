@@ -4,7 +4,7 @@ import Moment from "moment/moment";
 import Modal from "react-modal";
 import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
-import { test } from "../actions";
+import test from "../actions";
 import CommercialTerms from "./CommercialTerms";
 import TermSheet from "./TermSheet";
 import ProgramDetails from "./ProgramDetails";

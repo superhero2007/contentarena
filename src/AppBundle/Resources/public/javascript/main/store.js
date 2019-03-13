@@ -1,4 +1,3 @@
-import React from "react";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { i18nState } from "redux-i18n";
 import thunk from "redux-thunk";

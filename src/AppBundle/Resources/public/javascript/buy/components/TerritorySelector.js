@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { test } from "../actions";
+import test from "../actions";
 
 class TerritorySelector extends React.Component {
 	constructor(props) {

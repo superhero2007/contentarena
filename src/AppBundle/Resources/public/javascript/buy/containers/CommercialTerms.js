@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
-import { test } from "../actions";
+import test from "../actions";
 import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
 import { pdfIcon } from "../../main/components/Icons";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";

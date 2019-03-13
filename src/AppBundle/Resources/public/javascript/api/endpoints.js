@@ -1,5 +1,5 @@
 
-export const API_ENDPOINTS = {
+const API_ENDPOINTS = {
 	COMPANY_INVITE_USERS: "api/company/invite",
 	PROPERTIES_ALL: "api/properties/all",
 	PROPERTIES_DETAIL: "api/properties/detail",
@@ -7,3 +7,5 @@ export const API_ENDPOINTS = {
 	MARKETPLACE_LISTINGS: "api/marketplace/listings",
 	SHARE_LISTING: "api/share/listing",
 };
+
+export default API_ENDPOINTS;

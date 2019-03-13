@@ -1,6 +1,6 @@
 import { propertyTypes } from "../reducers/property";
 import { propertyDetailsTypes } from "../reducers/propertyDetails";
-import { RightDefaults } from "../../sell/components/RightDefaults";
+import RightDefaults from "../../sell/components/RightDefaults";
 import api from "../../api";
 
 export const setConfig = config => ({

@@ -26,7 +26,7 @@ class LanguageSelectorExtended extends React.Component {
 				value={{ value, label: value }}
 				placeholder={placeholder}
 				multi={multi}
-				options={Object.values(languages).map((i, k) => ({ value: i.name, label: i.name }))}
+				options={Object.values(languages).map(i => ({ value: i.name, label: i.name }))}
 			/>
 		);
 	}

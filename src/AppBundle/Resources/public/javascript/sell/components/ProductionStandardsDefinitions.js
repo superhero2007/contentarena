@@ -1,4 +1,4 @@
-export const ProductionStandardsDefinitions = [
+const ProductionStandardsDefinitions = [
 	{
 		name: "Content Delivery",
 		key: "CONTENT_DELIVERY",
@@ -94,3 +94,5 @@ export const ProductionStandardsDefinitions = [
 		checkDelivery: true,
 	},
 ];
+
+export default ProductionStandardsDefinitions;

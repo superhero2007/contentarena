@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import ContentListingPendingBid from "../../main/components/ContentListingPendingBid";
 import { goTo } from "../../main/actions/utils";
 import ContentListing from "../../main/components/ContentListing";
 import RightsLegend from "../../main/components/RightsLegend";
@@ -49,7 +48,7 @@ class PendingDeals extends React.Component {
 	};
 
 	deleteBid = (id) => {
-		ContentArena.ContentApi.removeBid({ id }).done((r) => {
+		ContentArena.ContentApi.removeBid({ id }).done(() => {
 			this.update();
 		});
 	};
@@ -156,12 +155,9 @@ PendingDeals.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({});
-
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(PendingDeals);

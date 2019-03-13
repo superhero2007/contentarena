@@ -208,7 +208,7 @@ class Right extends React.Component {
 
 								{
 									this.getProgramsName()
-										.map(program => (
+										.map(() => (
 											<div className="column right-item-selection" />
 										))
 								}

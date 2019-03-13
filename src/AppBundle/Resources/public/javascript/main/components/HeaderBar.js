@@ -22,7 +22,7 @@ const CustomLink = ({ match, children, route }) => (
 	</div>
 );
 
-const HeaderBarSeller = ({ match, profile }, context) => (
+const HeaderBarSeller = ({ match }, context) => (
 	<React.Fragment>
 		<HeaderBarTab
 			match={match.url === ROUTE_PATHS.MANAGE_LISTINGS}
@@ -54,7 +54,7 @@ HeaderBarSeller.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const HeaderBarSellerCms = ({ match, common }, context) => (
+const HeaderBarSellerCms = ({ match }, context) => (
 	<React.Fragment>
 		<HeaderBarTab
 			match={match.url === ROUTE_PATHS.PROPERTIES}
@@ -133,10 +133,11 @@ class HeaderBar extends React.Component {
 			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount, isDownArrowShown,
 		} = this.state;
 		const logoUrl = this.getLogoUrl(tab);
+		const { testStageMode, cmsEnabled } = common;
 
 		return (
 			<React.Fragment>
-				{common.testStageMode && (
+				{testStageMode && (
 					<div className="manager-header-test-mode">
 						{this.context.t("HEADER_TEST_STAGE_MODE")}
 					</div>
@@ -183,9 +184,9 @@ class HeaderBar extends React.Component {
 							</HeaderBarTab>
 						)}
 
-						{profile === "SELLER" && !common.cmsEnabled && <HeaderBarSeller {...this.props} />}
+						{profile === "SELLER" && !cmsEnabled && <HeaderBarSeller {...this.props} />}
 
-						{profile === "SELLER" && common.cmsEnabled && <HeaderBarSellerCms {...this.props} />}
+						{profile === "SELLER" && cmsEnabled && <HeaderBarSellerCms {...this.props} />}
 
 						<div className="spacer" />
 
@@ -204,7 +205,7 @@ class HeaderBar extends React.Component {
 							<HeaderBarTab
 								className="tab baseline switch-mode"
 								linkClass="ca-btn primary"
-								route={ROUTE_PATHS.PROPERTIES}
+								route={cmsEnabled ? ROUTE_PATHS.PROPERTIES : ROUTE_PATHS.MANAGE_LISTINGS}
 							>
 								{this.context.t("HEADER_LINK_SELLING_MODE")}
 							</HeaderBarTab>
@@ -320,9 +321,7 @@ const mapStateToProps = state => ({
 	common: state.common,
 });
 
-const mapDispatchToProps = dispatch => ({});
-
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(HeaderBar);

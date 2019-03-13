@@ -1,4 +1,4 @@
-export const RightDefinitions = [
+const RightDefinitions = [
 	{
 		name: "Right to sublicense",
 		key: "SUBLICENSE",
@@ -105,3 +105,5 @@ export const RightDefinitions = [
 		textAreaRequired: "RESERVED_RIGHTS_YES",
 	},
 ];
+
+export default RightDefinitions;

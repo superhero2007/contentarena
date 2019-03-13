@@ -21,14 +21,10 @@ CreateProperty.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({
-	// updateProfile: profile => dispatch(updateProfile(profile)),
-});
+const mapStateToProps = state => state;
 
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(CreateProperty);

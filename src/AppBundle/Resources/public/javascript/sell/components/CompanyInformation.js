@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import { PropTypes } from "prop-types";
 import { customStyles } from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
-import { companyIsValid } from "../actions/validationActions";
+import companyIsValid from "../actions/validationActions";
 
 const labelStyle = {
 	height: "35px", fontSize: "14px", width: "100%", padding: "0 20px",

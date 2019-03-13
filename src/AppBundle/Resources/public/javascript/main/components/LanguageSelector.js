@@ -39,7 +39,7 @@ class LanguageSelector extends React.Component {
 
 	render() {
 		const { value, multi = true, placeholder } = this.props;
-		const realLanguages = Object.values(languages).map((i, k) => ({ value: i.name, label: i.name }));
+		const realLanguages = Object.values(languages).map(i => ({ value: i.name, label: i.name }));
 		const allLanguages = [allValue, ...realLanguages];
 
 		return (

@@ -17,7 +17,10 @@ ContentArena.Utils = {
 		if (content.extraData) {
 			Object.entries(content.extraData)
 				.forEach(
-					([key, value]) => content[key] = value,
+					([key, value]) => {
+						content[key] = value;
+						return content;
+					},
 				);
 		}
 
@@ -126,7 +129,7 @@ ContentArena.Utils = {
 
 		content.step = Number(content.step);
 		content.customSeasons = content.seasons.filter(s => s.externalId && s.externalId.startsWith("ca:"))
-			.map((s, i) => {
+			.map((s) => {
 				let years;
 				if (s.year) {
 					years = s.year.split("/");

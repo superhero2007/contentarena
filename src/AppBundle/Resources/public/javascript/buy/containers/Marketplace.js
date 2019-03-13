@@ -5,7 +5,7 @@ import cn from "classnames";
 import queryString from "query-string";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { test } from "../actions";
+import test from "../actions";
 import EventFilter from "../components/EventFilter";
 import RightsFilter from "../components/RightsFilter";
 import SortByListing from "../components/ListingSorting";

@@ -1,5 +1,4 @@
 import React from "react";
-import Select from "react-select";
 import cn from "classnames";
 import CountrySelector from "./CountrySelector";
 
@@ -242,7 +241,6 @@ class NewRegionCountrySelector extends React.Component {
 		const {
 			territories,
 			regions,
-			worldwideSelected,
 			territoryItems,
 			regionItems,
 			selection,

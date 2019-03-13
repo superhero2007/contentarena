@@ -6,7 +6,7 @@ import isFinite from "lodash/isFinite";
 import isEqual from "lodash/isEqual";
 import cn from "classnames";
 import { customStyles } from "../../main/styles/custom";
-import { RightItemsDefinitions } from "./RightItemsDefinitions";
+import RightItemsDefinitions from "./RightItemsDefinitions";
 import { LanguageSelector } from "../../main/components/LanguageSelector";
 import { SuperRightProductionDetailsLabels } from "./SuperRightDefinitions";
 import { PropTypes } from "prop-types";
@@ -782,7 +782,6 @@ class PopupRight extends React.Component {
 			rightsPackage,
 			programName,
 			languages,
-			checkContentDelivery,
 			disabled,
 			contentDeliveryConfigured,
 			validation,

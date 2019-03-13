@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { goTo } from "../../main/actions/utils";
 
 class PreferredUserProfile extends React.Component {
 	constructor(props) {
@@ -26,7 +25,7 @@ class PreferredUserProfile extends React.Component {
 	};
 
 	render() {
-		const { status, centered, style = {} } = this.props;
+		const { centered, style = {} } = this.props;
 		const { profile } = this.state;
 
 		return (

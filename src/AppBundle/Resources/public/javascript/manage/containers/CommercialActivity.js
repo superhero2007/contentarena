@@ -55,7 +55,7 @@ class CommercialActivity extends Component {
 	}
 
 	deleteBid = (id) => {
-		ContentArena.ContentApi.removeBid({ id }).done((r) => {
+		ContentArena.ContentApi.removeBid({ id }).done(() => {
 			this.update();
 		});
 	};
@@ -230,12 +230,9 @@ CommercialActivity.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({});
-
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(CommercialActivity);

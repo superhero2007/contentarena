@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
-import { ProgramTypesDefinitions } from "../../main/components/ProgramTypesDefinitions";
+import ProgramTypesDefinitions from "../../main/components/ProgramTypesDefinitions";
 
 class ProgramDetails extends Component {
 	constructor(props) {

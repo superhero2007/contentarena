@@ -185,14 +185,8 @@ class ContentListingEventDetails extends React.Component {
 		} = this.props;
 
 		const schedules = this.getSchedules();
-		const { rounds } = schedules;
-		const { matches } = schedules;
-		const seasonTitle = (seasons.length > 1) ? "Seasons: " : "Season: ";
 		const episodesText = (PROGRAM_EPISODES > 1) ? "episodes" : "episode";
-		const seasonName = seasonTitle + seasons.map(season => (season.year)).join(", ");
 		const seasonsArray = this.getSeasonsYears(seasons);
-		const roundsTitle = (rounds.length > 1) ? "Rounds: " : "Round: ";
-		const roundsName = roundsTitle + rounds.join(", ");
 		const seasonsWithYear = seasons.filter(season => (
 			season.year !== undefined
 			|| (season.customEndDate !== undefined && season.customStartDate !== undefined)

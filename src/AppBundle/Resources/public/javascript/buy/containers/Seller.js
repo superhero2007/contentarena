@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import { test } from "../actions";
+import test from "../actions";
 import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 
 class Seller extends React.Component {

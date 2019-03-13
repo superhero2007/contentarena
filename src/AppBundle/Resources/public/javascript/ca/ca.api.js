@@ -262,7 +262,6 @@ ContentArena.Api = {
 	},
 	getActiveSports() {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 		$.ajax({
 			url: `${envhosturl}api/search/sports/active`,
 			type: "POST",
@@ -284,7 +283,6 @@ ContentArena.Api = {
 	},
 	getAllSports(flags) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 		$.ajax({
 			url: `${envhosturl}api/search/sports/all`,
 			type: "POST",
@@ -309,7 +307,6 @@ ContentArena.Api = {
 	},
 	getSportsGroups() {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 		$.ajax({
 			url: `${envhosturl}api/search/sports/groups`,
 			type: "POST",
@@ -400,7 +397,6 @@ ContentArena.Api = {
 	},
 	getRights(rightsPackage, group) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 		$.ajax({
 			url: `${envhosturl}api/search/rights`,
 			type: "POST",
@@ -427,7 +423,6 @@ ContentArena.Api = {
 	},
 	getRightsPackage(rightsPackage, group) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 		$.ajax({
 			url: `${envhosturl}api/search/rights-package`,
 			type: "POST",
@@ -477,7 +472,6 @@ ContentArena.Api = {
 	},
 	getContentDetails(id) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}content/details/`,
@@ -498,7 +492,6 @@ ContentArena.Api = {
 	},
 	getPendingListings(id) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}content/pending-listings/`,
@@ -597,7 +590,6 @@ ContentArena.Api = {
 	},
 	getSeasons(tournamentId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${externalApiUrl}v1/feed/seasons`,
@@ -648,7 +640,6 @@ ContentArena.Api = {
 	},
 	getSchedule(seasonId) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${externalApiUrl}v1/feed/schedules`,
@@ -722,7 +713,6 @@ ContentArena.Api = {
 	},
 	watchlist(id) {
 		const deferred = jQuery.Deferred();
-		const _this = this;
 
 		$.ajax({
 			url: `${envhosturl}api/watchlist/add`,

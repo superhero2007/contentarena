@@ -14,7 +14,7 @@ import {
 	getCurrencySymbol, getCustomLicenseUrl,
 } from "../../main/actions/utils";
 import { customStyles } from "../../main/styles/custom";
-import { companyIsValid } from "../../sell/actions/validationActions";
+import companyIsValid from "../../sell/actions/validationActions";
 import CountrySelector from "../../main/components/CountrySelector";
 import { DATE_FORMAT } from "@constants";
 import GeneralTerms from "../../main/components/GeneralTerms";
@@ -51,7 +51,6 @@ class Checkout extends React.Component {
 				return b;
 			});
 
-		this.baseDir = `${assetsBaseDir}../`;
 		this.single = "SINGLE";
 		this.all = "ALL";
 		this.state = {

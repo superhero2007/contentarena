@@ -80,7 +80,7 @@ class DefinitionItem extends React.Component {
 	};
 
 	render() {
-		const { editable, onRemove } = this.props;
+		const { editable } = this.props;
 		const {
 			editing, content, name, showRemoveConfirm, edited, updating, custom,
 		} = this.state;

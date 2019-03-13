@@ -76,6 +76,6 @@ export const IconYellowCircle = ({ icon, onClick }) => (
 	<div onClick={onClick} className="icon-circle-background"><img src={icon} alt="" /></div>
 );
 
-export const Spinner = ({ test }) => (
+export const Spinner = () => (
 	<div><i className="fa fa-cog fa-spin" /></div>
 );
