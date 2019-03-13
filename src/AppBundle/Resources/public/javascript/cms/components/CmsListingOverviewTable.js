@@ -128,7 +128,7 @@ class CmsListingOverviewTable extends React.Component {
 						status.name === LISTING_STATUS.DRAFT
 						&& (
 							<PropertyActionListing
-								className="listing"
+								className="listing pointer"
 								style={{
 									position: "absolute",
 									zIndex: 100 - props.index,
@@ -154,7 +154,7 @@ class CmsListingOverviewTable extends React.Component {
 						(status.name === LISTING_STATUS.INACTIVE || status.name === LISTING_STATUS.AUTO_INACTIVE || status.name === LISTING_STATUS.REJECTED)
 						&& (
 							<PropertyActionListing
-								className="listing"
+								className="listing pointer"
 								style={{
 									position: "absolute",
 									zIndex: 100 - props.index,
@@ -186,7 +186,7 @@ class CmsListingOverviewTable extends React.Component {
 						(status.name === LISTING_STATUS.PENDING || status.name === LISTING_STATUS.APPROVED || status.name === LISTING_STATUS.EDITED)
 						&& (
 							<PropertyActionListing
-								className="listing"
+								className="listing pointer"
 								style={{
 									position: "absolute",
 									zIndex: 100 - props.index,
@@ -219,7 +219,7 @@ class CmsListingOverviewTable extends React.Component {
 						(status.name === LISTING_STATUS.SOLD_OUT || status.name === LISTING_STATUS.EXPIRED || status.name === LISTING_STATUS.SOLD_COPY)
 						&& (
 							<PropertyActionListing
-								className="listing"
+								className="listing pointer"
 								style={{
 									position: "absolute",
 									zIndex: 100 - props.index,
