@@ -57,10 +57,11 @@ class Translate extends Component {
 	componentDidMount() {
 		const {
 			i18nKey,
+			params,
 		} = this.props;
 
 		this.setState({
-			value: this.context.t(i18nKey),
+			value: this.context.t(i18nKey, params),
 		});
 	}
 
@@ -127,6 +128,7 @@ class Translate extends Component {
 		const {
 			i18nKey,
 			children,
+			style,
 		} = this.props;
 
 		if (!isEditEnabled) {
@@ -142,7 +144,7 @@ class Translate extends Component {
 		return (
 			<>
 				{!children && (
-					<span style={editTranslationStyle} data-tip data-for={`${rnd}-${i18nKey}`}>
+					<span style={{ ...editTranslationStyle, ...style }} data-tip data-for={`${rnd}-${i18nKey}`}>
 						{value}
 					</span>
 				)}

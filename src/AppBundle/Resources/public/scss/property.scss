@@ -2,17 +2,23 @@
 @import "mixins";
 
 .property{
+  .property-welcome-title{
+    margin: 5px 20px 0;
+  }
   .property-welcome-subtitle{
-	text-align: center;
 	color: $font-color-1;
 	font-size: 16px;
 	font-weight: 100;
-	margin: 15px 0 0;
+	margin: 15px 20px 0;
   }
   .sales-packages-filters {
     font-size: 13px;
     color: #666;
     margin: 20px 30px 0 0;
+  }
+
+  .manual-competition{
+    padding: 0 20px;
   }
 
   .season-selector{
@@ -33,7 +39,6 @@
   .season-buttons{
     display: flex;
     align-items: center;
-    padding-top: 15px;
   }
 
   .remove-season{
@@ -63,19 +68,35 @@
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    max-width: 600px;
     margin: 15px 0 0;
+    .add-season{
+      display: flex;
+      align-items: center;
+      padding-bottom: 21px;
+      margin-left: 10px;
+    }
     .custom-season-form{
       display: flex;
       flex-direction: column;
       width: 100%;
       margin-right: 20px;
+      max-width: 300px;
       .date-select {
         display: flex;
         .ca-form-control{
           margin-right: 5px;
         }
       }
+    }
+    .custom-season-result{
+      display: flex;
+      align-items: center;
+      width: 130px;
+      height: 42px;
+      justify-content: center;
+      justify-items: center;
+      margin: 12px 20px 12px 0;
+      background-color: darkgray;
     }
   }
   .right-selector {
@@ -84,7 +105,6 @@
     .right-selector-item {
       flex: 1 0 45%;
       display: flex;
-      justify-content: space-between;
       border-top: 1px solid lightgray;
       max-width: 50%;
       padding: 10px 0;
@@ -101,9 +121,10 @@
         }
       }
       .right-name{
-        width: 55%;
+        width: auto;
         display: flex;
         align-items: center;
+        margin-right: 30px;
         .tooltip-container{
           display: inline;
           margin: 0 5px;
@@ -342,7 +363,7 @@
       align-items: center;
       margin: 20px;
       input{
-        margin: 0 20px 0 0;
+        margin: 0;
         height: 60px;
         font-size: 16px;
 
@@ -359,25 +380,22 @@
       }
     }
     .search-competition-messages{
+      padding: 10px 20px;
+      width: auto;
       display: flex;
-      flex-direction: column;
-      padding: 20px 250px;
+      justify-content: flex-start;
       align-items: center;
-      position: relative;
+      min-height: 0;
       a{
         border-radius: 5px;
         width: 240px;
-        font-size: 13px;
-        height: 40px;
-        margin: 20px 0 0;
-        padding: 10px 0;
+        font-size: 15px;
+        margin-left: 5px;
       }
       i{
         font-size: 20px;
-        position: absolute;
-        left: 210px;
-        top: 33px;
         color: red;
+        margin-right: 10px;
       }
     }
     .ReactTable {

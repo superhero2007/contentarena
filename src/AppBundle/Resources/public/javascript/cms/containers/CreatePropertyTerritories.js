@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { scrollMainContainer } from "@utils/listing";
+import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
 	updateFromMultiple,
 } from "../../sell/actions/stepOneActions";
@@ -19,7 +19,6 @@ import { ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS } from "@cons
 import CmsAvailableRightsSelector from "../components/CmsAvailableRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import api from "../../api";
-
 
 class CreatePropertyTerritories extends React.Component {
 	constructor(props) {
@@ -240,7 +239,15 @@ class CreatePropertyTerritories extends React.Component {
 				)
 				}
 
-				<VerticalButtonBox>
+				<HorizontalButtonBox>
+					{!propertySaved && !savingProperty && (
+						<button
+							onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1)}
+							className="yellow-button"
+						>
+							<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
+						</button>
+					)}
 					{!this.rightsComplete() && (
 						<button
 							className="yellow-button"
@@ -273,26 +280,7 @@ class CreatePropertyTerritories extends React.Component {
 							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 						</button>
 					)}
-
-					{!propertySaved && !savingProperty && (
-						<button
-							onClick={() => {
-								history.push(ROUTE_PATHS.CREATE_PROPERTY);
-							}}
-							className="link-button property-cancel-button"
-						>
-							<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
-						</button>
-					)}
-					{!propertySaved && !savingProperty && (
-						<button
-							onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1)}
-							className="link-button property-cancel-button no-margin"
-						>
-							<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
-						</button>
-					)}
-				</VerticalButtonBox>
+				</HorizontalButtonBox>
 			</div>
 		);
 	}

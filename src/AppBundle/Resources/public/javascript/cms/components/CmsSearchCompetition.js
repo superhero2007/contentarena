@@ -116,7 +116,6 @@ class CmsSearchCompetition extends React.Component {
 						onKeyPress={this.handleKeyPress}
 						onChange={this.handleInput}
 						placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")}
-						style={{ marginLeft: "inherit" }}
 						ref={this.competitionInput}
 					/>
 					<button
@@ -124,26 +123,20 @@ class CmsSearchCompetition extends React.Component {
 						disabled={!this.state.valid || this.state.searching}
 						onClick={this.search}
 					>
-						Search <Loader loading={searching} xSmall />
+						{!searching && "Search"}
+						<Loader loading={searching} xSmall />
 					</button>
 				</div>
 
-				{
-					this.state.searchDone && this.state.results.length === 0
-					&& (
-						<div className="search-competition-messages">
-							{this.context.t("CL_STEP1_SEARCH_NO_RESULTS", { n: this.state.input })}
-							<Translate i18nKey="CMS_SEARCH_TRY" />
-							<a
-								className="standard-button standard-button-big"
-								onClick={onCreateManually}
-							>
-								<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" />
-							</a>
-							<i className="fa fa-exclamation-circle" />
-						</div>
-					)
-				}
+				{this.state.searchDone && this.state.results.length === 0 && (
+					<div className="search-competition-messages">
+						<i className="fa fa-exclamation-circle" />
+						<Translate i18nKey="CMS_SEARCH_NO_RESULTS" params={{ n: this.state.input }} style={{ width: "auto" }} />
+						<a onClick={onCreateManually}>
+							<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" />
+						</a>
+					</div>
+				)}
 			</div>
 		);
 	}

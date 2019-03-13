@@ -14,6 +14,42 @@ export const UserName = ({ firstName, lastName, roles = [] }) => {
 	);
 };
 
+export const SeasonYear = ({
+	startDate, endDate, year, showPlaceholder = false,
+}) => {
+	const start = (startDate) ? moment(startDate).format("YYYY") : null;
+	const end = (endDate) ? moment(endDate).format("YYYY") : null;
+	const shortEnd = (endDate) ? moment(endDate).format("YY") : null;
+
+	if (start === null) {
+		if (showPlaceholder) return (<>Season</>);
+		if (year) return (<>{Number(year.substring(0, 2)) > 50 ? 19 : 20}{year}</>);
+		return (null);
+	}
+	if (end === null) return (<>{start}</>);
+	if (start === end) return (<>{start}</>);
+	return (
+		<>
+			{`${start}/${shortEnd}`}
+		</>
+	);
+};
+
+export const getSeasonStartYear = ({ startDate, year }) => {
+	const start = (startDate) ? moment(startDate).format("YYYY") : null;
+
+	if (start === null) {
+		if (year) {
+			const yearsData = year.split("/");
+			const startYear = yearsData[0];
+			if (startYear.length === 4) return startYear;
+			return startYear.substring(0, 2) > 50 ? `19${startYear}` : `20${startYear}`;
+		}
+		return null;
+	}
+	return start;
+};
+
 export const getListingImage = (props) => {
 	const { imageBase64, image, sports } = props;
 	let listingImageUrl = (imageBase64) || (image ? `${assetsBaseDir}../${image}` : null);

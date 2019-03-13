@@ -14,3 +14,9 @@ export const VerticalButtonBox = props => (
 		{props.children}
 	</div>
 );
+
+export const HorizontalButtonBox = props => (
+	<div className={cn("horizontal-button-box", { mobile: isMobileOnly })}>
+		{props.children}
+	</div>
+);

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { SeasonYear } from "@utils/listing";
 import { setCustomSeasonName, setSeasons, updateCustomSeason } from "../actions/propertyActions";
 import cn from "classnames";
 import { getMonths, getYears } from "@utils/time";
@@ -11,6 +12,13 @@ const RemoveSeason = ({ onClick }) => (
 	<span className="remove-season" onClick={onClick}>
 		<i className="fa fa-minus-circle" />
 		<Translate i18nKey="CMS_FORM_REMOVE_SEASON" />
+	</span>
+);
+
+const AddSeason = ({ onClick }) => (
+	<span className="add-season" onClick={onClick}>
+		<i className="fa fa-plus-circle" />
+		<Translate i18nKey="CMS_FORM_ADD_SEASON" />
 	</span>
 );
 
@@ -92,6 +100,7 @@ class CmsCustomSeason extends React.Component {
 			index,
 			season,
 			onDelete,
+			onAdd,
 		} = this.props;
 
 		const months = getMonths();
@@ -174,7 +183,11 @@ class CmsCustomSeason extends React.Component {
 						</select>
 					</div>
 				</div>
+				<div className="custom-season-result">
+					<SeasonYear {...season} showPlaceholder />
+				</div>
 				<RemoveSeason onClick={() => onDelete(index)} />
+				{/* <AddSeason onClick={onAdd} /> */}
 			</div>
 		);
 	}

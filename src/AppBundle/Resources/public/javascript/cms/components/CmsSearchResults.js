@@ -94,6 +94,7 @@ class CmsSearchResults extends React.Component {
 					<div style={{ marginBottom: 20 }}>
 						<ReactTable
 							defaultPageSize={this.state.pageSize}
+							showPagination={results.length > 10}
 							showPageSizeOptions={false}
 							onPageChange={this.onPageChange}
 							minRows={0}

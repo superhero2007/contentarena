@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import moment from "moment/moment";
 import { scrollMainContainer } from "@utils/listing";
+import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
 	updateFromMultiple,
 } from "../../sell/actions/stepOneActions";
@@ -20,7 +20,6 @@ import CmsRightsSelector from "../components/CmsRightsSelector";
 import { getPropertyName } from "../helpers/PropertyHelper";
 import CmsSeasonSelector from "../components/CmsSeasonSelector";
 import CmsCustomSeason from "../components/CmsCustomSeason";
-
 
 const AddSeason = ({ onClick }) => (
 	<span className="add-season" onClick={onClick}>
@@ -106,6 +105,12 @@ class CreatePropertyEvent extends React.Component {
 						<CmsSeasonSelector />
 					)}
 
+					{isSeasonApplicable && customSeasons && customSeasons.length > 0 && (
+						<h6>
+							<Translate i18nKey="CMS_CREATE_PROPERTY_CUSTOM_DESCRIPTION" />
+						</h6>
+					)}
+
 					{isSeasonApplicable && customSeasons && customSeasons.length > 0 && seasons.map((season, i) => {
 						if (!season.custom) return (null);
 
@@ -115,6 +120,7 @@ class CreatePropertyEvent extends React.Component {
 								key={i}
 								index={i}
 								onDelete={removeCustomSeason}
+								onAdd={addCustomSeason}
 							/>
 						);
 					})}
@@ -147,7 +153,13 @@ class CreatePropertyEvent extends React.Component {
 					</h6>
 					<CmsRightsSelector />
 				</DefaultBox>
-				<VerticalButtonBox>
+				<HorizontalButtonBox>
+					<button
+						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
+						className="yellow-button"
+					>
+						<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
+					</button>
 					<button
 						className="yellow-button"
 						disabled={rightsInvalid || seasonsInvalid}
@@ -155,22 +167,7 @@ class CreatePropertyEvent extends React.Component {
 					>
 						<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 					</button>
-					<button
-						onClick={() => {
-							resetProperty();
-							history.push(ROUTE_PATHS.CREATE_PROPERTY);
-						}}
-						className="link-button property-cancel-button"
-					>
-						<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
-					</button>
-					<button
-						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
-						className="link-button property-cancel-button no-margin"
-					>
-						<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
-					</button>
-				</VerticalButtonBox>
+				</HorizontalButtonBox>
 			</div>
 		);
 	}

@@ -5,9 +5,8 @@ import { isMobileOnly, isTablet } from "react-device-detect";
 import cn from "classnames";
 import Translate from "@components/Translator/Translate";
 import { scrollMainContainer } from "@utils/listing";
-import { VerticalButtonBox } from "@components/Containers";
+import { HorizontalButtonBox, DefaultBox } from "@components/Containers";
 import { TranslatedPlaceholderInput } from "@components/Translator";
-import { DefaultBox } from "../../common/components/Containers";
 import { ROUTE_PATHS, SPORT_KEYS } from "@constants";
 import {
 	removeNewSport,
@@ -202,11 +201,15 @@ class CreatePropertyWelcome extends React.Component {
 				</div>
 
 				<DefaultBox>
-					<h5 className="text-center"><Translate i18nKey="CMS_WELCOME_SEARCH_TITLE" /></h5>
-					<h5 className="text-center property-welcome-subtitle"><Translate i18nKey="CMS_WELCOME_SEARCH_SUB_TITLE" /></h5>
+					<h5 className="property-welcome-title">
+						<Translate i18nKey="CMS_WELCOME_SEARCH_TITLE" />
+					</h5>
+					<h5 className="property-welcome-subtitle">
+						<Translate i18nKey="CMS_WELCOME_SEARCH_SUB_TITLE" />
+					</h5>
 
 					{showCompetitionSelectors && (
-						<section>
+						<div className="manual-competition">
 							<form>
 								<ul className="form-items">
 									<li>
@@ -298,14 +301,7 @@ class CreatePropertyWelcome extends React.Component {
 								</ul>
 							</form>
 
-							<VerticalButtonBox>
-								<button
-									className="yellow-button"
-									disabled={property.sports.length === 0}
-									onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1)}
-								>
-									<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
-								</button>
+							<HorizontalButtonBox>
 								<button
 									onClick={() => {
 										resetProperty();
@@ -313,12 +309,19 @@ class CreatePropertyWelcome extends React.Component {
 											showCompetitionSelectors: false,
 										});
 									}}
-									className="link-button property-cancel-button"
+									className="yellow-button"
 								>
-									<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
+									<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
 								</button>
-							</VerticalButtonBox>
-						</section>
+								<button
+									className="yellow-button"
+									disabled={property.sports.length === 0}
+									onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1)}
+								>
+									<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
+								</button>
+							</HorizontalButtonBox>
+						</div>
 					)}
 
 					{!showCompetitionSelectors && (
@@ -329,7 +332,7 @@ class CreatePropertyWelcome extends React.Component {
 					)}
 
 					{!results && !showCompetitionSelectors && (
-						<p className="text-center">
+						<p style={{ marginLeft: 20 }}>
 							<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_1" />{" "}
 							<a onClick={this.onCreateManually}><Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" /></a>
 						</p>

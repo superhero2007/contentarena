@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import moment from "moment";
 import Loader from "@components/Loader/Loader";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
+import { getSeasonStartYear, SeasonYear } from "@utils/listing";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import { setSeasons } from "../actions/propertyActions";
 
@@ -11,6 +14,7 @@ class CmsSeasonSelector extends React.Component {
 		this.state = {
 			seasons: this.getSeasonsFromProps(props),
 			loadingSeasons: false,
+			showAll: false,
 			availableSeasons: [],
 		};
 	}
@@ -89,10 +93,23 @@ class CmsSeasonSelector extends React.Component {
 		return seasons.has(externalId);
 	};
 
+	getFutureSeasons = () => {
+		const {
+			availableSeasons,
+		} = this.state;
+
+		return availableSeasons.filter((season) => {
+			const seasonStartYear = +getSeasonStartYear(season);
+			const currentYear = +moment().format("YYYY");
+			return currentYear <= +seasonStartYear;
+		});
+	};
+
 	render() {
 		const {
 			loadingSeasons,
 			availableSeasons,
+			showAll,
 		} = this.state;
 
 		if (loadingSeasons) {
@@ -105,33 +122,51 @@ class CmsSeasonSelector extends React.Component {
 
 		if (availableSeasons.length === 0) return (null);
 
+		const futureSeasons = this.getFutureSeasons();
+		const seasons = (showAll || futureSeasons.length === 0) ? availableSeasons : futureSeasons;
+
 		return (
-			<div className="season-selector">
-				{availableSeasons.map((season, index) => {
-					const {
-						externalId,
-					} = season;
-					const idAttr = `checkbox-${externalId}`;
-					return (
-						<div className="season-selector-item" key={idAttr}>
-							<input
-								type="checkbox"
-								className="ca-checkbox blue"
-								checked={this.isCheckBoxChecked(externalId)}
-								onChange={(e) => {
-									e.target.checked
-										? this.addSeason(season)
-										: this.removeSeason(season);
-								}}
-								id={idAttr}
-							/>
-							<label className={cn({ selected: this.isCheckBoxChecked(externalId) })} htmlFor={idAttr}>
-								{season.year}
-							</label>
-						</div>
-					);
-				})}
-			</div>
+			<>
+				<div className="season-selector">
+					{seasons.map((season) => {
+						const {
+							externalId,
+						} = season;
+
+						const idAttr = `checkbox-${externalId}`;
+						return (
+							<div className="season-selector-item" key={idAttr}>
+								<input
+									type="checkbox"
+									className="ca-checkbox blue"
+									checked={this.isCheckBoxChecked(externalId)}
+									onChange={(e) => {
+										e.target.checked
+											? this.addSeason(season)
+											: this.removeSeason(season);
+									}}
+									id={idAttr}
+								/>
+								<label className={cn({ selected: this.isCheckBoxChecked(externalId) })} htmlFor={idAttr}>
+									<SeasonYear {...season} />
+								</label>
+							</div>
+						);
+					})}
+				</div>
+				{!showAll && futureSeasons.length > 1 && (
+					<div className="season-buttons" style={{ marginBottom: 20 }}>
+						<span
+							className="add-season"
+							onClick={() => {
+								this.setState({ showAll: true });
+							}}
+						>
+							<Translate i18nKey="CMS_SEASONS_SHOW_ALL" />
+						</span>
+					</div>
+				)}
+			</>
 		);
 	}
 }
