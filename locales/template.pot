@@ -1187,6 +1187,14 @@ msgid "DIGITAL_SIGNATURE_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_HEADLINE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_TERMS_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "CL_STEP5_TERMS_1"
 msgstr ""
 
@@ -1205,6 +1213,10 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 #: src/AppBundle/Resources/public/javascript/main/components/GeneralTerms.js
 msgid "TERMS_NOT_CHECKED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
+msgid "CL_STEP5_SIGNATURE_HEADLINE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
