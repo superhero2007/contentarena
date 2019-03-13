@@ -27,10 +27,15 @@ easy_admin:
                 - {label: 'Upload LA General Terms', icon: 'file-new', route: 'uploadGeneralTerms'}
                 - {label: 'Upload Localization File', icon: 'file-new', route: 'uploadLocales'}
             - Country
-            - Terms
-            - TermItems
-            - Definitions
+            - label: 'License Agreement'
+              children:
+                - Terms
+                - TermItems
+                - Definitions
             - AdminConfig
+            - label: 'Marketplace'
+              url: '/marketplace'
+              rel: 'index'
 
         assets:
             js:
