@@ -35,7 +35,9 @@
         }
       }
       .right-exclusivity{
-        margin: 0 11px;
+        input {
+          margin: 11px !important;
+        }
       }
     }
 

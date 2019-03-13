@@ -106,8 +106,8 @@ class RightsSelector extends React.Component {
 									/>
 									<label className={cn({"selected": this.isCheckBoxChecked(id)})} htmlFor={idAttr}>{name}</label>
 									<div className="tooltip-container">
-										<span className="ca-link" data-tip data-for={right.id}>
-											<i className="fa fa-info-circle" />
+										<span className="" data-tip data-for={right.id}>
+											<i className="fa fa-question-circle-o" />
 										</span>
 										<ReactTooltip id={right.id} effect="solid" className="CaTooltip " delayHide={400}>
 											<div className="body">
