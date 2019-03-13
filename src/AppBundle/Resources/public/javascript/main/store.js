@@ -14,6 +14,7 @@ import { validation } from "./reducers/validation";
 import { landing } from "../landing/reducers/landing";
 import { cms } from "../cms/reducers/cms";
 import { property } from "../cms/reducers/property";
+import { propertyFilters } from "../cms/reducers/propertyFilters";
 
 const reducers = combineReducers({
 	content,
@@ -28,6 +29,7 @@ const reducers = combineReducers({
 	i18nState,
 	cms,
 	property,
+	propertyFilters,
 });
 
 export default createStore(reducers, composeWithDevTools(

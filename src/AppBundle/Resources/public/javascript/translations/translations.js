@@ -7,6 +7,8 @@ export const translations = {
     'plural_number': '2',
   },
   'en': {
+  	'CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING': 'Listing',
+	'CMS_RIGHTS_OVERVIEW_TABLE_HEADER_DEALS': 'Deals',
     'LISTING_DETAILS_GENERAL_CONTENT': 'General Content',
     'LISTING_DETAILS_MULTIPLE_SPORTS': 'Multiple Sports',
     'Search': 'Search…',

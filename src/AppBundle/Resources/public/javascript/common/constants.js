@@ -8,6 +8,12 @@ export const CONTENT_LISTING_VIEW = {
 	TABLE: "table",
 };
 
+export const RIGHT_STATUS = {
+	AVAILABLE_RIGHTS: "AVAILABLE_RIGHTS",
+	OFFERED_RIGHTS: "OFFERED_RIGHTS",
+	CLOSED_DEALS: "CLOSED_DEALS"
+};
+
 export const CMS_PROPERTY_TABS = {
 	RIGHTS: "rightsoverview",
 	FIXTURES: "fixtures",
@@ -116,37 +122,37 @@ export const SERVER_ERROR_CODES = {
 
 export const RIGHTS = [
 	{
-		id: "LT",
+		code: "LT",
 		name: "Live Transmission",
 		translationKey: "RIGHT_LIVE_TRANSMISSION_NAME",
 		exclusive: false,
 	},
 	{
-		id: "DT",
+		code: "DT",
 		name: "Delayed & Archive",
 		translationKey: "RIGHT_DELAYED_ARCHIVE_NAME",
 		exclusive: false,
 	},
 	{
-		id: "LB",
+		code: "LB",
 		name: "Live Betting",
 		translationKey: "RIGHT_LIVE_BETTING_NAME",
 		exclusive: false,
 	},
 	{
-		id: "NA",
+		code: "NA",
 		name: "News Footage",
 		translationKey: "RIGHT_NEWS_NAME",
 		exclusive: false,
 	},
 	{
-		id: "HL",
+		code: "HL",
 		name: "Highlight & Clip",
 		translationKey: "RIGHT_HIGHLIGHTS_NAME",
 		exclusive: false,
 	},
 	{
-		id: "PR",
+		code: "PR",
 		name: "Edited Program",
 		translationKey: "RIGHT_PROGRAM_NAME",
 		exclusive: false,

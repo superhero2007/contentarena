@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
 /**
  * Country
@@ -18,7 +19,7 @@ class Country
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing","countryList", "home", "settings"})
+     * @Groups({"listing","countryList", "home", "settings", "property"})
      */
     private $id;
 
@@ -26,7 +27,7 @@ class Country
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
-     * @Groups({"listing", "closed", "commercial", "settings","countryList", "home"})
+     * @Groups({"listing", "closed", "commercial", "settings","countryList", "home", "property"})
      */
     private $name;
 
@@ -49,7 +50,7 @@ class Country
      * @var integer
      *
      * @ORM\Column(name="territory_id", type="integer", nullable=true)
-     * @Groups({"listing", "countryList", "settings"})
+     * @Groups({"listing", "countryList", "settings", "property"})
      */
 
     private $territoryId;
@@ -61,7 +62,7 @@ class Country
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="region_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "countryList", "settings"})
+     * @Groups({"listing", "countryList", "settings", "property"})
      */
     private $regions;
 

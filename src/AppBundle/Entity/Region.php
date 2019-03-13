@@ -20,7 +20,7 @@ class Region
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing","countryList"})
+     * @Groups({"listing","countryList", "property"})
      */
     private $id;
 

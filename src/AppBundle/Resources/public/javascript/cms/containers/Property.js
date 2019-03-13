@@ -10,20 +10,25 @@ import CmsCommercialOverview from "./CmsCommercialOverview";
 import CmsFixtures from "./CmsFixtures";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";
+import { fetchCountries, fetchRegions, fetchTerritories } from "../actions/propertyActions";
 
 class Property extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			loadingProperty: false,
-			property: {},
+			property: props.property,
 			activeTab: props.tab
 		};
 	}
 
 	componentDidMount(){
 		const { propertyId } = this.props;
-		if (propertyId) this.fetchProperty(propertyId);
+		if (!propertyId) return false;
+
+		this.fetchProperty(propertyId);
+		this.props.getTerritories();
+		this.props.getRegions();
 	};
 
 	fetchProperty = (propertyId) => {
@@ -40,12 +45,17 @@ class Property extends React.Component {
 			});
 	};
 
+	isLoadingRegions = () => {
+		const { property: { isRegionsFetched, isTerritoriesFetched } } = this.props;
+		return  !isRegionsFetched || !isTerritoriesFetched;
+	};
+
 	render() {
 		const { propertyId, history, } = this.props;
 		const { activeTab, loadingProperty, property, errorCode } = this.state;
 		const { name, } = property;
 
-		if (loadingProperty) {
+		if (loadingProperty || this.isLoadingRegions()) {
 			return (
 				<DefaultBox>
 					<Loader loading />
@@ -76,6 +86,7 @@ class Property extends React.Component {
 							//TODO: Add translation to tab names
 							return (
 								<a
+									key={tab}
 									className={`tab lg ${activeTab === tab ? "active" : ""}`}
 									onClick={() => {
 										history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${tab}`);
@@ -107,7 +118,8 @@ Property.contextTypes = {
 const mapStateToProps = (state, ownProps) => state;
 
 const mapDispatchToProps = dispatch => ({
-	// updateProfile: profile => dispatch(updateProfile(profile)),
+	getTerritories: () => dispatch(fetchTerritories()),
+	getRegions: () => dispatch(fetchRegions()),
 });
 
 
