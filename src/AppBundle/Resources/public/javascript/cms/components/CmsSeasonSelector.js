@@ -113,6 +113,11 @@ class CmsSeasonSelector extends React.Component {
 		}
 	};
 
+	editSeason = (season) => {
+		this.setState({ showCustomSeason: true }, () => {
+			this.setState({ editSeason: season });
+		});
+	};
 
 	isCheckBoxChecked = (externalId) => {
 		const { seasons } = this.state;
@@ -189,7 +194,7 @@ class CmsSeasonSelector extends React.Component {
 									</span>
 								)}
 								{custom && (
-									<span className="edit-season" onClick={() => { this.setState({ editSeason: season }); }}>
+									<span className="edit-season" onClick={() => { this.editSeason(season); }}>
 										<i className="fa fa-info-circle" />
 									</span>
 								)}
@@ -236,6 +241,7 @@ class CmsSeasonSelector extends React.Component {
 								this.setState({ showCustomSeason: false });
 							}}
 							season={editSeason}
+							existingSeasons={seasons}
 							onConfirm={this.addCustomSeason}
 						/>
 					</>

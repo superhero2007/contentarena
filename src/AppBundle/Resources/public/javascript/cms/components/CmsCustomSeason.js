@@ -17,6 +17,7 @@ class CmsCustomSeason extends React.Component {
 			startYear: "",
 			endMonth: "",
 			endYear: "",
+			seasonExists: false,
 		};
 	}
 
@@ -28,6 +29,8 @@ class CmsCustomSeason extends React.Component {
 			endYear: (props.season && props.season.endDate) ? moment(props.season.endDate).format("YYYY") : "",
 		});
 	};
+
+	seasonAlreadyExists = year => this.props.existingSeasons.filter(season => season.year === year).length > 0;
 
 	confirm = () => {
 		const {
@@ -49,6 +52,11 @@ class CmsCustomSeason extends React.Component {
 		const fullYear = getCustomSeasonFullYear(startYear, endYear);
 		const tournamentName = tournament.name;
 
+		if (!season && this.seasonAlreadyExists(year)) {
+			this.setState({ seasonExists: true });
+			return;
+		}
+
 		const newSeason = {
 			custom: true,
 			startDate,
@@ -64,6 +72,7 @@ class CmsCustomSeason extends React.Component {
 			startYear: "",
 			endMonth: "",
 			endYear: "",
+			seasonExists: false,
 		});
 
 		onConfirm(newSeason);
@@ -100,6 +109,7 @@ class CmsCustomSeason extends React.Component {
 			startYear,
 			endMonth,
 			endYear,
+			seasonExists,
 		} = this.state;
 
 		const months = getMonths();
@@ -108,106 +118,114 @@ class CmsCustomSeason extends React.Component {
 		const fullYear = getCustomSeasonFullYear(startYear, endYear);
 
 		return (
-			<div className="custom-season-container">
-				<div className="custom-season-form">
-					<label>
-						From {" "}
-					</label>
-					<div className="date-select">
-						<select
-							value={startMonth}
-							className="ca-form-control"
-							onChange={e => this.setState({ startMonth: e.target.value })}
-						>
-							<option value="" disabled>
-								Month
-							</option>
-							{months.map(month => (
-								<option value={month} key={month}>
-									{month}
+			<>
+				<div className="custom-season-container">
+					<div className="custom-season-form">
+						<label>
+							From {" "}
+						</label>
+						<div className="date-select">
+							<select
+								value={startMonth}
+								className="ca-form-control"
+								onChange={e => this.setState({ startMonth: e.target.value })}
+							>
+								<option value="" disabled>
+									Month
 								</option>
-							))}
-						</select>
-						<select
-							value={startYear}
-							onChange={(e) => {
-								const value = e.target.value;
-								this.setState({
-									startYear: value,
-									endYear: (endYear !== "" && +endYear < +value) ? value : endYear,
-								});
-							}}
-							className="ca-form-control"
-						>
-							<option value="" disabled>
-								Year
-							</option>
-							{getYears(null, null, 69, 17).map(year => (
-								<option value={year} key={year}>
-									{year}
+								{months.map(month => (
+									<option value={month} key={month}>
+										{month}
+									</option>
+								))}
+							</select>
+							<select
+								value={startYear}
+								onChange={(e) => {
+									const value = e.target.value;
+									this.setState({
+										startYear: value,
+										endYear: (endYear !== "" && +endYear < +value) ? value : endYear,
+									});
+								}}
+								className="ca-form-control"
+							>
+								<option value="" disabled>
+									Year
 								</option>
-							))}
-						</select>
-					</div>
+								{getYears(null, null, 69, 17).map(year => (
+									<option value={year} key={year}>
+										{year}
+									</option>
+								))}
+							</select>
+						</div>
 
-				</div>
-				<div className="custom-season-form">
-					<label>
-						To {" "}
-					</label>
-					<div className="date-select">
-						<select
-							value={endMonth}
-							onChange={e => this.setState({ endMonth: e.target.value })}
-							className="ca-form-control"
-							disabled={!startDateIsValid}
-						>
-							<option value="" disabled>
-								Month
-							</option>
-							{months.map(month => (
-								<option value={month} key={month}>
-									{month}
-								</option>
-							))}
-						</select>
-						<select
-							value={endYear}
-							onChange={e => this.setState({ endYear: e.target.value })}
-							className="ca-form-control"
-							disabled={!startDateIsValid}
-						>
-							<option value="" disabled>
-								Year
-							</option>
-							{getYears(startYear, null, 69, 25).map(year => (
-								<option value={year} key={year}>
-									{year}
-								</option>
-							))}
-						</select>
 					</div>
-				</div>
-				<div className="custom-season-result">
-					{!fullYear && (
-						<Translate i18nKey="CMS_CUSTOM_SEASON_YEAR_PLACEHOLDER" style={{ textAlign: "center" }} />
+					<div className="custom-season-form">
+						<label>
+							To {" "}
+						</label>
+						<div className="date-select">
+							<select
+								value={endMonth}
+								onChange={e => this.setState({ endMonth: e.target.value })}
+								className="ca-form-control"
+								disabled={!startDateIsValid}
+							>
+								<option value="" disabled>
+									Month
+								</option>
+								{months.map(month => (
+									<option value={month} key={month}>
+										{month}
+									</option>
+								))}
+							</select>
+							<select
+								value={endYear}
+								onChange={e => this.setState({ endYear: e.target.value })}
+								className="ca-form-control"
+								disabled={!startDateIsValid}
+							>
+								<option value="" disabled>
+									Year
+								</option>
+								{getYears(startYear, null, 69, 25).map(year => (
+									<option value={year} key={year}>
+										{year}
+									</option>
+								))}
+							</select>
+						</div>
+					</div>
+					<div className="custom-season-result">
+						{!fullYear && (
+							<Translate i18nKey="CMS_CUSTOM_SEASON_YEAR_PLACEHOLDER" style={{ textAlign: "center" }} />
+						)}
+						{fullYear && fullYear}
+					</div>
+					<span className="remove-season" onClick={onDelete}>
+						<i className="fa fa-times-circle" />
+					</span>
+					{!dateIsValid && (
+						<span className="remove-season disabled">
+							<i className="fa fa-check-circle" />
+						</span>
 					)}
-					{fullYear && fullYear}
+					{dateIsValid && (
+						<span className="remove-season" onClick={this.confirm}>
+							<i className="fa fa-check-circle" />
+						</span>
+					)}
 				</div>
-				<span className="remove-season" onClick={onDelete}>
-					<i className="fa fa-times-circle" />
-				</span>
-				{!dateIsValid && (
-					<span className="remove-season disabled">
-						<i className="fa fa-check-circle" />
-					</span>
+				{seasonExists && (
+					<div className="custom-season-exists">
+						<Translate i18nKey="CMS_PROPERTY_SEASON_ALREADY_EXISTS" />
+					</div>
 				)}
-				{dateIsValid && (
-					<span className="remove-season" onClick={this.confirm}>
-						<i className="fa fa-check-circle" />
-					</span>
-				)}
-			</div>
+			</>
+
 		);
 	}
 }
