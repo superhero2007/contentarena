@@ -1503,6 +1503,31 @@ button {
   border-bottom: none !important;
   border-radius: 5px !important;
 
+  .territory-selector-modal, .season-selector-modal{
+    padding: 20px;
+    .buttons{
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+      .yellow-button{
+        height: 40px;
+        padding: 7px 25px;
+      }
+    }
+  }
+
+  .season-selector-modal{
+    .region-filter{
+      .regions{
+        .region{
+          padding: 8px;
+          height: auto;
+          line-height: 12px;
+        }
+      }
+    }
+  }
+
   .modal-title {
     background: none;
     text-transform: capitalize;

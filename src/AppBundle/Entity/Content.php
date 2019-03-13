@@ -27,7 +27,7 @@ class Content implements NotifiableInterface
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"listing", "board", "commercial", "home", "propertyList", "property"})
      */

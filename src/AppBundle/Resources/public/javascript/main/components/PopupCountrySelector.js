@@ -61,65 +61,74 @@ class PopupCountrySelector extends React.Component {
 				style={customStyles}
 				onRequestClose={this.cancelModal}
 			>
+				<div className="territory-selector-modal">
 
-				<div className="modal-title">
-					<Translate i18nKey="Country Selector" />
-					<div className="close" onClick={this.cancelModal}>X</div>
-				</div>
+					<div className="modal-title">
+						<Translate i18nKey="Country Selector" />
+						<div className="close" onClick={this.cancelModal}>X</div>
+					</div>
 
-				<div className="step-content">
-					<RegionCountrySelector
-						value={value}
-						ref="selector"
-						worldwide
-						onChange={this.handleCountryChange}
-					/>
-				</div>
+					<div className="step-content">
+						<RegionCountrySelector
+							value={value}
+							ref="selector"
+							worldwide
+							onChange={this.handleCountryChange}
+						/>
+					</div>
 
-				<div style={{
-					display: "flex",
-					margin: 20,
-
-				}}
-				>
-					<input
-						type="radio"
-						value="single"
-						className="ca-radio"
-						style={{ height: "20px", width: 20, marginRight: 15 }}
-						checked={this.state.selectedOption === "single"}
-						onChange={this.handleOptionChange}
-					/>
-					<span style={{ color: "black", marginRight: 30, fontSize: "14px" }}>
-						<Translate i18nKey="MARKETPLACE_FILTER_ONE_TERRITORY" />
-					</span>
-
-					<input
-						type="radio"
-						value="multiple"
-						className="ca-radio"
-						style={{ height: "20px", width: 20, marginRight: 15 }}
-						checked={this.state.selectedOption === "multiple"}
-						onChange={this.handleOptionChange}
-					/>
-					<span style={{ color: "black", fontSize: "14px" }}>
-						<Translate i18nKey="MARKETPLACE_FILTER_ALL_TERRITORIES" />
-					</span>
-				</div>
-
-				<div className="buttons">
-					<button
-						disabled={!value || value.length === 0}
-						className="standard-button"
-						onClick={this.closeModal}
+					<div style={{
+						display: "flex",
+						margin: "0px 20px 20px",
+					}}
 					>
-						Ok
+						<input
+							type="radio"
+							value="single"
+							className="ca-radio"
+							style={{
+								height: "20px", width: 20, marginRight: 15, marginTop: 3,
+							}}
+							checked={this.state.selectedOption === "single"}
+							onChange={this.handleOptionChange}
+						/>
+						<span
+							style={{
+								color: "black", marginRight: 30, fontSize: "14px",
+							}}
+						>
+							<Translate i18nKey="MARKETPLACE_FILTER_ONE_TERRITORY" />
+						</span>
+
+						<input
+							type="radio"
+							value="multiple"
+							className="ca-radio"
+							style={{
+								height: "20px", width: 20, marginRight: 15, marginTop: 3,
+							}}
+							checked={this.state.selectedOption === "multiple"}
+							onChange={this.handleOptionChange}
+						/>
+						<span style={{ color: "black", fontSize: "14px" }}>
+							<Translate i18nKey="MARKETPLACE_FILTER_ALL_TERRITORIES" />
+						</span>
+					</div>
+
+					<div className="buttons">
+						<button
+							disabled={!value || value.length === 0}
+							className="yellow-button"
+							onClick={this.closeModal}
+						>
+							Ok
 
 
-					</button>
+						</button>
+
+					</div>
 
 				</div>
-
 			</Modal>
 		);
 	};

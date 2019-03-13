@@ -57,7 +57,7 @@ class Bid
     private $totalFee;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content")
      * @ORM\JoinColumn(name="content_id",referencedColumnName="id",nullable=true)
      * @Groups({"closed", "commercial"})
      * @MaxDepth(1)
@@ -65,7 +65,7 @@ class Bid
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="bid", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", cascade={"remove"})
      * @ORM\JoinColumn(name="sold_listing_id",
      *      referencedColumnName="id",
      *      onDelete="CASCADE",nullable=true)
@@ -76,47 +76,47 @@ class Bid
 
     /**
      * @var BidStatus
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial", "property", "propertyList"})
      */
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial"})
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial", "property", "propertyList"})
      */
     private $buyerUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial"})
      */
     private $buyerCompany;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanySnapshot", inversedBy="bid", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanySnapshot", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $buyerCompanySnapshot;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanySnapshot", inversedBy="bid", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanySnapshot", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $sellerCompanySnapshot;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage", inversedBy="bid")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial", "property"})
      */
