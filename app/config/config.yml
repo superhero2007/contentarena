@@ -31,8 +31,6 @@ parameters:
     app.email_info: 'info@contentarena.com'
     app.email_support: 'support@contentarena.com'
     app.email_alerts: 'alerts@contentarena.com'
-    app.email_bcc_alex: 'alexander@contentarena.com'
-    app.email_bcc_sascha: 'sascha@contentarena.com'
 
 framework:
     #esi: ~

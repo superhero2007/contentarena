@@ -65,8 +65,6 @@ services:
             $hostUrl: '%carena_host_url%'
             $infoAddress : '%app.email_info%'
             $supportAddress : '%app.email_support%'
-            $bccAlexAddress : '%app.email_bcc_alex%'
-            $bccSaschaAddress : '%app.email_bcc_sascha%'
             $alertsAddress : '%app.email_alerts%'
 
     AppBundle\Service\JobService:

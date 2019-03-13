@@ -26,6 +26,7 @@ easy_admin:
             - Terms
             - TermItems
             - Definitions
+            - AdminConfig
 
         assets:
             js:
@@ -62,11 +63,11 @@ easy_admin:
                         - { property: 'email' }
                         - { property: 'firstName' }
                         - { property: 'lastName' }
+                        - { property: 'company', type_options: { required: true }}
+                        - { property: 'applicationCompany' }
                         - { property: 'title', label: 'Position' }
                         - { property: 'phone' }
                         - { property: 'country' }
-                        - { property: 'applicationCompany' }
-                        - { property: 'company' }
                         - { property: 'autoPublish' }
                 edit:
                     fields:
@@ -247,6 +248,11 @@ easy_admin:
                 class: AppBundle\Entity\SourceLicenseTerm
             Definitions:
                 class: AppBundle\Entity\SourceDefinitions
+            AdminConfig:
+                class: AppBundle\Entity\AdminConfig
+                label: 'Admin Config'
+                list:
+                    fields: ['slug', 'content']
             TermItems:
                 class: AppBundle\Entity\SourceLicenseTermItem
                 label: 'Term Items'
