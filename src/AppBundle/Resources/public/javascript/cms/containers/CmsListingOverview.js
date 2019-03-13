@@ -8,7 +8,7 @@ import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOvervie
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
-import CmsRightsLegend from "../components/CmsRightsLegend";
+import CmsRightsLegendSmall from "../components/CmsRightsLegendSmall";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
@@ -175,6 +175,7 @@ class CmsListingOverview extends React.Component {
 									includeAllCountries={includeAllCountries}
 									selectTerritory={this.selectTerritory}
 									updateIncludedCountries={this.updateIncludedCountries}
+									placeholder="Filter By Territory"
 								/>
 
 								{allSeasons && allSeasons.length > 1 && (
@@ -189,7 +190,7 @@ class CmsListingOverview extends React.Component {
 						</div>
 					</div>
 					<div className="d-flex">
-						<CmsRightsLegend />
+						<CmsRightsLegendSmall />
 					</div>
 					<div className="region-filter-bids">
 						<div className="region-filter-content">

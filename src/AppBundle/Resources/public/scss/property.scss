@@ -333,6 +333,16 @@
       }
     }
   }
+  .rights-legend-small{
+    @extend .rights-legend;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 20px;
+    .item{
+      flex: none;
+      margin-left: 10px;
+    }
+  }
   .property-cancel-button{
     margin: 20px 0 0;
     text-decoration: none;
@@ -1596,7 +1606,7 @@
 
   .property-listing-overview-wrapper {
     position: relative;
-    margin-top: 2rem;
+    margin-top: 10px;
   }
 
   &.property-deal {

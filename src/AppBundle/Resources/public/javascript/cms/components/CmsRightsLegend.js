@@ -9,9 +9,6 @@ import {
 const CmsRightsLegend = () => (
 
 	<div className="split-filter full-width">
-		<div className="region-filter-title">
-			{ <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
-		</div>
 		<div className="rights-legend">
 			<div className="item">
 				<NonExclusiveRightAvailableIcon />
