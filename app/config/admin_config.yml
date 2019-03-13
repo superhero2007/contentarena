@@ -96,6 +96,8 @@ easy_admin:
                         - { property: 'expiresAt' }
                         - { property: 'featured' }
                         - { property: 'featuredPosition' }
+                    actions:
+                        - { name: 'notifyUsersAboutListing', css_class : 'btn btn-primary' }
                 list:
                     dql_filter: "status.name != 'SOLD_COPY'"
                     fields:

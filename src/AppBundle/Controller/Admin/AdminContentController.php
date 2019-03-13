@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
@@ -74,15 +75,38 @@ class AdminContentController extends BaseAdminController
         return $queryBuilder;
     }
 
-   /* public function editAction()
+    /**
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function notifyUsersAboutListingAction()
     {
 
-        // change the properties of the given entity and save the changes
         $id = $this->request->query->get('id');
-        $entity = $this->em->getRepository('AppBundle:Company')->find($id);
+        $listing = $this->em->getRepository('AppBundle:Content')->find($id);
+        $emailService = $this->get("AppBundle\Service\EmailService");
+        $notificationsService = $this->get("AppBundle\Service\NotificationService");
+        $contentService = $this->get("AppBundle\Service\ContentService");
+        $users = $contentService->getUsersToNotify($listing);
 
-        var_dump($entity);
+        foreach ($users as $user){
+            /* @var User $user */
+            $notificationsService->createSingleNotification("BUYER_LISTING_MATCH", $listing->getCustomId(),$user, array(
+                "%listingName%" => $listing->getName()
+            ));
 
-    }*/
+            if($user->isReceivePreferenceNotifications() != null && $user->isReceivePreferenceNotifications() ) {
+                $emailService->listingMatch($listing, $user);
+            }
+        }
+
+        return $this->redirectToRoute('easyadmin', array(
+            'action' => 'edit',
+            'id' => $listing->getId(),
+            'entity' => 'Content'
+        ));
+
+    }
 
 }
