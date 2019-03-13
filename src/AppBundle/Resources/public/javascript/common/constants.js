@@ -45,10 +45,10 @@ export const SIGN_UP_FIELDS = {
 };
 
 export const LANDING_LINKS = {
-	PRIVACY: "https://contentarena.com/web/privacy-policy/",
-	TERMS: "https://contentarena.com/web/terms-of-use/",
-	FAQ: "https://contentarena.com/web/faq/",
-	COOKIE: "https://contentarena.com/web/cookie-policy/",
+	PRIVACY: "https://landing.contentarena.com/web/privacy-policy/",
+	TERMS: "https://landing.contentarena.com/web/terms-of-use/",
+	FAQ: "https://landing.contentarena.com/web/faq/",
+	COOKIE: "https://landing.contentarena.com/web/cookie-policy/",
 	HOME: "https://contentarena.com/",
 };
 
