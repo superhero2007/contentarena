@@ -330,7 +330,7 @@ export const validateEmail = (email) => {
 	return re.test(String(email).toLowerCase());
 };
 
-export const getSeasonDateString = (dateObj) => {
+export const getSeasonDateString = (dateObj, hideMonth = false) => {
 	const {
 		customStartDate, startDate, customEndDate, endDate,
 	} = dateObj;
@@ -344,7 +344,7 @@ export const getSeasonDateString = (dateObj) => {
 	const startYear = start.format("YYYY");
 	const endYear = end.format("YYYY");
 
-	const isMonthAdded = startMonth && endMonth;
+	const isMonthAdded = startMonth && endMonth && !hideMonth;
 
 	if (startYear === endYear) {
 		return `${endYear}`;
@@ -353,7 +353,7 @@ export const getSeasonDateString = (dateObj) => {
 		return `${startYear}/${endYear.toString().substr(-2)}`;
 	}
 	if (startYear < endYear && isMonthAdded) {
-		return `${startYear}/${endYear.toString().substr(-2)} (${startYear} ${startMonth} - ${endYear} ${endMonth})`;
+		return `${startYear}/${endYear.toString().substr(-2)} (${startMonth} ${startYear} - ${endMonth} ${endYear})`;
 	}
 	return "";
 };
