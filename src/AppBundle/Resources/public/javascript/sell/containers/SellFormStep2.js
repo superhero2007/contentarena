@@ -4,7 +4,6 @@ import { PropTypes } from "prop-types";
 import SuperRightList from "./SuperRightList";
 import RightDefinitions from "../components/RightDefinitions";
 import ProductionStandardsDefinitions from "../components/ProductionStandardsDefinitions";
-import { stepChangeReset, changeAllEpisodeFlag } from "../actions/contentActions";
 import { editedProgramSelected } from "../../main/actions/utils";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import { LanguageSelector } from "../../main/components/LanguageSelector";
@@ -52,27 +51,6 @@ class SellFormStep2 extends React.Component {
 		}
 	};
 
-	updateRight = (rightsPackage) => {
-		this.props.superRightsUpdated(rightsPackage);
-	};
-
-	superRightsEnabled = (superRights) => {
-		const selected = this.props.rightsPackage.map(a => a.shortLabel);
-		return superRights.filter(r => selected.indexOf(r) !== -1).length > 0;
-	};
-
-	scroll = () => {
-		const { stepChange, stepChangeReset } = this.props;
-
-		const list = document.getElementsByClassName("main-container");
-
-		if (stepChange) {
-			window.scrollTo(0, 0);
-			if (list.length > 0) list[0].scrollTop = 0;
-			stepChangeReset();
-		}
-	};
-
 	getProgramDescriptionDefaultValue = (value) => {
 		const { updateContentValue, programDescription } = this.props;
 		if (value && !this.userDescriptionAdded && (!programDescription || programDescription === "")) {
@@ -116,7 +94,6 @@ class SellFormStep2 extends React.Component {
 
 		const isProgramDescriptionInvalid = !programDescription && validation;
 
-		this.scroll();
 		return (
 
 			<div className="step-content step-2">
@@ -358,8 +335,6 @@ const mapDispatchToProps = dispatch => ({
 		key,
 		value,
 	}),
-	stepChangeReset: () => dispatch(stepChangeReset()),
-	changeAllEpisodeFlag: flag => dispatch(changeAllEpisodeFlag(flag)),
 });
 
 export default connect(

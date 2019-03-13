@@ -355,3 +355,9 @@ export const getSeasonDateString = (dateObj, hideMonth = false) => {
 	}
 	return "";
 };
+
+export const scrollMainContainer = () => {
+	const list = document.getElementsByClassName("main-container");
+	window.scrollTo(0, 0);
+	if (list.length > 0) list[0].scrollTop = 0;
+};

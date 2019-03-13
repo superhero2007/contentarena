@@ -1,4 +1,5 @@
 import { contentType } from "../reducers/content";
+import { scrollMainContainer } from "../../common/utils/listing";
 
 export const scrollTopMainContent = () => {
 	const mainContent = document.querySelectorAll("body > .main-content")[0];
@@ -8,40 +9,14 @@ export const scrollTopMainContent = () => {
 	}
 };
 
-export const goToPreviousStep = () => {
-	scrollTopMainContent();
-
-	return {
-		type: contentType.GO_TO_PREVIOUS_STEP,
-	};
-};
-
-export const goToNextStep = () => {
-	scrollTopMainContent();
-
-	return {
-		type: contentType.GO_TO_NEXT_STEP,
-	};
-};
-
 export const goToStep = (step) => {
 	scrollTopMainContent();
-
+	scrollMainContainer();
 	return {
 		type: contentType.GO_TO_STEP,
 		step,
 	};
 };
-
-export const stepChangeReset = () => ({
-	type: contentType.STEP_CHANGE_RESET,
-});
-
-
-export const changeAllEpisodeFlag = flag => ({
-	type: contentType.ALL_EPISODE_UPDATE_FLAG,
-	payload: flag,
-});
 
 export const updateContentValue = (key, value) => ({
 	type: "UPDATE_CONTENT_VALUE",

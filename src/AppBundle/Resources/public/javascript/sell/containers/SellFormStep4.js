@@ -7,7 +7,6 @@ import SalesPackageEdit from "../components/SalesPackageEdit";
 import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
 import CompanyInformation from "../components/CompanyInformation";
-import { stepChangeReset } from "../actions/contentActions";
 import { SummaryText, TitleBar } from "../components/SellFormItems";
 import ApplicableLaw from "../components/ApplicableLaw";
 import CurrencySelector from "../components/CurrencySelector";
@@ -27,10 +26,6 @@ class SellFormStep4 extends React.Component {
 
 	selectCurrency = (currency) => {
 		this.props.updateContentValue("currency", currency);
-	};
-
-	updateName = (e) => {
-		this.props.updateContentValue("name", e.target.value);
 	};
 
 	editSalesPackage = (index) => {
@@ -70,18 +65,6 @@ class SellFormStep4 extends React.Component {
 		return rightsPackage.filter(rp => rp.exclusive).length > 0;
 	};
 
-	scroll = () => {
-		const { stepChange, stepChangeReset } = this.props;
-
-		const list = document.getElementsByClassName("main-container");
-
-		if (stepChange) {
-			window.scrollTo(0, 0);
-			if (list.length > 0) list[0].scrollTop = 0;
-			stepChangeReset();
-		}
-	};
-
 	addFile = (response) => {
 		const { annex } = this.props;
 		const index = annex.length;
@@ -105,7 +88,6 @@ class SellFormStep4 extends React.Component {
 		} = this.props;
 
 		if (step !== 4) return (null);
-		this.scroll();
 		return (
 
 			<div className="step-content step-4">
@@ -214,7 +196,6 @@ const mapDispatchToProps = dispatch => ({
 		index,
 		value,
 	}),
-	stepChangeReset: () => dispatch(stepChangeReset()),
 });
 
 export default connect(

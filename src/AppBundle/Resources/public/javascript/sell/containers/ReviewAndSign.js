@@ -7,7 +7,6 @@ import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
 import ListingDetails from "../../buy/containers/ListingDetails";
 import ContentListing from "../../main/components/ContentListing";
-import { stepChangeReset } from "../actions/contentActions";
 import DigitalSignature from "../../main/components/DigitalSignature";
 import { goTo, goToListing, parseSeasons } from "../../main/actions/utils";
 import { customStyles } from "../../main/styles/custom";
@@ -40,22 +39,6 @@ class ReviewAndSign extends React.Component {
 			this.termsAutoSelected = true;
 		}
 	}
-
-	showTerritories = salesPackage => (salesPackage.bundleMethod === this.individually
-		&& salesPackage.territoriesMethod === this.worldwide)
-		|| salesPackage.territoriesMethod !== this.worldwide;
-
-	scroll = () => {
-		const { stepChange, stepChangeReset } = this.props;
-
-		const list = document.getElementsByClassName("main-container");
-
-		if (stepChange) {
-			window.scrollTo(0, 0);
-			if (list.length > 0) list[0].scrollTop = 0;
-			stepChangeReset();
-		}
-	};
 
 	submit = () => {
 		const { updateContentValue, disableValidation } = this.props;
@@ -179,7 +162,6 @@ class ReviewAndSign extends React.Component {
 
 	render() {
 		if (this.props.step !== 5) return (null);
-		this.scroll();
 		const {
 			salesPackages,
 			updateContentValue,
@@ -378,7 +360,6 @@ const mapDispatchToProps = dispatch => ({
 		salesPackage,
 		name,
 	}),
-	stepChangeReset: () => dispatch(stepChangeReset()),
 	enableValidation: () => dispatch(enableValidation()),
 	disableValidation: () => dispatch(disableValidation()),
 });
