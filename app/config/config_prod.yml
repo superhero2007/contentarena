@@ -17,6 +17,17 @@ monolog:
             type:         fingers_crossed
             action_level: error
             handler:      grouped
+            excluded_404s:
+              - ^/phpmyadmin
+              - ^/wp-login.php
+              - ^/cookie-policy/
+              - ^/web/faq/
+              - ^/version
+              - ^/.well-known/assetlinks.json
+              - ^/administrator/
+              - ^/admin-post.php
+              - ^/phpthumb.php
+              - ^/index.php
         grouped:
             type:    group
             members: [nested, deduplicated]

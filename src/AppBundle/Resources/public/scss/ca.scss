@@ -21,7 +21,7 @@ body {
   }
 
   &.page-home {
-    .manager-container {
+    .main-container {
       @media only screen and (min-width: 1920px) {
         width: 1600px;
         margin: 0 auto;
@@ -63,11 +63,6 @@ a:hover {
 
 button {
   cursor: pointer;
-}
-
-.main-container {
-  background-color: white;
-  margin: 20px;
 }
 
 .table-for-cl4-cl5 {
@@ -183,32 +178,6 @@ button {
       align-items: center;
       margin-right: 15px;
       font-size: 14px;
-    }
-  }
-}
-
-.marketplace-container {
-  .date-picker {
-    width: 65px;
-    border: none;
-    font-size: 12px;
-    outline: none;
-    margin: 0;
-  }
-
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
-
-    i.fa {
-      padding: 5px;
-    }
-
-    .buttons-container {
-      margin: 0 0 8px;
-      display: inline-flex;
-      justify-content: center;
     }
   }
 }
@@ -2021,9 +1990,7 @@ button {
   overflow: auto;
 }
 
-.marketplace-container {
-  min-height: 100%;
-}
+
 
 .custom-id {
   border-radius: 5px;

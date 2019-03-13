@@ -84,8 +84,10 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
-     *     name="homepage", defaults={"reactRouting": null})
+     *     requirements={"reactRouting"="createproperty|manageproperties|terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
+     *     name="homepage",
+     *     defaults={"reactRouting": null}
+     *     )
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -105,7 +107,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
+     *     requirements={"reactRouting"="createproperty|register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -128,7 +130,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
-     *     requirements={"reactRouting"="register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
+     *     requirements={"reactRouting"="createproperty|register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -181,6 +183,7 @@ class DefaultController extends BaseController
             "cmsEnabled" => $this->container->getParameter('cms_enabled'),
             "gaTrackingId"      => $this->container->getParameter('google_analytics_key'),
             "testStageMode"     => $this->container->getParameter('test_stage_mode'),
+            "properties"        => array(),
         );
 
         return [

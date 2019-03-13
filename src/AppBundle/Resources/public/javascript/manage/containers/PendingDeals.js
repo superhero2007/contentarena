@@ -67,7 +67,7 @@ class PendingDeals extends React.Component {
 		const { history } = this.props;
 
 		return (
-			<div>
+			<div className="section-container">
 				<div style={{
 					display: "flex",
 					padding: "0 0 20px",

@@ -48,19 +48,18 @@ security:
         - { path: ^/api/search/sports/groups, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/search/territories, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/search/regions, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/generalterms, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/public/listing, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
+        - { path: ^/api, role: ROLE_USER }
         - { path: ^/api/notifications/all/visited, role: ROLE_USER }
         - { path: ^/api/notifications/, role: ROLE_USER }
         - { path: ^/api/notifications/visited, role: ROLE_USER }
         - { path: ^/api/notifications/seen, role: ROLE_USER }
         - { path: ^/api/notifications/remove, role: ROLE_USER }
 
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/generalterms, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/public/listing, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/test, role: ROLE_ADMIN }
         - { path: ^/contract, role: ROLE_USER }
         - { path: ^/listings, role: ROLE_USER }
         - { path: ^/listing, role: ROLE_USER }
@@ -72,7 +71,11 @@ security:
         - { path: ^/managelistings, role: ROLE_USER }
         - { path: ^/commercialoverview, role: ROLE_USER }
         - { path: ^/watchlist, role: ROLE_USER }
-        - { path: ^/api, role: ROLE_USER }
+        - { path: ^/manageproperties, role: ROLE_USER }
+        - { path: ^/createproperty, role: ROLE_USER }
         - { path: ^/bids, role: ROLE_USER }
         - { path: ^/closeddeals, role: ROLE_USER }
         - { path: ^/content/draft, role: ROLE_USER }
+
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/test, role: ROLE_ADMIN }

@@ -4,12 +4,9 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { goTo } from "../actions/utils";
 import HeaderNotifications from "./HeaderNotifications";
-import {
-	addRight, clearFilter, removeRight, updateAllFilters, updateCountries, updateExclusive,
-	updateIncludedCountries,
-} from "../../buy/actions/filterActions";
 import InviteUsersModal from "../../common/modals/InviteUsersModal";
 import { inviteIcon } from "./Icons";
+import { ROUTE_PATHS } from "../routes";
 
 const HeaderBarTab = ({
 	match, children, route, className = "", linkClass = "", onClick,
@@ -24,6 +21,71 @@ const CustomLink = ({ match, children, route }) => (
 		<a href={route}>{children}</a>
 	</div>
 );
+
+const HeaderBarSeller = ({ match, profile }, context) => (
+	<React.Fragment>
+		<HeaderBarTab
+			match={match.url === ROUTE_PATHS.MANAGE_LISTINGS}
+			route={ROUTE_PATHS.MANAGE_LISTINGS}
+		>
+			{context.t("HEADER_LINK_MANAGE_LISTINGS")}
+		</HeaderBarTab>
+		<HeaderBarTab
+			match={
+				match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW
+				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_WITH_ACTIVITY
+				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_OPEN_BIDS
+				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_CLOSED_DEALS
+			}
+			route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
+		>
+			{context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
+		</HeaderBarTab>
+		<CustomLink
+			match={match.path === "/contentlisting/:customId?/:step?"}
+			route="/contentlisting/new"
+		>
+			{context.t("HEADER_LINK_CREATE_LISTING")}
+		</CustomLink>
+	</React.Fragment>
+);
+
+HeaderBarSeller.contextTypes = {
+	t: PropTypes.func.isRequired,
+};
+
+const HeaderBarSellerCms = ({ match, common, }, context) => (
+	<React.Fragment>
+		{common.properties.length > 0 && (
+			<HeaderBarTab
+				match={match.url === ROUTE_PATHS.MANAGE_PROPERTIES}
+				route={ROUTE_PATHS.MANAGE_PROPERTIES}
+			>
+				{context.t("HEADER_LINK_MANAGE_PROPERTIES")}
+			</HeaderBarTab>
+		)}
+
+		{common.properties.length > 0 && (
+			<HeaderBarTab
+				match={
+					match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW
+					|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_WITH_ACTIVITY
+					|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_OPEN_BIDS
+					|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_CLOSED_DEALS
+				}
+				route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
+			>
+				{context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
+			</HeaderBarTab>
+		)}
+
+	</React.Fragment>
+);
+
+HeaderBarSellerCms.contextTypes = {
+	t: PropTypes.func.isRequired,
+};
+
 
 class HeaderBar extends React.Component {
 	constructor(props) {
@@ -70,7 +132,7 @@ class HeaderBar extends React.Component {
 
 	render() {
 		const {
-			tab, profile, match, common,
+			tab, profile, match, common
 		} = this.props;
 		const {
 			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount,
@@ -126,37 +188,9 @@ class HeaderBar extends React.Component {
 							</HeaderBarTab>
 						)}
 
-						{profile === "SELLER" && (
-							<HeaderBarTab
-								match={match.url === "/managelistings"}
-								route="/managelistings"
-							>
-								{this.context.t("HEADER_LINK_MANAGE_LISTINGS")}
-							</HeaderBarTab>
-						)}
+						{profile === "SELLER" && !common.cmsEnabled && <HeaderBarSeller {...this.props}/>}
 
-						{profile === "SELLER" && (
-							<HeaderBarTab
-								match={
-									match.url === "/commercialoverview"
-									|| match.url === "/commercialoverview/filter/withactivity"
-									|| match.url === "/commercialoverview/filter/openbids"
-									|| match.url === "/commercialoverview/filter/closeddeals"
-								}
-								route="/commercialoverview"
-							>
-								{this.context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
-							</HeaderBarTab>
-						)}
-
-						{profile === "SELLER" && (
-							<CustomLink
-								match={match.path === "/contentlisting/:customId?/:step?"}
-								route="/contentlisting/new"
-							>
-								{this.context.t("HEADER_LINK_CREATE_LISTING")}
-							</CustomLink>
-						)}
+						{profile === "SELLER" && common.cmsEnabled && <HeaderBarSellerCms {...this.props}/>}
 
 						<div className="spacer" />
 
@@ -175,7 +209,7 @@ class HeaderBar extends React.Component {
 							<HeaderBarTab
 								className="tab baseline switch-mode"
 								linkClass="ca-btn primary"
-								route="/managelistings"
+								route={ROUTE_PATHS.MANAGE_PROPERTIES}
 							>
 								{this.context.t("HEADER_LINK_SELLING_MODE")}
 							</HeaderBarTab>

@@ -11,6 +11,8 @@ import { user } from "./reducers/user";
 import { common } from "./reducers/common";
 import { validation } from "./reducers/validation";
 import { landing } from "../landing/reducers/landing";
+import { cms } from "../cms/reducers/cms";
+import { property } from "../cms/reducers/property";
 
 const reducers = combineReducers({
 	content,
@@ -23,6 +25,8 @@ const reducers = combineReducers({
 	validation,
 	landing,
 	i18nState,
+	cms,
+	property,
 });
 
 export default createStore(reducers, applyMiddleware(thunk));

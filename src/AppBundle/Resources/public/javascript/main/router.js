@@ -111,8 +111,8 @@ class AuthRouter extends React.Component {
 		this.props.setTotalCountries(Number(totalCountries));
 		this.props.setEnvHostUrl(envHostUrl);
 		this.props.setRefererData(refererEmail, refererListingId);
-		this.props.setConfig(JSON.parse(config, function (k, v) {
-			if(v === 1 || v === 0) return !!+v;
+		this.props.setConfig(JSON.parse(config, (k, v) => {
+			if (v === 1 || v === 0) return !!+v;
 			return v;
 		}));
 	}
@@ -148,7 +148,7 @@ class AuthRouter extends React.Component {
 							/>
 						</React.Fragment>
 					))}
-					<div className="manager-container">
+					<div className="main-container">
 						{routes.map((route, index) => (
 							<PrivateRoute
 								key={index}

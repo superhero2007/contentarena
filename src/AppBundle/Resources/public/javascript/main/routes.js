@@ -1,3 +1,6 @@
+import React from "react";
+import { withRouter } from "react-router-dom";
+
 import Watchlist from "../manage/containers/Watchlist";
 import ClosedDeals from "../manage/containers/ClosedDeals";
 import PendingDeals from "../manage/containers/PendingDeals";
@@ -16,9 +19,10 @@ import Terms from "../manage/containers/Terms";
 import SignInUpWrapper from "../landing/containers/SignInUpWrapper";
 import LandingWrapper from "../landing/containers/LandingWrapper";
 
-import React from "react";
-import { withRouter } from "react-router-dom";
+
 import { LOGIN_VIEW_TYPE } from "@constants";
+import ManageProperties from "../cms/containers/ManageProperties";
+import CreateProperty from "../cms/containers/CreateProperty";
 
 const SignUp = withRouter(({ history }) => (
 	<SignInUpWrapper
@@ -36,6 +40,18 @@ const ResetPassword = withRouter(({ history, match }) => (
 ));
 const Landing = withRouter(({ history }) => <LandingWrapper history={history} />);
 
+export const ROUTE_PATHS = {
+	MARKETPLACE: "/marketplace",
+	COMMERCIAL_OVERVIEW: "/commercialoverview",
+	COMMERCIAL_OVERVIEW_WITH_ACTIVITY: "/commercialoverview/filter/withactivity",
+	COMMERCIAL_OVERVIEW_OPEN_BIDS: "/commercialoverview/filter/openbids",
+	COMMERCIAL_OVERVIEW_CLOSED_DEALS: "/commercialoverview/filter/closeddeals",
+	MANAGE_LISTINGS: "/managelistings",
+	MANAGE_PROPERTIES: "/manageproperties",
+	CREATE_PROPERTY: "/createproperty",
+};
+
+
 export const routes = [
 	{
 		path: "/",
@@ -43,7 +59,7 @@ export const routes = [
 		main: Landing,
 	},
 	{
-		path: "/marketplace",
+		path: ROUTE_PATHS.MARKETPLACE,
 		exact: true,
 		header: HeaderBar,
 		main: Marketplace,
@@ -102,7 +118,7 @@ export const routes = [
 		title: "Create Listing",
 	},
 	{
-		path: "/commercialoverview",
+		path: ROUTE_PATHS.COMMERCIAL_OVERVIEW,
 		header: HeaderBar,
 		exact: true,
 		main: CommercialActivity,
@@ -110,7 +126,7 @@ export const routes = [
 		title: "Commercial Overview",
 	},
 	{
-		path: "/commercialoverview/filter/:filterName/:filterValue?",
+		path: `${ROUTE_PATHS.COMMERCIAL_OVERVIEW}/filter/:filterName/:filterValue?`,
 		header: HeaderBar,
 		main: CommercialActivity,
 		updateByPath: true,
@@ -166,11 +182,25 @@ export const routes = [
 		title: "Messages",
 	},
 	{
-		path: "/managelistings",
+		path: ROUTE_PATHS.MANAGE_LISTINGS,
 		header: HeaderBar,
 		main: ManageListings,
 		profile: "SELLER",
 		title: "Manage Listings",
+	},
+	{
+		path: ROUTE_PATHS.MANAGE_PROPERTIES,
+		header: HeaderBar,
+		main: ManageProperties,
+		profile: "SELLER",
+		title: "Manage Properties",
+	},
+	{
+		path: `${ROUTE_PATHS.CREATE_PROPERTY}/:action?/:key?`,
+		header: HeaderBar,
+		main: CreateProperty,
+		profile: "SELLER",
+		title: "Create Property",
 	},
 	{
 		path: "/bids/:tab?",

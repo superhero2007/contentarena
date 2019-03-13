@@ -61,12 +61,7 @@ class ClosedDeals extends Component {
 
 
 		return (
-			<div style={{
-				display: "flex",
-				flexDirection: "column",
-				flex: 1,
-			}}
-			>
+			<div className="section-container">
 				<Loader
 					loading={loading}
 				>

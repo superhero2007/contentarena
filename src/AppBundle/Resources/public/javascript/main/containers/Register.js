@@ -60,7 +60,7 @@ class Register extends React.Component {
 	};
 
 	componentWillUnmount() {
-		jQuery(".manager-container, .page-home").removeAttr("style");
+		jQuery(".main-container, .page-home").removeAttr("style");
 	}
 
 	componentDidMount() {
@@ -72,7 +72,7 @@ class Register extends React.Component {
 		const { activationCode } = match.params;
 		const sessionUser = this.getUserObj();
 
-		jQuery(".manager-container, .page-home").css("width", "auto");
+		jQuery(".main-container, .page-home").css("width", "auto");
 
 		if (!sessionUser || sessionUser.activationCode !== activationCode) {
 			this.getUserInfoByActivateKey(activationCode).catch((err) => {});
