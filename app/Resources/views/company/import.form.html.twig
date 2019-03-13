@@ -46,6 +46,9 @@
             <strong>Total companies skipped (Wrong region name): {{ companiesSkippedByRegion | length }}</strong>
         </div>
         <div>
+            <strong>Total companies skipped (Wrong sport name): {{ companiesSkippedBySport | length }}</strong>
+        </div>
+        <div>
             <strong>Total companies skipped (Malformed data): {{ companiesSkippedByError | length }}</strong>
         </div>
     {% endif %}
@@ -59,6 +62,7 @@
                {{ company.row }} - {{ company.name }} - {{ company.country }}
             </div>
         {% endfor %}
+        </br>
     {% endif %}
 
     {% if companiesSkippedByRegion | length > 0 %}
@@ -68,6 +72,17 @@
                {{ company.row }} - {{ company.name }} - {{ company.region }}
             </div>
         {% endfor %}
+        </br>
+    {% endif %}
+
+    {% if companiesSkippedBySport | length > 0 %}
+        <div> <strong>Companies skipped (Wrong sport name): </strong></div>
+        {% for company in companiesSkippedBySport %}
+            <div>
+                {{ company.row }} - {{ company.name }} - {{ company.sport }}
+            </div>
+        {% endfor %}
+        </br>
     {% endif %}
 
     {% if companiesCreated | length > 0 %}

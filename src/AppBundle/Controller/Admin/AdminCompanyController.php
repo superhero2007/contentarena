@@ -31,15 +31,22 @@ class AdminCompanyController extends BaseAdminController
 
     use \AppBundle\Helper\EmailHelper;
 
-    public function switchUserAction(){
-
-        $id = $this->request->query->get('id');
-        $entity = $this->em->getRepository(User::class)->find($id);
-
-        return $this->redirectToRoute('homepage', array(
-            '_ghost_mode' => $entity->getEmail(),
-        ));
-    }
+    static $EXPORT_DATA = array(
+        "Name",
+        "Company Country",
+        "Company Region",
+        "Website",
+        "Category",
+        "Fed/Club/League Sport",
+        "City",
+        "Address",
+        "Address 2",
+        "Zip",
+        "Phone",
+        "VAT",
+        "Registration Number",
+        "CreatedAt",
+    );
 
     /**
      * @Route("/company/import", name="importCompaniesPage")
@@ -53,6 +60,7 @@ class AdminCompanyController extends BaseAdminController
         $companyCategoryRepo = $doctrine->getRepository('AppBundle:CompanyCategory');
         $countryRepo = $doctrine->getRepository('AppBundle:Country');
         $regionRepo = $doctrine->getRepository("AppBundle:Territory");
+        $sportRepo = $doctrine->getRepository("AppBundle:Sport");
         $user = $this->getUser();
         $data = null;
         $companiesCreated = array();
@@ -60,6 +68,7 @@ class AdminCompanyController extends BaseAdminController
         $companiesSkippedByError = array();
         $companiesSkippedByCountry = array();
         $companiesSkippedByRegion = array();
+        $companiesSkippedBySport = array();
         $rows = array();
 
         $defaultData = array();
@@ -97,13 +106,14 @@ class AdminCompanyController extends BaseAdminController
                 $companyWebsite = trim($row[2]);
                 $companyCountry = trim($row[3]);
                 $companyRegion = trim($row[4]);
-                $companyFederation = trim($row[5]);
+                $companySport = trim($row[5]);
 
                 $rowNumber = $key + 2; // plus one for index 0 and another one for skipping first row
 
                 $company = $companyRepo->findOneBy(array("legalName" => $companyName ));
-                $country = $countryRepo->findOneBy(array("name" => $companyCountry));
-                $region = $regionRepo->findOneBy(array("name" => $companyRegion));
+                if ($companyCountry) $country = $countryRepo->findOneBy(array("name" => $companyCountry));
+                if ($companyRegion) $region = $regionRepo->findOneBy(array("name" => $companyRegion));
+                if ($companySport) $sport = $sportRepo->findOneBy(array("name" => $companySport));
 
                 if ( $companyCountry && $country == null ) {
                     $companiesSkippedByCountry[] = array(
@@ -118,6 +128,15 @@ class AdminCompanyController extends BaseAdminController
                     $companiesSkippedByRegion[] = array(
                         "name" => $companyName,
                         "region" => $companyRegion,
+                        "row" => $rowNumber
+                    );
+                    continue;
+                }
+
+                if ( $companySport && $sport == null ) {
+                    $companiesSkippedBySport[] = array(
+                        "name" => $companyName,
+                        "sport" => $companySport,
                         "row" => $rowNumber
                     );
                     continue;
@@ -154,7 +173,7 @@ class AdminCompanyController extends BaseAdminController
                 }
 
                 if ($region) $company->setRegion($region);
-                if ($companyFederation) $company->setFederation($companyFederation);
+                if ($sport) $company->setSport($sport);
                 if ($country) $company->setCountry($country);
                 if ($companyWebsite) $company->setWebsite($companyWebsite);
 
@@ -178,6 +197,7 @@ class AdminCompanyController extends BaseAdminController
             'companiesSkippedByError' => $companiesSkippedByError,
             'companiesSkippedByCountry' => $companiesSkippedByCountry,
             'companiesSkippedByRegion' => $companiesSkippedByRegion,
+            'companiesSkippedBySport' => $companiesSkippedBySport,
             'companiesProcessed' => count($rows),
             'hostUrl' => $this->container->getParameter("carena_host_url")
         );
@@ -185,6 +205,79 @@ class AdminCompanyController extends BaseAdminController
         return $this->render('company/import.form.html.twig', $viewElements);
     }
 
+    /**
+     * @Route("/company/export", name="exportCompaniesPage")
+     * @param Request $request
+     * @return Response
+     */
+    public function exportCompaniesPage(Request $request){
+
+        $user = $this->getUser();
+        $repo = $this->getDoctrine()->getRepository('AppBundle:Company');
+        $data = null;
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('send', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-primary action-new'),
+                "label" => "Download"
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $companies = $repo->findAll();
+            $content = $this->companiesToCsvExport($companies);
+            return $this->csvResponse($content);
+        }
+
+
+        $viewElements = array(
+            'user' => $user,
+            //'message' => $message,
+            'form' => $form->createView(),
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('company/export.form.html.twig', $viewElements);
+    }
+
+    private function csvResponse($content, $name = "Content Arena Companies.csv"){
+        $response = new Response($content);
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$name.'"');
+
+        return $response;
+    }
+
+    private function companiesToCsvExport(array $companies){
+        $rows[] = implode(',', $this::$EXPORT_DATA);
+
+        foreach ( $companies as $company ){
+            /* @var User $user*/
+            /* @var Company $company*/
+            $rows[] = implode(',', array(
+                $company->getLegalName(),
+                ($company->getCountry() != null) ? $company->getCountry()->getName() : "",
+                ($company->getRegion() != null) ? $company->getRegion()->getName() : "",
+                $company->getWebsite(),
+                ($company->getCategory()) ? $company->getCategory()->getName() : "",
+                ($company->getSport()) ? $company->getSport()->getName() : "",
+                $company->getCity(),
+                $company->getAddress(),
+                $company->getAddress2(),
+                $company->getZip(),
+                $company->getPhone(),
+                $company->getVat(),
+                $company->getRegistrationNumber(),
+                ($company->getCreatedAt() != null) ? $company->getCreatedAt()->format('Y-m-d H:i:s') : ""
+            ));
+        }
+
+        return implode("\n", $rows);
+    }
 
     /**
      * @param string $entityClass

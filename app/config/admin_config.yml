@@ -14,6 +14,7 @@ easy_admin:
               children:
                 - Company
                 - {label: 'Import data', icon: 'file-new', route: 'importCompaniesPage'}
+                - {label: 'Export', icon: 'file-new', route: 'exportCompaniesPage'}
             - Deals
             - RightsPackage
             - label: 'Sports'
@@ -76,6 +77,9 @@ easy_admin:
                         - { property: 'phone' }
                         - { property: 'country' }
                         - { property: 'company' }
+                        - { property: 'company.country', label: "Company Country" }
+                        - { property: 'company.region', label: "Company Region" }
+                        - { property: 'company.category', label: "Company Category" }
                         - { property: 'applicationCompany' }
                         - { property: 'preferredProfile' }
                         - { property: 'preferredBuyerCountries' }
@@ -146,10 +150,10 @@ easy_admin:
                 list:
                     fields:
                         - { property: 'legalName' }
-                        - { property: 'country', label: 'Company Country'}
                         - { property: 'category' }
-                        - { property: 'region' }
-                        - { property: 'federation', label: 'Fed/Club/League Sport' }
+                        - { property: 'country', label: 'Company Country'}
+                        - { property: 'region', label: 'Company Region' }
+                        - { property: 'sport', label: 'Fed/Club/League Sport' }
                         - { property: 'website'}
                         - { property: 'createdAt'}
                     actions:
@@ -161,9 +165,9 @@ easy_admin:
                         - { property: 'legalName' }
                         - { property: 'country', label: 'Company Country', type_options: { required: true }}
                         - { property: 'website', type_options: { required: true } }
-                        - { property: 'category' }
-                        - { property: 'region' }
-                        - { property: 'federation', label: 'Fed/Club/League Sport' }
+                        - { property: 'category', type_options: { required: true } }
+                        - { property: 'region', label: 'Company Region'  }
+                        - { property: 'sport', label: 'Fed/Club/League Sport' }
                         - { property: 'city' }
                         - { property: 'address' }
                         - { property: 'address2' }
@@ -181,8 +185,8 @@ easy_admin:
                         - { property: 'country', label: 'Company Country' }
                         - { property: 'website' }
                         - { property: 'category' }
-                        - { property: 'region' }
-                        - { property: 'federation', label: 'Fed/Club/League Sport' }
+                        - { property: 'region' , label: 'Company Region' }
+                        - { property: 'sport', label: 'Fed/Club/League Sport' }
                         - { property: 'city' }
                         - { property: 'address' }
                         - { property: 'address2' }
