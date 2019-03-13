@@ -31,50 +31,57 @@ class ContentListingTable extends Component {
 
 	getRightCell = (prop, rightEnum) => {
 		const right = prop.value.find(item => item.shortLabel === rightEnum);
+		const { customId } = prop.original;
 		return (
-			<div>
+			<a href={`/listing/${customId}`}>
 				{right && <img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} />}
-			</div>
+			</a>
 		);
 	};
 
 	getYear = date => Moment(date).format(YEAR_FORMAT);
 
-	getSeasonCell = (seasons) => {
-		if (!seasons) return "-";
+	getSeasonCell = (props) => {
+
+		const { value, original, } = props;
+		const { customId } = original;
+
+		if (!value) return "-";
 
 		let season = "-";
 
-		if (seasons.length === 1) {
-			season = `${this.getYear(first(seasons).startDate)}/${this.getYear(first(seasons).customEndDate)}`;
-		} else if (seasons.length === 2) {
-			const firstSeason = minBy(seasons, season => this.getYear(season.startDate));
-			const secondSeason = first(seasons.filter(item => item.id !== firstSeason.id));
+		if (value.length === 1) {
+			season = `${this.getYear(first(value).startDate)}/${this.getYear(first(value).customEndDate)}`;
+		} else if (value.length === 2) {
+			const firstSeason = minBy(value, season => this.getYear(season.startDate));
+			const secondSeason = first(value.filter(item => item.id !== firstSeason.id));
 			season = `${this.getYear(firstSeason.startDate)}/${this.getYear(firstSeason.customEndDate)}-${this.getYear(secondSeason.startDate)}/${this.getYear(secondSeason.customEndDate)}`;
-		} else if (seasons.length > 2) {
-			const firstSeason = minBy(seasons, season => this.getYear(season.startDate));
-			const secondSeason = maxBy(seasons, season => this.getYear(season.startDate));
+		} else if (value.length > 2) {
+			const firstSeason = minBy(value, season => this.getYear(season.startDate));
+			const secondSeason = maxBy(value, season => this.getYear(season.startDate));
 			season = `${this.getYear(firstSeason.startDate)}/${this.getYear(firstSeason.customEndDate)}-${this.getYear(secondSeason.startDate)}/${this.getYear(secondSeason.customEndDate)}`;
 		}
 
-		return <span title={season}>{season}</span>;
+		return <a href={`/listing/${customId}`} title={season}>{season}</a>;
 	};
 
-	getCell = (value, isCountry = false) => {
+	getCell = (props, isCountry = false) => {
+		const { value, original, } = props;
+		const { customId } = original;
 		const isValueArr = Array.isArray(value);
 
 		if (isValueArr) {
 			const cellValue = first(value) ? first(value).name : "-";
 			const cellText = isCountry && REGIONS_ENUMS[cellValue] ? REGIONS_ENUMS[cellValue] : cellValue;
-			return <span title={cellValue}>{cellText}</span>;
+			return <a href={`/listing/${customId}`} title={cellValue}>{cellText}</a>;
 		}
 
-		return <span title={value}>{value}</span>;
+		return <a href={`/listing/${customId}`} title={value}>{value}</a>;
 	};
 
-	goToSelectedListing = (customId) => {
-		const { history } = this.props;
-		history.push(`/listing/${customId}`);
+	getBundlesCell = (props) => {
+		const { customId, salesPackages, } = props;
+		return <a href={`/listing/${customId}`} title={salesPackages.length}>{salesPackages.length}</a>;
 	};
 
 	getColumns = () => [{
@@ -85,7 +92,7 @@ class ContentListingTable extends Component {
 		accessor: "name",
 		width: 300,
 		sortMethod: (a, b) => (a.length >= b.length ? 1 : -1),
-		Cell: props => this.getCell(props.value),
+		Cell: props => this.getCell(props),
 	}, {
 		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_SPORT"), "", "", true),
 		headerClassName: "table-header-big",
@@ -94,7 +101,7 @@ class ContentListingTable extends Component {
 		accessor: "sports",
 		width: 150,
 		sortMethod: (a, b) => this.getSort(a, b),
-		Cell: props => this.getCell(props.value),
+		Cell: props => this.getCell(props),
 	}, {
 		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_COUNTRY"), "", "", true),
 		headerClassName: "table-header-big",
@@ -103,7 +110,7 @@ class ContentListingTable extends Component {
 		accessor: "sportCategory",
 		width: 100,
 		sortMethod: (a, b) => this.getSort(a, b),
-		Cell: props => this.getCell(props.value, true),
+		Cell: props => this.getCell(props, true),
 	}, {
 		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_COMPETITION"), "", "", true),
 		headerClassName: "table-header-big",
@@ -111,7 +118,7 @@ class ContentListingTable extends Component {
 		id: "competition",
 		accessor: "tournament",
 		sortMethod: (a, b) => this.getSort(a, b),
-		Cell: props => this.getCell(props.value),
+		Cell: props => this.getCell(props),
 	}, {
 		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_SEASON_RELEASE"), "", "", true),
 		headerClassName: "table-header-big",
@@ -119,7 +126,7 @@ class ContentListingTable extends Component {
 		id: "seasons",
 		accessor: "seasons",
 		sortMethod: (a, b) => this.getSort(a, b),
-		Cell: props => this.getSeasonCell(props.value),
+		Cell: props => this.getSeasonCell(props),
 	}, {
 		Header: () => this.getHeader("LT", "Live transmission"),
 		id: "LT",
@@ -167,18 +174,10 @@ class ContentListingTable extends Component {
 		headerClassName: "table-header-big",
 		className: "table-header-big",
 		id: "globe",
-		accessor: "salesPackages",
 		width: 55,
 		sortMethod: (a, b) => (a.length >= b.length ? 1 : -1),
-		Cell: props => this.getCell(props.value.length),
+		Cell: props => this.getBundlesCell(props.original),
 	}];
-
-	getTrClick = (state, row) => {
-		const { customId } = row.original;
-		return {
-			onClick: e => this.goToSelectedListing(customId),
-		};
-	};
 
 	render() {
 		const { listings } = this.props;
@@ -195,7 +194,7 @@ class ContentListingTable extends Component {
 					resizable={false}
 					data={listings}
 					columns={this.getColumns()}
-					getTrProps={(state, rowInfo) => this.getTrClick(state, rowInfo)}
+					/*getTrProps={(state, rowInfo) => this.getTrClick(state, rowInfo)}*/
 				/>
 				<ReactTooltip place="top" type="dark" effect="solid" />
 			</section>
