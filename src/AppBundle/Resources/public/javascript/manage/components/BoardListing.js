@@ -193,7 +193,7 @@ class BoardListing extends React.Component {
 								{`${lastActionUser.firstName} ${lastActionUser.lastName}`}
 								{" "}
 								{lastActionDate && `- ${Moment(lastActionDate)
-									.format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}`}
+									.format(`${DATE_FORMAT} ${TIME_FORMAT}`)}`}
 							</div>
 						)}
 
