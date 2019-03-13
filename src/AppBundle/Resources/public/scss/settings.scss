@@ -451,6 +451,17 @@
 	background-position: top center;
   }
 
+  &.mobile{
+    padding: 0;
+    .settings-wrapper{
+      margin-top: 0;
+      .settings-title{
+        margin-bottom: 0;
+        font-size: 23px;
+      }
+    }
+  }
+
   justify-content: center;
   flex-direction: column;
   position: absolute;
@@ -482,6 +493,7 @@
     background-size: cover;
     padding: 30px;
     margin: 0 -20px;
+    text-align: center;
   }
 
   .big-title {
@@ -497,8 +509,10 @@
 	  font-size: 45px;
 	}
 	&.mobile{
-	  font-size: 40px;
+	  font-size: 26px;
 	  text-align: center;
+      line-height: 26px;
+      margin: 0;
 	}
   }
 
@@ -539,7 +553,7 @@
 	  justify-content: center;
 
 	  &.mobile{
-		margin-top: 30px !important;
+		margin-top: 0px !important;
 	  }
 	}
 	.setting-password, .setting-validation {
@@ -565,6 +579,11 @@
 		input{
 		  margin: 20px 0 30px 0;
 		}
+        label{
+          color: #333333;
+          font-size: 16px;
+          font-weight: 600;
+        }
 	  }
 
 	  &.mobile{
@@ -575,9 +594,13 @@
 		.subtitle{
 		  margin-bottom: 10px;
 		}
-		.password input{
-		  margin-top: 10px;
-		}
+        .password {
+          max-width: none;
+          margin-right: 0;
+          input {
+            margin-top: 10px;
+          }
+        }
 	}
 	  .password-validation{
 		margin-left:0;
@@ -650,6 +673,10 @@
 		}
 		&.mobile{
 		  flex: 0 1 100%;
+          input{
+            margin-top: 10px;
+            margin-bottom: 20px;
+          }
 		}
 		&.tablet{
 		  flex: 0 1 50%;

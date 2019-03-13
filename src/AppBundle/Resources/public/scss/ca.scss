@@ -38,6 +38,22 @@ body {
       @media only screen and (min-width: 1280px) {
         overflow: inherit;
       }
+      .logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+          max-height: 50px;
+        }
+      }
+      &.mobile{
+        min-height: 54px;
+        .logo{
+          img{
+            max-height: 34px;
+          }
+        }
+      }
     }
   }
 }

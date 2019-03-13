@@ -221,7 +221,7 @@ class Register extends React.Component {
 
 		TrackingEvent(`Register ${user.fullName}`, "Password", user.fullName);
 		return (
-			<div className="settings-container activate-user-container">
+			<div className={cn("settings-container activate-user-container", { mobile: isMobileOnly })}>
 				<div className="settings-header">
 					<div className={cn("big-title", { mobile: isMobileOnly, tablet: isTablet })}>
 						<Translate i18nKey="SETTINGS_WELCOME" />
@@ -249,7 +249,7 @@ class Register extends React.Component {
 								<Translate i18nKey="SETTINGS_LABEL_CHANGE_PASSWORD_2" />
 							</div>
 							<div className="password">
-								<label><b><Translate i18nKey="SETTINGS_LABEL_TYPE_NEW_PASSWORD" /></b></label>
+								<label><Translate i18nKey="SETTINGS_LABEL_TYPE_NEW_PASSWORD" /></label>
 								<input
 									type="password"
 									onChange={(e) => {
@@ -259,7 +259,7 @@ class Register extends React.Component {
 									}}
 								/>
 
-								<label><b><Translate i18nKey="SETTINGS_LABEL_RETYPE_NEW_PASSWORD" /></b></label>
+								<label><Translate i18nKey="SETTINGS_LABEL_RETYPE_NEW_PASSWORD" /></label>
 								<input
 									type="password"
 									onChange={(e) => {
