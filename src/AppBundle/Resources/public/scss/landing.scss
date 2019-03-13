@@ -1085,6 +1085,7 @@
       text-align: left;
       font-size: 14px;
       font-style: italic;
+      margin: 10px 0;
     }
     .sign-error-top {
       @extend .sign-error;
@@ -1093,6 +1094,12 @@
       margin-bottom: 30px;
     }
 
+    .sign-message {
+      font-size: 13px;
+      text-align: left;
+      display: block;
+      margin-bottom: 30px;
+    }
     .forgot-password-wrapper {
       padding: 15px 0 35px 0;
       margin: 0;

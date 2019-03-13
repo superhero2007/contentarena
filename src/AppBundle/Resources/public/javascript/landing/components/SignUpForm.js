@@ -108,6 +108,10 @@ class SignUpForm extends PureComponent {
 					<Translate i18nKey="SIGN_UP_FOR_ACCOUNT" />
 				</h3>
 
+				<span className="sign-message">
+					<Translate i18nKey="SIGN_UP_HEADER_MESSAGE" />
+				</span>
+
 				{refererEmail && refererEmail !== "" && (
 					<p className="sign-in-error-message">
 						<Translate i18nKey="SIGN_UP_FROM_PUBLIC_LISTING_MESSAGE" />
@@ -133,6 +137,7 @@ class SignUpForm extends PureComponent {
 						</span>
 					)
 				}
+
 
 				<div className="username">
 					<label htmlFor="username">
