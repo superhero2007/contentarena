@@ -16,6 +16,7 @@ services:
 
     service.entry_point:
             class: AppBundle\Service\CustomEntryPoint
+            arguments: ['@security.authentication.form_entry_point.main']
 
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
