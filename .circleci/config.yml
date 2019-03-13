@@ -200,11 +200,13 @@ workflows:
             branches:
               ignore:
                 - release
+                - master
       - build_fe:
           filters:
             branches:
               ignore:
                 - release
+                - master
       # The deploy job will only run on the filtered branches and
       # require the build job to be successful before it starts
       - deploy:
