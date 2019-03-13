@@ -21,12 +21,11 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: /
                 use_referer : true
-
+            entry_point: service.entry_point
             logout:
                 path: /logout
                 target: /
                 invalidate_session: true
-
             anonymous:    true
             switch_user:  { role: ROLE_ADMIN, parameter: _ghost_mode }
 
