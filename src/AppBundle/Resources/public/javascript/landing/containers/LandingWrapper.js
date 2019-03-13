@@ -53,7 +53,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/layout/web_globe.png"
+										src={`${assetsBaseDir}app/images/landing/web_globe.png`}
 										 alt="global market place"
 									/>
 								</div>
@@ -65,7 +65,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/layout/web_dollar.png"
+										src={`${assetsBaseDir}app/images/landing/web_dollar.png`}
 										 alt="maximize revenues"
 									/>
 								</div>
@@ -77,7 +77,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/layout/web_sales-process.png"
+										src={`${assetsBaseDir}app/images/landing/web_sales-process.png`}
 										 alt="seamless sales process"
 									/>
 								</div>
@@ -95,7 +95,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/layout/web_search.png"
+										src={`${assetsBaseDir}app/images/landing/web_search.png`}
 										 alt="find relevant content"
 									/>
 								</div>
@@ -107,7 +107,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/layout/web_growth-.png"
+										src={`${assetsBaseDir}app/images/landing/web_growth-.png`}
 										 alt="optimize content portfolio"
 									/>
 								</div>
@@ -119,7 +119,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/layout/web_security.png"
+										src={`${assetsBaseDir}app/images/landing/web_security.png`}
 										 alt="Fast &amp; Safe transaction"
 									/>
 								</div>
@@ -153,9 +153,9 @@ class LandingWrapper extends Component {
 									</div>
 								</div>
 								<div className="icon">
-									<a href="https://contentarena.com/site/assets/files/4128/globe-icon_content_arena.png">
+									<a href={`${assetsBaseDir}app/images/landing/globe-icon_content_arena.png`}>
 										<img
-											src="https://contentarena.com/site/assets/files/4128/globe-icon_content_arena.png"
+											src={`${assetsBaseDir}app/images/landing/globe-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
 										/>
 									</a>
@@ -163,9 +163,9 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="benefit-row">
 								<div className="icon">
-									<a href="https://contentarena.com/site/assets/files/4129/screen-icon_content_arena.png">
+									<a href={`${assetsBaseDir}app/images/landing/screen-icon_content_arena.png`}>
 										<img
-											src="https://contentarena.com/site/assets/files/4129/screen-icon_content_arena.png"
+											src={`${assetsBaseDir}app/images/landing/screen-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
 										/>
 									</a>
@@ -189,9 +189,9 @@ class LandingWrapper extends Component {
 									</div>
 								</div>
 								<div className="icon">
-									<a href="https://contentarena.com/site/assets/files/4130/handshake-icon_content_arena.png">
+									<a href={`${assetsBaseDir}app/images/landing/handshake-icon_content_arena.png`}>
 										<img
-											src="https://contentarena.com/site/assets/files/4130/handshake-icon_content_arena.png"
+											src={`${assetsBaseDir}app/images/landing/handshake-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
 										/>
 									</a>
@@ -216,7 +216,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/files/4523/sascha_rund.400x400.png"
+										src={`${assetsBaseDir}app/images/landing/sascha_rund.400x400.png`}
 										 alt="Sascha Kojic"
 									/>
 								</div>
@@ -228,7 +228,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/files/4524/erik_rund.400x400.png"
+										src={`${assetsBaseDir}app/images/landing/erik_rund.400x400.png`}
 										 alt="Erik Lorenz"
 									/>
 								</div>
@@ -240,7 +240,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/files/4525/bernie_rund.400x400.png"
+										src={`${assetsBaseDir}app/images/landing/bernie_rund.400x400.png`}
 										 alt="Bernhard Riedlsperger"
 									/>
 								</div>
@@ -254,7 +254,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/files/4526/alex_rund_neu.400x400.png"
+										src={`${assetsBaseDir}app/images/landing/alex_rund_neu.400x400.png`}
 										 alt="Alexander Abts"
 									/>
 								</div>
@@ -268,7 +268,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/files/4527/klemens_rund.400x400.png"
+										src={`${assetsBaseDir}app/images/landing/klemens_rund.400x400.png`}
 										 alt="Klemens Kögl"
 									/>
 								</div>
@@ -282,7 +282,7 @@ class LandingWrapper extends Component {
 							<div className="item">
 								<div className="icon">
 									<img
-										src="https://contentarena.com/site/assets/files/4528/juan_rund.400x400.png"
+										src={`${assetsBaseDir}app/images/landing/juan_rund.400x400.png`}
 										 alt="Juan Cruz"
 									/>
 								</div>
@@ -310,82 +310,82 @@ class LandingWrapper extends Component {
 						<div className="inner">
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4542/pitch_international.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/pitch_international.400x400.png`}
 									alt="Pitch International"
 								/>
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4541/perform.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/perform.400x400.png`}
 									 alt="Perform"
 								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4534/dazn.400x400.png" alt="DAZN" />
+								<img src={`${assetsBaseDir}app/images/landing/dazn.400x400.png`} alt="DAZN" />
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4546/sportradar.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/sportradar.400x400.png`}
 									 alt="Sportradar"
 								/>
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4547/sportsman.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/sportsman.400x400.png`}
 									 alt="Sportsman"
 								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4532/bvb.400x400.png" alt="BVB" />
+								<img src={`${assetsBaseDir}app/images/landing/bvb.400x400.png`} alt="BVB" />
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4533/crystal.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/crystal.400x400.png`}
 									 alt="Crystal"
 								/>
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4536/everton.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/everton.400x400.png`}
 									 alt="Everton"
 								/>
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4555/malaga.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/malaga.400x400.png`}
 									 alt="Malaga CF"
 								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4556/cze.400x400.png" alt="CZE" />
+								<img src={`${assetsBaseDir}app/images/landing/cze.400x400.png`} alt="CZE" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4535/dcl.400x400.png" alt="DCL" />
+								<img src={`${assetsBaseDir}app/images/landing/dcl.400x400.png`} alt="DCL" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4543/sky.400x400.png" alt="Sky" />
+								<img src={`${assetsBaseDir}app/images/landing/sky.400x400.png`} alt="Sky" />
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4544/sport1.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/sport1.400x400.png`}
 									 alt="Sport 1"
 								/>
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4537/matchtv_grey.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/matchtv_grey.400x400.png`}
 									 alt="Match TV"
 								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4540/orf.400x400.png" alt="ORF" />
+								<img src={`${assetsBaseDir}app/images/landing/orf.400x400.png`} alt="ORF" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4539/oefb.400x400.png" alt="OEFB" />
+								<img src={`${assetsBaseDir}app/images/landing/oefb.400x400.png`} alt="OEFB" />
 							</div>
 							<div className="icon">
 								<img
-									src="https://contentarena.com/site/assets/files/4545/sportklub.400x400.png"
+									src={`${assetsBaseDir}app/images/landing/sportklub.400x400.png`}
 									 alt="SportKlub"
 								/>
 							</div>

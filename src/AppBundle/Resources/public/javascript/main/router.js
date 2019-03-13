@@ -40,7 +40,7 @@ class PrivateRoute extends React.Component {
 				render={(props) => {
 					this.updateProfile();
 					PageView();
-					if (title !== null && title !== undefined ) document.title = `Content Arena - ${title}`;
+					if (title !== null && title !== undefined) document.title = `Content Arena - ${title}`;
 
 					return (
 						<Component
