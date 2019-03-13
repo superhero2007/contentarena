@@ -285,7 +285,7 @@ const mapDispatchToProps = dispatch => ({
 	openSeasonSelector: (index, selectedItems) => dispatch(openSeasonSelector(index, selectedItems)),
 	setCustomSportName: (index, sportName) => dispatch(setCustomSportName(index, sportName)),
 	setCustomSportCategoryName: (index, sportCategoryName) => dispatch(setCustomSportCategoryName(index, sportCategoryName)),
-	setCustomTournamntName: (index, tournamentName) => dispatch(setCustomTournamentName(index, tournamentName)),
+	setCustomTournamentName: (index, tournamentName) => dispatch(setCustomTournamentName(index, tournamentName)),
 	setCustomSeasonName: (index, seasonName) => dispatch(setCustomSeasonName(index, seasonName)),
 });
 
