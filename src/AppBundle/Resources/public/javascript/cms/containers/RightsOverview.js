@@ -6,8 +6,7 @@ import CmsRightsFilter from "../components/CmsRightsFilter";
 import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
 import ReactTable from "react-table";
-import { getTerritories } from "../reducers/propertyFilters";
-import { yellowCheckIcon } from "../../main/components/Icons";
+import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import { RIGHT_STATUS } from "../../common/constants";
 
 
@@ -26,6 +25,48 @@ class RightsOverview extends React.Component {
 			this.props.propertyFilters.regions.length !== regions.length ) this.setState({selectedTerritories});
 	}
 
+	renderSeasonRightHeader = (right, key, list, season) => {
+		return (
+			<div className="d-flex justify-content-center">
+				{
+					key === 0 &&
+					<div className="season-header" style={{width: 40 * list.length}}>
+						{season.year}
+					</div>
+				}
+				<span>
+					{right.code}
+				</span>
+			</div>
+		)
+	};
+
+	renderSeasonRightCell = (right, key, list) => {
+		return (
+			<div className="d-flex justify-content-center">
+				<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon }/>
+			</div>
+		)
+	};
+
+	renderRightHeader = (right) => {
+		return (
+			<div className="d-flex justify-content-center">
+				<span>
+					{right.code}
+				</span>
+			</div>
+		)
+	};
+
+	renderRightCell = (right) => {
+		return (
+			<div className="d-flex justify-content-center">
+				<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon }/>
+			</div>
+		)
+	};
+
 	getColumns = () => {
 
 		const { propertyFilters: { seasons, rights, } } = this.props;
@@ -37,35 +78,29 @@ class RightsOverview extends React.Component {
 			accessor: "name",
 		});
 
-		seasons.forEach(season => {
+		if (seasons.length > 0){
+			seasons.forEach(season => {
+				rights.forEach((right, key, list) => {
+					columns.push({
+						headerClassName: "season-header-column",
+						Header: props => this.renderSeasonRightHeader(right, key, list,season),
+						Cell: () => this.renderSeasonRightCell(right, key, list),
+						maxWidth: 40
+					})
+				});
+			});
+		} else {
 			rights.forEach((right, key, list) => {
 				columns.push({
 					headerClassName: "season-header-column",
-					Header: props => {
-						return (
-							<div className="d-flex justify-content-center">
-								{
-									key === 0 &&
-									<div className="season-header" style={{width: 40 * list.length}}>
-										{season.year}
-									</div>
-								}
-								<span>
-									{right.code}
-								</span>
-							</div>
-
-						)
-					},
-					Cell: props => (
-						<div className="d-flex justify-content-center">
-							<img src={yellowCheckIcon}/>
-						</div>
-					),
+					Header: () => this.renderRightHeader(right),
+					Cell: () => this.renderRightCell(right),
 					maxWidth: 40
 				})
 			});
-		});
+		}
+
+
 
 		columns.push({
 			Header: this.context.t("CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING"),
@@ -89,15 +124,10 @@ class RightsOverview extends React.Component {
 		return columns;
 	};
 
-	setRightStatus = (rightStatus, checked) => {
-		if (checked) this.setState({rightStatus});
-	};
-
 	render() {
 		const {
 			loading,
 			selectedTerritories,
-			rightStatus,
 		} = this.state;
 
 		const { property, common: { totalCountries } } = this.props;
@@ -115,29 +145,83 @@ class RightsOverview extends React.Component {
 						<div className="region-filter-title">
 							{ this.context.t("CMS_STATUS_TITLE")}
 						</div>
-						<div className="regions">
-							<input
-								type="checkbox"
-								checked={rightStatus === RIGHT_STATUS.AVAILABLE_RIGHTS}
-								className="ca-checkbox blue"
-								onChange={(e) => { this.setRightStatus(RIGHT_STATUS.AVAILABLE_RIGHTS, e.target.checked)}}
-								id={RIGHT_STATUS.AVAILABLE_RIGHTS}
-							/>
-							<label
-								className={cn({ selected: rightStatus === RIGHT_STATUS.AVAILABLE_RIGHTS })}
-								htmlFor={RIGHT_STATUS.AVAILABLE_RIGHTS}
-							>
-								{this.context.t("CMS_STATUS_AVAILABLE_RIGHTS")}
-							</label>
+						<div className="right-status">
+							<div>
+								<input
+									type="checkbox"
+									checked={this.state[RIGHT_STATUS.AVAILABLE_RIGHTS]}
+									className="ca-checkbox blue"
+									onChange={(e) => { this.setState({[RIGHT_STATUS.AVAILABLE_RIGHTS]: e.target.checked})}}
+									id={RIGHT_STATUS.AVAILABLE_RIGHTS}
+								/>
+								<label
+									className={cn({ selected: this.state[RIGHT_STATUS.AVAILABLE_RIGHTS] })}
+									htmlFor={RIGHT_STATUS.AVAILABLE_RIGHTS}
+								>
+									{this.context.t("CMS_AVAILABLE_RIGHTS")}
+								</label>
+							</div>
+							<div>
+								<input
+									type="checkbox"
+									checked={this.state[RIGHT_STATUS.OFFERED_RIGHTS]}
+									className="ca-checkbox blue"
+									onChange={(e) => { this.setState({[RIGHT_STATUS.OFFERED_RIGHTS]: e.target.checked})}}
+									id={RIGHT_STATUS.OFFERED_RIGHTS}
+								/>
+								<label
+									className={cn({ selected: this.state[RIGHT_STATUS.OFFERED_RIGHTS] })}
+									htmlFor={RIGHT_STATUS.OFFERED_RIGHTS}
+								>
+									{this.context.t("CMS_OFFERED_RIGHTS")}
+								</label>
+							</div>
+							<div>
+								<input
+									type="checkbox"
+									checked={this.state[RIGHT_STATUS.CLOSED_DEALS]}
+									className="ca-checkbox blue"
+									onChange={(e) => { this.setState({[RIGHT_STATUS.CLOSED_DEALS]: e.target.checked})}}
+									id={RIGHT_STATUS.CLOSED_DEALS}
+								/>
+								<label
+									className={cn({ selected: this.state[RIGHT_STATUS.CLOSED_DEALS] })}
+									htmlFor={RIGHT_STATUS.CLOSED_DEALS}
+								>
+									{this.context.t("CMS_CLOSED_DEALS")}
+								</label>
+							</div>
 						</div>
 					</div>
 					<div className="split-filter">
 						<div className="region-filter-title">
 							{ this.context.t("CMS_RIGHT_LEGENDS_TITLE")}
 						</div>
-						<div className="regions">
-
-							qwe
+						<div className="right-legends">
+							<div className="right-legends-item">
+								<img src={blueCheckIcon} />
+								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE")}
+							</div>
+							<div className="right-legends-item">
+								<img src={blueCheckIcon} />
+								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED")}
+							</div>
+							<div className="right-legends-item">
+								<img src={blueCheckIcon} />
+								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD")}
+							</div>
+							<div className="right-legends-item">
+								<img src={yellowCheckIcon} />
+								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE")}
+							</div>
+							<div className="right-legends-item">
+								<img src={yellowCheckIcon} />
+								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED")}
+							</div>
+							<div className="right-legends-item">
+								<img src={yellowCheckIcon} />
+								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD")}
+							</div>
 						</div>
 					</div>
 				</div>

@@ -52,6 +52,18 @@ class CmsSeasonsFilter extends React.Component {
 					}
 				</div>
 				<div className="regions">
+
+					{
+						seasons.length === 0 &&
+						<button
+							key={`no-season`}
+							className="region"
+							disabled
+						>
+							Not available
+						</button>
+					}
+
 					{seasons.map(season => (
 						<button
 							key={`season-${season.id}`}

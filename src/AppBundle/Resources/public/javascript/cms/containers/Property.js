@@ -17,18 +17,19 @@ class Property extends React.Component {
 		super(props);
 		this.state = {
 			loadingProperty: false,
-			property: props.property,
+			property: null,
 			activeTab: props.tab
 		};
 	}
 
 	componentDidMount(){
-		const { propertyId } = this.props;
+		const { match : { params : { propertyId, tab} = {} } } = this.props;
 		if (!propertyId) return false;
 
-		this.fetchProperty(propertyId);
+		if (!this.state.property) this.fetchProperty(propertyId);
 		this.props.getTerritories();
 		this.props.getRegions();
+		this.setState({propertyId, activeTab: tab});
 	};
 
 	fetchProperty = (propertyId) => {
@@ -51,11 +52,10 @@ class Property extends React.Component {
 	};
 
 	render() {
-		const { propertyId, history, } = this.props;
-		const { activeTab, loadingProperty, property, errorCode } = this.state;
-		const { name, } = property;
+		const { history, match : { params : { propertyId, tab } = {} } } = this.props;
+		const { loadingProperty, property, errorCode } = this.state;
 
-		if (loadingProperty || this.isLoadingRegions()) {
+		if (loadingProperty || this.isLoadingRegions() || !property ) {
 			return (
 				<DefaultBox>
 					<Loader loading />
@@ -75,38 +75,40 @@ class Property extends React.Component {
 		}
 
 		return (
-			<DefaultBox>
-				<h4 className="title">
-					{name}
-				</h4>
+			<div className="default-container no-title property">
+				<DefaultBox>
+					<h4 className="title">
+						{property.name}
+					</h4>
 
-				<div className="ca-tabs">
-					{
-						Object.values(CMS_PROPERTY_TABS).map(tab => {
-							//TODO: Add translation to tab names
-							return (
-								<a
-									key={tab}
-									className={`tab lg ${activeTab === tab ? "active" : ""}`}
-									onClick={() => {
-										history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${tab}`);
-									}}
-								>
-									{tab}
-								</a>
-							)
-						})
-					}
-				</div>
+					<div className="ca-tabs">
+						{
+							Object.values(CMS_PROPERTY_TABS).map(t => {
+								//TODO: Add translation to tab names
+								return (
+									<a
+										key={t}
+										className={`tab lg ${t === tab ? "active" : ""}`}
+										onClick={() => {
+											history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${t}`);
+										}}
+									>
+										{t}
+									</a>
+								)
+							})
+						}
+					</div>
 
-				{activeTab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview property={property} />}
-				{activeTab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures property={property} />}
-				{activeTab === CMS_PROPERTY_TABS.COMMERCIAL && <CmsCommercialOverview property={property} />}
-				{activeTab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} />}
-				{activeTab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails property={property} />}
+					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview property={property} />}
+					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures property={property} />}
+					{tab === CMS_PROPERTY_TABS.COMMERCIAL && <CmsCommercialOverview property={property} />}
+					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} />}
+					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails property={property} />}
 
 
-			</DefaultBox>
+				</DefaultBox>
+			</div>
 		);
 	}
 }

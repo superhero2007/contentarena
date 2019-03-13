@@ -1,8 +1,8 @@
 
 export const propertyFiltersTypes = {
-	SET_RIGHTS: "SET_RIGHTS",
-	SET_SEASONS: "SET_SEASONS",
-	SET_REGIONS: "SET_REGIONS"
+	SET_FILTER_RIGHTS: "SET_FILTER_RIGHTS",
+	SET_FILTER_SEASONS: "SET_FILTER_SEASONS",
+	SET_FILTER_REGIONS: "SET_FILTER_REGIONS"
 };
 
 const DEFAULT_STATE = {
@@ -17,7 +17,7 @@ export const propertyFilters = (state = DEFAULT_STATE, action) => {
 	let newState = {};
 	let selectedTerritories = new Map();
 	switch (action.type) {
-		case propertyFiltersTypes.SET_RIGHTS:
+		case propertyFiltersTypes.SET_FILTER_RIGHTS:
 			let availableTerritories = new Map();
 
 			action.rights.forEach(r=>{
@@ -42,9 +42,9 @@ export const propertyFilters = (state = DEFAULT_STATE, action) => {
 				availableTerritories: availableTerritories,
 				selectedTerritories: selectedTerritories,
 			});
-		case propertyFiltersTypes.SET_SEASONS:
+		case propertyFiltersTypes.SET_FILTER_SEASONS:
 			return Object.assign({}, state, { seasons: action.seasons });
-		case propertyFiltersTypes.SET_REGIONS:
+		case propertyFiltersTypes.SET_FILTER_REGIONS:
 
 			action.regions.forEach(r=>{
 				state.availableTerritories.forEach(t=>{
