@@ -378,7 +378,18 @@
                         {% for round in content.fixturesBySeason[loop.index0] %}
                             <tr>
                                 <td>
-                                    {% if round.name is defined %}{{ round.name }}{% endif %}{% if round.date is defined %} - {{ round.date | date("d/m/Y - H:i", timeZone) }} UTC {% endif %}
+                                    {% if round.name is defined %}
+                                        {{ round.name }}
+                                    {% endif %}
+                                    {% if round.date is defined %}
+                                        - {{ round.date | date("d/m/Y", timeZone) }}
+                                        {% if round.time is defined %}
+                                            - {{ round.time }} UTC
+                                        {% endif %}
+                                        {% if round.time is not defined %}
+                                            - {{ round.date | date("H:i", timeZone) }} UTC
+                                        {% endif %}
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

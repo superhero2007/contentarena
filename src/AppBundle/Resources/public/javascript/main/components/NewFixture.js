@@ -5,6 +5,7 @@ import moment from "moment/moment";
 import { DATE_TIME_FORMAT, DATE_FORMAT, TIME_FORMAT } from "@constants";
 import { formatMomentToServerFormat } from "@utils/time";
 import { addIcon, cancelIcon } from "./Icons";
+import { formatMomentToServerTime } from "../../common/utils/time";
 
 class NewFixture extends Component {
 	constructor(props) {
@@ -35,9 +36,15 @@ class NewFixture extends Component {
 	};
 
 	onDateSelected = (e) => {
-		const { handleDate } = this.props;
+		const { handleDate, handleTime } = this.props;
+		const { isDatePickerWithTimeEnabled } = this.state;
 		const formatted = formatMomentToServerFormat(e);
 		handleDate(formatted);
+
+		if (isDatePickerWithTimeEnabled) {
+			const formattedTime = formatMomentToServerTime(e);
+			handleTime(formattedTime);
+		}
 	};
 
 	handleDateChangeRaw = (e) => {
@@ -57,9 +64,20 @@ class NewFixture extends Component {
 
 	render() {
 		const {
-			onRemove, onAdd, onChange, value, showAdd, id, date, isInvalid,
+			onRemove, onAdd, onChange, value, showAdd, id, date, isInvalid, time,
 		} = this.props;
 		const { isDatePickerEnabled, isDatePickerWithTimeEnabled } = this.state;
+
+		const selectedDate = (date) ? moment(date) : undefined;
+
+		if (time) {
+			const timeObj = moment(time, "HH:mm");
+
+			selectedDate.set({
+				hour: timeObj.get("hour"),
+				minute: timeObj.get("minute"),
+			});
+		}
 
 		return (
 			<div className="fixture-item">
@@ -94,9 +112,10 @@ class NewFixture extends Component {
 									{this.context.t("Add Time")}
 								</a>
 							)}
+
 							<DatePicker
 								className={`date-picker id${id}`}
-								selected={(date) ? moment(date) : undefined}
+								selected={selectedDate}
 								onChange={this.onDateSelected}
 								timeIntervals={15}
 								dateFormat={isDatePickerWithTimeEnabled ? `${DATE_TIME_FORMAT} [UTC]` : DATE_FORMAT}
