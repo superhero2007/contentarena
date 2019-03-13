@@ -44,10 +44,18 @@ class UserController extends FOSRestController
         $user_manager = $this->get('fos_user.user_manager');
         $factory = $this->get('security.encoder_factory');
 
+        /* @var User $user */
         $user = $user_manager->findUserByUsername($username);
 
         if(is_null($user)) {
             $errorCode = UserErrors::USER_NOT_EXISTS;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "username" => $username));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
+        }
+
+        if (!$user->canLogin())
+        {
+            $errorCode = UserErrors::USER_DISABLED;
             $logger->info(UserErrors::getErrorMessage($errorCode), array( "username" => $username));
             return $this->getErrorResponse(UserErrors::class, $errorCode);
         }

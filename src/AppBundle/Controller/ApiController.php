@@ -590,6 +590,7 @@ class ApiController extends BaseController
     public function getUserInfoByActivationCode(Request $request, UserService $userService, JobService $jobService)
     {
         $user = $userService->getUserByActivationCode($request->get("activationCode"));
+        $user = $userService->setUserAsIncomplete($user);
         $jobService->createAccountIncompleteJob($user);
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();

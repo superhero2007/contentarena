@@ -8,6 +8,7 @@ easy_admin:
                   - User
                   - Company
                   - Status
+                  - { entity: 'ArchivedUser', label: 'Archived' }
                   - {label: 'Import', icon: 'file-new', route: 'importUsersPage'}
                   - {label: 'Export', icon: 'file-new', route: 'exportUsersPage'}
             - Deals
@@ -32,15 +33,50 @@ easy_admin:
             js:
                 - 'bundles/app/admin/javascript/admin.js'
     entities:
-            User:
+            ArchivedUser:
                 class: AppBundle\Entity\User
+                controller: AppBundle\Controller\Admin\AdminUserController
+                search:
+                    fields:
+                        - 'email'
+                        - 'firstName'
+                        - 'lastName'
+                        - 'title'
+                        - 'status.name'
+                        - 'country'
+                        - 'company'
+                        - 'applicationCompany'
+                        - 'notes'
                 list:
+                    dql_filter: "status.name = 'Archived'"
                     fields: ['id', 'firstName', 'lastName', 'email', 'company', 'status', 'lastLogin']
                     actions:
                         - { name: 'show' }
                         - { name: 'edit' }
                         - { name: 'delete' }
-                        - { name: 'switchUser' }
+            User:
+                class: AppBundle\Entity\User
+                controller: AppBundle\Controller\Admin\AdminUserController
+                search:
+                    fields:
+                        - 'email'
+                        - 'firstName'
+                        - 'lastName'
+                        - 'title'
+                        - 'status.name'
+                        - 'country'
+                        - 'company'
+                        - 'applicationCompany'
+                        - 'notes'
+                list:
+                    dql_filter: "status.name != 'Archived'"
+                    fields: ['id', 'firstName', 'lastName', 'email', 'company', 'status', 'lastLogin']
+                    actions:
+                        - { name: 'show' }
+                        - { name: 'edit' }
+                        - { name: 'delete' }
+                        - { name: 'switchUser', label: "Switch" }
+                        - { name: 'archiveUser', label: "Archive" }
                 show:
                     fields:
                         - { property: 'email' }
@@ -59,6 +95,7 @@ easy_admin:
                         #- { property: 'confirmationToken', label: 'Activation Code' }
                         - { property: 'confirmationToken', template: 'easy_admin/activation.code.list.html.twig', base_path: '%carena_host_url%' }
                         - { property: 'autoPublish' }
+                        - { property: 'notes' }
                 form:
                     fields:
                         - { property: 'email' }
@@ -70,6 +107,7 @@ easy_admin:
                         - { property: 'phone' }
                         - { property: 'country' }
                         - { property: 'autoPublish' }
+                        - { property: 'notes', type_options: { required: false } }
                 edit:
                     fields:
                         - { property: 'email' }
@@ -88,6 +126,7 @@ easy_admin:
                         - { property: 'confirmationToken', label: 'Activation Code' }
                         #- { property: 'confirmationToken', template: ':easy_admin:activation.code.list.html.twig', base_path: '%admin_uploads_uri%' }
                         - { property: 'autoPublish' }
+                        - { property: 'notes', type_options: { required: false } }
                     actions:
                         - { name: 'sendActivationLink', css_class : 'btn btn-primary' }
                         - { name: 'createActivationLink', css_class : 'btn btn-primary' }

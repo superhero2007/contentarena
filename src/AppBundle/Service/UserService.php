@@ -195,6 +195,28 @@ class UserService
 
     }
 
+    public function setUserAsIncomplete($user)
+    {
+        if ( isset($user) ) {
+
+            $user = $this->em
+                ->getRepository('AppBundle:User')
+                ->findOneBy(array('id' => $user->getId()));
+
+            $userState = $this->em
+                ->getRepository('AppBundle:UserStatus')
+                ->findByName(User::$INCOMPLETE_STATUS);
+
+            if ($userState && $user->getStatus() == null) $user->setStatus($userState);
+
+            $this->em->persist($user);
+            $this->em->flush();
+            return $user;
+        }
+
+        return false;
+    }
+
     public function updateUserProfile($user, $profile){
 
         if ( isset($user) ) {
