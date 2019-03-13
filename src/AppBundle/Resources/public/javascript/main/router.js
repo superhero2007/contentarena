@@ -11,7 +11,7 @@ import { Sentry, sentryDsnUrl } from "./constants/sentry";
 import store from "./store";
 import { updateProfile, loadUserData } from "./actions/userActions";
 import {
-	getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries, setGaTrackingID,
+	getDefaultRightsPackage, setEnvHostUrl, setTotalCountries, setConfig,
 } from "./actions/commonActions";
 import { setRefererData } from "../landing/actions/landingActions";
 import { initGA, PageView } from "../common/components/Tracking";
@@ -97,17 +97,24 @@ class AuthRouter extends React.Component {
 
 	componentWillMount() {
 		const {
-			loggedUserData, totalCountries, testStageMode, envHostUrl, refererEmail, refererListingId, gaTrackingId,
+			loggedUserData,
+			totalCountries,
+			envHostUrl,
+			refererEmail,
+			refererListingId,
+			config,
 		} = this.props;
 
 		this.props.loadUserData(loggedUserData);
 		this.props.getDefaultRightsPackage();
 		this.props.setLanguage("en");
 		this.props.setTotalCountries(Number(totalCountries));
-		this.props.setTestStageMode(!!+testStageMode);
 		this.props.setEnvHostUrl(envHostUrl);
 		this.props.setRefererData(refererEmail, refererListingId);
-		this.props.setGaTrackingID(gaTrackingId);
+		this.props.setConfig(JSON.parse(config, function (k, v) {
+			if(v === 1 || v === 0) return !!+v;
+			return v;
+		}));
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -173,11 +180,10 @@ const mapDispatchToProps = dispatch => ({
 	updateProfile: profile => dispatch(updateProfile(profile)),
 	loadUserData: data => dispatch(loadUserData(data)),
 	setTotalCountries: totalCountries => dispatch(setTotalCountries(totalCountries)),
-	setTestStageMode: testStageMode => dispatch(setTestStageMode(testStageMode)),
 	getDefaultRightsPackage: () => dispatch(getDefaultRightsPackage()),
 	setLanguage: lang => dispatch(setLanguage(lang)),
 	setEnvHostUrl: envHostUrl => dispatch(setEnvHostUrl(envHostUrl)),
-	setGaTrackingID: gaTrackingId => dispatch(setGaTrackingID(gaTrackingId)),
+	setConfig: config => dispatch(setConfig(config)),
 	setRefererData: (refererEmail, refererListingId) => dispatch(setRefererData(refererEmail, refererListingId)),
 });
 

@@ -24,17 +24,14 @@ export const setTotalCountries = totalCountries => ({
 	totalCountries,
 });
 
-export const setTestStageMode = testStageMode => ({
-	type: commonTypes.SET_TEST_STAGE_MODE,
-	testStageMode,
-});
 
 export const setEnvHostUrl = envHostUrl => ({
 	type: commonTypes.SET_ENV_HOST_URL,
 	envHostUrl,
 });
 
-export const setGaTrackingID = gaTrackingId => ({
-	type: commonTypes.SET_GA_TRACKING_ID,
-	gaTrackingId,
+
+export const setConfig = config => ({
+	type: commonTypes.SET_CONFIG,
+	config,
 });

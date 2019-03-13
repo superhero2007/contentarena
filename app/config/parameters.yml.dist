@@ -15,3 +15,4 @@ parameters:
     knp_snappy_binary : /usr/local/bin/wkhtmltopdf
     test_stage_mode: 0
     local_email_alert_address: juancruztalco@gmail.com
+    cms_enabled: 0

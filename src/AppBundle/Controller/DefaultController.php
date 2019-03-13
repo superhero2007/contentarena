@@ -177,13 +177,17 @@ class DefaultController extends BaseController
 
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $config = array(
+            "cmsEnabled" => $this->container->getParameter('cms_enabled'),
+            "gaTrackingId"      => $this->container->getParameter('google_analytics_key'),
+            "testStageMode"     => $this->container->getParameter('test_stage_mode'),
+        );
 
         return [
             'hostUrl'           => $this->container->getParameter('local_host'),
-            'gaTrackingId'      => $this->container->getParameter('google_analytics_key'),
-            'testStageMode'     => $this->container->getParameter('test_stage_mode'),
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'        => $serializer->serialize($content, 'json', SerializationContext::create()->setGroups(array('home'))),
+            'config'            => $this->serialize($config),
             'loggedUser'        => $user,
             'refererEmail'      => $refererEmail,
             'refererListingId'  => $refererListingId,

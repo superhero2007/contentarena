@@ -1,9 +1,8 @@
 export const commonTypes = {
 	GET_DEFAULT_RIGHTS_PACKAGE: "GET_DEFAULT_RIGHTS_PACKAGE",
 	SET_TOTAL_COUNTRIES: "SET_TOTAL_COUNTRIES",
-	SET_TEST_STAGE_MODE: "SET_TEST_STAGE_MODE",
 	SET_ENV_HOST_URL: "SET_ENV_HOST_URL",
-	SET_GA_TRACKING_ID: "SET_GA_TRACKING_ID",
+	SET_CONFIG: "SET_CONFIG",
 };
 
 const commonDefault = {
@@ -17,12 +16,10 @@ export const common = (state = commonDefault, action) => {
 		return Object.assign({}, state, { defaultRightsPackage: action.defaultRightsPackage });
 	case commonTypes.SET_TOTAL_COUNTRIES:
 		return Object.assign({}, state, { totalCountries: action.totalCountries });
-	case commonTypes.SET_TEST_STAGE_MODE:
-		return Object.assign({}, state, { testStageMode: action.testStageMode });
 	case commonTypes.SET_ENV_HOST_URL:
 		return Object.assign({}, state, { envHostUrl: action.envHostUrl });
-	case commonTypes.SET_GA_TRACKING_ID:
-		return Object.assign({}, state, { gaTrackingId: action.gaTrackingId });
+	case commonTypes.SET_CONFIG:
+		return Object.assign({}, state, action.config);
 
 	default:
 		return state;
