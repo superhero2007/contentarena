@@ -590,7 +590,7 @@ ContentArena.Api = {
 
 				deferred.resolve(_this.prepareList(list));
 			})
-			.fail(()=>{
+			.fail(() => {
 				deferred.resolve([]);
 			});
 

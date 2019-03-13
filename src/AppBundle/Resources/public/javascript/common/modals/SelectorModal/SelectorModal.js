@@ -87,7 +87,7 @@ class SelectorModal extends Component {
 
 	shouldShowInternationalFilter = () => {
 		const { selectorItems } = this.state;
-		return selectorItems.some(item => item.name.match(/international/gi) !== null);
+		return selectorItems && selectorItems.some(item => item.name.match(/international/gi) !== null);
 	};
 
 	setActiveFilter = (filterName) => {

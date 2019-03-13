@@ -72,6 +72,9 @@ class SellFormStep1 extends React.Component {
 				ContentArena.Data.TopSports = sports;
 			});
 
+		/**
+		 * Pre-loader for country selector. Do not remove
+ 		 */
 		ContentArena.Api.getCountries();
 
 		this.props.updateContentValue("lastUpdate", new Date().getTime());
@@ -221,8 +224,6 @@ class SellFormStep1 extends React.Component {
 			}
 		}
 
-		console.log(seasonSelectors, nextProps.seasons);
-
 		if (nextProps.customTournament &&
 			nextProps.customTournament !== "" &&
 			nextProps.seasons.length === 0 &&
@@ -324,7 +325,7 @@ class SellFormStep1 extends React.Component {
 
 	hasCustomTournament = () => {
 		let hasCustomTournament = false;
-		this.state.tournaments.forEach((tournament) => {
+		this.props.tournament.forEach((tournament) => {
 			if (tournament.custom) hasCustomTournament = true;
 		});
 
@@ -450,7 +451,6 @@ class SellFormStep1 extends React.Component {
 			&& this.state.seasonSelectors.length > 0;
 
 		if (this.hasCustomTournament() && (this.props.customTournament === null || this.props.customTournament === "")) show = false;
-		console.log(show)
 		return show;
 	};
 
@@ -529,8 +529,6 @@ class SellFormStep1 extends React.Component {
 		}
 
 		const { validation, name } = this.props;
-
-		console.log(this.state.seasonSelectors)
 
 		return (
 			<div className="step-content">
@@ -673,7 +671,10 @@ class SellFormStep1 extends React.Component {
 
 						<ListingName
 							name={name}
-							onChange={e => this.props.updateContentValue("name", e.target.value)}
+							onChange={e => {
+								this.setState({nameSet: true});
+								this.props.updateContentValue("name", e.target.value)}
+							}
 						/>
 
 						<Description
