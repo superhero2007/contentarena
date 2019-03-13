@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
 import LandingHeader from "../components/LandingHeader";
-import { LANDING_LINKS, LOGIN_VIEW_TYPE } from "@constants";
+import { LANDING_LINKS, LOGIN_VIEW_TYPE, USER_STATUS } from "@constants";
 import { contentWhiteLogo } from "../../main/components/Icons";
 import {
 	hideRegistrationEmail,
 	showRegistrationEmail,
 } from "../actions/landingActions";
 import request from "../../common/request";
+import api from "../../api";
 
 class LandingWrapper extends Component {
 	constructor(props) {
@@ -27,10 +28,10 @@ class LandingWrapper extends Component {
 	handleRegisterClick = () => {
 		this.props.showRegistrationEmail(this.registerEmail.current.value);
 		if (this.registerEmail.current.value !== "") {
-			request.post(`${envhosturl}api/users/pre/register`, {
+			api.authentication.preRegisterUser({
 				firstName: "n/a",
 				lastName: "n/a",
-				status: "Applied",
+				status: USER_STATUS.ABORTED,
 				email: this.registerEmail.current.value,
 			})
 				.then(

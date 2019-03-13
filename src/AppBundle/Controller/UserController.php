@@ -229,8 +229,8 @@ class UserController extends FOSRestController
         $user->setEmail($email);
         $user->setStatus($userStatus);
         $user->setUsername($email);
-        $user->setFirstName($request->get("firstName"));
-        $user->setLastName($request->get("lastName"));
+        if ($user->getFirstName() == null ) $user->setFirstName($request->get("firstName"));
+        if ($user->getLastName() == null ) $user->setLastName($request->get("lastName"));
         $user->setRegisteredAt(new \DateTime());
         $user->setPlainPassword('');
 

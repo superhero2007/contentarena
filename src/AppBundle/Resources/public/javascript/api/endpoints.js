@@ -14,6 +14,7 @@ const API_ENDPOINTS = {
 	PROPERTIES_UPDATE: "api/properties/update",
 	MARKETPLACE_LISTINGS: "api/marketplace/listings",
 	SHARE_LISTING: "api/share/listing",
+	AUTHENTICATION_PRE_REGISTER: "api/users/pre/register",
 };
 
 export default API_ENDPOINTS;

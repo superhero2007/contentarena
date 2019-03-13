@@ -53,6 +53,10 @@ export const USER_PROFILES = {
 	BOTH: "BOTH",
 };
 
+export const USER_STATUS = {
+	ABORTED: "Aborted",
+};
+
 export const ROUTE_PATHS = {
 	ADMIN: "/admin",
 	LANDING: "/landing",

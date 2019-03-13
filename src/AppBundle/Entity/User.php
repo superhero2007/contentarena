@@ -32,7 +32,7 @@ class User extends BaseUser
     public static $INACTIVE_STATUS = "Inactive";
     public static $ARCHIVED_STATUS = "Archived";
     public static $INCOMPLETE_STATUS = "Incomplete";
-    public static $PENDING_STATUS = "Pending";
+    public static $PENDING_STATUS = "Requested";
 
 
     public function __construct()
