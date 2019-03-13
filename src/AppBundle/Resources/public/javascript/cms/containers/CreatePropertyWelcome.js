@@ -8,6 +8,8 @@ import SearchCompetition from "../../main/components/SearchCompetition";
 import { DefaultBox } from "../../common/components/Containers";
 import { ROUTE_PATHS } from "@constants";
 import { selectTournament, setCustomSportName } from "../actions/propertyActions";
+import CmsSearchCompetition from "../components/CmsSearchCompetition";
+import CmsSearchResults from "../components/CmsSearchResults";
 
 class CreatePropertyWelcome extends React.Component {
 	constructor(props) {
@@ -31,9 +33,14 @@ class CreatePropertyWelcome extends React.Component {
 		}
 	};
 
+	onSearch = (results) => {
+		this.setState({results});
+	};
+
 	render() {
 		const {
 			loading,
+			results,
 		} = this.state;
 
 		return (
@@ -53,28 +60,30 @@ class CreatePropertyWelcome extends React.Component {
 						{this.context.t("CMS_WELCOME_SEARCH_TITLE")}
 					</h5>
 
-					<SearchCompetition
-						hideDescription
+					<CmsSearchCompetition
 						hideEnterManually
-						select={this.selectTournament}
+						onSearch={this.onSearch}
 					/>
 
-					<p className="text-center">
-						{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
-						<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
-					</p>
+					{
+						!results &&
+						<p className="text-center">
+							{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
+							<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
+						</p>
+					}
 				</DefaultBox>
 
+				{
+					results && results.length > 0 &&
+					<DefaultBox>
+						<CmsSearchResults
+							results={results}
+							select={this.selectTournament}
+						/>
+					</DefaultBox>
+				}
 
-				{/* <div>
-					<Loader loading={loading} small>
-						<button
-							className="standard-button"
-						>
-							{this.context.t("REGISTER_SUCCESS_MESSAGE")}
-						</button>
-					</Loader>
-				</div> */}
 			</div>
 		);
 	}

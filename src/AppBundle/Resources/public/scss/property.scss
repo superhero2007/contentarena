@@ -41,6 +41,20 @@
         }
         input {
           margin-right: 11px !important;
+          &.ca-checkbox{
+            &:checked{
+              border: 1px solid $property-blue;
+              background-color: $property-blue;
+            }
+            &:hover {
+              border-color: $property-blue;
+            }
+            &:disabled{
+              background-color: #caccd1 !important;
+              border: 1px solid #dcdddf !important;
+              cursor: default;
+            }
+          }
         }
         label{
           min-width: 130px;
@@ -208,11 +222,30 @@
       }
       button{
         height: 60px;
-        border-radius: 10px;
+        border-radius: 5px;
       }
     }
     .search-competition-messages{
-      min-height: inherit;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 250px;
+      align-items: center;
+      position: relative;
+      a{
+        border-radius: 5px;
+        width: 240px;
+        font-size: 13px;
+        height: 40px;
+        margin: 20px 0 0;
+        padding: 10px 0;
+      }
+      i{
+        font-size: 20px;
+        position: absolute;
+        left: 210px;
+        top: 33px;
+        color: red;
+      }
     }
     .ReactTable {
       .rt-thead{
