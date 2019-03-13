@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import cn from "classnames";
 import NumberFormat from "react-number-format";
+import Translate from "@components/Translator/Translate";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import LicenseDownloader from "../../main/components/LicenseDownloader";
 import { getCurrencySymbol } from "../../main/actions/utils";
 import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
-import Translate from "@components/Translator/Translate";
 
 const SalesPackageTable = ({
 	salesPackages, currency, listingId, hideButtons, editSalesPackage, onRemove,

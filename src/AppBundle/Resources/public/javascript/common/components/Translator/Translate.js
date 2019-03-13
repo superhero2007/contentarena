@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import Portal from "@portal";
 import axios from "axios";
 import { connect } from "react-redux";
 import Loader from "../Loader";
+import Portal from "../Portal/Portal";
 
 const inputStyle = {
 	margin: "0 0 10px",

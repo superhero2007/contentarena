@@ -1,7 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
-import Translate from "@translate";
+import Translate from "@components/Translator/Translate";
 
 const Loader = ({
 	loading, children, text, error, small, xSmall,
