@@ -72,6 +72,8 @@ class SellFormStep1 extends React.Component {
 				ContentArena.Data.TopSports = sports;
 			});
 
+		ContentArena.Api.getCountries();
+
 		this.props.updateContentValue("lastUpdate", new Date().getTime());
 	}
 
@@ -86,6 +88,10 @@ class SellFormStep1 extends React.Component {
 				ContentArena.Data.Categories = categories;
 				this.setState({
 					lastSportId: sportId,
+				});
+			})
+			.always(()=>{
+				this.setState({
 					loadingCategories: false,
 				});
 			});
@@ -122,18 +128,18 @@ class SellFormStep1 extends React.Component {
 						}
 					}
 
-					this.setState({
-						loadingTournaments: false,
-						customSeasonsParsed: true,
-					});
-
 					return;
 				}
 
 				this.setState({
 					lastSportId: sportId,
-					loadingTournaments: false,
 					lastCategoryId: categoryId,
+				});
+			})
+			.always(()=>{
+				this.setState({
+					loadingTournaments: false,
+					customSeasonsParsed: true,
 				});
 			});
 	}
