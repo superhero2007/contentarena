@@ -1540,20 +1540,6 @@ class CountriesFixtures extends Fixture implements DependentFixtureInterface
 
         );
         $countriesToRemove = array(
-            "Faroe Islands",
-            "Gibraltar",
-            "Swaziland",
-            "Guernsey",
-            "Holly See",
-            "French Polynesia",
-            "Isle of Man",
-            "Jersey",
-            "Svalbard and Jan Mayen",
-            "Åland Islands",
-            "Hong Kong",
-            "Macao",
-            "Mayotte",
-            "Western Sahara"
 
         );
 
