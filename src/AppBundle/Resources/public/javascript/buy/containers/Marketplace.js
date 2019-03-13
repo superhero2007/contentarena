@@ -261,6 +261,9 @@ class Marketplace extends Component {
 			errorMessage,
 			defaultRightsPackage,
 			parsedFilter,
+			loadingListing,
+			listings,
+			totalItems
 		} = this.state;
 
 		if (!parsedFilter) return null;
@@ -272,10 +275,6 @@ class Marketplace extends Component {
 		document.title = "Content Arena - Marketplace";
 
 		const customFilter = this.getQueryString();
-
-		const {
-			error, loading, listings, totalItems,
-		} = listingsData;
 
 		return (
 			<div
