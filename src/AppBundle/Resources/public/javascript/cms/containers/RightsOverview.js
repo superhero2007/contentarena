@@ -17,6 +17,10 @@ class RightsOverview extends React.Component {
 			selectedTerritories: props.propertyFilters.selectedTerritories,
 		};
 	}
+	componentDidMount(){
+		const { propertyFilters: { selectedTerritories } } = this.props;
+		this.setState({selectedTerritories});
+	};
 
 	componentWillReceiveProps(nextProps) {
 		const { propertyFilters: { selectedTerritories, rights, regions } } = nextProps;
@@ -91,7 +95,6 @@ class RightsOverview extends React.Component {
 				});
 			});
 		}
-
 
 		columns.push({
 			Header: this.context.t("CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING"),
@@ -222,19 +225,19 @@ class RightsOverview extends React.Component {
 					&& (
 						<ReactTable
 							showPageSizeOptions={false}
-							showPagination={false}
+							showPagination={true}
 							resizable={false}
 							collapseOnPageChange={false}
 							collapseOnDataChange={false}
 							minRows={0}
-							defaultPageSize={totalCountries}
+							defaultPageSize={30}
 							data={territories}
 							select={this.props.select}
 							className="ca-table"
 							columns={this.getColumns()}
 							sorted={[{
-								id: "name",
-								desc: false,
+								id: 'name',
+								desc: false
 							}]}
 						/>
 					)

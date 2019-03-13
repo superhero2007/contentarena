@@ -35,7 +35,7 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      * @var string
      *
      * @ORM\Column(name="short_label", type="string", length=5, unique=true)
-     * @Groups({"common", "listing", "closed", "board", "commercial", "home", "preview"})
+     * @Groups({"common", "listing", "closed", "board", "commercial", "home", "preview", "propertyList"})
      */
     private $shortLabel;
 

@@ -3,6 +3,7 @@ export const SERVER_DATE_TIME_FORMAT = "YYYY-MM-DDTHH:mm:ss";
 export const TIME_FORMAT = "HH:mm";
 export const YEAR_FORMAT = "YYYY";
 export const DATE_TIME_FORMAT = `${DATE_FORMAT} ${TIME_FORMAT}`;
+export const TIME_ZONE = "UTC";
 export const CONTENT_LISTING_VIEW = {
 	LIST: "list",
 	TABLE: "table",

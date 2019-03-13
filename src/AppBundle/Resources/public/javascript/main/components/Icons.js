@@ -33,6 +33,8 @@ export const packageIcon = `${assetsBaseDir}app/images/package.svg`;
 export const yellowCheckIcon = `${assetsBaseDir}app/images/rights/exclusive.svg`;
 export const blueCheckIcon = `${assetsBaseDir}app/images/rights/non-exclusive.svg`;
 export const greyMinusIcon = `${assetsBaseDir}app/images/rights/non-included.svg`;
+export const yellowCheckOutlined = `${assetsBaseDir}app/images/rights/yellow_check_outlined.svg`;
+export const blueCheckOutlined = `${assetsBaseDir}app/images/rights/blue_check_outlined.svg`;
 
 // events
 export const tournamentIcon = <img src={`${assetsBaseDir}app/images/listing/trophy.svg`} alt="" />;

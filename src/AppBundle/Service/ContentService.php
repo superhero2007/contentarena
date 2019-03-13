@@ -11,6 +11,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
+use AppBundle\Entity\Property;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
 use AppBundle\Enum\ListingStatusEnum;
@@ -237,6 +238,26 @@ class ContentService
     public function getForCommercialActivity($user) {
         $content = $this->em->getRepository('AppBundle:Content')->getForCommercialActivity($user);
         return $content;
+    }
+
+    public function getPropertyListings(Property $property, User $user) {
+        $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListings($property);
+
+        //TODO: remove this. Just for testing
+        $listings = $this->em->getRepository('AppBundle:Content')->getForCommercialActivity($user);
+
+        foreach ($listings as $listing){
+            /* @var Content $listing  */
+            $total = 0;
+            foreach ($listing->getSalesPackages() as $bundle){
+                /* @var SalesPackage $bundle  */
+                $total += count($bundle->getTerritories());
+            }
+
+            $listing->setTerritories($total);
+        }
+
+        return $listings;
     }
 
     public function getExpired($user) {

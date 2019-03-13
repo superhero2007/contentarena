@@ -190,6 +190,8 @@
         margin: 5px;
         overflow: hidden;
         color: #666 !important;
+        background-color: $property-yellow !important;
+        height: 40px !important;
         &.excluding{
           border: 1px solid #D0021B;
         }
@@ -199,6 +201,7 @@
         &:disabled {
           background-color: #ECECEC !important;
           border: 1px solid #ECECEC !important;
+          cursor: default !important;
         }
       }
       .region-selected{
@@ -434,7 +437,88 @@
 	}
   }
   .commercial-overview-tab{}
-  .fixture-tab{}
+  .fixture-tab{
+    button{
+      height: 40px;
+    }
+    .fixture-tab-description{
+      color: #666666;
+      font-size: 13px;
+      line-height: 22px;
+    }
+    .fixture-item-wrapper{
+      display: flex;
+      flex-direction: row;
+      color: #666666;
+      font-size: 13px;
+      line-height: 18px;
+      border-bottom: 1px solid lightgray;
+      padding: 15px 0;
+      position: relative;
+      .fixture-item-round, .fixture-item-name{
+        margin-right: 20px !important;
+        align-items: center;
+        display: flex;
+        flex: 3;
+      }
+      .fixture-item-date, .fixture-item-time{
+        margin-right: 20px !important;
+        align-items: center;
+        display: flex;
+        flex: 1;
+        color: #666666;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+      .fixture-item-actions{
+        flex: 0.5;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        i{
+          cursor: pointer;
+        }
+
+      }
+      .fixture-title{
+        color: #333333;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        margin: 20px 0;
+      }
+      .fa {
+        font-size: 20px;
+        margin-right: 5px;
+        &.fa-calendar, &.fa-clock-o, &.fa-edit{
+          color: $property-blue;
+        }
+        &.fa-clock-o, &.fa-edit{
+          font-size: 22px;
+        }
+        &.fa-trash{
+          color: red;
+          margin-top: -2px;
+        }
+      }
+    }
+    .react-datepicker-wrapper {
+      border: 1px solid lightgray;
+      display: flex;
+    }
+    .react-datepicker__time-container {
+      width: 110px;
+      .react-datepicker__time-box {
+        width: 110px;
+      }
+    }
+    input{
+      width: 100% !important;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
 
   .empty-property-tab{
 	display: flex;
@@ -467,11 +551,13 @@
 	& a, & button{
 	  margin: 30px 0 25px;
 	  text-transform: capitalize;
+      height: 40px;
+      padding: 10px 25px;
+      background-color: $property-yellow;
 	}
   }
 
   .property-list-header{
-    border-bottom: 2px solid #FDD306;
     padding: 0 0 20px;
     display: flex;
     justify-content: flex-end;
@@ -527,19 +613,19 @@
   }
   .property-item-wrapper{
     display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
-	height: 166px;
 	padding: 20px 0;
-	border-bottom: 1px solid $font-color-2;
-
+    border-top: 2px solid #FDD306;
 	.property-wrapper{
 	  width: 100%;
 	  align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid $font-color-2;
 
 	  .property-img{
 		flex: 1;
+        padding: 10px 10px 10px 0;
 	  }
 	  .property-info{
 		flex: 6.5;
@@ -550,11 +636,10 @@
 		  flex-direction: row;
 		  flex-wrap: wrap;
 		  padding-top: 10px;
-
-		  font-size: 18px;
-
+		  font-size: 13px;
+          color: $property-blue;
 		  button{
-		    font-size: 18px;
+		    font-size: 13px;
 			text-decoration: none;
 			outline: none;
 		  }
@@ -571,5 +656,14 @@
 	    }
 	  }
 	}
+
+    .property-listing-wrapper {
+      display: flex;
+      width: 100%;
+      .property-listings-table {
+        width: 100%;
+      }
+    }
+
   }
 }

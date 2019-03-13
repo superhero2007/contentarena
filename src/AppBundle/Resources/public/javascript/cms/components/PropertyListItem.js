@@ -11,26 +11,16 @@ class PropertyListItem extends React.Component {
 		};
 	}
 
-	getOpenBid = () => {
-		// TODO: YU take a look after implemented BE for this
-		const { salesPackages = [] } = this.props;
-		return salesPackages.filter(item => item.status.name !== "REJECTED" && item.content.status.name !== "EXPIRED").length;
-	};
-
-	getClosedBid = () => {
-		// TODO: YU take a look after implemented BE for this
-		const { salesPackages = [] } = this.props;
-		return salesPackages.filter(item => item.status.name === "REJECTED" || item.content.status.name === "EXPIRED").length;
-	};
-
 	render() {
 		const {
-			name, customId, listings = [], history,
+			name, customId, listings = [], history, closedBids, openBids = 0
 		} = this.props; // TODO: YU check listings property
 		return (
 			<section className="property-item-wrapper">
 				<div className="property-wrapper d-flex">
-					<div className="property-img">{getListingImage(this.props)}</div>
+					<div className="property-img">
+						{getListingImage(this.props)}
+					</div>
 					<div className="property-info">
 						<a
 							className="ca-title"
@@ -40,11 +30,15 @@ class PropertyListItem extends React.Component {
 						</a>
 						<div className="bids-wrapper">
 							<div className="open-bid">
-								<span>{this.getOpenBid()}</span>
+								<span>
+									{openBids}
+								</span>
 								{this.context.t("CMS_PROPERTY_OPEN_BID")}
 							</div>
 							<div className="closed-bid">
-								<span>{this.getClosedBid()}</span>
+								<span>
+									{closedBids}
+								</span>
 								{this.context.t("CMS_PROPERTY_CLOSED_BID")}
 							</div>
 							<button

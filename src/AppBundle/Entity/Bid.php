@@ -75,6 +75,7 @@ class Bid
 
 
     /**
+     * @var BidStatus
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"closed", "commercial"})
@@ -348,7 +349,7 @@ class Bid
     }
 
     /**
-     * @return mixed
+     * @return BidStatus
      */
     public function getStatus()
     {

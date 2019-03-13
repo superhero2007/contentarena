@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Country;
+use AppBundle\Entity\Property;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Sport;
 use AppBundle\Entity\Territory;
@@ -411,6 +412,28 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('inactive',"INACTIVE")
             ->setParameter('archived',"ARCHIVED")
             ->setParameter('company',$user->getCompany())
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @param Property $property
+     * @return array
+     */
+    public function getPropertyListings(Property $property){
+
+        $now = date('Y-m-d H:i:s');
+
+        return $this->createQueryBuilder('c')
+            ->innerJoin("c.status", "status")
+            ->where('c.expiresAt > :now')
+            ->andWhere('c.property = :property')
+            ->andWhere('status.name = :pending OR status.name = :approved OR status.name = :edited')
+            ->setParameter('now',$now)
+            ->setParameter('pending',"PENDING")
+            ->setParameter('approved',"APPROVED")
+            ->setParameter('edited',"EDITED")
+            ->setParameter('property',$property)
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();
     }

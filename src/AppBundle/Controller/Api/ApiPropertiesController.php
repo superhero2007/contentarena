@@ -6,6 +6,7 @@ use AppBundle\Entity\Property;
 use AppBundle\Entity\User;
 use AppBundle\Error\PropertyErrors;
 use AppBundle\Helper\ControllerHelper;
+use AppBundle\Service\ContentService;
 use AppBundle\Service\PropertyService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,9 +34,7 @@ class ApiPropertiesController extends Controller
     {
         /* @var User $user */
         $user = $this->getUser();
-        $company = $user->getCompany();
-        $properties = $propertyService->getAllCompanyProperties($company);
-
+        $properties = $propertyService->getAllCompanyProperties($user);
         return $this->getSerializedResponse(array(
             "properties" => $properties
         ), array("propertyList"));

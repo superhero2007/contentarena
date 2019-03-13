@@ -60,7 +60,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=255)
-     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread", "auth", "companyUsers", "home"})
+     * @Groups({"listing","board","closed", "commercial", "settings","messages", "thread", "auth", "companyUsers", "home", "propertyList"})
      *
      */
     protected $firstName;

@@ -29,14 +29,14 @@ class Content implements NotifiableInterface
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingStatus", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "board", "commercial", "home"})
+     * @Groups({"listing", "board", "commercial", "home", "propertyList"})
      */
     private $status;
 
     /**
      * @var string
      * @ORM\Column(name="custom_id", type="string", unique=true, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "propertyList"})
      */
     protected $customId;
 
@@ -82,9 +82,15 @@ class Content implements NotifiableInterface
 
     /**
      * @ORM\Column(type="datetime", name="expires_at", nullable=true)
-     * @Groups({"listing", "board", "home"})
+     * @Groups({"listing", "board", "home", "propertyList"})
      */
     private $expiresAt;
+
+    /**
+     * @var integer
+     * @Groups({"propertyList"})
+     */
+    protected $territories;
 
     /**
      * @var integer
@@ -260,7 +266,7 @@ class Content implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview", "propertyList"})
      */
     private $name;
 
@@ -340,6 +346,12 @@ class Content implements NotifiableInterface
     private $company;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Property", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $property;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport")
      * @ORM\JoinTable(name="content_sports",
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
@@ -380,7 +392,7 @@ class Content implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed", "board", "commercial", "home", "preview"})
+     * @Groups({"listing", "closed", "board", "commercial", "home", "preview", "propertyList"})
      */
     private $rightsPackage;
 
@@ -433,14 +445,14 @@ class Content implements NotifiableInterface
 
     /**
      * @ORM\Column(type="datetime", name="last_action_date", nullable=true)
-     * @Groups({"board", "home"})
+     * @Groups({"board", "home", "propertyList"})
      */
     private $lastActionDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingLastAction", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"board", "home"})
+     * @Groups({"board", "home", "propertyList"})
      */
     private $lastAction;
 
@@ -454,7 +466,7 @@ class Content implements NotifiableInterface
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing","board", "home"})
+     * @Groups({"listing","board", "home", "propertyList"})
      */
     private $owner;
 
@@ -1937,4 +1949,42 @@ class Content implements NotifiableInterface
     {
         return $this->contentDeliveryConfigured;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    /**
+     * @param mixed $property
+     */
+    public function setProperty($property)
+    {
+        $this->property = $property;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTerritories()
+    {
+        return $this->territories;
+    }
+
+    /**
+     * @param int $territories
+     */
+    public function setTerritories($territories)
+    {
+        $this->territories = $territories;
+    }
+
+
+
+
+
+
 }

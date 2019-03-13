@@ -21,6 +21,11 @@ class CmsTerritoriesFilter extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		const { propertyFilters: { availableTerritories } } = this.props;
+		this.parseRegionSelectors(availableTerritories);
+	}
+
 	componentWillReceiveProps(nextProps) {
 		const { propertyFilters: { availableTerritories, rights } } = nextProps;
 		if (this.props.propertyFilters.rights.length !== rights.length) this.parseRegionSelectors(availableTerritories);

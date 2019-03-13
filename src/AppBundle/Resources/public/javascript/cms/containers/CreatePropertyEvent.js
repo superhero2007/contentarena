@@ -129,6 +129,11 @@ class CreatePropertyEvent extends React.Component {
 					lastSportId: sportId,
 					loadingCategories: false,
 				}, this.handleCompetitionFocus);
+			})
+			.fail(()=>{
+				this.setState({
+					loadingCategories: false,
+				});
 			});
 	}
 
@@ -162,6 +167,11 @@ class CreatePropertyEvent extends React.Component {
 					lastSportId: sportId,
 					loadingTournaments: false,
 					lastCategoryId: categoryId,
+				});
+			})
+			.fail(()=>{
+				this.setState({
+					loadingTournaments: false,
 				});
 			});
 	}

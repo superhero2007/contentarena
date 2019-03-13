@@ -141,7 +141,6 @@ export const fetchCountries = () => async (dispatch) => {
 	}
 };
 
-
 export const fetchRegionsSuccess = regions => ({
 	type: propertyTypes.GET_REGIONS_SUCCESS,
 	regions,

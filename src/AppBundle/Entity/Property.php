@@ -115,6 +115,25 @@ class Property implements NotifiableInterface
     private $rights;
 
     /**
+     * @Serializer\Type("array<AppBundle\Entity\Content>")
+     * @var array<AppBundle\Entity\Content>
+     * @Groups({"propertyList"})
+     */
+    private $listings;
+
+    /**
+     * @var integer
+     * @Groups({"propertyList"})
+     */
+    private $openBids;
+
+    /**
+     * @var integer
+     * @Groups({"propertyList"})
+     */
+    private $closedBids;
+
+    /**
      * @return mixed
      */
     public function getRights()
@@ -130,6 +149,21 @@ class Property implements NotifiableInterface
         $this->rights = $rights;
     }
 
+    /**
+     * @return array
+     */
+    public function getListings()
+    {
+        return $this->listings;
+    }
+
+    /**
+     * @param array $listings
+     */
+    public function setListings($listings)
+    {
+        $this->listings = $listings;
+    }
 
 
     /**
@@ -286,8 +320,37 @@ class Property implements NotifiableInterface
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @return int
+     */
+    public function getOpenBids()
+    {
+        return $this->openBids;
+    }
 
+    /**
+     * @param int $openBids
+     */
+    public function setOpenBids($openBids)
+    {
+        $this->openBids = $openBids;
+    }
 
+    /**
+     * @return int
+     */
+    public function getClosedBids()
+    {
+        return $this->closedBids;
+    }
+
+    /**
+     * @param int $closedBids
+     */
+    public function setClosedBids($closedBids)
+    {
+        $this->closedBids = $closedBids;
+    }
 
 }
 

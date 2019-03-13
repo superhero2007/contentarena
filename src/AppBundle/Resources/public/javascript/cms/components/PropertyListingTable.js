@@ -3,6 +3,9 @@ import { PropTypes } from "prop-types";
 import { ROUTE_PATHS } from "@constants";
 import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
+import { yellowCheckIcon } from "../../main/components/Icons";
+import Moment from "moment/moment";
+import { DATE_FORMAT } from "../../common/constants";
 
 class PropertyListingsTable extends React.Component {
 	constructor(props) {
@@ -21,18 +24,47 @@ class PropertyListingsTable extends React.Component {
 		const { value, original } = props;
 		const { customId } = original;
 
-		return <a href={`/listing/${customId}`} title={value}>{value}</a>;
+		return <a href={`/listing/${customId}`} title={value}>
+			{value}
+		</a>;
+	};
+
+	getRightCell = (props, shortLabel) => {
+		const { value } = props;
+
+		let rights = value.map(right => right.shortLabel);
+
+		if (rights.indexOf(shortLabel) !== -1) return <img src={yellowCheckIcon} />;
+
+		return <span></span>;
 	};
 
 	getColumns = () => [{
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_LISTING_NAME"), ""),
+		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_HEADER_STATUS"), ""),
 		id: props => `status-${props.customId}-${props.index}`,
 		headerClassName: "table-header-big",
 		className: "table-header-big",
-		accessor: "status",
-		Cell: props => this.getCell(props),
+		accessor: "status.name",
+		width: 100,
+		Cell: props => (
+			<span>
+				{this.context.t("CMS_LISTING_TABLE_STATUS_"+props.original)}
+			</span>
+		),
 	}, {
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_SPORT"), ""),
+		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_ID"), ""),
+		id: props => `custom-id-${props.customId}-${props.index}`,
+		headerClassName: "table-header",
+		className: "table-header",
+		accessor: "customId",
+		width: 100,
+		Cell: props => (
+			<span>
+				{props.value}
+			</span>
+		),
+	},{
+		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_NAME"), ""),
 		id: props => `listing-name-${props.customId}-${props.index}`,
 		headerClassName: "table-header-big",
 		className: "table-header-big",
@@ -44,56 +76,87 @@ class PropertyListingsTable extends React.Component {
 		headerClassName: "table-header-small",
 		className: "table-header-small",
 		accessor: "rightsPackage",
-		Cell: props => this.getCell(props),
+		Cell: props => this.getRightCell(props, "LT"),
 	}, {
 		Header: () => this.getHeader("LB", "Live betting"),
 		id: props => `lb-${props.customId}-${props.index}`,
 		headerClassName: "table-header-small",
 		className: "table-header-small",
 		accessor: "rightsPackage",
-		Cell: props => this.getCell(props),
+		Cell: props => this.getRightCell(props, "LB"),
 	}, {
 		Header: () => this.getHeader("DT", "Delayed & Archive"),
 		id: props => `dt-${props.customId}-${props.index}`,
 		headerClassName: "table-header-small",
 		className: "table-header-small",
 		accessor: "rightsPackage",
-		Cell: props => this.getCell(props),
+		Cell: props => this.getRightCell(props, "DT"),
 	}, {
 		Header: () => this.getHeader("HL", "Highlights"),
 		id: props => `hl-${props.customId}-${props.index}`,
 		headerClassName: "table-header-small",
 		className: "table-header-small",
 		accessor: "rightsPackage",
-		Cell: props => this.getCell(props),
+		Cell: props => this.getRightCell(props, "HL"),
 	}, {
 		Header: () => this.getHeader("NA", "News access"),
 		id: props => `na-${props.customId}-${props.index}`,
 		headerClassName: "table-header-small",
 		className: "table-header-small",
 		accessor: "rightsPackage",
-		Cell: props => this.getCell(props),
+		Cell: props => this.getRightCell(props, "NA"),
 	}, {
 		Header: () => this.getHeader("PR", "Program"),
 		id: props => `pr-${props.customId}-${props.index}`,
 		headerClassName: "table-header-small",
 		className: "table-header-small",
 		accessor: "rightsPackage",
-		Cell: props => this.getCell(props),
+		Cell: props => this.getRightCell(props, "PR"),
 	}, {
-		Header: () => this.getHeader("", ""),
-		id: props => `exp-${props.customId}-${props.index}`,
-		headerClassName: "table-header-big",
-		className: "table-header-big",
+		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_EXPIRY"), ""),
+		id: props => `expiry-${props.customId}-${props.index}`,
+		headerClassName: "table-header",
+		className: "table-header",
 		accessor: "expiresAt",
-		Cell: props => this.getCell(props),
+		Cell: props => (
+			<span>
+				{Moment(props.value).format(DATE_FORMAT)}
+			</span>
+		),
 	}, {
-		Header: () => this.getHeader("", ""),
+		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_TERRITORIES"), ""),
 		id: props => `ter-${props.customId}-${props.index}`,
 		headerClassName: "table-header-big",
 		className: "table-header-big",
-		accessor: "sports",
-		Cell: props => this.getCell(props),
+		Cell: props => (
+			<span>
+				{props.original.territories}
+			</span>
+		),
+	}, {
+		id: props => `ter-${props.original.customId}-${props.index}`,
+		headerClassName: "table-header-small",
+		className: "table-header-small",
+		Cell: props => {
+			const { original : { customId, lastActionDate, owner, lastAction }} = props;
+			const formattedDate = Moment(lastActionDate).format(DATE_FORMAT);
+			return (
+				<div className="tooltip-container">
+					<span className="" data-tip data-for={customId}>
+						<i className="fa fa-question-circle-o"/>
+					</span>
+					<ReactTooltip id={customId} effect="solid" className="CaTooltip " delayHide={400}>
+						<div className="body">
+							{`${this.context.t("CMS_LISTING_TABLE_LAST_ACTION_DATE")}: ${formattedDate}`}
+							<br/>
+							{lastAction && `${this.context.t("CMS_LISTING_TABLE_LAST_ACTION")}: ${lastAction.name}`}
+							<br/>
+							{owner && `${this.context.t("CMS_LISTING_TABLE_OWNER")}: ${owner.firstName}`}
+							<br/>
+						</div>
+					</ReactTooltip>
+				</div>
+			)},
 	}];
 
 	render() {

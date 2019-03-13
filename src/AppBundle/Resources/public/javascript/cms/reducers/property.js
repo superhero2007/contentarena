@@ -35,6 +35,7 @@ const DEFAULT_STATE = {
 	seasons: [],
 	rights: [],
 	selectedRights: [],
+	fixtures: [],
 
 	countries: [],
 	isCountryFetched: false,

@@ -3,9 +3,12 @@
 namespace AppBundle\Service;
 
 use AppBundle\Doctrine\RandomIdGenerator;
+use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
+use AppBundle\Entity\Content;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\User;
+use AppBundle\Enum\BidStatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
 
 class PropertyService
@@ -16,21 +19,73 @@ class PropertyService
 
     private $idGenerator;
 
+    private $contentService;
+
+    private $bidService;
+
     public function __construct(
         EntityManagerInterface $entityManager,
-        RandomIdGenerator $idGenerator
+        RandomIdGenerator $idGenerator,
+        ContentService $contentService,
+        BidService $bidService
+
     ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->repo = $this->em->getRepository("AppBundle:Property");
+        $this->contentService = $contentService;
+        $this->bidService = $bidService;
     }
 
     /**
-     * @param Company $company
+     * @param User $user
      * @return Property[]|array
      */
-    public function getAllCompanyProperties(Company $company){
-        return $this->repo->findBy(array("company"=>$company));
+    public function getAllCompanyProperties(User $user){
+        $company = $user->getCompany();
+        $properties = $this->repo->findBy(array("company"=>$company));
+
+        foreach ($properties as $property){
+            $listings = $this->contentService->getPropertyListings($property, $user);
+            $totalOpenBids = 0;
+            $totalClosedBids = 0;
+
+            foreach ( $listings as $key => $listing ){
+
+                /* @var $listing Content */
+                $bids = $this->bidService->getAllBidsByContent($listing);
+                foreach ($bids as $bid){
+
+                    /* @var Bid $bid */
+                    if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
+                        $totalOpenBids++;
+                    } else {
+                        $totalClosedBids++;
+                    }
+
+                }
+
+                /*foreach ($listing->getSalesPackages() as $salesBundle){
+                    $bids = $this->bidService->getAllBidsBySalesBundle($salesBundle);
+
+                    foreach ($bids as $bid){
+
+                        if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
+                            $totalOpenBids++;
+                        }
+
+                    }
+
+                    $totalClosedBids += count( $closedBids );
+                }*/
+            }
+
+            $property->setListings($listings);
+            $property->setClosedBids($totalClosedBids);
+            $property->setOpenBids($totalOpenBids);
+        }
+
+        return $properties;
     }
 
     /**
@@ -65,7 +120,11 @@ class PropertyService
         return $property;
     }
 
-    public function createPropertyName($property)
+    /**
+     * @param Property $property
+     * @return string
+     */
+    private function createPropertyName(Property $property)
     {
         $sports = $property->getSports();
         $tournaments = $property->getTournament();
