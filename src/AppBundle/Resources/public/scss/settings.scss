@@ -540,6 +540,10 @@
     padding: 25px 100px;
     position: relative;
 
+    .setting-password{
+      max-width: 50%;
+    }
+
     .password-validation {
       display: flex;
       flex-direction: column;
