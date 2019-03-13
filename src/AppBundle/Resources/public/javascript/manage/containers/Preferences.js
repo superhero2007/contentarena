@@ -157,6 +157,11 @@ class Preferences extends React.Component {
 						</>
 					)}
 					<div className="buttons">
+						{userUpdated && (
+							<div>
+								{this.context.t("PREFERENCES_USER_UPDATED_MESSAGE")}
+							</div>
+						)}
 						<div>
 							<button
 								onClick={this.saveUser}
@@ -166,13 +171,6 @@ class Preferences extends React.Component {
 								Save
 							</button>
 						</div>
-						{userUpdated && (
-							<div>
-								{this.context.t("PREFERENCES_USER_UPDATED_MESSAGE")}
-							</div>
-						)}
-
-
 					</div>
 				</div>
 			</div>

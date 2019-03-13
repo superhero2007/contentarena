@@ -18,7 +18,7 @@ class Country
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing","countryList", "home"})
+     * @Groups({"listing","countryList", "home", "settings"})
      */
     private $id;
 
@@ -49,7 +49,7 @@ class Country
      * @var integer
      *
      * @ORM\Column(name="territory_id", type="integer", nullable=true)
-     * @Groups({"listing", "countryList"})
+     * @Groups({"listing", "countryList", "settings"})
      */
 
     private $territoryId;
@@ -61,7 +61,7 @@ class Country
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="region_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "countryList"})
+     * @Groups({"listing", "countryList", "settings"})
      */
     private $regions;
 
