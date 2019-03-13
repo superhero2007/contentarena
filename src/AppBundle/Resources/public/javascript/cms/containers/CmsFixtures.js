@@ -1,13 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import {
-	Redirect,
-} from "react-router-dom";
-import RightsOverview from "./RightsOverview";
-import { ROUTE_PATHS } from "@constants";
 
-class ManageProperties extends React.Component {
+class CmsFixtures extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,19 +21,15 @@ class ManageProperties extends React.Component {
 
 		const { common } = this.props;
 
-		if (common.properties.length === 0) {
-			return <Redirect to={ROUTE_PATHS.CREATE_PROPERTY} />;
-		}
-
 		return (
-			<React.Fragment>
-				<RightsOverview />
-			</React.Fragment>
+			<div>
+				Fixtures
+			</div>
 		);
 	}
 }
 
-ManageProperties.contextTypes = {
+CmsFixtures.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
@@ -52,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(ManageProperties);
+)(CmsFixtures);
