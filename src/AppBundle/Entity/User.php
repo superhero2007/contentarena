@@ -699,11 +699,8 @@ class User extends BaseUser
      */
     public function canLogin()
     {
-        return $this->getStatus()->getName() !== $this::$ARCHIVED_STATUS &&
-            $this->getStatus()->getName() !== $this::$INACTIVE_STATUS;
+        $status = $this->getStatus();
+        return $status == null || ($status->getName() !== $this::$ARCHIVED_STATUS && $status->getName() !== $this::$INACTIVE_STATUS);
     }
-
-
-
 
 }
