@@ -23,6 +23,6 @@ export const landing = (state = DEFAULT_STATE, action) => {
 		});
 
 	default:
-		return DEFAULT_STATE;
+		return state;
 	}
 };
