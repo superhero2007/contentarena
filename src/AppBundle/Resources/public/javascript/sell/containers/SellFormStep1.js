@@ -325,8 +325,13 @@ class SellFormStep1 extends React.Component {
 	};
 
 	hasCustomTournament = () => {
-		let hasCustomTournament = false;
-		this.props.tournament.forEach((tournament) => {
+		const {
+			tournament,
+			customTournament,
+		} = this.props;
+
+		let hasCustomTournament = customTournament && customTournament !== "";
+		tournament.forEach((tournament) => {
 			if (tournament.custom) hasCustomTournament = true;
 		});
 

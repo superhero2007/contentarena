@@ -8,7 +8,6 @@ export const propertyTypes = {
 	SET_CUSTOM_SPORT_CATEGORY_NAME: "SET_CUSTOM_SPORT_CATEGORY_NAME",
 	SET_CUSTOM_TOURNAMENT_NAME: "SET_CUSTOM_TOURNAMENT_NAME",
 	SET_CUSTOM_SEASON_NAME: "SET_CUSTOM_SEASON_NAME",
-	UPDATE_FROM_MULTIPLE: "UPDATE_FROM_MULTIPLE",
 	ADD_CUSTOM_SEASON: "ADD_CUSTOM_SEASON",
 	REMOVE_SEASON: "REMOVE_SEASON",
 	SELECT_PROPERTY_TOURNAMENT: "SELECT_PROPERTY_TOURNAMENT",
@@ -55,13 +54,6 @@ export const property = (state = DEFAULT_STATE, action) => {
 		return Object.assign({}, state, { regions: action.regions, isRegionsFetched: true });
 	case propertyTypes.GET_TERRITORIES_SUCCESS:
 		return Object.assign({}, state, { territories: action.territories, isTerritoriesFetched: true });
-	case propertyTypes.UPDATE_FROM_MULTIPLE:
-		newState = {};
-		newState[action.selectorType] = [...state[action.selectorType]];
-		// if(!newState[action.selectorType][action.index]) newState[action.selectorType] =
-		// [...newState[action.selectorType], ({custom: true, name: ""})];
-		newState[action.selectorType][action.index][action.key] = action.value;
-		return Object.assign({}, state, newState);
 	case propertyTypes.SET_PROPERTY_CONFIG:
 		return Object.assign({}, state, action.config);
 	case propertyTypes.SET_RIGHTS:
