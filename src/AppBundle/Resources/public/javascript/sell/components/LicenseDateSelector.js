@@ -49,7 +49,7 @@ class LicenseDateSelector extends React.Component {
 		const {
 			startDate, endDate, endDateLimit, startDateMode, endDateMode,
 		} = this.state;
-		const saveButtonTooltip = <Translate i18nKey={this.getSaveButtonTooltip()} />;
+		const saveButtonTooltip = this.getSaveButtonTooltip();
 
 		return (
 			<Modal

@@ -71,7 +71,7 @@ class NewFixture extends Component {
 					<input
 						className={`new-fixture ${isInvalid ? "is-invalid" : ""}`}
 						type="text"
-						placeholder={isInvalid ? <Translate i18nKey="FIXTURE_NAME_EMPTY" /> : <Translate i18nKey="Enter Fixture" />}
+						placeholder={isInvalid ? this.context.t("FIXTURE_NAME_EMPTY") : this.context.t("Enter Fixture")}
 						onChange={onChange}
 						value={value}
 					/>
