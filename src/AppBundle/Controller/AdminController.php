@@ -526,13 +526,15 @@ class AdminController extends BaseAdminController
             }
 
 
+            $company = $user->getCompany();
+
             /* @var User $user*/
             $rows[] = implode(',', array(
                 $user->getFirstName(),
                 $user->getLastName(),
                 $user->getEmail(),
-                ($user->getCompany() != null) ? $user->getCompany()->getLegalName() : "",
-                $user->getCountry(),
+                ($company != null) ? $company->getLegalName() : "",
+                ($company != null && $company->getCountry() != null) ? $company->getCountry()->getName() : "",
                 ( $user->getStatus() != null ) ? $user->getStatus()->getName() : "",
                 ( $user->getLastLogin() != null ) ? $user->getLastLogin()->format('Y-m-d H:i:s'): "",
                 ( $user->getRegisteredAt() != null ) ? $user->getRegisteredAt()->format('Y-m-d H:i:s'): "",
