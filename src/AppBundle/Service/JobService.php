@@ -154,14 +154,16 @@ class JobService
 
                 $user = $job->getUser();
 
-                if ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) $this->emailService->accountIncomplete($user);
+                if ( $user != null && ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) ){
+                    $this->emailService->accountIncomplete($user);
+                }
                 $job->setCompleted(true);
                 break;
 
             case JobTypeEnum::ACCOUNT_INCOMPLETE_FROM_INVITE:
                 $user = $job->getUser();
 
-                if ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) {
+                if (  $user != null && (  $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) ) {
                     $confirmationUrl = $this->router->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
                     $this->emailService->accountIncompleteFromInvite($user, $job->getColleague(), $confirmationUrl);
                 }
