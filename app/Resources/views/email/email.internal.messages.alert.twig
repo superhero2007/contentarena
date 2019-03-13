@@ -1,0 +1,29 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block header %}
+    Team!
+{% endblock %}
+
+
+{% block content %}
+    <tr>
+        <td style="text-align: left">
+            <strong>{{ sender.firstName }} {{ sender.lastName }} {{ sender.email }}</strong>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="text-align: left">
+            sent a message to
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left">
+            <strong>{{ company.legalName }}</strong>
+        </td>
+    </tr>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

@@ -234,6 +234,11 @@ class MessageService
             $this->em->flush();
         }
 
+        try {
+            $this->emailService->internalNewMessageAlert($user, $recipientCompany);
+        }
+        catch (\Exception $e){}
+
         $message = new Message();
         $createdAt = new \DateTime();
         $message->setCreatedAt($createdAt);
