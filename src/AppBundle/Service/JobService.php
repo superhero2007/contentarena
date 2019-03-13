@@ -148,15 +148,23 @@ class JobService
         $expatriation_date = strtotime($job->getRunAt()->format("Y-m-d H:i:s"));
         if ( $expatriation_date > $current_date ) return;
 
+        /* @var User $user */
         switch ( $job->getType() ){
             case JobTypeEnum::ACCOUNT_INCOMPLETE:
-                $this->emailService->accountIncomplete($job->getUser());
+
+                $user = $job->getUser();
+
+                if ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) $this->emailService->accountIncomplete($user);
                 $job->setCompleted(true);
                 break;
 
             case JobTypeEnum::ACCOUNT_INCOMPLETE_FROM_INVITE:
-                $confirmationUrl = $this->router->generate('fos_user_registration_confirm_new', array('token' => $job->getUser()->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
-                $this->emailService->accountIncompleteFromInvite($job->getUser(), $job->getColleague(), $confirmationUrl);
+                $user = $job->getUser();
+
+                if ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) {
+                    $confirmationUrl = $this->router->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+                    $this->emailService->accountIncompleteFromInvite($user, $job->getColleague(), $confirmationUrl);
+                }
                 $job->setCompleted(true);
                 break;
         }
