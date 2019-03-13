@@ -9,6 +9,10 @@ export const CONTENT_LISTING_VIEW = {
 	TABLE: "table",
 };
 
+export const LISTING_STATUS = {
+	REJECTED: "REJECTED",
+};
+
 export const RIGHT_STATUS = {
 	AVAILABLE_RIGHTS: "AVAILABLE_RIGHTS",
 	OFFERED_RIGHTS: "OFFERED_RIGHTS",

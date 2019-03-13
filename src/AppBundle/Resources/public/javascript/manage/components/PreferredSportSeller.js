@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import SportSelector from "../../main/components/SportSelector";
 
 class PreferredSportSeller extends React.Component {
@@ -30,11 +31,11 @@ class PreferredSportSeller extends React.Component {
 		return (
 			<React.Fragment>
 				<div className="preferences-title">
-					{this.context.t("PREFERENCES_SPORT_SELLER_TITLE")}
+					<Translate i18nKey="PREFERENCES_SPORT_SELLER_TITLE" />
 				</div>
 				{showSubtitle && (
 					<div className="subtitle">
-						{this.context.t("PREFERENCES_SPORT_SELLER_SUBTITLE")}
+						<Translate i18nKey="PREFERENCES_SPORT_SELLER_SUBTITLE" />
 					</div>
 				)}
 				<div className="row" style={{ marginBottom: 50 }}>

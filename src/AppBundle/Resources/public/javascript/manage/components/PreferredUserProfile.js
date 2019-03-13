@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 
 class PreferredUserProfile extends React.Component {
 	constructor(props) {
@@ -31,10 +32,10 @@ class PreferredUserProfile extends React.Component {
 		return (
 			<React.Fragment>
 				<div className={cn("preferences-title", { "justify-content-center": centered })}>
-					{this.context.t("PREFERENCES_PROFILE_TITLE")}
+					<Translate i18nKey="PREFERENCES_PROFILE_TITLE" />
 				</div>
 				<div className="subtitle">
-					{this.context.t("PREFERENCES_PROFILE_SUBTITLE")}
+					<Translate i18nKey="PREFERENCES_PROFILE_SUBTITLE" />
 				</div>
 				<div className={cn("row", { "justify-content-center": centered })} style={style}>
 					<div className={cn({
@@ -56,7 +57,7 @@ class PreferredUserProfile extends React.Component {
 								checked={profile === "BUYER"}
 								style={{ marginRight: 5, width: 20, padding: 0 }}
 							/>
-							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_BUYER")}
+							<Translate i18nKey="PREFERENCES_TERRITORIES_PROFILE_BUYER" />
 						</div>
 						<div className={cn({ "font-weight-bold": profile === "SELLER" })} style={{ marginRight: 20 }}>
 							<input
@@ -69,7 +70,7 @@ class PreferredUserProfile extends React.Component {
 								checked={profile === "SELLER"}
 								style={{ marginRight: 5, width: 20, padding: 0 }}
 							/>
-							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_SELLER")}
+							<Translate i18nKey="PREFERENCES_TERRITORIES_PROFILE_SELLER" />
 						</div>
 						<div className={cn({ "font-weight-bold": profile === "BOTH" })}>
 							<input
@@ -82,7 +83,7 @@ class PreferredUserProfile extends React.Component {
 								checked={profile === "BOTH"}
 								style={{ marginRight: 5, width: 20, padding: 0 }}
 							/>
-							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_BOTH")}
+							<Translate i18nKey="PREFERENCES_TERRITORIES_PROFILE_BOTH" />
 						</div>
 					</div>
 				</div>

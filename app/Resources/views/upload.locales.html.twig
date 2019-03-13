@@ -8,15 +8,10 @@
     </section>
     <section id="main" class="content">
 
-        <div class="form-group">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-        </div>
         <div class="uk-padding">
             {#<a class="btn btn-primary" href="{{ path('getLocalesDevFile') }}" >Download DEV en.po file</a>#}
-            <a class="btn btn-primary" href="{{ path('getLocalesFile') }}" >Download en.po file</a>
-            <a class="btn btn-primary" href="{{ path('getLocalesTemplates') }}" >Download template.pot file</a>
+            <a class="btn btn-primary" href="{{ path('juanx_react_translation_import_dev') }}" >Import from DEV</a>
+            <a class="btn btn-primary" href="{{ path('juanx_react_translation_import_test') }}" >Import from API</a>
         </div>
 
         <div class="alert alert-primary">

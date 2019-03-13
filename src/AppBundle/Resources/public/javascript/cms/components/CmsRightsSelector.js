@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import SuperRightDefinitions from "../../sell/components/SuperRightDefinitions";
 import { RIGHTS } from "../../common/constants";
@@ -112,7 +113,7 @@ class CmsRightsSelector extends React.Component {
 									</span>
 									<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
 										<div className="body">
-											{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${code}`)}
+											<Translate i18nKey={`CL_STEP2_RIGHT_DEFINITIONS_${code}`} />
 										</div>
 									</ReactTooltip>
 								</div>
@@ -132,7 +133,7 @@ class CmsRightsSelector extends React.Component {
 									className={cn({ selected: !checkboxIsDisabled && offerValue === offers.EXCLUSIVE })}
 									htmlFor={exclusiveIdAttr}
 								>
-									{this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
+									<Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVE" />
 								</label>
 								<input
 									type="radio"
@@ -148,7 +149,7 @@ class CmsRightsSelector extends React.Component {
 									htmlFor={nonExclusiveIdAttr}
 									className={cn({ selected: !checkboxIsDisabled && offerValue === offers.NON_EXCLUSIVE })}
 								>
-									{this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
+									<Translate i18nKey="RIGHT_SELECTION_OFFER_NON_EXCLUSIVE" />
 								</label>
 							</div>
 

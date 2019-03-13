@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "AppBundle\\": "src/AppBundle",
-            "ApiBundle\\": "src/ApiBundle"
+            "ApiBundle\\": "src/ApiBundle",
+            "Juanx\\ReactTranslationBundle\\": "src/Juanx/ReactTranslationBundle"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },

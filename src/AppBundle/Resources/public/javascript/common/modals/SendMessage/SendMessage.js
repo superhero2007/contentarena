@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import Translate from "@components/Translator/Translate";
 import { GenericModalStyle } from "../../../main/styles/custom";
 
 class SendMessage extends Component {
@@ -74,7 +75,7 @@ class SendMessage extends Component {
 					{isLoading && <i className="fa fa-cog fa-spin" />}
 					{(isFail || isSuccess) && (
 						<div className="body-msg">
-							{isFail ? this.context.t("MESSAGE_POPUP_FAILED") : this.context.t("MESSAGE_POPUP_SENT")}
+							{isFail ? <Translate i18nKey="MESSAGE_POPUP_FAILED" /> : <Translate i18nKey="MESSAGE_POPUP_SENT" />}
 						</div>
 					)}
 				</section>
@@ -82,19 +83,19 @@ class SendMessage extends Component {
 					{isFail || isSuccess
 						? (
 							<button className="standard-button" onClick={onCloseModal}>
-								{this.context.t("MESSAGE_POPUP_BUTTON_CLOSE")}
+								<Translate i18nKey="MESSAGE_POPUP_BUTTON_CLOSE" />
 							</button>
 						)
 						: (
 							<React.Fragment>
 								<button className="cancel-btn" onClick={onCloseModal}>
-									{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+									<Translate i18nKey="MESSAGE_POPUP_BUTTON_CANCEL" />
 								</button>
 								<button
 									className="standard-button"
 									onClick={this.handleSendBtnClick}
 								>
-									{this.context.t("MESSAGES_SEND_BUTTON")}
+									<Translate i18nKey="MESSAGES_SEND_BUTTON" />
 								</button>
 							</React.Fragment>
 						)

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 import LandingHeader from "../components/LandingHeader";
 import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
 import { contentWhiteLogo } from "../../main/components/Icons";
@@ -30,10 +31,10 @@ class LandingWrapper extends Component {
 				<section className="banner">
 					<div className="banner-content">
 						<div className="title">
-							{this.context.t("LANDING_SELL_BUY")}
+							<Translate i18nKey="LANDING_SELL_BUY" />
 						</div>
 						<div className="subtitle">
-							{this.context.t("LANDING_SPORTS_RIGHTS")}
+							<Translate i18nKey="LANDING_SPORTS_RIGHTS" />
 						</div>
 						<div className="registration">
 							<input
@@ -46,7 +47,7 @@ class LandingWrapper extends Component {
 								className="yellow-button"
 								onClick={this.handleRegisterClick}
 							>
-								{this.context.t("LANDING_REGISTER")}
+								<Translate i18nKey="LANDING_REGISTER" />
 							</button>
 						</div>
 					</div>
@@ -141,7 +142,7 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LANDING_GET_IN_TOUCH")}
+								<Translate i18nKey="LANDING_GET_IN_TOUCH" />
 							</span>
 						</div>
 						<div className="outer" />
@@ -154,10 +155,10 @@ class LandingWrapper extends Component {
 							<div className="benefit-row">
 								<div className="content">
 									<div className="cap">
-										{this.context.t("LANDING_HOW_TO_TITLE_1")}
+										<Translate i18nKey="LANDING_HOW_TO_TITLE_1" />
 									</div>
 									<div className="txt">
-										{this.context.t("LANDING_HOW_TO_TEXT_1")}
+										<Translate i18nKey="LANDING_HOW_TO_TEXT_1" />
 									</div>
 								</div>
 								<div className="icon">
@@ -182,20 +183,20 @@ class LandingWrapper extends Component {
 								</div>
 								<div className="content">
 									<div className="cap">
-										{this.context.t("LANDING_HOW_TO_TITLE_2")}
+										<Translate i18nKey="LANDING_HOW_TO_TITLE_2" />
 									</div>
 									<div className="txt">
-										{this.context.t("LANDING_HOW_TO_TEXT_2")}
+										<Translate i18nKey="LANDING_HOW_TO_TEXT_2" />
 									</div>
 								</div>
 							</div>
 							<div className="benefit-row">
 								<div className="content">
 									<div className="cap">
-										{this.context.t("LANDING_HOW_TO_TITLE_3")}
+										<Translate i18nKey="LANDING_HOW_TO_TITLE_3" />
 									</div>
 									<div className="txt">
-										{this.context.t("LANDING_HOW_TO_TEXT_3")}
+										<Translate i18nKey="LANDING_HOW_TO_TEXT_3" />
 									</div>
 								</div>
 								<div className="icon">
@@ -214,7 +215,7 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle bg-white">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LANDING_TEAM")}
+								<Translate i18nKey="LANDING_TEAM" />
 							</span>
 						</div>
 						<div className="outer" />
@@ -309,7 +310,7 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LANDING_OUR_REFERENCES")}
+								<Translate i18nKey="LANDING_OUR_REFERENCES" />
 							</span>
 						</div>
 						<div className="outer" />
@@ -411,7 +412,7 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle bg-white">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LANDING_CONTACT_US")}
+								<Translate i18nKey="LANDING_CONTACT_US" />
 							</span>
 						</div>
 						<div className="outer" />
@@ -432,22 +433,22 @@ class LandingWrapper extends Component {
 						</a>
 						<div className="footer-links">
 							<div>
-								<span className="footer-company-name">{this.context.t("LANDING_COMPANY")}</span>
+								<span className="footer-company-name"><Translate i18nKey="LANDING_COMPANY" /></span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.PRIVACY}>{this.context.t("LOGIN_BAR_PRIVACY_POLICY")}</a>
+									<a href={LANDING_LINKS.PRIVACY}><Translate i18nKey="LOGIN_BAR_PRIVACY_POLICY" /></a>
 								</span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.TERMS}>{this.context.t("LOGIN_BAR_TERMS")}</a>
+									<a href={LANDING_LINKS.TERMS}><Translate i18nKey="LOGIN_BAR_TERMS" /></a>
 								</span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.COOKIE}>{this.context.t("LOGIN_BAR_COOKIE_POLICY")}</a>
+									<a href={LANDING_LINKS.COOKIE}><Translate i18nKey="LOGIN_BAR_COOKIE_POLICY" /></a>
 								</span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.FAQ}>{this.context.t("LOGIN_BAR_FAQ")}</a>
+									<a href={LANDING_LINKS.FAQ}><Translate i18nKey="LOGIN_BAR_FAQ" /></a>
 								</span>
 							</div>
 						</div>

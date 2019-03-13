@@ -4,6 +4,7 @@ import Moment from "moment/moment";
 import Modal from "react-modal";
 import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import test from "../actions";
 import CommercialTerms from "./CommercialTerms";
 import TermSheet from "./TermSheet";
@@ -122,7 +123,7 @@ class ListingDetails extends React.Component {
 						fontWeight: 600,
 					}}
 					>
-						{this.context.t("CHECKOUT_CONGRATULATIONS")}
+						<Translate i18nKey="CHECKOUT_CONGRATULATIONS" />
 					</div>
 					{selectedPackage.salesMethod === "FIXED" && (
 						<div style={{
@@ -132,7 +133,7 @@ class ListingDetails extends React.Component {
 							textAlign: "center",
 						}}
 						>
-							{this.context.t("CHECKOUT_FIXED_SUCCESS_MESSAGE")}
+							<Translate i18nKey="CHECKOUT_FIXED_SUCCESS_MESSAGE" />
 						</div>
 					)}
 					{selectedPackage.salesMethod === "BIDDING" && (
@@ -143,7 +144,7 @@ class ListingDetails extends React.Component {
 							textAlign: "center",
 						}}
 						>
-							{this.context.t("CHECKOUT_BID_SUCCESS_MESSAGE")}
+							<Translate i18nKey="CHECKOUT_BID_SUCCESS_MESSAGE" />
 						</div>
 					)}
 
@@ -155,7 +156,7 @@ class ListingDetails extends React.Component {
 									history.push("/closeddeals");
 								}}
 							>
-								{this.context.t("CHECKOUT_FIXED_GO_TO_CLOSED_DEALS")}
+								<Translate i18nKey="CHECKOUT_FIXED_GO_TO_CLOSED_DEALS" />
 							</button>
 						)}
 
@@ -166,12 +167,12 @@ class ListingDetails extends React.Component {
 									history.push("/bids/activebids");
 								}}
 							>
-								{this.context.t("CHECKOUT_FIXED_GO_TO_BIDS")}
+								<Translate i18nKey="CHECKOUT_FIXED_GO_TO_BIDS" />
 							</button>
 						)}
 
 						<button className="standard-button" onClick={this.closeSuccessScreen}>
-							{this.context.t("CHECKOUT_FIXED_GO_TO_MARKETPLACE")}
+							<Translate i18nKey="CHECKOUT_FIXED_GO_TO_MARKETPLACE" />
 						</button>
 					</div>
 				</div>
@@ -244,7 +245,7 @@ class ListingDetails extends React.Component {
 							<a onClick={this.handleOpenContactSellerModal}>
 								<img src={this.contactIcon} className="icon" alt="" />
 								<span>
-									{this.context.t("Contact Seller")}
+									<Translate i18nKey="Contact Seller" />
 								</span>
 							</a>
 						)}
@@ -255,7 +256,7 @@ class ListingDetails extends React.Component {
 							<a onClick={this.watchlist}>
 								<img src={content.watchlist ? this.checkIcon : this.watchlistIcon} className="icon" alt="" />
 								<span>
-									{content.watchlist ? this.context.t("LISTING_DETAILS_ADDED_TO_WATCHLIST") : this.context.t("Watchlist")}
+									{content.watchlist ? <Translate i18nKey="LISTING_DETAILS_ADDED_TO_WATCHLIST" /> : <Translate i18nKey="Watchlist" />}
 								</span>
 							</a>
 						)}
@@ -270,7 +271,7 @@ class ListingDetails extends React.Component {
 
 						{content.featured && (
 							<div className="featured-badge">
-								<span>{this.context.t("FEATURED_LISTING_BADGE_TEXT")}</span>
+								<span><Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" /></span>
 							</div>
 						)}
 
@@ -289,7 +290,7 @@ class ListingDetails extends React.Component {
 						<div className="info">
 							<div className="d-flex">
 								<div style={{ marginRight: 5 }}>
-									{this.context.t("Publishing date")}
+									<Translate i18nKey="Publishing date" />
 								</div>
 								<div>
 									<b>{Moment().format(DATE_FORMAT)}</b>
@@ -297,7 +298,7 @@ class ListingDetails extends React.Component {
 							</div>
 							<div className="d-flex">
 								<div style={{ marginRight: 5 }}>
-									{this.context.t("Expiry")}
+									<Translate i18nKey="Expiry" />
 								</div>
 								<div>
 									<b>{Moment(content.expiresAt).format(DATE_FORMAT)}</b>
@@ -323,7 +324,7 @@ class ListingDetails extends React.Component {
 										this.showTab("bundles");
 									}}
 								>
-									{this.context.t("LISTING_DETAILS_TAB_BUNDLES")}
+									<Translate i18nKey="LISTING_DETAILS_TAB_BUNDLES" />
 								</div>
 
 								{content.PROGRAM_NAME && !isEditedProgramShownInFirstTab && isEditedProgramShown && (
@@ -334,7 +335,7 @@ class ListingDetails extends React.Component {
 											this.showTab("editedprogram");
 										}}
 									>
-										{this.context.t("LISTING_DETAILS_EDITED_PROGRAM")}
+										<Translate i18nKey="LISTING_DETAILS_EDITED_PROGRAM" />
 									</div>
 								)}
 
@@ -346,7 +347,7 @@ class ListingDetails extends React.Component {
 										this.showTab("grantofrights");
 									}}
 								>
-									{this.context.t("LISTING_DETAILS_TAB_RIGHTS")}
+									<Translate i18nKey="LISTING_DETAILS_TAB_RIGHTS" />
 								</div>
 
 
@@ -357,7 +358,7 @@ class ListingDetails extends React.Component {
 										this.showTab("seller");
 									}}
 								>
-									{this.context.t("LISTING_DETAILS_TAB_SELLER")}
+									<Translate i18nKey="LISTING_DETAILS_TAB_SELLER" />
 								</div>
 							</div>
 

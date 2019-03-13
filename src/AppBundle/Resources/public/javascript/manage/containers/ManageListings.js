@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Modal from "react-modal";
+import Translate from "@components/Translator/Translate";
 import { goTo } from "../../main/actions/utils";
 import BoardListing from "../components/BoardListing";
 import { updateProfile } from "../../main/actions/userActions";
@@ -141,7 +142,7 @@ class ManageListings extends React.Component {
 				<div className="top-row">
 					<RightsLegend />
 					<button className="ca-btn primary" onClick={this.showHelpModal}>
-						{this.context.t("MANAGE_LISTINGS_HELP")}
+						<Translate i18nKey="MANAGE_LISTINGS_HELP" />
 					</button>
 				</div>
 
@@ -150,7 +151,7 @@ class ManageListings extends React.Component {
 					<div className="column">
 						<div className="column-title">
 							<div>
-								{this.context.t("MANAGE_LISTINGS_TITLE_DRAFT")}
+								<Translate i18nKey="MANAGE_LISTINGS_TITLE_DRAFT" />
 							</div>
 							{" "}
 							(
@@ -162,7 +163,7 @@ class ManageListings extends React.Component {
 
 							<div>
 								<a className="ca-btn primary" href="/contentlisting/new">
-									{this.context.t("MANAGE_LISTINGS_CREATE_LISTING")}
+									<Translate i18nKey="MANAGE_LISTINGS_CREATE_LISTING" />
 								</a>
 							</div>
 						</div>
@@ -195,7 +196,7 @@ class ManageListings extends React.Component {
 					{/* INACTIVE */}
 					<div className="column">
 						<div className="column-title">
-							<div>{this.context.t("MANAGE_LISTINGS_TITLE_INACTIVE")}</div>
+							<div><Translate i18nKey="MANAGE_LISTINGS_TITLE_INACTIVE" /></div>
 							{" "}
 							(
 
@@ -239,7 +240,7 @@ class ManageListings extends React.Component {
 					{/* ACTIVE */}
 					<div className="column">
 						<div className="column-title">
-							<div>{this.context.t("MANAGE_LISTINGS_TITLE_ACTIVE")}</div>
+							<div><Translate i18nKey="MANAGE_LISTINGS_TITLE_ACTIVE" /></div>
 							{" "}
 							(
 
@@ -284,7 +285,7 @@ class ManageListings extends React.Component {
 					{/* EXPIRED */}
 					<div className="column">
 						<div className="column-title">
-							<div>{this.context.t("MANAGE_LISTINGS_TITLE_EXPIRED")}</div>
+							<div><Translate i18nKey="MANAGE_LISTINGS_TITLE_EXPIRED" /></div>
 							{" "}
 							(
 
@@ -335,7 +336,7 @@ class ManageListings extends React.Component {
 			>
 				<div className="manage-listing-modal">
 					<div className="modal-title">
-						{this.context.t("MANAGE_LISTINGS_HELP_MODAL_TITLE")}
+						<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_TITLE" />
 						<i className="fa fa-times-circle-o close-icon" onClick={this.hideHelpModal} />
 					</div>
 					<div className="modal-content">
@@ -344,12 +345,12 @@ class ManageListings extends React.Component {
 								1.
 
 
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_DRAFTS_TITLE")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_DRAFTS_TITLE" />
 							</div>
 							<div
 								className="description"
 							>
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_DRAFTS_DESCRIPTION")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_DRAFTS_DESCRIPTION" />
 							</div>
 						</div>
 						<div className="help-item">
@@ -357,12 +358,12 @@ class ManageListings extends React.Component {
 								2.
 
 
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_INACTIVE_TITLE")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_INACTIVE_TITLE" />
 							</div>
 							<div
 								className="description"
 							>
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_INACTIVE_DESCRIPTION")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_INACTIVE_DESCRIPTION" />
 							</div>
 						</div>
 						<div className="help-item">
@@ -370,12 +371,12 @@ class ManageListings extends React.Component {
 								3.
 
 
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_ACTIVE_TITLE")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_ACTIVE_TITLE" />
 							</div>
 							<div
 								className="description"
 							>
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_ACTIVE_DESCRIPTION")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_ACTIVE_DESCRIPTION" />
 							</div>
 						</div>
 						<div className="help-item">
@@ -383,12 +384,12 @@ class ManageListings extends React.Component {
 								4.
 
 
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_EXPIRED_TITLE")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_EXPIRED_TITLE" />
 							</div>
 							<div
 								className="description"
 							>
-								{this.context.t("MANAGE_LISTINGS_HELP_MODAL_EXPIRED_DESCRIPTION")}
+								<Translate i18nKey="MANAGE_LISTINGS_HELP_MODAL_EXPIRED_DESCRIPTION" />
 							</div>
 						</div>
 					</div>

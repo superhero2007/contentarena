@@ -2,9 +2,10 @@ import React from "react";
 import DatePicker from "@components/DatePicker";
 import moment from "moment";
 import Modal from "react-modal";
-import { customStyles } from "../../main/styles/custom";
 import { PropTypes } from "prop-types";
 import { DATE_FORMAT } from "@constants";
+import Translate from "@components/Translator/Translate";
+import { customStyles } from "../../main/styles/custom";
 
 class LicenseDateSelector extends React.Component {
 	constructor(props) {
@@ -48,7 +49,7 @@ class LicenseDateSelector extends React.Component {
 		const {
 			startDate, endDate, endDateLimit, startDateMode, endDateMode,
 		} = this.state;
-		const saveButtonTooltip = this.context.t(this.getSaveButtonTooltip());
+		const saveButtonTooltip = <Translate i18nKey={this.getSaveButtonTooltip()} />;
 
 		return (
 			<Modal
@@ -60,18 +61,18 @@ class LicenseDateSelector extends React.Component {
 
 				<div className="modal-title">
 					<i className="fa fa-edit" />
-					{this.context.t("license period")}
+					<Translate i18nKey="license period" />
 					<i className="fa fa-times close-icon" onClick={onClose} />
 				</div>
 				<div style={{ padding: "0 20px 15px" }}>
-					{this.context.t("CL3_EDIT_LICENSE_PERIOD_DESCRIPTION")}
+					<Translate i18nKey="CL3_EDIT_LICENSE_PERIOD_DESCRIPTION" />
 				</div>
 
 				<div className="step-content step-content-custom">
 					<div className="step-content-container">
 						<div className="modal-input">
 							<label>
-								{this.context.t("CL_STEP3_LICENSE_POPUP_START")}
+								<Translate i18nKey="CL_STEP3_LICENSE_POPUP_START" />
 							</label>
 							<div className="row">
 								<div className="column">
@@ -88,7 +89,7 @@ class LicenseDateSelector extends React.Component {
 										this.onDataChange("startDateMode", "LICENSE");
 									}}
 									>
-										{this.context.t("CL_STEP3_LICENSE_POPUP_START_CONCLUSION")}
+										<Translate i18nKey="CL_STEP3_LICENSE_POPUP_START_CONCLUSION" />
 									</span>
 								</div>
 								<div
@@ -120,7 +121,7 @@ class LicenseDateSelector extends React.Component {
 						</div>
 						<div className="modal-input">
 							<label>
-								{this.context.t("CL_STEP3_LICENSE_POPUP_END")}
+								<Translate i18nKey="CL_STEP3_LICENSE_POPUP_END" />
 							</label>
 							<div className="row">
 								<div
@@ -146,7 +147,7 @@ class LicenseDateSelector extends React.Component {
 										placeholder="Enter number"
 									/>
 									<span className="small-label">
-										{this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
+										<Translate i18nKey="LISTING_DETAILS_LICENSE_END_DAYS" />
 									</span>
 								</div>
 								<div
@@ -190,7 +191,7 @@ class LicenseDateSelector extends React.Component {
 											this.onDataChange("endDateMode", "UNLIMITED");
 										}}
 									>
-										{this.context.t("Unlimited")}
+										<Translate i18nKey="Unlimited" />
 									</span>
 								</div>
 							</div>
@@ -205,7 +206,7 @@ class LicenseDateSelector extends React.Component {
 						className="standard-button"
 						onClick={this.onOKClick}
 					>
-						{this.context.t("MODAL_APPLY")}
+						<Translate i18nKey="MODAL_APPLY" />
 					</button>
 				</div>
 

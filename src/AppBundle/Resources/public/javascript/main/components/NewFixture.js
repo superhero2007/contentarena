@@ -4,6 +4,7 @@ import DatePicker from "@components/DatePicker";
 import moment from "moment/moment";
 import { DATE_TIME_FORMAT, DATE_FORMAT, TIME_FORMAT } from "@constants";
 import { formatMomentToServerFormat } from "@utils/time";
+import Translate from "@components/Translator/Translate";
 import { addIcon, cancelIcon } from "./Icons";
 
 class NewFixture extends Component {
@@ -65,12 +66,12 @@ class NewFixture extends Component {
 			<div className="fixture-item">
 				<div className="fixture-row">
 					<label>
-						{this.context.t("Fixture")}
+						<Translate i18nKey="Fixture" />
 					</label>
 					<input
 						className={`new-fixture ${isInvalid ? "is-invalid" : ""}`}
 						type="text"
-						placeholder={isInvalid ? this.context.t("FIXTURE_NAME_EMPTY") : this.context.t("Enter fixture")}
+						placeholder={isInvalid ? <Translate i18nKey="FIXTURE_NAME_EMPTY" /> : <Translate i18nKey="Enter Fixture" />}
 						onChange={onChange}
 						value={value}
 					/>
@@ -91,7 +92,7 @@ class NewFixture extends Component {
 									className="ca-link text-nowrap add-time"
 									onClick={() => this.enablePicker("isDatePickerWithTimeEnabled")}
 								>
-									{this.context.t("Add Time")}
+									<Translate i18nKey="Add Time" />
 								</a>
 							)}
 							<DatePicker
@@ -113,13 +114,13 @@ class NewFixture extends Component {
 									onClick={() => this.enablePicker("isDatePickerWithTimeEnabled")}
 									style={{ marginLeft: 10 }}
 								>
-									{this.context.t("Add Time")}
+									<Translate i18nKey="Add Time" />
 								</a>
 							)}
 						</div>
 					) : (
 						<a className="ca-link text-nowrap" onClick={() => this.enablePicker("isDatePickerEnabled")}>
-							{this.context.t("Add date")}
+							<Translate i18nKey="Add date" />
 						</a>
 					)}
 				</div>

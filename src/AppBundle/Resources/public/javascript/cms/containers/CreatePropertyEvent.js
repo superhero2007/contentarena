@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import moment from "moment/moment";
+import Translate from "@components/Translator/Translate";
 import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
 	openCategorySelector, openSeasonSelector, openSportSelector,
@@ -480,7 +481,7 @@ class CreatePropertyEvent extends React.Component {
 	getAddBtn = () => (
 		<span className="add-season" onClick={() => this.addSeason()}>
 			<i className="fa fa-plus-circle" />
-			{this.context.t("CMS_FORM_ADD_SEASON")}
+			<Translate i18nKey="CMS_FORM_ADD_SEASON" />
 		</span>
 	);
 
@@ -489,7 +490,7 @@ class CreatePropertyEvent extends React.Component {
 		return (
 			<span className="remove-season" onClick={() => removeCustomSeason(index)}>
 				<i className="fa fa-minus-circle" />
-				{this.context.t("CMS_FORM_REMOVE_SEASON")}
+				<Translate i18nKey="CMS_FORM_REMOVE_SEASON" />
 			</span>
 		);
 	};
@@ -541,16 +542,16 @@ class CreatePropertyEvent extends React.Component {
 				/>
 				<DefaultBox>
 					<h4>
-						{this.context.t("CMS_CREATE_PROPERTY_TITLE")}
+						<Translate i18nKey="CMS_CREATE_PROPERTY_TITLE" />
 					</h4>
 					<h6>
-						{this.context.t("CMS_CREATE_PROPERTY_DESCRIPTION")}
+						<Translate i18nKey="CMS_CREATE_PROPERTY_DESCRIPTION" />
 					</h6>
 					<form>
 						<ul className="form-items">
 							<li>
 								<label>
-									{this.context.t("CMS_FORM_SPORT_LABEL")}
+									<Translate i18nKey="CMS_FORM_SPORT_LABEL" />
 								</label>
 								<input
 									type="text"
@@ -578,7 +579,7 @@ class CreatePropertyEvent extends React.Component {
 							</li>
 							<li>
 								<label>
-									{this.context.t("CMS_FORM_CATEGORY_LABEL")}
+									<Translate i18nKey="CMS_FORM_CATEGORY_LABEL" />
 								</label>
 								<input
 									type="text"
@@ -599,7 +600,7 @@ class CreatePropertyEvent extends React.Component {
 							</li>
 							<li>
 								<label>
-									{this.context.t("CMS_FORM_TOURNAMENT_LABEL")}
+									<Translate i18nKey="CMS_FORM_TOURNAMENT_LABEL" />
 								</label>
 								<input
 									type="text"
@@ -630,7 +631,7 @@ class CreatePropertyEvent extends React.Component {
 								<React.Fragment key={index}>
 									<li ref={el => this[`season-${index}-input`] = el}>
 										<label>
-											{this.context.t("CMS_FORM_SEASON_LABEL")}
+											<Translate i18nKey="CMS_FORM_SEASON_LABEL" />
 										</label>
 										<input
 											type="text"
@@ -663,7 +664,7 @@ class CreatePropertyEvent extends React.Component {
 										className="ca-checkbox blue"
 										onClick={this.handleSeasonCheckbox}
 									/>
-									<label htmlFor="season-checkbox">{this.context.t("CMS_FORM_NOT_APPLICABLE")}</label>
+									<label htmlFor="season-checkbox"><Translate i18nKey="CMS_FORM_NOT_APPLICABLE" /></label>
 								</li>
 							)}
 						</ul>
@@ -671,10 +672,10 @@ class CreatePropertyEvent extends React.Component {
 				</DefaultBox>
 				<DefaultBox>
 					<h4>
-						{this.context.t("CMS_SELECT_RIGHTS_TITLE")}
+						<Translate i18nKey="CMS_SELECT_RIGHTS_TITLE" />
 					</h4>
 					<h6>
-						{this.context.t("CMS_SELECT_RIGHTS_DESCRIPTION")}
+						<Translate i18nKey="CMS_SELECT_RIGHTS_DESCRIPTION" />
 					</h6>
 					<CmsRightsSelector />
 				</DefaultBox>
@@ -684,10 +685,10 @@ class CreatePropertyEvent extends React.Component {
 						disabled={property.rights.length === 0}
 						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_2)}
 					>
-						{this.context.t("CMS_CREATE_PROPERTY_CONTINUE_BUTTON")}
+						<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 					</button>
 					<button onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)} className="link-button property-cancel-button">
-						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
+						<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
 					</button>
 				</VerticalButtonBox>
 			</div>

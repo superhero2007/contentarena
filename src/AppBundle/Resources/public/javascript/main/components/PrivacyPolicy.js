@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class PrivacyPolicy extends Component {
 	render() {
 		const {
-			text = this.context.t("GENERIC_TERMS_TEXT_1"),
-			text2 = this.context.t("GENERIC_TERMS_TEXT_2"),
+			text = <Translate i18nKey="GENERIC_TERMS_TEXT_1" />,
+			text2 = <Translate i18nKey="GENERIC_TERMS_TEXT_2" />,
 			defaultChecked,
 			value,
 			onChange,

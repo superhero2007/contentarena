@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import ContentListing from "../../main/components/ContentListing";
 import { goTo } from "../../main/actions/utils";
 import RightsLegend from "../../main/components/RightsLegend";
@@ -50,7 +51,7 @@ class Watchlist extends React.Component {
 				<Loader loading={loading}>
 					{listings.length === 0 && (
 						<div className="manager-content-message">
-							{this.context.t("WATCHLIST_EMPTY_MESSAGE")}
+							<Translate i18nKey="WATCHLIST_EMPTY_MESSAGE" />
 						</div>
 					)}
 					{listings.length > 0 && listings.map(listing => (

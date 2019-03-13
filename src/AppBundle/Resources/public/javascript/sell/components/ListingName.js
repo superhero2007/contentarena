@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class ListingName extends React.PureComponent {
 	onBlur = (e) => {
@@ -15,7 +16,7 @@ class ListingName extends React.PureComponent {
 		return (
 			<div className="base-input">
 				<label>
-					{this.context.t("CL_STEP1_LISTING_NAME")}
+					<Translate i18nKey="CL_STEP1_LISTING_NAME" />
 				</label>
 				<input
 					type="text"

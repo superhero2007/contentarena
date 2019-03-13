@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
 import ReactTable from "react-table";
+import Translate from "@components/Translator/Translate";
 import CmsRightsFilter from "../components/CmsRightsFilter";
 import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
@@ -71,7 +72,7 @@ class RightsOverview extends React.Component {
 		const columns = [];
 
 		columns.push({
-			Header: this.context.t("CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY"),
+			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY" />,
 			accessor: "name",
 		});
 
@@ -98,7 +99,7 @@ class RightsOverview extends React.Component {
 		}
 
 		columns.push({
-			Header: this.context.t("CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING"),
+			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING" />,
 			Cell: props => (
 				<div className="d-flex justify-content-center">
 					1
@@ -108,7 +109,7 @@ class RightsOverview extends React.Component {
 		});
 
 		columns.push({
-			Header: this.context.t("CMS_RIGHTS_OVERVIEW_TABLE_HEADER_DEALS"),
+			Header: <Translate i18nKey="CMS_RIGHTS_OVERVIEW_TABLE_HEADER_DEALS" />,
 			Cell: props => (
 				<div className="d-flex justify-content-center">
 					1
@@ -137,7 +138,7 @@ class RightsOverview extends React.Component {
 				<div className="d-flex">
 					<div className="split-filter">
 						<div className="region-filter-title">
-							{ this.context.t("CMS_STATUS_TITLE")}
+							{ <Translate i18nKey="CMS_STATUS_TITLE" />}
 						</div>
 						<div className="right-status">
 							<div>
@@ -152,7 +153,7 @@ class RightsOverview extends React.Component {
 									className={cn({ selected: this.state[RIGHT_STATUS.AVAILABLE_RIGHTS] })}
 									htmlFor={RIGHT_STATUS.AVAILABLE_RIGHTS}
 								>
-									{this.context.t("CMS_AVAILABLE_RIGHTS")}
+									<Translate i18nKey="CMS_AVAILABLE_RIGHTS" />
 								</label>
 							</div>
 							<div>
@@ -167,7 +168,7 @@ class RightsOverview extends React.Component {
 									className={cn({ selected: this.state[RIGHT_STATUS.OFFERED_RIGHTS] })}
 									htmlFor={RIGHT_STATUS.OFFERED_RIGHTS}
 								>
-									{this.context.t("CMS_OFFERED_RIGHTS")}
+									<Translate i18nKey="CMS_OFFERED_RIGHTS" />
 								</label>
 							</div>
 							<div>
@@ -182,39 +183,39 @@ class RightsOverview extends React.Component {
 									className={cn({ selected: this.state[RIGHT_STATUS.CLOSED_DEALS] })}
 									htmlFor={RIGHT_STATUS.CLOSED_DEALS}
 								>
-									{this.context.t("CMS_CLOSED_DEALS")}
+									<Translate i18nKey="CMS_CLOSED_DEALS" />
 								</label>
 							</div>
 						</div>
 					</div>
 					<div className="split-filter">
 						<div className="region-filter-title">
-							{ this.context.t("CMS_RIGHT_LEGENDS_TITLE")}
+							{ <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
 						</div>
 						<div className="right-legends">
 							<div className="right-legends-item">
 								<img src={blueCheckIcon} alt="" />
-								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE")}
+								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE" />}
 							</div>
 							<div className="right-legends-item">
 								<img src={blueCheckIcon} alt="" />
-								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED")}
+								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED" />}
 							</div>
 							<div className="right-legends-item">
 								<img src={blueCheckIcon} alt="" />
-								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD")}
+								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD" />}
 							</div>
 							<div className="right-legends-item">
 								<img src={yellowCheckIcon} alt="" />
-								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE")}
+								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE" />}
 							</div>
 							<div className="right-legends-item">
 								<img src={yellowCheckIcon} alt="" />
-								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED")}
+								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED" />}
 							</div>
 							<div className="right-legends-item">
 								<img src={yellowCheckIcon} alt="" />
-								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD")}
+								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD" />}
 							</div>
 						</div>
 					</div>

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Moment from "moment/moment";
 import DatePicker from "@components/DatePicker";
+import Translate from "@components/Translator/Translate";
 import { DATE_FORMAT, TIME_FORMAT, TIME_ZONE } from "../../common/constants";
 
 class FixtureForm extends React.Component {
@@ -104,7 +105,7 @@ class FixtureForm extends React.Component {
 					onClick={this.create}
 					disabled={this.applyIsDisabled()}
 				>
-					{this.context.t("CMS_EMPTY_FIXTURE_CREATE_APPLY")}
+					<Translate i18nKey="CMS_EMPTY_FIXTURE_CREATE_APPLY" />
 				</button>
 			</>
 		);

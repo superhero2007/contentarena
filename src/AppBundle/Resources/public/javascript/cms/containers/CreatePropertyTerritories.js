@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
 	updateFromMultiple,
@@ -177,10 +178,10 @@ class CreatePropertyTerritories extends React.Component {
 
 				<DefaultBox>
 					<h4>
-						{this.context.t("CMS_SELECT_RIGHTS_TITLE")}
+						<Translate i18nKey="CMS_SELECT_RIGHTS_TITLE" />
 					</h4>
 					<h6>
-						{this.context.t("CMS_SELECT_RIGHTS_DESCRIPTION")}
+						<Translate i18nKey="CMS_SELECT_RIGHTS_DESCRIPTION" />
 					</h6>
 					<CmsAvailableRightsSelector
 						onUndoTerritories={this.onUndoTerritories}
@@ -191,10 +192,10 @@ class CreatePropertyTerritories extends React.Component {
 				{selectedRights.length > 0 && (
 					<DefaultBox>
 						<h4>
-							{this.context.t("CMS_SELECT_TERRITORIES_TITLE")}
+							<Translate i18nKey="CMS_SELECT_TERRITORIES_TITLE" />
 						</h4>
 						<h6>
-							{this.context.t("CMS_SELECT_TERRITORIES_DESCRIPTION")}
+							<Translate i18nKey="CMS_SELECT_TERRITORIES_DESCRIPTION" />
 						</h6>
 
 						<CmsTerritorySelector
@@ -218,7 +219,7 @@ class CreatePropertyTerritories extends React.Component {
 							<i className="fa fa-check-circle" />
 						</h5>
 						<h5>
-							{this.context.t("CMS_PROPERTY_CREATION_COMPLETE")}
+							<Translate i18nKey="CMS_PROPERTY_CREATION_COMPLETE" />
 						</h5>
 					</DefaultBox>
 				)
@@ -231,7 +232,7 @@ class CreatePropertyTerritories extends React.Component {
 							disabled={selectedRights.length === 0 || territories.length === 0}
 							onClick={this.applyTerritories}
 						>
-							{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
+							<Translate i18nKey="CMS_APPLY_TERRITORIES_BUTTON" />
 						</button>
 					)}
 
@@ -241,7 +242,7 @@ class CreatePropertyTerritories extends React.Component {
 							className="yellow-button"
 							onClick={this.createProperty}
 						>
-							{!savingProperty && this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+							{!savingProperty && <Translate i18nKey="CMS_CREATE_PROPERTY_BUTTON" />}
 							{savingProperty && <Loader loading xSmall />}
 						</button>
 					)}
@@ -251,7 +252,7 @@ class CreatePropertyTerritories extends React.Component {
 							className="yellow-button"
 							onClick={() => history.push(ROUTE_PATHS.PROPERTIES)}
 						>
-							{this.context.t("CMS_CREATE_PROPERTY_CONTINUE_BUTTON")}
+							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 						</button>
 					)}
 
@@ -259,7 +260,7 @@ class CreatePropertyTerritories extends React.Component {
 						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
 						className="link-button property-cancel-button"
 					>
-						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
+						<Translate i18nKey="CMS_CANCEL_CREATE_PROPERTY_BUTTON" />
 					</button>
 				</VerticalButtonBox>
 			</div>

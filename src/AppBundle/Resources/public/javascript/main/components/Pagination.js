@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
 import Select from "react-select";
+import Translate from "@components/Translator/Translate";
 
 class Pagination extends Component {
 	static propTypes = {
@@ -71,7 +72,7 @@ class Pagination extends Component {
 						>
 							<i className="fa fa-chevron-left" />
 							{" "}
-							{this.context.t("PAGINATION_PREV")}
+							<Translate i18nKey="PAGINATION_PREV" />
 						</a>
 					)}
 					<ul className="pagination-pages">
@@ -98,14 +99,12 @@ class Pagination extends Component {
 							href={this.getLink(page + 1)}
 							className={cn("pagination-button", { "disabled-link": page >= totalPages })}
 						>
-							{this.context.t("PAGINATION_NEXT")}
-							{" "}
-							<i className="fa fa-chevron-right" />
+							<Translate i18nKey="PAGINATION_NEXT" />{" "}<i className="fa fa-chevron-right" />
 						</a>
 					)}
 				</div>
 				<div className="pagination-page-size">
-					{this.context.t("PAGINATION_PAGE_SIZE")}
+					<Translate i18nKey="PAGINATION_PAGE_SIZE" />
 					<Select
 						name="form-field-name"
 						multi={false}

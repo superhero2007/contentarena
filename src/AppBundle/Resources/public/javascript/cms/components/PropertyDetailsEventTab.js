@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { updateSinglePropertyByKeyValue } from "../actions/propertyActions";
 
 class PropertyDetailsEventTab extends Component {
@@ -134,8 +135,8 @@ class PropertyDetailsEventTab extends Component {
 			<section className="property-event-tab">
 				<div className="title-property-tab">
 					<div className="title-wrapper">
-						<span className="title">{this.context.t("PROPERTY_DETAILS_EVENT_TAB_TITLE")}</span>
-						<span className="sub-title">{this.context.t("PROPERTY_DETAILS_EVENT_TAB_TEXT")}</span>
+						<span className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_TAB_TITLE" /></span>
+						<span className="sub-title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_TAB_TEXT" /></span>
 					</div>
 				</div>
 
@@ -146,11 +147,10 @@ class PropertyDetailsEventTab extends Component {
 						</div>
 						{!image && (
 							<div className="image-upload-wrapper">
-								<span>{this.context.t("PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT")}</span>
+								<span><Translate i18nKey="PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT" /></span>
 
 								<label htmlFor="select-image" className="ca-btn primary">
-									{this.context.t("PROPERTY_DETAILS_EVENT_UPLOAD")}
-									<input
+									<Translate i18nKey="PROPERTY_DETAILS_EVENT_UPLOAD" /><input
 										id="select-image"
 										accept=".png, .jpg, .jpeg"
 										type="file"
@@ -168,7 +168,7 @@ class PropertyDetailsEventTab extends Component {
 					</div>
 					<div className="event-description">
 						<div className="description-block">
-							<div className="title">{this.context.t("PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE")}</div>
+							<div className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE" /></div>
 							<div className="description-wrapper">
 								<textarea
 									readOnly={!isEditMode}
@@ -190,7 +190,9 @@ class PropertyDetailsEventTab extends Component {
 							</div>
 							<div className="files-and-website-wrapper">
 								<div className="website-wrapper">
-									<div className="title">{this.context.t("PROPERTY_DETAILS_EVENT_WEBSITE_TITLE")}</div>
+									<div className="title">
+										<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_TITLE" />
+									</div>
 									<div className="input-wrapper">
 										<input
 											placeholder={this.context.t("PROPERTY_DETAILS_EVENT_WEBSITE_PLACEHOLDER")}
@@ -199,12 +201,12 @@ class PropertyDetailsEventTab extends Component {
 											onChange={e => this.handleChangeWebsite(e)}
 										/>
 										<button className="ca-btn primary" onClick={this.handleSaveWebsite}>
-											{this.context.t("PROPERTY_DETAILS_EVENT_WEBSITE_SAVE")}
+											<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
 										</button>
 									</div>
 								</div>
 								<div className="files-wrapper">
-									<div className="title">{this.context.t("PROPERTY_DETAILS_EVENT_FILES_TITLE")}</div>
+									<div className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_TITLE" /></div>
 									<div className="input-wrapper">
 										<input
 											placeholder={this.context.t("PROPERTY_DETAILS_EVENT_FILES_PLACEHOLDER")}
@@ -213,7 +215,7 @@ class PropertyDetailsEventTab extends Component {
 											readOnly
 										/>
 										<label htmlFor="select-files" className="ca-btn primary">
-											{this.context.t("PROPERTY_DETAILS_EVENT_FILES_SAVE")}
+											<Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_SAVE" />
 											<input
 												id="select-files"
 												accept="image/png, image/jpg, .pdf, .doc, .docx, .cvs, .ppt, .xls, .xlsx"
@@ -233,7 +235,7 @@ class PropertyDetailsEventTab extends Component {
 							className="yellow-button centered-btn"
 							onClick={this.handleSaveDescriptionAndImage}
 						>
-							{this.context.t("Apply")}
+							<Translate i18nKey="Apply" />
 						</button>
 					</div>
 				)}

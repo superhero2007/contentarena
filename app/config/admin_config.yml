@@ -18,10 +18,9 @@ easy_admin:
               children: ['EmailContent']
             - label: 'Utils'
               children:
-                - {label: 'View LA General Terms', icon: 'file-new', route: 'contractTestGeneral', target: '_blank'}
-                - {label: 'Upload General Terms Page', icon: 'file-new', route: 'uploadGeneralTermsPage'}
-                - {label: 'Upload LA General Terms', icon: 'file-new', route: 'uploadGeneralTerms'}
-                - {label: 'Upload Localization File', icon: 'file-new', route: 'uploadLocales'}
+                - Language
+                - Translation
+                - {label: 'Import translations', icon: 'file-new', route: 'uploadLocales'}
             - Country
             - Terms
             - TermItems
@@ -225,6 +224,12 @@ easy_admin:
                 class: AppBundle\Entity\SourceLicenseTerm
             Definitions:
                 class: AppBundle\Entity\SourceDefinitions
+            Language:
+                class: Juanx\ReactTranslationBundle\Entity\Language
+            Translation:
+                class: Juanx\ReactTranslationBundle\Entity\Translation
+                list:
+                    fields: ['id', 'i18nKey', 'value', 'language']
             TermItems:
                 class: AppBundle\Entity\SourceLicenseTermItem
                 label: 'Term Items'

@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { hideSuccessResetPass } from "../actions/landingActions";
 import { LOGIN_VIEW_TYPE } from "@constants";
 import Loader from "../../common/components/Loader";
@@ -71,14 +72,15 @@ class SignInForm extends PureComponent {
 
 	render() {
 		const { refererEmail } = this.props;
+		const { error } = this.state;
 
 		return (
 			<section className="sign-in-wrapper" onKeyPress={this.handleEnterPress}>
-				<h3>{this.context.t("SIGN_IN_TO_CONTENT_ARENT")}</h3>
+				<h3><Translate i18nKey="SIGN_IN_TO_CONTENT_ARENT" /></h3>
 
 				{refererEmail && refererEmail !== "" && (
 					<p className="sign-in-error-message">
-						{this.context.t("SIGN_IN_FROM_PUBLIC_LISTING_MESSAGE")}
+						<Translate i18nKey="SIGN_IN_FROM_PUBLIC_LISTING_MESSAGE" />
 					</p>
 				)}
 
@@ -86,14 +88,25 @@ class SignInForm extends PureComponent {
 					<div className="reset-success-password">
 						<p>
 							<i className="fa fa-chevron-circle-down" />
-							{this.context.t("SIGN_IN_RESET_MESSAGE")}
+							<Translate i18nKey="SIGN_IN_RESET_MESSAGE" />
 						</p>
-						<p>{this.context.t("SIGN_IN_RESET_LOGIN_MESSAGE")}</p>
+						<p><Translate i18nKey="SIGN_IN_RESET_LOGIN_MESSAGE" /></p>
 					</div>
 				)}
-				{this.state.error && <span className="sign-error">{this.state.error}</span>}
+
+				{
+					error
+					&& (
+						<span className="sign-error">
+							<Translate i18nKey={error} />
+						</span>
+					)
+				}
+
 				<div className="username">
-					<label htmlFor="username">{this.context.t("SIGN_IN_EMAIL")}</label>
+					<label htmlFor="username">
+						<Translate i18nKey="SIGN_IN_EMAIL" />
+					</label>
 					<input
 						ref={name => this.name = name}
 						type="text"
@@ -107,7 +120,7 @@ class SignInForm extends PureComponent {
 				</div>
 
 				<div className="password">
-					<label htmlFor="password">{this.context.t("SIGN_IN_PASSWORD")}</label>
+					<label htmlFor="password"><Translate i18nKey="SIGN_IN_PASSWORD" /></label>
 					<input
 						ref={password => this.pass = password}
 						type="password"
@@ -119,22 +132,22 @@ class SignInForm extends PureComponent {
 				</div>
 
 				<button className="yellow-btn" onClick={this.handleSignIn}>
-					{this.context.t("SIGN_IN_SUBMIT")}
+					<Translate i18nKey="SIGN_IN_SUBMIT" />
 					{this.state.isLoading && <Loader loading xSmall />}
 				</button>
 
 				<p className="forgot-password-wrapper">
 					<span className="forgot-password" onClick={this.handleForgotPassClick}>
-						{this.context.t("SIGN_IN_FORGOT_PASSWORD")}
+						<Translate i18nKey="SIGN_IN_FORGOT_PASSWORD" />
 					</span>
 				</p>
 
 				<div className="create-account">
-					<h3>{this.context.t("SIGN_IN_NOT_ACCOUNT_YET")}</h3>
+					<h3><Translate i18nKey="SIGN_IN_NOT_ACCOUNT_YET" /></h3>
 				</div>
 
 				<button className="yellow-btn" onClick={this.handleSignUpClick}>
-					{this.context.t("SIGN_IN_SIGN_UP_LABEL")}
+					<Translate i18nKey="SIGN_IN_SIGN_UP_LABEL" />
 				</button>
 			</section>
 		);

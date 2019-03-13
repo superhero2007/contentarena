@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class GeneralTerms extends Component {
 	render() {
 		const {
-			text = this.context.t("GENERIC_TERMS_TEXT_1"),
-			text2 = this.context.t("GENERIC_TERMS_TEXT_2"),
+			text = <Translate i18nKey="GENERIC_TERMS_TEXT_1" />,
+			text2 = <Translate i18nKey="GENERIC_TERMS_TEXT_2" />,
 			activationCode,
 			defaultChecked,
 			value,
@@ -40,7 +41,7 @@ class GeneralTerms extends Component {
 					{text2}
 				</div>
 				{isInvalid
-				&& <span className="is-invalid" style={{ marginLeft: 15 }}>{this.context.t("TERMS_NOT_CHECKED")}</span>}
+				&& <span className="is-invalid" style={{ marginLeft: 15 }}><Translate i18nKey="TERMS_NOT_CHECKED" /></span>}
 			</div>
 		);
 	}

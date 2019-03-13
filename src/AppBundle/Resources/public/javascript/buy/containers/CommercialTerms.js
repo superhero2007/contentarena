@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
+import Translate from "@components/Translator/Translate";
 import test from "../actions";
 import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
 import { pdfIcon } from "../../main/components/Icons";
@@ -78,7 +79,7 @@ class CommercialTerms extends React.Component {
 				{description && !programDetails && (
 					<div className="description-wrapper">
 						<div className="spacer-bottom title">
-							{this.context.t("LISTING_DETAILS_EVENT_DESCRIPTION")}
+							<Translate i18nKey="LISTING_DETAILS_EVENT_DESCRIPTION" />
 						</div>
 						<div className="txt description-text">
 							<textarea
@@ -99,7 +100,7 @@ class CommercialTerms extends React.Component {
 							<div className="item">
 								<i className="fa fa-link icon" />
 								<div className="cap">
-									{this.context.t("LISTING_DETAILS_EVENT_TITLE_WEBSITE")}
+									<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_WEBSITE" />
 								</div>
 								<div className="d-flex">
 									<b>
@@ -121,7 +122,7 @@ class CommercialTerms extends React.Component {
 							<div className="item">
 								<i className="fa fa-folder-open-o icon" />
 								<div className="cap">
-									{this.context.t("LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS")}
+									<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS" />
 								</div>
 								<div className="d-flex">
 									<b>
@@ -144,7 +145,7 @@ class CommercialTerms extends React.Component {
 				{seasons && seasons.length > 0 && (
 					<>
 						<div className="spacer-bottom title">
-							{this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")}
+							<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_SEASON" />
 						</div>
 						{seasons.map((season, key) => (
 							<div key={`season-${key}`} className="season-details">

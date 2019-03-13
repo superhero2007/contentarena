@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { isTablet, isMobileOnly } from "react-device-detect";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { updateProfile } from "../actions/userActions";
 import PasswordValidationBox from "../components/PasswordValidationBox";
 import GeneralTerms from "../components/GeneralTerms";
@@ -112,7 +113,7 @@ class Register extends React.Component {
 		return (
 			<div className={cn("item", { mobile: isMobileOnly, tablet: isTablet })}>
 				<label>
-					{`${this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")} (*)`}
+					<Translate i18nKey="SETTINGS_LABEL_USER_FIRST_NAME" /> {" (*)"}
 				</label>
 				<input
 					placeholder={this.context.t("SETTINGS_PLACEHOLDER_USER_FIRST_NAME")}
@@ -130,7 +131,7 @@ class Register extends React.Component {
 		return (
 			<div className={cn("item", { mobile: isMobileOnly, tablet: isTablet })}>
 				<label>
-					{`${this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")} (*)`}
+					<Translate i18nKey="SETTINGS_LABEL_USER_FAMILY_NAME" /> {" (*)"}
 				</label>
 				<input
 					placeholder={this.context.t("SETTINGS_PLACEHOLDER_USER_LAST_NAME")}
@@ -148,7 +149,7 @@ class Register extends React.Component {
 		return (
 			<div className={cn("item", { mobile: isMobileOnly, tablet: isTablet })}>
 				<label>
-					{`${this.context.t("SETTINGS_LABEL_USER_EMAIL")} (*)`}
+					<Translate i18nKey="SETTINGS_LABEL_USER_EMAIL" /> {"(*)"}
 				</label>
 				<input
 					placeholder={this.context.t("SETTINGS_PLACEHOLDER_USER_EMAIL")}
@@ -227,12 +228,12 @@ class Register extends React.Component {
 		return (
 			<div className="settings-container activate-user-container">
 				<div className={cn("big-title", { mobile: isMobileOnly, tablet: isTablet })}>
-					{this.context.t("SETTINGS_WELCOME")}
+					<Translate i18nKey="SETTINGS_WELCOME" />
 				</div>
 
 				<div className={cn("setting", { mobile: isMobileOnly })}>
 					<div className="title">
-						{this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
+						<Translate i18nKey="SETTINGS_LABEL_USER_TITLE_INFO" />
 					</div>
 					{this.getPersonalInfoBox()}
 				</div>
@@ -241,13 +242,13 @@ class Register extends React.Component {
 				<div className={cn("setting-row", { mobile: isMobileOnly })}>
 					<div className={cn("setting-password", { mobile: isMobileOnly })}>
 						<div className="title">
-							{this.context.t("REGISTER_LABEL_SELECT_PASSWORD")}
+							<Translate i18nKey="REGISTER_LABEL_SELECT_PASSWORD" />
 						</div>
 						<div className="subtitle">
-							{this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
+							<Translate i18nKey="SETTINGS_LABEL_CHANGE_PASSWORD_2" />
 						</div>
 						<div className="password">
-							<label><b>{this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}</b></label>
+							<label><b><Translate i18nKey="SETTINGS_LABEL_TYPE_NEW_PASSWORD" /></b></label>
 							<input
 								type="password"
 								onChange={(e) => {
@@ -257,7 +258,7 @@ class Register extends React.Component {
 								}}
 							/>
 
-							<label><b>{this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}</b></label>
+							<label><b><Translate i18nKey="SETTINGS_LABEL_RETYPE_NEW_PASSWORD" /></b></label>
 							<input
 								type="password"
 								onChange={(e) => {
@@ -282,7 +283,7 @@ class Register extends React.Component {
 				</div>
 
 				<div className={cn("setting", { mobile: isMobileOnly })}>
-					<div className="title">{this.context.t("SETTINGS_LABEL_TERMS_TITLE")}</div>
+					<div className="title"><Translate i18nKey="SETTINGS_LABEL_TERMS_TITLE" /></div>
 					<div className="terms-confirm">
 						<GeneralTerms
 							activationCode={activationCode}
@@ -313,7 +314,7 @@ class Register extends React.Component {
 								className="standard-button"
 								style={{ maxWidth: 300, lineHeight: "22px" }}
 							>
-								{this.context.t("REGISTER_SUCCESS_MESSAGE")}
+								<Translate i18nKey="REGISTER_SUCCESS_MESSAGE" />
 							</button>
 						)}
 					</Loader>

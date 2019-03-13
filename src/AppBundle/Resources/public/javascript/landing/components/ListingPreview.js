@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import queryString from "query-string";
 import moment from "moment";
 import isEmpty from "lodash/isEmpty";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import { ROUTE_PATHS } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
@@ -25,7 +26,7 @@ class ListingPreview extends PureComponent {
 
 		if (!params || !params.listingId.trim()) {
 			this.setState({
-				error: this.context.t("LISTING_PREVIEW_INVALID_LISTING_ID"),
+				error: "LISTING_PREVIEW_INVALID_LISTING_ID",
 				isLoading: false,
 			});
 			return;
@@ -90,17 +91,20 @@ class ListingPreview extends PureComponent {
 		return (
 			<section className="sign-in-listing-preview-wrapper">
 				<div className="big-title">
-					{this.context.t("SETTINGS_WELCOME")}
+					<Translate i18nKey="SETTINGS_WELCOME" />
 				</div>
 				<div className="title">
-					{this.context.t("LISTING_PREVIEW_SUB_TITLE")}
+					<Translate i18nKey="LISTING_PREVIEW_SUB_TITLE" />
 				</div>
 				{isLoading && <Loader loading={isLoading} />}
 				{!isLoading && error
 					&& (
 						<section className="listing-details error">
-							<span><i className="fa fa-exclamation-triangle" />{error}</span>
-							<button className="link-button" onClick={this.handleLoginClick}>{this.context.t("LISTING_PREVIEW_LOG_IN")}</button>
+							<span>
+								<i className="fa fa-exclamation-triangle" />
+								<Translate i18nKey={error} />
+							</span>
+							<button className="link-button" onClick={this.handleLoginClick}><Translate i18nKey="LISTING_PREVIEW_LOG_IN" /></button>
 						</section>
 					)
 				}
@@ -111,7 +115,7 @@ class ListingPreview extends PureComponent {
 								<div className="image-wrapper">
 									{listing.featured && (
 										<div className="featured-badge">
-											<span>{this.context.t("FEATURED_LISTING_BADGE_TEXT")}</span>
+											<span><Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" /></span>
 										</div>
 									)}
 									{getListingImage(listing)}
@@ -119,27 +123,27 @@ class ListingPreview extends PureComponent {
 							</div>
 							<div className="listing-data">
 								<div className="ca-title">{listing.name.toUpperCase()}</div>
-								<div className="title">{this.context.t("LISTING_PREVIEW_RIGHTS_TITLE")}</div>
+								<div className="title"><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></div>
 								<div className="rights-wrapper">
 									<ContentListingRightsPackage rightsPackage={listing.rightsPackage} />
 								</div>
 								{!!listing.seasons.length && (
 									<Fragment>
-										<div className="title">{this.context.t("LISTING_PREVIEW_SEASONS_TITLE")}</div>
+										<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
 										{this.getSeasons()}
 									</Fragment>
 								)}
 								{listing.description && (
 									<Fragment>
-										<div className="title">{this.context.t("LISTING_PREVIEW_DESCRIPTION_TITLE")}</div>
+										<div className="title"><Translate i18nKey="LISTING_PREVIEW_DESCRIPTION_TITLE" /></div>
 										<textarea readOnly value={listing.description} />
 									</Fragment>
 								)}
 								<footer className="buttons-wrapper">
-									<button className="yellow-button" onClick={this.handleRegisterClick}>{this.context.t("LISTING_PREVIEW_REGISTER")}</button>
+									<button className="yellow-button" onClick={this.handleRegisterClick}><Translate i18nKey="LISTING_PREVIEW_REGISTER" /></button>
 									<span className="login-wrapper">
-										<span className="log-in-text">{this.context.t("LISTING_PREVIEW_HAVE_ACCOUNT")}</span>
-										<button className="link-button" onClick={this.handleLoginClick}>{this.context.t("LISTING_PREVIEW_LOG_IN")}</button>
+										<span className="log-in-text"><Translate i18nKey="LISTING_PREVIEW_HAVE_ACCOUNT" /></span>
+										<button className="link-button" onClick={this.handleLoginClick}><Translate i18nKey="LISTING_PREVIEW_LOG_IN" /></button>
 									</span>
 								</footer>
 							</div>

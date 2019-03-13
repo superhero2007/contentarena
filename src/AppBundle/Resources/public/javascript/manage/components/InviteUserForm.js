@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { validateEmail } from "../../common/utils/listing";
 
 class InviteUserForm extends React.Component {
@@ -44,7 +45,7 @@ class InviteUserForm extends React.Component {
 			<div className="row">
 				<div className="item">
 					<label>
-						{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
+						<Translate i18nKey="SETTINGS_LABEL_USER_EMAIL" />
 					</label>
 					<input
 						name={`email-${key}`}
@@ -62,7 +63,7 @@ class InviteUserForm extends React.Component {
 				</div>
 				<div className="item">
 					<label>
-						{this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
+						<Translate i18nKey="SETTINGS_LABEL_USER_FIRST_NAME" />
 					</label>
 					<input
 						id={`first-name-${key}`}
@@ -78,7 +79,7 @@ class InviteUserForm extends React.Component {
 				</div>
 				<div className="item">
 					<label>
-						{this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
+						<Translate i18nKey="SETTINGS_LABEL_USER_FAMILY_NAME" />
 					</label>
 					<input
 						id={`last-name-${key}`}

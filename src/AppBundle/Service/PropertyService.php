@@ -7,6 +7,7 @@ use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Property;
+use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\User;
 use AppBundle\Enum\BidStatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,33 +52,28 @@ class PropertyService
             $totalClosedBids = 0;
 
             foreach ( $listings as $key => $listing ){
-
                 /* @var $listing Content */
-                $bids = $this->bidService->getAllBidsByContent($listing);
-                foreach ($bids as $bid){
 
+                $totalTerritories = 0;
+                $bids = $this->bidService->getAllBidsByContent($listing);
+
+                foreach ($listing->getSalesPackages() as $bundle){
+                    /* @var SalesPackage $bundle  */
+                    $totalTerritories += count($bundle->getTerritories());
+                }
+
+                $listing->setTerritories($totalTerritories);
+                if ( $bids != null ) $listing->setHasActivity(true);
+
+                foreach ($bids as $bid){
                     /* @var Bid $bid */
                     if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
                         $totalOpenBids++;
                     } else {
                         $totalClosedBids++;
                     }
-
                 }
 
-                /*foreach ($listing->getSalesPackages() as $salesBundle){
-                    $bids = $this->bidService->getAllBidsBySalesBundle($salesBundle);
-
-                    foreach ($bids as $bid){
-
-                        if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
-                            $totalOpenBids++;
-                        }
-
-                    }
-
-                    $totalClosedBids += count( $closedBids );
-                }*/
             }
 
             $property->setListings($listings);

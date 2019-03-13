@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ReactTable from "react-table";
 import cn from "classnames";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 
 class EmptySalesPackageTable extends Component {
 	constructor(props) {
@@ -12,16 +13,16 @@ class EmptySalesPackageTable extends Component {
 
 	getColumns = () => [
 		{
-			Header: this.context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
+			Header: <Translate i18nKey="SALES_PACKAGE_TABLE_TERRITORY_BUNDLE" />,
 			headerClassName: "table-header-big",
 			Cell: () => <div />,
 		}, {
-			Header: this.context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
+			Header: <Translate i18nKey="SALES_PACKAGE_TABLE_SALES_METHOD" />,
 			headerClassName: "table-header-big",
 			width: 300,
 			Cell: () => <div />,
 		}, {
-			Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
+			Header: <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />,
 			headerClassName: "table-header-big",
 			width: 400,
 			Cell: () => <div />,
@@ -44,7 +45,7 @@ class EmptySalesPackageTable extends Component {
 					columns={this.getColumns()}
 				/>
 				{validation
-				&&				<p className="bundle-validation-error">{this.context.t("SALES_PACKAGE_TABLE_VALIDATION_MESSAGE")}</p>}
+				&&				<p className="bundle-validation-error"><Translate i18nKey="SALES_PACKAGE_TABLE_VALIDATION_MESSAGE" /></p>}
 			</Fragment>
 		);
 	}

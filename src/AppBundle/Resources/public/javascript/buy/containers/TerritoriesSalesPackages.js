@@ -3,6 +3,7 @@ import { PropTypes } from "prop-types";
 import NumberFormat from "react-number-format";
 import cn from "classnames";
 import ReactTable from "react-table";
+import Translate from "@components/Translator/Translate";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import { getCurrencySymbol } from "../../main/actions/utils";
 import RadioSelector from "../../main/components/RadioSelector";
@@ -210,7 +211,7 @@ class TerritoriesSalesPackages extends PureComponent {
 				onClick={this.goToCheckout}
 				title={this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
 			>
-				{this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
+				<Translate i18nKey="MARKETPLACE_CHECKOUT_BUTTON" />
 				{" "}
 				{this.getCheckedTerritoriesSize()}
 				<i className="fa fa-chevron-right" />
@@ -242,7 +243,7 @@ class TerritoriesSalesPackages extends PureComponent {
 
 				{/* TITLE */}
 				<div className="spacer-bottom title">
-					{this.context.t("MARKETPLACE_LABEL_FILTER_TERRITORIES")}
+					<Translate i18nKey="MARKETPLACE_LABEL_FILTER_TERRITORIES" />
 				</div>
 
 				{/* TERRITORY MODE SELECTOR */}
@@ -254,12 +255,12 @@ class TerritoriesSalesPackages extends PureComponent {
 						items={[
 							{
 								value: this.filtered,
-								label: this.context.t("LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED"),
+								label: <Translate i18nKey="LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED" />,
 								disabled: !filter.countries || filter.countries.length === 0,
 							},
 							{
 								value: this.all,
-								label: this.context.t("LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES"),
+								label: <Translate i18nKey="LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES" />,
 							},
 						]}
 					/>
@@ -271,31 +272,31 @@ class TerritoriesSalesPackages extends PureComponent {
 						{territories === this.filtered && bundles.length > 1 && (
 							<span>
 								<strong>
-									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}:{" "}
+									<Translate i18nKey="LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED" />:{" "}
 								</strong>
-								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
+								<Translate i18nKey="LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED" />
 							</span>
 						)}
 						{territories === this.filtered && bundles.length === 0 && (
 							<span>
 								<strong>
-									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY")}
+									<Translate i18nKey="LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY" />
 								:
 
 
 									{" "}
 								</strong>
-								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY")}
+								<Translate i18nKey="LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY" />
 							</span>
 						)}
 						{territories === this.all && (
 							<span>
 								<strong>
-									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL")}
+									<Translate i18nKey="LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL" />
 								:
 									{" "}
 								</strong>
-								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL")}
+								<Translate i18nKey="LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL" />
 							</span>
 						)}
 					</div>
@@ -313,8 +314,8 @@ class TerritoriesSalesPackages extends PureComponent {
 				{/* BUNDLE AVAILABILITY SELECTOR */}
 				<div className="bundles-countries text-right">
 					<div className="bundles-countries-title">
-						{filteredTerritorialBundles.length > 0 && this.context.t("SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES")}
-						{filteredTerritorialBundles.length === 0 && this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
+						{filteredTerritorialBundles.length > 0 && <Translate i18nKey="SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES" /> }
+						{filteredTerritorialBundles.length === 0 && <Translate i18nKey="SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES" /> }
 					</div>
 					{total > 3 && !userCanNotBuy && this.renderCheckoutButton()}
 				</div>
@@ -343,7 +344,7 @@ class TerritoriesSalesPackages extends PureComponent {
 													type="checkbox"
 												/>
 											)}
-											{this.context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE")}
+											<Translate i18nKey="SALES_PACKAGE_TABLE_TERRITORY_BUNDLE" />
 										</div>
 
 									),
@@ -381,18 +382,18 @@ class TerritoriesSalesPackages extends PureComponent {
 									},
 								},
 								{
-									Header: this.context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
+									Header: <Translate i18nKey="SALES_PACKAGE_TABLE_SALES_METHOD" />,
 									headerClassName: "table-header-big",
 									Cell: (props) => {
 										const bundle = props.original;
 										const key = `CHECKOUT_METHOD_${bundle.salesMethod}`;
 										return (
-											this.context.t(key)
+											<Translate i18nKey={key} />
 										);
 									},
 								},
 								{
-									Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
+									Header: <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />,
 									headerClassName: "table-header-big",
 									Cell: (props) => {
 										const bundle = props.original;
@@ -414,7 +415,7 @@ class TerritoriesSalesPackages extends PureComponent {
 				{filteredTerritorialBundles.length > 0 && filteredIndividualBundles.length > 0 && (
 					<div className="bundles-countries">
 						<div className="bundles-countries-title">
-							{this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
+							<Translate i18nKey="SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES" />
 						</div>
 					</div>
 				)}
@@ -446,7 +447,7 @@ class TerritoriesSalesPackages extends PureComponent {
 													type="checkbox"
 												/>
 											)}
-											{this.context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE")}
+											<Translate i18nKey="SALES_PACKAGE_TABLE_TERRITORY_BUNDLE" />
 										</div>
 
 									),
@@ -486,18 +487,18 @@ class TerritoriesSalesPackages extends PureComponent {
 									},
 								},
 								{
-									Header: this.context.t("SALES_PACKAGE_TABLE_SALES_METHOD"),
+									Header: <Translate i18nKey="SALES_PACKAGE_TABLE_SALES_METHOD" />,
 									headerClassName: "table-header-big",
 									Cell: (props) => {
 										const bundle = props.original;
 										const key = `CHECKOUT_METHOD_${bundle.salesMethod}`;
 										return (
-											this.context.t(key)
+											<Translate i18nKey={key} />
 										);
 									},
 								},
 								{
-									Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
+									Header: <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />,
 									headerClassName: "table-header-big",
 									Cell: (props) => {
 										const bundle = props.original;

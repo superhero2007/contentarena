@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import InviteUserForm from "../components/InviteUserForm";
 import api from "../../api";
@@ -63,7 +64,7 @@ class InviteUsers extends React.Component {
 					<div className="result-message">
 						<i className="fa fa-check-circle" />
 						{" "}
-						{this.context.t("SETTINGS_SEND_INVITE_SUCCESS")}
+						<Translate i18nKey="SETTINGS_SEND_INVITE_SUCCESS" />
 					</div>
 				)}
 
@@ -74,7 +75,7 @@ class InviteUsers extends React.Component {
 							{" "}
 							{skippedUser.email}
 							{" "}
-							{this.context.t("SETTINGS_SEND_INVITE_EMAIL_ALREADY_INVITED")}
+							<Translate i18nKey="SETTINGS_SEND_INVITE_EMAIL_ALREADY_INVITED" />
 						</div>
 					))
 				)}
@@ -83,7 +84,7 @@ class InviteUsers extends React.Component {
 					<div className="result-message">
 						<i className="fa fa-close" />
 						{" "}
-						{this.context.t("SETTINGS_SEND_INVITE_FAIL")}
+						<Translate i18nKey="SETTINGS_SEND_INVITE_FAIL" />
 					</div>
 				)}
 
@@ -98,7 +99,7 @@ class InviteUsers extends React.Component {
 						className="ca-btn primary large"
 						disabled={this.isButtonDisabled()}
 					>
-						{this.context.t("SETTINGS_BUTTON_SEND_INVITE")}
+						<Translate i18nKey="SETTINGS_BUTTON_SEND_INVITE" />
 						{" "}
 						<Loader loading={loading} xSmall />
 					</button>

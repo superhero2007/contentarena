@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Moment from "moment/moment";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { getFullName, goToListing, limitText } from "../../main/actions/utils";
 import { DATE_TIME_FORMAT } from "@constants";
 import ChatMessage from "../../main/components/ChatMessage";
@@ -161,7 +162,7 @@ class Messages extends React.Component {
 
 	renderNoMessages() {
 		return (
-			<div className="no-messages">{this.context.t("MESSAGES_NO_MESSAGES_YET")}</div>
+			<div className="no-messages"><Translate i18nKey="MESSAGES_NO_MESSAGES_YET" /></div>
 		);
 	}
 
@@ -185,7 +186,7 @@ class Messages extends React.Component {
 					<div className="thread-wrapper ca-overflow">
 						<Loader loading={loadingThreads}>
 							{threads.length === 0 && (
-								<div>{this.context.t("MESSAGES_NO_THREADS_YET")}</div>
+								<div><Translate i18nKey="MESSAGES_NO_THREADS_YET" /></div>
 							)}
 							{threads.length > 0 && threads.map((t, i) => (
 								<div
@@ -282,7 +283,7 @@ class Messages extends React.Component {
 								onClick={this.send}
 								disabled={(!inputMessage || inputMessage === "" || saving) && !attachmentReady}
 							>
-								{!saving && this.context.t("MESSAGES_SEND_BUTTON")}
+								{!saving && <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
 								{saving && <i className="fa fa-cog fa-spin" />}
 							</button>
 						</div>
@@ -291,7 +292,7 @@ class Messages extends React.Component {
 
 				{!selectedThread && (
 					<div style={{ padding: "0 15px" }}>
-						{this.context.t("MESSAGES_NO_THREAD_SELECTED")}
+						<Translate i18nKey="MESSAGES_NO_THREAD_SELECTED" />
 					</div>
 				)}
 			</React.Fragment>

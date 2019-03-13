@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { isMobileOnly, isTablet } from "react-device-detect";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { DefaultBox } from "../../common/components/Containers";
 import { ROUTE_PATHS } from "@constants";
 import { selectTournament } from "../actions/propertyActions";
@@ -40,17 +41,17 @@ class CreatePropertyWelcome extends React.Component {
 			<div className="default-container property">
 				<div className="default-title-box">
 					<h1 className={cn({ mobile: isMobileOnly, tablet: isTablet })}>
-						{this.context.t("CMS_WELCOME_MAIN_TITLE")}
+						<Translate i18nKey="CMS_WELCOME_MAIN_TITLE" />
 					</h1>
 					<h3 className={cn({ mobile: isMobileOnly, tablet: isTablet })}>
-						{this.context.t("CMS_WELCOME_MAIN_SUBTITLE")}
+						<Translate i18nKey="CMS_WELCOME_MAIN_SUBTITLE" />
 					</h3>
 
 				</div>
 
 				<DefaultBox>
-					<h5 className="text-center">{this.context.t("CMS_WELCOME_SEARCH_TITLE")}</h5>
-					<h5 className="text-center property-welcome-subtitle">{this.context.t("CMS_WELCOME_SEARCH_SUB_TITLE")}</h5>
+					<h5 className="text-center"><Translate i18nKey="CMS_WELCOME_SEARCH_TITLE" /></h5>
+					<h5 className="text-center property-welcome-subtitle"><Translate i18nKey="CMS_WELCOME_SEARCH_SUB_TITLE" /></h5>
 
 					<CmsSearchCompetition
 						onSearch={this.onSearch}
@@ -58,8 +59,8 @@ class CreatePropertyWelcome extends React.Component {
 
 					{!results && (
 						<p className="text-center">
-							{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
-							<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
+							<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_1" />{" "}
+							<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}><Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" /></a>
 						</p>
 					)}
 				</DefaultBox>

@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import test from "../actions";
 import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 
@@ -30,25 +31,25 @@ class Seller extends React.Component {
 					)}
 				</div>
 				<div className="company-info-table">
-					<div className="table-title">{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}</div>
+					<div className="table-title"><Translate i18nKey="LISTING_DETAILS_SELLER_TITLE_ADDRESS" /></div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_COUNTRY")}</span>
+						<span className="label"><Translate i18nKey="LISTING_DETAILS_SELLER_COUNTRY" /></span>
 						{country && country.name && <span className="value">{country.name}</span>}
 					</div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_CITY")}</span>
+						<span className="label"><Translate i18nKey="LISTING_DETAILS_SELLER_CITY" /></span>
 						{city && <span className="value">{city}</span>}
 					</div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ZIP")}</span>
+						<span className="label"><Translate i18nKey="LISTING_DETAILS_SELLER_ZIP" /></span>
 						{zip && <span className="value">{zip}</span>}
 					</div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_1")}</span>
+						<span className="label"><Translate i18nKey="LISTING_DETAILS_SELLER_ADDRESS_1" /></span>
 						{address && <span className="value">{address}</span>}
 					</div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_2")}</span>
+						<span className="label"><Translate i18nKey="LISTING_DETAILS_SELLER_ADDRESS_2" /></span>
 						{address2 && <span className="value">{address2}</span>}
 					</div>
 				</div>

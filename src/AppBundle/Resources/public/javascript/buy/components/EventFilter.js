@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import uniqBy from "lodash/uniqBy";
+import Translate from "@components/Translator/Translate";
 import { updateEvent, updateSport, showAllFilters } from "../actions/filterActions";
 import { searchIcon } from "../../main/components/Icons";
 import localStorageEnums from "../../main/constants/localStorageEnums";
@@ -137,7 +138,7 @@ class EventFilter extends React.Component {
 				</div>
 				<div className="box">
 					<div className="title">
-						{this.context.t("MARKETPLACE_LABEL_FILTER_SPORT")}
+						<Translate i18nKey="MARKETPLACE_LABEL_FILTER_SPORT" />
 					</div>
 					{this.getFilters()
 						.slice(0, allFilters ? this.getFilters().length : 5)
@@ -166,9 +167,9 @@ class EventFilter extends React.Component {
 							<div className="text-center">
 								<a onClick={() => this.props.showAllFilters(!allFilters)}>
 									{allFilters ? (
-										this.context.t("SEE_LESS")
+										<Translate i18nKey="SEE_LESS" />
 									) : (
-										this.context.t("SEE_ALL")
+										<Translate i18nKey="SEE_ALL" />
 									)}
 								</a>
 							</div>

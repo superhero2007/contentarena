@@ -4,6 +4,7 @@ import ReactTooltip from "react-tooltip";
 import PropTypes from "prop-types";
 import { getMaxDate } from "@utils/listing";
 import moment from "moment";
+import Translate from "@components/Translator/Translate";
 import store from "../../main/store";
 import { updateContentValue, goToStep } from "../actions/contentActions";
 import { enableValidation, disableValidation } from "../../main/actions/validationActions";
@@ -331,7 +332,7 @@ class SellButtons extends Component {
 							onClick={this.goToPreviousStep}
 						>
 							<i className="fa fa-angle-left" />
-							{this.context.t("Back")}
+							<Translate i18nKey="Back" />
 						</button>
 
 						<div
@@ -343,7 +344,7 @@ class SellButtons extends Component {
 									className="yellow-button disabled"
 									id="next-step"
 								>
-									{this.context.t("Next")}
+									<Translate i18nKey="Next" />
 									{" "}
 									<i className="fa fa-arrow-right" />
 								</button>
@@ -353,7 +354,7 @@ class SellButtons extends Component {
 									className="yellow-button"
 									onClick={() => (step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext())}
 								>
-									{this.context.t("Next")}
+									<Translate i18nKey="Next" />
 									{saving ? <i className="fa fa-cog fa-spin" /> : <i className="fa fa-arrow-right" />}
 								</button>
 							)}

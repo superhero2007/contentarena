@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE } from "@constants";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 
 class RecoverPassword extends PureComponent {
@@ -50,11 +51,11 @@ class RecoverPassword extends PureComponent {
 	render() {
 		return (
 			<section className="recover-wrapper" onKeyPress={this.handleEnterPress}>
-				<h3>{this.context.t("LOGIN_RECOVER_PASSWORD")}</h3>
+				<h3><Translate i18nKey="LOGIN_RECOVER_PASSWORD" /></h3>
 
 				{this.state.error && <span className="sign-error">{this.state.error}</span>}
 				<div className="username">
-					<label htmlFor="username">{this.context.t("LOGIN_YOUR_EMAIL")}</label>
+					<label htmlFor="username"><Translate i18nKey="LOGIN_YOUR_EMAIL" /></label>
 					<input
 						ref={email => this.email = email}
 						type="text"
@@ -67,8 +68,7 @@ class RecoverPassword extends PureComponent {
 					/>
 				</div>
 				<button className="yellow-button" onClick={this.handleRecoverPassword}>
-					{this.context.t("LOGIN_REQUEST_NEW_PASSWORD")}
-					{this.state.isLoading && <Loader loading xSmall />}
+					<Translate i18nKey="LOGIN_REQUEST_NEW_PASSWORD" />{this.state.isLoading && <Loader loading xSmall />}
 				</button>
 			</section>
 		);

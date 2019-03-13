@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import cloneDeep from "lodash/cloneDeep";
+import Translate from "@components/Translator/Translate";
 import { setSeasons } from "../actions/propertyFiltersActions";
 
 class CmsSeasonsFilter extends React.Component {
@@ -43,7 +44,7 @@ class CmsSeasonsFilter extends React.Component {
 			<>
 				<div className="region-filter-title">
 					{
-						this.context.t("CMD_RIGHTS_OVERVIEW_SEASONS")
+						<Translate i18nKey="CMD_RIGHTS_OVERVIEW_SEASONS" />
 					}
 				</div>
 				<div className="regions">

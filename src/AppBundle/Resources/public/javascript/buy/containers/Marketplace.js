@@ -5,6 +5,7 @@ import cn from "classnames";
 import queryString from "query-string";
 import moment from "moment";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import test from "../actions";
 import EventFilter from "../components/EventFilter";
 import RightsFilter from "../components/RightsFilter";
@@ -352,7 +353,7 @@ class Marketplace extends Component {
 								)}
 
 								{listings.length === 0 && (
-									<span className="no-results">{this.context.t("MARKETPLACE_NO_RESULTS")}</span>
+									<span className="no-results"><Translate i18nKey="MARKETPLACE_NO_RESULTS" /></span>
 								)}
 							</Loader>
 						</div>

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ReactTable from "react-table";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import RightDefaults from "../components/RightDefaults";
 import { updateContentValue } from "../actions/contentActions";
 import { SuperRightDefinitions } from "../components/SuperRightDefinitions";
@@ -105,16 +106,16 @@ class SuperRightList extends React.Component {
 		return (
 			<div className="right-selector package-selector">
 				<header>
-					{this.context.t("CL_STEP2_RIGHTS_TITLE")}
+					<Translate i18nKey="CL_STEP2_RIGHTS_TITLE" />
 				</header>
 
 				<div className="right-description">
-					{this.context.t("CL_STEP2_RIGHTS_TEXT")}
+					<Translate i18nKey="CL_STEP2_RIGHTS_TEXT" />
 				</div>
 
 				{hasSoldAnyPackage && (
 					<div className="right-error-message">
-						{this.context.t("CL_STEP2_RIGHTS_ERROR_MESSAGE")}
+						<Translate i18nKey="CL_STEP2_RIGHTS_ERROR_MESSAGE" />
 					</div>
 				)}
 
@@ -129,7 +130,7 @@ class SuperRightList extends React.Component {
 						data={this.state.packages}
 						columns={[
 							{
-								Header: this.context.t("RIGHT_SELECTION_AUDIO_VISUAL"),
+								Header: <Translate i18nKey="RIGHT_SELECTION_AUDIO_VISUAL" />,
 								headerClassName: "table-right-selection-header",
 								width: 200,
 								Cell: (props) => {
@@ -153,7 +154,7 @@ class SuperRightList extends React.Component {
 									);
 								},
 							}, {
-								Header: this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVELY"),
+								Header: <Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVELY" />,
 								headerClassName: "table-right-selection-header",
 								width: 250,
 								Cell: (props) => {
@@ -180,7 +181,7 @@ class SuperRightList extends React.Component {
 											<label
 												htmlFor={exclusiveIdAttr}
 											>
-												{this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
+												<Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVE" />
 											</label>
 											<input
 												type="radio"
@@ -195,13 +196,13 @@ class SuperRightList extends React.Component {
 											<label
 												htmlFor={nonExclusiveIdAttr}
 											>
-												{this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
+												<Translate i18nKey="RIGHT_SELECTION_OFFER_NON_EXCLUSIVE" />
 											</label>
 										</React.Fragment>
 									);
 								},
 							}, {
-								Header: this.context.t("SALES_PACKAGE_TABLE_DEFINITION"),
+								Header: <Translate i18nKey="SALES_PACKAGE_TABLE_DEFINITION" />,
 								headerClassName: "table-right-selection-header",
 								Cell: (props) => {
 									const { id, shortLabel } = props.original;
@@ -210,7 +211,7 @@ class SuperRightList extends React.Component {
 
 									return (
 										<p>
-											{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${shortLabel}`)}
+											<Translate i18nKey={`CL_STEP2_RIGHT_DEFINITIONS_${shortLabel}`} />
 											{inputData && (
 												<input
 													type="number"
@@ -221,7 +222,7 @@ class SuperRightList extends React.Component {
 													disabled={this.isInputBoxDisabled(id)}
 												/>
 											)}
-											{defByLabel[2] && this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${shortLabel}_2`)}
+											{defByLabel[2] && <Translate i18nKey={`CL_STEP2_RIGHT_DEFINITIONS_${shortLabel}_2`} />}
 										</p>
 									);
 								},

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import Translate from "@components/Translator/Translate";
 import { GenericModalStyle } from "../../../main/styles/custom";
 import Loader from "../../components/Loader";
 
@@ -41,7 +42,7 @@ class DeclineBidModal extends Component {
 		return (
 			<Modal isOpen={isOpen} className="modal-wrapper" style={GenericModalStyle} onRequestClose={onCloseModal}>
 				<header className="modal-header">
-					<h3 className="modal-title">{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REJECT")}</h3>
+					<h3 className="modal-title"><Translate i18nKey="COMMERCIAL_ACTIVITY_BID_TITLE_REJECT" /></h3>
 				</header>
 				<section className="modal-body">
 					<Loader loading={isLoading}>
@@ -54,7 +55,7 @@ class DeclineBidModal extends Component {
 							/>
 						) : (
 							<div className="body-msg">
-								{this.context.t("COMMERCIAL_ACTIVITY_DECLINE_BID_FAILED")}
+								<Translate i18nKey="COMMERCIAL_ACTIVITY_DECLINE_BID_FAILED" />
 							</div>
 						)}
 					</Loader>
@@ -63,16 +64,16 @@ class DeclineBidModal extends Component {
 					{isFail || isLoading
 						? (
 							<button className="cancel-btn" onClick={onCloseModal}>
-								{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+								<Translate i18nKey="MESSAGE_POPUP_BUTTON_CANCEL" />
 							</button>
 						)
 						: (
 							<React.Fragment>
 								<button className="cancel-btn" onClick={onCloseModal}>
-									{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+									<Translate i18nKey="MESSAGE_POPUP_BUTTON_CANCEL" />
 								</button>
 								<button className="standard-button" onClick={this.handleDeclineBid}>
-									{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM")}
+									<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_REJECT_CONFIRM" />
 								</button>
 							</React.Fragment>
 						)

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import cloneDeep from "lodash/cloneDeep";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import PreferredSportSeller from "../components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../components/PreferredSportBuyer";
@@ -94,11 +95,11 @@ class Preferences extends React.Component {
 				<div className="setting">
 
 					<div className="title">
-						{this.context.t("PREFERENCES_HEADLINE")}
+						<Translate i18nKey="PREFERENCES_HEADLINE" />
 					</div>
 
 					<div className="subtitle">
-						{this.context.t("PREFERENCES_HEADLINE_EXPLANATION_TEXT")}
+						<Translate i18nKey="PREFERENCES_HEADLINE_EXPLANATION_TEXT" />
 					</div>
 
 					<div className="ca-tabs">
@@ -109,7 +110,7 @@ class Preferences extends React.Component {
 								this.updateUser("preferredProfile", "SELLER");
 							}}
 						>
-							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_SELLER")}
+							<Translate i18nKey="PREFERENCES_TERRITORIES_PROFILE_SELLER" />
 						</div>
 						<div
 							className={`tab lg ${activeTab === USER_PROFILES.BUYER ? "active" : ""}`}
@@ -118,7 +119,7 @@ class Preferences extends React.Component {
 								this.updateUser("preferredProfile", "BUYER");
 							}}
 						>
-							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_BUYER")}
+							<Translate i18nKey="PREFERENCES_TERRITORIES_PROFILE_BUYER" />
 						</div>
 					</div>
 					{activeTab === USER_PROFILES.SELLER && (
@@ -156,7 +157,7 @@ class Preferences extends React.Component {
 									style={{ marginRight: 10 }}
 								/>
 								<div>
-									{this.context.t("PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE")}
+									<Translate i18nKey="PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE" />
 								</div>
 							</div>
 						</>
@@ -164,7 +165,7 @@ class Preferences extends React.Component {
 					<div className="buttons">
 						{userUpdated && (
 							<div>
-								{this.context.t("PREFERENCES_USER_UPDATED_MESSAGE")}
+								<Translate i18nKey="PREFERENCES_USER_UPDATED_MESSAGE" />
 							</div>
 						)}
 						<div>

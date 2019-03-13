@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import cloneDeep from "lodash/cloneDeep";
+import Translate from "@components/Translator/Translate";
 import { setRights } from "../actions/propertyFiltersActions";
 
 class CmsRightsFilter extends React.Component {
@@ -41,9 +42,7 @@ class CmsRightsFilter extends React.Component {
 		return (
 			<>
 				<div className="region-filter-title">
-					{
-						this.context.t("CMD_RIGHTS_OVERVIEW_RIGHTS")
-					}
+					<Translate i18nKey="CMD_RIGHTS_OVERVIEW_RIGHTS" />
 				</div>
 				<div className="regions">
 					{rights.map(right => (

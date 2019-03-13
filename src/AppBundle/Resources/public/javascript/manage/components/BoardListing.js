@@ -1,6 +1,7 @@
 import React, {} from "react";
 import Moment from "moment/moment";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { goTo } from "../../main/actions/utils";
 import {
 	clockRoundIcon, exclamationRoundIcon, expiredIcon, playIcon, soldIcon,
@@ -112,14 +113,14 @@ class BoardListing extends React.Component {
 							<div className="option" onClick={this.submit}>
 								<img src={this.submitIcon} alt="" />
 								{" "}
-								{this.context.t("Submit")}
+								<Translate i18nKey="Submit" />
 							</div>
 						)}
 						{showEdit && (
 							<div className="option" onClick={this.edit}>
 								<img src={this.editIcon} alt="" />
 								{" "}
-								{this.context.t("Edit")}
+								<Translate i18nKey="Edit" />
 							</div>
 						)}
 						{showDuplicate && (
@@ -131,13 +132,13 @@ class BoardListing extends React.Component {
 								}}
 							>
 								<img src={this.duplicateIcon} alt="" />
-								{this.context.t("Duplicate")}
+								<Translate i18nKey="Duplicate" />
 							</div>
 						)}
 						{showView && (
 							<div className="option" onClick={this.view}>
 								<img src={this.viewIcon} alt="" />
-								{this.context.t("View")}
+								<Translate i18nKey="View" />
 							</div>
 						)}
 						{showRemove && (
@@ -148,7 +149,7 @@ class BoardListing extends React.Component {
 								}}
 							>
 								<img src={this.bucketIcon} alt="" />
-								{this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
+								<Translate i18nKey="MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM" />
 							</div>
 						)}
 						{showArchive && (
@@ -159,7 +160,7 @@ class BoardListing extends React.Component {
 								}}
 							>
 								<img src={this.bucketIcon} alt="" />
-								{this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM")}
+								<Translate i18nKey="MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM" />
 							</div>
 						)}
 						{showDeactivate && (
@@ -170,7 +171,7 @@ class BoardListing extends React.Component {
 								}}
 							>
 								<img src={this.deactivateIcon} style={{ width: 16 }} alt="" />
-								{this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM")}
+								<Translate i18nKey="MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM" />
 							</div>
 						)}
 
@@ -185,7 +186,7 @@ class BoardListing extends React.Component {
 						{lastAction && (
 							<div className="last-action">
 								<div style={{ fontWeight: 500 }}>
-									{this.context.t("MANAGE_LISTINGS_LAST_ACTION")}
+									<Translate i18nKey="MANAGE_LISTINGS_LAST_ACTION" />
 									{" "}
 									{`${lastAction.description} by `}
 								</div>
@@ -199,7 +200,7 @@ class BoardListing extends React.Component {
 						{owner && (
 							<div className="last-action">
 								<div style={{ fontWeight: 500 }}>
-									{this.context.t("MANAGE_LISTINGS_LISTING_OWNER")}
+									<Translate i18nKey="MANAGE_LISTINGS_LISTING_OWNER" />
 								</div>
 								{`${owner.firstName} ${owner.lastName}`}
 							</div>
@@ -211,7 +212,7 @@ class BoardListing extends React.Component {
 				{showDeactivateConfirm && (
 					<div className="confirmation-tooltip">
 						<div className="confirmation-text">
-							{this.context.t("MANAGE_LISTINGS_DEACTIVATE_CONFIRMATION")}
+							<Translate i18nKey="MANAGE_LISTINGS_DEACTIVATE_CONFIRMATION" />
 						</div>
 						<button
 							className="button button-confirm"
@@ -224,7 +225,7 @@ class BoardListing extends React.Component {
 								e.stopPropagation();
 							}}
 						>
-							{this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM")}
+							<Translate i18nKey="MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM" />
 						</button>
 						<button
 							className="button"
@@ -233,7 +234,7 @@ class BoardListing extends React.Component {
 								e.stopPropagation();
 							}}
 						>
-							{this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CANCEL")}
+							<Translate i18nKey="MANAGE_LISTINGS_DEACTIVATE_BUTTON_CANCEL" />
 						</button>
 					</div>
 				)}
@@ -242,7 +243,7 @@ class BoardListing extends React.Component {
 				{showRemoveConfirm && (
 					<div className="confirmation-tooltip">
 						<div className="confirmation-text">
-							{this.context.t("MANAGE_LISTINGS_REMOVE_CONFIRMATION")}
+							<Translate i18nKey="MANAGE_LISTINGS_REMOVE_CONFIRMATION" />
 						</div>
 						<button
 							className="button button-confirm"
@@ -255,7 +256,7 @@ class BoardListing extends React.Component {
 								e.stopPropagation();
 							}}
 						>
-							{this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
+							<Translate i18nKey="MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM" />
 						</button>
 						<button
 							className="button"
@@ -264,7 +265,7 @@ class BoardListing extends React.Component {
 								e.stopPropagation();
 							}}
 						>
-							{this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL")}
+							<Translate i18nKey="MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL" />
 						</button>
 					</div>
 				)}
@@ -273,7 +274,7 @@ class BoardListing extends React.Component {
 				{showArchiveConfirm && (
 					<div className="confirmation-tooltip">
 						<div className="confirmation-text">
-							{this.context.t("MANAGE_LISTINGS_ARCHIVE_CONFIRMATION")}
+							<Translate i18nKey="MANAGE_LISTINGS_ARCHIVE_CONFIRMATION" />
 						</div>
 						<button
 							className="button button-confirm"
@@ -286,7 +287,7 @@ class BoardListing extends React.Component {
 								e.stopPropagation();
 							}}
 						>
-							{this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM")}
+							<Translate i18nKey="MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM" />
 						</button>
 						<button
 							className="button"
@@ -295,7 +296,7 @@ class BoardListing extends React.Component {
 								e.stopPropagation();
 							}}
 						>
-							{this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL")}
+							<Translate i18nKey="MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL" />
 						</button>
 					</div>
 				)}
@@ -365,7 +366,7 @@ class BoardListing extends React.Component {
 						</div>
 					)}
 					<div>
-						<div style={{ fontWeight: 500 }}>{this.context.t("Expiry:")}</div>
+						<div style={{ fontWeight: 500 }}><Translate i18nKey="Expiry:" /></div>
 						{" "}
 						{expiresAt ? Moment(expiresAt)
 							.format(DATE_FORMAT) : "Not set"}

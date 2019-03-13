@@ -2,6 +2,7 @@ import React from "react";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
 import NumberFormat from "react-number-format";
+import Translate from "@components/Translator/Translate";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import CommercialSalesBundle from "./CommercialSalesBundle";
@@ -98,7 +99,7 @@ class ContentListingCommercialActivity extends ContentListing {
 					<div className="left" onClick={this.onSelect}>
 						{featured && (
 							<div className="featured-badge">
-								<span>{this.context.t("FEATURED_LISTING_BADGE_TEXT")}</span>
+								<span><Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" /></span>
 							</div>
 						)}
 						{getListingImage(this.props)}
@@ -138,21 +139,21 @@ class ContentListingCommercialActivity extends ContentListing {
 							<span>
 								{closedBids.length}
 								{" "}
-								{closedBids.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEAL")}
-								{closedBids.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEALS")}
+								{closedBids.length === 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_CLOSED_DEAL" />}
+								{closedBids.length !== 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_CLOSED_DEALS" />}
 							</span>
 						</div>
 						<div className="item">
 							<span>
 								{openBids.length}
 								{" "}
-								{openBids.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID")}
-								{openBids.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BIDS")}
+								{openBids.length === 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_OPEN_BID" />}
+								{openBids.length !== 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_OPEN_BIDS" />}
 							</span>
 						</div>
 						{bids.length > 0 && (
 							<div className="total-wrapper">
-								<span className="bid-total">{this.context.t("Revenue")}</span>
+								<span className="bid-total"><Translate i18nKey="Revenue" /></span>
 								<span className="bid-currency">
 									<NumberFormat
 										thousandSeparator
@@ -167,7 +168,7 @@ class ContentListingCommercialActivity extends ContentListing {
 						{bids.length > 0 && (
 							<div className="show-bundle-wrapper" onClick={this.onClickShowBundle}>
 								<div className="bundle-text">
-									{showSalesPackage ? this.context.t("COMMERCIAL_ACTIVITY_HIDE_BUNDLES_BUTTON") : this.context.t("COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON")}
+									{showSalesPackage ? <Translate i18nKey="COMMERCIAL_ACTIVITY_HIDE_BUNDLES_BUTTON" /> : <Translate i18nKey="COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON" />}
 									{showSalesPackage ? minusGreyIcon : plusGreyIcon}
 								</div>
 							</div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import TermItem from "../components/TermItem";
 import DefinitionItem from "../components/DefinitionItem";
 import Loader from "../../common/components/Loader";
@@ -110,9 +111,9 @@ class Terms extends React.Component {
 		return (
 			<div className="settings-container terms-edit-container">
 				<div className="terms-edit-header-title">
-					{this.context.t("TERMS_EDIT_HEADER")}
+					<Translate i18nKey="TERMS_EDIT_HEADER" />
 					<div className="subtitle">
-						{this.context.t("TERMS_EDIT_HEADER_TWO")}
+						<Translate i18nKey="TERMS_EDIT_HEADER_TWO" />
 					</div>
 				</div>
 				<div className="d-flex justify-content-between align-items-baseline">
@@ -121,13 +122,13 @@ class Terms extends React.Component {
 							className={`tab lg ${activeTab === 1 ? "active" : ""}`}
 							onClick={() => this.setState({ activeTab: 1 })}
 						>
-							{this.context.t("TERMS_EDIT_TITLE_DEFINITIONS")}
+							<Translate i18nKey="TERMS_EDIT_TITLE_DEFINITIONS" />
 						</div>
 						<div
 							className={`tab lg ${activeTab === 2 ? "active" : ""}`}
 							onClick={() => this.setState({ activeTab: 2 })}
 						>
-							{this.context.t("TERMS_EDIT_TITLE_TERMS")}
+							<Translate i18nKey="TERMS_EDIT_TITLE_TERMS" />
 						</div>
 					</div>
 					<div className="terms-edit-header">
@@ -136,7 +137,7 @@ class Terms extends React.Component {
 							disabled={restoringDefinitions}
 							className="standard-button license-agreement-button terms-restore-button"
 						>
-							{this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}
+							<Translate i18nKey="TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS" />
 							{restoringDefinitions && <Loader loading xSmall />}
 							{!restoringDefinitions && <div><i className="fa fa-refresh" /></div>}
 						</button>
@@ -145,7 +146,7 @@ class Terms extends React.Component {
 							disabled={restoring}
 							className="standard-button license-agreement-button terms-restore-button"
 						>
-							{this.context.t("TERMS_EDIT_BUTTON_RESTORE")}
+							<Translate i18nKey="TERMS_EDIT_BUTTON_RESTORE" />
 							{restoring && <Loader loading xSmall />}
 							{!restoring && <div><i className="fa fa-refresh" /></div>}
 						</button>
@@ -169,7 +170,7 @@ class Terms extends React.Component {
 							onClick={this.addDefinition}
 							className="standard-button terms-add-definition-button"
 						>
-							{this.context.t("TERMS_EDIT_BUTTON_ADD_DEFINITIONS")}
+							<Translate i18nKey="TERMS_EDIT_BUTTON_ADD_DEFINITIONS" />
 						</button>
 					</div>
 				)}

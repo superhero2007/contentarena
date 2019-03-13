@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import SuperRightList from "./SuperRightList";
 import RightDefinitions from "../components/RightDefinitions";
 import ProductionStandardsDefinitions from "../components/ProductionStandardsDefinitions";
@@ -106,10 +107,10 @@ class SellFormStep2 extends React.Component {
 				<div className="step-content-container">
 					<div className="textarea-input-wrapper">
 						<header>
-							{this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TITLE")}
+							<Translate i18nKey="CL_STEP2_PROGRAM_DESCRIPTION_TITLE" />
 						</header>
 						<div className="textarea-input-description">
-							{this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_TEXT")}
+							<Translate i18nKey="CL_STEP2_PROGRAM_DESCRIPTION_TEXT" />
 						</div>
 						<textarea
 							onChange={(e) => {
@@ -142,7 +143,7 @@ class SellFormStep2 extends React.Component {
 						<div className="left">
 							<div className="modal-input">
 								<label>
-									{this.context.t("CL_STEP2_PROGRAM_NAME")}
+									<Translate i18nKey="CL_STEP2_PROGRAM_NAME" />
 								</label>
 								<input
 									type="text"
@@ -156,7 +157,7 @@ class SellFormStep2 extends React.Component {
 
 							<div className="modal-input">
 								<label>
-									{this.context.t("CL_STEP2_PROGRAM_EPISODES")}
+									<Translate i18nKey="CL_STEP2_PROGRAM_EPISODES" />
 								</label>
 								<input
 									type="number"
@@ -170,7 +171,7 @@ class SellFormStep2 extends React.Component {
 
 							<div className="modal-input">
 								<label>
-									{this.context.t("CL_STEP2_PROGRAM_DURATION")}
+									<Translate i18nKey="CL_STEP2_PROGRAM_DURATION" />
 								</label>
 								<input
 									type="number"
@@ -184,7 +185,7 @@ class SellFormStep2 extends React.Component {
 
 							<div className="modal-input">
 								<label htmlFor="similar-length">
-									{this.context.t("LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC")}
+									<Translate i18nKey="LISTING_DETAILS_PROGRAM_ENTER_DETAILS_VIA_EDITED_PROGRAM_DESC" />
 								</label>
 
 								<div className="radio-box">
@@ -197,7 +198,7 @@ class SellFormStep2 extends React.Component {
 										id="edit-program-optional"
 										className="ca-radio package-selector"
 									/>
-									<label htmlFor="edit-program-optional">{this.context.t("Yes")}</label>
+									<label htmlFor="edit-program-optional"><Translate i18nKey="Yes" /></label>
 									<input
 										type="radio"
 										checked={!EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
@@ -207,18 +208,18 @@ class SellFormStep2 extends React.Component {
 										id="edit-program"
 										className="ca-radio package-selector"
 									/>
-									<label htmlFor="edit-program">{this.context.t("No")}</label>
+									<label htmlFor="edit-program"><Translate i18nKey="No" /></label>
 								</div>
 
 							</div>
 							{!EDIT_PROGRAM_DESCRIPTION_OPTIONAL && (
 								<div className="modal-input red-text">
-									{this.context.t("LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES")}
+									<Translate i18nKey="LISTING_DETAILS_PROGRAM_SIMILAR_LENGTH_EPISODES" />
 								</div>
 							)}
 							<div className="modal-input">
 								<label>
-									{this.context.t("CL_STEP2_PROGRAM_TYPE")}
+									<Translate i18nKey="CL_STEP2_PROGRAM_TYPE" />
 								</label>
 								<select
 									value={PROGRAM_TYPE}
@@ -239,7 +240,7 @@ class SellFormStep2 extends React.Component {
 
 							<div className="modal-input">
 								<label>
-									{this.context.t("CL_STEP2_PROGRAM_YEAR")}
+									<Translate i18nKey="CL_STEP2_PROGRAM_YEAR" />
 								</label>
 								<select
 									value={PROGRAM_YEAR}
@@ -254,7 +255,7 @@ class SellFormStep2 extends React.Component {
 							<div>
 								<div className="modal-input">
 									<label>
-										{this.context.t("CL_STEP3_PROGRAM_MODAL_LANGUAGE")}
+										<Translate i18nKey="CL_STEP3_PROGRAM_MODAL_LANGUAGE" />
 									</label>
 									<div className="select">
 										<LanguageSelector
@@ -268,7 +269,7 @@ class SellFormStep2 extends React.Component {
 								</div>
 								<div className="modal-input">
 									<label>
-										{this.context.t("CL_STEP3_PROGRAM_MODAL_SUBTITLES")}
+										<Translate i18nKey="CL_STEP3_PROGRAM_MODAL_SUBTITLES" />
 									</label>
 									<div className="select">
 										<LanguageSelector
@@ -281,7 +282,7 @@ class SellFormStep2 extends React.Component {
 								</div>
 								<div className="modal-input">
 									<label>
-										{this.context.t("CL_STEP3_PROGRAM_MODAL_SCRIPT")}
+										<Translate i18nKey="CL_STEP3_PROGRAM_MODAL_SCRIPT" />
 									</label>
 									<div className="select">
 										<LanguageSelector
@@ -297,7 +298,7 @@ class SellFormStep2 extends React.Component {
 						<div className="right">
 							<div className="modal-input">
 								<label>
-									{this.context.t("CL_STEP2_PROGRAM_DESCRIPTION")}
+									<Translate i18nKey="CL_STEP2_PROGRAM_DESCRIPTION" />
 								</label>
 								<textarea
 									onChange={(e) => {

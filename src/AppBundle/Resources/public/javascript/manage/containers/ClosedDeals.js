@@ -4,6 +4,7 @@ import ReactTable from "react-table";
 import Moment from "moment/moment";
 import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { getCurrencySymbol, goTo } from "../../main/actions/utils";
 import { DATE_FORMAT } from "@constants";
 import {
@@ -95,7 +96,7 @@ class ClosedDeals extends Component {
 								}, {
 									Header: () => (
 										<span>
-											{this.context.t("CLOSED_DEALS_LISTING_NAME")}
+											<Translate i18nKey="CLOSED_DEALS_LISTING_NAME" />
 											{" "}
 											<i className="fa fa-sort" />
 										</span>
@@ -127,7 +128,7 @@ class ClosedDeals extends Component {
 									accessor: "content.company.legalName", // Required because our accessor is not a string
 									Header: () => (
 										<span>
-											{this.context.t("Seller")}
+											<Translate i18nKey="Seller" />
 											{" "}
 											<i className="fa fa-sort" />
 										</span>
@@ -312,7 +313,7 @@ class ClosedDeals extends Component {
 								}, {
 									Header: () => (
 										<span>
-											{this.context.t("Territories")}
+											<Translate i18nKey="Territories" />
 											{" "}
 											<i className="fa fa-sort" />
 										</span>
@@ -345,14 +346,14 @@ class ClosedDeals extends Component {
 												{!worldwide && !excluding && size > 1 && `${size} territories`}
 												{!worldwide && !excluding && size === 1 && territories[0].name}
 												{excluding && `Worldwide excluding ${excludedCountries[0].name}`}
-												{worldwide && this.context.t("Worldwide")}
+												{worldwide && <Translate i18nKey="Worldwide" />}
 											</div>
 										);
 									},
 								}, {
 									Header: () => (
 										<span>
-											{this.context.t("Price")}
+											<Translate i18nKey="Price" />
 											{" "}
 											<i className="fa fa-sort" />
 										</span>
@@ -371,7 +372,7 @@ class ClosedDeals extends Component {
 								}, {
 									Header: () => (
 										<span>
-											{this.context.t("Date of sale")}
+											<Translate i18nKey="Date of sale" />
 											{" "}
 											<i className="fa fa-sort" />
 										</span>
@@ -389,7 +390,7 @@ class ClosedDeals extends Component {
 								}, {
 									Header: () => (
 										<span>
-											{this.context.t("Buyer name")}
+											<Translate i18nKey="Buyer name" />
 											{" "}
 											<i className="fa fa-sort" />
 										</span>
@@ -412,7 +413,7 @@ class ClosedDeals extends Component {
 								}, {
 									headerClassName: "table-header",
 									className: "table-header",
-									Header: this.context.t("Actions"), // Custom header components!
+									Header: <Translate i18nKey="Actions" />, // Custom header components!
 									width: 100,
 									id: "header",
 									accessor: d => ({
@@ -455,7 +456,7 @@ class ClosedDeals extends Component {
 						</div>
 					) : (
 						<div className="manager-content-message">
-							{this.context.t("CLOSED_DEALS_EMPTY_MESSAGE")}
+							<Translate i18nKey="CLOSED_DEALS_EMPTY_MESSAGE" />
 						</div>
 					)}
 				</Loader>

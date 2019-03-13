@@ -492,7 +492,7 @@ class Content implements NotifiableInterface
 
     /**
      * @var boolean;
-     * @Groups({"board"})
+     * @Groups({"board", "propertyList"})
      */
     private $hasActivity = false;
 

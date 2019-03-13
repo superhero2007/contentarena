@@ -424,16 +424,18 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
 
         $now = date('Y-m-d H:i:s');
 
+        //TODO: Enable property criteria
+
         return $this->createQueryBuilder('c')
             ->innerJoin("c.status", "status")
             ->where('c.expiresAt > :now')
-            ->andWhere('c.property = :property')
-            ->andWhere('status.name = :pending OR status.name = :approved OR status.name = :edited')
+            //->andWhere('c.property = :property')
+            ->andWhere('status.name = :rejected OR status.name = :approved OR status.name = :edited')
             ->setParameter('now',$now)
-            ->setParameter('pending',"PENDING")
+            ->setParameter('rejected',"REJECTED")
             ->setParameter('approved',"APPROVED")
             ->setParameter('edited',"EDITED")
-            ->setParameter('property',$property)
+            //->setParameter('property',$property)
             ->orderBy('c.createdAt','DESC')
             ->getQuery()->getResult();
     }

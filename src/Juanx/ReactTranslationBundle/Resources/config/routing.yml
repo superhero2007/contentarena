@@ -1,0 +1,15 @@
+juanx_react_translation_homepage:
+    path:     /translations
+    defaults: { _controller: JuanxReactTranslationBundle:Default:index }
+
+juanx_react_translation_update:
+    path:     /translations/update
+    defaults: { _controller: JuanxReactTranslationBundle:Default:update }
+
+juanx_react_translation_import_dev:
+    path:     /translations/import/dev
+    defaults: { _controller: JuanxReactTranslationBundle:Default:importDev }
+
+juanx_react_translation_import_test:
+    path:     /translations/import/test
+    defaults: { _controller: JuanxReactTranslationBundle:Default:importTest }

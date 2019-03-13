@@ -2,6 +2,7 @@ import React from "react";
 import Select from "react-select";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import CountrySelector from "./CountrySelector";
 
 class RegionCountrySelector extends React.Component {
@@ -187,7 +188,7 @@ class RegionCountrySelector extends React.Component {
 									className="region remain"
 									onClick={() => this.selectRemainCountries(remainCountries)}
 								>
-									{this.context.t("CL4_REMAIN_COUNTRIES")}
+									<Translate i18nKey="CL4_REMAIN_COUNTRIES" />
 								</button>
 							)}
 							{territories.map((territory, i) => (

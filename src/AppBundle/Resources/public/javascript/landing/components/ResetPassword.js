@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import PasswordValidationBox from "../../main/components/PasswordValidationBox";
 import { showSuccessResetPass } from "../actions/landingActions";
@@ -74,11 +75,11 @@ class ResetPassword extends PureComponent {
 		const { password, passwordCheck, isPassValid } = this.state;
 		return (
 			<section className="reset-wrapper" onKeyPress={this.handleEnterPress}>
-				<h3>{this.context.t("RESET_PASSWORD_TITLE")}</h3>
+				<h3><Translate i18nKey="RESET_PASSWORD_TITLE" /></h3>
 
 				{this.state.error && <span className="sign-error">{this.state.error}</span>}
 				<div className="password">
-					<label htmlFor="password">{this.context.t("RESET_NEW_PASSWORD")}</label>
+					<label htmlFor="password"><Translate i18nKey="RESET_NEW_PASSWORD" /></label>
 					<input
 						ref={password => this.newPass = password}
 						type="password"
@@ -88,7 +89,7 @@ class ResetPassword extends PureComponent {
 					/>
 				</div>
 				<div className="repeat-password">
-					<label htmlFor="repeat-password">{this.context.t("RESET_REPEAT_PASSWORD")}</label>
+					<label htmlFor="repeat-password"><Translate i18nKey="RESET_REPEAT_PASSWORD" /></label>
 					<input
 						type="password"
 						id="repeat-password"
@@ -105,12 +106,11 @@ class ResetPassword extends PureComponent {
 
 				<span className="note">
 					<b>**Note: </b>
-					{this.context.t("RESET_PASSWORD_NOTE")}
+					<Translate i18nKey="RESET_PASSWORD_NOTE" />
 				</span>
 
 				<button className="yellow-btn" onClick={this.handleSubmitChangePassword} disabled={!isPassValid}>
-					{this.context.t("RESET_PASSWORD_BUTTON")}
-					{this.state.isLoading && <Loader loading xSmall />}
+					<Translate i18nKey="RESET_PASSWORD_BUTTON" />{this.state.isLoading && <Loader loading xSmall />}
 				</button>
 			</section>
 		);

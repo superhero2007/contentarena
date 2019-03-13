@@ -178,6 +178,7 @@ class AdminController extends BaseAdminController
         ));
     }
 
+    //TODO: deprecate
     /**
      * @Route("/generalterms/upload", name="uploadGeneralTermsPage")
      * @param Request $request

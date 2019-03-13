@@ -5,6 +5,7 @@ import { PropTypes } from "prop-types";
 import moment from "moment";
 import { DATE_FORMAT } from "@constants";
 import NumberFormat from "react-number-format";
+import Translate from "@components/Translator/Translate";
 import CountrySelector from "../../main/components/CountrySelector";
 import { customStyles } from "../../main/styles/custom";
 import { getCurrencySymbol } from "../../main/actions/utils";
@@ -236,7 +237,7 @@ class SalesPackageEdit extends React.Component {
 			>
 
 				<div className="modal-title" style={{ paddingBottom: 15 }}>
-					{this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
+					<Translate i18nKey="CL_STEP4_SALES_BUNDLE_POPUP_TITLE" />
 					<i className="fa fa-times close-icon" onClick={this.closeModal} />
 				</div>
 
@@ -244,7 +245,7 @@ class SalesPackageEdit extends React.Component {
 					<div className="step-content-container">
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES")}
+								<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES" />
 								{this.state.territoriesMethod === this.worldwideExcluding && ": Worldwide excluding"}
 							</label>
 						</div>
@@ -280,13 +281,13 @@ class SalesPackageEdit extends React.Component {
 						&& (this.state.territoriesMethod === this.worldwide)
 						&& (
 							<div style={{ padding: "10px 5px 20px" }}>
-								{this.context.t("Worldwide")}
+								<Translate i18nKey="Worldwide" />
 							</div>
 						)}
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Sales method")}
+								<Translate i18nKey="Sales method" />
 							</label>
 							<div className="content">
 								<div
@@ -298,7 +299,7 @@ class SalesPackageEdit extends React.Component {
 									{this.state.salesMethod !== this.fixed && <i className="fa fa-circle-thin" />}
 									{this.state.salesMethod === this.fixed && <i className="fa fa-check-circle-o" />}
 									<div className="title">
-										{this.context.t("Fixed fee")}
+										<Translate i18nKey="Fixed fee" />
 									</div>
 								</div>
 								<div
@@ -310,7 +311,7 @@ class SalesPackageEdit extends React.Component {
 									{this.state.salesMethod !== this.bidding && <i className="fa fa-circle-thin" />}
 									{this.state.salesMethod === this.bidding && <i className="fa fa-check-circle-o" />}
 									<div className="title">
-										{this.context.t("Bidding")}
+										<Translate i18nKey="Bidding" />
 									</div>
 								</div>
 								<div
@@ -344,7 +345,7 @@ class SalesPackageEdit extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_PAYMENT")}
+								<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_PAYMENT" />
 							</label>
 
 							{this.state.installments.map((installment, i, list) => (
@@ -431,7 +432,7 @@ class SalesPackageEdit extends React.Component {
 												}}
 											/>
 											{" "}
-											{this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS")}
+											<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS" />
 										</div>
 
 									</div>
@@ -481,7 +482,7 @@ class SalesPackageEdit extends React.Component {
 						color: "red",
 					}}
 				>
-					{this.installmentsIncomplete() && this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING")}
+					{this.installmentsIncomplete() && <Translate i18nKey="CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING" />}
 				</div>
 
 				<div className="buttons popup-buttons">

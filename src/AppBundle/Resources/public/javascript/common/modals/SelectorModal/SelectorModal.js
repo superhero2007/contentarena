@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { GenericModalStyle } from "../../../main/styles/custom";
 
 Modal.setAppElement("#home-wrapper");
@@ -237,7 +238,7 @@ class SelectorModal extends Component {
 							this.addNewSport(index);
 						}}
 					>
-						{this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
+						<Translate i18nKey="CL_STEP1_SELECTOR_ADD_SPORT" />
 					</button>
 				)}
 
@@ -248,7 +249,7 @@ class SelectorModal extends Component {
 							this.addNewSeason(index);
 						}}
 					>
-						{this.context.t("CL_STEP1_SELECTOR_ADD_SEASON")}
+						<Translate i18nKey="CL_STEP1_SELECTOR_ADD_SEASON" />
 					</button>
 				)}
 
@@ -259,13 +260,13 @@ class SelectorModal extends Component {
 							this.addNewTournament(index);
 						}}
 					>
-						{this.context.t("CL_STEP1_SELECTOR_ADD_TOURNAMENT")}
+						<Translate i18nKey="CL_STEP1_SELECTOR_ADD_TOURNAMENT" />
 					</button>
 				)}
 
 				{showAllCountries && (
 					<button className="ca-btn yellow-border" onClick={this.showAllCountries}>
-						{this.context.t("CL_STEP1_SELECTOR_COUNTRIES_ALL")}
+						<Translate i18nKey="CL_STEP1_SELECTOR_COUNTRIES_ALL" />
 					</button>
 				)}
 			</React.Fragment>
@@ -278,16 +279,16 @@ class SelectorModal extends Component {
 
 		switch (selectorType) {
 		case "sports":
-			title = this.context.t("CL_STEP1_SELECTOR_TITLE_SPORT");
+			title = <Translate i18nKey="CL_STEP1_SELECTOR_TITLE_SPORT" />;
 			break;
 		case "sportCategory":
-			title = this.context.t("CL_STEP1_SELECTOR_TITLE_SPORT_CATEGORY");
+			title = <Translate i18nKey="CL_STEP1_SELECTOR_TITLE_SPORT_CATEGORY" />;
 			break;
 		case "tournament":
-			title = this.context.t("CL_STEP1_SELECTOR_TITLE_TOURNAMENT");
+			title = <Translate i18nKey="CL_STEP1_SELECTOR_TITLE_TOURNAMENT" />;
 			break;
 		case "seasons":
-			title = this.context.t("CL_STEP1_SELECTOR_TITLE_SEASONS");
+			title = <Translate i18nKey="CL_STEP1_SELECTOR_TITLE_SEASONS" />;
 			break;
 		default:
 			title = "provide title for this case";
@@ -301,16 +302,16 @@ class SelectorModal extends Component {
 
 		switch (selectorType) {
 		case "sports":
-			subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_SPORT");
+			subTitle = <Translate i18nKey="CL_STEP1_SELECTOR_SUB_TITLE_SPORT" />;
 			break;
 		case "sportCategory":
-			subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_SPORT_CATEGORY");
+			subTitle = <Translate i18nKey="CL_STEP1_SELECTOR_SUB_TITLE_SPORT_CATEGORY" />;
 			break;
 		case "tournament":
-			subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_TOURNAMENT");
+			subTitle = <Translate i18nKey="CL_STEP1_SELECTOR_SUB_TITLE_TOURNAMENT" />;
 			break;
 		case "seasons":
-			subTitle = this.context.t("CL_STEP1_SELECTOR_SUB_TITLE_SEASONS");
+			subTitle = <Translate i18nKey="CL_STEP1_SELECTOR_SUB_TITLE_SEASONS" />;
 			break;
 		default:
 			subTitle = "provide sub title for this case";
@@ -392,7 +393,7 @@ class SelectorModal extends Component {
 										this.setActiveFilter("international");
 									}}
 								>
-									{this.context.t("International")}
+									<Translate i18nKey="International" />
 								</button>
 							)}
 							{this.props.popularItems && this.props.popularItems.length > 0 && (
@@ -402,7 +403,7 @@ class SelectorModal extends Component {
 										this.setActiveFilter("popular");
 									}}
 								>
-									{this.context.t("Popular")}
+									<Translate i18nKey="Popular" />
 								</button>
 							)}
 						</div>
@@ -424,10 +425,10 @@ class SelectorModal extends Component {
 				</section>
 				<footer className="modal-footer">
 					<button className="cancel-btn" onClick={this.closeModal}>
-						{this.context.t("CL_STEP1_SELECTOR_CANCEL")}
+						<Translate i18nKey="CL_STEP1_SELECTOR_CANCEL" />
 					</button>
 					<button className="standard-button" onClick={this.applySelection} disabled={!this.state.updated}>
-						{this.context.t("CL_STEP1_SELECTOR_APPLY")}
+						<Translate i18nKey="CL_STEP1_SELECTOR_APPLY" />
 					</button>
 				</footer>
 			</Modal>

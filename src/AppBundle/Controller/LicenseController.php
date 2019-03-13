@@ -508,23 +508,6 @@ class LicenseController extends Controller
     }
 
     /**
-     * @Route("/license/test-general", name="contractTestGeneral")
-     * @throws \exception
-     */
-    public function contractTestGeneralAction(Request $request){
-
-        $user = $this->getUser();
-
-        $viewElements = array(
-            'user' => $user,
-            'watermark' => true,
-            'hostUrl' => $this->container->getParameter("carena_host_url")
-        );
-
-        return $this->render('contract/la-general-terms-base.html.twig', $viewElements);
-    }
-
-    /**
      * @Route("/license/test-general-source", name="contractTestGeneralSource")
      * @throws \exception
      */

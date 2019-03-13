@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import cloneDeep from "lodash/cloneDeep";
+import Translate from "@components/Translator/Translate";
 import { setRegions } from "../actions/propertyFiltersActions";
 
 class CmsTerritoriesFilter extends React.Component {
@@ -103,7 +104,7 @@ class CmsTerritoriesFilter extends React.Component {
 
 				<div>
 					<div className="region-filter-title">
-						{ this.context.t("CMS_TERRITORIES_SELECTOR_TITLE")}
+						{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_TITLE" />}
 					</div>
 					<div className="regions">
 						<button

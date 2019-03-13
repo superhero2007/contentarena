@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import cloneDeep from "lodash/cloneDeep";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import CountrySelector from "../../main/components/CountrySelector";
 import PasswordValidationBox from "../../main/components/PasswordValidationBox";
 import Loader from "../../common/components/Loader";
@@ -107,39 +108,39 @@ class Settings extends React.Component {
 							className={`tab ${activeTab === 1 ? "active" : ""}`}
 							onClick={() => this.setState({ activeTab: 1 })}
 						>
-							{this.context.t("SETTINGS_TAB_COMPANY")}
+							<Translate i18nKey="SETTINGS_TAB_COMPANY" />
 						</div>
 					)}
 					<div
 						className={`tab ${activeTab === 2 ? "active" : ""}`}
 						onClick={() => this.setState({ activeTab: 2 })}
 					>
-						{this.context.t("SETTINGS_TAB_USERS")}
+						<Translate i18nKey="SETTINGS_TAB_USERS" />
 					</div>
 					<div
 						className={`tab ${activeTab === 3 ? "active" : ""}`}
 						onClick={() => this.setState({ activeTab: 3 })}
 					>
-						{this.context.t("SETTINGS_TAB_ACCOUNT")}
+						<Translate i18nKey="SETTINGS_TAB_ACCOUNT" />
 					</div>
 					<div
 						className={`tab ${activeTab === 4 ? "active" : ""}`}
 						onClick={() => this.setState({ activeTab: 4 })}
 					>
-						{this.context.t("SETTINGS_TAB_PASSWORD")}
+						<Translate i18nKey="SETTINGS_TAB_PASSWORD" />
 					</div>
 					<div
 						className={`tab ${activeTab === 5 ? "active" : ""}`}
 						onClick={() => this.setState({ activeTab: 5 })}
 					>
-						{this.context.t("SETTINGS_TAB_SUPPORT")}
+						<Translate i18nKey="SETTINGS_TAB_SUPPORT" />
 					</div>
 				</div>
 
 				{user.company && activeTab === 1 && (
 					<div className="setting">
 						<div className="title">
-							{this.context.t("SETTINGS_TITLE_COMPANY")}
+							<Translate i18nKey="SETTINGS_TITLE_COMPANY" />
 							{!editCompanyInfo && !updatingCompany && (
 								<div
 									className="edit-button"
@@ -157,7 +158,7 @@ class Settings extends React.Component {
 						<div className="row">
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_NAME" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -171,7 +172,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -185,7 +186,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_VAT")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_VAT" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -201,7 +202,7 @@ class Settings extends React.Component {
 						<div className="row">
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_ADDRESS" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -215,7 +216,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS_2")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_ADDRESS_2" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -229,7 +230,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_CITY")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_CITY" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -245,7 +246,7 @@ class Settings extends React.Component {
 						<div className="row">
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_ZIP")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_ZIP" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -259,7 +260,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_COUNTRY")}
+									<Translate i18nKey="SETTINGS_LABEL_COMPANY_COUNTRY" />
 								</label>
 								<CountrySelector
 									multi={false}
@@ -274,7 +275,7 @@ class Settings extends React.Component {
 						</div>
 						<div>
 							<label>
-								{this.context.t("SETTINGS_LABEL_COMPANY_DESCRIPTION")}
+								<Translate i18nKey="SETTINGS_LABEL_COMPANY_DESCRIPTION" />
 							</label>
 							<textarea
 								value={user.company.description}
@@ -316,10 +317,10 @@ class Settings extends React.Component {
 						<div className="setting">
 							{/* ACTIVE USERS */}
 							<div className="title">
-								{this.context.t("SETTINGS_LABEL_ACTIVE_USERS")}
+								<Translate i18nKey="SETTINGS_LABEL_ACTIVE_USERS" />
 							</div>
 							<h4 className="subtitle">
-								{this.context.t("SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION")}
+								<Translate i18nKey="SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION" />
 							</h4>
 
 							{!loadingCompanyUsers && companyUsers.length > 0 && (
@@ -333,17 +334,17 @@ class Settings extends React.Component {
 										resizable={false}
 										data={companyUsers}
 										columns={[{
-											Header: this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME"),
+											Header: <Translate i18nKey="SETTINGS_LABEL_USER_FAMILY_NAME" />,
 											headerClassName: "table-header",
 											className: "table-header",
 											accessor: "lastName",
 										}, {
 											accessor: "firstName", // Required because our accessor is not a string
-											Header: this.context.t("SETTINGS_LABEL_USER_FIRST_NAME"),
+											Header: <Translate i18nKey="SETTINGS_LABEL_USER_FIRST_NAME" />,
 											headerClassName: "table-header",
 											className: "table-header",
 										}, {
-											Header: this.context.t("SETTINGS_LABEL_USER_EMAIL"),
+											Header: <Translate i18nKey="SETTINGS_LABEL_USER_EMAIL" />,
 											accessor: "email",
 											headerClassName: "table-header",
 											className: "table-header",
@@ -354,17 +355,17 @@ class Settings extends React.Component {
 											),
 											width: 350,
 										}, {
-											Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),
+											Header: <Translate i18nKey="SETTINGS_LABEL_USER_PHONE_NUMBER" />,
 											accessor: "phone",
 											headerClassName: "table-header",
 											className: "table-header",
 										}, {
-											Header: this.context.t("SETTINGS_LABEL_USER_COMPANY_POSITION"),
+											Header: <Translate i18nKey="SETTINGS_LABEL_USER_COMPANY_POSITION" />,
 											accessor: "title",
 											headerClassName: "table-header",
 											className: "table-header",
 										}, {
-											Header: this.context.t("SETTINGS_LABEL_USER_STATUS"),
+											Header: <Translate i18nKey="SETTINGS_LABEL_USER_STATUS" />,
 											accessor: "status",
 											headerClassName: "table-header",
 											className: "table-header d-flex justify-content-center",
@@ -397,10 +398,10 @@ class Settings extends React.Component {
 						</div>
 						<div className="setting">
 							<div className="title">
-								{this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES")}
+								<Translate i18nKey="SETTINGS_LABEL_INVITE_COLLEAGUES" />
 							</div>
 							<h4 className="subtitle">
-								{this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES_EXPLANATION")}
+								<Translate i18nKey="SETTINGS_LABEL_INVITE_COLLEAGUES_EXPLANATION" />
 							</h4>
 							<InviteUsers onInvite={this.loadCompanyUsers} />
 						</div>
@@ -410,7 +411,7 @@ class Settings extends React.Component {
 				{activeTab === 3 && (
 					<div className="setting">
 						<div className="title">
-							{this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
+							<Translate i18nKey="SETTINGS_LABEL_USER_TITLE_INFO" />
 							{!editPersonalInfo && !updatingUser && (
 								<div
 									className="edit-button"
@@ -428,7 +429,7 @@ class Settings extends React.Component {
 						<div className="row">
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
+									<Translate i18nKey="SETTINGS_LABEL_USER_FIRST_NAME" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -442,7 +443,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
+									<Translate i18nKey="SETTINGS_LABEL_USER_FAMILY_NAME" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -456,7 +457,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_USER_TITLE")}
+									<Translate i18nKey="SETTINGS_LABEL_USER_TITLE" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -472,7 +473,7 @@ class Settings extends React.Component {
 						<div className="row">
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
+									<Translate i18nKey="SETTINGS_LABEL_USER_EMAIL" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -482,7 +483,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")}
+									<Translate i18nKey="SETTINGS_LABEL_USER_PHONE_NUMBER" />
 								</label>
 								<input
 									className="ca-form-control"
@@ -526,15 +527,15 @@ class Settings extends React.Component {
 				{activeTab === 4 && (
 					<div className="setting">
 						<div className="title">
-							{this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD")}
+							<Translate i18nKey="SETTINGS_LABEL_CHANGE_PASSWORD" />
 						</div>
 						<div className="subtitle">
-							{this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
+							<Translate i18nKey="SETTINGS_LABEL_CHANGE_PASSWORD_2" />
 						</div>
 						<div className="row">
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_TYPE_CURRENT_PASSWORD")}
+									<Translate i18nKey="SETTINGS_LABEL_TYPE_CURRENT_PASSWORD" />
 								</label>
 								<input
 									type="password"
@@ -548,7 +549,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
+									<Translate i18nKey="SETTINGS_LABEL_TYPE_NEW_PASSWORD" />
 								</label>
 								<input
 									type="password"
@@ -562,7 +563,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
+									<Translate i18nKey="SETTINGS_LABEL_RETYPE_NEW_PASSWORD" />
 								</label>
 								<input
 									type="password"
@@ -579,7 +580,7 @@ class Settings extends React.Component {
 							<div className="text-center">
 								{passwordUpdated ? (
 									<div>
-										{this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
+										<Translate i18nKey="SETTINGS_LABEL_PASSWORD_UPDATED" />
 									</div>
 								) : (
 									<button
@@ -587,7 +588,7 @@ class Settings extends React.Component {
 										disabled={!isPassValid}
 										className="ca-btn primary large"
 									>
-										{this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
+										<Translate i18nKey="SETTINGS_BUTTON_SAVE_PASSWORD" />
 									</button>
 								)}
 							</div>
@@ -606,10 +607,10 @@ class Settings extends React.Component {
 						<div className="row">
 							<div style={{ width: "100%" }}>
 								<div className="title">
-									{this.context.t("SETTINGS_LINKS_HEADER")}
+									<Translate i18nKey="SETTINGS_LINKS_HEADER" />
 								</div>
 								<div className="subtitle">
-									{this.context.t("SETTINGS_LINKS_TITLE")}
+									<Translate i18nKey="SETTINGS_LINKS_TITLE" />
 								</div>
 								<div>
 									<a
@@ -617,7 +618,7 @@ class Settings extends React.Component {
 										target="_blank"
 										className="ca-btn primary"
 									>
-										{this.context.t("SETTINGS_LINKS_BUTTON_TERMS")}
+										<Translate i18nKey="SETTINGS_LINKS_BUTTON_TERMS" />
 									</a>
 									{" "}
 									<a
@@ -626,16 +627,16 @@ class Settings extends React.Component {
 										rel="noopener noreferrer"
 										className="ca-btn primary"
 									>
-										{this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
+										<Translate i18nKey="SETTINGS_LINKS_BUTTON_PRIVACY" />
 									</a>
 								</div>
 							</div>
 							<div style={{ width: "100%" }}>
 								<div className="title">
-									{this.context.t("SETTINGS_SUPPORT_HEADER")}
+									<Translate i18nKey="SETTINGS_SUPPORT_HEADER" />
 								</div>
 								<div className="subtitle">
-									{this.context.t("SETTINGS_SUPPORT_TITLE")}
+									<Translate i18nKey="SETTINGS_SUPPORT_TITLE" />
 								</div>
 								<div>
 									<a
@@ -644,7 +645,7 @@ class Settings extends React.Component {
 										rel="noopener noreferrer"
 										className="ca-btn primary"
 									>
-										{this.context.t("SETTINGS_LINKS_BUTTON_FAQ")}
+										<Translate i18nKey="SETTINGS_LINKS_BUTTON_FAQ" />
 									</a>
 									{" "}
 									<a
@@ -652,7 +653,7 @@ class Settings extends React.Component {
 										download
 										className="ca-btn primary"
 									>
-										{this.context.t("SETTINGS_LINKS_BUTTON_MANUAL")}
+										<Translate i18nKey="SETTINGS_LINKS_BUTTON_MANUAL" />
 									</a>
 
 								</div>

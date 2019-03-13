@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
 import NumberFormat from "react-number-format";
+import Translate from "@components/Translator/Translate";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import SalesPackages from "./SalesPackeges";
@@ -170,7 +171,7 @@ class ContentListing extends Component {
 				<div className="left">
 					{featured && (
 						<div className="featured-badge">
-							<span>{this.context.t("FEATURED_LISTING_BADGE_TEXT")}</span>
+							<span><Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" /></span>
 						</div>
 					)}
 					{getListingImage(this.props)}
@@ -237,21 +238,21 @@ class ContentListing extends Component {
 						{confirmWatchlistRemove ? (
 							<div className="wrapper">
 								<div>
-									{this.context.t("WATCHLIST_REMOVE_CONFIRMATION")}
+									<Translate i18nKey="WATCHLIST_REMOVE_CONFIRMATION" />
 								</div>
 								<button
 									type="button"
 									className="ca-btn primary small"
 									onClick={this.removeFromWatchlist}
 								>
-									{this.context.t("Yes")}
+									<Translate i18nKey="Yes" />
 								</button>
 								<button
 									type="button"
 									className="ca-btn danger small"
 									onClick={this.cancelRemoveFromWatchlist}
 								>
-									{this.context.t("Cancel")}
+									<Translate i18nKey="Cancel" />
 								</button>
 							</div>
 						) : (
@@ -263,7 +264,7 @@ class ContentListing extends Component {
 								/>
 								{owner && (
 									<div className="owner">
-										{this.context.t("Placed by")}
+										<Translate i18nKey="Placed by" />
 										{" "}
 										<b>
 											{owner.firstName}
@@ -316,7 +317,7 @@ class ContentListing extends Component {
 											location.href = `/listing/${customId}/checkout/${bid.salesPackage.id}`;
 										}}
 									>
-										{this.context.t("Increase bid")}
+										<Translate i18nKey="Increase bid" />
 									</a>
 								)}
 
@@ -335,7 +336,7 @@ class ContentListing extends Component {
 
 							<div className="bid-author">
 								<div>{Moment(bid.createdAt).format(DATE_FORMAT)}</div>
-								{this.context.t("Placed by:")}
+								<Translate i18nKey="Placed by:" />
 								{" "}
 								<b>{`${bid.buyerUser.firstName} ${bid.buyerUser.lastName}`}</b>
 							</div>
@@ -356,7 +357,7 @@ class ContentListing extends Component {
 							{this.state.showRemoveConfirm && (
 								<div className="confirmation-tooltip">
 									<div className="confirmation-text">
-										{this.context.t("PENDING_BIDS_REMOVE_TITLE")}
+										<Translate i18nKey="PENDING_BIDS_REMOVE_TITLE" />
 									</div>
 									<button
 										className="button button-confirm"
@@ -367,7 +368,7 @@ class ContentListing extends Component {
 											onDelete(bid.id);
 										}}
 									>
-										{this.context.t("PENDING_BIDS_REMOVE_BUTTON_CONFIRM")}
+										<Translate i18nKey="PENDING_BIDS_REMOVE_BUTTON_CONFIRM" />
 									</button>
 									<button
 										className="button"
@@ -377,7 +378,7 @@ class ContentListing extends Component {
 											this.setState({ showRemoveConfirm: false });
 										}}
 									>
-										{this.context.t("PENDING_BIDS_REMOVE_BUTTON_CANCEL")}
+										<Translate i18nKey="PENDING_BIDS_REMOVE_BUTTON_CANCEL" />
 									</button>
 								</div>
 							)}

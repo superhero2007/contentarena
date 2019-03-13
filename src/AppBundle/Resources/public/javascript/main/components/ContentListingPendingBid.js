@@ -1,12 +1,13 @@
 import React from "react";
 import Moment from "moment/moment";
+import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import ContentListing from "./ContentListing";
 import SendMessage from "../../common/modals/SendMessage/SendMessage";
 import { getCurrencySymbol } from "../actions/utils";
 import { blueEnvelopeIcon, bucketIcon, infoIcon } from "./Icons";
-import { PropTypes } from "prop-types";
 import { DATE_FORMAT } from "@constants";
 
 class ContentListingPendingBid extends ContentListing {
@@ -182,7 +183,7 @@ class ContentListingPendingBid extends ContentListing {
 										}}
 										href={`${envhosturl}listing/${customId}/checkout/${bid.salesPackage.id}`}
 									>
-										{this.context.t("Increase bid")}
+										<Translate i18nKey="Increase bid" />
 									</a>
 								)}
 
@@ -218,7 +219,7 @@ class ContentListingPendingBid extends ContentListing {
 								{showEdited && (
 									<div className="status-tooltip">
 										<div className="option">
-											{this.context.t("PENDING_BIDS_TOOLTIP_LISTING_EDITED")}
+											<Translate i18nKey="PENDING_BIDS_TOOLTIP_LISTING_EDITED" />
 										</div>
 									</div>
 								)}
@@ -231,7 +232,7 @@ class ContentListingPendingBid extends ContentListing {
 							>
 								<div>
 									<span style={{ fontWeight: 400, fontStyle: "italic" }}>
-										{this.context.t("Placed by:")}
+										<Translate i18nKey="Placed by:" />
 									</span>
 									{` ${bid.buyerUser.firstName} ${bid.buyerUser.lastName}`}
 								</div>
@@ -257,7 +258,7 @@ class ContentListingPendingBid extends ContentListing {
 							{this.state.showRemoveConfirm && (
 								<div className="confirmation-tooltip">
 									<div className="confirmation-text">
-										{this.context.t("PENDING_BIDS_REMOVE_TITLE")}
+										<Translate i18nKey="PENDING_BIDS_REMOVE_TITLE" />
 									</div>
 									<button
 										className="button button-confirm"
@@ -267,7 +268,7 @@ class ContentListingPendingBid extends ContentListing {
 											e.stopPropagation();
 										}}
 									>
-										{this.context.t("PENDING_BIDS_REMOVE_BUTTON_CONFIRM")}
+										<Translate i18nKey="PENDING_BIDS_REMOVE_BUTTON_CONFIRM" />
 									</button>
 									<button
 										className="button"
@@ -276,7 +277,7 @@ class ContentListingPendingBid extends ContentListing {
 											e.stopPropagation();
 										}}
 									>
-										{this.context.t("PENDING_BIDS_REMOVE_BUTTON_CANCEL")}
+										<Translate i18nKey="PENDING_BIDS_REMOVE_BUTTON_CANCEL" />
 									</button>
 								</div>
 							)}

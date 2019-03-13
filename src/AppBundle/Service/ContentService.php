@@ -243,9 +243,6 @@ class ContentService
     public function getPropertyListings(Property $property, User $user) {
         $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListings($property);
 
-        //TODO: remove this. Just for testing
-        $listings = $this->em->getRepository('AppBundle:Content')->getForCommercialActivity($user);
-
         foreach ($listings as $listing){
             /* @var Content $listing  */
             $total = 0;

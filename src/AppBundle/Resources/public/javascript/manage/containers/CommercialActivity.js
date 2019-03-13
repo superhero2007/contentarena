@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import ContentListingCommercialActivity from "../../main/components/ContentListingCommercialActivity";
 import { goToListing } from "../../main/actions/utils";
 import RightsLegend from "../../main/components/RightsLegend";
@@ -152,10 +153,10 @@ class CommercialActivity extends Component {
 	}
 
 	getFiltersText = () => ({
-		all: this.context.t("COMMERCIAL_ACTIVITY_FILTER_ALL"),
-		withActivity: this.context.t("COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY"),
-		openBids: this.context.t("COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS"),
-		closedDeals: this.context.t("COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS"),
+		all: <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_ALL" />,
+		withActivity: <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_WITH_ACTIVITY" />,
+		openBids: <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" />,
+		closedDeals: <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" />,
 	});
 
 	render() {
@@ -180,7 +181,7 @@ class CommercialActivity extends Component {
 						/>
 						<div className="reset-listing-filter" onClick={this.onResetFilter}>
 							<img src={this.reloadIcon} alt="" />
-							<span>{this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR")}</span>
+							<span><Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR" /></span>
 						</div>
 					</div>
 
@@ -199,10 +200,10 @@ class CommercialActivity extends Component {
 				<Loader loading={loading}>
 					{listings.length === 0 && (
 						<div className="manager-content-message">
-							{this.state.filter === "ALL" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE")}
-							{this.state.filter === "withactivity" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_WITH_ACTIVITY")}
-							{this.state.filter === "openbids" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_OPEN_BIDS")}
-							{this.state.filter === "closeddeals" && this.context.t("COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS")}
+							{this.state.filter === "ALL" && <Translate i18nKey="COMMERCIAL_ACTIVITY_EMPTY_MESSAGE" />}
+							{this.state.filter === "withactivity" && <Translate i18nKey="COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_WITH_ACTIVITY" />}
+							{this.state.filter === "openbids" && <Translate i18nKey="COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_OPEN_BIDS" />}
+							{this.state.filter === "closeddeals" && <Translate i18nKey="COMMERCIAL_ACTIVITY_EMPTY_MESSAGE_CLOSED_DEALS" />}
 						</div>
 					)}
 					{listings.length > 0 && listings.map((listing, i, list) => (

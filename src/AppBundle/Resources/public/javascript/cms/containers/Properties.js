@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader/Loader";
 import api from "../../api";
 import { DefaultBox } from "../../common/components/Containers";
@@ -14,7 +15,7 @@ const CreatePropertyButton = ({ history }, context) => (
 		className="cms-button"
 		onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
 	>
-		{context.t("CMS_CREATE_PROPERTY_BUTTON")}
+		<Translate i18nKey="CMS_CREATE_PROPERTY_BUTTON" />
 	</button>
 );
 
@@ -82,10 +83,10 @@ class Properties extends React.Component {
 							<div className="property-empty-list">
 								<img src={cmsFile} alt="" />
 								<span className="title">
-									{this.context.t("CMS_PROPERTIES_EMPTY_LIST_1")}
+									<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_1" />
 								</span>
 								<span className="subtitle">
-									{this.context.t("CMS_PROPERTIES_EMPTY_LIST_2")}
+									<Translate i18nKey="CMS_PROPERTIES_EMPTY_LIST_2" />
 								</span>
 								<CreatePropertyButton history={history} />
 							</div>

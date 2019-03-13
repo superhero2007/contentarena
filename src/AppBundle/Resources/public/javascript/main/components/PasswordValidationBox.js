@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { blueCheckIcon, cancelIcon } from "./Icons";
 
 class PasswordValidationBox extends Component {
@@ -37,24 +38,24 @@ class PasswordValidationBox extends Component {
 			<div className="password-validation">
 				<div className={cn({ invalid: !isValid.passlength })}>
 					<img src={isValid.passlength ? blueCheckIcon : cancelIcon} alt="" />
-					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
+					<Translate i18nKey="SETTINGS_LABEL_PASSWORD_VALIDATE_1" />
 				</div>
 				<div className={cn({ invalid: !isValid.upper })}>
 					<img src={isValid.upper ? blueCheckIcon : cancelIcon} alt="" />
-					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
+					<Translate i18nKey="SETTINGS_LABEL_PASSWORD_VALIDATE_2" />
 				</div>
 				<div className={cn({ invalid: !isValid.digit })}>
 					<img src={isValid.digit ? blueCheckIcon : cancelIcon} alt="" />
-					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
+					<Translate i18nKey="SETTINGS_LABEL_PASSWORD_VALIDATE_3" />
 				</div>
 				<div className={cn({ invalid: !isValid.special })}>
 					<img src={isValid.special ? blueCheckIcon : cancelIcon} alt="" />
-					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
+					<Translate i18nKey="SETTINGS_LABEL_PASSWORD_VALIDATE_4" />
 				</div>
 				{passwordCheck && (
 					<div className={cn({ invalid: passwordCheck !== password })}>
 						<img src={passwordCheck === password ? blueCheckIcon : cancelIcon} alt="" />
-						{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
+						<Translate i18nKey="SETTINGS_LABEL_PASSWORD_VALIDATE_5" />
 					</div>
 				)}
 			</div>

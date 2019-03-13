@@ -1,6 +1,7 @@
 import React from "react";
 import Textarea from "react-textarea-autosize";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import Round from "./Round";
 import StaticRound from "./StaticRound";
 
@@ -8,7 +9,9 @@ export const Description = ({
 	value, onChange, title = "Enter a description", placeholder = "Provide a short description of your content listing",
 }) => (
 	<div className="textarea-input">
-		<label>{title}</label>
+		<label>
+			<Translate i18nKey={title} />
+		</label>
 		<textarea onChange={onChange} value={value} placeholder={placeholder} />
 	</div>
 );
@@ -24,7 +27,9 @@ export const RepresentationTextArea = ({ value = "" }) => (
 export const TitleBar = ({ title, subtitle, infoText }) => (
 	<div className="title-bar">
 		<hr />
-		<div className="title">{title}</div>
+		<div className="title">
+			<Translate i18nKey={title} />
+		</div>
 		<div className="subtitle">{subtitle}</div>
 		{infoText && (
 			<i className="fa fa-info-circle tooltip-icon" title={infoText} />
@@ -101,7 +106,7 @@ export class SportSelector extends React.Component {
 			<div className="base-container">
 				<div className="base-input">
 					<label>
-						{this.context.t("CL_STEP1_LABEL_SPORT")}
+						<Translate i18nKey="CL_STEP1_LABEL_SPORT" />
 					</label>
 					{
 						!this.props.isCustom
@@ -144,7 +149,7 @@ export class SportSelector extends React.Component {
 						className="standard-button link-button"
 						onClick={this.props.addSportSelector}
 					>
-						{this.context.t("CL_STEP1_SELECTOR_ADD_SPORT")}
+						{<Translate i18nKey="CL_STEP1_SELECTOR_ADD_SPORT" />}
 					</button>
 				)}
 			</div>

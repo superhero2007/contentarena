@@ -1,7 +1,8 @@
 import React from "react";
-import { editedProgramSelected } from "../../main/actions/utils";
 import { PropTypes } from "prop-types";
 import moment from "moment";
+import Translate from "@components/Translator/Translate";
+import { editedProgramSelected } from "../../main/actions/utils";
 import {
 	tournamentIcon,
 	sportIcon,
@@ -224,7 +225,7 @@ class ContentListingEventDetails extends React.Component {
 								{tournamentIcon}
 							</div>
 							<div className="event-text" title={this.context.t("EVENT_TOURNAMENT")}>
-								{this.context.t("LISTING_DETAILS_GENERAL_CONTENT")}
+								<Translate i18nKey="LISTING_DETAILS_GENERAL_CONTENT" />
 							</div>
 						</div>
 					)}
@@ -249,7 +250,7 @@ class ContentListingEventDetails extends React.Component {
 								{sportIcon}
 							</div>
 							<div className="event-text" title={this.context.t("EVENT_SPORT")}>
-								{this.context.t("LISTING_DETAILS_MULTIPLE_SPORTS")}
+								<Translate i18nKey="LISTING_DETAILS_MULTIPLE_SPORTS" />
 							</div>
 						</div>
 					)}

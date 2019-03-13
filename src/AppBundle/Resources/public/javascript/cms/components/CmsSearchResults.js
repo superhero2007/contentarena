@@ -1,6 +1,7 @@
 import React from "react";
 import ReactTable from "react-table";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 
 class CmsSearchResults extends React.Component {
@@ -100,14 +101,14 @@ class CmsSearchResults extends React.Component {
 							select={this.props.select}
 							className="ca-table"
 							columns={[{
-								Header: this.context.t("CL_STEP1_SEARCH_HEADER_COMPETITION"),
+								Header: <Translate i18nKey="CL_STEP1_SEARCH_HEADER_COMPETITION" />,
 								accessor: "name", // String-based value accessors!
 							}, {
-								Header: this.context.t("CL_STEP1_SEARCH_HEADER_COUNTRY"),
+								Header: <Translate i18nKey="CL_STEP1_SEARCH_HEADER_COUNTRY" />,
 								accessor: "sportCategory.name",
 							}, {
 								accessor: "sport.name", // Required because our accessor is not a string
-								Header: this.context.t("CL_STEP1_SEARCH_HEADER_SPORT"),
+								Header: <Translate i18nKey="CL_STEP1_SEARCH_HEADER_SPORT" />,
 							}, {
 								Header: "", // Custom header components!
 								Cell: props => (
@@ -117,7 +118,7 @@ class CmsSearchResults extends React.Component {
 											this.props.select(props.original);
 										}}
 									>
-										{this.context.t("CL_STEP1_SEARCH_BUTTON_SELECT")}
+										<Translate i18nKey="CL_STEP1_SEARCH_BUTTON_SELECT" />
 									</button>
 								),
 							}]}

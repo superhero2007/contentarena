@@ -1,3 +1,7 @@
+juanx_react_translation:
+    resource: "@JuanxReactTranslationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 api:
     resource: "@ApiBundle/Controller/"
     type:     annotation

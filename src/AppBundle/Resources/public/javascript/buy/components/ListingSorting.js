@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
 import { LISTING_SORT_OPTIONS } from "@constants";
+import Translate from "@components/Translator/Translate";
 
 class ListingSorting extends PureComponent {
 	constructor(props) {
@@ -9,10 +10,10 @@ class ListingSorting extends PureComponent {
 	}
 
 	getTranslatedLabels = () => ({
-		[LISTING_SORT_OPTIONS.UPCOMING_EVENT]: this.context.t("MARKETPLACE_UPCOMING"),
-		[LISTING_SORT_OPTIONS.EXPIRY_DATE]: this.context.t("MARKETPLACE_EXPIRY"),
-		[LISTING_SORT_OPTIONS.PUBLISH_DATE]: this.context.t("MARKETPLACE_PUBLISH"),
-		[LISTING_SORT_OPTIONS.RELEVANCE]: this.context.t("MARKETPLACE_RELEVANCE"),
+		[LISTING_SORT_OPTIONS.UPCOMING_EVENT]: <Translate i18nKey="MARKETPLACE_UPCOMING" />,
+		[LISTING_SORT_OPTIONS.EXPIRY_DATE]: <Translate i18nKey="MARKETPLACE_EXPIRY" />,
+		[LISTING_SORT_OPTIONS.PUBLISH_DATE]: <Translate i18nKey="MARKETPLACE_PUBLISH" />,
+		[LISTING_SORT_OPTIONS.RELEVANCE]: <Translate i18nKey="MARKETPLACE_RELEVANCE" />,
 	});
 
 	render() {

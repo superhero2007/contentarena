@@ -3,6 +3,7 @@ import SignaturePad from "react-signature-pad";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 import { pdfIcon } from "./Icons";
 import { viewLicenseBid } from "../actions/utils";
 import GeneralTerms from "./GeneralTerms";
@@ -48,7 +49,7 @@ class DigitalSignature extends React.Component {
 		const {
 			signature,
 			licenseBidId,
-			title = this.context.t("DIGITAL_SIGNATURE_TITLE"),
+			title = <Translate i18nKey="DIGITAL_SIGNATURE_TITLE" />,
 			customClass = "",
 			signaturePosition,
 			signatureName,
@@ -73,10 +74,10 @@ class DigitalSignature extends React.Component {
 					<div className="terms-confirm">
 						<div className="headlines">
 							<label>
-								{this.context.t("CL_STEP5_TERMS_HEADLINE")}
+								<Translate i18nKey="CL_STEP5_TERMS_HEADLINE" />
 							</label>
 							<span>
-								{this.context.t("CL_STEP5_TERMS_DESCRIPTION")}
+								<Translate i18nKey="CL_STEP5_TERMS_DESCRIPTION" />
 							</span>
 						</div>
 						<div style={{ display: "flex", marginBottom: 10 }}>
@@ -92,13 +93,12 @@ class DigitalSignature extends React.Component {
 								style={{ marginRight: 10 }}
 							/>
 							<label htmlFor="terms" />
-							{this.context.t("CL_STEP5_TERMS_1")}
-							{!terms && validation && (
+							<Translate i18nKey="CL_STEP5_TERMS_1" />{!terms && validation && (
 								<span
 									className="is-invalid"
 									style={{ marginLeft: 15 }}
 								>
-									{this.context.t("LICENSE_NOT_CHECKED")}
+									<Translate i18nKey="LICENSE_NOT_CHECKED" />
 								</span>
 							)}
 						</div>
@@ -110,15 +110,15 @@ class DigitalSignature extends React.Component {
 								onChange={(e) => {
 									updateContentValue("termsArena", e.target.checked);
 								}}
-								text={this.context.t("CL_STEP5_TERMS_2")}
-								text2={this.context.t("CL_STEP5_TERMS_3")}
+								text={<Translate i18nKey="CL_STEP5_TERMS_2" />}
+								text2={<Translate i18nKey="CL_STEP5_TERMS_3" />}
 							/>
 							{!termsArena && validation && (
 								<span
 									className="is-invalid"
 									style={{ marginLeft: 15 }}
 								>
-									{this.context.t("TERMS_NOT_CHECKED")}
+									<Translate i18nKey="TERMS_NOT_CHECKED" />
 								</span>
 							)}
 						</div>
@@ -129,7 +129,7 @@ class DigitalSignature extends React.Component {
 					<div className="signature-info">
 						<div className="headlines">
 							<label>
-								{this.context.t("CL_STEP5_SIGNATURE_HEADLINE")}
+								<Translate i18nKey="CL_STEP5_SIGNATURE_HEADLINE" />
 							</label>
 							<span>
 								{title}
@@ -143,7 +143,7 @@ class DigitalSignature extends React.Component {
 								}}
 							>
 								<img src={pdfIcon} alt="Licence" />
-								{` ${this.context.t("LICENSE_AGREEMENT")}`}
+								<Translate i18nKey="LICENSE_AGREEMENT" />
 							</span>
 						)}
 					</div>
@@ -153,7 +153,7 @@ class DigitalSignature extends React.Component {
 						<div className="placeholder">
 							<div>
 								<div className="big-text">
-									{this.context.t("DIGITAL_SIGNATURE_PLACEHOLDER_BIG_TEXT")}
+									<Translate i18nKey="DIGITAL_SIGNATURE_PLACEHOLDER_BIG_TEXT" />
 								</div>
 							</div>
 						</div>

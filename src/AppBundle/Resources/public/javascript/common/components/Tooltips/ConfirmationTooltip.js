@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class ConfirmationTooltip extends Component {
 	constructor(props) {
@@ -23,7 +24,7 @@ class ConfirmationTooltip extends Component {
 
 		const {
 			onConfirm,
-			message = this.context.t("GENERAL_CONFIRMATION_TOOLTIP_MESSAGE"),
+			message = <Translate i18nKey="GENERAL_CONFIRMATION_TOOLTIP_MESSAGE" />,
 		} = this.props;
 
 		if (!isOpen) return null;
@@ -40,7 +41,7 @@ class ConfirmationTooltip extends Component {
 						e.stopPropagation();
 					}}
 				>
-					{this.context.t("GENERAL_CONFIRMATION_TOOLTIP_CONFIRM")}
+					<Translate i18nKey="GENERAL_CONFIRMATION_TOOLTIP_CONFIRM" />
 				</button>
 				<button
 					className="button"
@@ -49,7 +50,7 @@ class ConfirmationTooltip extends Component {
 						e.stopPropagation();
 					}}
 				>
-					{this.context.t("GENERAL_CONFIRMATION_TOOLTIP_CANCEL")}
+					<Translate i18nKey="GENERAL_CONFIRMATION_TOOLTIP_CANCEL" />
 				</button>
 			</div>
 		);

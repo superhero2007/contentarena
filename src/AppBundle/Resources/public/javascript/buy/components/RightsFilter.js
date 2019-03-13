@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import first from "lodash/first";
+import Translate from "@components/Translator/Translate";
 import {
 	addRight, clearFilter, removeRight, updateCountries, updateExclusive,
 	updateIncludedCountries, updateAllFilters,
@@ -8,7 +10,6 @@ import {
 import CountrySelector from "../../main/components/CountrySelector";
 import PopupCountrySelector from "../../main/components/PopupCountrySelector";
 import { cancelIcon } from "../../main/components/Icons";
-import first from "lodash/first";
 import localStorageEnums from "../../main/constants/localStorageEnums";
 import LocalStorageHelper from "../../main/utiles/localStorageHelper";
 import { DATE_FORMAT } from "@constants";
@@ -124,7 +125,7 @@ class RightsFilter extends React.Component {
 			<div>
 				<div className="box">
 					<div className="title">
-						{this.context.t("MARKETPLACE_LABEL_FILTER_TERRITORIES")}
+						<Translate i18nKey="MARKETPLACE_LABEL_FILTER_TERRITORIES" />
 					</div>
 					<div style={{
 						display: "flex",
@@ -184,7 +185,7 @@ class RightsFilter extends React.Component {
 				<div className="box right-checkboxes">
 					<div id="rights-packages" className="filter-rights">
 						<div className="title">
-							{this.context.t("MARKETPLACE_LABEL_FILTER_RIGHTS")}
+							<Translate i18nKey="MARKETPLACE_LABEL_FILTER_RIGHTS" />
 						</div>
 						{
 							rightsPackage && rightsPackage.map((right) => {
@@ -220,7 +221,7 @@ class RightsFilter extends React.Component {
 								className="ca-checkbox checkbox-item"
 								onChange={this.onChangeExclusive}
 							/>
-							{this.context.t("MARKETPLACE_LABEL_FILTER_EXCLUSIVE")}
+							<Translate i18nKey="MARKETPLACE_LABEL_FILTER_EXCLUSIVE" />
 						</div>
 					</div>
 
@@ -233,7 +234,7 @@ class RightsFilter extends React.Component {
 					}}
 					>
 						<button className="ca-btn primary clear-filter" onClick={this.onClearFilter}>
-							{this.context.t("MARKETPLACE_BUTTON_CLEAR")}
+							<Translate i18nKey="MARKETPLACE_BUTTON_CLEAR" />
 						</button>
 					</div>
 				</div>

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
+import Translate from "@components/Translator/Translate";
 import { contentWhiteLogo } from "../../main/components/Icons";
 import PublicHeaderBar from "../../main/components/PulbicHeaderBar";
 
@@ -89,7 +90,7 @@ class LandingHeader extends React.Component {
 									onClick={() => history.push("/login")}
 									className="ca-btn primary"
 								>
-									{context.t("LOGIN_BAR_LOGIN")}
+									<Translate i18nKey="LOGIN_BAR_LOGIN" />
 								</a>
 							)}
 

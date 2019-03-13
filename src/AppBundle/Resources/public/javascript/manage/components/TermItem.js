@@ -1,6 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import {
 	IconYellowCircle, trashIconWhite, pencilIcon, reloadIcon,
 } from "../../main/components/Icons";
@@ -62,7 +63,7 @@ class TermItem extends React.Component {
 
 
 						{" "}
-						{this.context.t("TERMS_EDIT_NON_EDITABLE")}
+						<Translate i18nKey="TERMS_EDIT_NON_EDITABLE" />
 					</div>
 				)}
 				<div className="terms-edit-item">
@@ -111,7 +112,7 @@ class TermItem extends React.Component {
 					{showRemoveConfirm && (
 						<div className="confirmation-tooltip">
 							<div className="confirmation-text">
-								{this.context.t("TERMS_DEFINITIONS_REMOVE_CONFIRMATION")}
+								<Translate i18nKey="TERMS_DEFINITIONS_REMOVE_CONFIRMATION" />
 							</div>
 							<button
 								className="button button-confirm"
@@ -121,7 +122,7 @@ class TermItem extends React.Component {
 									e.stopPropagation();
 								}}
 							>
-								{this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
+								<Translate i18nKey="MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM" />
 							</button>
 							<button
 								className="button"
@@ -130,7 +131,7 @@ class TermItem extends React.Component {
 									e.stopPropagation();
 								}}
 							>
-								{this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL")}
+								<Translate i18nKey="MANAGE_LISTINGS_REMOVE_BUTTON_CANCEL" />
 							</button>
 						</div>
 					)}

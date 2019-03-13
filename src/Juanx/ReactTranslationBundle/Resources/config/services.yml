@@ -1,0 +1,14 @@
+services:
+
+    Juanx\ReactTranslationBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Juanx\ReactTranslationBundle\DataFixtures\:
+        resource: '../../DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
+#    juanx_react_translation.example:
+#        class: Juanx\ReactTranslationBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

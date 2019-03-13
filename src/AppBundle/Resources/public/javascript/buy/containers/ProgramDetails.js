@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import ProgramTypesDefinitions from "../../main/components/ProgramTypesDefinitions";
 
 class ProgramDetails extends Component {
@@ -23,7 +24,7 @@ class ProgramDetails extends Component {
 	programDescription = description => description && (
 		<div className="description-wrapper">
 			<div className="title spacer-bottom">
-				{this.context.t("LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION")}
+				<Translate i18nKey="LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION" />
 			</div>
 			<div className="spacer-bottom txt description-text">
 				<textarea
@@ -53,11 +54,11 @@ class ProgramDetails extends Component {
 	);
 
 	getProgramTitle = () => ({
-		episode: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_EPISODES"),
-		duration: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_DURATION"),
-		type: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_TYPE"),
-		release: this.context.t("LISTING_DETAILS_PROGRAM_TITLE_RELEASE"),
-		differentLength: this.context.t("INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH"),
+		episode: <Translate i18nKey="LISTING_DETAILS_PROGRAM_TITLE_EPISODES" />,
+		duration: <Translate i18nKey="LISTING_DETAILS_PROGRAM_TITLE_DURATION" />,
+		type: <Translate i18nKey="LISTING_DETAILS_PROGRAM_TITLE_TYPE" />,
+		release: <Translate i18nKey="LISTING_DETAILS_PROGRAM_TITLE_RELEASE" />,
+		differentLength: <Translate i18nKey="INCLUDED_EPISODES_HAVE_DIFFERENT_LENGTH" />,
 	});
 
 	render() {

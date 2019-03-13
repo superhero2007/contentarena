@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import FileSelector from "../../main/components/FileSelector";
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
@@ -132,7 +133,7 @@ class SellFormStep4 extends React.Component {
 						/>
 					)}
 
-					<TitleBar title={this.context.t("CL_STEP4_TITLE_INFO")} />
+					<TitleBar title="CL_STEP4_TITLE_INFO" />
 
 					<CompanyInformation />
 
@@ -140,13 +141,13 @@ class SellFormStep4 extends React.Component {
 
 					<JurisdictionSelector />
 
-					<TitleBar title={this.context.t("CL_STEP4_ANNEX_INFO")} />
+					<TitleBar title="CL_STEP4_ANNEX_INFO" />
 					<div>
-						{this.context.t("CL_STEP4_LABEL_ANNEX_DESCRIPTION")}
+						<Translate i18nKey="CL_STEP4_LABEL_ANNEX_DESCRIPTION" />
 					</div>
 
 					<FileSelector
-						label={this.context.t("CL_STEP4_LABEL_ANNEX")}
+						label={<Translate i18nKey="CL_STEP4_LABEL_ANNEX" />}
 						target="annex"
 						selected={annex}
 						onSelect={this.addFile}

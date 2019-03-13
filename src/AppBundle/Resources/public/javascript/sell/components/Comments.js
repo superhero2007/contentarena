@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class Comments extends React.Component {
 	constructor(props) {
@@ -56,10 +57,10 @@ class Comments extends React.Component {
 				{addCommentButton && (
 					<div className="d-flex align-items-center justify-content-between">
 						<div style={{ marginLeft: "auto" }}>
-							{this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+							<Translate i18nKey="CL_STEP5_ADD_AMENDMENT_INFO" />
 						</div>
 						<button className="ca-btn primary" onClick={this.addComment} style={{ marginLeft: 20 }}>
-							{this.context.t("CL_STEP5_ADD_AMENDMENT")}
+							<Translate i18nKey="CL_STEP5_ADD_AMENDMENT" />
 						</button>
 					</div>
 				)}
@@ -67,7 +68,7 @@ class Comments extends React.Component {
 				{commentsView && (
 					<div>
 						<div className="cap">
-							{this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+							<Translate i18nKey="CL_STEP5_ADD_AMENDMENT_INFO" />
 						</div>
 						<div className="d-flex">
 							<textarea value={comments} readOnly disabled />
@@ -81,7 +82,7 @@ class Comments extends React.Component {
 				{isAddComment && (
 					<div>
 						<div className="cap">
-							{this.context.t("CL_STEP5_ADD_AMENDMENT_INFO")}
+							<Translate i18nKey="CL_STEP5_ADD_AMENDMENT_INFO" />
 						</div>
 						<textarea
 							defaultValue={isCommentsExisted ? comments : ""}
@@ -91,10 +92,10 @@ class Comments extends React.Component {
 
 						<div className="d-flex justify-content-end">
 							<div className="ca-btn" onClick={this.cancelComment}>
-								{this.context.t("Cancel")}
+								<Translate i18nKey="Cancel" />
 							</div>
 							<button className="ca-btn primary" onClick={this.saveComment}>
-								{this.context.t("Save")}
+								<Translate i18nKey="Save" />
 							</button>
 						</div>
 					</div>

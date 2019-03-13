@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import CountrySelector from "../../main/components/CountrySelector";
 
 class ApplicableLaw extends React.Component {
@@ -20,13 +21,13 @@ class ApplicableLaw extends React.Component {
 		return (
 			<div className="base-input">
 				<label>
-					{this.context.t("CL_STEP4_LABEL_APPLICABLE_LAW")}
+					<Translate i18nKey="CL_STEP4_LABEL_APPLICABLE_LAW" />
 				</label>
 				<CountrySelector
 					value={law}
 					multi={false}
 					onChange={this.select}
-					placeholder={isInvalid ? this.context.t("LAW_EMPTY") : this.context.t("CL_STEP4_PLACEHOLDER_APPLICABLE_LAW")}
+					placeholder={isInvalid ? <Translate i18nKey="LAW_EMPTY" /> : <Translate i18nKey="CL_STEP4_PLACEHOLDER_APPLICABLE_LAW" />}
 					className={isInvalid ? "is-invalid" : ""}
 				/>
 			</div>

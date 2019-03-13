@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Moment from "moment";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import PopupRight from "../components/PopupRight";
 import LicenseDateSelector from "../components/LicenseDateSelector";
 import RightDefinitions from "../components/RightDefinitions";
@@ -117,25 +118,25 @@ class SellFormStep3 extends React.Component {
 						onClose={this.closeLicensePopup}
 					/>
 
-					<TitleBar title={this.context.t("CL3_LICENSE_PERIOD")} />
+					<TitleBar title="CL3_LICENSE_PERIOD" />
 
 					<div className="license-date-container">
 						<div className="table-right">
 							<div className="row">
 								<div className="column right-name">
-									{this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_START")}
+									<Translate i18nKey="CL_STEP3_TITLE_LICENSE_PERIOD_START" />
 								</div>
 								<div
 									className="column right-item-content"
 									style={licenseStyles}
 									onClick={this.showLicensePopup}
 								>
-									{this.props.startDateMode === "LICENSE" && this.context.t("CL3_CONTRACT_CONCLUSION")}
+									{this.props.startDateMode === "LICENSE" && <Translate i18nKey="CL3_CONTRACT_CONCLUSION" />}
 									{this.props.startDateMode === "DATE" && Moment(this.props.startDate)
 										.format(DATE_FORMAT)}
 								</div>
 								<div className="column right-name">
-									{this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_END")}
+									<Translate i18nKey="CL_STEP3_TITLE_LICENSE_PERIOD_END" />
 								</div>
 								<div
 									className={`column right-item-content ${isLicenseInvalid ? "is-invalid" : ""}`}
@@ -144,14 +145,14 @@ class SellFormStep3 extends React.Component {
 								>
 
 									{isLicenseInvalid ? (
-										this.context.t("LICENSE_PERIOD_EMPTY")
+										<Translate i18nKey="LICENSE_PERIOD_EMPTY" />
 									) : (
 										<span>
-											{endDateMode === "LIMITED" && this.props.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
+											{endDateMode === "LIMITED" && this.props.endDateLimit + <Translate i18nKey="LISTING_DETAILS_LICENSE_END_DAYS" />}
 											{endDateMode === "DATE" && Moment(this.props.endDate)
 												.format(DATE_FORMAT)}
-											{endDateMode === "UNLIMITED" && this.context.t("Unlimited")}
-											{!endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
+											{endDateMode === "UNLIMITED" && <Translate i18nKey="Unlimited" />}
+											{!endDateMode && <Translate i18nKey="CL_STEP3_SELECT_LICENSE_PERIOD" />}
 										</span>
 									)}
 
@@ -166,7 +167,7 @@ class SellFormStep3 extends React.Component {
 						</div>
 					</div>
 
-					<TitleBar title={this.context.t("CL_STEP3_TITLE_GRANT_RIGHT")} />
+					<TitleBar title="CL_STEP3_TITLE_GRANT_RIGHT" />
 
 					<div className="rights-container">
 						{
@@ -183,8 +184,8 @@ class SellFormStep3 extends React.Component {
 									<PopupRight
 										key={right.key}
 										id={right.key}
-										name={this.context.t(rightKeyPreffix + right.key)}
-										description={this.context.t(rightKeyPreffix + right.key + rightKeySuffix)}
+										name={rightKeyPreffix + right.key}
+										description={rightKeyPreffix + right.key + rightKeySuffix}
 										global={right.global}
 										language={right.language}
 										languages={LICENSED_LANGUAGES}
@@ -204,7 +205,7 @@ class SellFormStep3 extends React.Component {
 						}
 					</div>
 
-					<TitleBar title={this.context.t("CL_STEP3_TITLE_PRODUCTION_STANDARDS")} />
+					<TitleBar title="CL_STEP3_TITLE_PRODUCTION_STANDARDS" />
 
 					<div className="rights-container">
 						{
@@ -230,8 +231,8 @@ class SellFormStep3 extends React.Component {
 									<PopupRight
 										key={right.key}
 										id={right.key}
-										name={this.context.t(rightKeyPreffix + right.key)}
-										description={this.context.t(rightKeyPreffix + right.key + rightKeySuffix)}
+										name={rightKeyPreffix + right.key}
+										description={rightKeyPreffix + right.key + rightKeySuffix}
 										selected={this.props[right.key]}
 										options={right.options}
 										multiple={right.multiple}

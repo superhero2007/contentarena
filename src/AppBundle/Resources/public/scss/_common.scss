@@ -359,6 +359,11 @@ i.fa.ca-tooltip {
   }
 }
 
+.TranslationTooltip{
+  @extend .CaTooltip;
+  max-width: 100px !important;
+}
+
 .ca-title {
   font-weight: bold;
   color: #03547C;
@@ -430,6 +435,10 @@ i.fa.ca-tooltip {
 
 .text-left {
   text-align: left;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .text-uppercase {

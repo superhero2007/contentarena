@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
 import find from "lodash/find";
+import Translate from "@components/Translator/Translate";
 import CountrySelector from "../../main/components/CountrySelector";
 import RadioSelector from "../../main/components/RadioSelector";
 import { BUNDLE_TERRITORIES_METHOD } from "@constants";
@@ -294,15 +295,15 @@ class CmsTerritorySelector extends React.Component {
 					items={[
 						{
 							value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-							label: this.context.t("CMS_RADIO_WORLDWIDE"),
+							label: <Translate i18nKey="CMS_RADIO_WORLDWIDE" />,
 						},
 						{
 							value: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-							label: this.context.t("CMS_RADIO_SELECTED_TERRITORIES"),
+							label: <Translate i18nKey="CMS_RADIO_SELECTED_TERRITORIES" />,
 						},
 						{
 							value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-							label: this.context.t("CMS_RADIO_WORLDWIDE_EXCLUDING"),
+							label: <Translate i18nKey="CMS_RADIO_WORLDWIDE_EXCLUDING" />,
 						},
 					]}
 				/>
@@ -310,10 +311,10 @@ class CmsTerritorySelector extends React.Component {
 				{!disabled && territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && (
 					<div>
 						<div className="region-filter-title">
-							{ this.context.t("CMS_TERRITORIES_SELECTOR_TITLE")}
+							{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_TITLE" />}
 						</div>
 						<div className="region-filter-subtitle">
-							{ this.context.t("CMS_TERRITORIES_SELECTOR_CONTINENTS")}
+							{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_CONTINENTS" />}
 						</div>
 						<div className="regions">
 							{territories.map((territory, i) => {
@@ -337,7 +338,7 @@ class CmsTerritorySelector extends React.Component {
 							})}
 						</div>
 						<div className="region-filter-subtitle">
-							{ this.context.t("CMS_TERRITORIES_SELECTOR_REGIONS")}
+							{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_REGIONS" />}
 						</div>
 						<div className="regions">
 							{regions.map((region, i) => {
@@ -363,7 +364,7 @@ class CmsTerritorySelector extends React.Component {
 							})}
 						</div>
 						<div className="region-filter-subtitle">
-							{ this.context.t("CMS_TERRITORIES_SELECTOR_SEARCH")}
+							{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_SEARCH" />}
 						</div>
 						<CountrySelector
 							filter={selection}
@@ -379,18 +380,18 @@ class CmsTerritorySelector extends React.Component {
 				{
 					<div className="region-filter-title">
 						{territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
-							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING")
+							&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING" />
 						}
 						{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
-							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED")
+							&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_SELECTED" />
 						}
 						{ ` (${selection.length})` }
 						{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE
 						&& !this.isSelectedAllTerritories() && (
 							<button className="link-button" onClick={this.handleViewTerritories}>
 								{viewAllTerritories
-									? this.context.t("CMS_TERRITORIES_VIEW_SELECTED")
-									: this.context.t("CMS_TERRITORIES_VIEW_ALL")
+									? <Translate i18nKey="CMS_TERRITORIES_VIEW_SELECTED" />
+									: <Translate i18nKey="CMS_TERRITORIES_VIEW_ALL" />
 								}
 							</button>
 						)}
@@ -406,11 +407,11 @@ class CmsTerritorySelector extends React.Component {
 								<span className="region-filter-selection-word">
 									{
 										territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE
-									&& this.context.t("CMS_TERRITORIES_SELECTOR_ALL_SELECTED")
+									&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_ALL_SELECTED" />
 									}
 									{
 										selection.length === 0
-									&& this.context.t("CMS_TERRITORIES_SELECTOR_EMPTY")
+									&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_EMPTY" />
 									}
 								</span>
 							</div>

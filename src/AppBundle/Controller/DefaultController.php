@@ -173,10 +173,11 @@ class DefaultController extends BaseController
         $namingStrategy = new IdenticalPropertyNamingStrategy();
         $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
         $config = array(
-            "cmsEnabled" => $this->container->getParameter('cms_enabled'),
+            "cmsEnabled"        => $this->container->getParameter('cms_enabled'),
             "gaTrackingId"      => $this->container->getParameter('google_analytics_key'),
             "testStageMode"     => $this->container->getParameter('test_stage_mode'),
             "properties"        => array(),
+            "editTranslation"   => $user && in_array('ROLE_ADMIN', $this->getUser()->getRoles()),
         );
 
         return [
@@ -196,6 +197,8 @@ class DefaultController extends BaseController
         ];
     }
 
+
+    //TODO: deprecate
     /**
      * @Route("/locales/upload", name="uploadLocales")
      * @param Request $request

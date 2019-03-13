@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 import { goTo } from "../actions/utils";
 import HeaderNotifications from "./HeaderNotifications";
 import InviteUsersModal from "../../common/modals/InviteUsersModal";
@@ -28,7 +29,7 @@ const HeaderBarSeller = ({ match }, context) => (
 			match={match.url === ROUTE_PATHS.MANAGE_LISTINGS}
 			route={ROUTE_PATHS.MANAGE_LISTINGS}
 		>
-			{context.t("HEADER_LINK_MANAGE_LISTINGS")}
+			<Translate i18nKey="HEADER_LINK_MANAGE_LISTINGS" />
 		</HeaderBarTab>
 		<HeaderBarTab
 			match={
@@ -39,13 +40,13 @@ const HeaderBarSeller = ({ match }, context) => (
 			}
 			route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
 		>
-			{context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
+			<Translate i18nKey="HEADER_LINK_COMMERCIAL_ACTIVITY" />
 		</HeaderBarTab>
 		<CustomLink
 			match={match.path === "/contentlisting/:customId?/:step?"}
 			route="/contentlisting/new"
 		>
-			{context.t("HEADER_LINK_CREATE_LISTING")}
+			<Translate i18nKey="HEADER_LINK_CREATE_LISTING" />
 		</CustomLink>
 	</React.Fragment>
 );
@@ -60,7 +61,7 @@ const HeaderBarSellerCms = ({ match }, context) => (
 			match={match.url === ROUTE_PATHS.PROPERTIES}
 			route={ROUTE_PATHS.PROPERTIES}
 		>
-			{context.t("HEADER_LINK_MANAGE_PROPERTIES")}
+			<Translate i18nKey="HEADER_LINK_MANAGE_PROPERTIES" />
 		</HeaderBarTab>
 
 		<HeaderBarTab
@@ -72,7 +73,7 @@ const HeaderBarSellerCms = ({ match }, context) => (
 			}
 			route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
 		>
-			{context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
+			<Translate i18nKey="HEADER_LINK_COMMERCIAL_ACTIVITY" />
 		</HeaderBarTab>
 
 	</React.Fragment>
@@ -139,7 +140,7 @@ class HeaderBar extends React.Component {
 			<React.Fragment>
 				{testStageMode && (
 					<div className="manager-header-test-mode">
-						{this.context.t("HEADER_TEST_STAGE_MODE")}
+						<Translate i18nKey="HEADER_TEST_STAGE_MODE" />
 					</div>
 				)}
 				<div className="manager-header">
@@ -153,13 +154,13 @@ class HeaderBar extends React.Component {
 								match={this.isMarketplaceMatch(match.url)}
 								route="/marketplace"
 							>
-								{this.context.t("HEADER_LINK_MARKETPLACE")}
+								<Translate i18nKey="HEADER_LINK_MARKETPLACE" />
 							</HeaderBarTab>
 						)}
 
 						{profile === "BUYER" && (
 							<HeaderBarTab match={match.url === "/watchlist"} route="/watchlist">
-								{this.context.t("HEADER_LINK_WATCHLIST")}
+								<Translate i18nKey="HEADER_LINK_WATCHLIST" />
 							</HeaderBarTab>
 						)}
 
@@ -171,7 +172,7 @@ class HeaderBar extends React.Component {
 								}
 								route="/bids/activebids"
 							>
-								{this.context.t("HEADER_LINK_BIDS")}
+								<Translate i18nKey="HEADER_LINK_BIDS" />
 							</HeaderBarTab>
 						)}
 
@@ -180,7 +181,7 @@ class HeaderBar extends React.Component {
 								match={match.url === "/closeddeals"}
 								route="/closeddeals"
 							>
-								{this.context.t("HEADER_LINK_CLOSED_DEALS")}
+								<Translate i18nKey="HEADER_LINK_CLOSED_DEALS" />
 							</HeaderBarTab>
 						)}
 
@@ -197,7 +198,7 @@ class HeaderBar extends React.Component {
 							}}
 							>
 								<img src={inviteIcon} alt="Invite users" style={{ height: 24, marginRight: 5 }} />
-								{this.context.t("HEADER_INVITE_USERS")}
+								<Translate i18nKey="HEADER_INVITE_USERS" />
 							</a>
 						</div>
 
@@ -207,7 +208,7 @@ class HeaderBar extends React.Component {
 								linkClass="ca-btn primary"
 								route={cmsEnabled ? ROUTE_PATHS.PROPERTIES : ROUTE_PATHS.MANAGE_LISTINGS}
 							>
-								{this.context.t("HEADER_LINK_SELLING_MODE")}
+								<Translate i18nKey="HEADER_LINK_SELLING_MODE" />
 							</HeaderBarTab>
 						)}
 
@@ -217,7 +218,7 @@ class HeaderBar extends React.Component {
 								linkClass="ca-btn primary"
 								route="/marketplace"
 							>
-								{this.context.t("HEADER_LINK_BUYING_MODE")}
+								<Translate i18nKey="HEADER_LINK_BUYING_MODE" />
 							</HeaderBarTab>
 						)}
 
@@ -240,8 +241,7 @@ class HeaderBar extends React.Component {
 							 onMouseLeave={() => this.setDownArrow(true)}
 						>
 
-							{this.context.t("HEADER_LINK_MY_CONTENT_ARENA")}
-							<i className={`fa ${isDownArrowShown ? "fa-angle-down" : "fa-angle-up"}`} />
+							<Translate i18nKey="HEADER_LINK_MY_CONTENT_ARENA" /><i className={`fa ${isDownArrowShown ? "fa-angle-down" : "fa-angle-up"}`} />
 
 							<div className="popup">
 								<div className="wrap">
@@ -250,29 +250,29 @@ class HeaderBar extends React.Component {
 										className="popup-item"
 									>
 										<i className="fa fa-file-pdf-o" />
-										{this.context.t("HEADER_LINK_TERMS")}
+										<Translate i18nKey="HEADER_LINK_TERMS" />
 									</HeaderBarTab>
 									<HeaderBarTab
 										route="/preferences"
 										className="popup-item"
 									>
 										<i className="fa fa-sliders" />
-										{this.context.t("HEADER_LINK_PREFERENCES")}
+										<Translate i18nKey="HEADER_LINK_PREFERENCES" />
 									</HeaderBarTab>
 									<HeaderBarTab
 										route="/settings"
 										className="popup-item"
 									>
 										<i className="fa fa-cog" />
-										{this.context.t("HEADER_LINK_SETTINGS")}
+										<Translate i18nKey="HEADER_LINK_SETTINGS" />
 									</HeaderBarTab>
 									<a href="https://landing.contentarena.com/web/faq/" className="tab popup-item">
 										<i className="fa fa-question-circle-o" />
-										{this.context.t("HEADER_LINK_FAQ")}
+										<Translate i18nKey="HEADER_LINK_FAQ" />
 									</a>
 									<a href="/logout" className="tab popup-item">
 										<i className="fa fa-sign-out" />
-										{this.context.t("HEADER_LINK_LOGOUT")}
+										<Translate i18nKey="HEADER_LINK_LOGOUT" />
 									</a>
 								</div>
 							</div>

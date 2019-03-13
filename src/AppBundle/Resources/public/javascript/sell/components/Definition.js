@@ -1,5 +1,6 @@
 import React from "react";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class Definition extends React.Component {
 	constructor(props) {
@@ -36,12 +37,12 @@ class Definition extends React.Component {
 				</div>
 				{!this.state.editable && (
 					<button onClick={this.editContent}>
-						{this.context.t("Edit")}
+						<Translate i18nKey="Edit" />
 					</button>
 				)}
 				{this.state.editable && (
 					<button onClick={this.saveContent}>
-						{this.context.t("Save")}
+						<Translate i18nKey="Save" />
 					</button>
 				)}
 			</div>

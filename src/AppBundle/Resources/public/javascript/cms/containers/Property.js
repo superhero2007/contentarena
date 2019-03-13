@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { DefaultBox } from "../../common/components/Containers";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS, SERVER_ERROR_CODES } from "@constants";
 import Loader from "../../common/components/Loader/Loader";
@@ -20,11 +21,11 @@ class Property extends React.Component {
 	}
 
 	getTranslatedTabs = () => ({
-		[CMS_PROPERTY_TABS.COMMERCIAL]: this.context.t("CMS_PROPERTY_TAB_COMMERCIAL"),
-		[CMS_PROPERTY_TABS.RIGHTS]: this.context.t("CMS_PROPERTY_TAB_RIGHTS"),
-		[CMS_PROPERTY_TABS.FIXTURES]: this.context.t("CMS_PROPERTY_TAB_FIXTURES"),
-		[CMS_PROPERTY_TABS.LISTING]: this.context.t("CMS_PROPERTY_TAB_LISTING"),
-		[CMS_PROPERTY_TABS.DETAILS]: this.context.t("CMS_PROPERTY_TAB_DETAILS"),
+		[CMS_PROPERTY_TABS.COMMERCIAL]: <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />,
+		[CMS_PROPERTY_TABS.RIGHTS]: <Translate i18nKey="CMS_PROPERTY_TAB_RIGHTS" />,
+		[CMS_PROPERTY_TABS.FIXTURES]: <Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" />,
+		[CMS_PROPERTY_TABS.LISTING]: <Translate i18nKey="CMS_PROPERTY_TAB_LISTING" />,
+		[CMS_PROPERTY_TABS.DETAILS]: <Translate i18nKey="CMS_PROPERTY_TAB_DETAILS" />,
 	});
 
 	componentDidMount() {
@@ -82,7 +83,7 @@ class Property extends React.Component {
 					<DefaultBox>
 						{
 							error === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
-							&& this.context.t("CMS_PROPERTY_DOES_NOT_EXISTS")
+							&& <Translate i18nKey="CMS_PROPERTY_DOES_NOT_EXISTS" />
 						}
 					</DefaultBox>
 				</div>
@@ -98,13 +99,13 @@ class Property extends React.Component {
 						<span>{property.name}</span>
 						<div className="title-action-wrapper">
 							<a className="ca-btn primary" href={ROUTE_PATHS.CREATE_LISTING}>
-								{this.context.t("CMS_EMPTY_LISTING_CREATE_LISTING")}
+								<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
 							</a>
 							<button
 								onClick={() => { console.info("add deal not specified"); }}
 								className="ca-btn primary"
 							>
-								{this.context.t("CMS_PROPERTY_ADD_DEAL")}
+								<Translate i18nKey="CMS_PROPERTY_ADD_DEAL" />
 							</button>
 							<i className="fa fa-pencil-square-o" onClick={() => { console.info("pensil icon not specified"); }} />
 						</div>

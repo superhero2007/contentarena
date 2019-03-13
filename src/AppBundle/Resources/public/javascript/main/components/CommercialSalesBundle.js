@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import { PropTypes } from "prop-types";
 import NumberFormat from "react-number-format";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
 import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
 import { getCurrencySymbol, getFee } from "../actions/utils";
@@ -75,7 +76,7 @@ class CommercialSalesBundle extends React.Component {
 			>
 				<div className="generic-modal-container">
 					<div className="title">
-						{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE")}
+						<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE" />
 					</div>
 
 					<div className="container" />
@@ -84,12 +85,12 @@ class CommercialSalesBundle extends React.Component {
 
 						{!saving && (
 							<button onClick={this.removeBid} className="confirm">
-								{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM")}
+								<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM" />
 							</button>
 						)}
 						{saving && <i className="fa fa-spin fa-cog" />}
 						<button onClick={this.closeRemoveModal}>
-							{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL")}
+							<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL" />
 						</button>
 					</div>
 				</div>
@@ -138,42 +139,42 @@ class CommercialSalesBundle extends React.Component {
 				<span>
 					<img src={this.creditIcon} alt="Buyer" />
 					{" "}
-					{this.context.t("BUYER")}
+					<Translate i18nKey="BUYER" />
 				</span>
 			),
 			fee: () => (
 				<span>
 					<img src={this.coinIcon} alt="Fee" />
 					{" "}
-					{this.context.t("FEE")}
+					<Translate i18nKey="FEE" />
 				</span>
 			),
 			user: () => (
 				<span>
 					<img src={this.userIcon} alt="User" />
 					{" "}
-					{this.context.t("USER")}
+					<Translate i18nKey="USER" />
 				</span>
 			),
 			lastAction: () => (
 				<span>
 					<i className="fa fa-arrow-circle-o-right" />
 					{" "}
-					{this.context.t("LAST_ACTION")}
+					<Translate i18nKey="LAST_ACTION" />
 				</span>
 			),
 			date: () => (
 				<span>
 					<img src={this.calendarIcon} alt="Action Date" />
 					{" "}
-					{this.context.t("ACTION_DATE")}
+					<Translate i18nKey="ACTION_DATE" />
 				</span>
 			),
 			actions: () => (
 				<span>
 					<img src={this.actionIcon} alt="Action" />
 					{" "}
-					{this.context.t("Actions")}
+					<Translate i18nKey="Actions" />
 				</span>
 			),
 		};
@@ -235,8 +236,8 @@ class CommercialSalesBundle extends React.Component {
 						<span>
 							{closedDeals.length}
 							{" "}
-							{closedDeals.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEAL")}
-							{closedDeals.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_CLOSED_DEALS")}
+							{closedDeals.length === 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_CLOSED_DEAL" />}
+							{closedDeals.length !== 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_CLOSED_DEALS" />}
 						</span>
 					</div>
 
@@ -244,8 +245,8 @@ class CommercialSalesBundle extends React.Component {
 						<span>
 							{openBids.length}
 							{" "}
-							{openBids.length === 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID")}
-							{openBids.length !== 1 && this.context.t("COMMERCIAL_ACTIVITY_OPEN_BIDS")}
+							{openBids.length === 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_OPEN_BID" />}
+							{openBids.length !== 1 && <Translate i18nKey="COMMERCIAL_ACTIVITY_OPEN_BIDS" />}
 						</span>
 					</div>
 
@@ -317,9 +318,9 @@ class CommercialSalesBundle extends React.Component {
 								accessor: "status.name",
 								Cell: props => (
 									<div>
-										{props.value === "APPROVED" && this.context.t("COMMERCIAL_ACTIVITY_BID_STATUS_CLOSED_DEAL")}
-										{props.value === "PENDING" && this.context.t("COMMERCIAL_ACTIVITY_BID_STATUS_PENDING")}
-										{props.value === "REJECTED" && this.context.t("COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED")}
+										{props.value === "APPROVED" && <Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_CLOSED_DEAL" />}
+										{props.value === "PENDING" && <Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_PENDING" />}
+										{props.value === "REJECTED" && <Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" />}
 									</div>
 								),
 
@@ -394,7 +395,7 @@ class CommercialSalesBundle extends React.Component {
 											<a href={`/license/bid/${props.value.bid.customId}`} target="_blank" rel="noopener noreferrer">
 												<img
 													src={pdfIcon}
-													title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")}
+													title={props.value.status === "APPROVED" ? <Translate i18nKey="COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT" /> : <Translate i18nKey="COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT" />}
 													alt=""
 												/>
 											</a>
@@ -426,7 +427,7 @@ class CommercialSalesBundle extends React.Component {
 										{this.state.showRemoveConfirm && (
 											<div className="confirmation-tooltip">
 												<div className="confirmation-text" style={{ whiteSpace: "normal" }}>
-													{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE")}
+													<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_TITLE_REMOVE" />
 												</div>
 												<button
 													className="button button-confirm"
@@ -439,7 +440,7 @@ class CommercialSalesBundle extends React.Component {
 														e.stopPropagation();
 													}}
 												>
-													{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM")}
+													<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CONFIRM" />
 												</button>
 												<button
 													className="button"
@@ -451,7 +452,7 @@ class CommercialSalesBundle extends React.Component {
 														e.stopPropagation();
 													}}
 												>
-													{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL")}
+													<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_REMOVE_CANCEL" />
 												</button>
 											</div>
 										)}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import cloneDeep from "lodash/cloneDeep";
 import first from "lodash/first";
+import Translate from "@components/Translator/Translate";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	CONTENT_DELIVERY,
@@ -58,8 +59,8 @@ class PropertyDetailsProductionTab extends Component {
 			<section className="property-production-tab">
 				<div className="title-property-tab">
 					<div className="title-wrapper">
-						<span className="title">{this.context.t("PROPERTY_DETAILS_PRODUCTION_TAB_TITLE")}</span>
-						<span className="sub-title">{this.context.t("PROPERTY_DETAILS_PRODUCTION_TAB_TEXT")}</span>
+						<span className="title"><Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TITLE" /></span>
+						<span className="sub-title"><Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TEXT" /></span>
 					</div>
 					<i className="fa fa-pencil-square-o" onClick={this.handleEditProductions} />
 				</div>
@@ -74,7 +75,7 @@ class PropertyDetailsProductionTab extends Component {
 				)}
 				<div className="row">
 					<li className="item">
-						<label>{this.context.t("RIGHTS_CONTENT_DELIVERY")}</label>
+						<label><Translate i18nKey="RIGHTS_CONTENT_DELIVERY" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -87,7 +88,7 @@ class PropertyDetailsProductionTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{this.context.t("RIGHTS_TECHNICAL_DELIVERY")}</label>
+						<label><Translate i18nKey="RIGHTS_TECHNICAL_DELIVERY" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -103,7 +104,7 @@ class PropertyDetailsProductionTab extends Component {
 
 				<div className="row">
 					<li className="item">
-						<label>{this.context.t("RIGHTS_GRAPHICS")}</label>
+						<label><Translate i18nKey="RIGHTS_GRAPHICS" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -116,7 +117,7 @@ class PropertyDetailsProductionTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{this.context.t("RIGHTS_ASPECT_RATIO")}</label>
+						<label><Translate i18nKey="RIGHTS_ASPECT_RATIO" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -129,7 +130,7 @@ class PropertyDetailsProductionTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{this.context.t("RIGHTS_COMMENTARY")}</label>
+						<label><Translate i18nKey="RIGHTS_COMMENTARY" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -145,7 +146,7 @@ class PropertyDetailsProductionTab extends Component {
 
 				<div className="row">
 					<li className="item">
-						<label>{this.context.t("RIGHTS_CAMERA")}</label>
+						<label><Translate i18nKey="RIGHTS_CAMERA" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -165,7 +166,7 @@ class PropertyDetailsProductionTab extends Component {
 							className="yellow-button centered-btn"
 							onClick={this.handleApplyProductionsChanges}
 						>
-							{this.context.t("Apply")}
+							<Translate i18nKey="Apply" />
 						</button>
 					</div>
 				)}

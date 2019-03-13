@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new ApiBundle\ApiBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Juanx\ReactTranslationBundle\JuanxReactTranslationBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
+import Translate from "@components/Translator/Translate";
 import { GenericModalStyle } from "../../main/styles/custom";
 import InviteUserForm from "../../manage/components/InviteUserForm";
 import Loader from "../components/Loader";
@@ -98,9 +99,9 @@ class InviteUsersModal extends Component {
 				onRequestClose={this.close}
 			>
 				<header className="modal-header">
-					<h3 className="modal-title">{this.context.t("INVITE_USERS_MODAL_TITLE")}</h3>
+					<h3 className="modal-title"><Translate i18nKey="INVITE_USERS_MODAL_TITLE" /></h3>
 					<h4 className="modal-subtitle">
-						{this.context.t("INVITE_USERS_MODAL_TITLE_EXPLANATION")}
+						<Translate i18nKey="INVITE_USERS_MODAL_TITLE_EXPLANATION" />
 					</h4>
 					<i className="fa fa-times" onClick={this.close} />
 				</header>
@@ -110,7 +111,7 @@ class InviteUsersModal extends Component {
 						<div className="result-message" style={this.messageStyle}>
 							<i className="fa fa-check-circle" />
 							{" "}
-							{this.context.t("INVITE_USERS_MODAL_SENT")}
+							<Translate i18nKey="INVITE_USERS_MODAL_SENT" />
 						</div>
 					)}
 
@@ -121,7 +122,7 @@ class InviteUsersModal extends Component {
 								{" "}
 								{skippedUser.email}
 								{" "}
-								{this.context.t("INVITE_USERS_MODAL_EMAIL_ALREADY_INVITED")}
+								<Translate i18nKey="INVITE_USERS_MODAL_EMAIL_ALREADY_INVITED" />
 							</div>
 						))
 					)}
@@ -130,7 +131,7 @@ class InviteUsersModal extends Component {
 						<div className="result-message" style={this.messageStyle}>
 							<i className="fa fa-close" />
 							{" "}
-							{this.context.t("INVITE_USERS_MODAL_FAILED")}
+							<Translate i18nKey="INVITE_USERS_MODAL_FAILED" />
 						</div>
 					)}
 
@@ -150,7 +151,7 @@ class InviteUsersModal extends Component {
 					{(
 						<React.Fragment>
 							<button className="cancel-btn" onClick={this.close}>
-								{this.context.t("INVITE_USERS_MODAL_BUTTON_CANCEL")}
+								<Translate i18nKey="INVITE_USERS_MODAL_BUTTON_CANCEL" />
 							</button>
 							<button
 								className="standard-button"
@@ -158,9 +159,7 @@ class InviteUsersModal extends Component {
 								onClick={this.inviteUsers}
 							>
 
-								{this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")}
-								{" "}
-								<Loader loading={loading} xSmall />
+								<Translate i18nKey="INVITE_USERS_MODAL_SEND_BUTTON" />{" "}<Loader loading={loading} xSmall />
 
 							</button>
 						</React.Fragment>

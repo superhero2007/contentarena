@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import uniqueId from "lodash/uniqueId";
 import Moment from "moment/moment";
+import Translate from "@components/Translator/Translate";
 import CaTooltip from "../../main/components/CaTooltip";
 import { DATE_FORMAT } from "@constants";
 
@@ -56,7 +57,7 @@ const Installments = ({ installments }, context) => {
 				<a data-tip data-for={tooltipId}>
 					<i className="fa fa-money" />
 					{" "}
-					{context.t("PAYMENT")}
+					<Translate i18nKey="PAYMENT" />
 				</a>
 			</CaTooltip>
 		</div>

@@ -1,6 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 const CURRENCIES = ["USD", "EUR"];
 
@@ -16,7 +17,7 @@ class CurrencySelector extends React.Component {
 		return (
 			<div className="select-currency">
 				<div className="select-text">
-					{this.context.t("Currency")}
+					<Translate i18nKey="Currency" />
 				</div>
 				<div className="currency-selector">
 					<div className="current">

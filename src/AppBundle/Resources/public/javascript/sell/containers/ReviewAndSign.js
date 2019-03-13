@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import store from "../../main/store";
 import SalesPackageForm from "../components/SalesPackageForm";
 import SalesPackageEdit from "../components/SalesPackageEdit";
@@ -107,7 +108,7 @@ class ReviewAndSign extends React.Component {
 					fontWeight: 600,
 				}}
 				>
-					{this.context.t("CL_STEP5_MODAL_SUCCESS_MESSAGE_1")}
+					<Translate i18nKey="CL_STEP5_MODAL_SUCCESS_MESSAGE_1" />
 				</div>
 				<div style={{
 					fontSize: 20,
@@ -117,11 +118,11 @@ class ReviewAndSign extends React.Component {
 				}}
 				>
 
-					{this.context.t("CL_STEP5_MODAL_SUCCESS_MESSAGE_2")}
+					<Translate i18nKey="CL_STEP5_MODAL_SUCCESS_MESSAGE_2" />
 				</div>
 				<div>
 					<button className="standard-button" onClick={this.closeSuccessScreen}>
-						{this.context.t("CL_STEP5_MODAL_BUTTON")}
+						<Translate i18nKey="CL_STEP5_MODAL_BUTTON" />
 					</button>
 				</div>
 			</div>
@@ -152,11 +153,11 @@ class ReviewAndSign extends React.Component {
 		const { status } = this.props;
 
 		if ((!status || status.name === "DRAFT" || status.name === "INACTIVE" || status.name === "AUTO_INACTIVE")) {
-			return this.context.t("CL_STEP5_BUTTON_SUBMIT");
+			return <Translate i18nKey="CL_STEP5_BUTTON_SUBMIT" />;
 		}
 
 		if (status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED")) {
-			return this.context.t("CL_STEP5_BUTTON_SAVE");
+			return <Translate i18nKey="CL_STEP5_BUTTON_SAVE" />;
 		}
 	};
 
@@ -201,7 +202,7 @@ class ReviewAndSign extends React.Component {
 				{showDetails && (
 					<div>
 						<div className="step-title">
-							{this.context.t("CL_STEP5_TITLE_PREVIEW")}
+							<Translate i18nKey="CL_STEP5_TITLE_PREVIEW" />
 						</div>
 						<ListingDetails
 							onBack={this.toggleDetails}
@@ -224,12 +225,12 @@ class ReviewAndSign extends React.Component {
 							}}
 						>
 							<label>
-								{this.context.t("CL_STEP5_PREVIEW_LISTING")}
+								<Translate i18nKey="CL_STEP5_PREVIEW_LISTING" />
 							</label>
 						</div>
 
 						<div className="step-item-description" style={{ marginTop: 0 }}>
-							{this.context.t("CL_STEP5_PREVIEW_INFO")}
+							<Translate i18nKey="CL_STEP5_PREVIEW_INFO" />
 						</div>
 
 						<div onClick={(e) => {
@@ -241,7 +242,7 @@ class ReviewAndSign extends React.Component {
 
 						<div className="d-flex justify-content-between align-items-center" style={{ marginBottom: 20 }}>
 							<div style={{ marginLeft: "auto" }}>
-								{this.context.t("CL_STEP5_PREVIEW_LISTING_DETAILS")}
+								<Translate i18nKey="CL_STEP5_PREVIEW_LISTING_DETAILS" />
 							</div>
 							<div
 								onClick={() => {
@@ -250,7 +251,7 @@ class ReviewAndSign extends React.Component {
 								className="ca-btn primary"
 								style={{ marginLeft: 20 }}
 							>
-								{this.context.t("CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT")}
+								<Translate i18nKey="CL_STEP5_PREVIEW_LISTING_BUTTON_TEXT" />
 							</div>
 						</div>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import { ROUTE_PATHS } from "../../common/constants";
 
@@ -128,13 +129,13 @@ class CmsSearchCompetition extends React.Component {
 					&& (
 						<div className="search-competition-messages">
 							{this.context.t("CL_STEP1_SEARCH_NO_RESULTS", { n: this.state.input })}
-							{this.context.t("CMS_SEARCH_TRY")}
+							<Translate i18nKey="CMS_SEARCH_TRY" />
 							<a
 								href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}
 								className="standard-button standard-button-big"
 								onClick={this.props.close}
 							>
-								{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}
+								<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" />
 							</a>
 							<i className="fa fa-exclamation-circle" />
 						</div>

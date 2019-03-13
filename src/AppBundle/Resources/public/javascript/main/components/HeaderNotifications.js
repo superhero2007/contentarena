@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import moment from "moment";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import { getListingImage } from "../../common/utils/listing";
 
@@ -175,10 +176,10 @@ class HeaderNotifications extends React.Component {
 				{showList && (
 					<section className="expanded-list" ref={list => this.expandedList = list}>
 						<header className="notification-header">
-							<span className="title">{this.context.t("NOTIFICATIONS_HEADER")}</span>
+							<span className="title"><Translate i18nKey="NOTIFICATIONS_HEADER" /></span>
 							{this.hasUnvisitedNotifications() && (
 								<span className="mark-all-read" onClick={this.handleAllVisited}>
-									{this.context.t("NOTIFICATIONS_MARK_ALL_READ")}
+									<Translate i18nKey="NOTIFICATIONS_MARK_ALL_READ" />
 								</span>
 							)}
 						</header>
@@ -192,7 +193,7 @@ class HeaderNotifications extends React.Component {
 						{!dataLoading && !notifications.length && (
 							<div className="no-notifications">
 								<i className="fa fa-bell-o" />
-								<span>{this.context.t("NOTIFICATIONS_EMPTY")}</span>
+								<span><Translate i18nKey="NOTIFICATIONS_EMPTY" /></span>
 							</div>
 						)}
 						{!dataLoading && !!notifications.length
@@ -225,7 +226,7 @@ class HeaderNotifications extends React.Component {
 							&& (
 								<div className="clear-notification-wrapper">
 									<span onClick={this.handleRemoveNotifications}>
-										{this.context.t("NOTIFICATIONS_CLEAR_ALL")}
+										<Translate i18nKey="NOTIFICATIONS_CLEAR_ALL" />
 									</span>
 								</div>
 							)

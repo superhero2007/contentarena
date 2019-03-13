@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import { setSelectedRights } from "../actions/propertyActions";
 import { cmsWorldActive, cmsWorldDisabled } from "../../main/components/Icons";
@@ -77,16 +78,16 @@ class CmsAvailableRightsSelector extends React.Component {
 				<div className="right-selector-item full-width">
 					<div className="right-name">
 						<label className={cn({ selected: false })}>
-							{this.context.t("CMS_RIGHT_SELECTOR_ALL")}
+							<Translate i18nKey="CMS_RIGHT_SELECTOR_ALL" />
 						</label>
 					</div>
 					<div className="right-exclusivity">
 						<label>
-							{this.context.t("CMS_RIGHT_SELECTION_EXCLUSIVITY")}
+							<Translate i18nKey="CMS_RIGHT_SELECTION_EXCLUSIVITY" />
 						</label>
 					</div>
 					<div className="right-territories">
-						<label>{this.context.t("LISTING_PREVIEW_RIGHTS_TITLE")}</label>
+						<label><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></label>
 					</div>
 				</div>
 				{
@@ -121,15 +122,15 @@ class CmsAvailableRightsSelector extends React.Component {
 										</span>
 										<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
 											<div className="body">
-												{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${code}`)}
+												<Translate i18nKey={`CL_STEP2_RIGHT_DEFINITIONS_${code}`} />
 											</div>
 										</ReactTooltip>
 									</div>
 								</div>
 								<div className="right-exclusivity">
 									<label>
-										{offerValue === offers.EXCLUSIVE && this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
-										{offerValue === offers.NON_EXCLUSIVE && this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
+										{offerValue === offers.EXCLUSIVE && <Translate i18nKey="RIGHT_SELECTION_OFFER_EXCLUSIVE" />}
+										{offerValue === offers.NON_EXCLUSIVE && <Translate i18nKey="RIGHT_SELECTION_OFFER_NON_EXCLUSIVE" />}
 									</label>
 								</div>
 								<div className="right-territories">

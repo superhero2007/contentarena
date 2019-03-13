@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import { hideRegistrationEmail } from "../actions/landingActions";
 import { validateEmail } from "../../common/utils/listing";
@@ -104,12 +105,12 @@ class SignUpForm extends PureComponent {
 		return (
 			<section className="sign-up-wrapper" onKeyPress={this.handleEnterPress}>
 				<h3>
-					{this.context.t("SIGN_UP_FOR_ACCOUNT")}
+					<Translate i18nKey="SIGN_UP_FOR_ACCOUNT" />
 				</h3>
 
 				{refererEmail && refererEmail !== "" && (
 					<p className="sign-in-error-message">
-						{this.context.t("SIGN_UP_FROM_PUBLIC_LISTING_MESSAGE")}
+						<Translate i18nKey="SIGN_UP_FROM_PUBLIC_LISTING_MESSAGE" />
 					</p>
 				)}
 
@@ -135,7 +136,7 @@ class SignUpForm extends PureComponent {
 
 				<div className="username">
 					<label htmlFor="username">
-						{this.context.t("SIGN_UP_NAME")}
+						<Translate i18nKey="SIGN_UP_NAME" />
 					</label>
 					<input
 						ref={name => this.username = name}
@@ -159,7 +160,7 @@ class SignUpForm extends PureComponent {
 
 				<div className="lastname">
 					<label htmlFor="lastname">
-						{this.context.t("SIGN_UP_LAST_NAME")}
+						<Translate i18nKey="SIGN_UP_LAST_NAME" />
 					</label>
 					<input
 						onChange={e => this.handleInputChange(SIGN_UP_FIELDS.LAST_NAME, e.target.value)}
@@ -181,7 +182,7 @@ class SignUpForm extends PureComponent {
 
 				<div className="email">
 					<label htmlFor="email">
-						{this.context.t("SIGN_UP_EMAIL")}
+						<Translate i18nKey="SIGN_UP_EMAIL" />
 					</label>
 					<input
 						value={this.state[SIGN_UP_FIELDS.EMAIL].value}
@@ -204,7 +205,7 @@ class SignUpForm extends PureComponent {
 
 				<div className="company">
 					<label htmlFor="company">
-						{this.context.t("SIGN_UP_COMPANY")}
+						<Translate i18nKey="SIGN_UP_COMPANY" />
 					</label>
 					<input
 						onChange={e => this.handleInputChange(SIGN_UP_FIELDS.COMPANY, e.target.value)}
@@ -225,7 +226,7 @@ class SignUpForm extends PureComponent {
 				</div>
 
 				<button className="yellow-btn" onClick={this.handleSignUpUser}>
-					{this.context.t("SIGN_UP_SUBMIT")}
+					<Translate i18nKey="SIGN_UP_SUBMIT" />
 					{this.state.isLoading && <Loader loading xSmall />}
 				</button>
 

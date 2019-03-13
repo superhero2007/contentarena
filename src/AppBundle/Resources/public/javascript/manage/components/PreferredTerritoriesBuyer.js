@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 import CountrySelector from "../../main/components/CountrySelector";
 import NewRegionCountrySelector from "../../main/components/NewRegionCountrySelector";
 
@@ -53,10 +54,10 @@ class PreferredTerritoriesBuyer extends React.Component {
 		return (
 			<React.Fragment>
 				<div className="preferences-title">
-					{this.context.t("PREFERENCES_TERRITORIES_BUYER_TITLE")}
+					<Translate i18nKey="PREFERENCES_TERRITORIES_BUYER_TITLE" />
 				</div>
 				<div className="subtitle">
-					{this.context.t("PREFERENCES_TERRITORIES_BUYER_SUBTITLE")}
+					<Translate i18nKey="PREFERENCES_TERRITORIES_BUYER_SUBTITLE" />
 				</div>
 				<div className="row" style={style}>
 					<div className="preferences-item">
@@ -78,7 +79,7 @@ class PreferredTerritoriesBuyer extends React.Component {
 									checked={isMultipleEnabled === false}
 									style={{ marginRight: 5, width: 20, padding: 0 }}
 								/>
-								{this.context.t("PREFERENCES_TERRITORIES_BUYER_SINGLE_TERRITORY_OPTION")}
+								<Translate i18nKey="PREFERENCES_TERRITORIES_BUYER_SINGLE_TERRITORY_OPTION" />
 							</div>
 							<div className={cn({
 								"font-weight-bold": isMultipleEnabled === true,
@@ -95,7 +96,7 @@ class PreferredTerritoriesBuyer extends React.Component {
 									checked={isMultipleEnabled === true}
 									style={{ marginRight: 5, width: 20, padding: 0 }}
 								/>
-								{this.context.t("PREFERENCES_TERRITORIES_BUYER_MULTIPLE_TERRITORY_OPTION")}
+								<Translate i18nKey="PREFERENCES_TERRITORIES_BUYER_MULTIPLE_TERRITORY_OPTION" />
 							</div>
 						</div>
 					</div>

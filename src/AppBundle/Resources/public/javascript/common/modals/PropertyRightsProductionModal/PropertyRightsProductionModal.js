@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import cn from "classnames";
 import first from "lodash/first";
+import Translate from "@components/Translator/Translate";
 import { getDedicatedRigths } from "../../../cms/helpers/PropertyDetailsHelper";
 import { GenericModalStyle } from "../../../main/styles/custom";
 import { LanguageSelector } from "../../../main/components/LanguageSelector";
@@ -184,14 +185,14 @@ class PropertyRightsProductionModal extends Component {
 		const { config: { headers = [], languageSelector = false, key } } = this.props;
 
 		if (languageSelector) {
-			return <div className="row-item-header full-width">{this.context.t(`RIGHTS_${key}`)}</div>;
+			return <div className="row-item-header full-width"><Translate i18nKey={`RIGHTS_${key}`} /></div>;
 		}
 
 		return (
 			<Fragment>
 				<div className="row-item-header" />
 				{headers.map(item => (
-					<div key={item} className="row-item-header">{this.context.t(`RIGHTS_${item}`)}</div>
+					<div key={item} className="row-item-header"><Translate i18nKey={`RIGHTS_${item}`} /></div>
 				))}
 			</Fragment>
 		);
@@ -375,7 +376,7 @@ class PropertyRightsProductionModal extends Component {
 						<i className="fa fa-times close-icon" onClick={onCloseModal} />
 					</span>
 					<div className="modal-sub-title">
-						{this.context.t(descriptionKey)}
+						<Translate i18nKey={descriptionKey} />
 					</div>
 				</header>
 				<section className="modal-body">
@@ -408,7 +409,7 @@ class PropertyRightsProductionModal extends Component {
 									onChange={e => this.handleChangeInAllRights(e.target.value, "TECHNICAL_FEE")}
 									name="TECHNICAL_FEE"
 								/>
-								<label htmlFor="INCLUDED">{` ${this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_1")}`}</label>
+								<label htmlFor="INCLUDED">{" "} <Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_1" /></label>
 							</p>
 							<p>
 								<input
@@ -420,7 +421,7 @@ class PropertyRightsProductionModal extends Component {
 									onChange={e => this.handleChangeInAllRights(e.target.value, "TECHNICAL_FEE")}
 									name="TECHNICAL_FEE"
 								/>
-								<label htmlFor="ON_TOP">{` ${this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_2")} `}</label>
+								<label htmlFor="ON_TOP">{" "} <Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_2" /></label>
 								<input
 									onChange={e => this.handleChangeInAllRights(e.target.value, "TECHNICAL_FEE_PERCENTAGE")}
 									value={firstRight.selectedRights.TECHNICAL_FEE_PERCENTAGE}
@@ -429,7 +430,7 @@ class PropertyRightsProductionModal extends Component {
 									min={0}
 									onFocus={() => this.handleChangeInAllRights("ON_TOP", "TECHNICAL_FEE")}
 								/>
-								{` ${this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_3")}`}
+								<Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_3" />
 							</p>
 						</div>
 					)
@@ -437,10 +438,10 @@ class PropertyRightsProductionModal extends Component {
 				</section>
 				<footer className="modal-footer">
 					<button className="cancel-btn" onClick={onCloseModal}>
-						{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+						<Translate i18nKey="MESSAGE_POPUP_BUTTON_CANCEL" />
 					</button>
 					<button className="standard-button" onClick={this.handleUpdate} disabled={isDisabled}>
-						{this.context.t("MODAL_APPLY")}
+						<Translate i18nKey="MODAL_APPLY" />
 					</button>
 				</footer>
 			</Modal>

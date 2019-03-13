@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
 import { connect } from "react-redux";
+import Translate from "@components/Translator/Translate";
 import { GenericModalStyle } from "../../../main/styles/custom";
 import GeneralTerms from "../../../main/components/GeneralTerms";
 import DigitalSignature from "../../../main/components/DigitalSignature";
@@ -75,7 +76,7 @@ class AcceptBidModal extends Component {
 				onRequestClose={onCloseModal}
 			>
 				<header className="modal-header">
-					<h3 className="modal-title">{this.context.t("COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT")}</h3>
+					<h3 className="modal-title"><Translate i18nKey="COMMERCIAL_ACTIVITY_BID_TITLE_ACCEPT" /></h3>
 					<i className="fa fa-times" onClick={onCloseModal} />
 				</header>
 				<section className="modal-body">
@@ -85,7 +86,7 @@ class AcceptBidModal extends Component {
 								<DigitalSignature
 									customClass="for-modal"
 									licenseBidId={selectedBid.customId}
-									title={this.context.t("ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR")}
+									title={<Translate i18nKey="ACCEPT_BID_PLEASE_SIGN_WITH_YOUR_CURSOR" />}
 									signature={signature}
 									signatureName={signatureName}
 									signaturePosition={signaturePosition}
@@ -107,14 +108,14 @@ class AcceptBidModal extends Component {
 								/>
 							</div>
 						) : (
-							<div className="body-msg">{this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_FAILED")}</div>
+							<div className="body-msg"><Translate i18nKey="COMMERCIAL_ACTIVITY_ACCEPT_BID_FAILED" /></div>
 						)}
 					</Loader>
 				</section>
 				<footer className="modal-footer">
 					{isFail || isLoading ? (
 						<button className="cancel-btn" onClick={onCloseModal}>
-							{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+							<Translate i18nKey="MESSAGE_POPUP_BUTTON_CANCEL" />
 						</button>
 					) : (
 						<React.Fragment>
@@ -122,14 +123,14 @@ class AcceptBidModal extends Component {
 								className="cancel-btn"
 								onClick={onCloseModal}
 							>
-								{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
+								<Translate i18nKey="MESSAGE_POPUP_BUTTON_CANCEL" />
 							</button>
 							{isAcceptDisabled ? (
 								<button
 									className="standard-button disabled"
 									onClick={this.props.enableValidation}
 								>
-									{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
+									<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT" />
 								</button>
 							) : (
 								<button
@@ -137,7 +138,7 @@ class AcceptBidModal extends Component {
 									onClick={this.handleAcceptBid}
 									disabled={!signature || !terms || !signaturePosition.trim() || !signatureName.trim()}
 								>
-									{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
+									<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT" />
 								</button>
 							)}
 

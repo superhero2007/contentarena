@@ -771,7 +771,7 @@
 	.property-wrapper{
 	  width: 100%;
 	  align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       border-bottom: 1px solid $font-color-2;
 
 	  .property-img{
@@ -780,7 +780,7 @@
 	  }
 	  .property-info{
 		flex: 6.5;
-		padding: 0 20px;
+		padding: 0 20px 20px;
 
 		.bids-wrapper{
 		  display: flex;
@@ -796,8 +796,7 @@
 		  }
 		  .closed-bid, button{ padding-left: 25px; }
 		  .open-bid, .closed-bid {
-
-			span {
+			.bids-count {
 			  background-color: $property-blue;
 			  color: $primary-color;
 			  padding: 1px 6px;
@@ -813,8 +812,35 @@
       width: 100%;
       .property-listings-table {
         width: 100%;
+        .table-header {
+          display: flex;
+          align-items: center;
+        }
+        .tooltip-container {
+          display: flex !important;
+          justify-content: space-between;
+          width: 100%;
+          i{
+            color: $property-blue;
+            font-size: 18px;
+          }
+        }
+        .table-status{
+          padding: 0 !important;
+          .status-active{
+            color: #36CB97;
+            border-left: 3px solid #36CB97;
+            padding: 10px !important;
+            display: flex;
+            font-weight: bold;
+          }
+          .status-rejected{
+            @extend .status-active;
+            color: #D20515;
+            border-left: 3px solid #D20515;
+          }
+        }
       }
     }
-
   }
 }

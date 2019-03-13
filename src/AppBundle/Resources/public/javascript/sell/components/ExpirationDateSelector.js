@@ -4,6 +4,7 @@ import { SERVER_DATE_TIME_FORMAT, DATE_FORMAT } from "@constants";
 import moment from "moment";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class ExpirationDateSelector extends React.Component {
 	constructor(props) {
@@ -27,7 +28,7 @@ class ExpirationDateSelector extends React.Component {
 		return (
 			<div className="base-input">
 				<label>
-					{this.context.t("CL_STEP4_TITLE_EXPIRY")}
+					<Translate i18nKey="CL_STEP4_TITLE_EXPIRY" />
 				</label>
 				<DatePicker
 					className={`date-picker ${isInvalid ? "is-invalid" : ""}`}
@@ -40,7 +41,7 @@ class ExpirationDateSelector extends React.Component {
 				/>
 				{isInvalid && (
 					<span className="is-invalid" style={{ marginLeft: 15 }}>
-						{this.context.t("LISTING_EXPIRY_EMPTY")}
+						<Translate i18nKey="LISTING_EXPIRY_EMPTY" />
 					</span>
 				)}
 			</div>

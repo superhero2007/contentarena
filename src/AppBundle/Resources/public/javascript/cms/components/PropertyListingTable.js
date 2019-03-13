@@ -1,11 +1,15 @@
 import React from "react";
 import { PropTypes } from "prop-types";
-import { ROUTE_PATHS } from "@constants";
 import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
-import { yellowCheckIcon } from "../../main/components/Icons";
+import cn from "classnames";
+import { LISTING_STATUS } from "@constants";
+import ListingLink from "@components/Links/ListingLink";
+import { getListingBidsUrl } from "@utils/routing";
+import Translate from "@components/Translator/Translate";
 import { DATE_FORMAT } from "../../common/constants";
+import { yellowCheckIcon } from "../../main/components/Icons";
 
 class PropertyListingsTable extends React.Component {
 	constructor(props) {
@@ -25,9 +29,9 @@ class PropertyListingsTable extends React.Component {
 		const { customId } = original;
 
 		return (
-			<a href={`/listing/${customId}`} title={value}>
+			<ListingLink customId={customId} name={value}>
 				{value}
-			</a>
+			</ListingLink>
 		);
 	};
 
@@ -41,34 +45,39 @@ class PropertyListingsTable extends React.Component {
 	};
 
 	getColumns = () => [{
-		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_HEADER_STATUS"), ""),
+		Header: () => <Translate i18nKey="CMS_LISTING_TABLE_HEADER_STATUS" />,
 		id: props => `status-${props.customId}-${props.index}`,
-		headerClassName: "table-header-big",
-		className: "table-header-big",
+		headerClassName: "table-header",
+		className: "table-status",
 		accessor: "status.name",
-		width: 100,
-		Cell: props => (
-			<span>
-				{this.context.t(`CMS_LISTING_TABLE_STATUS_${props.original}`)}
+		width: 90,
+		Cell: ({ value }) => (
+			<span className={cn({
+				"status-active": value !== "REJECTED",
+				"status-rejected": value === "REJECTED",
+			})}
+			>
+				{value === "REJECTED" && "Rejected"}
+				{value !== "REJECTED" && "Active"}
 			</span>
 		),
 	}, {
-		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_ID"), ""),
+		Header: () => <Translate i18nKey="CMS_LISTING_TABLE_ID" />,
 		id: props => `custom-id-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
-		className: "table-header",
+		className: "table-header justify-content-center",
 		accessor: "customId",
-		width: 100,
+		width: 80,
 		Cell: props => (
 			<span>
 				{props.value}
 			</span>
 		),
 	}, {
-		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_NAME"), ""),
+		Header: () => <Translate i18nKey="CMS_LISTING_TABLE_NAME" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
-		headerClassName: "table-header-big",
-		className: "table-header-big",
+		headerClassName: "table-header",
+		className: "table-header",
 		accessor: "name",
 		Cell: props => this.getCell(props),
 	}, {
@@ -114,45 +123,75 @@ class PropertyListingsTable extends React.Component {
 		accessor: "rightsPackage",
 		Cell: props => this.getRightCell(props, "PR"),
 	}, {
-		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_EXPIRY"), ""),
+		Header: () => <Translate i18nKey="CMS_LISTING_TABLE_EXPIRY" />,
 		id: props => `expiry-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
-		className: "table-header",
+		className: "table-header justify-content-center",
 		accessor: "expiresAt",
+		width: 100,
 		Cell: props => (
 			<span>
 				{Moment(props.value).format(DATE_FORMAT)}
 			</span>
 		),
 	}, {
-		Header: () => this.getHeader(this.context.t("CMS_LISTING_TABLE_TERRITORIES"), ""),
+		Header: () => <Translate i18nKey="CMS_LISTING_TABLE_TERRITORIES" />,
 		id: props => `ter-${props.customId}-${props.index}`,
-		headerClassName: "table-header-big",
-		className: "table-header-big",
+		headerClassName: "table-header",
+		className: "table-header justify-content-center",
+		width: 100,
 		Cell: props => (
 			<span>
 				{props.original.territories}
 			</span>
 		),
 	}, {
+		Header: () => this.getHeader("", ""),
 		id: props => `ter-${props.original.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
+		headerClassName: "table-header",
+		className: "table-header",
+		width: 120,
 		Cell: (props) => {
 			const {
 				original: {
-					customId, lastActionDate, owner, lastAction,
+					customId, lastActionDate, owner, lastAction, hasActivity, status, name,
 				},
 			} = props;
 			const formattedDate = Moment(lastActionDate).format(DATE_FORMAT);
 			return (
 				<div className="tooltip-container">
+					{
+						!hasActivity
+						&& status.name !== LISTING_STATUS.REJECTED
+						&& (
+							<ListingLink customId={customId} name={name}>
+								<Translate i18nKey="CMS_LISTING_TABLE_VIEW_LISTING" />
+							</ListingLink>
+						)
+					}
+					{
+						hasActivity
+						&& status.name !== LISTING_STATUS.REJECTED
+						&& (
+							<a href={getListingBidsUrl(customId)} target="_blank" rel="noopener noreferrer">
+								<Translate i18nKey="CMS_LISTING_TABLE_VIEW_BIDS" />
+							</a>
+						)
+					}
+					{
+						status.name === LISTING_STATUS.REJECTED
+						&& (
+							<a>
+								<Translate i18nKey="CMS_LISTING_TABLE_EDIT" />
+							</a>
+						)
+					}
 					<span className="" data-tip data-for={customId}>
-						<i className="fa fa-question-circle-o" />
+						<i className="fa fa-info-circle" />
 					</span>
 					<ReactTooltip id={customId} effect="solid" className="CaTooltip " delayHide={400}>
 						<div className="body">
-							{`${this.context.t("CMS_LISTING_TABLE_LAST_ACTION_DATE")}: ${formattedDate}`}
+							<Translate i18nKey="CMS_LISTING_TABLE_LAST_ACTION_DATE" /> {`: ${formattedDate}`}
 							<br />
 							{lastAction && `${this.context.t("CMS_LISTING_TABLE_LAST_ACTION")}: ${lastAction.name}`}
 							<br />

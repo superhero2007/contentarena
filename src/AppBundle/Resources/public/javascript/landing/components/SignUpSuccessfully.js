@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { SITE_URLS } from "@constants";
+import Translate from "@components/Translator/Translate";
 
 class SignUpSuccessfully extends PureComponent {
 	handleLoginClick = () => window.location = SITE_URLS.HOME_URL;
@@ -9,13 +10,13 @@ class SignUpSuccessfully extends PureComponent {
 		return (
 			<section className="sign-up-successfully-wrapper">
 				<p className="done-icon-wrapper"><i className="fa fa-check-circle fa-5x" /></p>
-				<h3>{this.context.t("SIGN_UP_SUCCESSFULLY_HEADER")}</h3>
-				<p className="sign-up-text">{this.context.t("SIGN_UP_SUCCESSFULLY_TEXT")}</p>
+				<h3><Translate i18nKey="SIGN_UP_SUCCESSFULLY_HEADER" /></h3>
+				<p className="sign-up-text"><Translate i18nKey="SIGN_UP_SUCCESSFULLY_TEXT" /></p>
 				<button
 					className="yellow-btn"
 					onClick={this.handleLoginClick}
 				>
-					{this.context.t("LOGIN_SIGN_UP_BUTTON")}
+					<Translate i18nKey="LOGIN_SIGN_UP_BUTTON" />
 				</button>
 			</section>
 		);

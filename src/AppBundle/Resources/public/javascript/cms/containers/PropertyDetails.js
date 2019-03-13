@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
+import Translate from "@components/Translator/Translate";
 import PropertyDetailsEditedProgramTab from "../components/PropertyDetailsEditedProgramTab";
 import PropertyDetailsEventTab from "../components/PropertyDetailsEventTab";
 import PropertyDetailsLicenseTab from "../components/PropertyDetailsLicenseTab";
@@ -17,23 +18,23 @@ class PropertyDetails extends React.Component {
 
 	getTabs = () => ({
 		[CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS]: {
-			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_EVENT_LABEL"),
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EVENT_LABEL" />,
 			component: PropertyDetailsEventTab,
 		},
 		[CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM]: {
-			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL"),
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL" />,
 			component: PropertyDetailsEditedProgramTab,
 		},
 		[CMS_PROPERTY_DETAILS_TABS.LICENSE_DETAILS]: {
-			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_LICENSE_LABEL"),
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_LICENSE_LABEL" />,
 			component: PropertyDetailsLicenseTab,
 		},
 		[CMS_PROPERTY_DETAILS_TABS.PRODUCTION_DETAILS]: {
-			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_PRODUCTION_LABEL"),
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_PRODUCTION_LABEL" />,
 			component: PropertyDetailsProductionTab,
 		},
 		[CMS_PROPERTY_DETAILS_TABS.RIGHTS_DETAILS]: {
-			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_RIGHT_LABEL"),
+			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_RIGHT_LABEL" />,
 			component: PropertyDetailsRightsTab,
 		},
 	});

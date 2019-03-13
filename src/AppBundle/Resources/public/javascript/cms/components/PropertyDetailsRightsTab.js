@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cloneDeep from "lodash/cloneDeep";
 import first from "lodash/first";
+import Translate from "@components/Translator/Translate";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	SUBLICENSE,
@@ -57,8 +58,8 @@ class PropertyDetailsRightsTab extends Component {
 			<section className="property-rights-tab">
 				<div className="title-property-tab">
 					<div className="title-wrapper">
-						<span className="title">{this.context.t("PROPERTY_DETAILS_RIGHT_TAB_TITLE")}</span>
-						<span className="sub-title">{this.context.t("PROPERTY_DETAILS_RIGHT_TAB_TEXT")}</span>
+						<span className="title"><Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TITLE" /></span>
+						<span className="sub-title"><Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" /></span>
 					</div>
 					<i className="fa fa-pencil-square-o" onClick={this.handleEditRights} />
 				</div>
@@ -88,7 +89,7 @@ class PropertyDetailsRightsTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{this.context.t("RIGHTS_BROADCASTING")}</label>
+						<label><Translate i18nKey="RIGHTS_BROADCASTING" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -117,7 +118,7 @@ class PropertyDetailsRightsTab extends Component {
 
 				<div className="row">
 					<li className="item">
-						<label>{this.context.t("RIGHTS_TRANSMISSION_MEANS")}</label>
+						<label><Translate i18nKey="RIGHTS_TRANSMISSION_MEANS" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -143,7 +144,7 @@ class PropertyDetailsRightsTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{this.context.t("RIGHTS_RESERVED_RIGHTS")}</label>
+						<label><Translate i18nKey="RIGHTS_RESERVED_RIGHTS" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
@@ -159,7 +160,7 @@ class PropertyDetailsRightsTab extends Component {
 
 				{!disableEditRight && (
 					<div className="buttons">
-						<button className="yellow-button centered-btn" onClick={this.handleApplyRightChanges}>{this.context.t("Apply")}</button>
+						<button className="yellow-button centered-btn" onClick={this.handleApplyRightChanges}><Translate i18nKey="Apply" /></button>
 					</div>
 				)}
 			</section>

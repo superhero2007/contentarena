@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import Moment from "moment/moment";
+import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import test from "../actions";
 import { StaticSchedules } from "../../sell/components/SellFormItems";
-import { PropTypes } from "prop-types";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 
 class ContentInformation extends React.Component {
@@ -68,7 +69,7 @@ class ContentInformation extends React.Component {
 					seasons && seasons.length > 0 && seasons.map((season, key) => (
 						<div key={`season-${key}`} className="season-details">
 							<div className="season-name">
-								{this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")}
+								<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_SEASON" />
 								{" "}
 								{season.name}
 							</div>
@@ -94,7 +95,7 @@ class ContentInformation extends React.Component {
 				{description && (
 					<div className="full-item-box">
 						<label>
-							{this.context.t("LISTING_DETAILS_EVENT_TITLE_DESCRIPTION")}
+							<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_DESCRIPTION" />
 						</label>
 						<div className="full-item-content">
 							{description}

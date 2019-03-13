@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import EmptyFixture from "../components/EmptyScreens/EmptyFixture";
 import FixtureList from "./FixturesList";
@@ -61,10 +62,10 @@ class CmsFixtures extends React.Component {
 		return (
 			<section className="fixture-tab region-filter">
 				<div className="region-filter-title">
-					{this.context.t("CMS_FIXTURES_TITLE")}
+					<Translate i18nKey="CMS_FIXTURES_TITLE" />
 				</div>
 				<div className="fixture-tab-description">
-					{this.context.t("CMS_FIXTURES_DESCRIPTION")}
+					<Translate i18nKey="CMS_FIXTURES_DESCRIPTION" />
 				</div>
 				<CmsSeasonsFilter property={property} />
 
@@ -73,7 +74,7 @@ class CmsFixtures extends React.Component {
 					&& (
 						<>
 							<div className="region-filter-title">
-								{this.context.t("CMS_FIXTURES")}
+								<Translate i18nKey="CMS_FIXTURES" />
 							</div>
 							{
 								fixtures.length === 0 && !create
@@ -88,16 +89,16 @@ class CmsFixtures extends React.Component {
 								&& (
 									<section className="fixture-item-wrapper no-border no-padding">
 										<div className="fixture-item-round fixture-title">
-											{this.context.t("CMS_FIXTURES_TABLE_ROUND")}
+											<Translate i18nKey="CMS_FIXTURES_TABLE_ROUND" />
 										</div>
 										<div className="fixture-item-name fixture-title">
-											{this.context.t("CMS_FIXTURES_TABLE_NAME")}
+											<Translate i18nKey="CMS_FIXTURES_TABLE_NAME" />
 										</div>
 										<div className="fixture-item-date fixture-title">
-											{this.context.t("CMS_FIXTURES_TABLE_DATE")}
+											<Translate i18nKey="CMS_FIXTURES_TABLE_DATE" />
 										</div>
 										<div className="fixture-item-time fixture-title">
-											{this.context.t("CMS_FIXTURES_TABLE_TIME")}
+											<Translate i18nKey="CMS_FIXTURES_TABLE_TIME" />
 										</div>
 										<div className="fixture-item-actions" />
 									</section>
@@ -127,7 +128,7 @@ class CmsFixtures extends React.Component {
 								&& (
 									<div className="empty-property-tab">
 										<a className="ca-btn primary" onClick={this.showCreateFixture}>
-											{this.context.t("CMS_EMPTY_FIXTURE_CREATE_FIXTURE")}
+											<Translate i18nKey="CMS_EMPTY_FIXTURE_CREATE_FIXTURE" />
 										</a>
 									</div>
 								)

@@ -1,6 +1,7 @@
 import React from "react";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class CountrySelector extends React.Component {
 	constructor(props) {
@@ -73,7 +74,7 @@ class CountrySelector extends React.Component {
 							<div
 								style={{ padding: "15px 0" }}
 							>
-								{this.context.t("All territories are sold and listing is exclusive")}
+								<Translate i18nKey="All territories are sold and listing is exclusive" />
 							</div>
 						);
 					}
@@ -85,7 +86,7 @@ class CountrySelector extends React.Component {
 					<div
 						style={{ padding: "15px 0" }}
 					>
-						{this.context.t("Worldwide includes sold territories and listing is exclusive")}
+						<Translate i18nKey="Worldwide includes sold territories and listing is exclusive" />
 					</div>
 				);
 			}

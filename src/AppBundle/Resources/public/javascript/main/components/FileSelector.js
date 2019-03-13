@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import Modal from "react-modal";
 import ReactCrop, { makeAspectCrop } from "react-image-crop";
+import Translate from "@components/Translator/Translate";
 import { bucketIcon } from "./Icons";
 
 const FileItem = ({ item, onClick }) => (
@@ -321,12 +322,12 @@ class FileSelector extends Component {
 								.trigger("click");
 						}}
 					>
-						{this.context.t("Upload")}
+						<Translate i18nKey="Upload" />
 					</button>
 
 					{isImageCropEnabled && !isImageSizeFit && (
 						<span style={{ padding: "6px 15px" }} className="text-danger">
-							{this.context.t("CL_STEP1_IMAGE_SMALL")}
+							<Translate i18nKey="CL_STEP1_IMAGE_SMALL" />
 						</span>
 					)}
 

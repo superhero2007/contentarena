@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TagsInput from "react-tagsinput";
+import Translate from "@components/Translator/Translate";
 import Modal from "../Modal";
 import api from "../../../api";
 import Loader from "../Loader";
@@ -73,7 +74,7 @@ class ShareListing extends Component {
 				}}
 				>
 					<span className="fa fa-share-alt" />
-					{this.context.t("SHARE")}
+					<Translate i18nKey="SHARE" />
 				</span>
 				<Modal
 					isOpen={this.state.modalOpen}
@@ -86,7 +87,7 @@ class ShareListing extends Component {
 							<label htmlFor="email">
 								<p>
 									<b>
-										{this.context.t("SHARE_EMAIL_ADDRESS")}
+										<Translate i18nKey="SHARE_EMAIL_ADDRESS" />
 										{" "}
 										<span className="text-danger">*</span>
 									</b>
@@ -106,7 +107,7 @@ class ShareListing extends Component {
 							<label htmlFor="comment">
 								<p>
 									<b>
-										{this.context.t("SHARE_COMMENT")}
+										<Translate i18nKey="SHARE_COMMENT" />
 									</b>
 								</p>
 							</label>
@@ -125,14 +126,14 @@ class ShareListing extends Component {
 							<p className="text-center text-success">
 								<i className="fa fa-check" />
 								{" "}
-								{this.context.t("SHARE_SUCCESS")}
+								<Translate i18nKey="SHARE_SUCCESS" />
 							</p>
 						)}
 						{error && (
 							<p className="text-center text-danger">
 								<i className="fa fa-exclamation-triangle" />
 								{" "}
-								{this.context.t("SHARE_FAILED")}
+								<Translate i18nKey="SHARE_FAILED" />
 							</p>
 						)}
 
@@ -145,7 +146,7 @@ class ShareListing extends Component {
 										className="text-uppercase"
 										onClick={() => this.setState({ modalOpen: false })}
 									>
-										{this.context.t("SHARE_CANCEL")}
+										<Translate i18nKey="SHARE_CANCEL" />
 									</b>
 								</div>
 								<button
@@ -154,7 +155,7 @@ class ShareListing extends Component {
 									disabled={this.state.emails.length === 0}
 								>
 									<b className="text-uppercase">
-										{this.context.t("SHARE")}
+										<Translate i18nKey="SHARE" />
 									</b>
 								</button>
 							</section>

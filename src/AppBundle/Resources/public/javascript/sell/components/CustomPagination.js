@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import Translate from "@components/Translator/Translate";
 
 const defaultButton = props => <button {...props}>{props.children}</button>;
 
@@ -77,8 +78,8 @@ class CustomPagination extends Component {
 			PageButtonComponent = defaultButton,
 			BackButtonComponent = defaultBackButton,
 			NextButtonComponent = defaultNextButton,
-			backText = this.context.t("CUSTOM_PAGINATION_CL_4_5_PREV_TEXT"),
-			nextText = this.context.t("CUSTOM_PAGINATION_CL_4_5_NEXT_TEXT"),
+			backText = <Translate i18nKey="CUSTOM_PAGINATION_CL_4_5_PREV_TEXT" />,
+			nextText = <Translate i18nKey="CUSTOM_PAGINATION_CL_4_5_NEXT_TEXT" />,
 		} = this.props;
 
 		const { visiblePages } = this.state;

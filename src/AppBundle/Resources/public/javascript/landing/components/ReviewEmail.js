@@ -1,15 +1,16 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 
 class ReviewEmail extends PureComponent {
 	render() {
 		return (
 			<section className="review-wrapper">
-				<h3>{this.context.t("LOGIN_REVIEW_EMAIL")}</h3>
-				<b>{this.context.t("LOGIN_REVIEW_EMAIL_SUB_TITLE")}</b>
+				<h3><Translate i18nKey="LOGIN_REVIEW_EMAIL" /></h3>
+				<b><Translate i18nKey="LOGIN_REVIEW_EMAIL_SUB_TITLE" /></b>
 				<span className="note">
 					<b>**Note: </b>
-					{this.context.t("LOGIN_REVIEW_EMAIL_NOTE")}
+					<Translate i18nKey="LOGIN_REVIEW_EMAIL_NOTE" />
 				</span>
 			</section>
 		);

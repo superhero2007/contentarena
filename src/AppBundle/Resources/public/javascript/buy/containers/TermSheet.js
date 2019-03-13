@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
+import Translate from "@components/Translator/Translate";
 import test from "../actions";
 import RightDefinitions from "../../sell/components/RightDefinitions";
 import ProductionStandardsDefinitions from "../../sell/components/ProductionStandardsDefinitions";
@@ -242,7 +243,7 @@ class TermSheet extends React.Component {
 				{programDescription && (
 					<div className="description-wrapper">
 						<div className="title spacer-bottom">
-							{this.context.t("LISTING_DETAILS_PROGRAM_DEFINITION")}
+							<Translate i18nKey="LISTING_DETAILS_PROGRAM_DEFINITION" />
 						</div>
 						<div className="txt description-text">
 							<RepresentationTextArea value={programDescription} />
@@ -254,14 +255,14 @@ class TermSheet extends React.Component {
 					<div className="item">
 						<i className="fa fa-calendar-check-o icon" />
 						<div className="cap">
-							{this.context.t("LISTING_DETAILS_LICENSE_START")}
+							<Translate i18nKey="LISTING_DETAILS_LICENSE_START" />
 							:
 
 
 						</div>
 						<div className="d-flex">
 							<b>
-								{startDateMode !== "DATE" && this.context.t("LISTING_DETAILS_LICENSE_START_CONCLUSION")}
+								{startDateMode !== "DATE" && <Translate i18nKey="LISTING_DETAILS_LICENSE_START_CONCLUSION" />}
 								{startDateMode === "DATE" && ` ${Moment(startDate).format(DATE_FORMAT)}`}
 							</b>
 						</div>
@@ -269,7 +270,7 @@ class TermSheet extends React.Component {
 					<div className="item">
 						<i className="fa fa-calendar-times-o icon" />
 						<div className="cap">
-							{this.context.t("LISTING_DETAILS_LICENSE_END")}
+							<Translate i18nKey="LISTING_DETAILS_LICENSE_END" />
 							:
 
 
@@ -278,7 +279,7 @@ class TermSheet extends React.Component {
 							<b>
 								{endDateMode === "LIMITED" && ` ${endDateLimit}${this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}`}
 								{endDateMode === "DATE" && ` ${Moment(endDate).format(DATE_FORMAT)}`}
-								{endDateMode === "UNLIMITED" && this.context.t(" Unlimited")}
+								{endDateMode === "UNLIMITED" && <Translate i18nKey=" Unlimited" />}
 							</b>
 						</div>
 					</div>
@@ -328,7 +329,7 @@ class TermSheet extends React.Component {
 				{COMMENTS_RIGHTS && (
 					<div>
 						<div className="title spacer">
-							{this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
+							<Translate i18nKey="LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS" />
 						</div>
 						<div className="txt description-text">
 							<RepresentationTextArea
@@ -386,7 +387,7 @@ class TermSheet extends React.Component {
 					selectedRightsBySuperRight[rightsPackage[0].id].items.TECHNICAL_FEE_DETAILS && (
 						<div>
 							<div className="title spacer">
-								{this.context.t("LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS")}
+								<Translate i18nKey="LISTING_DETAILS_RIGHTS_TECHNICAL_FEE_DETAILS" />
 							</div>
 							<div className="txt description-text">
 								{selectedRightsBySuperRight[rightsPackage[0].id].items.TECHNICAL_FEE_DETAILS}
@@ -397,7 +398,7 @@ class TermSheet extends React.Component {
 				{COMMENTS_PRODUCTION && (
 					<div>
 						<div className="title spacer">
-							{this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2")}
+							<Translate i18nKey="LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS_2" />
 						</div>
 						<div className="txt description-text">
 							{COMMENTS_PRODUCTION}

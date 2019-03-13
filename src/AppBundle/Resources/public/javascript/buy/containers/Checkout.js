@@ -7,6 +7,7 @@ import { PropTypes } from "prop-types";
 import NumberFormat from "react-number-format";
 import ReactTable from "react-table";
 import cloneDeep from "lodash/cloneDeep";
+import Translate from "@components/Translator/Translate";
 import { pdfIcon, packageIcon } from "../../main/components/Icons";
 import Installments from "../components/Installments";
 import DigitalSignature from "../../main/components/DigitalSignature";
@@ -121,7 +122,7 @@ class Checkout extends React.Component {
 			>
 
 				<div className="modal-title" style={{ paddingBottom: 15 }}>
-					{this.context.t("Company Information")}
+					<Translate i18nKey="Company Information" />
 					<i className="fa fa-times close-icon" onClick={this.closeModal} />
 				</div>
 
@@ -130,7 +131,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Legal name")}
+								<Translate i18nKey="Legal name" />
 							</label>
 							<input
 								type="text"
@@ -145,7 +146,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Registration number")}
+								<Translate i18nKey="Registration number" />
 							</label>
 							<input
 								style={inputStyle}
@@ -177,7 +178,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+								<Translate i18nKey="LISTING_DETAILS_SELLER_TITLE_ADDRESS" />
 								{" "}
 								1
 
@@ -196,7 +197,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+								<Translate i18nKey="LISTING_DETAILS_SELLER_TITLE_ADDRESS" />
 								{" "}
 								2
 
@@ -215,7 +216,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("City")}
+								<Translate i18nKey="City" />
 							</label>
 							<input
 								style={inputStyle}
@@ -230,7 +231,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("ZIP code")}
+								<Translate i18nKey="ZIP code" />
 							</label>
 							<input
 								style={inputStyle}
@@ -245,7 +246,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Country")}
+								<Translate i18nKey="Country" />
 							</label>
 							<CountrySelector
 								multi={false}
@@ -317,7 +318,7 @@ class Checkout extends React.Component {
 						fontWeight: 600,
 					}}
 					>
-						{this.context.t("CHECKOUT_CONGRATULATIONS")}
+						<Translate i18nKey="CHECKOUT_CONGRATULATIONS" />
 					</div>
 					{fixedBundles > 0 && (
 						<div
@@ -328,7 +329,7 @@ class Checkout extends React.Component {
 								textAlign: "center",
 							}}
 						>
-							{this.context.t("CHECKOUT_FIXED_SUCCESS_MESSAGE")}
+							<Translate i18nKey="CHECKOUT_FIXED_SUCCESS_MESSAGE" />
 						</div>
 					)}
 					{fixedBundles === 0 && biddingBundles > 0 && (
@@ -340,7 +341,7 @@ class Checkout extends React.Component {
 								textAlign: "center",
 							}}
 						>
-							{this.context.t("CHECKOUT_BID_SUCCESS_MESSAGE")}
+							<Translate i18nKey="CHECKOUT_BID_SUCCESS_MESSAGE" />
 						</div>
 					)}
 
@@ -352,7 +353,7 @@ class Checkout extends React.Component {
 									history.push("/closeddeals");
 								}}
 							>
-								{this.context.t("CHECKOUT_FIXED_GO_TO_CLOSED_DEALS")}
+								<Translate i18nKey="CHECKOUT_FIXED_GO_TO_CLOSED_DEALS" />
 							</button>
 						)}
 
@@ -363,12 +364,12 @@ class Checkout extends React.Component {
 									history.push("/bids/activebids");
 								}}
 							>
-								{this.context.t("CHECKOUT_FIXED_GO_TO_BIDS")}
+								<Translate i18nKey="CHECKOUT_FIXED_GO_TO_BIDS" />
 							</button>
 						)}
 
 						<button className="standard-button" onClick={this.closeSuccessScreen}>
-							{this.context.t("CHECKOUT_FIXED_GO_TO_MARKETPLACE")}
+							<Translate i18nKey="CHECKOUT_FIXED_GO_TO_MARKETPLACE" />
 						</button>
 					</div>
 				</div>
@@ -513,7 +514,7 @@ class Checkout extends React.Component {
 
 	getMinBid = (bundle) => {
 		if (!bundle.minimumBid) return <span>-</span>;
-		if (bundle.minimumBid && (+bundle.minimumBid) === 1) return <span>{this.context.t("SALES_PACKAGE_TABLE_MINIMUM_BID_ONE")}</span>;
+		if (bundle.minimumBid && (+bundle.minimumBid) === 1) return <span><Translate i18nKey="SALES_PACKAGE_TABLE_MINIMUM_BID_ONE" /></span>;
 
 		return (
 			<NumberFormat
@@ -551,7 +552,7 @@ class Checkout extends React.Component {
 		const { content, bid, company } = this.state;
 		const tableStart = [
 			{
-				Header: this.context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_TERRITORY_BUNDLE" />,
 				headerClassName: packages.length > 15 ? "table-header-big scroll" : "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
@@ -578,7 +579,7 @@ class Checkout extends React.Component {
 				},
 			},
 			{
-				Header: this.context.t("SALES_PACKAGE_TABLE_DETAILS"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_DETAILS" />,
 				headerClassName: "table-header-big",
 				width: 300,
 				Cell: (props) => {
@@ -593,7 +594,7 @@ class Checkout extends React.Component {
 								title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}
 							>
 								<img src={pdfIcon} alt="Licence" />
-								<span>{this.context.t("License agreement")}</span>
+								<span><Translate i18nKey="License agreement" /></span>
 							</a>
 
 							{bundle.salesMethod === BUNDLE_SALES_METHOD.BIDDING
@@ -606,8 +607,8 @@ class Checkout extends React.Component {
 			},
 			{
 				Header: type === BUNDLE_SALES_METHOD.FIXED
-					? this.context.t("SALES_PACKAGE_TABLE_PRICE")
-					: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
+					? <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE" />
+					: <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID" />,
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
@@ -630,7 +631,7 @@ class Checkout extends React.Component {
 		];
 		const yourBid = [
 			{
-				Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_YOUR_BID"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_PRICE_YOUR_BID" />,
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
@@ -656,7 +657,7 @@ class Checkout extends React.Component {
 		];
 		const tableEnd = [
 			{
-				Header: this.context.t("SALES_PACKAGE_TABLE_TECHNICAL_FEE"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_TECHNICAL_FEE" />,
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
@@ -675,7 +676,7 @@ class Checkout extends React.Component {
 				},
 			},
 			{
-				Header: this.context.t("SALES_PACKAGE_TABLE_TOTAL"),
+				Header: <Translate i18nKey="SALES_PACKAGE_TABLE_TOTAL" />,
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
@@ -735,10 +736,10 @@ class Checkout extends React.Component {
 					{biddingPackages.length > 0 && (
 						<Fragment>
 							<div className="checkout-title">
-								{this.context.t("SALES_PACKAGE_BIDDING_TITLE")}
+								<Translate i18nKey="SALES_PACKAGE_BIDDING_TITLE" />
 							</div>
 							<div className="checkout-subtitle">
-								{this.context.t("SALES_PACKAGE_BIDDING_SUB_TITLE")}
+								<Translate i18nKey="SALES_PACKAGE_BIDDING_SUB_TITLE" />
 							</div>
 							<ReactTable
 								className={cn("ca-table round-0 bundles-table bundles-table-checkout", { showScroll: biddingPackages.length > 15 })}
@@ -767,10 +768,10 @@ class Checkout extends React.Component {
 					{fixedPackages.length > 0 && (
 						<Fragment>
 							<div className="checkout-title">
-								{this.context.t("SALES_PACKAGE_FIXED_TITLE")}
+								<Translate i18nKey="SALES_PACKAGE_FIXED_TITLE" />
 							</div>
 							<div className="checkout-subtitle">
-								{this.context.t("SALES_PACKAGE_FIXED_SUB_TITLE")}
+								<Translate i18nKey="SALES_PACKAGE_FIXED_SUB_TITLE" />
 							</div>
 							<ReactTable
 								className={cn("ca-table round-0 bundles-table bundles-table-checkout", { showScroll: fixedPackages.length > 15 })}
@@ -800,11 +801,11 @@ class Checkout extends React.Component {
 				{/* COMPANY INFORMATION */}
 				<div className="bid-address-license">
 					<div className="checkout-title">
-						{this.context.t("SALES_PACKAGE_COMPANY_ADDRESS")}
+						<Translate i18nKey="SALES_PACKAGE_COMPANY_ADDRESS" />
 					</div>
 					<div className="checkout-subtitle">
 						<div>
-							{this.context.t("SALES_PACKAGE_COMPANY_SUB_TITLE")}
+							<Translate i18nKey="SALES_PACKAGE_COMPANY_SUB_TITLE" />
 							<i className="fa fa-pencil-square-o" onClick={this.openEditCompany} />
 						</div>
 						<span>{this.getCompanyAddress()}</span>
@@ -814,10 +815,10 @@ class Checkout extends React.Component {
 				{/* SIGNATURE */}
 				<div className="bid-signature">
 					<div className="checkout-title">
-						{this.context.t("SALES_PACKAGE_SIGNATURE_TITLE")}
+						<Translate i18nKey="SALES_PACKAGE_SIGNATURE_TITLE" />
 					</div>
 					<div className="checkout-subtitle">
-						{this.context.t("SALES_PACKAGE_SIGNATURE_SUB_TITLE")}
+						<Translate i18nKey="SALES_PACKAGE_SIGNATURE_SUB_TITLE" />
 					</div>
 					<DigitalSignature
 						customClass="for-listing"
@@ -853,7 +854,7 @@ class Checkout extends React.Component {
 							disabled={this.buttonDisabled()}
 							onClick={this.placeBid}
 						>
-							{this.context.t("CHECKOUT_COMPLETE_TRANSACTION")}
+							<Translate i18nKey="CHECKOUT_COMPLETE_TRANSACTION" />
 						</button>
 					</Loader>
 				</div>

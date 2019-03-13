@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ROUTE_PATHS } from "@constants";
+import Translate from "@components/Translator/Translate";
 import { cmsFile } from "../../../main/components/Icons";
 
 const EmptyListingOverview = ({ history }, context) => (
 	<div className="empty-property-tab">
 		<img src={cmsFile} alt="" />
-		<h3>{context.t("CMS_EMPTY_LISTING_OVERVIEW_TITLE")}</h3>
-		<h4>{context.t("CMS_EMPTY_LISTING_OVERVIEW_TEXT")}</h4>
+		<h3> <Translate i18nKey="CMS_EMPTY_LISTING_OVERVIEW_TITLE" /> </h3>
+		<h4> <Translate i18nKey="CMS_EMPTY_LISTING_OVERVIEW_TEXT" /> </h4>
 		<a className="ca-btn primary" href={ROUTE_PATHS.CREATE_LISTING}>
-			{context.t("CMS_EMPTY_LISTING_CREATE_LISTING")}
+			 <Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
 		</a>
 	</div>
 );

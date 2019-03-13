@@ -7,6 +7,7 @@ import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
 import { YEAR_FORMAT, REGIONS_ENUMS } from "@constants";
 import Moment from "moment/moment";
+import Translate from "@components/Translator/Translate";
 import { blueCheckIcon, yellowCheckIcon } from "./Icons";
 
 class ContentListingTable extends Component {
@@ -23,7 +24,7 @@ class ContentListingTable extends Component {
 
 	getHeader = (text, tooltip = "", iconClass = "", sortIcon = false) => (
 		<span data-tip={tooltip && tooltip}>
-			{text && text}
+			<Translate i18nKey={text} />
 			{iconClass && <i className={`fa ${iconClass}`} />}
 			{sortIcon && <i className="fa fa-sort" />}
 		</span>
@@ -84,7 +85,7 @@ class ContentListingTable extends Component {
 	};
 
 	getColumns = () => [{
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_LISTING_NAME"), "", "", true),
+		Header: () => this.getHeader("MARKETPLACE_TABLE_LISTING_NAME", "", "", true),
 		headerClassName: "table-header-big",
 		className: "table-header-big",
 		id: "name",
@@ -93,7 +94,7 @@ class ContentListingTable extends Component {
 		sortMethod: (a, b) => (a.length >= b.length ? 1 : -1),
 		Cell: props => this.getCell(props),
 	}, {
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_SPORT"), "", "", true),
+		Header: () => this.getHeader("MARKETPLACE_TABLE_SPORT", "", "", true),
 		headerClassName: "table-header-big",
 		className: "table-header-big",
 		id: "sport",
@@ -102,7 +103,7 @@ class ContentListingTable extends Component {
 		sortMethod: (a, b) => this.getSort(a, b),
 		Cell: props => this.getCell(props),
 	}, {
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_COUNTRY"), "", "", true),
+		Header: () => this.getHeader("MARKETPLACE_TABLE_COUNTRY", "", "", true),
 		headerClassName: "table-header-big",
 		className: "table-header-big",
 		id: "country",
@@ -111,7 +112,7 @@ class ContentListingTable extends Component {
 		sortMethod: (a, b) => this.getSort(a, b),
 		Cell: props => this.getCell(props, true),
 	}, {
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_COMPETITION"), "", "", true),
+		Header: () => this.getHeader("MARKETPLACE_TABLE_COMPETITION", "", "", true),
 		headerClassName: "table-header-big",
 		className: "table-header-big",
 		id: "competition",
@@ -119,7 +120,7 @@ class ContentListingTable extends Component {
 		sortMethod: (a, b) => this.getSort(a, b),
 		Cell: props => this.getCell(props),
 	}, {
-		Header: () => this.getHeader(this.context.t("MARKETPLACE_TABLE_SEASON_RELEASE"), "", "", true),
+		Header: () => this.getHeader("MARKETPLACE_TABLE_SEASON_RELEASE", "", "", true),
 		headerClassName: "table-header-big",
 		className: "table-header-big",
 		id: "seasons",

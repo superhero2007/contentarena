@@ -5,11 +5,12 @@ import toNumber from "lodash/toNumber";
 import isFinite from "lodash/isFinite";
 import isEqual from "lodash/isEqual";
 import cn from "classnames";
+import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { customStyles } from "../../main/styles/custom";
 import RightItemsDefinitions from "./RightItemsDefinitions";
 import { LanguageSelector } from "../../main/components/LanguageSelector";
 import { SuperRightProductionDetailsLabels } from "./SuperRightDefinitions";
-import { PropTypes } from "prop-types";
 import { commentIcon } from "@icons";
 
 const numberFieldStyle = {
@@ -536,13 +537,13 @@ class PopupRight extends React.Component {
 
 				<div className="modal-title">
 					<i className="fa fa-edit" />
-					{name}
+					<Translate i18nKey={name} />
 					<i className="fa fa-times close-icon" onClick={this.closePopupAndRestoreData} />
 				</div>
 
 				{description && (
 					<div style={{ padding: "0 20px 15px" }}>
-						{description}
+						<Translate i18nKey={description} />
 					</div>
 				)}
 
@@ -567,7 +568,7 @@ class PopupRight extends React.Component {
 									const definition = RightItemsDefinitions[option];
 									if (definition.language) flex += 2;
 									const rightKeyPreffix = "RIGHTS_";
-									const label = this.context.t(rightKeyPreffix + option);
+									const label = <Translate i18nKey={rightKeyPreffix + option} />;
 
 									if (definition.hideIf && definition.hideIf.filter(sl => packagesAvailable.indexOf(sl) !== -1).length > 0) return null;
 
@@ -664,7 +665,7 @@ class PopupRight extends React.Component {
 											name="TECHNICAL_FEE"
 										/>
 										{" "}
-										{this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_1")}
+										<Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_1" />
 									</div>
 									<div>
 										<input
@@ -679,7 +680,7 @@ class PopupRight extends React.Component {
 											name="TECHNICAL_FEE"
 										/>
 										{" "}
-										{this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_2")}
+										<Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_2" />
 										<input
 											style={{
 												width: "70px",
@@ -696,7 +697,7 @@ class PopupRight extends React.Component {
 												this.updateSelectionInAllPackages("ON_TOP", "TECHNICAL_FEE");
 											}}
 										/>
-										{this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_3")}
+										<Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_3" />
 
 									</div>
 								</div>
@@ -721,7 +722,7 @@ class PopupRight extends React.Component {
 						className="standard-button"
 						onClick={this.onOKClicked}
 					>
-						{this.context.t("MODAL_APPLY")}
+						<Translate i18nKey="MODAL_APPLY" />
 					</button>
 				</div>
 
@@ -796,12 +797,9 @@ class PopupRight extends React.Component {
 			validation,
 		} = this.props;
 		const { id } = this.props;
-
 		const rightsPackageFiltered = this.filterRightsPackage(id, rightsPackage);
-
 		const isMultipleValuesSelected = this.isMultipleValuesSelected(id, rightsPackageFiltered);
 		let displayedValue = "";
-
 
 		if (rightsPackageFiltered.length > 0) {
 			const firstPackage = rightsPackageFiltered[0];
@@ -850,13 +848,15 @@ class PopupRight extends React.Component {
 
 		return (
 			<div className={cn("base-input", { disabled })} style={{ width: "49%" }}>
-				<label>{name}</label>
+				<label>
+					<Translate i18nKey={name} />
+				</label>
 				<div
 					className={`display-label ${isContentDeliveryInvalid ? "is-invalid" : ""} `}
 					onClick={this.togglePopup}
 				>
 					{isContentDeliveryInvalid ? (
-						this.context.t("CONTENT_DELIVERY_EMPTY")
+						<Translate i18nKey="CONTENT_DELIVERY_EMPTY" />
 					) : (
 						value || "Select"
 					)}

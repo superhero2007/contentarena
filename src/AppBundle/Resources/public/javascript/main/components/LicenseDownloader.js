@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import {
 	viewLicense, viewLicenseBid, viewLicenseBundle, viewLicenseCustom,
 } from "../actions/utils";
@@ -37,7 +38,7 @@ class LicenseDownloader extends Component {
 				className="license-agreement-button"
 			>
 				<i className="fa fa-file-pdf-o" />
-				{this.context.t("License agreement")}
+				<Translate i18nKey="License agreement" />
 			</div>
 		);
 	}

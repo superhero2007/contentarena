@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { goTo } from "../../main/actions/utils";
 import ContentListing from "../../main/components/ContentListing";
 import RightsLegend from "../../main/components/RightsLegend";
@@ -86,7 +87,7 @@ class PendingDeals extends React.Component {
 					>
 						{tab === "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} alt="" />}
 						{tab !== "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} alt="" />}
-						{this.context.t("PENDING_BIDS_FILTER_ACTIVE")}
+						<Translate i18nKey="PENDING_BIDS_FILTER_ACTIVE" />
 					</div>
 					<div
 						style={{
@@ -98,7 +99,7 @@ class PendingDeals extends React.Component {
 					>
 						{tab === "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} alt="" />}
 						{tab !== "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} alt="" />}
-						{this.context.t("PENDING_BIDS_FILTER_DECLINED")}
+						<Translate i18nKey="PENDING_BIDS_FILTER_DECLINED" />
 					</div>
 					<div style={{ marginLeft: "auto" }}>
 						<RightsLegend />
@@ -119,7 +120,7 @@ class PendingDeals extends React.Component {
 							))
 						) : (
 							<div className="manager-content-message">
-								{this.context.t("PENDING_BIDS_MADE_EMPTY_MESSAGE")}
+								<Translate i18nKey="PENDING_BIDS_MADE_EMPTY_MESSAGE" />
 							</div>
 						)}
 					</Loader>
@@ -140,7 +141,7 @@ class PendingDeals extends React.Component {
 							))
 						) : (
 							<div className="manager-content-message">
-								{this.context.t("PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE")}
+								<Translate i18nKey="PENDING_BIDS_MADE_DECLINED_EMPTY_MESSAGE" />
 							</div>
 						)}
 					</Loader>

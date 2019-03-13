@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import DatePicker from "@components/DatePicker";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import cn from "classnames";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -454,8 +455,7 @@ class SalesPackageForm extends React.Component {
 			>
 
 				<div className="modal-title" style={{ paddingBottom: 15 }}>
-					{this.context.t("CL_STEP4_SALES_BUNDLE_POPUP_TITLE")}
-					<i className="fa fa-times close-icon" onClick={this.closeModal} />
+					<Translate i18nKey="CL_STEP4_SALES_BUNDLE_POPUP_TITLE" /><i className="fa fa-times close-icon" onClick={this.closeModal} />
 				</div>
 
 				<div className="step-content">
@@ -463,7 +463,7 @@ class SalesPackageForm extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES_MODE")}
+								<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_TERRITORIES_MODE" />
 							</label>
 							<div className="content" style={{ padding: "5px 0" }}>
 								<div className="item" onClick={() => this.handleTerritories("single")}>
@@ -472,7 +472,7 @@ class SalesPackageForm extends React.Component {
 										: <i className="fa fa-circle-thin" />
 									}
 									<div className="title">
-										{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_SINGLE_TERRITORY")}
+										<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_SINGLE_TERRITORY" />
 									</div>
 								</div>
 								<div className="item" onClick={() => this.handleTerritories("multiple")}>
@@ -481,7 +481,7 @@ class SalesPackageForm extends React.Component {
 										: <i className="fa fa-circle-thin" />
 									}
 									<div className="title">
-										{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_MULTIPLE_TERRITORIES")}
+										<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_MULTIPLE_TERRITORIES" />
 									</div>
 								</div>
 							</div>
@@ -502,7 +502,7 @@ class SalesPackageForm extends React.Component {
 										{territoriesMethod === this.selectedTerritories
 										&& <i className="fa fa-check-circle-o" />}
 										<div className="title">
-											{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_SELECTED_TERRITORIES")}
+											<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_SELECTED_TERRITORIES" />
 										</div>
 									</div>
 									{(!exclusivity || (exclusivity && salesPackages.length === 0)) && (
@@ -515,7 +515,7 @@ class SalesPackageForm extends React.Component {
 											{territoriesMethod === this.worldwide
 											&& <i className="fa fa-check-circle-o" />}
 											<div className="title">
-												{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE")}
+												<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE" />
 											</div>
 										</div>
 									)}
@@ -531,7 +531,7 @@ class SalesPackageForm extends React.Component {
 											{territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
 											&& <i className="fa fa-check-circle-o" />}
 											<div className="title">
-												{this.context.t("CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING")}
+												<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TITLE_WORLDWIDE_EXCLUDING" />
 											</div>
 										</div>
 									)}
@@ -582,7 +582,7 @@ class SalesPackageForm extends React.Component {
 											fontSize: "14px",
 										}}
 										>
-											{this.context.t("CL_STEP4_EDIT_BUNDLE_AS_PACKAGE")}
+											<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_AS_PACKAGE" />
 										</div>
 										<div
 											className={cn({ "font-weight-bold": this.state.bundleMethod === this.asBundle })}
@@ -595,7 +595,7 @@ class SalesPackageForm extends React.Component {
 												checked={this.state.bundleMethod === this.asBundle}
 												style={{ marginRight: 5 }}
 											/>
-											{this.context.t("Yes")}
+											<Translate i18nKey="Yes" />
 										</div>
 										<div
 											className={cn({ "font-weight-bold": this.state.bundleMethod === this.individually })}
@@ -607,7 +607,7 @@ class SalesPackageForm extends React.Component {
 												checked={this.state.bundleMethod === this.individually}
 												style={{ marginRight: 5 }}
 											/>
-											{this.context.t("No")}
+											<Translate i18nKey="No" />
 										</div>
 
 									</div>
@@ -621,7 +621,7 @@ class SalesPackageForm extends React.Component {
 								fontSize: "14px",
 							}}
 							>
-								{this.context.t("CL4_TERRITORIES_BUNDLE_SALES_INFO")}
+								<Translate i18nKey="CL4_TERRITORIES_BUNDLE_SALES_INFO" />
 							</div>
 							<div className="content">
 								<div
@@ -633,7 +633,7 @@ class SalesPackageForm extends React.Component {
 									{this.state.salesMethod !== this.fixed && <i className="fa fa-circle-thin" />}
 									{this.state.salesMethod === this.fixed && <i className="fa fa-check-circle-o" />}
 									<div className="title">
-										{this.context.t("CL_STEP4_EDIT_BUNDLE_TYPE_FIXED")}
+										<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TYPE_FIXED" />
 									</div>
 								</div>
 								<div
@@ -645,7 +645,7 @@ class SalesPackageForm extends React.Component {
 									{this.state.salesMethod !== this.bidding && <i className="fa fa-circle-thin" />}
 									{this.state.salesMethod === this.bidding && <i className="fa fa-check-circle-o" />}
 									<div className="title">
-										{this.context.t("CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING")}
+										<Translate i18nKey="CL_STEP4_EDIT_BUNDLE_TYPE_BIDDING" />
 									</div>
 								</div>
 								<div
@@ -684,7 +684,7 @@ class SalesPackageForm extends React.Component {
 								fontSize: "14px",
 							}}
 							>
-								{this.context.t("CL4_TERRITORIES_BUNDLE_PAYMENT_INFO")}
+								<Translate i18nKey="CL4_TERRITORIES_BUNDLE_PAYMENT_INFO" />
 							</div>
 							{this.state.installments.map((installment, i, list) => (
 								<div className="content">
@@ -716,7 +716,7 @@ class SalesPackageForm extends React.Component {
 												className={validation && !installment.value ? "is-invalid" : ""}
 											/>
 											{" "}
-											{this.context.t("CL_STEP4_INSTALLMENTS_PERCENTAGE")}
+											<Translate i18nKey="CL_STEP4_INSTALLMENTS_PERCENTAGE" />
 										</div>
 										{installment.type !== "DATE"
 										&& (
@@ -780,7 +780,7 @@ class SalesPackageForm extends React.Component {
 												}}
 											/>
 											{" "}
-											{this.context.t("CL_STEP4_INSTALLMENTS_DAYS_AFTER")}
+											<Translate i18nKey="CL_STEP4_INSTALLMENTS_DAYS_AFTER" />
 										</div>
 									</div>
 									{i !== 0 && (
@@ -829,7 +829,7 @@ class SalesPackageForm extends React.Component {
 						color: "red",
 					}}
 				>
-					{this.installmentsIncomplete() && this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING")}
+					{this.installmentsIncomplete() && <Translate i18nKey="CL_STEP4_EDIT_BUNDLE_INSTALLMENT_WARNING" />}
 				</div>
 
 				<div className="buttons popup-buttons">
@@ -843,11 +843,11 @@ class SalesPackageForm extends React.Component {
 					</button>
 					{isOkButtonDisabled ? (
 						<button className="standard-button disabled" onClick={this.props.enableValidation}>
-							{this.context.t("MODAL_APPLY")}
+							<Translate i18nKey="MODAL_APPLY" />
 						</button>
 					) : (
 						<button className="standard-button" onClick={this.applySelection}>
-							{this.context.t("MODAL_APPLY")}
+							<Translate i18nKey="MODAL_APPLY" />
 						</button>
 					)}
 				</div>
@@ -915,10 +915,10 @@ class SalesPackageForm extends React.Component {
 				{this.renderModal()}
 				<div className="base-full-input" style={inputStyle}>
 					<label style={{ color: "black" }}>
-						{this.context.t("CL_STEP4_SALES_BUNDLES")}
+						<Translate i18nKey="CL_STEP4_SALES_BUNDLES" />
 					</label>
 					<span>
-						{this.context.t("CL_STEP4_TERRITORIAL_BUNDLES_DESCRIPTION")}
+						<Translate i18nKey="CL_STEP4_TERRITORIAL_BUNDLES_DESCRIPTION" />
 					</span>
 
 					{!hideButtons && (
@@ -933,12 +933,12 @@ class SalesPackageForm extends React.Component {
 								}}
 							>
 								<i className="fa fa-plus-circle" />
-								{this.context.t("CL_STEP4_ADD_SALES_BUNDLE")}
+								<Translate i18nKey="CL_STEP4_ADD_SALES_BUNDLE" />
 							</button>
 							{salesPackages.length > 0 && (
 								<button className="ca-btn primary remove-all" onClick={this.props.onRemoveAll}>
 									<i className="fa fa-minus-circle" />
-									{this.context.t("CL_STEP4_REMOVE_ALL_BUNDLES")}
+									<Translate i18nKey="CL_STEP4_REMOVE_ALL_BUNDLES" />
 								</button>
 							)}
 						</div>

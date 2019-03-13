@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import TagsInput from "react-tagsinput";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import FileSelector from "../../main/components/FileSelector";
 import SearchCompetition from "../../main/components/SearchCompetition";
 import SeasonSelector from "../../main/components/SeasonSelector";
@@ -28,6 +29,7 @@ import {
 	updateFromMultiple,
 } from "../actions/stepOneActions";
 import ListingName from "../components/ListingName";
+
 
 class SellFormStep1 extends React.Component {
 	constructor(props) {
@@ -541,7 +543,7 @@ class SellFormStep1 extends React.Component {
 					<div className="buttons no-margin">
 						<div className="buttons-container" style={{ justifyContent: "flex-start" }}>
 							<button className="light-blue-button" onClick={this.clear}>
-								{this.context.t("CL_STEP1_BUTTON_START_OVER")}
+								<Translate i18nKey="CL_STEP1_BUTTON_START_OVER" />
 							</button>
 						</div>
 					</div>
@@ -551,11 +553,11 @@ class SellFormStep1 extends React.Component {
 					<div className="step-content-container">
 
 						<div className="step-title">
-							{this.context.t("CL_STEP1_LABEL_EVENT_TITLE")}
+							<Translate i18nKey="CL_STEP1_LABEL_EVENT_TITLE" />
 						</div>
 
 						<div className="step-item-description" style={{ marginTop: 0 }}>
-							{this.context.t("CL_STEP1_DESCRIPTION_1")}
+							<Translate i18nKey="CL_STEP1_DESCRIPTION_1" />
 						</div>
 
 						{this.state.sportSelectors.map((item, i, list) => {
@@ -585,7 +587,7 @@ class SellFormStep1 extends React.Component {
 						{this.state.sportSelectors.length === 1 && !this.hasCustomCategory() && (
 							<div className="base-input">
 								<label>
-									{this.context.t("CL_STEP1_LABEL_COUNTRY")}
+									<Translate i18nKey="CL_STEP1_LABEL_COUNTRY" />
 								</label>
 								<input
 									type="text"
@@ -611,7 +613,7 @@ class SellFormStep1 extends React.Component {
 						{this.state.sportSelectors.length === 1 && !this.hasCustomTournament() && (
 							<div className="base-input">
 								<label>
-									{this.context.t("CL_STEP1_LABEL_COMPETITION")}
+									<Translate i18nKey="CL_STEP1_LABEL_COMPETITION" />
 								</label>
 								<input
 									type="text"
@@ -658,11 +660,11 @@ class SellFormStep1 extends React.Component {
 						)}
 
 						<div className="step-title">
-							{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}
+							<Translate i18nKey="CL_STEP1_LABEL_LISTING_TITLE" />
 						</div>
 
 						<div className="step-item-description" style={{ marginTop: 0 }}>
-							{this.context.t("CL_STEP1_LISTING_DETAILS_TEXT")}
+							<Translate i18nKey="CL_STEP1_LISTING_DETAILS_TEXT" />
 						</div>
 
 						<ListingName
@@ -675,7 +677,7 @@ class SellFormStep1 extends React.Component {
 
 						<Description
 							value={this.props.description}
-							title={this.context.t("CL_STEP1_LISTING_DETAILS_TITLE")}
+							title="CL_STEP1_LISTING_DETAILS_TITLE"
 							placeholder={this.context.t("CL_STEP1_LISTING_DETAILS_PLACEHOLDER")}
 							onChange={e => this.updateContentValue(e, "description")}
 						/>
@@ -684,10 +686,10 @@ class SellFormStep1 extends React.Component {
 							className="step-item-description"
 							style={{ marginTop: 0 }}
 						>
-							{this.context.t("CL_STEP1_IMAGE_INFO")}
+							<Translate i18nKey="CL_STEP1_IMAGE_INFO" />
 						</div>
 						<FileSelector
-							label={this.context.t("CL_STEP1_LABEL_IMAGE")}
+							label={<Translate i18nKey="CL_STEP1_LABEL_IMAGE" />}
 							isImage
 							onSelect={this.props.updateContentValue}
 							previousImage={this.props.image}
@@ -697,7 +699,7 @@ class SellFormStep1 extends React.Component {
 
 						<div className="base-input">
 							<label>
-								{this.context.t("CL_STEP1_LABEL_WEBSITE")}
+								<Translate i18nKey="CL_STEP1_LABEL_WEBSITE" />
 							</label>
 							<TagsInput
 								inputProps={{
@@ -715,7 +717,7 @@ class SellFormStep1 extends React.Component {
 								disabled={this.state.disableSaveWebsiteButton}
 								onClick={this.onSiteSaveClicked}
 							>
-								{this.context.t("CL_STEP5_BUTTON_SAVE")}
+								<Translate i18nKey="CL_STEP5_BUTTON_SAVE" />
 							</button>
 						</div>
 

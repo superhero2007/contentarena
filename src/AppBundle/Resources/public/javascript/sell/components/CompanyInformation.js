@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { PropTypes } from "prop-types";
+import Translate from "@components/Translator/Translate";
 import { customStyles } from "../../main/styles/custom";
 import CountrySelector from "../../main/components/CountrySelector";
 import companyIsValid from "../actions/validationActions";
@@ -61,7 +62,7 @@ class CompanyInformation extends React.Component {
 			>
 
 				<div className="modal-title" style={{ paddingBottom: 15 }}>
-					{this.context.t("Company Information")}
+					<Translate i18nKey="Company Information" />
 					<i className="fa fa-times close-icon" onClick={this.closeModal} />
 				</div>
 
@@ -70,7 +71,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_NAME")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_NAME" />
 							</label>
 							<input
 								type="text"
@@ -84,7 +85,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_REGISTRATION_NUMBER")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_REGISTRATION_NUMBER" />
 							</label>
 							<input
 								style={inputStyle}
@@ -98,7 +99,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_VAT")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_VAT" />
 							</label>
 							<input
 								style={inputStyle}
@@ -112,7 +113,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_ADDRESS")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_ADDRESS" />
 							</label>
 							<input
 								style={inputStyle}
@@ -126,7 +127,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_ADDRESS_2")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_ADDRESS_2" />
 							</label>
 							<input
 								style={inputStyle}
@@ -140,7 +141,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_CITY")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_CITY" />
 							</label>
 							<input
 								style={inputStyle}
@@ -154,7 +155,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_ZIP")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_ZIP" />
 							</label>
 							<input
 								style={inputStyle}
@@ -168,7 +169,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("POPUP_LABEL_COMPANY_COUNTRY")}
+								<Translate i18nKey="POPUP_LABEL_COMPANY_COUNTRY" />
 							</label>
 							<CountrySelector
 								multi={false}
@@ -200,7 +201,7 @@ class CompanyInformation extends React.Component {
 							className="standard-button"
 							onClick={this.onOKClick}
 						>
-							{this.context.t("MODAL_APPLY")}
+							<Translate i18nKey="MODAL_APPLY" />
 						</button>
 					)}
 
@@ -209,7 +210,7 @@ class CompanyInformation extends React.Component {
 							className="standard-button"
 							disabled
 						>
-							{this.context.t("MODAL_APPLY")}
+							<Translate i18nKey="MODAL_APPLY" />
 						</button>
 					)}
 				</div>
@@ -226,7 +227,7 @@ class CompanyInformation extends React.Component {
 			<div className="base-input">
 				{this.renderModal()}
 				<label>
-					{this.context.t("Company address")}
+					<Translate i18nKey="Company address" />
 				</label>
 				<input
 					type="text"
@@ -234,7 +235,7 @@ class CompanyInformation extends React.Component {
 					onClick={() => {
 						this.setState({ isOpen: true });
 					}}
-					placeholder={isInvalid ? this.context.t("COMPANY_INFORMATION_EMPTY") : ""}
+					placeholder={isInvalid ? <Translate i18nKey="COMPANY_INFORMATION_EMPTY" /> : ""}
 					className={`${isInvalid ? "is-invalid" : ""}`}
 				/>
 				<i

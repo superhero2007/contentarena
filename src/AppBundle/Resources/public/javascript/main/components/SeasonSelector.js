@@ -5,6 +5,7 @@ import { DATE_FORMAT } from "@constants";
 import moment from "moment";
 import cn from "classnames";
 import ReactTooltip from "react-tooltip";
+import Translate from "@components/Translator/Translate";
 import NewFixture from "./NewFixture";
 import { getSeasonDateString } from "../../common/utils/listing";
 import { getMonths, getYears } from "../../common/utils/time";
@@ -227,7 +228,7 @@ class SeasonSelector extends React.Component {
 				{!this.props.isCustom && (
 					<div className="base-input">
 						<label>
-							{this.context.t("CL_STEP1_LABEL_SEASON")}
+							<Translate i18nKey="CL_STEP1_LABEL_SEASON" />
 						</label>
 						<input
 							type="text"
@@ -256,7 +257,7 @@ class SeasonSelector extends React.Component {
 				{this.props.isCustom && activeSeason && (
 					<div className="base-input">
 						<label>
-							{this.context.t("CL_STEP1_LABEL_SEASON")}
+							<Translate i18nKey="CL_STEP1_LABEL_SEASON" />
 						</label>
 						<input
 							className={cn({ "full-disabled": isDisabled })}
@@ -287,14 +288,14 @@ class SeasonSelector extends React.Component {
 				{activeSeason && (
 					<div className="step-item-description d-flex justify-content-end text-right align-items-center">
 						<div style={{ marginRight: 15 }}>
-							{this.context.t("Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds.")}
+							<Translate i18nKey="Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds." />
 						</div>
 						<button
 							className="standard-button link-button"
 							onClick={this.addFixture}
 							style={{ minWidth: 200 }}
 						>
-							{this.context.t("CL_STEP1_ADD_FIXTURES")}
+							<Translate i18nKey="CL_STEP1_ADD_FIXTURES" />
 						</button>
 					</div>
 				)}
@@ -320,14 +321,14 @@ class SeasonSelector extends React.Component {
 				{this.props.showAddNew && (
 					<div className="step-item-description d-flex justify-content-end text-right align-items-center">
 						<div style={{ marginRight: 15 }}>
-							{this.context.t("CL_STEP1_ADD_SEASON_BUTTON_DESCRIPTION")}
+							<Translate i18nKey="CL_STEP1_ADD_SEASON_BUTTON_DESCRIPTION" />
 						</div>
 						<button
 							className="standard-button link-button"
 							onClick={this.props.addSeason}
 							style={{ minWidth: 200 }}
 						>
-							{this.context.t("CL_STEP1_ADD_SEASON")}
+							<Translate i18nKey="CL_STEP1_ADD_SEASON" />
 						</button>
 					</div>
 				)}
