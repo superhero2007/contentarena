@@ -71,11 +71,22 @@
         padding: 15px 0;
         max-width: 70%;
         .right-exclusivity {
-          width: 40%;
+          width: 30%;
           text-align: center;
         }
         .right-territories{
-          width: 20%;
+          width: 30%;
+          display: flex;
+          i {
+            font-size: 24px;
+            margin: 1px 10px 0;
+            display: flex !important;
+            cursor: pointer;
+            color: $property-blue;
+          }
+          .fa-undo {
+            font-size: 23px !important;
+          }
           img{
             max-width: 24px;
             margin-right: 5px;
@@ -84,7 +95,9 @@
             display: flex !important;
             flex-direction: row;
             height: 24px;
-            justify-content: center;
+            width: 150px;
+            justify-content: flex-start;
+            padding-left: 30px;
             align-items: center;
             font-weight: bold !important;
           }
@@ -180,7 +193,6 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-direction: column;
       img {
         max-height: 100px;

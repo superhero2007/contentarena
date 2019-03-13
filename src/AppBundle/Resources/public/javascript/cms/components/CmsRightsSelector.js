@@ -86,7 +86,7 @@ class CmsRightsSelector extends React.Component {
 
 				{
 					RIGHTS.map((right, i) => {
-						const { name, shortLabel, id } = right;
+						const { name, shortLabel, id, translationKey } = right;
 						const idAttr = `checkbox-${shortLabel}`;
 						const { offers } = this.state;
 						const exclusiveIdAttr = `exc-id-${shortLabel}`;
@@ -109,7 +109,9 @@ class CmsRightsSelector extends React.Component {
 										}}
 										id={idAttr}
 									/>
-									<label className={cn({"selected": this.isCheckBoxChecked(id)})} htmlFor={idAttr}>{name}</label>
+									<label className={cn({"selected": this.isCheckBoxChecked(id)})} htmlFor={idAttr}>
+										{name}
+									</label>
 									<div className="tooltip-container">
 										<span className="" data-tip data-for={right.id}>
 											<i className="fa fa-question-circle-o" />

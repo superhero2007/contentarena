@@ -37,6 +37,52 @@ class CreatePropertyTerritories extends React.Component {
 
 	}
 
+	onUndoTerritories = (selectedRight) => {
+		const {
+			property,
+		} = this.props;
+
+		const {
+			rights,
+		} = property;
+
+		let editedRights = rights.map( right => {
+			if ( selectedRight.id === right.id ) {
+				delete right.edited;
+				delete right.territories;
+				delete right.territoriesMode;
+			}
+			return right;
+		});
+
+		this.props.rightsUpdated(editedRights);
+	};
+
+	onEditTerritories = (selectedRight) => {
+		const {
+			property,
+		} = this.props;
+
+		const {
+			rights,
+			selectedRights,
+		} = property;
+
+		let selectedRightsIds = selectedRights.map(right=>right.id);
+
+		let editedRights = rights.map( right => {
+			if ( selectedRight.id === right.id ) {
+				delete right.edited;
+			}
+			return right;
+		});
+
+
+		this.setState({ editMode: true });
+		this.props.rightsUpdated(editedRights);
+		this.props.selectedRightsUpdated([...selectedRights, selectedRight]);
+	};
+
 	applyTerritories = () => {
 		const {
 			property,
@@ -44,6 +90,7 @@ class CreatePropertyTerritories extends React.Component {
 
 		const {
 			territories,
+			territoriesMode,
 		} = this.state;
 
 		const {
@@ -56,24 +103,28 @@ class CreatePropertyTerritories extends React.Component {
 			if ( selectedRightsIds.indexOf(right.id) !== -1 ) {
 				right.edited = true;
 				right.territories = territories;
+				right.territoriesMode = territoriesMode;
 			}
 			return right;
 		});
 
 		this.props.rightsUpdated(editedRights);
 		this.props.selectedRightsUpdated([]);
+		this.setState({ territories: [], territoriesMode: null, editMode: false });
 
 	};
 
-	handleTerritories = territories => {
-		this.setState({ territories });
+	handleTerritories = (territories, territoriesMode) => {
+		this.setState({ territories, territoriesMode, editMode: false });
 	};
 
 	rightsComplete = () => this.props.property.rights.filter(right=>!right.edited).length === 0;
 
 	render() {
-		const {
+		let {
 			territories,
+			territoriesMode,
+			editMode,
 		} = this.state;
 
 		const {
@@ -82,7 +133,17 @@ class CreatePropertyTerritories extends React.Component {
 
 		const {
 			selectedRights,
+			rights,
 		} = property;
+
+		if (editMode && selectedRights.length > 0) {
+			rights.forEach( right => {
+				if ( selectedRights[0].id === right.id && right.territories && right.territories.length > 0) {
+					territories = right.territories || [];
+					territoriesMode = right.territoriesMode;
+				}
+			});
+		}
 
 		return (
 			<div className="default-container no-title property">
@@ -94,7 +155,10 @@ class CreatePropertyTerritories extends React.Component {
 					<h6>
 						{this.context.t("CMS_SELECT_RIGHTS_DESCRIPTION")}
 					</h6>
-					<CmsAvailableRightsSelector />
+					<CmsAvailableRightsSelector
+						onUndoTerritories={this.onUndoTerritories}
+						onEditTerritories={this.onEditTerritories}
+					/>
 				</DefaultBox>
 
 				{
@@ -113,6 +177,7 @@ class CreatePropertyTerritories extends React.Component {
 							onSelectRegion={() => {
 							}}
 							value={territories}
+							territoriesMode={territoriesMode}
 							multiple
 							filter={[]}
 							selectedRights={selectedRights}
@@ -138,7 +203,7 @@ class CreatePropertyTerritories extends React.Component {
 						!this.rightsComplete() &&
 						<button
 							className="yellow-button"
-							disabled={selectedRights.length === 0}
+							disabled={selectedRights.length === 0 || territories.length === 0}
 							onClick={this.applyTerritories}
 						>
 							{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
