@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
-import queryString from "query-string";
+import cn from "classnames";
+import { isMobileOnly } from "react-device-detect";
 import moment from "moment";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@components/Translator/Translate";
@@ -9,6 +10,15 @@ import RightsLegend from "../../main/components/RightsLegend";
 import { DATE_FORMAT, TIME_FORMAT, ROUTE_PATHS } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import { getListingImage } from "../../common/utils/listing";
+
+const EventDescription = ({ description }) => (
+	<>
+		<div className="title">
+			<Translate i18nKey="LISTING_PREVIEW_DESCRIPTION_TITLE" />
+		</div>
+		<div className="event-wrapper">{description}</div>
+	</>
+);
 
 class ListingPreview extends PureComponent {
 	constructor(props) {
@@ -22,10 +32,9 @@ class ListingPreview extends PureComponent {
 	}
 
 	componentDidMount() {
-		const { search } = this.props.history.location;
-		const params = queryString.parse(search);
+		const { params } = this.props.match;
 
-		if (!params || !params.listingId.trim()) {
+		if (!params || !params.customId.trim()) {
 			this.setState({
 				error: "LISTING_PREVIEW_INVALID_LISTING_ID",
 				isLoading: false,
@@ -33,7 +42,7 @@ class ListingPreview extends PureComponent {
 			return;
 		}
 
-		ContentArena.Api.getContentDetailForPreview(params.listingId).then(({ data }) => {
+		ContentArena.Api.getContentDetailForPreview(params.customId).then(({ data }) => {
 			if (data.success) {
 				const { selectedRightsBySuperRight, rightsPackage } = data.listing;
 
@@ -100,7 +109,7 @@ class ListingPreview extends PureComponent {
 		const { isLoading, listing, error } = this.state;
 		const fixturesBySeason = listing ? [].concat.apply([], listing.fixturesBySeason) : [];
 		return (
-			<section className="sign-in-listing-preview-wrapper">
+			<section className={cn("listing-preview-wrapper", { "listing-preview-mobile": isMobileOnly })}>
 				<div className="big-title">
 					<Translate i18nKey="SETTINGS_WELCOME" />
 				</div>
@@ -144,6 +153,7 @@ class ListingPreview extends PureComponent {
 							</div>
 							<div className="listing-data">
 								<div className="ca-title">{listing.name.toUpperCase()}</div>
+								{listing.description && isMobileOnly && <EventDescription description={listing.description} />}
 								{!!listing.rightsPackage.length && (
 									<Fragment>
 										<div className="title"><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></div>
@@ -210,12 +220,7 @@ class ListingPreview extends PureComponent {
 										)}
 									</div>
 								)}
-								{listing.description && (
-									<Fragment>
-										<div className="title"><Translate i18nKey="LISTING_PREVIEW_DESCRIPTION_TITLE" /></div>
-										<div className="event-wrapper">{listing.description}</div>
-									</Fragment>
-								)}
+								{listing.description && !isMobileOnly && <EventDescription description={listing.description} />}
 							</div>
 						</section>
 					)

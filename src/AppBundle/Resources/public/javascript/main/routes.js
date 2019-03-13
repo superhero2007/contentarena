@@ -78,9 +78,10 @@ const routes = [
 		title: "Login",
 	},
 	{
-		path: ROUTE_PATHS.LISTING_PREVIEW,
+		path: `${ROUTE_PATHS.LISTING_PREVIEW}/:customId`,
 		exact: true,
 		main: ListingPreview,
+		header: PublicHeaderBar,
 		title: "Listing Preview",
 	},
 	{

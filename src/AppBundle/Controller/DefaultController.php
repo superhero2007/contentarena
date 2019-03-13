@@ -58,27 +58,27 @@ class DefaultController extends BaseController
     /**
      * @Route("/public/listing/{customId}", name="publicListing")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function publicListing(Request $request)
     {
         $user = $this->getUser();
-        $email = $request->get("email");
         $customId = $request->get("customId");
 
-        if ( $email == null || $customId == null ) throw $this->createNotFoundException("That page doesn't exists, sorry!");
+        if ( $customId == null ) throw $this->createNotFoundException("That page doesn't exists, sorry!");
 
         if ( $user != null ){
             return $this->redirect("/listing/". $customId);
         }
 
-        return $this->redirect("/listing-preview?listingId=".$customId);
+        return $this->render('@App/home.html.twig', $this->getPublicParams());
+
     }
 
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="properties|createproperty|manageproperties|terms|listing-preview|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
+     *     requirements={"reactRouting"="properties|createproperty|manageproperties|terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage",
      *     defaults={"reactRouting": null}
      *     )
@@ -152,7 +152,24 @@ class DefaultController extends BaseController
         return $this->render('@App/home.html.twig', $this->getInternalParams($request, $switchUserService));
     }
 
-    private function getInternalParams(Request $request, SwitchUserService $switchUserService){
+
+    private function getPublicParams(){
+        $user = $this->getUser();
+        $config = array(
+            "cmsEnabled"        => false,
+            "gaTrackingId"      => $this->container->getParameter('google_analytics_key'),
+            "testStageMode"     => $this->container->getParameter('test_stage_mode'),
+            "editTranslation"   => $user && in_array('ROLE_ADMIN', $this->getUser()->getRoles()),
+        );
+
+        return [
+            'hostUrl'           => $this->container->getParameter('local_host'),
+            'externalApiUrl'    => $this->container->getParameter('external_api_url'),
+            'config'            => $this->serialize($config),
+        ];
+    }
+
+    private function getInternalParams(Request $request, SwitchUserService $switchUserService = null){
         $user = $this->getUser();
         $isOwner = false;
         $refererEmail = $request->get("email");
@@ -162,7 +179,7 @@ class DefaultController extends BaseController
         $packages = $this->getDoctrine()
             ->getRepository('AppBundle:RightsPackage')
             ->findAll();
-        $ghostMode = $switchUserService->isGhostModeActive();
+        $ghostMode = ($switchUserService != null) ? $switchUserService->isGhostModeActive() : false;
 
         if ($listingId && $listingId != "new" && $listingId != "1"){
             $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $listingId]);
