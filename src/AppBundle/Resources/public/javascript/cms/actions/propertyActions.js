@@ -29,6 +29,16 @@ export const setCustomSeasonName = (index, seasonName) => ({
 	seasonName
 });
 
+export const setRights = rights => ({
+	type: propertyTypes.SET_RIGHTS,
+	rights,
+});
+
+export const setSelectedRights = selectedRights => ({
+	type: propertyTypes.SET_SELECTED_RIGHTS,
+	selectedRights,
+});
+
 export const removeNewSport = index => ({
 	type: "REMOVE_NEW",
 	index,

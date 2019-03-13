@@ -49,6 +49,11 @@
             &:hover {
               border-color: $property-blue;
             }
+            &:disabled{
+              background-color: #caccd1 !important;
+              border: 1px solid #dcdddf !important;
+              cursor: default;
+            }
           }
         }
         label{
@@ -58,6 +63,39 @@
       .right-exclusivity{
         input {
           margin: 11px !important;
+        }
+      }
+
+      &.full-width{
+        flex: 1 0 100%;
+        padding: 15px 0;
+        max-width: 70%;
+        .right-exclusivity {
+          width: 40%;
+          text-align: center;
+        }
+        .right-territories{
+          width: 20%;
+          img{
+            max-width: 24px;
+            margin-right: 5px;
+          }
+          label {
+            display: flex !important;
+            flex-direction: row;
+            height: 24px;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold !important;
+          }
+        }
+        &:last-of-type{
+          border-bottom: 1px solid lightgray;
+          margin-bottom: 20px;
+        }
+        &:first-of-type{
+          border-top: none;
+          margin-top: 20px;
         }
       }
     }
@@ -143,6 +181,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
+      img {
+        max-height: 100px;
+        margin-bottom: 10px;
+      }
       .region-filter-selection-word {
         height: 20px;
         color: #666666;

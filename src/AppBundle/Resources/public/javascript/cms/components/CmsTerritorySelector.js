@@ -4,6 +4,7 @@ import cn from "classnames";
 import CountrySelector from "../../main/components/CountrySelector";
 import RadioSelector from "../../main/components/RadioSelector";
 import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
+import { cmsWorldActive, cmsWorldDisabled } from "../../main/components/Icons";
 
 class CmsTerritorySelector extends React.Component {
 	constructor(props) {
@@ -20,7 +21,7 @@ class CmsTerritorySelector extends React.Component {
 			selected: [],
 			activeTerritories: [],
 			worldwideSelected: false,
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
 	}
 
@@ -29,6 +30,7 @@ class CmsTerritorySelector extends React.Component {
 		ContentArena.Api.getCountries().done((countries) => {
 			_this.setState({ countries });
 			_this.parseTerritoryCountries(countries);
+			setTimeout(() => { _this.handleChangeMode(BUNDLE_TERRITORIES_METHOD.WORLDWIDE) },1);
 		});
 
 		if (ContentArena.Data.Territories.length === 0) {
@@ -52,47 +54,6 @@ class CmsTerritorySelector extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({ selection: nextProps.value });
-	}
-
-	selectTerritory(region) {
-		const {
-			filter = [],
-			onChange,
-			onSelectRegion,
-			multiple,
-		} = this.props;
-		const { countries, territoryItems } = this.state;
-		const { activeRegions } = this.state;
-		const { activeTerritories } = this.state;
-		const countriesPerTerritory = this.getTerritoryCountries(this.state.selection, region.id).length;
-		let { worldwideSelected } = this.state;
-		let index;
-		let selection;
-
-		if (multiple) {
-			index = activeTerritories.indexOf(region.id);
-
-			if (index === -1 && countriesPerTerritory < territoryItems[region.id].length) {
-				activeTerritories.push(region.id);
-			} else if (index !== -1 && countriesPerTerritory === territoryItems[region.id].length) {
-				activeTerritories.splice(index, 1);
-			}
-
-			worldwideSelected = false;
-			selection = countries.filter(c => (this.countryHasRegions(c, activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1) && filter.indexOf(c.name) === -1);
-		} else {
-			selection = countries.filter(c => c.territoryId === region.id && filter.indexOf(c.name) === -1);
-		}
-
-		selection = selection.map((item) => {
-			item.value = item.name;
-			item.label = item.name;
-			return item;
-		});
-
-		this.setState({ selection, activeTerritories, worldwideSelected });
-		if (onChange) onChange(selection);
-		if (onSelectRegion) onSelectRegion(region, selection);
 	}
 
 	countryHasRegions = (country, regions) => {
@@ -200,7 +161,52 @@ class CmsTerritorySelector extends React.Component {
 		if (onSelectRegion) onSelectRegion(region, selection);
 	};
 
+	selectTerritory(region) {
+		const {
+			filter = [],
+			onChange,
+			onSelectRegion,
+			multiple,
+		} = this.props;
+		const { countries, territoryItems } = this.state;
+		const { activeRegions } = this.state;
+		const { activeTerritories } = this.state;
+		const countriesPerTerritory = this.getTerritoryCountries(this.state.selection, region.id).length;
+		let { worldwideSelected } = this.state;
+		let index;
+		let selection;
+
+		if (multiple) {
+			index = activeTerritories.indexOf(region.id);
+
+			if (index === -1 && countriesPerTerritory < territoryItems[region.id].length) {
+				activeTerritories.push(region.id);
+			} else if (index !== -1 && countriesPerTerritory === territoryItems[region.id].length) {
+				activeTerritories.splice(index, 1);
+			}
+
+			worldwideSelected = false;
+			selection = countries.filter(c => (this.countryHasRegions(c, activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1) && filter.indexOf(c.name) === -1);
+		} else {
+			selection = countries.filter(c => c.territoryId === region.id && filter.indexOf(c.name) === -1);
+		}
+
+		selection = selection.map((item) => {
+			item.value = item.name;
+			item.label = item.name;
+			return item;
+		});
+
+		this.setState({ selection, activeTerritories, worldwideSelected });
+		if (onChange) onChange(selection);
+		if (onSelectRegion) onSelectRegion(region, selection);
+	}
+
 	handleChange = (country) => {
+
+		const {
+			onChange,
+		} = this.props;
 
 		let index = this.countryIndex(country);
 		let selection = this.state.selection;
@@ -212,6 +218,7 @@ class CmsTerritorySelector extends React.Component {
 		}
 
 		this.setState({ selection });
+		if (onChange) onChange(selection);
 	};
 
 	handleSearch = (countries) => {
@@ -220,11 +227,15 @@ class CmsTerritorySelector extends React.Component {
 
 	handleChangeMode = (territoriesMode) => {
 		const { countries } = this.state;
+		const {
+			onChange,
+		} = this.props;
 		let selection = territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? countries : [];
 		this.setState({
 			territoriesMode,
 			selection
-		})
+		});
+		if (onChange) onChange(selection);
 	};
 
 	getCounterLabel = (name, counter, total) => {
@@ -238,6 +249,7 @@ class CmsTerritorySelector extends React.Component {
 			exclusiveSoldTerritories,
 			placeholder,
 			isInvalid,
+			selectedRights,
 		} = this.props;
 
 		const {
@@ -253,18 +265,25 @@ class CmsTerritorySelector extends React.Component {
 		return (
 			<div className="country-selector region-filter">
 
+				{
+					selectedRights && selectedRights.length > 0 &&
+					<div className="region-filter-title">
+						{ selectedRights.map((right, i, l) => <span>{right.name}{i<l.length-1&&", "}</span> )}
+					</div>
+				}
+
 				<RadioSelector
 					value={territoriesMode}
 					onChange={this.handleChangeMode}
 					className="sales-packages-filters"
 					items={[
 						{
-							value: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-							label: this.context.t("CMS_RADIO_SELECTED_TERRITORIES"),
-						},
-						{
 							value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 							label: this.context.t("CMS_RADIO_WORLDWIDE"),
+						},
+						{
+							value: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
+							label: this.context.t("CMS_RADIO_SELECTED_TERRITORIES"),
 						},
 						{
 							value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
@@ -346,7 +365,14 @@ class CmsTerritorySelector extends React.Component {
 
 				{
 					<div className="region-filter-title">
-						{ this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED") }
+						{
+							territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING &&
+							this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING")
+						}
+						{
+							territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING &&
+							this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED")
+						}
 						{ ` (${selection.length})` }
 					</div>
 				}
@@ -355,14 +381,11 @@ class CmsTerritorySelector extends React.Component {
 					(territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE || selection.length === 0) &&
 					<div>
 						<div className="region-filter-selection-box">
+							<img src={territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? cmsWorldActive : cmsWorldDisabled} />
 							<span className="region-filter-selection-word">
 								{
 									territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE &&
 									this.context.t("CMS_TERRITORIES_SELECTOR_ALL_SELECTED")
-								}
-								{
-									territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING &&
-									this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING")
 								}
 								{
 									selection.length === 0 &&

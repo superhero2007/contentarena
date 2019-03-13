@@ -5,8 +5,8 @@ import ReactTooltip from "react-tooltip";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import { SuperRightDefinitions } from "../../sell/components/SuperRightDefinitions";
 import { RIGHTS } from "../../common/constants";
-import CaTooltip from "../../main/components/CaTooltip";
 import cn from "classnames";
+import { setRights } from "../actions/propertyActions";
 
 
 class CmsRightsSelector extends React.Component {
@@ -14,7 +14,7 @@ class CmsRightsSelector extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rightsPackage: new Map(),
+			rights: this.getRightsFromProps(props) ,
 			offers: {
 				EXCLUSIVE: "exclusive",
 				NON_EXCLUSIVE: "non-exclusive",
@@ -23,34 +23,38 @@ class CmsRightsSelector extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ rightsPackage: new Map(nextProps.rightsPackage.map(rightItem => [rightItem.id, rightItem])) });
+		this.setState({ rights: this.getRightsFromProps(nextProps) });
 	}
 
-	addRight = (superRight) => {
-		const { rightsPackage } = this.state;
+	getRightsFromProps = props => new Map(props.rights.map(rightItem => [rightItem.id, rightItem]));
 
-		if (!rightsPackage.has(superRight.id)) {
-			rightsPackage.set(superRight.id, {
-				...superRight,
+	getRightsForProps = rights => [...rights.values()];
+
+	addRight = (right) => {
+		const { rights } = this.state;
+
+		if (!rights.has(right.id)) {
+			rights.set(right.id, {
+				...right,
 				exclusive: false,
 			});
-			this.props.superRightsUpdated(rightsPackage);
+			this.props.rightsUpdated(this.getRightsForProps(rights));
 		}
 	};
 
-	removeRight = (superRight) => {
-		const { rightsPackage } = this.state;
+	removeRight = (right) => {
+		const { rights } = this.state;
 
-		if (rightsPackage.has(superRight.id)) {
-			rightsPackage.delete(superRight.id);
-			this.props.superRightsUpdated(rightsPackage);
+		if (rights.has(right.id)) {
+			rights.delete(right.id);
+			this.props.rightsUpdated(this.getRightsForProps(rights));
 		}
 	};
 
-	onExclusive = (superRight, exclusive) => {
-		const { rightsPackage } = this.state;
-		const { superRightsUpdated } = this.props;
-		let rightPackageItem = rightsPackage.get(superRight.id);
+	onExclusive = (right, exclusive) => {
+		const { rights } = this.state;
+		const { rightsUpdated } = this.props;
+		let rightPackageItem = rights.get(right.id);
 
 		if (rightPackageItem.exclusive === exclusive) return;
 
@@ -58,24 +62,24 @@ class CmsRightsSelector extends React.Component {
 			...rightPackageItem,
 			exclusive,
 		};
-		rightsPackage.set(superRight.id, rightPackageItem);
-		superRightsUpdated(rightsPackage);
+		rights.set(right.id, rightPackageItem);
+		rightsUpdated(this.getRightsForProps(rights));
 	};
 
 	isCheckBoxChecked = (id) => {
-		const { rightsPackage } = this.state;
-		return rightsPackage.has(id);
+		const { rights } = this.state;
+		return rights.has(id);
 	};
 
 	getRadioBoxValue = (id) => {
-		const { rightsPackage } = this.state;
-		const superRight = rightsPackage.get(id);
-		return superRight && superRight.exclusive || false;
+		const { rights } = this.state;
+		const right = rights.get(id);
+		return right && right.exclusive || false;
 	};
 
 	render() {
-		const { validation, rightsPackage } = this.props;
-		const isInvalid = rightsPackage.length === 0 && validation;
+		const { validation, rights } = this.props;
+		const isInvalid = rights.length === 0 && validation;
 
 		return (
 			<div className="right-selector">
@@ -166,15 +170,12 @@ CmsRightsSelector.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-	...state.content,
+	...state.property,
 	validation: state.validation,
 });
 
 const mapDispatchToProps = dispatch => ({
-	superRightsUpdated: rightsPackage => dispatch({
-		type: "SUPER_RIGHTS_UPDATED",
-		rightsPackage,
-	}),
+	rightsUpdated: rights => dispatch(setRights(rights)),
 	updateContentValue: (k, v) => dispatch(updateContentValue(k, v)),
 });
 

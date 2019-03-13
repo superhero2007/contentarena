@@ -517,11 +517,12 @@ class CreatePropertyEvent extends React.Component {
 				<VerticalButtonBox>
 					<button
 						className="yellow-button"
+						disabled={property.rights.length === 0}
 						onClick={()=>{
 							history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_2);
 						}}
 					>
-						{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+						{this.context.t("CMS_CREATE_PROPERTY_CONTINUE_BUTTON")}
 					</button>
 					<a href={ROUTE_PATHS.CREATE_PROPERTY} className="link-button property-cancel-button">
 						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
