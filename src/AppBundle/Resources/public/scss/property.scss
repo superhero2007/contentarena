@@ -1,0 +1,69 @@
+@import "vars";
+
+.property{
+  .right-selector {
+    display: flex;
+    flex-wrap: wrap;
+    .right-selector-item {
+      flex: 1 0 45%;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid lightgray;
+      max-width: 50%;
+      padding: 20px 0;
+      width: 40%;
+      margin-right: 5%;
+      label{
+        font-size: 13px;
+        font-weight: 400;
+        display: inline-block;
+        &.selected{
+          font-weight: bold;
+        }
+      }
+      .right-name{
+        width: 40%;
+        .tooltip-container{
+          display: inline;
+          margin: 0 5px;
+        }
+        input {
+          margin-right: 11px !important;
+        }
+        label{
+          min-width: 130px;
+        }
+      }
+      .right-exclusivity{
+        margin: 0 11px;
+      }
+    }
+
+    .CaTooltip{
+      max-width: 200px !important;
+    }
+
+    input[type="radio"].ca-radio {
+      background-color: white;
+
+      &:disabled,
+      &.disabled {
+        border-color: $grey-color;
+        cursor: not-allowed;
+
+        &:after {
+          background-image: none;
+        }
+
+        &:after {
+          background-image: none;
+        }
+
+        &:hover {
+          border-color: $grey-color
+        }
+        background-color: #F7F7F7;
+      }
+    }
+  }
+}

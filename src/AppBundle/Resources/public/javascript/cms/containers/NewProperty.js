@@ -368,7 +368,7 @@ class NewProperty extends React.Component {
 		} = this.props;
 
 		return (
-			<div className="default-container no-title">
+			<div className="default-container no-title property">
 				<SelectorModal />
 				<DefaultBox>
 					<h4>

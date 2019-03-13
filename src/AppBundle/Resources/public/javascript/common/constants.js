@@ -62,15 +62,42 @@ export const SITE_URLS = {
 
 export const RIGHTS = [
 	{
-		"shortLabel" : "LT",
+		"id" : "LT",
 		"name" : "Live Transmission",
-		"translationKey" : "RIGHT_LIVE_TRANSMISSION_NAME"
+		"translationKey" : "RIGHT_LIVE_TRANSMISSION_NAME",
+		"exclusive": false,
 	},
 	{
-		"shortLabel" : "DT",
+		"id" : "DT",
 		"name" : "Delayed & Archive",
-		"translationKey" : "RIGHT_DELAYED_ARCHIVE_NAME"
+		"translationKey" : "RIGHT_DELAYED_ARCHIVE_NAME",
+		"exclusive": false,
+	},
+	{
+		"id" : "LB",
+		"name" : "Delayed & Archive",
+		"translationKey" : "RIGHT_LIVE_BETTING_NAME",
+		"exclusive": false,
+	},
+	{
+		"id" : "NA",
+		"name" : "News Footage",
+		"translationKey" : "RIGHT_NEWS_NAME",
+		"exclusive": false,
+	},
+	{
+		"id" : "HL",
+		"name" : "Highlight & Clip",
+		"translationKey" : "RIGHT_HIGHLIGHTS_NAME",
+		"exclusive": false,
+	},
+	{
+		"id" : "PR",
+		"name" : "Edited Program",
+		"translationKey" : "RIGHT_PROGRAM_NAME",
+		"exclusive": false,
 	}
+
 ];
 
 export const REGIONS_ENUMS = {

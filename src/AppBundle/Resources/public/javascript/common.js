@@ -26,3 +26,4 @@ require("../scss/landing.scss");
 require("../scss/error-page.scss");
 require("../scss/pagination.scss");
 require("../scss/containers.scss");
+require("../scss/property.scss");

@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import ReactTable from "react-table";
 import PropTypes from "prop-types";
+import ReactTooltip from "react-tooltip";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import { SuperRightDefinitions } from "../../sell/components/SuperRightDefinitions";
 import { RIGHTS } from "../../common/constants";
+import CaTooltip from "../../main/components/CaTooltip";
+import cn from "classnames";
+
 
 class RightsSelector extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -74,121 +78,81 @@ class RightsSelector extends React.Component {
 		const isInvalid = rightsPackage.length === 0 && validation;
 
 		return (
-			<div className="right-selector package-selector">
-				<header>
-					{this.context.t("CL_STEP2_RIGHTS_TITLE")}
-				</header>
+			<div className="right-selector">
 
-				<div className="right-description">
-					{this.context.t("CL_STEP2_RIGHTS_TEXT")}
-				</div>
+				{
+					RIGHTS.map(right => {
+						const { name, shortLabel, id } = right;
+						const idAttr = `checkbox-${shortLabel}`;
+						const { offers } = this.state;
+						const exclusiveIdAttr = `exc-id-${shortLabel}`;
+						const nonExclusiveIdAttr = `non-exc-id-${shortLabel}`;
+						const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
+						const defByLabel = SuperRightDefinitions[id] || [];
+						const inputData = defByLabel[1];
+						return (
+							<div className="right-selector-item">
+								<div className="right-name">
+									<input
+										type="checkbox"
+										checked={this.isCheckBoxChecked(id)}
+										className="ca-checkbox"
+										onChange={(e) => {
+											e.target.checked
+												? this.addRight(right)
+												: this.removeRight(right);
+										}}
+										id={idAttr}
+									/>
+									<label className={cn({"selected": this.isCheckBoxChecked(id)})} htmlFor={idAttr}>{name}</label>
+									<div className="tooltip-container">
+										<span className="ca-link" data-tip data-for={right.id}>
+											<i className="fa fa-info-circle" />
+										</span>
+										<ReactTooltip id={right.id} effect="solid" className="CaTooltip " delayHide={400}>
+											<div className="body">
+												{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${id}`)}
+											</div>
+										</ReactTooltip>
+									</div>
+								</div>
+								<div className="right-exclusivity">
+									<input
+										disabled={!this.isCheckBoxChecked(id)}
+										type="radio"
+										checked={offerValue === offers.EXCLUSIVE}
+										onChange={() => {
+											this.onExclusive(right, true);
+										}}
+										id={exclusiveIdAttr}
+										className="ca-radio"
+									/>
+									<label
+										htmlFor={exclusiveIdAttr}
+									>
+										{this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
+									</label>
+									<input
+										type="radio"
+										disabled={!this.isCheckBoxChecked(id)}
+										checked={offerValue === offers.NON_EXCLUSIVE}
+										onChange={() => {
+											this.onExclusive(right, false);
+										}}
+										id={nonExclusiveIdAttr}
+										className="ca-radio"
+									/>
+									<label
+										htmlFor={nonExclusiveIdAttr}
+									>
+										{this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
+									</label>
+								</div>
 
-				<div className={`package-selector-container ${isInvalid ? "is-invalid" : ""}`}>
-					<ReactTable
-						minRows={0}
-						resizable={false}
-						showPageSizeOptions={false}
-						noDataText={null}
-						showPagination={false}
-						className="ca-table right-selection-table"
-						data={RIGHTS}
-						columns={[
-							{
-								Header: this.context.t("RIGHT_SELECTION_AUDIO_VISUAL"),
-								headerClassName: "table-right-selection-header",
-								width: 200,
-								Cell: (props) => {
-									const { name, shortLabel, id } = props.original;
-									const idAttr = `checkbox-${shortLabel}`;
-									return (
-										<React.Fragment>
-											<input
-												type="checkbox"
-												checked={this.isCheckBoxChecked(id)}
-												className="ca-checkbox"
-												onChange={(e) => {
-													e.target.checked
-														? this.addRight(props.original)
-														: this.removeRight(props.original);
-												}}
-												id={idAttr}
-											/>
-											<label htmlFor={idAttr}>{name}</label>
-										</React.Fragment>
-									);
-								},
-							}, {
-								Header: this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVELY"),
-								headerClassName: "table-right-selection-header",
-								width: 250,
-								Cell: (props) => {
-									const { shortLabel, id } = props.original;
-									const { offers } = this.state;
-									const exclusiveIdAttr = `exc-id-${shortLabel}`;
-									const nonExclusiveIdAttr = `non-exc-id-${shortLabel}`;
-									const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
-
-									return (
-										<React.Fragment>
-											<input
-												type="radio"
-												checked={offerValue === offers.EXCLUSIVE}
-												onChange={() => {
-													this.onExclusive(props.original, true);
-												}}
-												id={exclusiveIdAttr}
-												className="ca-radio in-yellow"
-											/>
-											<label
-												htmlFor={exclusiveIdAttr}
-											>
-												{this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
-											</label>
-											<input
-												type="radio"
-												checked={offerValue === offers.NON_EXCLUSIVE}
-												onChange={() => {
-													this.onExclusive(props.original, false);
-												}}
-												id={nonExclusiveIdAttr}
-												className="ca-radio in-yellow"
-											/>
-											<label
-												htmlFor={nonExclusiveIdAttr}
-											>
-												{this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
-											</label>
-										</React.Fragment>
-									);
-								},
-							}, {
-								Header: this.context.t("SALES_PACKAGE_TABLE_DEFINITION"),
-								headerClassName: "table-right-selection-header",
-								Cell: (props) => {
-									const { id, shortLabel } = props.original;
-									const defByLabel = SuperRightDefinitions[shortLabel] || [];
-									const inputData = defByLabel[1];
-
-									return (
-										<p>
-											{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${shortLabel}`)}
-											{inputData && (
-												<input
-													type="number"
-													onChange={(e) => {
-														this.props.updateContentValue(inputData.key, Number(e.target.value));
-													}}
-													value={this.props[inputData.key]}
-												/>
-											)}
-											{defByLabel[2] && this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${shortLabel}_2`)}
-										</p>
-									);
-								},
-							},
-						]}
-					/>
-				</div>
+							</div>
+						);
+					})
+				}
 			</div>
 		);
 	}
