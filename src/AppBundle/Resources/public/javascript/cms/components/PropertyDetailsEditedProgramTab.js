@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Loader from "@components/Loader/Loader";
 import Translate from "@components/Translator/Translate";
 import CmsEditedProgramDetail from "./CmsEditedProgramDetail";
 import CmsEditedProgramList from "./CmsEditedProgramList";
@@ -11,6 +12,7 @@ import {
 	updateProgram,
 	deleteProgram,
 } from "../actions/propertyActions";
+
 
 class PropertyDetailsEditedProgramTab extends Component {
 	constructor(props) {
@@ -50,8 +52,10 @@ class PropertyDetailsEditedProgramTab extends Component {
 	};
 
 	render() {
-		const { property: { programs } } = this.props;
+		const { property: { programs }, loading } = this.props;
 		const { mode, selected } = this.state;
+
+		if (loading) return <Loader xSmall loading />;
 
 		if (mode !== "list") {
 			return (
@@ -101,6 +105,7 @@ PropertyDetailsEditedProgramTab.contextTypes = {
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
+	loading: state.propertyDetails.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

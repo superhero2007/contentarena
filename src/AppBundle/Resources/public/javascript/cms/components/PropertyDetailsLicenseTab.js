@@ -177,7 +177,6 @@ class PropertyDetailsLicenseTab extends Component {
 		return (
 			<section className="property-license-tab terms-edit-container">
 				<div className="terms-edit-header-title">
-					<Translate i18nKey="TERMS_EDIT_HEADER" />
 					<h6 className="subtitle">
 						<Translate i18nKey="TERMS_EDIT_HEADER_TWO" />
 					</h6>

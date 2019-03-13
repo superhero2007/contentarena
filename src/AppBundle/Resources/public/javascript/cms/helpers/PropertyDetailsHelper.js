@@ -5,7 +5,7 @@ const multipleVabel = "Multiple values selected";
 const getUniqueSelectedOptions = (rights, key) => {
 	let values = [];
 	for (const value of rights) {
-		const selectedValue = value.selectedRights[key];
+		const selectedValue = value.details[key];
 		values = Array.isArray(selectedValue) ? [...values, ...selectedValue] : [...values, selectedValue];
 	}
 
@@ -16,7 +16,7 @@ const getLanguages = (rights, key) => {
 	let values = [];
 	const right = first(rights);
 
-	const languageList = right.selectedRights[key];
+	const languageList = right.details[key];
 	for (const language of languageList) {
 		values = [...values, language.label];
 	}
@@ -61,7 +61,7 @@ export const getRightsValue = (config, rights, context) => {
 	case "ASPECT_RATIO":
 		const aspRatios = getUniqueSelectedOptions(rights, "ASPECT_RATIO");
 		if (aspRatios.length === 1 && first(aspRatios) === "ASPECT_RATIO_CUSTOM") {
-			return first(rights).selectedRights.ASPECT_RATIO_TEXT;
+			return first(rights).details.ASPECT_RATIO_TEXT;
 		}
 		break;
 
@@ -74,14 +74,14 @@ export const getRightsValue = (config, rights, context) => {
 };
 
 export const hasRightComment = (right, key) => {
-	const { selectedRights } = right;
+	const { details } = right;
 	const textareaKey = `${key}_TEXTAREA`;
 
-	return selectedRights[textareaKey] || false;
+	return details[textareaKey] || false;
 };
 
 export const getDedicatedRigths = (rights) => {
-	const dedicatedRights = rights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
+	const dedicatedRights = rights.filter(item => item.details.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
 
 	if (dedicatedRights.length === 0) {
 		const arrWithOne = first(rights);

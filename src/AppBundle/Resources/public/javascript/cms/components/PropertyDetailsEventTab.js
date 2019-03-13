@@ -102,13 +102,6 @@ class PropertyDetailsEventTab extends Component {
 
 		return (
 			<section className="property-event-tab">
-				<div className="title-property-tab">
-					<div className="title-wrapper">
-						<span className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_TAB_TITLE" /></span>
-						<span className="sub-title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_TAB_TEXT" /></span>
-					</div>
-				</div>
-
 				<section className="property-event-details-wrapper">
 					<div className="event-details-image">
 						<div className="image-wrapper">

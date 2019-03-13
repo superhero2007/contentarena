@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import cloneDeep from "lodash/cloneDeep";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
+import Loader from "@components/Loader/Loader";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	CONTENT_DELIVERY,
@@ -13,7 +14,7 @@ import {
 	COMMENTARY,
 	CAMERA,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
-import { updateSinglePropertyByKeyValue } from "../actions/propertyActions";
+import { updateRightDetails } from "../actions/propertyActions";
 import { getRightsValue, hasRightComment, getDedicatedRigths } from "../helpers/PropertyDetailsHelper";
 
 class PropertyDetailsProductionTab extends Component {
@@ -34,16 +35,9 @@ class PropertyDetailsProductionTab extends Component {
 		}));
 	};
 
-	handleEditProductions = () => this.setState(state => ({ disableEditRight: !state.disableEditRight }));
-
-	handleApplyProductionsChanges = () => {
-		const { rights } = this.state;
-		this.handleEditProductions();
-		this.props.updateRights("rights", rights);
-	};
-
 	handleRightUpdate = (rights) => {
 		this.setState({ rights });
+		this.props.updateRights("rights", rights);
 	};
 
 	render() {
@@ -51,19 +45,20 @@ class PropertyDetailsProductionTab extends Component {
 			disableEditRight, isModalOpen, config, rights,
 		} = this.state;
 
+		const {
+			loading,
+		} = this.props;
+
 		if (rights.length === 0) return null;
 		const firstRight = first(rights);
 		const dedicatedRights = getDedicatedRigths(rights);
 
 		return (
 			<section className="property-production-tab">
-				<div className="title-property-tab">
-					<div className="title-wrapper">
-						<span className="title"><Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TITLE" /></span>
-						<span className="sub-title"><Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TEXT" /></span>
-					</div>
-					<i className="fa fa-pencil-square-o" onClick={this.handleEditProductions} />
-				</div>
+				<h6>
+					<Translate i18nKey="PROPERTY_DETAILS_PRODUCTION_TAB_TEXT" />
+				</h6>
+
 				{isModalOpen && (
 					<PropertyRightsProductionModal
 						isOpen={isModalOpen}
@@ -73,14 +68,13 @@ class PropertyDetailsProductionTab extends Component {
 						onUpdate={this.handleRightUpdate}
 					/>
 				)}
-				<div className="row">
+				<div className="row" style={{ marginTop: 20 }}>
 					<li className="item">
 						<label><Translate i18nKey="RIGHTS_CONTENT_DELIVERY" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(CONTENT_DELIVERY, rights, this.context)}
 								onClick={() => this.handleModal(CONTENT_DELIVERY)}
 							/>
@@ -93,36 +87,33 @@ class PropertyDetailsProductionTab extends Component {
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(TECHNICAL_DELIVERY, dedicatedRights, this.context)}
 								onClick={() => this.handleModal(TECHNICAL_DELIVERY)}
 							/>
 							{hasRightComment(firstRight, TECHNICAL_DELIVERY.key) && <i className="fa fa-commenting-o" />}
 						</div>
 					</li>
-				</div>
-
-				<div className="row">
 					<li className="item">
 						<label><Translate i18nKey="RIGHTS_GRAPHICS" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(GRAPHICS, dedicatedRights, this.context)}
 								onClick={() => this.handleModal(GRAPHICS)}
 							/>
 							{hasRightComment(firstRight, GRAPHICS.key) && <i className="fa fa-commenting-o" />}
 						</div>
 					</li>
+				</div>
+
+				<div className="row">
 					<li className="item">
 						<label><Translate i18nKey="RIGHTS_ASPECT_RATIO" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(ASPECT_RATIO, dedicatedRights, this.context)}
 								onClick={() => this.handleModal(ASPECT_RATIO)}
 							/>
@@ -135,23 +126,18 @@ class PropertyDetailsProductionTab extends Component {
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(COMMENTARY, dedicatedRights, this.context)}
 								onClick={() => this.handleModal(COMMENTARY)}
 							/>
 							{hasRightComment(firstRight, COMMENTARY.key) && <i className="fa fa-commenting-o" />}
 						</div>
 					</li>
-				</div>
-
-				<div className="row">
 					<li className="item">
 						<label><Translate i18nKey="RIGHTS_CAMERA" /></label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(CAMERA, dedicatedRights, this.context)}
 								onClick={() => this.handleModal(CAMERA)}
 							/>
@@ -160,16 +146,7 @@ class PropertyDetailsProductionTab extends Component {
 					</li>
 				</div>
 
-				{!disableEditRight && (
-					<div className="buttons">
-						<button
-							className="yellow-button centered-btn"
-							onClick={this.handleApplyProductionsChanges}
-						>
-							<Translate i18nKey="Apply" />
-						</button>
-					</div>
-				)}
+				{loading && <Loader xSmall loading />}
 			</section>
 		);
 	}
@@ -181,10 +158,11 @@ PropertyDetailsProductionTab.contextTypes = {
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
+	loading: state.propertyDetails.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-	updateRights: (key, value) => dispatch(updateSinglePropertyByKeyValue(key, value)),
+	updateRights: (key, value) => dispatch(updateRightDetails(key, value)),
 });
 
 export default connect(

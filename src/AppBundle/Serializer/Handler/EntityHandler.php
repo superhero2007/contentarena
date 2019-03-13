@@ -51,6 +51,18 @@ class EntityHandler implements SubscribingHandlerInterface
             'format' => 'json',
             'method' => 'serializeTerritoryEntity',
         ];
+        $methods[] = [
+            'type' => "JsObject",
+            'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+            'format' => 'json',
+            'method' => 'deserializeJsObject',
+        ];
+        $methods[] = [
+            'type' => "JsObject",
+            'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
+            'format' => 'json',
+            'method' => 'serializeJsObject',
+        ];
         return $methods;
     }
 
@@ -234,4 +246,28 @@ class EntityHandler implements SubscribingHandlerInterface
 
         return $entityManager;
     }
+
+    /**
+     * @param VisitorInterface $visitor
+     * @param $entity
+     * @param array $type
+     * @param Context $context
+     * @return mixed
+     */
+    public function serializeJsObject(VisitorInterface $visitor, $entity, array $type, Context $context)
+    {
+        return json_decode($entity);
+    }
+
+    /**
+     * @param GenericDeserializationVisitor $visitor
+     * @param null|object $item
+     * @param array $type
+     * @return null|object
+     */
+    public function deserializeJsObject(GenericDeserializationVisitor $visitor, $item, array $type)
+    {
+        return json_encode($item);
+    }
+
 }

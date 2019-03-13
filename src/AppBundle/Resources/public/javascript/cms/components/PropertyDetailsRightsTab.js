@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cloneDeep from "lodash/cloneDeep";
+import Loader from "@components/Loader/Loader";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
@@ -14,7 +15,7 @@ import {
 	RESERVED_RIGHTS,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
 import { getRightsValue, hasRightComment } from "../helpers/PropertyDetailsHelper";
-import { updateSinglePropertyByKeyValue } from "../actions/propertyActions";
+import { updateRightDetails, updateSinglePropertyByKeyValue } from "../actions/propertyActions";
 
 class PropertyDetailsRightsTab extends Component {
 	constructor(props) {
@@ -27,8 +28,6 @@ class PropertyDetailsRightsTab extends Component {
 		};
 	}
 
-	handleEditRights = () => this.setState(state => ({ disableEditRight: !state.disableEditRight }));
-
 	handleModal = (config = "") => {
 		this.setState(state => ({
 			isModalOpen: !state.isModalOpen,
@@ -36,33 +35,28 @@ class PropertyDetailsRightsTab extends Component {
 		}));
 	};
 
-	handleApplyRightChanges = () => {
-		const { rights } = this.state;
-		this.handleEditRights();
-		this.props.updateRights("rights", rights);
-	};
-
 	handleRightUpdate = (rights) => {
 		this.setState({ rights });
+		this.props.updateRights("rights", rights);
 	};
 
 	render() {
 		const {
-			disableEditRight, isModalOpen, config, rights,
+			isModalOpen, config, rights,
 		} = this.state;
+
+		const {
+			loading,
+		} = this.props;
 
 		if (rights.length === 0) return null;
 		const firstRight = first(rights);
 
 		return (
 			<section className="property-rights-tab">
-				<div className="title-property-tab">
-					<div className="title-wrapper">
-						<span className="title"><Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TITLE" /></span>
-						<span className="sub-title"><Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" /></span>
-					</div>
-					<i className="fa fa-pencil-square-o" onClick={this.handleEditRights} />
-				</div>
+				<h6>
+					<Translate i18nKey="PROPERTY_DETAILS_RIGHT_TAB_TEXT" />
+				</h6>
 
 				{isModalOpen && (
 					<PropertyRightsProductionModal
@@ -74,14 +68,15 @@ class PropertyDetailsRightsTab extends Component {
 					/>
 				)}
 
-				<div className="row">
+				<div className="row" style={{ marginTop: 20 }}>
 					<li className="item">
-						<label>{SUBLICENSE.name}</label>
+						<label>
+							{SUBLICENSE.name}
+						</label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(SUBLICENSE, rights, this.context)}
 								onClick={() => this.handleModal(SUBLICENSE)}
 							/>
@@ -89,12 +84,13 @@ class PropertyDetailsRightsTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label><Translate i18nKey="RIGHTS_BROADCASTING" /></label>
+						<label>
+							<Translate i18nKey="RIGHTS_BROADCASTING" />
+						</label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(BROADCASTING, rights, this.context)}
 								onClick={() => this.handleModal(BROADCASTING)}
 							/>
@@ -102,12 +98,13 @@ class PropertyDetailsRightsTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{EXPLOITATION_FORM.name}</label>
+						<label>
+							{EXPLOITATION_FORM.name}
+						</label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(EXPLOITATION_FORM, rights, this.context)}
 								onClick={() => this.handleModal(EXPLOITATION_FORM)}
 							/>
@@ -118,12 +115,13 @@ class PropertyDetailsRightsTab extends Component {
 
 				<div className="row">
 					<li className="item">
-						<label><Translate i18nKey="RIGHTS_TRANSMISSION_MEANS" /></label>
+						<label>
+							<Translate i18nKey="RIGHTS_TRANSMISSION_MEANS" />
+						</label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(TRANSMISSION_MEANS, rights, this.context)}
 								onClick={() => this.handleModal(TRANSMISSION_MEANS)}
 							/>
@@ -131,12 +129,13 @@ class PropertyDetailsRightsTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label>{LICENSED_LANGUAGES.name}</label>
+						<label>
+							{LICENSED_LANGUAGES.name}
+						</label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(LICENSED_LANGUAGES, rights, this.context)}
 								onClick={() => this.handleModal(LICENSED_LANGUAGES)}
 							/>
@@ -144,12 +143,13 @@ class PropertyDetailsRightsTab extends Component {
 						</div>
 					</li>
 					<li className="item">
-						<label><Translate i18nKey="RIGHTS_RESERVED_RIGHTS" /></label>
+						<label>
+							<Translate i18nKey="RIGHTS_RESERVED_RIGHTS" />
+						</label>
 						<div className="input-wrapper">
 							<input
 								readOnly
 								type="text"
-								disabled={disableEditRight}
 								value={getRightsValue(RESERVED_RIGHTS, rights, this.context)}
 								onClick={() => this.handleModal(RESERVED_RIGHTS)}
 							/>
@@ -158,11 +158,8 @@ class PropertyDetailsRightsTab extends Component {
 					</li>
 				</div>
 
-				{!disableEditRight && (
-					<div className="buttons">
-						<button className="yellow-button centered-btn" onClick={this.handleApplyRightChanges}><Translate i18nKey="Apply" /></button>
-					</div>
-				)}
+				{loading && <Loader xSmall loading />}
+
 			</section>
 		);
 	}
@@ -174,10 +171,11 @@ PropertyDetailsRightsTab.contextTypes = {
 
 const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
+	loading: state.propertyDetails.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-	updateRights: (key, value) => dispatch(updateSinglePropertyByKeyValue(key, value)),
+	updateRights: (key, value) => dispatch(updateRightDetails(key, value)),
 });
 
 export default connect(
