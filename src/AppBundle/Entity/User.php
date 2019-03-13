@@ -304,7 +304,7 @@ class User extends BaseUser
      */
     public function getFirstName()
     {
-        return "asdasd" . $this->firstName;
+        return $this->firstName;
     }
 
     /**
