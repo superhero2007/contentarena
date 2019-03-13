@@ -38,6 +38,14 @@
       justify-content: center;
     }
   }
+  .cl_buttons{
+    min-height: 120px;
+    margin: 0;
+    .buttons-container {
+      margin: 30px;
+      min-height: 60px;
+    }
+  }
 }
 
 .section-container{

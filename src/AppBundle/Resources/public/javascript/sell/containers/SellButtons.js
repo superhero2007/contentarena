@@ -322,7 +322,7 @@ class SellButtons extends Component {
 		const isButtonDisabled = (step === 1 && !this.step1Enabled()) || (step === 2 && !this.step2Enabled()) || (step === 3 && !this.step3Enabled()) || (cantReviewAndSign);
 
 		return (
-			<div className="buttons">
+			<div className="buttons cl_buttons">
 				{step < lastStep && (
 					<div className="buttons-container step-1 step-2">
 						<button
