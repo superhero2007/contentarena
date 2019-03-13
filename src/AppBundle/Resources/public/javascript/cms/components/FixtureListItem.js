@@ -1,26 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Moment from "moment/moment";
+import Loader from "@components/Loader/Loader";
 import { DATE_FORMAT, TIME_FORMAT, TIME_ZONE } from "../../common/constants";
 import ConfirmationTooltip from "../../common/components/Tooltips/ConfirmationTooltip";
-import FixtureForm from "./FixtureForm";
 
 class FixtureListItem extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showConfirmationTooltip: false,
-			showEdit: false,
 		};
 	}
 
 	onUpdateFixture = (fixture) => {
 		const {
-			onUpdateFixture,
+			onEditFixture,
 		} = this.props;
 
-		this.setState({ showEdit: false });
-		onUpdateFixture(fixture);
+		onEditFixture(fixture);
 	};
 
 	onRemoveFixture = (confirmed) => {
@@ -28,73 +26,77 @@ class FixtureListItem extends React.Component {
 			onRemoveFixture,
 		} = this.props;
 
-		this.setState({ showConfirmationTooltip: false });
-		if (confirmed) onRemoveFixture();
+		this.setState({
+			showConfirmationTooltip: false,
+		});
+
+		if (confirmed) {
+			this.setState({
+				showLoading: true,
+			});
+			onRemoveFixture();
+		}
 	};
 
 	render() {
 		const {
 			name = "Fixture name",
 			round = "Round",
-			date = new Date(),
+			date,
+			time,
+			timezone = "UTC",
 		} = this.props;
 
 		const {
 			showConfirmationTooltip,
-			showEdit,
+			showLoading,
 		} = this.state;
 
 		return (
-			<>
-				{
-					showEdit
-					&& (
-						<FixtureForm
-							fixture={{ round, name, date }}
-							onUpdate={this.onUpdateFixture}
+			<section className="fixture-item-wrapper">
+				<div className="fixture-item-round">
+					{round}
+					{!round && "-"}
+				</div>
+				<div className="fixture-item-name">
+					{name}
+				</div>
+				<div className="fixture-item-date">
+					<i className="fa fa-calendar" />
+					{date && Moment(date).format(DATE_FORMAT)}
+					{!date && "N/A"}
+				</div>
+				<div className="fixture-item-time">
+					<i className="fa fa-clock-o" />
+					{time}
+					{!time && "N/A"}
+				</div>
+				<div className="fixture-item-timezone">
+					{date && timezone}
+					{!date && "N/A"}
+				</div>
+				<div className="fixture-item-actions">
+					{!showLoading && (
+						<i
+							className="fa fa-edit"
+							onClick={this.onUpdateFixture}
 						/>
-					)
-				}
-				{
-					!showEdit
-					&& (
-						<section className="fixture-item-wrapper">
-							<div className="fixture-item-round">
-								{round}
-							</div>
-							<div className="fixture-item-name">
-								{name}
-							</div>
-							<div className="fixture-item-date">
-								<i className="fa fa-calendar" />
-								{Moment(date).format(DATE_FORMAT)}
-							</div>
-							<div className="fixture-item-time">
-								<i className="fa fa-clock-o" />
-								{`${Moment(date).format(TIME_FORMAT)} ${TIME_ZONE}`}
-							</div>
-							<div className="fixture-item-actions">
-								<i
-									className="fa fa-edit"
-									onClick={() => {
-										this.setState({ showEdit: true });
-									}}
-								/>
-								<i
-									className="fa fa-trash"
-									onClick={() => {
-										this.setState({ showConfirmationTooltip: true });
-									}}
-								/>
-							</div>
-							<ConfirmationTooltip
-								isOpen={showConfirmationTooltip}
-								onConfirm={this.onRemoveFixture}
-							/>
-						</section>
-					)
-				}
-			</>
+					)}
+					{!showLoading && (
+						<i
+							className="fa fa-trash"
+							onClick={() => {
+								this.setState({ showConfirmationTooltip: true });
+							}}
+						/>
+					)}
+					{showLoading && <Loader xSmall loading />}
+				</div>
+				<ConfirmationTooltip
+					isOpen={showConfirmationTooltip}
+					onConfirm={this.onRemoveFixture}
+				/>
+			</section>
 		);
 	}
 }

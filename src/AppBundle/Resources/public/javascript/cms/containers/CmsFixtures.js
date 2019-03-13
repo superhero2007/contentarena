@@ -2,141 +2,175 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
+import Loader from "@components/Loader/Loader";
 import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import EmptyFixture from "../components/EmptyScreens/EmptyFixture";
 import FixtureList from "./FixturesList";
 import FixtureForm from "../components/FixtureForm";
+import api from "../../api";
+import { fetchPropertySuccess, startFetchingPropertyDetails } from "../actions/propertyActions";
 
 
 class CmsFixtures extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
-			loading: false,
-			create: false,
+			saving: false,
 			fixtures: [],
 		};
 	}
 
 	componentDidMount() {}
 
+	getSeasonSelected() {
+		const { propertyFilters: { seasons }, property } = this.props;
+		return (seasons.length) ? seasons[0] : property.seasons.length ? property.seasons[0] : null;
+	}
+
 	showCreateFixture = () => {
 		this.setState({ create: true });
 	};
 
 	onCreateFixture = (fixture) => {
-		this.setState(prevState => ({
-			fixtures: [...prevState.fixtures, fixture],
-			create: false,
-		}));
+		const season = this.getSeasonSelected();
+		const { property } = this.props;
+
+		this.setState({ saving: true });
+
+		api.fixtures.createFixture({
+			seasonId: season.id,
+			propertyId: property.id,
+			fixture,
+
+		})
+			.then((response) => {
+				this.props.startFetchingPropertyDetails();
+				this.props.fetchPropertySuccess(response.data);
+				this.setState({
+					isSuccess: true,
+					isFail: false,
+				});
+			})
+			.catch(() => {
+				this.setState({ isFail: true });
+			})
+			.finally(() => {
+				this.setState({ saving: false });
+			});
 	};
 
-	onUpdateFixture = (fixture, i) => {
-		this.setState((prevState) => {
-			const fixtures = [...prevState.fixtures];
-			fixtures[i] = fixture;
-			return {
-				fixtures,
-				create: false,
-			};
+	onEditFixture = (fixture) => {
+		this.setState({
+			selectedFixture: fixture,
 		});
 	};
 
-	onRemoveFixture = (index) => {
-		this.setState((prevState) => {
-			const fixtures = [...prevState.fixtures];
-			fixtures.splice(index, 1);
-			return {
-				fixtures,
-			};
-		});
+	onUpdateFixture = (fixture) => {
+		this.setState({ saving: true, selectedFixture: null });
+
+		api.fixtures.updateFixture({ fixture }).then((response) => {
+			this.props.startFetchingPropertyDetails();
+			this.props.fetchPropertySuccess(response.data);
+			this.setState({
+				isSuccess: true,
+				isFail: false,
+			});
+		})
+			.catch(() => {
+				this.setState({ isFail: true });
+			})
+			.finally(() => {
+				this.setState({ saving: false });
+			});
+	};
+
+	onRemoveFixture = (fixture) => {
+		api.fixtures.removeFixture({ fixture }).then((response) => {
+			this.props.startFetchingPropertyDetails();
+			this.props.fetchPropertySuccess(response.data);
+			this.forceUpdate();
+			this.setState({
+				isSuccess: true,
+				isFail: false,
+			});
+		})
+			.catch(() => {
+				this.setState({ isFail: true });
+			})
+			.finally(() => {
+				this.setState({ saving: false });
+			});
 	};
 
 	render() {
 		const {
-			create,
-			fixtures,
+			saving,
+			selectedFixture,
 		} = this.state;
 
 		const { property } = this.props;
+		const season = this.getSeasonSelected();
 
 		return (
 			<section className="fixture-tab region-filter">
-				<div className="region-filter-title">
+				<h5>
 					<Translate i18nKey="CMS_FIXTURES_TITLE" />
-				</div>
-				<div className="fixture-tab-description">
+				</h5>
+				<h6>
 					<Translate i18nKey="CMS_FIXTURES_DESCRIPTION" />
-				</div>
-				<CmsSeasonsFilter property={property} />
+				</h6>
 
-				{
-					property.seasons.length > 0
-					&& (
-						<>
-							<div className="region-filter-title">
-								<Translate i18nKey="CMS_FIXTURES" />
-							</div>
-							{
-								fixtures.length === 0 && !create
-								&& (
-									<EmptyFixture onCreate={this.showCreateFixture} />
-								)
+				{season && (
+					<>
+						<CmsSeasonsFilter property={property} singleOption />
+						<div className="region-filter-title">
+							<Translate i18nKey="CMS_FIXTURES" />
+						</div>
+						{season.fixtures.length > 0 && (
+							<section className="fixture-item-wrapper no-border no-padding">
+								<div className="fixture-item-round fixture-title">
+									<Translate i18nKey="CMS_FIXTURES_TABLE_ROUND" />
+								</div>
+								<div className="fixture-item-name fixture-title">
+									<Translate i18nKey="CMS_FIXTURES_TABLE_NAME" />
+								</div>
+								<div className="fixture-item-date fixture-title">
+									<Translate i18nKey="CMS_FIXTURES_TABLE_DATE" />
+								</div>
+								<div className="fixture-item-time fixture-title">
+									<Translate i18nKey="CMS_FIXTURES_TABLE_TIME" />
+								</div>
+								<div className="fixture-item-timezone fixture-title">
+									<Translate i18nKey="CMS_FIXTURES_TABLE_TIME_ZONE" />
+								</div>
+								<div className="fixture-item-actions" />
+							</section>
+						)}
 
-							}
+						{season.fixtures.length === 0 && (
+							<Translate i18nKey="CMS_FIXTURES_NO_FIXTURES" />
+						)}
 
-							{
-								(fixtures.length > 0 || create)
-								&& (
-									<section className="fixture-item-wrapper no-border no-padding">
-										<div className="fixture-item-round fixture-title">
-											<Translate i18nKey="CMS_FIXTURES_TABLE_ROUND" />
-										</div>
-										<div className="fixture-item-name fixture-title">
-											<Translate i18nKey="CMS_FIXTURES_TABLE_NAME" />
-										</div>
-										<div className="fixture-item-date fixture-title">
-											<Translate i18nKey="CMS_FIXTURES_TABLE_DATE" />
-										</div>
-										<div className="fixture-item-time fixture-title">
-											<Translate i18nKey="CMS_FIXTURES_TABLE_TIME" />
-										</div>
-										<div className="fixture-item-actions" />
-									</section>
-								)
-							}
+						{season.fixtures.length > 0 && (
+							<FixtureList
+								fixtures={season.fixtures}
+								onRemoveFixture={this.onRemoveFixture}
+								onEditFixture={this.onEditFixture}
+							/>
+						)}
 
-							{
-								fixtures.length > 0
-								&& (
-									<FixtureList
-										fixtures={fixtures}
-										onRemoveFixture={this.onRemoveFixture}
-										onUpdateFixture={this.onUpdateFixture}
-									/>
-								)
-							}
+						{saving && <Loader xSmall loading />}
 
-							{
-								create
-								&& (
-									<FixtureForm onUpdate={this.onCreateFixture} />
-								)
-							}
+						<FixtureForm
+							onCreate={this.onCreateFixture}
+							onUpdate={this.onUpdateFixture}
+							fixture={selectedFixture}
+						/>
+					</>
+				)}
 
-							{
-								!create && fixtures.length > 0
-								&& (
-									<div className="empty-property-tab">
-										<a className="ca-btn primary" onClick={this.showCreateFixture}>
-											<Translate i18nKey="CMS_EMPTY_FIXTURE_CREATE_FIXTURE" />
-										</a>
-									</div>
-								)
-							}
-						</>
-					)
-				}
+				{!season && <EmptyFixture onCreate={this.showCreateFixture} />}
 
 			</section>
 		);
@@ -153,7 +187,13 @@ const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
 });
 
+const mapDispatchToProps = dispatch => ({
+	fetchPropertySuccess: property => dispatch(fetchPropertySuccess(property)),
+	startFetchingPropertyDetails: () => dispatch(startFetchingPropertyDetails()),
+});
+
+
 export default connect(
 	mapStateToProps,
-	null,
+	mapDispatchToProps,
 )(CmsFixtures);

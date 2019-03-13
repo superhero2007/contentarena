@@ -77,16 +77,11 @@ class Season
      */
     private $userSeason = false;
 
-
     /**
-     * Get id
-     *
-     * @return int
+     * @Groups({"property"})
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $fixtures = array();
+
 
     /**
      * Set name
@@ -100,6 +95,16 @@ class Season
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -219,6 +224,22 @@ class Season
     public function setUserSeason($userSeason)
     {
         $this->userSeason = $userSeason;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFixtures()
+    {
+        return $this->fixtures;
+    }
+
+    /**
+     * @param mixed $fixtures
+     */
+    public function setFixtures($fixtures)
+    {
+        $this->fixtures = $fixtures;
     }
 
 

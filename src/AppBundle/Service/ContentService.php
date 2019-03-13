@@ -247,7 +247,7 @@ class ContentService
         return $content;
     }
 
-    public function getPropertyListings(Property $property, User $user) {
+    public function getPropertyListings(Property $property) {
         $listings = $this->em->getRepository('AppBundle:Content')->getPropertyListings($property);
 
         foreach ($listings as $listing){

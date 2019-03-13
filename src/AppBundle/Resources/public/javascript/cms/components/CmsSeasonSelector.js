@@ -194,7 +194,7 @@ class CmsSeasonSelector extends React.Component {
 									<SeasonYear {...season} />
 								</label>
 								{custom && (
-									<span className="remove-season" onClick={() => { this.removeCustomSeason(index); }}>
+									<span className="remove-icon-button" onClick={() => { this.removeCustomSeason(index); }}>
 										<i className="fa fa-times-circle" />
 									</span>
 								)}

@@ -208,16 +208,16 @@ class CmsCustomSeason extends React.Component {
 						)}
 						{fullYear && fullYear}
 					</div>
-					<span className="remove-season" onClick={onDelete}>
+					<span className="remove-icon-button" onClick={onDelete}>
 						<i className="fa fa-times-circle" />
 					</span>
 					{!dateIsValid && (
-						<span className="remove-season disabled">
+						<span className="remove-icon-button disabled">
 							<i className="fa fa-check-circle" />
 						</span>
 					)}
 					{dateIsValid && (
-						<span className="remove-season" onClick={this.confirm}>
+						<span className="remove-icon-button" onClick={this.confirm}>
 							<i className="fa fa-check-circle" />
 						</span>
 					)}

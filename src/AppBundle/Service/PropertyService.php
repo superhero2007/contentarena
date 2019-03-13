@@ -8,6 +8,7 @@ use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\SalesPackage;
+use AppBundle\Entity\Season;
 use AppBundle\Entity\User;
 use AppBundle\Enum\BidStatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,11 +94,13 @@ class PropertyService
      * @param User $user
      * @return Property|null|object
      */
-    public function getPropertyDetails($property, User $user){
-        $listings = $this->contentService->getPropertyListings($property, $user);
+    public function getPropertyDetails($property){
+        $listings = $this->contentService->getPropertyListings($property);
+        $fixturesRepo = $this->em->getRepository("AppBundle:Fixture");
         $totalOpenBids = 0;
         $totalClosedBids = 0;
         $totalDeclinedBids = 0;
+        $seasons = $property->getSeasons();
 
         foreach ( $listings as $key => $listing ){
             /* @var $listing Content */
@@ -127,6 +130,19 @@ class PropertyService
 
         }
 
+        foreach ($seasons as $season){
+
+            /* @var Season $season*/
+
+            $fixtures = $fixturesRepo->findBy(array(
+                "season" => $season,
+                "property" => $property
+            ));
+
+            if ( $fixtures != null ) $season->setFixtures($fixtures);
+        }
+
+        $property->setSeasons($seasons);
         $property->setListings($listings);
         $property->setClosedBids($totalClosedBids);
         $property->setOpenBids($totalOpenBids);

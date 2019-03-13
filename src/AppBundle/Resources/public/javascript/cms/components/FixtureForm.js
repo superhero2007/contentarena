@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Moment from "moment/moment";
 import DatePicker from "@components/DatePicker";
+import TimezonePicker from "react-timezone";
 import Translate from "@components/Translator/Translate";
 import { DATE_FORMAT, TIME_FORMAT, TIME_ZONE } from "../../common/constants";
 
@@ -17,31 +18,86 @@ class FixtureForm extends React.Component {
 			name: fixture.name || "",
 			round: fixture.round || "",
 			date: fixture.date || null,
+			time: fixture.time || null,
+			timezone: fixture.timezone || null,
 		};
+	}
+
+	componentWillReceiveProps(props) {
+		if (!props.fixture) return;
+
+		const {
+			name, round, date, time, timezone, id,
+		} = props.fixture;
+		this.setState({
+			name,
+			round,
+			date: (date) ? Moment(date) : null,
+			time,
+			timezone,
+			id,
+		});
 	}
 
 	create = () => {
 		const {
-			name,
-			round,
-			date,
+			name, round, date, time, timezone, id,
 		} = this.state;
 
-		this.props.onUpdate({ name, round, date });
+		if (id) {
+			this.props.onUpdate({
+				name, round, date, time, timezone, id,
+			});
+		} else {
+			this.props.onCreate({
+				name, round, date, time, timezone,
+			});
+		}
+
+		this.reset();
+	};
+
+	reset = () => {
+		this.setState({
+			name: "",
+			round: "",
+			date: null,
+			time: null,
+			timezone: null,
+			id: null,
+		});
 	};
 
 	handleStartDate = (value) => {
 		this.setState({ date: value });
 	};
 
+	handleStartTime = (value) => {
+		this.setState({ time: value.format(TIME_FORMAT) });
+	};
+
 	applyIsDisabled = () => {
+		const {
+			name,
+		} = this.state;
+
+		return name === "";
+	};
+
+	removeIsDisabled = () => {
 		const {
 			name,
 			round,
 			date,
+			time,
+			timezone,
 		} = this.state;
 
-		return name === "" || round === "" || date === null;
+		return name === ""
+			&& round === ""
+			&& date === null
+			&& time === null
+			&& timezone === null;
 	};
 
 	render() {
@@ -49,7 +105,11 @@ class FixtureForm extends React.Component {
 			name,
 			round,
 			date,
+			time,
+			timezone,
 		} = this.state;
+
+		const timeObj = (time) ? Moment(time, TIME_FORMAT) : null;
 
 		return (
 			<>
@@ -85,8 +145,8 @@ class FixtureForm extends React.Component {
 					<div className="fixture-item-time">
 						<DatePicker
 							className="date-picker"
-							selected={date}
-							onChange={this.handleStartDate}
+							selected={timeObj}
+							onChange={this.handleStartTime}
 							showTimeSelect
 							showTimeSelectOnly
 							timeIntervals={5}
@@ -96,17 +156,42 @@ class FixtureForm extends React.Component {
 							timeCaption="Select Time"
 						/>
 					</div>
-					<div className="fixture-item-actions">
-						{TIME_ZONE}
+					<div className="fixture-item-timezone">
+						<TimezonePicker
+							value={timezone}
+							onChange={timezone => this.setState({ timezone })}
+							inputProps={{
+								placeholder: "Select Timezone...",
+								name: "timezone",
+							}}
+						/>
 					</div>
+
+					{this.removeIsDisabled() && (
+						<span className="remove-icon-button disabled">
+							<i className="fa fa-times-circle" />
+						</span>
+					)}
+
+					{!this.removeIsDisabled() && (
+						<span className="remove-icon-button" onClick={this.reset}>
+							<i className="fa fa-times-circle" />
+						</span>
+					)}
+
+					{this.applyIsDisabled() && (
+						<span className="remove-icon-button disabled">
+							<i className="fa fa-check-circle" />
+						</span>
+					)}
+
+					{!this.applyIsDisabled() && (
+						<span className="remove-icon-button" onClick={this.create}>
+							<i className="fa fa-check-circle" />
+						</span>
+					)}
 				</section>
-				<button
-					className="ca-btn primary"
-					onClick={this.create}
-					disabled={this.applyIsDisabled()}
-				>
-					<Translate i18nKey="CMS_EMPTY_FIXTURE_CREATE_APPLY" />
-				</button>
+
 			</>
 		);
 	}

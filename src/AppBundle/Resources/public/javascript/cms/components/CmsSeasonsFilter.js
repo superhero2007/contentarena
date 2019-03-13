@@ -15,19 +15,37 @@ class CmsSeasonsFilter extends React.Component {
 	}
 
 	componentDidMount() {
-		this.selectAllSeasons();
+		const {
+			singleOption, setSeasons, property, propertyFilters: { seasons },
+		} = this.props;
+		if (singleOption) {
+			if (property.seasons.length && !seasons.length) {
+				setSeasons([property.seasons[0]]);
+			} else {
+				property.seasons.forEach((season) => {
+					if (season.id === seasons[0].id) setSeasons([season]);
+				});
+			}
+		} else {
+			this.selectAllSeasons();
+		}
 	}
 
 	handleChangeSeason = (season) => {
-		const seasons = cloneDeep(this.props.propertyFilters.seasons);
-
+		const { singleOption, setSeasons, propertyFilters: { seasons = [] } } = this.props;
+		const availableSeasons = cloneDeep(seasons);
 		const index = this.getSeasonIndex(season);
 
-		if (index === -1) {
-			seasons.push(season);
-		} else if (seasons.length > 1) seasons.splice(index, 1);
+		if (singleOption) {
+			setSeasons([season]);
+			return;
+		}
 
-		this.props.setSeasons(seasons);
+		if (index === -1) {
+			availableSeasons.push(season);
+		} else if (availableSeasons.length > 1) availableSeasons.splice(index, 1);
+
+		setSeasons(availableSeasons);
 	};
 
 	selectAllSeasons = () => {
@@ -49,18 +67,15 @@ class CmsSeasonsFilter extends React.Component {
 				</div>
 				<div className="regions">
 
-					{
-						seasons.length === 0
-						&& (
-							<button
-								key="no-season"
-								className="region"
-								disabled
-							>
+					{seasons.length === 0 && (
+						<button
+							key="no-season"
+							className="region"
+							disabled
+						>
 							Not available
-							</button>
-						)
-					}
+						</button>
+					)}
 
 					{seasons.map(season => (
 						<button

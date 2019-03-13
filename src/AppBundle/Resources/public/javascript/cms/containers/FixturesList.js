@@ -18,23 +18,23 @@ class FixturesList extends React.Component {
 			fixtures,
 			history,
 			onRemoveFixture,
-			onUpdateFixture,
+			onEditFixture,
 		} = this.props;
 
 		return (
-			<>
+			<div className="fixture-list">
 				{
 					fixtures.map((fixture, i) => (
 						<FixtureListItem
 							{...fixture}
 							key={`fixture-${i}`}
 							history={history}
-							onRemoveFixture={() => onRemoveFixture(i)}
-							onUpdateFixture={fixture => onUpdateFixture(fixture, i)}
+							onRemoveFixture={() => onRemoveFixture(fixture)}
+							onEditFixture={() => onEditFixture(fixture)}
 						/>
 					))
 				}
-			</>
+			</div>
 		);
 	}
 }
