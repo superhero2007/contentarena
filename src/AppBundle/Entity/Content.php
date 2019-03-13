@@ -845,7 +845,7 @@ class Content implements NotifiableInterface
      */
     public function setRightsPackage($rightsPackage)
     {
-        $this->rightsPackage = new ArrayCollection($rightsPackage);
+        $this->rightsPackage = $rightsPackage;
     }
 
     /**

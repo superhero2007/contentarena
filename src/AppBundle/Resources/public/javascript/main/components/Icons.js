@@ -39,12 +39,20 @@ export const greyMinusIcon = `${assetsBaseDir}app/images/rights/non-included.svg
 export const yellowCheckOutlined = `${assetsBaseDir}app/images/rights/yellow_check_outlined.svg`;
 export const blueCheckOutlined = `${assetsBaseDir}app/images/rights/blue_check_outlined.svg`;
 
-export const exclusiveRightAvailable = `${assetsBaseDir}app/images/rights/exclusive_right_available.svg`;
-export const nonExclusiveRightAvailable = `${assetsBaseDir}app/images/rights/non_exclusive_right_available.svg`;
-export const exclusiveRightOffered = `${assetsBaseDir}app/images/rights/exclusive_right_offered.svg`;
-export const nonExclusiveRightOffered = `${assetsBaseDir}app/images/rights/non_exclusive_right_offered.svg`;
-export const exclusiveRightSold = `${assetsBaseDir}app/images/rights/exclusive_right_sold.svg`;
-export const nonExclusiveRightSold = `${assetsBaseDir}app/images/rights/non_exclusive_right_sold.svg`;
+export const exclusiveRightAvailable = `${assetsBaseDir}app/images/rights/exclusive-available.png`;
+export const nonExclusiveRightAvailable = `${assetsBaseDir}app/images/rights/non-exclusive-available.png`;
+export const exclusiveRightOffered = `${assetsBaseDir}app/images/rights/exclusive-offered.png`;
+export const nonExclusiveRightOffered = `${assetsBaseDir}app/images/rights/non-exclusive-offered.png`;
+export const exclusiveRightSold = `${assetsBaseDir}app/images/rights/exclusive-sold.png`;
+export const nonExclusiveRightSold = `${assetsBaseDir}app/images/rights/non-exclusive-sold.png`;
+
+export const NonExclusiveRightAvailableIcon = () => (<img className="icon" src={nonExclusiveRightAvailable} alt="" />);
+export const NonExclusiveRightOfferedIcon = () => (<img className="icon" src={nonExclusiveRightOffered} alt="" />);
+export const NonExclusiveRightSoldIcon = () => (<img className="icon" src={nonExclusiveRightSold} alt="" />);
+export const ExclusiveRightAvailableIcon = () => (<img className="icon" src={exclusiveRightAvailable} alt="" />);
+export const ExclusiveRightOfferedIcon = () => (<img className="icon" src={exclusiveRightOffered} alt="" />);
+export const ExclusiveRightSoldIcon = () => (<img className="icon" src={exclusiveRightSold} alt="" />);
+
 
 // events
 export const tournamentIcon = <img src={`${assetsBaseDir}app/images/listing/trophy.svg`} alt="" />;

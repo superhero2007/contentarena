@@ -24,6 +24,7 @@ import {
 } from "../../main/components/Icons";
 import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
 import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
+import { getRightTableColumns } from "../helpers/PropertyHelper";
 
 class CommercialBidsTable extends React.Component {
 	constructor(props) {
@@ -88,7 +89,7 @@ class CommercialBidsTable extends React.Component {
 		return <span />;
 	};
 
-	getColumns = type => [{
+	getTitleColumns = () => [{
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_ID" />,
 		id: props => `custom-id-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
@@ -107,49 +108,10 @@ class CommercialBidsTable extends React.Component {
 		className: "table-header",
 		accessor: "list.name",
 		Cell: props => this.getCell(props),
-	}, {
-		Header: () => this.getHeader("HL", "Highlights"),
-		id: props => `hl-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "list.rightsPackage",
-		Cell: props => this.getRightCell(props, "HL"),
-	}, {
-		Header: () => this.getHeader("LT", "Live transmission"),
-		id: props => `lt-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "list.rightsPackage",
-		Cell: props => this.getRightCell(props, "LT"),
-	}, {
-		Header: () => this.getHeader("NA", "News access"),
-		id: props => `na-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "list.rightsPackage",
-		Cell: props => this.getRightCell(props, "NA"),
-	}, {
-		Header: () => this.getHeader("LB", "Live betting"),
-		id: props => `lb-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "list.rightsPackage",
-		Cell: props => this.getRightCell(props, "LB"),
-	}, {
-		Header: () => this.getHeader("DT", "Delayed & Archive"),
-		id: props => `dt-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "list.rightsPackage",
-		Cell: props => this.getRightCell(props, "DT"),
-	}, {
-		Header: () => this.getHeader("PR", "Program"),
-		id: props => `pr-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "list.rightsPackage",
-		Cell: props => this.getRightCell(props, "PR"),
-	}, {
+	}];
+
+
+	getDetailColumns = type => [{
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_TERRITORY" />,
 		id: props => `ter-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
@@ -256,6 +218,9 @@ class CommercialBidsTable extends React.Component {
 		const {
 			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId,
 		} = this.state;
+
+		const columns = [...this.getTitleColumns(), ...getRightTableColumns("list.rightsPackage"), ...this.getDetailColumns(type)];
+
 		return (
 			<section className="property-listing-wrapper">
 				{approveModalIsOpen && (
@@ -286,7 +251,7 @@ class CommercialBidsTable extends React.Component {
 					multiSort={false}
 					resizable={false}
 					data={listings}
-					columns={this.getColumns(type)}
+					columns={columns}
 				/>
 				<ReactTooltip place="top" type="dark" effect="solid" />
 			</section>
