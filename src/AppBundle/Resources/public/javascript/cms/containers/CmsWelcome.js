@@ -6,6 +6,7 @@ import cn from "classnames";
 import Loader from "../../common/components/Loader";
 import SearchCompetition from "../../main/components/SearchCompetition";
 import { DefaultBox } from "../../common/components/Containers";
+import { ROUTE_PATHS } from "../../main/routes";
 
 class CmsWelcome extends React.Component {
 	constructor(props) {
@@ -45,7 +46,7 @@ class CmsWelcome extends React.Component {
 
 					<p>
 						{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}
-						<a>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
+						<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
 					</p>
 				</DefaultBox>
 

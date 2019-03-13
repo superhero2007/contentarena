@@ -94,17 +94,57 @@
     @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
 
     ul.form-items {
+
       list-style-type: none;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       flex-flow: row wrap;
-      margin: 0;
+      margin: 20px 0;
       padding: 0;
       justify-content: space-between;
+      &:after{
+        content: "";
+        flex: 1 0 32%;
+        max-width: 32%;
+      }
       li {
         flex: 1 0 32%;
         max-width: 32%;
+        position: relative;
+        .item-tools {
+          position: absolute;
+          bottom: 39px;
+          right: 5px;
+          align-items: flex-end;
+          display: flex;
+          justify-content: flex-end;
+          width: 20px;
+          cursor: pointer;
+          .fa{
+            font-size: 26px;
+            margin-right: 5px;
+          }
+        }
+        .date-select{
+          display: flex;
+          justify-content: space-between;
+          select {
+            max-width: 45%;
+            margin: 20px 0 30px;
+            border-radius: 0;
+            -webkit-appearance: none;
+            -webkit-border-radius: 0px;
+          }
+        }
+        &.small-item{
+          display: flex;
+          justify-content: space-between;
+        }
+        .small-item-container{
+          width: 48%;
+        }
+
       }
     }
 
@@ -437,6 +477,8 @@
 
   input{
     margin-top: 20px;
+    height: 45px;
+    margin-bottom: 30px;
   }
 
   input:disabled{

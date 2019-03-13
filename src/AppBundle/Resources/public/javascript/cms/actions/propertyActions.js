@@ -28,3 +28,30 @@ export const setCustomSeasonName = (index, seasonName) => ({
 	index,
 	seasonName
 });
+
+export const removeNewSport = index => ({
+	type: "REMOVE_NEW",
+	index,
+	selectorType: "sports",
+	clean: ["tournament", "sportCategory", "seasons"],
+});
+
+export const removeNewTournament = index => ({
+	type: "REMOVE_NEW",
+	index,
+	selectorType: "tournament",
+	clean: ["seasons"],
+});
+
+export const removeNewCategory = index => ({
+	type: "REMOVE_NEW",
+	index,
+	selectorType: "sportCategory",
+	clean: ["tournament", "seasons"],
+});
+
+export const removeNewSeason = index => ({
+	type: "REMOVE_NEW",
+	index,
+	selectorType: "seasons",
+});

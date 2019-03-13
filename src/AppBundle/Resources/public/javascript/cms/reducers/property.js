@@ -1,3 +1,5 @@
+import { contentType } from "../../sell/reducers/content";
+
 export const propertyTypes = {
 	SET_PROPERTY_CONFIG: "SET_PROPERTY_CONFIG",
 	APPLY_SELECTION: "APPLY_SELECTION",
@@ -6,7 +8,10 @@ export const propertyTypes = {
 	SET_CUSTOM_SPORT_NAME: "SET_CUSTOM_SPORT_NAME",
 	SET_CUSTOM_SPORT_CATEGORY_NAME: "SET_CUSTOM_SPORT_CATEGORY_NAME",
 	SET_CUSTOM_TOURNAMENT_NAME: "SET_CUSTOM_TOURNAMENT_NAME",
-	SET_CUSTOM_SEASON_NAME: "SET_CUSTOM_SEASON_NAME"
+	SET_CUSTOM_SEASON_NAME: "SET_CUSTOM_SEASON_NAME",
+	UPDATE_FROM_MULTIPLE: "UPDATE_FROM_MULTIPLE",
+	ADD_SEASON: "ADD_SEASON",
+	REMOVE_SEASON: "REMOVE_SEASON",
 };
 
 const DEFAULT_STATE = {
@@ -19,6 +24,11 @@ const DEFAULT_STATE = {
 export const property = (state = DEFAULT_STATE, action) => {
 	let newState = {};
 	switch (action.type) {
+		case propertyTypes.UPDATE_FROM_MULTIPLE:
+			newState = {};
+			newState[action.selectorType] = [...state[action.selectorType]];
+			newState[action.selectorType][action.index][action.key] = action.value;
+			return Object.assign({}, state, newState);
 		case propertyTypes.SET_PROPERTY_CONFIG:
 			return Object.assign({}, state, action.config);
 		case propertyTypes.SET_CUSTOM_SPORT_NAME:
@@ -39,6 +49,14 @@ export const property = (state = DEFAULT_STATE, action) => {
 		case propertyTypes.SET_CUSTOM_SEASON_NAME:
 			newState = {};
 			newState.seasons = [...state.seasons];
+
+			if (newState.seasons[action.index] === undefined ){
+				newState.seasons[action.index] = {
+					custom: true,
+					name: "",
+				};
+			}
+
 			newState.seasons[action.index]["name"] = action.seasonName;
 			return Object.assign({}, state, newState);
 		case propertyTypes.APPLY_SELECTION:
@@ -111,9 +129,9 @@ export const getTournamentName = (state) => {
 	return (tournament.length > 0 && tournament[0].name) ? tournament[0].name : "";
 };
 
-export const getSeasonName = (state) => {
+export const getSeasonNames = (state) => {
 	const { seasons } = state.property;
-	return (seasons.length > 0 && seasons[0].name) ? seasons[0].name : "";
+	return seasons.map(season => season.name || "");
 };
 
 export const hasCustomSport = (state) => state.property.sports.filter(sport => sport.custom).length > 0;

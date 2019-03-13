@@ -60,6 +60,19 @@ export const SITE_URLS = {
 	HOME_URL: "https://www.contentarena.com",
 };
 
+export const RIGHTS = [
+	{
+		"shortLabel" : "LT",
+		"name" : "Live Transmission",
+		"translationKey" : "RIGHT_LIVE_TRANSMISSION_NAME"
+	},
+	{
+		"shortLabel" : "DT",
+		"name" : "Delayed & Archive",
+		"translationKey" : "RIGHT_DELAYED_ARCHIVE_NAME"
+	}
+];
+
 export const REGIONS_ENUMS = {
 	Algeria: "DZA",
 	Angola: "AGO",

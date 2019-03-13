@@ -49,6 +49,7 @@ export const ROUTE_PATHS = {
 	MANAGE_LISTINGS: "/managelistings",
 	MANAGE_PROPERTIES: "/manageproperties",
 	CREATE_PROPERTY: "/createproperty",
+	CREATE_PROPERTY_STEP_1: "/createproperty/1",
 };
 
 

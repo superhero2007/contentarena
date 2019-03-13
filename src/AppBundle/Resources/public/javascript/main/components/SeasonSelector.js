@@ -7,6 +7,7 @@ import moment from "moment";
 import NewFixture from "./NewFixture";
 import NewSeason from "./NewSeason";
 import { getSeasonDateString } from "../../common/utils/listing";
+import { getMonths, getYears } from "../../common/utils/time";
 
 class SeasonSelector extends React.Component {
 	constructor(props) {
@@ -47,18 +48,6 @@ class SeasonSelector extends React.Component {
 		fixtures.splice(i, 1);
 		updateFromMultiple("seasons", index, "fixtures", fixtures);
 	};
-
-	getYears = () => {
-		const currentYear = moment().year();
-		const years = [];
-
-		for (let i = currentYear - 5; i < currentYear + 5; i++) {
-			years.push(i);
-		}
-		return years;
-	}
-
-	getMonths = () => Array.apply(0, Array(12)).map((_, i) => moment().month(i).format("MMM"))
 
 	handleSeasonStartChange = (e, type) => {
 		const {
@@ -259,7 +248,7 @@ class SeasonSelector extends React.Component {
 					<option value="" disabled>
 						Year
 					</option>
-					{this.getYears().map(year => (
+					{getYears().map(year => (
 						<option value={year} key={year}>{year}</option>
 					))}
 				</select>
@@ -271,7 +260,7 @@ class SeasonSelector extends React.Component {
 					<option value="" disabled>
 						Month
 					</option>
-					{this.getMonths().map(month => (
+					{getMonths().map(month => (
 						<option value={month} key={month}>{month}</option>
 					))}
 				</select>
@@ -286,7 +275,7 @@ class SeasonSelector extends React.Component {
 					<option value="" disabled>
 						Year
 					</option>
-					{this.getYears().map(year => (
+					{getYears().map(year => (
 						<option value={year} key={year}>{year}</option>
 					))}
 				</select>
@@ -298,7 +287,7 @@ class SeasonSelector extends React.Component {
 					<option value="" disabled>
 						Month
 					</option>
-					{this.getMonths().map(month => (
+					{getMonths().map(month => (
 						<option value={month} key={month}>{month}</option>
 					))}
 				</select>
