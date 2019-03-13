@@ -272,7 +272,6 @@ ContentArena.ContentApi = {
 
 		return deferred.promise();
 	},
-
 	updateUserProfile(profile) {
 		const deferred = jQuery.Deferred();
 		const _this = this;

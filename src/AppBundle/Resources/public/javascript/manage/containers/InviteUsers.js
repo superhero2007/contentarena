@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Loader from "../../common/components/Loader";
 import InviteUserForm from "../components/InviteUserForm";
-import { InviteUsersRequest } from "../../api/company";
+import api from "../../api";
 
 class InviteUsers extends React.Component {
 	constructor(props) {
@@ -15,32 +15,31 @@ class InviteUsers extends React.Component {
 		};
 	}
 
-	inviteUser = async () => {
-		const { onInvite, common } = this.props;
+	inviteUser = () => {
+		const { onInvite } = this.props;
 		const { user } = this.state;
-
-		let response;
 
 		this.setState({ loading: true });
 
-		try {
-			response = await InviteUsersRequest(common, [user]);
-			if (onInvite) onInvite();
-		} catch (e) {
-			response = false;
-		}
-
-		this.setState({
-			loading: false,
-			invitationSent: true,
-			skippedUsers: (response) ? response.skippedUsers : [],
-			invitedUsers: (response) ? response.invitedUsers : [],
-			success: !!response,
-		});
-
-		setTimeout(() => {
-			this.setState({ invitationSent: false });
-		}, 5000);
+		api.company.inviteUsers({users: [user]})
+			.then(({data}) => {
+				this.setState({
+					invitationSent: true,
+					skippedUsers: (data) ? data.skippedUsers : [],
+					invitedUsers: (data) ? data.invitedUsers : [],
+					success: true,
+				});
+				if (onInvite) onInvite();
+				setTimeout(() => {
+					this.setState({ invitationSent: false });
+				}, 5000);
+			})
+			.catch(() => {
+				this.setState({ success: false });
+			})
+			.finally(()=>{
+				this.setState({ loading: false });
+			});
 	};
 
 	onUpdateUsers = (user) => {

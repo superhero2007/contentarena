@@ -3,6 +3,7 @@
 namespace AppBundle\Helper;
 
 use AppBundle\Error\ErrorInterface;
+use JMS\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
@@ -11,26 +12,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 trait ControllerHelper
 {
-    /**
-     * Set base HTTP headers.
-     *
-     * @param Response $response
-     *
-     * @return Response
-     */
-    private function setBaseHeaders(Response $response)
-    {
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-
-        return $response;
-    }
 
     /**
      * Data serializing via JMS serializer.
      *
      * @param mixed $data
      *
+     * @param null $context
      * @return string JSON string
      */
     public function serialize($data, $context = null){
@@ -44,12 +32,24 @@ trait ControllerHelper
 
     /**
      * @param $data
+     * @param $type
+     * @return array|\JMS\Serializer\scalar|mixed|object
+     */
+    public function deserialize($data, $type){
+        /* @var Serializer $serializer */
+        $serializer = $this->container->get('jms_serializer');
+        $object = $serializer->deserialize(json_encode($data), $type, 'json');
+        return $object;
+    }
+
+    /**
+     * @param $data
      * @param $groups
      * @return mixed|string|Response
      */
     private function getSerializedResponse ($data, $groups = null){
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        /* @var Serializer $serializer */
+        $serializer = $this->container->get('jms_serializer');
         $context = SerializationContext::create();
 
         if ( $groups != null ) $context->setGroups($groups);

@@ -56,28 +56,24 @@ HeaderBarSeller.contextTypes = {
 
 const HeaderBarSellerCms = ({ match, common }, context) => (
 	<React.Fragment>
-		{common.properties.length > 0 && (
-			<HeaderBarTab
-				match={match.url === ROUTE_PATHS.MANAGE_PROPERTIES}
-				route={ROUTE_PATHS.MANAGE_PROPERTIES}
-			>
-				{context.t("HEADER_LINK_MANAGE_PROPERTIES")}
-			</HeaderBarTab>
-		)}
+		<HeaderBarTab
+			match={match.url === ROUTE_PATHS.PROPERTIES}
+			route={ROUTE_PATHS.PROPERTIES}
+		>
+			{context.t("HEADER_LINK_MANAGE_PROPERTIES")}
+		</HeaderBarTab>
 
-		{common.properties.length > 0 && (
-			<HeaderBarTab
-				match={
-					match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW
-					|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_WITH_ACTIVITY
-					|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_OPEN_BIDS
-					|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_CLOSED_DEALS
-				}
-				route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
-			>
-				{context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
-			</HeaderBarTab>
-		)}
+		<HeaderBarTab
+			match={
+				match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW
+				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_WITH_ACTIVITY
+				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_OPEN_BIDS
+				|| match.url === ROUTE_PATHS.COMMERCIAL_OVERVIEW_CLOSED_DEALS
+			}
+			route={ROUTE_PATHS.COMMERCIAL_OVERVIEW}
+		>
+			{context.t("HEADER_LINK_COMMERCIAL_ACTIVITY")}
+		</HeaderBarTab>
 
 	</React.Fragment>
 );
@@ -208,7 +204,7 @@ class HeaderBar extends React.Component {
 							<HeaderBarTab
 								className="tab baseline switch-mode"
 								linkClass="ca-btn primary"
-								route={ROUTE_PATHS.MANAGE_PROPERTIES}
+								route={ROUTE_PATHS.PROPERTIES}
 							>
 								{this.context.t("HEADER_LINK_SELLING_MODE")}
 							</HeaderBarTab>

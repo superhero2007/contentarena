@@ -77,7 +77,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="createproperty|manageproperties|terms|listing-preview|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
+     *     requirements={"reactRouting"="properties|createproperty|manageproperties|terms|listing-preview|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage",
      *     defaults={"reactRouting": null}
      *     )
@@ -100,7 +100,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}",
-     *     requirements={"reactRouting"="createproperty|register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
+     *     requirements={"reactRouting"="properties|createproperty|register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -123,7 +123,7 @@ class DefaultController extends BaseController
     /**
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}",
-     *     requirements={"reactRouting"="createproperty|register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
+     *     requirements={"reactRouting"="properties|createproperty|register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -137,7 +137,7 @@ class DefaultController extends BaseController
      * @Route(
      *     "/{reactRouting}/{reactParam}/{reactParam2}/{reactParam3}",
      *     name="homepageParams3",
-     *     requirements={"reactRouting"="marketplace|listing|contentlisting|commercialoverview"},
+     *     requirements={"reactRouting"="properties|marketplace|listing|contentlisting|commercialoverview"},
      *     defaults={"reactParam3" : null, "reactParam2" : null, "reactRouting": null, "reactParam" : null})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response

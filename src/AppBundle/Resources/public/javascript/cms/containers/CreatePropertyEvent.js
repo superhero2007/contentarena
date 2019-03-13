@@ -496,11 +496,6 @@ class CreatePropertyEvent extends React.Component {
 			removeCustomTournament,
 			removeCustomSeason,
 		} = this.props;
-		console.log("----------");
-		console.log(this.props.property.seasons);
-		console.log(this.state.seasonsData);
-		console.log(this);
-		console.log("----------");
 		return (
 			<div className="default-container no-title property">
 				<SelectorModal

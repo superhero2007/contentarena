@@ -83,7 +83,6 @@ ContentArena.Api = {
 
 		return deferred.promise();
 	},
-
 	getCompanyDefinitions() {
 		const deferred = jQuery.Deferred();
 
@@ -103,7 +102,6 @@ ContentArena.Api = {
 
 		return deferred.promise();
 	},
-
 	restoreCompanyTerms() {
 		const deferred = jQuery.Deferred();
 
@@ -123,7 +121,6 @@ ContentArena.Api = {
 
 		return deferred.promise();
 	},
-
 	restoreDefinitions() {
 		const deferred = jQuery.Deferred();
 
@@ -143,7 +140,6 @@ ContentArena.Api = {
 
 		return deferred.promise();
 	},
-
 	updateTerm(term) {
 		const deferred = jQuery.Deferred();
 
@@ -215,46 +211,6 @@ ContentArena.Api = {
 
 		$.ajax({
 			url: `${envhosturl}buy/search`,
-			type: "POST",
-			data: filter,
-			success(response) {
-				deferred.resolve(response);
-			},
-			error(data, status) {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
-
-		return deferred.promise();
-	},
-	getMarketplaceListings(filter) {
-		const deferred = jQuery.Deferred();
-
-		$.ajax({
-			url: `${envhosturl}api/marketplace/listings`,
-			type: "POST",
-			data: filter,
-			success: (response) => {
-				deferred.resolve(response);
-			},
-			error: (data, status) => {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
-
-		return deferred.promise();
-	},
-	saveFilter(filter) {
-		const deferred = jQuery.Deferred();
-
-		$.ajax({
-			url: `${envhosturl}buy/filter/save`,
 			type: "POST",
 			data: filter,
 			success(response) {

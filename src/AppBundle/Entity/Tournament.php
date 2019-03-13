@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -10,6 +11,7 @@ use JMS\Serializer\Annotation\Groups;
  *
  * @ORM\Table(name="tournament")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TournamentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Tournament
 {
@@ -19,23 +21,23 @@ class Tournament
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "board", "home"})
+     * @Groups({"listing", "board", "home", "property"})
      */
     private $id;
 
     /**
      * @var string
-     *
+     * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "board", "commercial", "home"})
+     * @Groups({"listing", "board", "commercial", "home", "property"})
      */
     private $name;
 
     /**
      * @var string
-     *
+     * @Serializer\Type("string")
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
-     * @Groups({"home"})
+     * @Groups({"home", "property"})
      */
     private $externalId;
 
@@ -52,6 +54,16 @@ class Tournament
      * @Groups({"home"})
      */
     private $sport;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultExternalId() {
+
+        if ($this->externalId !== null) return;
+        $time = new \DateTime();
+        $this->setExternalId("ca:tournament:".$time->getTimestamp());
+    }
 
 
     /**

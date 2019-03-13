@@ -1,16 +1,13 @@
-import request from "../common/request";
+import propertiesApi from "./propertiesApi";
+import companyApi from "./companyApi";
+import shareApi from "./shareApi";
+import marketplaceApi from "./marketplaceApi";
 
 const api = {
-	fetchMarketplaceListings: (data = {}, method = "POST") => request({
-		data,
-		method,
-		url: "api/marketplace/listings",
-	}),
-	postShareListing: data => request({
-		data,
-		method: "POST",
-		url: "api/share/listing",
-	}),
+	properties: propertiesApi,
+	company: companyApi,
+	share: shareApi,
+	marketplace: marketplaceApi,
 };
 
 export default api;

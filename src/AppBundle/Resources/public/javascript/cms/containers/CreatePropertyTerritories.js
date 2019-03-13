@@ -16,6 +16,7 @@ import Loader from "../../common/components/Loader/Loader";
 import { DATE_FORMAT, ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD } from "@constants";
 import CmsAvailableRightsSelector from "../components/CmsAvailableRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
+import api from "../../api";
 
 class CreatePropertyTerritories extends React.Component {
 	constructor(props) {
@@ -23,6 +24,8 @@ class CreatePropertyTerritories extends React.Component {
 		this.state = {
 			territories: [],
 			territoriesMode: props.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			savingProperty: false,
+			propertySaved : false
 		};
 	}
 
@@ -110,29 +113,39 @@ class CreatePropertyTerritories extends React.Component {
 		this.setState({ territories, territoriesMode, editMode: false });
 	};
 
-	rightsComplete = () => this.props.property.rights.filter(right => !right.edited).length === 0;
+	rightsComplete = () => {
+		const { property: { rights } } = this.props;
+		return rights.length > 0 && rights.filter(right => !right.edited).length === 0;
+	};
 
 	isLoading = () => {
 		const { isCountryFetched, isRegionsFetched, isTerritoriesFetched } = this.props;
 		return !isCountryFetched || !isRegionsFetched || !isTerritoriesFetched;
 	};
 
-	render() {
-		const { editMode } = this.state;
-		let {
-			territories,
-			territoriesMode,
-		} = this.state;
-
+	createProperty = () => {
 		const {
 			property,
-			history,
 		} = this.props;
 
-		const {
-			selectedRights,
-			rights,
-		} = property;
+		this.setState({savingProperty: true});
+
+		api.properties.createProperty({property: property})
+			.then(response => {
+				this.setState({propertySaved: true});
+			})
+			.catch()
+			.finally(()=>{
+				this.setState({savingProperty: false});
+			});
+	};
+
+	render() {
+		const { editMode, propertySaved, savingProperty, } = this.state;
+		const { property, history, } = this.props;
+		const { selectedRights, rights, } = property;
+
+		let { territories, territoriesMode, } = this.state;
 
 		if (this.isLoading()) {
 			return (
@@ -191,7 +204,7 @@ class CreatePropertyTerritories extends React.Component {
 				)
 				}
 
-				{this.rightsComplete() && (
+				{propertySaved && (
 					<DefaultBox>
 						<h5>
 							<i className="fa fa-check-circle" />
@@ -212,20 +225,32 @@ class CreatePropertyTerritories extends React.Component {
 						>
 							{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
 						</button>
-					)
-					}
+					)}
 
-					{this.rightsComplete() && (
+					{this.rightsComplete() && !propertySaved && (
+						<button
+							disabled={savingProperty}
+							className="yellow-button"
+							onClick={this.createProperty}
+						>
+							{!savingProperty && this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+							{savingProperty && <Loader loading xSmall/>}
+						</button>
+					)}
+
+					{propertySaved && (
 						<button
 							className="yellow-button"
-							onClick={() => {}}
+							onClick={() => history.push(ROUTE_PATHS.PROPERTIES)}
 						>
-							{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+							{this.context.t("CMS_CREATE_PROPERTY_CONTINUE_BUTTON")}
 						</button>
-					)
-					}
+					)}
 
-					<button onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)} className="link-button property-cancel-button">
+					<button
+						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
+						className="link-button property-cancel-button"
+					>
 						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
 					</button>
 				</VerticalButtonBox>

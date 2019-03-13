@@ -23,8 +23,8 @@ import Loader from "../../common/components/Loader";
 import Pagination from "../../main/components/Pagination";
 import { contentParserFromServer, serialize } from "../../common/utils/listing";
 import localStorageEnums from "../../main/constants/localStorageEnums";
-import { fetchListings } from "../actions/marketplaceActions";
 import { initGA, TrackingEvent } from "../../common/components/Tracking";
+import api from "../../api";
 
 class Marketplace extends Component {
 	constructor(props) {
@@ -228,14 +228,19 @@ class Marketplace extends Component {
 	};
 
 	fetchListings = (filter) => {
-		ContentArena.Api.getMarketplaceListings(filter)
-			.done((response) => {
+		api.marketplace.fetchListings(filter)
+			.then(({ data }) => {
 				this.setState({
-					listings: response.listings.map(listing => contentParserFromServer(listing)),
-					totalItems: response.totalItems,
-					loadingListing: false,
+					listings: data.listings.map(listing => contentParserFromServer(listing)),
+					totalItems: data.totalItems,
 					sortSalesPackages: true,
 				});
+			})
+			.catch(() => {
+				console.log("fetch listings error")
+			})
+			.finally(() => {
+				this.setState({ loadingListing: false });
 			});
 	};
 
@@ -396,7 +401,6 @@ const mapDispatchToProps = dispatch => ({
 	updateCountries: countries => dispatch(updateCountries(countries)),
 	updateExclusive: exclusive => dispatch(updateExclusive(exclusive)),
 	updateFilters: filters => dispatch(updateMany(filters)),
-	fetchListings: (filter, method) => dispatch(fetchListings(filter, method)),
 	updateListingView: type => dispatch(updateListingView(type)),
 });
 

@@ -20,8 +20,8 @@ import SignInUpWrapper from "../landing/containers/SignInUpWrapper";
 import LandingWrapper from "../landing/containers/LandingWrapper";
 
 import { LOGIN_VIEW_TYPE, ROUTE_PATHS } from "@constants";
-import ManageProperties from "../cms/containers/ManageProperties";
 import CreateProperty from "../cms/containers/CreateProperty";
+import Properties from "../cms/containers/Properties";
 
 const SignUp = withRouter(({ history }) => (
 	<SignInUpWrapper
@@ -128,6 +128,14 @@ export const routes = [
 		title: "Commercial Overview",
 	},
 	{
+		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId?/:tab?`,
+		header: HeaderBar,
+		main: Properties,
+		updateByPath: true,
+		profile: "SELLER",
+		title: "Properties",
+	},
+	{
 		path: `${ROUTE_PATHS.LISTING}/:customId/:tab?/:bundles?`,
 		header: HeaderBar,
 		main: Marketplace,
@@ -181,13 +189,6 @@ export const routes = [
 		main: ManageListings,
 		profile: "SELLER",
 		title: "Manage Listings",
-	},
-	{
-		path: ROUTE_PATHS.MANAGE_PROPERTIES,
-		header: HeaderBar,
-		main: ManageProperties,
-		profile: "SELLER",
-		title: "Manage Properties",
 	},
 	{
 		path: `${ROUTE_PATHS.CREATE_PROPERTY}/:action?/:key?`,

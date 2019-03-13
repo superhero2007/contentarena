@@ -252,4 +252,42 @@
       }
     }
   }
+
+  .ca-tabs {
+    margin-top: 25px;
+    padding-top: 22px;
+    border-top: 1px solid #ECECEC;
+  }
+  .property-list-header{
+    border-bottom: 2px solid #FDD306;
+    padding: 0 0 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .property-empty-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 400px;
+    justify-content: space-around;
+    padding: 65px 0 90px;
+    img{
+      max-width: 60px;
+    }
+    span{
+      margin: 10px 0;
+      &.title{
+        color: #333333;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 20px;
+      }
+      &.subtitle{
+        color: #666666;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+    }
+  }
 }

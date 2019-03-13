@@ -152,9 +152,10 @@ knp_paginator:
         filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
 
 jms_serializer:
+    property_naming:
+        id: 'jms_serializer.identical_property_naming_strategy'
     metadata:
         directories:
             KnpPaginatorBundle:
                 namespace_prefix:  "Knp\\Bundle\\PaginatorBundle"
                 path: '%kernel.root_dir%/Resources/serializer/Knp'
-

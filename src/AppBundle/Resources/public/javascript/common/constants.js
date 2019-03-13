@@ -8,6 +8,14 @@ export const CONTENT_LISTING_VIEW = {
 	TABLE: "table",
 };
 
+export const CMS_PROPERTY_TABS = {
+	RIGHTS: "rightsoverview",
+	FIXTURES: "fixtures",
+	COMMERCIAL: "commercialoverview",
+	LISTING: "listingoverview",
+	DETAILS: "propertydetails",
+};
+
 export const USER_PROFILES = {
 	SELLER: "SELLER",
 	BUYER: "BUYER",
@@ -36,10 +44,10 @@ export const ROUTE_PATHS = {
 	COMMERCIAL_OVERVIEW_OPEN_BIDS: "/commercialoverview/filter/openbids",
 	COMMERCIAL_OVERVIEW_CLOSED_DEALS: "/commercialoverview/filter/closeddeals",
 	MANAGE_LISTINGS: "/managelistings",
-	MANAGE_PROPERTIES: "/manageproperties",
 	CREATE_PROPERTY: "/createproperty",
 	CREATE_PROPERTY_STEP_1: "/createproperty/1",
 	CREATE_PROPERTY_STEP_2: "/createproperty/2",
+	PROPERTIES: "/properties",
 };
 
 export const BUNDLE_TERRITORIES_METHOD = {
@@ -92,10 +100,6 @@ export const SPORT_KEYS = {
 	TOP: "top",
 };
 
-export const API_URLS = {
-	INVITE_USERS: "api/company/invite",
-};
-
 export const SITE_URLS = {
 	HOME_URL: "https://www.contentarena.com",
 	LOGIN_URL: "https://www.contentarena.com/login",
@@ -107,6 +111,7 @@ export const SITE_EMAILS = {
 
 export const SERVER_ERROR_CODES = {
 	USER_ALREADY_EXISTS: 1001,
+	PROPERTY_DOES_NOT_EXISTS: 2000,
 };
 
 export const RIGHTS = [

@@ -71,8 +71,8 @@ security:
         - { path: ^/marketplace, role: ROLE_USER }
         - { path: ^/managelistings, role: ROLE_USER }
         - { path: ^/commercialoverview, role: ROLE_USER }
+        - { path: ^/properties, role: ROLE_USER }
         - { path: ^/watchlist, role: ROLE_USER }
-        - { path: ^/manageproperties, role: ROLE_USER }
         - { path: ^/createproperty, role: ROLE_USER }
         - { path: ^/bids, role: ROLE_USER }
         - { path: ^/closeddeals, role: ROLE_USER }

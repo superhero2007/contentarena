@@ -148,3 +148,10 @@ services:
           tags:
               - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
           arguments: [ '@router', '@service_container' ]
+
+    custom_serializer_handle:
+        class: AppBundle\Serializer\Handler\EntityHandler
+        arguments: ['@doctrine']
+        public: true
+        tags:
+            - {name: jms_serializer.subscribing_handler}

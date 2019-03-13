@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -15,47 +16,49 @@ class Season
 {
     /**
      * @var int
-     *
+     * @Serializer\Type("integer")
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "home", "preview"})
+     * @Groups({"listing", "home", "preview", "property"})
      */
     private $id;
 
     /**
      * @var string
-     *
+     * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "board", "commercial", "home"})
+     * @Groups({"listing", "board", "commercial", "home", "property"})
      */
     private $name;
 
     /**
      * @var string
-     *
+     * @Serializer\Type("string")
      * @ORM\Column(name="externalId", type="string", length=255, nullable=true, unique=true)
-     * @Groups({"listing", "home"})
+     * @Groups({"listing", "home", "property"})
      */
     private $externalId;
 
     /**
+     * @Serializer\Type("DateTime<'Y-m-d'>")
      * @ORM\Column(type="datetime", name="start_date", nullable=true)
-     * @Groups({"listing", "home", "preview"})
+     * @Groups({"listing", "home", "preview", "property"})
      */
     private $startDate;
 
     /**
+     * @Serializer\Type("DateTime<'Y-m-d'>")
      * @ORM\Column(type="datetime", name="end_date", nullable=true)
-     * @Groups({"listing", "home", "preview"})
+     * @Groups({"listing", "home", "preview", "property"})
      */
     private $endDate;
 
     /**
      * @var string
-     *
+     * @Serializer\Type("string")
      * @ORM\Column(name="year", type="string", length=255, nullable=true)
-     * @Groups({"listing", "board", "commercial", "home", "preview"})
+     * @Groups({"listing", "board", "commercial", "home", "preview", "property"})
      */
     private $year;
 
@@ -67,6 +70,7 @@ class Season
     private $tournament;
 
     /**
+     * @Serializer\Type("boolean")
      * @var boolean
      * @ORM\Column(name="user_season", type="boolean")
      * @Groups({"home"})

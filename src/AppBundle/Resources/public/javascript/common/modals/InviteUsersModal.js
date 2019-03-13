@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import { GenericModalStyle } from "../../main/styles/custom";
 import InviteUserForm from "../../manage/components/InviteUserForm";
-import { InviteUsersRequest } from "../../api/company";
 import Loader from "../components/Loader";
+import api from "../../api";
 
 class InviteUsersModal extends Component {
 	constructor(props) {
@@ -28,27 +28,25 @@ class InviteUsersModal extends Component {
 
 	inviteUsers = async () => {
 		const { users } = this.state;
-		const { common } = this.props;
-
-		let response;
 		const filteredUsers = users.filter(user => user.valid);
 
 		this.setState({ loading: true });
 
-		try {
-			response = await InviteUsersRequest(common, filteredUsers);
-		} catch (e) {
-			response = false;
-		}
-
-		this.setState({
-			loading: false,
-			isSuccess: !!response,
-			isFail: !response,
-			skippedUsers: (response) ? response.skippedUsers : [],
-			invitedUsers: (response) ? response.invitedUsers : [],
-			users: [],
-		});
+		api.company.inviteUsers({users: filteredUsers})
+			.then(response => {
+				this.setState({
+					isSuccess: true,
+					isFail: false,
+					skippedUsers: (response.data) ? response.data.skippedUsers : [],
+					invitedUsers: (response.data) ? response.data.invitedUsers : [],
+				});
+			})
+			.catch(() => {
+				this.setState({ isSuccess: false, isFail: true, });
+			})
+			.finally(()=>{
+				this.setState({ loading: false, users: [], });
+			});
 	};
 
 	onUpdateUsers = (user, index) => {

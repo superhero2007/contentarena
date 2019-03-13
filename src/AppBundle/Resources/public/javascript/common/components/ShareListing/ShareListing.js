@@ -32,11 +32,11 @@ class ShareListing extends Component {
 			error: false,
 		});
 
-		api.postShareListing({
+		api.share.shareListing({
 			listingId,
 			recipients: emails,
 			message: comment,
-		}).then((res) => {
+		}).then(() => {
 			this.setState({
 				loading: false,
 				emails: [],
@@ -50,7 +50,7 @@ class ShareListing extends Component {
 					success: false,
 				});
 			}, 3000);
-		}).catch((error) => {
+		}).catch(() => {
 			this.setState({
 				loading: false,
 				success: false,
