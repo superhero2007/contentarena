@@ -226,13 +226,13 @@ class SeasonSelector extends React.Component {
 						</label>
 						<input
 							type="text"
-							value={this.props.value || ""}
+							value={dateString}
 							readOnly
 							disabled={this.props.loading}
 							onClick={this.props.openSelector}
 							placeholder={this.context.t("Season")}
 						/>
-						{dateString && (
+						{/*{dateString && (
 							<span style={{
 								position: "absolute",
 								top: "6px",
@@ -241,7 +241,7 @@ class SeasonSelector extends React.Component {
 							>
 								{dateString}
 							</span>
-						)}
+						)}*/}
 
 						{showClose && <RemoveSeasonButton onRemove={removeSeason} />}
 					</div>
@@ -254,13 +254,11 @@ class SeasonSelector extends React.Component {
 						</label>
 						<input
 							type="text"
-							value={this.props.value || ""}
+							value={dateString}
+							readOnly
 							placeholder={this.context.t("Season")}
-							onChange={(e) => {
-								this.props.updateFromMultiple("seasons", index, "name", e.target.value);
-							}}
 						/>
-						{dateString && (
+						{/*{dateString && (
 							<span style={{
 								position: "absolute",
 								top: "6px",
@@ -269,7 +267,7 @@ class SeasonSelector extends React.Component {
 							>
 								{dateString}
 							</span>
-						)}
+						)}*/}
 						<RemoveSeasonButton onRemove={removeSeason} />
 					</div>
 				)}
