@@ -181,7 +181,11 @@ class ContentService
             if ( !$featuredA  && $featuredB ) return 1;
             if ($featuredA && !$featuredB ) return -1;
             if ($featuredA == $featuredB) {
-                return ($positionA > $positionB ) ? -1 : ($positionA < $positionB ) ? 1 : 0;
+                if ($positionA === null ) $positionA = 100;
+                if ($positionB === null ) $positionB = 100;
+                if ($positionA < $positionB ) return -1;
+                if ($positionB < $positionA ) return 1;
+                if ($positionA == $positionB) return 0;
             };
 
         };
