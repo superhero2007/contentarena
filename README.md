@@ -1,4 +1,4 @@
-Symfony Standard Edition
+Content Arena
 ========================
 
 Welcome to the Symfony Standard Edition - a fully-functional Symfony
