@@ -1,1 +1,5 @@
-Dear {{ user.firstName }},
+{% if user.firstName == 'n/a' %}
+    Hello,
+{% else %}
+    Dear {{ user.firstName }},
+{% endif %}

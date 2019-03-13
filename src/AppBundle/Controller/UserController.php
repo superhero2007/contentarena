@@ -6,6 +6,7 @@ use ApiBundle\Helper\ControllerHelper;
 use ApiBundle\Helper\EmailHelper;
 use AppBundle\Entity\User;
 use AppBundle\Error\UserErrors;
+use AppBundle\Service\JobService;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -187,15 +188,17 @@ class UserController extends FOSRestController
 
     /**
      * @param Request $request
+     * @param JobService $jobService
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @Rest\Post("/pre/register")
      * @Rest\RequestParam(name="email", nullable=false,strict=true)
      * @Rest\RequestParam(name="status", nullable=false,strict=true)
      * @Rest\RequestParam(name="firstName", nullable=false,strict=true)
      * @Rest\RequestParam(name="lastName", nullable=false,strict=true)
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
 
-    public function postPreRegisterAction(Request $request){
+    public function postPreRegisterAction(Request $request, JobService $jobService){
         $logger = $this->get('logger');
         $email = $request->get("email");
 
@@ -235,7 +238,7 @@ class UserController extends FOSRestController
         $user->setPlainPassword('');
 
         $userManager->updateUser($user);
-
+        $jobService->createAccountAbortedJob($user);
         $logger->info("USER ACCOUNT SUCCESSFULLY CREATED", array( "email" => $email));
 
         $response = array("success" => true, "user" => $user);

@@ -10,11 +10,13 @@ namespace AppBundle\Enum;
 
 abstract class JobTypeEnum
 {
+    const ACCOUNT_ABORTED = "ACCOUNT_ABORTED";
     const ACCOUNT_INCOMPLETE = "ACCOUNT_INCOMPLETE";
     const ACCOUNT_INCOMPLETE_FROM_INVITE = "ACCOUNT_INCOMPLETE_FROM_INVITE";
 
     /** @var array user friendly named type */
     protected static $typeName = [
+        self::ACCOUNT_ABORTED => 'Aborted',
         self::ACCOUNT_INCOMPLETE => 'Information',
         self::ACCOUNT_INCOMPLETE_FROM_INVITE => 'Attention',
     ];
@@ -38,6 +40,7 @@ abstract class JobTypeEnum
     public static function getAvailableTypes()
     {
         return [
+            self::ACCOUNT_ABORTED,
             self::ACCOUNT_INCOMPLETE,
             self::ACCOUNT_INCOMPLETE_FROM_INVITE,
         ];

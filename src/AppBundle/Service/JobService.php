@@ -101,6 +101,24 @@ class JobService
 
     /**
      * @param $user
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function createAccountAbortedJob($user)
+    {
+        $type = JobTypeEnum::ACCOUNT_ABORTED;
+        $repo = $this->em->getRepository("AppBundle:Job");
+        $job =  $repo->findOneBy(array(
+            "user" => $user,
+            "type" => $type
+        ));
+
+        if ( $job == null && $user != null) $this->createJob($type, $user, null, $this->accountIncompleteTime);
+
+
+    }
+
+    /**
+     * @param $user
      * @param $colleage
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -164,6 +182,16 @@ class JobService
 
                 if ( $user != null && ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) ){
                     $confirmationUrl = $this->router->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+                    $this->emailService->accountIncomplete($user, $confirmationUrl);
+                }
+                $job->setCompleted(true);
+                break;
+            case JobTypeEnum::ACCOUNT_ABORTED:
+
+                $user = $job->getUser();
+
+                if ( $user != null && ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) ){
+                    $confirmationUrl = $this->router->generate('app_registration', array(), UrlGeneratorInterface::ABSOLUTE_URL);
                     $this->emailService->accountIncomplete($user, $confirmationUrl);
                 }
                 $job->setCompleted(true);
