@@ -33,27 +33,6 @@ easy_admin:
             js:
                 - 'bundles/app/admin/javascript/admin.js'
     entities:
-            ArchivedUser:
-                class: AppBundle\Entity\User
-                controller: AppBundle\Controller\Admin\AdminUserController
-                search:
-                    fields:
-                        - 'email'
-                        - 'firstName'
-                        - 'lastName'
-                        - 'title'
-                        - 'status.name'
-                        - 'country'
-                        - 'company'
-                        - 'applicationCompany'
-                        - 'notes'
-                list:
-                    dql_filter: "status.name = 'Archived'"
-                    fields: ['id', 'firstName', 'lastName', 'email', 'company', 'status', 'lastLogin']
-                    actions:
-                        - { name: 'show' }
-                        - { name: 'edit' }
-                        - { name: 'delete' }
             User:
                 class: AppBundle\Entity\User
                 controller: AppBundle\Controller\Admin\AdminUserController
@@ -131,7 +110,27 @@ easy_admin:
                         - { name: 'sendActivationLink', css_class : 'btn btn-primary' }
                         - { name: 'createActivationLink', css_class : 'btn btn-primary' }
                         - { name: 'createCompany', css_class : 'btn btn-primary' }
-
+            ArchivedUser:
+                class: AppBundle\Entity\User
+                controller: AppBundle\Controller\Admin\AdminUserController
+                search:
+                    fields:
+                        - 'email'
+                        - 'firstName'
+                        - 'lastName'
+                        - 'title'
+                        - 'status.name'
+                        - 'country'
+                        - 'company'
+                        - 'applicationCompany'
+                        - 'notes'
+                list:
+                    dql_filter: "status.name = 'Archived'"
+                    fields: ['id', 'firstName', 'lastName', 'email', 'company', 'status', 'lastLogin']
+                    actions:
+                        - { name: 'show' }
+                        - { name: 'edit' }
+                        - { name: 'delete' }
             Company:
                 class: AppBundle\Entity\Company
                 list:
