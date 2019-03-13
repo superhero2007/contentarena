@@ -57,6 +57,16 @@ easy_admin:
                         #- { property: 'confirmationToken', label: 'Activation Code' }
                         - { property: 'confirmationToken', template: 'easy_admin/activation.code.list.html.twig', base_path: '%carena_host_url%' }
                         - { property: 'autoPublish' }
+                form:
+                    fields:
+                        - { property: 'email' }
+                        - { property: 'firstName' }
+                        - { property: 'lastName' }
+                        - { property: 'title', label: 'Position' }
+                        - { property: 'phone' }
+                        - { property: 'country' }
+                        - { property: 'applicationCompany' }
+                        - { property: 'autoPublish' }
                 edit:
                     fields:
                         - { property: 'email' }
@@ -88,19 +98,16 @@ easy_admin:
                     fields:
                         - { property: 'legalName' }
                         - { property: 'country', type_options: { required: true }}
+                        - { property: 'website', type_options: { required: true } }
                         - { property: 'city' }
                         - { property: 'address' }
                         - { property: 'address2' }
                         - { property: 'zip' }
                         - { property: 'phone' }
-                        - { property: 'website' }
                         - { property: 'vat' }
                         - { property: 'registrationNumber' }
                         - { property: 'users' }
-                        - { property: 'enabled' }
                         - { property: 'description' }
-                        - { property: 'year' }
-                        - { property: 'size' }
                         - { property: 'owner' }
                 controller: AppBundle\Controller\Admin\CompanyController
             Content:
@@ -153,6 +160,20 @@ easy_admin:
                         - { name: 'edit', icon: 'pencil', label: '' }
                         - { name: 'delete', icon: 'times', label: '' }
             Deals:
+                list:
+                    sort: 'createdAt'
+                    fields:
+                        - { property: 'customId', sortable: false }
+                        - { property: 'createdAt' }
+                        - { property: 'status' }
+                        - { property: 'salesPackage.name', label: 'Bundle'}
+                        - { property: 'content.company', label: 'Seller Company' }
+                        - { property: 'buyerCompany', label: 'Buyer Company' }
+                        - { property: 'buyerUser', label: 'Buyer User' }
+                        - { property: 'amount', label: 'License fee' }
+                        - { property: 'totalFee' }
+                        - { property: 'content', label: 'Listing', sortable: false }
+
                 class: AppBundle\Entity\Bid
             Country:
                 class: AppBundle\Entity\Country
