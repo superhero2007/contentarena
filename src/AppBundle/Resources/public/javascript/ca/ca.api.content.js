@@ -299,47 +299,6 @@ ContentArena.ContentApi = {
 
 		return deferred.promise();
 	},
-	getThreads() {
-		const deferred = jQuery.Deferred();
-
-		$.ajax({
-			url: `${envhosturl}api/messages/threads`,
-			type: "POST",
-			contentType: "application/json",
-			success(response) {
-				deferred.resolve(response);
-			},
-			error(data, status) {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
-
-		return deferred.promise();
-	},
-	placeBid(bid) {
-		const deferred = jQuery.Deferred();
-
-		$.ajax({
-			url: `${envhosturl}api/bid/place`,
-			type: "POST",
-			data: JSON.stringify(bid),
-			contentType: "application/json",
-			success(response) {
-				deferred.resolve(response);
-			},
-			error(data, status) {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
-
-		return deferred.promise();
-	},
 	placeBids(bid) {
 		const deferred = jQuery.Deferred();
 

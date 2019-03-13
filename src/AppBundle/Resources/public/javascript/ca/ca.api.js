@@ -731,26 +731,6 @@ ContentArena.Api = {
 
 		return deferred.promise();
 	},
-	getNotifications() {
-		return request.get(`${envhosturl}api/notifications/`);
-	},
-	markNotificationAsVisited(id) {
-		return request.post(`${envhosturl}api/notifications/visited`, {
-			id,
-		});
-	},
-	markAllNotificationAsVisited() {
-		return request.post(`${envhosturl}api/notifications/all/visited`);
-	},
-	removeNotifications() {
-		return request.post(`${envhosturl}api/notifications/remove`);
-	},
-	markNotificationAsSeen() {
-		return request.get(`${envhosturl}api/notifications/seen`);
-	},
-	markMessagesAsSeen() {
-		return request.get(`${envhosturl}api/notifications/seen?type=MESSAGE`);
-	},
 	signInUser(username, password) {
 		return request.post(`${envhosturl}api/users/login`, {
 			username,

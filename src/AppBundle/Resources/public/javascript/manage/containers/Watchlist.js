@@ -5,6 +5,7 @@ import ContentListing from "../../main/components/ContentListing";
 import { goTo } from "../../main/actions/utils";
 import RightsLegend from "../../main/components/RightsLegend";
 import Loader from "../../common/components/Loader";
+import { userIsAdmin } from "../../main/reducers/user";
 
 
 class Watchlist extends React.Component {
@@ -73,7 +74,7 @@ Watchlist.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = () => ({});
 
 export default connect(
 	mapStateToProps,

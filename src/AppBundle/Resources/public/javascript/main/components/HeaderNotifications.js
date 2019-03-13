@@ -1,9 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import moment from "moment";
 import Loader from "../../common/components/Loader";
 import { getListingImage } from "../../common/utils/listing";
+import api from "../../api";
 
 class HeaderNotifications extends React.Component {
 	constructor(props) {
@@ -85,11 +87,12 @@ class HeaderNotifications extends React.Component {
 	};
 
 	handleNotificationClick = (item) => {
+		const { common: { ghostMode } } = this.props;
 		const { name } = item.type;
 		const urlTo = this.getRedirectUrl(name, item.referenceId);
 
 		if (urlTo) {
-			ContentArena.Api.markNotificationAsVisited(item.id);
+			if (!ghostMode) api.notifications.markNotificationAsVisited({ id: item.id });
 			document.location.href = urlTo;
 		}
 
@@ -105,9 +108,10 @@ class HeaderNotifications extends React.Component {
 
 	handleBellIconClick = () => {
 		const { showList, notifications, unseenNotificationsCount } = this.state;
+		const { common: { ghostMode } } = this.props;
 
 		if (!showList && !!notifications.length && unseenNotificationsCount) {
-			ContentArena.Api.markNotificationAsSeen();
+			if (!ghostMode) api.notifications.markNotificationAsSeen();
 
 			this.setState(state => ({
 				showList: !state.showList,
@@ -127,8 +131,9 @@ class HeaderNotifications extends React.Component {
 
 	handleAllVisited = () => {
 		const { notifications } = this.state;
+		const { common: { ghostMode } } = this.props;
 
-		ContentArena.Api.markAllNotificationAsVisited();
+		if (!ghostMode) api.notifications.markAllNotificationAsVisited();
 
 		const allVisited = notifications.map((item) => {
 			item.visited = true;
@@ -141,7 +146,9 @@ class HeaderNotifications extends React.Component {
 	};
 
 	handleRemoveNotifications = () => {
-		ContentArena.Api.removeNotifications();
+		const { common: { ghostMode } } = this.props;
+
+		if (!ghostMode) api.notifications.removeNotifications();
 
 		this.setState({
 			notifications: 0,
@@ -241,4 +248,11 @@ HeaderNotifications.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default HeaderNotifications;
+const mapStateToProps = state => ({
+	common: state.common,
+});
+
+export default connect(
+	mapStateToProps,
+	null,
+)(HeaderNotifications);

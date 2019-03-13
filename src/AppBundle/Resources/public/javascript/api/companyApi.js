@@ -5,5 +5,4 @@ const companyApi = {
 	inviteUsers: data => request.post(API_ENDPOINTS.COMPANY_INVITE_USERS, data),
 };
 
-
 export default companyApi;

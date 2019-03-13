@@ -48,7 +48,6 @@ class CommercialSalesBundle extends React.Component {
 		const { selectedBid } = this.state;
 		this.setState({ saving: true });
 		ContentArena.ContentApi.removeBid(selectedBid).done((response) => {
-			// this.setState({removeModalIsOpen : false, saving : false})
 			this.props.onUpdate();
 		});
 	};
@@ -128,6 +127,8 @@ class CommercialSalesBundle extends React.Component {
 		const {
 			showBids, rejectModalIsOpen, approveModalIsOpen, selectedBid,
 		} = this.state;
+
+		const { ghostMode } = common;
 
 		const closedDeals = salesBundle.bids.filter(b => b.status.name === "APPROVED");
 		const openBids = salesBundle.bids.filter(b => b.status.name === "PENDING");
@@ -367,8 +368,7 @@ class CommercialSalesBundle extends React.Component {
 												alt=""
 											/>
 										)}
-										{props.value.status === "PENDING"
-										&& (
+										{props.value.status === "PENDING" && !ghostMode && (
 											<i
 												className="fa fa-check-circle-o"
 												style={{ color: "#19CB43", fontSize: 26 }}
@@ -378,8 +378,7 @@ class CommercialSalesBundle extends React.Component {
 												title={this.context.t("COMMERCIAL_ACTIVITY_ACCEPT_BID_ICON")}
 											/>
 										)}
-										{props.value.status === "PENDING"
-										&& (
+										{props.value.status === "PENDING" && !ghostMode && (
 											<i
 												className="fa fa-times-circle-o"
 												style={{ color: "#990000", fontSize: 26 }}
@@ -473,7 +472,9 @@ CommercialSalesBundle.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+	common: state.common,
+});
 
 const mapDispatchToProps = dispatch => ({});
 
