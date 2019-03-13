@@ -21,6 +21,7 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Events;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class UpdateListingSubscriber implements EventSubscriber
 {
@@ -30,6 +31,7 @@ class UpdateListingSubscriber implements EventSubscriber
     protected $container;
     protected $contentService;
     protected $notificationService;
+    protected $tokenStorage;
 
     private $preStatus;
     private $postStatus;
@@ -39,13 +41,15 @@ class UpdateListingSubscriber implements EventSubscriber
         EmailService $mailer,
         EntityManager $em,
         ContainerInterface $container,
-        NotificationService $notificationService
+        NotificationService $notificationService,
+        TokenStorage $tokenStorage
     )
     {
         $this->mailer = $mailer;
         $this->em = $em;
         $this->contentService = $contentService;
         $this->notificationService = $notificationService;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function getSubscribedEvents()
@@ -140,7 +144,8 @@ class UpdateListingSubscriber implements EventSubscriber
                     && ( $changed["status"][1]->getName() === "APPROVED" || $changed["status"][1]->getName() === "PENDING" )){
 
                     // Notify admins
-                    $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity);
+                    $admin = $this->tokenStorage->getToken()->getUser();
+                    $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity, $admin);
                 }
             }
         }

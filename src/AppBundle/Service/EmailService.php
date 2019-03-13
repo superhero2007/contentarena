@@ -558,18 +558,20 @@ class EmailService
      *
      * @param User $user
      * @param Content $listing
+     * @param User $admin
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function internalUserListingSubmit( User $user, Content $listing ){
+    public function internalUserListingSubmit( User $user, Content $listing, User $admin ){
 
         $subject = $this->translator->trans("email.internal.user.listing.submit.subject");
         $content = $this->translator->trans("email.internal.user.listing.submit.content");
         $parameters = array(
             "content" => $content,
             "user" => $user,
-            "listing" => $listing
+            "listing" => $listing,
+            "admin" => $admin
         );
         $this->sendEmail("email/email.internal.user.listing.submit.twig", $subject, $this->alertsAddress, $parameters );
 
