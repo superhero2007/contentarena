@@ -267,7 +267,7 @@ class CreatePropertyTerritories extends React.Component {
 							className="yellow-button"
 							onClick={() => {
 								resetProperty();
-								history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${CMS_PROPERTY_TABS.RIGHTS}`)
+								history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${CMS_PROPERTY_TABS.RIGHTS}`);
 							}}
 						>
 							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
