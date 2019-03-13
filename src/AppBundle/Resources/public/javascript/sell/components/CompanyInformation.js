@@ -41,8 +41,9 @@ class CompanyInformation extends React.Component {
 	};
 
 	updateCountry = (value) => {
-		const company = { ...this.state.company };
+		let company = this.state.company;
 
+		if (!company.country) company.country = {};
 		company.country.name = value.label;
 		this.onDataChange("company", company);
 	};
@@ -182,7 +183,10 @@ class CompanyInformation extends React.Component {
 								onChange={(val) => {
 									this.updateCountry(val);
 								}}
-								value={{ value: company.country.name, label: company.country.name }}
+								value={{
+									value: (company.country) ? company.country.name : null,
+									label: (company.country) ? company.country.name : null,
+								}}
 							/>
 						</div>
 
