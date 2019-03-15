@@ -83,8 +83,6 @@ class Preferences extends React.Component {
 			updatingUser, loading, user, privacy, userUpdated, activeTab,
 		} = this.state;
 
-		document.title = "Content Arena - Preferences";
-
 		if (loading) return <Loader loading />;
 
 		return (

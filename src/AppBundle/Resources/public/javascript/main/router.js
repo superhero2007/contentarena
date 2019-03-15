@@ -29,14 +29,28 @@ class PrivateRoute extends React.Component {
 		}
 	}
 
+	trackPageView() {
+		try {
+			ga("send", "pageview", location.pathname);
+		} catch (e) {
+			console.error("Google Analytics library not initialized");
+		}
+	}
+
 	render() {
-		const { component: Component, updateByPath, ...rest } = this.props;
+		const {
+			component: Component, updateByPath, title, ...rest
+		} = this.props;
 
 		return (
 			<Route
 				{...rest}
 				render={(props) => {
 					this.updateProfile();
+					this.trackPageView();
+
+					if (title !== null) document.title = `Content Arena - ${title}`;
+
 					return (
 						<Component
 							{...props}
@@ -113,11 +127,11 @@ class AuthRouter extends React.Component {
 								key={index}
 								path={route.path}
 								exact={route.exact}
+								title={route.title}
 								updateByPath={route.updateByPath}
 								component={route.main}
 								profile={user.profile}
 								routeProfile={route.profile}
-								title={route.title}
 								updateProfile={this.props.updateProfile}
 								{...this.props}
 							/>

@@ -51,8 +51,6 @@ class Messages extends React.Component {
 			});
 			this.updateMessages();
 		});
-
-		document.title = "Content Arena - Messages";
 	}
 
 	selectThread = (selectedThread) => {

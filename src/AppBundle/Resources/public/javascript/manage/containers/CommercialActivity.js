@@ -164,8 +164,6 @@ class CommercialActivity extends Component {
 		const allListings = this.state.listings;
 		const filters = this.getFiltersText();
 
-		document.title = "Content Arena - Commercial Overview";
-
 		return (
 			<div style={{ height: "100%" }}>
 

@@ -66,8 +66,6 @@ class PendingDeals extends React.Component {
 		} = this.state;
 		const { history } = this.props;
 
-		document.title = "Content Arena - Bids";
-
 		return (
 			<div>
 				<div style={{

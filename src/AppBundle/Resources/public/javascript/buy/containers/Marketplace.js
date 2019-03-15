@@ -272,8 +272,6 @@ class Marketplace extends Component {
 			return <h2 className="text-center">{errorMessage}</h2>;
 		}
 
-		document.title = "Content Arena - Marketplace";
-
 		const customFilter = this.getQueryString();
 
 		return (

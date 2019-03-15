@@ -4,6 +4,7 @@ imports:
 
 parameters:
     locale: en
+    google_analytics_key: 'UA-136237491-1'
     sportradar_api_token: dqahyKSX6u5J1vNHMp
     sportradar_api_host: https://api.betradar.com/v1
     carena_host_url: '%local_host%'

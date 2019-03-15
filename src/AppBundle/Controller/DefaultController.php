@@ -147,6 +147,7 @@ class DefaultController extends BaseController
 
         return [
             'hostUrl'           => $this->container->getParameter('local_host'),
+            'googleAnalyticsKey'=> $this->container->getParameter('google_analytics_key'),
             'testStageMode'     => $this->container->getParameter('test_stage_mode'),
             'externalApiUrl'    => $this->container->getParameter('external_api_url'),
             'newListing'        => $serializer->serialize($content, 'json', SerializationContext::create()->setGroups(array('home'))),
