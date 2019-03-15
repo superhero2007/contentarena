@@ -55,6 +55,10 @@ class Register extends React.Component {
 			isPassValid: false,
 			isCompanyValid: true,
 			isCompanyLoading: false,
+			sportsSelected: {
+				seller: false,
+				buyer: false,
+			},
 		};
 	}
 
@@ -186,33 +190,34 @@ class Register extends React.Component {
 	};
 
 	handleSellerSports = (selection) => {
-		const { user } = this.state;
+		const { user, sportsSelected } = this.state;
 		user.preferredSellerSports = selection.sports;
 		user.preferredSellerAllSports = selection.all;
 		user.preferredSellerOtherSport = selection.other;
+		sportsSelected.seller = selection.isSelected;
 		this.storeUserObj(user);
-		this.setState({ user });
+		this.setState({ user, sportsSelected });
 	};
 
 	handleBuyerSports = (selection) => {
-		const { user } = this.state;
+		const { user, sportsSelected } = this.state;
 		user.preferredBuyerSports = selection.sports;
 		user.preferredBuyerAllSports = selection.all;
 		user.preferredBuyerOtherSport = selection.other;
+		sportsSelected.buyer = selection.isSelected;
 		this.storeUserObj(user);
-		this.setState({ user });
+		this.setState({ user, sportsSelected });
 	};
 
 	completeButtonDisabled = () => {
-		const { user } = this.state;
+		const { user, sportsSelected } = this.state;
 		return (user.preferredProfile !== "SELLER"
 			&& ((!user.preferredBuyerOtherSport
 				&& !user.preferredBuyerAllSports
-				&& user.preferredBuyerSports
-				&& user.preferredBuyerSports.length === 0)
+				&& !sportsSelected.seller)
 				|| user.preferredBuyerCountries && user.preferredBuyerCountries.length === 0))
 			|| (user.preferredProfile !== "BUYER"
-				&& (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0));
+				&& (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && !sportsSelected.buyer));
 	};
 
 	goToNextStep = (step) => {
