@@ -191,7 +191,6 @@ class Marketplace extends Component {
 	filter = () => {
 		const { filter } = this.props;
 		let parsedFilter = this.parseFilter(filter);
-		console.log(parsedFilter);
 		this.fetchListings(parsedFilter);
 		this.setState({
 			parsedFilter,
@@ -356,8 +355,7 @@ class Marketplace extends Component {
 				)}
 
 				<Loader loading={loadingListingDetails}>
-					{showDetails
-					&& (
+					{showDetails && (
 						<ListingDetails
 							key={location.pathname}
 							tab={match.params.tab}

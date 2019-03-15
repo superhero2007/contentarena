@@ -63,3 +63,8 @@ export const updateListingView = listType => ({
 	type: filterTypes.UPDATE_LIST_VIEW,
 	listType,
 });
+
+export const showAllFilters = bool => ({
+	type: filterTypes.SHOW_ALL_FILTERS,
+	payload: bool,
+});

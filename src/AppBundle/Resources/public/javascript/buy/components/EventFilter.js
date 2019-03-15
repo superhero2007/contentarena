@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
 import uniqBy from "lodash/uniqBy";
-import { updateEvent, updateSport } from "../actions/filterActions";
+import { updateEvent, updateSport, showAllFilters } from "../actions/filterActions";
 import { searchIcon } from "../../main/components/Icons";
 import localStorageEnums from "../../main/constants/localStorageEnums";
 
@@ -13,7 +13,6 @@ class EventFilter extends React.Component {
 		this.state = {
 			sports: [],
 			checkedSports: this.getActiveSport(),
-			seeAll: false,
 		};
 
 		this.searchIcon = searchIcon;
@@ -43,7 +42,7 @@ class EventFilter extends React.Component {
 		}
 	}
 
-	getOptions = () => {
+	getFilters = () => {
 		const { sports } = this.state;
 
 		const countries = sports.filter(s => s.name).map((i, k) => ({ value: i.name, label: i.name }));
@@ -110,8 +109,7 @@ class EventFilter extends React.Component {
 	}
 
 	render() {
-		const { event } = this.props;
-		const { seeAll } = this.state;
+		const { event, allFilters } = this.props;
 		return (
 			<div>
 				<div className="box">
@@ -137,8 +135,7 @@ class EventFilter extends React.Component {
 					<div className="title">
 						{this.context.t("MARKETPLACE_LABEL_FILTER_SPORT")}
 					</div>
-
-					{this.getOptions().slice(0, seeAll ? -1 : 5).map(sp => (
+					{this.getFilters().slice(0, allFilters ? this.getFilters().length : 5).map(sp => (
 						<div style={{ margin: "7px 0 " }} key={sp.label}>
 							<label className="d-flex">
 								<input
@@ -151,16 +148,20 @@ class EventFilter extends React.Component {
 							</label>
 						</div>
 					))}
-					<hr />
-					<div className="text-center">
-						<a onClick={() => this.setState({ seeAll: !seeAll })}>
-							{seeAll ? (
-								this.context.t("SEE_LESS")
-							) : (
-								this.context.t("SEE_ALL")
-							)}
-						</a>
-					</div>
+					{this.getFilters().length > 5 && (
+						<>
+							<hr />
+							<div className="text-center">
+								<a onClick={() => this.props.showAllFilters(!allFilters)}>
+									{allFilters ? (
+										this.context.t("SEE_LESS")
+									) : (
+										this.context.t("SEE_ALL")
+									)}
+								</a>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		);
@@ -177,6 +178,7 @@ const mapDispatchToProps = dispatch => ({
 	onClick: id => dispatch(test(id)),
 	selectSport: sport => dispatch(updateSport(sport)),
 	updateEvent: event => dispatch(updateEvent(event)),
+	showAllFilters: bool => dispatch(showAllFilters(bool))
 });
 
 

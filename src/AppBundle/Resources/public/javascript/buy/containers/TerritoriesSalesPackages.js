@@ -178,7 +178,7 @@ class TerritoriesSalesPackages extends PureComponent {
 		return Array.from(checkedItems.values()).map(item => item.territories.length).reduce((a, b) => a + b, 0);
 	};
 
-	renderCheckoutButton = () => {
+	renderCheckoutButton = (large) => {
 		const {
 			userCanNotBuy,
 		} = this.props;
@@ -189,20 +189,14 @@ class TerritoriesSalesPackages extends PureComponent {
 
 		return (
 			<button
-				className="ca-btn primary"
+				className={`ca-btn primary ${large}`}
 				disabled={checkedItems.size === 0 || userCanNotBuy}
 				onClick={this.goToCheckout}
 				title={this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
 			>
 				{this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
 				{" "}
-				(
-
-
 				{this.getCheckedTerritoriesSize()}
-				)
-
-
 				<i className="fa fa-chevron-right" />
 			</button>
 		);
@@ -299,14 +293,13 @@ class TerritoriesSalesPackages extends PureComponent {
 				}
 
 				{/* BUNDLE AVAILABILITY SELECTOR */}
-				{<div className="bundles-countries checkout-button">
+				<div className="bundles-countries text-right">
 					<div className="bundles-countries-title">
 						{filteredTerritorialBundles.length > 0 && this.context.t("SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES")}
 						{filteredTerritorialBundles.length === 0 && this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
 					</div>
-
 					{total > 3 && this.renderCheckoutButton()}
-				</div>}
+				</div>
 
 				{filteredTerritorialBundles.length > 0 && (
 					<div className="sales-packages">
@@ -399,9 +392,7 @@ class TerritoriesSalesPackages extends PureComponent {
 				)}
 
 
-				{filteredTerritorialBundles.length > 0
-				&& filteredIndividualBundles.length > 0
-				&& (
+				{filteredTerritorialBundles.length > 0 && filteredIndividualBundles.length > 0 && (
 					<div className="bundles-countries">
 						<div className="bundles-countries-title">
 							{this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
@@ -506,7 +497,7 @@ class TerritoriesSalesPackages extends PureComponent {
 
 				{/* SECOND CHECKOUT BUTTON */}
 				<div className={cn("checkout-button", { active: checkedItems.size > 0 })}>
-					{this.renderCheckoutButton()}
+					{this.renderCheckoutButton("large")}
 				</div>
 			</React.Fragment>
 		);

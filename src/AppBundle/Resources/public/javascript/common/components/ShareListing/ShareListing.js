@@ -44,6 +44,12 @@ class ShareListing extends Component {
 				success: true,
 				error: false,
 			});
+			setTimeout(() => {
+				this.setState({
+					modalOpen: false,
+					success: false,
+				});
+			}, 3000);
 		}).catch((error) => {
 			this.setState({
 				loading: false,
@@ -55,7 +61,9 @@ class ShareListing extends Component {
 	};
 
 	render() {
-		const { success, error, loading } = this.state;
+		const {
+			success, error, loading, comment,
+		} = this.state;
 		return (
 			<div className="ca-share-listing">
 				<span onClick={(e) => {
@@ -108,6 +116,7 @@ class ShareListing extends Component {
 								placeholder={this.context.t("SHARE_ADD_COMMENT")}
 								className="ca-form-control"
 								onChange={this.handleCommentChange}
+								value={comment}
 							/>
 						</section>
 
