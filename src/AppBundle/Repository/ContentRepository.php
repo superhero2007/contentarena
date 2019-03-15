@@ -156,7 +156,9 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                     foreach ($filter->getCountries() as $country){
                         $query
                             ->andWhere('territories IN (:country)')
-                            ->setParameter('country', array($country));
+                            ->andWhere('salesPackages.sold != :soldBundle')
+                            ->setParameter('country', array($country))
+                            ->setParameter('soldBundle', true);
                     }
 
                     $query
@@ -171,7 +173,9 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
                         ->andWhere($query->expr()->orX(
                             $query->expr()->eq('salesPackages.territoriesMethod', ':worldwide'),
                             $query->expr()->in('territories', ':countries')
-                        ));
+                        ))
+                        ->andWhere('salesPackages.sold != :soldBundle')
+                        ->setParameter('soldBundle', true);
                 }
             }
 

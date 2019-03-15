@@ -20,13 +20,12 @@ class TerritoriesSalesPackages extends PureComponent {
 			territoriesList: [],
 			installments: [],
 			selected: [],
-			availabilitySelector: this.all,
 			filteredIndividualBundles: [],
 			filteredTerritorialBundles: [],
 			selectedName: "All",
-			sorted: false,
 			checkedItems: new Map(),
 			territories: (props.filter && props.filter.countries.length > 0) ? this.filtered : this.all,
+			bundles: [],
 		};
 	}
 
@@ -65,50 +64,40 @@ class TerritoriesSalesPackages extends PureComponent {
 
 	filterBundles = (territories, selected, clear) => {
 		const {
-			salesPackages = [],
+			filter,
+			salesPackages,
 			bundlesWithActivity,
 			bundlesSold,
-			filter,
 		} = this.props;
 
-		const {
-			availabilitySelector,
-			sorted,
-		} = this.state;
+		// Filter sold out bundles
+		let bundles = (salesPackages === null || salesPackages === undefined) ? [] : salesPackages.filter(bundle => !bundle.sold);
 
-		let filteredBundles = salesPackages.filter((sp) => {
+		// Filter bundles bought by the user
+		bundles = bundles.map((bundle) => {
+			bundle.hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(bundle.id) !== -1 : false;
+			bundle.hasClosedDeal = (bundlesSold !== null) ? bundlesSold.indexOf(bundle.id) !== -1 : false;
+			return bundle;
+		}).filter(bundle => !(bundle.hasOfferFromUser && bundle.hasClosedDeal));
+
+		// Filter bundles by marketplace territory filter
+		if (territories === this.filtered) {
+			bundles = bundles.filter(bundle => bundle.territories.filter(territory => filter.countries.indexOf(territory.label) !== -1).length > 0);
+		}
+
+		// Filter bundles by territory selector
+		let filteredBundles = bundles.filter((sp) => {
 			if (selected.length === 0) return true;
 			return selected.indexOf(sp.id) !== -1;
 		}).map((bundle) => {
-			bundle.hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(bundle.id) !== -1 : false;
-			bundle.hasClosedDeal = (bundlesSold !== null) ? bundlesSold.indexOf(bundle.id) !== -1 : false;
 			bundle.extraTerritories = (bundle.territoriesMethod === "WORLDWIDE_EXCLUDING") ? bundle.excludedTerritories : bundle.territories;
 			return bundle;
 		});
 
-		filteredBundles = filteredBundles.filter(bundle => !bundle.sold);
-
-		if (territories === this.filtered) {
-			filteredBundles = filteredBundles.filter(bundle => bundle.territories.filter(territory => filter.countries.indexOf(territory.label) !== -1).length > 0);
-		}
-
-		if (availabilitySelector === this.available) {
-			filteredBundles = filteredBundles.filter(bundle => !bundle.hasOfferFromUser && !bundle.hasClosedDeal);
-		}
-
-		if (availabilitySelector === this.notAvailable) {
-			filteredBundles = filteredBundles.filter(bundle => bundle.hasOfferFromUser && bundle.hasClosedDeal);
-		}
-
-		if (!sorted) {
-			filteredBundles = filteredBundles.sort((a, b) => b.hasOfferFromUser - a.hasOfferFromUser);
-			this.setState({ sorted: true });
-		}
-
 		const filteredIndividualBundles = filteredBundles.filter(bundle => bundle.bundleMethod !== "SELL_AS_BUNDLE");
 		const filteredTerritorialBundles = filteredBundles.filter(bundle => bundle.bundleMethod === "SELL_AS_BUNDLE");
 
-		this.setDefaultSelection(territories, filteredIndividualBundles, filteredTerritorialBundles, clear);
+		this.setDefaultSelection(bundles, territories, filteredIndividualBundles, filteredTerritorialBundles, clear);
 	};
 
 	selectTerritory = (e, bundle) => {
@@ -132,25 +121,23 @@ class TerritoriesSalesPackages extends PureComponent {
 		this.filterBundles(territories, selected, true);
 	};
 
-	setDefaultSelection = (territories, filteredIndividualBundles, filteredTerritorialBundles, clear) => {
+	setDefaultSelection = (bundles, territories, filteredIndividualBundles, filteredTerritorialBundles, clear) => {
 		const {
-			salesPackages,
-		} = this.props;
-
-		const { checkedItems } = this.state;
+			checkedItems,
+		} = this.state;
 		const total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
 
 		if (clear) checkedItems.clear();
 
-		if (salesPackages.length === 1) {
-			checkedItems.set(salesPackages[0].id, salesPackages[0]);
+		if (bundles.length === 1) {
+			checkedItems.set(bundles[0].id, bundles[0]);
 		} else if (total === 1) {
 			if (filteredIndividualBundles.length === 1) checkedItems.set(filteredIndividualBundles[0].id, filteredIndividualBundles[0]);
 			if (filteredTerritorialBundles.length === 1) checkedItems.set(filteredTerritorialBundles[0].id, filteredTerritorialBundles[0]);
 		}
 
 		this.setState({
-			territories, checkedItems, filteredIndividualBundles, filteredTerritorialBundles,
+			bundles, territories, checkedItems, filteredIndividualBundles, filteredTerritorialBundles,
 		});
 	};
 
@@ -223,7 +210,6 @@ class TerritoriesSalesPackages extends PureComponent {
 
 	render() {
 		const {
-			salesPackages,
 			userCanNotBuy,
 			filter,
 		} = this.props;
@@ -234,6 +220,7 @@ class TerritoriesSalesPackages extends PureComponent {
 			filteredTerritorialBundles,
 			selectedName,
 			checkedItems,
+			bundles,
 		} = this.state;
 
 		const total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
@@ -246,7 +233,7 @@ class TerritoriesSalesPackages extends PureComponent {
 				</div>
 
 				{/* TERRITORY MODE SELECTOR */}
-				{salesPackages.length > 1 && (
+				{bundles.length > 1 && (
 					<RadioSelector
 						value={territories}
 						onChange={this.handleTerritorySelector}
@@ -264,7 +251,7 @@ class TerritoriesSalesPackages extends PureComponent {
 
 				{/* SELECTOR DESCRIPTION */}
 				{<div className="spacer-bottom filter-description">
-					{territories === this.filtered && salesPackages.length > 1 && (
+					{territories === this.filtered && bundles.length > 1 && (
 						<span>
 							<strong>
 								{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}
@@ -276,7 +263,7 @@ class TerritoriesSalesPackages extends PureComponent {
 							{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
 						</span>
 					)}
-					{territories === this.filtered && salesPackages.length === 0 && (
+					{territories === this.filtered && bundles.length === 0 && (
 						<span>
 							<strong>
 								{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY")}
@@ -303,9 +290,9 @@ class TerritoriesSalesPackages extends PureComponent {
 				</div>}
 
 				{/* REGION FILTER */}
-				{territories === this.all && salesPackages.length > 1 && (
+				{territories === this.all && bundles.length > 1 && (
 					<RegionFilter
-						bundles={salesPackages}
+						bundles={bundles}
 						onChange={this.onFilter}
 					/>
 				)
@@ -457,7 +444,6 @@ class TerritoriesSalesPackages extends PureComponent {
 										return (
 											<div className="d-flex align-items-center">
 												{total > 1
-												&& !(bundle.hasOfferFromUser && bundle.hasClosedDeal)
 												&& !userCanNotBuy
 												&& (
 													<input

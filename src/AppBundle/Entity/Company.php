@@ -37,7 +37,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="vat", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $vat;
 
@@ -45,7 +45,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="registration_number", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $registrationNumber;
 
@@ -53,7 +53,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $city;
 
@@ -77,7 +77,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $address;
 
@@ -85,7 +85,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="address2", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $address2;
 
@@ -93,7 +93,7 @@ class Company
      * @var string
      *
      * @ORM\Column(name="zip", type="string", length=255, nullable=true)
-     * @Groups({"details", "settings"})
+     * @Groups({"details", "settings", "home"})
      */
     private $zip;
 
