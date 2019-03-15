@@ -48,6 +48,7 @@ class InviteUserForm extends React.Component {
 					</label>
 					<input
 						id={`first-name-${key}`}
+						className="ca-form-control"
 						value={user.firstName}
 						disabled={disabled}
 						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FIRST_NAME")}
@@ -63,6 +64,7 @@ class InviteUserForm extends React.Component {
 					</label>
 					<input
 						id={`last-name-${key}`}
+						className="ca-form-control"
 						value={user.lastName}
 						disabled={disabled}
 						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME")}
@@ -78,6 +80,7 @@ class InviteUserForm extends React.Component {
 					</label>
 					<input
 						name={`email-${key}`}
+						className="ca-form-control"
 						id={`email-${key}`}
 						value={user.email}
 						disabled={disabled}

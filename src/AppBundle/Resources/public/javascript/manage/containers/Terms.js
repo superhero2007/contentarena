@@ -13,6 +13,7 @@ class Terms extends React.Component {
 			updating: false,
 			terms: [],
 			definitions: [],
+			activeTab: 1,
 		};
 	}
 
@@ -89,88 +90,102 @@ class Terms extends React.Component {
 
 	render() {
 		const {
-			loading, terms, restoring, definitions, restoringDefinitions,
+			loading,
+			terms,
+			restoring,
+			definitions,
+			restoringDefinitions,
+			activeTab,
 		} = this.state;
 
 		document.title = "Content Arena - Terms";
 
-		if (loading) return <Loader loading small />;
+		if (loading) return <Loader loading />;
 
 		return (
 			<div className="settings-container terms-edit-container">
-
-				<div className="terms-edit-header">
-					<div className="terms-edit-header-title">
-						{this.context.t("TERMS_EDIT_HEADER")}
-						<div className="subtitle">
-							{this.context.t("TERMS_EDIT_HEADER_TWO")}
+				<div className="terms-edit-header-title">
+					{this.context.t("TERMS_EDIT_HEADER")}
+					<div className="subtitle">
+						{this.context.t("TERMS_EDIT_HEADER_TWO")}
+					</div>
+				</div>
+				<div className="d-flex justify-content-between align-items-baseline">
+					<div className="ca-tabs">
+						<div
+							className={`tab lg ${activeTab === 1 ? "active" : ""}`}
+							onClick={() => this.setState({ activeTab: 1 })}
+						>
+							{this.context.t("TERMS_EDIT_TITLE_DEFINITIONS")}
+						</div>
+						<div
+							className={`tab lg ${activeTab === 2 ? "active" : ""}`}
+							onClick={() => this.setState({ activeTab: 2 })}
+						>
+							{this.context.t("TERMS_EDIT_TITLE_TERMS")}
 						</div>
 					</div>
-					<button
-						onClick={this.restoreDefaultDefinitions}
-						disabled={restoringDefinitions}
-						className="standard-button license-agreement-button terms-restore-button"
-					>
-						{this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}
-						{restoringDefinitions && <Loader loading xSmall />}
-						{!restoringDefinitions && <div><i className="fa fa-refresh" /></div>}
-					</button>
-					<button
-						onClick={this.restoreDefaultTerms}
-						disabled={restoring}
-						className="standard-button license-agreement-button terms-restore-button"
-					>
-						{this.context.t("TERMS_EDIT_BUTTON_RESTORE")}
-						{restoring && <Loader loading xSmall />}
-						{!restoring && <div><i className="fa fa-refresh" /></div>}
-					</button>
-
+					<div className="terms-edit-header">
+						<button
+							onClick={this.restoreDefaultDefinitions}
+							disabled={restoringDefinitions}
+							className="standard-button license-agreement-button terms-restore-button"
+						>
+							{this.context.t("TERMS_EDIT_BUTTON_RESTORE_DEFINITIONS")}
+							{restoringDefinitions && <Loader loading xSmall />}
+							{!restoringDefinitions && <div><i className="fa fa-refresh" /></div>}
+						</button>
+						<button
+							onClick={this.restoreDefaultTerms}
+							disabled={restoring}
+							className="standard-button license-agreement-button terms-restore-button"
+						>
+							{this.context.t("TERMS_EDIT_BUTTON_RESTORE")}
+							{restoring && <Loader loading xSmall />}
+							{!restoring && <div><i className="fa fa-refresh" /></div>}
+						</button>
+					</div>
 				</div>
-				<div className="terms-edit-title">
-					{this.context.t("TERMS_EDIT_TITLE_DEFINITIONS")}
-				</div>
-				<div className="terms-edit-box">
-					{!restoringDefinitions && definitions.map((definition, i) => (
-						<div>
-							{!definition.removed && (
-								<DefinitionItem
-									key={i}
-									index={i}
-									onRemove={() => this.onRemoveDefinition(i)}
-									{...definition}
-								/>
-							)}
-						</div>
-					))
-					}
-
-					<button
-						onClick={this.addDefinition}
-						className="standard-button terms-add-definition-button"
-					>
-						{this.context.t("TERMS_EDIT_BUTTON_ADD_DEFINITIONS")}
-					</button>
-				</div>
-				<div className="terms-edit-title" style={{ borderTop: "none" }}>
-					{this.context.t("TERMS_EDIT_TITLE_TERMS")}
-				</div>
-				<div className="terms-edit-box">
-					{!restoring && terms.map((term, i) => (
-						<div>
-							{term.items.map((item, k) => {
-								if (item.removed) return undefined;
-								return (
-									<TermItem
-										onRemove={() => this.onRemoveTerm(i, k)}
-										{...item}
-										termPosition={term.position}
+				{activeTab === 1 && (
+					<div className="terms-edit-box">
+						{!restoringDefinitions && definitions.map((definition, i) => (
+							<div>
+								{!definition.removed && (
+									<DefinitionItem
+										key={i}
+										index={i}
+										onRemove={() => this.onRemoveDefinition(i)}
+										{...definition}
 									/>
-								);
-							})}
-						</div>
-					))
-					}
-				</div>
+								)}
+							</div>
+						))}
+						<button
+							onClick={this.addDefinition}
+							className="standard-button terms-add-definition-button"
+						>
+							{this.context.t("TERMS_EDIT_BUTTON_ADD_DEFINITIONS")}
+						</button>
+					</div>
+				)}
+				{activeTab === 2 && (
+					<div className="terms-edit-box">
+						{!restoring && terms.map((term, i) => (
+							<div>
+								{term.items.map((item, k) => {
+									if (item.removed) return undefined;
+									return (
+										<TermItem
+											onRemove={() => this.onRemoveTerm(i, k)}
+											{...item}
+											termPosition={term.position}
+										/>
+									);
+								})}
+							</div>
+						))}
+					</div>
+				)}
 			</div>
 		);
 	}

@@ -88,13 +88,22 @@ class InviteUsers extends React.Component {
 					</div>
 				)}
 
-
-				<InviteUserForm onUpdate={this.onUpdateUsers} disabled={loading} key={0} />
-				<button onClick={this.inviteUser} className="yellow-button" disabled={this.isButtonDisabled()}>
-					{this.context.t("SETTINGS_BUTTON_SEND_INVITE")}
-					{" "}
-					<Loader loading={loading} xSmall />
-				</button>
+				<InviteUserForm
+					onUpdate={this.onUpdateUsers}
+					disabled={loading}
+					key={0}
+				/>
+				<div className="text-center">
+					<button
+						onClick={this.inviteUser}
+						className="ca-btn primary large"
+						disabled={this.isButtonDisabled()}
+					>
+						{this.context.t("SETTINGS_BUTTON_SEND_INVITE")}
+						{" "}
+						<Loader loading={loading} xSmall />
+					</button>
+				</div>
 			</div>
 		);
 	}

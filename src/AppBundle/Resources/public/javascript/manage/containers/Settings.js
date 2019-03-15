@@ -24,6 +24,7 @@ class Settings extends React.Component {
 			password: "",
 			passwordCheck: "",
 			isPassValid: false,
+			activeTab: 1,
 		};
 	}
 
@@ -32,7 +33,11 @@ class Settings extends React.Component {
 
 		ContentArena.ContentApi.getUserInfo().done((user) => {
 			this.originalUser = cloneDeep(user);
-			this.setState({ loading: false, user });
+			this.setState({
+				loading: false,
+				user,
+				activeTab: user.company ? 1 : 2,
+			});
 		});
 
 		this.loadCompanyUsers();
@@ -93,7 +98,7 @@ class Settings extends React.Component {
 			editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers, isPassValid,
 			updatingCompany, updatingUser, updatingPassword, password, passwordCheck, passwordUpdated,
 		} = this.state;
-		const { user } = this.state;
+		const { user, activeTab, loading } = this.state;
 
 		const country = (user && user.company && user.company.country) ? {
 			label: user.company.country.name,
@@ -102,14 +107,50 @@ class Settings extends React.Component {
 
 		document.title = "Content Arena - Settings";
 
+		if (loading) return <Loader loading />;
+
 		return (
 			<div className="settings-container">
-				{user.company && (
+				<div className="ca-tabs">
+					{user.company && (
+						<div
+							className={`tab ${activeTab === 1 ? "active" : ""}`}
+							onClick={() => this.setState({ activeTab: 1 })}
+						>
+							{this.context.t("SETTINGS_TAB_COMPANY")}
+						</div>
+					)}
+					<div
+						className={`tab ${activeTab === 2 ? "active" : ""}`}
+						onClick={() => this.setState({ activeTab: 2 })}
+					>
+						{this.context.t("SETTINGS_TAB_USERS")}
+					</div>
+					<div
+						className={`tab ${activeTab === 3 ? "active" : ""}`}
+						onClick={() => this.setState({ activeTab: 3 })}
+					>
+						{this.context.t("SETTINGS_TAB_ACCOUNT")}
+					</div>
+					<div
+						className={`tab ${activeTab === 4 ? "active" : ""}`}
+						onClick={() => this.setState({ activeTab: 4 })}
+					>
+						{this.context.t("SETTINGS_TAB_PASSWORD")}
+					</div>
+					<div
+						className={`tab ${activeTab === 5 ? "active" : ""}`}
+						onClick={() => this.setState({ activeTab: 5 })}
+					>
+						{this.context.t("SETTINGS_TAB_SUPPORT")}
+					</div>
+				</div>
+
+				{user.company && activeTab === 1 && (
 					<div className="setting">
 						<div className="title">
 							{this.context.t("SETTINGS_TITLE_COMPANY")}
-							{!editCompanyInfo && !updatingCompany
-							&& (
+							{!editCompanyInfo && !updatingCompany && (
 								<div
 									className="edit-button"
 									onClick={(e) => {
@@ -129,6 +170,7 @@ class Settings extends React.Component {
 									{this.context.t("SETTINGS_LABEL_COMPANY_NAME")}
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.legalName}
 									disabled={common.testStageMode || !editCompanyInfo}
 									onChange={(e) => {
@@ -142,6 +184,7 @@ class Settings extends React.Component {
 									{this.context.t("SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER")}
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.registrationNumber}
 									disabled={!editCompanyInfo}
 									onChange={(e) => {
@@ -155,6 +198,7 @@ class Settings extends React.Component {
 									{this.context.t("SETTINGS_LABEL_COMPANY_VAT")}
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.vat}
 									disabled={!editCompanyInfo}
 									onChange={(e) => {
@@ -174,6 +218,7 @@ class Settings extends React.Component {
 
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.address}
 									disabled={!editCompanyInfo}
 									onChange={(e) => {
@@ -191,6 +236,7 @@ class Settings extends React.Component {
 
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.address2}
 									disabled={!editCompanyInfo}
 									onChange={(e) => {
@@ -204,6 +250,7 @@ class Settings extends React.Component {
 									{this.context.t("SETTINGS_LABEL_COMPANY_CITY")}
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.city}
 									disabled={!editCompanyInfo}
 									onChange={(e) => {
@@ -219,6 +266,7 @@ class Settings extends React.Component {
 									{this.context.t("SETTINGS_LABEL_COMPANY_ZIP")}
 								</label>
 								<input
+									className="ca-form-control"
 									value={user.company.zip}
 									disabled={!editCompanyInfo}
 									onChange={(e) => {
@@ -268,350 +316,366 @@ class Settings extends React.Component {
 										className="cancel-button"
 									>
 										Cancel
-
-
 									</button>
 									<button
 										onClick={this.updateCompany}
-										className="yellow-button"
+										className="ca-btn primary"
 									>
 										Save
-
-
 									</button>
 								</div>
 							</div>
 						)}
 					</div>
 				)}
-				<div className="setting">
-					{/* ACTIVE USERS */}
-					<div className="title" style={{ marginBottom: 0 }}>{this.context.t("SETTINGS_LABEL_ACTIVE_USERS")}</div>
-					<h4 className="subtitle">
-						{this.context.t("SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION")}
-					</h4>
 
-					{!loadingCompanyUsers && companyUsers.length > 0 && (
-						<div>
-							<ReactTable
-								className="closed-deals-table"
-								defaultPageSize={30}
-								showPageSizeOptions={false}
-								showPagination={false}
-								minRows={0}
-								resizable={false}
-								data={companyUsers}
-								columns={[{
-									Header: this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME"),
-									headerClassName: "table-header",
-									className: "table-header",
-									accessor: "lastName",
-								}, {
-									accessor: "firstName", // Required because our accessor is not a string
-									Header: this.context.t("SETTINGS_LABEL_USER_FIRST_NAME"),
-									headerClassName: "table-header",
-									className: "table-header",
-								}, {
-									Header: this.context.t("SETTINGS_LABEL_USER_EMAIL"),
-									accessor: "email",
-									headerClassName: "table-header",
-									className: "table-header",
-									Cell: row => <span title={row.value}>{row.value}</span>,
-									width: 350,
-								}, {
-									Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),
-									accessor: "phone",
-									headerClassName: "table-header",
-									className: "table-header",
-								}, {
-									Header: this.context.t("SETTINGS_LABEL_USER_COMPANY_POSITION"),
-									accessor: "title",
-									headerClassName: "table-header",
-									className: "table-header",
-								}, {
-									Header: this.context.t("SETTINGS_LABEL_USER_STATUS"),
-									accessor: "status",
-									headerClassName: "table-header",
-									className: "table-header d-flex justify-content-center",
-									Cell: (props) => {
-										const user = props.original;
-
-										if (user.status && user.status.name === "Active") {
-											return (
-												<i
-													className="fa fa-check-circle setting-table-icon"
-													style={{ color: "green" }}
-												/>
-											);
-										}
-
-										return (
-											<i
-												className="fa fa-minus-circle setting-table-icon"
-												style={{ color: "orange" }}
-											/>
-										);
-									},
-								},
-
-								]}
-							/>
-						</div>
-					)}
-					{loadingCompanyUsers && <Loader loading small />}
-				</div>
-				<div className="setting">
-					<div className="title" style={{ marginBottom: 0 }}>
-						{this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES")}
-					</div>
-					<h4 className="subtitle">
-						{this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES_EXPLANATION")}
-					</h4>
-					<InviteUsers onInvite={this.loadCompanyUsers} />
-				</div>
-				<div className="setting">
-					<div className="title">
-						{this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
-						{!editPersonalInfo && !updatingUser
-						&& (
-							<div
-								className="edit-button"
-								onClick={(e) => {
-									this.setState({
-										editPersonalInfo: true,
-									});
-								}}
-							>
-								<i className="fa fa-edit" />
+				{activeTab === 2 && (
+					<>
+						<div className="setting">
+							{/* ACTIVE USERS */}
+							<div className="title">
+								{this.context.t("SETTINGS_LABEL_ACTIVE_USERS")}
 							</div>
-						)}
-						{updatingUser && <Loader loading small />}
-					</div>
-					<div className="row">
-						<div className="item">
-							<label>
-								{this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
-							</label>
-							<input
-								value={user.firstName}
-								disabled={common.testStageMode || !editPersonalInfo}
-								onChange={(e) => {
-									user.firstName = e.target.value;
-									this.setState({ user });
-								}}
-							/>
+							<h4 className="subtitle">
+								{this.context.t("SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION")}
+							</h4>
+
+							{!loadingCompanyUsers && companyUsers.length > 0 && (
+								<div>
+									<ReactTable
+										className="closed-deals-table"
+										defaultPageSize={30}
+										showPageSizeOptions={false}
+										showPagination={false}
+										minRows={0}
+										resizable={false}
+										data={companyUsers}
+										columns={[{
+											Header: this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME"),
+											headerClassName: "table-header",
+											className: "table-header",
+											accessor: "lastName",
+										}, {
+											accessor: "firstName", // Required because our accessor is not a string
+											Header: this.context.t("SETTINGS_LABEL_USER_FIRST_NAME"),
+											headerClassName: "table-header",
+											className: "table-header",
+										}, {
+											Header: this.context.t("SETTINGS_LABEL_USER_EMAIL"),
+											accessor: "email",
+											headerClassName: "table-header",
+											className: "table-header",
+											Cell: row => <span title={row.value}>{row.value}</span>,
+											width: 350,
+										}, {
+											Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),
+											accessor: "phone",
+											headerClassName: "table-header",
+											className: "table-header",
+										}, {
+											Header: this.context.t("SETTINGS_LABEL_USER_COMPANY_POSITION"),
+											accessor: "title",
+											headerClassName: "table-header",
+											className: "table-header",
+										}, {
+											Header: this.context.t("SETTINGS_LABEL_USER_STATUS"),
+											accessor: "status",
+											headerClassName: "table-header",
+											className: "table-header d-flex justify-content-center",
+											Cell: (props) => {
+												const user = props.original;
+
+												if (user.status && user.status.name === "Active") {
+													return (
+														<i
+															className="fa fa-check-circle setting-table-icon"
+															style={{ color: "green" }}
+														/>
+													);
+												}
+
+												return (
+													<i
+														className="fa fa-minus-circle setting-table-icon"
+														style={{ color: "orange" }}
+													/>
+												);
+											},
+										},
+
+										]}
+									/>
+								</div>
+							)}
+							{loadingCompanyUsers && <Loader loading small />}
 						</div>
-						<div className="item">
-							<label>
-								{this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
-							</label>
-							<input
-								value={user.lastName}
-								disabled={common.testStageMode || !editPersonalInfo}
-								onChange={(e) => {
-									user.lastName = e.target.value;
-									this.setState({ user });
-								}}
-							/>
+						<div className="setting">
+							<div className="title">
+								{this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES")}
+							</div>
+							<h4 className="subtitle">
+								{this.context.t("SETTINGS_LABEL_INVITE_COLLEAGUES_EXPLANATION")}
+							</h4>
+							<InviteUsers onInvite={this.loadCompanyUsers} />
 						</div>
-						<div className="item">
-							<label>
-								{this.context.t("SETTINGS_LABEL_USER_TITLE")}
-							</label>
-							<input
-								value={user.title}
-								disabled={!editPersonalInfo}
-								onChange={(e) => {
-									user.title = e.target.value;
-									this.setState({ user });
-								}}
-							/>
-						</div>
-					</div>
-					<div className="row" style={{ marginBottom: 0 }}>
-						<div className="item">
-							<label>
-								{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
-							</label>
-							<input
-								value={user.email}
-								disabled={!editPersonalInfo}
-								onChange={(e) => {
-									user.email = e.target.value;
-									this.setState({ user });
-								}}
-							/>
-						</div>
-						<div className="item">
-							<label>
-								{this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")}
-							</label>
-							<input
-								value={user.phone}
-								disabled={!editPersonalInfo}
-								onChange={(e) => {
-									user.phone = e.target.value;
-									this.setState({ user });
-								}}
-							/>
-						</div>
-					</div>
-					{editPersonalInfo && !updatingUser && (
-						<div className="buttons">
-							<div>
-								<button
-									onClick={() => {
+					</>
+				)}
+
+				{activeTab === 3 && (
+					<div className="setting">
+						<div className="title">
+							{this.context.t("SETTINGS_LABEL_USER_TITLE_INFO")}
+							{!editPersonalInfo && !updatingUser && (
+								<div
+									className="edit-button"
+									onClick={(e) => {
 										this.setState({
-											user: { ...this.originalUser },
-											editPersonalInfo: false,
+											editPersonalInfo: true,
 										});
 									}}
-									className="cancel-button"
 								>
-									Cancel
-
-
-								</button>
-								<button
-									onClick={this.updateUser}
-									className="yellow-button"
-								>
-									Save
-
-
-								</button>
+									<i className="fa fa-edit" />
+								</div>
+							)}
+							{updatingUser && <Loader loading small />}
+						</div>
+						<div className="row">
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
+								</label>
+								<input
+									className="ca-form-control"
+									value={user.firstName}
+									disabled={common.testStageMode || !editPersonalInfo}
+									onChange={(e) => {
+										user.firstName = e.target.value;
+										this.setState({ user });
+									}}
+								/>
+							</div>
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_USER_FAMILY_NAME")}
+								</label>
+								<input
+									className="ca-form-control"
+									value={user.lastName}
+									disabled={common.testStageMode || !editPersonalInfo}
+									onChange={(e) => {
+										user.lastName = e.target.value;
+										this.setState({ user });
+									}}
+								/>
+							</div>
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_USER_TITLE")}
+								</label>
+								<input
+									className="ca-form-control"
+									value={user.title}
+									disabled={!editPersonalInfo}
+									onChange={(e) => {
+										user.title = e.target.value;
+										this.setState({ user });
+									}}
+								/>
 							</div>
 						</div>
-					)}
-				</div>
-				<div style={{
-					position: "relative",
-					display: "flex",
-					justifyContent: "space-between",
-				}}
-				>
-					<div className="setting" style={{ width: "48%" }}>
-						<div className="title" style={{ marginBottom: 0 }}>
+						<div className="row">
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
+								</label>
+								<input
+									className="ca-form-control"
+									value={user.email}
+									disabled={!editPersonalInfo}
+									onChange={(e) => {
+										user.email = e.target.value;
+										this.setState({ user });
+									}}
+								/>
+							</div>
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER")}
+								</label>
+								<input
+									className="ca-form-control"
+									value={user.phone}
+									disabled={!editPersonalInfo}
+									onChange={(e) => {
+										user.phone = e.target.value;
+										this.setState({ user });
+									}}
+								/>
+							</div>
+						</div>
+						{editPersonalInfo && !updatingUser && (
+							<div className="buttons">
+								<div>
+									<button
+										onClick={() => {
+											this.setState({
+												user: { ...this.originalUser },
+												editPersonalInfo: false,
+											});
+										}}
+										className="cancel-button"
+									>
+										Cancel
+
+
+									</button>
+									<button
+										onClick={this.updateUser}
+										className="ca-btn primary"
+									>
+										Save
+									</button>
+								</div>
+							</div>
+						)}
+					</div>
+				)}
+
+				{activeTab === 4 && (
+					<div className="setting">
+						<div className="title">
 							{this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD")}
 						</div>
 						<div className="subtitle">
 							{this.context.t("SETTINGS_LABEL_CHANGE_PASSWORD_2")}
 						</div>
-						<div className="password">
-							<label>
-								{this.context.t("SETTINGS_LABEL_TYPE_CURRENT_PASSWORD")}
-							</label>
-							<input
-								type="password"
-								onChange={(e) => {
-									this.setState({
-										oldPassword: e.target.value,
-									});
-								}}
+						<div className="row">
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_TYPE_CURRENT_PASSWORD")}
+								</label>
+								<input
+									type="password"
+									className="ca-form-control"
+									onChange={(e) => {
+										this.setState({
+											oldPassword: e.target.value,
+										});
+									}}
+								/>
+							</div>
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
+								</label>
+								<input
+									type="password"
+									className="ca-form-control"
+									onChange={(e) => {
+										this.setState({
+											password: e.target.value,
+										});
+									}}
+								/>
+							</div>
+							<div className="item">
+								<label>
+									{this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
+								</label>
+								<input
+									type="password"
+									className="ca-form-control"
+									onChange={(e) => {
+										this.setState({
+											passwordCheck: e.target.value,
+										});
+									}}
+								/>
+							</div>
+						</div>
+						<Loader loding={updatingPassword} small>
+							<div className="text-center">
+								{passwordUpdated ? (
+									<div>
+										{this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
+									</div>
+								) : (
+									<button
+										onClick={this.updatePassword}
+										disabled={!isPassValid}
+										className="ca-btn primary large"
+									>
+										{this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
+									</button>
+								)}
+							</div>
+						</Loader>
+						{password && (
+							<PasswordValidationBox
+								password={password}
+								passwordCheck={passwordCheck}
+								onPasswordValid={this.handlePasswordValid}
 							/>
-
-							<label>
-								{this.context.t("SETTINGS_LABEL_TYPE_NEW_PASSWORD")}
-							</label>
-							<input
-								type="password"
-								onChange={(e) => {
-									this.setState({
-										password: e.target.value,
-									});
-								}}
-							/>
-
-							<label>
-								{this.context.t("SETTINGS_LABEL_RETYPE_NEW_PASSWORD")}
-							</label>
-							<input
-								type="password"
-								onChange={(e) => {
-									this.setState({
-										passwordCheck: e.target.value,
-									});
-								}}
-							/>
-
-							{!updatingPassword && !passwordUpdated
-							&& (
-								<button
-									onClick={this.updatePassword}
-									disabled={!isPassValid}
-									className="yellow-button"
-								>
-									{this.context.t("SETTINGS_BUTTON_SAVE_PASSWORD")}
-								</button>
-							)}
-							{updatingPassword && <Loader loading small />}
-							{passwordUpdated && (
-								<div>
-									{this.context.t("SETTINGS_LABEL_PASSWORD_UPDATED")}
+						)}
+					</div>
+				)}
+				{activeTab === 5 && (
+					<div className="setting">
+						<div className="row">
+							<div style={{ width: "100%" }}>
+								<div className="title">
+									{this.context.t("SETTINGS_LINKS_HEADER")}
 								</div>
-							)}
+								<div className="subtitle">
+									{this.context.t("SETTINGS_LINKS_TITLE")}
+								</div>
+								<div>
+									<a
+										href="/generalterms"
+										target="_blank"
+										className="ca-btn primary"
+									>
+										{this.context.t("SETTINGS_LINKS_BUTTON_TERMS")}
+									</a>
+									{" "}
+									<a
+										href="https://contentarena.com/web/privacy-policy/"
+										target="_blank"
+										className="ca-btn primary"
+									>
+										{this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
+									</a>
+								</div>
+							</div>
+							<div style={{ width: "100%" }}>
+								<div className="title">
+									{this.context.t("SETTINGS_SUPPORT_HEADER")}
+								</div>
+								<div className="subtitle">
+									{this.context.t("SETTINGS_SUPPORT_TITLE")}
+								</div>
+								<div>
+									<a
+										href="https://contentarena.com/web/faq/"
+										target="_blank"
+										className="ca-btn primary"
+									>
+										{this.context.t("SETTINGS_LINKS_BUTTON_FAQ")}
+									</a>
+									{" "}
+									<a
+										href="/bundles/app/data/Content_Arena_Manual_1.0.pdf"
+										download
+										className="ca-btn primary"
+									>
+										{this.context.t("SETTINGS_LINKS_BUTTON_MANUAL")}
+									</a>
+
+								</div>
+							</div>
 						</div>
 					</div>
-					<div className="setting" style={{ width: "48%", marginBottom: 30 }}>
-						<div className="title" style={{ marginBottom: 0 }}>
-							{this.context.t("SETTINGS_LINKS_HEADER")}
-						</div>
-						<div className="subtitle" style={{ marginBottom: 0 }}>
-							{this.context.t("SETTINGS_LINKS_TITLE")}
-						</div>
-
-						<div>
-							<a
-								href="/generalterms"
-								target="_blank"
-								className="standard-button settings-link"
-							>
-								{this.context.t("SETTINGS_LINKS_BUTTON_TERMS")}
-							</a>
-							<a
-								href="https://contentarena.com/web/privacy-policy/"
-								target="_blank"
-								className="standard-button settings-link"
-							>
-								{this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
-							</a>
-						</div>
-
-						<div className="title" style={{ marginBottom: 0, marginTop: 50 }}>
-							{this.context.t("SETTINGS_SUPPORT_HEADER")}
-						</div>
-						<div className="subtitle" style={{ marginBottom: 0 }}>
-							{this.context.t("SETTINGS_SUPPORT_TITLE")}
-						</div>
-
-						<div>
-							<a
-								href="https://contentarena.com/web/faq/"
-								target="_blank"
-								className="standard-button settings-link"
-							>
-								{this.context.t("SETTINGS_LINKS_BUTTON_FAQ")}
-							</a>
-							<a
-								href="/bundles/app/data/Content_Arena_Manual_1.0.pdf"
-								download
-								className="standard-button settings-link"
-							>
-								{this.context.t("SETTINGS_LINKS_BUTTON_MANUAL")}
-							</a>
-
-						</div>
-					</div>
-				</div>
-				{password
-				&& (
-					<PasswordValidationBox
-						password={password}
-						passwordCheck={passwordCheck}
-						onPasswordValid={this.handlePasswordValid}
-					/>
-				)
-				}
+				)}
 
 				<div
 					style={{
@@ -630,7 +694,6 @@ class Settings extends React.Component {
 						{this.context.t("PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE")}
 					</div>
 				</div>
-
 			</div>
 		);
 	}
