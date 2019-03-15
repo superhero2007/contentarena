@@ -98,8 +98,6 @@ class Terms extends React.Component {
 			activeTab,
 		} = this.state;
 
-		document.title = "Content Arena - Terms";
-
 		if (loading) return <Loader loading />;
 
 		return (

@@ -48,6 +48,7 @@ export const routes = [
 		header: HeaderBar,
 		main: Marketplace,
 		profile: "BUYER",
+		title: "Marketplace",
 	},
 	{
 		path: "/landing",
@@ -57,16 +58,19 @@ export const routes = [
 	{
 		path: "/reset-password/:resetToken",
 		main: ResetPassword,
+		title: "Reset Password",
 	},
 	{
 		path: "/login",
 		exact: true,
 		main: SignIn,
+		title: "Login",
 	},
 	{
 		path: "/registration",
 		exact: true,
 		main: SignUp,
+		title: "Registration",
 	},
 	{
 		path: "/test",
@@ -79,24 +83,29 @@ export const routes = [
 		exact: true,
 		header: PublicHeaderBar,
 		main: Register,
+		title: "Welcome",
 	},
 	{
 		path: "/register/:activationCode",
 		exact: true,
 		header: PublicHeaderBar,
 		main: Register,
+		title: "Welcome",
+
 	},
 	{
 		path: "/register/:activationCode/:step?",
 		updateByPath: true,
 		header: PublicHeaderBar,
 		main: Register,
+		title: "Welcome",
 	},
 	{
 		path: "/marketplace/filter/:filterName/:filterValue?",
 		header: HeaderBar,
 		main: Marketplace,
 		profile: "BUYER",
+		title: "Marketplace",
 	},
 	{
 		path: "/contentlisting/:customId?/:step?",
@@ -104,6 +113,7 @@ export const routes = [
 		main: SellForm,
 		updateByPath: true,
 		profile: "SELLER",
+		title: "Create Listing",
 	},
 	{
 		path: "/commercialoverview",
@@ -111,6 +121,7 @@ export const routes = [
 		exact: true,
 		main: CommercialActivity,
 		profile: "SELLER",
+		title: "Commercial Overview",
 	},
 	{
 		path: "/commercialoverview/filter/:filterName/:filterValue?",
@@ -118,53 +129,62 @@ export const routes = [
 		main: CommercialActivity,
 		updateByPath: true,
 		profile: "SELLER",
+		title: "Commercial Overview",
 	},
 	{
 		path: "/listing/:customId/:tab?/:bundles?",
 		header: HeaderBar,
 		main: Marketplace,
+		title: "Listing Details",
 	},
 	{
 		path: "/watchlist",
 		header: HeaderBar,
 		main: Watchlist,
 		profile: "BUYER",
+		title: "Watchlist",
 	},
 	{
 		path: "/closeddeals",
 		header: HeaderBar,
 		main: ClosedDeals,
 		profile: "BUYER",
+		title: "Closed Deals",
 	},
 	{
 		path: "/settings/:filter?",
 		header: HeaderBar,
 		main: Settings,
 		updateByPath: true,
+		title: "Settings",
 	},
 	{
 		path: "/preferences/:mode?",
 		header: HeaderBar,
 		main: Preferences,
 		updateByPath: true,
+		title: "Preferences",
 	},
 	{
 		path: "/terms",
 		header: HeaderBar,
 		main: Terms,
 		updateByPath: true,
+		title: "Terms",
 	},
 	{
 		path: "/messages/:customId?",
 		header: HeaderBar,
 		main: Messages,
 		updateByPath: true,
+		title: "Messages",
 	},
 	{
 		path: "/managelistings",
 		header: HeaderBar,
 		main: ManageListings,
 		profile: "SELLER",
+		title: "Manage Listings",
 	},
 	{
 		path: "/bids/:tab?",
@@ -172,5 +192,6 @@ export const routes = [
 		main: PendingDeals,
 		updateByPath: true,
 		profile: "BUYER",
+		title: "Bids",
 	},
 ];

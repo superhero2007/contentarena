@@ -13,6 +13,7 @@ parameters:
     locale: en
     sportradar_api_token: c0c1uBQGvll3lzYaXa
     sportradar_api_host: https://api.betradar.com/v1
+    google_analytics_key: 'UA-136235648-1'
     carena_host_url : '%local_host%'
     sportradar_api_cache_ttl : 432000
     main_folder : '%kernel.project_dir%/web'
@@ -54,6 +55,8 @@ framework:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        cookie_lifetime: 86400
+        gc_maxlifetime: 86400
     fragments: ~
     http_method_override: true
     assets:

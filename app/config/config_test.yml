@@ -3,6 +3,7 @@ imports:
 
 parameters:
     app.email_alerts: 'alexander@contentarena.com'
+    google_analytics_key: 'UA-136237491-2'
 
 framework:
     router:

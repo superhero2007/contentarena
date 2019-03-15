@@ -51,8 +51,6 @@ class ClosedDeals extends Component {
 
 		const { common } = this.props;
 
-		document.title = "Content Arena - Closed Deals";
-
 		bids.forEach((bid) => {
 			if (bid.soldListing && bid.soldListing.selectedRightsBySuperRight) {
 				bid.soldListing.rightsPackage.forEach((rp, k) => {

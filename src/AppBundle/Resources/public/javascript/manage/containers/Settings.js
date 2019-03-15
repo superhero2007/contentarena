@@ -105,8 +105,6 @@ class Settings extends React.Component {
 			value: user.company.country.name,
 		} : null;
 
-		document.title = "Content Arena - Settings";
-
 		if (loading) return <Loader loading />;
 
 		return (

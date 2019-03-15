@@ -103,8 +103,6 @@ class ManageListings extends React.Component {
 			draft, active, inactive, expired,
 		} = this.state;
 
-		document.title = "Content Arena - Manage Listings";
-
 		return (
 			<div style={{
 				display: "flex",
