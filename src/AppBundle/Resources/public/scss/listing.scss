@@ -605,10 +605,6 @@
         }
       }
 
-      .ca-tabs {
-        margin-bottom: 30px;
-      }
-
       .txt {
         color: #666;
         font-size: 13px;
@@ -806,7 +802,6 @@
             }
           }
 
-
         }
 
         .sales-packages-filters {
@@ -906,18 +901,18 @@
             }
           }
         }
-	  	.checkout-button {
-		  display: none;
-		  position: fixed;
-		  bottom: 15px;
-		  text-align: center;
-		  right: 0;
-		  left: 0;
+        .checkout-button {
+          display: none;
+          position: fixed;
+          bottom: 15px;
+          text-align: center;
+          right: 0;
+          left: 0;
 
-		  &.active {
-			  display: block;
-		  }
-	  	}
+          &.active {
+            display: block;
+          }
+        }
       }
 
       .sales-bundles {

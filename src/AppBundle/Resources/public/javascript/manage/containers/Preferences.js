@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import cloneDeep from "lodash/cloneDeep";
 import { PropTypes } from "prop-types";
-import PreferredUserProfile from "../components/PreferredUserProfile";
 import PreferredSportSeller from "../components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../components/PreferredSportBuyer";
@@ -17,6 +16,7 @@ class Preferences extends React.Component {
 			userUpdated: false,
 			companyUsers: [],
 			user: {},
+			activeTab: 1,
 		};
 	}
 
@@ -29,6 +29,7 @@ class Preferences extends React.Component {
 				loading: false,
 				user,
 				profile: user.preferredProfile,
+				activeTab: user.preferredProfile === "SELLER" ? 1 : 2,
 			});
 		});
 	}
@@ -79,7 +80,7 @@ class Preferences extends React.Component {
 	render() {
 		const { history, common } = this.props;
 		const {
-			updatingUser, loading, user, privacy, userUpdated,
+			updatingUser, loading, user, privacy, userUpdated, activeTab,
 		} = this.state;
 
 		document.title = "Content Arena - Preferences";
@@ -98,12 +99,27 @@ class Preferences extends React.Component {
 						{this.context.t("PREFERENCES_HEADLINE_EXPLANATION_TEXT")}
 					</div>
 
-					<PreferredUserProfile
-						profile={user.preferredProfile}
-						onChange={profile => this.updateUser("preferredProfile", profile)}
-					/>
-
-					{user.preferredProfile !== "BUYER" && (
+					<div className="ca-tabs">
+						<div
+							className={`tab lg ${activeTab === 1 ? "active" : ""}`}
+							onClick={() => {
+								this.setState({ activeTab: 1 });
+								this.updateUser("preferredProfile", "SELLER");
+							}}
+						>
+							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_SELLER")}
+						</div>
+						<div
+							className={`tab lg ${activeTab === 2 ? "active" : ""}`}
+							onClick={() => {
+								this.setState({ activeTab: 2 });
+								this.updateUser("preferredProfile", "BUYER");
+							}}
+						>
+							{this.context.t("PREFERENCES_TERRITORIES_PROFILE_BUYER")}
+						</div>
+					</div>
+					{activeTab === 1 && (
 						<PreferredSportSeller
 							sports={user.preferredSellerSports}
 							parse
@@ -112,24 +128,21 @@ class Preferences extends React.Component {
 							onChange={this.handleSellerSports}
 						/>
 					)}
-
-					{user.preferredProfile !== "SELLER" && (
-						<PreferredTerritoriesBuyer
-							territories={user.preferredBuyerCountries}
-							onChange={territories => this.updateUser("preferredBuyerCountries", territories)}
-						/>
+					{activeTab === 2 && (
+						<>
+							<PreferredTerritoriesBuyer
+								territories={user.preferredBuyerCountries}
+								onChange={territories => this.updateUser("preferredBuyerCountries", territories)}
+							/>
+							<PreferredSportBuyer
+								sports={user.preferredBuyerSports}
+								parse
+								showSubtitle={false}
+								allSports={user.preferredBuyerAllSports}
+								onChange={this.handleBuyerSports}
+							/>
+						</>
 					)}
-
-					{user.preferredProfile !== "SELLER" && (
-						<PreferredSportBuyer
-							sports={user.preferredBuyerSports}
-							parse
-							showSubtitle={false}
-							allSports={user.preferredBuyerAllSports}
-							onChange={this.handleBuyerSports}
-						/>
-					)}
-
 					<div className="buttons">
 						<div>
 							<button
@@ -138,8 +151,6 @@ class Preferences extends React.Component {
 								className="standard-button"
 							>
 								Save
-
-
 							</button>
 						</div>
 						{userUpdated && (
@@ -147,6 +158,8 @@ class Preferences extends React.Component {
 								{this.context.t("PREFERENCES_USER_UPDATED_MESSAGE")}
 							</div>
 						)}
+
+
 					</div>
 				</div>
 			</div>

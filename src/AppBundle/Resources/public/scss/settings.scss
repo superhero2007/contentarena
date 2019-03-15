@@ -1,20 +1,11 @@
 @import "vars";
 
 .settings-container {
-  .yellow-button {
-    margin-left: 0;
-  }
+  background-color: #fff;
+  box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
+  padding: 10px 20px 25px;
 
   .setting {
-
-    .settings-link {
-      margin: 20px 0;
-      border-radius: 5px;
-    }
-
-    background-color: #F7F7F7;
-    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
-    padding: 25px 20px;
     margin-bottom: 30px;
 
     &:last-child {
@@ -105,6 +96,8 @@
   }
 
   &.preferences, &.settings-container-welcome {
+    padding: 25px 20px;
+
     .title, .subtitle {
       margin-bottom: 15px !important;
     }
@@ -155,7 +148,7 @@
 
   .title {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     color: #03547C;
     font-size: 21px;
     font-weight: bold;
@@ -209,61 +202,18 @@
       font-weight: 600;
     }
 
-    .password {
-      display: flex;
-      flex-direction: column;
-
-      input {
-        width: 380px;
-        height: 45px;
-        padding: 5px;
-        line-height: 20px;
-        font-size: 16px;
-        margin: 5px 0 10px;
-        background: #F5F5F5;
-        border-color: #E6E6E6;
-      }
-
-      .standard-button {
-        margin-left: 0;
-        height: 68px;
-        width: 253px;
-        margin-top: 30px;
-        border-radius: 5px;
-      }
-    }
-
     .row {
       display: flex;
       margin-bottom: 20px;
 
       .item {
-        width: 33%;
-        max-width: 467px;
-        box-sizing: border-box;
         margin: 0 20px 0 0;
         display: flex;
+        flex: 0 1 33%;
         flex-direction: column;
 
         &:last-child {
           margin-right: inherit;
-        }
-
-
-        input {
-          width: auto;
-          padding: 10px;
-          margin-bottom: inherit;
-          background: #F5F5F5;
-          border-color: #E6E6E6;
-          font-weight: normal;
-          font-size: 13px;
-          color: #666;
-
-          &:disabled {
-            background: #EDEDED;
-            border-color: #E3E3E3;
-          }
         }
 
         .Select-control {
@@ -296,7 +246,7 @@
         max-width: 800%;
 
         .Select-placeholder, .Select-value, .Select-control {
-          background-color: #fff;
+          background-color: transparent;
         }
       }
     }
@@ -332,6 +282,10 @@
     margin: 20px;
     flex-direction: column;
   }
+
+  .ca-tabs {
+    margin-bottom: 15px;
+  }
 }
 
 .terms-edit-container {
@@ -352,30 +306,15 @@
     justify-content: flex-end;
     align-items: center;
     margin: 10px 0 0;
-
-    .terms-edit-header-title {
-      color: #03547C;
-      font-size: 21px;
-      font-weight: bold;
-      line-height: 24px;
-      align-self: center;
-      margin-right: auto;
-    }
-
   }
 
-  .terms-edit-box {
-    border: 1px solid lightgray;
-    padding: 5px 5px 30px;
-    border-top: none;
-  }
-
-  .terms-edit-title {
-    border: 1px solid lightgray;
-    padding: 5px;
-    color: #333333;
-    font-size: 16px;
+  .terms-edit-header-title {
+    color: #03547C;
+    font-size: 21px;
     font-weight: bold;
+    line-height: 24px;
+    align-self: center;
+    margin-right: auto;
   }
 
   .terms-edit-non-editable {
@@ -405,6 +344,14 @@
 
     .ca-loader {
       width: 40px;
+    }
+
+    .ca-tabs {
+      margin-bottom: 15px;
+
+      .tab {
+        font-size: 18px;
+      }
     }
 
     i {
@@ -494,10 +441,6 @@
         font-size: 27px;
       }
     }
-  }
-
-  .setting {
-
   }
 }
 

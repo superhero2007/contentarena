@@ -137,8 +137,8 @@ textarea.representation-textarea {
 
 textarea,
 input {
-  &::placeholder{
-    font-style: italic ;
+  &::placeholder {
+    font-style: italic;
     color: #CCCCCC;
   }
 }
@@ -438,6 +438,7 @@ a[disabled] {
 .ca-tabs {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 
   .tab {
     display: block;
@@ -447,6 +448,10 @@ a[disabled] {
     font-size: 15px;
     color: #333;
     font-weight: normal;
+
+    &.lg {
+      font-size: 18px;
+    }
 
     &:last-child {
       margin-right: 0;
@@ -462,7 +467,6 @@ a[disabled] {
 .ReactTable .rt-noData {
   display: none;
 }
-
 
 .ReactTable.ca-table {
   font-size: 14px;
@@ -610,7 +614,8 @@ a[disabled] {
     }
   }
 }
-.result-message{
+
+.result-message {
   color: #333333;
   font-size: 16px;
   font-weight: bold;
@@ -619,15 +624,15 @@ a[disabled] {
   display: flex;
   align-items: center;
   align-self: flex-start;
-  i{
+  i {
     font-size: 26px;
     margin: 0 5px;
   }
-  .fa-check-circle{
+  .fa-check-circle {
     color: green;
   }
 
-  .fa-close{
+  .fa-close {
     color: red;
   }
 }
@@ -696,7 +701,7 @@ a.ca-link {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     overflow-y: scroll;
     z-index: 9998;
   }
@@ -758,7 +763,7 @@ a.ca-link {
   height: inherit;
 
   &.react-tagsinput--focused {
-    border-color:  rgba(204, 204, 204, 0.48);
+    border-color: rgba(204, 204, 204, 0.48);
   }
 
   & > span {
@@ -770,7 +775,7 @@ a.ca-link {
   .react-tagsinput-input {
     width: inherit;
     font-size: 15px;
-	flex: 1;
+    flex: 1;
   }
 
   .react-tagsinput-remove {
@@ -808,8 +813,12 @@ a.ca-link {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .icon-circle-background {
@@ -840,17 +849,19 @@ a.ca-link {
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
+
 @keyframes hideMeAnimation {
   to {
-    width:0;
-    height:0;
-    overflow:hidden;
+    width: 0;
+    height: 0;
+    overflow: hidden;
   }
 }
+
 @-webkit-keyframes hideMeAnimation {
   to {
-    width:0;
-    height:0;
-    visibility:hidden;
+    width: 0;
+    height: 0;
+    visibility: hidden;
   }
 }
