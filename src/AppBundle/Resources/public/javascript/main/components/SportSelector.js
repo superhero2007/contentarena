@@ -65,7 +65,6 @@ class SportSelector extends React.Component {
 		this.setState({ activeSports, all: false });
 		if (onChange) {
 			onChange({
-				isSelected: !!activeSports.size,
 				sports: this.getSelectedSports(activeSports),
 				all: false,
 			});

@@ -17,10 +17,6 @@ class Preferences extends React.Component {
 			companyUsers: [],
 			user: {},
 			activeTab: 1,
-			sportsSelected: {
-				seller: false,
-				buyer: false,
-			},
 		};
 	}
 
@@ -56,36 +52,35 @@ class Preferences extends React.Component {
 	};
 
 	handleSellerSports = (response) => {
-		const { user, sportsSelected } = this.state;
+		const { user } = this.state;
 		user.preferredSellerSports = response.sports;
 		user.preferredSellerAllSports = response.all;
-		sportsSelected.seller = response.isSelected;
-		this.setState({ user, sportsSelected });
+		this.setState({ user });
 	};
 
 	handleBuyerSports = (response) => {
-		const { user, sportsSelected } = this.state;
+		const { user } = this.state;
 		user.preferredBuyerSports = response.sports;
 		user.preferredBuyerAllSports = response.all;
-		sportsSelected.buyer = response.isSelected;
-		this.setState({ user, sportsSelected });
+		this.setState({ user });
 	};
 
 	completeButtonDisabled = () => {
-		const { user, sportsSelected } = this.state;
+		const { user } = this.state;
 
 		if (!user.preferredProfile && !user.preferredBuyerCountries && !user.preferredSellerSports) return false;
 
 		return (user.preferredProfile !== "SELLER"
-			&& ((!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && !sportsSelected.buyer)
+			&& ((!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && user.preferredBuyerSports.length === 0)
 				|| user.preferredBuyerCountries.length === 0))
 			|| (user.preferredProfile !== "BUYER"
-				&& (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && !sportsSelected.seller));
+				&& (!user.preferredSellerOtherSport && !user.preferredSellerAllSports && user.preferredSellerSports.length === 0));
 	};
 
 	render() {
+		const { history, common } = this.props;
 		const {
-			updatingUser, loading, user, userUpdated, activeTab,
+			updatingUser, loading, user, privacy, userUpdated, activeTab,
 		} = this.state;
 
 		if (loading) return <Loader loading />;

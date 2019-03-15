@@ -21,10 +21,7 @@ class PreferredSportSeller extends React.Component {
 	setSports = (selection) => {
 		const { onChange } = this.props;
 		if (onChange) onChange(selection);
-		this.setState({
-			isSelected: selection.isSelected,
-			sports: selection.sports,
-		});
+		this.setState({ sports: selection.sports });
 	};
 
 	render() {
