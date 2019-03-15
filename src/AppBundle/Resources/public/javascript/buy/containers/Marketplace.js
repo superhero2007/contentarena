@@ -225,7 +225,7 @@ class Marketplace extends Component {
 	};
 
 	setListingViewType = (type) => {
-		this.setState({ listingView: type });
+		this.props.updateListingView(type);
 	};
 
 	fetchListings = (filter) => {

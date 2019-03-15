@@ -24,7 +24,7 @@ security:
 
             logout:
                 path: /logout
-                target: /landing
+                target: /login
                 invalidate_session: true
 
             anonymous:    true
