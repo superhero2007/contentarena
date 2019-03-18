@@ -278,6 +278,11 @@
       .rt-tr{
         @include boxSizing(border-box);
 
+        & a{
+          color: #666;
+          cursor: pointer;
+        }
+
         &.-even, &.-odd{
           cursor: pointer;
         }
@@ -286,7 +291,7 @@
           @include shadow(inset 0 0 0 1px $orange-color);
           @include transition(box-shadow 300ms ease-out);
 
-          & span{
+          & span, & a{
             text-decoration: underline;
           }
         }
