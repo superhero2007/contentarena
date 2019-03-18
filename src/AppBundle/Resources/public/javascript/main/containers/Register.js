@@ -92,6 +92,9 @@ class Register extends React.Component {
 			throw err;
 		}
 	};
+	componentWillUnmount() {
+		jQuery(".manager-container, .page-home").removeAttr("style");
+	}
 
 	componentDidMount() {
 		const {
@@ -104,6 +107,7 @@ class Register extends React.Component {
 		const { step } = match.params;
 		const sessionUser = this.getUserObj();
 
+		jQuery(".manager-container, .page-home").css("width", "auto");
 		// Redirect to welcome step if none
 		if (!step) {
 			history.push(`/register/${activationCode}/welcome`);
