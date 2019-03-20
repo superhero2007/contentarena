@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { PropTypes } from "prop-types";
 import ExtraTerritories from "./ExtraTerritories";
-import { bidIcon, fixedIcon } from "./Icons";
+import { bidIcon, packageIcon } from "./Icons";
 import { getCurrencySymbol } from "../actions/utils";
 
 class SalesPackages extends PureComponent {
@@ -27,7 +27,7 @@ class SalesPackages extends PureComponent {
 
 							{salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
 								<div className="icon">
-									<img src={fixedIcon} />
+									<img src={packageIcon} />
 								</div>
 							)}
 
