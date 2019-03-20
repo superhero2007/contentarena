@@ -26,6 +26,8 @@ ContentArena.Api = {
 	prepareList(list, categoryId) {
 		const _this = this;
 
+		if (!Array.isArray(list)) list = [list];
+
 		list = $.map(list, (item) => {
 			// Filter by category
 			if (categoryId && item.category["@attributes"].id != categoryId) return null;
@@ -570,7 +572,11 @@ ContentArena.Api = {
 					return;
 				}
 
-				list = $.map(__apiStore.tournaments[sportId].tournament, (item) => {
+				list = __apiStore.tournaments[sportId].tournament;
+
+				if (!Array.isArray(list)) list = [list];
+
+				list = $.map(list, (item) => {
 					const { id } = item.category["@attributes"];
 
 					if (cats.indexOf(id) !== -1) {

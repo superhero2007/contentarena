@@ -11,9 +11,10 @@ import { routes } from "./routes";
 import store from "./store";
 import { updateProfile, loadUserData } from "./actions/userActions";
 import {
-	getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries,
+	getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries, setGaTrackingID,
 } from "./actions/commonActions";
 import { setRefererData, setRefererEmail } from "../landing/actions/landingActions";
+import { initGA, PageView } from "../common/components/Tracking";
 
 class PrivateRoute extends React.Component {
 	constructor(props) {
@@ -29,14 +30,6 @@ class PrivateRoute extends React.Component {
 		}
 	}
 
-	trackPageView() {
-		try {
-			ga("send", "pageview", location.pathname);
-		} catch (e) {
-			console.error("Google Analytics library not initialized");
-		}
-	}
-
 	render() {
 		const {
 			component: Component, updateByPath, title, ...rest
@@ -47,8 +40,7 @@ class PrivateRoute extends React.Component {
 				{...rest}
 				render={(props) => {
 					this.updateProfile();
-					this.trackPageView();
-
+					PageView();
 					if (title !== null) document.title = `Content Arena - ${title}`;
 
 					return (
@@ -86,7 +78,7 @@ class AuthRouter extends React.Component {
 
 	componentWillMount() {
 		const {
-			loggedUserData, totalCountries, testStageMode, envHostUrl, refererEmail, refererListingId,
+			loggedUserData, totalCountries, testStageMode, envHostUrl, refererEmail, refererListingId, gaTrackingId,
 		} = this.props;
 
 		this.props.loadUserData(loggedUserData);
@@ -96,12 +88,21 @@ class AuthRouter extends React.Component {
 		this.props.setTestStageMode(!!+testStageMode);
 		this.props.setEnvHostUrl(envHostUrl);
 		this.props.setRefererData(refererEmail, refererListingId);
+		this.props.setGaTrackingID(gaTrackingId);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.user) {
 			this.setState({ user: nextProps.user });
 		}
+	}
+
+	componentDidMount() {
+		const {
+			gaTrackingId,
+		} = this.props;
+
+		initGA(gaTrackingId);
 	}
 
 	render() {
@@ -157,6 +158,7 @@ const mapDispatchToProps = dispatch => ({
 	getDefaultRightsPackage: () => dispatch(getDefaultRightsPackage()),
 	setLanguage: lang => dispatch(setLanguage(lang)),
 	setEnvHostUrl: envHostUrl => dispatch(setEnvHostUrl(envHostUrl)),
+	setGaTrackingID: gaTrackingId => dispatch(setGaTrackingID(gaTrackingId)),
 	setRefererData: (refererEmail, refererListingId) => dispatch(setRefererData(refererEmail, refererListingId)),
 });
 

@@ -12,6 +12,7 @@ import PreferredSportSeller from "../../manage/components/PreferredSportSeller";
 import PreferredTerritoriesBuyer from "../../manage/components/PreferredTerritoriesBuyer";
 import PreferredSportBuyer from "../../manage/components/PreferredSportBuyer";
 import Loader from "../../common/components/Loader";
+import { initGA, TrackingEvent } from "../../common/components/Tracking";
 
 const Steps = ({ steps = [] }) => {
 	const colors = [
@@ -81,6 +82,8 @@ class Register extends React.Component {
 				if (user.preferredProfile === undefined) {
 					user.preferredProfile = "BOTH";
 				}
+
+				if (!user.fullName) user.fullName = `${user.firstName} ${user.lastName}`;
 			}
 			this.storeUserObj(user);
 			this.setState({
@@ -100,7 +103,7 @@ class Register extends React.Component {
 		const {
 			history,
 			match,
-			register,
+			common,
 		} = this.props;
 
 		const { activationCode } = match.params;
@@ -124,13 +127,14 @@ class Register extends React.Component {
 				step,
 			});
 		}
+
+		initGA(common.gaTrackingId);
 	}
 
 	updateInfo = () => {
 		const { user, password } = this.state;
 		this.setState({ updatingUser: true });
 		ContentArena.ContentApi.activateUser(user, password).done(() => {
-			sessionStorage.setItem("registering_user", null);
 			this.setState({ updated: true, updatingUser: false });
 			location.href = "/marketplace";
 		});
@@ -291,6 +295,9 @@ class Register extends React.Component {
 		}
 
 		if (step === "welcome") {
+
+			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Welcome', user.fullName);
+
 			return (
 				<div className="settings-container settings-container-welcome">
 
@@ -329,6 +336,9 @@ class Register extends React.Component {
 		}
 
 		if (step === "questionnaire") {
+
+			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Questionnaire', user.fullName);
+
 			return (
 				<div className="settings-container settings-container-welcome">
 
@@ -392,6 +402,9 @@ class Register extends React.Component {
 		}
 
 		if (step === "personal") {
+
+			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Personal', user.fullName);
+
 			return (
 				<div className="settings-container settings-container-welcome">
 
@@ -655,6 +668,8 @@ class Register extends React.Component {
 				</div>
 			);
 		}
+
+		if (step === "password" && user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Password', user.fullName);
 
 		return (
 			<div className="settings-container settings-container-welcome">

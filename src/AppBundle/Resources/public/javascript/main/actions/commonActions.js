@@ -33,3 +33,8 @@ export const setEnvHostUrl = envHostUrl => ({
 	type: commonTypes.SET_ENV_HOST_URL,
 	envHostUrl,
 });
+
+export const setGaTrackingID = gaTrackingId => ({
+	type: commonTypes.SET_GA_TRACKING_ID,
+	gaTrackingId,
+});

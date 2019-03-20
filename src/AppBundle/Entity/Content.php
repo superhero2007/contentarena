@@ -304,7 +304,7 @@ class Content
      * @Groups({"listing", "home"})
      *
      */
-    private $featuredPosition = false;
+    private $featuredPosition;
 
     /**
      * @var boolean
