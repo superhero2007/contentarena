@@ -75,7 +75,7 @@
         "react/no-unescaped-entities": "off",
         "react/no-multi-comp": "off",
         "react/sort-comp": "off",
-        "react/jsx-filename-extension": "off",
+        "react/jsx-filename-extension": "off", //No need to fix
         "react/prefer-stateless-function": "off",
         "react/prop-types": "off",
         "react/jsx-no-target-blank": "off",
