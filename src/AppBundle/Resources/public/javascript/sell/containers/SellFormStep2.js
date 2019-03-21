@@ -39,9 +39,10 @@ class SellFormStep2 extends React.Component {
 
 	loadRights = (rightsPackage, group) => {
 		const _this = this;
-		ContentArena.Api.getRights(rightsPackage.map(p => (p.id)), group).done((rights) => {
-			_this.setState({ rights });
-		});
+		ContentArena.Api.getRights(rightsPackage.map(p => (p.id)), group)
+			.done((rights) => {
+				_this.setState({ rights });
+			});
 	};
 
 	handleCheckboxChange = (flag) => {
@@ -81,7 +82,7 @@ class SellFormStep2 extends React.Component {
 		const { validation } = this.props;
 
 		return !type && validation;
-	}
+	};
 
 	render() {
 		const {
@@ -105,7 +106,6 @@ class SellFormStep2 extends React.Component {
 			seasons,
 			packages,
 			validation,
-			name,
 		} = this.props;
 		if (step !== 2) return (null);
 
@@ -211,7 +211,7 @@ class SellFormStep2 extends React.Component {
 									<input
 										type="radio"
 										checked={EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
-										onChange={(e) => {
+										onChange={() => {
 											this.handleCheckboxChange(true);
 										}}
 										id="edit-program-optional"
@@ -221,7 +221,7 @@ class SellFormStep2 extends React.Component {
 									<input
 										type="radio"
 										checked={!EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
-										onChange={(e) => {
+										onChange={() => {
 											this.handleCheckboxChange(false);
 										}}
 										id="edit-program"

@@ -36,7 +36,7 @@ class ReviewAndSign extends React.Component {
 
 		if ((step === 5 && status && (status.name === "APPROVED" || status.name === "EDITED")) && !this.termsAutoSelected) {
 			updateContentValue("terms", true);
-			updateContentValue("terms_arena", true);
+			updateContentValue("termsArena", true);
 			this.termsAutoSelected = true;
 		}
 	}
@@ -63,12 +63,16 @@ class ReviewAndSign extends React.Component {
 
 		disableValidation();
 		this.setState({ showSubmitting: true });
-		ContentArena.ContentApi.saveContentAsActive(content).done((response) => {
-			if (response.success && response.contentId) {
-				updateContentValue("id", response.contentId);
-				_this.setState({ showSuccessScreen: true, showSubmitting: false });
-			}
-		});
+		ContentArena.ContentApi.saveContentAsActive(content)
+			.done((response) => {
+				if (response.success && response.contentId) {
+					updateContentValue("id", response.contentId);
+					_this.setState({
+						showSuccessScreen: true,
+						showSubmitting: false,
+					});
+				}
+			});
 	};
 
 	save = () => {
@@ -76,11 +80,13 @@ class ReviewAndSign extends React.Component {
 
 		let { content } = store.getState();
 		content = parseSeasons(content);
-		ContentArena.ContentApi.saveContentAsDraft(content).done(() => {
-			this.setState({ showSubmitting: false });
-		}).fail(() => {
-			this.setState({ showSubmitting: false });
-		});
+		ContentArena.ContentApi.saveContentAsDraft(content)
+			.done(() => {
+				this.setState({ showSubmitting: false });
+			})
+			.fail(() => {
+				this.setState({ showSubmitting: false });
+			});
 	};
 
 	closeSuccessScreen = () => {
@@ -162,7 +168,7 @@ class ReviewAndSign extends React.Component {
 		if (status && (status.name === "APPROVED" || status.name === "PENDING" || status.name === "EDITED")) {
 			return this.context.t("CL_STEP5_BUTTON_SAVE");
 		}
-	}
+	};
 
 	render() {
 		if (this.props.step !== 5) return (null);
@@ -175,7 +181,7 @@ class ReviewAndSign extends React.Component {
 			signaturePosition,
 			currency,
 			company,
-			terms_arena,
+			termsArena,
 			terms,
 			history,
 			customId,
@@ -186,7 +192,7 @@ class ReviewAndSign extends React.Component {
 		const { showDetails, showSubmitting } = this.state;
 
 		const signatureReady = (signature && status !== undefined && (status.name === "INACTIVE" || status.name === "EDITED" || status.name === "APPROVED"));
-		const isButtonDisabled = !(terms && terms_arena && signature && signatureName && signaturePosition);
+		const isButtonDisabled = !(terms && termsArena && signature && signatureName && signaturePosition);
 
 		return (
 			<div className="step-content review-sign-container">
@@ -221,7 +227,13 @@ class ReviewAndSign extends React.Component {
 				{!showDetails && (
 					<div className="step-content-container">
 
-						<div className="base-full-input" style={{ maxWidth: "none", borderBottom: "none" }}>
+						<div
+							className="base-full-input"
+							style={{
+								maxWidth: "none",
+								borderBottom: "none",
+							}}
+						>
 							<label>
 								{this.context.t("CL_STEP5_PREVIEW_LISTING")}
 							</label>
@@ -300,7 +312,7 @@ class ReviewAndSign extends React.Component {
 							}}
 							showTerms
 							terms={terms}
-							terms_arena={terms_arena}
+							termsArena={termsArena}
 							updateContentValue={updateContentValue}
 							customClass="review-and-sign"
 							ready={signatureReady}

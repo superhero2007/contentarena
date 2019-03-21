@@ -15,9 +15,10 @@ ContentArena.Utils = {
 		let sort = true;
 
 		if (content.extraData) {
-			Object.entries(content.extraData).forEach(
-				([key, value]) => content[key] = value,
-			);
+			Object.entries(content.extraData)
+				.forEach(
+					([key, value]) => content[key] = value,
+				);
 		}
 
 		content.tournament = (content.tournament) ? Array.isArray(content.tournament) ? content.tournament : [content.tournament] : [];
@@ -46,12 +47,19 @@ ContentArena.Utils = {
 				if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
 				if (sp.excludedCountries) {
 					sp.excludedTerritories = sp.excludedCountries.map(t => ({
-						label: t.name, value: t.name, regions: t.regions, territoryId: t.territoryId,
+						label: t.name,
+						value: t.name,
+						regions: t.regions,
+						territoryId: t.territoryId,
 					}));
 				}
 				if (sp.territories) {
 					sp.territories = sp.territories.map(t => ({
-						name: t.name, label: t.name, value: t.name, regions: t.regions, territoryId: t.territoryId,
+						name: t.name,
+						label: t.name,
+						value: t.name,
+						regions: t.regions,
+						territoryId: t.territoryId,
 					}));
 				}
 				if (!sp.territories) sort = false;
@@ -73,12 +81,18 @@ ContentArena.Utils = {
 				if (sp.salesMethod) sp.salesMethod = sp.salesMethod.name;
 				if (sp.excludedCountries) {
 					sp.excludedTerritories = sp.excludedCountries.map(t => ({
-						label: t.name, value: t.name, regions: t.regions, territoryId: t.territoryId,
+						label: t.name,
+						value: t.name,
+						regions: t.regions,
+						territoryId: t.territoryId,
 					}));
 				}
 				if (sp.territories) {
 					sp.territories = sp.territories.map(t => ({
-						label: t.name, value: t.name, regions: t.regions, territoryId: t.territoryId,
+						label: t.name,
+						value: t.name,
+						regions: t.regions,
+						territoryId: t.territoryId,
 					}));
 				}
 				if (!sp.territories) sort = false;
@@ -93,7 +107,10 @@ ContentArena.Utils = {
 					// continue regardless of error
 				}
 			});
-			if (sort) content.salesPackages.sort(this.sortSalesPackages).reverse();
+			if (sort) {
+				content.salesPackages.sort(this.sortSalesPackages)
+					.reverse();
+			}
 		}
 
 		if (content.endDate) content.endDate = moment(content.endDate);
@@ -101,19 +118,20 @@ ContentArena.Utils = {
 		if (content.signature) content.signature = hosturl + content.signature;
 
 		content.step = Number(content.step);
-		content.customSeasons = content.seasons.filter(s => s.externalId && s.externalId.startsWith("ca:")).map((s, i) => {
-			let years;
-			if (s.year) {
-				years = s.year.split("/");
-				s.from = years.length === 1 ? years[0] : 2000 + Number(years[0]);
-				s.to = years.length === 1 ? null : 2000 + Number(years[1]);
-			}
+		content.customSeasons = content.seasons.filter(s => s.externalId && s.externalId.startsWith("ca:"))
+			.map((s, i) => {
+				let years;
+				if (s.year) {
+					years = s.year.split("/");
+					s.from = years.length === 1 ? years[0] : 2000 + Number(years[0]);
+					s.to = years.length === 1 ? null : 2000 + Number(years[1]);
+				}
 
-			if (content.fixturesBySeason) {
-				s.fixtures = content.fixturesBySeason[i];
-			}
-			return s;
-		});
+				if (content.fixturesBySeason) {
+					s.fixtures = content.fixturesBySeason[i];
+				}
+				return s;
+			});
 
 
 		content.seasons = content.seasons.map((s) => {
@@ -186,7 +204,8 @@ ContentArena.Utils = {
 		return false;
 	},
 	addOrdinal(n) {
-		const str = n.toString().slice(-1);
+		const str = n.toString()
+			.slice(-1);
 		let ord = "";
 		switch (str) {
 		case "1":
@@ -207,6 +226,7 @@ ContentArena.Utils = {
 		case "0":
 			ord = "th";
 			break;
+		default:
 		}
 		return n + ord;
 	},

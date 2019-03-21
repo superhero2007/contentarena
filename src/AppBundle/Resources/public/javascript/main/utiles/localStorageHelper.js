@@ -2,9 +2,6 @@ import localStorageEnums from "../constants/localStorageEnums";
 import store from "../store";
 
 class LocalStorageClass {
-	constructor() {
-	}
-
 	getRightsCheckboxSelected() {
 		const LTFromStorage = localStorage.getItem(localStorageEnums.LT)
 			&& JSON.parse(localStorage.getItem(localStorageEnums.LT));

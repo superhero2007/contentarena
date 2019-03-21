@@ -72,6 +72,8 @@ class Marketplace extends Component {
 				const customFilter = this.getQueryString();
 				this.props.updateFilters(customFilter);
 				return;
+
+			default:
 			}
 		}
 		initGA(common.gaTrackingId);

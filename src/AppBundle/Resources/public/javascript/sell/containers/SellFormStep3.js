@@ -10,7 +10,6 @@ import { SummaryText, TitleBar } from "../components/SellFormItems";
 import { stepChangeReset } from "../actions/contentActions";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
-import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import RightsList from "../../main/components/RightsList";
 
 const licenseStyles = {
@@ -50,9 +49,10 @@ class SellFormStep3 extends React.Component {
 
 	loadRights = (rightsPackage, group) => {
 		const _this = this;
-		ContentArena.Api.getRights(rightsPackage.map(p => (p.id)), group).done((rights) => {
-			_this.setState({ rights });
-		});
+		ContentArena.Api.getRights(rightsPackage.map(p => (p.id)), group)
+			.done((rights) => {
+				_this.setState({ rights });
+			});
 	};
 
 	closeLicensePopup = () => {
@@ -154,7 +154,8 @@ class SellFormStep3 extends React.Component {
 									onClick={this.showLicensePopup}
 								>
 									{this.props.startDateMode === "LICENSE" && this.context.t("CL3_CONTRACT_CONCLUSION")}
-									{this.props.startDateMode === "DATE" && Moment(this.props.startDate).format(DATE_FORMAT)}
+									{this.props.startDateMode === "DATE" && Moment(this.props.startDate)
+										.format(DATE_FORMAT)}
 								</div>
 								<div className="column right-name">
 									{this.context.t("CL_STEP3_TITLE_LICENSE_PERIOD_END")}
@@ -170,7 +171,8 @@ class SellFormStep3 extends React.Component {
 									) : (
 										<span>
 											{endDateMode === "LIMITED" && this.props.endDateLimit + this.context.t("LISTING_DETAILS_LICENSE_END_DAYS")}
-											{endDateMode === "DATE" && Moment(this.props.endDate).format(DATE_FORMAT)}
+											{endDateMode === "DATE" && Moment(this.props.endDate)
+												.format(DATE_FORMAT)}
 											{endDateMode === "UNLIMITED" && this.context.t("Unlimited")}
 											{!endDateMode && this.context.t("CL_STEP3_SELECT_LICENSE_PERIOD")}
 										</span>
@@ -191,9 +193,11 @@ class SellFormStep3 extends React.Component {
 
 					<div className="rights-container">
 						{
-							this.state.rights.length > 0 && this.state.rights.map((right, i) => {
+							this.state.rights.length > 0 && this.state.rights.map((right) => {
 								if (right.superRights.length > 0
-									&& !this.superRightsEnabled(right.superRights)) return;
+									&& !this.superRightsEnabled(right.superRights)) {
+									return;
+								}
 
 								const rightKeyPreffix = "RIGHTS_";
 								const rightKeySuffix = "_DESCRIPTION";
@@ -227,11 +231,13 @@ class SellFormStep3 extends React.Component {
 
 					<div className="rights-container">
 						{
-							this.state.productionStandards.length > 0 && this.state.productionStandards.map((right, i) => {
+							this.state.productionStandards.length > 0 && this.state.productionStandards.map((right) => {
 								const { superRights } = right;
 
 								if (right.superRights.length > 0
-									&& !this.superRightsEnabled(right.superRights)) return;
+									&& !this.superRightsEnabled(right.superRights)) {
+									return;
+								}
 
 								if (this.skipContentDelivery(right)) return;
 
@@ -309,7 +315,7 @@ class SellFormStep3 extends React.Component {
 			...tempData,
 			CONTENT_DELIVERY_SHOULD_BE_CONFIGURED: contentDeliveryShouldBeConfigured,
 		});
-	}
+	};
 }
 
 SellFormStep3.contextTypes = {

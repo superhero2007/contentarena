@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
 	BrowserRouter as Router,
 	Route,
-	Redirect,
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { setLanguage } from "redux-i18n";
@@ -13,7 +12,7 @@ import { updateProfile, loadUserData } from "./actions/userActions";
 import {
 	getDefaultRightsPackage, setEnvHostUrl, setTestStageMode, setTotalCountries, setGaTrackingID,
 } from "./actions/commonActions";
-import { setRefererData, setRefererEmail } from "../landing/actions/landingActions";
+import { setRefererData } from "../landing/actions/landingActions";
 import { initGA, PageView } from "../common/components/Tracking";
 
 class PrivateRoute extends React.Component {

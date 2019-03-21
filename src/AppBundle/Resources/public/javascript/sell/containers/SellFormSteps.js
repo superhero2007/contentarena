@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import cn from "classnames";
 import { PropTypes } from "prop-types";
-import { goToPreviousStep, goToStep } from "../actions/contentActions";
+import { goToStep } from "../actions/contentActions";
 
 const SellFormStep = ({
 	step, active, title, onClick, stepVisited, stepFinished,

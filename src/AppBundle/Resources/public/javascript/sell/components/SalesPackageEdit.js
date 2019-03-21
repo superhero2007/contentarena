@@ -9,8 +9,14 @@ import CountrySelector from "../../main/components/CountrySelector";
 import { customStyles } from "../../main/styles/custom";
 import { getCurrencySymbol } from "../../main/actions/utils";
 
-const labelStyle = { height: "30px", fontSize: "12px" };
-const installmentIconStyle = { margin: "0 10px", position: "relative" };
+const labelStyle = {
+	height: "30px",
+	fontSize: "12px",
+};
+const installmentIconStyle = {
+	margin: "0 10px",
+	position: "relative",
+};
 const smallContainerStyle = {
 	display: "inline-block",
 	overflowY: "overlay",
@@ -68,10 +74,11 @@ class SalesPackageEdit extends React.Component {
 		if (territoriesMethod === this.worldwide
 			&& bundleMethod === this.individually) {
 			this.setState({
-				territories: Object.values(ContentArena.Data.Countries).map((i, k) => ({
-					value: i.name,
-					label: i.name,
-				})),
+				territories: Object.values(ContentArena.Data.Countries)
+					.map(i => ({
+						value: i.name,
+						label: i.name,
+					})),
 			});
 		} else {
 			this.setState({ territories: [] });
@@ -100,7 +107,11 @@ class SalesPackageEdit extends React.Component {
 		filter = [...filter, ...selected];
 
 
-		return filter.filter((item, pos, self) => self.indexOf(item) == pos).map(t => ({ value: t, label: t }));
+		return filter.filter((item, pos, self) => self.indexOf(item) == pos)
+			.map(t => ({
+				value: t,
+				label: t,
+			}));
 	};
 
 	preselectedExcluded = () => {
@@ -128,9 +139,13 @@ class SalesPackageEdit extends React.Component {
 		if (territoriesMethod === this.worldwide) {
 			name = "Worldwide";
 		} else if (territoriesMethod === this.selectedTerritories) {
-			name = territories.slice(0, 3).map((territory, i) => territory.label).join(", ");
+			name = territories.slice(0, 3)
+				.map(territory => territory.label)
+				.join(", ");
 		} else if (territoriesMethod === this.worldwideExcluding) {
-			name = `Worldwide excl. ${excludedTerritories.slice(0, 3).map((territory, i) => territory.label).join(", ")}`;
+			name = `Worldwide excl. ${excludedTerritories.slice(0, 3)
+				.map(territory => territory.label)
+				.join(", ")}`;
 		}
 
 		return name;
@@ -143,11 +158,13 @@ class SalesPackageEdit extends React.Component {
 		const { salesPackageId, exclusivity } = this.props;
 		const excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
 		let { territories } = this.state;
-		const allTerritories = Object.values(ContentArena.Data.Countries).map((i, k) => ({
-			value: i.name,
-			label: i.name,
-		}));
-		const territoriesByLabel = (exclusivity) ? this.getExcludedTerritories().map(t => t.label) : territories.map(t => t.label);
+		const allTerritories = Object.values(ContentArena.Data.Countries)
+			.map((i, k) => ({
+				value: i.name,
+				label: i.name,
+			}));
+		const territoriesByLabel = (exclusivity) ? this.getExcludedTerritories()
+			.map(t => t.label) : territories.map(t => t.label);
 		if (territoriesMethod === this.worldwideExcluding) territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
 		this.props.onUpdate({
 			name: this.getName(),
@@ -194,7 +211,11 @@ class SalesPackageEdit extends React.Component {
 
 	addInstallment = () => {
 		const { installments } = this.state;
-		installments.push({ value: 100, type: "DAY", days: 30 });
+		installments.push({
+			value: 100,
+			type: "DAY",
+			days: 30,
+		});
 		this.setState({ installments });
 	};
 
@@ -300,7 +321,13 @@ class SalesPackageEdit extends React.Component {
 										{this.context.t("Bidding")}
 									</div>
 								</div>
-								<div className="item" style={{ paddingLeft: 0, paddingRight: 0 }}>
+								<div
+									className="item"
+									style={{
+										paddingLeft: 0,
+										paddingRight: 0,
+									}}
+								>
 									<span>
 										{this.state.salesMethod === this.fixed && "Fixed fee"}
 										{this.state.salesMethod !== this.fixed && "Minimum bid (optional)"}
@@ -313,7 +340,10 @@ class SalesPackageEdit extends React.Component {
 											this.setState({ fee: value });
 										}}
 										min={0}
-										style={{ height: "26px", width: "100px" }}
+										style={{
+											height: "26px",
+											width: "100px",
+										}}
 										prefix={`${getCurrencySymbol(currency)} `}
 									/>
 								</div>
@@ -344,7 +374,10 @@ class SalesPackageEdit extends React.Component {
 												onChange={(e) => {
 													this.setInstallmentValue(e.target.value, i);
 												}}
-												style={{ height: "26px", width: "70px" }}
+												style={{
+													height: "26px",
+													width: "70px",
+												}}
 												type="number"
 												max={100}
 												value={installment.value}
@@ -400,7 +433,10 @@ class SalesPackageEdit extends React.Component {
 												}}
 												disabled={installment.type !== "DAY"}
 												value={installment.days}
-												style={{ height: "26px", width: "70px" }}
+												style={{
+													height: "26px",
+													width: "70px",
+												}}
 											/>
 											{" "}
 											{this.context.t("CL_STEP4_EDIT_BUNDLE_INSTALLMENT_DAYS")}

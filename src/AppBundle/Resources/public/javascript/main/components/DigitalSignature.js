@@ -62,10 +62,9 @@ class DigitalSignature extends React.Component {
 			onChangeSignatureName,
 			onChangeSignaturePosition,
 			showTerms,
-			noLabel,
 			noInfo,
 			terms,
-			terms_arena,
+			termsArena,
 			updateContentValue,
 			validation,
 		} = this.props;
@@ -107,15 +106,15 @@ class DigitalSignature extends React.Component {
 
 						<div className="d-flex">
 							<GeneralTerms
-								defaultChecked={terms_arena}
-								value={terms_arena}
+								defaultChecked={termsArena}
+								value={termsArena}
 								onChange={(e) => {
-									updateContentValue("terms_arena", e.target.checked);
+									updateContentValue("termsArena", e.target.checked);
 								}}
 								text={this.context.t("CL_STEP5_TERMS_2")}
 								text2={this.context.t("CL_STEP5_TERMS_3")}
 							/>
-							{!terms_arena && validation && (
+							{!termsArena && validation && (
 								<span
 									className="is-invalid"
 									style={{ marginLeft: 15 }}

@@ -28,7 +28,10 @@ class SuperRightList extends React.Component {
 		const { rightsPackage } = this.state;
 
 		if (!rightsPackage.has(superRight.id)) {
-			rightsPackage.set(superRight.id, { ...superRight, exclusive: false });
+			rightsPackage.set(superRight.id, {
+				...superRight,
+				exclusive: false,
+			});
 			this.props.superRightsUpdated(rightsPackage);
 		}
 	};
@@ -49,22 +52,26 @@ class SuperRightList extends React.Component {
 
 		if (rightPackageItem.exclusive === exclusive) return;
 
-		rightPackageItem = { ...rightPackageItem, exclusive };
+		rightPackageItem = {
+			...rightPackageItem,
+			exclusive,
+		};
 		rightsPackage.set(superRight.id, rightPackageItem);
 		superRightsUpdated(rightsPackage);
 	};
 
 	parsePackages(packages) {
-		return JSON.parse(packages).map((pItem) => {
-			pItem.selectedRights = Object.assign({}, RightDefaults);
-			if (RightDefaultsBySuperRight[pItem.shortLabel] !== undefined) {
-				pItem.selectedRights = Object.assign({},
-					pItem.selectedRights,
-					RightDefaultsBySuperRight[pItem.shortLabel]);
-			}
+		return JSON.parse(packages)
+			.map((pItem) => {
+				pItem.selectedRights = Object.assign({}, RightDefaults);
+				if (RightDefaultsBySuperRight[pItem.shortLabel] !== undefined) {
+					pItem.selectedRights = Object.assign({},
+						pItem.selectedRights,
+						RightDefaultsBySuperRight[pItem.shortLabel]);
+				}
 
-			return pItem;
-		});
+				return pItem;
+			});
 	}
 
 	isCheckBoxChecked = (id) => {
@@ -160,7 +167,7 @@ class SuperRightList extends React.Component {
 											<input
 												type="radio"
 												checked={offerValue === offers.EXCLUSIVE}
-												onChange={(e) => {
+												onChange={() => {
 													this.onExclusive(props.original, true);
 												}}
 												id={exclusiveIdAttr}
@@ -175,7 +182,7 @@ class SuperRightList extends React.Component {
 											<input
 												type="radio"
 												checked={offerValue === offers.NON_EXCLUSIVE}
-												onChange={(e) => {
+												onChange={() => {
 													this.onExclusive(props.original, false);
 												}}
 												id={nonExclusiveIdAttr}

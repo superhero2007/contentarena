@@ -4,11 +4,10 @@ import uniqueId from "lodash/uniqueId";
 import Moment from "moment/moment";
 import CaTooltip from "../../main/components/CaTooltip";
 import { DATE_FORMAT } from "@constants";
-import { pdfIcon } from "../../main/components/Icons";
 
 const Installments = ({ installments }, context) => {
 	const tooltipId = uniqueId();
-	const ordinal_suffix_of = (i) => {
+	const ordinalSuffixOf = (i) => {
 		const j = i % 10;
 		const k = i % 100;
 		if (j === 1 && k !== 11) {
@@ -33,16 +32,16 @@ const Installments = ({ installments }, context) => {
 						<div className="payment" key={`payment${index}`}>
 							<div>
 								<b>
-									{ordinal_suffix_of(index + 1)}
+									{ordinalSuffixOf(index + 1)}
 									{" "}
-									installment
+                                    installment
 
 
 								</b>
 							</div>
 							<div>
 								{installment.value}
-								%
+                                %
 
 
 							</div>

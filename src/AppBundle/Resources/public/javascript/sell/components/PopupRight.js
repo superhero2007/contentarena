@@ -12,11 +12,15 @@ import { SuperRightProductionDetailsLabels } from "./SuperRightDefinitions";
 import { PropTypes } from "prop-types";
 import { commentIcon } from "@icons";
 
-const numberFieldStyle = { width: "30px", paddingLeft: "10px" };
+const numberFieldStyle = {
+	width: "30px",
+	paddingLeft: "10px",
+};
 
 const getLanguagesString = (languages) => {
 	if (!languages) return null;
-	return languages.map(item => item.label).join(", ");
+	return languages.map(item => item.label)
+		.join(", ");
 };
 
 const getCustomValueString = (firstPackage, currentRights, rightItemsDefinitions, context, item, predicate) => {
@@ -77,14 +81,18 @@ class PopupRight extends React.Component {
 	toggleAll = (rightItem) => {
 		const { selection } = this.state;
 
-		if (selection.get(rightItem).has(0)) {
-			selection.get(rightItem).clear();
+		if (selection.get(rightItem)
+			.has(0)) {
+			selection.get(rightItem)
+				.clear();
 		} else {
 			this.state.activePackages.forEach((rightPackage) => {
-				selection.get(rightItem).set(rightPackage.id, true);
+				selection.get(rightItem)
+					.set(rightPackage.id, true);
 			});
 
-			selection.get(rightItem).set(0, true);
+			selection.get(rightItem)
+				.set(0, true);
 		}
 
 		this.setState({ selection });
@@ -100,20 +108,24 @@ class PopupRight extends React.Component {
 				if (key !== rightItem) item.clear();
 			});
 		}
-		selection.get(rightItem).set(rightPackage, true);
+		selection.get(rightItem)
+			.set(rightPackage, true);
 		this.setState({ selection });
 	};
 
 	unselect = (rightItem, rightPackage) => {
 		const { selection } = this.state;
-		selection.get(rightItem).delete(rightPackage);
-		selection.get(rightItem).delete(0);
+		selection.get(rightItem)
+			.delete(rightPackage);
+		selection.get(rightItem)
+			.delete(0);
 		this.setState({ selection });
 	};
 
 	toggle = (rightItem, rightPackage) => {
 		const { selection } = this.state;
-		if (selection.get(rightItem).has(rightPackage)) {
+		if (selection.get(rightItem)
+			.has(rightPackage)) {
 			this.unselect(rightItem, rightPackage);
 		} else {
 			this.select(rightItem, rightPackage);
@@ -122,7 +134,8 @@ class PopupRight extends React.Component {
 
 	isSelected = (rightItem, rightPackage) => {
 		const { selection } = this.state;
-		return selection.get(rightItem).has(rightPackage);
+		return selection.get(rightItem)
+			.has(rightPackage);
 	};
 
 	packageIsActive = id => this.state.activePackages.has(id) && this.state.availablePackages.has(id);
@@ -132,7 +145,8 @@ class PopupRight extends React.Component {
 
 		if (!this.state.activePackages.has(rightPackage)) return false;
 
-		selection.get(rightItem).set(rightPackage, date);
+		selection.get(rightItem)
+			.set(rightPackage, date);
 		this.setState({ selection });
 	};
 
@@ -188,7 +202,6 @@ class PopupRight extends React.Component {
 		const { rightsPackage } = this.state;
 		const index = rightPackage.selectedRights[id].indexOf(val);
 		const { all } = RightItemsDefinitions[val];
-		const alls = RightItemsDefinitions;
 
 		if (index === -1) {
 			if (all) {
@@ -311,7 +324,9 @@ class PopupRight extends React.Component {
 
 		superRights.forEach((superRight) => {
 			if (checkContentDelivery
-				&& superRight.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE") return false;
+				&& superRight.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE") {
+				return false;
+			}
 
 			const selected = superRight.selectedRights[id];
 			if (Array.isArray(selected)) {
@@ -335,7 +350,13 @@ class PopupRight extends React.Component {
 
 		return (
 			<div className="row">
-				<div className="column" style={{ justifyContent: "flex-start", flex: 3 }}>
+				<div
+					className="column"
+					style={{
+						justifyContent: "flex-start",
+						flex: 3,
+					}}
+				>
 					{!productionLabel && rightPackage.name}
 					{!name && productionLabel && productionLabels[(rightPackage.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT") ? "HL" : rightPackage.shortLabel]}
 					{name && name}
@@ -436,7 +457,13 @@ class PopupRight extends React.Component {
 								)
 							}
 							{RightItemsDefinitions[option].bigTextField
-							&& <textarea style={{ minHeight: "50px", margin: "5px 0px" }} />}
+							&& (
+								<textarea style={{
+									minHeight: "50px",
+									margin: "5px 0px",
+								}}
+								/>
+							)}
 						</div>
 					);
 				})}
@@ -514,7 +541,15 @@ class PopupRight extends React.Component {
 					<div className="step-content-container">
 						<div className="modal-table">
 							<div className="row row-header">
-								{!global && <div className="column" style={{ justifyContent: "flex-start", flex: 3 }} />}
+								{!global && (
+									<div
+										className="column"
+										style={{
+											justifyContent: "flex-start",
+											flex: 3,
+										}}
+									/>
+								)}
 								{global && language
 								&& <div className="column" style={{ flex: 3 }}>Licensed languages</div>}
 								{options.map((option, i, list) => {
@@ -582,7 +617,12 @@ class PopupRight extends React.Component {
 							{showTextArea && showTextArea === "FURTHER_DETAILS" && rightsPackage && rightsPackage.length > 0
 							&& (
 								<div style={{ padding: "0 15px" }}>
-									<div style={{ fontWeight: 600, padding: "15px 0 5px" }}>Further details</div>
+									<div style={{
+										fontWeight: 600,
+										padding: "15px 0 5px",
+									}}
+									>Further details
+									</div>
 									<textarea
 
 										onChange={(e) => {
@@ -596,7 +636,12 @@ class PopupRight extends React.Component {
 
 							{technicalFee && (
 								<div style={{ padding: "0 15px" }}>
-									<div style={{ fontWeight: 600, padding: "15px 0 5px" }}>Technical fee</div>
+									<div style={{
+										fontWeight: 600,
+										padding: "15px 0 5px",
+									}}
+									>Technical fee
+									</div>
 									<div>
 										<input
 											style={{ width: "20px" }}
@@ -627,7 +672,10 @@ class PopupRight extends React.Component {
 										{" "}
 										{this.context.t("CL_STEP3_POPUP_TECHNICAL_FEE_2")}
 										<input
-											style={{ width: "70px", margin: "1px 10px" }}
+											style={{
+												width: "70px",
+												margin: "1px 10px",
+											}}
 											onChange={(e) => {
 												this.updateSelectionInAllPackages(e.target.value, "TECHNICAL_FEE_PERCENTAGE");
 											}}
@@ -782,7 +830,8 @@ class PopupRight extends React.Component {
 					if (isSingleLabel) {
 						displayedValue = this.context.t(suffix + currentRights);
 					} else {
-						displayedValue = currentRights.map(item => this.context.t(suffix + item)).join(", ");
+						displayedValue = currentRights.map(item => this.context.t(suffix + item))
+							.join(", ");
 					}
 				}
 			}

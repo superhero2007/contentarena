@@ -7,8 +7,6 @@ import SalesPackageEdit from "../components/SalesPackageEdit";
 import ExpirationDateSelector from "../components/ExpirationDateSelector";
 import JurisdictionSelector from "../components/JurisdictionSelector";
 import CompanyInformation from "../components/CompanyInformation";
-import ListingName from "../components/ListingName";
-import { CountrySelector } from "../../main/components/CountrySelector";
 import { stepChangeReset } from "../actions/contentActions";
 import { SummaryText, TitleBar } from "../components/SellFormItems";
 import ApplicableLaw from "../components/ApplicableLaw";
