@@ -47,7 +47,7 @@ class Marketplace extends Component {
 	}
 
 	componentDidMount() {
-		const { clearUpdateFilter, match, common, } = this.props;
+		const { clearUpdateFilter, match, common } = this.props;
 
 		if (match && match.params && match.params.customId) {
 			this.selectListing(match.params.customId);
@@ -97,7 +97,7 @@ class Marketplace extends Component {
 		sessionStorage.removeItem("registering_user");
 		user = JSON.parse(user);
 
-		if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Marketplace', user.fullName);
+		if (user.fullName) TrackingEvent(`Register ${user.fullName}`, "Marketplace", user.fullName);
 	};
 
 	selectListing = (id) => {

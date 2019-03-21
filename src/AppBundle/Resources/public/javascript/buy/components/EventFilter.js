@@ -178,7 +178,7 @@ const mapDispatchToProps = dispatch => ({
 	onClick: id => dispatch(test(id)),
 	selectSport: sport => dispatch(updateSport(sport)),
 	updateEvent: event => dispatch(updateEvent(event)),
-	showAllFilters: bool => dispatch(showAllFilters(bool))
+	showAllFilters: bool => dispatch(showAllFilters(bool)),
 });
 
 

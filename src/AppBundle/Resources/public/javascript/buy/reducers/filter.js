@@ -14,7 +14,7 @@ export const filterTypes = {
 	UPDATE_FILTERS_CONFIG: "UPDATE_ALL",
 	UPDATE_EVENT_DATE_FROM_TO: "UPDATE_FROM_TO",
 	UPDATE_LIST_VIEW: "UPDATE_LIST_VIEW",
-	SHOW_ALL_FILTERS: "SHOW_ALL_FILTERS"
+	SHOW_ALL_FILTERS: "SHOW_ALL_FILTERS",
 };
 
 const defaultFilter = {
@@ -31,7 +31,7 @@ const defaultFilter = {
 	eventDateFrom: "",
 	eventDateTo: "",
 	listType: CONTENT_LISTING_VIEW.LIST,
-	allFilters: false
+	allFilters: false,
 };
 
 export const filter = (state = defaultFilter, action) => {
@@ -83,7 +83,7 @@ export const filter = (state = defaultFilter, action) => {
 		if (action.filters.rights) action.filters.rights = action.filters.rights.map(r => Number(r));
 		return Object.assign({}, state, action.filters);
 	case filterTypes.SHOW_ALL_FILTERS:
-		return Object.assign({}, state, {allFilters: action.payload});
+		return Object.assign({}, state, { allFilters: action.payload });
 	default:
 		return state;
 	}

@@ -95,6 +95,7 @@ class Register extends React.Component {
 			throw err;
 		}
 	};
+
 	componentWillUnmount() {
 		jQuery(".manager-container, .page-home").removeAttr("style");
 	}
@@ -295,8 +296,7 @@ class Register extends React.Component {
 		}
 
 		if (step === "welcome") {
-
-			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Welcome', user.fullName);
+			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, "Welcome", user.fullName);
 
 			return (
 				<div className="settings-container settings-container-welcome">
@@ -336,8 +336,7 @@ class Register extends React.Component {
 		}
 
 		if (step === "questionnaire") {
-
-			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Questionnaire', user.fullName);
+			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, "Questionnaire", user.fullName);
 
 			return (
 				<div className="settings-container settings-container-welcome">
@@ -402,8 +401,7 @@ class Register extends React.Component {
 		}
 
 		if (step === "personal") {
-
-			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Personal', user.fullName);
+			if (user.fullName) TrackingEvent(`Register ${user.fullName}`, "Personal", user.fullName);
 
 			return (
 				<div className="settings-container settings-container-welcome">
@@ -669,7 +667,7 @@ class Register extends React.Component {
 			);
 		}
 
-		if (step === "password" && user.fullName) TrackingEvent(`Register ${user.fullName}`, 'Password', user.fullName);
+		if (step === "password" && user.fullName) TrackingEvent(`Register ${user.fullName}`, "Password", user.fullName);
 
 		return (
 			<div className="settings-container settings-container-welcome">

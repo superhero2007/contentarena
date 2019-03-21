@@ -42,8 +42,7 @@ class ContentListingTable extends Component {
 	getYear = date => Moment(date).format(YEAR_FORMAT);
 
 	getSeasonCell = (props) => {
-
-		const { value, original, } = props;
+		const { value, original } = props;
 		const { customId } = original;
 
 		if (!value) return "-";
@@ -66,7 +65,7 @@ class ContentListingTable extends Component {
 	};
 
 	getCell = (props, isCountry = false) => {
-		const { value, original, } = props;
+		const { value, original } = props;
 		const { customId } = original;
 		const isValueArr = Array.isArray(value);
 
@@ -80,7 +79,7 @@ class ContentListingTable extends Component {
 	};
 
 	getBundlesCell = (props) => {
-		const { customId, salesPackages, } = props;
+		const { customId, salesPackages } = props;
 		return <a href={`/listing/${customId}`} title={salesPackages.length}>{salesPackages.length}</a>;
 	};
 
@@ -194,7 +193,7 @@ class ContentListingTable extends Component {
 					resizable={false}
 					data={listings}
 					columns={this.getColumns()}
-					/*getTrProps={(state, rowInfo) => this.getTrClick(state, rowInfo)}*/
+					/* getTrProps={(state, rowInfo) => this.getTrClick(state, rowInfo)} */
 				/>
 				<ReactTooltip place="top" type="dark" effect="solid" />
 			</section>

@@ -8,9 +8,9 @@ import ReactGA from "react-ga";
  */
 export const TrackingEvent = (category, action, label) => {
 	ReactGA.event({
-		category: category,
-		action: action,
-		label: label
+		category,
+		action,
+		label,
 	});
 };
 
