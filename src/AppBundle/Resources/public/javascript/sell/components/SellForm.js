@@ -22,9 +22,9 @@ class SellForm extends React.Component {
 
 		if (content.law === undefined || content.law === null) {
 			content.law = {
-				label: content.company.country.name,
-				value: content.company.country.name,
-				name: content.company.country.name,
+				label: (content.company.country) ? content.company.country.name : "",
+				value: (content.company.country) ? content.company.country.name : "",
+				name: (content.company.country) ? content.company.country.name : "",
 			};
 		}
 
