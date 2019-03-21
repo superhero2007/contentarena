@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import Select from "react-select";
 import { PropTypes } from "prop-types";
 import uniqBy from "lodash/uniqBy";
 import { updateEvent, updateSport, showAllFilters } from "../actions/filterActions";
@@ -24,10 +23,11 @@ class EventFilter extends React.Component {
 
 	componentDidMount() {
 		if (ContentArena.Data.ActiveSports.length === 0) {
-			ContentArena.Api.getActiveSports().done((sports) => {
-				ContentArena.Data.ActiveSports = sports;
-				!this.isCancelled && this.setState({ sports });
-			});
+			ContentArena.Api.getActiveSports()
+				.done((sports) => {
+					ContentArena.Data.ActiveSports = sports;
+					!this.isCancelled && this.setState({ sports });
+				});
 		} else {
 			!this.isCancelled && this.setState({ sports: ContentArena.Data.ActiveSports });
 		}
@@ -45,9 +45,16 @@ class EventFilter extends React.Component {
 	getFilters = () => {
 		const { sports } = this.state;
 
-		const countries = sports.filter(s => s.name).map((i, k) => ({ value: i.name, label: i.name }));
+		const countries = sports.filter(s => s.name)
+			.map(i => ({
+				value: i.name,
+				label: i.name,
+			}));
 
-		return [...[{ value: null, label: "All sports" }], ...countries];
+		return [...[{
+			value: null,
+			label: "All sports",
+		}], ...countries];
 	};
 
 	showTab = (tab) => {
@@ -61,7 +68,7 @@ class EventFilter extends React.Component {
 		this.setState({
 			checkedSports: sports,
 		});
-	}
+	};
 
 	onSelectSport = (e, sp) => {
 		const { checked } = e.target;
@@ -79,7 +86,7 @@ class EventFilter extends React.Component {
 		this.handleFilter();
 	};
 
-	updateEvent = (e) => {
+	updateEvent = () => {
 		this.props.updateEvent(this.refs.search_field.value);
 	};
 
@@ -98,7 +105,7 @@ class EventFilter extends React.Component {
 			&& JSON.parse(localStorage.getItem(localStorageEnums.SPORTS));
 		const sportValue = sportFromStorage || this.props.sport;
 		return sportValue;
-	}
+	};
 
 	isSportChecked = (sp) => {
 		const { checkedSports } = this.state;
@@ -106,7 +113,7 @@ class EventFilter extends React.Component {
 			return true;
 		}
 		return checkedSports.some(s => s.value === sp.value);
-	}
+	};
 
 	render() {
 		const { event, allFilters } = this.props;
@@ -135,19 +142,21 @@ class EventFilter extends React.Component {
 					<div className="title">
 						{this.context.t("MARKETPLACE_LABEL_FILTER_SPORT")}
 					</div>
-					{this.getFilters().slice(0, allFilters ? this.getFilters().length : 5).map(sp => (
-						<div style={{ margin: "7px 0 " }} key={sp.label}>
-							<label className="d-flex">
-								<input
-									type="checkbox"
-									onChange={e => this.onSelectSport(e, sp)}
-									className="ca-checkbox checkbox-item"
-									defaultChecked={this.isSportChecked(sp)}
-								/>
-								<span>{sp.label}</span>
-							</label>
-						</div>
-					))}
+					{this.getFilters()
+						.slice(0, allFilters ? this.getFilters().length : 5)
+						.map(sp => (
+							<div style={{ margin: "7px 0 " }} key={sp.label}>
+								<label className="d-flex">
+									<input
+										type="checkbox"
+										onChange={e => this.onSelectSport(e, sp)}
+										className="ca-checkbox checkbox-item"
+										defaultChecked={this.isSportChecked(sp)}
+									/>
+									<span>{sp.label}</span>
+								</label>
+							</div>
+						))}
 					{this.getFilters().length > 5 && (
 						<>
 							<hr />

@@ -30,7 +30,7 @@ ContentArena.Api = {
 
 		list = $.map(list, (item) => {
 			// Filter by category
-			if (categoryId && item.category["@attributes"].id != categoryId) return null;
+			if (categoryId && item.category["@attributes"].id !== categoryId) return null;
 
 			return {
 				name: item["@attributes"].name,

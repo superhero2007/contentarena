@@ -1,11 +1,5 @@
-import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-	addRight, clearUpdateFilter, removeRight, updateCountries, updateEvent, updateExclusive,
-	updateMany, updateSport,
-} from "../buy/actions/filterActions";
-import { test } from "../buy/actions";
 
 class Fetch extends Component {
 	static propTypes = {
@@ -54,10 +48,6 @@ class Fetch extends Component {
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => ({});
-
-
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
 )(Fetch);

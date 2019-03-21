@@ -255,7 +255,7 @@ class ReviewAndSign extends React.Component {
 								{this.context.t("CL_STEP5_PREVIEW_LISTING_DETAILS")}
 							</div>
 							<div
-								onClick={(e) => {
+								onClick={() => {
 									goToListing(customId, true);
 								}}
 								className="ca-btn primary"

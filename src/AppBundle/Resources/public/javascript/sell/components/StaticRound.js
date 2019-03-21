@@ -1,6 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import Match from "./Match";
 
 class StaticRound extends React.Component {
 	constructor(props) {
@@ -59,7 +57,7 @@ class StaticRound extends React.Component {
 	};
 
 	completeSeason = () => {
-		const { seasons, season, round } = this.props;
+		const { seasons, season } = this.props;
 		const schedule = seasons[season].schedules;
 		return Object.values(schedule).filter(r => Array.from(r.matches.values()).filter(m => m.selected).length > 0).length === 0;
 	};

@@ -8,7 +8,6 @@ import {
 	sportCategoryIcon,
 	seasonReleaseIcon,
 	fixturesEpisodeIcon,
-	eventTimeIcon,
 } from "../../main/components/Icons";
 
 import { DATE_FORMAT } from "@constants";
@@ -176,11 +175,9 @@ class ContentListingEventDetails extends React.Component {
 			sportCategory,
 			customTournament,
 			customCategory,
-			customId,
 			tournament,
 			seasons,
 			showFullSeasons,
-			showCustomId,
 			PROGRAM_YEAR,
 			PROGRAM_EPISODES,
 			setRawContent,

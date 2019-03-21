@@ -92,7 +92,7 @@ class SellButtons extends Component {
 		} = this.props;
 
 		return expiresAt
-			&& (vat === "no" || (vatPercentage && vatPercentage != 0 && vatPercentage !== ""))
+			&& (vat === "no" || (vatPercentage && vatPercentage !== 0 && vatPercentage !== ""))
 			&& law !== null
 			&& jurisdiction !== null
 			&& jurisdiction !== undefined

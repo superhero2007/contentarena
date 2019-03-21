@@ -308,7 +308,7 @@ class PopupRight extends React.Component {
 					custom = true;
 					return true;
 				}
-			} else if (current != selected) {
+			} else if (current !== selected) {
 				custom = true;
 				return true;
 			}
@@ -375,7 +375,7 @@ class PopupRight extends React.Component {
 							&& (
 								<input
 									checked={rightPackage.selectedRights[id].indexOf(option) !== -1}
-									onChange={(e) => {
+									onChange={() => {
 										this.updateMultipleSelection(option, id, rightPackage);
 									}}
 									type="checkbox"
@@ -683,7 +683,7 @@ class PopupRight extends React.Component {
 											type="number"
 											max={100}
 											min={0}
-											onFocus={(e) => {
+											onFocus={() => {
 												this.updateSelectionInAllPackages("ON_TOP", "TECHNICAL_FEE");
 											}}
 										/>

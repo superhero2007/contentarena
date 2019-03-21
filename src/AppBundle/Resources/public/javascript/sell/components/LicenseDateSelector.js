@@ -78,7 +78,7 @@ class LicenseDateSelector extends React.Component {
 									<input
 										type="radio"
 										checked={startDateMode === "LICENSE"}
-										onChange={(e) => {
+										onChange={() => {
 											this.onDataChange("startDateMode", "LICENSE");
 										}}
 										id="license-start-contract"
@@ -100,7 +100,7 @@ class LicenseDateSelector extends React.Component {
 									<input
 										type="radio"
 										checked={startDateMode === "DATE"}
-										onChange={(e) => {
+										onChange={() => {
 											this.onDataChange("startDateMode", "DATE");
 										}}
 										id="license-start"
@@ -132,7 +132,7 @@ class LicenseDateSelector extends React.Component {
 									<input
 										type="radio"
 										checked={endDateMode === "LIMITED"}
-										onChange={(e) => {
+										onChange={() => {
 											this.onDataChange("endDateMode", "LIMITED");
 										}}
 										id="license-end-input"
@@ -158,7 +158,7 @@ class LicenseDateSelector extends React.Component {
 									<input
 										type="radio"
 										checked={endDateMode === "DATE"}
-										onChange={(e) => {
+										onChange={() => {
 											this.onDataChange("endDateMode", "DATE");
 										}}
 										id="license-end"
@@ -178,7 +178,7 @@ class LicenseDateSelector extends React.Component {
 									<input
 										type="radio"
 										checked={endDateMode === "UNLIMITED"}
-										onChange={(e) => {
+										onChange={() => {
 											this.onDataChange("endDateMode", "UNLIMITED");
 										}}
 										id="license-end-unlimited"

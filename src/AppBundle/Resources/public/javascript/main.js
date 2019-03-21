@@ -30,7 +30,7 @@ $(() => {
 			digit: /\d/.test(first),
 			upper: /[A-Z]/.test(first),
 			special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(first),
-			match: (first == second),
+			match: (first === second),
 		};
 	}
 

@@ -18,21 +18,26 @@ class Terms extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({ loading: true, loadingDefinitions: true });
-
-		ContentArena.Api.getCompanyTerms().done((terms) => {
-			this.setState({
-				loading: false,
-				terms,
-			});
+		this.setState({
+			loading: true,
+			loadingDefinitions: true,
 		});
 
-		ContentArena.Api.getCompanyDefinitions().done((definitions) => {
-			this.setState({
-				loadingDefinitions: false,
-				definitions,
+		ContentArena.Api.getCompanyTerms()
+			.done((terms) => {
+				this.setState({
+					loading: false,
+					terms,
+				});
 			});
-		});
+
+		ContentArena.Api.getCompanyDefinitions()
+			.done((definitions) => {
+				this.setState({
+					loadingDefinitions: false,
+					definitions,
+				});
+			});
 	}
 
 	onRemoveDefinition = (index) => {
@@ -53,23 +58,25 @@ class Terms extends React.Component {
 	restoreDefaultTerms = () => {
 		this.setState({ restoring: true });
 
-		ContentArena.Api.restoreCompanyTerms().done((terms) => {
-			this.setState({
-				restoring: false,
-				terms,
+		ContentArena.Api.restoreCompanyTerms()
+			.done((terms) => {
+				this.setState({
+					restoring: false,
+					terms,
+				});
 			});
-		});
 	};
 
 	restoreDefaultDefinitions = () => {
 		this.setState({ restoringDefinitions: true });
 
-		ContentArena.Api.restoreDefinitions().done((definitions) => {
-			this.setState({
-				restoringDefinitions: false,
-				definitions,
+		ContentArena.Api.restoreDefinitions()
+			.done((definitions) => {
+				this.setState({
+					restoringDefinitions: false,
+					definitions,
+				});
 			});
-		});
 	};
 
 	addDefinition = () => {
@@ -193,12 +200,8 @@ Terms.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({});
-
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
 )(Terms);

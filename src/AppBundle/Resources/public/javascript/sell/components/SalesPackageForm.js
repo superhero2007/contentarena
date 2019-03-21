@@ -147,7 +147,7 @@ class SalesPackageForm extends React.Component {
 		filter = [...filter, ...selected];
 
 
-		return filter.filter((item, pos, self) => self.indexOf(item) == pos)
+		return filter.filter((item, pos, self) => self.indexOf(item) === pos)
 			.map(t => ({
 				value: t,
 				label: t,
