@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DatePicker renders correctly 1`] = `
+<div>
+  <div
+    className="react-datepicker-wrapper"
+  >
+    <div
+      className="react-datepicker__input-container"
+    >
+      <input
+        className="ca-date-picker "
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+  </div>
+</div>
+`;
