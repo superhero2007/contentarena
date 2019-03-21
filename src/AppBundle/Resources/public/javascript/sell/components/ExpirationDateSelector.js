@@ -42,11 +42,11 @@ class ExpirationDateSelector extends React.Component {
 						{this.context.t("LISTING_EXPIRY_EMPTY")}
 					</span>
 				)}
-				{maxDate && currentDate && currentDate > maxDate && (
+				{/*{maxDate && currentDate && currentDate > maxDate && (
 					<span className="is-invalid" style={{ marginLeft: 15 }}>
 						{this.context.t("LISTING_MUST_EXPIRE_BEFORE_EVENT_END")}
 					</span>
-				)}
+				)}*/}
 			</div>
 		);
 	}

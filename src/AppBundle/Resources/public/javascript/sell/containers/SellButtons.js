@@ -98,7 +98,7 @@ class SellButtons extends Component {
 			&& jurisdiction !== undefined
 			&& jurisdiction !== ""
 			&& salesPackages.length > 0
-			&& this.expireDateIsValid()
+			//&& this.expireDateIsValid()
 			&& companyIsValid(company);
 	};
 
@@ -116,9 +116,9 @@ class SellButtons extends Component {
 
 		if (vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "")) message += "<br/>- Enter VAT percentage.";
 
-		if (!this.expireDateIsValid()) {
+		/*if (!this.expireDateIsValid()) {
 			message += "<br/>- The listing must expire before the end of the event.";
-		}
+		}*/
 
 		return message;
 	};
