@@ -42,7 +42,7 @@ class UserController extends FOSRestController
         $user = $user_manager->findUserByUsername($username);
 
         if(is_null($user)) {
-            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_INCORRECT_PASSWORD);
+            return $this->getErrorResponse(UserErrors::class, UserErrors::USER_NOT_EXISTS);
         }
 
         $encoder = $factory->getEncoder($user);

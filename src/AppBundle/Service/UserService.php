@@ -77,6 +77,32 @@ class UserService
 
     }
 
+    public function removeUserByEmail( $email )
+    {
+        if( $email == null ) return null;
+
+        $user = $this->em
+            ->getRepository('AppBundle:User')
+            ->findOneBy(array('email' => $email));
+
+        if ( $user != null ) $this->em->remove($user);
+
+        $this->em->flush();
+
+    }
+
+    public function updatePasswordByEmail( $email, $password )
+    {
+        $user = $this->fosUserManager->findUserByEmail($email);
+
+        if(!$user){
+            return false;
+        }
+
+        $user->setPlainPassword($password);
+        $this->fosUserManager->updateUser($user);
+    }
+
     public function updateUser($data){
 
         if ( isset($data['id']) ) {

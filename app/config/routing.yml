@@ -3,11 +3,6 @@ api:
     type:     annotation
     prefix:   /v1
 
-content_arena_layer:
-    resource: "@ContentArenaLayerBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 app:
     resource: '@AppBundle/Controller/'
     type: annotation

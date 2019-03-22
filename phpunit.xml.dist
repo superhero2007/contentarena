@@ -12,6 +12,7 @@
         <server name="KERNEL_CLASS" value="AppKernel" />
         <server name='HTTP_HOST' value='http://localhost' />
         <server name='HTTP_USER_AGENT' value='chrome' />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
     </php>
 
     <testsuites>
