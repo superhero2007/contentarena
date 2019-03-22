@@ -52,7 +52,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/layout/web_globe.png" alt="global market place" />
+									<img
+										src="https://contentarena.com/site/assets/layout/web_globe.png"
+										 alt="global market place"
+									/>
 								</div>
 								<div className="content">
 									<div className="cap">Global</div>
@@ -61,7 +64,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/layout/web_dollar.png" alt="maximize revenues" />
+									<img
+										src="https://contentarena.com/site/assets/layout/web_dollar.png"
+										 alt="maximize revenues"
+									/>
 								</div>
 								<div className="content">
 									<div className="cap">maximize</div>
@@ -70,7 +76,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/layout/web_sales-process.png" alt="seamless sales process" />
+									<img
+										src="https://contentarena.com/site/assets/layout/web_sales-process.png"
+										 alt="seamless sales process"
+									/>
 								</div>
 								<div className="content">
 									<div className="cap">seamless</div>
@@ -85,7 +94,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/layout/web_search.png" alt="find relevant content" />
+									<img
+										src="https://contentarena.com/site/assets/layout/web_search.png"
+										 alt="find relevant content"
+									/>
 								</div>
 								<div className="content">
 									<div className="cap">Find</div>
@@ -94,7 +106,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/layout/web_growth-.png" alt="optimize content portfolio" />
+									<img
+										src="https://contentarena.com/site/assets/layout/web_growth-.png"
+										 alt="optimize content portfolio"
+									/>
 								</div>
 								<div className="content">
 									<div className="cap">optimize</div>
@@ -103,7 +118,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/layout/web_security.png" alt="Fast &amp; Safe transaction" />
+									<img
+										src="https://contentarena.com/site/assets/layout/web_security.png"
+										 alt="Fast &amp; Safe transaction"
+									/>
 								</div>
 								<div className="content">
 									<div className="cap">Fast&amp;Safe</div>
@@ -201,7 +219,10 @@ class LandingWrapper extends Component {
 						<div className="inner">
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/files/4523/sascha_rund.400x400.png" alt="Sascha Kojic" />
+									<img
+										src="https://contentarena.com/site/assets/files/4523/sascha_rund.400x400.png"
+										 alt="Sascha Kojic"
+									/>
 								</div>
 								<div className="content">
 									<div>Sascha<br />Kojic</div>
@@ -210,7 +231,10 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/files/4524/erik_rund.400x400.png" alt="Erik Lorenz" />
+									<img
+										src="https://contentarena.com/site/assets/files/4524/erik_rund.400x400.png"
+										 alt="Erik Lorenz"
+									/>
 								</div>
 								<div className="content">
 									<div>Erik<br />Lorenz</div>
@@ -219,42 +243,58 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/files/4525/bernie_rund.400x400.png" alt="Bernhard Riedlsperger" />
+									<img
+										src="https://contentarena.com/site/assets/files/4525/bernie_rund.400x400.png"
+										 alt="Bernhard Riedlsperger"
+									/>
 								</div>
 								<div className="content">
 									<div>Bernhard<br />Riedlsperger</div>
 									<div>Product<br />
-										Development</div>
+										Development
+									</div>
 								</div>
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/files/4526/alex_rund_neu.400x400.png" alt="Alexander Abts" />
+									<img
+										src="https://contentarena.com/site/assets/files/4526/alex_rund_neu.400x400.png"
+										 alt="Alexander Abts"
+									/>
 								</div>
 								<div className="content">
 									<div>Alexander<br />Abts</div>
 									<div>Business<br />
-										Development</div>
+										Development
+									</div>
 								</div>
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/files/4527/klemens_rund.400x400.png" alt="Klemens Kögl" />
+									<img
+										src="https://contentarena.com/site/assets/files/4527/klemens_rund.400x400.png"
+										 alt="Klemens Kögl"
+									/>
 								</div>
 								<div className="content">
 									<div>Klemens<br />Kögl</div>
 									<div>Product<br />
-										Development</div>
+										Development
+									</div>
 								</div>
 							</div>
 							<div className="item">
 								<div className="icon">
-									<img src="https://contentarena.com/site/assets/files/4528/juan_rund.400x400.png" alt="Juan Cruz" />
+									<img
+										src="https://contentarena.com/site/assets/files/4528/juan_rund.400x400.png"
+										 alt="Juan Cruz"
+									/>
 								</div>
 								<div className="content">
 									<div>Juan<br />Cruz</div>
 									<div>Technical<br />
-										Development</div>
+										Development
+									</div>
 								</div>
 							</div>
 						</div>
@@ -273,34 +313,52 @@ class LandingWrapper extends Component {
 					<div className="landing-column">
 						<div className="inner">
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4538/mpsilva.400x400.png" alt="MP Silva" />
+								<img
+									src="https://contentarena.com/site/assets/files/4542/pitch_international.400x400.png"
+									alt="Pitch International"
+								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4542/pitch_international.400x400.png" alt="Pitch International" />
-							</div>
-							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4541/perform.400x400.png" alt="Perform" />
+								<img
+									src="https://contentarena.com/site/assets/files/4541/perform.400x400.png"
+									 alt="Perform"
+								/>
 							</div>
 							<div className="icon">
 								<img src="https://contentarena.com/site/assets/files/4534/dazn.400x400.png" alt="DAZN" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4546/sportradar.400x400.png" alt="Sportradar" />
+								<img
+									src="https://contentarena.com/site/assets/files/4546/sportradar.400x400.png"
+									 alt="Sportradar"
+								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4547/sportsman.400x400.png" alt="Sportsman" />
+								<img
+									src="https://contentarena.com/site/assets/files/4547/sportsman.400x400.png"
+									 alt="Sportsman"
+								/>
 							</div>
 							<div className="icon">
 								<img src="https://contentarena.com/site/assets/files/4532/bvb.400x400.png" alt="BVB" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4533/crystal.400x400.png" alt="Crystal" />
+								<img
+									src="https://contentarena.com/site/assets/files/4533/crystal.400x400.png"
+									 alt="Crystal"
+								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4536/everton.400x400.png" alt="Everton" />
+								<img
+									src="https://contentarena.com/site/assets/files/4536/everton.400x400.png"
+									 alt="Everton"
+								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4555/malaga.400x400.png" alt="Malaga CF" />
+								<img
+									src="https://contentarena.com/site/assets/files/4555/malaga.400x400.png"
+									 alt="Malaga CF"
+								/>
 							</div>
 							<div className="icon">
 								<img src="https://contentarena.com/site/assets/files/4556/cze.400x400.png" alt="CZE" />
@@ -312,10 +370,16 @@ class LandingWrapper extends Component {
 								<img src="https://contentarena.com/site/assets/files/4543/sky.400x400.png" alt="Sky" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4544/sport1.400x400.png" alt="Sport 1" />
+								<img
+									src="https://contentarena.com/site/assets/files/4544/sport1.400x400.png"
+									 alt="Sport 1"
+								/>
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4537/matchtv_grey.400x400.png" alt="Match TV" />
+								<img
+									src="https://contentarena.com/site/assets/files/4537/matchtv_grey.400x400.png"
+									 alt="Match TV"
+								/>
 							</div>
 							<div className="icon">
 								<img src="https://contentarena.com/site/assets/files/4540/orf.400x400.png" alt="ORF" />
@@ -324,7 +388,16 @@ class LandingWrapper extends Component {
 								<img src="https://contentarena.com/site/assets/files/4539/oefb.400x400.png" alt="OEFB" />
 							</div>
 							<div className="icon">
-								<img src="https://contentarena.com/site/assets/files/4545/sportklub.400x400.png" alt="SportKlub" />
+								<img
+									src="https://contentarena.com/site/assets/files/4545/sportklub.400x400.png"
+									 alt="SportKlub"
+								/>
+							</div>
+							<div className="icon">
+								<img src={`${assetsBaseDir}app/images/ATP.png`} alt="ATP" />
+							</div>
+							<div className="icon">
+								<img src={`${assetsBaseDir}app/images/FIBA.png`} alt="FIBA" />
 							</div>
 						</div>
 					</div>
