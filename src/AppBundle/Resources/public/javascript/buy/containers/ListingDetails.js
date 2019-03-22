@@ -75,16 +75,6 @@ class ListingDetails extends React.Component {
 			selectedPackage = content.salesPackages.filter(p => Number(p.id) === Number(salesPackage))[0];
 			this.selectPackage(selectedPackage);
 		}
-
-		jQuery("body,.manager-container,.marketplace-container").css("background-color", "#eee"); // todo: remove this when other page redesign ready
-	}
-
-	componentWillUnmount() {
-		jQuery("body,.manager-container,.marketplace-container").removeAttr("style"); // todo: remove this when other page redesign ready
-
-		const { validation, disableValidation } = this.props;
-
-		if (validation) disableValidation();
 	}
 
 	componentWillReceiveProps(nextProps) {

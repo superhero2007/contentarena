@@ -15,9 +15,9 @@ export const TrackingEvent = (category, action, label) => {
 };
 
 export const initGA = (trackingID, testMode = false) => {
-	ReactGA.initialize(trackingID, { testMode: testMode });
+	ReactGA.initialize(trackingID, { testMode });
 };
 
 export const PageView = (page) => {
-	ReactGA.pageview((page) ? page : window.location.pathname + window.location.search);
+	ReactGA.pageview((page) || window.location.pathname + window.location.search);
 };

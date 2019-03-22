@@ -2,186 +2,315 @@
 @import "vars";
 @import "mixins";
 
-.landing-page, .login-page{
-  .header{
-    width: 1300px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-
-    .content{
-      float: right;
-
-      .uk-margin{
-        margin-top: 20px;
-
-        a, a:visited{
-          text-transform: uppercase;
-          font-size: 15px;
-          color: $primary-color;
-          padding: 0 15px;
-          text-decoration: none;
-          font-weight: 600;
-          
-          &.primary{
-            color: $font-color-4;
-            padding: 10px 25px;
-          }
-        }
-      }
-    }
-
-    .logo{
-      height: 100%;
-      float: left;
-
-      img {
-        max-width: 100%;
-        height: 60px;
-      }
-    }
-  }
+.landing-column {
+  max-width: 1230px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
-.landing-page{
+.landing-header {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
 
-  @media screen and (max-width: 1320px) {
-    left: auto;
-    right: auto;
+  .inner {
+    display: flex;
+    justify-content: space-between;
   }
 
-  .landing-header-wrapper{
+  .logo {
+    img {
+      max-width: 140px;
+      height: auto;
+    }
+  }
+
+  .nav {
+    margin-top: 20px;
+
+    a {
+      text-transform: uppercase;
+      font-size: 15px;
+      color: $primary-color;
+      padding: 0 15px;
+      text-decoration: none;
+      font-weight: 600;
+
+      &.primary {
+        color: $font-color-4;
+        padding: 10px 25px;
+      }
+    }
+  }
+}
+
+.landing-page {
+  background: #ffffff;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .banner {
+    text-align: center;
+    color: $primary-color;
     width: 100%;
     height: 775px;
-
+    padding-top: 200px;
     background: url(./../img/stadium_background.jpg) no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
 
     @include shadow(inset 0 -19px 30px 0 $landing-color);
-  }
 
-  .landing-main{
-    width: 765px;
-    margin: 230px auto 0;
-
-    .main-text-wrapper{
-      width: 460px;
-      margin: 0 auto;
-      p{
-        &.landing-title{
-          margin-bottom: 0;
-          font-size: 86px;
-        }
-        &.landing-sub-title{
-          margin-top: 0;
-          font-size: 42px;
-        }
-
-        color: $primary-color;
-        text-align: center;
-      }
+    .title {
+      font-size: 86px;
     }
-    .main-registration-wrapper{
+    .subtitle {
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+    .registration {
       display: flex;
-      justify-content: center;
-      flex-direction: row;
+      max-width: 767px;
+      margin: 0 auto;
 
-      input{
+      input {
+        height: 60px;
         margin: 0;
         font-size: 21px;
-        color: $font-color-5;
-        padding: 20px 30px;
-        font-style: italic;
       }
     }
   }
-  .landing-content{
+
+  .features {
+    background: $landing-color;
+    color: #ffffff;
+
+    .inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 420px;
+    }
+
+    .feature-row {
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        border-bottom: 2px solid rgba(255,255,255,.7);
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+      }
+
+      .title {
+        margin-right: auto;
+        font-size: 75px;
+        text-transform: uppercase;
+        width: 25%;
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        width: 25%;
+        color: rgba(255,255,255,.7);
+        //margin-left: 80px;
+
+        .icon {
+          max-width: 65px;
+          margin-right: 20px;
+        }
+        .cap {
+          font-size: 35px;
+          text-transform: uppercase;
+        }
+        .txt {
+          font-size: 19px;
+          text-transform: lowercase;
+        }
+      }
+    }
+  }
+
+  .benefits {
+    background: #ffffff;
+    padding: 50px 0 0;
+
+    .benefit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 45px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+      &:last-child {
+        margin-bottom: 75px;
+      }
+
+      .icon {
+        width: 50%;
+        a {
+          display: block;
+          max-width: 300px;
+          margin: 0 auto;
+        }
+      }
+
+      .content {
+        width: 50%;
+
+        .cap {
+          font-size: 29px;
+          color: #094360;
+          margin-bottom: 15px;
+          text-transform: uppercase;
+        }
+        .txt {
+          font-size: 18px;
+          line-height: 27px;
+          color: #4879a3;
+        }
+      }
+    }
+  }
+
+  .team {
+    background: $landing-color;
+    padding: 50px 0 0;
+    .inner {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .item {
+      display: flex;
+      flex: 33% 0 0;
+      align-items: center;
+
+      &:nth-child(-n+3) {
+        margin-bottom: 40px;
+      }
+
+      .icon {
+        max-width: 186px;
+        margin-right: 40px;
+        filter: grayscale(100%);
+        transition: all 300ms ease-in;
+
+        &:hover {
+          filter: grayscale(0%);
+        }
+      }
+      .content {
+        font-size: 18px;
+        color: #ffffff;
+        text-align: center;
+
+        div:first-child {
+          text-transform: uppercase;
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+
+  .references {
+    .inner {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .icon {
+      flex: 16.6% 0 0;
+      padding: 10px 20px;
+    }
+  }
+
+  .landing-content {
     width: 100%;
     background: $landing-color;
     height: 100px;
   }
-  .landing-content-with-triangle{
-    position: relative;
 
-    .landing-triangle-text{
+  .bottom-triangle {
+    position: relative;
+    margin-top: -1px;
+
+    .text {
       position: absolute;
+      bottom: 30px;
       text-align: center;
-      margin-top: 2.5%;
-      color: $primary-color;
       width: 100%;
       z-index: 999;
 
-      @media screen and (max-width: 1600px) {
-        margin-top: 1.5%;
-      }
-      @media screen and (max-width: 1100px) {
-        margin-top: 0.5%;
-      }
-      
-      span:focus, span:hover {
-        color: $font-color-2;
+      span {
         cursor: pointer;
       }
-
-      &:after{
+      &:after {
         content: '';
         display: block;
         position: absolute;
         width: 0;
         left: 50%;
-        height: 50px;
-        border-left: 1px solid $background-4;
+        height: 30px;
+        border-left: 1px solid;
       }
     }
 
     .outer {
-      background: #052e44;
       width: 100%;
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 0;
+      clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+      height: 100px;
+    }
 
-      &:after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        padding-bottom: 5%;
+    &:not(.bg-white) {
+      color: #052e44;
+      background: #ffffff;
+
+      .text {
+        color: #ffffff;
+        &:after {
+          border-color: #ffffff;
+        }
+      }
+      .outer {
         background: #052e44;
-        clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+      }
+    }
+    &.bg-white {
+      color: #ffffff;
+      background: #052e44;
+
+      .text {
+        color: #052e44;
+        &:after {
+          border-color: #052e44;
+        }
       }
 
+      .outer {
+        background: #ffffff;
+      }
     }
   }
-  .landing-get-in-touch{
-    height: 180px;
-    margin-top: 150px;
-    width: 100%;
+  .get-in-touch {
+    padding: 50px 0 0;
     text-align: center;
+    background: $landing-color;
 
-    a{
-      color: $landing-color;
-      display: inline-flex;
-      flex-direction: column;
-      span{ margin-top: 20px }
-      
-      &:focus, &:hover{
-        color: $font-color-6;
+    a {
+      color: #ffffff;
+
+      span {
+        display: block;
+        margin-top: 20px
       }
     }
-
   }
-
-  .landing-footer{
+  .landing-footer {
     width: 100%;
     height: 180px;
     background-color: $landing-color;
@@ -189,48 +318,48 @@
     align-items: center;
     justify-content: center;
 
-    .footer-wrapper{
+    .footer-wrapper {
       width: 1300px;
       height: 120px;
       display: flex;
       justify-content: space-around;
 
-      .footer-logo{
+      .footer-logo {
         height: 100%;
         display: flex;
         align-items: center;
 
-        img{
+        img {
           max-width: 100%;
           height: 80px;
         }
       }
-      .footer-links{
+      .footer-links {
         display: flex;
         align-items: center;
 
-        .footer-company-name{
+        .footer-company-name {
           color: $text-color-1;
         }
 
-        p{
+        p {
           margin: 0;
 
-          span a{
+          span a {
             color: $primary-color;
 
-            &:hover, &:focus{
+            &:hover, &:focus {
               text-decoration: underline;
             }
           }
         }
       }
-      .footer-contact{
+      .footer-contact {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
 
-        a{
+        a {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -238,14 +367,18 @@
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background-color: rgba(255,255,255,.1);
+          background-color: rgba(255, 255, 255, .1);
 
-          &:hover{ background-color: rgba(242,242,242,.1); }
-          i{
-            color: rgba(255,255,255,.5);
+          &:hover {
+            background-color: rgba(242, 242, 242, .1);
+          }
+          i {
+            color: rgba(255, 255, 255, .5);
             font-size: 18px;
 
-            &:hover { color: rgba(255,255,255,.7); }
+            &:hover {
+              color: rgba(255, 255, 255, .7);
+            }
           }
         }
       }
@@ -253,33 +386,24 @@
   }
 }
 
-.login-page{
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-
+.login-page {
   background: url(./../img/stadium_background.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
 
-  .action-form{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-    width: 480px;
 
-    background: $background-3;
+  .action-form {
+    max-width: 480px;
+    width: 100%;
+    background: #F7F7F7;
     padding: 15px 40px 45px 40px;
+    margin: 100px auto 0;
 
-    display: flex;
-
-    .sign-in-wrapper, .sign-up-wrapper{
+    .sign-in-wrapper, .sign-up-wrapper {
       width: 100%;
       flex-direction: column;
       justify-content: center;
@@ -287,35 +411,41 @@
       text-align: center;
     }
 
-    .reset-wrapper{
+    .reset-wrapper {
       @extend .sign-in-wrapper;
-      .note{
+      .note {
         margin: 0;
         padding-bottom: 25px;
         text-align: left;
       }
     }
 
-    .sign-up-successfully-wrapper{
+    .sign-up-successfully-wrapper {
       @extend .sign-in-wrapper;
       padding-top: 60px;
       padding-bottom: 35px;
     }
 
-    .review-wrapper{
+    .review-wrapper {
       width: 100%;
-      h3{ padding-bottom: 10px; }
-      b{
+      h3 {
+        padding-bottom: 10px;
+      }
+      b {
         font-size: 13px;
       }
     }
 
-    .recover-wrapper{
+    .recover-wrapper {
       width: 100%;
-      button{ margin: 0; }
+      button {
+        margin: 0;
+      }
     }
 
-    .reset-wrapper h3{ text-align: left; }
+    .reset-wrapper h3 {
+      text-align: left;
+    }
 
     .password-validation {
       display: flex;
@@ -339,13 +469,15 @@
       }
     }
 
-    .done-icon-wrapper{
+    .done-icon-wrapper {
       margin-bottom: -10px;
 
-      i{ color: #3ecc57d9; }
+      i {
+        color: #3ecc57d9;
+      }
     }
 
-    h3{
+    h3 {
       color: $font-color-6;
       font-size: 21px;
       padding-top: 30px;
@@ -354,7 +486,7 @@
       margin: 0;
     }
 
-    div label{
+    div label {
       text-align: left;
       color: $black-color;
       font-size: 16px;
@@ -362,7 +494,7 @@
       padding-bottom: 5px;
     }
 
-    div input{
+    div input {
       height: 45px;
       padding: 0 10px;
       margin: 0;
@@ -376,72 +508,82 @@
       outline: none;
     }
 
-    .yellow-button{
+    .yellow-button {
       @extend .yellow-button;
-      & .ca-loader { width: 40px; }
-      & .spinner{ margin: 0; }
+      & .ca-loader {
+        width: 40px;
+      }
+      & .spinner {
+        margin: 0;
+      }
     }
 
-    .yellow-btn{
+    .yellow-btn {
       @extend .yellow-button;
       margin: 0 auto;
       min-width: 180px;
 
-      &:hover:enabled{ background-color: #ffbe25; }
+      &:hover:enabled {
+        background-color: #ffbe25;
+      }
     }
 
-    .sign-up-text{
+    .sign-up-text {
       color: $black-color;
       font-size: 16px;
       padding-bottom: 30px;
       margin: -20px auto 0;
     }
 
-    .create-account{
+    .create-account {
       border-top: 1px solid $font-color-2;
 
-      h3{
+      h3 {
         padding-bottom: 15px;
       }
     }
 
-    .sign-error{
+    .sign-error {
       color: #CC0000;
       text-align: left;
       font-size: 14px;
       font-style: italic;
     }
 
-    .forgot-password-wrapper{
+    .forgot-password-wrapper {
       padding: 15px 0 35px 0;
       margin: 0;
 
-      .forgot-password{
+      .forgot-password {
         color: $font-color-7;
         font-size: 13px;
         cursor: pointer;
       }
     }
 
-    .username, .password, .repeat-password, .phone, .company, .email, .lastname{
+    .username, .password, .repeat-password, .phone, .company, .email, .lastname {
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
       padding-bottom: 25px;
     }
 
-    .note{
-      b{ display: inline; }
+    .note {
+      b {
+        display: inline;
+      }
       display: block;
       margin-top: 30px;
       font-size: 13px;
       color: $font-color-5;
     }
 
-    .reset-success-password{
+    .reset-success-password {
       margin-top: -25px;
-      p{
-        i{ color: #3ecc57d9; }
+      p {
+        i {
+          color: #3ecc57d9;
+        }
         margin: 5px;
         font-size: 13px;
         color: $black-color;

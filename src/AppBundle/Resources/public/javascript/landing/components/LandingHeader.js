@@ -55,31 +55,33 @@ const LandingHeader = ({ currentView, history }, context) => {
 
 	const navLinks = currentView === LOGIN_VIEW_TYPE.LANDING ? [...landingLinks] : [...loginLinks];
 	return (
-		<div className="header">
-			<a className="logo" href={LANDING_LINKS.HOME} target="_self">
-				{contentWhiteLogo}
-			</a>
-			<div className="content">
-				<p className="uk-margin">
-					{navLinks.map((item, index) => {
-						const props = {
-							key: `${index}${item.title}`,
-							target: item.isNewTab ? "_blank" : "_self",
-							onClick: item.to ? () => history.push(item.to) : undefined,
-						};
-						return (
-							<a
-								{...props}
-								{...(item.link && { href: item.link })}
-								{...(item.button && { className: "ca-btn primary" })}
-							>
-								{item.title}
-							</a>
-						);
-					})}
-				</p>
+		<header className="landing-header">
+			<div className="landing-column">
+				<div className="inner">
+					<a className="logo" href={LANDING_LINKS.HOME} target="_self">
+						{contentWhiteLogo}
+					</a>
+					<div className="nav">
+						{navLinks.map((item, index) => {
+							const props = {
+								key: `${index}${item.title}`,
+								target: item.isNewTab ? "_blank" : "_self",
+								onClick: item.to ? () => history.push(item.to) : undefined,
+							};
+							return (
+								<a
+									{...props}
+									{...(item.link && { href: item.link })}
+									{...(item.button && { className: "ca-btn primary" })}
+								>
+									{item.title}
+								</a>
+							);
+						})}
+					</div>
+				</div>
 			</div>
-		</div>
+		</header>
 	);
 };
 
