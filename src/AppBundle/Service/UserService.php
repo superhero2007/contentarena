@@ -189,13 +189,6 @@ class UserService
         $this->logger->error("Trigger logging");
 
         $user = $this->updateUser($data);
-        //if ( isset($data['company']) && isset($data['company']['id']) ){
-
-            //$this->updateCompany($data['company'], $user);
-
-        //} else {
-            //$this->createCompany($data['company'], $user);
-        //}
 
         $this->updatePassword($request);
 

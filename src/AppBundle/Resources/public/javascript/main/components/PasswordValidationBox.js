@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import cn from "classnames";
 import { blueCheckIcon, cancelIcon } from "./Icons";
 
 class PasswordValidationBox extends Component {
@@ -35,26 +36,27 @@ class PasswordValidationBox extends Component {
 
 	render() {
 		const { password, passwordCheck } = this.props;
+		const isValid = this.validate(password);
 		return (
 			<div className="password-validation">
-				<div>
-					<img src={this.validate(password).passlength ? blueCheckIcon : cancelIcon} />
+				<div className={cn({ invalid: !isValid.passlength })}>
+					<img src={isValid.passlength ? blueCheckIcon : cancelIcon} />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
 				</div>
-				<div>
-					<img src={this.validate(password).upper ? blueCheckIcon : cancelIcon} />
+				<div className={cn({ invalid: !isValid.upper })}>
+					<img src={isValid.upper ? blueCheckIcon : cancelIcon} />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
 				</div>
-				<div>
-					<img src={this.validate(password).digit ? blueCheckIcon : cancelIcon} />
+				<div className={cn({ invalid: !isValid.digit })}>
+					<img src={isValid.digit ? blueCheckIcon : cancelIcon} />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
 				</div>
-				<div>
-					<img src={this.validate(password).special ? blueCheckIcon : cancelIcon} />
+				<div className={cn({ invalid: !isValid.special })}>
+					<img src={isValid.special ? blueCheckIcon : cancelIcon} />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
 				</div>
 				{passwordCheck && (
-					<div>
+					<div className={cn({ invalid: passwordCheck !== password })}>
 						<img src={passwordCheck === password ? blueCheckIcon : cancelIcon} />
 						{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
 					</div>

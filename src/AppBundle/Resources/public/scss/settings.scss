@@ -1,4 +1,5 @@
 @import "vars";
+@import "mixins";
 
 .settings-container {
   background-color: #fff;
@@ -94,7 +95,7 @@
     }
   }
 
-  &.preferences, &.settings-container-welcome {
+  &.preferences{
     padding: 25px 20px;
 
     .title, .subtitle {
@@ -444,139 +445,197 @@
   }
 }
 
-.settings-container-welcome {
-	@media only screen and (max-width: 1020px) {
-		background-size: auto;
-		background-position: top center;
-	}
+.activate-user-container {
+  @media only screen and (max-width: 1020px) {
+	background-size: auto;
+	background-position: top center;
+  }
 
   justify-content: center;
   display: flex;
   flex-direction: column;
-  background: url('../images/bg-questionnarie.png') no-repeat;
+  background: url('../images/wall-banner.jpg') no-repeat;
   background-size: contain;
   background-color: #eee;
   margin: -20px;
 
-  .terms-and-condition-wrapper {
-    justify-content: normal !important;
-  }
 
-  .buttons {
-    margin: 50px auto;
-    display: flex;
-    flex-direction: row;
-
-    button {
-      color: #062E44;
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 46px;
-      border-radius: 5px;
-      height: 68px;
-      width: 236px;
-      margin: 0 10px;
-      align-items: center;
-    }
-
-    .back {
-      border: 1px solid #FFC94B;
-      background-color: transparent;
-      position: relative;
-
-      i {
-        position: absolute;
-        left: 10px;
-        top: 19px;
-      }
-    }
-  }
-
-  .steps {
-    display: flex;
-    height: 50px;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-
-    .step {
-      height: 4px;
-      width: 39px;
-      background-color: #DAD4D4;
-      margin: 0 1px;
-    }
-
-    .active-step {
-      background-color: #FFC94B;
-    }
-  }
-
-  .title {
-    display: flex;
-    max-width: 800px;
-    margin: 0 auto 30px;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 32px;
-    text-align: center;
-    color: #F7F7F7;
+  .activate-user-button{
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+	button{
+	  font-size: 18px;
+	  font-weight: 600;
+	  line-height: 46px;
+	  border-radius: 5px;
+	  height: 68px;
+	  width: 290px;
+	  margin: 50px 10px 20px 10px;
+	  align-items: center;
+	}
   }
 
   .big-title {
-    @extend .title;
-    color: #fff;
-    font-size: 60px;
-    justify-content: center;
-    margin: 70px auto 10px;
-    line-height: 60px;
-    font-weight: 600;
+	display: flex;
+	color: #fff;
+	font-size: 60px;
+	justify-content: center;
+	margin: 70px auto 10px;
+	line-height: 60px;
+	font-weight: 600;
+
+	&.tablet{
+	  font-size: 45px;
+	}
+	&.mobile{
+	  font-size: 40px;
+	  text-align: center;
+	}
+  }
+
+  .setting-row{
+	max-width: 1000px;
+	width: 100%;
+	margin: 30px auto 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	&.mobile{
+	  flex-direction: column;
+	}
+
+	.setting-password {
+		margin-right: 15px;
+	}
+
+	.setting-validation{
+	  margin-left: 15px;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+
+	  &.mobile{
+		margin-top: 30px !important;
+	  }
+	}
+	.setting-password, .setting-validation {
+	  width: 50%;
+	  background-color: #fff;
+	  padding: 25px 20px;
+	  @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
+
+	  .title {
+		color: #03547C;
+		font-size: 21px;
+		font-weight: bold;
+		line-height: 24px;
+		margin-bottom: 25px;
+	  }
+
+	  .subtitle{
+	    margin-top: -20px;
+		margin-bottom: 20px;
+	  }
+
+	  .password{
+		max-width: 360px;
+		input{
+		  margin: 20px 0 30px 0;
+		}
+	  }
+
+	  &.mobile{
+		width: 100%;
+		margin: 0;
+		padding-bottom: 0;
+
+		.subtitle{
+		  margin-bottom: 10px;
+		}
+		.password input{
+		  margin-top: 10px;
+		}
+	}
+	  .password-validation{
+		margin-left:0;
+		height: 215px;
+		width: 300px;
+
+		div{
+		  display: flex;
+		  &.invalid{
+			font-style: italic;
+			color: #f3665a;
+		  }
+		  img{
+			width: 20px;
+			height: 20px;
+		  }
+		}
+	  }
+	}
   }
 
   .setting {
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 30px auto 0;
     display: flex;
     flex-direction: column;
     width: 100%;
     background-color: #fff;
-    padding: 25px 100px;
+    padding: 25px 20px;
     position: relative;
+	@include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
 
-    .setting-password{
-      max-width: 50%;
+	&.mobile{
+	  padding-bottom: 0;
+
+	  .terms-confirm{
+	    div{
+		  font-size: 11px;
+	    }
+	  }
     }
 
     .password-validation {
-		@media only screen and (max-width: 935px) {
-			height: 190px;
-			width: 280px;
-		}
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border: 10px solid #CCCCCC;
-      height: 250px;
-      width: 385px;
-      margin-left: 10%;
-      position: absolute;
-      right: 50px;
-      bottom: 30px;
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: center;
+	  border: 10px solid #CCCCCC;
+	  height: 250px;
+	  width: 385px;
+	  margin-left: 10%;
+	  position: absolute;
+	  right: 50px;
+	  bottom: 30px;
     }
 
     .title {
-      color: #03547C;
-      font-size: 21px;
-      font-weight: bold;
-      line-height: 24px;
+	  color: #03547C;
+	  font-size: 21px;
+	  font-weight: bold;
+	  line-height: 24px;
+	  margin-bottom: 25px;
     }
 
     .row {
-      .row-content {
-        justify-content: space-between;
-        width: 100%;
-      }
+	  .item {
+		&.mobile{
+		  flex: 0 1 100%;
+		}
+		&.tablet{
+		  flex: 0 1 50%;
+		}
+	  }
 
-    }
+	  input{
+		margin-top: 20px;
+	  }
+	}
+  	.terms-and-condition-wrapper {
+	  justify-content: normal !important;
+  	}
   }
 }

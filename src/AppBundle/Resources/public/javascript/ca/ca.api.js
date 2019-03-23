@@ -816,10 +816,4 @@ ContentArena.Api = {
 			companyLegalName,
 		});
 	},
-	isCompanyUnique(companyName, companyId) {
-		return axios.post(`${envhosturl}api/company/unique`, {
-			companyName,
-			companyId,
-		});
-	},
 };

@@ -79,26 +79,12 @@ export const routes = [
 		main: TestPage,
 	},
 	{
-		path: "/register",
-		exact: true,
-		header: PublicHeaderBar,
-		main: Register,
-		title: "Welcome",
-	},
-	{
 		path: "/register/:activationCode",
 		exact: true,
 		header: PublicHeaderBar,
 		main: Register,
 		title: "Welcome",
 
-	},
-	{
-		path: "/register/:activationCode/:step?",
-		updateByPath: true,
-		header: PublicHeaderBar,
-		main: Register,
-		title: "Welcome",
 	},
 	{
 		path: "/marketplace/filter/:filterName/:filterValue?",
