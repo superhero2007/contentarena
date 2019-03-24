@@ -457,8 +457,6 @@
   background: url('../images/wall-banner.jpg') no-repeat;
   background-size: contain;
   background-color: #eee;
-  margin: -20px;
-
 
   .activate-user-button{
 	display: flex;
@@ -593,6 +591,7 @@
 	  padding-bottom: 0;
 
 	  .terms-confirm{
+		margin-bottom: 30px;
 	    div{
 		  font-size: 11px;
 	    }
