@@ -104,7 +104,7 @@ class DefaultController extends BaseController
         $route = $request->get("reactRouting");
 
         if ( $route == "register") $logger->info("USER ENTERED WALL", array(
-            "User" => $user->getEmail(),
+            "User" => isset($user) ? $user->getEmail() : "undefined",
             "Route" => $request->getRequestUri()
         ));
 
