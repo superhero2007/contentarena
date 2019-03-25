@@ -23,9 +23,33 @@
       padding-top: 15px;
       text-align: center;
     }
+
+    .mob-trigger {
+      position: absolute;
+      right: 15px;
+      display: none;
+      color: #ffffff;
+      margin-top: 15px;
+      cursor: pointer;
+      z-index: 101;
+      @media only screen and (max-width: 1230px) {
+        display: block;
+      }
+    }
+
+    .closeIcon {
+      @media only screen and (max-width: 1230px) {
+        position: fixed;
+        z-index: 1001;
+      }
+    }
   }
 
   .logo {
+    @media only screen and (max-width: 1230px) {
+      float: left;
+    }
+
     img {
       max-width: 140px;
       height: auto;
@@ -35,7 +59,15 @@
   .nav {
     margin-top: 20px;
     @media only screen and (max-width: 1230px) {
-      margin-top: 10px;
+      position: fixed;
+      top: -20px;
+      right: 0;
+      width: 270px;
+      background: #094360;
+      display: none;
+      padding: 55px 20px 0;
+      height: 100%;
+      z-index: 1000;
     }
 
     a {
@@ -45,12 +77,24 @@
       padding: 0 15px;
       text-decoration: none;
       font-weight: 600;
+      @media only screen and (max-width: 1230px) {
+        display: block;
+        padding: 0;
+        color: rgba(255, 255, 255, .5);
+        text-align: left;
+        max-width: fit-content;
+        margin-bottom: 10px;
+      }
 
       &.primary {
         color: $font-color-4;
         padding: 10px 25px;
       }
     }
+  }
+
+  .showMenu {
+    display: block;
   }
 }
 
