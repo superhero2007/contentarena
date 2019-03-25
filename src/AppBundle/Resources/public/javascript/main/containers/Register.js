@@ -152,9 +152,8 @@ class Register extends React.Component {
 				<input
 					placeholder={this.context.t("SETTINGS_PLACEHOLDER_USER_EMAIL")}
 					value={email}
-					onChange={(e) => {
-						this.updateUser("email", e.target.value);
-					}}
+					readOnly
+					disabled
 				/>
 			</div>
 		);
