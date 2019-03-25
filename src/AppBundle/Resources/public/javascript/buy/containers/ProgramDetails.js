@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { ProgramTypesDefinitions } from "../../main/components/ProgramTypesDefinitions";
-import { RepresenationTextArea } from "../../sell/components/SellFormItems";
+import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 
 class ProgramDetails extends Component {
 	constructor(props) {
@@ -15,7 +15,7 @@ class ProgramDetails extends Component {
 				{this.context.t("LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION")}
 			</div>
 			<div className="spacer-bottom txt description-text">
-				<RepresenationTextArea value={description} />
+				<RepresentationTextArea value={description} />
 			</div>
 		</div>
 	);

@@ -809,6 +809,33 @@
           font-size: 13px;
           margin: 15px 50px 25px 0;
         }
+		.company-info-table{
+		  display: flex;
+		  flex-direction: column;
+		  width: 430px;
+
+		  .company-item, .table-title{
+			height: 50px;
+			border-bottom: $border-color-1 1px solid;
+			display: flex;
+			align-items: center;
+			font-size: 13px;
+			color: $font-color-5;
+
+			.label{
+			  font-weight: 600;
+			  flex: 0 0 60%;
+			}
+			.value{
+			  flex: 0 0 40%;
+			}
+		  }
+		  .table-title{
+			color: $font-color-6;
+			font-size: 15px;
+			font-weight: 600;
+		  }
+		}
 
         .term-sheet {
           .term-sheet-rights {

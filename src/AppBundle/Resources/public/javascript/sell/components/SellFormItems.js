@@ -13,7 +13,7 @@ export const Description = ({
 	</div>
 );
 
-export const RepresenationTextArea = ({ value = "" }) => (
+export const RepresentationTextArea = ({ value = "" }) => (
 	<Textarea
 		value={value}
 		readOnly

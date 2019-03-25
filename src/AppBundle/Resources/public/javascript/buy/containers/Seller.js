@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { test } from "../actions";
+import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 
 class Seller extends React.Component {
 	constructor(props) {
@@ -10,76 +11,50 @@ class Seller extends React.Component {
 	}
 
 	render() {
-		const { company } = this.props;
+		const {
+			legalName, description, country, city, zip, address, address2,
+		} = this.props.company;
+
+		console.log(this.props);
+
 		return (
-			<div>
-				<div className="spacer-bottom">
-					<div className="ca-title">
-						{company.legalName}
-					</div>
-					{company.website && (
-						<div>
-							<a
-								href={ContentArena.Utils.getWebsiteURl(company.website)}
-								target="_blank"
-							>
-								{company.website}
-							</a>
+			<Fragment>
+				<div className="description-wrapper">
+					{legalName && (
+						<div className="title spacer-bottom">
+							{legalName}
+						</div>
+					)}
+					{description && (
+						<div className="txt description-text">
+							<RepresentationTextArea value={description} />
 						</div>
 					)}
 				</div>
-				<div className="description-info align-items-start">
-					<div className="col">
-						<div className="spacer-bottom">
-							<b>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
-							</b>
-						</div>
-
-						<div className="spacer-bottom">
-							{company.address}
-							{company.address2 && company.address2}
-						</div>
-
-						{(company.city || company.zip) && (
-							<div className="spacer-bottom">
-								{company.city && company.city}
-								&nbsp;
-
-
-								{company.zip && company.zip}
-							</div>
-						)}
-
-						{company.country.name && <div className="spacer-bottom">{company.country.name}</div>}
-
-
+				<div className="company-info-table">
+					<div className="table-title">{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}</div>
+					<div className="company-item">
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_COUNTRY")}</span>
+						{country && country.name && <span className="value">{country.name}</span>}
 					</div>
-					<div className="col">
-						{company.registrationNumber && (
-							<div className="spacer-bottom">
-								<b>
-									{this.context.t("LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER")}
-								</b>
-								<div>
-									{company.registrationNumber}
-								</div>
-							</div>
-						)}
-						{company.vat && (
-							<div className="spacer-bottom">
-								<b>
-									{this.context.t("LISTING_DETAILS_SELLER_TITLE_VAT")}
-								</b>
-								<div>
-									{company.vat}
-								</div>
-							</div>
-						)}
+					<div className="company-item">
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_CITY")}</span>
+						{city && <span className="value">{city}</span>}
+					</div>
+					<div className="company-item">
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ZIP")}</span>
+						{zip && <span className="value">{zip}</span>}
+					</div>
+					<div className="company-item">
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_1")}</span>
+						{address && <span className="value">{address}</span>}
+					</div>
+					<div className="company-item">
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_2")}</span>
+						{address2 && <span className="value">{address2}</span>}
 					</div>
 				</div>
-				{company.description && <div className="txt description-text">{company.description}</div>}
-			</div>
+			</Fragment>
 		);
 	}
 }

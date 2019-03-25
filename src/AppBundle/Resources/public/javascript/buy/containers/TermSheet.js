@@ -7,7 +7,7 @@ import { RightDefinitions } from "../../sell/components/RightDefinitions";
 import { ProductionStandardsDefinitions } from "../../sell/components/ProductionStandardsDefinitions";
 import { RightItemsDefinitions } from "../../sell/components/RightItemsDefinitions";
 import { SuperRightProductionDetailsLabels } from "../../sell/components/SuperRightDefinitions";
-import { RepresenationTextArea } from "../../sell/components/SellFormItems";
+import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 import { DATE_FORMAT } from "@constants";
 import RightTableItem from "../components/RightTableItem";
 
@@ -245,7 +245,7 @@ class TermSheet extends React.Component {
 							{this.context.t("LISTING_DETAILS_PROGRAM_DEFINITION")}
 						</div>
 						<div className="txt description-text">
-							<RepresenationTextArea value={programDescription} />
+							<RepresentationTextArea value={programDescription} />
 						</div>
 					</div>
 				)}
@@ -331,7 +331,7 @@ class TermSheet extends React.Component {
 							{this.context.t("LISTING_DETAILS_RIGHTS_TITLE_AMENDMENTS")}
 						</div>
 						<div className="txt description-text">
-							<RepresenationTextArea
+							<RepresentationTextArea
 								value={COMMENTS_RIGHTS}
 							/>
 

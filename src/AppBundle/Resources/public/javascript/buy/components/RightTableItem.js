@@ -1,7 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
-import { RepresenationTextArea } from "../../sell/components/SellFormItems";
+import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 
 class RightTableItem extends React.Component {
 	constructor(props) {
@@ -21,7 +21,7 @@ class RightTableItem extends React.Component {
 			<td className={cn("right-definition", className)} colSpan={length}>
 				<div className="right-definition-content">
 					{!textarea && value}
-					{textarea && <RepresenationTextArea value={value} />}
+					{textarea && <RepresentationTextArea value={value} />}
 				</div>
 			</td>
 		);

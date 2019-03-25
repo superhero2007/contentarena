@@ -291,11 +291,23 @@ msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_REGISTRATION_NUMBER"
+msgid "LISTING_DETAILS_SELLER_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-msgid "LISTING_DETAILS_SELLER_TITLE_VAT"
+msgid "LISTING_DETAILS_SELLER_CITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+msgid "LISTING_DETAILS_SELLER_ZIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+msgid "LISTING_DETAILS_SELLER_ADDRESS_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+msgid "LISTING_DETAILS_SELLER_ADDRESS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js
@@ -885,6 +897,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
 msgid "LENDING_GET_IN_TOUCH"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LENDING_TEAM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LENDING_OUR_REFERENCES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
@@ -1718,30 +1738,13 @@ msgid "CHECKOUT_METHOD_BIDDING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_BUTTON_BACK"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_WELCOME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_WELCOME_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_BUTTON_CONTINUE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_TITLE_INFO"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_FIRST_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_PLACEHOLDER_USER_FIRST_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1751,7 +1754,7 @@ msgid "SETTINGS_LABEL_USER_FAMILY_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_LABEL_COMPANY_POSITION"
+msgid "SETTINGS_PLACEHOLDER_USER_LAST_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1761,52 +1764,16 @@ msgid "SETTINGS_LABEL_USER_EMAIL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_USER_PHONE_NUMBER"
+msgid "SETTINGS_PLACEHOLDER_USER_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_WELCOME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_TITLE_COMPANY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_DUPLICATE_COMPANY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_VAT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_ADDRESS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_CITY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_ZIP"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "SETTINGS_LABEL_COMPANY_COUNTRY"
+msgid "SETTINGS_LABEL_USER_TITLE_INFO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -1826,6 +1793,10 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_RETYPE_NEW_PASSWORD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_LABEL_TERMS_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
@@ -2198,6 +2169,38 @@ msgid "SETTINGS_TAB_SUPPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_TITLE_COMPANY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_REGISTRATION_NUMBER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_VAT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_CITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_ZIP"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_COMPANY_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_COMPANY_DESCRIPTION"
 msgstr ""
 
@@ -2207,6 +2210,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_ACTIVE_USERS_EXPLANATION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
+msgid "SETTINGS_LABEL_USER_PHONE_NUMBER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
