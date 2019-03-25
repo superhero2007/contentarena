@@ -86,7 +86,7 @@ class TerritoriesSalesPackages extends PureComponent {
 		}
 
 		// Filter bundles by territory selector
-		let filteredBundles = bundles.filter((sp) => {
+		const filteredBundles = bundles.filter((sp) => {
 			if (selected.length === 0) return true;
 			return selected.indexOf(sp.id) !== -1;
 		}).map((bundle) => {

@@ -95,6 +95,7 @@ class SellFormStep4 extends React.Component {
 			sports,
 			sportCategory,
 			tournament,
+			seasons,
 		} = this.props;
 
 		if (step !== 4) return (null);

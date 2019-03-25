@@ -54,7 +54,7 @@ class TermSheet extends React.Component {
 				/>
 				{
 					rightsPackage.map((rp, k) => {
-						let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+						const liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
 
 						if ((rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
 								|| highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT"
@@ -81,8 +81,8 @@ class TermSheet extends React.Component {
 			definitions = this.getFilteredByDelivery(definitions, rightsPackage, deliveryViaLiveFeed, liveFeedPackages);
 		}
 
-		let highlightRight = rightsPackage.filter(rp => rp.shortLabel === "HL");
-		let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+		const highlightRight = rightsPackage.filter(rp => rp.shortLabel === "HL");
+		const highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
 
 		return definitions.map((right, i) => {
 			if (right.key === "CONTENT_DELIVERY") return;
@@ -101,7 +101,7 @@ class TermSheet extends React.Component {
 						/>
 						{
 							rightsPackage.map((rp, k) => {
-								let liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
+								const liveFeedColumn = deliveryViaLiveFeed && liveFeedPackages[0].shortLabel === rp.shortLabel;
 
 								if (checkContentDelivery
 									&& !liveFeedColumn
@@ -128,7 +128,7 @@ class TermSheet extends React.Component {
 								}
 
 								const defItems = selectedRightsBySuperRight[rp.id].items;
-								let definition = defItems[right.key];
+								const definition = defItems[right.key];
 								let label = "";
 
 								if (right.multiple) {
@@ -189,8 +189,8 @@ class TermSheet extends React.Component {
 			rightsPackage,
 		} = this.props;
 
-		let highlightRight = rightsPackage.filter(rp => rp.shortLabel === "HL");
-		let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+		const highlightRight = rightsPackage.filter(rp => rp.shortLabel === "HL");
+		const highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
 
 		return rightsPackage.filter((rp, i) => {
 			if ((rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE"
@@ -229,11 +229,11 @@ class TermSheet extends React.Component {
 			endDateLimit,
 			endDate,
 		} = this.props;
-		let packagesAvailable = rightsPackage.map(rp => rp.shortLabel);
-		let liveFeedPackages = rightsPackage.filter(rp => rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
-		let deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
-		let highlightRight = rightsPackage.filter(rp => rp.shortLabel === "HL");
-		let highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
+		const packagesAvailable = rightsPackage.map(rp => rp.shortLabel);
+		const liveFeedPackages = rightsPackage.filter(rp => rp.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_LIVE");
+		const deliveryViaLiveFeed = liveFeedPackages.length > 0 && packagesAvailable.indexOf("LT") === -1;
+		const highlightRight = rightsPackage.filter(rp => rp.shortLabel === "HL");
+		const highlightIsDedicated = highlightRight.length > 0 && highlightRight[0].selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED";
 
 
 		return (
@@ -311,7 +311,7 @@ class TermSheet extends React.Component {
 								/>
 								{
 									rightsPackage.map((rp, k) => {
-										let label = (rp.shortLabel === "NA") ? `${NA_INPUT} seconds` : rp.shortLabel === "HL" ? `${HL_INPUT} minutes` : "-";
+										const label = (rp.shortLabel === "NA") ? `${NA_INPUT} seconds` : rp.shortLabel === "HL" ? `${HL_INPUT} minutes` : "-";
 										return (
 											<RightTableItem
 												key={`rp-list_childs${k}`}
@@ -361,7 +361,7 @@ class TermSheet extends React.Component {
 											|| (highlightIsDedicated && rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT"))
 										&& rp.shortLabel !== "PR"
 										&& rp.shortLabel !== "LT") return;
-									let label = (rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT")
+									const label = (rp.selectedRights.CONTENT_DELIVERY_NA === "CONTENT_DELIVERY_NA_HIGHLIGHT")
 										? SuperRightProductionDetailsLabels.HL
 										: SuperRightProductionDetailsLabels[rp.shortLabel];
 									return (

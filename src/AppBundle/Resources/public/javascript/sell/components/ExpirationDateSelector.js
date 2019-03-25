@@ -1,10 +1,9 @@
 import React from "react";
 import DatePicker from "@components/DatePicker";
-import { SERVER_DATE_TIME_FORMAT } from "@constants";
+import { SERVER_DATE_TIME_FORMAT, DATE_FORMAT } from "@constants";
 import moment from "moment";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import { DATE_FORMAT } from "@constants";
 import { getMaxDate } from "@utils/listing";
 
 class ExpirationDateSelector extends React.Component {
@@ -14,7 +13,11 @@ class ExpirationDateSelector extends React.Component {
 	}
 
 	handleStartDate = (date) => {
-		this.props.updateContentValue("expiresAt", date.set({ hour: 23, minute: 59 }).format(SERVER_DATE_TIME_FORMAT));
+		this.props.updateContentValue("expiresAt", date.set({
+			hour: 23,
+			minute: 59,
+		})
+			.format(SERVER_DATE_TIME_FORMAT));
 	};
 
 	render() {

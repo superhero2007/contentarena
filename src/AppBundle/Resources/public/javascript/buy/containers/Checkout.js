@@ -6,7 +6,7 @@ import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
 import NumberFormat from "react-number-format";
 import ReactTable from "react-table";
-import { pdfIcon } from "../../main/components/Icons";
+import { pdfIcon, packageIcon } from "../../main/components/Icons";
 import Installments from "../components/Installments";
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {
@@ -19,13 +19,20 @@ import { DATE_FORMAT } from "@constants";
 import GeneralTerms from "../../main/components/GeneralTerms";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
-import { packageIcon } from "../../main/components/Icons";
 import RadioSelector from "../../main/components/RadioSelector";
 import Loader from "../../common/components/Loader";
 import { BUNDLE_SALES_METHOD } from "../../common/constants";
 
-const labelStyle = { height: "30px", fontSize: "12px", width: "400px" };
-const inputStyle = { width: "380px", margin: 0, height: "30px" };
+const labelStyle = {
+	height: "30px",
+	fontSize: "12px",
+	width: "400px",
+};
+const inputStyle = {
+	width: "380px",
+	margin: 0,
+	height: "30px",
+};
 
 class Checkout extends React.Component {
 	constructor(props) {
@@ -76,7 +83,10 @@ class Checkout extends React.Component {
 	}
 
 	closeModal = () => {
-		this.setState({ editCompanyOpen: false, companyUpdated: true });
+		this.setState({
+			editCompanyOpen: false,
+			companyUpdated: true,
+		});
 	};
 
 	closeSuccessScreen = () => {
@@ -87,8 +97,10 @@ class Checkout extends React.Component {
 	getInstallments = () => {
 		const { selectedPackages } = this.state;
 
-		const result = selectedPackages.filter(b => b.salesMethod === "BIDDING").sort((a, b) => selectedPackages.filter(v => v.installments.length === a.installments.length).length
-			- selectedPackages.filter(v => v.installments.length === b.installments.length).length).pop();
+		const result = selectedPackages.filter(b => b.salesMethod === "BIDDING")
+			.sort((a, b) => selectedPackages.filter(v => v.installments.length === a.installments.length).length
+				- selectedPackages.filter(v => v.installments.length === b.installments.length).length)
+			.pop();
 
 		if (!result) return;
 
@@ -248,7 +260,10 @@ class Checkout extends React.Component {
 									company.country.name = value.label;
 									this.setState({ company });
 								}}
-								value={{ value: company.country.name, label: company.country.name }}
+								value={{
+									value: company.country.name,
+									label: company.country.name,
+								}}
 							/>
 						</div>
 
@@ -385,12 +400,13 @@ class Checkout extends React.Component {
 			bidMethod,
 		} = this.state;
 
-		const total = selectedPackages.filter(b => !(b.salesMethod === "BIDDING" && bidMethod === this.all)).reduce((a, b) => {
-			if (a.fee === undefined && b.fee === undefined) return { fee: 0 };
-			if (a.fee === undefined) return { fee: parseFloat(b.fee) };
-			if (b.fee === undefined) return { fee: parseFloat(a.fee) };
-			return { fee: parseFloat(b.fee) + parseFloat(a.fee) };
-		}, { fee: 0 });
+		const total = selectedPackages.filter(b => !(b.salesMethod === "BIDDING" && bidMethod === this.all))
+			.reduce((a, b) => {
+				if (a.fee === undefined && b.fee === undefined) return { fee: 0 };
+				if (a.fee === undefined) return { fee: parseFloat(b.fee) };
+				if (b.fee === undefined) return { fee: parseFloat(a.fee) };
+				return { fee: parseFloat(b.fee) + parseFloat(a.fee) };
+			}, { fee: 0 });
 
 		if (bidMethod === this.all) total.fee += multipleBidValue;
 
@@ -436,9 +452,14 @@ class Checkout extends React.Component {
 			bidObj.company = company;
 		}
 
-		ContentArena.ContentApi.placeBids(bidObj).then((r) => {
-			this.setState({ showSuccessScreen: true, soldOut: r.soldOut, spinner: false });
-		});
+		ContentArena.ContentApi.placeBids(bidObj)
+			.then((r) => {
+				this.setState({
+					showSuccessScreen: true,
+					soldOut: r.soldOut,
+					spinner: false,
+				});
+			});
 	};
 
 	getTechnicalFee = () => {
@@ -542,7 +563,11 @@ class Checkout extends React.Component {
 		const bidMethod = (bundles.length === 1 || !allowMultiple) ? this.single : this.all;
 
 
-		this.setState({ bundles, bidMethod, allowMultiple });
+		this.setState({
+			bundles,
+			bidMethod,
+			allowMultiple,
+		});
 	};
 
 	isBundleDisabled = (bundle) => {
@@ -676,7 +701,10 @@ class Checkout extends React.Component {
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
-					const style = { height: "28px", width: "100%" };
+					const style = {
+						height: "28px",
+						width: "100%",
+					};
 					if (bidMethod === this.all && !bundle.all) style.backgroundColor = "#666";
 					return (
 						<div className={cn("price-action-wrapper")}>
@@ -692,7 +720,10 @@ class Checkout extends React.Component {
 											const bundles = this.state.selectedPackages;
 											bundle.fee = value;
 											bundles[props.index] = bundle;
-											this.setState({ bundles, isBidInputEdit: true });
+											this.setState({
+												bundles,
+												isBidInputEdit: true,
+											});
 										}}
 										disabled={bidMethod === this.all && !bundle.all}
 										min={bundle.minimumBid}
@@ -709,7 +740,10 @@ class Checkout extends React.Component {
 										value={multipleBidValue}
 										onValueChange={(values) => {
 											const { value } = values;
-											this.setState({ multipleBidValue: parseFloat(value), isBidMultInputEdit: true });
+											this.setState({
+												multipleBidValue: parseFloat(value),
+												isBidMultInputEdit: true,
+											});
 										}}
 										min={0}
 										style={style}
@@ -788,8 +822,14 @@ class Checkout extends React.Component {
 							onChange={bidMethod => this.setState({ bidMethod })}
 							className="bid-list-mode"
 							items={[
-								{ value: this.single, label: "Place bids for territories individually" },
-								{ value: this.all, label: "Place one bid for all territories" },
+								{
+									value: this.single,
+									label: "Place bids for territories individually",
+								},
+								{
+									value: this.all,
+									label: "Place one bid for all territories",
+								},
 							]}
 						/>
 					)}

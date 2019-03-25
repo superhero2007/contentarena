@@ -38,7 +38,7 @@ class Register extends React.Component {
 
 	getUserInfoByActivateKey = async (code) => {
 		try {
-			let user = await ContentArena.ContentApi.getUserInfoByActivationCode(code);
+			const user = await ContentArena.ContentApi.getUserInfoByActivationCode(code);
 
 			if (!user) {
 				this.props.history.push("/login");

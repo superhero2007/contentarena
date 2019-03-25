@@ -14,10 +14,9 @@ import ContentListingTable from "../../main/components/ContentListingTable";
 import ListingDetails from "./ListingDetails";
 import {
 	addRight, clearUpdateFilter, removeRight, updateCountries, updateExclusive,
-	updateMany, updateListingView,
+	updateMany, updateListingView, updateEvent, updateSport,
 } from "../actions/filterActions";
 import { CONTENT_LISTING_VIEW, LISTING_SORT_OPTIONS, SERVER_DATE_TIME_FORMAT } from "@constants";
-import { updateEvent, updateSport } from "../actions/filterActions";
 import RightsLegend from "../../main/components/RightsLegend";
 import LocalStorageHelper from "../../main/utiles/localStorageHelper";
 import Loader from "../../common/components/Loader";
@@ -204,7 +203,7 @@ class Marketplace extends Component {
 
 	filter = () => {
 		const { filter } = this.props;
-		let parsedFilter = this.parseFilter(filter);
+		const parsedFilter = this.parseFilter(filter);
 		this.fetchListings(parsedFilter);
 		this.setState({
 			parsedFilter,

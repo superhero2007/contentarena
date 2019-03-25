@@ -136,8 +136,6 @@ class FileSelector extends Component {
 		const { imageWidth, imageHeight } = userImage;
 		let maxWidth;
 		let maxHeight;
-		let minWidth;
-		let minHeight;
 
 		if (imageWidth > imageHeight) {
 			maxHeight = 100;
@@ -147,19 +145,19 @@ class FileSelector extends Component {
 			maxHeight = imageWidth * 100 / imageHeight;
 		}
 
-		minHeight = this.cropSize.min * 100 / imageHeight;
-		minWidth = this.cropSize.min * 100 / imageWidth;
+		const minHeight = this.cropSize.min * 100 / imageHeight;
+		const minWidth = this.cropSize.min * 100 / imageWidth;
 
 		return {
 			maxWidth, maxHeight, minWidth, minHeight,
 		};
-	}
+	};
 
 	getCropPosition = (maxWidth) => {
 		let pos = (25 * 100 / maxWidth) / 2;
 		if (maxWidth === 100) pos = 0;
 		return pos;
-	}
+	};
 
 	getCroppedImg = (image, pixelCrop) => {
 		const canvas = document.createElement("canvas");

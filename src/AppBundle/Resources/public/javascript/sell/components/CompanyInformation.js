@@ -41,7 +41,7 @@ class CompanyInformation extends React.Component {
 	};
 
 	updateCountry = (value) => {
-		let company = this.state.company;
+		const { company } = this.state;
 
 		if (!company.country) company.country = {};
 		company.country.name = value.label;

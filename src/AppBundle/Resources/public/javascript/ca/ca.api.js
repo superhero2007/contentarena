@@ -229,7 +229,7 @@ ContentArena.Api = {
 		return deferred.promise();
 	},
 	getMarketplaceListings(filter) {
-		let deferred = jQuery.Deferred();
+		const deferred = jQuery.Deferred();
 
 		$.ajax({
 			url: `${envhosturl}api/marketplace/listings`,

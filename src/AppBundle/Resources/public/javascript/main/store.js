@@ -1,6 +1,5 @@
 import React from "react";
-import { createStore, applyMiddleware } from "redux";
-import { combineReducers } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { i18nState } from "redux-i18n";
 import thunk from "redux-thunk";
 import { content } from "../sell/reducers/content";

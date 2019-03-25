@@ -1,11 +1,12 @@
 @import "vars";
 
-.table-right{
+.table-right {
   width: 100%;
   border-bottom: 4px solid $border-color-1;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+
   .column {
     display: flex;
     margin: 0 0 5px;
@@ -24,7 +25,7 @@
     margin-bottom: 3px;
   }
 
-  .right-name{
+  .right-name {
     flex: 3;
     background-color: $background-2;
     padding: 10px 0 10px 20px;
@@ -33,7 +34,7 @@
     font-weight: 600;
   }
 
-  .right-item-content{
+  .right-item-content {
     flex: 3;
     align-items: center;
     padding: 0 0 0 20px;
@@ -46,7 +47,7 @@
     cursor: pointer;
   }
 
-  .edit-item{
+  .edit-item {
     border: none;
     font-size: 26px;
     color: grey;
@@ -59,7 +60,7 @@
     color: #9DA4B0;
   }
 
-  .right-package{
+  .right-package {
     background-color: #F4F6F9;
     align-items: center;
     justify-content: center;
@@ -68,7 +69,7 @@
     border-right: 1px solid #F4F6F9;
   }
 
-  .right-item-selection{
+  .right-item-selection {
     border-right: 1px solid #EEF3F6;
     display: flex;
     justify-content: center;
@@ -76,12 +77,7 @@
     color: #2DA7E6;
   }
 
-  input{
+  input {
     width: 20px;
   }
 }
-
-.right-item{
-
-}
-
