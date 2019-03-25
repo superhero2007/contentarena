@@ -78,12 +78,11 @@ class DefaultController extends BaseController
      */
     public function indexAction( Request $request )
     {
-
         $user = $this->getUser();
         $logger = $this->get('logger');
         $route = $request->get("reactRouting");
         $logger->info("USER ENTERED " . strtoupper($route), array(
-            "User" => $user->getEmail(),
+            "User" => isset($user) ? $user->getEmail() : "undefined", // YV: need to take a look here, /login route: $user = null
             "Route" => $request->getRequestUri()
         ));
 
