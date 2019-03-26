@@ -133,24 +133,23 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LENDING_GET_IN_TOUCH")}
+								{this.context.t("LANDING_GET_IN_TOUCH")}
 							</span>
 						</div>
 						<div className="outer" />
 					</div>
 				</section>
 
-				<section className="benefits">
+				<section className="benefits" id="how-to">
 					<div className="landing-column">
 						<div>
 							<div className="benefit-row">
 								<div className="content">
-									<div className="cap">offer your content globally</div>
+									<div className="cap">
+										{this.context.t("LANDING_HOW_TO_TITLE_1")}
+									</div>
 									<div className="txt">
-										Leverage&nbsp;direct and easy access to a global network of verified
-										buyers. Enjoy the flexibility to package and sell your rights in
-										your preferred way across different territories and all distribution
-										channels.&nbsp;
+										{this.context.t("LANDING_HOW_TO_TEXT_1")}
 									</div>
 								</div>
 								<div className="icon">
@@ -172,24 +171,21 @@ class LandingWrapper extends Component {
 									</a>
 								</div>
 								<div className="content">
-									<div className="cap">find effortlessly and buy hassle-free</div>
+									<div className="cap">
+										{this.context.t("LANDING_HOW_TO_TITLE_2")}
+									</div>
 									<div className="txt">
-										Browse intuitively through available content and explore new
-										opportunities to enrich your portfolio. Easily&nbsp;access all
-										relevant information, contact the seller and&nbsp;make a bid or
-										purchase directly.
+										{this.context.t("LANDING_HOW_TO_TEXT_2")}
 									</div>
 								</div>
 							</div>
 							<div className="benefit-row">
 								<div className="content">
-									<div className="cap">fast and safe deal closure</div>
+									<div className="cap">
+										{this.context.t("LANDING_HOW_TO_TITLE_3")}
+									</div>
 									<div className="txt">
-										Automated generation of legal agreements and an integrated escrow
-										payment system,&nbsp;providing a&nbsp;fast, confidential and secure
-										&nbsp;environment for a hassle-free&nbsp;deal
-										transaction.&nbsp;Content is made accessible as soon as both parties
-										have confirmed the deal.
+										{this.context.t("LANDING_HOW_TO_TEXT_3")}
 									</div>
 								</div>
 								<div className="icon">
@@ -207,14 +203,14 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle bg-white">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LENDING_TEAM")}
+								{this.context.t("LANDING_TEAM")}
 							</span>
 						</div>
 						<div className="outer" />
 					</div>
 				</section>
 
-				<section className="team">
+				<section className="team" id="team">
 					<div className="landing-column">
 						<div className="inner">
 							<div className="item">
@@ -302,14 +298,14 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LENDING_OUR_REFERENCES")}
+								{this.context.t("LANDING_OUR_REFERENCES")}
 							</span>
 						</div>
 						<div className="outer" />
 					</div>
 				</section>
 
-				<section className="references">
+				<section className="references" id="references">
 					<div className="landing-column">
 						<div className="inner">
 							<div className="icon">
@@ -396,15 +392,15 @@ class LandingWrapper extends Component {
 							<div className="icon">
 								<img src={`${assetsBaseDir}app/images/ATP.png`} alt="ATP" />
 							</div>
-							<div className="icon">
+							{/*	<div className="icon">
 								<img src={`${assetsBaseDir}app/images/FIBA.png`} alt="FIBA" />
-							</div>
+							</div> */}
 						</div>
 					</div>
 					<div className="bottom-triangle bg-white">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LENDING_GET_IN_TOUCH")}
+								{this.context.t("LANDING_GET_IN_TOUCH")}
 							</span>
 						</div>
 						<div className="outer" />
