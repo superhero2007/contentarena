@@ -54,7 +54,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/web_globe.png`}
-										 alt="global market place"
+										alt="global market place"
 									/>
 								</div>
 								<div className="content">
@@ -66,7 +66,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/web_dollar.png`}
-										 alt="maximize revenues"
+										alt="maximize revenues"
 									/>
 								</div>
 								<div className="content">
@@ -78,7 +78,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/web_sales-process.png`}
-										 alt="seamless sales process"
+										alt="seamless sales process"
 									/>
 								</div>
 								<div className="content">
@@ -96,7 +96,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/web_search.png`}
-										 alt="find relevant content"
+										alt="find relevant content"
 									/>
 								</div>
 								<div className="content">
@@ -108,7 +108,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/web_growth-.png`}
-										 alt="optimize content portfolio"
+										alt="optimize content portfolio"
 									/>
 								</div>
 								<div className="content">
@@ -120,7 +120,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/web_security.png`}
-										 alt="Fast &amp; Safe transaction"
+										alt="Fast &amp; Safe transaction"
 									/>
 								</div>
 								<div className="content">
@@ -217,7 +217,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/sascha_rund.400x400.png`}
-										 alt="Sascha Kojic"
+										alt="Sascha Kojic"
 									/>
 								</div>
 								<div className="content">
@@ -229,7 +229,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/erik_rund.400x400.png`}
-										 alt="Erik Lorenz"
+										alt="Erik Lorenz"
 									/>
 								</div>
 								<div className="content">
@@ -241,7 +241,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/bernie_rund.400x400.png`}
-										 alt="Bernhard Riedlsperger"
+										alt="Bernhard Riedlsperger"
 									/>
 								</div>
 								<div className="content">
@@ -255,7 +255,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/alex_rund_neu.400x400.png`}
-										 alt="Alexander Abts"
+										alt="Alexander Abts"
 									/>
 								</div>
 								<div className="content">
@@ -269,7 +269,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/klemens_rund.400x400.png`}
-										 alt="Klemens Kögl"
+										alt="Klemens Kögl"
 									/>
 								</div>
 								<div className="content">
@@ -283,7 +283,7 @@ class LandingWrapper extends Component {
 								<div className="icon">
 									<img
 										src={`${assetsBaseDir}app/images/landing/juan_rund.400x400.png`}
-										 alt="Juan Cruz"
+										alt="Juan Cruz"
 									/>
 								</div>
 								<div className="content">
@@ -317,7 +317,7 @@ class LandingWrapper extends Component {
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/perform.400x400.png`}
-									 alt="Perform"
+									alt="Perform"
 								/>
 							</div>
 							<div className="icon">
@@ -326,13 +326,13 @@ class LandingWrapper extends Component {
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/sportradar.400x400.png`}
-									 alt="Sportradar"
+									alt="Sportradar"
 								/>
 							</div>
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/sportsman.400x400.png`}
-									 alt="Sportsman"
+									alt="Sportsman"
 								/>
 							</div>
 							<div className="icon">
@@ -341,19 +341,19 @@ class LandingWrapper extends Component {
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/crystal.400x400.png`}
-									 alt="Crystal"
+									alt="Crystal"
 								/>
 							</div>
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/everton.400x400.png`}
-									 alt="Everton"
+									alt="Everton"
 								/>
 							</div>
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/malaga.400x400.png`}
-									 alt="Malaga CF"
+									alt="Malaga CF"
 								/>
 							</div>
 							<div className="icon">
@@ -368,13 +368,13 @@ class LandingWrapper extends Component {
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/sport1.400x400.png`}
-									 alt="Sport 1"
+									alt="Sport 1"
 								/>
 							</div>
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/matchtv_grey.400x400.png`}
-									 alt="Match TV"
+									alt="Match TV"
 								/>
 							</div>
 							<div className="icon">
@@ -386,7 +386,7 @@ class LandingWrapper extends Component {
 							<div className="icon">
 								<img
 									src={`${assetsBaseDir}app/images/landing/sportklub.400x400.png`}
-									 alt="SportKlub"
+									alt="SportKlub"
 								/>
 							</div>
 							<div className="icon">
@@ -407,7 +407,7 @@ class LandingWrapper extends Component {
 					</div>
 				</section>
 
-				<section className="get-in-touch">
+				<section className="get-in-touch" id="contact">
 					<a href="mailto:info@contentarena.com">
 						<i className="fa fa-4x fa-envelope-o" />
 						<div className="email">info@contentarena.com</div>
