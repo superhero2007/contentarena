@@ -67,7 +67,6 @@ class BoardListing extends React.Component {
 
 	hideOptions = (e) => {
 		this.setState({ showOptions: false });
-
 		e.stopPropagation();
 	};
 
@@ -79,8 +78,6 @@ class BoardListing extends React.Component {
 			expiresAt,
 			salesPackages,
 			rightsPackage,
-			tournament,
-			seasons,
 			className,
 			showEdit,
 			showRemove,
@@ -98,9 +95,7 @@ class BoardListing extends React.Component {
 			lastActionUser,
 			owner,
 			status,
-			hasActivity,
 			hasPendingBids,
-			onSubmit,
 			style,
 			canShare,
 		} = this.props;
@@ -221,7 +216,10 @@ class BoardListing extends React.Component {
 						<button
 							className="button button-confirm"
 							onClick={(e) => {
-								this.setState({ showDeactivateConfirm: false });
+								this.setState({
+									showOptions: false,
+									showDeactivateConfirm: false,
+								});
 								onDeactivate();
 								e.stopPropagation();
 							}}
@@ -249,7 +247,10 @@ class BoardListing extends React.Component {
 						<button
 							className="button button-confirm"
 							onClick={(e) => {
-								this.setState({ showRemoveConfirm: false });
+								this.setState({
+									showOptions: false,
+									showRemoveConfirm: false,
+								});
 								onRemove();
 								e.stopPropagation();
 							}}
@@ -277,7 +278,10 @@ class BoardListing extends React.Component {
 						<button
 							className="button button-confirm"
 							onClick={(e) => {
-								this.setState({ showArchiveConfirm: false });
+								this.setState({
+									showOptions: false,
+									showArchiveConfirm: false,
+								});
 								onArchive();
 								e.stopPropagation();
 							}}
