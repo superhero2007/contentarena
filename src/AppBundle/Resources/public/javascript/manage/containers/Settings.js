@@ -51,7 +51,6 @@ class Settings extends React.Component {
 	};
 
 	updateCompany = () => {
-		const { history } = this.props;
 		this.setState({ updatingCompany: true, editCompanyInfo: false });
 		this.originalUser = cloneDeep(this.state.user);
 		ContentArena.ContentApi.updateCompany(this.state.user.company).done(() => {
@@ -60,7 +59,6 @@ class Settings extends React.Component {
 	};
 
 	updateUser = () => {
-		const { history } = this.props;
 		this.setState({ updatingUser: true, editPersonalInfo: false });
 		this.originalUser = cloneDeep(this.state.user);
 		ContentArena.ContentApi.updateUser(this.state.user).done(() => {
@@ -92,7 +90,7 @@ class Settings extends React.Component {
 	handlePasswordValid = isValid => this.setState({ isPassValid: isValid });
 
 	render() {
-		const { history, common } = this.props;
+		const { common } = this.props;
 
 		const {
 			editPersonalInfo, editCompanyInfo, loadingCompanyUsers, companyUsers, isPassValid,
@@ -151,7 +149,7 @@ class Settings extends React.Component {
 							{!editCompanyInfo && !updatingCompany && (
 								<div
 									className="edit-button"
-									onClick={(e) => {
+									onClick={() => {
 										this.setState({
 											editCompanyInfo: true,
 										});
@@ -426,7 +424,7 @@ class Settings extends React.Component {
 							{!editPersonalInfo && !updatingUser && (
 								<div
 									className="edit-button"
-									onClick={(e) => {
+									onClick={() => {
 										this.setState({
 											editPersonalInfo: true,
 										});
@@ -701,12 +699,8 @@ Settings.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({});
-
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
 )(Settings);

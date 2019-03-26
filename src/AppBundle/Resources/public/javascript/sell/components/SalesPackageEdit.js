@@ -17,14 +17,6 @@ const installmentIconStyle = {
 	margin: "0 10px",
 	position: "relative",
 };
-const smallContainerStyle = {
-	display: "inline-block",
-	overflowY: "overlay",
-	maxHeight: "200px",
-};
-const containerStyle = {
-	display: "inline-block",
-};
 
 class SalesPackageEdit extends React.Component {
 	constructor(props) {
@@ -159,7 +151,7 @@ class SalesPackageEdit extends React.Component {
 		const excludedTerritories = (exclusivity) ? this.getExcludedTerritories() : this.state.territories;
 		let { territories } = this.state;
 		const allTerritories = Object.values(ContentArena.Data.Countries)
-			.map((i, k) => ({
+			.map(i => ({
 				value: i.name,
 				label: i.name,
 			}));

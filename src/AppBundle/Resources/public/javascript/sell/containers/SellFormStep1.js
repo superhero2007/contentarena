@@ -70,10 +70,6 @@ class SellFormStep1 extends React.Component {
 				ContentArena.Data.TopSports = sports;
 			});
 
-		ContentArena.Api.getCountries()
-			.done((countries) => {
-			});
-
 		this.props.updateContentValue("lastUpdate", new Date().getTime());
 	}
 

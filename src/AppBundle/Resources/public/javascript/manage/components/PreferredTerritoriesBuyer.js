@@ -72,7 +72,7 @@ class PreferredTerritoriesBuyer extends React.Component {
 									className="ca-radio"
 									type="radio"
 									value={false}
-									onChange={(e) => {
+									onChange={() => {
 										this.handleRadioChange(false);
 									}}
 									checked={isMultipleEnabled === false}
@@ -89,7 +89,7 @@ class PreferredTerritoriesBuyer extends React.Component {
 									className="ca-radio"
 									type="radio"
 									value
-									onChange={(e) => {
+									onChange={() => {
 										this.handleRadioChange(true);
 									}}
 									checked={isMultipleEnabled === true}
@@ -116,7 +116,7 @@ class PreferredTerritoriesBuyer extends React.Component {
 							<NewRegionCountrySelector
 								className="small-select"
 								onChange={this.setTerritories}
-								onSelectRegion={(c) => {
+								onSelectRegion={() => {
 								}}
 								value={territories}
 								multiple

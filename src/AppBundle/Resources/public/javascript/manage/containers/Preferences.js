@@ -78,9 +78,8 @@ class Preferences extends React.Component {
 	};
 
 	render() {
-		const { history, common } = this.props;
 		const {
-			updatingUser, loading, user, privacy, userUpdated, activeTab,
+			updatingUser, loading, user, userUpdated, activeTab,
 		} = this.state;
 
 		if (loading) return <Loader loading />;

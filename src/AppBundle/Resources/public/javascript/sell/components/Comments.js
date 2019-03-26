@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Modal from "react-modal";
 import { PropTypes } from "prop-types";
-import { customStyles } from "../../main/styles/custom";
 
 class Comments extends React.Component {
 	constructor(props) {

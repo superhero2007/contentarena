@@ -722,13 +722,12 @@ class PopupRight extends React.Component {
 
 	showOkButton = () => {
 		const {
-			name, multiple, options, id, superRights, showTextArea, textAreaRequired, rightsPackage, technicalFee, global,
+			id, showTextArea, textAreaRequired, rightsPackage, global,
 			language,
 			languages,
 		} = this.props;
 
 		let response = true;
-		const contentDeliveryCounter = 0;
 
 		if (global && language) {
 			return languages.length > 0;

@@ -109,7 +109,7 @@ class SalesPackageForm extends React.Component {
 		if (territoriesMethod === this.worldwide && bundleMethod === this.individually) {
 			this.setState({
 				territories: Object.values(ContentArena.Data.Countries)
-					.map((i, k) => ({
+					.map(i => ({
 						value: i.name,
 						label: i.name,
 					})),
@@ -247,19 +247,19 @@ class SalesPackageForm extends React.Component {
 							name += " excluding ";
 							const territoriesNames = territories.map(t => t.label);
 							const excludedFromRegion = selectedRegionCountries.filter(c => territoriesNames.indexOf(c.label) === -1);
-							name += excludedFromRegion.map((territory, i) => territory.label)
+							name += excludedFromRegion.map(territory => territory.label)
 								.join(", ");
 						}
 						regionNamed = true;
 					} else {
 						name = territories.slice(0, 3)
-							.map((territory, i) => territory.label)
+							.map(territory => territory.label)
 							.join(", ");
 					}
 				} else if (territoriesMethod === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING) {
 					territories = allTerritories.filter(t => territoriesByLabel.indexOf(t.label) === -1);
 					name = `Worldwide excl. ${excludedTerritories.slice(0, 3)
-						.map((territory, i) => territory.label)
+						.map(territory => territory.label)
 						.join(", ")}`;
 				}
 
@@ -414,7 +414,7 @@ class SalesPackageForm extends React.Component {
 	};
 
 	getAllCountries = () => Object.values(ContentArena.Data.Countries)
-		.map((i, k) => ({
+		.map(i => ({
 			value: i.name,
 			label: i.name,
 		}));
@@ -424,7 +424,7 @@ class SalesPackageForm extends React.Component {
 			exclusivity, salesPackages, currency, validation,
 		} = this.props;
 		const {
-			territoriesQuantity, territoriesMethod, territories, fee, remainCountries,
+			territoriesQuantity, territoriesMethod, territories, fee,
 		} = this.state;
 
 		const isFilterEnabled = territoriesMethod === this.selectedTerritories;

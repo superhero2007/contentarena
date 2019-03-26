@@ -111,7 +111,7 @@ class Round extends React.Component {
 
 				{activeRound.showMatches && (
 					<div className="match-group">
-						{activeRound.matches.size > 0 && Array.from(activeRound.matches.values()).map((item, i) => (
+						{activeRound.matches.size > 0 && Array.from(activeRound.matches.values()).map(item => (
 							<Match
 								match={item}
 								key={item.externalId}

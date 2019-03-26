@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, {} from "react";
 import Moment from "moment/moment";
 import { PropTypes } from "prop-types";
-import { goTo, limitText } from "../../main/actions/utils";
+import { goTo } from "../../main/actions/utils";
 import {
-	blueCheckIcon, clockRoundIcon, exclamationRoundIcon, expiredIcon, playIcon, soldIcon,
-	yellowCheckIcon,
+	clockRoundIcon, exclamationRoundIcon, expiredIcon, playIcon, soldIcon,
 } from "../../main/components/Icons";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
@@ -197,7 +196,8 @@ class BoardListing extends React.Component {
 								</div>
 								{`${lastActionUser.firstName} ${lastActionUser.lastName}`}
 								{" "}
-								{lastActionDate && `- ${Moment(lastActionDate).format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}`}
+								{lastActionDate && `- ${Moment(lastActionDate)
+									.format(`${DATE_FORMAT} ${TIME_FORMAT} [UTC]`)}`}
 							</div>
 						)}
 
@@ -363,7 +363,8 @@ class BoardListing extends React.Component {
 					<div>
 						<div style={{ fontWeight: 500 }}>{this.context.t("Expiry:")}</div>
 						{" "}
-						{expiresAt ? Moment(expiresAt).format(DATE_FORMAT) : "Not set"}
+						{expiresAt ? Moment(expiresAt)
+							.format(DATE_FORMAT) : "Not set"}
 					</div>
 				</div>
 
