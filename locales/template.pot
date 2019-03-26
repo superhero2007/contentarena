@@ -896,15 +896,39 @@ msgid "LANDING_REGISTER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LENDING_GET_IN_TOUCH"
+msgid "LANDING_GET_IN_TOUCH"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LENDING_TEAM"
+msgid "LANDING_HOW_TO_TITLE_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
-msgid "LENDING_OUR_REFERENCES"
+msgid "LANDING_HOW_TO_TEXT_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_HOW_TO_TITLE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_HOW_TO_TEXT_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_HOW_TO_TITLE_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_HOW_TO_TEXT_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_TEAM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_OUR_REFERENCES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js

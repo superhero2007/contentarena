@@ -621,6 +621,13 @@
 
     .row {
 	  .item {
+		input:disabled{
+		  font-size: 13px;
+		  font-weight: 600;
+		  color: $border-color-3;
+		  background-color: #ECECEC;
+		  border: none;
+		}
 		&.mobile{
 		  flex: 0 1 100%;
 		}
