@@ -78,6 +78,14 @@ class LandingHeader extends React.Component {
 							className={cn("mob-trigger", { closeIcon: showMobileMenu })}
 							onClick={() => this.setState({ showMobileMenu: !showMobileMenu })}
 						>
+							{!showMobileMenu && currentView === LOGIN_VIEW_TYPE.LANDING &&
+							<a
+								onClick={() => history.push("/login")}
+								className="ca-btn primary"
+							>
+								{context.t("LOGIN_BAR_LOGIN")}
+							</a>}
+
 							{showMobileMenu ? "✖" : "MENU ☰"}
 						</div>
 						<div className={cn("nav", { showMenu: showMobileMenu })}>
@@ -87,6 +95,7 @@ class LandingHeader extends React.Component {
 									target: item.isNewTab ? "_blank" : "_self",
 									onClick: item.to ? () => history.push(item.to) : undefined,
 								};
+								if (showMobileMenu && item.to === "/login") return undefined;
 								return (
 									<a
 										{...props}
