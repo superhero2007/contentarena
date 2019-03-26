@@ -400,7 +400,7 @@ class LandingWrapper extends Component {
 					<div className="bottom-triangle bg-white">
 						<div className="text">
 							<span onClick={this.getInTouch}>
-								{this.context.t("LANDING_GET_IN_TOUCH")}
+								{this.context.t("LANDING_CONTACT_US")}
 							</span>
 						</div>
 						<div className="outer" />

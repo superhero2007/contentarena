@@ -932,6 +932,10 @@ msgid "LANDING_OUR_REFERENCES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
+msgid "LANDING_CONTACT_US"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/containers/LandingWrapper.js
 msgid "LANDING_COMPANY"
 msgstr ""
 
