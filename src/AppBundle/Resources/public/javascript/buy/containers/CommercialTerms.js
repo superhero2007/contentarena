@@ -127,36 +127,55 @@ class CommercialTerms extends React.Component {
 				)}
 
 				{/* SEASON/FIXTURES */}
-				{seasons && seasons.length > 0 && seasons.map((season, key) => (
-					<div key={`season-${key}`} className="season-details">
-						<div className="title">
+				{seasons && seasons.length > 0 && (
+					<>
+						<div className="spacer-bottom title">
 							{this.context.t("LISTING_DETAILS_EVENT_TITLE_SEASON")}
-							{" "}
-							{season.name}
 						</div>
-						<div className="d-flex align-items-center justify-content-between flex-wrap">
-							{season.fixtures && season.fixtures.length > 0 && season.fixtures.map((fixture, i) => (
-								<div className="row-container" style={{ width: "45%" }} key={i}>
-									<div className="name">
-										{fixture.name}
-									</div>
-									<div className="actions" style={{ minWidth: 230 }}>
-										<div className="item" style={{ width: "50%", marginLeft: 0 }}>
-											<i className="fa fa-calendar icon" />
-											{!fixture.date && "Date N/A"}
-											{fixture.date && Moment(fixture.date).format(DATE_FORMAT)}
-										</div>
-										<div className="item" style={{ width: "50%", marginLeft: 0 }}>
-											<i className="fa fa-clock-o icon" />
-											{!fixture.date && "Time N/A"}
-											{fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
-										</div>
-									</div>
+						{seasons.map((season, key) => (
+							<div key={`season-${key}`} className="season-details">
+								<div className="season-cap">
+									{season.name}
 								</div>
-							))}
-						</div>
-					</div>
-				))}
+								<div>
+									{season.fixtures && season.fixtures.length > 0 && season.fixtures.map((fixture, i) => (
+										<div className="row-container" style={{ width: "45%" }} key={i}>
+											<div className="name">
+												{fixture.name}
+											</div>
+											<div className="actions" style={{ minWidth: 230 }}>
+												<div
+													className="item"
+													style={{
+														width: "50%",
+														marginLeft: 0,
+													}}
+												>
+													<i className="fa fa-calendar icon" />
+													{!fixture.date && "Date N/A"}
+													{fixture.date && Moment(fixture.date)
+														.format(DATE_FORMAT)}
+												</div>
+												<div
+													className="item"
+													style={{
+														width: "50%",
+														marginLeft: 0,
+													}}
+												>
+													<i className="fa fa-clock-o icon" />
+													{!fixture.date && "Time N/A"}
+													{fixture.date && Moment(fixture.date)
+														.format(`${TIME_FORMAT} [UTC]`)}
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						))}
+					</>
+				)}
 
 				<TerritoriesSalesPackages {...this.props} />
 			</div>
