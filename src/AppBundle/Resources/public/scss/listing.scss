@@ -661,6 +661,13 @@
           color: #333;
         }
 
+        .season-cap {
+          color: #03547C;
+          font-weight: bold;
+          font-size: 15px;
+          margin: 20px 0;
+        }
+
         .filter-description {
           border-top: 1px grey dotted;
           padding: 10px 0;
@@ -675,6 +682,10 @@
           padding: 15px 0;
           font-size: 13px;
           color: #666;
+
+          &:first-child {
+            border-top: 1px solid $color-grey-light;
+          }
 
           .name {
             display: flex;

@@ -143,8 +143,8 @@ class ApiController extends BaseController
         foreach ($bids as $bid){
             if ($bid != null){
 
-                $definitions = $termsService->getBidDefinitions($bid, $user->getCompany());
-                $terms = $termsService->getBidTerms($bid, $user->getCompany());
+                $definitions = $termsService->getBidDefinitions($bid, $content->getCompany());
+                $terms = $termsService->getBidTerms($bid, $content->getCompany());
 
                 if ($bid->getStatus()->getName() == 'APPROVED'){
                     if ($isMultiple) $bundleService->setSoldCustomBundles($bundles, $content);

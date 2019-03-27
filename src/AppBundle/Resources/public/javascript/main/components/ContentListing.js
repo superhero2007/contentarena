@@ -223,8 +223,6 @@ class ContentListing extends Component {
 						{expiresAt && (
 							<div className="expires">
 								Expiry:
-
-
 								{" "}
 								<b>{Moment(expiresAt).format(DATE_FORMAT)}</b>
 							</div>
