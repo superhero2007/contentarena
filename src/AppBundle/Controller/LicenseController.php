@@ -84,6 +84,7 @@ class LicenseController extends Controller
      * @param $viewElements
      * @param bool $download
      * @param bool $save
+     * @return BinaryFileResponse|void
      * @throws \exception
      */
     private function mergeAndSave($content, $viewElements, $download = true, $save = true){
@@ -235,8 +236,8 @@ class LicenseController extends Controller
         }
         $bundle = $bid->getSalesPackage();
         $bundle->getSalesMethod()->getName();
-        $terms = $termsService->getCompanyTerms($user->getCompany());
-        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
+        $terms = $termsService->getBidTerms($bid, $user->getCompany());
+        $definitions = $termsService->getBidDefinitions($bid, $user->getCompany());
         $viewElements = array(
             'user' => $user,
             'bid' => $bid,
@@ -545,6 +546,7 @@ class LicenseController extends Controller
         return $this->render('contract/la-general-terms-source.html.twig', $viewElements);
     }
 
+    //TODO: deprecate uploadGeneralTerms
     /**
      * @Route("/license/upload", name="uploadGeneralTerms")
      * @throws \exception

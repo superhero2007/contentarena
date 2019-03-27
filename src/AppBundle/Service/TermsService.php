@@ -8,6 +8,9 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Bid;
+use AppBundle\Entity\BidDefinitions;
+use AppBundle\Entity\BidLicenseTermItem;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\CompanyDefinitions;
 use AppBundle\Entity\CompanyLicenseTermItem;
@@ -68,6 +71,92 @@ class TermsService
         return $terms;
     }
 
+    public function storeBidDefinitions(Bid $bid, Company $company){
+        $companyRepo = $this->em->getRepository('AppBundle:CompanyDefinitions');
+        $bidRepo = $this->em->getRepository('AppBundle:BidDefinitions');
+        $companyItems = $companyRepo->findBy(array(
+            'company' => $company
+        ));
+
+        foreach ( $companyItems as $sourceItem){
+            $criteria= array(
+                'name' => $sourceItem->getName(),
+                'bid' => $bid
+            );
+            /* @var BidDefinitions $bidItem */
+            $bidItem = $bidRepo->findOneBy($criteria);
+
+            if ($bidItem == null) $bidItem = new BidDefinitions();
+            $bidItem->setName($sourceItem->getName());
+            $bidItem->setPosition($sourceItem->getPosition());
+            $bidItem->setContent($sourceItem->getContent());
+            $bidItem->setBid($bid);
+            $this->em->persist($bidItem);
+        }
+
+        $this->em->flush();
+    }
+
+    public function storeBidTermItems(Bid $bid, Company $company){
+        $companyRepo = $this->em->getRepository('AppBundle:CompanyLicenseTermItem');
+        $bidRepo = $this->em->getRepository('AppBundle:BidLicenseTermItem');
+        $companyItems = $companyRepo->findBy(array(
+            'company' => $company
+        ));
+
+        foreach ( $companyItems as $sourceItem){
+            $criteria= array(
+                'term' => $sourceItem->getTerm(),
+                'bid' => $bid
+            );
+            /* @var BidLicenseTermItem $bidItem */
+            $bidItem = $bidRepo->findOneBy($criteria);
+
+            if ($bidItem == null) $bidItem = new BidLicenseTermItem();
+            $bidItem->setPosition($sourceItem->getPosition());
+            $bidItem->setContent($sourceItem->getContent());
+            $bidItem->setBid($bid);
+            $bidItem->setTerm($sourceItem->getTerm());
+            $this->em->persist($bidItem);
+        }
+
+        $this->em->flush();
+    }
+
+    public function getBidDefinitions(Bid $bid, Company $company){
+        $bidRepo = $this->em->getRepository('AppBundle:BidDefinitions');
+        $bidDefinitions = $bidRepo->findBy(array(
+            'bid' => $bid
+        ));
+
+        if (count($bidDefinitions) > 0) return $bidDefinitions;
+
+        $this->storeBidDefinitions($bid, $company);
+
+        return $bidRepo->findBy(array(
+            'bid' => $bid
+        ));
+    }
+
+    public function getBidTerms(Bid $bid, Company $company)
+    {
+        $terms = $this->em
+            ->getRepository('AppBundle:SourceLicenseTerm')
+            ->findAll();
+
+        $bidTermItemsRepo = $this->em->getRepository('AppBundle:BidLicenseTermItem');
+        $bidTermItems = $bidTermItemsRepo->findBy(array('bid' => $bid));
+
+        if ( count($bidTermItems) == 0 ) $this->storeBidTermItems($bid, $company);
+
+        foreach ( $terms as $term){
+            $items = $bidTermItemsRepo->findBy(array('term' => $term, 'bid' => $bid));
+            $term->setItems($items);
+        }
+
+        return $terms;
+    }
+
     /**
      * @param Company $company
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -84,6 +173,8 @@ class TermsService
         foreach ($companyItems as $companyItem ){
             $this->em->remove($companyItem);
         }
+
+        $this->em->flush();
 
         $sourceTermItems = $sourceTermItemsRepo->findAll();
 
@@ -162,6 +253,8 @@ class TermsService
         foreach ($companyItems as $companyItem ){
             $this->em->remove($companyItem);
         }
+
+        $this->em->flush();
 
         $sourceItems = $sourceRepo->findAll();
 

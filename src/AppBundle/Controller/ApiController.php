@@ -109,9 +109,6 @@ class ApiController extends BaseController
         $user = $this->getUser();
         $bidsData = $request->get("bids");
         $multiple = $request->get("multiple");
-
-        $terms = $termsService->getCompanyTerms($user->getCompany());
-        $definitions = $termsService->getCompanyDefinitions($user->getCompany());
         $content = $contentService->findContent($request);
         $soldOut = false;
         $success = true;
@@ -145,6 +142,9 @@ class ApiController extends BaseController
 
         foreach ($bids as $bid){
             if ($bid != null){
+
+                $definitions = $termsService->getBidDefinitions($bid, $user->getCompany());
+                $terms = $termsService->getBidTerms($bid, $user->getCompany());
 
                 if ($bid->getStatus()->getName() == 'APPROVED'){
                     if ($isMultiple) $bundleService->setSoldCustomBundles($bundles, $content);
