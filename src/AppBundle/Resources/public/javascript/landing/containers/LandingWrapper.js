@@ -1,19 +1,26 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import LandingHeader from "../components/LandingHeader";
 import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
 import { contentWhiteLogo } from "../../main/components/Icons";
+import { showRegistrationEmail, hideRegistrationEmail } from "../actions/landingActions";
 
 class LandingWrapper extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {};
+		this.registerEmail = React.createRef();
+		this.props.hideRegistrationEmail();
 	}
 
 	getInTouch = () => console.warn("get in touch not ready");
 
-	handleRegisterClick = () => this.props.history.push("/registration");
+	handleRegisterClick = () => {
+		this.props.showRegistrationEmail(this.registerEmail.current.value);
+		this.props.history.push("/registration");
+	};
 
 	render() {
 		return (
@@ -33,6 +40,7 @@ class LandingWrapper extends Component {
 								type="text"
 								placeholder={this.context.t("LANDING_EMAIL_ADDRESS")}
 								className="ca-form-control"
+								ref={this.registerEmail}
 							/>
 							<button
 								className="yellow-button"
@@ -463,4 +471,14 @@ LandingWrapper.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default LandingWrapper;
+const mapStateToProps = ({ landing }) => landing;
+
+const mapDispatchToProps = dispatch => ({
+	hideRegistrationEmail: () => dispatch(hideRegistrationEmail()),
+	showRegistrationEmail: email => dispatch(showRegistrationEmail(email)),
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(LandingWrapper);

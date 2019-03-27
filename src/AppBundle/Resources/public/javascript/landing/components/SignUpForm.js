@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
 import { connect } from "react-redux";
 import Loader from "../../common/components/Loader";
-import { hideSuccessResetPass } from "../actions/landingActions";
+import { hideRegistrationEmail } from "../actions/landingActions";
 
 class SignUpForm extends PureComponent {
 	constructor(props) {
@@ -11,7 +11,7 @@ class SignUpForm extends PureComponent {
 		this.state = {
 			[SIGN_UP_FIELDS.NAME]: { value: "", error: "" },
 			[SIGN_UP_FIELDS.LAST_NAME]: { value: "", error: "" },
-			[SIGN_UP_FIELDS.EMAIL]: { value: "", error: "" },
+			[SIGN_UP_FIELDS.EMAIL]: { value: props.registrationEmail, error: "" },
 			[SIGN_UP_FIELDS.COMPANY]: { value: "", error: "" },
 			generalError: "",
 			isLoading: false,
@@ -74,6 +74,7 @@ class SignUpForm extends PureComponent {
 	};
 
 	handleInputChange = (field, value) => {
+		if (this.props.registrationEmail) this.props.hideRegistrationEmail();
 		this.setState(prevState => ({
 			generalError: "",
 			[field]: {
@@ -90,6 +91,7 @@ class SignUpForm extends PureComponent {
 	};
 
 	render() {
+		console.log(this.state);
 		const { refererEmail } = this.props;
 		return (
 			<section className="sign-up-wrapper" onKeyPress={this.handleEnterPress}>
@@ -135,6 +137,7 @@ class SignUpForm extends PureComponent {
 				<div className="email">
 					<label htmlFor="email">{this.context.t("SIGN_UP_EMAIL")}</label>
 					<input
+						value={this.state[SIGN_UP_FIELDS.EMAIL].value}
 						onChange={e => this.handleInputChange(SIGN_UP_FIELDS.EMAIL, e.target.value)}
 						type="email"
 						placeholder={this.context.t("LOGIN_EMAIL_PLACEHOLDER")}
@@ -180,4 +183,8 @@ SignUpForm.propsType = {
 
 const mapStateToProps = ({ landing }) => landing;
 
-export default connect(mapStateToProps, null)(SignUpForm);
+const mapDispatchToProps = dispatch => ({
+	hideRegistrationEmail: () => dispatch(hideRegistrationEmail()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
