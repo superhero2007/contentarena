@@ -6,10 +6,10 @@ const RightsList = ({ rightsPackage }) => (
 		{rightsPackage.map((sr, i) => (
 			<div key={i} className="rights-list-item">
 				{!sr.exclusive
-				&& <img style={{ width: 23, height: 22, margin: "0 5px" }} src={blueCheckIcon} />}
+				&& <img style={{ width: 23, height: 22, margin: "0 5px" }} src={blueCheckIcon} alt="" />}
 
 				{sr.exclusive
-				&& <img style={{ width: 23, height: 22, margin: "0 5px" }} src={yellowCheckIcon} />}
+				&& <img style={{ width: 23, height: 22, margin: "0 5px" }} src={yellowCheckIcon} alt="" />}
 
 				<div style={{ display: "flex", flexDirection: "row" }}>
 					{sr.shortLabel !== "PR" && sr.name}

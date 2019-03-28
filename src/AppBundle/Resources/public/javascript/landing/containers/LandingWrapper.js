@@ -165,6 +165,7 @@ class LandingWrapper extends Component {
 										<img
 											src={`${assetsBaseDir}app/images/landing/globe-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
+											alt=""
 										/>
 									</a>
 								</div>
@@ -175,6 +176,7 @@ class LandingWrapper extends Component {
 										<img
 											src={`${assetsBaseDir}app/images/landing/screen-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
+											alt=""
 										/>
 									</a>
 								</div>
@@ -201,6 +203,7 @@ class LandingWrapper extends Component {
 										<img
 											src={`${assetsBaseDir}app/images/landing/handshake-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
+											alt=""
 										/>
 									</a>
 								</div>
@@ -453,10 +456,11 @@ class LandingWrapper extends Component {
 								href="https://www.linkedin.com/company/11294986/"
 								className="linkedin-icon"
 								target="_blank"
+								rel="noopener noreferrer"
 							>
 								<i className="fa fa-linkedin" />
 							</a>
-							<a href="mailto:info@contentarena.com" className="email-icon" target="_blank">
+							<a href="mailto:info@contentarena.com" className="email-icon" target="_blank" rel="noopener noreferrer">
 								<i className="fa fa-envelope-o" />
 							</a>
 						</div>

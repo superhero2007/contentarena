@@ -34,7 +34,7 @@ class ContentListingTable extends Component {
 		const { customId } = prop.original;
 		return (
 			<a href={`/listing/${customId}`}>
-				{right && <img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} />}
+				{right && <img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} alt="" />}
 			</a>
 		);
 	};

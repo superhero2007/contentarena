@@ -183,6 +183,7 @@ class RightsFilter extends React.Component {
 									onClick={() => {
 										this.selectTerritory([]);
 									}}
+									alt=""
 								/>
 
 							</React.Fragment>

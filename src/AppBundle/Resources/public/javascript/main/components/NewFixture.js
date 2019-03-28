@@ -79,9 +79,9 @@ class NewFixture extends Component {
 
 					<div className="fixture-actions">
 						{showAdd && (
-						    <img src={addIcon} onClick={onAdd} />
+						    <img src={addIcon} onClick={onAdd} alt="" />
 						)}
-						<img src={cancelIcon} onClick={onRemove} />
+						<img src={cancelIcon} onClick={onRemove} alt="" />
 					</div>
 				</div>
 

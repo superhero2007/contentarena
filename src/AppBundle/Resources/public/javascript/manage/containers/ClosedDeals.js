@@ -163,6 +163,7 @@ class ClosedDeals extends Component {
 													<img
 														style={rightImageStyle}
 														src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}
+														alt=""
 													/>
 												)}
 											</div>
@@ -191,6 +192,7 @@ class ClosedDeals extends Component {
 													<img
 														style={rightImageStyle}
 														src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}
+														alt=""
 													/>
 												)}
 											</div>
@@ -219,6 +221,7 @@ class ClosedDeals extends Component {
 													<img
 														style={rightImageStyle}
 														src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}
+														alt=""
 													/>
 												)}
 											</div>
@@ -247,6 +250,7 @@ class ClosedDeals extends Component {
 													<img
 														style={rightImageStyle}
 														src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}
+														alt=""
 													/>
 												)}
 											</div>
@@ -275,6 +279,7 @@ class ClosedDeals extends Component {
 													<img
 														style={rightImageStyle}
 														src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}
+														alt=""
 													/>
 												)}
 											</div>
@@ -303,6 +308,7 @@ class ClosedDeals extends Component {
 													<img
 														style={rightImageStyle}
 														src={(right.exclusive) ? yellowCheckIcon : blueCheckIcon}
+														alt=""
 													/>
 												)}
 											</div>
@@ -423,17 +429,18 @@ class ClosedDeals extends Component {
 										<div className="actions-col">
 											{!common.testStageMode
 											&& (
-												<a href={`/license/bid/${props.value.customId}`} target="_blank">
+												<a href={`/license/bid/${props.value.customId}`} target="_blank" rel="noopener noreferrer">
 													<img
 														src={pdfIcon}
 														title={this.context.t("CLOSED_DEALS_LICENSE_AGREEMENT_ICON")}
+														alt=""
 													/>
 												</a>
 											)
 											}
 
 											{common.testStageMode
-											&& <img src={disabledPdfIcon} />
+											&& <img src={disabledPdfIcon} alt="" />
 											}
 
 											<img
@@ -442,6 +449,7 @@ class ClosedDeals extends Component {
 												}}
 												src={this.blueEnvelopeIcon}
 												title={this.context.t("CLOSED_DEALS_MESSAGE_ICON")}
+												alt=""
 											/>
 										</div>
 									),
@@ -466,12 +474,8 @@ ClosedDeals.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({});
-
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
 )(ClosedDeals);

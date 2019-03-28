@@ -17,7 +17,7 @@ import { getListingImage } from "../../common/utils/listing";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
 import EditButton from "../components/EditButton";
-import { goToStep, scrollTopMainContent } from "../../sell/actions/contentActions";
+import { scrollTopMainContent } from "../../sell/actions/contentActions";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import Checkout from "./Checkout";
 import ShareListing from "../../common/components/ShareListing";
@@ -378,7 +378,7 @@ class ListingDetails extends React.Component {
 
 						{profile === "BUYER" && !content.userCanNotBuy && (
 							<a onClick={this.handleOpenContactSellerModal}>
-								<img src={this.contactIcon} className="icon" />
+								<img src={this.contactIcon} className="icon" alt="" />
 								<span>
 									{this.context.t("Contact Seller")}
 								</span>
@@ -389,7 +389,7 @@ class ListingDetails extends React.Component {
 
 						{profile === "BUYER" && (
 							<a onClick={this.watchlist}>
-								<img src={content.watchlist ? this.checkIcon : this.watchlistIcon} className="icon" />
+								<img src={content.watchlist ? this.checkIcon : this.watchlistIcon} className="icon" alt="" />
 								<span>
 									{content.watchlist ? this.context.t("LISTING_DETAILS_ADDED_TO_WATCHLIST") : this.context.t("Watchlist")}
 								</span>

@@ -33,6 +33,7 @@ class GeneralTerms extends Component {
 					<a
 						href={(activationCode) ? `/generalterms?activationCode=${activationCode}` : "/generalterms"}
 						target="_blank"
+						rel="noopener noreferrer"
 					>
 						{" "}
 						Terms & Conditions

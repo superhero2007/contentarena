@@ -343,7 +343,7 @@ class TerritoriesSalesPackages extends PureComponent {
 												)}
 
 												{bundle.bundleMethod === "SELL_AS_BUNDLE" && bundle.territories.length > 1 && (
-													<img src={packageIcon} style={{ marginRight: 5 }} />
+													<img src={packageIcon} style={{ marginRight: 5 }} alt="" />
 												)}
 
 												<span>
@@ -446,7 +446,7 @@ class TerritoriesSalesPackages extends PureComponent {
 												)}
 
 												{bundle.bundleMethod === "SELL_AS_BUNDLE" && bundle.territories.length > 1 && (
-													<img src={packageIcon} style={{ marginRight: 5 }} />
+													<img src={packageIcon} style={{ marginRight: 5 }} alt="" />
 												)}
 
 												<span>

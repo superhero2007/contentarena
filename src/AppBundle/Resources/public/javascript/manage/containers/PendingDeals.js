@@ -85,8 +85,8 @@ class PendingDeals extends React.Component {
 							history.push("/bids/activebids");
 						}}
 					>
-						{tab === "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} />}
-						{tab !== "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} />}
+						{tab === "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} alt="" />}
+						{tab !== "activebids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} alt="" />}
 						{this.context.t("PENDING_BIDS_FILTER_ACTIVE")}
 					</div>
 					<div
@@ -97,8 +97,8 @@ class PendingDeals extends React.Component {
 							history.push("/bids/declinedbids");
 						}}
 					>
-						{tab === "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} />}
-						{tab !== "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} />}
+						{tab === "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.activeBulletIcon} alt="" />}
+						{tab !== "declinedbids" && <img style={{ margin: "0px 10px 0px" }} src={this.bulletIcon} alt="" />}
 						{this.context.t("PENDING_BIDS_FILTER_DECLINED")}
 					</div>
 					<div style={{ marginLeft: "auto" }}>

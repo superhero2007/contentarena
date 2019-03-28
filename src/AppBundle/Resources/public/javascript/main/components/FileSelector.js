@@ -18,6 +18,7 @@ const FileItem = ({ item, onClick }) => (
 			style={{ right: 10, position: "absolute", cursor: "pointer" }}
 			src={`${assetsBaseDir}app/images/cancel.png`}
 			onClick={onClick}
+			alt=""
 		/>
 	</div>
 );
@@ -40,6 +41,7 @@ const InvalidFileItem = ({ item, onClick }) => (
 			style={{ right: 10, position: "absolute", cursor: "pointer" }}
 			src={`${assetsBaseDir}app/images/cancel.png`}
 			onClick={onClick}
+			alt=""
 		/>
 	</div>
 );
@@ -314,6 +316,7 @@ class FileSelector extends Component {
 							src={bucketIcon}
 							style={{ cursor: "pointer", marginLeft: 10, objectFit: "contain" }}
 							onClick={this.handleRemoveFile}
+							alt=""
 						/>
 					)}
 					<input
@@ -377,7 +380,7 @@ class FileSelector extends Component {
 
 					{croppedImage && <img src={croppedImage} style={imageStyle} alt="" />}
 
-					{previousImage && <img src={`${assetsBaseDir}../${previousImage}`} style={imageStyle} />}
+					{previousImage && <img src={`${assetsBaseDir}../${previousImage}`} style={imageStyle} alt="" />}
 
 				</div>
 			</div>

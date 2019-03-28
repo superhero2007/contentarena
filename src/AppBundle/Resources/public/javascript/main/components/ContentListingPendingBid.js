@@ -62,7 +62,7 @@ class ContentListingPendingBid extends ContentListing {
 
 				<div className="left">
 					<div className="image">
-						<img src={listingImage} />
+						<img src={listingImage} alt="" />
 					</div>
 				</div>
 				<div className="right" style={{ padding: "25px 0" }}>
@@ -90,7 +90,7 @@ class ContentListingPendingBid extends ContentListing {
 					<div className="company" onClick={this.handleOpenContactSellerModal}>
 						{company.legalName}
 						{" "}
-						<img style={{ marginLeft: 5 }} src={this.envelopeIcon} />
+						<img style={{ marginLeft: 5 }} src={this.envelopeIcon} alt="" />
 					</div>
 
 					<div style={{ display: "flex" }}>
@@ -167,6 +167,7 @@ class ContentListingPendingBid extends ContentListing {
 										onMouseLeave={() => {
 											this.setState({ showEdited: false });
 										}}
+										alt=""
 									/>
 								)}
 
@@ -200,6 +201,7 @@ class ContentListingPendingBid extends ContentListing {
 										onMouseLeave={() => {
 											this.setState({ showMessage: false });
 										}}
+										alt=""
 									/>
 								)}
 
@@ -247,7 +249,7 @@ class ContentListingPendingBid extends ContentListing {
 										e.stopPropagation();
 									}}
 								>
-									<img src={bucketIcon} />
+									<img src={bucketIcon} alt="" />
 								</div>
 							)}
 

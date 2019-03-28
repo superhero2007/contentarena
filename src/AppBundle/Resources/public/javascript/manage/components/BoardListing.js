@@ -110,14 +110,14 @@ class BoardListing extends React.Component {
 					<div className="options-tooltip">
 						{showSubmit && (
 							<div className="option" onClick={this.submit}>
-								<img src={this.submitIcon} />
+								<img src={this.submitIcon} alt="" />
 								{" "}
 								{this.context.t("Submit")}
 							</div>
 						)}
 						{showEdit && (
 							<div className="option" onClick={this.edit}>
-								<img src={this.editIcon} />
+								<img src={this.editIcon} alt="" />
 								{" "}
 								{this.context.t("Edit")}
 							</div>
@@ -130,13 +130,13 @@ class BoardListing extends React.Component {
 									onDuplicate(customId);
 								}}
 							>
-								<img src={this.duplicateIcon} />
+								<img src={this.duplicateIcon} alt="" />
 								{this.context.t("Duplicate")}
 							</div>
 						)}
 						{showView && (
 							<div className="option" onClick={this.view}>
-								<img src={this.viewIcon} />
+								<img src={this.viewIcon} alt="" />
 								{this.context.t("View")}
 							</div>
 						)}
@@ -147,7 +147,7 @@ class BoardListing extends React.Component {
 									this.setState({ showRemoveConfirm: true });
 								}}
 							>
-								<img src={this.bucketIcon} />
+								<img src={this.bucketIcon} alt="" />
 								{this.context.t("MANAGE_LISTINGS_REMOVE_BUTTON_CONFIRM")}
 							</div>
 						)}
@@ -158,7 +158,7 @@ class BoardListing extends React.Component {
 									this.setState({ showArchiveConfirm: true });
 								}}
 							>
-								<img src={this.bucketIcon} />
+								<img src={this.bucketIcon} alt="" />
 								{this.context.t("MANAGE_LISTINGS_ARCHIVE_BUTTON_CONFIRM")}
 							</div>
 						)}
@@ -169,7 +169,7 @@ class BoardListing extends React.Component {
 									this.setState({ showDeactivateConfirm: true });
 								}}
 							>
-								<img src={this.deactivateIcon} style={{ width: 16 }} />
+								<img src={this.deactivateIcon} style={{ width: 16 }} alt="" />
 								{this.context.t("MANAGE_LISTINGS_DEACTIVATE_BUTTON_CONFIRM")}
 							</div>
 						)}
@@ -325,12 +325,12 @@ class BoardListing extends React.Component {
 							this.setState({ showStatusInfo: false });
 						}}
 					>
-						{status.name === "PENDING" && <img src={clockRoundIcon} />}
-						{status.name === "INACTIVE" && <img src={playIcon} />}
-						{status.name === "REJECTED" && <img src={exclamationRoundIcon} />}
-						{status.name === "EXPIRED" && <img src={expiredIcon} />}
-						{status.name === "SOLD_OUT" && <img src={soldIcon} />}
-						{hasPendingBids && <img src={exclamationRoundIcon} />}
+						{status.name === "PENDING" && <img src={clockRoundIcon} alt="" />}
+						{status.name === "INACTIVE" && <img src={playIcon} alt="" />}
+						{status.name === "REJECTED" && <img src={exclamationRoundIcon} alt="" />}
+						{status.name === "EXPIRED" && <img src={expiredIcon} alt="" />}
+						{status.name === "SOLD_OUT" && <img src={soldIcon} alt="" />}
+						{hasPendingBids && <img src={exclamationRoundIcon} alt="" />}
 					</div>
 				)}
 

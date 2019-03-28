@@ -234,7 +234,7 @@ class CommercialSalesBundle extends React.Component {
 				>
 					<div className="sales-bundle-item">
 						{salesBundle.bundleMethod === "SELL_AS_BUNDLE"
-						&& <img style={{ width: 26, height: 23, marginRight: 5 }} src={fixedIcon} />}
+						&& <img style={{ width: 26, height: 23, marginRight: 5 }} src={fixedIcon} alt="" />}
 						{salesBundle.name}
 
 						{extraTerritories && extraTerritories.length > 3 && (
@@ -251,7 +251,7 @@ class CommercialSalesBundle extends React.Component {
 						<span>
 							{salesBundle.fee > 0 && getFee(salesBundle)}
 							{salesBundle.salesMethod === "BIDDING"
-		&& <img style={{ width: 23, height: 23 }} src={bidIcon} />}
+		&& <img style={{ width: 23, height: 23 }} src={bidIcon} alt="" />}
 						</span>
 					</div>
 
@@ -388,6 +388,7 @@ class CommercialSalesBundle extends React.Component {
 													});
 												}}
 												title={this.context.t("COMMERCIAL_ACTIVITY_TRASH_ICON")}
+												alt=""
 											/>
 										)}
 										{props.value.status === "PENDING"
@@ -414,17 +415,18 @@ class CommercialSalesBundle extends React.Component {
 										)}
 										{(props.value.status === "APPROVED" || props.value.status === "PENDING") && !common.testStageMode
 										&& (
-											<a href={`/license/bid/${props.value.bid.customId}`} target="_blank">
+											<a href={`/license/bid/${props.value.bid.customId}`} target="_blank" rel="noopener noreferrer">
 												<img
 													src={pdfIcon}
 													title={props.value.status === "APPROVED" ? this.context.t("COMMERCIAL_ACTIVITY_CLOSED_BID_LICENSE_AGREEMENT") : this.context.t("COMMERCIAL_ACTIVITY_OPEN_BID_LICENSE_AGREEMENT")}
+													alt=""
 												/>
 											</a>
 										)
 										}
 
 										{(props.value.status === "APPROVED" || props.value.status === "PENDING") && common.testStageMode
-										&& <img src={disabledPdfIcon} />
+										&& <img src={disabledPdfIcon} alt="" />
 										}
 
 
@@ -440,6 +442,7 @@ class CommercialSalesBundle extends React.Component {
 												}}
 												src={blueEnvelopeIcon}
 												title={this.context.t("COMMERCIAL_ACTIVITY_MESSAGE_ICON")}
+												alt=""
 											/>
 										)}
 

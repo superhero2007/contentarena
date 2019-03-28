@@ -64,7 +64,6 @@
         "import/no-unresolved": "off",
         "import/no-named-default": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
-        "import/no-named-as-default-member": "off",
         "react/destructuring-assignment": "off",
         "react/no-access-state-in-setstate": "off",
         "react/forbid-prop-types": "off",
@@ -76,7 +75,6 @@
         "react/jsx-filename-extension": "off", //No need to fix
         "react/prefer-stateless-function": "off",
         "react/prop-types": "off",
-        "react/jsx-no-target-blank": "off",
         "react/no-unused-prop-types": "off",
         "react/require-default-props": "off",
         "react/no-array-index-key": "off",
@@ -87,7 +85,6 @@
         "jsx-a11y/no-noninteractive-element-interactions": "off",
         "jsx-a11y/label-has-for": "off",
         "jsx-a11y/click-events-have-key-events": "off",
-        "jsx-a11y/alt-text": "off",
         "jsx-a11y/label-has-associated-control": "off",
         "jsx-a11y/aria-role": "off",
         "jsx-a11y/anchor-is-valid": "off",

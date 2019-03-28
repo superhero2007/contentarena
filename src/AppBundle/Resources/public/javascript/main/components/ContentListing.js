@@ -347,7 +347,7 @@ class ContentListing extends Component {
 										this.setState({ showRemoveConfirm: true });
 									}}
 								>
-									<img src={bucketIcon} />
+									<img src={bucketIcon} alt="" />
 								</div>
 							)}
 							{/* CONFIRM REMOVE */}

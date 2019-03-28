@@ -637,6 +637,7 @@ class Settings extends React.Component {
 									<a
 										href="https://contentarena.com/web/privacy-policy/"
 										target="_blank"
+										rel="noopener noreferrer"
 										className="ca-btn primary"
 									>
 										{this.context.t("SETTINGS_LINKS_BUTTON_PRIVACY")}
@@ -654,6 +655,7 @@ class Settings extends React.Component {
 									<a
 										href="https://contentarena.com/web/faq/"
 										target="_blank"
+										rel="noopener noreferrer"
 										className="ca-btn primary"
 									>
 										{this.context.t("SETTINGS_LINKS_BUTTON_FAQ")}

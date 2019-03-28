@@ -68,7 +68,7 @@ export const getListingImage = (props) => {
 
 	return (
 		<div className={cn("image", { "sport-placeholder": isSportPlaceholder, "ca-logo": caLogo })}>
-			<img src={listingImageUrl} />
+			<img src={listingImageUrl} alt="" />
 		</div>
 	);
 };

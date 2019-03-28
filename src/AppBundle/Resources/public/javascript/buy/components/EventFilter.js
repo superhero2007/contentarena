@@ -124,7 +124,7 @@ class EventFilter extends React.Component {
 						className="search-btn"
 						onClick={this.handleFilter}
 					>
-						<img src={this.searchIcon} />
+						<img src={this.searchIcon} alt="" />
 					</div>
 					<input
 						className="search-input ca-form-control"

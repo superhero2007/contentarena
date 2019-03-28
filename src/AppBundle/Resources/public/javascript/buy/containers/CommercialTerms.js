@@ -94,6 +94,7 @@ class CommercialTerms extends React.Component {
 											<a
 												href={ContentArena.Utils.getWebsiteURl(website)}
 												target="_blank"
+												rel="noopener noreferrer"
 											>
 												{website}
 											</a>
@@ -113,8 +114,8 @@ class CommercialTerms extends React.Component {
 									<b>
 										{attachments.map(a => (
 											<div className="attachment-item">
-												<a download={a.name} target="_blank" href={this.baseDir + a.file}>
-													<img src={pdfIcon} />
+												<a download={a.name} target="_blank" href={this.baseDir + a.file} rel="noopener noreferrer">
+													<img src={pdfIcon} alt="" />
 													{a.name}
 												</a>
 											</div>

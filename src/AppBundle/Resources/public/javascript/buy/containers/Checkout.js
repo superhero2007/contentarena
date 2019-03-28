@@ -617,7 +617,7 @@ class Checkout extends React.Component {
 						<div className="d-flex align-items-center">
 
 							{bundle.bundleMethod === "SELL_AS_BUNDLE" && bundle.territories.length > 1 && (
-								<img src={packageIcon} style={{ marginRight: 5 }} />
+								<img src={packageIcon} style={{ marginRight: 5 }} alt="" />
 							)}
 
 							<span>
@@ -648,6 +648,7 @@ class Checkout extends React.Component {
 								<a
 									className="bid-license"
 									target="_blank"
+									rel="noopener noreferrer"
 									href={getCustomLicenseUrl(content.customId, bundle.id, bid, company)}
 									title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}
 								>
@@ -661,6 +662,7 @@ class Checkout extends React.Component {
 								<a
 									className="bid-license"
 									target="_blank"
+									rel="noopener noreferrer"
 									href={getCustomLicenseUrlBids(content.customId, selectedPackages, multipleBidValue, company, true)}
 									title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}
 								>

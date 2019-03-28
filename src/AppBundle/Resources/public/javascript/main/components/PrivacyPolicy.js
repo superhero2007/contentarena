@@ -31,7 +31,7 @@ class PrivacyPolicy extends Component {
 				<label htmlFor="terms_arena" />
 				<div>
 					{text}
-					<a href="https://contentarena.com/web/privacy-policy/" target="_blank"> Privacy Policy </a>
+					<a href="https://contentarena.com/web/privacy-policy/" target="_blank" rel="noopener noreferrer"> Privacy Policy </a>
 					{text2}
 				</div>
 			</div>

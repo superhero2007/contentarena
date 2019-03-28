@@ -145,7 +145,7 @@ class CommercialActivity extends Component {
 				onClick={callBack}
 			>
 
-				<img src={filter === filterType ? this.activeBulletIcon : this.bulletIcon} />
+				<img src={filter === filterType ? this.activeBulletIcon : this.bulletIcon} alt="" />
 				{text}
 			</div>
 		);
@@ -179,7 +179,7 @@ class CommercialActivity extends Component {
 							options={allListings.map(b => ({ value: b.customId, label: b.name }))}
 						/>
 						<div className="reset-listing-filter" onClick={this.onResetFilter}>
-							<img src={this.reloadIcon} />
+							<img src={this.reloadIcon} alt="" />
 							<span>{this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR")}</span>
 						</div>
 					</div>

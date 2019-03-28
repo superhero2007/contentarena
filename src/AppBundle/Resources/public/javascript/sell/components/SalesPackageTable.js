@@ -48,7 +48,7 @@ const SalesPackageTable = ({
 					return (
 						<div className="d-flex align-items-center">
 							{(isWorldwide || isWorldwideExcluded || isSelectedTerritories) && (
-								<img src={`${assetsBaseDir}app/images/package.svg`} style={{ marginRight: 5 }} />
+								<img src={`${assetsBaseDir}app/images/package.svg`} style={{ marginRight: 5 }} alt="" />
 							)}
 							{salesPackage.name}
 							{extraTerritories && extraTerritories.length > 3 && (
@@ -102,6 +102,7 @@ const SalesPackageTable = ({
 									onClick={() => {
 										onRemove(i);
 									}}
+									alt=""
 								/>
 								<i
 									className="fa fa-edit"

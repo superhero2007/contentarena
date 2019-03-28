@@ -27,7 +27,7 @@ class SalesPackages extends PureComponent {
 
 							{salesPackage.bundleMethod === "SELL_AS_BUNDLE" && (
 								<div className="icon">
-									<img src={packageIcon} />
+									<img src={packageIcon} alt="" />
 								</div>
 							)}
 
@@ -52,7 +52,7 @@ class SalesPackages extends PureComponent {
 
 							{salesPackage.salesMethod === "BIDDING" && (
 								<div className="icon">
-									<img src={bidIcon} />
+									<img src={bidIcon} alt="" />
 								</div>
 							)}
 

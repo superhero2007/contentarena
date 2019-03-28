@@ -31,7 +31,7 @@ const ContentListingRightsPackage = ({ defaultRightsPackage, rightsPackage, boar
 				return (
 					<div key={i} className="listing-item d-flex align-items-center">
 
-						<img src={icon} />
+						<img src={icon} alt="" />
 
 						<div className={cn("d-flex", { disabled: rp.exclusive == null })}>
 							{boardLabels ? SuperRightBoardLabels[rp.shortLabel] : rp.name}

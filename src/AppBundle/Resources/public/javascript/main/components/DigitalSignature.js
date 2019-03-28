@@ -162,7 +162,7 @@ class DigitalSignature extends React.Component {
 					)}
 
 					{signature && ready && (
-						<img style={{ width: 800, height: 300, margin: "0 auto" }} src={signature} />
+						<img style={{ width: 800, height: 300, margin: "0 auto" }} src={signature} alt="" />
 					)}
 
 					{!ready && (

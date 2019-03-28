@@ -40,24 +40,24 @@ class PasswordValidationBox extends Component {
 		return (
 			<div className="password-validation">
 				<div className={cn({ invalid: !isValid.passlength })}>
-					<img src={isValid.passlength ? blueCheckIcon : cancelIcon} />
+					<img src={isValid.passlength ? blueCheckIcon : cancelIcon} alt="" />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_1")}
 				</div>
 				<div className={cn({ invalid: !isValid.upper })}>
-					<img src={isValid.upper ? blueCheckIcon : cancelIcon} />
+					<img src={isValid.upper ? blueCheckIcon : cancelIcon} alt="" />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_2")}
 				</div>
 				<div className={cn({ invalid: !isValid.digit })}>
-					<img src={isValid.digit ? blueCheckIcon : cancelIcon} />
+					<img src={isValid.digit ? blueCheckIcon : cancelIcon} alt="" />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_3")}
 				</div>
 				<div className={cn({ invalid: !isValid.special })}>
-					<img src={isValid.special ? blueCheckIcon : cancelIcon} />
+					<img src={isValid.special ? blueCheckIcon : cancelIcon} alt="" />
 					{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_4")}
 				</div>
 				{passwordCheck && (
 					<div className={cn({ invalid: passwordCheck !== password })}>
-						<img src={passwordCheck === password ? blueCheckIcon : cancelIcon} />
+						<img src={passwordCheck === password ? blueCheckIcon : cancelIcon} alt="" />
 						{this.context.t("SETTINGS_LABEL_PASSWORD_VALIDATE_5")}
 					</div>
 				)}
