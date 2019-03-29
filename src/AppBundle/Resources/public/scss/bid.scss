@@ -9,7 +9,9 @@
   @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
 
   .bid-header {
-    margin: 5px;
+	margin: 0 20px;
+	padding: 10px 0 20px;
+	border-bottom: 1px solid #d9d9d9;
 
     .name {
       font-size: 21px;
@@ -18,12 +20,22 @@
     }
   }
 
-  .bid-title {
+  .checkout-title {
     font-weight: 600;
-    border-bottom: 1px solid #666;
     font-size: 16px;
-    color: #333333;
-    padding: 0 0 8px;
+    color: $black-color;
+    padding: 25px 0 5px;
+  }
+  .checkout-subtitle{
+    color: $font-color-5;
+	margin-bottom: 20px;
+	& div{
+      padding-bottom: 10px;
+	  border-bottom: 1px solid $black-color;
+	}
+	& span{
+	  padding-top: 15px;
+	}
   }
 
   .radio-selector-container {
@@ -32,16 +44,9 @@
     margin-bottom: 20px;
   }
 
-  .bid-list-mode {
-    font-size: 13px;
-    margin: 15px 50px 15px 0;
-  }
-
   .bid-info-wrapper {
     width: 100%;
-    padding: 30px 20px;
-    margin: 15px 0;
-    background-color: #E7E7E7;
+	padding: 0 20px;
 
     .bid-title-content {
       display: inline-block;
@@ -54,7 +59,7 @@
       height: 60px;
       border: 1px solid #999999;
       background-color: #FFFFFF;
-      margin: 20px 0;
+      margin: 20px 0 0;
       border-radius: 5px;
       display: flex;
       justify-content: flex-end;
@@ -72,11 +77,6 @@
         display: flex;
       }
 
-      .price-action-center {
-        width: 100%;
-        text-align: center;
-      }
-
       .price-invalid {
         color: red
       }
@@ -91,6 +91,8 @@
         justify-content: space-between;
 
         input {
+		  height: 28px;
+		  width: 100%;
           :disabled {
             background-color: #333333;
           }
@@ -270,10 +272,10 @@
     margin: 10px 20px;
     flex-direction: column;
 
-    .bid-address, .bid-license {
+	.checkout-subtitle, .bid-license {
       flex: 1;
       font-size: 13px;
-      padding: 15px 0px;
+      padding: 0;
       font-weight: 600;
 
       i {
@@ -305,21 +307,6 @@
       img {
         float: right;
       }
-    }
-  }
-
-  .bid-signature {
-    .signature-wrap {
-      /*max-width: 100%;*/
-    }
-
-    .signature-name-container {
-      /*max-width: 100%;
-      margin: 0;*/
-    }
-
-    .buttons {
-      /*margin: 0;*/
     }
   }
 

@@ -945,8 +945,8 @@
           position: fixed;
           bottom: 15px;
           text-align: center;
-          right: 0;
-          left: 0;
+          right: 50%;
+			    transform: translate(50%);
 
           &.active {
             display: block;

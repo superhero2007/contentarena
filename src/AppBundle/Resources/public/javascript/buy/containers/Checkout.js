@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import cn from "classnames";
 import Modal from "react-modal";
@@ -6,6 +6,7 @@ import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
 import NumberFormat from "react-number-format";
 import ReactTable from "react-table";
+import cloneDeep from "lodash/cloneDeep";
 import { pdfIcon, packageIcon } from "../../main/components/Icons";
 import Installments from "../components/Installments";
 import DigitalSignature from "../../main/components/DigitalSignature";
@@ -38,13 +39,10 @@ class Checkout extends React.Component {
 	constructor(props) {
 		super(props);
 
-		let minimumBidBundles = 0;
-		const allowMultiple = props.selectedPackages.filter(b => b.salesMethod === "BIDDING").length > 1;
-
-		const selectedPackages = props.selectedPackages.map((b) => {
-			if (b.salesMethod === "BIDDING" && b.fee !== 0 && b.fee !== "0" && b.fee !== "") {
+		const selectedPackages = cloneDeep(props.selectedPackages).map((b) => {
+			if (b.salesMethod === "BIDDING" && b.fee && b.fee !== "0") {
 				b.minimumBid = parseFloat(b.fee);
-				b.fee = parseFloat(b.fee) + 1;
+				b.fee = "";
 			} else {
 				b.minimumBid = 1;
 			}
@@ -393,22 +391,15 @@ class Checkout extends React.Component {
 		return total + this.getTechnicalFeeValue(total);
 	};
 
-	getTotalFee = () => {
-		const {
-			selectedPackages,
-			multipleBidValue,
-			bidMethod,
-		} = this.state;
+	getTotalFee = (packages) => {
+		if (!packages.length) return { fee: 0 };
 
-		const total = selectedPackages.filter(b => !(b.salesMethod === "BIDDING" && bidMethod === this.all))
-			.reduce((a, b) => {
-				if (a.fee === undefined && b.fee === undefined) return { fee: 0 };
-				if (a.fee === undefined) return { fee: parseFloat(b.fee) };
-				if (b.fee === undefined) return { fee: parseFloat(a.fee) };
-				return { fee: parseFloat(b.fee) + parseFloat(a.fee) };
-			}, { fee: 0 });
-
-		if (bidMethod === this.all) total.fee += multipleBidValue;
+		const total = packages.reduce((a, b) => {
+			if (a.fee === undefined && b.fee === undefined) return { fee: 0 };
+			if (a.fee === undefined) return { fee: parseFloat(b.fee) };
+			if (b.fee === undefined) return { fee: parseFloat(a.fee) };
+			return { fee: parseFloat(b.fee) + parseFloat(a.fee) };
+		}, { fee: 0 });
 
 		total.withTechnical = total.fee + this.getTechnicalFeeValue(total.fee);
 
@@ -424,28 +415,26 @@ class Checkout extends React.Component {
 			signatureName,
 			signaturePosition,
 			bundles,
-			multipleBidValue,
-			bidMethod,
 		} = this.state;
 
 		this.props.disableValidation();
 		this.setState({ spinner: true });
 
 		const bids = bundles.map(bundle => ({
-			amount: (bidMethod === this.all && bundle.salesMethod === "BIDDING") ? multipleBidValue : parseFloat(bundle.fee),
+			amount: parseFloat(bundle.fee),
 			salesPackage: bundle.id,
 			salesMethod: bundle.salesMethod,
-			totalFee: (bidMethod === this.all && bundle.salesMethod === "BIDDING") ? this.getBundleTotalFee(multipleBidValue) : this.getBundleTotalFee(bundle.fee),
+			totalFee: this.getBundleTotalFee(bundle.fee),
 		}));
 
 		const bidObj = {
 			signature,
 			signatureName,
 			signaturePosition,
-			totalFee: this.getTotalFee(),
+			totalFee: this.getTotalFee(bundles),
 			content: content.id,
 			bids,
-			multiple: bidMethod === this.all,
+			multiple: false,
 		};
 
 		if (companyUpdated) {
@@ -481,8 +470,8 @@ class Checkout extends React.Component {
 	};
 
 	getTechnicalFeeValue = (bid) => {
-		const technicalFee = this.getTechnicalFee();
 		if (!bid) return 0;
+		const technicalFee = this.getTechnicalFee();
 
 		return technicalFee && technicalFee.TECHNICAL_FEE === "ON_TOP"
 			? bid * (technicalFee.TECHNICAL_FEE_PERCENTAGE / 100)
@@ -508,22 +497,13 @@ class Checkout extends React.Component {
 			signatureName,
 			signaturePosition,
 			bundles,
-			bidMethod,
-			multipleBidValue,
-			minimumBidBundles,
 		} = this.state;
-		// const validateMinimumBid = this.getCheckoutType() === 'RAISE_BID' ? parseFloat(bid) > parseFloat(minimumBid) : parseFloat(bid) >= parseFloat(minimumBid);
-		// return bid && parseFloat(bid) !== 0 && validateMinimumBid;
+
 		return !terms
 			|| !signature
 			|| signatureName === ""
 			|| signaturePosition === ""
-			|| bundles.filter((b) => {
-				const fee = parseFloat(b.fee);
-				return bidMethod !== this.all === b.salesMethod === "BIDDING" && fee <= b.minimumBid;
-			}).length > 0
-			|| (bidMethod === this.all && !multipleBidValue)
-			|| (bidMethod === this.all && multipleBidValue < minimumBidBundles);
+			|| bundles.some(b => b.salesMethod === "BIDDING" && (!b.fee || parseFloat(b.fee) <= parseFloat(b.minimumBid)));
 	};
 
 	getCompanyAddress = () => {
@@ -540,77 +520,45 @@ class Checkout extends React.Component {
 	};
 
 	getMinBid = (bundle) => {
-		const { minimumBidBundles, bidMethod } = this.state;
-
-		if (!bundle.minimumBid || (bidMethod === this.all && !bundle.all)) return <span>-</span>;
+		if (!bundle.minimumBid) return <span>-</span>;
 
 		return (
 			<NumberFormat
 				thousandSeparator
-				value={bundle.all ? minimumBidBundles : bundle.salesMethod === "FIXED" ? parseFloat(bundle.fee) : parseFloat(bundle.minimumBid)}
+				value={bundle.salesMethod === BUNDLE_SALES_METHOD.FIXED ? parseFloat(bundle.fee) : parseFloat(bundle.minimumBid)}
 				displayType="text"
 				prefix={`${getCurrencySymbol(bundle.currency.code)} `}
 			/>
 		);
 	};
 
-	removeBundle = (index) => {
-		const bundles = this.state.selectedPackages;
+	handleChangeYourBid = (values, id) => {
+		const { value } = values;
+		if (!value) return;
+		const { bundles } = this.state;
 
-		bundles.splice(index, 1);
-
-		const allowMultiple = bundles.filter(b => b.salesMethod === "BIDDING").length > 1;
-		const bidMethod = (bundles.length === 1 || !allowMultiple) ? this.single : this.all;
-
+		bundles.find(item => item.id === id).fee = value;
 
 		this.setState({
 			bundles,
-			bidMethod,
-			allowMultiple,
 		});
 	};
 
-	isBundleDisabled = (bundle) => {
-		const { bidMethod } = this.state;
-		return bidMethod === this.all && !bundle.all && bundle.salesMethod === "BIDDING";
+	removeBundle = (id) => {
+		const { bundles } = this.state;
+		const filtered = bundles.filter(item => item.id !== id);
+
+		this.setState({
+			bundles: filtered,
+		});
 	};
 
-	componentDidUpdate() {
-		if (this.state.isBidInputEdit) {
-			this.bidInput.focus();
-		}
-
-		if (this.state.isBidMultInputEdit) {
-			this.bidMultInput.focus();
-		}
-	}
-
-	render() {
-		ReactTooltip.rebuild();
-		const { listing, validation } = this.props;
-		const {
-			content,
-			signature,
-			signatureName,
-			signaturePosition,
-			bid,
-			multipleBidValue,
-			company,
-			spinner,
-			bidMethod,
-			terms,
-			allowMultiple,
-		} = this.state;
-
-		const { selectedPackages } = this.state;
-
-		const isTermsInvalid = !terms && validation;
-		const total = this.getTotalFee();
-		const TheadComponent = props => null; // a component returning null (to hide) or you could write as per your requirement
-		const columns = [
+	getColumn(packages, type) {
+		const { content, bid, company } = this.state;
+		const tableStart = [
 			{
 				Header: this.context.t("SALES_PACKAGE_TABLE_TERRITORY_BUNDLE"),
-				headerClassName: selectedPackages.length > 15 ? "table-header-big scroll" : "table-header-big",
+				headerClassName: packages.length > 15 ? "table-header-big scroll" : "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
 					return (
@@ -643,54 +591,37 @@ class Checkout extends React.Component {
 					const bundle = props.original;
 					return (
 						<div className="details-wrapper">
-							{(bundle.salesMethod === "FIXED" || bidMethod !== this.all)
-							&& (
-								<a
-									className="bid-license"
-									target="_blank"
-									rel="noopener noreferrer"
-									href={getCustomLicenseUrl(content.customId, bundle.id, bid, company)}
-									title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}
-								>
-									<img src={pdfIcon} alt="Licence" />
-									<span>{this.context.t("License agreement")}</span>
-								</a>
-							)}
+							<a
+								className="bid-license"
+								target="_blank"
+								rel="noopener noreferrer"
+								href={getCustomLicenseUrl(content.customId, bundle.id, bid, company)}
+								title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}
+							>
+								<img src={pdfIcon} alt="Licence" />
+								<span>{this.context.t("License agreement")}</span>
+							</a>
 
-							{bundle.all
-							&& (
-								<a
-									className="bid-license"
-									target="_blank"
-									rel="noopener noreferrer"
-									href={getCustomLicenseUrlBids(content.customId, selectedPackages, multipleBidValue, company, true)}
-									title={this.context.t("CHECKOUT_LICENSE_AGREEMENT")}
-								>
-									<img src={pdfIcon} alt="Licence" />
-									<span>{this.context.t("License agreement")}</span>
-								</a>
-							)}
-
-							{bundle.all
-							&& <Installments installments={this.getInstallments()} />}
-							{!bundle.all && (bundle.salesMethod === "FIXED" || bidMethod !== this.all)
-							&& <Installments installments={bundle.installments} />}
+							{bundle.salesMethod === BUNDLE_SALES_METHOD.BIDDING
+								? (<Installments installments={this.getInstallments()} />)
+								: (<Installments installments={bundle.installments} />)
+							}
 						</div>
 					);
 				},
 			},
 			{
-				Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
+				Header: type === BUNDLE_SALES_METHOD.FIXED
+					? this.context.t("SALES_PACKAGE_TABLE_PRICE")
+					: this.context.t("SALES_PACKAGE_TABLE_PRICE_MINIMUM_BID"),
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
 					return (
-						<div
-							className={cn("price-action-wrapper", { "price-action-center": bundle.salesMethod === "FIXED" || this.isBundleDisabled(bundle) })}
-						>
+						<div className="price-action-wrapper">
 							<div
 								title={bundle.fee}
-								className={cn({ "price-invalid": !bundle.all && bidMethod !== this.all && bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee) })}
+								className={cn({ "price-invalid": bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee) })}
 							>
 								{this.getMinBid(bundle)}
 							</div>
@@ -698,60 +629,24 @@ class Checkout extends React.Component {
 					);
 				},
 			},
+		];
+		const yourBid =	[
 			{
 				Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_YOUR_BID"),
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
-					const style = {
-						height: "28px",
-						width: "100%",
-					};
-					if (bidMethod === this.all && !bundle.all) style.backgroundColor = "#666";
 					return (
-						<div className={cn("price-action-wrapper")}>
+						<div className="price-action-wrapper">
 							<div title={bundle.fee}>
 								{bundle.salesMethod === "FIXED" && +bundle.fee > 0 && this.getFee(bundle)}
-								{bundle.salesMethod === "BIDDING" && !bundle.all
-								&& (
+								{bundle.salesMethod === "BIDDING" && (
 									<NumberFormat
 										thousandSeparator
-										value={bidMethod === this.all && !bundle.all ? undefined : bundle.fee}
-										onValueChange={(values) => {
-											const { value } = values;
-											const bundles = this.state.selectedPackages;
-											bundle.fee = value;
-											bundles[props.index] = bundle;
-											this.setState({
-												bundles,
-												isBidInputEdit: true,
-											});
-										}}
-										disabled={bidMethod === this.all && !bundle.all}
+										value={bundle.fee}
+										onValueChange={values => this.handleChangeYourBid(values, bundle.id)}
 										min={bundle.minimumBid}
-										style={style}
 										prefix={`${getCurrencySymbol(bundle.currency)} `}
-										getInputRef={elm => this.bidInput = elm}
-										onBlur={() => this.setState({ isBidInputEdit: false })}
-									/>
-								)}
-								{bundle.all
-								&& (
-									<NumberFormat
-										thousandSeparator
-										value={multipleBidValue}
-										onValueChange={(values) => {
-											const { value } = values;
-											this.setState({
-												multipleBidValue: parseFloat(value),
-												isBidMultInputEdit: true,
-											});
-										}}
-										min={0}
-										style={style}
-										prefix={`${getCurrencySymbol(bundle.currency)} `}
-										getInputRef={elm => this.bidMultInput = elm}
-										onBlur={() => this.setState({ isBidMultInputEdit: false })}
 									/>
 								)}
 							</div>
@@ -759,24 +654,22 @@ class Checkout extends React.Component {
 					);
 				},
 			},
+		];
+		const tableEnd = [
 			{
 				Header: this.context.t("SALES_PACKAGE_TABLE_TECHNICAL_FEE"),
 				headerClassName: "table-header-big",
 				Cell: (props) => {
 					const bundle = props.original;
-					// console.log(bundle)
 					return (
 						<div className="price-action-wrapper">
 							<div title={bundle.fee}>
-								{this.isBundleDisabled(bundle) && <span>-</span>}
-								{!this.isBundleDisabled(bundle) && (
-									<NumberFormat
-										thousandSeparator
-										value={this.getTechnicalFeeValue(bundle.all ? multipleBidValue : bundle.fee)}
-										displayType="text"
-										prefix={`${getCurrencySymbol(selectedPackages[0].currency.code)} `}
-									/>
-								)}
+								{<NumberFormat
+									thousandSeparator
+									value={this.getTechnicalFeeValue(bundle.fee)}
+									displayType="text"
+									prefix={`${getCurrencySymbol(bundle.currency.code)} `}
+								/>}
 							</div>
 						</div>
 					);
@@ -790,22 +683,44 @@ class Checkout extends React.Component {
 					return (
 						<div className="price-action-wrapper">
 							<div title={bundle.fee}>
-								{!this.isBundleDisabled(bundle) && (
-									<NumberFormat
-										thousandSeparator
-										value={this.getBundleTotalFee(bundle.all ? multipleBidValue : bundle.fee)}
-										displayType="text"
-										prefix={`${getCurrencySymbol(selectedPackages[0].currency.code)} `}
-									/>
-								)}
+								<NumberFormat
+									thousandSeparator
+									value={this.getBundleTotalFee(bundle.fee)}
+									displayType="text"
+									prefix={`${getCurrencySymbol(bundle.currency.code)} `}
+								/>
 							</div>
-							{!bundle.all && selectedPackages.length > 1
-							&& <i className="fa fa-minus-circle" onClick={() => this.removeBundle(props.index)} />}
+							<i className="fa fa-minus-circle" onClick={() => this.removeBundle(bundle.id)} />
 						</div>
 					);
 				},
 			},
 		];
+
+		return type === BUNDLE_SALES_METHOD.FIXED
+			? [...tableStart, ...tableEnd]
+			: [...tableStart, ...yourBid, ...tableEnd];
+	}
+
+	render() {
+		ReactTooltip.rebuild();
+		const { listing, validation } = this.props;
+		const {
+			signature,
+			signatureName,
+			signaturePosition,
+			spinner,
+			terms,
+			bundles,
+		} = this.state;
+
+		const isTermsInvalid = !terms && validation;
+
+		const fixedPackages = bundles.filter(item => item.salesMethod === BUNDLE_SALES_METHOD.FIXED);
+		const biddingPackages = bundles.filter(item => item.salesMethod === BUNDLE_SALES_METHOD.BIDDING);
+
+		const fixedTotal = fixedPackages.length > 0 && this.getTotalFee(fixedPackages);
+		const biddingTotal = biddingPackages.length > 0 && this.getTotalFee(biddingPackages);
 
 		return (
 			<div className="bid-wrapper">
@@ -818,80 +733,82 @@ class Checkout extends React.Component {
 					</div>
 				</div>
 				<div className="bid-info-wrapper">
-					{selectedPackages.length > 1 && allowMultiple && (
-						<RadioSelector
-							value={bidMethod}
-							onChange={bidMethod => this.setState({ bidMethod })}
-							className="bid-list-mode"
-							items={[
-								{
-									value: this.single,
-									label: "Place bids for territories individually",
-								},
-								{
-									value: this.all,
-									label: "Place one bid for all territories",
-								},
-							]}
-						/>
-					)}
-
-					<ReactTable
-						className={cn("ca-table round-0 bundles-table bundles-table-checkout", { showScroll: selectedPackages.length > 15 })}
-						defaultPageSize={242} // max number of possible Territorial Bundles
-						showPageSizeOptions={false}
-						noDataText={null}
-						showPagination={false}
-						minRows={0}
-						resizable={false}
-						data={selectedPackages}
-						columns={columns}
-					/>
-
-					{bidMethod === this.all && selectedPackages.length > 1 && (
-						<ReactTable
-							className="ca-table round-0 bundles-table bundles-table-checkout"
-							style={{ marginTop: 20 }}
-							data={[{
-								name: "All territories",
-								fee: 0,
-								currency: selectedPackages[0].currency,
-								salesMethod: "BIDDING",
-								minimumBid: Math.max.apply(Math, selectedPackages.map(o => o.minimumBid)),
-								all: true,
-							}]}
-							TheadComponent={TheadComponent}
-							columns={columns}
-							showPageSizeOptions={false}
-							noDataText={null}
-							showPagination={false}
-							minRows={0}
-							resizable={false}
-						/>
-					)}
-
-					{selectedPackages.length > 1 && (
-						<div className="total-fee">
-							<span style={{ marginRight: 20 }}>TOTAL</span>
-							<NumberFormat
-								thousandSeparator
-								value={this.getTechnicalFeeValue(total.fee) + total.fee}
-								displayType="text"
-								prefix={`${getCurrencySymbol(selectedPackages[0].currency.code)} `}
+					{biddingPackages.length > 0 && (
+						<Fragment>
+							<div className="checkout-title">
+								{this.context.t("SALES_PACKAGE_BIDDING_TITLE")}
+							</div>
+							<div className="checkout-subtitle">
+								{this.context.t("SALES_PACKAGE_BIDDING_SUB_TITLE")}
+							</div>
+							<ReactTable
+								className={cn("ca-table round-0 bundles-table bundles-table-checkout", { showScroll: biddingPackages.length > 15 })}
+								defaultPageSize={242} // max number of possible Territorial Bundles
+								showPageSizeOptions={false}
+								noDataText={null}
+								showPagination={false}
+								minRows={0}
+								resizable={false}
+								data={biddingPackages}
+								// resolveData={data => console.log(data)}
+								columns={this.getColumn(cloneDeep(biddingPackages), BUNDLE_SALES_METHOD.BIDDING)}
 							/>
-						</div>
+							<div className="total-fee">
+								<span style={{ marginRight: 20 }}>TOTAL</span>
+								<NumberFormat
+									thousandSeparator
+									value={this.getTechnicalFeeValue(biddingTotal.fee) + biddingTotal.fee}
+									displayType="text"
+									prefix={`${getCurrencySymbol(biddingPackages[0].currency.code)} `}
+								/>
+							</div>
+						</Fragment>
 					)}
 
+					{fixedPackages.length > 0 && (
+						<Fragment>
+							<div className="checkout-title">
+								{this.context.t("SALES_PACKAGE_FIXED_TITLE")}
+							</div>
+							<div className="checkout-subtitle">
+								{this.context.t("SALES_PACKAGE_FIXED_SUB_TITLE")}
+							</div>
+							<ReactTable
+								className={cn("ca-table round-0 bundles-table bundles-table-checkout", { showScroll: fixedPackages.length > 15 })}
+								defaultPageSize={242} // max number of possible Territorial Bundles
+								showPageSizeOptions={false}
+								noDataText={null}
+								showPagination={false}
+								minRows={0}
+								resizable={false}
+								data={fixedPackages}
+								// resolveData={data => console.log(data)}
+								columns={this.getColumn(cloneDeep(fixedPackages), BUNDLE_SALES_METHOD.FIXED)}
+							/>
+							<div className="total-fee">
+								<span style={{ marginRight: 20 }}>TOTAL</span>
+								<NumberFormat
+									thousandSeparator
+									value={this.getTechnicalFeeValue(fixedTotal.fee) + fixedTotal.fee}
+									displayType="text"
+									prefix={`${getCurrencySymbol(fixedPackages[0].currency.code)} `}
+								/>
+							</div>
+						</Fragment>
+					)}
 				</div>
 
 				{/* COMPANY INFORMATION */}
 				<div className="bid-address-license">
-					<div className="bid-title">
+					<div className="checkout-title">
 						{this.context.t("SALES_PACKAGE_COMPANY_ADDRESS")}
 					</div>
-					<div className="bid-address">
+					<div className="checkout-subtitle">
+						<div>
+							{this.context.t("SALES_PACKAGE_COMPANY_SUB_TITLE")}
+							<i className="fa fa-pencil-square-o" onClick={this.openEditCompany} />
+						</div>
 						<span>{this.getCompanyAddress()}</span>
-						<i className="fa fa-pencil-square-o" onClick={this.openEditCompany} />
 					</div>
 				</div>
 

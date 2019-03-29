@@ -148,6 +148,10 @@ msgid "License agreement"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_PRICE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 #: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
@@ -167,7 +171,27 @@ msgid "SALES_PACKAGE_TABLE_TOTAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_BIDDING_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_BIDDING_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_FIXED_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_FIXED_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 msgid "SALES_PACKAGE_COMPANY_ADDRESS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_COMPANY_SUB_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
