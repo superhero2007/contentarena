@@ -127,36 +127,46 @@
   }
 }
 
-.ReactModal__Content.modal-wrapper-invite{
+.ReactModal__Content.modal-wrapper-invite {
   @extend .modal-wrapper;
   width: 900px;
-  .modal-header{
+
+  .modal-header {
     flex-direction: column;
     position: relative;
+
     .modal-subtitle {
       color: $font-color-6;
       margin: 10px 0 0;
       font-size: 13px;
       font-weight: 400;
     }
-    i{
+
+    i {
       position: absolute;
       right: 20px;
-      top:15px
+      top: 15px
     }
   }
-  .modal-body{
+
+  .modal-body {
     flex-direction: column;
-    .row{
+
+    .row {
       display: flex;
       justify-content: space-between;
       width: 100%;
       padding: 10px 20px;
+
+      .item {
+        width: 32%;
+      }
     }
-    input{
-      background-color: rgba(204,204,204,0.21);
+
+    input {
+      background-color: rgba(204, 204, 204, 0.21);
       padding: 14px 10px;
-      border: 1px solid rgba(204,204,204,0.48);
+      border: 1px solid rgba(204, 204, 204, 0.48);
     }
   }
 

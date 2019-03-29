@@ -20,7 +20,10 @@ class InviteUsersModal extends Component {
 			skippedUsers: [],
 		};
 
-		this.messageStyle = { marginLeft: 15, marginBottom: 10 };
+		this.messageStyle = {
+			marginLeft: 15,
+			marginBottom: 10,
+		};
 	}
 
 	inviteUsers = async () => {
@@ -53,7 +56,11 @@ class InviteUsersModal extends Component {
 	onUpdateUsers = (user, index) => {
 		const { users } = this.state;
 		users[index] = user;
-		this.setState({ users, isFail: false, isSuccess: false });
+		this.setState({
+			users,
+			isFail: false,
+			isSuccess: false,
+		});
 	};
 
 	isButtonDisabled = () => {

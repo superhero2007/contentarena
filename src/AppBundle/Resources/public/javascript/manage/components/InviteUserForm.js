@@ -44,6 +44,24 @@ class InviteUserForm extends React.Component {
 			<div className="row">
 				<div className="item">
 					<label>
+						{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
+					</label>
+					<input
+						name={`email-${key}`}
+						className="ca-form-control"
+						id={`email-${key}`}
+						value={user.email}
+						disabled={disabled}
+						autoComplete="off"
+						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_EMAIL")}
+						onChange={(e) => {
+							user.email = e.target.value.trim();
+							this.handleChange(user);
+						}}
+					/>
+				</div>
+				<div className="item">
+					<label>
 						{this.context.t("SETTINGS_LABEL_USER_FIRST_NAME")}
 					</label>
 					<input
@@ -70,24 +88,6 @@ class InviteUserForm extends React.Component {
 						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME")}
 						onChange={(e) => {
 							user.lastName = e.target.value;
-							this.handleChange(user);
-						}}
-					/>
-				</div>
-				<div className="item">
-					<label>
-						{this.context.t("SETTINGS_LABEL_USER_EMAIL")}
-					</label>
-					<input
-						name={`email-${key}`}
-						className="ca-form-control"
-						id={`email-${key}`}
-						value={user.email}
-						disabled={disabled}
-						autoComplete="off"
-						placeholder={this.context.t("SETTINGS_INVITE_PLACEHOLDER_EMAIL")}
-						onChange={(e) => {
-							user.email = e.target.value.trim();
 							this.handleChange(user);
 						}}
 					/>
