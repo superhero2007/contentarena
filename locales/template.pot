@@ -1269,6 +1269,10 @@ msgid "HEADER_LINK_MESSAGES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_MY_CONTENT_ARENA"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_TERMS"
 msgstr ""
 
@@ -1930,15 +1934,15 @@ msgid "TERMS_DEFINITIONS_REMOVE_CONFIRMATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
+msgid "SETTINGS_INVITE_PLACEHOLDER_EMAIL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
 msgid "SETTINGS_INVITE_PLACEHOLDER_FIRST_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
 msgid "SETTINGS_INVITE_PLACEHOLDER_FAMILY_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/components/InviteUserForm.js
-msgid "SETTINGS_INVITE_PLACEHOLDER_EMAIL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/PreferredSportBuyer.js

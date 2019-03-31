@@ -165,29 +165,33 @@ class HeaderBar extends React.Component {
 						</HeaderBarTab>
 
 						<div className="settings">
-							<i className="fa fa-gear" />
+							{this.context.t("HEADER_LINK_MY_CONTENT_ARENA")}
 
 							<div className="popup">
 								<div className="wrap">
 									<HeaderBarTab
 										route="/terms"
-										className="tab"
+										className="popup-item"
 									>
+										<i className="fa fa-file-pdf-o" />
 										{this.context.t("HEADER_LINK_TERMS")}
 									</HeaderBarTab>
 									<HeaderBarTab
 										route="/preferences"
-										className="tab"
+										className="popup-item"
 									>
+										<i className="fa fa-sliders" />
 										{this.context.t("HEADER_LINK_PREFERENCES")}
 									</HeaderBarTab>
 									<HeaderBarTab
 										route="/settings"
-										className="tab"
+										className="popup-item"
 									>
+										<i className="fa fa-cog" />
 										{this.context.t("HEADER_LINK_SETTINGS")}
 									</HeaderBarTab>
-									<a href="/logout" className="tab">
+									<a href="/logout" className="tab popup-item">
+										<i className="fa fa-sign-out" />
 										{this.context.t("HEADER_LINK_LOGOUT")}
 									</a>
 								</div>

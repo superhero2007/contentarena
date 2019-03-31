@@ -112,9 +112,25 @@ $icon-color: #00769A;
     }
 
     .settings {
-      margin-top: 15px;
+      margin-top: 13px;
       position: relative;
       cursor: pointer;
+	    color: $color-blue-dark;
+	    font: inherit;
+	    font-size: 16px;
+	    font-weight: 600;
+	    white-space: nowrap;
+
+	  &::after{
+		  padding-left: 5px;
+		  font-weight: 100;
+		  content: "\2c5";
+	  }
+	  &:hover::after {
+		  padding-left: 5px;
+		  font-weight: 100;
+		  content: "\2c4";
+	  }
 
       .popup {
         display: none;
@@ -128,11 +144,11 @@ $icon-color: #00769A;
         display: block;
 
         .wrap {
-          min-width: 125px;
-          text-align: center;
-          background-color: #ffffff;
+          min-width: 170px;
+          text-align: left;
+          background-color: $content-bg;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-          color: #1A4B63;
+		  a { min-height: 0; }
 
           .tab {
             width: 100%;
@@ -144,6 +160,37 @@ $icon-color: #00769A;
               border-bottom: none;
             }
           }
+		  .popup-item{
+			height: 45px;
+			border-bottom: 1px solid $border-color-4;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			padding-left: 10px;
+			min-height: 0;
+			color: $font-color-5 !important;
+			font-size: 13px;
+			text-align: left;
+
+			a{
+		      min-height: 0;
+			  color: $font-color-5 !important;
+			  font-size: 13px;
+			  text-align: left;
+
+			  margin: 0;
+			  padding: 0;
+			}
+			i{
+			  padding: 0 10px 0 5px;
+			  color: $black-color;
+			}
+			&:hover{
+			  color: $border-color-2 !important;
+			  i, a{ color: $border-color-2 !important; }
+			}
+			&:last-child { border-bottom: none; }
+		  }
         }
       }
     }

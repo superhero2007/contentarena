@@ -49,12 +49,6 @@ class Checkout extends React.Component {
 			return b;
 		});
 
-		selectedPackages.forEach((b) => {
-			minimumBidBundles += b.minimumBid;
-		});
-
-		minimumBidBundles /= 2;
-
 		this.baseDir = `${assetsBaseDir}../`;
 		this.single = "SINGLE";
 		this.all = "ALL";
@@ -62,15 +56,12 @@ class Checkout extends React.Component {
 			companyUpdated: false,
 			content: props.listing,
 			company: props.company,
-			allowMultiple,
 			spinner: false,
 			tab: props.tab || "bundles",
 			buyingMode: props.tab && props.tab === "checkout",
-			bidMethod: (selectedPackages.length === 1 || !allowMultiple) ? this.single : this.all,
 			soldOut: false,
 			selectedPackages: selectedPackages || {},
 			bundles: selectedPackages,
-			minimumBidBundles,
 			editCompanyOpen: false,
 			bidApplied: false,
 			openContactSellerModal: false,
@@ -503,6 +494,7 @@ class Checkout extends React.Component {
 			|| !signature
 			|| signatureName === ""
 			|| signaturePosition === ""
+			|| bundles.length === 0
 			|| bundles.some(b => b.salesMethod === "BIDDING" && (!b.fee || parseFloat(b.fee) <= parseFloat(b.minimumBid)));
 	};
 
