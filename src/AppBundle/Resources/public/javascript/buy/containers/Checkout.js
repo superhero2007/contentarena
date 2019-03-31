@@ -11,7 +11,7 @@ import { pdfIcon, packageIcon } from "../../main/components/Icons";
 import Installments from "../components/Installments";
 import DigitalSignature from "../../main/components/DigitalSignature";
 import {
-	getCurrencySymbol, getCustomLicenseUrl, getCustomLicenseUrlBids,
+	getCurrencySymbol, getCustomLicenseUrl,
 } from "../../main/actions/utils";
 import { customStyles } from "../../main/styles/custom";
 import { companyIsValid } from "../../sell/actions/validationActions";
@@ -20,7 +20,6 @@ import { DATE_FORMAT } from "@constants";
 import GeneralTerms from "../../main/components/GeneralTerms";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import ExtraTerritories from "../../main/components/ExtraTerritories";
-import RadioSelector from "../../main/components/RadioSelector";
 import Loader from "../../common/components/Loader";
 import { BUNDLE_SALES_METHOD } from "../../common/constants";
 
@@ -62,13 +61,21 @@ class Checkout extends React.Component {
 			soldOut: false,
 			selectedPackages: selectedPackages || {},
 			bundles: selectedPackages,
+			focusedInputId: "",
 			editCompanyOpen: false,
-			bidApplied: false,
 			openContactSellerModal: false,
 			signatureName: `${props.user.firstName} ${props.user.lastName}`,
 			signaturePosition: props.user.title,
 			showSuccessScreen: false,
 		};
+	}
+
+	componentDidUpdate() {
+		const { focusedInputId } = this.state;
+
+		if (focusedInputId && this[`${focusedInputId}-input`]) {
+			this[`${focusedInputId}-input`].querySelector("input").focus();
+		}
 	}
 
 	closeModal = () => {
@@ -503,13 +510,11 @@ class Checkout extends React.Component {
 		return [company.legalName, company.address, company.zip, company.country.name].join(", ");
 	};
 
-	openEditCompany = () => {
-		this.setState({ editCompanyOpen: true });
-	};
+	openEditCompany = () => this.setState({ editCompanyOpen: true });
 
-	setTermsAndConditions = (e) => {
-		this.setState({ terms: e.target.checked });
-	};
+	setTermsAndConditions = e => this.setState({ terms: e.target.checked });
+
+	clearInputFocus = () => this.setState({ focusedInputId: "" });
 
 	getMinBid = (bundle) => {
 		if (!bundle.minimumBid) return <span>-</span>;
@@ -532,6 +537,7 @@ class Checkout extends React.Component {
 		bundles.find(item => item.id === id).fee = value;
 
 		this.setState({
+			focusedInputId: id,
 			bundles,
 		});
 	};
@@ -629,7 +635,7 @@ class Checkout extends React.Component {
 				Cell: (props) => {
 					const bundle = props.original;
 					return (
-						<div className="price-action-wrapper">
+						<div className="price-action-wrapper" ref={el => this[`${bundle.id}-input`] = el}>
 							<div title={bundle.fee}>
 								{bundle.salesMethod === "FIXED" && +bundle.fee > 0 && this.getFee(bundle)}
 								{bundle.salesMethod === "BIDDING" && (
@@ -639,6 +645,7 @@ class Checkout extends React.Component {
 										onValueChange={values => this.handleChangeYourBid(values, bundle.id)}
 										min={bundle.minimumBid}
 										prefix={`${getCurrencySymbol(bundle.currency)} `}
+										onBlur={this.clearInputFocus}
 									/>
 								)}
 							</div>
