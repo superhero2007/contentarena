@@ -138,6 +138,22 @@ class Preferences extends React.Component {
 								allSports={user.preferredBuyerAllSports}
 								onChange={this.handleBuyerSports}
 							/>
+							<div
+								style={{
+									display: "flex", marginBottom: 10, justifyContent: "center", fontSize: 14,
+								}}
+							>
+								<input
+									type="checkbox"
+									className="ca-checkbox"
+									defaultChecked={user.receivePreferenceNotifications}
+									onChange={e => this.updateUser("receivePreferenceNotifications", e.target.checked)}
+									style={{ marginRight: 10 }}
+								/>
+								<div>
+									{this.context.t("PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE")}
+								</div>
+							</div>
 						</>
 					)}
 					<div className="buttons">

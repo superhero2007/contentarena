@@ -81,12 +81,6 @@ class Settings extends React.Component {
 		});
 	};
 
-	onChangeReceiveNotifications = (e) => {
-		const { user } = this.state;
-		user.receivePreferenceNotifications = e.target.checked;
-		this.setState({ user });
-	};
-
 	handlePasswordValid = isValid => this.setState({ isPassValid: isValid });
 
 	render() {
@@ -670,24 +664,6 @@ class Settings extends React.Component {
 						</div>
 					</div>
 				)}
-
-				<div
-					style={{
-						display: "flex", marginBottom: 10, justifyContent: "center", fontSize: 14,
-					}}
-					className="terms-and-condition-wrapper"
-				>
-					<input
-						type="checkbox"
-						className="ca-checkbox"
-						defaultChecked={user.receivePreferenceNotifications}
-						onChange={this.onChangeReceiveNotifications}
-						style={{ marginRight: 10 }}
-					/>
-					<div>
-						{this.context.t("PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE")}
-					</div>
-				</div>
 			</div>
 		);
 	}
