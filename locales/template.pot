@@ -1554,6 +1554,10 @@ msgid "RIGHTS_TRANSMISSION_MEANS_DIGITAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS_OTT/INTERNET"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_TRANSMISSION_MEANS_OTT"
 msgstr ""
 

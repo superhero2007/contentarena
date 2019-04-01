@@ -50,6 +50,7 @@ class HiddenKeys extends React.Component {
 				{this.context.t("RIGHTS_TRANSMISSION_MEANS_CABLE")}
 				{this.context.t("RIGHTS_TRANSMISSION_MEANS_SATELLITE")}
 				{this.context.t("RIGHTS_TRANSMISSION_MEANS_DIGITAL")}
+				{this.context.t("RIGHTS_TRANSMISSION_MEANS_OTT/INTERNET")}
 				{this.context.t("RIGHTS_TRANSMISSION_MEANS_OTT")}
 				{this.context.t("RIGHTS_TRANSMISSION_MEANS_INTERNET")}
 				{this.context.t("RIGHTS_TRANSMISSION_MEANS_MOBILE")}

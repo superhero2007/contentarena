@@ -44,6 +44,10 @@ export const RightItemsDefinitions = {
 		parent: "Transmission means",
 		label: "Digital Terrestrial",
 	},
+	"TRANSMISSION_MEANS_OTT/INTERNET": {
+		parent: "Transmission means",
+		label: "OTT",
+	},
 	TRANSMISSION_MEANS_OTT: {
 		parent: "Transmission means",
 		label: "OTT",
