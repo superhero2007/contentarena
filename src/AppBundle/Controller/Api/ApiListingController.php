@@ -3,6 +3,8 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Content;
+use AppBundle\Entity\User;
+use AppBundle\Error\ListingErrors;
 use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
@@ -48,13 +50,38 @@ class ApiListingController extends Controller
      * @param Request $request
      * @param ContentService $contentService
      * @return JsonResponse
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function saveContentAsActive(Request $request, ContentService $contentService  )
     {
+        /* @var User $user */
         $user = $this->getUser();
-        $content = $contentService->saveContentAsActive($user, $request);
-        return new JsonResponse(array("success"=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId()));
+        $username = ($user != null) ? $user->getEmail() : "Anonymous";
+        $listingId = $request->get("customId");
+        $logger = $this->get('logger');
+
+        $logger->info("USER SUBMITTED LISTING", array(
+            "user" => $username,
+            "listingId" => $listingId,
+        ));
+
+        try {
+            $content = $contentService->saveContentAsActive($user, $request);
+
+            $logger->info("USER SUBMITTED LISTING SUCCESSFULLY", array(
+                "user" => $username,
+                "listingId" => $listingId,
+            ));
+
+            $data = array('success'=>true, "contentId"=> $content->getId(), "customId" => $content->getCustomId());
+            return $this->getSerializedResponse($data);
+        } catch (\Exception $e){
+            $logger->info("USER SUBMITTED LISTING UNSUCCESSFULLY", array(
+                "user" => $username,
+                "listingId" => $listingId,
+                "errorMessage" => $e->getMessage()
+            ));
+            return $this->getHandledErrorResponse(ListingErrors::class, 102, $e->getMessage());
+        }
     }
 
     /**

@@ -9,7 +9,7 @@
 namespace AppBundle\Error;
 
 
-class UserErrors
+class UserErrors implements ErrorInterface
 {
 
     const USER_NOT_EXISTS = 200;

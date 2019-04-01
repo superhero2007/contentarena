@@ -9,7 +9,7 @@
 namespace AppBundle\Error;
 
 
-class GenericErrors
+class GenericErrors implements ErrorInterface
 {
 
     const GENERIC_PARAMETER_SHOULD_BE_ARRAY = 000;

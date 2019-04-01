@@ -2,6 +2,7 @@
 
 namespace AppBundle\Helper;
 
+use AppBundle\Error\ErrorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
@@ -62,16 +63,40 @@ trait ControllerHelper
     /**
      * @param $class
      * @param $errorCode
+     * @param null $errorMessage
      * @return JsonResponse
      */
-    private function getErrorResponse ($class, $errorCode){
+    private function getErrorResponse ( $class, $errorCode, $errorMessage = null ){
+        /* @var ErrorInterface $class  */
         return new JsonResponse(
             $data = array(
                 "success" => false,
                 "code" => $errorCode,
-                "message" => $class::getErrorMessage($errorCode),
+                "message" => ($errorMessage != null) ? $errorMessage : $class::getErrorMessage($errorCode),
             ),
             Response::HTTP_BAD_REQUEST
+        );
+    }
+
+    /**
+     * @param $class
+     * @param $errorCode
+     * @param null $errorMessage
+     * @return JsonResponse
+     */
+    private function getHandledErrorResponse ($class, $errorCode, $errorMessage = null ){
+        /* @var ErrorInterface $class  */
+
+        $message = $class::getErrorMessage($errorCode);
+        if ($errorMessage != null) $message = $message . " - " . $errorMessage;
+
+        return new JsonResponse(
+            $data = array(
+                "success" => false,
+                "code" => $errorCode,
+                "message" => $message,
+            ),
+            Response::HTTP_OK
         );
     }
 

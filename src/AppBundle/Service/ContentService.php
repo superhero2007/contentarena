@@ -529,10 +529,11 @@ class ContentService
      * @param User $user
      * @param Request $request
      * @return Content
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function saveContentAsActive(User $user, Request $request)
     {
+
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
         /**
@@ -1008,6 +1009,7 @@ class ContentService
      * @param Request $request
      * @param Content $content
      * @return Content
+     * @throws \Exception
      */
     private function saveFiles( Request $request, Content $content ){
         $license = $request->files->get("license");

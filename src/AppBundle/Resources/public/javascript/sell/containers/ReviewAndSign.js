@@ -71,6 +71,10 @@ class ReviewAndSign extends React.Component {
 						showSuccessScreen: true,
 						showSubmitting: false,
 					});
+				} else {
+					_this.setState({
+						showSubmitting: false,
+					});
 				}
 			});
 	};
