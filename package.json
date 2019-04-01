@@ -66,6 +66,7 @@
     "stylelint-scss": "^3.5.3"
   },
   "scripts": {
+    "start": ".\\node_modules\\.bin\\encore dev-server --disable-host-check --hot",
     "test_be": "./vendor/bin/simple-phpunit",
     "test_fe": ".\\node_modules\\.bin\\jest",
     "dev": ".\\node_modules\\.bin\\encore dev",

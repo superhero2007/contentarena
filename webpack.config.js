@@ -51,7 +51,7 @@ Encore
     //.enableBuildNotifications()
 
     // create hashed filenames (e.g. app.abc123.css)
-    .enableVersioning()
+    .enableVersioning(Encore.isProduction())
 ;
 
 // export the final configuration
