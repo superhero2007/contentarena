@@ -127,13 +127,13 @@ textarea.representation-textarea {
   padding: 0;
   border: none;
   outline: none;
-  min-height: fit-content;
   background: transparent;
   resize: none;
   text-transform: none;
   font-size: 13px;
   font-family: $font-stack;
-  overflow: hidden;
+  min-height: 25px;
+  max-height: 200px;
 }
 
 textarea,

@@ -17,8 +17,6 @@ export const RepresentationTextArea = ({ value = "" }) => (
 	<Textarea
 		value={value}
 		readOnly
-		minRows={1}
-		maxRows={8}
 		className="representation-textarea"
 	/>
 );
