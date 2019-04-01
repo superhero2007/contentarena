@@ -115,11 +115,10 @@ $icon-color: #00769A;
       margin-top: 13px;
       position: relative;
       cursor: pointer;
-	    color: $color-blue-dark;
-	    font: inherit;
-	    font-size: 16px;
-	    font-weight: 600;
-	    white-space: nowrap;
+	  color: $color-blue-dark;
+	  font: inherit;
+	  font-size: 16px;
+	  font-weight: 600;
 
 	  &::after{
 		  padding-left: 5px;

@@ -487,11 +487,7 @@ class Settings extends React.Component {
 								<input
 									className="ca-form-control"
 									value={user.email}
-									disabled={!editPersonalInfo}
-									onChange={(e) => {
-										user.email = e.target.value;
-										this.setState({ user });
-									}}
+									disabled
 								/>
 							</div>
 							<div className="item">
