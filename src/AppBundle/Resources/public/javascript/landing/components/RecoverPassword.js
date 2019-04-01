@@ -56,7 +56,6 @@ class RecoverPassword extends PureComponent {
 				<div className="username">
 					<label htmlFor="username">{this.context.t("LOGIN_YOUR_EMAIL")}</label>
 					<input
-						autoFocus
 						ref={email => this.email = email}
 						type="text"
 						placeholder={this.context.t("LOGIN_EMAIL_PLACEHOLDER")}

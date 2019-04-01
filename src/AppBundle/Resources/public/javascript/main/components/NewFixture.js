@@ -20,12 +20,10 @@ class NewFixture extends Component {
 		const { isDatePickerEnabled } = this.state;
 
 		if (nextProps.date && !isDatePickerEnabled) {
-			{
-				this.setState({
-					isDatePickerEnabled: true,
-					isDatePickerWithTimeEnabled: isStartOfTheDay(nextProps.date),
-				});
-			}
+			this.setState({
+				isDatePickerEnabled: true,
+				isDatePickerWithTimeEnabled: isStartOfTheDay(nextProps.date),
+			});
 		}
 	}
 

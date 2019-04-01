@@ -94,7 +94,7 @@ class ListingDetails extends React.Component {
 		scrollTopMainContent();
 	};
 
-	ordinal_suffix_of = (i) => {
+	ordinalSuffixOf = (i) => {
 		const j = i % 10;
 		const k = i % 100;
 		if (j === 1 && k !== 11) {

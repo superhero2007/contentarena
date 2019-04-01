@@ -16,10 +16,6 @@ import { setRefererData } from "../landing/actions/landingActions";
 import { initGA, PageView } from "../common/components/Tracking";
 
 class PrivateRoute extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
 	updateProfile() {
 		const { profile, routeProfile } = this.props;
 

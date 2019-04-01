@@ -4,10 +4,6 @@ import cn from "classnames";
 import { blueCheckIcon, cancelIcon } from "./Icons";
 
 class PasswordValidationBox extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	componentWillReceiveProps(nextProps) {
 		const { onPasswordValid, password, passwordCheck } = this.props;
 		if (nextProps.password !== password || nextProps.passwordCheck !== passwordCheck) {

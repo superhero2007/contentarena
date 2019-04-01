@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 import { SITE_URLS } from "../../common/constants";
 
 class SignUpSuccessfully extends PureComponent {
-	constructor(props) {
-		super(props);
-	}
-
 	handleLoginClick = () => window.location = SITE_URLS.HOME_URL;
 
 	render() {
