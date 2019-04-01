@@ -45,16 +45,14 @@ class EventFilter extends React.Component {
 	getFilters = () => {
 		const { sports } = this.state;
 
-		const countries = sports.filter(s => s.name)
+		return sports
+			.filter(s => s.name)
 			.map(i => ({
 				value: i.name,
 				label: i.name,
-			}));
-
-		return [...[{
-			value: null,
-			label: "All sports",
-		}], ...countries];
+			}))
+			.sort((a, b) => a.label.localeCompare(b.label))
+			.sort((a, b) => (a.label === "Soccer" ? -1 : b.label === "Soccer" ? 1 : 0));
 	};
 
 	showTab = (tab) => {
@@ -70,10 +68,9 @@ class EventFilter extends React.Component {
 		});
 	};
 
-	onSelectSport = (e, sp) => {
+	onSelectSport = (e, selectedSport) => {
 		const { checked } = e.target;
 		const { checkedSports } = this.state;
-		const selectedSport = sp;
 
 		if (checked) {
 			selectedSport.value
