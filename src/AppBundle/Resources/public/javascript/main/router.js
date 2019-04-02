@@ -7,6 +7,7 @@ import {
 import { connect } from "react-redux";
 import { setLanguage } from "redux-i18n";
 import { routes } from "./routes";
+import { Sentry, sentryDsnUrl } from "./constants/sentry";
 import store from "./store";
 import { updateProfile, loadUserData } from "./actions/userActions";
 import {
@@ -69,6 +70,29 @@ class AuthRouter extends React.Component {
 		this.state = {
 			user: props.loggedUserData !== "" ? JSON.parse(props.loggedUserData) : {},
 		};
+
+		if (Sentry) {
+			const { email } = this.state.user;
+
+			Sentry.init({ dsn: sentryDsnUrl });
+
+			if (email) {
+				Sentry.configureScope((scope) => {
+					scope.setUser({ email });
+				});
+			}
+		}
+	}
+
+	componentDidCatch(error, errorInfo) {
+		if (Sentry) {
+			Sentry.withScope((scope) => {
+				Object.keys(errorInfo).forEach((key) => {
+					scope.setExtra(key, errorInfo[key]);
+				});
+				Sentry.captureException(error);
+			});
+		}
 	}
 
 	componentWillMount() {

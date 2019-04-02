@@ -10,7 +10,8 @@
         "$": "readonly",
         "jQuery": "readonly",
         "ContentArena": "readonly",
-        "envhosturl": "readonly"
+        "envhosturl": "readonly",
+        "Sentry": "readonly"
     },
     "parser": "babel-eslint",
     "parserOptions": {
