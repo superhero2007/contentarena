@@ -791,6 +791,9 @@ ContentArena.Api = {
 	markNotificationAsSeen() {
 		return axios.get(`${envhosturl}api/notifications/seen`);
 	},
+	markMessagesAsSeen() {
+		return axios.get(`${envhosturl}api/messages/seen`);
+	},
 	signInUser(username, password) {
 		return axios.post(`${envhosturl}api/users/login`, {
 			username,

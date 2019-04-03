@@ -12,9 +12,9 @@ import InviteUsersModal from "../../common/modals/InviteUsersModal";
 import { inviteIcon } from "./Icons";
 
 const HeaderBarTab = ({
-	match, children, route, className = "", linkClass = "",
+	match, children, route, className = "", linkClass = "", onClick,
 }) => (
-	<div className={(match) ? "tab active-tab" : `tab ${className}`}>
+	<div className={(match) ? "tab active-tab" : `tab ${className}`} onClick={onClick}>
 		<Link to={route} className={linkClass}>{children}</Link>
 	</div>
 );
@@ -31,7 +31,36 @@ class HeaderBar extends React.Component {
 
 		this.state = {
 			inviteModalOpen: false,
+			dataLoading: true,
+			notifications: [],
+			unseenNotificationsCount: 0,
+			unseenMessagesCount: 0,
 		};
+	}
+
+	componentDidMount() {
+		this.loadNotifications();
+	}
+
+	loadNotifications() {
+		ContentArena.Api.getNotifications().then(({ data }) => {
+			if (!data) {
+				return;
+			}
+
+			data.sort((a, b) => b.id - a.id);
+			const unseenNotifications = data.filter(item => !item.seen);
+			const notifications = unseenNotifications.filter(item => item.type.name !== "MESSAGE");
+			const unseenNotificationsCount = notifications.length;
+			const unseenMessagesCount = unseenNotifications.filter(item => item.type.name === "MESSAGE").length;
+
+			this.setState({
+				dataLoading: false,
+				unseenNotificationsCount,
+				unseenMessagesCount,
+				notifications,
+			});
+		});
 	}
 
 	isMarketplaceMatch = url => url === "/marketplace" || url === "/marketplace/filter/multi";
@@ -40,7 +69,9 @@ class HeaderBar extends React.Component {
 		const {
 			tab, profile, match, common,
 		} = this.props;
-		const { inviteModalOpen } = this.state;
+		const {
+			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount,
+		} = this.state;
 		const logoUrl = this.getLogoUrl(tab);
 
 		return (
@@ -157,10 +188,17 @@ class HeaderBar extends React.Component {
 							</HeaderBarTab>
 						)}
 
-						<HeaderNotifications />
+						<HeaderNotifications
+							dataLoading={dataLoading}
+							notifications={notifications}
+							unseenNotificationsCount={unseenNotificationsCount}
+						/>
 
-						<HeaderBarTab className="tab baseline messages" route="/messages">
+						<HeaderBarTab className="tab baseline messages" route="/messages" onClick={this.markMessagesAsSeen}>
 							<i className="fa fa-envelope" />
+							{!!unseenMessagesCount
+							&& <div className="counter">{unseenMessagesCount}</div>
+							}
 							{this.context.t("HEADER_LINK_MESSAGES")}
 						</HeaderBarTab>
 
@@ -225,6 +263,18 @@ class HeaderBar extends React.Component {
 		}
 		return "marketplace";
 	}
+
+	markMessagesAsSeen = () => {
+		const { unseenMessagesCount } = this.state;
+
+		this.setState({
+			unseenMessagesCount: 0,
+		});
+
+		if (unseenMessagesCount) {
+			ContentArena.Api.markMessagesAsSeen();
+		}
+	};
 }
 
 HeaderBar.contextTypes = {

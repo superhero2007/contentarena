@@ -9,11 +9,31 @@ class HeaderNotifications extends React.Component {
 		super(props);
 
 		this.state = {
-			dataLoading: true,
-			notifications: [],
-			unseenNotificationsCount: 0,
+			dataLoading: props.dataLoading,
+			notifications: props.notifications,
+			unseenNotificationsCount: props.unseenNotificationsCount,
 			showList: false,
 		};
+	}
+
+	componentWillReceiveProps(nextProps, nextContext) {
+		if (this.props.dataLoading !== nextProps.dataLoading) {
+			this.setState({
+				dataLoading: nextProps.dataLoading,
+			});
+		}
+
+		if (this.props.notifications !== nextProps.notifications) {
+			this.setState({
+				notifications: nextProps.notifications,
+			});
+		}
+
+		if (this.props.unseenNotificationsCount !== nextProps.unseenNotificationsCount) {
+			this.setState({
+				unseenNotificationsCount: nextProps.unseenNotificationsCount,
+			});
+		}
 	}
 
 	componentWillUnmount() {
@@ -22,7 +42,6 @@ class HeaderNotifications extends React.Component {
 
 	componentDidMount() {
 		document.addEventListener("mousedown", this.handleHideNotificationList);
-		this.loadNotifications();
 	}
 
 	getPassedTime = (createdAt) => {
@@ -68,9 +87,11 @@ class HeaderNotifications extends React.Component {
 			ContentArena.Api.markNotificationAsVisited(item.id);
 			document.location.href = urlTo;
 		}
+
 		if (this.state.unseenNotificationsCount) {
 			ContentArena.Api.markNotificationAsSeen();
 		}
+
 		this.setState({
 			showList: false,
 			unseenNotificationsCount: 0,
@@ -151,21 +172,6 @@ class HeaderNotifications extends React.Component {
 				)}
 			</div>
 		);
-	}
-
-	loadNotifications() {
-		ContentArena.Api.getNotifications().then(({ data }) => {
-			if (data === undefined) return;
-
-			data.sort((a, b) => b.id - a.id);
-			const unseenNotificationsCount = data.filter(item => !item.seen).length;
-
-			this.setState({
-				dataLoading: false,
-				unseenNotificationsCount,
-				notifications: data,
-			});
-		});
 	}
 }
 

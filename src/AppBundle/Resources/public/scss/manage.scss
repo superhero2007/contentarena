@@ -3,6 +3,20 @@
 
 $icon-color: #00769A;
 
+@mixin counter {
+  position: absolute;
+  right: -1px;
+  top: 1px;
+  border-radius: 50%;
+  background-color: $color-primary;
+  font-size: 10px;
+  width: 15px;
+  height: 15px;
+  color: $black-color;
+  font-weight: bold;
+  text-align: center;
+}
+
 .manager-container {
   flex: 1;
   display: flex;
@@ -77,8 +91,17 @@ $icon-color: #00769A;
     }
 
     .messages {
+      position: relative;
       a {
         color: #1A4B63;
+      }
+
+      .counter {
+        @include counter();
+        top: auto;
+        margin-top: -3px;
+        right: auto;
+        left: 36px;
       }
     }
 
@@ -206,17 +229,7 @@ $icon-color: #00769A;
       }
 
       .counter {
-        position: absolute;
-        right: -1px;
-        top: 1px;
-        border-radius: 50%;
-        background-color: $color-primary;
-        font-size: 10px;
-        width: 15px;
-        height: 15px;
-        color: $black-color;
-        font-weight: bold;
-        text-align: center;
+        @include counter();
       }
 
       .expanded-list {
