@@ -307,7 +307,7 @@ class ContentFilter
             $this->setOrderBy('expiresAt');
             return $this->getOrderBy();
         } else {
-            $this->setOrderBy('createdAt');
+            $this->setOrderBy('publishedAt');
             return $this->getOrderBy();
         }
     }

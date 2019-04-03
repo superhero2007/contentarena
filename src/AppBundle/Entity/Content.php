@@ -416,6 +416,12 @@ class Content
     private $createdAt;
 
     /**
+     * @ORM\Column(type="datetime", name="published_at", nullable=true)
+     * @Groups({"listing", "commercial", "home"})
+     */
+    private $publishedAt;
+
+    /**
      * @ORM\Column(type="datetime", name="last_action_date", nullable=true)
      * @Groups({"board", "home"})
      */
@@ -1832,6 +1838,33 @@ class Content
         return null;
 
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param mixed $publishedAt
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+    }
+
+
+    /**
+     * @param mixed $id
+     */
+    public function setMockId($id)
+    {
+        $this->id = $id;
+    }
+
+
 
 
 }

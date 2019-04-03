@@ -13,6 +13,7 @@ use AppBundle\Entity\ContentFilter;
 use AppBundle\Entity\ListingStatus;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\SportCategory;
+use AppBundle\Enum\ListingStatusEnum;
 use AppBundle\Repository\ContentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
@@ -549,22 +550,24 @@ class ContentService
             $lastAction = "EDITED";
         }
 
-        if ( $currentStatus != null && ( $currentStatus->getName() === 'APPROVED'
-                || $currentStatus->getName() === 'EDITED' ) ){
-            $newStatus = "EDITED";
-            $lastAction = "EDITED";
-        }
-
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$newStatus)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
         $content->setLastActionUser($user);
         $content->setOwner($user);
         $content->setLastActionDate(new \DateTime());
-        $content->setCreatedAt(new \DateTime());
+
+
+        /** Store publish date only the first time  */
+        if ($content->getPublishedAt() == null
+            && ($newStatus == ListingStatusEnum::APPROVED || $newStatus == ListingStatusEnum::PENDING)){
+            $content->setPublishedAt(new \DateTime());
+        }
+
         /**
-         * Save files
+         * Save files like images or attachments
          */
         $content = $this->saveFiles($request, $content);
+
         $this->em->persist($content);
         $this->em->flush();
 
@@ -901,7 +904,7 @@ class ContentService
         $extraData = array();
 
         foreach ($keys as $key){
-            if ( property_exists($data, $key)){
+            if ( $data != null && property_exists($data, $key)){
                 $extraData[$key] = $data->{$key};
             }
         }
@@ -918,7 +921,7 @@ class ContentService
      * @return mixed
      */
     private function saveSeasonExtraData($content, $data) {
-        if ($data->seasons) {
+        if (isset ($data->seasons) ) {
             $extraData = $content->getExtraData();
             $seasons = $content->getSeasons();
             $sData = [];

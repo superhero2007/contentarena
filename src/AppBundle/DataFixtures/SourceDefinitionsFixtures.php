@@ -20,6 +20,21 @@ class SourceDefinitionsFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+
+        $itemsToRemove = [
+            "Internet", "OTT", "Internet Transmission"
+        ];
+
+        foreach ($itemsToRemove as $item){
+            $item = $manager->getRepository("AppBundle:SourceDefinitions")->findOneBy( array('name' => $item ));
+
+            if ( $item != null ){
+                $manager->remove($item);
+            }
+        }
+
+        $manager->flush();
+
         $content = array(
             array('1', true, 'Live Transmission Rights', 'means the right to a real-time (subject to latency) Transmission of the Program other than in betting shops and on betting platforms'),
             array('2', true, 'Delayed Transmission Rights', 'means the right to a full-length delayed Transmission of the Program commencing not before the end of the respective Single Event;'),
@@ -30,7 +45,7 @@ class SourceDefinitionsFixtures extends Fixture
             array('7', true, 'Edited Program', 'means a Program that is edited and delivered to the Licensee ready for Transmission and that may not be edited by the Licensee'),
             //array('1', true, 'Live', 'live'),
             array('8', true, 'Transmission Means', 'means the technical means on which the Licensee may Transmit Program as per Rights Specification'),
-            array('*', true, 'Cable & IPTV Transmission', 'means the analogue or digital Transmission by way of coaxial, fibre-optic or any other form of cable, or by means of microwave dish systems (commonly known as MMDS or wireless cable), master antenna television systems (MATV) and satellite master antenna systems (SMATV) or the process of transmitting and broadcasting the Content within television programs solely available to a closed circuit of potential users/subscribers using Internet Protocol (IP)'),
+            array('9', true, 'Cable & IPTV Transmission', 'means the analogue or digital Transmission by way of coaxial, fibre-optic or any other form of cable, or by means of microwave dish systems (commonly known as MMDS or wireless cable), master antenna television systems (MATV) and satellite master antenna systems (SMATV) or the process of transmitting and broadcasting the Content within television programs solely available to a closed circuit of potential users/subscribers using Internet Protocol (IP)'),
             array('10', true, 'Satellite Transmission', 'means analogue or digital Transmission by way of a satellite system whereby such signal is initially Transmitted to a satellite situated beyond the earth’s atmosphere and is subsequently re-transmitted by transponders or similar devices for reception by a satellite dish at the place where the viewer will view such Transmission'),
             array('11', true, 'Terrestrial Transmission', 'means the analogue or digital Transmission by way of wireless telegraphy signals (e.g. DVB T), which are Transmitted by fixed land-based transmission stations'),
             array('12', true, 'Internet/OTT', 'means the digital Transmission of the Program by way of any telecommunication system utilizing TCP/IP protocols and/or related protocols including (i) OTT (ii) Transmission on a website or (iii) Transmission on Social Media Platforms, but excluding the IPTV transmission available to the public subject to territorial restrictions and other restrictions agreed between the Parties or applied by the Licensee when exploiting the rights'),
@@ -100,6 +115,8 @@ class SourceDefinitionsFixtures extends Fixture
                 $manager->persist($emailContent);
             }
         }
+
+
 
         $manager->flush();
     }
