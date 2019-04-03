@@ -195,6 +195,14 @@ msgid "SALES_PACKAGE_COMPANY_SUB_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_SIGNATURE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_SIGNATURE_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 msgid "PLEASE_SIGN_WITH_YOUR_CURSOR"
 msgstr ""
 
@@ -1285,6 +1293,10 @@ msgid "HEADER_LINK_SETTINGS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_FAQ"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_LOGOUT"
 msgstr ""
 
@@ -2205,6 +2217,10 @@ msgid "PREFERENCES_HEADLINE_EXPLANATION_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
+msgid "PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/manage/containers/Preferences.js
 msgid "PREFERENCES_USER_UPDATED_MESSAGE"
 msgstr ""
 
@@ -2342,10 +2358,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LINKS_BUTTON_MANUAL"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
-msgid "PREFERENCES_RECEIVE_NOTIFICATIONS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/containers/Terms.js

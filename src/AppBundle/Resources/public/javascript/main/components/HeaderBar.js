@@ -190,6 +190,13 @@ class HeaderBar extends React.Component {
 										<i className="fa fa-cog" />
 										{this.context.t("HEADER_LINK_SETTINGS")}
 									</HeaderBarTab>
+									<HeaderBarTab
+										route="#"
+										className="popup-item"
+									>
+										<i className="fa fa-question-circle-o" />
+										{this.context.t("HEADER_LINK_FAQ")}
+									</HeaderBarTab>
 									<a href="/logout" className="tab popup-item">
 										<i className="fa fa-sign-out" />
 										{this.context.t("HEADER_LINK_LOGOUT")}

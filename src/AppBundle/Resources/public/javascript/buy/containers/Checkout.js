@@ -813,6 +813,12 @@ class Checkout extends React.Component {
 
 				{/* SIGNATURE */}
 				<div className="bid-signature">
+					<div className="checkout-title">
+						{this.context.t("SALES_PACKAGE_SIGNATURE_TITLE")}
+					</div>
+					<div className="checkout-subtitle">
+						{this.context.t("SALES_PACKAGE_SIGNATURE_SUB_TITLE")}
+					</div>
 					<DigitalSignature
 						customClass="for-listing"
 						noLabel
