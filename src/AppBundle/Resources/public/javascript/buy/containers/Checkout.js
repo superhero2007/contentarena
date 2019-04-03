@@ -74,7 +74,9 @@ class Checkout extends React.Component {
 		const { focusedInputId } = this.state;
 
 		if (focusedInputId && this[`${focusedInputId}-input`]) {
-			this[`${focusedInputId}-input`].querySelector("input").focus();
+			setTimeout(() => {
+				this[`${focusedInputId}-input`].querySelector("input").focus();
+			}, 0);
 		}
 	}
 
