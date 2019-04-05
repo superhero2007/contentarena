@@ -12,6 +12,7 @@ const localStorageEnums = Object.freeze({
 	EVENT_DATE_TO: "eventDateTo",
 	PAGE_SIZE: "pageSize",
 	SORT_BY: "sortBy",
+	VIEW_MODE: "viewMode",
 });
 
 export default localStorageEnums;

@@ -238,6 +238,7 @@ class Marketplace extends Component {
 	};
 
 	setListingViewType = (type) => {
+		localStorage.setItem(localStorageEnums.VIEW_MODE, type);
 		this.props.updateListingView(type);
 	};
 
@@ -285,6 +286,7 @@ class Marketplace extends Component {
 		}
 
 		const customFilter = this.getQueryString();
+		const listType = LocalStorageHelper.getViewMode() || filter.listType;
 
 		return (
 			<div
@@ -314,13 +316,13 @@ class Marketplace extends Component {
 								<div className="content-listing-header">
 									<div className="content-listing-switcher">
 										<button
-											className={cn("content-view-tab", { selected: filter.listType === CONTENT_LISTING_VIEW.LIST })}
+											className={cn("content-view-tab", { selected: listType === CONTENT_LISTING_VIEW.LIST })}
 											onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.LIST)}
 										>
 											<i className="fa fa-list-ul" />
 										</button>
 										<button
-											className={cn("content-view-tab", { selected: filter.listType === CONTENT_LISTING_VIEW.TABLE })}
+											className={cn("content-view-tab", { selected: listType === CONTENT_LISTING_VIEW.TABLE })}
 											onClick={() => this.setListingViewType(CONTENT_LISTING_VIEW.TABLE)}
 										>
 											<i className="fa fa-th" />
@@ -333,13 +335,13 @@ class Marketplace extends Component {
 										<RightsLegend />
 									</div>
 								</div>
-								{listings.length > 0 && filter.listType === CONTENT_LISTING_VIEW.TABLE && (
+								{listings.length > 0 && listType === CONTENT_LISTING_VIEW.TABLE && (
 									<ContentListingTable
 										listings={listings}
 										history={history}
 									/>
 								)}
-								{listings.length > 0 && filter.listType === CONTENT_LISTING_VIEW.LIST && listings.map(listing => (
+								{listings.length > 0 && listType === CONTENT_LISTING_VIEW.LIST && listings.map(listing => (
 									<ContentListing
 										onSelect={() => this.goToListing(listing.customId)}
 										key={listing.customId}

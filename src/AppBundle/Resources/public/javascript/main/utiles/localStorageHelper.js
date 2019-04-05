@@ -75,6 +75,10 @@ class LocalStorageClass {
 	getSortBy() {
 		return localStorage.getItem(localStorageEnums.SORT_BY) || undefined;
 	}
+
+	getViewMode() {
+		return localStorage.getItem(localStorageEnums.VIEW_MODE) || undefined;
+	}
 }
 
 const LocalStorageHelper = new LocalStorageClass();
