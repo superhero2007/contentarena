@@ -54,7 +54,6 @@ class HeaderBar extends React.Component {
 			const unseenMessagesCount = data.filter(item => item.type.name === "MESSAGE").length;
 
 			const testNotifications = notifications.map((item) => {
-				item.sports = [{ id: "sr:sport:16" }];
 				return item;
 			}); // YV: should be removed after image implemented
 

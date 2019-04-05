@@ -77,6 +77,23 @@ class Notification
     private $createdAt;
 
     /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Groups({"notification"})
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport")
+     * @ORM\JoinTable(name="notification_sports",
+     *      joinColumns={@ORM\JoinColumn(name="notification_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="notification_sport_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"notification"})
+     */
+    private $sports;
+
+    /**
      * @return mixed
      */
     public function getCreatedAt()
@@ -214,6 +231,40 @@ class Notification
     {
         $this->text = $text;
     }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSports()
+    {
+        return $this->sports;
+    }
+
+    /**
+     * @param mixed $sports
+     */
+    public function setSports($sports)
+    {
+        $this->sports = $sports;
+    }
+
+
 
 
 }

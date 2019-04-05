@@ -11,6 +11,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
+use AppBundle\Entity\NotifiableInterface;
 use AppBundle\Entity\Notification;
 use AppBundle\Entity\User;
 use AppBundle\Doctrine\RandomIdGenerator;
@@ -40,7 +41,12 @@ class NotificationService
         $this->translator = $translator;
     }
 
-    public function createSingleNotification($type, $referenceId, $user, $params){
+    public function createSingleNotification($type, NotifiableInterface $referenceObject, User $user, $params ){
+
+        $image = $referenceObject->getImage();
+        $referenceId = $referenceObject->getCustomId();
+        $sports = $referenceObject->getSports();
+
 
         $notificationType = $this->em->getRepository('AppBundle:NotificationType')->findOneBy(array(
             "name" => $type,
@@ -61,6 +67,8 @@ class NotificationService
             $notification->setType($notificationType);
             $notification->setReferenceId($referenceId);
             $notification->setText($text);
+            $notification->setImage($image);
+            $notification->setSports($sports);
         } else {
             $notification->setSeen(false);
         }
@@ -81,7 +89,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("SELLER_LISTING_EXPIRING", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("SELLER_LISTING_EXPIRING", $listing, $user, $parameters );
         }
 
     }
@@ -95,7 +103,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("SELLER_LISTING_EXPIRED", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("SELLER_LISTING_EXPIRED", $listing, $user, $parameters );
         }
 
     }
@@ -109,7 +117,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("SELLER_LISTING_SOLD", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("SELLER_LISTING_SOLD", $listing, $user, $parameters );
         }
 
     }
@@ -123,7 +131,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("SELLER_BID_RECEIVED", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("SELLER_BID_RECEIVED", $listing, $user, $parameters );
         }
 
     }
@@ -138,7 +146,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $recipient){
-            $this->createSingleNotification("SELLER_BID_ACCEPTED", $listing->getCustomId(), $recipient, $parameters );
+            $this->createSingleNotification("SELLER_BID_ACCEPTED", $listing, $recipient, $parameters );
         }
 
     }
@@ -153,7 +161,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $recipient){
-            $this->createSingleNotification("BUYER_BID_PLACED", $listing->getCustomId(), $recipient, $parameters );
+            $this->createSingleNotification("BUYER_BID_PLACED", $listing, $recipient, $parameters );
         }
 
     }
@@ -167,7 +175,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("SELLER_BID_CLOSED", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("SELLER_BID_CLOSED", $listing, $user, $parameters );
         }
 
     }
@@ -182,7 +190,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $recipient){
-            $this->createSingleNotification("BUYER_BID_CLOSED", $listing->getCustomId(), $recipient, $parameters );
+            $this->createSingleNotification("BUYER_BID_CLOSED", $listing, $recipient, $parameters );
         }
 
     }
@@ -196,7 +204,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("BUYER_BID_ACCEPTED", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("BUYER_BID_ACCEPTED", $listing, $user, $parameters );
         }
 
     }
@@ -210,7 +218,7 @@ class NotificationService
         );
 
         foreach ($company->getUsers() as $user){
-            $this->createSingleNotification("BUYER_BID_DECLINED", $listing->getCustomId(), $user, $parameters );
+            $this->createSingleNotification("BUYER_BID_DECLINED", $listing, $user, $parameters );
         }
 
     }
@@ -246,11 +254,28 @@ class NotificationService
     }
 
     public function getNotifications(User $user){
-        return $this->em->getRepository('AppBundle:Notification')->findBy(array(
+
+        $listingRepository = $this->em->getRepository("AppBundle:Content");
+        $notifications = $this->em->getRepository('AppBundle:Notification')->findBy(array(
             "user" => $user,
         ), array(
             "createdAt" => "DESC"
         ));
+
+        /**
+         * Backwards compatibility for notification images
+         */
+        foreach ($notifications as $notification){
+            if ( $notification->getType()->getName() != "MESSAGE" && $notification->getImage() == null){
+                $listing = $listingRepository->findOneBy(array("customId" => $notification->getReferenceId()));
+                if ($listing != null) {
+                    $notification->setImage($listing->getImage());
+                    $notification->setSports($listing->getSports());
+                }
+            }
+        }
+
+        return $notifications;
     }
 
     public function markNotificationAsVisited($notificationId) {

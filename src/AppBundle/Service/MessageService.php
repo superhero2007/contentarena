@@ -178,7 +178,7 @@ class MessageService
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function sendMessage($request, User $user){
+    public function sendMessage(Request $request, User $user){
 
         $recipient = $request->get('recipient');
         $role = $request->get('role');
@@ -227,12 +227,12 @@ class MessageService
 
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread, $companyUser, $params );
             }
         }
         foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread, $companyUser, $params );
             }
         }
 

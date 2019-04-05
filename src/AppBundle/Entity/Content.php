@@ -17,7 +17,7 @@ use JMS\Serializer\Annotation\Groups;
  * @ORM\Table(name="content")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentRepository")
  */
-class Content
+class Content implements NotifiableInterface
 {
     /**
      * @var int
@@ -703,7 +703,7 @@ class Content
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCustomId()
     {

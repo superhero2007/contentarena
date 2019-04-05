@@ -19,7 +19,7 @@ class Sport
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "commercial", "settings", "home"})
+     * @Groups({"listing", "commercial", "settings", "home","notification"})
      */
     private $id;
 
@@ -35,7 +35,7 @@ class Sport
      * @var string
      *
      * @ORM\Column(name="externalId", type="string", length=255, unique=true, nullable=true)
-     * @Groups({"home"})
+     * @Groups({"home", "notification"})
      */
     private $externalId;
 

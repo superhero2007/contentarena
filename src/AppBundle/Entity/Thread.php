@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Groups;
  * @ORM\Table(name="thread")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
  */
-class Thread
+class Thread implements NotifiableInterface
 {
     /**
      * @var int
@@ -309,7 +309,20 @@ class Thread
         $this->lastMessageUser = $lastMessageUser;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return null;
+    }
 
-
+    /**
+     * @return mixed
+     */
+    public function getSports()
+    {
+        return null;
+    }
 }
 
