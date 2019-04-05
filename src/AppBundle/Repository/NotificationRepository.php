@@ -10,4 +10,18 @@ namespace AppBundle\Repository;
  */
 class NotificationRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getUnseenByUserExcludingType($user, $type){
+
+
+        return $this->createQueryBuilder('notification')
+            ->where('notification.seen = :seen')
+            ->andWhere('notification.user = :user')
+            ->andWhere('notification.type != :type')
+            ->setParameter('user',$user)
+            ->setParameter('seen', false)
+            ->setParameter('type', $type)
+            //->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult();
+    }
 }

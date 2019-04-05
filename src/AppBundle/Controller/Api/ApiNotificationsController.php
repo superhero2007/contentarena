@@ -76,8 +76,9 @@ class ApiNotificationsController extends Controller
      * @return JsonResponse
      */
     public function markNotificationAsSeen(Request $request, NotificationService $notificationService){
+        $type = $request->get("type");
         $user = $this->getUser();
-        $notificationService->markNotificationAsSeen($user);
+        $notificationService->markNotificationAsSeen($user, $type);
 
         return new JsonResponse(array("success"=>true));
     }

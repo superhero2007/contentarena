@@ -289,11 +289,27 @@ class NotificationService
         $this->em->flush();
     }
 
-    public function markNotificationAsSeen($user) {
-        $notifications = $this->em->getRepository('AppBundle:Notification')->findBy(array(
+    public function markNotificationAsSeen($user, $type) {
+
+        $notificationTypeRepository = $this->em->getRepository("AppBundle:NotificationType");
+        $notificationRepository = $this->em->getRepository("AppBundle:Notification");
+        $criteria = array(
             "user" => $user,
-            "seen" => false
-        ));
+            "seen" => false,
+        );
+
+        if ( $type != null ) {
+            $typeObj = $notificationTypeRepository->findOneBy(array("name" => $type));
+            if ($typeObj != null) $criteria["type"] = $typeObj;
+            $notifications = $notificationRepository->findBy($criteria);
+        } else {
+            /**
+             * Message type notifications are being excluded if type is null
+             */
+            $typeObj = $notificationTypeRepository->findOneBy(array("name" => "MESSAGE"));
+            if ($typeObj != null) $criteria["type"] = $typeObj;
+            $notifications = $notificationRepository->getUnseenByUserExcludingType($user, $typeObj);
+        }
 
         if(!empty($notifications)) {
             foreach ($notifications as $notification){
