@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import moment from "moment";
 import { TIME_FORMAT } from "@constants";
+import Loader from "../../common/components/Loader";
+import { getListingImage } from "../../common/utils/listing";
 
 class HeaderNotifications extends React.Component {
 	constructor(props) {
@@ -16,7 +18,7 @@ class HeaderNotifications extends React.Component {
 		};
 	}
 
-	componentWillReceiveProps(nextProps, nextContext) {
+	componentWillReceiveProps(nextProps) {
 		if (this.props.dataLoading !== nextProps.dataLoading) {
 			this.setState({
 				dataLoading: nextProps.dataLoading,
@@ -45,15 +47,16 @@ class HeaderNotifications extends React.Component {
 	}
 
 	getPassedTime = (createdAt) => {
-		const days = moment.utc().diff(moment(createdAt), "days");
+		if (!createdAt || !this.isDateValid(createdAt)) return "";
 
-		if (days && days <= 30) {
-			return `${days}d`;
-		}
-		if (!days) {
-			const times = moment.utc().diff(moment(createdAt), "hours");
-			return `${times}h`;
-		}
+		const days = moment.utc().diff(moment(createdAt), "days");
+		if (days && days <= 6) return `${days}d`;
+		if (days && days > 6 && days <= 28) return `${Math.floor(days / 7)}w`;
+
+		const times = moment.utc().diff(moment(createdAt), "hours");
+		if (times && times >= 0 && times <= 5) return "Just now";
+		if (times && times >= 6 && times <= 59) return `${times}min`;
+
 		const months = moment.utc().diff(moment(createdAt), "month");
 		return `${months}m`;
 	};
@@ -88,10 +91,6 @@ class HeaderNotifications extends React.Component {
 			document.location.href = urlTo;
 		}
 
-		if (this.state.unseenNotificationsCount) {
-			ContentArena.Api.markNotificationAsSeen();
-		}
-
 		this.setState({
 			showList: false,
 			unseenNotificationsCount: 0,
@@ -100,22 +99,60 @@ class HeaderNotifications extends React.Component {
 
 	isClickedOnBellIcon = element => this.bell === element;
 
-	getCreatedTime = createdAt => moment(createdAt).format(TIME_FORMAT);
-
 	isDateValid = createdAt => moment(createdAt).isValid();
 
-	handleBellIconClick = () => this.setState(state => ({ showList: !state.showList }));
+	handleBellIconClick = () => {
+		const { showList, notifications, unseenNotificationsCount } = this.state;
+
+		if (!showList && !!notifications.length && unseenNotificationsCount) {
+			ContentArena.Api.markNotificationAsSeen();
+
+			this.setState(state => ({
+				showList: !state.showList,
+				unseenNotificationsCount: 0,
+			}));
+		} else {
+			this.setState(state => ({
+				showList: !state.showList,
+			}));
+		}
+	};
+
+	hasUnvisitedNotifications = () => {
+		const { notifications } = this.state;
+		return !!notifications.length && notifications.some(item => !item.visited);
+	};
+
+	handleAllVisited = () => {
+		const { notifications } = this.state;
+
+		ContentArena.Api.markAllNotificationAsVisited();
+
+		const allVisited = notifications.map((item) => {
+			item.visited = true;
+			return item;
+		});
+
+		this.setState({
+			notifications: allVisited,
+		});
+	};
+
+	handleRemoveNotifications = () => {
+		ContentArena.Api.removeNotifications();
+
+		this.setState({
+			notifications: 0,
+			unseenNotificationsCount: 0,
+		});
+	};
 
 	handleHideNotificationList = (e) => {
-		const { showList, unseenNotificationsCount } = this.state;
+		const { showList } = this.state;
 
-		if (showList && this.list && !this.list.contains(e.target) && !this.isClickedOnBellIcon(e.target.parentElement)) {
-			if (unseenNotificationsCount) {
-				ContentArena.Api.markNotificationAsSeen();
-			}
+		if (showList && !this.expandedList.contains(e.target) && !this.isClickedOnBellIcon(e.target.parentElement)) {
 			this.setState({
 				showList: false,
-				unseenNotificationsCount: 0,
 			});
 		}
 	};
@@ -129,46 +166,69 @@ class HeaderNotifications extends React.Component {
 				<div className="icon-bell-wrapper" onClick={this.handleBellIconClick} ref={bell => this.bell = bell}>
 					<i className="fa fa-bell" title="Notifications" />
 					{!!unseenNotificationsCount
-					&& <div className="counter">{unseenNotificationsCount}</div>
+						&& <div className="counter">{unseenNotificationsCount}</div>
 					}
 				</div>
 
 				{showList && (
-					<div className="expanded-list">
-						<div className="items" ref={list => this.list = list}>
-							{dataLoading
-							&& <div className="item loading">{this.context.t("NOTIFICATIONS_LOADING")}</div>}
-							{!dataLoading && notifications.map((item) => {
-								const {
-									id, text, visited, createdAt,
-								} = item;
-								return (
-									<div
-										key={`notification-${id}`}
-										className={cn("item", { unread: !visited })}
-										onClick={() => this.handleNotificationClick(item)}
-									>
-										<span>{text}</span>
-
-										{createdAt && this.isDateValid(createdAt)
-										&& (
-											<span
-												className="notification-time"
-											>
-												{`${this.getPassedTime(createdAt)} - ${this.getCreatedTime(createdAt)}`}
-											</span>
-										)
-										}
-									</div>
-								);
-							})}
-						</div>
+					<section className="expanded-list" ref={list => this.expandedList = list}>
+						<header className="notification-header">
+							<span className="title">{this.context.t("NOTIFICATIONS_HEADER")}</span>
+							{this.hasUnvisitedNotifications() && (
+								<span className="mark-all-read" onClick={this.handleAllVisited}>
+									{this.context.t("NOTIFICATIONS_MARK_ALL_READ")}
+								</span>
+							)}
+						</header>
+						{dataLoading
+							&& (
+								<div className="loader-wrapper">
+									<Loader loading xSmall />
+								</div>
+							)
+						}
 						{!dataLoading && !notifications.length && (
 							<div className="no-notifications">
-								{this.context.t("NOTIFICATIONS_EMPTY")}
+								<i className="fa fa-bell-o" />
+								<span>{this.context.t("NOTIFICATIONS_EMPTY")}</span>
 							</div>
 						)}
-					</div>
+						{!dataLoading && !!notifications.length
+							&& (
+								<div className="items">
+									{notifications.map((item) => {
+										const {
+											id, text, visited, createdAt,
+										} = item;
+										const time = this.getPassedTime(createdAt);
+										return (
+											<div
+												key={`notification-${id}`}
+												className={cn("item", { unread: !visited })}
+												onClick={() => this.handleNotificationClick(item)}
+											>
+												<div className="notification-img">
+													{getListingImage(item)}
+												</div>
+												<div className="notification-text">
+													<span title={text}>{text}</span>
+													<span title={time} className="time">{time}</span>
+												</div>
+											</div>
+										);
+									})}
+								</div>
+							)}
+						{!dataLoading && !!notifications.length
+							&& (
+								<div className="clear-notification-wrapper">
+									<span onClick={this.handleRemoveNotifications}>
+										{this.context.t("NOTIFICATIONS_CLEAR_ALL")}
+									</span>
+								</div>
+							)
+						}
+					</section>
 				)}
 			</div>
 		);

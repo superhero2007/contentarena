@@ -788,6 +788,12 @@ ContentArena.Api = {
 			id,
 		});
 	},
+	markAllNotificationAsVisited() {
+		return axios.post(`${envhosturl}api/notifications/all/visited`);
+	},
+	removeNotifications() {
+		return axios.post(`${envhosturl}api/notifications/remove`);
+	},
 	markNotificationAsSeen() {
 		return axios.get(`${envhosturl}api/notifications/seen`);
 	},

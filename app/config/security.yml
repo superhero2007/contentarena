@@ -48,6 +48,13 @@ security:
         - { path: ^/api/search/sports/groups, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/search/territories, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/search/regions, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        - { path: ^/api/notifications/all/visited, role: ROLE_USER }
+        - { path: ^/api/notifications/, role: ROLE_USER }
+        - { path: ^/api/notifications/visited, role: ROLE_USER }
+        - { path: ^/api/notifications/seen, role: ROLE_USER }
+        - { path: ^/api/notifications/remove, role: ROLE_USER }
+
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/generalterms, role: IS_AUTHENTICATED_ANONYMOUSLY }

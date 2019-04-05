@@ -215,10 +215,39 @@ class NotificationService
 
     }
 
+    public function setAllNotificationsVisited(User $user){
+        $notifications = $this->em->getRepository('AppBundle:Notification')->findBy(array(
+            "user" => $user,
+        ));
+
+        if(!empty($notifications)) {
+            foreach ($notifications as $notification){
+                $notification->setVisited(true);
+                $this->em->persist($notification);
+            }
+        }
+
+        $this->em->flush();
+    }
+
+    public function removeNotifications(User $user)
+    {
+        $notifications = $this->em->getRepository('AppBundle:Notification')->findBy(array(
+            "user" => $user,
+        ));
+
+        if(!empty($notifications)) {
+            foreach ($notifications as $notification){
+                $this->em->remove($notification);
+            }
+        }
+
+        $this->em->flush();
+    }
+
     public function getNotifications(User $user){
         return $this->em->getRepository('AppBundle:Notification')->findBy(array(
             "user" => $user,
-            "visited" => false
         ), array(
             "createdAt" => "DESC"
         ));

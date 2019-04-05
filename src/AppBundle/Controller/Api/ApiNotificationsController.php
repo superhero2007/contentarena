@@ -30,7 +30,30 @@ class ApiNotificationsController extends Controller
         $user = $this->getUser();
         $notifications = $notificationService->getNotifications($user);
         return $this->getSerializedResponse($notifications, array('notification'));
+    }
 
+    /**
+     * @Route("/api/notifications/all/visited", name="setAllNotificationVisited")
+     * @param NotificationService $notificationService
+     * @return JsonResponse
+     */
+    public function setAllNotificationVisited(NotificationService $notificationService){
+
+        $user = $this->getUser();
+        $notificationService->setAllNotificationsVisited($user);
+        return new JsonResponse(array("success"=>true));
+    }
+
+    /**
+     * @Route("/api/notifications/remove", name="removeNotifications")
+     * @param NotificationService $notificationService
+     * @return JsonResponse
+     */
+    public function removeNotifications(NotificationService $notificationService){
+
+        $user = $this->getUser();
+        $notificationService->removeNotifications($user);
+        return new JsonResponse(array("success"=>true));
     }
 
     /**

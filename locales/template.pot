@@ -1301,7 +1301,15 @@ msgid "HEADER_LINK_LOGOUT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
-msgid "NOTIFICATIONS_LOADING"
+msgid "NOTIFICATIONS_HEADER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
+msgid "NOTIFICATIONS_MARK_ALL_READ"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
+msgid "NOTIFICATIONS_CLEAR_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js

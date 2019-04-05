@@ -49,16 +49,20 @@ class HeaderBar extends React.Component {
 			}
 
 			data.sort((a, b) => b.id - a.id);
-			const unseenNotifications = data.filter(item => !item.seen);
-			const notifications = unseenNotifications.filter(item => item.type.name !== "MESSAGE");
-			const unseenNotificationsCount = notifications.length;
-			const unseenMessagesCount = unseenNotifications.filter(item => item.type.name === "MESSAGE").length;
+			const notifications = data.filter(item => item.type.name !== "MESSAGE");
+			const unseenNotificationsCount = notifications.filter(item => !item.seen).length;
+			const unseenMessagesCount = data.filter(item => item.type.name === "MESSAGE").length;
+
+			const testNotifications = notifications.map((item) => {
+				item.sports = [{ id: "sr:sport:16" }];
+				return item;
+			}); // YV: should be removed after image implemented
 
 			this.setState({
 				dataLoading: false,
 				unseenNotificationsCount,
 				unseenMessagesCount,
-				notifications,
+				notifications: testNotifications,
 			});
 		});
 	}
@@ -262,7 +266,7 @@ class HeaderBar extends React.Component {
 			return "marketplace";
 		}
 		return "marketplace";
-	}
+	};
 
 	markMessagesAsSeen = () => {
 		const { unseenMessagesCount } = this.state;
