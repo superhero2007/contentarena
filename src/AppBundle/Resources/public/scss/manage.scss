@@ -37,6 +37,7 @@ $icon-color: #00769A;
 }
 
 .manager-header {
+  display: flex;
   $barHeight: 74px;
   min-height: $barHeight;
   box-shadow: 0 1px 9px rgba(0, 0, 0, 0.21);
@@ -44,19 +45,25 @@ $icon-color: #00769A;
   color: $color-blue-dark;
   margin: 0 auto 20px;
 
+  .logo {
+    cursor: pointer;
+	flex: 150px 0 0;
+	margin-right: 40px;
+  }
+
   .header-wrapper {
     display: flex;
     align-items: center;
     padding: 0 15px;
+	width: 100%;
+
     @media only screen and (min-width: 1920px) {
       width: 1600px;
       margin: 0 auto;
     }
 
     .logo {
-      cursor: pointer;
-      flex: 150px 0 0;
-      margin-right: 40px;
+      @extend .logo;
     }
 
     a {
@@ -241,10 +248,10 @@ $icon-color: #00769A;
 
         position: absolute;
         right: 0;
-				top: 40px;
+		    top: 40px;
         z-index: 1000;
 
-				@include shadow(0 2px 8px rgba(0, 0, 0, 0.07));
+		    @include shadow(0 2px 8px rgba(0, 0, 0, 0.07));
         background-color: $background-3;
 
 		header{
@@ -295,7 +302,8 @@ $icon-color: #00769A;
 		}
 
         .items {
-		  overflow: auto;
+		  overflow-x: hidden;
+		  overflow-y: auto;
 		  max-height: 360px;
 
 		  &::-webkit-scrollbar {
