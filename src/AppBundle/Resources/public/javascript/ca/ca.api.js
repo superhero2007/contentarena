@@ -35,6 +35,8 @@ ContentArena.Api = {
 			return {
 				name: item["@attributes"].name,
 				externalId: item["@attributes"].id,
+				scheduled: item["@attributes"].scheduled,
+				scheduledEnd: item["@attributes"].scheduled_end,
 			};
 		});
 

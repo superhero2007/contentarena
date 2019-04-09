@@ -15,8 +15,6 @@ class Seller extends React.Component {
 			legalName, description, country, city, zip, address, address2,
 		} = this.props.company;
 
-		console.log(this.props);
-
 		return (
 			<Fragment>
 				<div className="description-wrapper">

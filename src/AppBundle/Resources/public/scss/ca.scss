@@ -323,6 +323,24 @@ button {
       max-width: 872px;
     }
 
+    .season-duration {
+      display: flex;
+      align-items: center;
+      margin-left: 275px;
+      margin-bottom: 15px;
+
+      label:first-child {
+        margin-left: 0;
+      }
+
+      label,
+      select {
+        margin-left: 15px;
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
     .base-input {
       padding-bottom: 5px;
       border-bottom: 4px solid $border-color-1;

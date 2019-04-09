@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import Moment from "moment/moment";
+import moment from "moment";
 import { test } from "../actions";
 import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
 import { RepresentationTextArea } from "../../sell/components/SellFormItems";
-import { PropTypes } from "prop-types";
 import { pdfIcon } from "../../main/components/Icons";
-import Moment from "moment/moment";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 
 class CommercialTerms extends React.Component {

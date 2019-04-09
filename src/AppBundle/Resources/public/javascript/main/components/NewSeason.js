@@ -86,8 +86,7 @@ class NewSeason extends React.Component {
 							{this.context.t("Not applicable")}
 						</option>
 					</select>
-					{this.props.showClose
-					&& (
+					{this.props.showClose && (
 						<button className="standard-button" onClick={this.props.onRemove}>
 							<i className="fa fa-close" />
 						</button>

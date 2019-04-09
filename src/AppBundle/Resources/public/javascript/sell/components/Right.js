@@ -33,7 +33,7 @@ class Right extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log("Right - props", props);
+		// console.log("Right - props", props);
 		this.setState({
 			rightPackages: props.rightPackages,
 		});
