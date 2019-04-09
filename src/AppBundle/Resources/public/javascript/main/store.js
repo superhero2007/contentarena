@@ -2,6 +2,7 @@ import React from "react";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { i18nState } from "redux-i18n";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 import { content } from "../sell/reducers/content";
 import { selector } from "../sell/reducers/selector";
 import { filter } from "../buy/reducers/filter";
@@ -25,4 +26,6 @@ const reducers = combineReducers({
 	i18nState,
 });
 
-export default createStore(reducers, applyMiddleware(thunk));
+export default createStore(reducers, composeWithDevTools(
+	applyMiddleware(thunk),
+));
