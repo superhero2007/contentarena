@@ -198,7 +198,6 @@ class HeaderBar extends React.Component {
 							{!!unseenMessagesCount
 							&& <div className="counter">{unseenMessagesCount}</div>
 							}
-							{this.context.t("HEADER_LINK_MESSAGES")}
 						</HeaderBarTab>
 
 						<div className="settings">
