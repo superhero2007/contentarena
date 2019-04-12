@@ -504,7 +504,7 @@ class Checkout extends React.Component {
 			|| signatureName === ""
 			|| signaturePosition === ""
 			|| bundles.length === 0
-			|| bundles.some(b => b.salesMethod === "BIDDING" && (!b.fee || parseFloat(b.fee) <= parseFloat(b.minimumBid)));
+			|| bundles.some(b => b.salesMethod === "BIDDING" && (!b.fee || parseFloat(b.fee) < parseFloat(b.minimumBid)));
 	};
 
 	getCompanyAddress = () => {
@@ -621,7 +621,7 @@ class Checkout extends React.Component {
 						<div className="price-action-wrapper">
 							<div
 								title={bundle.fee}
-								className={cn({ "price-invalid": bundle.minimumBid && Number(bundle.minimumBid) >= Number(bundle.fee) })}
+								className={cn({ "price-invalid": bundle.minimumBid && Number(bundle.minimumBid) > Number(bundle.fee) })}
 							>
 								{this.getMinBid(bundle)}
 							</div>

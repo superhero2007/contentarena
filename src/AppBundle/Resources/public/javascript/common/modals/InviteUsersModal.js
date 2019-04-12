@@ -41,8 +41,6 @@ class InviteUsersModal extends Component {
 			response = false;
 		}
 
-		console.log(!!response, !response);
-
 		this.setState({
 			loading: false,
 			isSuccess: !!response,

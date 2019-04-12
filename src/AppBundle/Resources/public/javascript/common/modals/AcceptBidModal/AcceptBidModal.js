@@ -125,9 +125,6 @@ class AcceptBidModal extends Component {
 								onClick={onCloseModal}
 							>
 								{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
-								>
-
-
 							</button>
 							{isAcceptDisabled ? (
 								<button
