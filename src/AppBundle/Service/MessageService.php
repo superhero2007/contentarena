@@ -292,12 +292,12 @@ class MessageService
 
         foreach ($thread->getBuyerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread, $companyUser, $params );
             }
         }
         foreach ($thread->getOwnerCompany()->getUsers() as $companyUser ){
             if ( $companyUser->getId() != $user->getId() ){
-                $this->notificationService->createSingleNotification("MESSAGE", $thread->getCustomId(), $companyUser, $params );
+                $this->notificationService->createSingleNotification("MESSAGE", $thread, $companyUser, $params );
             }
         }
 
