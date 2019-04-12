@@ -91,7 +91,6 @@ class SignUpForm extends PureComponent {
 	};
 
 	render() {
-		console.log(this.state);
 		const { refererEmail } = this.props;
 		return (
 			<section className="sign-up-wrapper" onKeyPress={this.handleEnterPress}>

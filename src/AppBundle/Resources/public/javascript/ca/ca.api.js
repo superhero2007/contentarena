@@ -35,6 +35,8 @@ ContentArena.Api = {
 			return {
 				name: item["@attributes"].name,
 				externalId: item["@attributes"].id,
+				scheduled: item["@attributes"].scheduled,
+				scheduledEnd: item["@attributes"].scheduled_end,
 			};
 		});
 
@@ -798,7 +800,7 @@ ContentArena.Api = {
 		return axios.get(`${envhosturl}api/notifications/seen`);
 	},
 	markMessagesAsSeen() {
-		return axios.get(`${envhosturl}api/messages/seen`);
+		return axios.get(`${envhosturl}api/notifications/seen?type=MESSAGE`);
 	},
 	signInUser(username, password) {
 		return axios.post(`${envhosturl}api/users/login`, {

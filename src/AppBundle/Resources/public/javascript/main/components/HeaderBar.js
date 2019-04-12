@@ -115,15 +115,11 @@ class HeaderBar extends React.Component {
 			const unseenNotificationsCount = notifications.filter(item => !item.seen).length;
 			const unseenMessagesCount = data.filter(item => item.type.name === "MESSAGE").length;
 
-			const testNotifications = notifications.map((item) => {
-				return item;
-			}); // YV: should be removed after image implemented
-
 			this.setState({
 				dataLoading: false,
 				unseenNotificationsCount,
 				unseenMessagesCount,
-				notifications: testNotifications,
+				notifications,
 			});
 		});
 	}
@@ -236,7 +232,6 @@ class HeaderBar extends React.Component {
 							{!!unseenMessagesCount
 							&& <div className="counter">{unseenMessagesCount}</div>
 							}
-							{this.context.t("HEADER_LINK_MESSAGES")}
 						</HeaderBarTab>
 
 						<div className="settings">

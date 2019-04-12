@@ -53,9 +53,12 @@ class HeaderNotifications extends React.Component {
 		if (days && days <= 6) return `${days}d`;
 		if (days && days > 6 && days <= 28) return `${Math.floor(days / 7)}w`;
 
-		const times = moment.utc().diff(moment(createdAt), "hours");
-		if (times && times >= 0 && times <= 5) return "Just now";
-		if (times && times >= 6 && times <= 59) return `${times}min`;
+		const minutes = moment.utc().diff(moment(createdAt), "minutes");
+		if (minutes >= 0 && minutes <= 5) return "Just now";
+		if (minutes >= 6 && minutes <= 59) return `${minutes}min`;
+
+		const hours = moment.utc().diff(moment(createdAt), "hours");
+		if (hours && hours <= 24) return `${hours}h`;
 
 		const months = moment.utc().diff(moment(createdAt), "month");
 		return `${months}m`;

@@ -61,7 +61,7 @@ notifications:
             closed: A new deal was closed for listing %listingName%.
     buyer:
         listing:
-            match: 'A new listing was published that matches your preferences: %listingName%'
+            match: 'A new listing was published that matches your preferences: %listingName%.'
         bid:
             placed: '%userFullName% placed a bid for %listingName%.'
             declined: A bid for listing %listingName% was declined.

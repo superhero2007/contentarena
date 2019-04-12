@@ -101,7 +101,6 @@ class SellFormStep1 extends React.Component {
 		ContentArena.Api.getTournaments(sportId, categoryId)
 			.done((tournaments) => {
 				ContentArena.Data.Tournaments = tournaments;
-
 				if (tournaments.length === 0) {
 					if (!this.state.customSeasonsParsed) {
 						this.props.addNewCategory();
@@ -207,8 +206,7 @@ class SellFormStep1 extends React.Component {
 		const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
 		let tournaments;
 		let sportCategories;
-		const
-			{ name } = nextProps;
+		const { name } = nextProps;
 
 		tournaments = (Array.isArray(nextProps.tournament)) ? nextProps.tournament : [nextProps.tournament];
 		const seasons = (Array.isArray(nextProps.seasons)) ? nextProps.seasons : [nextProps.seasons];
@@ -501,6 +499,8 @@ class SellFormStep1 extends React.Component {
 					from: season.from,
 					to: season.to,
 					isCustom: season.custom,
+					startDate: season.startDate,
+					endDate: season.endDate,
 				});
 			});
 		}
@@ -529,7 +529,7 @@ class SellFormStep1 extends React.Component {
 			};
 		}
 
-		const { validation } = this.props;
+		const { validation, name } = this.props;
 
 		return (
 			<div className="step-content">
@@ -542,8 +542,7 @@ class SellFormStep1 extends React.Component {
 						select={this.selectTournament}
 					/>
 				)}
-				{!this.state.showSearch
-				&& (
+				{!this.state.showSearch && (
 					<div className="buttons">
 						<div className="buttons-container" style={{ justifyContent: "flex-start" }}>
 							<button className="light-blue-button" onClick={this.clear}>
@@ -562,50 +561,31 @@ class SellFormStep1 extends React.Component {
 							{this.context.t("CL_STEP1_DESCRIPTION_1")}
 						</div>
 
-						{
-							this.state.sportSelectors.map((item, i, list) => {
-								const value = (inputProps.sports[i]) ? inputProps.sports[i].value : "";
-								return (
-									<SportSelector
-										key={i}
-										index={i}
-										sports={this.props.sports}
-										remove={() => this.removeSport(i)}
-										showAddNew={list.length > 1 && list.length === i + 1}
-										onUpdateNew={(name) => {
-											this.props.updateFromMultiple("sports", i, "value", name);
-										}}
-										showClose={i > 0}
-										isCustom={(inputProps.sports[i]) ? inputProps.sports[i].isCustom : false}
-										addSportSelector={this.addSportSelector}
-										onClick={() => {
-											this.props.openSportSelector(i, this.props.sports);
-										}}
-										value={value}
-										isInvalid={!value && validation}
-									/>
-								);
-							})
-						}
+						{this.state.sportSelectors.map((item, i, list) => {
+							const value = (inputProps.sports[i]) ? inputProps.sports[i].value : "";
+							return (
+								<SportSelector
+									key={i}
+									index={i}
+									sports={this.props.sports}
+									remove={() => this.removeSport(i)}
+									showAddNew={list.length > 1 && list.length === i + 1}
+									onUpdateNew={(name) => {
+										this.props.updateFromMultiple("sports", i, "value", name);
+									}}
+									showClose={i > 0}
+									isCustom={(inputProps.sports[i]) ? inputProps.sports[i].isCustom : false}
+									addSportSelector={this.addSportSelector}
+									onClick={() => {
+										this.props.openSportSelector(i, this.props.sports);
+									}}
+									value={value}
+									isInvalid={!value && validation}
+								/>
+							);
+						})}
 
-						{this.state.sportSelectors.length === 1 && (
-							<div className="base-container">
-								<div
-									className="step-item-description d-flex justify-content-end"
-									style={{ marginTop: 0 }}
-								>
-									<span style={{ marginRight: 15 }}>
-										{this.context.t("CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION")}
-									</span>
-									<button className="standard-button link-button" onClick={this.addSportSelector}>
-										{this.context.t("CL_STEP1_FORM_ADD_SPORT")}
-									</button>
-								</div>
-							</div>
-						)}
-
-						{this.state.sportSelectors.length === 1 && !this.hasCustomCategory()
-						&& (
+						{this.state.sportSelectors.length === 1 && !this.hasCustomCategory() && (
 							<div className="base-input">
 								<label>
 									{this.context.t("CL_STEP1_LABEL_COUNTRY")}
@@ -631,8 +611,7 @@ class SellFormStep1 extends React.Component {
 								onClick={this.props.removeNewCategory}
 							/>
 						)}
-						{this.state.sportSelectors.length === 1 && !this.hasCustomTournament()
-						&& (
+						{this.state.sportSelectors.length === 1 && !this.hasCustomTournament() && (
 							<div className="base-input">
 								<label>
 									{this.context.t("CL_STEP1_LABEL_COMPETITION")}
@@ -651,19 +630,16 @@ class SellFormStep1 extends React.Component {
 							</div>
 						)}
 
-						{this.state.sportSelectors.length === 1 && this.hasCustomTournament()
-						&& (
+						{this.state.sportSelectors.length === 1 && this.hasCustomTournament() && (
 							<NewTournament
 								showClose={!this.forceCustomTournament()}
 								value={this.props.customTournament}
 								onBlur={e => this.updateContentValue(e, "customTournament")}
 								onClick={this.props.removeNewTournament}
 							/>
-						)
-						}
+						)}
 
-						{this.showSeasonSelector()
-						&& this.state.seasonSelectors.map((season, i, list) => (
+						{this.showSeasonSelector() && this.state.seasonSelectors.map((season, i, list) => (
 							<SeasonSelector
 								key={i}
 								season={i}
@@ -678,11 +654,11 @@ class SellFormStep1 extends React.Component {
 								showAddNew={this.props.seasons.length > 0 && list.length - 1 === i}
 								openSelector={() => this.props.openSeasonSelector(i, this.props.seasons)}
 							/>
-						))
-						}
+						))}
 
-						{(this.state.loadingSeasons || this.state.loadingSchedule)
-						&& <div><i className="fa fa-cog fa-spin" /></div>}
+						{(this.state.loadingSeasons || this.state.loadingSchedule) && (
+							<div><i className="fa fa-cog fa-spin" /></div>
+						)}
 
 						<div className="step-title">{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}</div>
 
@@ -690,7 +666,10 @@ class SellFormStep1 extends React.Component {
 							{this.context.t("CL_STEP1_LISTING_DETAILS_TEXT")}
 						</div>
 
-						<ListingName onChange={() => this.setState({ nameSet: true })} />
+						<ListingName
+							name={name}
+							onChange={e => this.props.updateContentValue("name", e.target.value)}
+						/>
 
 						<Description
 							value={this.props.description}

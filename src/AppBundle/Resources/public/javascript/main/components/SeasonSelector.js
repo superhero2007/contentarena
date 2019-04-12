@@ -6,6 +6,7 @@ import { DATE_FORMAT } from "@constants";
 import moment from "moment";
 import NewFixture from "./NewFixture";
 import NewSeason from "./NewSeason";
+import { getSeasonDateString } from "../../common/utils/listing";
 
 class SeasonSelector extends React.Component {
 	constructor(props) {
@@ -47,26 +48,89 @@ class SeasonSelector extends React.Component {
 		updateFromMultiple("seasons", index, "fixtures", fixtures);
 	};
 
-	setDurationStart = (e) => {
-		const { index } = this.props;
-		this.props.updateFromMultiple("seasons", index, "customStartDate", e ? e.format() : "");
-	};
+	getYears = () => {
+		const currentYear = moment().year();
+		const years = [];
 
-	setDurationEnd = (e) => {
-		const { index } = this.props;
-		this.props.updateFromMultiple("seasons", index, "customEndDate", e ? e.format() : "");
-	};
+		for (let i = currentYear - 5; i < currentYear + 5; i++) {
+			years.push(i);
+		}
+		return years;
+	}
+
+	getMonths = () => Array.apply(0, Array(12)).map((_, i) => moment().month(i).format("MMM"))
+
+	handleSeasonStartChange = (e, type) => {
+		const {
+			index, tournament, season, seasons,
+		} = this.props;
+		const activeSeason = seasons[season];
+
+		if (type === "YEAR") {
+			this.startYear = e.target.value;
+		}
+		if (type === "MONTH") {
+			this.startMonth = e.target.value;
+		}
+
+		const monthNumber = moment().month(this.startMonth).format("M");
+		const startDate = moment(new Date(this.startYear, +monthNumber)).utc().format();
+
+		this.props.updateFromMultiple("seasons", index, "customStartDate", startDate);
+		// this.props.updateFromMultiple("seasons", index, 'from', moment(startDate).utc().format('MMM YYYY'));
+
+		const initialName = tournament[0].name;
+		const dateString = getSeasonDateString(activeSeason);
+
+		this.props.updateFromMultiple("seasons", index, "name", `${initialName} ${dateString}`);
+
+		// if (!this.endYear && !this.endMonth) {
+		// 	this.props.updateFromMultiple("seasons", index, "custom", false);
+		// } else {
+		// 	this.props.updateFromMultiple("seasons", index, "custom", true);
+		// }
+	}
+
+	handleSeasonEndChange = (e, type) => {
+		const {
+			index, tournament, season, seasons,
+		} = this.props;
+		const activeSeason = seasons[season];
+
+		if (type === "YEAR") {
+			this.endYear = e.target.value;
+		}
+		if (type === "MONTH") {
+			this.endMonth = e.target.value;
+		}
+
+		const monthNumber = moment().month(this.endMonth).format("M");
+		const endDate = moment(new Date(this.endYear, +monthNumber)).utc().format();
+
+		this.props.updateFromMultiple("seasons", index, "customEndDate", endDate);
+		// this.props.updateFromMultiple("seasons", index, 'to', moment(endDate).utc().format('MMM YYYY'));
+
+		const initialName = tournament[index].name;
+		const dateString = getSeasonDateString(activeSeason);
+
+		this.props.updateFromMultiple("seasons", index, "name", `${initialName} ${dateString}`);
+
+		// if (!this.endYear && !this.endMonth) {
+		// 	this.props.updateFromMultiple("seasons", index, "custom", false);
+		// } else {
+		// 	this.props.updateFromMultiple("seasons", index, "custom", true);
+		// }
+	}
 
 	render() {
 		const {
-			index, season, seasons, validation,
+			index, season, seasons, validation, tournament,
 		} = this.props;
 		const activeSeason = seasons[season];
 
 		return (
 			<div className="base-container">
-				{!this.props.isCustom
-				&& (
+				{!this.props.isCustom && (
 					<div className="base-input">
 						<label>
 							{this.context.t("CL_STEP1_LABEL_SEASON")}
@@ -80,29 +144,42 @@ class SeasonSelector extends React.Component {
 							placeholder={this.context.t("Season")}
 						/>
 
-						{this.props.showClose
-						&& (
+						{this.props.showClose && (
 							<button onClick={this.props.removeSeason} className="standard-button">
 								<i className="fa fa-close" />
 							</button>
-						)
-						}
+						)}
 					</div>
 				)}
 
-				{this.props.isCustom && activeSeason
-				&& (
+				{this.props.isCustom && activeSeason && (
+					<div className="base-input">
+						<label>
+							{this.context.t("CL_STEP1_LABEL_SEASON")}
+						</label>
+						<input
+							type="text"
+							value={this.props.value || tournament[0].name || ""}
+							readOnly
+							placeholder={this.context.t("Season")}
+						/>
+					</div>
+				)}
+
+				{/* {this.props.isCustom && activeSeason && (
 					<NewSeason
 						showClose={this.props.showClose}
 						onBlur={this.props.onBlur}
 						index={index}
 						onRemove={this.props.removeSeason}
 					/>
-				)}
+				)} */}
 
-				{this.renderDurationFields(activeSeason)}
+				<div className="season-duration">
+					{this.renderSeason(activeSeason)}
+				</div>
 
-				{this.props.showAddNew && activeSeason && (
+				{activeSeason && (
 					<div className="step-item-description d-flex justify-content-end text-right align-items-center">
 						<div style={{ marginRight: 15 }}>
 							{this.context.t("Would you like to add specific fixture details to your listing? This is especially important if you sell single matches (e.g. friendly matches) or rounds.")}
@@ -117,6 +194,24 @@ class SeasonSelector extends React.Component {
 					</div>
 				)}
 
+				{activeSeason && activeSeason.fixtures && activeSeason.fixtures.length > 0 && (
+					<div className="base-input fixture-wrapper">
+						{activeSeason.fixtures.map((fixture, i, list) => (
+							<NewFixture
+								key={i}
+								id={i}
+								onAdd={this.addFixture}
+								value={fixture.name}
+								date={fixture.date}
+								handleDate={e => this.onChangeFixtureDate(i, e)}
+								onChange={e => this.onChangeFixture(i, e.target.value)}
+								onRemove={() => this.removeFixture(i)}
+								showAdd={i === list.length - 1}
+								isInvalid={!fixture.name && validation}
+							/>
+						))}
+					</div>
+				)}
 				{this.props.showAddNew && (
 					<div className="step-item-description d-flex justify-content-end text-right align-items-center">
 						<div style={{ marginRight: 15 }}>
@@ -131,66 +226,83 @@ class SeasonSelector extends React.Component {
 						</button>
 					</div>
 				)}
-
-				{activeSeason && activeSeason.fixtures && activeSeason.fixtures.length > 0 && (
-					<div className="base-input fixture-wrapper">
-						{
-							activeSeason.fixtures.map((fixture, i, list) => (
-								<NewFixture
-									key={i}
-									id={i}
-									onAdd={this.addFixture}
-									value={fixture.name}
-									date={fixture.date}
-									handleDate={e => this.onChangeFixtureDate(i, e)}
-									onChange={e => this.onChangeFixture(i, e.target.value)}
-									onRemove={() => this.removeFixture(i)}
-									showAdd={i === list.length - 1}
-									isInvalid={!fixture.name && validation}
-								/>
-							))
-						}
-					</div>
-				)}
 			</div>
 		);
 	}
 
-	renderDurationFields(activeSeason) {
+	renderSeason = (activeSeason) => {
 		if (!activeSeason) {
 			return null;
 		}
-
 		const {
 			startDate, endDate, customStartDate, customEndDate,
 		} = activeSeason;
 		const realStartDate = customStartDate || startDate;
 		const realEndDate = customEndDate || endDate;
 
+		this.startYear = realStartDate ? moment(realStartDate).utc().format("YYYY") : "";
+		this.startMonth = realStartDate ? moment(realStartDate).utc().format("MMM") : "";
+
+		this.endYear = realEndDate ? moment(realEndDate).utc().format("YYYY") : "";
+		this.endMonth = realEndDate ? moment(realEndDate).utc().format("MMM") : "";
+
 		return (
-			<div className="base-input duration-date-pickers">
-				<label>{this.context.t("CL_STEP1_ADD_SEASON_DURATION")}</label>
-				<label className="season-selector-label">From</label>
-				<DatePicker
-					showYearDropdown
-					className="date-picker"
-					selected={realStartDate ? moment(realStartDate) : undefined}
-					onChange={this.setDurationStart}
-					dateFormat={DATE_FORMAT}
-					placeholderText={DATE_FORMAT.toLowerCase()}
-				/>
-				<label className="season-selector-label">
-					{this.context.t("To")}
+			<>
+				<label>
+					From {" "}
 				</label>
-				<DatePicker
-					showYearDropdown
-					className="date-picker"
-					selected={realEndDate ? moment(realEndDate) : undefined}
-					onChange={this.setDurationEnd}
-					placeholderText={DATE_FORMAT.toLowerCase()}
-					dateFormat={DATE_FORMAT}
-				/>
-			</div>
+				<select
+					defaultValue={this.startYear || ""}
+					onChange={e => this.handleSeasonStartChange(e, "YEAR")}
+					className="ca-form-control"
+				>
+					<option value="" disabled>
+						Year
+					</option>
+					{this.getYears().map(year => (
+						<option value={year} key={year}>{year}</option>
+					))}
+				</select>
+				<select
+					defaultValue={this.startMonth || ""}
+					className="ca-form-control"
+					onChange={e => this.handleSeasonStartChange(e, "MONTH")}
+				>
+					<option value="" disabled>
+						Month
+					</option>
+					{this.getMonths().map(month => (
+						<option value={month} key={month}>{month}</option>
+					))}
+				</select>
+				<label>
+					To {" "}
+				</label>
+				<select
+					value={this.endYear || ""}
+					onChange={e => this.handleSeasonEndChange(e, "YEAR")}
+					className="ca-form-control"
+				>
+					<option value="" disabled>
+						Year
+					</option>
+					{this.getYears().map(year => (
+						<option value={year} key={year}>{year}</option>
+					))}
+				</select>
+				<select
+					value={this.endMonth || ""}
+					onChange={e => this.handleSeasonEndChange(e, "MONTH")}
+					className="ca-form-control"
+				>
+					<option value="" disabled>
+						Month
+					</option>
+					{this.getMonths().map(month => (
+						<option value={month} key={month}>{month}</option>
+					))}
+				</select>
+			</>
 		);
 	}
 }

@@ -2,24 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
-class ListingName extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
-
-	updateName = (e) => {
-		const { onChange } = this.props;
-
-		if (onChange) {
-			onChange();
-		}
-
-		this.props.updateContentValue("name", e.target.value);
-	};
-
+class ListingName extends React.PureComponent {
 	render() {
-		const { name, validation } = this.props;
+		const { name, validation, onChange } = this.props;
 		const isInvalid = !name && validation;
 		return (
 			<div className="base-input">
@@ -28,8 +13,8 @@ class ListingName extends React.Component {
 				</label>
 				<input
 					type="text"
-					value={name}
-					onChange={this.updateName}
+					value={name || ""}
+					onChange={onChange}
 					placeholder={isInvalid ? this.context.t("LISTING_NAME_EMPTY") : ""}
 					className={isInvalid ? "is-invalid" : ""}
 					maxLength={70}
@@ -44,19 +29,9 @@ ListingName.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-	...state.content,
 	validation: state.validation,
-});
-
-const mapDispatchToProps = dispatch => ({
-	updateContentValue: (key, value) => dispatch({
-		type: "UPDATE_CONTENT_VALUE",
-		key,
-		value,
-	}),
 });
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
 )(ListingName);

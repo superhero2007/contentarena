@@ -322,7 +322,6 @@ class ClosedDeals extends Component {
 									id: "territories",
 									width: 200,
 									sortMethod: (a, b) => {
-										console.log(a, b);
 										if (a.name.length === b.name.length) {
 											return a > b ? 1 : -1;
 										}

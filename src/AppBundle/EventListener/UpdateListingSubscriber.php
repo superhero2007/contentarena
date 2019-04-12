@@ -78,22 +78,22 @@ class UpdateListingSubscriber implements EventSubscriber
         if ( $entity instanceof Content && isset($this->preStatus) && isset($this->postStatus) ) {
 
             if ($this->preStatus->getName() !== "APPROVED" && $this->postStatus->getName() === "APPROVED") {
-                $this->notificationService->createSingleNotification("SELLER_LISTING_APPROVED", $entity->getCustomId(),$entity->getOwner(), array(
+                $this->notificationService->createSingleNotification("SELLER_LISTING_APPROVED", $entity,$entity->getOwner(), array(
                     "%listingName%" => $entity->getName()
                 ));
             }
             if ( $this->preStatus->getName() !== "REJECTED" && $this->postStatus->getName() === "REJECTED"  ){
-                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity->getCustomId(),$entity->getOwner(), array(
+                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity,$entity->getOwner(), array(
                     "%listingName%" => $entity->getName()
                 ));
             }
             if ( $this->preStatus->getName() !== "INACTIVE" && $this->postStatus->getName() === "INACTIVE"  ){
-                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity->getCustomId(),$entity->getOwner(), array(
+                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity,$entity->getOwner(), array(
                     "%listingName%" => $entity->getName()
                 ));
             }
             if ( $this->preStatus->getName() !== "INACTIVE" && $this->postStatus->getName() === "INACTIVE"  ){
-                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity->getCustomId(),$entity->getOwner(), array(
+                $this->notificationService->createSingleNotification("SELLER_LISTING_DEACTIVATED", $entity,$entity->getOwner(), array(
                     "%listingName%" => $entity->getName()
                 ));
             }
