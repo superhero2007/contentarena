@@ -28,7 +28,7 @@
         "import/no-unresolved": [
             "error",
             {
-                "ignore": [ "@constants", "@components", "@utils", "@translations" ]
+                "ignore": [ "@constants", "@components", "@utils", "@translations", "@icons" ]
             }
         ],
         "no-unused-vars": "off",
@@ -57,7 +57,6 @@
         "max-len": "off",
         "no-underscore-dangle": "off",
         "import/prefer-default-export": "off",
-        "import/no-unresolved": "off",
         "import/no-named-default": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
         "react/destructuring-assignment": "off",

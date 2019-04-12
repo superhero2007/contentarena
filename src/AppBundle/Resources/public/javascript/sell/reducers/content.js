@@ -67,7 +67,8 @@ export const content = (state = EmptyListing, action) => {
 		return Object.assign({}, state, EmptyListing);
 	case contentType.CONTENT_INIT:
 		action.content.initialized = true;
-		return Object.assign({}, state, action.content, { maxStep: max([action.content.maxStep, state.maxStep]) });
+		return Object.assign({}, state, action.content,
+			{ maxStep: max([action.content.maxStep, state.maxStep]) });
 	case contentType.ALL_EPISODE_UPDATE_FLAG:
 		return Object.assign({}, state, { EDIT_PROGRAM_DESCRIPTION_OPTIONAL: action.payload });
 	case contentType.GO_TO_NEXT_STEP:

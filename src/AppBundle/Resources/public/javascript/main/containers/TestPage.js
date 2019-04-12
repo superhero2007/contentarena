@@ -1,5 +1,4 @@
 import React from "react";
-
 import { connect } from "react-redux";
 import store from "../store";
 import { updateProfile } from "../actions/userActions";
@@ -21,7 +20,6 @@ class TestPage extends React.Component {
 	};
 
 	render() {
-		const { history } = this.props;
 		return (
 			<div className="manager-content">
 				<RegionCountrySelector

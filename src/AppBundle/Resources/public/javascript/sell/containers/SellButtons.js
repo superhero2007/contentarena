@@ -46,31 +46,39 @@ class SellButtons extends Component {
 
 		let { content } = store.getState();
 		content = parseSeasons(content);
-		ContentArena.ContentApi.saveContentAsDraft(content).done((response) => {
-			const currentStep = Number(content.step);
-			const nextStep = currentStep + 1;
+		ContentArena.ContentApi.saveContentAsDraft(content)
+			.done((response) => {
+				const currentStep = Number(content.step);
+				const nextStep = currentStep + 1;
 
-			if (response.success && response.contentId) {
-				this.props.updateContentValue("id", response.contentId);
-				this.props.updateContentValue("customId", response.customId);
-			}
+				if (response.success && response.contentId) {
+					this.props.updateContentValue("id", response.contentId);
+					this.props.updateContentValue("customId", response.customId);
+				}
 
-			if (response.success && response.sports) {
-				this.props.updateContentValue("sports", response.sports);
-			}
+				if (response.success && response.sports) {
+					this.props.updateContentValue("sports", response.sports);
+				}
 
-			this.setState({ saving: false, savingSuccess: true });
+				this.setState({
+					saving: false,
+					savingSuccess: true,
+				});
 
-			if (currentStep === 1) {
-				history.replace(`/contentlisting/${response.customId}/1`);
-			}
+				if (currentStep === 1) {
+					history.replace(`/contentlisting/${response.customId}/1`);
+				}
 
-			history.push(`/contentlisting/${response.customId}/${nextStep}`);
-			goToStep(nextStep);
-		}).fail(() => {
-			this.setState({ saving: false, savingSuccess: false });
-			// history.push("/contentlisting/"+ response.customId + "/" + nextStep);
-		});
+				history.push(`/contentlisting/${response.customId}/${nextStep}`);
+				goToStep(nextStep);
+			})
+			.fail(() => {
+				this.setState({
+					saving: false,
+					savingSuccess: false,
+				});
+				// history.push("/contentlisting/"+ response.customId + "/" + nextStep);
+			});
 	};
 
 	expireDateIsValid = () => {
@@ -269,14 +277,22 @@ class SellButtons extends Component {
 								value: t.name,
 							}));
 						}
-						if (sp.territories) sp.territories = sp.territories.map(t => ({ label: t.name, value: t.name }));
+						if (sp.territories) {
+							sp.territories = sp.territories.map(t => ({
+								label: t.name,
+								value: t.name,
+							}));
+						}
 
 						this.props.updateSalesPackages("save", sp, i);
 					});
 				}
 
 				this.props.updateContentValue("id", response.contentId);
-				this.setState({ saving: false, savingSuccess: true });
+				this.setState({
+					saving: false,
+					savingSuccess: true,
+				});
 				history.push(`/contentlisting/${response.customId}/sign`);
 				goToStep(5);
 			}
