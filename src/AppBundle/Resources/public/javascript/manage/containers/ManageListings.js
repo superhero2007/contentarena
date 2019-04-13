@@ -34,25 +34,41 @@ class ManageListings extends React.Component {
 			loadingExpired: true,
 		});
 
-		ContentArena.ContentApi.getDraftListings().done((listings) => {
-			listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
-			_this.setState({ draft: listings, loadingDraft: false });
-		});
+		ContentArena.ContentApi.getDraftListings()
+			.done((listings) => {
+				listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
+				_this.setState({
+					draft: listings,
+					loadingDraft: false,
+				});
+			});
 
-		ContentArena.ContentApi.getInactiveListings().done((listings) => {
-			listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
-			_this.setState({ inactive: listings, loadingInactive: false });
-		});
+		ContentArena.ContentApi.getInactiveListings()
+			.done((listings) => {
+				listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
+				_this.setState({
+					inactive: listings,
+					loadingInactive: false,
+				});
+			});
 
-		ContentArena.ContentApi.getActiveListings().done((listings) => {
-			listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
-			_this.setState({ active: listings, loadingActive: false });
-		});
+		ContentArena.ContentApi.getActiveListings()
+			.done((listings) => {
+				listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
+				_this.setState({
+					active: listings,
+					loadingActive: false,
+				});
+			});
 
-		ContentArena.ContentApi.getExpiredListings().done((listings) => {
-			listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
-			_this.setState({ expired: listings, loadingExpired: false });
-		});
+		ContentArena.ContentApi.getExpiredListings()
+			.done((listings) => {
+				listings = listings.map(listing => ContentArena.Utils.contentParserFromServer(listing));
+				_this.setState({
+					expired: listings,
+					loadingExpired: false,
+				});
+			});
 	}
 
 	selectListing = (id) => {
@@ -62,36 +78,48 @@ class ManageListings extends React.Component {
 	duplicate = (customId) => {
 		const { draft } = this.state;
 		this.setState({ loadingDraft: true });
-		ContentArena.ContentApi.duplicateListing(customId).done((response) => {
-			if (response.success) {
-				draft.unshift(response.listing);
-				this.setState({ draft, loadingDraft: false });
-				goTo(`contentlisting/${response.listing.customId}/1`);
-			}
-		});
+		ContentArena.ContentApi.duplicateListing(customId)
+			.done((response) => {
+				if (response.success) {
+					draft.unshift(response.listing);
+					this.setState({
+						draft,
+						loadingDraft: false,
+					});
+					goTo(`contentlisting/${response.listing.customId}/1`);
+				}
+			});
 	};
 
 	republish = (customId) => {
 		const { active } = this.state;
 		this.setState({ loadingActive: true });
-		ContentArena.ContentApi.republishListing(customId).done((response) => {
-			if (response.success) {
-				active.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
-				this.setState({ active, loadingActive: false });
-			}
-		});
+		ContentArena.ContentApi.republishListing(customId)
+			.done((response) => {
+				if (response.success) {
+					active.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+					this.setState({
+						active,
+						loadingActive: false,
+					});
+				}
+			});
 	};
 
 	deactivate = (customId) => {
 		const { inactive } = this.state;
 		this.setState({ loadingInactive: true });
-		ContentArena.ContentApi.deactivateListing(customId).done((response) => {
-			if (response.success) {
-				// inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
-				inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
-				this.setState({ inactive, loadingInactive: false });
-			}
-		});
+		ContentArena.ContentApi.deactivateListing(customId)
+			.done((response) => {
+				if (response.success) {
+					// inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+					inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+					this.setState({
+						inactive,
+						loadingInactive: false,
+					});
+				}
+			});
 	};
 
 	render() {
@@ -110,7 +138,14 @@ class ManageListings extends React.Component {
 				flex: 1,
 			}}
 			>
-				<div style={{ width: "100%", textAlign: "right" }} className="top-row">
+				<div
+					style={{
+						width: "100%",
+						textAlign: "right",
+						paddingRight: 15,
+					}}
+					className="top-row"
+				>
 					<RightsLegend />
 					<button className="ca-btn primary" onClick={this.showHelpModal}>
 						{this.context.t("MANAGE_LISTINGS_HELP")}
