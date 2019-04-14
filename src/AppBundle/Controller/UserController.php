@@ -94,6 +94,12 @@ class UserController extends FOSRestController
         $logger = $this->get('logger');
         $email = $request->get("email");
 
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errorCode = UserErrors::USER_EMAIL_NOT_VALID;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "email" => $email));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
+        }
+
         $user = $this->getDoctrine()
             ->getRepository('AppBundle:User')
             ->findOneBy(['email' => $email]);

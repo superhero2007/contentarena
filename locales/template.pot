@@ -860,6 +860,10 @@ msgid "SIGN_UP_FIELD_ERROR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/SignUpForm.js
+msgid "SIGN_UP_FIELD_EMAIL_ERROR"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/SignUpForm.js
 msgid "SIGN_UP_FOR_ACCOUNT"
 msgstr ""
 
@@ -1273,10 +1277,6 @@ msgid "HEADER_LINK_BUYING_MODE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "HEADER_LINK_MESSAGES"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_MY_CONTENT_ARENA"
 msgstr ""
 
@@ -1309,11 +1309,11 @@ msgid "NOTIFICATIONS_MARK_ALL_READ"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
-msgid "NOTIFICATIONS_CLEAR_ALL"
+msgid "NOTIFICATIONS_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderNotifications.js
-msgid "NOTIFICATIONS_EMPTY"
+msgid "NOTIFICATIONS_CLEAR_ALL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/LicenseDownloader.js
@@ -1345,7 +1345,6 @@ msgid "Year"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/NewSeason.js
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "To"
 msgstr ""
 
@@ -1475,10 +1474,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
 msgid "CL_STEP1_ADD_SEASON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
-msgid "CL_STEP1_ADD_SEASON_DURATION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -2775,14 +2770,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
 msgid "CL_STEP1_DESCRIPTION_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_FORM_ADD_SPORT_BUTTON_DESCRIPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
-msgid "CL_STEP1_FORM_ADD_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SellFormStep1.js
