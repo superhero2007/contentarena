@@ -207,7 +207,6 @@ ContentListingTable.contextTypes = {
 
 ContentListingTable.propTypes = {
 	listings: PropTypes.array.isRequired,
-	history: PropTypes.object.isRequired,
 };
 
 export default ContentListingTable;

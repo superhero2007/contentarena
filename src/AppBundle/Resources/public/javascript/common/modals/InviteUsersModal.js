@@ -149,22 +149,24 @@ class InviteUsersModal extends Component {
 					)}
 				</section>
 				<footer className="modal-footer">
-					{(<React.Fragment>
-						<button className="cancel-btn" onClick={this.close}>
-							{this.context.t("INVITE_USERS_MODAL_BUTTON_CANCEL")}
-						</button>
-						<button
-							className="standard-button"
-							disabled={this.isButtonDisabled()}
-							onClick={this.inviteUsers}
-						>
+					{(
+						<React.Fragment>
+							<button className="cancel-btn" onClick={this.close}>
+								{this.context.t("INVITE_USERS_MODAL_BUTTON_CANCEL")}
+							</button>
+							<button
+								className="standard-button"
+								disabled={this.isButtonDisabled()}
+								onClick={this.inviteUsers}
+							>
 
-							{this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")}
-							{" "}
-							<Loader loading={loading} xSmall />
+								{this.context.t("INVITE_USERS_MODAL_SEND_BUTTON")}
+								{" "}
+								<Loader loading={loading} xSmall />
 
-						</button>
-					</React.Fragment>)}
+							</button>
+						</React.Fragment>
+					)}
 				</footer>
 			</Modal>
 		);
