@@ -156,7 +156,13 @@ class EventFilter extends React.Component {
 						))}
 					{this.getFilters().length > 5 && (
 						<>
-							<hr />
+							<div style={{
+								background: "#999",
+								height: 1,
+								margin: "20px 0",
+							}}
+							/>
+
 							<div className="text-center">
 								<a onClick={() => this.props.showAllFilters(!allFilters)}>
 									{allFilters ? (
