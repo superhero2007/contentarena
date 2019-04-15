@@ -3,6 +3,12 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
 class ListingName extends React.PureComponent {
+	onBlur = (e) => {
+		const { onChange } = this.props;
+		e.target.value = e.target.value.trim();
+		onChange(e);
+	};
+
 	render() {
 		const { name, validation, onChange } = this.props;
 		const isInvalid = !name && validation;
@@ -15,6 +21,7 @@ class ListingName extends React.PureComponent {
 					type="text"
 					value={name || ""}
 					onChange={onChange}
+					onBlur={this.onBlur}
 					placeholder={isInvalid ? this.context.t("LISTING_NAME_EMPTY") : ""}
 					className={isInvalid ? "is-invalid" : ""}
 					maxLength={70}
