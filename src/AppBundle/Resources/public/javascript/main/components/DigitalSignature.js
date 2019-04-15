@@ -11,43 +11,37 @@ class DigitalSignature extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			ready: (props.ready) ? props.ready : false,
-		};
-
 		this.signature = React.createRef();
+		this.state = {
+			clearIconVisible: true,
+		};
 	}
 
 	componentDidMount() {
-		if (!this.state.ready) this.setState({ blank: this.signature.current.toDataURL() });
+		this.setState({ blank: this.signature.current.toDataURL() });
 	}
 
-	clear = () => {
+	clear = (e) => {
+		e.stopPropagation();
+		const { onReady } = this.props;
 		this.signature.current.clear();
-	};
-
-	done = () => {
-		const { blank } = this.state;
-		const { onReady } = this.props;
-
-		const data = this.signature.current.toDataURL();
-
-		if (data === blank) return;
-
-		this.setState({ ready: true });
-		if (onReady) onReady(data);
-	};
-
-	edit = () => {
-		const { onReady } = this.props;
-		this.setState({ ready: false });
 		if (onReady) onReady(null);
 	};
 
-	disablePlaceholder = () => {
-		const { isPlaceholderDisabled } = this.state;
+	saveSignature = () => {
+		const { blank, clearIconVisible } = this.state;
+		const { onReady } = this.props;
 
-		if (!isPlaceholderDisabled) this.setState({ isPlaceholderDisabled: true });
+		const data = this.signature.current.toDataURL();
+		this.setState({ clearIconVisible: true });
+
+		if (data === blank) return;
+
+		if (onReady) onReady(data);
+	};
+
+	hideClearIcon = () => {
+		this.setState({ clearIconVisible: false });
 	};
 
 	render() {
@@ -55,7 +49,6 @@ class DigitalSignature extends React.Component {
 			signature,
 			licenseBidId,
 			title = this.context.t("DIGITAL_SIGNATURE_TITLE"),
-			clearBtnText = this.context.t("DIGITAL_SIGNATURE_BUTTON_CLEAR"),
 			customClass = "",
 			signaturePosition,
 			signatureName,
@@ -68,8 +61,6 @@ class DigitalSignature extends React.Component {
 			updateContentValue,
 			validation,
 		} = this.props;
-
-		const { ready, isPlaceholderDisabled } = this.state;
 
 		const isSignatureNotAdded = !signature && validation;
 		const isSignatureNameEmpty = !signatureName && validation;
@@ -138,22 +129,15 @@ class DigitalSignature extends React.Component {
 								}}
 							>
 								<img src={pdfIcon} alt="Licence" />
-								{" "}
-								{this.context.t("LICENSE_AGREEMENT")}
+								{` ${this.context.t("LICENSE_AGREEMENT")}`}
 							</span>
 						)}
 					</div>
 				)}
-				<div
-					className={`signature-wrap ${isSignatureNotAdded ? "is-invalid" : ""}`}
-					onClick={this.disablePlaceholder}
-				>
-					{!signature && !isPlaceholderDisabled && (
+				<div className={`signature-wrap ${isSignatureNotAdded ? "is-invalid" : ""}`}>
+					{!signature && (
 						<div className="placeholder">
 							<div>
-								<div className="small-text">
-									{this.context.t("DIGITAL_SIGNATURE_PLACEHOLDER_SMALL_TEXT")}
-								</div>
 								<div className="big-text">
 									{this.context.t("DIGITAL_SIGNATURE_PLACEHOLDER_BIG_TEXT")}
 								</div>
@@ -161,56 +145,31 @@ class DigitalSignature extends React.Component {
 						</div>
 					)}
 
-					{signature && ready && (
-						<img style={{ width: 800, height: 300, margin: "0 auto" }} src={signature} alt="" />
-					)}
+					{signature && this.state.clearIconVisible
+						&& <i className="fa fa-refresh clear-signature" onClick={e => this.clear(e)} />
+					}
 
-					{!ready && (
-						<SignaturePad ref={this.signature} />
-					)}
+					<SignaturePad ref={this.signature} onEnd={this.saveSignature} onBegin={this.hideClearIcon} />
 				</div>
 
 				<div className="signature-name-container">
 					<label>
 						Signed By
-
-
 					</label>
-					<div style={{ display: "flex" }}>
+					<div>
 						<input
 							value={signatureName}
-							disabled={ready}
 							onChange={onChangeSignatureName}
 							placeholder={isSignatureNameEmpty ? this.context.t("SIGNATURE_NAME_EMPTY") : "First Name Last Name"}
-							className={`${isSignatureNameEmpty ? "is-invalid" : ""}`}
+							className={`ca-form-control ${isSignatureNameEmpty ? "is-invalid" : ""}`}
 						/>
 						<input
 							value={signaturePosition}
-							disabled={ready}
 							onChange={onChangeSignaturePosition}
 							placeholder={isSignatureNameEmpty ? this.context.t("SIGNATURE_POSITION_EMPTY") : "Position"}
-							className={`${isSignaturePositionEmpty ? "is-invalid" : ""}`}
+							className={`ca-form-control ${isSignaturePositionEmpty ? "is-invalid" : ""}`}
 						/>
 					</div>
-
-				</div>
-
-				<div className="buttons">
-					{!ready && (
-						<button onClick={this.clear} className="standard-button-small transparent">
-							{clearBtnText}
-						</button>
-					)}
-					{!ready && (
-						<button onClick={this.done} className="standard-button-small">
-							{this.context.t("DIGITAL_SIGNATURE_BUTTON_DONE")}
-						</button>
-					)}
-					{ready && (
-						<button onClick={this.edit} className="standard-button-big">
-							{this.context.t("DIGITAL_SIGNATURE_BUTTON_NEW")}
-						</button>
-					)}
 				</div>
 			</div>
 		);

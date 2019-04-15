@@ -501,8 +501,10 @@ class Checkout extends React.Component {
 
 		return !terms
 			|| !signature
-			|| signatureName === ""
-			|| signaturePosition === ""
+			|| !signatureName
+			|| (signatureName && signatureName.trim() === "")
+			|| !signaturePosition
+			|| (signaturePosition && signaturePosition.trim() === "")
 			|| bundles.length === 0
 			|| bundles.some(b => b.salesMethod === "BIDDING" && (!b.fee || parseFloat(b.fee) < parseFloat(b.minimumBid)));
 	};

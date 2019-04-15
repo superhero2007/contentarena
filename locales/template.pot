@@ -1162,10 +1162,6 @@ msgid "DIGITAL_SIGNATURE_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "DIGITAL_SIGNATURE_BUTTON_CLEAR"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "CL_STEP5_TERMS_1"
 msgstr ""
 
@@ -1191,10 +1187,6 @@ msgid "LICENSE_AGREEMENT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "DIGITAL_SIGNATURE_PLACEHOLDER_SMALL_TEXT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "DIGITAL_SIGNATURE_PLACEHOLDER_BIG_TEXT"
 msgstr ""
 
@@ -1204,14 +1196,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
 msgid "SIGNATURE_POSITION_EMPTY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "DIGITAL_SIGNATURE_BUTTON_DONE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/DigitalSignature.js
-msgid "DIGITAL_SIGNATURE_BUTTON_NEW"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/FileSelector.js
