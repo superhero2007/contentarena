@@ -128,17 +128,6 @@ class CustomPagination extends Component {
 	}
 }
 
-CustomPagination.propTypes = {
-	pages: PropTypes.number,
-	page: PropTypes.number,
-	PageButtonComponent: PropTypes.any,
-	PrevButtonComponent: PropTypes.any,
-	NextButtonComponent: PropTypes.any,
-	onPageChange: PropTypes.func,
-	backText: PropTypes.string,
-	nextText: PropTypes.string,
-};
-
 CustomPagination.contextTypes = {
 	t: PropTypes.func.isRequired,
 };

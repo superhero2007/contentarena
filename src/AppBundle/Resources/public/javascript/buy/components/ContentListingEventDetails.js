@@ -9,6 +9,7 @@ import {
 	seasonReleaseIcon,
 	fixturesEpisodeIcon,
 } from "../../main/components/Icons";
+import { getSeasonDateString } from "../../common/utils/listing";
 
 import { DATE_FORMAT } from "@constants";
 
@@ -192,7 +193,10 @@ class ContentListingEventDetails extends React.Component {
 		const seasonsArray = this.getSeasonsYears(seasons);
 		const roundsTitle = (rounds.length > 1) ? "Rounds: " : "Round: ";
 		const roundsName = roundsTitle + rounds.join(", ");
-		const seasonsWithYear = seasons.filter(season => (season.year !== undefined));
+		const seasonsWithYear = seasons.filter(season => (
+			season.year !== undefined
+			|| (season.customEndDate !== undefined && season.customStartDate !== undefined)
+		));
 		const tournamentArray = tournament ? Array.isArray(tournament) ? tournament : [tournament] : [];
 
 		return (
@@ -292,21 +296,23 @@ class ContentListingEventDetails extends React.Component {
 								{seasonReleaseIcon}
 							</div>
 							<div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
+
 								{showFullSeasons && seasons.map((season, i) => (
 									<span key={i}>
-										{this.buildSeasonYear(season)}
+										{getSeasonDateString(season)}
+										{/* {this.buildSeasonYear(season)}
 										{" "}
-										{this.buildSeasonString(season)}
+										{this.buildSeasonString(season)} */}
 									</span>
 								))}
 
 								{!showFullSeasons && (
 									<span>
-										{this.buildSeasonYear(seasons[0])}
-										{seasons.length > 1 && `-${this.buildSeasonYear(seasons[seasons.length - 1])}`}
+										{/* {this.buildSeasonYear(seasons[0])}
+										{seasons.length > 1 && `-${this.buildSeasonYear(seasons[seasons.length - 1])}`} */}
+										{getSeasonDateString(seasons[0])}
 									</span>
-								)
-								}
+								)}
 							</div>
 						</div>
 					)}
@@ -318,8 +324,6 @@ class ContentListingEventDetails extends React.Component {
 							</div>
 							<div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
 								Release year:
-
-
 								{" "}
 								{PROGRAM_YEAR === "Year" && "Not available"}
 								{" "}

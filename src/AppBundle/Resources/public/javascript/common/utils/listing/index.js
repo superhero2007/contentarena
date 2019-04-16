@@ -342,8 +342,16 @@ export const getSeasonDateString = (dateObj) => {
 	const startYear = start.format("YYYY");
 	const endYear = end.format("YYYY");
 
-	if (startMonth === endMonth && startYear === endYear) {
-		return `${startMonth} ${startYear}`;
+	const isMonthAdded = startMonth && endMonth;
+
+	if (startYear === endYear) {
+		return `${endYear}`;
 	}
-	return `(${startMonth} ${startYear} - ${endMonth} ${endYear})`;
+	if (startYear < endYear && !isMonthAdded) {
+		return `${startYear}/${endYear.toString().substr(-2)}`;
+	}
+	if (startYear < endYear && isMonthAdded) {
+		return `${startYear}/${endYear.toString().substr(-2)} (${startYear} ${startMonth} - ${endYear} ${endMonth})`;
+	}
+	return "";
 };

@@ -79,9 +79,7 @@ class AcceptBidModal extends Component {
 					<i className="fa fa-times" onClick={onCloseModal} />
 				</header>
 				<section className="modal-body">
-					<Loader
-						loading={isLoading}
-					>
+					<Loader loading={isLoading}>
 						{!isFail ? (
 							<div>
 								<DigitalSignature
@@ -125,9 +123,6 @@ class AcceptBidModal extends Component {
 								onClick={onCloseModal}
 							>
 								{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
-								>
-
-
 							</button>
 							{isAcceptDisabled ? (
 								<button
@@ -140,7 +135,7 @@ class AcceptBidModal extends Component {
 								<button
 									className="standard-button"
 									onClick={this.handleAcceptBid}
-									disabled={!signature || !terms}
+									disabled={!signature || !terms || !signaturePosition.trim() || !signatureName.trim()}
 								>
 									{this.context.t("COMMERCIAL_ACTIVITY_BID_BUTTON_ACCEPT")}
 								</button>

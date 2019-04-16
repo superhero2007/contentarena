@@ -460,7 +460,12 @@ class LandingWrapper extends Component {
 							>
 								<i className="fa fa-linkedin" />
 							</a>
-							<a href="mailto:info@contentarena.com" className="email-icon" target="_blank" rel="noopener noreferrer">
+							<a
+								href="mailto:info@contentarena.com"
+								className="email-icon"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								<i className="fa fa-envelope-o" />
 							</a>
 						</div>

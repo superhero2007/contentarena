@@ -148,7 +148,8 @@ class SellFormStep1 extends React.Component {
 
 				if (seasons.length === 0) {
 					const hasSeasons = this.props.seasons && this.props.seasons.length;
-					if (!hasSeasons && (this.props.customSeasons === null || this.props.customSeasons === undefined || this.props.customSeasons.length === 0)) {
+					if (!hasSeasons && (this.props.customSeasons === null
+						|| this.props.customSeasons === undefined || this.props.customSeasons.length === 0)) {
 						this.props.addNewSeason(0);
 					}
 					this.setState({
@@ -206,12 +207,13 @@ class SellFormStep1 extends React.Component {
 		const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
 		let tournaments;
 		let sportCategories;
-		const { name } = nextProps;
 
 		tournaments = (Array.isArray(nextProps.tournament)) ? nextProps.tournament : [nextProps.tournament];
 		const seasons = (Array.isArray(nextProps.seasons)) ? nextProps.seasons : [nextProps.seasons];
-		sportCategories = (Array.isArray(nextProps.sportCategory)) ? nextProps.sportCategory : [nextProps.sportCategory];
-		const websites = (Array.isArray(nextProps.website)) ? nextProps.website : (nextProps.website) ? [nextProps.website] : [];
+		sportCategories = (Array.isArray(nextProps.sportCategory))
+			? nextProps.sportCategory : [nextProps.sportCategory];
+		const websites = (Array.isArray(nextProps.website))
+			? nextProps.website : (nextProps.website) ? [nextProps.website] : [];
 
 		if (nextProps.sports.length === 1 && !loadingCategories) {
 			this.loadCategories(nextProps.sports[0]);

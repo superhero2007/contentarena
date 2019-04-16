@@ -476,7 +476,6 @@ class ApiController extends BaseController
         $emailService->internalUserBidDecline($user, $bid);
 
         return new JsonResponse(array("success"=>true, "salesBundle" => $bundle));
-
     }
 
     /**
