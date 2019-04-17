@@ -7,10 +7,16 @@ import CountrySelector from "../../main/components/CountrySelector";
 import { companyIsValid } from "../actions/validationActions";
 
 const labelStyle = {
-	height: "35px", fontSize: "14px", width: "100%", padding: "0 20px",
+	height: "35px",
+	fontSize: "14px",
+	width: "100%",
+	padding: "0 20px",
 };
 const inputStyle = {
-	width: "100%", margin: 0, height: "40px", padding: "0 20px",
+	width: "100%",
+	margin: 0,
+	height: "40px",
+	padding: "0 20px",
 };
 
 class CompanyInformation extends React.Component {
@@ -112,7 +118,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS_1")}
 								{" "}
 								1
 
@@ -130,7 +136,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS_2")}
 								{" "}
 								2
 
