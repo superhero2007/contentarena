@@ -283,7 +283,6 @@ class ContentListing extends Component {
 						<div className="wrapper">
 							<div className="bid-sales-wrap">
 								<SalesPackages
-									hideFee
 									limitedSize
 									salesPackages={bid.salesPackage}
 								/>
