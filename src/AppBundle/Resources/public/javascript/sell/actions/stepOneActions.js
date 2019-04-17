@@ -95,9 +95,10 @@ export const removeNewSeason = index => ({
 	selectorType: "seasons",
 });
 
-export const addNewSeason = index => ({
+export const addNewSeason = (index, name) => ({
 	type: "ADD_NEW",
 	index,
+	name,
 	selectorType: "seasons",
 	clean: [],
 });
