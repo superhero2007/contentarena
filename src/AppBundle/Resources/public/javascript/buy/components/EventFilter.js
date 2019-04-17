@@ -45,7 +45,7 @@ class EventFilter extends React.Component {
 	getFilters = () => {
 		const { sports } = this.state;
 
-		return sports
+		return uniqBy(sports, "name")
 			.filter(s => s.name)
 			.map(i => ({
 				value: i.name,
