@@ -112,7 +112,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_1")}
+								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
 								{" "}
 								1
 
@@ -130,7 +130,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_2")}
+								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
 								{" "}
 								2
 
