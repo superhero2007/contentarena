@@ -32,10 +32,17 @@ ContentArena.Utils = {
 		}
 
 		if (content.fixturesBySeason) {
-			content.seasons.forEach((s, i) => {
-				s.fixtures = content.fixturesBySeason[i];
+			content.seasons = content.seasons.map((s, i) => {
+				if (content.fixturesBySeason[i]) {
+					if (!s.fixtures) s.fixtures = [];
+					content.fixturesBySeason[i].forEach((fixture) => {
+						s.fixtures.push(fixture);
+					});
+				}
+				return s;
 			});
 		}
+
 
 		if (content.law) {
 			content.law.label = content.law.name;
@@ -127,9 +134,11 @@ ContentArena.Utils = {
 					s.to = years.length === 1 ? null : 2000 + Number(years[1]);
 				}
 
+				/*
 				if (content.fixturesBySeason) {
 					s.fixtures = content.fixturesBySeason[i];
 				}
+				*/
 				return s;
 			});
 

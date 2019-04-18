@@ -104,7 +104,7 @@ export const content = (state = EmptyListing, action) => {
 		newState[action.selectorType] = [...state[action.selectorType]];
 		newState[action.selectorType][action.index] = {
 			custom: true,
-			name: "",
+			name: action.name || "",
 		};
 
 		if (action.clean) {
