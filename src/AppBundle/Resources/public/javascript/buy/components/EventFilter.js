@@ -45,7 +45,7 @@ class EventFilter extends React.Component {
 	getFilters = () => {
 		const { sports } = this.state;
 
-		return sports
+		return uniqBy(sports, "name")
 			.filter(s => s.name)
 			.map(i => ({
 				value: i.name,
@@ -156,7 +156,13 @@ class EventFilter extends React.Component {
 						))}
 					{this.getFilters().length > 5 && (
 						<>
-							<hr />
+							<div style={{
+								background: "#999",
+								height: 1,
+								margin: "20px 0",
+							}}
+							/>
+
 							<div className="text-center">
 								<a onClick={() => this.props.showAllFilters(!allFilters)}>
 									{allFilters ? (

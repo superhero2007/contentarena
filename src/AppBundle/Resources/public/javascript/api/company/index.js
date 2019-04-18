@@ -11,5 +11,5 @@ export const InviteUsersRequest = async (common, users) => {
 
 	if (!res.ok) throw Error(res.statusText);
 
-	return await res.json();
+	return res.json();
 };

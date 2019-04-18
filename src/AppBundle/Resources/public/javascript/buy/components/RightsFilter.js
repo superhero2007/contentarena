@@ -49,7 +49,10 @@ class RightsFilter extends React.Component {
 			eventDateTo: eventDateToFromStorage || "",
 		};
 
-		this.setState({ eventDateFrom: config.eventDateFrom, eventDateTo: config.eventDateTo });
+		this.setState({
+			eventDateFrom: config.eventDateFrom,
+			eventDateTo: config.eventDateTo,
+		});
 		this.props.updateAllFilters(config);
 	};
 
@@ -93,7 +96,10 @@ class RightsFilter extends React.Component {
 
 	onClearFilter = () => {
 		localStorage.clear();
-		this.setState({ eventDateFrom: "", eventDateTo: "" }, this.props.clearFilter);
+		this.setState({
+			eventDateFrom: "",
+			eventDateTo: "",
+		}, this.props.clearFilter);
 		this.onApplyFilter();
 	};
 
@@ -133,7 +139,10 @@ class RightsFilter extends React.Component {
 
 		const { eventDateFrom, eventDateTo } = this.state;
 
-		const countriesValue = first(countries) ? { label: first(countries), value: first(countries) } : "";
+		const countriesValue = first(countries) ? {
+			label: first(countries),
+			value: first(countries),
+		} : "";
 
 		const isWorldWideCountriesSelected = countries.length === this.worldwideCountries;
 		const isMoreThanOneSelected = countries.length > 1 && countries.length !== this.worldwideCountries;
@@ -151,7 +160,11 @@ class RightsFilter extends React.Component {
 					<div className="title">
 						{this.context.t("MARKETPLACE_LABEL_FILTER_TERRITORIES")}
 					</div>
-					<div style={{ display: "flex", alignItems: "center" }}>
+					<div style={{
+						display: "flex",
+						alignItems: "center",
+					}}
+					>
 
 						{!countriesInputValueObj.isShown
 						&& (
@@ -227,7 +240,12 @@ class RightsFilter extends React.Component {
 								);
 							})
 						}
-						<div style={{ background: "#999", height: 1, margin: "20px 0" }} />
+						<div style={{
+							background: "#999",
+							height: 1,
+							margin: "20px 0",
+						}}
+						/>
 
 						<div className="filter-right">
 							<input

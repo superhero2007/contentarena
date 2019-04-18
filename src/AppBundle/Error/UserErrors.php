@@ -17,6 +17,7 @@ class UserErrors implements ErrorInterface
     const USER_INCORRECT_PASSWORD = 202;
     const USER_ALREADY_EXISTS = 203;
     const PASSWORD_REQUEST_EXPIRED = 204;
+    const USER_EMAIL_NOT_VALID = 205;
 
     public static $errorMessage = array(
         200 => 'The user doesn\'t exist',
@@ -24,12 +25,11 @@ class UserErrors implements ErrorInterface
         202 => 'Incorrect password',
         203 => 'User already exists',
         204 => 'Password request expired',
+        205 => 'Your email address is invalid'
     );
 
     public static function getErrorMessage( $code ){
         $message = isset(self::$errorMessage[$code]) ? self::$errorMessage[$code] : 'unknown error';
         return $message;
     }
-
-
 }

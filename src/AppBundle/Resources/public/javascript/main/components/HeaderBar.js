@@ -97,6 +97,7 @@ class HeaderBar extends React.Component {
 			notifications: [],
 			unseenNotificationsCount: 0,
 			unseenMessagesCount: 0,
+			isDownArrowShown: true,
 		};
 	}
 
@@ -126,12 +127,14 @@ class HeaderBar extends React.Component {
 
 	isMarketplaceMatch = url => url === "/marketplace" || url === "/marketplace/filter/multi";
 
+	setDownArrow = isDownSet => this.setState({ isDownArrowShown: isDownSet });
+
 	render() {
 		const {
 			tab, profile, match, common
 		} = this.props;
 		const {
-			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount,
+			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount, isDownArrowShown,
 		} = this.state;
 		const logoUrl = this.getLogoUrl(tab);
 
@@ -230,12 +233,18 @@ class HeaderBar extends React.Component {
 						<HeaderBarTab className="tab baseline messages" route="/messages" onClick={this.markMessagesAsSeen}>
 							<i className="fa fa-envelope" />
 							{!!unseenMessagesCount
-							&& <div className="counter">{unseenMessagesCount}</div>
+								&& <div className="counter">{unseenMessagesCount}</div>
 							}
 						</HeaderBarTab>
 
-						<div className="settings">
+						<div
+							className="settings"
+							 onMouseEnter={() => this.setDownArrow(false)}
+							 onMouseLeave={() => this.setDownArrow(true)}
+						>
+
 							{this.context.t("HEADER_LINK_MY_CONTENT_ARENA")}
+							<i className={`fa ${isDownArrowShown ? "fa-angle-down" : "fa-angle-up"}`} />
 
 							<div className="popup">
 								<div className="wrap">
@@ -260,13 +269,10 @@ class HeaderBar extends React.Component {
 										<i className="fa fa-cog" />
 										{this.context.t("HEADER_LINK_SETTINGS")}
 									</HeaderBarTab>
-									<HeaderBarTab
-										route="#"
-										className="popup-item"
-									>
+									<a href="https://landing.contentarena.com/web/faq/" className="tab popup-item">
 										<i className="fa fa-question-circle-o" />
 										{this.context.t("HEADER_LINK_FAQ")}
-									</HeaderBarTab>
+									</a>
 									<a href="/logout" className="tab popup-item">
 										<i className="fa fa-sign-out" />
 										{this.context.t("HEADER_LINK_LOGOUT")}

@@ -8,6 +8,7 @@ import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
 import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 import { pdfIcon } from "../../main/components/Icons";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
+import { getSeasonDateString } from "../../common/utils/listing";
 
 class CommercialTerms extends React.Component {
 	constructor(props) {
@@ -137,7 +138,10 @@ class CommercialTerms extends React.Component {
 						{seasons.map((season, key) => (
 							<div key={`season-${key}`} className="season-details">
 								<div className="season-cap">
-									{season.name}
+									{season.name} {" "}
+									{season.customStartDate && season.customEndDate && (
+										getSeasonDateString(season)
+									)}
 								</div>
 								<div>
 									{season.fixtures && season.fixtures.length > 0 && season.fixtures.map((fixture, i) => (

@@ -58,7 +58,10 @@ class TerritoriesSalesPackages extends PureComponent {
 		} = this.state;
 		const selected = (response.all) ? [] : response.selected;
 		const selectedName = response.name;
-		this.setState({ selected, selectedName });
+		this.setState({
+			selected,
+			selectedName,
+		});
 		this.filterBundles(territories, selected, true);
 	};
 
@@ -78,7 +81,8 @@ class TerritoriesSalesPackages extends PureComponent {
 			bundle.hasOfferFromUser = (bundlesWithActivity !== null) ? bundlesWithActivity.indexOf(bundle.id) !== -1 : false;
 			bundle.hasClosedDeal = (bundlesSold !== null) ? bundlesSold.indexOf(bundle.id) !== -1 : false;
 			return bundle;
-		}).filter(bundle => !(bundle.hasOfferFromUser && bundle.hasClosedDeal));
+		})
+			.filter(bundle => !(bundle.hasOfferFromUser && bundle.hasClosedDeal));
 
 		// Filter bundles by marketplace territory filter
 		if (territories === this.filtered) {
@@ -89,10 +93,11 @@ class TerritoriesSalesPackages extends PureComponent {
 		const filteredBundles = bundles.filter((sp) => {
 			if (selected.length === 0) return true;
 			return selected.indexOf(sp.id) !== -1;
-		}).map((bundle) => {
-			bundle.extraTerritories = (bundle.territoriesMethod === "WORLDWIDE_EXCLUDING") ? bundle.excludedTerritories : bundle.territories;
-			return bundle;
-		});
+		})
+			.map((bundle) => {
+				bundle.extraTerritories = (bundle.territoriesMethod === "WORLDWIDE_EXCLUDING") ? bundle.excludedTerritories : bundle.territories;
+				return bundle;
+			});
 
 		const filteredIndividualBundles = filteredBundles.filter(bundle => bundle.bundleMethod !== "SELL_AS_BUNDLE");
 		const filteredTerritorialBundles = filteredBundles.filter(bundle => bundle.bundleMethod === "SELL_AS_BUNDLE");
@@ -137,7 +142,11 @@ class TerritoriesSalesPackages extends PureComponent {
 		}
 
 		this.setState({
-			bundles, territories, checkedItems, filteredIndividualBundles, filteredTerritorialBundles,
+			bundles,
+			territories,
+			checkedItems,
+			filteredIndividualBundles,
+			filteredTerritorialBundles,
 		});
 	};
 
@@ -175,7 +184,9 @@ class TerritoriesSalesPackages extends PureComponent {
 			checkedItems,
 		} = this.state;
 
-		return Array.from(checkedItems.values()).map(item => item.territories.length).reduce((a, b) => a + b, 0);
+		return Array.from(checkedItems.values())
+			.map(item => item.territories.length)
+			.reduce((a, b) => a + b, 0);
 	};
 
 	renderCheckoutButton = (large) => {
@@ -238,50 +249,55 @@ class TerritoriesSalesPackages extends PureComponent {
 								label: this.context.t("LISTING_DETAILS_RADIO_LABEL_TERRITORIES_FILTERED"),
 								disabled: !filter.countries || filter.countries.length === 0,
 							},
-							{ value: this.all, label: this.context.t("LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES") },
+							{
+								value: this.all,
+								label: this.context.t("LISTING_DETAILS_RADIO_LABEL_ALL_TERRITORIES"),
+							},
 						]}
 					/>
 				)}
 
 				{/* SELECTOR DESCRIPTION */}
-				{<div className="spacer-bottom filter-description">
-					{territories === this.filtered && bundles.length > 1 && (
-						<span>
-							<strong>
-								{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}
-		:
-
-
-								{" "}
-							</strong>
-							{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
-						</span>
-					)}
-					{territories === this.filtered && bundles.length === 0 && (
-						<span>
-							<strong>
-								{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY")}
+				{
+					<div className="spacer-bottom filter-description">
+						{territories === this.filtered && bundles.length > 1 && (
+							<span>
+								<strong>
+									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}
 								:
 
 
-								{" "}
-							</strong>
-							{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY")}
-						</span>
-					)}
-					{territories === this.all && (
-						<span>
-							<strong>
-								{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL")}
+									{" "}
+								</strong>
+								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
+							</span>
+						)}
+						{territories === this.filtered && bundles.length === 0 && (
+							<span>
+								<strong>
+									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED_EMPTY")}
 								:
 
 
-								{" "}
-							</strong>
-							{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL")}
-						</span>
-					)}
-				</div>}
+									{" "}
+								</strong>
+								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED_EMPTY")}
+							</span>
+						)}
+						{territories === this.all && (
+							<span>
+								<strong>
+									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL")}
+								:
+
+
+									{" "}
+								</strong>
+								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL")}
+							</span>
+						)}
+					</div>
+				}
 
 				{/* REGION FILTER */}
 				{territories === this.all && bundles.length > 1 && (

@@ -2,16 +2,10 @@ import React, { PureComponent } from "react";
 import { PropTypes } from "prop-types";
 import ExtraTerritories from "./ExtraTerritories";
 import { bidIcon, packageIcon } from "./Icons";
-import { getCurrencySymbol } from "../actions/utils";
 
 class SalesPackages extends PureComponent {
-	getFee = (salesPackage) => {
-		const feeNumber = parseFloat(salesPackage.fee);
-		return `${feeNumber.toLocaleString()} ${getCurrencySymbol(salesPackage.currency.code)}`;
-	};
-
 	render() {
-		const { salesPackages, limitedSize, hideFee } = this.props;
+		const { salesPackages, limitedSize } = this.props;
 		const salesPackagesArray = Array.isArray(salesPackages) ? salesPackages : [salesPackages];
 		return (
 			<React.Fragment>
@@ -44,12 +38,6 @@ class SalesPackages extends PureComponent {
 								</div>
 							)}
 
-							{!hideFee && (salesPackage.salesMethod !== "BIDDING" || (salesPackage.salesMethod === "BIDDING" && salesPackage.fee > 0)) && (
-								<div className="fee">
-									{this.getFee(salesPackage)}
-								</div>
-							)}
-
 							{salesPackage.salesMethod === "BIDDING" && (
 								<div className="icon">
 									<img src={bidIcon} alt="" />
@@ -62,13 +50,7 @@ class SalesPackages extends PureComponent {
 				{salesPackages.length > 3 && (
 					<div className="sales-package show-all" onClick={this.onShowAllClick}>
 						<b>
-							{" "}
-							+
-
-
-							{salesPackages.length - 3}
-							{" "}
-
+							{` +${salesPackages.length - 3} `}
 						</b>
 					</div>
 				)}

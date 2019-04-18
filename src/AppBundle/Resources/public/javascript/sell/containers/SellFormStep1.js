@@ -148,7 +148,8 @@ class SellFormStep1 extends React.Component {
 
 				if (seasons.length === 0) {
 					const hasSeasons = this.props.seasons && this.props.seasons.length;
-					if (!hasSeasons && (this.props.customSeasons === null || this.props.customSeasons === undefined || this.props.customSeasons.length === 0)) {
+					if (!hasSeasons && (this.props.customSeasons === null
+						|| this.props.customSeasons === undefined || this.props.customSeasons.length === 0)) {
 						this.props.addNewSeason(0);
 					}
 					this.setState({
@@ -169,49 +170,19 @@ class SellFormStep1 extends React.Component {
 			});
 	}
 
-	loadSchedule(nextProps) {
-		const _this = this;
-		const { updateFromMultiple } = this.props;
-		const { seasons, schedulesBySeason } = nextProps;
-
-		seasons.forEach((season, index) => {
-			if (!season.schedules && !season.custom) {
-				_this.setState({ loadingSchedule: true });
-				ContentArena.Api.getSchedule(season.externalId)
-					.done((schedules) => {
-						_this.setState({ loadingSchedule: false });
-						let keys = [];
-						if (schedulesBySeason && schedulesBySeason[index]) {
-							keys = Object.keys(schedulesBySeason[index]);
-							keys.forEach((k) => {
-								schedulesBySeason[index][k].matches.forEach((m) => {
-									if (m.selected) {
-										schedules[k].matches.get(m.externalId).selected = true;
-									}
-								});
-								schedules[k].selected = true;
-							});
-						}
-
-						updateFromMultiple("seasons", index, "schedules", schedules);
-						if (keys.length > 0) updateFromMultiple("seasons", index, "showSchedule", true);
-					});
-			}
-		});
-	}
-
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.step !== 1) return;
 
 		const { loadingCategories, loadingTournaments, loadingSeasons } = this.state;
 		let tournaments;
 		let sportCategories;
-		const { name } = nextProps;
 
 		tournaments = (Array.isArray(nextProps.tournament)) ? nextProps.tournament : [nextProps.tournament];
 		const seasons = (Array.isArray(nextProps.seasons)) ? nextProps.seasons : [nextProps.seasons];
-		sportCategories = (Array.isArray(nextProps.sportCategory)) ? nextProps.sportCategory : [nextProps.sportCategory];
-		const websites = (Array.isArray(nextProps.website)) ? nextProps.website : (nextProps.website) ? [nextProps.website] : [];
+		sportCategories = (Array.isArray(nextProps.sportCategory))
+			? nextProps.sportCategory : [nextProps.sportCategory];
+		const websites = (Array.isArray(nextProps.website))
+			? nextProps.website : (nextProps.website) ? [nextProps.website] : [];
 
 		if (nextProps.sports.length === 1 && !loadingCategories) {
 			this.loadCategories(nextProps.sports[0]);
@@ -236,7 +207,7 @@ class SellFormStep1 extends React.Component {
 		}
 
 		if (tournaments.length === 1 && !loadingSeasons) {
-			if (!tournaments[0].custom && !tournaments[0].externalId.startsWith("ca:")) {
+			if (!tournaments[0].custom && !tournaments[0].externalId.startsWith("ca:") && !this.tournamentHasDates(tournaments[0])) {
 				this.loadSeasons(tournaments);
 			}
 		}
@@ -344,16 +315,20 @@ class SellFormStep1 extends React.Component {
 		return this.forceCustomSeason() || hasCustomSeason;
 	};
 
-	addSeason = () => {
-		const { seasons } = this.props;
+	tournamentHasDates = ( tournament ) => {
+		return tournament.scheduled && tournament.scheduledEnd
+	};
 
-		this.setState(prevState => ({
-			seasonSelectors: [...Array(seasons.length + 1)
-				.keys()],
+	addSeason = () => {
+		const { seasons, tournament, addNewSeason, } = this.props;
+		const { name } = tournament.length > 0 && tournament[0];
+
+		this.setState(() => ({
+			seasonSelectors: [...Array(seasons.length + 1).keys()],
 		}));
 
-		if (this.hasCustomTournament()) {
-			this.props.addNewSeason(this.props.seasons.length);
+		if (this.forceCustomSeason()) {
+			addNewSeason(this.props.seasons.length, name);
 		}
 	};
 
@@ -555,7 +530,9 @@ class SellFormStep1 extends React.Component {
 				{!this.state.showSearch && (
 					<div className="step-content-container">
 
-						<div className="step-title">{this.context.t("CL_STEP1_LABEL_EVENT_TITLE")}</div>
+						<div className="step-title">
+							{this.context.t("CL_STEP1_LABEL_EVENT_TITLE")}
+						</div>
 
 						<div className="step-item-description" style={{ marginTop: 0 }}>
 							{this.context.t("CL_STEP1_DESCRIPTION_1")}
@@ -648,7 +625,7 @@ class SellFormStep1 extends React.Component {
 								removeSeason={() => this.removeSeason(i)}
 								value={(inputProps.seasons[i]) ? inputProps.seasons[i].value : ""}
 								loading={this.state.loadingSeasons}
-								showClose={i > 0 || (!this.forceCustomSeason() && this.hasCustomSeason())}
+								showClose={i > 0}
 								onBlur={e => this.updateContentValue(e, "customSeason")}
 								isCustom={(inputProps.seasons[i]) ? inputProps.seasons[i].isCustom || this.forceCustomSeason() : this.forceCustomSeason()}
 								showAddNew={this.props.seasons.length > 0 && list.length - 1 === i}
@@ -660,7 +637,9 @@ class SellFormStep1 extends React.Component {
 							<div><i className="fa fa-cog fa-spin" /></div>
 						)}
 
-						<div className="step-title">{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}</div>
+						<div className="step-title">
+							{this.context.t("CL_STEP1_LABEL_LISTING_TITLE")}
+						</div>
 
 						<div className="step-item-description" style={{ marginTop: 0 }}>
 							{this.context.t("CL_STEP1_LISTING_DETAILS_TEXT")}
@@ -775,7 +754,7 @@ const mapDispatchToProps = dispatch => ({
 	removeNewTournament: index => dispatch(removeNewTournament(index)),
 	removeNewCategory: index => dispatch(removeNewCategory(index)),
 	removeNewSeason: index => dispatch(removeNewSeason(index)),
-	addNewSeason: index => dispatch(addNewSeason(index)),
+	addNewSeason: (index,name) => dispatch(addNewSeason(index,name)),
 	addNewCategory: () => dispatch(addNewCategory()),
 	addNewTournament: () => dispatch(addNewTournament()),
 	reset: () => dispatch(reset()),

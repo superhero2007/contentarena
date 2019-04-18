@@ -1,3 +1,5 @@
+import { getSeasonDateString } from "../../common/utils/listing";
+
 export const getCurrencySymbol = code => ((code === "EUR") ? "€" : "$");
 
 export const goTo = (route, openNew) => {
@@ -97,6 +99,12 @@ export const parseSeasons = (content) => {
 	if (content.seasons === undefined) return content;
 	content.seasons.forEach((season) => {
 		season.selectedSchedules = {};
+
+		if (season.customStartDate && season.customEndDate) {
+			season.customDate = getSeasonDateString(season.customStartDate, season.customEndDate);
+		} else {
+			season.customDate = "";
+		}
 
 		if (season.schedules === undefined) return;
 

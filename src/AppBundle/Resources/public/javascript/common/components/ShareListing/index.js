@@ -1,3 +1,3 @@
-import { default as ShareListing } from "./ShareListing";
+import ShareListing from "./ShareListing";
 
 export default ShareListing;

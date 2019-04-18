@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
-import cn from "classnames";
+import NumberFormat from "react-number-format";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import SalesPackages from "./SalesPackeges";
@@ -283,16 +283,18 @@ class ContentListing extends Component {
 						<div className="wrapper">
 							<div className="bid-sales-wrap">
 								<SalesPackages
-									hideFee
 									limitedSize
 									salesPackages={bid.salesPackage}
 								/>
 							</div>
 
 							<div className="bid-price">
-								{this.getTotalFee(bid.amount)}
-								{" "}
-								{getCurrencySymbol(bid.salesPackage.currency.code)}
+								<NumberFormat
+									thousandSeparator
+									value={this.getTotalFee(bid.amount)}
+									displayType="text"
+									suffix={` ${getCurrencySymbol(bid.salesPackage.currency.code)}`}
+								/>
 							</div>
 
 							<div className="bid-actions">

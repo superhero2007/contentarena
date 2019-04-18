@@ -140,22 +140,18 @@ $icon-color: #00769A;
 	  font: inherit;
 	  font-size: 16px;
 	  font-weight: 600;
+	  display: flex;
 
-	  &::after{
-		  padding-left: 5px;
-		  font-weight: 100;
-		  content: "\2c5";
-	  }
-	  &:hover::after {
-		  padding-left: 5px;
-		  font-weight: 100;
-		  content: "\2c4";
+	  & > i{
+	    padding-left: 5px;
+	    padding-right: 0;
+	    font-size: 1.4em;
 	  }
 
       .popup {
         display: none;
         z-index: 101;
-        padding-top: 20px;
+        padding-top: 40px;
         position: absolute;
         right: -15px;
       }

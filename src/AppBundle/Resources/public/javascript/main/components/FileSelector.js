@@ -15,7 +15,11 @@ const FileItem = ({ item, onClick }) => (
 		{item.name}
 		{" "}
 		<img
-			style={{ right: 10, position: "absolute", cursor: "pointer" }}
+			style={{
+				right: 10,
+				position: "absolute",
+				cursor: "pointer",
+			}}
 			src={`${assetsBaseDir}app/images/cancel.png`}
 			onClick={onClick}
 			alt=""
@@ -38,7 +42,11 @@ const InvalidFileItem = ({ item, onClick }) => (
 
 
 		<img
-			style={{ right: 10, position: "absolute", cursor: "pointer" }}
+			style={{
+				right: 10,
+				position: "absolute",
+				cursor: "pointer",
+			}}
 			src={`${assetsBaseDir}app/images/cancel.png`}
 			onClick={onClick}
 			alt=""
@@ -95,17 +103,18 @@ class FileSelector extends Component {
 		if (tmp) {
 			this.setState({ uploading: true });
 
-			ContentArena.ContentApi.saveTmpFile(event.target.files).then((response) => {
-				if (response.success) {
-					if (onSelect) onSelect(response);
-					this.setState({ uploading: false });
-				} else {
-					this.setState(prev => ({
-						failed: [...prev.failed, response.name],
-						uploading: false,
-					}));
-				}
-			});
+			ContentArena.ContentApi.saveTmpFile(event.target.files)
+				.then((response) => {
+					if (response.success) {
+						if (onSelect) onSelect(response);
+						this.setState({ uploading: false });
+					} else {
+						this.setState(prev => ({
+							failed: [...prev.failed, response.name],
+							uploading: false,
+						}));
+					}
+				});
 		}
 
 		if (isImage) {
@@ -151,7 +160,10 @@ class FileSelector extends Component {
 		const minWidth = this.cropSize.min * 100 / imageWidth;
 
 		return {
-			maxWidth, maxHeight, minWidth, minHeight,
+			maxWidth,
+			maxHeight,
+			minWidth,
+			minHeight,
 		};
 	};
 
@@ -185,7 +197,7 @@ class FileSelector extends Component {
 		);
 
 		return canvas.toDataURL("image/jpeg");
-	}
+	};
 
 	getItems = () => {
 		const list = [];
@@ -232,11 +244,14 @@ class FileSelector extends Component {
 
 	closeModal = () => {
 		this.setState({ image: null });
-	}
+	};
 
 	onCropChange = (crop, pixelCrop) => {
-		this.setState({ crop, pixelCrop });
-	}
+		this.setState({
+			crop,
+			pixelCrop,
+		});
+	};
 
 	handleCrop = () => {
 		const { onSelect, target } = this.props;
@@ -251,13 +266,16 @@ class FileSelector extends Component {
 			onSelect(target, croppedImage);
 			onSelect("image", null);
 
-			this.setState({ image: null, croppedImage });
+			this.setState({
+				image: null,
+				croppedImage,
+			});
 		}
-	}
+	};
 
 	onImageLoaded = (crop, pixelCrop) => {
 		this.setState({ pixelCrop });
-	}
+	};
 
 	handleRemoveFile = () => {
 		const { onSelect, target } = this.props;
@@ -271,7 +289,7 @@ class FileSelector extends Component {
 			onSelect("image", null);
 			onSelect(target, null);
 		}
-	}
+	};
 
 	render() {
 		const {
@@ -299,7 +317,8 @@ class FileSelector extends Component {
 						className="standard-button"
 						disabled={uploading}
 						onClick={() => {
-							$(`#input-${this.props.target}`).trigger("click");
+							$(`#input-${this.props.target}`)
+								.trigger("click");
 						}}
 					>
 						{this.context.t("Upload")}
@@ -314,7 +333,11 @@ class FileSelector extends Component {
 					{croppedImage && (
 						<img
 							src={bucketIcon}
-							style={{ cursor: "pointer", marginLeft: 10, objectFit: "contain" }}
+							style={{
+								cursor: "pointer",
+								marginLeft: 10,
+								objectFit: "contain",
+							}}
 							onClick={this.handleRemoveFile}
 							alt=""
 						/>

@@ -1,19 +1,66 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import DatePicker from "@components/DatePicker";
 import { DATE_FORMAT } from "@constants";
 import moment from "moment";
 import NewFixture from "./NewFixture";
-import NewSeason from "./NewSeason";
 import { getSeasonDateString } from "../../common/utils/listing";
+import ReactTooltip from "react-tooltip";
 import { getMonths, getYears } from "../../common/utils/time";
+
+const RemoveSeasonButton = ({onRemove}) => {
+	return (
+		<div
+			onClick={onRemove}
+			style={{
+				color: "red",
+				marginRight: "-34px",
+				width: "50px",
+				lineHeight: "35px",
+				fontSize: "20px",
+				textAlign: "center",
+				cursor: "pointer",
+			}}
+		>
+			<i className="fa fa-close" />
+		</div>
+	)
+};
 
 class SeasonSelector extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
 	}
+
+	componentWillReceiveProps(props) {
+
+		const { updateFromMultiple, index, season, seasons, } = props;
+		const activeSeason = seasons[season];
+
+		if (!activeSeason) return;
+
+		const {
+			realEndDate, realStartDate,
+		} = this.getRealDate(activeSeason);
+
+		const newEndDate = moment(realEndDate).utc().format();
+		const newStartDate = moment(realStartDate).utc().format();
+
+		if ( this.isAdminSeason(activeSeason) ){
+			if (!activeSeason.customEndDate) updateFromMultiple("seasons", index, "customEndDate", newEndDate);
+			if (!activeSeason.customStartDate) updateFromMultiple("seasons", index, "customStartDate", newStartDate);
+		}
+	}
+
+	isAdminSeason = (activeSeason) => {
+		return activeSeason && activeSeason.externalId && activeSeason.externalId.startsWith("ca:") && !activeSeason.custom;
+	};
+
+	getActiveSeason = () => {
+		const { season, seasons, } = this.props;
+		return seasons[season];
+	};
 
 	toggle = () => {
 		const { updateFromMultiple, seasons, index } = this.props;
@@ -49,73 +96,127 @@ class SeasonSelector extends React.Component {
 		updateFromMultiple("seasons", index, "fixtures", fixtures);
 	};
 
+	getYears = (year) => {
+		const currentYear = moment().year();
+		const years = [];
+
+		const startYear = year || currentYear;
+
+		for (let i = startYear - 5; i < currentYear + 10; i++) {
+			years.push(i);
+		}
+		return years;
+	};
+
+	getMonths = () => Array.apply(0, Array(12)).map((_, i) => moment().month(i).utc().format("MMM"));
+
 	handleSeasonStartChange = (e, type) => {
 		const {
-			index, tournament, season, seasons,
+			index,
 		} = this.props;
-		const activeSeason = seasons[season];
+		const activeSeason = this.getActiveSeason();
+		const {
+			realStartDate,
+		} = this.getRealDate(activeSeason);
+
+		let startMonth = moment(realStartDate).utc().format("MMM");
+		let startYear = moment(realStartDate).utc().format("YYYY");
 
 		if (type === "YEAR") {
-			this.startYear = e.target.value;
+			startYear = e.target.value;
 		}
 		if (type === "MONTH") {
-			this.startMonth = e.target.value;
+			startMonth = e.target.value;
 		}
 
-		const monthNumber = moment().month(this.startMonth).format("M");
-		const startDate = moment(new Date(this.startYear, +monthNumber)).utc().format();
+		const newStartDate = moment().year(+startYear).month(startMonth).date(1).utc().format();
+		this.props.updateFromMultiple("seasons", index, "customStartDate", newStartDate);
 
-		this.props.updateFromMultiple("seasons", index, "customStartDate", startDate);
-		// this.props.updateFromMultiple("seasons", index, 'from', moment(startDate).utc().format('MMM YYYY'));
-
-		const initialName = tournament[0].name;
-		const dateString = getSeasonDateString(activeSeason);
-
-		this.props.updateFromMultiple("seasons", index, "name", `${initialName} ${dateString}`);
-
-		// if (!this.endYear && !this.endMonth) {
-		// 	this.props.updateFromMultiple("seasons", index, "custom", false);
-		// } else {
-		// 	this.props.updateFromMultiple("seasons", index, "custom", true);
-		// }
-	}
+	};
 
 	handleSeasonEndChange = (e, type) => {
 		const {
-			index, tournament, season, seasons,
+			index, season, seasons,
 		} = this.props;
 		const activeSeason = seasons[season];
+		const {
+			realEndDate,
+		} = this.getRealDate(activeSeason);
+
+		let endMonth = moment(realEndDate).utc().format("MMM");
+		let endYear = moment(realEndDate).utc().format("YYYY");
 
 		if (type === "YEAR") {
-			this.endYear = e.target.value;
+			endYear = e.target.value;
 		}
 		if (type === "MONTH") {
-			this.endMonth = e.target.value;
+			endMonth = e.target.value;
 		}
 
-		const monthNumber = moment().month(this.endMonth).format("M");
-		const endDate = moment(new Date(this.endYear, +monthNumber)).utc().format();
+		const newEndDate = moment().year(+endYear).month(endMonth).date(1).utc().format();
+		this.props.updateFromMultiple("seasons", index, "customEndDate", newEndDate);
+	};
 
-		this.props.updateFromMultiple("seasons", index, "customEndDate", endDate);
-		// this.props.updateFromMultiple("seasons", index, 'to', moment(endDate).utc().format('MMM YYYY'));
+	getYearsData = (year) => {
+		if (year) {
+			const yearsData = year.split("/");
+			if (yearsData.length > 1) {
+				return {
+					startYear: `20${yearsData[0]}`,
+					endYear: `20${yearsData[1]}`,
+				};
+			}
+			return {
+				startYear: yearsData[0],
+			};
+		}
+		return {
+			startYear: "",
+			endYear: "",
+		};
+	};
 
-		const initialName = tournament[index].name;
-		const dateString = getSeasonDateString(activeSeason);
+	getRealDate = (activeSeason) => {
+		const {
+			startDate, endDate, customStartDate, customEndDate, year, custom, externalId
+		} = activeSeason;
 
-		this.props.updateFromMultiple("seasons", index, "name", `${initialName} ${dateString}`);
+		const { tournament } = this.props;
 
-		// if (!this.endYear && !this.endMonth) {
-		// 	this.props.updateFromMultiple("seasons", index, "custom", false);
-		// } else {
-		// 	this.props.updateFromMultiple("seasons", index, "custom", true);
-		// }
-	}
+		const { scheduled, scheduledEnd } = tournament.length > 0 && tournament[0];
+		const { startYear, endYear } = this.getYearsData(year);
+
+		const realStartDate = customStartDate || startDate || startYear || scheduled;
+		const realEndDate = customEndDate || endDate || endYear || scheduledEnd;
+
+		const isDisabledStartYear = ((startDate || startYear ) && !custom) || scheduled || externalId && startDate ;
+		const isDisabledEndYear = ((endDate || endYear ) && !custom ) || scheduledEnd || externalId && endDate ;
+
+		return {
+			realStartDate,
+			realEndDate,
+			isDisabledStartYear,
+			isDisabledEndYear,
+		};
+	};
+
+	getDateString = (activeSeason) => {
+		if (!activeSeason) {
+			return "";
+		}
+		const { realStartDate, realEndDate } = this.getRealDate(activeSeason);
+		return getSeasonDateString({
+			startDate: realStartDate,
+			endDate: realEndDate,
+		});
+	};
 
 	render() {
 		const {
-			index, season, seasons, validation, tournament,
+			index, season, seasons, validation, removeSeason, showClose,
 		} = this.props;
 		const activeSeason = seasons[season];
+		const dateString = this.getDateString(activeSeason);
 
 		return (
 			<div className="base-container">
@@ -132,12 +233,18 @@ class SeasonSelector extends React.Component {
 							onClick={this.props.openSelector}
 							placeholder={this.context.t("Season")}
 						/>
-
-						{this.props.showClose && (
-							<button onClick={this.props.removeSeason} className="standard-button">
-								<i className="fa fa-close" />
-							</button>
+						{dateString && (
+							<span style={{
+								position: "absolute",
+								top: "6px",
+								right: "10px",
+							}}
+							>
+								{dateString}
+							</span>
 						)}
+
+						{showClose && <RemoveSeasonButton onRemove={removeSeason}/>}
 					</div>
 				)}
 
@@ -148,21 +255,25 @@ class SeasonSelector extends React.Component {
 						</label>
 						<input
 							type="text"
-							value={this.props.value || tournament[0].name || ""}
-							readOnly
+							value={this.props.value || ""}
 							placeholder={this.context.t("Season")}
+							onChange={(e) => {
+								this.props.updateFromMultiple("seasons", index, "name", e.target.value);
+							}}
 						/>
+						{dateString && (
+							<span style={{
+								position: "absolute",
+								top: "6px",
+								right: "10px",
+							}}
+							>
+								{dateString}
+							</span>
+						)}
+						<RemoveSeasonButton onRemove={removeSeason}/>
 					</div>
 				)}
-
-				{/* {this.props.isCustom && activeSeason && (
-					<NewSeason
-						showClose={this.props.showClose}
-						onBlur={this.props.onBlur}
-						index={index}
-						onRemove={this.props.removeSeason}
-					/>
-				)} */}
 
 				<div className="season-duration">
 					{this.renderSeason(activeSeason)}
@@ -223,17 +334,16 @@ class SeasonSelector extends React.Component {
 		if (!activeSeason) {
 			return null;
 		}
+		const { startDate, endDate, custom } = activeSeason;
 		const {
-			startDate, endDate, customStartDate, customEndDate,
-		} = activeSeason;
-		const realStartDate = customStartDate || startDate;
-		const realEndDate = customEndDate || endDate;
+			realStartDate, realEndDate, isDisabledStartYear, isDisabledEndYear,
+		} = this.getRealDate(activeSeason);
 
-		this.startYear = realStartDate ? moment(realStartDate).utc().format("YYYY") : "";
-		this.startMonth = realStartDate ? moment(realStartDate).utc().format("MMM") : "";
+		const startYear = realStartDate ? moment(realStartDate).utc().format("YYYY") : "";
+		const startMonth = realStartDate ? moment(realStartDate).utc().format("MMM") : "";
 
-		this.endYear = realEndDate ? moment(realEndDate).utc().format("YYYY") : "";
-		this.endMonth = realEndDate ? moment(realEndDate).utc().format("MMM") : "";
+		const endYear = realEndDate ? moment(realEndDate).utc().format("YYYY") : "";
+		const endMonth = realEndDate ? moment(realEndDate).utc().format("MMM") : "";
 
 		return (
 			<>
@@ -241,56 +351,69 @@ class SeasonSelector extends React.Component {
 					From {" "}
 				</label>
 				<select
-					defaultValue={this.startYear || ""}
-					onChange={e => this.handleSeasonStartChange(e, "YEAR")}
-					className="ca-form-control"
-				>
-					<option value="" disabled>
-						Year
-					</option>
-					{getYears().map(year => (
-						<option value={year} key={year}>{year}</option>
-					))}
-				</select>
-				<select
-					defaultValue={this.startMonth || ""}
+					value={startMonth}
 					className="ca-form-control"
 					onChange={e => this.handleSeasonStartChange(e, "MONTH")}
+					disabled={!!startDate && !custom}
 				>
 					<option value="" disabled>
 						Month
 					</option>
-					{getMonths().map(month => (
-						<option value={month} key={month}>{month}</option>
+					{this.getMonths().map(month => (
+						<option value={month} key={month}>
+							{month}
+						</option>
+					))}
+				</select>
+				<select
+					value={startYear}
+					onChange={e => this.handleSeasonStartChange(e, "YEAR")}
+					className="ca-form-control"
+					disabled={isDisabledStartYear}
+				>
+					<option value="" disabled>
+						Year
+					</option>
+					{this.getYears(startYear).map(year => (
+						<option value={year} key={year}>
+							{year}
+						</option>
 					))}
 				</select>
 				<label>
 					To {" "}
 				</label>
 				<select
-					value={this.endYear || ""}
-					onChange={e => this.handleSeasonEndChange(e, "YEAR")}
-					className="ca-form-control"
-				>
-					<option value="" disabled>
-						Year
-					</option>
-					{getYears().map(year => (
-						<option value={year} key={year}>{year}</option>
-					))}
-				</select>
-				<select
-					value={this.endMonth || ""}
+					value={endMonth}
 					onChange={e => this.handleSeasonEndChange(e, "MONTH")}
 					className="ca-form-control"
+					disabled={!!endDate && !custom}
 				>
 					<option value="" disabled>
 						Month
 					</option>
-					{getMonths().map(month => (
-						<option value={month} key={month}>{month}</option>
+					{this.getMonths().map(month => (
+						<option value={month} key={month}>
+							{month}
+						</option>
 					))}
 				</select>
+				<select
+					value={endYear}
+					onChange={e => this.handleSeasonEndChange(e, "YEAR")}
+					className="ca-form-control"
+					disabled={isDisabledEndYear}
+				>
+					<option value="" disabled>
+						Year
+					</option>
+					{this.getYears().map(year => (
+						<option value={year} key={year}>
+							{year}
+						</option>
+					))}
+				</select>
+
 			</>
 		);
 	}

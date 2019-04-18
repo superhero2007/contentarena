@@ -111,7 +111,6 @@ SendMessage.propTypes = {
 	listing: PropTypes.number.isRequired,
 	recipient: PropTypes.number.isRequired,
 	onCloseModal: PropTypes.func.isRequired,
-	role: PropTypes.string,
 };
 
 SendMessage.contextTypes = {

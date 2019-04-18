@@ -4,6 +4,7 @@ import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
 import { connect } from "react-redux";
 import Loader from "../../common/components/Loader";
 import { hideRegistrationEmail } from "../actions/landingActions";
+import { validateEmail } from "../../common/utils/listing";
 
 class SignUpForm extends PureComponent {
 	constructor(props) {
@@ -26,11 +27,13 @@ class SignUpForm extends PureComponent {
 		const {
 			name, lastName, company, email,
 		} = this.state;
-		return !name.value || !lastName.value || !email.value || !company.value;
+
+		return !name.value || !lastName.value || !email.value || !validateEmail(email.value) || !company.value;
 	};
 
 	showError = () => {
 		const error = this.context.t("SIGN_UP_FIELD_ERROR");
+		const emailErrorText = this.context.t("SIGN_UP_FIELD_EMAIL_ERROR");
 		const {
 			name, lastName, company, email,
 		} = this.state;
@@ -38,7 +41,7 @@ class SignUpForm extends PureComponent {
 		const nameError = name.value ? "" : error;
 		const lastNameError = lastName.value ? "" : error;
 		const companyError = company.value ? "" : error;
-		const emailError = email.value ? "" : error;
+		const emailError = email.value && validateEmail(email.value) ? "" : emailErrorText;
 
 		this.setState(state => ({
 			[SIGN_UP_FIELDS.LAST_NAME]: { ...state[SIGN_UP_FIELDS.LAST_NAME], error: lastNameError },

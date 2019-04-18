@@ -1062,52 +1062,80 @@ class ContentService
 
     }
 
-    private function getSeason($seasonData, $tournament, $key){
+    private function isExternalSeason($externalId){
+        return strpos($externalId, 'sr:') !== false;
+    }
+
+    private function getSeason($seasonData, Tournament $tournament, $key){
         if ( isset($seasonData->externalId) ) {
             $season = $this->em
                 ->getRepository('AppBundle:Season')
                 ->findOneBy(array('externalId' => $seasonData->externalId));
-
-        } else if ( isset($seasonData->name) && $seasonData->name != ""  ){
-            $season = $this->em
-                ->getRepository('AppBundle:Season')
-                ->findOneBy(array('name' => $seasonData->name));
         }
 
         if ( !isset($season) || $season == null || !$season) {
             $season = new Season();
+            $time = new \DateTime();
 
             if ( isset( $tournament) ) {
                 $season->setTournament($tournament);
             }
 
-            if ( isset($seasonData->externalId) ) $season->setExternalId($seasonData->externalId);
+            if ( isset($seasonData->externalId) ) {
+                $season->setExternalId($seasonData->externalId);
+            } else {
+                $season->setExternalId("ca:season:".$key.$time->getTimestamp());
+            }
+
+            if ( isset($seasonData->customEndDate) ) $season->setEndDate(new \DateTime($seasonData->customEndDate));
+            if ( isset($seasonData->customStartDate) ) $season->setStartDate(new \DateTime($seasonData->customStartDate));
             if ( isset($seasonData->endDate) ) $season->setEndDate(new \DateTime($seasonData->endDate));
             if ( isset($seasonData->startDate) ) $season->setStartDate(new \DateTime($seasonData->startDate));
             if ( isset($seasonData->year) ) $season->setYear($seasonData->year);
-            $season->setUserSeason(true);
+            if ( isset($seasonData->name) ) $season->setName($seasonData->name);
 
-            if ( isset($seasonData->from) && (!isset($seasonData->to) || $seasonData->to == "Not applicable" ) ){
-                $season->setYear($seasonData->from);
-            }
+            if ( !$this->isExternalSeason($seasonData->externalId) ){
+                $season->setUserSeason(true);
 
-            if ( isset($seasonData->from) && isset($seasonData->to) && $seasonData->to != "Not applicable"){
-                $season->setYear( substr($seasonData->from, -2)."/".substr($seasonData->to, -2) );
-            }
+                $year = $this->getSeasonYearString($season);
+                $season->setYear($year);
 
-            $season->setName($seasonData->name);
-            $time = new \DateTime();
+                $name = ( isset($seasonData->name) ) ? $seasonData->name : "";
 
-            if ( isset($seasonData->custom)) {
-                $season->setExternalId("ca:season:".$key.$time->getTimestamp());
-                if ( isset( $tournament) ) {
+                if( $year != null ) $name = $name . " " . $year;
+
+                $season->setName($name);
+
+                if ( $season->getName() === null && isset( $tournament) ) {
                     $season->setName($tournament->getName(). " ". $season->getYear());
                 }
             }
+
+
             $this->em->persist($season);
         }
 
         return $season;
+    }
+
+    private function getSeasonYearString(Season $season){
+
+        $startYear = $this->getShortYearString($season->getStartDate());
+        $endYear = $this->getShortYearString($season->getEndDate());
+
+        if ( $startYear !== null ){
+            if ( $endYear != null && $startYear != $endYear ){
+                return $startYear."/".$endYear;
+            }
+
+            return $season->getStartDate()->format("Y");
+        }
+
+        return null;
+    }
+
+    private function getShortYearString(\DateTime $date){
+        return substr($date->format('Y'), -2);
     }
 
     private function getTournament($data){

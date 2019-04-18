@@ -21,7 +21,9 @@ class SuperRightList extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ rightsPackage: new Map(nextProps.rightsPackage.map(rightItem => [rightItem.id, rightItem])) });
+		this.setState({
+			rightsPackage: new Map(nextProps.rightsPackage.map(rightItem => [rightItem.id, rightItem])),
+		});
 	}
 
 	addRight = (superRight) => {
@@ -159,7 +161,8 @@ class SuperRightList extends React.Component {
 									const { offers } = this.state;
 									const exclusiveIdAttr = `exc-id-${shortLabel}`;
 									const nonExclusiveIdAttr = `non-exc-id-${shortLabel}`;
-									const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
+									const offerValue = this.getRadioBoxValue(id)
+										? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
 									const isDisabled = hasSoldAnyPackage || this.isInputBoxDisabled(id);
 
 									return (
