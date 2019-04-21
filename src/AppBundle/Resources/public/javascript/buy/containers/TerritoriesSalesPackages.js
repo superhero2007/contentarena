@@ -194,6 +194,10 @@ class TerritoriesSalesPackages extends PureComponent {
 			userCanNotBuy,
 		} = this.props;
 
+		if (userCanNotBuy) {
+			return null;
+		}
+
 		const {
 			checkedItems,
 		} = this.state;
@@ -201,7 +205,7 @@ class TerritoriesSalesPackages extends PureComponent {
 		return (
 			<button
 				className={`ca-btn primary ${large}`}
-				disabled={checkedItems.size === 0 || userCanNotBuy}
+				disabled={checkedItems.size === 0}
 				onClick={this.goToCheckout}
 				title={this.context.t("MARKETPLACE_CHECKOUT_BUTTON")}
 			>
@@ -263,11 +267,7 @@ class TerritoriesSalesPackages extends PureComponent {
 						{territories === this.filtered && bundles.length > 1 && (
 							<span>
 								<strong>
-									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}
-								:
-
-
-									{" "}
+									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_FILTERED")}:{" "}
 								</strong>
 								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_FILTERED")}
 							</span>
