@@ -318,6 +318,7 @@ msgid "LISTING_DETAILS_PROGRAM_TITLE_NAME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS"
 msgstr ""
 
@@ -334,13 +335,11 @@ msgid "LISTING_DETAILS_SELLER_ZIP"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS_1"
+msgid "LISTING_DETAILS_SELLER_ADDRESS_1"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Seller.js
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-msgid "LISTING_DETAILS_SELLER_TITLE_ADDRESS_2"
+msgid "LISTING_DETAILS_SELLER_ADDRESS_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/TermSheet.js

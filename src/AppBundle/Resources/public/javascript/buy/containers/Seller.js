@@ -44,11 +44,11 @@ class Seller extends React.Component {
 						{zip && <span className="value">{zip}</span>}
 					</div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS_1")}</span>
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_1")}</span>
 						{address && <span className="value">{address}</span>}
 					</div>
 					<div className="company-item">
-						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS_2")}</span>
+						<span className="label">{this.context.t("LISTING_DETAILS_SELLER_ADDRESS_2")}</span>
 						{address2 && <span className="value">{address2}</span>}
 					</div>
 				</div>
