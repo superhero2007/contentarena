@@ -140,7 +140,9 @@ class SelectorModal extends Component {
 	};
 
 	addNewSeason = (index) => {
-		const { listing, addNewSeason, closeSelector, clean } = this.props;
+		const {
+			listing, addNewSeason, closeSelector, clean,
+		} = this.props;
 		const { tournament } = listing;
 		const { name } = tournament.length > 0 && tournament[0];
 		this.setState({ updated: false, filterUpdated: false });
@@ -431,11 +433,9 @@ class SelectorModal extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return Object.assign({}, state.selector, {
-		listing: state.content
-	});
-};
+const mapStateToProps = state => Object.assign({}, state.selector, {
+	listing: state.content,
+});
 
 const mapDispatchToProps = dispatch => ({
 	openSelector: () => dispatch({

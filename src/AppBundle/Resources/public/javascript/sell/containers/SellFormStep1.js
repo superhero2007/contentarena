@@ -315,12 +315,10 @@ class SellFormStep1 extends React.Component {
 		return this.forceCustomSeason() || hasCustomSeason;
 	};
 
-	tournamentHasDates = ( tournament ) => {
-		return tournament.scheduled && tournament.scheduledEnd
-	};
+	tournamentHasDates = tournament => tournament.scheduled && tournament.scheduledEnd;
 
 	addSeason = () => {
-		const { seasons, tournament, addNewSeason, } = this.props;
+		const { seasons, tournament, addNewSeason } = this.props;
 		const { name } = tournament.length > 0 && tournament[0];
 
 		this.setState(() => ({
@@ -754,7 +752,7 @@ const mapDispatchToProps = dispatch => ({
 	removeNewTournament: index => dispatch(removeNewTournament(index)),
 	removeNewCategory: index => dispatch(removeNewCategory(index)),
 	removeNewSeason: index => dispatch(removeNewSeason(index)),
-	addNewSeason: (index,name) => dispatch(addNewSeason(index,name)),
+	addNewSeason: (index, name) => dispatch(addNewSeason(index, name)),
 	addNewCategory: () => dispatch(addNewCategory()),
 	addNewTournament: () => dispatch(addNewTournament()),
 	reset: () => dispatch(reset()),

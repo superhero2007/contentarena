@@ -24,29 +24,32 @@ import Loader from "../../common/components/Loader";
 import { BUNDLE_SALES_METHOD } from "../../common/constants";
 
 const labelStyle = {
-	height: "30px",
-	fontSize: "12px",
-	width: "400px",
+	height: "35px",
+	fontSize: "14px",
+	width: "100%",
+	padding: "0 20px",
 };
 const inputStyle = {
-	width: "380px",
+	width: "100%",
 	margin: 0,
-	height: "30px",
+	height: "40px",
+	padding: "0 20px",
 };
 
 class Checkout extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const selectedPackages = cloneDeep(props.selectedPackages).map((b) => {
-			if (b.salesMethod === "BIDDING" && b.fee && b.fee !== "0") {
-				b.minimumBid = parseFloat(b.fee);
-				b.fee = "";
-			} else {
-				b.minimumBid = 1;
-			}
-			return b;
-		});
+		const selectedPackages = cloneDeep(props.selectedPackages)
+			.map((b) => {
+				if (b.salesMethod === "BIDDING" && b.fee && b.fee !== "0") {
+					b.minimumBid = parseFloat(b.fee);
+					b.fee = "";
+				} else {
+					b.minimumBid = 1;
+				}
+				return b;
+			});
 
 		this.baseDir = `${assetsBaseDir}../`;
 		this.single = "SINGLE";
@@ -75,7 +78,8 @@ class Checkout extends React.Component {
 
 		if (focusedInputId && this[`${focusedInputId}-input`]) {
 			setTimeout(() => {
-				this[`${focusedInputId}-input`].querySelector("input").focus();
+				this[`${focusedInputId}-input`].querySelector("input")
+					.focus();
 			}, 0);
 		}
 	}
@@ -117,21 +121,17 @@ class Checkout extends React.Component {
 				contentLabel="Example Modal"
 			>
 
-				<div className="modal-title">
-					Company Information
-
-
-					<i className="fa fa-times-circle-o close-icon" onClick={this.closeModal} />
+				<div className="modal-title" style={{ paddingBottom: 15 }}>
+					{this.context.t("Company Information")}
+					<i className="fa fa-times close-icon" onClick={this.closeModal} />
 				</div>
 
-				<div className="step-content">
+				<div className="step-content custom">
 					<div className="step-content-container">
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								Legal name
-
-
+								{this.context.t("Legal name")}
 							</label>
 							<input
 								type="text"
@@ -146,9 +146,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								Registration number
-
-
+								{this.context.t("Registration number")}
 							</label>
 							<input
 								style={inputStyle}
@@ -180,7 +178,9 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								Address 1
+								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+								{" "}
+								1
 
 
 							</label>
@@ -197,7 +197,9 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								Address 2
+								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
+								{" "}
+								2
 
 
 							</label>
@@ -214,9 +216,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								City
-
-
+								{this.context.t("City")}
 							</label>
 							<input
 								style={inputStyle}
@@ -231,9 +231,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								ZIP code
-
-
+								{this.context.t("ZIP code")}
 							</label>
 							<input
 								style={inputStyle}
@@ -248,9 +246,7 @@ class Checkout extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								Country
-
-
+								{this.context.t("Country")}
 							</label>
 							<CountrySelector
 								multi={false}
@@ -269,15 +265,13 @@ class Checkout extends React.Component {
 					</div>
 				</div>
 
-				<div className="buttons">
+				<div className="buttons popup-buttons">
 					{companyIsValid(company) && (
 						<button
 							className="standard-button"
 							onClick={this.closeModal}
 						>
 							Ok
-
-
 						</button>
 					)}
 
@@ -287,8 +281,6 @@ class Checkout extends React.Component {
 							disabled
 						>
 							Ok
-
-
 						</button>
 					)}
 				</div>
@@ -632,7 +624,7 @@ class Checkout extends React.Component {
 				},
 			},
 		];
-		const yourBid =	[
+		const yourBid = [
 			{
 				Header: this.context.t("SALES_PACKAGE_TABLE_PRICE_YOUR_BID"),
 				headerClassName: "table-header-big",
