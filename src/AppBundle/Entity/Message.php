@@ -93,6 +93,14 @@ class Message
     /**
      * @var string
      *
+     * @ORM\Column(name="file_path", type="text", nullable=true)
+     * @Groups({"messages"})
+     */
+    private $filePath;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="file_extension", type="text", nullable=true)
      * @Groups({"messages"})
      */
@@ -279,8 +287,35 @@ class Message
         $this->fileExtension = $fileExtension;
     }
 
+    /**
+     * Get attachment
+     *
+     * @return boolean
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
 
+    /**
+     * Set filePath
+     *
+     * @param string $filePath
+     *
+     * @return Message
+     */
+    public function setFilePath($filePath)
+    {
+        $this->filePath = $filePath;
+    }
 
-
+    /**
+     * Get filePath
+     *
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->filePath;
+    }
 }
-

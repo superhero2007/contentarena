@@ -13,10 +13,6 @@ class ChatMessage extends Component {
 		this.state = {};
 	}
 
-	closeModal = () => {
-		this.setState({ image: null });
-	};
-
 	render() {
 		const { message, ownMessage, ownCompanyMessage } = this.props;
 
@@ -32,23 +28,23 @@ class ChatMessage extends Component {
 				<div className="message-date">
 					{Moment(message.createdAt).format(`${DATE_TIME_FORMAT}`)}
 				</div>
-				{!message.attachment && (
+				{message.attachment
+					&& (
+						<a
+							className="attachment-uploader attachment-uploader-file"
+							href={hosturl + message.filePath}
+							download={message.fileName}
+						>
+							<div className="attachment-uploader-extension">{message.fileExtension}</div>
+							<div className="attachment-uploader-name">{message.fileName}</div>
+							<div className="attachment-uploader-name"> .</div>
+							<div className="attachment-uploader-size">{humanFileSize(message.fileSize, false)}</div>
+						</a>
+					)}
+				{message.content && (
 					<div className="message-content">
 						{message.content}
 					</div>
-				)}
-				{message.attachment
-				&& (
-					<a
-						className="attachment-uploader attachment-uploader-file"
-						href={hosturl + message.content}
-						download={message.fileName}
-					>
-						<div className="attachment-uploader-extension">{message.fileExtension}</div>
-						<div className="attachment-uploader-name">{message.fileName}</div>
-						<div className="attachment-uploader-name"> .</div>
-						<div className="attachment-uploader-size">{humanFileSize(message.fileSize, false)}</div>
-					</a>
 				)}
 			</div>
 		);

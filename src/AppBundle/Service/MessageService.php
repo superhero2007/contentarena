@@ -144,14 +144,6 @@ class MessageService
         return $messages;
     }
 
-    public function getThreadByListingAndSeller(Content $content, User $user, Company $company){
-        return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
-            "listing" => $content,
-            "buyerCompany" => $user->getCompany(),
-            "ownerCompany" => $company,
-        ));
-    }
-
     public function getThreadByListingAndBuyer(Content $content, User $user, Company $company){
         return $this->em->getRepository('AppBundle:Thread')->findOneBy(array(
             "listing" => $content,
@@ -181,7 +173,6 @@ class MessageService
     public function sendMessage(Request $request, User $user){
 
         $recipient = $request->get('recipient');
-        $role = $request->get('role');
 
         if( isset( $recipient )){
             $company = $this->em->getRepository('AppBundle:Company')->find($recipient);
@@ -192,12 +183,7 @@ class MessageService
         if ( isset($threadId) ) {
             $thread = $this->em->getRepository('AppBundle:Thread')->find($threadId);
         } else{
-
-            if ( $role && $role == "SELLER"){
-                $thread = $this->getThreadByListingAndSeller($content, $user, $company);
-            } else {
-                $thread = $this->getThreadByListingAndBuyer($content, $user, $company);
-            }
+            $thread = $this->getThreadByListingAndBuyer($content, $user, $company);
         }
         if ( $thread == null ){
             $thread = new Thread();
@@ -248,7 +234,6 @@ class MessageService
             $this->em->flush();
         }
 
-
         $message = new Message();
         $createdAt = new \DateTime();
         $message->setCreatedAt($createdAt);
@@ -258,6 +243,7 @@ class MessageService
         $message->setAttachment($request->get("attachment"));
         $message->setFileName($request->get("fileName"));
         $message->setFileSize($request->get("fileSize"));
+        $message->setFilePath($request->get("filePath"));
         $message->setFileExtension($request->get("fileExtension"));
         $this->em->persist($message);
         $this->em->flush();
