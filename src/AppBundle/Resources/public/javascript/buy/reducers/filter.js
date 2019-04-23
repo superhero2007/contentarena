@@ -12,7 +12,6 @@ export const filterTypes = {
 	CLEAR_UPDATE: "CLEAR_UPDATE",
 	UPDATE_MANY: "UPDATE_MANY",
 	UPDATE_FILTERS_CONFIG: "UPDATE_ALL",
-	UPDATE_EVENT_DATE_FROM_TO: "UPDATE_FROM_TO",
 	UPDATE_LIST_VIEW: "UPDATE_LIST_VIEW",
 	SHOW_ALL_FILTERS: "SHOW_ALL_FILTERS",
 };
@@ -60,8 +59,6 @@ export const filter = (state = defaultFilter, action) => {
 		return Object.assign({}, state, {
 			countries: action.countries.map(c => c.value),
 		});
-	case filterTypes.UPDATE_EVENT_DATE_FROM_TO:
-		return Object.assign({}, state, { eventDateFrom: action.from, eventDateTo: action.to });
 	case filterTypes.UPDATE_EXCLUSIVE:
 		return Object.assign({}, state, {
 			exclusive: action.exclusive,

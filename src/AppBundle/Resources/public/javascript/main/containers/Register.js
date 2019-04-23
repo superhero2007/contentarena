@@ -91,6 +91,7 @@ class Register extends React.Component {
 		this.setState({ updatingUser: true });
 		ContentArena.ContentApi.activateUser(user, password).done(() => {
 			this.setState({ updated: true, updatingUser: false });
+			localStorage.clear();
 			location.href = "/marketplace";
 		});
 	};

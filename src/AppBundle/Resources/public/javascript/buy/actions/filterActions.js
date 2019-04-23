@@ -53,12 +53,6 @@ export const clearUpdateFilter = () => ({
 	type: filterTypes.CLEAR_UPDATE,
 });
 
-export const updateEventDatesFilter = (from, to) => ({
-	type: filterTypes.UPDATE_EVENT_DATE_FROM_TO,
-	from,
-	to,
-});
-
 export const updateListingView = listType => ({
 	type: filterTypes.UPDATE_LIST_VIEW,
 	listType,

@@ -23,7 +23,6 @@ export const BUNDLE_SALES_METHOD = {
 export const LISTING_SORT_OPTIONS = {
 	PUBLISH_DATE: "publishing",
 	UPCOMING_EVENT: "upcoming",
-	/* EVENT_DATE: 'event', */
 	EXPIRY_DATE: "expiry",
 };
 

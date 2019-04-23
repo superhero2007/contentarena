@@ -172,8 +172,6 @@ export const getMaxDate = (rightsPackage, seasons) => {
 export const contentParserFromServer = (content) => {
 	if (content.parsed) return content;
 
-	console.log(content);
-
 	let sort = true;
 
 	if (content.extraData) {

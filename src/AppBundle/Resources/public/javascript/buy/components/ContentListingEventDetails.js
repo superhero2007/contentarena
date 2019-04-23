@@ -298,13 +298,12 @@ class ContentListingEventDetails extends React.Component {
 							<div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
 
 								{showFullSeasons && seasons.map((season, i, list) => {
-
 									if (list.length === 1) {
 										return (
 											<span key={i}>
 												{getSeasonDateString(season)}
 											</span>
-										)
+										);
 									}
 
 									if (list.length > 1) {
@@ -313,10 +312,8 @@ class ContentListingEventDetails extends React.Component {
 												{getSeasonDateString(season, true)}
 												{i !== list.length - 1 && " - "}
 											</React.Fragment>
-										)
+										);
 									}
-
-
 								})}
 
 								{!showFullSeasons && (

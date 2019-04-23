@@ -11,7 +11,6 @@ class ListingSorting extends PureComponent {
 	getTranslatedLabels = () => ({
 		[LISTING_SORT_OPTIONS.UPCOMING_EVENT]: this.context.t("MARKETPLACE_UPCOMING"),
 		[LISTING_SORT_OPTIONS.EXPIRY_DATE]: this.context.t("MARKETPLACE_EXPIRY"),
-		[LISTING_SORT_OPTIONS.EVENT_DATE]: this.context.t("MARKETPLACE_EVENT_DATE"),
 		[LISTING_SORT_OPTIONS.PUBLISH_DATE]: this.context.t("MARKETPLACE_PUBLISH"),
 	});
 
