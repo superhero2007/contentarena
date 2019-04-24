@@ -70,7 +70,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Legal name")}
+								{this.context.t("POPUP_LABEL_COMPANY_NAME")}
 							</label>
 							<input
 								type="text"
@@ -84,7 +84,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Registration number")}
+								{this.context.t("POPUP_LABEL_COMPANY_REGISTRATION_NUMBER")}
 							</label>
 							<input
 								style={inputStyle}
@@ -98,7 +98,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("VAT ID number")}
+								{this.context.t("POPUP_LABEL_COMPANY_VAT")}
 							</label>
 							<input
 								style={inputStyle}
@@ -112,11 +112,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
-								{" "}
-								1
-
-
+								{this.context.t("POPUP_LABEL_COMPANY_ADDRESS")}
 							</label>
 							<input
 								style={inputStyle}
@@ -130,11 +126,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("LISTING_DETAILS_SELLER_TITLE_ADDRESS")}
-								{" "}
-								2
-
-
+								{this.context.t("POPUP_LABEL_COMPANY_ADDRESS_2")}
 							</label>
 							<input
 								style={inputStyle}
@@ -148,7 +140,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("City")}
+								{this.context.t("POPUP_LABEL_COMPANY_CITY")}
 							</label>
 							<input
 								style={inputStyle}
@@ -162,7 +154,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("ZIP code")}
+								{this.context.t("POPUP_LABEL_COMPANY_ZIP")}
 							</label>
 							<input
 								style={inputStyle}
@@ -176,7 +168,7 @@ class CompanyInformation extends React.Component {
 
 						<div className="base-full-input">
 							<label style={labelStyle}>
-								{this.context.t("Country")}
+								{this.context.t("POPUP_LABEL_COMPANY_COUNTRY")}
 							</label>
 							<CountrySelector
 								multi={false}

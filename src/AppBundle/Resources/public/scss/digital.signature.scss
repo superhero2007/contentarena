@@ -119,7 +119,6 @@
   }
 
   .signature-info {
-    margin-bottom: 20px;
   }
 
   .m-signature-pad {
@@ -132,6 +131,25 @@
         font-style: italic;
         text-decoration: underline;
       }
+    }
+  }
+
+  .headlines{
+    margin-top: 20px;
+    label{
+      color: black;
+      font-weight: bold;
+      text-transform: none;
+      font-size: 18px;
+      display: flex;
+      max-width: inherit;
+      height: 35px;
+    }
+    span{
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 15px;
+      display: inline-block;
     }
   }
 

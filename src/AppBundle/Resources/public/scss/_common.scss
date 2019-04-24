@@ -119,7 +119,8 @@ body {
   &:disabled,
   &[readonly] {
     background-color: #e9ecef;
-    opacity: 1
+    opacity: 1;
+    -webkit-appearance: none;
   }
 }
 
