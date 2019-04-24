@@ -98,6 +98,12 @@ export const content = (state = EmptyListing, action) => {
 		newState[action.selectorType] = [...state[action.selectorType]];
 		newState[action.selectorType].splice(action.index, 1);
 
+		if (action.clean) {
+			action.clean.forEach((selectorType) => {
+				newState[selectorType] = $.isArray(state[selectorType]) ? [] : null;
+			});
+		}
+
 		return Object.assign({}, state, newState);
 	case contentType.ADD_NEW:
 		newState = {};

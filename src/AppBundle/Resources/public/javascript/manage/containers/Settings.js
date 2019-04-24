@@ -202,10 +202,6 @@ class Settings extends React.Component {
 							<div className="item">
 								<label>
 									{this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")}
-									{" "}
-									1
-
-
 								</label>
 								<input
 									className="ca-form-control"
@@ -219,11 +215,7 @@ class Settings extends React.Component {
 							</div>
 							<div className="item">
 								<label>
-									{this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS")}
-									{" "}
-									2
-
-
+									{this.context.t("SETTINGS_LABEL_COMPANY_ADDRESS_2")}
 								</label>
 								<input
 									className="ca-form-control"
@@ -355,7 +347,13 @@ class Settings extends React.Component {
 											accessor: "email",
 											headerClassName: "table-header",
 											className: "table-header",
-											Cell: row => <span title={row.value}>{row.value}</span>,
+											Cell: row => {
+												return (
+													<span title={row.value}>
+														{row.value}
+														</span>
+												)
+											},
 											width: 350,
 										}, {
 											Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),

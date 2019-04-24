@@ -128,7 +128,7 @@ class SelectorModal extends Component {
 	addNewSport = (index) => {
 		this.setState({ updated: false, filterUpdated: false });
 		this.props.addNewSport(index, this.props.clean);
-		if (index === 0) this.props.addNewSeason(index, []);
+		//if (index === 0) this.props.addNewSeason(index, []);
 		this.props.closeSelector();
 	};
 

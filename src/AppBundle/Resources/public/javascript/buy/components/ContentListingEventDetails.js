@@ -297,7 +297,8 @@ class ContentListingEventDetails extends React.Component {
 							</div>
 							<div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
 
-								{showFullSeasons && seasons.map((season, i, list) => {
+								{seasons.map((season, i, list) => {
+
 									if (list.length === 1) {
 										return (
 											<span key={i}>
@@ -315,14 +316,6 @@ class ContentListingEventDetails extends React.Component {
 										);
 									}
 								})}
-
-								{!showFullSeasons && (
-									<span>
-										{/* {this.buildSeasonYear(seasons[0])}
-										{seasons.length > 1 && `-${this.buildSeasonYear(seasons[seasons.length - 1])}`} */}
-										{getSeasonDateString(seasons[0])}
-									</span>
-								)}
 							</div>
 						</div>
 					)}

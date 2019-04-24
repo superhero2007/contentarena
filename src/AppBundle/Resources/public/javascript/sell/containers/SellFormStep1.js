@@ -184,7 +184,7 @@ class SellFormStep1 extends React.Component {
 		const websites = (Array.isArray(nextProps.website))
 			? nextProps.website : (nextProps.website) ? [nextProps.website] : [];
 
-		if (nextProps.sports.length === 1 && !loadingCategories) {
+		if (nextProps.sports.length === 1 && !loadingCategories && !nextProps.sports[0].custom) {
 			this.loadCategories(nextProps.sports[0]);
 			this.setState(() => ({
 				showSearch: false,
@@ -202,7 +202,7 @@ class SellFormStep1 extends React.Component {
 			this.props.updateContentValue("name", "");
 		}
 
-		if (nextProps.sports.length === 1 && !loadingTournaments) {
+		if (nextProps.sports.length === 1 && !loadingTournaments && !nextProps.sports[0].custom) {
 			this.loadTournaments(nextProps.sports[0], sportCategories[0]);
 		}
 
@@ -211,6 +211,8 @@ class SellFormStep1 extends React.Component {
 				this.loadSeasons(tournaments);
 			}
 		}
+
+		if (nextProps.customTournament && nextProps.customTournament !== "" && nextProps.seasons.length === 0) this.addSeason();
 
 		if (tournaments.length === 0) {
 			this.setState({ seasons: [] });
