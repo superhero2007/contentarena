@@ -9,6 +9,7 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\RightsPackage;
+use AppBundle\Entity\Season;
 use Psr\Container\ContainerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -40,10 +41,25 @@ class AppExtension extends AbstractExtension
             new TwigFilter('has_content_dedicated_length', array($this, 'hasContentDedicatedLength')),
             new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel')),
             new TwigFilter('has_dedicated_highlights', array($this, 'hasDedicatedHighlights')),
-            new TwigFilter('get_custom_live', array($this, 'getCustomLive'))
+            new TwigFilter('get_custom_live', array($this, 'getCustomLive')),
+            new TwigFilter('season_duration', array($this, 'seasonDuration'))
 
 
         );
+    }
+
+    public function seasonDuration($season) {
+        /* @var Season $season */
+
+        $startMonth = $season->getStartDate()->format("M");
+        $endMonth = $season->getEndDate()->format("M");
+        $startYear = $season->getStartDate()->format("Y");
+        $endYear = $season->getEndDate()->format("Y");
+
+        if ( $startYear == $endYear ) return $startYear;
+
+        return $startYear."/".substr($endYear,-2). " (".$startMonth. " " . $startYear. " - ". $endMonth ." " . $endYear .  ")";
+
     }
 
     public function jsonDecode($str) {
