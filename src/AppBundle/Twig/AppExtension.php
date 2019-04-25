@@ -51,6 +51,8 @@ class AppExtension extends AbstractExtension
     public function seasonDuration($season) {
         /* @var Season $season */
 
+        if ($season->getStartDate() == null || $season->getEndDate() == null ) return $season->getName();
+
         $startMonth = $season->getStartDate()->format("M");
         $endMonth = $season->getEndDate()->format("M");
         $startYear = $season->getStartDate()->format("Y");
