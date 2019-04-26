@@ -82,6 +82,7 @@ export const removeNewTournament = index => ({
 	type: "REMOVE_NEW",
 	index,
 	selectorType: "tournament",
+	clean: ["tournament", "seasons", "customTournament"],
 });
 
 export const removeNewCategory = index => ({
