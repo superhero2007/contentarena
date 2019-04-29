@@ -77,21 +77,27 @@ class Messages extends React.Component {
 		});
 	};
 
-	send = () => {
+	prepareMessageObject = () => {
 		const {
 			selectedThread,
-			attachmentReady,
-			attachmentMessage,
 			inputMessage,
-			messages,
+			attachmentMessage,
+			attachmentReady,
 		} = this.state;
 
-		const message = (attachmentReady) ? attachmentMessage : {
-			content: inputMessage,
+		const base = {
 			thread: selectedThread.id,
 			listing: selectedThread.listing.id,
+			content: inputMessage || "",
 		};
 
+		return attachmentReady ? { ...base, ...attachmentMessage } : base;
+	};
+
+	send = () => {
+		const { messages } = this.state;
+
+		const message = this.prepareMessageObject();
 		this.setState({ inputMessage: "", saving: true });
 
 		ContentArena.ContentApi.sendMessage(message).done((r) => {
@@ -106,14 +112,12 @@ class Messages extends React.Component {
 		});
 	};
 
-	cancelAttachment = () => {
-		this.setState({
-			attachmentReady: false,
-			attachmentMessage: null,
-		});
-	};
+	cancelAttachment = () => this.setState({
+		attachmentReady: false,
+		attachmentMessage: null,
+	});
 
-	prepareAttachment = (fileUrl, fileName, fileSize, fileExtension) => {
+	prepareAttachment = (filePath, fileName, fileSize, fileExtension) => {
 		const {
 			selectedThread,
 		} = this.state;
@@ -127,7 +131,7 @@ class Messages extends React.Component {
 				fileName,
 				fileSize,
 				fileExtension,
-				content: fileUrl,
+				filePath,
 				thread: selectedThread.id,
 				listing: selectedThread.listing.id,
 			},

@@ -995,7 +995,7 @@ class ContentService
     private function getFilterFromResponse(Request $request){
         $filter = new ContentFilter();
 
-        if ( $request->request->get("sports") != null ) $filter->setSports( $this->getSports( $request->request->all()  ) );
+        if ( $request->request->get("sports") != null ) $filter->setSports( $this->getFilterSports( $request->request->all()  ) );
         if ( $request->request->get("countries") != null )$filter->setCountries($this->getCountriesByName( $request->request->get("countries")  ) );
         if ( $request->request->get("territories") != null )$filter->setTerritories($this->getTerritories( $request->request->get("territories")  ) );
         if ( $request->request->get("rights") != null )$filter->setSuperRights($this->getSuperRights( $request->request->get("rights") ) );
@@ -1329,6 +1329,22 @@ class ContentService
         $sports = array();
         forEach ( $data->sports as $sport ){
             $sports[] = $this->sport($sport);
+        }
+        return $sports;
+    }
+
+    private function getFilterSports($data){
+
+        if ( is_array($data) ) $data = (object) $data;
+
+        $sports = array();
+        forEach ( $data->sports as $sport ){
+
+            $results = $this->em
+                ->getRepository('AppBundle:Sport')
+                ->findBy(array( 'name'=> $sport["name"]));
+
+            $sports = array_merge($results, $sports);
         }
         return $sports;
     }

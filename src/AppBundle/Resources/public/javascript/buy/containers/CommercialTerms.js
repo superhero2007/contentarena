@@ -138,7 +138,7 @@ class CommercialTerms extends React.Component {
 						{seasons.map((season, key) => (
 							<div key={`season-${key}`} className="season-details">
 								<div className="season-cap">
-									{season.name} {" "}
+									{/*{season.name} {" "}*/}
 									{season.customStartDate && season.customEndDate && (
 										getSeasonDateString(season)
 									)}

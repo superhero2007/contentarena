@@ -71,6 +71,14 @@ class DigitalSignature extends React.Component {
 
 				{showTerms && (
 					<div className="terms-confirm">
+						<div className="headlines">
+							<label>
+								{this.context.t("CL_STEP5_TERMS_HEADLINE")}
+							</label>
+							<span>
+								{this.context.t("CL_STEP5_TERMS_DESCRIPTION")}
+							</span>
+						</div>
 						<div style={{ display: "flex", marginBottom: 10 }}>
 							<input
 								type="checkbox"
@@ -119,8 +127,14 @@ class DigitalSignature extends React.Component {
 
 				{!noInfo && (
 					<div className="signature-info">
-						<span>{title}</span>
-
+						<div className="headlines">
+							<label>
+								{this.context.t("CL_STEP5_SIGNATURE_HEADLINE")}
+							</label>
+							<span>
+								{title}
+							</span>
+						</div>
 						{licenseBidId && (
 							<span
 								className="license-bid"

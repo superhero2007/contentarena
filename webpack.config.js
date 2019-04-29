@@ -45,7 +45,7 @@ Encore
     .enableSingleRuntimeChunk()
 
     // empty the outputPath dir before each build
-    //.cleanupOutputBeforeBuild()
+    .cleanupOutputBeforeBuild()
 
     // show OS notifications when builds finish/fail
     //.enableBuildNotifications()

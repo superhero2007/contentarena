@@ -3,29 +3,28 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { DATE_FORMAT } from "@constants";
 import moment from "moment";
+import cn from "classnames";
 import NewFixture from "./NewFixture";
 import { getSeasonDateString } from "../../common/utils/listing";
 import ReactTooltip from "react-tooltip";
 import { getMonths, getYears } from "../../common/utils/time";
 
-const RemoveSeasonButton = ({onRemove}) => {
-	return (
-		<div
-			onClick={onRemove}
-			style={{
-				color: "red",
-				marginRight: "-34px",
-				width: "50px",
-				lineHeight: "35px",
-				fontSize: "20px",
-				textAlign: "center",
-				cursor: "pointer",
-			}}
-		>
-			<i className="fa fa-close" />
-		</div>
-	)
-};
+const RemoveSeasonButton = ({ onRemove }) => (
+	<div
+		onClick={onRemove}
+		style={{
+			color: "red",
+			marginRight: "-34px",
+			width: "50px",
+			lineHeight: "35px",
+			fontSize: "20px",
+			textAlign: "center",
+			cursor: "pointer",
+		}}
+	>
+		<i className="fa fa-close" />
+	</div>
+);
 
 class SeasonSelector extends React.Component {
 	constructor(props) {
@@ -34,8 +33,9 @@ class SeasonSelector extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-
-		const { updateFromMultiple, index, season, seasons, } = props;
+		const {
+			updateFromMultiple, index, season, seasons,
+		} = props;
 		const activeSeason = seasons[season];
 
 		if (!activeSeason) return;
@@ -47,18 +47,16 @@ class SeasonSelector extends React.Component {
 		const newEndDate = moment(realEndDate).utc().format();
 		const newStartDate = moment(realStartDate).utc().format();
 
-		if ( this.isAdminSeason(activeSeason) ){
+		if (this.isAdminSeason(activeSeason)) {
 			if (!activeSeason.customEndDate) updateFromMultiple("seasons", index, "customEndDate", newEndDate);
 			if (!activeSeason.customStartDate) updateFromMultiple("seasons", index, "customStartDate", newStartDate);
 		}
 	}
 
-	isAdminSeason = (activeSeason) => {
-		return activeSeason && activeSeason.externalId && activeSeason.externalId.startsWith("ca:") && !activeSeason.custom;
-	};
+	isAdminSeason = activeSeason => activeSeason && activeSeason.externalId && activeSeason.externalId.startsWith("ca:") && !activeSeason.custom;
 
 	getActiveSeason = () => {
-		const { season, seasons, } = this.props;
+		const { season, seasons } = this.props;
 		return seasons[season];
 	};
 
@@ -129,9 +127,10 @@ class SeasonSelector extends React.Component {
 			startMonth = e.target.value;
 		}
 
-		const newStartDate = moment().year(+startYear).month(startMonth).date(1).utc().format();
+		const newStartDate = moment().year(+startYear).month(startMonth).date(1)
+			.utc()
+			.format();
 		this.props.updateFromMultiple("seasons", index, "customStartDate", newStartDate);
-
 	};
 
 	handleSeasonEndChange = (e, type) => {
@@ -153,7 +152,9 @@ class SeasonSelector extends React.Component {
 			endMonth = e.target.value;
 		}
 
-		const newEndDate = moment().year(+endYear).month(endMonth).date(1).utc().format();
+		const newEndDate = moment().year(+endYear).month(endMonth).date(1)
+			.utc()
+			.format();
 		this.props.updateFromMultiple("seasons", index, "customEndDate", newEndDate);
 	};
 
@@ -178,7 +179,7 @@ class SeasonSelector extends React.Component {
 
 	getRealDate = (activeSeason) => {
 		const {
-			startDate, endDate, customStartDate, customEndDate, year, custom, externalId
+			startDate, endDate, customStartDate, customEndDate, year, custom, externalId,
 		} = activeSeason;
 
 		const { tournament } = this.props;
@@ -189,8 +190,8 @@ class SeasonSelector extends React.Component {
 		const realStartDate = customStartDate || startDate || startYear || scheduled;
 		const realEndDate = customEndDate || endDate || endYear || scheduledEnd;
 
-		const isDisabledStartYear = ((startDate || startYear ) && !custom) || scheduled || externalId && startDate ;
-		const isDisabledEndYear = ((endDate || endYear ) && !custom ) || scheduledEnd || externalId && endDate ;
+		const isDisabledStartYear = ((startDate || startYear) && !custom) || scheduled || externalId && startDate;
+		const isDisabledEndYear = ((endDate || endYear) && !custom) || scheduledEnd || externalId && endDate;
 
 		return {
 			realStartDate,
@@ -211,12 +212,17 @@ class SeasonSelector extends React.Component {
 		});
 	};
 
+	customSeasonIsDisabled = (activeSeason) => {
+		return !activeSeason.customStartDate || !activeSeason.customEndDate
+	};
+
 	render() {
 		const {
 			index, season, seasons, validation, removeSeason, showClose,
 		} = this.props;
 		const activeSeason = seasons[season];
 		const dateString = this.getDateString(activeSeason);
+		const isDisabled = activeSeason && this.customSeasonIsDisabled(activeSeason) || dateString === "";
 
 		return (
 			<div className="base-container">
@@ -227,13 +233,14 @@ class SeasonSelector extends React.Component {
 						</label>
 						<input
 							type="text"
-							value={this.props.value || ""}
+							value={dateString}
+							className={cn({"full-disabled": activeSeason && dateString === ""})}
 							readOnly
-							disabled={this.props.loading}
+							disabled={this.props.loading || (activeSeason && dateString === "")}
 							onClick={this.props.openSelector}
 							placeholder={this.context.t("Season")}
 						/>
-						{dateString && (
+						{/*{dateString && (
 							<span style={{
 								position: "absolute",
 								top: "6px",
@@ -242,9 +249,9 @@ class SeasonSelector extends React.Component {
 							>
 								{dateString}
 							</span>
-						)}
+						)}*/}
 
-						{showClose && <RemoveSeasonButton onRemove={removeSeason}/>}
+						{showClose && <RemoveSeasonButton onRemove={removeSeason} />}
 					</div>
 				)}
 
@@ -254,14 +261,14 @@ class SeasonSelector extends React.Component {
 							{this.context.t("CL_STEP1_LABEL_SEASON")}
 						</label>
 						<input
+							className={cn({"full-disabled": isDisabled})}
 							type="text"
-							value={this.props.value || ""}
+							value={isDisabled ? "" : dateString}
+							disabled={isDisabled}
+							readOnly
 							placeholder={this.context.t("Season")}
-							onChange={(e) => {
-								this.props.updateFromMultiple("seasons", index, "name", e.target.value);
-							}}
 						/>
-						{dateString && (
+						{/*{dateString && (
 							<span style={{
 								position: "absolute",
 								top: "6px",
@@ -270,8 +277,8 @@ class SeasonSelector extends React.Component {
 							>
 								{dateString}
 							</span>
-						)}
-						<RemoveSeasonButton onRemove={removeSeason}/>
+						)}*/}
+						<RemoveSeasonButton onRemove={removeSeason} />
 					</div>
 				)}
 

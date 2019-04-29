@@ -155,8 +155,6 @@ class Marketplace extends Component {
 		const allCountriesFromStorage = LocalStorageHelper.getAllCountries();
 		const pageSize = LocalStorageHelper.getPageSize();
 		const sortBy = LocalStorageHelper.getSortBy();
-		const dateFrom = LocalStorageHelper.getEventDateFrom();
-		const dateTo = LocalStorageHelper.getEventDateTo();
 
 		const customFilter = this.getQueryString();
 
@@ -174,19 +172,6 @@ class Marketplace extends Component {
 		if (filter.event) response.event = filter.event;
 
 		response.sortBy = sortBy || this.state.sortBy;
-
-		if (response.sortBy !== LISTING_SORT_OPTIONS.UPCOMING_EVENT) {
-			if (dateTo || filter.eventDateTo) {
-				response.to = dateTo || filter.eventDateTo;
-				response.to = moment(response.to)
-					.format(SERVER_DATE_TIME_FORMAT);
-			}
-			if (dateFrom || filter.eventDateFrom) {
-				response.from = dateFrom || filter.eventDateFrom;
-				response.from = moment(response.from)
-					.format(SERVER_DATE_TIME_FORMAT);
-			}
-		}
 
 		if (exclusiveFromStorage || filter.exclusive) {
 			response.exclusive = exclusiveFromStorage || filter.exclusive;

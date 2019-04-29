@@ -182,6 +182,7 @@
           padding: 10px 30px 10px 20px;
           color: #333333;
           border-radius: 0 25px 25px 0;
+	        display: inline-block;
         }
 
         .message-date {
@@ -202,6 +203,7 @@
           color: #F7F7F7;
           border-radius: 25px 0 0 25px;
           padding: 10px 20px 10px 30px;
+	        float: right;
         }
 
         .message-sender,
@@ -315,6 +317,7 @@
     font-size: 15px;
     font-weight: 600;
     position: relative;
+	margin-bottom: 5px;
 
     .attachment-uploader-name {
       align-items: center;

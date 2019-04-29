@@ -297,6 +297,11 @@ button {
       align-items: center;
       margin-left: 275px;
       margin-bottom: 15px;
+      .ca-form-control {
+        &:disabled {
+          background-color: #ccc;
+        }
+      }
 
       label:first-child {
         margin-left: 0;
@@ -317,6 +322,11 @@ button {
       margin-bottom: 20px;
       position: relative;
       max-width: 872px;
+
+      .full-disabled {
+        pointer-events: none;
+        background-color: #ccc;
+      }
 
       &.fixture-wrapper {
         display: block;

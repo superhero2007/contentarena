@@ -60,14 +60,6 @@ class LocalStorageClass {
 		return sports || null;
 	}
 
-	getEventDateFrom() {
-		return localStorage.getItem(localStorageEnums.EVENT_DATE_FROM) || undefined;
-	}
-
-	getEventDateTo() {
-		return localStorage.getItem(localStorageEnums.EVENT_DATE_TO) || undefined;
-	}
-
 	getPageSize() {
 		return localStorage.getItem(localStorageEnums.PAGE_SIZE) || undefined;
 	}
