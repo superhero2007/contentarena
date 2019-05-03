@@ -1,4 +1,4 @@
-import axios from "axios";
+import request from "../common/request";
 
 /**
  * Created by JuanCruz on 4/1/2018.
@@ -783,44 +783,44 @@ ContentArena.Api = {
 		return deferred.promise();
 	},
 	getNotifications() {
-		return axios.get(`${envhosturl}api/notifications/`);
+		return request.get(`${envhosturl}api/notifications/`);
 	},
 	markNotificationAsVisited(id) {
-		return axios.post(`${envhosturl}api/notifications/visited`, {
+		return request.post(`${envhosturl}api/notifications/visited`, {
 			id,
 		});
 	},
 	markAllNotificationAsVisited() {
-		return axios.post(`${envhosturl}api/notifications/all/visited`);
+		return request.post(`${envhosturl}api/notifications/all/visited`);
 	},
 	removeNotifications() {
-		return axios.post(`${envhosturl}api/notifications/remove`);
+		return request.post(`${envhosturl}api/notifications/remove`);
 	},
 	markNotificationAsSeen() {
-		return axios.get(`${envhosturl}api/notifications/seen`);
+		return request.get(`${envhosturl}api/notifications/seen`);
 	},
 	markMessagesAsSeen() {
-		return axios.get(`${envhosturl}api/notifications/seen?type=MESSAGE`);
+		return request.get(`${envhosturl}api/notifications/seen?type=MESSAGE`);
 	},
 	signInUser(username, password) {
-		return axios.post(`${envhosturl}api/users/login`, {
+		return request.post(`${envhosturl}api/users/login`, {
 			username,
 			password,
 		});
 	},
 	recoverPassword(email) {
-		return axios.post(`${envhosturl}api/users/password/recover`, {
+		return request.post(`${envhosturl}api/users/password/recover`, {
 			email,
 		});
 	},
 	resetPassword(password, confirmationToken) {
-		return axios.post(`${envhosturl}api/users/password/update`, {
+		return request.post(`${envhosturl}api/users/password/update`, {
 			password,
 			confirmationToken,
 		});
 	},
 	signUpUser(firstName, lastName, email, companyLegalName) {
-		return axios.post(`${envhosturl}api/users/register`, {
+		return request.post(`${envhosturl}api/users/register`, {
 			firstName,
 			lastName,
 			email,

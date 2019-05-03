@@ -1,20 +1,15 @@
-import axios from "axios";
-
-const instance = axios.create({
-	baseURL: `${envhosturl}api/`,
-	headers: { "Content-Type": "application/json" },
-});
+import request from "../common/request";
 
 const api = {
-	fetchMarketplaceListings: (data = {}, method = "POST") => instance({
+	fetchMarketplaceListings: (data = {}, method = "POST") => request({
 		data,
 		method,
-		url: "marketplace/listings",
+		url: "api/marketplace/listings",
 	}),
-	postShareListing: data => instance({
+	postShareListing: data => request({
 		data,
 		method: "POST",
-		url: "share/listing",
+		url: "api/share/listing",
 	}),
 };
 
