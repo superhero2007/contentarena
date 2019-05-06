@@ -268,6 +268,13 @@ class Content implements NotifiableInterface
     private $name;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="relevance", type="smallint", options={"default":1})
+     */
+    private $relevance;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="brochure", type="string", length=255, nullable=true)
@@ -1864,7 +1871,67 @@ class Content implements NotifiableInterface
         $this->id = $id;
     }
 
+    /**
+     * Set relevance
+     *
+     * @param integer $relevance
+     *
+     * @return Content
+     */
+    public function setRelevance($relevance)
+    {
+        $this->relevance = $relevance;
 
+        return $this;
+    }
 
+    /**
+     * Get relevance
+     *
+     * @return integer
+     */
+    public function getRelevance()
+    {
+        return $this->relevance;
+    }
 
+    /**
+     * Get featured
+     *
+     * @return boolean
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
+
+    /**
+     * Get expiryNotified
+     *
+     * @return boolean
+     */
+    public function getExpiryNotified()
+    {
+        return $this->expiryNotified;
+    }
+
+    /**
+     * Get expiredNotified
+     *
+     * @return boolean
+     */
+    public function getExpiredNotified()
+    {
+        return $this->expiredNotified;
+    }
+
+    /**
+     * Get contentDeliveryConfigured
+     *
+     * @return boolean
+     */
+    public function getContentDeliveryConfigured()
+    {
+        return $this->contentDeliveryConfigured;
+    }
 }

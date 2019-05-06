@@ -41,6 +41,7 @@ class ContentService
     const SORT_REFERENCE_UPCOMING = "upcoming";
     const SORT_REFERENCE_EXPIRY = "expiry";
     const SORT_REFERENCE_PUBLISHING = "publishing";
+    const SORT_REFERENCE_RELEVANCE = "relevance";
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -133,6 +134,23 @@ class ContentService
                 $date = $listing->getReferenceDate();
                 return $date != null && $date > $from && $date < $to;
             });
+        }
+
+        if ( $sortBy == $this::SORT_REFERENCE_RELEVANCE ){
+
+            foreach ($content as $key => $listing)
+            {
+                $listing_featured[$key] = $listing->getFeatured();
+                $listing_published[$key] = $listing->getPublishedAt();
+                $listing_relevance[$key] = $listing->getRelevance();
+            }
+
+            array_multisort(
+                $listing_featured, SORT_DESC,
+                $listing_relevance, SORT_DESC,
+                $listing_published, SORT_DESC,
+                $content
+            );
         }
 
 
@@ -328,6 +346,7 @@ class ContentService
 
             $newCustomId = $this->idGenerator->generate($content);
             $content->setCustomId($newCustomId);
+            $content->setRelevance($modelListing->getRelevance());
             $content->setName($modelListing->getName());
             $content->setSports($modelListing->getSports());
             $content->setSportCategory($modelListing->getSportCategory());
@@ -644,6 +663,11 @@ class ContentService
          * Set creation date
          */
         $content->setCreatedAt(new \DateTime());
+
+        /**
+         * Set default relevance
+         */
+        $content->setRelevance(1);
 
         /**
          * Set company. Every user must have a company

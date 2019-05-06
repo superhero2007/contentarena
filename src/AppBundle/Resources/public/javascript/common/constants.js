@@ -24,6 +24,7 @@ export const LISTING_SORT_OPTIONS = {
 	PUBLISH_DATE: "publishing",
 	UPCOMING_EVENT: "upcoming",
 	EXPIRY_DATE: "expiry",
+	RELEVANCE: "relevance",
 };
 
 export const LOGIN_VIEW_TYPE = {

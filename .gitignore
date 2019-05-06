@@ -31,3 +31,4 @@
 /web/app.php
 /web/assets
 /deploy-*
+*.php~

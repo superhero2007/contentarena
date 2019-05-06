@@ -12,6 +12,7 @@ class ListingSorting extends PureComponent {
 		[LISTING_SORT_OPTIONS.UPCOMING_EVENT]: this.context.t("MARKETPLACE_UPCOMING"),
 		[LISTING_SORT_OPTIONS.EXPIRY_DATE]: this.context.t("MARKETPLACE_EXPIRY"),
 		[LISTING_SORT_OPTIONS.PUBLISH_DATE]: this.context.t("MARKETPLACE_PUBLISH"),
+		[LISTING_SORT_OPTIONS.RELEVANCE]: this.context.t("MARKETPLACE_RELEVANCE"),
 	});
 
 	render() {

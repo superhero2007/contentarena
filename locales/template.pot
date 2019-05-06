@@ -60,12 +60,11 @@ msgid "MARKETPLACE_EXPIRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_EVENT_DATE"
+msgid "MARKETPLACE_PUBLISH"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/ListingSorting.js
-msgid "MARKETPLACE_PUBLISH"
+msgid "MARKETPLACE_RELEVANCE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
@@ -79,18 +78,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
 msgid "MARKETPLACE_LABEL_FILTER_EXCLUSIVE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "EVENT_DATE_FROM"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "EVENT_DATE_TO"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
-msgid "MARKETPLACE_APPLY_EVENT_DATE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/components/RightsFilter.js
