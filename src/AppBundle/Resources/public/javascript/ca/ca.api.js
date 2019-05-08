@@ -827,4 +827,9 @@ ContentArena.Api = {
 			companyLegalName,
 		});
 	},
+	getContentDetailForPreview(id) {
+		return request.post(`${envhosturl}api/content/preview`, {
+			id,
+		});
+	},
 };

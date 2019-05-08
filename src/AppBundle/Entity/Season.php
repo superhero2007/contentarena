@@ -19,7 +19,7 @@ class Season
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "home"})
+     * @Groups({"listing", "home", "preview"})
      */
     private $id;
 
@@ -41,13 +41,13 @@ class Season
 
     /**
      * @ORM\Column(type="datetime", name="start_date", nullable=true)
-     * @Groups({"listing", "home"})
+     * @Groups({"listing", "home", "preview"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="datetime", name="end_date", nullable=true)
-     * @Groups({"listing", "home"})
+     * @Groups({"listing", "home", "preview"})
      */
     private $endDate;
 
@@ -55,7 +55,7 @@ class Season
      * @var string
      *
      * @ORM\Column(name="year", type="string", length=255, nullable=true)
-     * @Groups({"listing", "board", "commercial", "home"})
+     * @Groups({"listing", "board", "commercial", "home", "preview"})
      */
     private $year;
 

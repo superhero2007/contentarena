@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { SITE_URLS } from "../../common/constants";
+import { SITE_URLS } from "@constants";
 
 class SignUpSuccessfully extends PureComponent {
 	handleLoginClick = () => window.location = SITE_URLS.HOME_URL;

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
 import { contentWhiteLogo } from "../../main/components/Icons";
+import PublicHeaderBar from "../../main/components/PulbicHeaderBar";
 
 class LandingHeader extends React.Component {
 	constructor(props) {
@@ -65,6 +66,10 @@ class LandingHeader extends React.Component {
 				button: true,
 			},
 		];
+
+		if (currentView === LOGIN_VIEW_TYPE.LISTING_PREVIEW) {
+			return <PublicHeaderBar />;
+		}
 
 		const navLinks = currentView === LOGIN_VIEW_TYPE.LANDING ? [...landingLinks] : [...loginLinks];
 		return (

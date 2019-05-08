@@ -19,7 +19,7 @@ class Sport
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "commercial", "settings", "home","notification"})
+     * @Groups({"listing", "commercial", "settings", "home", "notification", "preview"})
      */
     private $id;
 
@@ -27,7 +27,7 @@ class Sport
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "commercial", "settings", "home"})
+     * @Groups({"listing", "commercial", "settings", "home", "preview"})
      */
     private $name;
 
@@ -42,7 +42,7 @@ class Sport
     /**
      * @var boolean
      * @ORM\Column(name="shown_in_create", type="boolean", options={"default":"1"})
-     * @Groups({"listing", "commercial", "settings"})
+     * @Groups({"listing", "commercial", "settings", "preview"})
      *
      */
      private $shownInCreate = false;

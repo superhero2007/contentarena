@@ -12,11 +12,9 @@ import {
 import {
 	setSelectedRights, setRights,
 } from "../actions/propertyActions";
-import Loader from "../../common/components/Loader/Loader";
-import { DATE_FORMAT } from "@constants";
+import { DATE_FORMAT, ROUTE_PATHS } from "@constants";
 import CmsAvailableRightsSelector from "../components/CmsAvailableRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
-import { ROUTE_PATHS } from "../../main/routes";
 
 class CreatePropertyTerritories extends React.Component {
 	constructor(props) {
@@ -44,8 +42,8 @@ class CreatePropertyTerritories extends React.Component {
 			rights,
 		} = property;
 
-		let editedRights = rights.map( right => {
-			if ( selectedRight.id === right.id ) {
+		const editedRights = rights.map((right) => {
+			if (selectedRight.id === right.id) {
 				delete right.edited;
 				delete right.territories;
 				delete right.territoriesMode;
@@ -66,10 +64,10 @@ class CreatePropertyTerritories extends React.Component {
 			selectedRights,
 		} = property;
 
-		let selectedRightsIds = selectedRights.map(right=>right.id);
+		const selectedRightsIds = selectedRights.map(right => right.id);
 
-		let editedRights = rights.map( right => {
-			if ( selectedRight.id === right.id ) {
+		const editedRights = rights.map((right) => {
+			if (selectedRight.id === right.id) {
 				delete right.edited;
 			}
 			return right;
@@ -109,7 +107,6 @@ class CreatePropertyTerritories extends React.Component {
 		this.props.rightsUpdated(editedRights);
 		this.props.selectedRightsUpdated([]);
 		this.setState({ territories: [], territoriesMode: null, editMode: false });
-
 	};
 
 	handleTerritories = (territories, territoriesMode) => {
@@ -119,10 +116,10 @@ class CreatePropertyTerritories extends React.Component {
 	rightsComplete = () => this.props.property.rights.filter(right => !right.edited).length === 0;
 
 	render() {
+		const { editMode } = this.state;
 		let {
 			territories,
 			territoriesMode,
-			editMode,
 		} = this.state;
 
 		const {
@@ -135,8 +132,8 @@ class CreatePropertyTerritories extends React.Component {
 		} = property;
 
 		if (editMode && selectedRights.length > 0) {
-			rights.forEach( right => {
-				if ( selectedRights[0].id === right.id && right.territories && right.territories.length > 0) {
+			rights.forEach((right) => {
+				if (selectedRights[0].id === right.id && right.territories && right.territories.length > 0) {
 					territories = right.territories || [];
 					territoriesMode = right.territoriesMode;
 				}
@@ -170,19 +167,19 @@ class CreatePropertyTerritories extends React.Component {
 								{this.context.t("CMS_SELECT_TERRITORIES_DESCRIPTION")}
 							</h6>
 
-                            <CmsTerritorySelector
-                                className="small-select"
-                                onChange={this.handleTerritories}
-                                onSelectRegion={() => {
-                                }}
-                                value={territories}
-                                territoriesMode={territoriesMode}
-                                multiple
-                                filter={[]}
-                                selectedRights={selectedRights}
-                                exclusiveSoldTerritories={false}
-                            />
-					    </DefaultBox>
+							<CmsTerritorySelector
+								className="small-select"
+								onChange={this.handleTerritories}
+								onSelectRegion={() => {
+								}}
+								value={territories}
+								territoriesMode={territoriesMode}
+								multiple
+								filter={[]}
+								selectedRights={selectedRights}
+								exclusiveSoldTerritories={false}
+							/>
+						</DefaultBox>
 					)
 				}
 
@@ -205,12 +202,12 @@ class CreatePropertyTerritories extends React.Component {
 						!this.rightsComplete()
 						&& (
 							<button
-                                className="yellow-button"
-                                disabled={selectedRights.length === 0 || territories.length === 0}
-                                onClick={this.applyTerritories}
-                            >
-                                {this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
-                            </button>
+								className="yellow-button"
+								disabled={selectedRights.length === 0 || territories.length === 0}
+								onClick={this.applyTerritories}
+							>
+								{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
+							</button>
 						)
 					}
 

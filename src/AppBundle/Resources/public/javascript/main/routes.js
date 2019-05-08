@@ -19,8 +19,7 @@ import Terms from "../manage/containers/Terms";
 import SignInUpWrapper from "../landing/containers/SignInUpWrapper";
 import LandingWrapper from "../landing/containers/LandingWrapper";
 
-
-import { LOGIN_VIEW_TYPE } from "@constants";
+import { LOGIN_VIEW_TYPE, ROUTE_PATHS } from "@constants";
 import ManageProperties from "../cms/containers/ManageProperties";
 import CreateProperty from "../cms/containers/CreateProperty";
 
@@ -39,20 +38,13 @@ const ResetPassword = withRouter(({ history, match }) => (
 	/>
 ));
 const Landing = withRouter(({ history }) => <LandingWrapper history={history} />);
-
-export const ROUTE_PATHS = {
-	MARKETPLACE: "/marketplace",
-	COMMERCIAL_OVERVIEW: "/commercialoverview",
-	COMMERCIAL_OVERVIEW_WITH_ACTIVITY: "/commercialoverview/filter/withactivity",
-	COMMERCIAL_OVERVIEW_OPEN_BIDS: "/commercialoverview/filter/openbids",
-	COMMERCIAL_OVERVIEW_CLOSED_DEALS: "/commercialoverview/filter/closeddeals",
-	MANAGE_LISTINGS: "/managelistings",
-	MANAGE_PROPERTIES: "/manageproperties",
-	CREATE_PROPERTY: "/createproperty",
-	CREATE_PROPERTY_STEP_1: "/createproperty/1",
-	CREATE_PROPERTY_STEP_2: "/createproperty/2",
-};
-
+const ListingPreview = withRouter(({ history, match }) => (
+	<SignInUpWrapper
+		history={history}
+		currentView={LOGIN_VIEW_TYPE.LISTING_PREVIEW}
+		match={match}
+	/>
+));
 
 export const routes = [
 	{
@@ -69,35 +61,35 @@ export const routes = [
 		title: "Marketplace",
 	},
 	{
-		path: "/landing",
+		path: ROUTE_PATHS.LANDING,
 		exact: true,
 		main: Landing,
 	},
 	{
-		path: "/reset-password/:resetToken",
+		path: `${ROUTE_PATHS.RESET_PASSWORD}/:resetToken`,
 		main: ResetPassword,
 		title: "Reset Password",
 	},
 	{
-		path: "/login",
+		path: ROUTE_PATHS.LOGIN,
 		exact: true,
 		main: SignIn,
 		title: "Login",
 	},
 	{
-		path: "/registration",
+		path: ROUTE_PATHS.LISTING_PREVIEW,
+		exact: true,
+		main: ListingPreview,
+		title: "Listing Preview",
+	},
+	{
+		path: ROUTE_PATHS.REGISTRATION,
 		exact: true,
 		main: SignUp,
 		title: "Registration",
 	},
 	{
-		path: "/test",
-		exact: true,
-		header: HeaderBar,
-		main: TestPage,
-	},
-	{
-		path: "/register/:activationCode",
+		path: `${ROUTE_PATHS.REGISTER}/:activationCode`,
 		exact: true,
 		header: PublicHeaderBar,
 		main: Register,
@@ -105,14 +97,14 @@ export const routes = [
 
 	},
 	{
-		path: "/marketplace/filter/:filterName/:filterValue?",
+		path: `${ROUTE_PATHS.MARKETPLACE}/filter/:filterName/:filterValue?`,
 		header: HeaderBar,
 		main: Marketplace,
 		profile: "BUYER",
 		title: "Marketplace",
 	},
 	{
-		path: "/contentlisting/:customId?/:step?",
+		path: `${ROUTE_PATHS.CONTENT_LISTING}/:customId?/:step?`,
 		header: HeaderBar,
 		main: SellForm,
 		updateByPath: true,
@@ -136,48 +128,48 @@ export const routes = [
 		title: "Commercial Overview",
 	},
 	{
-		path: "/listing/:customId/:tab?/:bundles?",
+		path: `${ROUTE_PATHS.LISTING}/:customId/:tab?/:bundles?`,
 		header: HeaderBar,
 		main: Marketplace,
 		title: "Listing Details",
 	},
 	{
-		path: "/watchlist",
+		path: ROUTE_PATHS.WATCHLIST,
 		header: HeaderBar,
 		main: Watchlist,
 		profile: "BUYER",
 		title: "Watchlist",
 	},
 	{
-		path: "/closeddeals",
+		path: ROUTE_PATHS.CLOSED_DEALS,
 		header: HeaderBar,
 		main: ClosedDeals,
 		profile: "BUYER",
 		title: "Closed Deals",
 	},
 	{
-		path: "/settings/:filter?",
+		path: `${ROUTE_PATHS.SETTINGS}/:filter?`,
 		header: HeaderBar,
 		main: Settings,
 		updateByPath: true,
 		title: "Settings",
 	},
 	{
-		path: "/preferences/:mode?",
+		path: `${ROUTE_PATHS.PREFERENCES}/:mode?`,
 		header: HeaderBar,
 		main: Preferences,
 		updateByPath: true,
 		title: "Preferences",
 	},
 	{
-		path: "/terms",
+		path: ROUTE_PATHS.TERMS,
 		header: HeaderBar,
 		main: Terms,
 		updateByPath: true,
 		title: "Terms",
 	},
 	{
-		path: "/messages/:customId?",
+		path: `${ROUTE_PATHS.MESSAGES}/:customId?`,
 		header: HeaderBar,
 		main: Messages,
 		updateByPath: true,
@@ -206,11 +198,17 @@ export const routes = [
 		updateByPath: true,
 	},
 	{
-		path: "/bids/:tab?",
+		path: `${ROUTE_PATHS.BIDS}/:tab?`,
 		header: HeaderBar,
 		main: PendingDeals,
 		updateByPath: true,
 		profile: "BUYER",
 		title: "Bids",
+	},
+	{
+		path: "/test",
+		exact: true,
+		header: HeaderBar,
+		main: TestPage,
 	},
 ];

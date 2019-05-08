@@ -71,7 +71,7 @@ class Content implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
-     * @Groups({"listing", "home"})
+     * @Groups({"listing", "home", "preview"})
      */
     private $description;
 
@@ -142,7 +142,7 @@ class Content implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "preview"})
      */
     private $image;
 
@@ -263,7 +263,7 @@ class Content implements NotifiableInterface
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "preview"})
      */
     private $name;
 
@@ -300,7 +300,7 @@ class Content implements NotifiableInterface
     /**
      * @var boolean
      * @ORM\Column(name="featured", type="boolean", options={"default":"0"})
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "preview"})
      *
      */
     private $featured = false;
@@ -342,7 +342,7 @@ class Content implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_sport_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "preview"})
      */
     private $sports;
 
@@ -366,7 +366,7 @@ class Content implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "board", "commercial", "home"})
+     * @Groups({"listing", "board", "commercial", "home", "preview"})
      */
     private $seasons;
 
@@ -377,14 +377,14 @@ class Content implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rights_package_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed", "board", "commercial", "home"})
+     * @Groups({"listing", "closed", "board", "commercial", "home", "preview"})
      */
     private $rightsPackage;
 
     /**
      * @var object
      * @ORM\Column(name="selected_rights_by_super_right", type="object", nullable=true)
-     * @Groups({"listing", "board", "commercial", "closed", "home"})
+     * @Groups({"listing", "board", "commercial", "closed", "home", "preview"})
      */
     private $selectedRightsBySuperRight;
 

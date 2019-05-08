@@ -74,7 +74,9 @@ class CmsAvailableRightsSelector extends React.Component {
 	};
 
 	render() {
-		const { validation, rights, onUndoTerritories, onEditTerritories } = this.props;
+		const {
+			validation, rights, onUndoTerritories, onEditTerritories,
+		} = this.props;
 		const { allSelected } = this.state;
 		const isInvalid = rights.length === 0 && validation;
 
@@ -147,8 +149,8 @@ class CmsAvailableRightsSelector extends React.Component {
 										<img src={right.territories ? cmsWorldActive : cmsWorldDisabled} alt="" />
 										{right.territories ? right.territories.length : "0"}
 									</label>
-									{right.territories && <i className="fa fa-edit" onClick={() => {onEditTerritories(right)}} />}
-									{right.territories && <i className="fa fa-undo" onClick={() => {onUndoTerritories(right)}} />}
+									{right.territories && <i className="fa fa-edit" onClick={() => { onEditTerritories(right); }} />}
+									{right.territories && <i className="fa fa-undo" onClick={() => { onUndoTerritories(right); }} />}
 								</div>
 							</div>
 						);

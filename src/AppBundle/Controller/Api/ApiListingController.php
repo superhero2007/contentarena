@@ -272,5 +272,25 @@ class ApiListingController extends Controller
 
     }
 
+    /**
+     * @Route("/api/content/preview", name="listingDetailsPreview")
+     * @param Request $request
+     * @param ContentService $contentService
+     * @return JsonResponse
+     */
+    public function listingDetailsPreview(Request $request, ContentService $contentService){
+        $customId = $request->get('id');
+        if(!$customId) {
+            return $this->getErrorResponse(ListingErrors::class, 103);
+        }
 
+        $listingPreview = $contentService->findByCustomId($customId);
+
+        if (!$listingPreview) {
+            return $this->getErrorResponse(ListingErrors::class, 100);
+        }
+
+        $data = array('success'=>true, 'listing' => $listingPreview);
+        return $this->getSerializedResponse($data, array('preview'));
+    }
 }

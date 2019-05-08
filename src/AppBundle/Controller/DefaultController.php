@@ -69,22 +69,15 @@ class DefaultController extends BaseController
 
         if ( $user != null ){
             return $this->redirect("/listing/". $customId);
-        } else {
-
-            $user = $userService->getUserByEmail($email);
-
-            if ( $user != null ) {
-                return $this->redirect("/login?email=". $email."&listingId=".$customId);
-            } else {
-                return $this->redirect("/registration?email=". $email);
-            }
         }
+
+        return $this->redirect("/listing-preview?email=". $email."&listingId=".$customId);
     }
 
     /**
      * @Route(
      *     "/{reactRouting}",
-     *     requirements={"reactRouting"="createproperty|manageproperties|terms|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
+     *     requirements={"reactRouting"="createproperty|manageproperties|terms|listing-preview|register|registration|reset-password|landing|login|marketplace|watchlist|listing|bids|closeddeals|managelistings|commercialoverview|messages|settings|preferences"},
      *     name="homepage",
      *     defaults={"reactRouting": null}
      *     )

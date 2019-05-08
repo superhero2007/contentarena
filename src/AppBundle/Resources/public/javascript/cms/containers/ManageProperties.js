@@ -5,7 +5,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 import RightsOverview from "./RightsOverview";
-import { ROUTE_PATHS } from "../../main/routes";
+import { ROUTE_PATHS } from "@constants";
 
 class ManageProperties extends React.Component {
 	constructor(props) {

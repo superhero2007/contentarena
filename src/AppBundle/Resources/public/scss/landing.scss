@@ -665,9 +665,148 @@
     background: #F7F7F7;
     padding: 15px 40px 45px 40px;
     margin: 100px auto 0;
+
+	&.preview {
+		margin-top: 40px;
+		max-width: 1200px;
+		background-color: transparent;
+	}
+
     @media only screen and (max-width: 1230px) {
       margin: 80px auto 0;
     }
+
+	.sign-in-listing-preview-wrapper{
+		width: 100%;
+
+		.ca-loader{
+			.spinner{ border-top: 12px solid $primary-color; }
+			color: $primary-color;
+		}
+
+		.big-title{
+			color: $primary-color;
+			font-size: 60px;
+			text-align: center;
+		}
+		.title{
+			@extend .big-title;
+			font-size: 21px;
+			padding: 25px 0 30px;
+			width: 76%;
+			margin: 0 auto;
+		}
+
+		.listing-details{
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+			min-height: 80px;
+			background: $primary-color;
+
+			&.error{
+				align-items: center;
+				font-size: 24px;
+
+				i{
+					color: $red-color;
+					padding: 0 10px;
+				}
+				button{ font-size: 24px; }
+			}
+
+			.listing-img{
+				position: relative;
+				display: flex;
+				align-items: center;
+				background-color: lightgray;
+				width: 400px;
+
+				.image-wrapper{
+					position: relative;
+				}
+
+				.image, img{
+					width: 100%;
+					min-width: 300px;
+					height: auto;
+					object-fit: cover;
+				}
+			}
+			.listing-data{
+				overflow: auto;
+				padding: 25px;
+
+				.title{
+					color: $black-color;
+					text-align: left;
+					font-size: 16px;
+					font-weight: 600;
+					margin: 15px 0;
+					padding: 0;
+				}
+				.seasons-wrapper{
+					display: flex;
+					flex-direction: column;
+					margin: -5px 0;
+					max-height: 115px;
+					min-height: 0;
+					overflow: auto;
+
+					.season-item{
+						color: $font-color-5;
+						font-size: 13px;
+						padding: 5px 0;
+					}
+				}
+				.rights-wrapper {
+					margin: -5px;
+
+					.listing-rights{
+						display: flex;
+						flex-direction: row;
+						flex-flow: row;
+						justify-content: space-between;
+						flex-wrap: wrap;
+
+						.listing-item{
+							flex: 1 0 30%;
+							font-size: 13px;
+							padding: 5px;
+
+							img{
+								width: 15px;
+								height: 15px;
+								margin-right: 5px;
+							}
+						}
+					}
+				}
+				.representation-textarea{
+					background-color: $background-3;
+					border: 1px solid $border-color-1;
+					color: $font-color-5;
+					font-weight: 600;
+					padding: 20px 10px;
+				}
+				.buttons-wrapper{
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					margin-top: 15px;
+
+					.login-wrapper{
+						margin-top: 15px;
+						span{
+							font-weight: 600;
+							font-size: 16px;
+							color: $black-color;
+						};
+					}
+				}
+			}
+		}
+	}
 
     .sign-in-wrapper, .sign-up-wrapper {
       width: 100%;
@@ -680,6 +819,7 @@
     .reset-wrapper {
       @extend .sign-in-wrapper;
 
+	  h3{ text-align: left; }
       .note {
         margin: 0;
         padding-bottom: 25px;
@@ -711,10 +851,6 @@
       button {
         margin: 0;
       }
-    }
-
-    .reset-wrapper h3 {
-      text-align: left;
     }
 
     .password-validation {

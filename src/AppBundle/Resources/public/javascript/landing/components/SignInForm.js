@@ -46,7 +46,7 @@ class SignInForm extends PureComponent {
 
 		ContentArena.Api.signInUser(this.name.value, this.pass.value)
 			.then(({ data }) => {
-				if (data.success) {
+				if (data && data.success) {
 					localStorage.clear();
 					if (refererEmail !== null && refererEmail !== "" && refererListingId !== null && refererListingId !== "") {
 						window.location.href = `listing/${refererListingId}`;

@@ -6,7 +6,7 @@ import cn from "classnames";
 import Loader from "../../common/components/Loader";
 import SearchCompetition from "../../main/components/SearchCompetition";
 import { DefaultBox } from "../../common/components/Containers";
-import { ROUTE_PATHS } from "../../main/routes";
+import { ROUTE_PATHS } from "@constants";
 import { selectTournament, setCustomSportName } from "../actions/propertyActions";
 
 class CreatePropertyWelcome extends React.Component {

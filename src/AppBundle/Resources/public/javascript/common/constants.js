@@ -8,6 +8,34 @@ export const CONTENT_LISTING_VIEW = {
 	TABLE: "table",
 };
 
+export const ROUTE_PATHS = {
+	LANDING: "/landing",
+	RESET_PASSWORD: "/reset-password",
+	LOGIN: "/login",
+	REGISTRATION: "/registration",
+	REGISTER: "/register",
+	MARKETPLACE: "/marketplace",
+	CONTENT_LISTING: "/contentlisting",
+	COMMERCIAL_OVERVIEW: "/commercialoverview",
+	WATCHLIST: "/watchlist",
+	CLOSED_DEALS: "/closeddeals",
+	SETTINGS: "/settings",
+	PREFERENCES: "/preferences",
+	TERMS: "/terms",
+	MESSAGES: "/messages",
+	BIDS: "/bids",
+	LISTING: "/listing",
+	LISTING_PREVIEW: "/listing-preview",
+	COMMERCIAL_OVERVIEW_WITH_ACTIVITY: "/commercialoverview/filter/withactivity",
+	COMMERCIAL_OVERVIEW_OPEN_BIDS: "/commercialoverview/filter/openbids",
+	COMMERCIAL_OVERVIEW_CLOSED_DEALS: "/commercialoverview/filter/closeddeals",
+	MANAGE_LISTINGS: "/managelistings",
+	MANAGE_PROPERTIES: "/manageproperties",
+	CREATE_PROPERTY: "/createproperty",
+	CREATE_PROPERTY_STEP_1: "/createproperty/1",
+	CREATE_PROPERTY_STEP_2: "/createproperty/2",
+};
+
 export const BUNDLE_TERRITORIES_METHOD = {
 	WORLDWIDE_EXCLUDING: "WORLDWIDE_EXCLUDING",
 	SELECTED_TERRITORIES: "SELECTED_TERRITORIES",
@@ -35,6 +63,7 @@ export const LOGIN_VIEW_TYPE = {
 	REGISTRATION: "registration",
 	REGISTERED: "registered",
 	RESET_PASSWORD: "reset_password",
+	LISTING_PREVIEW: "listing_preview",
 };
 
 export const SIGN_UP_FIELDS = {

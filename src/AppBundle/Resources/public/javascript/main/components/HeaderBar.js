@@ -6,7 +6,7 @@ import { goTo } from "../actions/utils";
 import HeaderNotifications from "./HeaderNotifications";
 import InviteUsersModal from "../../common/modals/InviteUsersModal";
 import { inviteIcon } from "./Icons";
-import { ROUTE_PATHS } from "../routes";
+import { ROUTE_PATHS } from "@constants";
 
 const HeaderBarTab = ({
 	match, children, route, className = "", linkClass = "", onClick,

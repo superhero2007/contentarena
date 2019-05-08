@@ -273,6 +273,7 @@ msgid "Watchlist"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListing.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "FEATURED_LISTING_BADGE_TEXT"
@@ -945,6 +946,43 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
 msgid "LOGIN_BAR_CONTACT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_INVALID_LISTING_ID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "SETTINGS_WELCOME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_RIGHTS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_SEASONS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_DESCRIPTION_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_REGISTER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_HAVE_ACCOUNT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_LOG_IN"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js

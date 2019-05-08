@@ -67,7 +67,7 @@ class UserService
         return $user;
     }
 
-    public function getUserByEmail( string $email )
+    public function getUserByEmail($email)
     {
         if( $email == null ) return null;
 

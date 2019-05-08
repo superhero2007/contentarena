@@ -34,7 +34,7 @@ class CmsTerritorySelector extends React.Component {
 		ContentArena.Api.getCountries().done((countries) => {
 			_this.setState({ countries });
 			_this.parseTerritoryCountries(countries);
-			if(!territoriesMode) setTimeout(() => { _this.handleChangeMode(BUNDLE_TERRITORIES_METHOD.WORLDWIDE); }, 1);
+			if (!territoriesMode) setTimeout(() => { _this.handleChangeMode(BUNDLE_TERRITORIES_METHOD.WORLDWIDE); }, 1);
 		});
 
 		if (ContentArena.Data.Territories.length === 0) {

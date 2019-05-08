@@ -9,11 +9,11 @@ const instance = axios.create({
 	},
 });
 
-instance.interceptors.response.use(response => response, (error) => {
+instance.interceptors.response.use(response => Promise.resolve(response), (error) => {
 	if (error.response.status === 401) {
 		showErrorModal();
 	}
-	return error;
+	return Promise.reject(error);
 });
 
 export default instance;

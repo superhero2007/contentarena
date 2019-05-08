@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
+import cn from "classnames";
 import { updateContentValue } from "../../sell/actions/contentActions";
 import { SuperRightDefinitions } from "../../sell/components/SuperRightDefinitions";
 import { RIGHTS } from "../../common/constants";
-import cn from "classnames";
 import { setRights } from "../actions/propertyActions";
 
 
@@ -85,7 +85,9 @@ class CmsRightsSelector extends React.Component {
 
 				{
 					RIGHTS.map((right, i) => {
-						const { name, shortLabel, id, translationKey } = right;
+						const {
+							name, shortLabel, id, translationKey,
+						} = right;
 						const idAttr = `checkbox-${id}`;
 						const { offers } = this.state;
 						const exclusiveIdAttr = `exc-id-${shortLabel}`;

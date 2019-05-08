@@ -18,10 +18,9 @@ import {
 } from "../actions/propertyActions";
 import Loader from "../../common/components/Loader/Loader";
 import { getMonths, getYears } from "../../common/utils/time";
-import { DATE_FORMAT } from "@constants";
+import { DATE_FORMAT, ROUTE_PATHS } from "@constants";
 import CmsRightsSelector from "../components/CmsRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
-import { ROUTE_PATHS } from "../../main/routes";
 
 class CreatePropertyEvent extends React.Component {
 	constructor(props) {
@@ -160,7 +159,6 @@ class CreatePropertyEvent extends React.Component {
 	handleSeasonDateChange = (index, e, dateType, type) => {
 		let year; let
 			month;
-
 		const { seasonsData } = this.state;
 
 		if (dateType === "YEAR") {
