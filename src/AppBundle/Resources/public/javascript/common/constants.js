@@ -75,7 +75,7 @@ export const RIGHTS = [
 	},
 	{
 		id: "LB",
-		name: "Delayed & Archive",
+		name: "Live Betting",
 		translationKey: "RIGHT_LIVE_BETTING_NAME",
 		exclusive: false,
 	},
