@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import RightsOverview from "./RightsOverview";
 import {
-	Redirect
+	Redirect,
 } from "react-router-dom";
+import RightsOverview from "./RightsOverview";
 import { ROUTE_PATHS } from "../../main/routes";
 
 class ManageProperties extends React.Component {
@@ -27,16 +27,15 @@ class ManageProperties extends React.Component {
 		const { common } = this.props;
 
 		if (common.properties.length === 0) {
-			return <Redirect to={ROUTE_PATHS.CREATE_PROPERTY}/>;
+			return <Redirect to={ROUTE_PATHS.CREATE_PROPERTY} />;
 		}
 
 		return (
 			<React.Fragment>
-				<RightsOverview/>
+				<RightsOverview />
 			</React.Fragment>
 		);
 	}
-
 }
 
 ManageProperties.contextTypes = {
@@ -46,7 +45,7 @@ ManageProperties.contextTypes = {
 const mapStateToProps = (state, ownProps) => state;
 
 const mapDispatchToProps = dispatch => ({
-	//updateProfile: profile => dispatch(updateProfile(profile)),
+	// updateProfile: profile => dispatch(updateProfile(profile)),
 });
 
 

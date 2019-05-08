@@ -95,7 +95,6 @@ class SearchCompetition extends React.Component {
 	};
 
 	render() {
-
 		const {
 			hideDescription,
 			hideEnterManually,
@@ -108,10 +107,12 @@ class SearchCompetition extends React.Component {
 		return (
 			<div className="step-content-container search-competition">
 				{
-					!hideDescription &&
-					<div className="step-item-description">
-						{this.context.t("CL_STEP1_SEARCH_TITLE")}
-					</div>
+					!hideDescription
+					&& (
+						<div className="step-item-description">
+							{this.context.t("CL_STEP1_SEARCH_TITLE")}
+						</div>
+					)
 				}
 				<div className="base-input search-competition-input">
 					<input
@@ -138,21 +139,23 @@ class SearchCompetition extends React.Component {
 						</div>
 					)}
 
-					{this.state.searchDone && this.state.results.length > 0 && !hideEnterManually &&(
+					{this.state.searchDone && this.state.results.length > 0 && !hideEnterManually && (
 						<div className="step-item-description" style={{ margin: "auto", marginRight: -210 }}>
 							{this.context.t("CL_STEP1_SEARCH_CANT_FIND")}
 						</div>
 					)}
 
 					{
-						!hideEnterManually &&
-						<button
-							className="standard-button standard-button-big"
-							onClick={this.props.close}
-							style={{ marginLeft: "auto", alignSelf: "center" }}
-						>
-							{this.context.t("CL_STEP1_ENTER_MANUALLY")}
-						</button>
+						!hideEnterManually
+						&& (
+							<button
+								className="standard-button standard-button-big"
+								onClick={this.props.close}
+								style={{ marginLeft: "auto", alignSelf: "center" }}
+							>
+								{this.context.t("CL_STEP1_ENTER_MANUALLY")}
+							</button>
+						)
 					}
 				</div>
 

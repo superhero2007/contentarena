@@ -4,9 +4,9 @@ import { PropTypes } from "prop-types";
 import { DATE_FORMAT } from "@constants";
 import moment from "moment";
 import cn from "classnames";
+import ReactTooltip from "react-tooltip";
 import NewFixture from "./NewFixture";
 import { getSeasonDateString } from "../../common/utils/listing";
-import ReactTooltip from "react-tooltip";
 import { getMonths, getYears } from "../../common/utils/time";
 
 const RemoveSeasonButton = ({ onRemove }) => (
@@ -212,9 +212,7 @@ class SeasonSelector extends React.Component {
 		});
 	};
 
-	customSeasonIsDisabled = (activeSeason) => {
-		return !activeSeason.customStartDate || !activeSeason.customEndDate
-	};
+	customSeasonIsDisabled = activeSeason => !activeSeason.customStartDate || !activeSeason.customEndDate;
 
 	render() {
 		const {
@@ -234,13 +232,13 @@ class SeasonSelector extends React.Component {
 						<input
 							type="text"
 							value={dateString}
-							className={cn({"full-disabled": activeSeason && dateString === ""})}
+							className={cn({ "full-disabled": activeSeason && dateString === "" })}
 							readOnly
 							disabled={this.props.loading || (activeSeason && dateString === "")}
 							onClick={this.props.openSelector}
 							placeholder={this.context.t("Season")}
 						/>
-						{/*{dateString && (
+						{/* {dateString && (
 							<span style={{
 								position: "absolute",
 								top: "6px",
@@ -249,7 +247,7 @@ class SeasonSelector extends React.Component {
 							>
 								{dateString}
 							</span>
-						)}*/}
+						)} */}
 
 						{showClose && <RemoveSeasonButton onRemove={removeSeason} />}
 					</div>
@@ -261,14 +259,14 @@ class SeasonSelector extends React.Component {
 							{this.context.t("CL_STEP1_LABEL_SEASON")}
 						</label>
 						<input
-							className={cn({"full-disabled": isDisabled})}
+							className={cn({ "full-disabled": isDisabled })}
 							type="text"
 							value={isDisabled ? "" : dateString}
 							disabled={isDisabled}
 							readOnly
 							placeholder={this.context.t("Season")}
 						/>
-						{/*{dateString && (
+						{/* {dateString && (
 							<span style={{
 								position: "absolute",
 								top: "6px",
@@ -277,7 +275,7 @@ class SeasonSelector extends React.Component {
 							>
 								{dateString}
 							</span>
-						)}*/}
+						)} */}
 						<RemoveSeasonButton onRemove={removeSeason} />
 					</div>
 				)}

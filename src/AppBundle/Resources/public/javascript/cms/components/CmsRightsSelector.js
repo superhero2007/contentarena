@@ -10,11 +10,10 @@ import { setRights } from "../actions/propertyActions";
 
 
 class CmsRightsSelector extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
-			rights: this.getRightsFromProps(props) ,
+			rights: this.getRightsFromProps(props),
 			offers: {
 				EXCLUSIVE: "exclusive",
 				NON_EXCLUSIVE: "non-exclusive",
@@ -87,7 +86,7 @@ class CmsRightsSelector extends React.Component {
 				{
 					RIGHTS.map((right, i) => {
 						const { name, shortLabel, id, translationKey } = right;
-						const idAttr = `checkbox-${shortLabel}`;
+						const idAttr = `checkbox-${id}`;
 						const { offers } = this.state;
 						const exclusiveIdAttr = `exc-id-${shortLabel}`;
 						const nonExclusiveIdAttr = `non-exc-id-${shortLabel}`;
@@ -101,7 +100,7 @@ class CmsRightsSelector extends React.Component {
 									<input
 										type="checkbox"
 										checked={this.isCheckBoxChecked(id)}
-										className="ca-checkbox"
+										className="ca-checkbox blue"
 										onChange={(e) => {
 											e.target.checked
 												? this.addRight(right)
@@ -109,7 +108,7 @@ class CmsRightsSelector extends React.Component {
 										}}
 										id={idAttr}
 									/>
-									<label className={cn({"selected": this.isCheckBoxChecked(id)})} htmlFor={idAttr}>
+									<label className={cn({ selected: this.isCheckBoxChecked(id) })} htmlFor={idAttr}>
 										{name}
 									</label>
 									<div className="tooltip-container">
@@ -135,7 +134,7 @@ class CmsRightsSelector extends React.Component {
 										className="ca-radio"
 									/>
 									<label
-										className={cn({"selected": !checkboxIsDisabled && offerValue === offers.EXCLUSIVE})}
+										className={cn({ selected: !checkboxIsDisabled && offerValue === offers.EXCLUSIVE })}
 										htmlFor={exclusiveIdAttr}
 									>
 										{this.context.t("RIGHT_SELECTION_OFFER_EXCLUSIVE")}
@@ -152,7 +151,7 @@ class CmsRightsSelector extends React.Component {
 									/>
 									<label
 										htmlFor={nonExclusiveIdAttr}
-										className={cn({"selected": !checkboxIsDisabled && offerValue === offers.NON_EXCLUSIVE})}
+										className={cn({ selected: !checkboxIsDisabled && offerValue === offers.NON_EXCLUSIVE })}
 									>
 										{this.context.t("RIGHT_SELECTION_OFFER_NON_EXCLUSIVE")}
 									</label>

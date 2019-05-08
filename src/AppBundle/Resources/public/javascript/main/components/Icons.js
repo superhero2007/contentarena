@@ -63,7 +63,7 @@ export const trashIconRed = `${assetsBaseDir}app/images/trash-red.svg`;
 export const trashIcon = `${assetsBaseDir}app/images/trash-gray.svg`;
 export const trashIconWhite = `${assetsBaseDir}app/images/trash-white.svg`;
 
-//cms
+// cms
 export const cmsWorldActive = `${assetsBaseDir}app/images/cms/world-active.svg`;
 export const cmsWorldDisabled = `${assetsBaseDir}app/images/cms/world-disabled.svg`;
 

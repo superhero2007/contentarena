@@ -54,7 +54,7 @@ HeaderBarSeller.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const HeaderBarSellerCms = ({ match, common, }, context) => (
+const HeaderBarSellerCms = ({ match, common }, context) => (
 	<React.Fragment>
 		{common.properties.length > 0 && (
 			<HeaderBarTab
@@ -131,7 +131,7 @@ class HeaderBar extends React.Component {
 
 	render() {
 		const {
-			tab, profile, match, common
+			tab, profile, match, common,
 		} = this.props;
 		const {
 			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount, isDownArrowShown,
@@ -187,9 +187,9 @@ class HeaderBar extends React.Component {
 							</HeaderBarTab>
 						)}
 
-						{profile === "SELLER" && !common.cmsEnabled && <HeaderBarSeller {...this.props}/>}
+						{profile === "SELLER" && !common.cmsEnabled && <HeaderBarSeller {...this.props} />}
 
-						{profile === "SELLER" && common.cmsEnabled && <HeaderBarSellerCms {...this.props}/>}
+						{profile === "SELLER" && common.cmsEnabled && <HeaderBarSellerCms {...this.props} />}
 
 						<div className="spacer" />
 

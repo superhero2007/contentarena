@@ -913,7 +913,7 @@ class SalesPackageForm extends React.Component {
 			<div className="sales-package-form sales-bundle-wrapper">
 				{this.renderModal()}
 				<div className="base-full-input" style={inputStyle}>
-					<label style={{color: "black"}}>
+					<label style={{ color: "black" }}>
 						{this.context.t("CL_STEP4_SALES_BUNDLES")}
 					</label>
 					<span>

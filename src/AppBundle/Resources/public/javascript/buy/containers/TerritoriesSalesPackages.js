@@ -30,9 +30,9 @@ class TerritoriesSalesPackages extends PureComponent {
 			checkedItems: new Map(),
 			territories: (countriesFromStorage && countriesFromStorage.length > 0) ? this.filtered : this.all,
 			bundles: [],
-			filter : {
-				countries : countriesFromStorage
-			}
+			filter: {
+				countries: countriesFromStorage,
+			},
 		};
 	}
 

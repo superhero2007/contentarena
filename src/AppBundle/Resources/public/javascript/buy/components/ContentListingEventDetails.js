@@ -297,14 +297,12 @@ class ContentListingEventDetails extends React.Component {
 							</div>
 							<div className="event-text" title={this.context.t("EVENT_SEASON_RELEASE")}>
 
-								{seasons.map((season, i, list) => {
-									return (
-										<span key={i}>
-											{getSeasonDateString(season, !showFullSeasons)}
-											{!showFullSeasons && i < list.length - 1 && ","}
-										</span>
-									)
-								})}
+								{seasons.map((season, i, list) => (
+									<span key={i}>
+										{getSeasonDateString(season, !showFullSeasons)}
+										{!showFullSeasons && i < list.length - 1 && ","}
+									</span>
+								))}
 							</div>
 						</div>
 					)}

@@ -22,7 +22,7 @@ class CreatePropertyWelcome extends React.Component {
 	}
 
 	selectTournament = (tournament) => {
-		const { history, selectTournament, } = this.props;
+		const { history, selectTournament } = this.props;
 		history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_1);
 		if (tournament) {
 			setTimeout(() => {
@@ -66,7 +66,7 @@ class CreatePropertyWelcome extends React.Component {
 				</DefaultBox>
 
 
-				{/*<div>
+				{/* <div>
 					<Loader loading={loading} small>
 						<button
 							className="standard-button"
@@ -74,11 +74,10 @@ class CreatePropertyWelcome extends React.Component {
 							{this.context.t("REGISTER_SUCCESS_MESSAGE")}
 						</button>
 					</Loader>
-				</div>*/}
+				</div> */}
 			</div>
 		);
 	}
-
 }
 
 CreatePropertyWelcome.contextTypes = {

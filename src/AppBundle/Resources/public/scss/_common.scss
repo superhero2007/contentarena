@@ -243,6 +243,21 @@ input[type="checkbox"].ca-checkbox {
   padding: initial;
   font-size: initial;
 
+  &.blue{
+	&:checked{
+	  border: 1px solid $property-blue;
+	  background-color: $property-blue;
+	}
+	&:hover {
+	  border-color: $property-blue;
+	}
+	&:disabled{
+	  background-color: #caccd1 !important;
+	  border: 1px solid #dcdddf !important;
+	  cursor: default;
+	}
+  }
+
   &:hover {
     border-color: #ffc948;
   }

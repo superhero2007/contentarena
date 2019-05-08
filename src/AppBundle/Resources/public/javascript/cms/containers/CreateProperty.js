@@ -25,12 +25,11 @@ class CreateProperty extends React.Component {
 		const { common, history } = this.props;
 		const { action, key } = this.props.match.params;
 
-		if (action !== undefined && action === "1") return <CreatePropertyEvent history={history}/>;
-		if (action !== undefined && action === "2") return <CreatePropertyTerritories history={history}/>;
+		if (action !== undefined && action === "1") return <CreatePropertyEvent history={history} />;
+		if (action !== undefined && action === "2") return <CreatePropertyTerritories history={history} />;
 
 		return <CreatePropertyWelcome history={history} />;
 	}
-
 }
 
 CreateProperty.contextTypes = {
@@ -40,7 +39,7 @@ CreateProperty.contextTypes = {
 const mapStateToProps = (state, ownProps) => state;
 
 const mapDispatchToProps = dispatch => ({
-	//updateProfile: profile => dispatch(updateProfile(profile)),
+	// updateProfile: profile => dispatch(updateProfile(profile)),
 });
 
 

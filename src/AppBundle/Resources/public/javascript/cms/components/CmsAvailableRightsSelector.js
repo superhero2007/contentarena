@@ -2,18 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import { updateContentValue } from "../../sell/actions/contentActions";
 import cn from "classnames";
+import { updateContentValue } from "../../sell/actions/contentActions";
 import { setSelectedRights } from "../actions/propertyActions";
 import { cmsWorldActive, cmsWorldDisabled } from "../../main/components/Icons";
 import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
 
 class CmsAvailableRightsSelector extends React.Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
-			rights:  this.getRightsFromProps(this.getEditableRights()),
+			rights: this.getRightsFromProps(this.getEditableRights()),
 			selectedRights: this.getRightsFromProps(props.rights),
 			allSelected: true,
 			offers: {
@@ -31,11 +30,11 @@ class CmsAvailableRightsSelector extends React.Component {
 		});
 	}
 
-	getRightsFromProps = (rights) => new Map(rights.map(rightItem => [rightItem.id, rightItem]));
+	getRightsFromProps = rights => new Map(rights.map(rightItem => [rightItem.id, rightItem]));
 
 	getRightsForProps = rights => [...rights.values()];
 
-	getEditableRights = () => this.props.rights.filter(right=>!right.edited);
+	getEditableRights = () => this.props.rights.filter(right => !right.edited);
 
 	addRight = (right) => {
 		const { selectedRights } = this.state;
@@ -69,9 +68,9 @@ class CmsAvailableRightsSelector extends React.Component {
 	};
 
 	handleAll = (e) => {
-		let allSelected = e.target.checked;
+		const allSelected = e.target.checked;
 		this.setState({ allSelected });
-		if (allSelected) this.props.rightsUpdated( this.getRightsForProps(this.getEditableRights()));
+		if (allSelected) this.props.rightsUpdated(this.getRightsForProps(this.getEditableRights()));
 	};
 
 	render() {
@@ -81,7 +80,7 @@ class CmsAvailableRightsSelector extends React.Component {
 
 		return (
 			<div className="right-selector">
-				<div className="right-selector-item full-width" >
+				<div className="right-selector-item full-width">
 					<div className="right-name">
 						<input
 							type="checkbox"
@@ -89,7 +88,7 @@ class CmsAvailableRightsSelector extends React.Component {
 							className="ca-checkbox"
 							onChange={this.handleAll}
 						/>
-						<label className={cn({"selected": false})}>
+						<label className={cn({ selected: false })}>
 							{this.context.t("CMS_RIGHT_SELECTOR_ALL")}
 						</label>
 					</div>
@@ -99,13 +98,14 @@ class CmsAvailableRightsSelector extends React.Component {
 						</label>
 					</div>
 					<div className="right-territories">
-						<label>
-						</label>
+						<label />
 					</div>
 				</div>
 				{
 					rights.map((right, i) => {
-						const { name, shortLabel, id, edited } = right;
+						const {
+							name, shortLabel, id, edited,
+						} = right;
 						const idAttr = `checkbox-${shortLabel}`;
 						const { offers } = this.state;
 						const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
@@ -124,7 +124,7 @@ class CmsAvailableRightsSelector extends React.Component {
 										}}
 										id={idAttr}
 									/>
-									<label className={cn({"selected": this.isCheckBoxChecked(id)})} htmlFor={idAttr}>{name}</label>
+									<label className={cn({ selected: this.isCheckBoxChecked(id) })} htmlFor={idAttr}>{name}</label>
 									<div className="tooltip-container">
 										<span className="" data-tip data-for={right.id}>
 											<i className="fa fa-question-circle-o" />
@@ -144,7 +144,7 @@ class CmsAvailableRightsSelector extends React.Component {
 								</div>
 								<div className="right-territories">
 									<label>
-										<img src={right.territories ? cmsWorldActive : cmsWorldDisabled} />
+										<img src={right.territories ? cmsWorldActive : cmsWorldDisabled} alt="" />
 										{right.territories ? right.territories.length : "0"}
 									</label>
 									{right.territories && <i className="fa fa-edit" onClick={() => {onEditTerritories(right)}} />}

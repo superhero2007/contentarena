@@ -131,8 +131,36 @@
           .fa{
             font-size: 26px;
             margin-right: 5px;
+	        color: $property-blue;
           }
         }
+	    &.season-checkbox {
+		  display: flex;
+		  align-items: center;
+		  padding-top: 10px;
+		  label{
+			color: $font-color-5;
+			font-size: 13px;
+		  }
+		  input{
+			margin-right: 10px;
+
+		  }
+	    }
+
+	    &.season-buttons{
+		    display: flex;
+		    align-items: center;
+		    padding-top: 10px;
+	    }
+
+	    .remove-season{ margin-right: 15px; }
+	    .remove-season, .add-season{
+		    cursor: pointer;
+		    font-size: 16px;
+		    color: $property-blue;
+		    i{ margin-right: 5px; }
+	    }
         .date-select{
           display: flex;
           justify-content: space-between;

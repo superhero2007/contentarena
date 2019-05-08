@@ -34,7 +34,7 @@ class CmsTerritorySelector extends React.Component {
 		ContentArena.Api.getCountries().done((countries) => {
 			_this.setState({ countries });
 			_this.parseTerritoryCountries(countries);
-			if(!territoriesMode) setTimeout(() => { _this.handleChangeMode(BUNDLE_TERRITORIES_METHOD.WORLDWIDE) },1);
+			if(!territoriesMode) setTimeout(() => { _this.handleChangeMode(BUNDLE_TERRITORIES_METHOD.WORLDWIDE); }, 1);
 		});
 
 		if (ContentArena.Data.Territories.length === 0) {
@@ -117,7 +117,7 @@ class CmsTerritorySelector extends React.Component {
 			selection,
 		} = this.state;
 
-		return selection.findIndex(c=>c.id===country.id);
+		return selection.findIndex(c => c.id === country.id);
 	};
 
 	selectRegion = (region) => {
@@ -211,15 +211,14 @@ class CmsTerritorySelector extends React.Component {
 	}
 
 	handleChange = (country) => {
-
 		const {
 			onChange,
 		} = this.props;
 
-		let index = this.countryIndex(country);
-		let selection = this.state.selection;
+		const index = this.countryIndex(country);
+		const selection = this.state.selection;
 
-		if (index === -1){
+		if (index === -1) {
 			selection.push(country);
 		} else {
 			selection.splice(index, 1);
@@ -238,17 +237,15 @@ class CmsTerritorySelector extends React.Component {
 		const {
 			onChange,
 		} = this.props;
-		let selection = territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? countries : [];
+		const selection = territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? countries : [];
 		this.setState({
 			territoriesMode,
-			selection
+			selection,
 		});
 		if (onChange) onChange(selection, territoriesMode);
 	};
 
-	getCounterLabel = (name, counter, total) => {
-		return `${name} (${counter}/${total})`;
-	};
+	getCounterLabel = (name, counter, total) => `${name} (${counter}/${total})`;
 
 	render() {
 		const {
@@ -274,10 +271,12 @@ class CmsTerritorySelector extends React.Component {
 			<div className="country-selector region-filter">
 
 				{
-					selectedRights && selectedRights.length > 0 &&
-					<div className="region-filter-title">
-						{ selectedRights.map((right, i, l) => <span>{right.name}{i<l.length-1&&", "}</span> )}
-					</div>
+					selectedRights && selectedRights.length > 0
+					&& (
+						<div className="region-filter-title">
+							{ selectedRights.map((right, i, l) => <span>{right.name}{i < l.length - 1 && ", "}</span>)}
+						</div>
+					)
 				}
 
 				<RadioSelector
@@ -310,14 +309,14 @@ class CmsTerritorySelector extends React.Component {
 						</div>
 						<div className="regions">
 							{territories.map((territory, i) => {
-								let territoryCountries = this.getTerritoryCountries(selection, territory.id).length;
-								let totalItems = territoryItems[territory.id] ? territoryItems[territory.id].length : 0;
+								const territoryCountries = this.getTerritoryCountries(selection, territory.id).length;
+								const totalItems = territoryItems[territory.id] ? territoryItems[territory.id].length : 0;
 								return (
 									<button
 										className={cn({
 											region: true,
 											"region-selected": territoryCountries > 0,
-											"excluding" : territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+											excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
 										})}
 										key={`territory-${i}`}
 										onClick={() => {
@@ -325,10 +324,10 @@ class CmsTerritorySelector extends React.Component {
 										}}
 									>
 										{
-											this.getCounterLabel(territory.name, territoryCountries, totalItems )
+											this.getCounterLabel(territory.name, territoryCountries, totalItems)
 										}
 									</button>
-								)
+								);
 							})}
 						</div>
 						<div className="region-filter-subtitle">
@@ -336,14 +335,14 @@ class CmsTerritorySelector extends React.Component {
 						</div>
 						<div className="regions">
 							{regions.map((region, i) => {
-								let regionCountries =  this.getRegionCountries(selection, region.id);
-								let totalItems = regionItems[region.id] ? regionItems[region.id].length : 0;
+								const regionCountries = this.getRegionCountries(selection, region.id);
+								const totalItems = regionItems[region.id] ? regionItems[region.id].length : 0;
 								return (
 									<button
 										className={cn({
 											region: true,
 											"region-selected": regionCountries > 0,
-											"excluding" : territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+											excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
 										})}
 										key={`region-${i}`}
 										onClick={() => {
@@ -351,10 +350,10 @@ class CmsTerritorySelector extends React.Component {
 										}}
 									>
 										{
-											this.getCounterLabel(region.name, regionCountries, totalItems )
+											this.getCounterLabel(region.name, regionCountries, totalItems)
 										}
 									</button>
-								)
+								);
 							})}
 						</div>
 						<div className="region-filter-subtitle">
@@ -374,39 +373,41 @@ class CmsTerritorySelector extends React.Component {
 				{
 					<div className="region-filter-title">
 						{
-							territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING &&
-							this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING")
+							territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING")
 						}
 						{
-							territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING &&
-							this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED")
+							territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED")
 						}
 						{ ` (${selection.length})` }
 					</div>
 				}
 
 				{
-					(territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE || selection.length === 0) &&
-					<div>
-						<div className="region-filter-selection-box">
-							<img src={territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? cmsWorldActive : cmsWorldDisabled} />
-							<span className="region-filter-selection-word">
-								{
-									territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE &&
-									this.context.t("CMS_TERRITORIES_SELECTOR_ALL_SELECTED")
-								}
-								{
-									selection.length === 0 &&
-									this.context.t("CMS_TERRITORIES_SELECTOR_EMPTY")
-								}
-							</span>
+					(territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE || selection.length === 0)
+					&& (
+						<div>
+							<div className="region-filter-selection-box">
+								<img src={territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? cmsWorldActive : cmsWorldDisabled} alt="" />
+								<span className="region-filter-selection-word">
+									{
+										territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE
+									&& this.context.t("CMS_TERRITORIES_SELECTOR_ALL_SELECTED")
+									}
+									{
+										selection.length === 0
+									&& this.context.t("CMS_TERRITORIES_SELECTOR_EMPTY")
+									}
+								</span>
+							</div>
 						</div>
-					</div>
+					)
 				}
 
 				{ territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && territories.map((territory, i) => {
-					let selectedCountries = this.getTerritoryCountries(selection, territory.id);
-					let territoryCountries = this.getTerritoryCountries(countries, territory.id);
+					const selectedCountries = this.getTerritoryCountries(selection, territory.id);
+					const territoryCountries = this.getTerritoryCountries(countries, territory.id);
 
 					if (selectedCountries.length === 0) return undefined;
 
@@ -414,7 +415,7 @@ class CmsTerritorySelector extends React.Component {
 						<div key={`territory-box-${i}`}>
 							<div className="region-filter-subtitle">
 								{
-									this.getCounterLabel(territory.name, selectedCountries.length, territoryCountries.length )
+									this.getCounterLabel(territory.name, selectedCountries.length, territoryCountries.length)
 								}
 							</div>
 							<div className="regions">
@@ -426,9 +427,9 @@ class CmsTerritorySelector extends React.Component {
 												className={cn({
 													region: true,
 													"region-selected": this.countryIndex(country) !== -1,
-													"excluding" : territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+													excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
 												})}
-												onClick={() =>{
+												onClick={() => {
 													this.handleChange(country);
 												}}
 											>
@@ -438,7 +439,7 @@ class CmsTerritorySelector extends React.Component {
 								}
 							</div>
 						</div>
-					)
+					);
 				})}
 
 			</div>

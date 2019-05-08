@@ -530,6 +530,191 @@ msgstr ""
 msgid "SALES_PACKAGE_TABLE_SALES_METHOD"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsAvailableRightsSelector.js
+msgid "CMS_RIGHT_SELECTOR_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsAvailableRightsSelector.js
+msgid "CMS_RIGHT_SELECTION_EXCLUSIVITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsAvailableRightsSelector.js
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsRightsSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
+msgid "RIGHT_SELECTION_OFFER_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsAvailableRightsSelector.js
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsRightsSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
+msgid "RIGHT_SELECTION_OFFER_NON_EXCLUSIVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSportSelector.js
+#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
+msgid "LOGIN_BAR_LOGIN"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_RADIO_WORLDWIDE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_RADIO_SELECTED_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_RADIO_WORLDWIDE_EXCLUDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_CONTINENTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_REGIONS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_SEARCH"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_SELECTED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_ALL_SELECTED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_CREATE_PROPERTY_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_CREATE_PROPERTY_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_SPORT_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_SPORT_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_CATEGORY_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_CATEGORY_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_TOURNAMENT_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_TOURNAMENT_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_SEASON_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_SEASON_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_REMOVE_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_ADD_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_NOT_APPLICABLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_SELECT_RIGHTS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_SELECT_RIGHTS_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_CREATE_PROPERTY_CONTINUE_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_CANCEL_CREATE_PROPERTY_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_SELECT_TERRITORIES_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_SELECT_TERRITORIES_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_PROPERTY_CREATION_COMPLETE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_APPLY_TERRITORIES_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+msgid "CMS_CREATE_PROPERTY_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_MAIN_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_MAIN_SUBTITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_SEARCH_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_SEARCH_PHRASE_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_SEARCH_PHRASE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "REGISTER_SUCCESS_MESSAGE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js
 msgid "LOADER_DEFAULT_TEXT"
 msgstr ""
@@ -760,10 +945,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
 msgid "LOGIN_BAR_CONTACT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
-msgid "LOGIN_BAR_LOGIN"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
@@ -1241,6 +1422,22 @@ msgid "GENERIC_TERMS_TEXT_2"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_MANAGE_LISTINGS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_COMMERCIAL_ACTIVITY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_CREATE_LISTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
+msgid "HEADER_LINK_MANAGE_PROPERTIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_TEST_STAGE_MODE"
 msgstr ""
 
@@ -1258,18 +1455,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
 msgid "HEADER_LINK_CLOSED_DEALS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "HEADER_LINK_MANAGE_LISTINGS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "HEADER_LINK_COMMERCIAL_ACTIVITY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
-msgid "HEADER_LINK_CREATE_LISTING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/HeaderBar.js
@@ -1868,10 +2053,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "SETTINGS_LABEL_TERMS_TITLE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "REGISTER_SUCCESS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
@@ -2970,14 +3151,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
 msgid "RIGHT_SELECTION_OFFER_EXCLUSIVELY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
-msgid "RIGHT_SELECTION_OFFER_EXCLUSIVE"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
-msgid "RIGHT_SELECTION_OFFER_NON_EXCLUSIVE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js

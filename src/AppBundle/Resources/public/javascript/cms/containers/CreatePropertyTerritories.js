@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { DefaultBox, VerticalButtonBox } from "../../common/components/Containers";
 import {
-	updateFromMultiple
+	updateFromMultiple,
 } from "../../sell/actions/stepOneActions";
 import {
-	getSeasonName, getSeasonNames, getSportCategoryName, getSportName,
-	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament
+	getSeasonNames, getSportCategoryName, getSportName,
+	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
 } from "../reducers/property";
 import {
-	setSelectedRights, setRights
+	setSelectedRights, setRights,
 } from "../actions/propertyActions";
 import Loader from "../../common/components/Loader/Loader";
 import { DATE_FORMAT } from "@constants";
@@ -22,19 +22,17 @@ class CreatePropertyTerritories extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			territories : []
+			territories: [],
 		};
 	}
 
-	componentWillReceiveProps(nextProps){
-
+	componentWillReceiveProps(nextProps) {
 		const {
 			loadingCategories,
 		} = this.state;
 		const {
 			property,
 		} = nextProps;
-
 	}
 
 	onUndoTerritories = (selectedRight) => {
@@ -98,9 +96,9 @@ class CreatePropertyTerritories extends React.Component {
 			selectedRights,
 		} = property;
 
-		let selectedRightsIds = selectedRights.map(right=>right.id);
-		let editedRights = rights.map( right => {
-			if ( selectedRightsIds.indexOf(right.id) !== -1 ) {
+		const selectedRightsIds = selectedRights.map(right => right.id);
+		const editedRights = rights.map((right) => {
+			if (selectedRightsIds.indexOf(right.id) !== -1) {
 				right.edited = true;
 				right.territories = territories;
 				right.territoriesMode = territoriesMode;
@@ -118,7 +116,7 @@ class CreatePropertyTerritories extends React.Component {
 		this.setState({ territories, territoriesMode, editMode: false });
 	};
 
-	rightsComplete = () => this.props.property.rights.filter(right=>!right.edited).length === 0;
+	rightsComplete = () => this.props.property.rights.filter(right => !right.edited).length === 0;
 
 	render() {
 		let {
@@ -162,62 +160,70 @@ class CreatePropertyTerritories extends React.Component {
 				</DefaultBox>
 
 				{
-					selectedRights.length > 0 &&
-					<DefaultBox>
-						<h4>
-							{this.context.t("CMS_SELECT_TERRITORIES_TITLE")}
-						</h4>
-						<h6>
-							{this.context.t("CMS_SELECT_TERRITORIES_DESCRIPTION")}
-						</h6>
+					selectedRights.length > 0
+					&& (
+						<DefaultBox>
+							<h4>
+								{this.context.t("CMS_SELECT_TERRITORIES_TITLE")}
+							</h4>
+							<h6>
+								{this.context.t("CMS_SELECT_TERRITORIES_DESCRIPTION")}
+							</h6>
 
-						<CmsTerritorySelector
-							className="small-select"
-							onChange={this.handleTerritories}
-							onSelectRegion={() => {
-							}}
-							value={territories}
-							territoriesMode={territoriesMode}
-							multiple
-							filter={[]}
-							selectedRights={selectedRights}
-							exclusiveSoldTerritories={false}
-						/>
-					</DefaultBox>
+                            <CmsTerritorySelector
+                                className="small-select"
+                                onChange={this.handleTerritories}
+                                onSelectRegion={() => {
+                                }}
+                                value={territories}
+                                territoriesMode={territoriesMode}
+                                multiple
+                                filter={[]}
+                                selectedRights={selectedRights}
+                                exclusiveSoldTerritories={false}
+                            />
+					    </DefaultBox>
+					)
 				}
 
 				{
-					this.rightsComplete() &&
-					<DefaultBox>
-						<h5>
-							<i className="fa fa-check-circle" />
-						</h5>
-						<h5>
-							{this.context.t("CMS_PROPERTY_CREATION_COMPLETE")}
-						</h5>
-					</DefaultBox>
+					this.rightsComplete()
+					&& (
+						<DefaultBox>
+							<h5>
+								<i className="fa fa-check-circle" />
+							</h5>
+							<h5>
+								{this.context.t("CMS_PROPERTY_CREATION_COMPLETE")}
+							</h5>
+						</DefaultBox>
+					)
 				}
 
 				<VerticalButtonBox>
 					{
-						!this.rightsComplete() &&
-						<button
-							className="yellow-button"
-							disabled={selectedRights.length === 0 || territories.length === 0}
-							onClick={this.applyTerritories}
-						>
-							{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
-						</button>
+						!this.rightsComplete()
+						&& (
+							<button
+                                className="yellow-button"
+                                disabled={selectedRights.length === 0 || territories.length === 0}
+                                onClick={this.applyTerritories}
+                            >
+                                {this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
+                            </button>
+						)
 					}
 
 					{
-						this.rightsComplete() &&
-						<button
-							className="yellow-button"
-							onClick={() => {}}
-						>
-							{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
-						</button>
+						this.rightsComplete()
+						&& (
+							<button
+								className="yellow-button"
+								onClick={() => {}}
+							>
+								{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+							</button>
+						)
 					}
 
 					<a href={ROUTE_PATHS.CREATE_PROPERTY} className="link-button property-cancel-button">
@@ -227,26 +233,23 @@ class CreatePropertyTerritories extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 CreatePropertyTerritories.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-	return Object.assign({}, state, {
-		sportValue: getSportName(state),
-		sportCategoryValue: getSportCategoryName(state),
-		seasonValues: getSeasonNames(state),
-		tournamentValue: getTournamentName(state),
-		hasCustomSport: hasCustomSport(state),
-		hasCustomSportCategory: hasCustomSportCategory(state),
-		hasCustomTournament: hasCustomTournament(state),
-		hasCustomSeason: hasCustomSeason(state),
+const mapStateToProps = state => Object.assign({}, state, {
+	sportValue: getSportName(state),
+	sportCategoryValue: getSportCategoryName(state),
+	seasonValues: getSeasonNames(state),
+	tournamentValue: getTournamentName(state),
+	hasCustomSport: hasCustomSport(state),
+	hasCustomSportCategory: hasCustomSportCategory(state),
+	hasCustomTournament: hasCustomTournament(state),
+	hasCustomSeason: hasCustomSeason(state),
 
-	});
-};
+});
 
 const mapDispatchToProps = dispatch => ({
 	updateFromMultiple: (type, index, key, value) => dispatch(updateFromMultiple(type, index, key, value)),

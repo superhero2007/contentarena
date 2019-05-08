@@ -347,13 +347,11 @@ class Settings extends React.Component {
 											accessor: "email",
 											headerClassName: "table-header",
 											className: "table-header",
-											Cell: row => {
-												return (
-													<span title={row.value}>
-														{row.value}
-														</span>
-												)
-											},
+											Cell: row => (
+												<span title={row.value}>
+													{row.value}
+												</span>
+											),
 											width: 350,
 										}, {
 											Header: this.context.t("SETTINGS_LABEL_USER_PHONE_NUMBER"),

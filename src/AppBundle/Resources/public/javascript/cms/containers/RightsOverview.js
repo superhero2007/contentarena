@@ -17,7 +17,7 @@ class RightsOverview extends React.Component {
 	render() {
 		const {
 			loading,
-		} = this.state
+		} = this.state;
 
 		const { common } = this.props;
 
@@ -27,7 +27,6 @@ class RightsOverview extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 RightsOverview.contextTypes = {
@@ -37,7 +36,7 @@ RightsOverview.contextTypes = {
 const mapStateToProps = (state, ownProps) => state;
 
 const mapDispatchToProps = dispatch => ({
-	//updateProfile: profile => dispatch(updateProfile(profile)),
+	// updateProfile: profile => dispatch(updateProfile(profile)),
 });
 
 
