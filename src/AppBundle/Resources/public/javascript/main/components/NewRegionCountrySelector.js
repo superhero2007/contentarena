@@ -246,6 +246,7 @@ class NewRegionCountrySelector extends React.Component {
 			territoryItems,
 			regionItems,
 			selection,
+			countries,
 		} = this.state;
 
 		return (
@@ -255,7 +256,7 @@ class NewRegionCountrySelector extends React.Component {
 						<div className="regions">
 							{worldwide && (
 								<button
-									className={cn("region", { "region-selected": worldwideSelected })}
+									className={cn("region", { "region-selected": selection.length === countries.length })}
 									onClick={this.selectWorldwide}
 								>
 									Worldwide

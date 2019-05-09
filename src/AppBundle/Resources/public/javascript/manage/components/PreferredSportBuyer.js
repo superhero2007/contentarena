@@ -7,7 +7,7 @@ class PreferredSportBuyer extends React.Component {
 		super(props);
 		this.state = {
 			sports: (props.sports) ? props.sports : [],
-			all: (props.all) ? props.all : false,
+			all: (props.allSports) ? props.allSports : false,
 			other: (props.other) ? props.other : false,
 		};
 	}
