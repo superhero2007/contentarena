@@ -17,7 +17,6 @@ import {
 	minusYellowIcon, bucketIcon, disabledPdfIcon,
 } from "./Icons";
 import { customStyles, GenericModalStyle } from "../styles/custom";
-import SendMessage from "../../common/modals/SendMessage/SendMessage";
 import ExtraTerritories from "./ExtraTerritories";
 import { BUNDLE_TERRITORIES_METHOD, DATE_FORMAT } from "../../common/constants";
 
@@ -32,7 +31,6 @@ class CommercialSalesBundle extends React.Component {
 			showBids: props.bidsOpen,
 			territoriesList: [],
 			showAllTerritories: false,
-			openContactSellerModal: false,
 		};
 
 		this.creditIcon = `${assetsBaseDir}app/images/credit-card.png`;
@@ -64,10 +62,6 @@ class CommercialSalesBundle extends React.Component {
 	closeRejectModal = () => this.setState({ rejectModalIsOpen: false });
 
 	openRejectModal = () => this.setState({ rejectModalIsOpen: true });
-
-	openContactSellerModal = () => this.setState({ openContactSellerModal: true });
-
-	closeContactSellerModal = () => this.setState({ openContactSellerModal: false });
 
 	renderRemoveModal = () => {
 		const { saving } = this.state;
@@ -103,13 +97,6 @@ class CommercialSalesBundle extends React.Component {
 		);
 	};
 
-	showAllTerritories = (extraTerritories) => {
-		this.setState({
-			showAllTerritories: true,
-			territoriesList: extraTerritories,
-		});
-	};
-
 	closeTerritoriesModal = () => {
 		this.setState({ showAllTerritories: false });
 	};
@@ -139,7 +126,7 @@ class CommercialSalesBundle extends React.Component {
 			salesBundle, onDelete, contentId, onUpdate, onApprove, listingCustomId, common,
 		} = this.props;
 		const {
-			showBids, rejectModalIsOpen, approveModalIsOpen, selectedBid, openContactSellerModal, selectedCompany,
+			showBids, rejectModalIsOpen, approveModalIsOpen, selectedBid,
 		} = this.state;
 
 		const closedDeals = salesBundle.bids.filter(b => b.status.name === "APPROVED");
@@ -212,17 +199,6 @@ class CommercialSalesBundle extends React.Component {
 						postAction={onUpdate}
 						isOpen={rejectModalIsOpen}
 						onCloseModal={this.closeRejectModal}
-					/>
-				)}
-
-				{openContactSellerModal && (
-					<SendMessage
-						title={selectedCompany.legalName}
-						isOpen={openContactSellerModal}
-						listing={contentId}
-						recipient={selectedCompany.id}
-						role="SELLER"
-						onCloseModal={this.closeContactSellerModal}
 					/>
 				)}
 
@@ -394,7 +370,7 @@ class CommercialSalesBundle extends React.Component {
 										{props.value.status === "PENDING"
 										&& (
 											<i
-												className="fa fa-check-circle-o green-icon"
+												className="fa fa-check-circle-o"
 												style={{ color: "#19CB43", fontSize: 26 }}
 												onClick={() => {
 													this.setState({ selectedBid: props.value.bid }, this.openApproveModal);
@@ -405,7 +381,7 @@ class CommercialSalesBundle extends React.Component {
 										{props.value.status === "PENDING"
 										&& (
 											<i
-												className="fa fa-times-circle-o red-icon"
+												className="fa fa-times-circle-o"
 												style={{ color: "#990000", fontSize: 26 }}
 												onClick={() => {
 													this.setState({ selectedBid: props.value.bid }, this.openRejectModal);
@@ -429,15 +405,16 @@ class CommercialSalesBundle extends React.Component {
 										&& <img src={disabledPdfIcon} alt="" />
 										}
 
-
-										{props.value.status === "APPROVED"
-										&& (
+										{(props.value.status === "APPROVED" || props.value.status === "PENDING") && (
 											<img
 												onClick={() => {
 													if (props.value.status === "APPROVED") {
 														window.location.href = `/redirect-integration/messages-by-bid-seller/${props.value.bid.id}`;
 													} else {
-														this.setState({ selectedCompany: props.value.bid.buyerUser.company }, this.openContactSellerModal);
+														window.open(
+															`/redirect-integration/messages-by-bid-seller/${props.value.bid.id}`,
+															"_blank",
+														);
 													}
 												}}
 												src={blueEnvelopeIcon}
