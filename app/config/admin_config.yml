@@ -97,6 +97,7 @@ easy_admin:
                         - { property: 'expiresAt' }
                         - { property: 'featured' }
                         - { property: 'featuredPosition' }
+                        - { property: 'relevance' }
                     actions:
                         - { name: 'notifyUsersAboutListing', css_class : 'btn btn-primary' }
                 search:
@@ -123,6 +124,7 @@ easy_admin:
                         - { property: 'expiresAt' }
                         - { property: 'featured' }
                         - { property: 'featuredPosition' }
+                        - { property: 'relevance' }
                         - { property: 'image', type: 'image', base_path: '%admin_uploads_uri%' }
                         - { property: 'status' }
                         - { property: 'shareId', template: 'share.listing.list.html.twig', base_path: '%carena_host_url%', label: "Share" }

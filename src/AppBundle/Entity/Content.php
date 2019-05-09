@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Content
@@ -271,6 +272,12 @@ class Content implements NotifiableInterface
      * @var int
      *
      * @ORM\Column(name="relevance", type="smallint", options={"default":1})
+     * @Assert\Range(
+     *     min = 1,
+     *     max = 5,
+     *     minMessage = "Min value is {{ limit }}",
+     *     maxMessage = "Max value is {{ limit }}"
+     *     )
      */
     private $relevance;
 
