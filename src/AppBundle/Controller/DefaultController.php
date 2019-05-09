@@ -71,7 +71,7 @@ class DefaultController extends BaseController
             return $this->redirect("/listing/". $customId);
         }
 
-        return $this->redirect("/listing-preview?email=". $email."&listingId=".$customId);
+        return $this->redirect("/listing-preview?listingId=".$customId);
     }
 
     /**
