@@ -34,7 +34,7 @@ class CreatePropertyWelcome extends React.Component {
 	};
 
 	onSearch = (results) => {
-		this.setState({results});
+		this.setState({ results });
 	};
 
 	render() {
@@ -66,22 +66,26 @@ class CreatePropertyWelcome extends React.Component {
 					/>
 
 					{
-						!results &&
-						<p className="text-center">
-							{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
-							<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
-						</p>
+						!results
+						&& (
+							<p className="text-center">
+								{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
+								<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
+							</p>
+						)
 					}
 				</DefaultBox>
 
 				{
-					results && results.length > 0 &&
-					<DefaultBox>
-						<CmsSearchResults
-							results={results}
-							select={this.selectTournament}
-						/>
-					</DefaultBox>
+					results && results.length > 0
+					&& (
+						<DefaultBox>
+							<CmsSearchResults
+								results={results}
+								select={this.selectTournament}
+							/>
+						</DefaultBox>
+					)
 				}
 
 			</div>

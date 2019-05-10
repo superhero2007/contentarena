@@ -57,7 +57,6 @@ class CmsSearchCompetition extends React.Component {
 			});
 
 			onSearch(results);
-
 		}).always(() => {
 			_this.setState({
 				searching: false,
@@ -123,18 +122,21 @@ class CmsSearchCompetition extends React.Component {
 				</div>
 
 				{
-					this.state.searchDone && this.state.results.length === 0 &&
-					<div className="search-competition-messages">
-						{this.context.t("CL_STEP1_SEARCH_NO_RESULTS", { n: this.state.input })}
-						{this.context.t("CMS_SEARCH_TRY")}
-						<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}
-							className="standard-button standard-button-big"
-							onClick={this.props.close}
-						>
-							{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}
-						</a>
-						<i className="fa fa-exclamation-circle" />
-					</div>
+					this.state.searchDone && this.state.results.length === 0
+					&& (
+						<div className="search-competition-messages">
+							{this.context.t("CL_STEP1_SEARCH_NO_RESULTS", { n: this.state.input })}
+							{this.context.t("CMS_SEARCH_TRY")}
+							<a
+								href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}
+								className="standard-button standard-button-big"
+								onClick={this.props.close}
+							>
+								{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}
+							</a>
+							<i className="fa fa-exclamation-circle" />
+						</div>
+					)
 				}
 			</div>
 		);

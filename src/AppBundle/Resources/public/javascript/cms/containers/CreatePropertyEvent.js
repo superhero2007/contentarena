@@ -391,6 +391,7 @@ class CreatePropertyEvent extends React.Component {
 			setCustomTournamentName,
 			setCustomSeasonName,
 			removeCustomSport,
+			removeCustomTournament,
 			removeCustomSeason,
 		} = this.props;
 
@@ -476,8 +477,14 @@ class CreatePropertyEvent extends React.Component {
 								<div className="item-tools">
 									<Loader loading={loadingTournaments} xSmall />
 									{
-										!hasCustomSportCategory && hasCustomTournament && sportCategoryValue !== ""
-										&& this.getRemoveBtn(0)
+										!hasCustomSportCategory && hasCustomTournament && sportCategoryValue !== "" && (
+											<i
+												className="fa fa-minus-circle"
+												onClick={() => {
+													removeCustomTournament(0);
+												}}
+											/>
+										)
 									}
 								</div>
 							</li>
