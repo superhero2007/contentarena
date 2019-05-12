@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import Loader from "../../common/components/Loader";
 import { hideRegistrationEmail } from "../actions/landingActions";
 import { validateEmail } from "../../common/utils/listing";
+import { SERVER_ERROR_CODES, SITE_EMAILS, SITE_URLS } from "../../common/constants";
 
 class SignUpForm extends PureComponent {
 	constructor(props) {
@@ -69,7 +70,8 @@ class SignUpForm extends PureComponent {
 				}
 			})
 			.catch(({ response }) => {
-				this.setState({ generalError: response.data.message });
+				let responseData = response.status === 500 ? response.data.error : response.data;
+				this.setState({ generalError: responseData.message, errorCode: responseData.code });
 			})
 			.finally(() => {
 				this.setState({ isLoading: false });
@@ -95,9 +97,15 @@ class SignUpForm extends PureComponent {
 
 	render() {
 		const { refererEmail } = this.props;
+		const {
+			errorCode,
+			generalError,
+		} = this.state;
 		return (
 			<section className="sign-up-wrapper" onKeyPress={this.handleEnterPress}>
-				<h3>{this.context.t("SIGN_UP_FOR_ACCOUNT")}</h3>
+				<h3>
+					{this.context.t("SIGN_UP_FOR_ACCOUNT")}
+				</h3>
 
 				{refererEmail && refererEmail !== "" && (
 					<p className="sign-in-error-message">
@@ -105,9 +113,26 @@ class SignUpForm extends PureComponent {
 					</p>
 				)}
 
-				{this.state.generalError && <span className="sign-error">{this.state.generalError}</span>}
+				{
+					generalError && errorCode !== SERVER_ERROR_CODES.USER_ALREADY_EXISTS &&
+					<span className="sign-error-top">
+						{this.state.generalError}
+					</span>
+				}
+
+				{
+					generalError && errorCode === SERVER_ERROR_CODES.USER_ALREADY_EXISTS &&
+					<span className="sign-error-top">
+						This email address is already in use.
+						In case you have problems to login to your account, please reset your password via <a href={SITE_URLS.LOGIN_URL}>Reset password</a>.
+						Otherwise, please contact <a href={`mailto:${SITE_EMAILS.SUPPORT}`}>Support</a> for help.
+					</span>
+				}
+
 				<div className="username">
-					<label htmlFor="username">{this.context.t("SIGN_UP_NAME")}</label>
+					<label htmlFor="username">
+						{this.context.t("SIGN_UP_NAME")}
+					</label>
 					<input
 						ref={name => this.username = name}
 						type="text"
@@ -118,12 +143,18 @@ class SignUpForm extends PureComponent {
 						required="required"
 						autoComplete="username"
 					/>
-					{this.state[SIGN_UP_FIELDS.NAME].error
-					&& <span className="sign-error">{this.state[SIGN_UP_FIELDS.NAME].error}</span>}
+					{
+						this.state[SIGN_UP_FIELDS.NAME].error &&
+						<span className="sign-error">
+							{this.state[SIGN_UP_FIELDS.NAME].error}
+						</span>
+					}
 				</div>
 
 				<div className="lastname">
-					<label htmlFor="lastname">{this.context.t("SIGN_UP_LAST_NAME")}</label>
+					<label htmlFor="lastname">
+						{this.context.t("SIGN_UP_LAST_NAME")}
+					</label>
 					<input
 						onChange={e => this.handleInputChange(SIGN_UP_FIELDS.LAST_NAME, e.target.value)}
 						type="text"
@@ -132,12 +163,18 @@ class SignUpForm extends PureComponent {
 						required="required"
 						autoComplete="lastname"
 					/>
-					{this.state[SIGN_UP_FIELDS.LAST_NAME].error
-					&& <span className="sign-error">{this.state[SIGN_UP_FIELDS.LAST_NAME].error}</span>}
+					{
+						this.state[SIGN_UP_FIELDS.LAST_NAME].error &&
+						<span className="sign-error">
+							{this.state[SIGN_UP_FIELDS.LAST_NAME].error}
+						</span>
+					}
 				</div>
 
 				<div className="email">
-					<label htmlFor="email">{this.context.t("SIGN_UP_EMAIL")}</label>
+					<label htmlFor="email">
+						{this.context.t("SIGN_UP_EMAIL")}
+					</label>
 					<input
 						value={this.state[SIGN_UP_FIELDS.EMAIL].value}
 						onChange={e => this.handleInputChange(SIGN_UP_FIELDS.EMAIL, e.target.value)}
@@ -147,12 +184,18 @@ class SignUpForm extends PureComponent {
 						required="required"
 						autoComplete="email"
 					/>
-					{this.state[SIGN_UP_FIELDS.EMAIL].error
-					&& <span className="sign-error">{this.state[SIGN_UP_FIELDS.EMAIL].error}</span>}
+					{
+						this.state[SIGN_UP_FIELDS.EMAIL].error &&
+						<span className="sign-error">
+							{this.state[SIGN_UP_FIELDS.EMAIL].error}
+						</span>
+					}
 				</div>
 
 				<div className="company">
-					<label htmlFor="company">{this.context.t("SIGN_UP_COMPANY")}</label>
+					<label htmlFor="company">
+						{this.context.t("SIGN_UP_COMPANY")}
+					</label>
 					<input
 						onChange={e => this.handleInputChange(SIGN_UP_FIELDS.COMPANY, e.target.value)}
 						type="text"
@@ -161,8 +204,12 @@ class SignUpForm extends PureComponent {
 						required="required"
 						autoComplete="company"
 					/>
-					{this.state[SIGN_UP_FIELDS.COMPANY].error
-					&& <span className="sign-error">{this.state[SIGN_UP_FIELDS.COMPANY].error}</span>}
+					{
+						this.state[SIGN_UP_FIELDS.COMPANY].error &&
+						<span className="sign-error">
+							{this.state[SIGN_UP_FIELDS.COMPANY].error}
+						</span>
+					}
 				</div>
 
 				<button className="yellow-btn" onClick={this.handleSignUpUser}>
