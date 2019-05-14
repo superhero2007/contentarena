@@ -8,6 +8,12 @@ export const CONTENT_LISTING_VIEW = {
 	TABLE: "table",
 };
 
+export const USER_PROFILES = {
+	SELLER: "SELLER",
+	BUYER: "BUYER",
+	BOTH: "BOTH",
+};
+
 export const ROUTE_PATHS = {
 	LANDING: "/landing",
 	RESET_PASSWORD: "/reset-password",
