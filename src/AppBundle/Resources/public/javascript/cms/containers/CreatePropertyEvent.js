@@ -198,7 +198,7 @@ class CreatePropertyEvent extends React.Component {
 			month;
 		const { seasonsData } = this.state;
 		const { seasons } = this.props.property;
-		const { hasCustomSeason } = this.props;
+		const { hasCustomSport } = this.props;
 
 		if (dateType === "YEAR") {
 			year = e.target.value;
@@ -214,7 +214,7 @@ class CreatePropertyEvent extends React.Component {
 		const theDate = moment(new Date(year, +monthNumber)).utc().format();
 
 		this.props.updateFromMultiple("seasons", index, type, theDate);
-		if (!hasCustomSeason && seasons[index] && seasons[index].custom) {
+		if (!hasCustomSport && seasons[index] && seasons[index].custom) {
 			const seasonName = this.getCustomSeasonName(seasons[index], year, month, type);
 			this.props.setCustomSeasonName(index, seasonName);
 		}
@@ -255,7 +255,7 @@ class CreatePropertyEvent extends React.Component {
 	};
 
 	addSeason = () => {
-		if (this.props.hasCustomSeason) this.props.addCustomSeason();
+		if (this.props.hasCustomSport) this.props.addCustomSeason();
 		this.setState(state => ({
 			seasonsData: [...state.seasonsData, {}],
 		}), () => {
@@ -414,13 +414,13 @@ class CreatePropertyEvent extends React.Component {
 	handleSeasonCheckbox = () => this.setState(prevState => ({ isSeasonApplicable: !prevState.isSeasonApplicable }));
 
 	isSeasonInputDisabled = (index) => {
-		const { tournamentValue, loadingSeasons, hasCustomSeason } = this.props;
+		const { tournamentValue, loadingSeasons, hasCustomSport } = this.props;
 		const { isSeasonApplicable } = this.state;
 
 		if (!tournamentValue || loadingSeasons || !isSeasonApplicable) return true;
 		const { seasons } = this.props.property;
 		const seasonItem = seasons[index];
-		if (hasCustomSeason || !seasonItem) return false;
+		if (hasCustomSport || !seasonItem) return false;
 		if (seasonItem.custom || (!seasonItem.custom && seasonItem.name)) return true;
 		return false;
 	};
@@ -483,7 +483,6 @@ class CreatePropertyEvent extends React.Component {
 			hasCustomSport,
 			hasCustomSportCategory,
 			hasCustomTournament,
-			hasCustomSeason,
 			openSportSelector,
 			openCategorySelector,
 			openTournamentSelector,
@@ -494,13 +493,8 @@ class CreatePropertyEvent extends React.Component {
 			setCustomSeasonName,
 			removeCustomSport,
 			removeCustomTournament,
-			removeCustomSeason,
 		} = this.props;
-		console.log("----------");
-		console.log(this.props.property.seasons);
-		console.log(this.state.seasonsData);
-		console.log(this);
-		console.log("----------");
+
 		return (
 			<div className="default-container no-title property">
 				<SelectorModal

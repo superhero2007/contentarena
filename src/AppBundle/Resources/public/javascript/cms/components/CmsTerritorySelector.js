@@ -386,12 +386,12 @@ class CmsTerritorySelector extends React.Component {
 							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED")
 						}
 						{ ` (${selection.length})` }
-						{territoriesMode === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES
+						{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE
 						&& !this.isSelectedAllTerritories() && (
 							<button className="link-button" onClick={this.handleViewTerritories}>
 								{viewAllTerritories
-									? this.context.t("CMS_TERRITORIES_VIEW_ALL")
-									: this.context.t("CMS_TERRITORIES_VIEW_SELECTED")
+									? this.context.t("CMS_TERRITORIES_VIEW_SELECTED")
+									: this.context.t("CMS_TERRITORIES_VIEW_ALL")
 								}
 							</button>
 						)}
