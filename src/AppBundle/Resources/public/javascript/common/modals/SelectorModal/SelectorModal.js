@@ -97,9 +97,8 @@ class SelectorModal extends Component {
 	applySelection = () => {
 		let extended = false;
 		let { clean } = this.props;
-		const { selectedItems } = this.state;
-		const { prevCountries } = this.state;
-
+		const { postApplySeasonAction, selectorType } = this.props;
+		const { selectedItems, prevCountries } = this.state;
 
 		if (this.state.customCountry) {
 			selectedItems.forEach((item) => {
@@ -123,6 +122,8 @@ class SelectorModal extends Component {
 			this.props.index,
 			clean,
 		);
+
+		if (postApplySeasonAction && selectorType === "seasons") postApplySeasonAction(this.props.index);
 	};
 
 	addNewSport = (index) => {
@@ -141,13 +142,14 @@ class SelectorModal extends Component {
 
 	addNewSeason = (index) => {
 		const {
-			listing, addNewSeason, closeSelector, clean,
+			listing, addNewSeason, closeSelector, clean, postApplySeasonAction,
 		} = this.props;
 		const { tournament } = listing;
 		const { name } = tournament.length > 0 && tournament[0];
 		this.setState({ updated: false, filterUpdated: false });
 		addNewSeason(index, clean, name);
 		closeSelector();
+		if (postApplySeasonAction) postApplySeasonAction(index);
 	};
 
 	addNewCategory = (index) => {

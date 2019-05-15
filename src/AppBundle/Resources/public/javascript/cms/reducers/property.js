@@ -10,11 +10,20 @@ export const propertyTypes = {
 	SET_CUSTOM_TOURNAMENT_NAME: "SET_CUSTOM_TOURNAMENT_NAME",
 	SET_CUSTOM_SEASON_NAME: "SET_CUSTOM_SEASON_NAME",
 	UPDATE_FROM_MULTIPLE: "UPDATE_FROM_MULTIPLE",
-	ADD_SEASON: "ADD_SEASON",
+	ADD_CUSTOM_SEASON: "ADD_CUSTOM_SEASON",
 	REMOVE_SEASON: "REMOVE_SEASON",
 	SELECT_PROPERTY_TOURNAMENT: "SELECT_PROPERTY_TOURNAMENT",
 	SET_RIGHTS: "SET_RIGHTS",
 	SET_SELECTED_RIGHTS: "SET_SELECTED_RIGHTS",
+
+	GET_COUNTRIES: "GET_COUNTRIES",
+	GET_COUNTRIES_SUCCESS: "GET_COUNTRIES_SUCCESS",
+
+	GET_REGIONS: "GET_REGIONS",
+	GET_REGIONS_SUCCESS: "GET_REGIONS_SUCCESS",
+
+	GET_TERRITORIES: "GET_TERRITORIES",
+	GET_TERRITORIES_SUCCESS: "GET_TERRITORIES_SUCCESS",
 };
 
 const DEFAULT_STATE = {
@@ -24,14 +33,29 @@ const DEFAULT_STATE = {
 	seasons: [],
 	rights: [],
 	selectedRights: [],
+
+	countries: [],
+	isCountryFetched: false,
+	regions: [],
+	isRegionsFetched: false,
+	territories: [],
+	isTerritoriesFetched: false,
 };
 
 export const property = (state = DEFAULT_STATE, action) => {
 	let newState = {};
 	switch (action.type) {
+	case propertyTypes.GET_COUNTRIES_SUCCESS:
+		return Object.assign({}, state, { countries: action.countries, isCountryFetched: true });
+	case propertyTypes.GET_REGIONS_SUCCESS:
+		return Object.assign({}, state, { regions: action.regions, isRegionsFetched: true });
+	case propertyTypes.GET_TERRITORIES_SUCCESS:
+		return Object.assign({}, state, { territories: action.territories, isTerritoriesFetched: true });
 	case propertyTypes.UPDATE_FROM_MULTIPLE:
 		newState = {};
 		newState[action.selectorType] = [...state[action.selectorType]];
+		// if(!newState[action.selectorType][action.index]) newState[action.selectorType] =
+		// [...newState[action.selectorType], ({custom: true, name: ""})];
 		newState[action.selectorType][action.index][action.key] = action.value;
 		return Object.assign({}, state, newState);
 	case propertyTypes.SET_PROPERTY_CONFIG:
@@ -63,6 +87,10 @@ export const property = (state = DEFAULT_STATE, action) => {
 		newState.sports = (action.tournament.sport) ? [action.tournament.sport] : [];
 		newState.sportCategory = [action.tournament.sportCategory];
 
+		return Object.assign({}, state, newState);
+	case propertyTypes.ADD_CUSTOM_SEASON:
+		newState = {};
+		newState.seasons = [...state.seasons, { custom: true, name: "" }];
 		return Object.assign({}, state, newState);
 	case propertyTypes.SET_CUSTOM_SEASON_NAME:
 		newState = {};

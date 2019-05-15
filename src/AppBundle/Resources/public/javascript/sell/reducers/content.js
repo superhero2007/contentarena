@@ -162,6 +162,7 @@ export const content = (state = EmptyListing, action) => {
 	case contentType.UPDATE_FROM_MULTIPLE:
 		newState = {};
 		newState[action.selectorType] = [...state[action.selectorType]];
+		if (action.selectorType === "seasons" && !newState[action.selectorType][action.index]) { newState[action.selectorType].push({}); }
 		newState[action.selectorType][action.index][action.key] = action.value;
 		return Object.assign({}, state, newState);
 	case contentType.SUPER_RIGHTS_UPDATED:

@@ -87,6 +87,11 @@ export const LANDING_LINKS = {
 	HOME: "https://contentarena.com/",
 };
 
+export const SPORT_KEYS = {
+	CREATE: "create",
+	TOP: "top",
+};
+
 export const API_URLS = {
 	INVITE_USERS: "api/company/invite",
 };

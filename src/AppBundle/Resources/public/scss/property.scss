@@ -41,22 +41,9 @@
         }
         input {
           margin-right: 11px !important;
-          &.ca-checkbox{
-            &:checked{
-              border: 1px solid $property-blue;
-              background-color: $property-blue;
-            }
-            &:hover {
-              border-color: $property-blue;
-            }
-            &:disabled{
-              background-color: #caccd1 !important;
-              border: 1px solid #dcdddf !important;
-              cursor: default;
-            }
-          }
         }
         label{
+	      cursor: pointer;
           min-width: 130px;
         }
       }
@@ -141,7 +128,7 @@
     }
   }
   .property-cancel-button{
-    margin: 10px 0 0;
+    margin: 20px 0 0;
     text-decoration: none;
   }
 
@@ -180,6 +167,10 @@
       margin: 25px 0 17px;
       border-bottom: 1px solid #333;
       padding: 0 0 12px;
+
+	  button{
+		outline: none;
+	  }
     }
     .region-filter-subtitle{
       color: #333333;

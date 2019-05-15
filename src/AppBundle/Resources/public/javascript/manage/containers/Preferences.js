@@ -66,21 +66,20 @@ class Preferences extends React.Component {
 	};
 
 	completeButtonDisabled = () => {
-		const { user, activeTab, } = this.state;
+		const { user, activeTab } = this.state;
 
 		if (activeTab === USER_PROFILES.SELLER && (
 			!user.preferredSellerOtherSport && !user.preferredSellerAllSports && (
 				!user.preferredSellerSports || user.preferredSellerSports.length === 0)
-			)
-		)  return true;
+		)
+		) return true;
 
 
 		if (activeTab === USER_PROFILES.BUYER && (
-				(!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && (
-					!user.preferredBuyerSports || user.preferredBuyerSports.length === 0)
-				) || user.preferredBuyerCountries.length === 0)
-		)  return true;
-
+			(!user.preferredBuyerOtherSport && !user.preferredBuyerAllSports && (
+				!user.preferredBuyerSports || user.preferredBuyerSports.length === 0)
+			) || user.preferredBuyerCountries.length === 0)
+		) return true;
 	};
 
 	render() {

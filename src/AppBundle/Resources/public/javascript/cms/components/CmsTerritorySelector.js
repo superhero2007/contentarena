@@ -1,19 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
+import find from "lodash/find";
 import CountrySelector from "../../main/components/CountrySelector";
 import RadioSelector from "../../main/components/RadioSelector";
-import { BUNDLE_TERRITORIES_METHOD } from "../../common/constants";
+import { BUNDLE_TERRITORIES_METHOD } from "@constants";
 import { cmsWorldActive, cmsWorldDisabled } from "../../main/components/Icons";
 
 class CmsTerritorySelector extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			countries: [],
+			countries: props.countries || [],
 			selection: props.value,
-			territories: [],
-			regions: [],
+			territories: props.territories || [],
+			regions: props.regions || [],
 			territoryItems: {},
 			regionItems: {},
 			activeTerritory: null,
@@ -21,39 +23,16 @@ class CmsTerritorySelector extends React.Component {
 			selected: [],
 			activeTerritories: [],
 			worldwideSelected: false,
+			viewAllTerritories: false,
 			territoriesMode: props.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
 	}
 
 	componentDidMount() {
-		const _this = this;
-		const {
-			territoriesMode,
-		} = this.props;
+		const { countries, territoriesMode } = this.state;
 
-		ContentArena.Api.getCountries().done((countries) => {
-			_this.setState({ countries });
-			_this.parseTerritoryCountries(countries);
-			if (!territoriesMode) setTimeout(() => { _this.handleChangeMode(BUNDLE_TERRITORIES_METHOD.WORLDWIDE); }, 1);
-		});
-
-		if (ContentArena.Data.Territories.length === 0) {
-			ContentArena.Api.getTerritories().done((territories) => {
-				ContentArena.Data.Territories = territories;
-				_this.setState({ territories });
-			});
-		} else {
-			_this.setState({ territories: ContentArena.Data.Territories });
-		}
-
-		if (ContentArena.Data.Regions.length === 0) {
-			ContentArena.Api.getRegions().done((regions) => {
-				ContentArena.Data.Regions = regions;
-				_this.setState({ regions });
-			});
-		} else {
-			_this.setState({ regions: ContentArena.Data.Regions });
-		}
+		this.parseTerritoryCountries(countries);
+		this.handleChangeMode(territoriesMode);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -242,16 +221,44 @@ class CmsTerritorySelector extends React.Component {
 			territoriesMode,
 			selection,
 		});
+
 		if (onChange) onChange(selection, territoriesMode);
 	};
 
 	getCounterLabel = (name, counter, total) => `${name} (${counter}/${total})`;
 
+	handleViewTerritories = () => {
+		this.setState((prevState => ({
+			viewAllTerritories: !prevState.viewAllTerritories,
+		})));
+	};
+
+	getTerritoriesByViewType = (territories) => {
+		const { viewAllTerritories } = this.state;
+		if (territories.length === 0) return null;
+
+		return viewAllTerritories
+			? territories
+			: territories.filter(country => this.countryIndex(country) !== -1);
+	};
+
+	isSelectedAllTerritories = () => {
+		const { selection, territories } = this.state;
+		if (!selection.length) return true;
+
+		const getTerretoriesIds = selection.reduce((accum, item) => [...accum, item.territoryId], []);
+
+		const totalTerritories = [...new Set(getTerretoriesIds)].reduce((accum, item) => {
+			const territoryById = find(territories, { id: item });
+			return accum + territoryById.total;
+		}, 0);
+
+		return totalTerritories === selection.length;
+	};
+
 	render() {
 		const {
-			filter,
 			disabled,
-			exclusiveSoldTerritories,
 			placeholder,
 			isInvalid,
 			selectedRights,
@@ -265,8 +272,10 @@ class CmsTerritorySelector extends React.Component {
 			regionItems,
 			selection,
 			territoriesMode,
+			viewAllTerritories,
 		} = this.state;
 
+		console.log(this);
 		return (
 			<div className="country-selector region-filter">
 
@@ -323,9 +332,7 @@ class CmsTerritorySelector extends React.Component {
 											this.selectTerritory(territory);
 										}}
 									>
-										{
-											this.getCounterLabel(territory.name, territoryCountries, totalItems)
-										}
+										{this.getCounterLabel(territory.name, territoryCountries, totalItems)}
 									</button>
 								);
 							})}
@@ -372,15 +379,22 @@ class CmsTerritorySelector extends React.Component {
 
 				{
 					<div className="region-filter-title">
-						{
-							territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+						{territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
 							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING")
 						}
-						{
-							territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
+						{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
 							&& this.context.t("CMS_TERRITORIES_SELECTOR_SELECTED")
 						}
 						{ ` (${selection.length})` }
+						{territoriesMode === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES
+						&& !this.isSelectedAllTerritories() && (
+							<button className="link-button" onClick={this.handleViewTerritories}>
+								{viewAllTerritories
+									? this.context.t("CMS_TERRITORIES_VIEW_ALL")
+									: this.context.t("CMS_TERRITORIES_VIEW_SELECTED")
+								}
+							</button>
+						)}
 					</div>
 				}
 
@@ -420,22 +434,20 @@ class CmsTerritorySelector extends React.Component {
 							</div>
 							<div className="regions">
 
-								{
-									territoryCountries && territoryCountries
-										.map(country => (
-											<button
-												className={cn({
-													region: true,
-													"region-selected": this.countryIndex(country) !== -1,
-													excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-												})}
-												onClick={() => {
-													this.handleChange(country);
-												}}
-											>
-												{country.name}
-											</button>
-										))
+								{this.getTerritoriesByViewType(territoryCountries).map(country => (
+									<button
+										className={cn({
+											region: true,
+											"region-selected": this.countryIndex(country) !== -1,
+											excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
+										})}
+										onClick={() => {
+											this.handleChange(country);
+										}}
+									>
+										{country.name}
+									</button>
+								))
 								}
 							</div>
 						</div>
@@ -451,4 +463,10 @@ CmsTerritorySelector.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default CmsTerritorySelector;
+const mapStateToProps = state => ({
+	territories: state.property.territories,
+	countries: state.property.countries,
+	regions: state.property.regions,
+});
+
+export default connect(mapStateToProps, null)(CmsTerritorySelector);

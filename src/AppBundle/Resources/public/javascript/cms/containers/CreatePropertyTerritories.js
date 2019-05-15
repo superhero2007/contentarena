@@ -10,9 +10,10 @@ import {
 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
 } from "../reducers/property";
 import {
-	setSelectedRights, setRights,
+	setSelectedRights, setRights, fetchCountries, fetchTerritories, fetchRegions,
 } from "../actions/propertyActions";
-import { DATE_FORMAT, ROUTE_PATHS } from "@constants";
+import Loader from "../../common/components/Loader/Loader";
+import { DATE_FORMAT, ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD } from "@constants";
 import CmsAvailableRightsSelector from "../components/CmsAvailableRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 
@@ -21,16 +22,14 @@ class CreatePropertyTerritories extends React.Component {
 		super(props);
 		this.state = {
 			territories: [],
+			territoriesMode: props.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const {
-			loadingCategories,
-		} = this.state;
-		const {
-			property,
-		} = nextProps;
+	componentDidMount() {
+		this.props.getCountries();
+		this.props.getTerritories();
+		this.props.getRegions();
 	}
 
 	onUndoTerritories = (selectedRight) => {
@@ -63,8 +62,6 @@ class CreatePropertyTerritories extends React.Component {
 			rights,
 			selectedRights,
 		} = property;
-
-		const selectedRightsIds = selectedRights.map(right => right.id);
 
 		const editedRights = rights.map((right) => {
 			if (selectedRight.id === right.id) {
@@ -115,6 +112,11 @@ class CreatePropertyTerritories extends React.Component {
 
 	rightsComplete = () => this.props.property.rights.filter(right => !right.edited).length === 0;
 
+	isLoading = () => {
+		const { isCountryFetched, isRegionsFetched, isTerritoriesFetched } = this.props;
+		return !isCountryFetched || !isRegionsFetched || !isTerritoriesFetched;
+	};
+
 	render() {
 		const { editMode } = this.state;
 		let {
@@ -124,12 +126,21 @@ class CreatePropertyTerritories extends React.Component {
 
 		const {
 			property,
+			history,
 		} = this.props;
 
 		const {
 			selectedRights,
 			rights,
 		} = property;
+
+		if (this.isLoading()) {
+			return (
+				<div className="settings-container">
+					<Loader loading />
+				</div>
+			);
+		}
 
 		if (editMode && selectedRights.length > 0) {
 			rights.forEach((right) => {
@@ -156,76 +167,67 @@ class CreatePropertyTerritories extends React.Component {
 					/>
 				</DefaultBox>
 
-				{
-					selectedRights.length > 0
-					&& (
-						<DefaultBox>
-							<h4>
-								{this.context.t("CMS_SELECT_TERRITORIES_TITLE")}
-							</h4>
-							<h6>
-								{this.context.t("CMS_SELECT_TERRITORIES_DESCRIPTION")}
-							</h6>
+				{selectedRights.length > 0 && (
+					<DefaultBox>
+						<h4>
+							{this.context.t("CMS_SELECT_TERRITORIES_TITLE")}
+						</h4>
+						<h6>
+							{this.context.t("CMS_SELECT_TERRITORIES_DESCRIPTION")}
+						</h6>
 
-							<CmsTerritorySelector
-								className="small-select"
-								onChange={this.handleTerritories}
-								onSelectRegion={() => {
-								}}
-								value={territories}
-								territoriesMode={territoriesMode}
-								multiple
-								filter={[]}
-								selectedRights={selectedRights}
-								exclusiveSoldTerritories={false}
-							/>
-						</DefaultBox>
-					)
+						<CmsTerritorySelector
+							className="small-select"
+							onChange={this.handleTerritories}
+							onSelectRegion={() => { }}
+							value={territories}
+							territoriesMode={territoriesMode}
+							multiple
+							filter={[]}
+							selectedRights={selectedRights}
+							exclusiveSoldTerritories={false}
+						/>
+					</DefaultBox>
+				)
 				}
 
-				{
-					this.rightsComplete()
-					&& (
-						<DefaultBox>
-							<h5>
-								<i className="fa fa-check-circle" />
-							</h5>
-							<h5>
-								{this.context.t("CMS_PROPERTY_CREATION_COMPLETE")}
-							</h5>
-						</DefaultBox>
-					)
+				{this.rightsComplete() && (
+					<DefaultBox>
+						<h5>
+							<i className="fa fa-check-circle" />
+						</h5>
+						<h5>
+							{this.context.t("CMS_PROPERTY_CREATION_COMPLETE")}
+						</h5>
+					</DefaultBox>
+				)
 				}
 
 				<VerticalButtonBox>
-					{
-						!this.rightsComplete()
-						&& (
-							<button
-								className="yellow-button"
-								disabled={selectedRights.length === 0 || territories.length === 0}
-								onClick={this.applyTerritories}
-							>
-								{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
-							</button>
-						)
+					{!this.rightsComplete() && (
+						<button
+							className="yellow-button"
+							disabled={selectedRights.length === 0 || territories.length === 0}
+							onClick={this.applyTerritories}
+						>
+							{this.context.t("CMS_APPLY_TERRITORIES_BUTTON")}
+						</button>
+					)
 					}
 
-					{
-						this.rightsComplete()
-						&& (
-							<button
-								className="yellow-button"
-								onClick={() => {}}
-							>
-								{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
-							</button>
-						)
+					{this.rightsComplete() && (
+						<button
+							className="yellow-button"
+							onClick={() => {}}
+						>
+							{this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
+						</button>
+					)
 					}
 
-					<a href={ROUTE_PATHS.CREATE_PROPERTY} className="link-button property-cancel-button">
+					<button onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)} className="link-button property-cancel-button">
 						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
-					</a>
+					</button>
 				</VerticalButtonBox>
 			</div>
 		);
@@ -245,13 +247,18 @@ const mapStateToProps = state => Object.assign({}, state, {
 	hasCustomSportCategory: hasCustomSportCategory(state),
 	hasCustomTournament: hasCustomTournament(state),
 	hasCustomSeason: hasCustomSeason(state),
-
+	isCountryFetched: state.property.isCountryFetched,
+	isRegionsFetched: state.property.isRegionsFetched,
+	isTerritoriesFetched: state.property.isTerritoriesFetched,
 });
 
 const mapDispatchToProps = dispatch => ({
 	updateFromMultiple: (type, index, key, value) => dispatch(updateFromMultiple(type, index, key, value)),
 	rightsUpdated: rights => dispatch(setRights(rights)),
 	selectedRightsUpdated: selectedRights => dispatch(setSelectedRights(selectedRights)),
+	getTerritories: () => dispatch(fetchTerritories()),
+	getCountries: () => dispatch(fetchCountries()),
+	getRegions: () => dispatch(fetchRegions()),
 });
 
 

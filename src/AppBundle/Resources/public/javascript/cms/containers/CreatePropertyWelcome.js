@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { isMobileOnly, isTablet } from "react-device-detect";
 import cn from "classnames";
-import Loader from "../../common/components/Loader";
-import SearchCompetition from "../../main/components/SearchCompetition";
 import { DefaultBox } from "../../common/components/Containers";
 import { ROUTE_PATHS } from "@constants";
-import { selectTournament, setCustomSportName } from "../actions/propertyActions";
+import { selectTournament } from "../actions/propertyActions";
 import CmsSearchCompetition from "../components/CmsSearchCompetition";
 import CmsSearchResults from "../components/CmsSearchResults";
 
@@ -17,10 +15,6 @@ class CreatePropertyWelcome extends React.Component {
 		this.state = {
 			loading: false,
 		};
-	}
-
-	componentDidMount() {
-		const _this = this;
 	}
 
 	selectTournament = (tournament) => {
@@ -39,7 +33,6 @@ class CreatePropertyWelcome extends React.Component {
 
 	render() {
 		const {
-			loading,
 			results,
 		} = this.state;
 
@@ -56,38 +49,28 @@ class CreatePropertyWelcome extends React.Component {
 				</div>
 
 				<DefaultBox>
-					<h5>
-						{this.context.t("CMS_WELCOME_SEARCH_TITLE")}
-					</h5>
+					<h5>{this.context.t("CMS_WELCOME_SEARCH_TITLE")}</h5>
 
 					<CmsSearchCompetition
 						hideEnterManually
 						onSearch={this.onSearch}
 					/>
 
-					{
-						!results
-						&& (
-							<p className="text-center">
-								{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
-								<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
-							</p>
-						)
-					}
+					{!results && (
+						<p className="text-center">
+							{this.context.t("CMS_WELCOME_SEARCH_PHRASE_1")}{" "}
+							<a href={ROUTE_PATHS.CREATE_PROPERTY_STEP_1}>{this.context.t("CMS_WELCOME_SEARCH_PHRASE_2")}</a>
+						</p>
+					)}
 				</DefaultBox>
-
-				{
-					results && results.length > 0
-					&& (
-						<DefaultBox>
-							<CmsSearchResults
-								results={results}
-								select={this.selectTournament}
-							/>
-						</DefaultBox>
-					)
-				}
-
+				{results && results.length > 0 && (
+					<DefaultBox>
+						<CmsSearchResults
+							results={results}
+							select={this.selectTournament}
+						/>
+					</DefaultBox>
+				)}
 			</div>
 		);
 	}

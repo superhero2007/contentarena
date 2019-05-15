@@ -29,6 +29,10 @@ export const setCustomSeasonName = (index, seasonName) => ({
 	seasonName,
 });
 
+export const addCustomSeason = () => ({
+	type: propertyTypes.ADD_CUSTOM_SEASON,
+});
+
 export const setRights = rights => ({
 	type: propertyTypes.SET_RIGHTS,
 	rights,
@@ -70,3 +74,67 @@ export const selectTournament = tournament => ({
 	type: "SELECT_PROPERTY_TOURNAMENT",
 	tournament,
 });
+
+export const fetchTerritoriesSuccess = territories => ({
+	type: propertyTypes.GET_TERRITORIES_SUCCESS,
+	territories,
+});
+
+export const fetchTerritories = () => async (dispatch) => {
+	if (ContentArena.Data.Territories.length === 0) {
+		try {
+			const territories = await ContentArena.Api.getTerritories();
+			ContentArena.Data.Territories = territories;
+			dispatch(fetchTerritoriesSuccess(territories));
+			return territories;
+		} catch (error) {
+			throw error.response;
+		}
+	} else {
+		Promise((resolve) => {
+			resolve(
+				dispatch(fetchRegionsSuccess(ContentArena.Data.Territories)),
+			);
+		});
+	}
+};
+
+export const fetchCountriesSuccess = countries => ({
+	type: propertyTypes.GET_COUNTRIES_SUCCESS,
+	countries,
+});
+
+export const fetchCountries = () => async (dispatch) => {
+	try {
+		const countries = await ContentArena.Api.getCountries();
+		dispatch(fetchCountriesSuccess(countries));
+		return countries;
+	} catch (error) {
+		throw error.response;
+	}
+};
+
+
+export const fetchRegionsSuccess = regions => ({
+	type: propertyTypes.GET_REGIONS_SUCCESS,
+	regions,
+});
+
+export const fetchRegions = () => async (dispatch) => {
+	if (ContentArena.Data.Regions.length === 0) {
+		try {
+			const regions = await ContentArena.Api.getRegions();
+			ContentArena.Data.Regions = regions;
+			dispatch(fetchRegionsSuccess(regions));
+			return regions;
+		} catch (error) {
+			throw error.response;
+		}
+	} else {
+		Promise((resolve) => {
+			resolve(
+				dispatch(fetchRegionsSuccess(ContentArena.Data.Regions)),
+			);
+		});
+	}
+};

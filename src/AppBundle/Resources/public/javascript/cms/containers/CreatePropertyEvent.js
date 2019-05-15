@@ -13,23 +13,25 @@ import {
 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
 } from "../reducers/property";
 import {
-	setCustomSeasonName, setCustomSportCategoryName, setCustomSportName,
+	setCustomSeasonName, setCustomSportCategoryName, setCustomSportName, addCustomSeason,
 	setCustomTournamentName, removeNewSeason, removeNewSport, removeNewTournament,
 } from "../actions/propertyActions";
 import Loader from "../../common/components/Loader/Loader";
 import { getMonths, getYears } from "../../common/utils/time";
-import { DATE_FORMAT, ROUTE_PATHS } from "@constants";
+import { DATE_FORMAT, ROUTE_PATHS, SPORT_KEYS } from "@constants";
 import CmsRightsSelector from "../components/CmsRightsSelector";
-import CmsTerritorySelector from "../components/CmsTerritorySelector";
 
 class CreatePropertyEvent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: false,
+			loading: true,
 			seasonsData: [{}],
 			isSeasonApplicable: true,
 		};
+
+		this.tournamentInput = React.createRef();
+		this.countryInput = React.createRef();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -39,7 +41,6 @@ class CreatePropertyEvent extends React.Component {
 		const {
 			property,
 		} = nextProps;
-
 
 		if (property.sports.length === 1 && !loadingCategories) {
 			this.loadCategories(property.sports[0]);
@@ -55,21 +56,55 @@ class CreatePropertyEvent extends React.Component {
 			}
 		}
 
+		this.handleTournamentFocus(nextProps);
+
 		this.setSeasonData(property);
 	}
 
-	componentDidMount() {
-		this.setState({ loadingSports: true });
-		ContentArena.Api.getAllSports(["create"])
-			.done((sports) => {
-				ContentArena.Data.FullSports = sports;
-				this.setState({ loadingSports: false });
-			});
+	handleTournamentFocus = (next) => {
+		const { hasCustomSport, sportCategoryValue } = this.props;
 
-		ContentArena.Api.getAllSports(["top"])
-			.done((sports) => {
-				ContentArena.Data.TopSports = sports;
-			});
+		if (hasCustomSport) return;
+		if (next.sportCategoryValue !== sportCategoryValue) {
+			setTimeout(() => {
+				this.tournamentInput.current.focus();
+			}, 1);
+		}
+	};
+
+	handleCompetitionFocus = () => {
+		const { hasCustomSport } = this.props;
+
+		if (hasCustomSport) return;
+		setTimeout(() => {
+			this.countryInput.current.focus();
+		}, 1);
+	};
+
+	handleSeasonFocus = (index = 0, typeFocus = "input", selectIndex = 0) => {
+		setTimeout(() => {
+			if (typeFocus === "input") {
+				const el = this[`season-${index}-input`];
+				if (!el) return;
+				el.querySelector("input").focus();
+			} else {
+				const el = this[`season-${index}-selects`];
+				if (!el) return;
+				const selects = el.querySelectorAll("select");
+				if (!selects || selects.length === 0) return;
+				selects[selectIndex].focus();
+			}
+		}, 1);
+	};
+
+	getSportsByKey = async key => ContentArena.Api.getAllSports([key]).done((sports) => {
+		if (key === SPORT_KEYS.CREATE) ContentArena.Data.FullSports = sports;
+		if (key === SPORT_KEYS.TOP) ContentArena.Data.TopSports = sports;
+	});
+
+	componentDidMount() {
+		Promise.all([this.getSportsByKey(SPORT_KEYS.TOP), this.getSportsByKey(SPORT_KEYS.CREATE)])
+			.then(() => this.setState({ loading: false }));
 	}
 
 	loadCategories(sport) {
@@ -85,6 +120,8 @@ class CreatePropertyEvent extends React.Component {
 					lastSportId: sportId,
 					loadingCategories: false,
 				});
+
+				this.handleCompetitionFocus();
 			});
 	}
 
@@ -141,7 +178,7 @@ class CreatePropertyEvent extends React.Component {
 						loadingSeasons: false,
 						tournamentHasNoSeason: true,
 						lastTournamentId: tournamentId,
-					});
+					}, this.handleSeasonFocus);
 					return;
 				}
 
@@ -150,16 +187,18 @@ class CreatePropertyEvent extends React.Component {
 					loadingSeasons: false,
 					tournamentHasNoSeason: false,
 					seasons,
-				});
+				}, this.handleSeasonFocus);
 			})
 			.always(() => {
 			});
 	}
 
-	handleSeasonDateChange = (index, e, dateType, type) => {
+	handleSeasonDateChange = (index, e, dateType, type, selectorIndex) => {
 		let year; let
 			month;
 		const { seasonsData } = this.state;
+		const { seasons } = this.props.property;
+		const { hasCustomSeason } = this.props;
 
 		if (dateType === "YEAR") {
 			year = e.target.value;
@@ -175,18 +214,54 @@ class CreatePropertyEvent extends React.Component {
 		const theDate = moment(new Date(year, +monthNumber)).utc().format();
 
 		this.props.updateFromMultiple("seasons", index, type, theDate);
+		if (!hasCustomSeason && seasons[index] && seasons[index].custom) {
+			const seasonName = this.getCustomSeasonName(seasons[index], year, month, type);
+			this.props.setCustomSeasonName(index, seasonName);
+		}
+
+		if (selectorIndex) this.handleSeasonFocus(index, "selector", selectorIndex);
+	};
+
+	getCustomSeasonName = (season, year, month, type) => {
+		const startY = type === "startDate" && year
+			? year
+			: season.startDate
+				? moment(season.startDate).format("YYYY")
+				: "";
+		const endY = type === "endDate" && year
+			? year
+			: season.endDate
+				? moment(season.endDate).format("YYYY")
+				: "";
+		const startM = type === "startDate" && month
+			? `${month}${season.startDate ? ` ${moment(season.startDate).format("YYYY")}` : ""}`
+			: season.startDate
+				? moment(season.startDate).format("MMM YYYY")
+				: "";
+		const endM = type === "endDate" && month
+			? `${month}${season.startDate ? ` ${moment(season.endDate).format("YYYY")}` : ""}`
+			: season.endDate
+				? moment(season.endDate).format("MMM YYYY")
+				: "";
+
+		const finalYear = startY && endY
+			? `${startY}/${endY}`
+			: `${startY || endY}`;
+		const finalMonth = startM && endM
+			? `${startM} - ${endM}`
+			: `${startM || endM}`;
+
+		return `${finalYear} (${finalMonth})`;
 	};
 
 	addSeason = () => {
+		if (this.props.hasCustomSeason) this.props.addCustomSeason();
 		this.setState(state => ({
 			seasonsData: [...state.seasonsData, {}],
-		}));
-	};
-
-	removeSeason = (index) => {
-		this.setState(state => ({
-			seasonsData: state.seasonsData.splice(index, 1),
-		}));
+		}), () => {
+			const index = this.state.seasonsData.length - 1;
+			this.handleSeasonFocus(index, "input");
+		});
 	};
 
 	setSeasonData = (property) => {
@@ -220,22 +295,37 @@ class CreatePropertyEvent extends React.Component {
 	};
 
 	renderDurationFields(index) {
-		if (index === undefined) return null;
+		if (index === undefined && !this.isCustomSeason(index)) return null;
 
 		const { seasonsData } = this.state;
 
 		const disabled = !this.isCustomSeason(index);
 
 		return (
-			<li className="small-item">
+			<li className="small-item" ref={el => this[`season-${index}-selects`] = el}>
 				<div className="small-item-container">
 					<label>
 						From {" "}
 					</label>
 					<div className="date-select">
 						<select
+							value={seasonsData[index].startMonth || ""}
+							className="ca-form-control"
+							disabled={disabled}
+							onChange={e => this.handleSeasonDateChange(index, e, "MONTH", "startDate", 1)}
+						>
+							<option value="" disabled>
+								Month
+							</option>
+							{getMonths().map(month => (
+								<option value={month} key={month}>
+									{month}
+								</option>
+							))}
+						</select>
+						<select
 							value={seasonsData[index].startYear || ""}
-							onChange={e => this.handleSeasonDateChange(index, e, "YEAR", "startDate")}
+							onChange={e => this.handleSeasonDateChange(index, e, "YEAR", "startDate", 2)}
 							className="ca-form-control"
 							disabled={disabled}
 						>
@@ -248,11 +338,19 @@ class CreatePropertyEvent extends React.Component {
 								</option>
 							))}
 						</select>
+					</div>
+
+				</div>
+				<div className="small-item-container">
+					<label>
+						To {" "}
+					</label>
+					<div className="date-select">
 						<select
-							value={seasonsData[index].startMonth || ""}
+							value={seasonsData[index].endMonth || ""}
+							onChange={e => this.handleSeasonDateChange(index, e, "MONTH", "endDate", 3)}
 							className="ca-form-control"
 							disabled={disabled}
-							onChange={e => this.handleSeasonDateChange(index, e, "MONTH", "startDate")}
 						>
 							<option value="" disabled>
 								Month
@@ -263,14 +361,6 @@ class CreatePropertyEvent extends React.Component {
 								</option>
 							))}
 						</select>
-					</div>
-
-				</div>
-				<div className="small-item-container">
-					<label>
-						To {" "}
-					</label>
-					<div className="date-select">
 						<select
 							value={seasonsData[index].endYear || ""}
 							onChange={e => this.handleSeasonDateChange(index, e, "YEAR", "endDate")}
@@ -283,21 +373,6 @@ class CreatePropertyEvent extends React.Component {
 							{getYears(seasonsData[index].endYear).map(year => (
 								<option value={year} key={year}>
 									{year}
-								</option>
-							))}
-						</select>
-						<select
-							value={seasonsData[index].endMonth || ""}
-							onChange={e => this.handleSeasonDateChange(index, e, "MONTH", "endDate")}
-							className="ca-form-control"
-							disabled={disabled}
-						>
-							<option value="" disabled>
-								Month
-							</option>
-							{getMonths().map(month => (
-								<option value={month} key={month}>
-									{month}
 								</option>
 							))}
 						</select>
@@ -338,10 +413,29 @@ class CreatePropertyEvent extends React.Component {
 
 	handleSeasonCheckbox = () => this.setState(prevState => ({ isSeasonApplicable: !prevState.isSeasonApplicable }));
 
+	isSeasonInputDisabled = (index) => {
+		const { tournamentValue, loadingSeasons, hasCustomSeason } = this.props;
+		const { isSeasonApplicable } = this.state;
+
+		if (!tournamentValue || loadingSeasons || !isSeasonApplicable) return true;
+		const { seasons } = this.props.property;
+		const seasonItem = seasons[index];
+		if (hasCustomSeason || !seasonItem) return false;
+		if (seasonItem.custom || (!seasonItem.custom && seasonItem.name)) return true;
+		return false;
+	};
+
+	getSeasonValue = (index) => {
+		const { hasCustomSport } = this.props;
+		const { seasons } = this.props.property;
+		if (!seasons[index]) return "";
+		if (!hasCustomSport && seasons[index].custom && !seasons[index].name) return "please define via from/to fields";
+		return seasons[index].name;
+	};
+
 	isCheckboxSeasonShow = () => {
 		const { seasonValues } = this.props;
-		return seasonValues.length === 0
-			|| (seasonValues.length === 1 && seasonValues[0] === ""); // check for custom
+		return seasonValues.length === 0;
 	};
 
 	getAddBtn = () => (
@@ -368,8 +462,16 @@ class CreatePropertyEvent extends React.Component {
 			loadingTournaments,
 			loadingSeasons,
 			seasonsData,
-			isSeasonApplicable,
+			loading,
 		} = this.state;
+
+		if (loading) {
+			return (
+				<div className="settings-container">
+					<Loader loading />
+				</div>
+			);
+		}
 
 		const {
 			history,
@@ -394,10 +496,16 @@ class CreatePropertyEvent extends React.Component {
 			removeCustomTournament,
 			removeCustomSeason,
 		} = this.props;
-
+		console.log("----------");
+		console.log(this.props.property.seasons);
+		console.log(this.state.seasonsData);
+		console.log(this);
+		console.log("----------");
 		return (
 			<div className="default-container no-title property">
-				<SelectorModal />
+				<SelectorModal
+					postApplySeasonAction={index => this.handleSeasonFocus(index, "selector", 0)}
+				/>
 				<DefaultBox>
 					<h4>
 						{this.context.t("CMS_CREATE_PROPERTY_TITLE")}
@@ -425,17 +533,14 @@ class CreatePropertyEvent extends React.Component {
 								/>
 								<div className="item-tools">
 									<Loader loading={loadingSports} xSmall />
-									{
-										hasCustomSport
-										&& (
-											<i
-												className="fa fa-minus-circle"
-												onClick={() => {
-													removeCustomSport(0);
-												}}
-											/>
-										)
-									}
+									{hasCustomSport && (
+										<i
+											className="fa fa-minus-circle"
+											onClick={() => {
+												removeCustomSport(0);
+											}}
+										/>
+									)}
 								</div>
 							</li>
 							<li>
@@ -453,6 +558,7 @@ class CreatePropertyEvent extends React.Component {
 									onChange={(e) => {
 										if (hasCustomSportCategory) setCustomSportCategoryName(0, e.target.value);
 									}}
+									ref={this.countryInput}
 								/>
 								<div className="item-tools">
 									<Loader loading={loadingCategories} xSmall />
@@ -464,7 +570,7 @@ class CreatePropertyEvent extends React.Component {
 								</label>
 								<input
 									type="text"
-									disabled={!sportValue || loadingTournaments || (hasCustomSportCategory && sportCategoryValue === "")}
+									disabled={!sportValue || loadingTournaments || !sportCategoryValue.trim()}
 									placeholder={this.context.t("CMS_FORM_TOURNAMENT_PLACEHOLDER")}
 									value={tournamentValue}
 									onClick={() => {
@@ -473,6 +579,7 @@ class CreatePropertyEvent extends React.Component {
 									onChange={(e) => {
 										if (hasCustomTournament) setCustomTournamentName(0, e.target.value);
 									}}
+									ref={this.tournamentInput}
 								/>
 								<div className="item-tools">
 									<Loader loading={loadingTournaments} xSmall />
@@ -488,17 +595,17 @@ class CreatePropertyEvent extends React.Component {
 									}
 								</div>
 							</li>
-							{seasonsData.map((v, index) => (
+							{seasonsData.map((season, index) => (
 								<React.Fragment key={index}>
-									<li>
+									<li ref={el => this[`season-${index}-input`] = el}>
 										<label>
 											{this.context.t("CMS_FORM_SEASON_LABEL")}
 										</label>
 										<input
 											type="text"
-											disabled={!tournamentValue || loadingSeasons || !isSeasonApplicable}
+											disabled={this.isSeasonInputDisabled(index)}
 											placeholder={this.context.t("CMS_FORM_SEASON_PLACEHOLDER")}
-											value={seasonValues[index] || ""}
+											value={this.getSeasonValue(index)}
 											onClick={() => {
 												if (!this.isCustomSeason(index)) openSeasonSelector(index, property.seasons);
 											}}
@@ -506,17 +613,9 @@ class CreatePropertyEvent extends React.Component {
 												if (this.isCustomSeason(index)) setCustomSeasonName(index, e.target.value);
 											}}
 										/>
-										{isSeasonApplicable && (
-											<div className="item-tools">
-												<Loader loading={loadingSeasons} xSmall />
-												{!hasCustomTournament && hasCustomSeason && seasonValues[index] !== "" && (
-													<i
-														className="fa fa-minus-circle"
-														onClick={() => { removeCustomSeason(index); }}
-													/>
-												)}
-											</div>
-										)}
+										<div className="item-tools">
+											<Loader loading={loadingSeasons} xSmall />
+										</div>
 									</li>
 									{!this.isCheckboxSeasonShow() && tournamentValue && this.renderDurationFields(index)}
 									{!this.isCheckboxSeasonShow() && property.seasons.length > 0 && tournamentValue && (
@@ -554,15 +653,13 @@ class CreatePropertyEvent extends React.Component {
 					<button
 						className="yellow-button"
 						disabled={property.rights.length === 0}
-						onClick={() => {
-							history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_2);
-						}}
+						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_2)}
 					>
 						{this.context.t("CMS_CREATE_PROPERTY_CONTINUE_BUTTON")}
 					</button>
-					<a href={ROUTE_PATHS.CREATE_PROPERTY} className="link-button property-cancel-button">
+					<button onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)} className="link-button property-cancel-button">
 						{this.context.t("CMS_CANCEL_CREATE_PROPERTY_BUTTON")}
-					</a>
+					</button>
 				</VerticalButtonBox>
 			</div>
 		);
@@ -590,6 +687,7 @@ const mapDispatchToProps = dispatch => ({
 	openCategorySelector: selectedItems => dispatch(openCategorySelector(selectedItems)),
 	openTournamentSelector: selectedItems => dispatch(openTournamentSelector(selectedItems)),
 	openSeasonSelector: (index, selectedItems) => dispatch(openSeasonSelector(index, selectedItems)),
+	addCustomSeason: () => dispatch(addCustomSeason()),
 	removeCustomSport: index => dispatch(removeNewSport(index)),
 	removeCustomTournament: index => dispatch(removeNewTournament(index)),
 	removeCustomSeason: index => dispatch(removeNewSeason(index)),

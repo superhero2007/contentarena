@@ -78,7 +78,6 @@ class CmsAvailableRightsSelector extends React.Component {
 			validation, rights, onUndoTerritories, onEditTerritories,
 		} = this.props;
 		const { allSelected } = this.state;
-		const isInvalid = rights.length === 0 && validation;
 
 		return (
 			<div className="right-selector">
@@ -87,7 +86,7 @@ class CmsAvailableRightsSelector extends React.Component {
 						<input
 							type="checkbox"
 							checked={allSelected}
-							className="ca-checkbox"
+							className="ca-checkbox blue"
 							onChange={this.handleAll}
 						/>
 						<label className={cn({ selected: false })}>
@@ -106,9 +105,9 @@ class CmsAvailableRightsSelector extends React.Component {
 				{
 					rights.map((right, i) => {
 						const {
-							name, shortLabel, id, edited,
+							name, id, edited,
 						} = right;
-						const idAttr = `checkbox-${shortLabel}`;
+						const idAttr = `checkbox-${id}`;
 						const { offers } = this.state;
 						const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
 						return (
@@ -118,7 +117,7 @@ class CmsAvailableRightsSelector extends React.Component {
 										type="checkbox"
 										checked={edited || this.isCheckBoxChecked(id)}
 										disabled={edited}
-										className="ca-checkbox"
+										className="ca-checkbox blue"
 										onChange={(e) => {
 											e.target.checked
 												? this.addRight(right)

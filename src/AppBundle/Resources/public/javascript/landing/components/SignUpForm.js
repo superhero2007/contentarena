@@ -70,7 +70,7 @@ class SignUpForm extends PureComponent {
 				}
 			})
 			.catch(({ response }) => {
-				let responseData = response.status === 500 ? response.data.error : response.data;
+				const responseData = response.status === 500 ? response.data.error : response.data;
 				this.setState({ generalError: responseData.message, errorCode: responseData.code });
 			})
 			.finally(() => {
@@ -114,19 +114,23 @@ class SignUpForm extends PureComponent {
 				)}
 
 				{
-					generalError && errorCode !== SERVER_ERROR_CODES.USER_ALREADY_EXISTS &&
-					<span className="sign-error-top">
-						{this.state.generalError}
-					</span>
+					generalError && errorCode !== SERVER_ERROR_CODES.USER_ALREADY_EXISTS
+					&& (
+						<span className="sign-error-top">
+							{this.state.generalError}
+						</span>
+					)
 				}
 
 				{
-					generalError && errorCode === SERVER_ERROR_CODES.USER_ALREADY_EXISTS &&
-					<span className="sign-error-top">
+					generalError && errorCode === SERVER_ERROR_CODES.USER_ALREADY_EXISTS
+					&& (
+						<span className="sign-error-top">
 						This email address is already in use.
 						In case you have problems to login to your account, please reset your password via <a href={SITE_URLS.LOGIN_URL}>Reset password</a>.
 						Otherwise, please contact <a href={`mailto:${SITE_EMAILS.SUPPORT}`}>Support</a> for help.
-					</span>
+						</span>
+					)
 				}
 
 				<div className="username">
@@ -144,10 +148,12 @@ class SignUpForm extends PureComponent {
 						autoComplete="username"
 					/>
 					{
-						this.state[SIGN_UP_FIELDS.NAME].error &&
-						<span className="sign-error">
-							{this.state[SIGN_UP_FIELDS.NAME].error}
-						</span>
+						this.state[SIGN_UP_FIELDS.NAME].error
+						&& (
+							<span className="sign-error">
+								{this.state[SIGN_UP_FIELDS.NAME].error}
+							</span>
+						)
 					}
 				</div>
 
@@ -164,10 +170,12 @@ class SignUpForm extends PureComponent {
 						autoComplete="lastname"
 					/>
 					{
-						this.state[SIGN_UP_FIELDS.LAST_NAME].error &&
-						<span className="sign-error">
-							{this.state[SIGN_UP_FIELDS.LAST_NAME].error}
-						</span>
+						this.state[SIGN_UP_FIELDS.LAST_NAME].error
+						&& (
+							<span className="sign-error">
+								{this.state[SIGN_UP_FIELDS.LAST_NAME].error}
+							</span>
+						)
 					}
 				</div>
 
@@ -185,10 +193,12 @@ class SignUpForm extends PureComponent {
 						autoComplete="email"
 					/>
 					{
-						this.state[SIGN_UP_FIELDS.EMAIL].error &&
-						<span className="sign-error">
-							{this.state[SIGN_UP_FIELDS.EMAIL].error}
-						</span>
+						this.state[SIGN_UP_FIELDS.EMAIL].error
+						&& (
+							<span className="sign-error">
+								{this.state[SIGN_UP_FIELDS.EMAIL].error}
+							</span>
+						)
 					}
 				</div>
 
@@ -205,10 +215,12 @@ class SignUpForm extends PureComponent {
 						autoComplete="company"
 					/>
 					{
-						this.state[SIGN_UP_FIELDS.COMPANY].error &&
-						<span className="sign-error">
-							{this.state[SIGN_UP_FIELDS.COMPANY].error}
-						</span>
+						this.state[SIGN_UP_FIELDS.COMPANY].error
+						&& (
+							<span className="sign-error">
+								{this.state[SIGN_UP_FIELDS.COMPANY].error}
+							</span>
+						)
 					}
 				</div>
 

@@ -6,24 +6,9 @@ import CreatePropertyTerritories from "./CreatePropertyTerritories";
 import CreatePropertyWelcome from "./CreatePropertyWelcome";
 
 class CreateProperty extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			loading: false,
-		};
-	}
-
-	componentDidMount() {
-		const _this = this;
-	}
-
 	render() {
-		const {
-			loading,
-		} = this.state;
-
-		const { common, history } = this.props;
-		const { action, key } = this.props.match.params;
+		const { history } = this.props;
+		const { action } = this.props.match.params;
 
 		if (action !== undefined && action === "1") return <CreatePropertyEvent history={history} />;
 		if (action !== undefined && action === "2") return <CreatePropertyTerritories history={history} />;
