@@ -127,7 +127,7 @@
 	    input, select{
 		  margin-top: 10px !important;
 		  margin-bottom: 10px !important;
-	      &:focus{
+		  &:focus:not([type='checkbox']) {
 	        outline: none;
 	        border: 1px solid $color-primary;
 		    @include shadow(0px 0px 5px 0px rgba(255,201,75,1));

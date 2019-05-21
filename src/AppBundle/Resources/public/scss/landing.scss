@@ -754,6 +754,19 @@
 					min-height: 0;
 					overflow: auto;
 
+					&::-webkit-scrollbar {
+						width: 5px;
+					}
+
+					&::-webkit-scrollbar-track {
+						background: $border-color-1;
+					}
+
+					&::-webkit-scrollbar-thumb {
+						background-color: $border-color-2;
+						outline: 1px solid slategrey;
+					}
+
 					.season-item{
 						color: $font-color-5;
 						font-size: 13px;
@@ -789,6 +802,19 @@
 					color: $font-color-5;
 					font-weight: 600;
 					padding: 20px 10px;
+
+					&::-webkit-scrollbar {
+						width: 5px;
+					}
+
+					&::-webkit-scrollbar-track {
+						background: $border-color-1;
+					}
+
+					&::-webkit-scrollbar-thumb {
+						background-color: $border-color-2;
+						outline: 1px solid slategrey;
+					}
 				}
 				.buttons-wrapper{
 					display: flex;

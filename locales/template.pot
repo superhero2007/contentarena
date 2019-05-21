@@ -551,6 +551,45 @@ msgstr ""
 msgid "RIGHT_SELECTION_OFFER_NON_EXCLUSIVE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchCompetition.js
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchCompetition.js
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_NO_RESULTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchCompetition.js
+msgid "CMS_SEARCH_TRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchCompetition.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_SEARCH_PHRASE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchResults.js
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_HEADER_COMPETITION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchResults.js
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_HEADER_COUNTRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchResults.js
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_HEADER_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchResults.js
+#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
+msgid "CL_STEP1_SEARCH_BUTTON_SELECT"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsSportSelector.js
 #: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
 msgid "LOGIN_BAR_LOGIN"
@@ -593,11 +632,27 @@ msgid "CMS_TERRITORIES_SELECTOR_SELECTED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_VIEW_SELECTED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_VIEW_ALL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
 msgid "CMS_TERRITORIES_SELECTOR_ALL_SELECTED"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
 msgid "CMS_TERRITORIES_SELECTOR_EMPTY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_ADD_SEASON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+msgid "CMS_FORM_REMOVE_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
@@ -638,14 +693,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
 msgid "CMS_FORM_SEASON_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
-msgid "CMS_FORM_REMOVE_SEASON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
-msgid "CMS_FORM_ADD_SEASON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
@@ -705,15 +752,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
 msgid "CMS_WELCOME_SEARCH_PHRASE_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
-msgid "CMS_WELCOME_SEARCH_PHRASE_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "REGISTER_SUCCESS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js
@@ -962,6 +1000,10 @@ msgid "LISTING_PREVIEW_SUB_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_LOG_IN"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
 msgid "LISTING_PREVIEW_RIGHTS_TITLE"
 msgstr ""
 
@@ -979,10 +1021,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
 msgid "LISTING_PREVIEW_HAVE_ACCOUNT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
-msgid "LISTING_PREVIEW_LOG_IN"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/RecoverPassword.js
@@ -1636,14 +1674,6 @@ msgid "CL_STEP1_SEARCH_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_NO_RESULTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_TRY"
 msgstr ""
 
@@ -1653,22 +1683,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_ENTER_MANUALLY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_HEADER_COMPETITION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_HEADER_COUNTRY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_HEADER_SPORT"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
-msgid "CL_STEP1_SEARCH_BUTTON_SELECT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/SeasonSelector.js
@@ -2062,10 +2076,6 @@ msgid "SETTINGS_PLACEHOLDER_USER_EMAIL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
-msgid "SETTINGS_WELCOME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 #: src/AppBundle/Resources/public/javascript/manage/containers/Settings.js
 msgid "SETTINGS_LABEL_USER_TITLE_INFO"
 msgstr ""
@@ -2091,6 +2101,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/Register.js
 msgid "SETTINGS_LABEL_TERMS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/containers/Register.js
+msgid "REGISTER_SUCCESS_MESSAGE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/manage/components/BoardListing.js
