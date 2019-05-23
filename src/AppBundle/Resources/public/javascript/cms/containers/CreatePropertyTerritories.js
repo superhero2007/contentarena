@@ -25,7 +25,7 @@ class CreatePropertyTerritories extends React.Component {
 			territories: [],
 			territoriesMode: props.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 			savingProperty: false,
-			propertySaved : false
+			propertySaved: false,
 		};
 	}
 
@@ -128,24 +128,24 @@ class CreatePropertyTerritories extends React.Component {
 			property,
 		} = this.props;
 
-		this.setState({savingProperty: true});
+		this.setState({ savingProperty: true });
 
-		api.properties.createProperty({property: property})
-			.then(response => {
-				this.setState({propertySaved: true});
+		api.properties.createProperty({ property })
+			.then((response) => {
+				this.setState({ propertySaved: true });
 			})
 			.catch()
-			.finally(()=>{
-				this.setState({savingProperty: false});
+			.finally(() => {
+				this.setState({ savingProperty: false });
 			});
 	};
 
 	render() {
-		const { editMode, propertySaved, savingProperty, } = this.state;
-		const { property, history, } = this.props;
-		const { selectedRights, rights, } = property;
+		const { editMode, propertySaved, savingProperty } = this.state;
+		const { property, history } = this.props;
+		const { selectedRights, rights } = property;
 
-		let { territories, territoriesMode, } = this.state;
+		let { territories, territoriesMode } = this.state;
 
 		if (this.isLoading()) {
 			return (
@@ -234,7 +234,7 @@ class CreatePropertyTerritories extends React.Component {
 							onClick={this.createProperty}
 						>
 							{!savingProperty && this.context.t("CMS_CREATE_PROPERTY_BUTTON")}
-							{savingProperty && <Loader loading xSmall/>}
+							{savingProperty && <Loader loading xSmall />}
 						</button>
 					)}
 

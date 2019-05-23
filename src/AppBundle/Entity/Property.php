@@ -40,7 +40,7 @@ class Property implements NotifiableInterface
 
     /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
-     * @Groups({"property"})
+     * @Groups({"property", "propertyList"})
      */
     private $createdAt;
 
@@ -55,7 +55,7 @@ class Property implements NotifiableInterface
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"property"})
+     * @Groups({"property", "propertyList"})
      */
     private $company;
 
@@ -66,7 +66,7 @@ class Property implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="property_sport_id", referencedColumnName="id")}
      *      )
-     * @Groups({"property"})
+     * @Groups({"property", "propertyList"})
      */
     private $sports;
 

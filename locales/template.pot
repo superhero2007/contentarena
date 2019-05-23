@@ -647,6 +647,28 @@ msgstr ""
 msgid "CMS_TERRITORIES_SELECTOR_EMPTY"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_LISTING_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_SPORT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListItem.js
+msgid "CMS_PROPERTY_OPEN_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListItem.js
+msgid "CMS_PROPERTY_CLOSED_BID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListItem.js
+msgid "CMS_PROPERTY_VIEW_LISTING_OVERVIEW"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
 msgid "CMS_FORM_ADD_SEASON"
 msgstr ""
@@ -710,6 +732,7 @@ msgid "CMS_SELECT_RIGHTS_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
 msgid "CMS_CREATE_PROPERTY_CONTINUE_BUTTON"
 msgstr ""
 
@@ -735,6 +758,7 @@ msgid "CMS_APPLY_TERRITORIES_BUTTON"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyTerritories.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/Properties.js
 msgid "CMS_CREATE_PROPERTY_BUTTON"
 msgstr ""
 
@@ -752,6 +776,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
 msgid "CMS_WELCOME_SEARCH_PHRASE_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Properties.js
+msgid "CMS_PROPERTIES_EMPTY_LIST_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Properties.js
+msgid "CMS_PROPERTIES_EMPTY_LIST_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_DOES_NOT_EXISTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js
@@ -1396,14 +1432,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
-msgid "MARKETPLACE_TABLE_LISTING_NAME"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
-msgid "MARKETPLACE_TABLE_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js

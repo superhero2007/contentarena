@@ -32,8 +32,8 @@ class InviteUsersModal extends Component {
 
 		this.setState({ loading: true });
 
-		api.company.inviteUsers({users: filteredUsers})
-			.then(response => {
+		api.company.inviteUsers({ users: filteredUsers })
+			.then((response) => {
 				this.setState({
 					isSuccess: true,
 					isFail: false,
@@ -42,10 +42,10 @@ class InviteUsersModal extends Component {
 				});
 			})
 			.catch(() => {
-				this.setState({ isSuccess: false, isFail: true, });
+				this.setState({ isSuccess: false, isFail: true });
 			})
-			.finally(()=>{
-				this.setState({ loading: false, users: [], });
+			.finally(() => {
+				this.setState({ loading: false, users: [] });
 			});
 	};
 

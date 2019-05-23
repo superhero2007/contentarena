@@ -21,7 +21,7 @@ class Sport
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "commercial", "settings", "home", "notification", "preview", "property"})
+     * @Groups({"listing", "commercial", "settings", "home", "notification", "preview", "property", "propertyList"})
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Sport
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"listing", "commercial", "settings", "home", "preview", "property"})
+     * @Groups({"listing", "commercial", "settings", "home", "preview", "property", "propertyList"})
      */
     private $name;
 
@@ -37,7 +37,7 @@ class Sport
      * @var string
      * @Serializer\Type("string")
      * @ORM\Column(name="externalId", type="string", length=255, unique=true, nullable=true)
-     * @Groups({"home", "notification", "property"})
+     * @Groups({"home", "notification", "property", "propertyList"})
      */
     private $externalId;
 

@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
-import { ROUTE_PATHS } from "../../common/constants";
+import PropertyListItem from "../components/PropertyListItem";
+import { ROUTE_PATHS } from "@constants";
 
 class PropertyList extends React.Component {
 	constructor(props) {
@@ -10,23 +11,14 @@ class PropertyList extends React.Component {
 		};
 	}
 
-
 	render() {
 		const { properties } = this.props;
 
 		return (
 			<div>
-			{
-		 		properties.map(property => {
-					return (
-						<div>
-							<a href={`${ROUTE_PATHS.PROPERTIES}/${property.customId}`}>
-								{property.name}
-							</a>
-						</div>
-					)
-				})
-			}
+				{
+					properties.map(property => <PropertyListItem {...property} key={property.customId} />)
+				}
 			</div>
 		);
 	}

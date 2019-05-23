@@ -237,7 +237,7 @@ class Marketplace extends Component {
 				});
 			})
 			.catch(() => {
-				console.log("fetch listings error")
+				console.log("fetch listings error");
 			})
 			.finally(() => {
 				this.setState({ loadingListing: false });

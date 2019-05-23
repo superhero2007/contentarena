@@ -290,4 +290,47 @@
       }
     }
   }
+  .property-item-wrapper{
+    display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	height: 166px;
+	padding: 20px 0;
+	border-bottom: 1px solid $font-color-2;
+
+
+
+	.property-img{
+	  flex: 1;
+	}
+	.property-info{
+	  flex: 6.5;
+	  padding: 0 20px;
+
+	  .bids-wrapper{
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		padding-top: 10px;
+
+		font-size: 18px;
+
+		button{
+		  font-size: 18px;
+		  text-decoration: none;
+		}
+		.closed-bid, button{ padding-left: 25px; }
+		.open-bid, .closed-bid{
+
+		  span{
+			background-color: $property-blue;
+			color: $primary-color;
+			padding: 1px 6px;
+			margin-right: 8px;
+		  }
+		}
+	  }
+	}
+  }
 }

@@ -21,8 +21,8 @@ class InviteUsers extends React.Component {
 
 		this.setState({ loading: true });
 
-		api.company.inviteUsers({users: [user]})
-			.then(({data}) => {
+		api.company.inviteUsers({ users: [user] })
+			.then(({ data }) => {
 				this.setState({
 					invitationSent: true,
 					skippedUsers: (data) ? data.skippedUsers : [],
@@ -37,7 +37,7 @@ class InviteUsers extends React.Component {
 			.catch(() => {
 				this.setState({ success: false });
 			})
-			.finally(()=>{
+			.finally(() => {
 				this.setState({ loading: false });
 			});
 	};

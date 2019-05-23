@@ -17,22 +17,22 @@ class Property extends React.Component {
 		this.state = {
 			loadingProperty: false,
 			property: {},
-			activeTab: props.tab
+			activeTab: props.tab,
 		};
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		const { propertyId } = this.props;
 		if (propertyId) this.fetchProperty(propertyId);
-	};
+	}
 
 	fetchProperty = (propertyId) => {
 		this.setState({ loadingProperty: true });
-		api.properties.fetchProperty({propertyId})
+		api.properties.fetchProperty({ propertyId })
 			.then(({ data: { property } }) => {
-				this.setState({ property: property });
+				this.setState({ property });
 			})
-			.catch(({ response: {data:{ success, property, code }}}) => {
+			.catch(({ response: { data: { success, property, code } } }) => {
 				this.setState({ errorCode: code });
 			})
 			.finally(() => {
@@ -41,27 +41,29 @@ class Property extends React.Component {
 	};
 
 	render() {
-		const { propertyId, history, } = this.props;
-		const { activeTab, loadingProperty, property, errorCode } = this.state;
-		const { name, } = property;
+		const { propertyId, history } = this.props;
+		const {
+			activeTab, loadingProperty, property, errorCode,
+		} = this.state;
+		const { name } = property;
 
 		if (loadingProperty) {
 			return (
 				<DefaultBox>
 					<Loader loading />
 				</DefaultBox>
-			)
+			);
 		}
 
-		if (errorCode ){
+		if (errorCode) {
 			return (
 				<DefaultBox>
 					{
-						errorCode === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS &&
-						this.context.t("CMS_PROPERTY_DOES_NOT_EXISTS")
+						errorCode === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
+						&& this.context.t("CMS_PROPERTY_DOES_NOT_EXISTS")
 					}
 				</DefaultBox>
-			)
+			);
 		}
 
 		return (
@@ -72,19 +74,14 @@ class Property extends React.Component {
 
 				<div className="ca-tabs">
 					{
-						Object.values(CMS_PROPERTY_TABS).map(tab => {
-							//TODO: Add translation to tab names
-							return (
-								<a
-									className={`tab lg ${activeTab === tab ? "active" : ""}`}
-									onClick={() => {
-										history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${tab}`);
-									}}
-								>
-									{tab}
-								</a>
-							)
-						})
+						Object.values(CMS_PROPERTY_TABS).map(tab => (
+							<a
+								className={`tab lg ${activeTab === tab ? "active" : ""}`}
+								onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${tab}`)}
+							>
+								{tab}
+							</a>
+						))
 					}
 				</div>
 

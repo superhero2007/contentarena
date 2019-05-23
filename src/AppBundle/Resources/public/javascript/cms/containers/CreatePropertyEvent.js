@@ -65,7 +65,7 @@ class CreatePropertyEvent extends React.Component {
 		const { hasCustomSport, sportCategoryValue } = this.props;
 
 		if (hasCustomSport) return;
-		if (next.sportCategoryValue !== sportCategoryValue) {
+		if (next.sportCategoryValue !== sportCategoryValue && this.tournamentInput.current) {
 			setTimeout(() => {
 				this.tournamentInput.current.focus();
 			}, 1);
@@ -77,7 +77,7 @@ class CreatePropertyEvent extends React.Component {
 
 		if (hasCustomSport) return;
 		setTimeout(() => {
-			this.countryInput.current.focus();
+			this.countryInput.current && this.countryInput.current.focus();
 		}, 1);
 	};
 

@@ -59,9 +59,34 @@ class PropertyService
         $property->setCustomId($customId);
         $property->setCreatedAt($createdAt);
         $property->setCompany($company);
-        $property->setName("Test name");
+        $property->setName($this->createPropertyName($property));
         $this->em->persist($property);
         $this->em->flush();
         return $property;
+    }
+
+    public function createPropertyName($property)
+    {
+        $sports = $property->getSports();
+        $tournaments = $property->getTournament();
+        $sportCategory = $property->getSportCategory();
+        $seasons = $property->getSeasons();
+
+        if (!empty($seasons) && !empty($sportCategory) && !empty($tournaments)) {
+            $season = array_values($seasons)[0];
+            return isset($season->name) ? $season->getName() : $season->getYear();
+        }
+
+        if (empty($seasons) && !empty($sportCategory) && !empty($tournaments)){
+            return array_values($tournaments)[0]->getName();
+        }
+
+        if(empty($seasons) && !empty($sportCategory) && empty($tournaments)){
+            $sportName = array_values($sports)[0]->getName();
+            $categoryName = array_values($sportCategory)[0]->getName();
+            return $sportName. " - " .$categoryName;
+        }
+
+        return array_values($sports)[0]->getName();
     }
 }

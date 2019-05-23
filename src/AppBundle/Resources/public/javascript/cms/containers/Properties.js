@@ -9,10 +9,10 @@ import Property from "./Property";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "../../common/constants";
 import { cmsFile } from "../../main/components/Icons";
 
-const CreatePropertyButton = ({history}, context) => (
+const CreatePropertyButton = ({ history }, context) => (
 	<button
 		className="cms-button"
-		onClick={()=>history.push(ROUTE_PATHS.CREATE_PROPERTY)}
+		onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
 	>
 		{context.t("CMS_CREATE_PROPERTY_BUTTON")}
 	</button>
@@ -23,15 +23,15 @@ class Properties extends React.Component {
 		super(props);
 		this.state = {
 			loadingProperties: false,
-			propertiesLoaded : false,
+			propertiesLoaded: false,
 			properties: [],
 		};
 	}
 
-	componentDidMount(){
-		const { match : { params : { propertyId} = {} } } = this.props;
+	componentDidMount() {
+		const { match: { params: { propertyId } = {} } } = this.props;
 		if (!propertyId) this.fetchAllProperties();
-	};
+	}
 
 	fetchAllProperties = () => {
 		this.setState({ loadingProperties: true });
@@ -40,15 +40,15 @@ class Properties extends React.Component {
 				this.setState({ properties: data.properties });
 			})
 			.catch(() => {
-				console.log("fetch properties error")
+				console.log("fetch properties error");
 			})
 			.finally(() => {
-				this.setState({ loadingProperties: false, propertiesLoaded: true, });
+				this.setState({ loadingProperties: false, propertiesLoaded: true });
 			});
 	};
 
 	render() {
-		const { match : { params : { propertyId, tab = CMS_PROPERTY_TABS.RIGHTS } = {} }, history } = this.props;
+		const { match: { params: { propertyId, tab = CMS_PROPERTY_TABS.RIGHTS } = {} }, history } = this.props;
 		const {
 			loadingProperties,
 			propertiesLoaded,
@@ -61,39 +61,44 @@ class Properties extends React.Component {
 					propertyId && <Property propertyId={propertyId} tab={tab} history={history} />
 				}
 				{
-					!propertyId &&
-					<DefaultBox>
-						{
-							propertiesLoaded &&
-							properties.length > 0 &&
-							<div className="property-list-header">
-								<CreatePropertyButton history={history}/>
-							</div>
-						}
-						{
-							loadingProperties &&
-							<Loader loading />
-						}
-						{
-							propertiesLoaded &&
-							properties.length > 0 &&
-							<PropertyList properties={properties} />
-						}
-						{
-							propertiesLoaded &&
-							properties.length === 0 &&
-							<div className="property-empty-list">
-								<img src={cmsFile} />
-								<span className="title">
-									{this.context.t("CMS_PROPERTIES_EMPTY_LIST_1")}
-								</span>
-								<span className="subtitle">
-									{this.context.t("CMS_PROPERTIES_EMPTY_LIST_2")}
-								</span>
-								<CreatePropertyButton history={history}/>
-							</div>
-						}
-					</DefaultBox>
+					!propertyId
+					&& (
+						<DefaultBox>
+							{
+								propertiesLoaded
+							&& properties.length > 0
+							&& (
+								<div className="property-list-header">
+									<CreatePropertyButton history={history} />
+								</div>
+							)
+							}
+							{
+								loadingProperties && <Loader loading />
+							}
+							{
+								propertiesLoaded
+							&& properties.length > 0
+							&& <PropertyList properties={properties} />
+							}
+							{
+								propertiesLoaded
+							&& properties.length === 0
+							&& (
+								<div className="property-empty-list">
+									<img src={cmsFile} alt="" />
+									<span className="title">
+										{this.context.t("CMS_PROPERTIES_EMPTY_LIST_1")}
+									</span>
+									<span className="subtitle">
+										{this.context.t("CMS_PROPERTIES_EMPTY_LIST_2")}
+									</span>
+									<CreatePropertyButton history={history} />
+								</div>
+							)
+							}
+						</DefaultBox>
+					)
 				}
 
 			</div>
