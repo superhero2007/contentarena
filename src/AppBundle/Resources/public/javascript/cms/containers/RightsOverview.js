@@ -22,9 +22,9 @@ class RightsOverview extends React.Component {
 		const { common } = this.props;
 
 		return (
-			<div>
+			<section className="rights-overview-tab">
 				Rights Overview
-			</div>
+			</section>
 		);
 	}
 }

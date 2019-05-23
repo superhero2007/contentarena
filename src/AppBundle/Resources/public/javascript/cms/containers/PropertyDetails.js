@@ -22,9 +22,9 @@ class PropertyDetails extends React.Component {
 		const { common } = this.props;
 
 		return (
-			<div>
+			<section className="property-details-tab">
 				Property Details
-			</div>
+			</section>
 		);
 	}
 }

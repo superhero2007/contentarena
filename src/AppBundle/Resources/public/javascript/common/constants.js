@@ -30,6 +30,7 @@ export const ROUTE_PATHS = {
 	REGISTER: "/register",
 	MARKETPLACE: "/marketplace",
 	CONTENT_LISTING: "/contentlisting",
+	CREATE_LISTING: "/contentlisting/new",
 	COMMERCIAL_OVERVIEW: "/commercialoverview",
 	WATCHLIST: "/watchlist",
 	CLOSED_DEALS: "/closeddeals",

@@ -647,6 +647,18 @@ msgstr ""
 msgid "CMS_TERRITORIES_SELECTOR_EMPTY"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+msgid "CMS_EMPTY_LISTING_OVERVIEW_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+msgid "CMS_EMPTY_LISTING_OVERVIEW_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+msgid "CMS_EMPTY_LISTING_CREATE_LISTING"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
 msgid "MARKETPLACE_TABLE_LISTING_NAME"
@@ -784,6 +796,26 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/Properties.js
 msgid "CMS_PROPERTIES_EMPTY_LIST_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_TAB_COMMERCIAL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_TAB_RIGHTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_TAB_FIXTURES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_TAB_LISTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_TAB_DETAILS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/Property.js

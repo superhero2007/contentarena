@@ -1,30 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
+import EmptyListingOverview from "../components/EmptyListingOverview";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			loading: false,
-		};
+		this.state = {};
 	}
 
-	componentDidMount() {
-		const _this = this;
-	}
+	componentDidMount() { }
 
 	render() {
-		const {
-			loading,
-		} = this.state;
-
-		const { common } = this.props;
-
 		return (
-			<div>
-				Listing Overview
-			</div>
+			<section className="listing-overview-tab">
+				<EmptyListingOverview history={this.props.history} />
+			</section>
 		);
 	}
 }

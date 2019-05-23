@@ -21,6 +21,14 @@ class Property extends React.Component {
 		};
 	}
 
+	getTranslatedTabs = () => ({
+		[CMS_PROPERTY_TABS.COMMERCIAL]: this.context.t("CMS_PROPERTY_TAB_COMMERCIAL"),
+		[CMS_PROPERTY_TABS.RIGHTS]: this.context.t("CMS_PROPERTY_TAB_RIGHTS"),
+		[CMS_PROPERTY_TABS.FIXTURES]: this.context.t("CMS_PROPERTY_TAB_FIXTURES"),
+		[CMS_PROPERTY_TABS.LISTING]: this.context.t("CMS_PROPERTY_TAB_LISTING"),
+		[CMS_PROPERTY_TABS.DETAILS]: this.context.t("CMS_PROPERTY_TAB_DETAILS"),
+	});
+
 	componentDidMount() {
 		const { propertyId } = this.props;
 		if (propertyId) this.fetchProperty(propertyId);
@@ -32,7 +40,7 @@ class Property extends React.Component {
 			.then(({ data: { property } }) => {
 				this.setState({ property });
 			})
-			.catch(({ response: { data: { success, property, code } } }) => {
+			.catch(({ response: { data: { code } } }) => {
 				this.setState({ errorCode: code });
 			})
 			.finally(() => {
@@ -66,6 +74,8 @@ class Property extends React.Component {
 			);
 		}
 
+		const translatedTabs = this.getTranslatedTabs();
+
 		return (
 			<DefaultBox>
 				<h4 className="title">
@@ -79,7 +89,7 @@ class Property extends React.Component {
 								className={`tab lg ${activeTab === tab ? "active" : ""}`}
 								onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${tab}`)}
 							>
-								{tab}
+								{translatedTabs[tab]}
 							</a>
 						))
 					}
@@ -88,7 +98,7 @@ class Property extends React.Component {
 				{activeTab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview property={property} />}
 				{activeTab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures property={property} />}
 				{activeTab === CMS_PROPERTY_TABS.COMMERCIAL && <CmsCommercialOverview property={property} />}
-				{activeTab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} />}
+				{activeTab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} history={history} />}
 				{activeTab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails property={property} />}
 
 

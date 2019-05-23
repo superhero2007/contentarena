@@ -253,11 +253,45 @@
     }
   }
 
+  // tabs
   .ca-tabs {
     margin-top: 25px;
     padding-top: 22px;
     border-top: 1px solid #ECECEC;
   }
+  .listing-overview-tab{
+	.empty-listing{
+	  display: flex;
+	  justify-content: center;
+	  flex-direction: column;
+	  align-items: center;
+	  padding-top: 50px;
+
+	  i{
+		padding-bottom: 25px;
+		color: $property-blue;
+	  }
+	  h3{
+		color: $black-color;
+		font-size: 16px;
+		font-weight: bold;
+	  }
+	  h4{
+		margin-top: 5px;
+		color: $font-color-5;
+		font-size: 13px;
+	  }
+	  a{
+		margin: 30px 0 25px;
+		text-transform: capitalize;
+	  }
+	}
+  }
+  .rights-overview-tab{}
+  .property-details-tab{}
+  .commercial-overview-tab{}
+  .fixture-tab{}
+
   .property-list-header{
     border-bottom: 2px solid #FDD306;
     padding: 0 0 20px;
@@ -299,37 +333,41 @@
 	padding: 20px 0;
 	border-bottom: 1px solid $font-color-2;
 
+	.property-wrapper{
+	  width: 100%;
+	  align-items: center;
 
+	  .property-img{
+		flex: 1;
+	  }
+	  .property-info{
+		flex: 6.5;
+		padding: 0 20px;
 
-	.property-img{
-	  flex: 1;
-	}
-	.property-info{
-	  flex: 6.5;
-	  padding: 0 20px;
+		.bids-wrapper{
+		  display: flex;
+		  flex-direction: row;
+		  flex-wrap: wrap;
+		  padding-top: 10px;
 
-	  .bids-wrapper{
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		padding-top: 10px;
-
-		font-size: 18px;
-
-		button{
 		  font-size: 18px;
-		  text-decoration: none;
-		}
-		.closed-bid, button{ padding-left: 25px; }
-		.open-bid, .closed-bid{
 
-		  span{
-			background-color: $property-blue;
-			color: $primary-color;
-			padding: 1px 6px;
-			margin-right: 8px;
+		  button{
+		    font-size: 18px;
+			text-decoration: none;
+			outline: none;
 		  }
-		}
+		  .closed-bid, button{ padding-left: 25px; }
+		  .open-bid, .closed-bid {
+
+			span {
+			  background-color: $property-blue;
+			  color: $primary-color;
+			  padding: 1px 6px;
+			  margin-right: 8px;
+			}
+		  }
+	    }
 	  }
 	}
   }

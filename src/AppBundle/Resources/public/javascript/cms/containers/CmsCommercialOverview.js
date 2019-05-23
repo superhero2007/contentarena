@@ -22,9 +22,9 @@ class CmsCommercialOverview extends React.Component {
 		const { common } = this.props;
 
 		return (
-			<div>
+			<section className="commercial-overview-tab">
 				Commercial Overview
-			</div>
+			</section>
 		);
 	}
 }

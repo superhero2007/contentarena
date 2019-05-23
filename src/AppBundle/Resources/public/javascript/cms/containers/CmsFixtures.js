@@ -22,9 +22,9 @@ class CmsFixtures extends React.Component {
 		const { common } = this.props;
 
 		return (
-			<div>
+			<section className="fixture-tab">
 				Fixtures
-			</div>
+			</section>
 		);
 	}
 }
