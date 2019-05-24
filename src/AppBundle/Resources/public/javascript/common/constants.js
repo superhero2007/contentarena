@@ -16,6 +16,14 @@ export const CMS_PROPERTY_TABS = {
 	DETAILS: "propertydetails",
 };
 
+export const CMS_PROPERTY_DETAILS_TABS = {
+	EVENT_DETAILS: "eventdetails",
+	EDIT_PROGRAM: "editprogram",
+	RIGHTS_DETAILS: "rightsdetails",
+	PRODUCTION_DETAILS: "productiondetails",
+	LICENSE_DETAILS: "licensedetails",
+};
+
 export const USER_PROFILES = {
 	SELLER: "SELLER",
 	BUYER: "BUYER",

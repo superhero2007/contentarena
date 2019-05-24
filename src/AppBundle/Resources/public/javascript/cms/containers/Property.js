@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { DefaultBox } from "../../common/components/Containers";
-import { CMS_PROPERTY_TABS, ROUTE_PATHS, SERVER_ERROR_CODES } from "../../common/constants";
+import { CMS_PROPERTY_TABS, ROUTE_PATHS, SERVER_ERROR_CODES } from "@constants";
 import api from "../../api";
 import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
@@ -54,6 +54,8 @@ class Property extends React.Component {
 			activeTab, loadingProperty, property, errorCode,
 		} = this.state;
 		const { name } = property;
+
+		console.log(this);
 
 		if (loadingProperty) {
 			return (

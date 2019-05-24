@@ -289,7 +289,27 @@
 	}
   }
   .rights-overview-tab{}
-  .property-details-tab{}
+  .property-details-tab{
+	.details-tab-wrapper{
+	  display: flex;
+	  flex-wrap: wrap;
+	  margin-bottom: 30px;
+
+	  .tab{
+	    color: $property-blue;
+	    padding-right: 25px;
+		transition: 0.3s;
+
+		&:hover{
+		  color: #00aadd;
+		  cursor: pointer;
+		}
+		&:last-child{ padding-right: 0; }
+		&.active{ text-decoration: underline; }
+
+	  }
+	}
+  }
   .commercial-overview-tab{}
   .fixture-tab{}
 

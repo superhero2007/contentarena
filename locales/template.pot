@@ -822,6 +822,26 @@ msgstr ""
 msgid "CMS_PROPERTY_DOES_NOT_EXISTS"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js
+msgid "CMS_PROPERTY_DETAILS_TAB_EVENT_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js
+msgid "CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js
+msgid "CMS_PROPERTY_DETAILS_TAB_LICENSE_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js
+msgid "CMS_PROPERTY_DETAILS_TAB_PRODUCTION_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js
+msgid "CMS_PROPERTY_DETAILS_TAB_RIGHT_LABEL"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js
 msgid "LOADER_DEFAULT_TEXT"
 msgstr ""

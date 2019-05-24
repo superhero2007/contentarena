@@ -1,29 +1,65 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
+import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
+import PropertyDetailsEditedProgramTab from "../components/PropertyDetailsEditedProgramTab";
+import PropertyDetailsEventTab from "../components/PropertyDetailsEventTab";
+import PropertyDetailsLicenseTab from "../components/PropertyDetailsLicenseTab";
+import PropertyDetailsProductionTab from "../components/PropertyDetailsProductionTab";
+import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
 
 class PropertyDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			loading: false,
+			activeTab: CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS,
 		};
 	}
 
-	componentDidMount() {
-		const _this = this;
-	}
+	getTabs = () => ({
+		[CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS]: {
+			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_EVENT_LABEL"),
+			component: PropertyDetailsEventTab,
+		},
+		[CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM]: {
+			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_LABEL"),
+			component: PropertyDetailsEditedProgramTab,
+		},
+		[CMS_PROPERTY_DETAILS_TABS.LICENSE_DETAILS]: {
+			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_LICENSE_LABEL"),
+			component: PropertyDetailsLicenseTab,
+		},
+		[CMS_PROPERTY_DETAILS_TABS.PRODUCTION_DETAILS]: {
+			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_PRODUCTION_LABEL"),
+			component: PropertyDetailsProductionTab,
+		},
+		[CMS_PROPERTY_DETAILS_TABS.RIGHTS_DETAILS]: {
+			label: this.context.t("CMS_PROPERTY_DETAILS_TAB_RIGHT_LABEL"),
+			component: PropertyDetailsRightsTab,
+		},
+	});
+
+	handleChangeTab = (activeTab) => { this.setState({ activeTab }); };
 
 	render() {
-		const {
-			loading,
-		} = this.state;
-
-		const { common } = this.props;
-
+		const { activeTab } = this.state;
+		const tabs = this.getTabs();
+		const ActiveComponent = tabs[activeTab].component;
 		return (
 			<section className="property-details-tab">
-				Property Details
+				<div className="details-tab-wrapper">
+					{Object.values(CMS_PROPERTY_DETAILS_TABS).map(tab => (
+						<span
+							onClick={() => this.handleChangeTab(tab)}
+							className={`tab${tab === activeTab ? " active" : ""}`}
+						>
+							{tabs[tab].label}
+						</span>
+					))}
+				</div>
+
+				{<ActiveComponent />}
 			</section>
 		);
 	}
@@ -32,6 +68,8 @@ class PropertyDetails extends React.Component {
 PropertyDetails.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
+
+PropertyDetails.defaultProps = {};
 
 const mapStateToProps = (state, ownProps) => state;
 
