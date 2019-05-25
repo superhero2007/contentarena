@@ -253,9 +253,33 @@
     }
   }
 
+  .title-property-wrapper{
+	display: flex;
+	justify-content: space-between;
+
+    span{
+	  display: flex;
+	  align-items: center;
+    }
+	.title-action-wrapper{
+	  display: flex;
+	  flex-wrap: nowrap;
+	  align-items: flex-start;
+
+	  button, a{
+		margin-right: 10px;
+	  }
+	  i{
+		font-size: 38px;
+		color: $property-blue;
+		cursor: pointer;
+	  }
+	}
+  }
+
   // tabs
   .ca-tabs {
-    margin-top: 25px;
+    margin-top: 20px;
     padding-top: 22px;
     border-top: 1px solid #ECECEC;
   }

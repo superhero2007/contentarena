@@ -656,6 +656,7 @@ msgid "CMS_EMPTY_LISTING_OVERVIEW_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
 msgid "CMS_EMPTY_LISTING_CREATE_LISTING"
 msgstr ""
 
@@ -820,6 +821,10 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
 msgid "CMS_PROPERTY_DOES_NOT_EXISTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
+msgid "CMS_PROPERTY_ADD_DEAL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js

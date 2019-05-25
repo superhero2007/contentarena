@@ -12,12 +12,12 @@ class PropertyList extends React.Component {
 	}
 
 	render() {
-		const { properties } = this.props;
+		const { properties, history } = this.props;
 
 		return (
 			<div>
 				{
-					properties.map(property => <PropertyListItem {...property} key={property.customId} />)
+					properties.map(property => <PropertyListItem {...property} key={property.customId} history={history} />)
 				}
 			</div>
 		);

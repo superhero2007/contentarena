@@ -8,7 +8,7 @@ const EmptyListingOverview = ({ history }, context) => (
 		<img src={cmsFile} alt="" />
 		<h3>{context.t("CMS_EMPTY_LISTING_OVERVIEW_TITLE")}</h3>
 		<h4>{context.t("CMS_EMPTY_LISTING_OVERVIEW_TEXT")}</h4>
-		<a className="yellow-button" href={ROUTE_PATHS.CREATE_LISTING}>
+		<a className="ca-btn primary" href={ROUTE_PATHS.CREATE_LISTING}>
 			{context.t("CMS_EMPTY_LISTING_CREATE_LISTING")}
 		</a>
 	</div>

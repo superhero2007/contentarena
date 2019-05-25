@@ -79,7 +79,7 @@ class Properties extends React.Component {
 							{
 								propertiesLoaded
 							&& properties.length > 0
-							&& <PropertyList properties={properties} />
+							&& <PropertyList properties={properties} history={history} />
 							}
 							{
 								propertiesLoaded

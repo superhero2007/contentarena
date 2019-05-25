@@ -80,14 +80,27 @@ class Property extends React.Component {
 
 		return (
 			<DefaultBox>
-				<h4 className="title">
-					{name}
+				<h4 className="title title-property-wrapper">
+					<span>{name}</span>
+					<div className="title-action-wrapper">
+						<a className="ca-btn primary" href={ROUTE_PATHS.CREATE_LISTING}>
+							{this.context.t("CMS_EMPTY_LISTING_CREATE_LISTING")}
+						</a>
+						<button
+							onClick={() => { console.info("add deal not specified"); }}
+							className="ca-btn primary"
+						>
+							{this.context.t("CMS_PROPERTY_ADD_DEAL")}
+						</button>
+						<i className="fa fa-pencil-square-o" onClick={() => { console.info("pensil icon not specified"); }} />
+					</div>
 				</h4>
 
 				<div className="ca-tabs">
 					{
 						Object.values(CMS_PROPERTY_TABS).map(tab => (
 							<a
+								key={tab}
 								className={`tab lg ${activeTab === tab ? "active" : ""}`}
 								onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${tab}`)}
 							>

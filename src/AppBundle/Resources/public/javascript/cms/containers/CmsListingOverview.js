@@ -14,7 +14,7 @@ class CmsListingOverview extends React.Component {
 	render() {
 		return (
 			<section className="listing-overview-tab">
-				<EmptyListingOverview history={this.props.history} />
+				<EmptyListingOverview />
 			</section>
 		);
 	}

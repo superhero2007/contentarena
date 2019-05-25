@@ -211,7 +211,7 @@ class CreatePropertyEvent extends React.Component {
 		}
 
 		const monthNumber = moment().month(month).format("M");
-		const theDate = moment(new Date(year, +monthNumber)).utc().format();
+		const theDate = moment(new Date(year, +monthNumber)).utc().format("YYYY-MM-DD");
 
 		this.props.updateFromMultiple("seasons", index, type, theDate);
 		if (!hasCustomSport && seasons[index] && seasons[index].custom) {
