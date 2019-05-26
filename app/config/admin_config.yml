@@ -82,6 +82,26 @@ easy_admin:
 
             Company:
                 class: AppBundle\Entity\Company
+                list:
+                    fields: ['id', 'legalName', 'vat', 'registrationNumber', 'country', 'city', 'website']
+                form:
+                    fields:
+                        - { property: 'legalName' }
+                        - { property: 'country', type_options: { required: true }}
+                        - { property: 'city' }
+                        - { property: 'address' }
+                        - { property: 'address2' }
+                        - { property: 'zip' }
+                        - { property: 'phone' }
+                        - { property: 'website' }
+                        - { property: 'vat' }
+                        - { property: 'registrationNumber' }
+                        - { property: 'users' }
+                        - { property: 'enabled' }
+                        - { property: 'description' }
+                        - { property: 'year' }
+                        - { property: 'size' }
+                        - { property: 'owner' }
                 controller: AppBundle\Controller\Admin\CompanyController
             Content:
                 class: AppBundle\Entity\Content

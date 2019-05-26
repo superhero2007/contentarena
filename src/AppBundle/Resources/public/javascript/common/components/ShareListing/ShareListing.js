@@ -99,6 +99,7 @@ class ShareListing extends Component {
 								className="ca-tags-input ca-form-control"
 								validationRegex={/\S+@\S+\.\S+/}
 								onlyUnique
+								addOnBlur
 							/>
 						</section>
 						<section style={{ marginBottom: "25px" }}>
