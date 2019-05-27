@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { setRights } from "../actions/propertyFiltersActions";
 import cloneDeep from "lodash/cloneDeep";
+import { setRights } from "../actions/propertyFiltersActions";
 
 class CmsRightsFilter extends React.Component {
 	constructor(props) {
@@ -18,16 +18,13 @@ class CmsRightsFilter extends React.Component {
 	}
 
 	handleChangeRight = (right) => {
-
-		let rights = cloneDeep(this.props.propertyFilters.rights);
+		const rights = cloneDeep(this.props.propertyFilters.rights);
 
 		const index = this.getRightIndex(right);
 
-		if (index === -1){
+		if (index === -1) {
 			rights.push(right);
-		} else {
-			if (rights.length > 1) rights.splice(index, 1);
-		}
+		} else if (rights.length > 1) rights.splice(index, 1);
 
 		this.props.setRights(rights);
 	};
@@ -36,10 +33,9 @@ class CmsRightsFilter extends React.Component {
 		this.props.setRights(cloneDeep(this.props.property.rights));
 	};
 
-	getRightIndex = (right) => this.props.propertyFilters.rights.findIndex(r => r.code === right.code);
+	getRightIndex = right => this.props.propertyFilters.rights.findIndex(r => r.code === right.code);
 
 	render() {
-
 		const { property: { rights } } = this.props;
 
 		return (
@@ -55,7 +51,7 @@ class CmsRightsFilter extends React.Component {
 							key={`right-${right.code}`}
 							className={cn({
 								region: true,
-								"region-selected": this.getRightIndex(right) !== -1
+								"region-selected": this.getRightIndex(right) !== -1,
 							})}
 							onClick={() => {
 								this.handleChangeRight(right);

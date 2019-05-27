@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { setSeasons } from "../actions/propertyFiltersActions";
 import cloneDeep from "lodash/cloneDeep";
+import { setSeasons } from "../actions/propertyFiltersActions";
 
 class CmsSeasonsFilter extends React.Component {
 	constructor(props) {
@@ -18,19 +18,15 @@ class CmsSeasonsFilter extends React.Component {
 	}
 
 	handleChangeSeason = (season) => {
-
-		let seasons = cloneDeep(this.props.propertyFilters.seasons);
+		const seasons = cloneDeep(this.props.propertyFilters.seasons);
 
 		const index = this.getSeasonIndex(season);
 
-		if (index === -1){
+		if (index === -1) {
 			seasons.push(season);
-		} else {
-			if (seasons.length > 1) seasons.splice(index, 1);
-		}
+		} else if (seasons.length > 1) seasons.splice(index, 1);
 
 		this.props.setSeasons(seasons);
-
 	};
 
 	selectAllSeasons = () => {
@@ -38,10 +34,9 @@ class CmsSeasonsFilter extends React.Component {
 		setSeasons(JSON.parse(JSON.stringify(seasons)));
 	};
 
-	getSeasonIndex = (season) => this.props.propertyFilters.seasons.findIndex(r => r.id === season.id);
+	getSeasonIndex = season => this.props.propertyFilters.seasons.findIndex(r => r.id === season.id);
 
 	render() {
-
 		const { property: { seasons } } = this.props;
 
 		return (
@@ -54,14 +49,16 @@ class CmsSeasonsFilter extends React.Component {
 				<div className="regions">
 
 					{
-						seasons.length === 0 &&
-						<button
-							key={`no-season`}
-							className="region"
-							disabled
-						>
+						seasons.length === 0
+						&& (
+							<button
+								key="no-season"
+								className="region"
+								disabled
+							>
 							Not available
-						</button>
+							</button>
+						)
 					}
 
 					{seasons.map(season => (
@@ -69,7 +66,7 @@ class CmsSeasonsFilter extends React.Component {
 							key={`season-${season.id}`}
 							className={cn({
 								region: true,
-								"region-selected": this.getSeasonIndex(season) !== -1
+								"region-selected": this.getSeasonIndex(season) !== -1,
 							})}
 							onClick={() => {
 								this.handleChangeSeason(season);

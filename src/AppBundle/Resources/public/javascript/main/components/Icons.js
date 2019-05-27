@@ -67,6 +67,7 @@ export const trashIconWhite = `${assetsBaseDir}app/images/trash-white.svg`;
 export const cmsWorldActive = `${assetsBaseDir}app/images/cms/world-active.svg`;
 export const cmsWorldDisabled = `${assetsBaseDir}app/images/cms/world-disabled.svg`;
 export const cmsFile = `${assetsBaseDir}app/images/cms/file.svg`;
+export const cmsFlow = `${assetsBaseDir}app/images/cms/flow.svg`;
 
 
 export const IconYellowCircle = ({ icon, onClick }) => (

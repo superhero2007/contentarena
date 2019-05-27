@@ -551,6 +551,10 @@ msgstr ""
 msgid "RIGHT_SELECTION_OFFER_NON_EXCLUSIVE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsRightsFilter.js
+msgid "CMD_RIGHTS_OVERVIEW_RIGHTS"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsSearchCompetition.js
 #: src/AppBundle/Resources/public/javascript/main/components/SearchCompetition.js
 msgid "CL_STEP1_SEARCH_PLACEHOLDER"
@@ -590,9 +594,18 @@ msgstr ""
 msgid "CL_STEP1_SEARCH_BUTTON_SELECT"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsSeasonsFilter.js
+msgid "CMD_RIGHTS_OVERVIEW_SEASONS"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsSportSelector.js
 #: src/AppBundle/Resources/public/javascript/landing/components/LandingHeader.js
 msgid "LOGIN_BAR_LOGIN"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritoriesFilter.js
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
+msgid "CMS_TERRITORIES_SELECTOR_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
@@ -605,10 +618,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
 msgid "CMS_RADIO_WORLDWIDE_EXCLUDING"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
-msgid "CMS_TERRITORIES_SELECTOR_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsTerritorySelector.js
@@ -647,15 +656,35 @@ msgstr ""
 msgid "CMS_TERRITORIES_SELECTOR_EMPTY"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyCommercialOverview.js
+msgid "CMS_EMPTY_COMMERCIAL_OVERVIEW_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyCommercialOverview.js
+msgid "CMS_EMPTY_COMMERCIAL_OVERVIEW_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyCommercialOverview.js
+msgid "CMS_EMPTY_COMMERCIAL_OVERVIEW_PROMOTE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyCommercialOverview.js
+msgid "CMS_EMPTY_COMMERCIAL_OVERVIEW_PROMOTE_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyCommercialOverview.js
+msgid "CMS_EMPTY_COMMERCIAL_PROMOTE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 msgid "CMS_EMPTY_LISTING_OVERVIEW_TITLE"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 msgid "CMS_EMPTY_LISTING_OVERVIEW_TEXT"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/cms/components/EmptyListingOverview.js
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 #: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
 msgid "CMS_EMPTY_LISTING_CREATE_LISTING"
 msgstr ""
@@ -845,6 +874,62 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/PropertyDetails.js
 msgid "CMS_PROPERTY_DETAILS_TAB_RIGHT_LABEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHTS_OVERVIEW_TABLE_HEADER_LISTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHTS_OVERVIEW_TABLE_HEADER_DEALS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_STATUS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_AVAILABLE_RIGHTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_OFFERED_RIGHTS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_CLOSED_DEALS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/RightsOverview.js
+msgid "CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/components/Loader/Loader.js

@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
-import { setRegions } from "../actions/propertyFiltersActions";
 import cloneDeep from "lodash/cloneDeep";
+import { setRegions } from "../actions/propertyFiltersActions";
 
 class CmsTerritoriesFilter extends React.Component {
 	constructor(props) {
@@ -17,7 +17,7 @@ class CmsTerritoriesFilter extends React.Component {
 			selected: [],
 			activeTerritories: [],
 			viewAllTerritories: false,
-			regionSelectors: []
+			regionSelectors: [],
 		};
 	}
 
@@ -32,43 +32,40 @@ class CmsTerritoriesFilter extends React.Component {
 			regions,
 		} = this.props;
 
-		let selectAll = this.state.regionSelectors.length === 0;
-		let regionSelectors = [...territories.map(t=>{ t.type= "territory"; return t;}),...regions.map(r=>{ r.type = "region"; return r;})];
+		const selectAll = this.state.regionSelectors.length === 0;
+		let regionSelectors = [...territories.map((t) => { t.type = "territory"; return t; }), ...regions.map((r) => { r.type = "region"; return r; })];
 
-		regionSelectors = regionSelectors.map(region => {
+		regionSelectors = regionSelectors.map((region) => {
 			region.countries = 0;
-			Array.from( availableTerritories.values() ).forEach(country =>{
-				if (region.type === "region" && country.regions.map(r=>r.id).indexOf(region.id) !== -1 ){
+			Array.from(availableTerritories.values()).forEach((country) => {
+				if (region.type === "region" && country.regions.map(r => r.id).indexOf(region.id) !== -1) {
 					region.countries++;
 				}
-				if (region.type === "territory" && country.territoryId === region.id){
+				if (region.type === "territory" && country.territoryId === region.id) {
 					region.countries++;
 				}
 			});
 
-			return region
+			return region;
 		});
 
 		if (selectAll) this.props.setRegions(regionSelectors);
 		this.setState({ regionSelectors });
 		console.log("parsed");
-
 	};
 
 	selectRegion = (region, type) => {
-
-		let regions = cloneDeep(this.props.propertyFilters.regions);
+		const regions = cloneDeep(this.props.propertyFilters.regions);
 
 		const index = this.getRegionIndex(region, type);
 
-		if (index === -1){
+		if (index === -1) {
 			regions.push(region);
 		} else {
 			regions.splice(index, 1);
 		}
 
 		this.props.setRegions(regions);
-
 	};
 
 	getRegionIndex = (region, type) => this.props.propertyFilters.regions.findIndex(r => r.id === region.id && r.type === type);
@@ -77,14 +74,13 @@ class CmsTerritoriesFilter extends React.Component {
 		const {
 			propertyFilters,
 		} = this.props;
-		let regionSelectors = cloneDeep(this.state.regionSelectors);
+		const regionSelectors = cloneDeep(this.state.regionSelectors);
 
-		if (propertyFilters.availableTerritories.size === propertyFilters.selectedTerritories.size){
+		if (propertyFilters.availableTerritories.size === propertyFilters.selectedTerritories.size) {
 			this.props.setRegions([]);
 		} else {
 			this.props.setRegions(regionSelectors);
 		}
-
 	};
 
 	getCounterLabel = (name, counter, total) => `${name} (${counter}/${total})`;
@@ -95,7 +91,7 @@ class CmsTerritoriesFilter extends React.Component {
 		} = this.props;
 
 		const {
-			regionSelectors
+			regionSelectors,
 		} = this.state;
 
 		return (
@@ -111,7 +107,7 @@ class CmsTerritoriesFilter extends React.Component {
 								region: true,
 								"region-selected": propertyFilters.availableTerritories.size === propertyFilters.selectedTerritories.size,
 							})}
-							key={`territory-0`}
+							key="territory-0"
 							onClick={() => {
 								this.selectAllTerritories();
 							}}
@@ -124,7 +120,7 @@ class CmsTerritoriesFilter extends React.Component {
 								<button
 									className={cn({
 										region: true,
-										"region-selected": region.countries !== 0 && propertyFilters.regions.filter(r=>r.type === "territory" && r.id === region.id ).length > 0,
+										"region-selected": region.countries !== 0 && propertyFilters.regions.filter(r => r.type === "territory" && r.id === region.id).length > 0,
 									})}
 									key={`territory-${i}`}
 									disabled={region.countries === 0}
@@ -144,7 +140,7 @@ class CmsTerritoriesFilter extends React.Component {
 								<button
 									className={cn({
 										region: true,
-										"region-selected": region.countries !== 0 && propertyFilters.regions.filter(r=>r.type === "region" && r.id === region.id ).length > 0,
+										"region-selected": region.countries !== 0 && propertyFilters.regions.filter(r => r.type === "region" && r.id === region.id).length > 0,
 									})}
 									disabled={region.countries === 0}
 									key={`region-${i}`}

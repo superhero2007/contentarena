@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import EmptyListingOverview from "../components/EmptyListingOverview";
+import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOverview";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {

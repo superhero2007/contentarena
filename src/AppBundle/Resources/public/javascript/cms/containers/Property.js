@@ -18,7 +18,7 @@ class Property extends React.Component {
 		this.state = {
 			loadingProperty: false,
 			property: null,
-			activeTab: props.tab
+			activeTab: props.tab,
 		};
 	}
 
@@ -30,15 +30,15 @@ class Property extends React.Component {
 		[CMS_PROPERTY_TABS.DETAILS]: this.context.t("CMS_PROPERTY_TAB_DETAILS"),
 	});
 
-	componentDidMount(){
-		const { match : { params : { propertyId, tab} = {} } } = this.props;
+	componentDidMount() {
+		const { match: { params: { propertyId, tab } = {} } } = this.props;
 		if (!propertyId) return false;
 
 		if (!this.state.property) this.fetchProperty(propertyId);
 		this.props.getTerritories();
 		this.props.getRegions();
-		this.setState({propertyId, activeTab: tab});
-	};
+		this.setState({ propertyId, activeTab: tab });
+	}
 
 	fetchProperty = (propertyId) => {
 		this.setState({ loadingProperty: true });
@@ -56,14 +56,14 @@ class Property extends React.Component {
 
 	isLoadingRegions = () => {
 		const { property: { isRegionsFetched, isTerritoriesFetched } } = this.props;
-		return  !isRegionsFetched || !isTerritoriesFetched;
+		return !isRegionsFetched || !isTerritoriesFetched;
 	};
 
 	render() {
-		const { history, match : { params : { propertyId, tab } = {} } } = this.props;
+		const { history, match: { params: { propertyId, tab } = {} } } = this.props;
 		const { loadingProperty, property, errorCode } = this.state;
 
-		if (loadingProperty || this.isLoadingRegions() || !property ) {
+		if (loadingProperty || this.isLoadingRegions() || !property) {
 			return (
 				<DefaultBox>
 					<Loader loading />
@@ -105,27 +105,24 @@ class Property extends React.Component {
 
 					<div className="ca-tabs">
 						{
-							Object.values(CMS_PROPERTY_TABS).map(t => {
-								//TODO: Add translation to tab names
-								return (
-									<a
-										key={t}
-										className={`tab lg ${t === tab ? "active" : ""}`}
-										onClick={() => {
-											history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${t}`);
-										}}
-									>
-										{translatedTabs[t]}
-									</a>
-								)
-							})
+							Object.values(CMS_PROPERTY_TABS).map(t => (
+								<a
+									key={t}
+									className={`tab lg ${t === tab ? "active" : ""}`}
+									onClick={() => {
+										history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/${t}`);
+									}}
+								>
+									{translatedTabs[t]}
+								</a>
+							))
 						}
 					</div>
 
 					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview property={property} />}
 					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures property={property} />}
 					{tab === CMS_PROPERTY_TABS.COMMERCIAL && <CmsCommercialOverview property={property} />}
-					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property}  history={history}  />}
+					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} history={history} />}
 					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails property={property} />}
 
 

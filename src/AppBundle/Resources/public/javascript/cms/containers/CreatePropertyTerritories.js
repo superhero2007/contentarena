@@ -136,11 +136,11 @@ class CreatePropertyTerritories extends React.Component {
 				sportCategory: property.sportCategory,
 				tournament: property.tournament,
 				seasons: property.seasons,
-				rights: property.rights
-			}
+				rights: property.rights,
+			},
 		})
-			.then(response => {
-				this.setState({propertySaved: true});
+			.then((response) => {
+				this.setState({ propertySaved: true });
 			})
 			.catch()
 			.finally(() => {

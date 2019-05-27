@@ -24,7 +24,7 @@ class CmsFixtures extends React.Component {
 
 		return (
 			<section className="fixture-tab region-filter">
-				<CmsSeasonsFilter property={property}/>
+				<CmsSeasonsFilter property={property} />
 			</section>
 		);
 	}
@@ -34,12 +34,10 @@ CmsFixtures.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-	return {
-		common: state.common,
-		propertyFilters: state.propertyFilters,
-	}
-};
+const mapStateToProps = state => ({
+	common: state.common,
+	propertyFilters: state.propertyFilters,
+});
 
 const mapDispatchToProps = dispatch => ({
 	// updateProfile: profile => dispatch(updateProfile(profile)),

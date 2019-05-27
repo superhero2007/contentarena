@@ -325,35 +325,7 @@
     padding-top: 22px;
     border-top: 1px solid #ECECEC;
   }
-  .listing-overview-tab{
-	.empty-listing{
-	  display: flex;
-	  justify-content: center;
-	  flex-direction: column;
-	  align-items: center;
-	  padding-top: 50px;
-
-	  img{
-		padding-bottom: 25px;
-		width: 70px;
-		height: auto;
-	  }
-	  h3{
-		color: $black-color;
-		font-size: 16px;
-		font-weight: bold;
-	  }
-	  h4{
-		margin-top: 5px;
-		color: $font-color-5;
-		font-size: 13px;
-	  }
-	  a{
-		margin: 30px 0 25px;
-		text-transform: capitalize;
-	  }
-	}
-  }
+  .listing-overview-tab{}
   .rights-overview-tab{}
   .property-details-tab{
 	.details-tab-wrapper{
@@ -378,6 +350,34 @@
   }
   .commercial-overview-tab{}
   .fixture-tab{}
+
+  .empty-property-tab{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+
+	img{
+	  padding-top: 50px;
+	  padding-bottom: 25px;
+	  width: 70px;
+	  height: auto;
+	}
+	h3{
+	  color: $black-color;
+	  font-size: 16px;
+	  font-weight: bold;
+	}
+	h4{
+	  margin-top: 5px;
+	  color: $font-color-5;
+	  font-size: 13px;
+	}
+	a, button{
+	  margin: 30px 0 25px;
+	  text-transform: capitalize;
+	}
+  }
 
   .property-list-header{
     border-bottom: 2px solid #FDD306;

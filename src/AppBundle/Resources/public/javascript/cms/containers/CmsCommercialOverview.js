@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -10,20 +11,12 @@ class CmsCommercialOverview extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		const _this = this;
-	}
+	componentDidMount() {}
 
 	render() {
-		const {
-			loading,
-		} = this.state;
-
-		const { common } = this.props;
-
 		return (
 			<section className="commercial-overview-tab">
-				Commercial Overview
+				<EmptyCommercialOverview />
 			</section>
 		);
 	}

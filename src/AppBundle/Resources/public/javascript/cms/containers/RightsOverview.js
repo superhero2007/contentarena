@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import cn from "classnames";
+import ReactTable from "react-table";
 import CmsRightsFilter from "../components/CmsRightsFilter";
 import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
-import ReactTable from "react-table";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import { RIGHT_STATUS } from "../../common/constants";
 
@@ -15,78 +15,71 @@ class RightsOverview extends React.Component {
 		super(props);
 		this.state = {
 			loading: false,
-			selectedTerritories: new Map()
+			selectedTerritories: new Map(),
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
 		const { propertyFilters: { selectedTerritories, rights, regions } } = nextProps;
-		if (this.props.propertyFilters.rights.length !== rights.length ||
-			this.props.propertyFilters.regions.length !== regions.length ) this.setState({selectedTerritories});
+		if (this.props.propertyFilters.rights.length !== rights.length
+			|| this.props.propertyFilters.regions.length !== regions.length) this.setState({ selectedTerritories });
 	}
 
-	renderSeasonRightHeader = (right, key, list, season) => {
-		return (
-			<div className="d-flex justify-content-center">
-				{
-					key === 0 &&
-					<div className="season-header" style={{width: 40 * list.length}}>
-						{season.year}
-					</div>
-				}
-				<span>
-					{right.code}
-				</span>
-			</div>
-		)
-	};
+	renderSeasonRightHeader = (right, key, list, season) => (
+		<div className="d-flex justify-content-center">
+			{
+				key === 0
+					&& (
+						<div className="season-header" style={{ width: 40 * list.length }}>
+							{season.year}
+						</div>
+					)
+			}
+			<span>
+				{right.code}
+			</span>
+		</div>
+	);
 
-	renderSeasonRightCell = (right, key, list) => {
-		return (
-			<div className="d-flex justify-content-center">
-				<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon }/>
-			</div>
-		)
-	};
+	renderSeasonRightCell = (right, key, list) => (
+		<div className="d-flex justify-content-center">
+			<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} alt="" />
+		</div>
+	);
 
-	renderRightHeader = (right) => {
-		return (
-			<div className="d-flex justify-content-center">
-				<span>
-					{right.code}
-				</span>
-			</div>
-		)
-	};
+	renderRightHeader = right => (
+		<div className="d-flex justify-content-center">
+			<span>
+				{right.code}
+			</span>
+		</div>
+	);
 
-	renderRightCell = (right) => {
-		return (
-			<div className="d-flex justify-content-center">
-				<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon }/>
-			</div>
-		)
-	};
+	renderRightCell = right => (
+		<div className="d-flex justify-content-center">
+			<img src={right.exclusive ? yellowCheckIcon : blueCheckIcon} alt="" />
+		</div>
+	);
 
 	getColumns = () => {
+		const { propertyFilters: { seasons, rights } } = this.props;
 
-		const { propertyFilters: { seasons, rights, } } = this.props;
-
-		let columns = [];
+		const columns = [];
 
 		columns.push({
 			Header: this.context.t("CMS_RIGHTS_OVERVIEW_TABLE_HEADER_TERRITORY"),
 			accessor: "name",
 		});
 
-		if (seasons.length > 0){
-			seasons.forEach(season => {
+		if (seasons.length > 0) {
+			seasons.forEach((season) => {
 				rights.forEach((right, key, list) => {
 					columns.push({
 						headerClassName: "season-header-column",
-						Header: props => this.renderSeasonRightHeader(right, key, list,season),
+						Header: props => this.renderSeasonRightHeader(right, key, list, season),
 						Cell: () => this.renderSeasonRightCell(right, key, list),
-						maxWidth: 40
-					})
+						maxWidth: 40,
+					});
 				});
 			});
 		} else {
@@ -95,11 +88,10 @@ class RightsOverview extends React.Component {
 					headerClassName: "season-header-column",
 					Header: () => this.renderRightHeader(right),
 					Cell: () => this.renderRightCell(right),
-					maxWidth: 40
-				})
+					maxWidth: 40,
+				});
 			});
 		}
-
 
 
 		columns.push({
@@ -109,7 +101,7 @@ class RightsOverview extends React.Component {
 					1
 				</div>
 
-			)
+			),
 		});
 
 		columns.push({
@@ -118,7 +110,7 @@ class RightsOverview extends React.Component {
 				<div className="d-flex justify-content-center">
 					1
 				</div>
-			)
+			),
 		});
 
 		return columns;
@@ -132,12 +124,12 @@ class RightsOverview extends React.Component {
 
 		const { property, common: { totalCountries } } = this.props;
 
-		let territories = Array.from(selectedTerritories.values());
+		const territories = Array.from(selectedTerritories.values());
 
 		return (
 			<div className="region-filter">
-				<CmsSeasonsFilter property={property}/>
-				<CmsRightsFilter property={property}/>
+				<CmsSeasonsFilter property={property} />
+				<CmsRightsFilter property={property} />
 				<CmsTerritoriesFilter property={property} />
 
 				<div className="d-flex">
@@ -151,7 +143,7 @@ class RightsOverview extends React.Component {
 									type="checkbox"
 									checked={this.state[RIGHT_STATUS.AVAILABLE_RIGHTS]}
 									className="ca-checkbox blue"
-									onChange={(e) => { this.setState({[RIGHT_STATUS.AVAILABLE_RIGHTS]: e.target.checked})}}
+									onChange={(e) => { this.setState({ [RIGHT_STATUS.AVAILABLE_RIGHTS]: e.target.checked }); }}
 									id={RIGHT_STATUS.AVAILABLE_RIGHTS}
 								/>
 								<label
@@ -166,7 +158,7 @@ class RightsOverview extends React.Component {
 									type="checkbox"
 									checked={this.state[RIGHT_STATUS.OFFERED_RIGHTS]}
 									className="ca-checkbox blue"
-									onChange={(e) => { this.setState({[RIGHT_STATUS.OFFERED_RIGHTS]: e.target.checked})}}
+									onChange={(e) => { this.setState({ [RIGHT_STATUS.OFFERED_RIGHTS]: e.target.checked }); }}
 									id={RIGHT_STATUS.OFFERED_RIGHTS}
 								/>
 								<label
@@ -181,7 +173,7 @@ class RightsOverview extends React.Component {
 									type="checkbox"
 									checked={this.state[RIGHT_STATUS.CLOSED_DEALS]}
 									className="ca-checkbox blue"
-									onChange={(e) => { this.setState({[RIGHT_STATUS.CLOSED_DEALS]: e.target.checked})}}
+									onChange={(e) => { this.setState({ [RIGHT_STATUS.CLOSED_DEALS]: e.target.checked }); }}
 									id={RIGHT_STATUS.CLOSED_DEALS}
 								/>
 								<label
@@ -199,27 +191,27 @@ class RightsOverview extends React.Component {
 						</div>
 						<div className="right-legends">
 							<div className="right-legends-item">
-								<img src={blueCheckIcon} />
+								<img src={blueCheckIcon} alt="" />
 								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE")}
 							</div>
 							<div className="right-legends-item">
-								<img src={blueCheckIcon} />
+								<img src={blueCheckIcon} alt="" />
 								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED")}
 							</div>
 							<div className="right-legends-item">
-								<img src={blueCheckIcon} />
+								<img src={blueCheckIcon} alt="" />
 								{ this.context.t("CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD")}
 							</div>
 							<div className="right-legends-item">
-								<img src={yellowCheckIcon} />
+								<img src={yellowCheckIcon} alt="" />
 								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE")}
 							</div>
 							<div className="right-legends-item">
-								<img src={yellowCheckIcon} />
+								<img src={yellowCheckIcon} alt="" />
 								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED")}
 							</div>
 							<div className="right-legends-item">
-								<img src={yellowCheckIcon} />
+								<img src={yellowCheckIcon} alt="" />
 								{ this.context.t("CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD")}
 							</div>
 						</div>
@@ -228,24 +220,26 @@ class RightsOverview extends React.Component {
 
 
 				{
-					territories.length > 0 &&
-					<ReactTable
-						showPageSizeOptions={false}
-						showPagination={false}
-						resizable={false}
-						collapseOnPageChange={false}
-						collapseOnDataChange={false}
-						minRows={0}
-						defaultPageSize={totalCountries}
-						data={territories}
-						select={this.props.select}
-						className="ca-table"
-						columns={this.getColumns()}
-						sorted={[{
-							id: 'name',
-							desc: false
-						}]}
-					/>
+					territories.length > 0
+					&& (
+						<ReactTable
+							showPageSizeOptions={false}
+							showPagination={false}
+							resizable={false}
+							collapseOnPageChange={false}
+							collapseOnDataChange={false}
+							minRows={0}
+							defaultPageSize={totalCountries}
+							data={territories}
+							select={this.props.select}
+							className="ca-table"
+							columns={this.getColumns()}
+							sorted={[{
+								id: "name",
+								desc: false,
+							}]}
+						/>
+					)
 				}
 			</div>
 		);
@@ -256,12 +250,10 @@ RightsOverview.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-	return {
-		common: state.common,
-		propertyFilters: state.propertyFilters,
-	}
-};
+const mapStateToProps = state => ({
+	common: state.common,
+	propertyFilters: state.propertyFilters,
+});
 
 const mapDispatchToProps = dispatch => ({
 	// updateProfile: profile => dispatch(updateProfile(profile)),
