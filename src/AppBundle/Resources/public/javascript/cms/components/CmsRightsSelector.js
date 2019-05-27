@@ -25,15 +25,15 @@ class CmsRightsSelector extends React.Component {
 		this.setState({ rights: this.getRightsFromProps(nextProps) });
 	}
 
-	getRightsFromProps = props => new Map(props.rights.map(rightItem => [rightItem.id, rightItem]));
+	getRightsFromProps = props => new Map(props.rights.map(rightItem => [rightItem.code, rightItem]));
 
 	getRightsForProps = rights => [...rights.values()];
 
 	addRight = (right) => {
 		const { rights } = this.state;
 
-		if (!rights.has(right.id)) {
-			rights.set(right.id, {
+		if (!rights.has(right.code)) {
+			rights.set(right.code, {
 				...right,
 				exclusive: false,
 			});
@@ -44,8 +44,8 @@ class CmsRightsSelector extends React.Component {
 	removeRight = (right) => {
 		const { rights } = this.state;
 
-		if (rights.has(right.id)) {
-			rights.delete(right.id);
+		if (rights.has(right.code)) {
+			rights.delete(right.code);
 			this.props.rightsUpdated(this.getRightsForProps(rights));
 		}
 	};
@@ -53,7 +53,7 @@ class CmsRightsSelector extends React.Component {
 	onExclusive = (right, exclusive) => {
 		const { rights } = this.state;
 		const { rightsUpdated } = this.props;
-		let rightPackageItem = rights.get(right.id);
+		let rightPackageItem = rights.get(right.code);
 
 		if (rightPackageItem.exclusive === exclusive) return;
 
@@ -61,18 +61,18 @@ class CmsRightsSelector extends React.Component {
 			...rightPackageItem,
 			exclusive,
 		};
-		rights.set(right.id, rightPackageItem);
+		rights.set(right.code, rightPackageItem);
 		rightsUpdated(this.getRightsForProps(rights));
 	};
 
-	isCheckBoxChecked = (id) => {
+	isCheckBoxChecked = (code) => {
 		const { rights } = this.state;
-		return rights.has(id);
+		return rights.has(code);
 	};
 
-	getRadioBoxValue = (id) => {
+	getRadioBoxValue = (code) => {
 		const { rights } = this.state;
-		const right = rights.get(id);
+		const right = rights.get(code);
 		return right && right.exclusive || false;
 	};
 
@@ -81,20 +81,20 @@ class CmsRightsSelector extends React.Component {
 			<div className="right-selector">
 				{RIGHTS.map((right, i) => {
 					const {
-						name, id,
+						name, code,
 					} = right;
 					const { offers } = this.state;
-					const idAttr = `checkbox-${id}`;
-					const exclusiveIdAttr = `exc-id-${id}`;
-					const nonExclusiveIdAttr = `non-exc-id-${id}`;
-					const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
-					const checkboxIsDisabled = !this.isCheckBoxChecked(id);
+					const idAttr = `checkbox-${code}`;
+					const exclusiveIdAttr = `exc-id-${code}`;
+					const nonExclusiveIdAttr = `non-exc-id-${code}`;
+					const offerValue = this.getRadioBoxValue(code) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
+					const checkboxIsDisabled = !this.isCheckBoxChecked(code);
 					return (
 						<div className="right-selector-item" key={`right-${i}`}>
 							<div className="right-name">
 								<input
 									type="checkbox"
-									checked={this.isCheckBoxChecked(id)}
+									checked={this.isCheckBoxChecked(code)}
 									className="ca-checkbox blue"
 									onChange={(e) => {
 										e.target.checked
@@ -103,16 +103,16 @@ class CmsRightsSelector extends React.Component {
 									}}
 									id={idAttr}
 								/>
-								<label className={cn({ selected: this.isCheckBoxChecked(id) })} htmlFor={idAttr}>
+								<label className={cn({ selected: this.isCheckBoxChecked(code) })} htmlFor={idAttr}>
 									{name}
 								</label>
 								<div className="tooltip-container">
-									<span className="" data-tip data-for={right.id}>
+									<span className="" data-tip data-for={right.code}>
 										<i className="fa fa-question-circle-o" />
 									</span>
-									<ReactTooltip id={right.id} effect="solid" className="CaTooltip " delayHide={400}>
+									<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
 										<div className="body">
-											{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${id}`)}
+											{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${code}`)}
 										</div>
 									</ReactTooltip>
 								</div>

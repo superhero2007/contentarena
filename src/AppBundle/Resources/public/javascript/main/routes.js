@@ -22,6 +22,7 @@ import LandingWrapper from "../landing/containers/LandingWrapper";
 import { LOGIN_VIEW_TYPE, ROUTE_PATHS } from "@constants";
 import CreateProperty from "../cms/containers/CreateProperty";
 import Properties from "../cms/containers/Properties";
+import Property from "../cms/containers/Property";
 
 const SignUp = withRouter(({ history }) => (
 	<SignInUpWrapper
@@ -128,10 +129,19 @@ export const routes = [
 		title: "Commercial Overview",
 	},
 	{
-		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId?/:tab?`,
+		path: `${ROUTE_PATHS.PROPERTIES}`,
 		header: HeaderBar,
 		main: Properties,
+		exact: true,
 		updateByPath: true,
+		profile: "SELLER",
+		title: "Properties",
+	},
+	{
+		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?`,
+		header: HeaderBar,
+		main: Property,
+		updateByPath: false,
 		profile: "SELLER",
 		title: "Properties",
 	},

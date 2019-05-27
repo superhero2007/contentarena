@@ -104,6 +104,35 @@ class Property implements NotifiableInterface
     private $seasons;
 
     /**
+     * @Serializer\Type("array<AppBundle\Entity\PropertyRight>")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\PropertyRight",cascade={"persist"})
+     * @ORM\JoinTable(name="property_rights",
+     *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="property_right_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"property"})
+     */
+    private $rights;
+
+    /**
+     * @return mixed
+     */
+    public function getRights()
+    {
+        return $this->rights;
+    }
+
+    /**
+     * @param mixed $rights
+     */
+    public function setRights($rights)
+    {
+        $this->rights = $rights;
+    }
+
+
+
+    /**
      * Get id
      *
      * @return int

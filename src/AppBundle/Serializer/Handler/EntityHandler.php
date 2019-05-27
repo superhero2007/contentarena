@@ -39,6 +39,18 @@ class EntityHandler implements SubscribingHandlerInterface
             'format' => 'json',
             'method' => 'serializeEntity',
         ];
+        $methods[] = [
+            'type' => "PropertyTerritoryItem",
+            'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+            'format' => 'json',
+            'method' => 'deserializeTerritoryEntity',
+        ];
+        $methods[] = [
+            'type' => "PropertyTerritoryItem",
+            'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
+            'format' => 'json',
+            'method' => 'serializeTerritoryEntity',
+        ];
         return $methods;
     }
 
@@ -101,6 +113,68 @@ class EntityHandler implements SubscribingHandlerInterface
         if (isset($item["externalId"])){
             $entity = $entityManager->getRepository($entityClass)->findOneBy(array(
                 "externalId" => $item["externalId"]
+            ));
+        }
+
+        if (null === $entity){
+            $namingStrategy = new IdenticalPropertyNamingStrategy();
+            $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+            $entity = $serializer->deserialize(json_encode($item), $entityClass, 'json');
+        }
+
+        return $entity;
+    }
+
+    /**
+     * @param VisitorInterface $visitor
+     * @param $entity
+     * @param array $type
+     * @param Context $context
+     * @return mixed
+     */
+    public function serializeTerritoryEntity(VisitorInterface $visitor, $entity, array $type, Context $context)
+    {
+
+        $entityClass = $this->getEntityClassFromParameters($type['params']);
+        if (!$entity instanceof  $entityClass) {
+            throw new InvalidArgumentException(
+                sprintf("Entity class '%s' was expected, but '%s' got", $entityClass, get_class($entity))
+            );
+        }
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $newContext = SerializationContext::create();
+        $groups = $context->attributes->get("groups");
+
+        if ( $context->attributes != null && !$groups->isEmpty() ) $newContext->setGroups($groups->get(0));
+        return json_decode($serializer->serialize($entity, 'json', $newContext));
+
+    }
+
+    /**
+     * @param GenericDeserializationVisitor $visitor
+     * @param null|object $item
+     * @param array $type
+     * @return null|object
+     */
+    public function deserializeTerritoryEntity(GenericDeserializationVisitor $visitor, $item, array $type)
+    {
+        if (null === $item || (is_array($item) && empty($item))) {
+            return null;
+        }
+
+        if (!(is_array($type) && isset($type['params']) && is_array($type['params']) && isset($type['params']['0']))) {
+            return null;
+        }
+
+        $entity = null;
+        $entityClass = $type['params'][0]['name'];
+        $entityManager = $this->getEntityManager($entityClass);
+
+        if (isset($item["id"])){
+            $entity = $entityManager->getRepository($entityClass)->findOneBy(array(
+                "id" => $item["id"]
             ));
         }
 

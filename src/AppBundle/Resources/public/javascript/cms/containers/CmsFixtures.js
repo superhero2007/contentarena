@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 
 class CmsFixtures extends React.Component {
 	constructor(props) {
@@ -19,11 +20,11 @@ class CmsFixtures extends React.Component {
 			loading,
 		} = this.state;
 
-		const { common } = this.props;
+		const { property, common: { totalCountries } } = this.props;
 
 		return (
-			<section className="fixture-tab">
-				Fixtures
+			<section className="fixture-tab region-filter">
+				<CmsSeasonsFilter property={property}/>
 			</section>
 		);
 	}
@@ -33,7 +34,12 @@ CmsFixtures.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
+const mapStateToProps = (state) => {
+	return {
+		common: state.common,
+		propertyFilters: state.propertyFilters,
+	}
+};
 
 const mapDispatchToProps = dispatch => ({
 	// updateProfile: profile => dispatch(updateProfile(profile)),

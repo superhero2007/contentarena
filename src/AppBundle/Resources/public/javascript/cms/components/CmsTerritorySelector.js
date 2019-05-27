@@ -74,7 +74,7 @@ class CmsTerritorySelector extends React.Component {
 
 		const territory = territoryItems[territoryId];
 
-		if (!territory) return 0;
+		if (!territory) return [];
 
 		return countries.filter(country => territory.indexOf(country.id) !== -1);
 	};
@@ -86,7 +86,7 @@ class CmsTerritorySelector extends React.Component {
 
 		const region = regionItems[regionId];
 
-		if (!region) return 0;
+		if (!region) return [];
 
 		return countries.filter(country => region.indexOf(country.id) !== -1).length;
 	};
@@ -422,6 +422,8 @@ class CmsTerritorySelector extends React.Component {
 				{ territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && territories.map((territory, i) => {
 					const selectedCountries = this.getTerritoryCountries(selection, territory.id);
 					const territoryCountries = this.getTerritoryCountries(countries, territory.id);
+
+					console.log(selectedCountries, territoryCountries);
 
 					if (selectedCountries.length === 0) return undefined;
 

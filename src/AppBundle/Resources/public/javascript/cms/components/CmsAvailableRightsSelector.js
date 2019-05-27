@@ -30,7 +30,7 @@ class CmsAvailableRightsSelector extends React.Component {
 		});
 	}
 
-	getRightsFromProps = rights => new Map(rights.map(rightItem => [rightItem.id, rightItem]));
+	getRightsFromProps = rights => new Map(rights.map(rightItem => [rightItem.code, rightItem]));
 
 	getRightsForProps = rights => [...rights.values()];
 
@@ -39,8 +39,8 @@ class CmsAvailableRightsSelector extends React.Component {
 	addRight = (right) => {
 		const { selectedRights } = this.state;
 
-		if (!selectedRights.has(right.id)) {
-			selectedRights.set(right.id, {
+		if (!selectedRights.has(right.code)) {
+			selectedRights.set(right.code, {
 				...right,
 			});
 		}
@@ -50,20 +50,20 @@ class CmsAvailableRightsSelector extends React.Component {
 	removeRight = (right) => {
 		const { selectedRights } = this.state;
 
-		if (selectedRights.has(right.id)) {
-			selectedRights.delete(right.id);
+		if (selectedRights.has(right.code)) {
+			selectedRights.delete(right.code);
 		}
 		this.props.rightsUpdated(this.getRightsForProps(selectedRights));
 	};
 
-	isCheckBoxChecked = (id) => {
+	isCheckBoxChecked = (code) => {
 		const { selectedRights } = this.state;
-		return selectedRights.has(id);
+		return selectedRights.has(code);
 	};
 
-	getRadioBoxValue = (id) => {
+	getRadioBoxValue = (code) => {
 		const { rights } = this.state;
-		const right = rights.get(id);
+		const right = rights.get(code);
 		return right && right.exclusive || false;
 	};
 
@@ -105,17 +105,17 @@ class CmsAvailableRightsSelector extends React.Component {
 				{
 					rights.map((right, i) => {
 						const {
-							name, id, edited,
+							name, code, edited,
 						} = right;
-						const idAttr = `checkbox-${id}`;
+						const idAttr = `checkbox-${code}`;
 						const { offers } = this.state;
-						const offerValue = this.getRadioBoxValue(id) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
+						const offerValue = this.getRadioBoxValue(code) ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
 						return (
 							<div className="right-selector-item full-width" key={`right-${i}`}>
 								<div className="right-name">
 									<input
 										type="checkbox"
-										checked={edited || this.isCheckBoxChecked(id)}
+										checked={edited || this.isCheckBoxChecked(code)}
 										disabled={edited}
 										className="ca-checkbox blue"
 										onChange={(e) => {
@@ -125,14 +125,16 @@ class CmsAvailableRightsSelector extends React.Component {
 										}}
 										id={idAttr}
 									/>
-									<label className={cn({ selected: this.isCheckBoxChecked(id) })} htmlFor={idAttr}>{name}</label>
+									<label className={cn({ selected: this.isCheckBoxChecked(code) })} htmlFor={idAttr}>
+										{name}
+									</label>
 									<div className="tooltip-container">
-										<span className="" data-tip data-for={right.id}>
+										<span className="" data-tip data-for={right.code}>
 											<i className="fa fa-question-circle-o" />
 										</span>
-										<ReactTooltip id={right.id} effect="solid" className="CaTooltip " delayHide={400}>
+										<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
 											<div className="body">
-												{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${id}`)}
+												{this.context.t(`CL_STEP2_RIGHT_DEFINITIONS_${code}`)}
 											</div>
 										</ReactTooltip>
 									</div>

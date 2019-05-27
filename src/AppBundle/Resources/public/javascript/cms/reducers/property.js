@@ -1,4 +1,3 @@
-import { contentType } from "../../sell/reducers/content";
 
 export const propertyTypes = {
 	SET_PROPERTY_CONFIG: "SET_PROPERTY_CONFIG",

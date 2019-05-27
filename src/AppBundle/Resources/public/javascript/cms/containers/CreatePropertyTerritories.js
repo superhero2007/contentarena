@@ -45,7 +45,7 @@ class CreatePropertyTerritories extends React.Component {
 		} = property;
 
 		const editedRights = rights.map((right) => {
-			if (selectedRight.id === right.id) {
+			if (selectedRight.code === right.code) {
 				delete right.edited;
 				delete right.territories;
 				delete right.territoriesMode;
@@ -67,7 +67,7 @@ class CreatePropertyTerritories extends React.Component {
 		} = property;
 
 		const editedRights = rights.map((right) => {
-			if (selectedRight.id === right.id) {
+			if (selectedRight.code === right.code) {
 				delete right.edited;
 			}
 			return right;
@@ -94,9 +94,9 @@ class CreatePropertyTerritories extends React.Component {
 			selectedRights,
 		} = property;
 
-		const selectedRightsIds = selectedRights.map(right => right.id);
+		const selectedRightsIds = selectedRights.map(right => right.code);
 		const editedRights = rights.map((right) => {
-			if (selectedRightsIds.indexOf(right.id) !== -1) {
+			if (selectedRightsIds.indexOf(right.code) !== -1) {
 				right.edited = true;
 				right.territories = territories;
 				right.territoriesMode = territoriesMode;
@@ -130,9 +130,17 @@ class CreatePropertyTerritories extends React.Component {
 
 		this.setState({ savingProperty: true });
 
-		api.properties.createProperty({ property })
-			.then((response) => {
-				this.setState({ propertySaved: true });
+		api.properties.createProperty({
+			property: {
+				sports: property.sports,
+				sportCategory: property.sportCategory,
+				tournament: property.tournament,
+				seasons: property.seasons,
+				rights: property.rights
+			}
+		})
+			.then(response => {
+				this.setState({propertySaved: true});
 			})
 			.catch()
 			.finally(() => {
@@ -157,7 +165,7 @@ class CreatePropertyTerritories extends React.Component {
 
 		if (editMode && selectedRights.length > 0) {
 			rights.forEach((right) => {
-				if (selectedRights[0].id === right.id && right.territories && right.territories.length > 0) {
+				if (selectedRights[0].code === right.code && right.territories && right.territories.length > 0) {
 					territories = right.territories || [];
 					territoriesMode = right.territoriesMode;
 				}
