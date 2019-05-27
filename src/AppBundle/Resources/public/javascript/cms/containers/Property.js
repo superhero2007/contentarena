@@ -121,7 +121,14 @@ class Property extends React.Component {
 
 					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview property={property} />}
 					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures property={property} />}
-					{tab === CMS_PROPERTY_TABS.COMMERCIAL && <CmsCommercialOverview property={property} />}
+					{tab === CMS_PROPERTY_TABS.COMMERCIAL
+						&& (
+							<CmsCommercialOverview
+								property={property}
+								history={history}
+								propertyId={propertyId}
+							/>
+						)}
 					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} history={history} />}
 					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails property={property} />}
 

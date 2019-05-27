@@ -14,9 +14,10 @@ class CmsCommercialOverview extends React.Component {
 	componentDidMount() {}
 
 	render() {
+		const { history, propertyId } = this.props;
 		return (
 			<section className="commercial-overview-tab">
-				<EmptyCommercialOverview />
+				<EmptyCommercialOverview history={history} propertyId={propertyId} />
 			</section>
 		);
 	}
