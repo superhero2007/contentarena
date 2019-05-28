@@ -131,7 +131,7 @@ class ListingPreview extends PureComponent {
 								{listing.description && (
 									<Fragment>
 										<div className="title">{this.context.t("LISTING_PREVIEW_DESCRIPTION_TITLE")}</div>
-										<RepresentationTextArea value={listing.description} maxRows={5} />
+										<textarea readOnly value={listing.description} />
 									</Fragment>
 								)}
 								<footer className="buttons-wrapper">

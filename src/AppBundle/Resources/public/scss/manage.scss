@@ -434,8 +434,12 @@ $icon-color: #00769A;
   display: flex;
   flex-direction: row;
   flex: 1;
-  margin-top: -20px;
+  margin-top: 0;
   height: 60px;
+
+  @media only screen and (min-width: 1920px) {
+	margin-top: -20px;
+  }
 
   .listing-filter {
     flex: 1;

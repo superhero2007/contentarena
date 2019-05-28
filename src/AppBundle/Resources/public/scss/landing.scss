@@ -743,7 +743,7 @@
 					text-align: left;
 					font-size: 16px;
 					font-weight: 600;
-					margin: 15px 0;
+					margin: 20px 0 10px 0;
 					padding: 0;
 				}
 				.seasons-wrapper{
@@ -770,7 +770,7 @@
 					.season-item{
 						color: $font-color-5;
 						font-size: 13px;
-						padding: 5px 0;
+						padding: 0 0 5px 0;
 					}
 				}
 				.rights-wrapper {
@@ -796,12 +796,22 @@
 						}
 					}
 				}
-				.representation-textarea{
+				textarea{
+					overflow-y: auto;
 					background-color: $background-3;
 					border: 1px solid $border-color-1;
 					color: $font-color-5;
 					font-weight: 600;
+					font-family: "Open Sans";
+					resize: none;
+					font-size: 13px;
+					line-height: 20px;
 					padding: 20px 10px;
+					height: 150px;
+
+					&:focus, &:hover{
+						outline: none;
+					}
 
 					&::-webkit-scrollbar {
 						width: 5px;
@@ -821,6 +831,12 @@
 					flex-direction: column;
 					align-items: center;
 					margin-top: 15px;
+
+					& > button{
+						width: 300px;
+						height: 68px;
+						font-size: 16px;
+					}
 
 					.login-wrapper{
 						margin-top: 15px;

@@ -41,7 +41,7 @@ class Marketplace extends Component {
 			profile: props.user.profile,
 			errorMessage: "",
 			totalItems: 1,
-			sortBy: LISTING_SORT_OPTIONS.PUBLISH_DATE,
+			sortBy: LISTING_SORT_OPTIONS.RELEVANCE,
 		};
 	}
 

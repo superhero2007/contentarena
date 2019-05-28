@@ -78,10 +78,10 @@ export const BUNDLE_SALES_METHOD = {
 };
 
 export const LISTING_SORT_OPTIONS = {
-	PUBLISH_DATE: "publishing",
-	UPCOMING_EVENT: "upcoming",
-	EXPIRY_DATE: "expiry",
 	RELEVANCE: "relevance",
+	PUBLISH_DATE: "publishing",
+	/* UPCOMING_EVENT: "upcoming", */
+	EXPIRY_DATE: "expiry",
 };
 
 export const LOGIN_VIEW_TYPE = {
