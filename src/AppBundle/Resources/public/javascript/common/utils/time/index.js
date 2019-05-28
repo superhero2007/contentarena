@@ -3,14 +3,14 @@ import { SERVER_DATE_TIME_FORMAT } from "../../constants";
 
 export const formatMomentToServerFormat = m => m.format(SERVER_DATE_TIME_FORMAT);
 
-export const getYears = (start = null, end = null) => {
+export const getYears = (startYear = null, endYear = null, startFrom = 5, endTo = 5) => {
 	const currentYear = moment().year();
 	const years = [];
 
-	if (!start) start = currentYear - 5;
-	if (!end) end = currentYear + 5;
+	if (!startYear) startYear = currentYear - startFrom;
+	if (!endYear) endYear = currentYear + endTo;
 
-	for (let i = start; i < end; i++) {
+	for (let i = startYear; i < endYear; i++) {
 		years.push(i);
 	}
 	return years;

@@ -817,6 +817,10 @@ msgid "CMS_WELCOME_SEARCH_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
+msgid "CMS_WELCOME_SEARCH_SUB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyWelcome.js
 msgid "CMS_WELCOME_SEARCH_PHRASE_1"
 msgstr ""
 

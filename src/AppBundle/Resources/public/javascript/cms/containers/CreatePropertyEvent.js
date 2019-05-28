@@ -210,8 +210,13 @@ class CreatePropertyEvent extends React.Component {
 			month = e.target.value;
 		}
 
-		const monthNumber = moment().month(month).format("M");
-		const theDate = moment(new Date(year, +monthNumber)).utc().format("YYYY-MM-DD");
+		if (!year) {
+			year = moment.utc().format("YYYY");
+		}
+
+		const monthNumber = moment().month(month).format("MM");
+		const yearNumber = moment().year(year).format("YYYY");
+		const theDate = moment(new Date(+yearNumber, +monthNumber)).utc().format("YYYY-MM-DD");
 
 		this.props.updateFromMultiple("seasons", index, type, theDate);
 		if (!hasCustomSport && seasons[index] && seasons[index].custom) {
@@ -332,7 +337,7 @@ class CreatePropertyEvent extends React.Component {
 							<option value="" disabled>
 								Year
 							</option>
-							{getYears(seasonsData[index].startYear).map(year => (
+							{getYears(seasonsData[index].startYear, null, 69, 17).map(year => (
 								<option value={year} key={year}>
 									{year}
 								</option>
@@ -370,7 +375,7 @@ class CreatePropertyEvent extends React.Component {
 							<option value="" disabled>
 								Year
 							</option>
-							{getYears(seasonsData[index].endYear).map(year => (
+							{getYears(seasonsData[index].endYear, null, 69, 17).map(year => (
 								<option value={year} key={year}>
 									{year}
 								</option>

@@ -1,6 +1,14 @@
 @import "vars";
+@import "mixins";
 
 .property{
+  .property-welcome-subtitle{
+	text-align: center;
+	color: $font-color-1;
+	font-size: 16px;
+	font-weight: 100;
+	margin: 15px 0 0;
+  }
   .sales-packages-filters {
     font-size: 13px;
     color: #666;
@@ -252,6 +260,13 @@
         margin: 0 20px 0 0;
         height: 60px;
         font-size: 16px;
+
+	    &:hover, &:focus{
+		  outline: none;
+		  border: 1px solid $color-primary;
+		  @include shadow(0px 0px 5px 0px rgba(255,201,75,1));
+		  transition: all .3s ease-out;
+	    }
       }
       button{
         height: 60px;

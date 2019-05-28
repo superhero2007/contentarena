@@ -49,10 +49,10 @@ class CreatePropertyWelcome extends React.Component {
 				</div>
 
 				<DefaultBox>
-					<h5>{this.context.t("CMS_WELCOME_SEARCH_TITLE")}</h5>
+					<h5 className="text-center">{this.context.t("CMS_WELCOME_SEARCH_TITLE")}</h5>
+					<h5 className="text-center property-welcome-subtitle">{this.context.t("CMS_WELCOME_SEARCH_SUB_TITLE")}</h5>
 
 					<CmsSearchCompetition
-						hideEnterManually
 						onSearch={this.onSearch}
 					/>
 

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactTable from "react-table";
 import { PropTypes } from "prop-types";
 import Loader from "../../common/components/Loader";
 import { ROUTE_PATHS } from "../../common/constants";
@@ -17,6 +16,12 @@ class CmsSearchCompetition extends React.Component {
 			results: [],
 			resultMessage: "",
 		};
+
+		this.competitionInput = React.createRef();
+	}
+
+	componentDidMount() {
+		this.competitionInput.current.focus();
 	}
 
 	search = () => {
@@ -95,10 +100,6 @@ class CmsSearchCompetition extends React.Component {
 
 	render() {
 		const {
-			hideEnterManually,
-		} = this.props;
-
-		const {
 			searching,
 		} = this.state;
 
@@ -111,6 +112,7 @@ class CmsSearchCompetition extends React.Component {
 						onChange={this.handleInput}
 						placeholder={this.context.t("CL_STEP1_SEARCH_PLACEHOLDER")}
 						style={{ marginLeft: "inherit" }}
+						ref={this.competitionInput}
 					/>
 					<button
 						className="standard-button"
