@@ -198,7 +198,6 @@ class CreatePropertyEvent extends React.Component {
 			month;
 		const { seasonsData } = this.state;
 		const { seasons } = this.props.property;
-		const { hasCustomSport } = this.props;
 
 		if (dateType === "YEAR") {
 			year = e.target.value;
@@ -219,7 +218,7 @@ class CreatePropertyEvent extends React.Component {
 		const theDate = moment(new Date(+yearNumber, +monthNumber)).utc().format("YYYY-MM-DD");
 
 		this.props.updateFromMultiple("seasons", index, type, theDate);
-		if (!hasCustomSport && seasons[index] && seasons[index].custom) {
+		if (seasons[index] && seasons[index].custom) {
 			const seasonName = this.getCustomSeasonName(seasons[index], year, month, type);
 			this.props.setCustomSeasonName(index, seasonName);
 		}
@@ -419,22 +418,21 @@ class CreatePropertyEvent extends React.Component {
 	handleSeasonCheckbox = () => this.setState(prevState => ({ isSeasonApplicable: !prevState.isSeasonApplicable }));
 
 	isSeasonInputDisabled = (index) => {
-		const { tournamentValue, loadingSeasons, hasCustomSport } = this.props;
+		const { tournamentValue, loadingSeasons } = this.props;
 		const { isSeasonApplicable } = this.state;
 
 		if (!tournamentValue || loadingSeasons || !isSeasonApplicable) return true;
 		const { seasons } = this.props.property;
 		const seasonItem = seasons[index];
-		if (hasCustomSport || !seasonItem) return false;
+		if (!seasonItem) return false;
 		if (seasonItem.custom || (!seasonItem.custom && seasonItem.name)) return true;
 		return false;
 	};
 
 	getSeasonValue = (index) => {
-		const { hasCustomSport } = this.props;
-		const { seasons } = this.props.property;
-		if (!seasons[index]) return "";
-		if (!hasCustomSport && seasons[index].custom && !seasons[index].name) return "please define via from/to fields";
+		const { seasons, tournament } = this.props.property;
+		if (!seasons[index] || !tournament[0].name) return "";
+		if (seasons[index].custom && !seasons[index].name) return "please define via from/to fields";
 		return seasons[index].name;
 	};
 
