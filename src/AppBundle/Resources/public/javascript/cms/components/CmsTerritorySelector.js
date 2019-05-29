@@ -275,7 +275,6 @@ class CmsTerritorySelector extends React.Component {
 			viewAllTerritories,
 		} = this.state;
 
-		console.log(this);
 		return (
 			<div className="country-selector region-filter">
 
@@ -422,8 +421,6 @@ class CmsTerritorySelector extends React.Component {
 				{ territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && territories.map((territory, i) => {
 					const selectedCountries = this.getTerritoryCountries(selection, territory.id);
 					const territoryCountries = this.getTerritoryCountries(countries, territory.id);
-
-					console.log(selectedCountries, territoryCountries);
 
 					if (selectedCountries.length === 0) return undefined;
 

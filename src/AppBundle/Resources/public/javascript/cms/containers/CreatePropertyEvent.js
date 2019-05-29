@@ -104,7 +104,11 @@ class CreatePropertyEvent extends React.Component {
 
 	componentDidMount() {
 		Promise.all([this.getSportsByKey(SPORT_KEYS.TOP), this.getSportsByKey(SPORT_KEYS.CREATE)])
-			.then(() => this.setState({ loading: false }));
+			.then(() => {
+				this.setState({ loading: false }, () => {
+					this.handleCompetitionFocus();
+				});
+			});
 	}
 
 	loadCategories(sport) {

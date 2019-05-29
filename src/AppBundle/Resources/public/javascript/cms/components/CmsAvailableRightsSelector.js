@@ -67,28 +67,15 @@ class CmsAvailableRightsSelector extends React.Component {
 		return right && right.exclusive || false;
 	};
 
-	handleAll = (e) => {
-		const allSelected = e.target.checked;
-		this.setState({ allSelected });
-		if (allSelected) this.props.rightsUpdated(this.getRightsForProps(this.getEditableRights()));
-	};
-
 	render() {
 		const {
-			validation, rights, onUndoTerritories, onEditTerritories,
+			rights, onUndoTerritories, onEditTerritories,
 		} = this.props;
-		const { allSelected } = this.state;
 
 		return (
 			<div className="right-selector">
 				<div className="right-selector-item full-width">
 					<div className="right-name">
-						<input
-							type="checkbox"
-							checked={allSelected}
-							className="ca-checkbox blue"
-							onChange={this.handleAll}
-						/>
 						<label className={cn({ selected: false })}>
 							{this.context.t("CMS_RIGHT_SELECTOR_ALL")}
 						</label>
@@ -99,7 +86,7 @@ class CmsAvailableRightsSelector extends React.Component {
 						</label>
 					</div>
 					<div className="right-territories">
-						<label />
+						<label>{this.context.t("LISTING_PREVIEW_RIGHTS_TITLE")}</label>
 					</div>
 				</div>
 				{

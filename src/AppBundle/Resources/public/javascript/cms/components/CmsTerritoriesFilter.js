@@ -51,7 +51,6 @@ class CmsTerritoriesFilter extends React.Component {
 
 		if (selectAll) this.props.setRegions(regionSelectors);
 		this.setState({ regionSelectors });
-		console.log("parsed");
 	};
 
 	selectRegion = (region, type) => {
