@@ -82,6 +82,10 @@ class CreatePropertyEvent extends React.Component {
 	};
 
 	handleSeasonFocus = (index = 0, typeFocus = "input", selectIndex = 0) => {
+		const { loadingTournaments, loadingCategories, loading } = this.state;
+
+		if (loadingTournaments || loadingCategories || loading) return null;
+
 		setTimeout(() => {
 			if (typeFocus === "input") {
 				const el = this[`season-${index}-input`];
@@ -123,9 +127,7 @@ class CreatePropertyEvent extends React.Component {
 				this.setState({
 					lastSportId: sportId,
 					loadingCategories: false,
-				});
-
-				this.handleCompetitionFocus();
+				}, this.handleCompetitionFocus);
 			});
 	}
 
