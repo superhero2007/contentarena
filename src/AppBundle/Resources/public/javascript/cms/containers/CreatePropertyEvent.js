@@ -14,7 +14,7 @@ import {
 } from "../reducers/property";
 import {
 	setCustomSeasonName, setCustomSportCategoryName, setCustomSportName, addCustomSeason,
-	setCustomTournamentName, removeNewSeason, removeNewSport, removeNewTournament,
+	setCustomTournamentName, removeNewSeason, removeNewSport, removeNewTournament, setFocusSeason,
 } from "../actions/propertyActions";
 import Loader from "../../common/components/Loader/Loader";
 import { getMonths, getYears } from "../../common/utils/time";
@@ -83,8 +83,9 @@ class CreatePropertyEvent extends React.Component {
 
 	handleSeasonFocus = (index = 0, typeFocus = "input", selectIndex = 0) => {
 		const { loadingTournaments, loadingCategories, loading } = this.state;
+		const { property: { canFocusSeason = true } } = this.props;
 
-		if (loadingTournaments || loadingCategories || loading) return null;
+		if (loadingTournaments || loadingCategories || loading || !canFocusSeason) return null;
 
 		setTimeout(() => {
 			if (typeFocus === "input") {
@@ -176,10 +177,6 @@ class CreatePropertyEvent extends React.Component {
 				ContentArena.Data.Seasons = seasons;
 
 				if (seasons.length === 0) {
-					/* const hasSeasons = this.props.seasons && this.props.seasons.length;
-					if (!hasSeasons && (this.props.customSeasons === null || this.props.customSeasons === undefined || this.props.customSeasons.length === 0)) {
-						this.props.addNewSeason(0);
-					} */
 					this.setState({
 						loadingSeasons: false,
 						tournamentHasNoSeason: true,
@@ -230,6 +227,29 @@ class CreatePropertyEvent extends React.Component {
 		}
 
 		if (selectorIndex) this.handleSeasonFocus(index, "selector", selectorIndex);
+	};
+
+	handleOpenTournament = (index, tournament) => {
+		const {
+			setFocusSeason,
+			hasCustomTournament,
+			openTournamentSelector,
+			property: { canFocusSeason = true },
+		} = this.props;
+
+		if (!canFocusSeason) setFocusSeason(true);
+		if (!hasCustomTournament) openTournamentSelector(index, tournament);
+	};
+
+	handleOpenSeasonSelector = (index, seasons) => {
+		const {
+			setFocusSeason,
+			openSeasonSelector,
+			property: { canFocusSeason = true },
+		} = this.props;
+
+		if (!canFocusSeason) setFocusSeason(true);
+		if (!this.isCustomSeason(index)) openSeasonSelector(index, seasons);
 	};
 
 	getCustomSeasonName = (season, year, month, type) => {
@@ -576,9 +596,7 @@ class CreatePropertyEvent extends React.Component {
 									disabled={!sportValue || loadingTournaments || !sportCategoryValue.trim()}
 									placeholder={this.context.t("CMS_FORM_TOURNAMENT_PLACEHOLDER")}
 									value={tournamentValue}
-									onClick={() => {
-										if (!hasCustomTournament) openTournamentSelector(0, property.tournament);
-									}}
+									onClick={() => { this.handleOpenTournament(0, property.tournament); }}
 									onChange={(e) => {
 										if (hasCustomTournament) setCustomTournamentName(0, e.target.value);
 									}}
@@ -609,9 +627,7 @@ class CreatePropertyEvent extends React.Component {
 											disabled={this.isSeasonInputDisabled(index)}
 											placeholder={this.context.t("CMS_FORM_SEASON_PLACEHOLDER")}
 											value={this.getSeasonValue(index)}
-											onClick={() => {
-												if (!this.isCustomSeason(index)) openSeasonSelector(index, property.seasons);
-											}}
+											onClick={() => { this.handleOpenSeasonSelector(index, property.seasons); }}
 											onChange={(e) => {
 												if (this.isCustomSeason(index)) setCustomSeasonName(index, e.target.value);
 											}}
@@ -699,6 +715,7 @@ const mapDispatchToProps = dispatch => ({
 	setCustomTournamentName: (index, tournamentName) => dispatch(setCustomTournamentName(index, tournamentName)),
 	setCustomSeasonName: (index, seasonName) => dispatch(setCustomSeasonName(index, seasonName)),
 	updateFromMultiple: (type, index, key, value) => dispatch(updateFromMultiple(type, index, key, value)),
+	setFocusSeason: isFocus => dispatch(setFocusSeason(isFocus)),
 });
 
 

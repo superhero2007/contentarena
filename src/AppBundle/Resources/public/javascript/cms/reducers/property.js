@@ -12,6 +12,7 @@ export const propertyTypes = {
 	ADD_CUSTOM_SEASON: "ADD_CUSTOM_SEASON",
 	REMOVE_SEASON: "REMOVE_SEASON",
 	SELECT_PROPERTY_TOURNAMENT: "SELECT_PROPERTY_TOURNAMENT",
+
 	SET_RIGHTS: "SET_RIGHTS",
 	SET_SELECTED_RIGHTS: "SET_SELECTED_RIGHTS",
 
@@ -23,6 +24,8 @@ export const propertyTypes = {
 
 	GET_TERRITORIES: "GET_TERRITORIES",
 	GET_TERRITORIES_SUCCESS: "GET_TERRITORIES_SUCCESS",
+
+	CAN_FOCUS_SEASON: "CAN_FOCUS_SEASON",
 };
 
 const DEFAULT_STATE = {
@@ -39,6 +42,7 @@ const DEFAULT_STATE = {
 	isRegionsFetched: false,
 	territories: [],
 	isTerritoriesFetched: false,
+	canFocusSeason: true,
 };
 
 export const property = (state = DEFAULT_STATE, action) => {
@@ -85,8 +89,11 @@ export const property = (state = DEFAULT_STATE, action) => {
 		newState.tournament = [action.tournament];
 		newState.sports = (action.tournament.sport) ? [action.tournament.sport] : [];
 		newState.sportCategory = [action.tournament.sportCategory];
+		newState.canFocusSeason = false;
 
 		return Object.assign({}, state, newState);
+	case propertyTypes.CAN_FOCUS_SEASON:
+		return Object.assign({}, state, { canFocusSeason: action.isFocus });
 	case propertyTypes.ADD_CUSTOM_SEASON:
 		newState = {};
 		newState.seasons = [...state.seasons, { custom: true, name: "" }];

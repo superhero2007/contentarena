@@ -33,6 +33,11 @@ export const addCustomSeason = () => ({
 	type: propertyTypes.ADD_CUSTOM_SEASON,
 });
 
+export const setFocusSeason = isFocus => ({
+	type: propertyTypes.CAN_FOCUS_SEASON,
+	isFocus,
+});
+
 export const setRights = rights => ({
 	type: propertyTypes.SET_RIGHTS,
 	rights,
