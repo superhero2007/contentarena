@@ -32,3 +32,17 @@
   &:-ms-input-placeholder      {@content}
   &:-moz-placeholder           {@content}
 }
+
+@mixin yellowInput() {
+	&:hover:enabled{
+		outline: none;
+		border: 1px solid $color-primary;
+		@include shadow(0px 0px 5px 0px rgba(255,201,75,1));
+		@include transition(all .3s ease-out);
+	}
+	&:disabled, &:focus{
+		outline: none;
+		@include shadow(none);
+		@include transition(none);
+	}
+}

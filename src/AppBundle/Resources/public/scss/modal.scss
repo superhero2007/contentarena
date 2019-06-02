@@ -32,6 +32,168 @@
     width: 870px;
   }
 
+  &.rights-production{
+	  max-width: 750px;
+		width: 750px;
+
+	  .modal-header{
+		  display: flex;
+		  flex-direction: column;
+
+		  border: none;
+		  margin: 0;
+
+		  .modal-title{
+			  display: flex;
+			  align-items: center;
+			  margin: 0;
+
+			  i{
+				  color: $font-color-6;
+				  font-size: 30px;
+				  &.close-icon{
+					  right: 0;
+					  color: $font-color-2;
+				  }
+			  }
+		  }
+		  .modal-sub-title{
+			  margin-top: 10px;
+			  font-weight: 100;
+		  }
+	  }
+
+	  .modal-body{
+		  flex-direction: column;
+		  min-height: 0;
+
+		  .modal-table{
+			  width: 100%;
+			  display: flex;
+			  flex-wrap:wrap;
+
+			  .table-headline{
+				  display: flex;
+				  width: 100%;
+				  height: auto;
+				  min-height: 50px;
+				  background-color: $border-color-1;
+			  }
+
+			  .table-body{
+				  @extend .table-headline;
+				  background-color: transparent;
+				  height: auto;
+				  flex-direction: column;
+			  }
+
+			  .row-item-label{
+				  justify-content: flex-start;
+				  flex: 3;
+			  }
+			  .row-item-header{
+				  display: flex;
+				  justify-content: center;
+				  align-items: center;
+
+				  flex-grow: 1;
+				  height: auto;
+				  width: calc(100% * (1/4) - 10px - 1px);
+
+				  font-size: 14px;
+				  font-weight: bold;
+				  text-align: center;
+			  }
+			  .table-row{
+				  @extend .table-headline;
+				  background-color: transparent;
+
+				  .row-item{
+					  @extend .row-item-header;
+					  border-bottom: 1px solid $font-color-2;
+
+					  &:first-child{
+						  justify-content: flex-start;
+						  padding-left: 25px;
+						  text-align: left;
+					  }
+
+					  .modal-select{
+						  width: 170px;
+						  @include yellowInput();
+					  }
+					  .modal-input-number{
+						  @extend .modal-select;
+						  width: 80px;
+						  margin-left: 10px;
+					  }
+					  .modal-input-text{
+						  @extend .modal-input-number;
+						  width: 120px;
+					  }
+					  .Select--multi {
+						  height: max-content;
+						  .Select-control{
+							  width: 170px;
+							  margin-left: 10px;
+							  height: 30px;
+
+							  .Select-multi-value-wrapper{
+
+								  .Select-placeholder{
+									  display: flex;
+									  align-items: center;
+								  }
+							  }
+						  }
+					  }
+				  }
+			  }
+		  }
+		  .explanation-text{
+			  width: 100%;
+			  padding: 20px 20px 0 20px;
+			  textarea{
+				  @include yellowInput();
+				  @include placeholder {
+					  color: $border-color-3;
+					  font-weight: normal;
+					  font-style: italic;
+				  }
+
+				  border: 1px solid $font-color-2;
+				  background-color: $primary-color;
+				  width: 100%;
+				  padding: 10px;
+				  height: 80px;
+				  resize: none;
+
+				  &.required{ border: 1px solid red; }
+			  }
+		  }
+		  .technical-fee{
+			  width: 100%;
+			  padding: 20px;
+
+			  &>div{
+				  font-weight: 600;
+			  }
+			  & p{
+				  margin: 5px 0 0 0;
+
+				  input[type="number"]{
+					  width: 100px;
+					  margin: 0;
+					  @include yellowInput();
+				  }
+			  }
+		  }
+	  }
+	  .modal-footer{
+		  padding-top: 10px;
+	  }
+  }
+
   .modal-header {
     display: flex;
     justify-content: space-between;

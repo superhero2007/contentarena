@@ -227,7 +227,6 @@ export const RightItemsDefinitions = {
 		parent: "Content Delivery",
 		label: "Delivered via live feed",
 		disabledIf: ["LT", "PR"],
-
 	},
 
 	CONTENT_DELIVERY_DEDICATED: {

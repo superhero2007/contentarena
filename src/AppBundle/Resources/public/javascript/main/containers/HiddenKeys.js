@@ -96,6 +96,7 @@ class HiddenKeys extends React.Component {
 				{this.context.t("RIGHTS_COMMENTARY_NO")}
 				{this.context.t("RIGHTS_CAMERA")}
 				{this.context.t("RIGHTS_CAMERA_MINIMUM")}
+				{this.context.t("CAMERA_MINIMUM")}
 				{this.context.t("RIGHTS_TECHNICAL_DELIVERY")}
 				{this.context.t("RIGHTS_TECHNICAL_DELIVERY_SATELLITE")}
 				{this.context.t("RIGHTS_TECHNICAL_DELIVERY_IP")}

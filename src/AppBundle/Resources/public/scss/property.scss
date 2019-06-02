@@ -336,6 +336,38 @@
 	  }
 	}
   }
+  .title-property-tab{
+	margin: 25px 0 17px;
+	border-bottom: 1px solid $black-color;
+	padding: 0 0 12px;
+
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: flex-end;
+
+	i{
+	  color: $property-blue;
+	  font-size: 28px;
+	  cursor: pointer;
+	}
+
+	.title-wrapper{
+	  display: flex;
+	  flex-direction: column;
+
+	  .title{
+		font-size: 16px;
+		font-weight: bold;
+		color: $black-color;
+	  }
+	  .sub-title{
+	    font-size: 13px;
+		color: $property-grey;
+		  padding-top: 5px;
+	  }
+	}
+  }
 
   // tabs
   .ca-tabs {
@@ -346,6 +378,35 @@
   .listing-overview-tab{}
   .rights-overview-tab{}
   .property-details-tab{
+	.property-production-tab, .property-rights-tab{
+	  input{
+		  color: lightgray;
+		  font-style: italic;
+		  cursor: pointer;
+	  }
+	}
+	.row{
+		margin-bottom: 0;
+		.item{ flex: 0 1 32%; }
+		input{
+			&:hover:enabled{
+				outline: none;
+				border: 1px solid $color-primary;
+				@include shadow(0px 0px 5px 0px rgba(255,201,75,1));
+				@include transition(all .3s ease-out);
+			}
+			&:disabled, &:focus{
+				outline: none;
+				@include shadow(none);
+				@include transition(none);
+			}
+		}
+	}
+	.centered-btn{
+	  position: absolute;
+	  left: 50%;
+	  transform: translate(-50%);
+	}
 	.details-tab-wrapper{
 	  display: flex;
 	  flex-wrap: wrap;

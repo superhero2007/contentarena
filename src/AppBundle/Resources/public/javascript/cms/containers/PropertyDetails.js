@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
 import PropertyDetailsEditedProgramTab from "../components/PropertyDetailsEditedProgramTab";
@@ -44,13 +43,15 @@ class PropertyDetails extends React.Component {
 
 	render() {
 		const { activeTab } = this.state;
+		const { property } = this.props;
 		const tabs = this.getTabs();
 		const ActiveComponent = tabs[activeTab].component;
 		return (
 			<section className="property-details-tab">
 				<div className="details-tab-wrapper">
-					{Object.values(CMS_PROPERTY_DETAILS_TABS).map(tab => (
+					{Object.values(CMS_PROPERTY_DETAILS_TABS).map((tab, index) => (
 						<span
+							key={index}
 							onClick={() => this.handleChangeTab(tab)}
 							className={`tab${tab === activeTab ? " active" : ""}`}
 						>
@@ -59,7 +60,7 @@ class PropertyDetails extends React.Component {
 					))}
 				</div>
 
-				{<ActiveComponent />}
+				{<ActiveComponent {...property} />}
 			</section>
 		);
 	}
@@ -69,16 +70,4 @@ PropertyDetails.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-PropertyDetails.defaultProps = {};
-
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({
-	// updateProfile: profile => dispatch(updateProfile(profile)),
-});
-
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(PropertyDetails);
+export default PropertyDetails;

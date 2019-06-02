@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { DefaultBox } from "../../common/components/Containers";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS, SERVER_ERROR_CODES } from "@constants";
+import { RightDefaults } from "../../sell/components/RightDefaults";
 import api from "../../api";
 import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
@@ -44,6 +45,13 @@ class Property extends React.Component {
 		this.setState({ loadingProperty: true });
 		api.properties.fetchProperty({ propertyId })
 			.then(({ data: { property } }) => {
+				// TODO probably need to add defaultRights from BE
+				if (property.rights.length > 0) {
+					for (const value of property.rights) {
+						value.selectedRights = Object.assign({}, RightDefaults);
+					}
+				}
+
 				this.setState({ property });
 			})
 			.catch(({ response: { data: { code } } }) => {

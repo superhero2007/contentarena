@@ -95,6 +95,12 @@ export const LOGIN_VIEW_TYPE = {
 	LISTING_PREVIEW: "listing_preview",
 };
 
+export const VALIDATION_KEYS = {
+	NO_EMPTY_STRING: "noemptystring",
+	NO_ZERO: "nozero",
+	NO_EMPTY_ARR: "noemptyarr",
+};
+
 export const SIGN_UP_FIELDS = {
 	NAME: "name",
 	LAST_NAME: "lastName",
