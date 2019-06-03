@@ -34,7 +34,7 @@ class PropertyListItem extends React.Component {
 					<div className="property-info">
 						<a
 							className="ca-title"
-							onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}`)}
+							onClick={() => history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`)}
 						>
 							{name}
 						</a>

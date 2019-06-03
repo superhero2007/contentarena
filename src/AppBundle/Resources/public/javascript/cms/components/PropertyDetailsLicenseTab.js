@@ -21,7 +21,9 @@ PropertyDetailsLicenseTab.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
+const mapStateToProps = state => ({
+	property: state.propertyDetails.property,
+});
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(

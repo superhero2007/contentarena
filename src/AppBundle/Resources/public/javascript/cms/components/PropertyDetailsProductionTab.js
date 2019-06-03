@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import cloneDeep from "lodash/cloneDeep";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	CONTENT_DELIVERY,
@@ -9,6 +11,7 @@ import {
 	COMMENTARY,
 	CAMERA,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
+import { updatedPropertyRights } from "../actions/propertyActions";
 import { getRightsValue } from "../helpers/PropertyDetailsHelper";
 
 class PropertyDetailsProductionTab extends Component {
@@ -18,7 +21,7 @@ class PropertyDetailsProductionTab extends Component {
 			disableEditRight: true,
 			isModalOpen: false,
 			config: "",
-			rights: props.rights || [],
+			rights: cloneDeep(props.property.rights),
 		};
 	}
 
@@ -32,8 +35,9 @@ class PropertyDetailsProductionTab extends Component {
 	handleEditProductions = () => this.setState(state => ({ disableEditRight: !state.disableEditRight }));
 
 	handleApplyProductionsChanges = () => {
+		const { rights } = this.state;
 		this.handleEditProductions();
-		console.warn("apply changes: TODO");
+		this.props.updateRights(rights);
 	};
 
 	handleRightUpdate = (rights) => {
@@ -153,4 +157,15 @@ PropertyDetailsProductionTab.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default PropertyDetailsProductionTab;
+const mapStateToProps = state => ({
+	property: state.propertyDetails.property,
+});
+
+const mapDispatchToProps = dispatch => ({
+	updateRights: rights => dispatch(updatedPropertyRights(rights)),
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(PropertyDetailsProductionTab);

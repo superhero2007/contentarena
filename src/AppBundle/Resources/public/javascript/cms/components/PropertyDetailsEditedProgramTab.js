@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-class PropertyDetailsEditedProramTab extends Component {
+class PropertyDetailsEditedProgramTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -17,14 +17,16 @@ class PropertyDetailsEditedProramTab extends Component {
 	}
 }
 
-PropertyDetailsEditedProramTab.contextTypes = {
+PropertyDetailsEditedProgramTab.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
+const mapStateToProps = state => ({
+	property: state.propertyDetails.property,
+});
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(PropertyDetailsEditedProramTab);
+)(PropertyDetailsEditedProgramTab);

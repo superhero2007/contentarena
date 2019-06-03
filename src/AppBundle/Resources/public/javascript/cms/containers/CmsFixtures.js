@@ -11,9 +11,7 @@ class CmsFixtures extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		const _this = this;
-	}
+	componentDidMount() {}
 
 	render() {
 		const {
@@ -37,12 +35,10 @@ CmsFixtures.contextTypes = {
 const mapStateToProps = state => ({
 	common: state.common,
 	propertyFilters: state.propertyFilters,
+	property: state.propertyDetails.property,
 });
 
-const mapDispatchToProps = dispatch => ({
-	// updateProfile: profile => dispatch(updateProfile(profile)),
-});
-
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
 	mapStateToProps,

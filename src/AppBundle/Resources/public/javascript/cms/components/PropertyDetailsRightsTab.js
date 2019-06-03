@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import cloneDeep from "lodash/cloneDeep";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	SUBLICENSE,
@@ -19,7 +20,7 @@ class PropertyDetailsRightsTab extends Component {
 			disableEditRight: true,
 			isModalOpen: false,
 			config: "",
-			rights: props.rights || [],
+			rights: cloneDeep(props.property.rights),
 		};
 	}
 
@@ -148,7 +149,10 @@ PropertyDetailsRightsTab.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
+const mapStateToProps = state => ({
+	property: state.propertyDetails.property,
+});
+
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(

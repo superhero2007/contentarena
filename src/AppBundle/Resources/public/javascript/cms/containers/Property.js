@@ -1,24 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 import { DefaultBox } from "../../common/components/Containers";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS, SERVER_ERROR_CODES } from "@constants";
-import { RightDefaults } from "../../sell/components/RightDefaults";
-import api from "../../api";
 import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
 import CmsCommercialOverview from "./CmsCommercialOverview";
 import CmsFixtures from "./CmsFixtures";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";
-import { fetchCountries, fetchRegions, fetchTerritories } from "../actions/propertyActions";
+import { fetchRegions, fetchTerritories, fetchPropertyDetails } from "../actions/propertyActions";
 
 class Property extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loadingProperty: false,
-			property: null,
 			activeTab: props.tab,
 		};
 	}
@@ -35,43 +31,37 @@ class Property extends React.Component {
 		const { match: { params: { propertyId, tab } = {} } } = this.props;
 		if (!propertyId) return false;
 
-		if (!this.state.property) this.fetchProperty(propertyId);
+		this.props.getPropertyDetails(propertyId);
 		this.props.getTerritories();
 		this.props.getRegions();
 		this.setState({ propertyId, activeTab: tab });
 	}
 
-	fetchProperty = (propertyId) => {
-		this.setState({ loadingProperty: true });
-		api.properties.fetchProperty({ propertyId })
-			.then(({ data: { property } }) => {
-				// TODO probably need to add defaultRights from BE
-				if (property.rights.length > 0) {
-					for (const value of property.rights) {
-						value.selectedRights = Object.assign({}, RightDefaults);
-					}
-				}
-
-				this.setState({ property });
-			})
-			.catch(({ response: { data: { code } } }) => {
-				this.setState({ errorCode: code });
-			})
-			.finally(() => {
-				this.setState({ loadingProperty: false });
-			});
-	};
-
 	isLoadingRegions = () => {
-		const { property: { isRegionsFetched, isTerritoriesFetched } } = this.props;
-		return !isRegionsFetched || !isTerritoriesFetched;
+		const {
+			property: { isRegionsFetched, isTerritoriesFetched },
+			propertyDetails: { isPropertyDetailFetched },
+		} = this.props;
+
+		return !isRegionsFetched || !isTerritoriesFetched || !isPropertyDetailFetched;
 	};
 
 	render() {
-		const { history, match: { params: { propertyId, tab } = {} } } = this.props;
-		const { loadingProperty, property, errorCode } = this.state;
+		const {
+			propertyDetails: {
+				property,
+				error,
+			},
+			history,
+			match: {
+				params: {
+					propertyId,
+					tab,
+				} = {},
+			},
+		} = this.props;
 
-		if (loadingProperty || this.isLoadingRegions() || !property) {
+		if (this.isLoadingRegions()) {
 			return (
 				<DefaultBox>
 					<Loader loading />
@@ -79,11 +69,11 @@ class Property extends React.Component {
 			);
 		}
 
-		if (errorCode) {
+		if (error) {
 			return (
 				<DefaultBox>
 					{
-						errorCode === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
+						error === SERVER_ERROR_CODES.PROPERTY_DOES_NOT_EXISTS
 						&& this.context.t("CMS_PROPERTY_DOES_NOT_EXISTS")
 					}
 				</DefaultBox>
@@ -127,18 +117,17 @@ class Property extends React.Component {
 						}
 					</div>
 
-					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview property={property} />}
-					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures property={property} />}
+					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview />}
+					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures />}
 					{tab === CMS_PROPERTY_TABS.COMMERCIAL
 						&& (
 							<CmsCommercialOverview
-								property={property}
 								history={history}
 								propertyId={propertyId}
 							/>
 						)}
-					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview property={property} history={history} />}
-					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails property={property} />}
+					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview history={history} />}
+					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails />}
 
 
 				</DefaultBox>
@@ -156,6 +145,7 @@ const mapStateToProps = (state, ownProps) => state;
 const mapDispatchToProps = dispatch => ({
 	getTerritories: () => dispatch(fetchTerritories()),
 	getRegions: () => dispatch(fetchRegions()),
+	getPropertyDetails: id => dispatch(fetchPropertyDetails(id)),
 });
 
 

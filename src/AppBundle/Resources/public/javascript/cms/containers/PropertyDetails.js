@@ -11,7 +11,6 @@ class PropertyDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: false,
 			activeTab: CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS,
 		};
 	}
@@ -43,7 +42,6 @@ class PropertyDetails extends React.Component {
 
 	render() {
 		const { activeTab } = this.state;
-		const { property } = this.props;
 		const tabs = this.getTabs();
 		const ActiveComponent = tabs[activeTab].component;
 		return (
@@ -60,7 +58,7 @@ class PropertyDetails extends React.Component {
 					))}
 				</div>
 
-				{<ActiveComponent {...property} />}
+				{<ActiveComponent />}
 			</section>
 		);
 	}

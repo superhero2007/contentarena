@@ -9,7 +9,6 @@ import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import { RIGHT_STATUS } from "../../common/constants";
 
-
 class RightsOverview extends React.Component {
 	constructor(props) {
 		super(props);
@@ -118,7 +117,6 @@ class RightsOverview extends React.Component {
 
 	render() {
 		const {
-			loading,
 			selectedTerritories,
 		} = this.state;
 
@@ -253,12 +251,10 @@ RightsOverview.contextTypes = {
 const mapStateToProps = state => ({
 	common: state.common,
 	propertyFilters: state.propertyFilters,
+	property: state.propertyDetails.property,
 });
 
-const mapDispatchToProps = dispatch => ({
-	// updateProfile: profile => dispatch(updateProfile(profile)),
-});
-
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
 	mapStateToProps,

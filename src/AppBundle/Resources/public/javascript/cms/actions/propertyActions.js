@@ -1,4 +1,7 @@
 import { propertyTypes } from "../reducers/property";
+import { propertyDetailsTypes } from "../reducers/propertyDetails";
+import { RightDefaults } from "../../sell/components/RightDefaults";
+import api from "../../api";
 
 export const setConfig = config => ({
 	type: propertyTypes.SET_PROPERTY_CONFIG,
@@ -85,6 +88,21 @@ export const fetchTerritoriesSuccess = territories => ({
 	territories,
 });
 
+export const fetchPropertySuccess = propertyDetail => ({
+	type: propertyDetailsTypes.GET_PROPERTY_SUCCESS,
+	propertyDetail,
+});
+
+export const fetchPropertyFail = error => ({
+	type: propertyDetailsTypes.GET_PROPERTY_FAIL,
+	error,
+});
+
+export const updatedPropertyRights = rights => ({
+	type: propertyDetailsTypes.UPDATE_PROPERTY_RIGHTS,
+	rights,
+});
+
 export const fetchTerritories = () => async (dispatch) => {
 	if (ContentArena.Data.Territories.length === 0) {
 		try {
@@ -141,5 +159,18 @@ export const fetchRegions = () => async (dispatch) => {
 				dispatch(fetchRegionsSuccess(ContentArena.Data.Regions)),
 			);
 		});
+	}
+};
+
+export const fetchPropertyDetails = propertyId => async (dispatch) => {
+	try {
+		const { data: { property } } = await api.properties.fetchProperty({ propertyId });
+		for (const value of property.rights) {
+			value.selectedRights = Object.assign({}, RightDefaults);
+		}
+		dispatch(fetchPropertySuccess(property));
+		return property;
+	} catch (error) {
+		dispatch(fetchPropertyFail(error));
 	}
 };

@@ -27,12 +27,11 @@ CmsCommercialOverview.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => state;
-
-const mapDispatchToProps = dispatch => ({
-	// updateProfile: profile => dispatch(updateProfile(profile)),
+const mapStateToProps = state => ({
+	property: state.propertyDetails.property,
 });
 
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
 	mapStateToProps,
