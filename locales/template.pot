@@ -540,6 +540,11 @@ msgid "CMS_RIGHT_SELECTION_EXCLUSIVITY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsAvailableRightsSelector.js
+#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
+msgid "LISTING_PREVIEW_RIGHTS_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/CmsAvailableRightsSelector.js
 #: src/AppBundle/Resources/public/javascript/cms/components/CmsRightsSelector.js
 #: src/AppBundle/Resources/public/javascript/sell/containers/SuperRightList.js
 msgid "RIGHT_SELECTION_OFFER_EXCLUSIVE"
@@ -687,6 +692,61 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 #: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
 msgid "CMS_EMPTY_LISTING_CREATE_LISTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+msgid "PROPERTY_DETAILS_RIGHT_TAB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CONTENT_DELIVERY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TECHNICAL_DELIVERY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_GRAPHICS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_ASPECT_RATIO"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_COMMENTARY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_CAMERA"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+msgid "Apply"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_BROADCASTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_TRANSMISSION_MEANS"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
+msgid "RIGHTS_RESERVED_RIGHTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
@@ -986,6 +1046,7 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
 #: src/AppBundle/Resources/public/javascript/common/modals/DeclineBidModal/DeclineBidModal.js
+#: src/AppBundle/Resources/public/javascript/common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal.js
 #: src/AppBundle/Resources/public/javascript/common/modals/SendMessage/SendMessage.js
 msgid "MESSAGE_POPUP_BUTTON_CANCEL"
 msgstr ""
@@ -1036,6 +1097,34 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/InviteUsersModal.js
 msgid "INVITE_USERS_MODAL_SEND_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal.js
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL3_LANGUAGE_SELECTOR_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal.js
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL_STEP3_POPUP_TECHNICAL_FEE_1"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal.js
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL_STEP3_POPUP_TECHNICAL_FEE_2"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal.js
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+msgid "CL_STEP3_POPUP_TECHNICAL_FEE_3"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal.js
+#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
+#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
+#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
+#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
+msgid "MODAL_APPLY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/SelectorModal/SelectorModal.js
@@ -1183,10 +1272,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
 msgid "LISTING_PREVIEW_LOG_IN"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
-msgid "LISTING_PREVIEW_RIGHTS_TITLE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/landing/components/ListingPreview.js
@@ -1936,10 +2021,6 @@ msgid "RIGHTS_SUBLICENSE_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_BROADCASTING"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_BROADCASTING_YES"
 msgstr ""
 
@@ -1949,10 +2030,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_BROADCASTING_DESCRIPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_TRANSMISSION_MEANS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -2060,10 +2137,6 @@ msgid "RIGHTS_EXPLOITATION_WINDOW_DESCRIPTION"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_RESERVED_RIGHTS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_RESERVED_RIGHTS_YES"
 msgstr ""
 
@@ -2073,10 +2146,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_RESERVED_RIGHTS_DESCRIPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_CONTENT_DELIVERY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -2112,10 +2181,6 @@ msgid "RIGHTS_VIDEO_STANDARD_VR"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_ASPECT_RATIO"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_ASPECT_RATIO_16_9"
 msgstr ""
 
@@ -2128,19 +2193,11 @@ msgid "RIGHTS_ASPECT_RATIO_CUSTOM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_GRAPHICS"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_GRAPHICS_YES"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_GRAPHICS_NO"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_COMMENTARY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -2152,15 +2209,11 @@ msgid "RIGHTS_COMMENTARY_NO"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_CAMERA"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
 msgid "RIGHTS_CAMERA_MINIMUM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
-msgid "RIGHTS_TECHNICAL_DELIVERY"
+msgid "CAMERA_MINIMUM"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/containers/HiddenKeys.js
@@ -2860,13 +2913,6 @@ msgid "POPUP_LABEL_COMPANY_COUNTRY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
-#: src/AppBundle/Resources/public/javascript/sell/components/LicenseDateSelector.js
-#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-#: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageForm.js
-msgid "MODAL_APPLY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/CompanyInformation.js
 msgid "Company address"
 msgstr ""
 
@@ -2948,10 +2994,6 @@ msgid "LISTING_NAME_EMPTY"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-msgid "CL3_LANGUAGE_SELECTOR_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
 msgid "CL3_COMMENTS_TRANSMISSION_PLACEHOLDER"
 msgstr ""
 
@@ -2969,18 +3011,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
 msgid "CL3_LICENSED_LANGUAGE_SELECTOR_PLACEHOLDER"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-msgid "CL_STEP3_POPUP_TECHNICAL_FEE_1"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-msgid "CL_STEP3_POPUP_TECHNICAL_FEE_2"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js
-msgid "CL_STEP3_POPUP_TECHNICAL_FEE_3"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/PopupRight.js

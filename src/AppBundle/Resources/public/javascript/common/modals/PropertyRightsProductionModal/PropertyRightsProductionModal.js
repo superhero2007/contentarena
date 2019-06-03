@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
 import cn from "classnames";
+import first from "lodash/first";
 import { GenericModalStyle } from "../../../main/styles/custom";
 import { LanguageSelector } from "../../../main/components/LanguageSelector";
 import { SuperRightProductionDetailsLabels } from "../../../sell/components/SuperRightDefinitions";
@@ -259,35 +260,64 @@ class PropertyRightsProductionModal extends Component {
 			: this.getRadioButton(key, header, right)));
 	};
 
+	getLeftLabel = (right) => {
+		const { productionLabel, checkDelivery = false } = this.props.config;
+		const label = productionLabel ? SuperRightProductionDetailsLabels[right.code] : right.name;
+
+		if (!checkDelivery) return label;
+
+		const { rights } = this.state;
+		const dedicatedRights = [...rights.values()]
+			.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
+
+		return dedicatedRights && dedicatedRights.length === 0 ? SuperRightProductionDetailsLabels.LT : label;
+	};
+
 	getRightsByConditions = () => {
-		const { key } = this.props.config;
+		const { key, checkDelivery } = this.props.config;
 		const { rights } = this.state;
 		const availableRights = [...rights.values()];
 
-		if (key === "ASPECT_RATIO" || key === "COMMENTARY" || key === "CAMERA" || key === "GRAPHICS") {
-			const dedicatedRights = availableRights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
-			const getLiveFeed = rights.get(15); // LT
+		if (!checkDelivery) return availableRights;
 
-			return [...dedicatedRights, getLiveFeed];
+		if (checkDelivery && key !== "TECHNICAL_DELIVERY") {
+			const dedicatedRights = availableRights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
+
+			if (dedicatedRights.length === 0) {
+				const arrWithOne = first(availableRights);
+				return [arrWithOne];
+			}
+
+			return dedicatedRights;
 		}
 
-		if (key === "TECHNICAL_DELIVERY") {
-			const dedicatedRights = availableRights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
-			const getLiveFeed = rights.get(15); // LT
-			const getProgram = rights.get(18); // PR
+		if (checkDelivery && key === "TECHNICAL_DELIVERY") {
+			const hasEditedProgram = rights.has(18); // PR
+			if (hasEditedProgram && availableRights.length === 1) return availableRights;
 
-			return [...dedicatedRights, getLiveFeed, getProgram];
+			const dedicatedRights = availableRights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
+
+			if (dedicatedRights.length === 0) {
+				const arrWithOne = first(availableRights);
+				return [arrWithOne];
+			}
+
+			return hasEditedProgram ? [dedicatedRights, rights.get(18)] : dedicatedRights;
 		}
 
 		return availableRights;
 	};
 
-	renderRightsRow = () => this.getRightsByConditions().map((right, index) => (
-		<div className="table-row" key={`${right.code}-${index}`}>
-			<div className="row-item">{SuperRightProductionDetailsLabels[right.code]}</div>
-			{this.renderOptionsRow(right, index)}
-		</div>
-	));
+	renderRightsRow = () => this.getRightsByConditions().map((right, index) => {
+		const itemLabel = this.getLeftLabel(right);
+
+		return (
+			<div className="table-row" key={`${right.code}-${index}`}>
+				<div className="row-item">{itemLabel}</div>
+				{this.renderOptionsRow(right, index)}
+			</div>
+		);
+	});
 
 	render() {
 		const {

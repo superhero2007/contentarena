@@ -19,7 +19,7 @@ class PropertyDetailsRightsTab extends Component {
 			disableEditRight: true,
 			isModalOpen: false,
 			config: "",
-			rights: Object.values(props.rights) || [],
+			rights: props.rights || [],
 		};
 	}
 
@@ -45,6 +45,8 @@ class PropertyDetailsRightsTab extends Component {
 		const {
 			disableEditRight, isModalOpen, config, rights,
 		} = this.state;
+
+		if (rights.length === 0) return null;
 
 		return (
 			<section className="property-rights-tab">

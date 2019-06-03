@@ -23,13 +23,13 @@ export const ASPECT_RATIO = {
 	key: "ASPECT_RATIO",
 	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	productionLabel: true,
+	checkDelivery: true,
 	headers: [
 		"ASPECT_RATIO_16_9",
 		"ASPECT_RATIO_4_3",
 		"ASPECT_RATIO_CUSTOM",
 	],
 	multiple: false,
-	checkDelivery: true, // TODO
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 	validations: [
 		{
@@ -47,12 +47,12 @@ export const GRAPHICS = {
 	key: "GRAPHICS",
 	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	productionLabel: true,
+	checkDelivery: true,
 	headers: [
 		"GRAPHICS_NO",
 		"GRAPHICS_YES",
 	],
 	multiple: false,
-	checkDelivery: true,
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 	validations: [
 		{
@@ -69,13 +69,13 @@ export const COMMENTARY = {
 	descriptionKey: "RIGHTS_COMMENTARY_DESCRIPTION",
 	key: "COMMENTARY",
 	productionLabel: true,
+	checkDelivery: true,
 	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	headers: [
 		"COMMENTARY_NO",
 		"COMMENTARY_YES",
 	],
 	multiple: false,
-	checkDelivery: true,
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 	validations: [
 		{
@@ -93,12 +93,12 @@ export const CAMERA = {
 	minimumDefault: 4,
 	key: "CAMERA",
 	productionLabel: true,
+	checkDelivery: true,
 	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	headers: [
 		"CAMERA_MINIMUM",
 	],
 	multiple: false,
-	checkDelivery: true,
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 	validations: [
 		{
@@ -115,6 +115,7 @@ export const TECHNICAL_DELIVERY = {
 	descriptionKey: "RIGHTS_TECHNICAL_DELIVERY_DESCRIPTION",
 	key: "TECHNICAL_DELIVERY",
 	productionLabel: true,
+	checkDelivery: true,
 	superRights: [],
 	headers: [
 		"TECHNICAL_DELIVERY_SATELLITE",
@@ -124,7 +125,6 @@ export const TECHNICAL_DELIVERY = {
 	],
 	multiple: true,
 	technicalFee: "TECHNICAL_DELIVERY_SATELLITE",
-	checkDelivery: true,
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 };
 
