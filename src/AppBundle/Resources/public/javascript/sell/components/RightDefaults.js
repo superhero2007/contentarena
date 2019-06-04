@@ -26,4 +26,8 @@ export const RightDefaults = {
 	LIVE_FEED_CAMERAS: 4,
 	LIVE_FEED_VIDEO_STANDARD: "VIDEO_STANDARD_HD",
 	LICENSED_LANGUAGES: "LICENSED_LANGUAGES_YES",
+	LICENSED_LANGUAGE_LIST: [{
+		value: "all",
+		label: "All local languages",
+	}],
 };
