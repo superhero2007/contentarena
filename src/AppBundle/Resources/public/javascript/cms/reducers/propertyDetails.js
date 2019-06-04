@@ -1,4 +1,5 @@
 export const propertyDetailsTypes = {
+	START_FETCHING: "START_FETCHING",
 	GET_PROPERTY_SUCCESS: "GET_PROPERTY_SUCCESS",
 	GET_PROPERTY_FAIL: "GET_PROPERTY_FAIL",
 
@@ -7,6 +8,7 @@ export const propertyDetailsTypes = {
 
 const DEFAULT_STATE = {
 	property: {
+		customId: "",
 		rights: [],
 	},
 	isPropertyDetailFetched: false,
@@ -15,6 +17,8 @@ const DEFAULT_STATE = {
 
 export const propertyDetails = (state = DEFAULT_STATE, action) => {
 	switch (action.type) {
+	case propertyDetailsTypes.START_FETCHING:
+		return Object.assign({}, DEFAULT_STATE);
 	case propertyDetailsTypes.GET_PROPERTY_SUCCESS:
 		return Object.assign({}, state, { property: { ...action.propertyDetail } }, { isPropertyDetailFetched: true });
 	case propertyDetailsTypes.GET_PROPERTY_FAIL:

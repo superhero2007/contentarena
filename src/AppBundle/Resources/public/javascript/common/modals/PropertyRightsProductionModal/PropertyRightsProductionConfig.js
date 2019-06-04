@@ -4,7 +4,6 @@ export const CONTENT_DELIVERY = {
 	name: "Content Delivery",
 	descriptionKey: "RIGHTS_CONTENT_DELIVERY_DESCRIPTION",
 	key: "CONTENT_DELIVERY",
-	superRights: [],
 	headers: [
 		"CONTENT_DELIVERY_LIVE",
 		"CONTENT_DELIVERY_DEDICATED",
@@ -21,7 +20,6 @@ export const ASPECT_RATIO = {
 	name: "Aspect ratio",
 	descriptionKey: "RIGHTS_ASPECT_RATIO_DESCRIPTION",
 	key: "ASPECT_RATIO",
-	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	productionLabel: true,
 	checkDelivery: true,
 	headers: [
@@ -45,7 +43,6 @@ export const GRAPHICS = {
 	name: "Graphics",
 	descriptionKey: "RIGHTS_GRAPHICS_DESCRIPTION",
 	key: "GRAPHICS",
-	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	productionLabel: true,
 	checkDelivery: true,
 	headers: [
@@ -70,7 +67,6 @@ export const COMMENTARY = {
 	key: "COMMENTARY",
 	productionLabel: true,
 	checkDelivery: true,
-	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	headers: [
 		"COMMENTARY_NO",
 		"COMMENTARY_YES",
@@ -94,7 +90,6 @@ export const CAMERA = {
 	key: "CAMERA",
 	productionLabel: true,
 	checkDelivery: true,
-	superRights: ["LT", "HL", "LB", "NA", "DT"],
 	headers: [
 		"CAMERA_MINIMUM",
 	],
@@ -116,7 +111,6 @@ export const TECHNICAL_DELIVERY = {
 	key: "TECHNICAL_DELIVERY",
 	productionLabel: true,
 	checkDelivery: true,
-	superRights: [],
 	headers: [
 		"TECHNICAL_DELIVERY_SATELLITE",
 		"TECHNICAL_DELIVERY_IP",
@@ -132,35 +126,40 @@ export const TECHNICAL_DELIVERY = {
 export const SUBLICENSE = {
 	name: "Right to sublicense",
 	key: "SUBLICENSE",
-	superRights: [],
 	headers: [
 		"SUBLICENSE_YES",
 		"SUBLICENSE_YES_APPROVAL",
 		"SUBLICENSE_NO",
 	],
 	multiple: false,
-	description: "Means the licensee's right to sublicense the program to a third party.",
+	descriptionKey: "RIGHTS_SUBLICENSE_DESCRIPTION",
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 };
 
 export const BROADCASTING = {
 	name: "Transmission Obligation",
 	key: "BROADCASTING",
-	superRights: [],
 	headers: [
 		"BROADCASTING_NO",
 		"BROADCASTING_YES",
 	],
-	textAreaRequired: "BROADCASTING_YES",
 	textAreaLabelKey: "CL3_COMMENTS_TRANSMISSION_PLACEHOLDER",
 	multiple: false,
-	description: "Means the licensee's obligation to transmit the program.",
+	descriptionKey: "RIGHTS_BROADCASTING_DESCRIPTION",
+	validateTextarea: true,
+	validations: [
+		{
+			key: "BROADCASTING",
+			value: "BROADCASTING_YES",
+			keyToCheck: "BROADCASTING_TEXTAREA",
+			type: VALIDATION_KEYS.NO_EMPTY_STRING,
+		},
+	],
 };
 
 export const TRANSMISSION_MEANS = {
 	name: "Transmission means",
 	key: "TRANSMISSION_MEANS",
-	superRights: [],
 	headers: [
 		"TRANSMISSION_MEANS_ALL",
 		"TRANSMISSION_MEANS_CABLE",
@@ -170,14 +169,14 @@ export const TRANSMISSION_MEANS = {
 		"TRANSMISSION_MEANS_MOBILE",
 	],
 	multiple: true,
-	description: "Means the technical means on which the licensee may transmit the program to the end-user.",
+	descriptionKey: "RIGHTS_TRANSMISSION_MEANS_DESCRIPTION",
+	selectAllCheckbox: "TRANSMISSION_MEANS_ALL",
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 };
 
 export const EXPLOITATION_FORM = {
 	name: "Transmission Form",
 	key: "EXPLOITATION_FORM",
-	superRights: [],
 	headers: [
 		"EXPLOITATION_FORM_ALL",
 		"EXPLOITATION_FORM_FREE",
@@ -185,31 +184,45 @@ export const EXPLOITATION_FORM = {
 		"EXPLOITATION_FORM_CLOSED",
 	],
 	multiple: true,
-	description: "Means the commercial form by means of which the licensee may transmit the program to the end-user.",
+	descriptionKey: "RIGHTS_EXPLOITATION_FORM_DESCRIPTION",
+	selectAllCheckbox: "EXPLOITATION_FORM_ALL",
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
 };
 
 export const LICENSED_LANGUAGES = {
 	name: "Licensed languages",
 	key: "LICENSED_LANGUAGES",
-	superRights: [],
 	headers: [],
-	global: true,
-	language: true,
-	description: "Means the language in which the licensee my exploit the granted rights.",
+	languageSelector: true,
+	descriptionKey: "RIGHTS_LICENSED_LANGUAGES_DESCRIPTION",
 	textAreaLabelKey: "CL3_COMMENTS_PLACEHOLDER",
+	validations: [
+		{
+			key: "LICENSED_LANGUAGES",
+			value: "LICENSED_LANGUAGES_YES",
+			keyToCheck: "LICENSED_LANGUAGE_LIST",
+			type: VALIDATION_KEYS.NO_EMPTY_ARR,
+		},
+	],
 };
 
 export const RESERVED_RIGHTS = {
 	name: "Reserved rights",
 	key: "RESERVED_RIGHTS",
-	superRights: [],
 	headers: [
 		"RESERVED_RIGHTS_NO",
 		"RESERVED_RIGHTS_YES",
 	],
 	multiple: false,
-	description: "Means the audio-visual rights to the program that you, or your sublicensee, may exploit irrespective of any exclusivity granted.",
-	textAreaRequired: "RESERVED_RIGHTS_YES",
+	descriptionKey: "RIGHTS_RESERVED_RIGHTS_DESCRIPTION",
 	textAreaLabelKey: "CL3_COMMENTS_RESERVED_PLACEHOLDER",
+	validateTextarea: true,
+	validations: [
+		{
+			key: "RESERVED_RIGHTS",
+			value: "RESERVED_RIGHTS_YES",
+			keyToCheck: "RESERVED_RIGHTS_TEXTAREA",
+			type: VALIDATION_KEYS.NO_EMPTY_STRING,
+		},
+	],
 };

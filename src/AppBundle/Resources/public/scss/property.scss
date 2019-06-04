@@ -378,30 +378,36 @@
   .listing-overview-tab{}
   .rights-overview-tab{}
   .property-details-tab{
-	.property-production-tab, .property-rights-tab{
-	  input{
-		  color: lightgray;
-		  font-style: italic;
-		  cursor: pointer;
+	  .property-production-tab, .property-rights-tab{
+		  .row{
+			  margin-bottom: 0;
+			  .item{
+				  flex: 0 1 32%;
+				  .input-wrapper{
+					  display: flex;
+					  flex-wrap: nowrap;
+
+					  input{
+						  color: lightgray;
+						  font-style: italic;
+						  cursor: pointer;
+
+						  @include yellowInput();
+					  }
+					  i {
+						  display: flex;
+						  align-items: center;
+						  margin: 0 0 15px 10px;
+						  font-size: 25px;
+						  color: $property-blue;
+					  }
+				  }
+
+			  }
+
+		  }
 	  }
-	}
-	.row{
-		margin-bottom: 0;
-		.item{ flex: 0 1 32%; }
-		input{
-			&:hover:enabled{
-				outline: none;
-				border: 1px solid $color-primary;
-				@include shadow(0px 0px 5px 0px rgba(255,201,75,1));
-				@include transition(all .3s ease-out);
-			}
-			&:disabled, &:focus{
-				outline: none;
-				@include shadow(none);
-				@include transition(none);
-			}
-		}
-	}
+
 	.centered-btn{
 	  position: absolute;
 	  left: 50%;

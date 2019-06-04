@@ -103,10 +103,17 @@
 				  font-size: 14px;
 				  font-weight: bold;
 				  text-align: center;
+
+				  &.full-width{
+					  width: 100%;
+				  }
 			  }
 			  .table-row{
 				  @extend .table-headline;
 				  background-color: transparent;
+				  &.full-width{
+					  .Select{ width: 100%; }
+				  }
 
 				  .row-item{
 					  @extend .row-item-header;
@@ -133,10 +140,12 @@
 					  }
 					  .Select--multi {
 						  height: max-content;
+						  margin: 5px 0;
+
 						  .Select-control{
 							  width: 170px;
 							  margin-left: 10px;
-							  height: 30px;
+							  height: 100%;
 
 							  .Select-multi-value-wrapper{
 
@@ -168,7 +177,7 @@
 				  height: 80px;
 				  resize: none;
 
-				  &.required{ border: 1px solid red; }
+				  &.required{ border: 1px solid #CC0000; }
 			  }
 		  }
 		  .technical-fee{

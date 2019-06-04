@@ -28,10 +28,15 @@ class Property extends React.Component {
 	});
 
 	componentDidMount() {
-		const { match: { params: { propertyId, tab } = {} } } = this.props;
+		const {
+			propertyDetails: { property: { customId = "" } },
+			match: { params: { propertyId, tab } = {} },
+		} = this.props;
 		if (!propertyId) return false;
 
-		this.props.getPropertyDetails(propertyId);
+		if (!customId || customId !== propertyId) {
+			this.props.getPropertyDetails(propertyId);
+		}
 		this.props.getTerritories();
 		this.props.getRegions();
 		this.setState({ propertyId, activeTab: tab });

@@ -103,6 +103,10 @@ export const updatedPropertyRights = rights => ({
 	rights,
 });
 
+export const startFetchingPropertyDetails = () => ({
+	type: propertyDetailsTypes.START_FETCHING,
+});
+
 export const fetchTerritories = () => async (dispatch) => {
 	if (ContentArena.Data.Territories.length === 0) {
 		try {
@@ -163,6 +167,7 @@ export const fetchRegions = () => async (dispatch) => {
 };
 
 export const fetchPropertyDetails = propertyId => async (dispatch) => {
+	dispatch(startFetchingPropertyDetails());
 	try {
 		const { data: { property } } = await api.properties.fetchProperty({ propertyId });
 		for (const value of property.rights) {

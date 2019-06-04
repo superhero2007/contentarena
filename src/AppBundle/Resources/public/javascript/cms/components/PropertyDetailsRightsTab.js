@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cloneDeep from "lodash/cloneDeep";
+import first from "lodash/first";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	SUBLICENSE,
@@ -11,7 +12,8 @@ import {
 	LICENSED_LANGUAGES,
 	RESERVED_RIGHTS,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
-import { getRightsValue } from "../helpers/PropertyDetailsHelper";
+import { getRightsValue, hasRightComment } from "../helpers/PropertyDetailsHelper";
+import { updatedPropertyRights } from "../actions/propertyActions";
 
 class PropertyDetailsRightsTab extends Component {
 	constructor(props) {
@@ -34,8 +36,9 @@ class PropertyDetailsRightsTab extends Component {
 	};
 
 	handleApplyRightChanges = () => {
+		const { rights } = this.state;
 		this.handleEditRights();
-		console.warn("apply changes: TODO");
+		this.props.updateRights(rights);
 	};
 
 	handleRightUpdate = (rights) => {
@@ -48,6 +51,7 @@ class PropertyDetailsRightsTab extends Component {
 		} = this.state;
 
 		if (rights.length === 0) return null;
+		const firstRight = first(rights);
 
 		return (
 			<section className="property-rights-tab">
@@ -72,66 +76,84 @@ class PropertyDetailsRightsTab extends Component {
 				<div className="row">
 					<li className="item">
 						<label>{SUBLICENSE.name}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(SUBLICENSE, rights, this.context)}
-							onClick={() => this.handleModal(SUBLICENSE)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(SUBLICENSE, rights, this.context)}
+								onClick={() => this.handleModal(SUBLICENSE)}
+							/>
+							{hasRightComment(firstRight, SUBLICENSE.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{this.context.t("RIGHTS_BROADCASTING")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(BROADCASTING, rights, this.context)}
-							onClick={() => this.handleModal(BROADCASTING)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(BROADCASTING, rights, this.context)}
+								onClick={() => this.handleModal(BROADCASTING)}
+							/>
+							{hasRightComment(firstRight, BROADCASTING.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{EXPLOITATION_FORM.name}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(EXPLOITATION_FORM, rights, this.context)}
-							onClick={() => this.handleModal(EXPLOITATION_FORM)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(EXPLOITATION_FORM, rights, this.context)}
+								onClick={() => this.handleModal(EXPLOITATION_FORM)}
+							/>
+							{hasRightComment(firstRight, EXPLOITATION_FORM.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 				</div>
 
 				<div className="row">
 					<li className="item">
 						<label>{this.context.t("RIGHTS_TRANSMISSION_MEANS")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(TRANSMISSION_MEANS, rights, this.context)}
-							onClick={() => this.handleModal(TRANSMISSION_MEANS)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(TRANSMISSION_MEANS, rights, this.context)}
+								onClick={() => this.handleModal(TRANSMISSION_MEANS)}
+							/>
+							{hasRightComment(firstRight, TRANSMISSION_MEANS.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{LICENSED_LANGUAGES.name}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(LICENSED_LANGUAGES, rights, this.context)}
-							onClick={() => this.handleModal(LICENSED_LANGUAGES)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(LICENSED_LANGUAGES, rights, this.context)}
+								onClick={() => this.handleModal(LICENSED_LANGUAGES)}
+							/>
+							{hasRightComment(firstRight, LICENSED_LANGUAGES.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{this.context.t("RIGHTS_RESERVED_RIGHTS")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(RESERVED_RIGHTS, rights, this.context)}
-							onClick={() => this.handleModal(RESERVED_RIGHTS)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(RESERVED_RIGHTS, rights, this.context)}
+								onClick={() => this.handleModal(RESERVED_RIGHTS)}
+							/>
+							{hasRightComment(firstRight, RESERVED_RIGHTS.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 				</div>
 
@@ -153,7 +175,9 @@ const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	updateRights: rights => dispatch(updatedPropertyRights(rights)),
+});
 
 export default connect(
 	mapStateToProps,

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import cloneDeep from "lodash/cloneDeep";
+import first from "lodash/first";
 import PropertyRightsProductionModal from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionModal";
 import {
 	CONTENT_DELIVERY,
@@ -12,7 +13,7 @@ import {
 	CAMERA,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
 import { updatedPropertyRights } from "../actions/propertyActions";
-import { getRightsValue } from "../helpers/PropertyDetailsHelper";
+import { getRightsValue, hasRightComment, getDedicatedRigths } from "../helpers/PropertyDetailsHelper";
 
 class PropertyDetailsProductionTab extends Component {
 	constructor(props) {
@@ -50,6 +51,8 @@ class PropertyDetailsProductionTab extends Component {
 		} = this.state;
 
 		if (rights.length === 0) return null;
+		const firstRight = first(rights);
+		const dedicatedRights = getDedicatedRigths(rights);
 
 		return (
 			<section className="property-production-tab">
@@ -72,69 +75,87 @@ class PropertyDetailsProductionTab extends Component {
 				<div className="row">
 					<li className="item">
 						<label>{this.context.t("RIGHTS_CONTENT_DELIVERY")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(CONTENT_DELIVERY, rights, this.context)}
-							onClick={() => this.handleModal(CONTENT_DELIVERY)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(CONTENT_DELIVERY, rights, this.context)}
+								onClick={() => this.handleModal(CONTENT_DELIVERY)}
+							/>
+							{hasRightComment(firstRight, CONTENT_DELIVERY.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{this.context.t("RIGHTS_TECHNICAL_DELIVERY")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(TECHNICAL_DELIVERY, rights, this.context)}
-							onClick={() => this.handleModal(TECHNICAL_DELIVERY)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(TECHNICAL_DELIVERY, dedicatedRights, this.context)}
+								onClick={() => this.handleModal(TECHNICAL_DELIVERY)}
+							/>
+							{hasRightComment(firstRight, TECHNICAL_DELIVERY.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 				</div>
 
 				<div className="row">
 					<li className="item">
 						<label>{this.context.t("RIGHTS_GRAPHICS")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(GRAPHICS, rights, this.context)}
-							onClick={() => this.handleModal(GRAPHICS)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(GRAPHICS, dedicatedRights, this.context)}
+								onClick={() => this.handleModal(GRAPHICS)}
+							/>
+							{hasRightComment(firstRight, GRAPHICS.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{this.context.t("RIGHTS_ASPECT_RATIO")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(ASPECT_RATIO, rights, this.context)}
-							onClick={() => this.handleModal(ASPECT_RATIO)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(ASPECT_RATIO, dedicatedRights, this.context)}
+								onClick={() => this.handleModal(ASPECT_RATIO)}
+							/>
+							{hasRightComment(firstRight, ASPECT_RATIO.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 					<li className="item">
 						<label>{this.context.t("RIGHTS_COMMENTARY")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(COMMENTARY, rights, this.context)}
-							onClick={() => this.handleModal(COMMENTARY)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(COMMENTARY, dedicatedRights, this.context)}
+								onClick={() => this.handleModal(COMMENTARY)}
+							/>
+							{hasRightComment(firstRight, COMMENTARY.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 				</div>
 
 				<div className="row">
 					<li className="item">
 						<label>{this.context.t("RIGHTS_CAMERA")}</label>
-						<input
-							readOnly
-							type="text"
-							disabled={disableEditRight}
-							value={getRightsValue(CAMERA, rights, this.context)}
-							onClick={() => this.handleModal(CAMERA)}
-						/>
+						<div className="input-wrapper">
+							<input
+								readOnly
+								type="text"
+								disabled={disableEditRight}
+								value={getRightsValue(CAMERA, dedicatedRights, this.context)}
+								onClick={() => this.handleModal(CAMERA)}
+							/>
+							{hasRightComment(firstRight, CAMERA.key) && <i className="fa fa-commenting-o" />}
+						</div>
 					</li>
 				</div>
 

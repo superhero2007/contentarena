@@ -14,7 +14,7 @@ class RightsOverview extends React.Component {
 		super(props);
 		this.state = {
 			loading: false,
-			selectedTerritories: new Map(),
+			selectedTerritories: props.propertyFilters.selectedTerritories,
 		};
 	}
 

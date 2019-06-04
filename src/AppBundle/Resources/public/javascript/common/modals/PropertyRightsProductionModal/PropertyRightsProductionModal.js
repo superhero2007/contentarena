@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Modal from "react-modal";
 import cn from "classnames";
 import first from "lodash/first";
+import { getDedicatedRigths } from "../../../cms/helpers/PropertyDetailsHelper";
 import { GenericModalStyle } from "../../../main/styles/custom";
 import { LanguageSelector } from "../../../main/components/LanguageSelector";
 import { SuperRightProductionDetailsLabels } from "../../../sell/components/SuperRightDefinitions";
@@ -16,9 +17,9 @@ class PropertyRightsProductionModal extends Component {
 		};
 	}
 
-	checkIfTextAreaRequired = () => {
-		const { textAreaRequired } = this.props.config;
-		// TODO impl logic
+	isRequiredTextarea = (applyDisabled) => {
+		const { validateTextarea } = this.props.config;
+		if (validateTextarea && applyDisabled) return true;
 		return false;
 	};
 
@@ -96,20 +97,65 @@ class PropertyRightsProductionModal extends Component {
 	};
 
 	handleCheckboxBtnChange = (e, selectedRights, key, id) => {
+		const { selectAllCheckbox } = this.props.config;
 		const { rights } = this.state;
 		const { value } = e.target;
 
 		let arr = rights.get(id).selectedRights[key];
 
-		if (arr.includes(e.target.value)) {
-			arr = arr.filter(item => item === value);
+		if (selectAllCheckbox && selectAllCheckbox === value) {
+			arr = [value];
 		} else {
-			arr = [...arr, value];
+			if (selectAllCheckbox) {
+				arr = arr.filter(item => item !== selectAllCheckbox);
+			}
+			if (arr.includes(e.target.value)) {
+				if (arr.length > 1) {
+					arr = arr.filter(item => item !== value);
+				}
+			} else {
+				arr = [...arr, value];
+			}
 		}
 
 		rights.get(id).selectedRights[key] = arr;
-
 		this.setState({ rights });
+	};
+
+	getLeftLabel = (right) => {
+		const { productionLabel, checkDelivery = false } = this.props.config;
+		const label = productionLabel ? SuperRightProductionDetailsLabels[right.code] : right.name;
+
+		if (!checkDelivery) return label;
+
+		const { rights } = this.state;
+		const dedicatedRights = [...rights.values()]
+			.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
+
+		return dedicatedRights && dedicatedRights.length === 0 ? SuperRightProductionDetailsLabels.LT : label;
+	};
+
+	getRightsByConditions = () => {
+		const { key, checkDelivery } = this.props.config;
+		const { rights } = this.state;
+		const availableRights = [...rights.values()];
+
+		if (!checkDelivery) return availableRights;
+
+		if (checkDelivery && key !== "TECHNICAL_DELIVERY") {
+			return getDedicatedRigths(availableRights);
+		}
+
+		if (checkDelivery && key === "TECHNICAL_DELIVERY") {
+			const hasEditedProgram = rights.has(18); // PR
+			if (hasEditedProgram && availableRights.length === 1) return availableRights;
+
+			const dedicatedRights = getDedicatedRigths(availableRights);
+
+			return hasEditedProgram ? [...dedicatedRights, rights.get(18)] : dedicatedRights;
+		}
+
+		return availableRights;
 	};
 
 	hasExtraTag = (index, key, value, right) => {
@@ -128,14 +174,18 @@ class PropertyRightsProductionModal extends Component {
 		}
 
 		if ((key === "GRAPHICS" && value === "GRAPHICS_YES") || (key === "COMMENTARY" && value === "COMMENTARY_YES")) {
-			return this.getLanguageSelector(index, key, value, right);
+			return this.getSmallLanguageSelector(index, key, value, right);
 		}
 
 		return null;
 	};
 
 	renderRowHeader = () => {
-		const { config: { headers = [] } } = this.props;
+		const { config: { headers = [], languageSelector = false, key } } = this.props;
+
+		if (languageSelector) {
+			return <div className="row-item-header full-width">{this.context.t(`RIGHTS_${key}`)}</div>;
+		}
 
 		return (
 			<Fragment>
@@ -147,7 +197,7 @@ class PropertyRightsProductionModal extends Component {
 		);
 	};
 
-	getLanguageSelector = (index, key, value, right) => {
+	getSmallLanguageSelector = (index, key, value, right) => {
 		const { selectedRights } = right;
 		const selectorValue = selectedRights[`${key}_LANGUAGES`];
 		return (
@@ -156,6 +206,21 @@ class PropertyRightsProductionModal extends Component {
 				onChange={(selectedValue) => {
 					this.handleChange(selectedValue, selectedRights, `${key}_LANGUAGES`, index);
 					this.handleChange(value, selectedRights, key, index);
+				}}
+				value={selectorValue}
+			/>
+		);
+	};
+
+	getLanguageSelector = () => {
+		const listKey = "LICENSED_LANGUAGE_LIST";
+		const { rights } = this.state;
+		const selectorValue = rights.values().next().value.selectedRights[listKey];
+		return (
+			<LanguageSelector
+				placeholder={this.context.t("CL3_LANGUAGE_SELECTOR_PLACEHOLDER")}
+				onChange={(selectedValue) => {
+					this.handleChangeInAllRights(selectedValue, listKey);
 				}}
 				value={selectorValue}
 			/>
@@ -260,64 +325,28 @@ class PropertyRightsProductionModal extends Component {
 			: this.getRadioButton(key, header, right)));
 	};
 
-	getLeftLabel = (right) => {
-		const { productionLabel, checkDelivery = false } = this.props.config;
-		const label = productionLabel ? SuperRightProductionDetailsLabels[right.code] : right.name;
+	renderRightsRow = () => {
+		const { languageSelector = false } = this.props.config;
 
-		if (!checkDelivery) return label;
-
-		const { rights } = this.state;
-		const dedicatedRights = [...rights.values()]
-			.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
-
-		return dedicatedRights && dedicatedRights.length === 0 ? SuperRightProductionDetailsLabels.LT : label;
-	};
-
-	getRightsByConditions = () => {
-		const { key, checkDelivery } = this.props.config;
-		const { rights } = this.state;
-		const availableRights = [...rights.values()];
-
-		if (!checkDelivery) return availableRights;
-
-		if (checkDelivery && key !== "TECHNICAL_DELIVERY") {
-			const dedicatedRights = availableRights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
-
-			if (dedicatedRights.length === 0) {
-				const arrWithOne = first(availableRights);
-				return [arrWithOne];
-			}
-
-			return dedicatedRights;
+		if (languageSelector) {
+			return (
+				<div className="table-row full-width">
+					{this.getLanguageSelector()}
+				</div>
+			);
 		}
 
-		if (checkDelivery && key === "TECHNICAL_DELIVERY") {
-			const hasEditedProgram = rights.has(18); // PR
-			if (hasEditedProgram && availableRights.length === 1) return availableRights;
+		return this.getRightsByConditions().map((right, index) => {
+			const itemLabel = this.getLeftLabel(right);
 
-			const dedicatedRights = availableRights.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
-
-			if (dedicatedRights.length === 0) {
-				const arrWithOne = first(availableRights);
-				return [arrWithOne];
-			}
-
-			return hasEditedProgram ? [dedicatedRights, rights.get(18)] : dedicatedRights;
-		}
-
-		return availableRights;
+			return (
+				<div className="table-row" key={`${right.code}-${index}`}>
+					<div className="row-item">{itemLabel}</div>
+					{this.renderOptionsRow(right, index)}
+				</div>
+			);
+		});
 	};
-
-	renderRightsRow = () => this.getRightsByConditions().map((right, index) => {
-		const itemLabel = this.getLeftLabel(right);
-
-		return (
-			<div className="table-row" key={`${right.code}-${index}`}>
-				<div className="row-item">{itemLabel}</div>
-				{this.renderOptionsRow(right, index)}
-			</div>
-		);
-	});
 
 	render() {
 		const {
@@ -333,6 +362,7 @@ class PropertyRightsProductionModal extends Component {
 		} = this.props;
 
 		const firstRight = this.state.rights.values().next().value;
+		const isDisabled = this.isApplyDisabled();
 
 		console.log(this);
 
@@ -359,7 +389,7 @@ class PropertyRightsProductionModal extends Component {
 					</div>
 					<div className="explanation-text">
 						<textarea
-							className={cn({ required: this.checkIfTextAreaRequired() })}
+							className={cn({ required: this.isRequiredTextarea(isDisabled) })}
 							placeholder={this.context.t(textAreaLabelKey)}
 							onChange={e => this.handleChangeInAllRights(e.target.value, `${key}_TEXTAREA`)}
 							value={firstRight.selectedRights[`${key}_TEXTAREA`]}
@@ -409,7 +439,7 @@ class PropertyRightsProductionModal extends Component {
 					<button className="cancel-btn" onClick={onCloseModal}>
 						{this.context.t("MESSAGE_POPUP_BUTTON_CANCEL")}
 					</button>
-					<button className="standard-button" onClick={this.handleUpdate} disabled={this.isApplyDisabled()}>
+					<button className="standard-button" onClick={this.handleUpdate} disabled={isDisabled}>
 						{this.context.t("MODAL_APPLY")}
 					</button>
 				</footer>
