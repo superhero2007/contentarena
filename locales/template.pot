@@ -681,6 +681,18 @@ msgstr ""
 msgid "CMS_EMPTY_COMMERCIAL_PROMOTE"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyEditProgram.js
+msgid "CMS_EMPTY_EDIT_PROGRAM_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyEditProgram.js
+msgid "CMS_EMPTY_EDIT_PROGRAM_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyEditProgram.js
+msgid "CMS_EMPTY_EDIT_RIGHTS_BUTTON"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 msgid "CMS_EMPTY_LISTING_OVERVIEW_TITLE"
 msgstr ""
@@ -695,8 +707,11 @@ msgid "CMS_EMPTY_LISTING_CREATE_LISTING"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
-#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
-msgid "PROPERTY_DETAILS_RIGHT_TAB_TITLE"
+msgid "PROPERTY_DETAILS_PRODUCTION_TAB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+msgid "PROPERTY_DETAILS_PRODUCTION_TAB_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
@@ -732,6 +747,14 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
 msgid "Apply"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+msgid "PROPERTY_DETAILS_RIGHT_TAB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+msgid "PROPERTY_DETAILS_RIGHT_TAB_TEXT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js

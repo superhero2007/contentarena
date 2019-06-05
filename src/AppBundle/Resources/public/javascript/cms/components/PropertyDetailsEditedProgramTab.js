@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import EmptyEditProgram from "./EmptyScreens/EmptyEditProgram";
 
 class PropertyDetailsEditedProgramTab extends Component {
 	constructor(props) {
@@ -9,9 +10,10 @@ class PropertyDetailsEditedProgramTab extends Component {
 	}
 
 	render() {
+		const { history } = this.props;
 		return (
 			<section className="property-edited-program-tab">
-				edited program
+				<EmptyEditProgram history={history} />
 			</section>
 		);
 	}

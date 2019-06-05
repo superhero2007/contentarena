@@ -42,6 +42,7 @@ class PropertyDetails extends React.Component {
 
 	render() {
 		const { activeTab } = this.state;
+		const { history } = this.props;
 		const tabs = this.getTabs();
 		const ActiveComponent = tabs[activeTab].component;
 		return (
@@ -58,7 +59,7 @@ class PropertyDetails extends React.Component {
 					))}
 				</div>
 
-				{<ActiveComponent />}
+				{<ActiveComponent history={history} />}
 			</section>
 		);
 	}

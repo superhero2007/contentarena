@@ -132,7 +132,7 @@ class Property extends React.Component {
 							/>
 						)}
 					{tab === CMS_PROPERTY_TABS.LISTING && <CmsListingOverview history={history} />}
-					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails />}
+					{tab === CMS_PROPERTY_TABS.DETAILS && <PropertyDetails history={history} />}
 
 
 				</DefaultBox>

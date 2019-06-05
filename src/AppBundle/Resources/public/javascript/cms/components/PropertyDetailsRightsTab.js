@@ -58,7 +58,7 @@ class PropertyDetailsRightsTab extends Component {
 				<div className="title-property-tab">
 					<div className="title-wrapper">
 						<span className="title">{this.context.t("PROPERTY_DETAILS_RIGHT_TAB_TITLE")}</span>
-						<span className="sub-title">{this.context.t("PROPERTY_DETAILS_RIGHT_TAB_TITLE")}</span>
+						<span className="sub-title">{this.context.t("PROPERTY_DETAILS_RIGHT_TAB_TEXT")}</span>
 					</div>
 					<i className="fa fa-pencil-square-o" onClick={this.handleEditRights} />
 				</div>
