@@ -514,6 +514,7 @@ class Checkout extends React.Component {
 
 	getMinBid = (bundle) => {
 		if (!bundle.minimumBid) return <span>-</span>;
+		if (bundle.minimumBid && (+bundle.minimumBid) === 1) return <span>{this.context.t("SALES_PACKAGE_TABLE_MINIMUM_BID_ONE")}</span>;
 
 		return (
 			<NumberFormat
@@ -614,8 +615,12 @@ class Checkout extends React.Component {
 					return (
 						<div className="price-action-wrapper">
 							<div
-								title={bundle.fee}
-								className={cn({ "price-invalid": bundle.minimumBid && Number(bundle.minimumBid) > Number(bundle.fee) })}
+								title={bundle.minimumBid}
+								className={cn({
+									"price-invalid": bundle.minimumBid
+									&& bundle.minimumBid !== 1
+									&& Number(bundle.minimumBid) > Number(bundle.fee),
+								})}
 							>
 								{this.getMinBid(bundle)}
 							</div>

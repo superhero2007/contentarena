@@ -48,6 +48,7 @@ class TerritoriesSalesPackages extends PureComponent {
 		let feeNumber = parseFloat(salesPackage.fee);
 
 		if (feeNumber === 0) feeNumber = 1;
+		if (feeNumber === 1) return this.context.t("SALES_PACKAGE_TABLE_MINIMUM_BID_ONE");
 
 		return (
 			<NumberFormat
@@ -201,14 +202,6 @@ class TerritoriesSalesPackages extends PureComponent {
 
 	renderCheckoutButton = (large) => {
 		const {
-			userCanNotBuy,
-		} = this.props;
-
-		if (userCanNotBuy) {
-			return null;
-		}
-
-		const {
 			checkedItems,
 		} = this.state;
 
@@ -299,8 +292,6 @@ class TerritoriesSalesPackages extends PureComponent {
 								<strong>
 									{this.context.t("LISTING_DETAILS_FILTER_DESC_TITLE_TERRITORIES_ALL")}
 								:
-
-
 									{" "}
 								</strong>
 								{this.context.t("LISTING_DETAILS_FILTER_DESC_TERRITORIES_ALL")}

@@ -55,14 +55,9 @@ class ListingDetails extends React.Component {
 		};
 
 		if (this.state.selectedPackage) this.state.minimumBid = this.state.selectedPackage.fee;
-		this.blueCheck = `${assetsBaseDir}app/images/blue_check.png`;
 		this.checkIcon = `${assetsBaseDir}app/images/check.png`;
-		this.yellowCheck = `${assetsBaseDir}app/images/yellow_chech.png`;
 		this.contactIcon = `${assetsBaseDir}app/images/envelope.png`;
 		this.watchlistIcon = `${assetsBaseDir}app/images/watchlist.png`;
-		this.bidIcon = `${assetsBaseDir}app/images/hammer.png`;
-		this.packageIcon = `${assetsBaseDir}app/images/bid.png`;
-		this.draftIcon = `${assetsBaseDir}app/images/draft.png`;
 		this.baseDir = `${assetsBaseDir}../`;
 	}
 
@@ -83,10 +78,6 @@ class ListingDetails extends React.Component {
 		});
 	}
 
-	toggleBuyingMode = () => {
-		this.setState({ buyingMode: !this.state.buyingMode });
-	};
-
 	selectPackage = (bundles, customId) => {
 		const { history } = this.props;
 
@@ -94,31 +85,8 @@ class ListingDetails extends React.Component {
 		scrollTopMainContent();
 	};
 
-	ordinalSuffixOf = (i) => {
-		const j = i % 10;
-		const k = i % 100;
-		if (j === 1 && k !== 11) {
-			return `${i}st`;
-		}
-		if (j === 2 && k !== 12) {
-			return `${i}nd`;
-		}
-		if (j === 3 && k !== 13) {
-			return `${i}rd`;
-		}
-		return `${i}th`;
-	};
-
 	showTab = (tab) => {
 		this.setState({ tab });
-	};
-
-	isTabHasData = (content, tab) => {
-		const { description, website, attachments } = content;
-
-		if (tab === "event") {
-			return !!(description || website || (attachments && attachments.length > 0));
-		}
 	};
 
 	closeSuccessScreen = () => {
@@ -212,86 +180,6 @@ class ListingDetails extends React.Component {
 		);
 	};
 
-	getTechnicalFee = () => {
-		const { content } = this.state;
-
-		const response = {
-			TECHNICAL_FEE: "",
-			TECHNICAL_FEE_PERCENTAGE: 0,
-		};
-
-		const selected = (content.rightsPackage && content.rightsPackage[0] && content.rightsPackage[0].selectedRights) ? content.rightsPackage[0].selectedRights : null;
-
-		if (selected) {
-			response.TECHNICAL_FEE = selected.TECHNICAL_FEE;
-			response.TECHNICAL_FEE_PERCENTAGE = selected.TECHNICAL_FEE_PERCENTAGE;
-		}
-
-		return selected;
-	};
-
-	getTotalFee = () => {
-		const { selectedPackage, bidApplied } = this.state;
-		const technicalFee = this.getTechnicalFee();
-		const total = Number(selectedPackage.fee);
-
-		if (selectedPackage.salesMethod === "BIDDING" && !bidApplied) {
-			return 0;
-		}
-
-		if (technicalFee.TECHNICAL_FEE === "ON_TOP") {
-			return total + (total / 100) * Number(technicalFee.TECHNICAL_FEE_PERCENTAGE);
-		}
-
-		return total;
-	};
-
-	setBid = () => {
-		const { selectedPackage, bid } = this.state;
-
-		selectedPackage.fee = bid;
-
-		this.setState({
-			selectedPackage,
-			bidApplied: true,
-		});
-	};
-
-	placeBid = () => {
-		const {
-			selectedPackage, signature, content, companyUpdated, company, signatureName, signaturePosition,
-		} = this.state;
-		this.props.disableValidation();
-		this.setState({ spinner: true });
-		const bidObj = {
-			amount: parseFloat(selectedPackage.fee),
-			salesPackage: selectedPackage.id,
-			signature,
-			signatureName,
-			signaturePosition,
-			totalFee: this.getTotalFee(),
-			content: content.id,
-			salesMethod: selectedPackage.salesMethod,
-		};
-
-		if (companyUpdated) {
-			bidObj.company = company;
-		}
-
-		ContentArena.ContentApi.placeBid(bidObj).then((r) => {
-			this.setState({ showSuccessScreen: true, soldOut: r.soldOut, spinner: false });
-		});
-	};
-
-	isPackageValid = () => {
-		const {
-			signature, terms, selectedPackage, bidApplied,
-		} = this.state;
-		const isBidValueValid = selectedPackage.salesMethod === "BIDDING" ? this.getTotalFee() && bidApplied : true;
-
-		return signature && terms && isBidValueValid;
-	};
-
 	watchlist = () => {
 		const { content } = this.state;
 		const _this = this;
@@ -308,30 +196,6 @@ class ListingDetails extends React.Component {
 	};
 
 	isActiveTab = (activeTab, tab) => (activeTab === tab ? "active" : "");
-
-	getTitlePrefix = (type) => {
-		if (!type) return "";
-
-		const titleMap = {
-			BUY_NOW: "Buy Now",
-			PLACE_BID: "Place Bid",
-			RAISE_BID: "Raise Bid",
-		};
-
-		return titleMap[type] || "";
-	};
-
-	getButtonTooltip = (type) => {
-		if (!type) return "";
-
-		const titleMap = {
-			BUY_NOW: this.context.t("CHECKOUT_BUY_NOW"),
-			PLACE_BID: this.context.t("CHECKOUT_PLACE_BID"),
-			RAISE_BID: this.context.t("CHECKOUT_RAISE_BID"),
-		};
-
-		return titleMap[type] || "";
-	};
 
 	handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
 

@@ -6,7 +6,6 @@ import isEmpty from "lodash/isEmpty";
 import Loader from "../../common/components/Loader";
 import { ROUTE_PATHS } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
-import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 import { getListingImage } from "../../common/utils/listing";
 
 class ListingPreview extends PureComponent {

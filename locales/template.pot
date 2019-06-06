@@ -145,6 +145,10 @@ msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+msgid "SALES_PACKAGE_TABLE_MINIMUM_BID_ONE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
 #: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 #: src/AppBundle/Resources/public/javascript/sell/components/EmptySalesPackageTable.js
 #: src/AppBundle/Resources/public/javascript/sell/components/SalesPackageTable.js
@@ -246,18 +250,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ContentInformation.js
 msgid "LISTING_DETAILS_EVENT_TITLE_DESCRIPTION"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_BUY_NOW"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_PLACE_BID"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
-msgid "CHECKOUT_RAISE_BID"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/ListingDetails.js
