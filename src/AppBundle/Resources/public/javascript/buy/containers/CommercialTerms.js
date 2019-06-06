@@ -2,10 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
-import moment from "moment";
 import { test } from "../actions";
 import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
-import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 import { pdfIcon } from "../../main/components/Icons";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import { getSeasonDateString } from "../../common/utils/listing";
@@ -17,11 +15,19 @@ class CommercialTerms extends React.Component {
 			seasons: props.seasons,
 		};
 		this.baseDir = `${assetsBaseDir}../`;
+		this.textArea = React.createRef();
 	}
 
 	componentDidMount() {
 		this.loadSchedule();
+		this.setTextAreaHeight();
 	}
+
+	setTextAreaHeight = () => {
+		if (this.textArea.current) {
+			this.textArea.current.style.height = `${this.textArea.current.scrollHeight}px`;
+		}
+	};
 
 	loadSchedule() {
 		const _this = this;
@@ -75,7 +81,12 @@ class CommercialTerms extends React.Component {
 							{this.context.t("LISTING_DETAILS_EVENT_DESCRIPTION")}
 						</div>
 						<div className="txt description-text">
-							<RepresentationTextArea value={description} />
+							<textarea
+								readOnly
+								ref={this.textArea}
+								value={description}
+								className="representation-textarea"
+							/>
 						</div>
 					</div>
 				)}
@@ -138,7 +149,7 @@ class CommercialTerms extends React.Component {
 						{seasons.map((season, key) => (
 							<div key={`season-${key}`} className="season-details">
 								<div className="season-cap">
-									{/*{season.name} {" "}*/}
+									{/* {season.name} {" "} */}
 									{season.customStartDate && season.customEndDate && (
 										getSeasonDateString(season)
 									)}
