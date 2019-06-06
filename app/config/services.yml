@@ -62,7 +62,7 @@ services:
             $infoAddress : '%app.email_info%'
             $supportAddress : '%app.email_support%'
             $bccAlexAddress : '%app.email_bcc_alex%'
-            $bccLasseAddress : '%app.email_bcc_lasse%'
+            $bccSaschaAddress : '%app.email_bcc_sascha%'
             $alertsAddress : '%app.email_alerts%'
 
     AppBundle\Service\JobService:

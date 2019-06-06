@@ -34,7 +34,7 @@ class EmailService
 
     private $bccAlexAddress;
 
-    private $bccLasseAddress;
+    private $bccSaschaAddress;
 
     private $alertsAddress;
 
@@ -49,7 +49,7 @@ class EmailService
         $supportAddress,
         $infoAddress,
         $bccAlexAddress,
-        $bccLasseAddress,
+        $bccSaschaAddress,
         $alertsAddress
     ) {
         $this->em = $entityManager;
@@ -59,7 +59,7 @@ class EmailService
         $this->supportAddress = $supportAddress;
         $this->infoAddress = $infoAddress;
         $this->bccAlexAddress = $bccAlexAddress;
-        $this->bccLasseAddress = $bccLasseAddress;
+        $this->bccSaschaAddress = $bccSaschaAddress;
         $this->alertsAddress = $alertsAddress;
         $this->translator = $translator;
     }
@@ -833,7 +833,7 @@ class EmailService
             $this->supportAddress,
             array(
                 $this->bccAlexAddress,
-                $this->bccLasseAddress,
+                $this->bccSaschaAddress,
             ));
 
     }
@@ -865,7 +865,7 @@ class EmailService
             $this->supportAddress,
             array(
                 $this->bccAlexAddress,
-                $this->bccLasseAddress,
+                $this->bccSaschaAddress,
             ));
 
     }
@@ -904,7 +904,7 @@ class EmailService
             $this->supportAddress,
             array(
                 $this->bccAlexAddress,
-                $this->bccLasseAddress,
+                $this->bccSaschaAddress,
             ));
 
     }
