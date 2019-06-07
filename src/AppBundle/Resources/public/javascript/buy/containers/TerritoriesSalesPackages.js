@@ -201,9 +201,7 @@ class TerritoriesSalesPackages extends PureComponent {
 	};
 
 	renderCheckoutButton = (large) => {
-		const {
-			checkedItems,
-		} = this.state;
+		const { checkedItems } = this.state;
 
 		return (
 			<button
@@ -513,9 +511,11 @@ class TerritoriesSalesPackages extends PureComponent {
 				)}
 
 				{/* SECOND CHECKOUT BUTTON */}
-				<div className={cn("checkout-button", { active: checkedItems.size > 0 })}>
-					{this.renderCheckoutButton("large")}
-				</div>
+				{!userCanNotBuy && (
+					<div className="checkout-button">
+						{this.renderCheckoutButton("large")}
+					</div>
+				)}
 			</React.Fragment>
 		);
 	}
