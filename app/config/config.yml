@@ -32,7 +32,7 @@ parameters:
     app.email_support: 'support@contentarena.com'
     app.email_alerts: 'alerts@contentarena.com'
     app.email_bcc_alex: 'alexander@contentarena.com'
-    app.email_bcc_lasse: 'lasse@contentarena.com'
+    app.email_bcc_sascha: 'sascha@contentarena.com'
 
 framework:
     #esi: ~

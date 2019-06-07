@@ -1,13 +1,24 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { ProgramTypesDefinitions } from "../../main/components/ProgramTypesDefinitions";
-import { RepresentationTextArea } from "../../sell/components/SellFormItems";
 
 class ProgramDetails extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
+
+		this.textArea = React.createRef();
 	}
+
+	componentDidMount() {
+		this.setTextAreaHeight();
+	}
+
+	setTextAreaHeight = () => {
+		if (this.textArea.current) {
+			this.textArea.current.style.height = `${this.textArea.current.scrollHeight}px`;
+		}
+	};
 
 	programDescription = description => description && (
 		<div className="description-wrapper">
@@ -15,7 +26,12 @@ class ProgramDetails extends Component {
 				{this.context.t("LISTING_DETAILS_EDITED_PROGRAM_DESCRIPTION")}
 			</div>
 			<div className="spacer-bottom txt description-text">
-				<RepresentationTextArea value={description} />
+				<textarea
+					readOnly
+					ref={this.textArea}
+					value={description}
+					className="representation-textarea"
+				/>
 			</div>
 		</div>
 	);

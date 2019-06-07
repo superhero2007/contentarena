@@ -653,6 +653,10 @@
           }
         }
 
+	    .description-wrapper textarea{
+	      max-height: inherit;
+        }
+
         .title {
           border-bottom: 1px solid;
           font-weight: bold;
