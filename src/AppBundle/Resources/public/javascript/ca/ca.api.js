@@ -545,6 +545,9 @@ ContentArena.Api = {
 				});
 
 				deferred.resolve(_this.prepareList(list));
+			})
+			.fail(() => {
+				deferred.resolve([]);
 			});
 
 

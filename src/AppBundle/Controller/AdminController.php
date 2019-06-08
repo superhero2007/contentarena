@@ -278,7 +278,7 @@ class AdminController extends BaseAdminController
             }
 
             foreach ( $rows as $row){
-                $user = $repo->findOneBy(array("email" => $row[2]));
+                $user = $repo->findOneBy(array("email" => trim($row[2])));
                 if ( $user == null ) {
 
                     try {
@@ -337,6 +337,15 @@ class AdminController extends BaseAdminController
                             } else {
                                 $company = new Company();
                                 $company->setLegalName( $row[3] );
+
+                                if ( isset($row[5]) ){
+                                    $companyCountry = $countryRepo->findOneBy(array("name" => trim($row[5])));
+                                    if ($companyCountry == null){
+                                        $companyCountry = $countryRepo->findOneBy(array("name" => "Singapore"));
+                                    }
+                                    if ($companyCountry != null) $company->setCountry($companyCountry);
+                                }
+
                                 $doctrine->getManager()->persist($company);
                             }
                             $user->setCompany($company);
