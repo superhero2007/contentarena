@@ -6,7 +6,6 @@ import api from "../../../api";
 import Loader from "../Loader";
 
 class ConfirmationTooltip extends Component {
-
 	constructor(props) {
 		super(props);
 
@@ -15,8 +14,8 @@ class ConfirmationTooltip extends Component {
 		};
 	}
 
-	componentWillReceiveProps(props){
-		this.setState ({
+	componentWillReceiveProps(props) {
+		this.setState({
 			isOpen: props.isOpen,
 		});
 	}

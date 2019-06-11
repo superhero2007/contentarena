@@ -42,7 +42,7 @@
         "no-prototype-builtins": "off",
         "no-undef": "off",
         "no-return-await": "off",
-        "no-useless-escape": "off", //No need to fix
+        "no-useless-escape": "off",
         "no-plusplus": "off",
         "array-callback-return": "off",
         "no-nested-ternary": "off",
@@ -53,7 +53,7 @@
         "no-shadow": "off",
         "no-case-declarations": "off",
         "no-param-reassign": "off",
-        "consistent-return": "off", //No need to fix
+        "consistent-return": "off",
         "max-len": "off",
         "no-underscore-dangle": "off",
         "import/prefer-default-export": "off",
@@ -67,7 +67,8 @@
         "react/no-unescaped-entities": "off",
         "react/no-multi-comp": "off",
         "react/sort-comp": "off",
-        "react/jsx-filename-extension": "off", //No need to fix
+        "react/jsx-filename-extension": "off",
+        "jsx-a11y/no-autofocus": "off",
         "react/prefer-stateless-function": "off",
         "react/prop-types": "off",
         "react/no-array-index-key": "off",

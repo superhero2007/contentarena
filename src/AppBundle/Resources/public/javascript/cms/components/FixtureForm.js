@@ -1,24 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Moment from "moment/moment";
+import DatePicker from "@components/DatePicker";
 import { getListingImage } from "../../common/utils/listing";
 import PropertyListingTable from "./PropertyListingTable";
 import { CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
-import Moment from "moment/moment";
 import { DATE_FORMAT, TIME_FORMAT, TIME_ZONE } from "../../common/constants";
-import DatePicker from "@components/DatePicker";
 
 class FixtureForm extends React.Component {
 	constructor(props) {
 		super(props);
 
 		const {
-			fixture = {}
+			fixture = {},
 		} = props;
 
 		this.state = {
-			name : fixture.name || "",
+			name: fixture.name || "",
 			round: fixture.round || "",
-			date: fixture.date || null
+			date: fixture.date || null,
 		};
 	}
 
@@ -31,14 +31,14 @@ class FixtureForm extends React.Component {
 
 
 		this.props.onUpdate({
-			name: name,
-			round: round,
-			date: date
+			name,
+			round,
+			date,
 		});
 	};
 
 	handleStartDate = (value) => {
-		this.setState({date: value})
+		this.setState({ date: value });
 	};
 
 	applyIsDisabled = () => {
@@ -58,7 +58,7 @@ class FixtureForm extends React.Component {
 			date,
 		} = this.state;
 
-		//const currentDate = Moment(date);
+		// const currentDate = Moment(date);
 
 		return (
 			<>
@@ -68,8 +68,8 @@ class FixtureForm extends React.Component {
 							autoFocus
 							value={round}
 							placeholder={this.context.t("CMS_FIXTURE_PLACEHOLDER_ROUND")}
-							onChange={e=>{
-								this.setState({round: e.target.value})
+							onChange={(e) => {
+								this.setState({ round: e.target.value });
 							}}
 						/>
 					</div>
@@ -77,14 +77,14 @@ class FixtureForm extends React.Component {
 						<input
 							value={name}
 							placeholder={this.context.t("CMS_FIXTURE_PLACEHOLDER_NAME")}
-							onChange={e=>{
-								this.setState({name: e.target.value})
+							onChange={(e) => {
+								this.setState({ name: e.target.value });
 							}}
 						/>
 					</div>
 					<div className="fixture-item-date">
 						<DatePicker
-							className={`date-picker`}
+							className="date-picker"
 							selected={date}
 							onChange={this.handleStartDate}
 							minDate={Moment()}
@@ -94,7 +94,7 @@ class FixtureForm extends React.Component {
 					</div>
 					<div className="fixture-item-time">
 						<DatePicker
-							className={`date-picker`}
+							className="date-picker"
 							selected={date}
 							onChange={this.handleStartDate}
 							showTimeSelect

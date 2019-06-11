@@ -17,10 +17,11 @@ class RightsOverview extends React.Component {
 			selectedTerritories: props.propertyFilters.selectedTerritories,
 		};
 	}
-	componentDidMount(){
+
+	componentDidMount() {
 		const { propertyFilters: { selectedTerritories } } = this.props;
-		this.setState({selectedTerritories});
-	};
+		this.setState({ selectedTerritories });
+	}
 
 	componentWillReceiveProps(nextProps) {
 		const { propertyFilters: { selectedTerritories, rights, regions } } = nextProps;
@@ -225,7 +226,7 @@ class RightsOverview extends React.Component {
 					&& (
 						<ReactTable
 							showPageSizeOptions={false}
-							showPagination={true}
+							showPagination
 							resizable={false}
 							collapseOnPageChange={false}
 							collapseOnDataChange={false}
@@ -236,8 +237,8 @@ class RightsOverview extends React.Component {
 							className="ca-table"
 							columns={this.getColumns()}
 							sorted={[{
-								id: 'name',
-								desc: false
+								id: "name",
+								desc: false,
 							}]}
 						/>
 					)

@@ -14,18 +14,22 @@ class FixturesList extends React.Component {
 	}
 
 	render() {
-		const { fixtures, history, onRemoveFixture, onUpdateFixture } = this.props;
+		const {
+			fixtures, history, onRemoveFixture, onUpdateFixture,
+		} = this.props;
 
 		return (
 			<>
 				{
-					fixtures.map((fixture, i) => <FixtureListItem
-						{...fixture}
-						key={`fixture-${i}`}
-						history={history}
-						onRemoveFixture={() => onRemoveFixture(i)}
-						onUpdateFixture={fixture => onUpdateFixture(fixture, i)}
-					/>)
+					fixtures.map((fixture, i) => (
+						<FixtureListItem
+							{...fixture}
+							key={`fixture-${i}`}
+							history={history}
+							onRemoveFixture={() => onRemoveFixture(i)}
+							onUpdateFixture={fixture => onUpdateFixture(fixture, i)}
+						/>
+					))
 				}
 			</>
 		);
