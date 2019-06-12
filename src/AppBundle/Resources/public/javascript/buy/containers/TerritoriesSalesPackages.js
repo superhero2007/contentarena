@@ -313,7 +313,6 @@ class TerritoriesSalesPackages extends PureComponent {
 						{filteredTerritorialBundles.length > 0 && this.context.t("SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES")}
 						{filteredTerritorialBundles.length === 0 && this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
 					</div>
-					{total > 3 && this.renderCheckoutButton()}
 				</div>
 
 				{filteredTerritorialBundles.length > 0 && (
