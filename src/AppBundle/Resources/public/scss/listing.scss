@@ -945,16 +945,13 @@
           }
         }
         .checkout-button {
-          display: none;
+          display: block;
           position: fixed;
           bottom: 15px;
           text-align: center;
           right: 50%;
-	        transform: translate(50%);
+	      transform: translate(50%);
 
-          &.active {
-            display: block;
-          }
         }
       }
 
