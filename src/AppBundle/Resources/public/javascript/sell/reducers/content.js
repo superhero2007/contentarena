@@ -3,10 +3,7 @@ import { allValue } from "../../main/components/LanguageSelector";
 
 export const contentType = {
 	CONTENT_INIT: "CONTENT_INIT",
-	STEP_CHANGE_RESET: "STEP_CHANGE_RESET",
 	GO_TO_STEP: "GO_TO_STEP",
-	GO_TO_NEXT_STEP: "GO_TO_NEXT_STEP",
-	GO_TO_PREVIOUS_STEP: "GO_TO_PREVIOUS_STEP",
 	ADD_NEW: "ADD_NEW",
 	REMOVE_NEW: "REMOVE_NEW",
 	SUPER_RIGHTS_UPDATED: "SUPER_RIGHTS_UPDATED",
@@ -20,7 +17,6 @@ export const contentType = {
 	UPDATE_ANNEX: "UPDATE_ANNEX",
 	ADD_SALES_PACKAGES: "ADD_SALES_PACKAGES",
 	RESET: "RESET",
-	ALL_EPISODE_UPDATE_FLAG: "UPDATE_ALL_EPISODES_FLAG",
 };
 
 export const EmptyListing = {
@@ -69,29 +65,11 @@ export const content = (state = EmptyListing, action) => {
 		action.content.initialized = true;
 		return Object.assign({}, state, action.content,
 			{ maxStep: max([action.content.maxStep, state.maxStep]) });
-	case contentType.ALL_EPISODE_UPDATE_FLAG:
-		return Object.assign({}, state, { EDIT_PROGRAM_DESCRIPTION_OPTIONAL: action.payload });
-	case contentType.GO_TO_NEXT_STEP:
-		const newStep = state.step + 1;
-		return Object.assign({}, state, {
-			step: newStep,
-			stepChange: true,
-			maxStep: max([newStep, state.maxStep]),
-		});
 	case contentType.GO_TO_STEP:
 		return Object.assign({}, state, {
 			step: action.step,
 			stepChange: true,
 			maxStep: max([action.step, state.maxStep]),
-		});
-	case contentType.STEP_CHANGE_RESET:
-		return Object.assign({}, state, {
-			stepChange: false,
-		});
-	case contentType.GO_TO_PREVIOUS_STEP:
-		return Object.assign({}, state, {
-			step: state.step - 1,
-			stepChange: true,
 		});
 	case contentType.REMOVE_NEW:
 		newState = {};

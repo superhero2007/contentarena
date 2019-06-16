@@ -234,6 +234,9 @@ class TerritoriesSalesPackages extends PureComponent {
 		} = this.state;
 
 		const total = filteredTerritorialBundles.length + filteredIndividualBundles.length;
+		const showFloatingCheckout = total > 3 && !userCanNotBuy;
+		const showFixedCheckout = total <= 3 && !userCanNotBuy;
+
 		return (
 			<React.Fragment>
 
@@ -313,11 +316,13 @@ class TerritoriesSalesPackages extends PureComponent {
 						{filteredTerritorialBundles.length > 0 && this.context.t("SALES_PACKAGE_HEADER_TERRITORIAL_BUNDLES")}
 						{filteredTerritorialBundles.length === 0 && this.context.t("SALES_PACKAGE_HEADER_INDIVIDUAL_TERRITORIES")}
 					</div>
+					{total > 3 && !userCanNotBuy && this.renderCheckoutButton()}
 				</div>
 
 				{filteredTerritorialBundles.length > 0 && (
-					<div className="sales-packages">
-
+					<div
+						className={cn("sales-packages", { "has-checkout": showFloatingCheckout })}
+					>
 						<ReactTable
 							className={cn("ca-table round-0 bundles-table")}
 							defaultPageSize={242} // max number of possible Territorial Bundles
@@ -416,7 +421,9 @@ class TerritoriesSalesPackages extends PureComponent {
 
 				{/* INDIVIDUAL BUNDLES */}
 				{filteredIndividualBundles.length > 0 && (
-					<div className="sales-packages">
+					<div
+						className={cn("sales-packages", { "has-checkout": showFloatingCheckout })}
+					>
 
 						<ReactTable
 							className={cn("ca-table round-0 bundles-table", { showScroll: filteredIndividualBundles.length > 15 })}
@@ -510,11 +517,20 @@ class TerritoriesSalesPackages extends PureComponent {
 				)}
 
 				{/* SECOND CHECKOUT BUTTON */}
-				{!userCanNotBuy && (
+				{showFloatingCheckout && (
 					<div className="checkout-button">
 						{this.renderCheckoutButton("large")}
 					</div>
 				)}
+
+				{
+					showFixedCheckout
+					&& (
+						<div className="buttons-container">
+							{this.renderCheckoutButton("large")}
+						</div>
+					)
+				}
 			</React.Fragment>
 		);
 	}

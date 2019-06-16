@@ -7,7 +7,6 @@ import LicenseDateSelector from "../components/LicenseDateSelector";
 import RightDefinitions from "../components/RightDefinitions";
 import ProductionStandardsDefinitions from "../components/ProductionStandardsDefinitions";
 import { SummaryText, TitleBar } from "../components/SellFormItems";
-import { stepChangeReset } from "../actions/contentActions";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
 import RightsList from "../../main/components/RightsList";
@@ -47,20 +46,8 @@ class SellFormStep3 extends React.Component {
 		}
 	}
 
-	loadRights = (rightsPackage, group) => {
-		const _this = this;
-		ContentArena.Api.getRights(rightsPackage.map(p => (p.id)), group)
-			.done((rights) => {
-				_this.setState({ rights });
-			});
-	};
-
 	closeLicensePopup = () => {
 		this.setState({ licensePopup: false });
-	};
-
-	selectCurrency = (currency) => {
-		this.props.updateContentValue("currency", currency);
 	};
 
 	selectLicenseDates = (key, value) => {
@@ -87,15 +74,6 @@ class SellFormStep3 extends React.Component {
 			&& selected.indexOf("DT") === -1;
 	};
 
-	scroll = () => {
-		const { stepChange, stepChangeReset } = this.props;
-
-		if (stepChange) {
-			window.scrollTo(0, 0);
-			stepChangeReset();
-		}
-	};
-
 	render() {
 		const {
 			step,
@@ -109,7 +87,6 @@ class SellFormStep3 extends React.Component {
 			validation,
 		} = this.props;
 		if (step !== 3) return (null);
-		this.scroll();
 
 		const isLicenseInvalid = !endDateMode && validation;
 
@@ -342,13 +319,6 @@ const mapDispatchToProps = dispatch => ({
 		key,
 		value,
 	}),
-	updateProgram: (index, program, name) => dispatch({
-		type: "UPDATE_PROGRAMS",
-		index,
-		program,
-		name,
-	}),
-	stepChangeReset: () => dispatch(stepChangeReset()),
 });
 
 export default connect(
