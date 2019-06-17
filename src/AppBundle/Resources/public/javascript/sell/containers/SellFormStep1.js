@@ -164,6 +164,7 @@ class SellFormStep1 extends React.Component {
 					this.setState({
 						loadingSeasons: false,
 						tournamentHasNoSeason: true,
+						lastTournamentId: tournamentId,
 					});
 					return;
 				}
