@@ -118,6 +118,7 @@ class PropertyDetailsEventTab extends Component {
 			this.props.updateSinglePropertyByKeyValue("image", imageReader.result);
 			console.warn("we should update property on backend");
 		};
+		imageReader.readAsDataURL(imageFile);
 	};
 
 	render() {
