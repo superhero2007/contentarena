@@ -35,7 +35,11 @@ export const getRightsValue = (config, rights, context) => {
 	switch (key) {
 	case "CAMERA":
 		const cameras = getUniqueSelectedOptions(rights, "CAMERAS");
-		return `Minimum cameras: ${Math.min(...cameras)}`;
+		if (cameras.length === 1) {
+			return `Minimum cameras: ${first(cameras)}`;
+		}
+		return multipleVabel;
+
 
 	case "LICENSED_LANGUAGES":
 		return getLanguages(rights, "LICENSED_LANGUAGE_LIST");

@@ -290,6 +290,15 @@ class PopupRight extends React.Component {
 					current = rightsPackage.selectedRights[rightLabelCustom];
 				}
 				break;
+			case "CAMERA":
+				const cameraLabel = nameToCustomValueConfig[id].key;
+				const cameraLabelCustom = nameToCustomValueConfig[id].value;
+
+				if (current === cameraLabel) {
+					current = rightsPackage.selectedRights[cameraLabelCustom];
+				}
+				break;
+
 			default:
 				break;
 			}
