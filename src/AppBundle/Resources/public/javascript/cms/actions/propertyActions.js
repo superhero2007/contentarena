@@ -98,9 +98,10 @@ export const fetchPropertyFail = error => ({
 	error,
 });
 
-export const updatedPropertyRights = rights => ({
-	type: propertyDetailsTypes.UPDATE_PROPERTY_RIGHTS,
-	rights,
+export const updateSinglePropertyByKeyValue = (key, value) => ({
+	type: propertyDetailsTypes.UPDATE_SINGLE_PROPERTY,
+	key,
+	value,
 });
 
 export const startFetchingPropertyDetails = () => ({

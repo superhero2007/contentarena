@@ -13,7 +13,7 @@ import {
 	RESERVED_RIGHTS,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
 import { getRightsValue, hasRightComment } from "../helpers/PropertyDetailsHelper";
-import { updatedPropertyRights } from "../actions/propertyActions";
+import { updateSinglePropertyByKeyValue } from "../actions/propertyActions";
 
 class PropertyDetailsRightsTab extends Component {
 	constructor(props) {
@@ -38,7 +38,7 @@ class PropertyDetailsRightsTab extends Component {
 	handleApplyRightChanges = () => {
 		const { rights } = this.state;
 		this.handleEditRights();
-		this.props.updateRights(rights);
+		this.props.updateRights("rights", rights);
 	};
 
 	handleRightUpdate = (rights) => {
@@ -176,7 +176,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	updateRights: rights => dispatch(updatedPropertyRights(rights)),
+	updateRights: (key, value) => dispatch(updateSinglePropertyByKeyValue(key, value)),
 });
 
 export default connect(

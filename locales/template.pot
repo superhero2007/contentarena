@@ -145,6 +145,7 @@ msgid "CHECKOUT_FIXED_GO_TO_MARKETPLACE"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/buy/containers/Checkout.js
+#: src/AppBundle/Resources/public/javascript/buy/containers/TerritoriesSalesPackages.js
 msgid "SALES_PACKAGE_TABLE_MINIMUM_BID_ONE"
 msgstr ""
 
@@ -685,6 +686,19 @@ msgstr ""
 msgid "CMS_EMPTY_EDIT_RIGHTS_BUTTON"
 msgstr ""
 
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyFixture.js
+msgid "CMS_EMPTY_FIXTURE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyFixture.js
+msgid "CMS_EMPTY_FIXTURE_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyFixture.js
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_EMPTY_FIXTURE_CREATE_FIXTURE"
+msgstr ""
+
 #: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 msgid "CMS_EMPTY_LISTING_OVERVIEW_TITLE"
 msgstr ""
@@ -696,6 +710,68 @@ msgstr ""
 #: src/AppBundle/Resources/public/javascript/cms/components/EmptyScreens/EmptyListingOverview.js
 #: src/AppBundle/Resources/public/javascript/cms/containers/Property.js
 msgid "CMS_EMPTY_LISTING_CREATE_LISTING"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/FixtureForm.js
+msgid "CMS_FIXTURE_PLACEHOLDER_ROUND"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/FixtureForm.js
+msgid "CMS_FIXTURE_PLACEHOLDER_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/FixtureForm.js
+msgid "CMS_EMPTY_FIXTURE_CREATE_APPLY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_TAB_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_TAB_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_UPLOAD"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_WEBSITE_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_WEBSITE_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_WEBSITE_SAVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_FILES_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_FILES_PLACEHOLDER"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+msgid "PROPERTY_DETAILS_EVENT_FILES_SAVE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsEventTab.js
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
+msgid "Apply"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
@@ -736,11 +812,6 @@ msgstr ""
 msgid "RIGHTS_CAMERA"
 msgstr ""
 
-#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsProductionTab.js
-#: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
-msgid "Apply"
-msgstr ""
-
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyDetailsRightsTab.js
 msgid "PROPERTY_DETAILS_RIGHT_TAB_TITLE"
 msgstr ""
@@ -765,13 +836,35 @@ msgid "RIGHTS_RESERVED_RIGHTS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
-msgid "MARKETPLACE_TABLE_LISTING_NAME"
+msgid "CMS_LISTING_TABLE_HEADER_STATUS"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
-#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
-msgid "MARKETPLACE_TABLE_SPORT"
+msgid "CMS_LISTING_TABLE_ID"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+msgid "CMS_LISTING_TABLE_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+msgid "CMS_LISTING_TABLE_EXPIRY"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+msgid "CMS_LISTING_TABLE_TERRITORIES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+msgid "CMS_LISTING_TABLE_LAST_ACTION_DATE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+msgid "CMS_LISTING_TABLE_LAST_ACTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/components/PropertyListingTable.js
+msgid "CMS_LISTING_TABLE_OWNER"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyListItem.js
@@ -784,6 +877,34 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/components/PropertyListItem.js
 msgid "CMS_PROPERTY_VIEW_LISTING_OVERVIEW"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES_TITLE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES_DESCRIPTION"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES_TABLE_ROUND"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES_TABLE_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES_TABLE_DATE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/cms/containers/CmsFixtures.js
+msgid "CMS_FIXTURES_TABLE_TIME"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/cms/containers/CreatePropertyEvent.js
@@ -1045,6 +1166,18 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/components/ShareListing/ShareListing.js
 msgid "SHARE_CANCEL"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/Tooltips/ConfirmationTooltip.js
+msgid "GENERAL_CONFIRMATION_TOOLTIP_MESSAGE"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/Tooltips/ConfirmationTooltip.js
+msgid "GENERAL_CONFIRMATION_TOOLTIP_CONFIRM"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/common/components/Tooltips/ConfirmationTooltip.js
+msgid "GENERAL_CONFIRMATION_TOOLTIP_CANCEL"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/common/modals/AcceptBidModal/AcceptBidModal.js
@@ -1678,6 +1811,14 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingCommercialActivity.js
 msgid "COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_LISTING_NAME"
+msgstr ""
+
+#: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
+msgid "MARKETPLACE_TABLE_SPORT"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/main/components/ContentListingTable.js
@@ -2957,10 +3098,6 @@ msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
 msgid "LISTING_EXPIRY_EMPTY"
-msgstr ""
-
-#: src/AppBundle/Resources/public/javascript/sell/components/ExpirationDateSelector.js
-msgid "LISTING_MUST_EXPIRE_BEFORE_EVENT_END"
 msgstr ""
 
 #: src/AppBundle/Resources/public/javascript/sell/components/JurisdictionSelector.js

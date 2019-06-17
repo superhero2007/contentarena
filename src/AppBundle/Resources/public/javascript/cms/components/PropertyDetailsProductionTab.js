@@ -12,7 +12,7 @@ import {
 	COMMENTARY,
 	CAMERA,
 } from "../../common/modals/PropertyRightsProductionModal/PropertyRightsProductionConfig";
-import { updatedPropertyRights } from "../actions/propertyActions";
+import { updateSinglePropertyByKeyValue } from "../actions/propertyActions";
 import { getRightsValue, hasRightComment, getDedicatedRigths } from "../helpers/PropertyDetailsHelper";
 
 class PropertyDetailsProductionTab extends Component {
@@ -38,7 +38,7 @@ class PropertyDetailsProductionTab extends Component {
 	handleApplyProductionsChanges = () => {
 		const { rights } = this.state;
 		this.handleEditProductions();
-		this.props.updateRights(rights);
+		this.props.updateRights("rights", rights);
 	};
 
 	handleRightUpdate = (rights) => {
@@ -183,7 +183,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	updateRights: rights => dispatch(updatedPropertyRights(rights)),
+	updateRights: (key, value) => dispatch(updateSinglePropertyByKeyValue(key, value)),
 });
 
 export default connect(
