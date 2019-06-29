@@ -45,11 +45,12 @@ trait ControllerHelper
     /**
      * @param $data
      * @param $groups
+     * @param null $serializer
      * @return mixed|string|Response
      */
-    private function getSerializedResponse ($data, $groups = null){
+    private function getSerializedResponse ($data, $groups = null, $serializer = null){
         /* @var Serializer $serializer */
-        $serializer = $this->container->get('jms_serializer');
+        if ($serializer == null) $serializer = $this->container->get('jms_serializer');
         $context = SerializationContext::create();
 
         if ( $groups != null ) $context->setGroups($groups);

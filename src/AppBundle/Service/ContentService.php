@@ -765,14 +765,16 @@ class ContentService
                         $filteredFixtures = [];
                         foreach ( $seasonData->fixtures as $fixtureData ){
                             if ( isset($fixtureData->name) && $fixtureData->name != "" ){
+
+                                if ( isset($fixtureData->date) && $fixtureData->date != "" ){
+                                    $fixtureData->date = str_replace('Z', '', $fixtureData->date);
+                                }
+
                                 $filteredFixtures[] = $fixtureData;
                             }
                         }
-
                         $fixtures[] = $filteredFixtures;
                     }
-
-
                 }
 
                 $content->setSchedulesBySeason($schedules);

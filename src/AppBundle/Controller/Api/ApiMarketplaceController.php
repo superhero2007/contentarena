@@ -8,6 +8,8 @@ use AppBundle\Service\BundleService;
 use AppBundle\Service\FileUploader;
 use AppBundle\Service\TermsService;
 use AppBundle\Service\TestService;
+use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
+use JMS\Serializer\SerializerBuilder;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -68,7 +70,10 @@ class ApiMarketplaceController extends Controller
             "listings" => $contents->getItems(),
             "totalItems" => $totalItems
         );
-        return $this->getSerializedResponse($response, array('listing') );
+
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        return $this->getSerializedResponse($response, array('listing'), $serializer );
 
     }
 
