@@ -28,6 +28,7 @@ class WatchlistService
             $watchlist = new Watchlist();
             $watchlist->setContent($content);
             $watchlist->setCompany($user->getCompany());
+            $watchlist->setAddedBy($user);
 
             $this->em->persist($watchlist);
             $this->em->flush();

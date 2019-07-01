@@ -114,7 +114,9 @@ class ApiListingController extends Controller
         $contents = [];
 
         foreach ($watchlistItems as $watchlist){
-            $contents[] = $watchlist->getContent();
+            $newContent = $watchlist->getContent();
+            $newContent->setAddedBy($watchlist->getAddedBy());
+            $contents[] = $newContent;
         }
 
         $paginator  = $this->get('knp_paginator');

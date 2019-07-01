@@ -545,6 +545,13 @@ class Content implements NotifiableInterface
     private $mainEventDate;
 
     /**
+     * @var mixed;
+     *
+     * @Groups({"listing"})
+     */
+    private $addedBy;
+
+    /**
      * @Groups({"listing"})
      */
     private $referenceDate;
@@ -1983,7 +1990,21 @@ class Content implements NotifiableInterface
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function getAddedBy()
+    {
+        return $this->addedBy;
+    }
 
+    /**
+     * @param mixed $addedBy
+     */
+    public function setAddedBy($addedBy)
+    {
+        $this->addedBy = $addedBy;
+    }
 
 
 
