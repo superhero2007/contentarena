@@ -214,7 +214,8 @@ class ContentService
         /**
          * Sorting featured listings in the top must be applied only if there are no other filters active
          */
-        if ($featuredSortActive) usort($content, $sortByFeatured);
+        // if ($featuredSortActive) usort($content, $sortByFeatured);
+        usort($content, $sortByFeatured);
 
         return $content;
 
