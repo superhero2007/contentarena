@@ -737,6 +737,7 @@
 			.listing-data{
 				overflow: auto;
 				padding: 25px;
+                flex: 1;
 
 				.title{
 					color: $black-color;
@@ -779,12 +780,10 @@
 					.listing-rights{
 						display: flex;
 						flex-direction: row;
-						flex-flow: row;
-						justify-content: space-between;
 						flex-wrap: wrap;
 
 						.listing-item{
-							flex: 1 0 30%;
+							flex: 0 0 33%;
 							font-size: 13px;
 							padding: 5px;
 
@@ -796,41 +795,18 @@
 						}
 					}
 				}
-				textarea{
-					overflow-y: auto;
-					background-color: $background-3;
-					border: 1px solid $border-color-1;
-					color: $font-color-5;
-					font-weight: 600;
-					font-family: "Open Sans";
-					resize: none;
-					font-size: 13px;
-					line-height: 20px;
-					padding: 20px 10px;
-					height: 150px;
-
-					&:focus, &:hover{
-						outline: none;
-					}
-
-					&::-webkit-scrollbar {
-						width: 5px;
-					}
-
-					&::-webkit-scrollbar-track {
-						background: $border-color-1;
-					}
-
-					&::-webkit-scrollbar-thumb {
-						background-color: $border-color-2;
-						outline: 1px solid slategrey;
-					}
-				}
+                .right-legend-wrapper {
+                    margin-top: 20px;
+                }
+                .event-wrapper {
+                    color: $font-color-5;
+                    font-size: 13px;
+                }
 				.buttons-wrapper{
 					display: flex;
 					flex-direction: column;
 					align-items: center;
-					margin-top: 15px;
+					margin-top: 30px;
 
 					& > button{
 						width: 300px;
