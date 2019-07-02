@@ -124,13 +124,17 @@ class ListingPreview extends PureComponent {
 							</div>
 							<div className="listing-data">
 								<div className="ca-title">{listing.name.toUpperCase()}</div>
-								<div className="title"><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></div>
-								<div className="rights-wrapper">
-									<ContentListingRightsPackage rightsPackage={listing.rightsPackage} isOnlyRightPackage />
-								</div>
-								<div className="right-legend-wrapper">
-									<RightsLegend />
-								</div>
+								{!!listing.rightsPackage.length && (
+									<Fragment>
+										<div className="title"><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></div>
+										<div className="rights-wrapper">
+											<ContentListingRightsPackage rightsPackage={listing.rightsPackage} isOnlyRightPackage />
+										</div>
+										<div className="right-legend-wrapper">
+											<RightsLegend isExclusive />
+										</div>
+									</Fragment>
+								)}
 								{!!listing.seasons.length && (
 									<Fragment>
 										<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
