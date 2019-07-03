@@ -99,6 +99,7 @@ class ShareListing extends Component {
 								onChange={this.handleEmailChange}
 								className="ca-tags-input ca-form-control"
 								validationRegex={/\S+@\S+\.\S+/}
+								addKeys={[9, 13, 32]}
 								onlyUnique
 								addOnBlur
 							/>
