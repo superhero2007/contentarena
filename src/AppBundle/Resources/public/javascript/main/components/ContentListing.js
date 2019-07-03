@@ -117,7 +117,7 @@ class ContentListing extends Component {
 		const isStatusShown = ((watchlistRemove || (bid && declined)) && (status.name === "SOLD_OUT" || status.name === "EXPIRED" || status.name === "INACTIVE" || status.name === "REJECTED" || status.name === "ARCHIVED"));
 
 		return (
-			<a href={listingHref} className="listing-list-view">
+			<a href={listingHref} className="listing-list-view market-place">
 				<div className="left">
 					{featured && (
 						<div className="featured-badge">
