@@ -5,6 +5,7 @@ import moment from "moment";
 import isEmpty from "lodash/isEmpty";
 import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
+import RightsLegend from "../../main/components/RightsLegend";
 import { ROUTE_PATHS } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import { getListingImage } from "../../common/utils/listing";
@@ -123,10 +124,17 @@ class ListingPreview extends PureComponent {
 							</div>
 							<div className="listing-data">
 								<div className="ca-title">{listing.name.toUpperCase()}</div>
-								<div className="title"><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></div>
-								<div className="rights-wrapper">
-									<ContentListingRightsPackage rightsPackage={listing.rightsPackage} />
-								</div>
+								{!!listing.rightsPackage.length && (
+									<Fragment>
+										<div className="title"><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></div>
+										<div className="rights-wrapper">
+											<ContentListingRightsPackage rightsPackage={listing.rightsPackage} isOnlyRightPackage />
+										</div>
+										<div className="right-legend-wrapper">
+											<RightsLegend isExclusive />
+										</div>
+									</Fragment>
+								)}
 								{!!listing.seasons.length && (
 									<Fragment>
 										<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
@@ -136,7 +144,7 @@ class ListingPreview extends PureComponent {
 								{listing.description && (
 									<Fragment>
 										<div className="title"><Translate i18nKey="LISTING_PREVIEW_DESCRIPTION_TITLE" /></div>
-										<textarea readOnly value={listing.description} />
+										<div className="event-wrapper">{listing.description}</div>
 									</Fragment>
 								)}
 								<footer className="buttons-wrapper">

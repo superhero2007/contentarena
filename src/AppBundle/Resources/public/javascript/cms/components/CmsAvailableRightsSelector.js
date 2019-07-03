@@ -87,7 +87,7 @@ class CmsAvailableRightsSelector extends React.Component {
 						</label>
 					</div>
 					<div className="right-territories">
-						<label><Translate i18nKey="LISTING_PREVIEW_RIGHTS_TITLE" /></label>
+						<label><Translate i18nKey="CMS_TERRITORIES_SELECTOR_TITLE" /></label>
 					</div>
 				</div>
 				{

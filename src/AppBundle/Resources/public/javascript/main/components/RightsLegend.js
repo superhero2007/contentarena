@@ -17,12 +17,14 @@ const RightsLegend = (props, context) => (
 				<Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" />
 			</span>
 		</div>
-		<div className="item">
-			<img className="icon" src={greyMinusIcon} alt="" />
-			<span className="name">
-				<Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_INCLUDED" />
-			</span>
-		</div>
+		{!props.isExclusive && (
+			<div className="item">
+				<img className="icon" src={greyMinusIcon} alt="" />
+				<span className="name">
+					<Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_INCLUDED" />
+				</span>
+			</div>
+		)}
 	</div>
 );
 
