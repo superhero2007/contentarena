@@ -142,7 +142,7 @@ class ContentListing extends Component {
 			watchlistRemove,
 			company,
 			rightsPackage,
-			owner,
+			addedBy,
 			bid,
 			checkExpired,
 			status,
@@ -262,14 +262,14 @@ class ContentListing extends Component {
 									aria-hidden="true"
 									onClick={this.confirmRemoveFromWatchlist}
 								/>
-								{owner && (
-									<div className="owner">
+								{addedBy && (
+									<div className="addedBy">
 										<Translate i18nKey="Placed by" />
 										{" "}
 										<b>
-											{owner.firstName}
+											{addedBy.firstName}
 											{" "}
-											{owner.lastName}
+											{addedBy.lastName}
 										</b>
 									</div>
 								)}

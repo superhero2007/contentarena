@@ -34,6 +34,12 @@ class Watchlist
     private $company;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $addedBy;
+
+    /**
      * Get id
      *
      * @return integer
@@ -83,6 +89,20 @@ class Watchlist
         $this->company = $company;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAddedBy()
+    {
+        return $this->addedBy;
+    }
 
+    /**
+     * @param mixed $addedBy
+     */
+    public function setAddedBy($addedBy)
+    {
+        $this->addedBy = $addedBy;
+    }
 
 }
