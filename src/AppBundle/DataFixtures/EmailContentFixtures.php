@@ -31,7 +31,7 @@ class EmailContentFixtures extends Fixture
             array(
                 "email_subject_internal_user_request",
                 "Email subject when user requested login on landing page",
-                "New Content Arena User"
+                "New Content Arena User Request"
             ),
             array(
                 "email_content_internal_user_request",

@@ -25,6 +25,7 @@ easy_admin:
             - Terms
             - TermItems
             - Definitions
+            - AdminConfig
 
         assets:
             js:
@@ -61,11 +62,11 @@ easy_admin:
                         - { property: 'email' }
                         - { property: 'firstName' }
                         - { property: 'lastName' }
+                        - { property: 'company', type_options: { required: true }}
+                        - { property: 'applicationCompany' }
                         - { property: 'title', label: 'Position' }
                         - { property: 'phone' }
                         - { property: 'country' }
-                        - { property: 'applicationCompany' }
-                        - { property: 'company' }
                         - { property: 'autoPublish' }
                 edit:
                     fields:
@@ -252,6 +253,11 @@ easy_admin:
                 class: Juanx\ReactTranslationBundle\Entity\Translation
                 list:
                     fields: ['id', 'i18nKey', 'value', 'language']
+            AdminConfig:
+                class: AppBundle\Entity\AdminConfig
+                label: 'Admin Config'
+                list:
+                    fields: ['slug', 'content']
             TermItems:
                 class: AppBundle\Entity\SourceLicenseTermItem
                 label: 'Term Items'

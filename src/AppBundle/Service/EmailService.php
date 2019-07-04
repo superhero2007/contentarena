@@ -8,6 +8,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\AdminConfig;
 use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
@@ -32,10 +33,6 @@ class EmailService
 
     private $infoAddress;
 
-    private $bccAlexAddress;
-
-    private $bccSaschaAddress;
-
     private $alertsAddress;
 
     private $translator;
@@ -48,8 +45,6 @@ class EmailService
         $hostUrl,
         $supportAddress,
         $infoAddress,
-        $bccAlexAddress,
-        $bccSaschaAddress,
         $alertsAddress
     ) {
         $this->em = $entityManager;
@@ -58,8 +53,6 @@ class EmailService
         $this->hostUrl = $hostUrl;
         $this->supportAddress = $supportAddress;
         $this->infoAddress = $infoAddress;
-        $this->bccAlexAddress = $bccAlexAddress;
-        $this->bccSaschaAddress = $bccSaschaAddress;
         $this->alertsAddress = $alertsAddress;
         $this->translator = $translator;
     }
@@ -824,27 +817,27 @@ class EmailService
             "content2" => $content2->getContent(),
             "user" => $user
         );
+        $bcc = $this->getBccRecipients();
 
         $this->sendEmail(
             "email/email.account.activated.twig",
             $subject->getContent(),
             $user->getEmail(),
             $parameters,
-            $this->supportAddress,
-            array(
-                $this->bccAlexAddress,
-                $this->bccSaschaAddress,
-            ));
+            $this->infoAddress,
+            $bcc
+        );
 
     }
 
     /**
      * @param User $user
+     * @param $confirmationUrl
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function accountIncomplete(User $user){
+    public function accountIncomplete(User $user, $confirmationUrl){
 
         $repository = $this->em->getRepository("AppBundle:EmailContent");
         $subject = $repository->findBySlug("email_subject_account_incomplete");
@@ -854,19 +847,20 @@ class EmailService
         $parameters = array(
             "content" => $content->getContent(),
             "content2" => $content2->getContent(),
-            "user" => $user
+            "user" => $user,
+            "confirmationUrl" => $confirmationUrl
         );
+
+        $bcc = $this->getBccRecipients();
 
         $this->sendEmail(
             "email/email.account.incomplete.twig",
             $subject->getContent(),
             $user->getEmail(),
             $parameters,
-            $this->supportAddress,
-            array(
-                $this->bccAlexAddress,
-                $this->bccSaschaAddress,
-            ));
+            $this->infoAddress,
+            $bcc
+        );
 
     }
 
@@ -896,16 +890,16 @@ class EmailService
             "confirmationUrl" => $confirmationUrl
         );
 
+        $bcc = $this->getBccRecipients();
+
         $this->sendEmail(
             "email/email.account.incomplete.invite.twig",
             $subject->getContent(),
             $user->getEmail(),
             $parameters,
-            $this->supportAddress,
-            array(
-                $this->bccAlexAddress,
-                $this->bccSaschaAddress,
-            ));
+            $this->infoAddress,
+            $bcc
+        );
 
     }
 
@@ -990,6 +984,27 @@ class EmailService
         $this->mailer->send($message);
 
         return true;
+    }
+
+    private function getBccRecipients()
+    {
+        /* @var AdminConfig $config */
+        $slug = "email_admin_alerts_bcc";
+        $configRepository = $this->em->getRepository("AppBundle:AdminConfig");
+        $config = $configRepository->findBySlug($slug);
+        $response = array();
+
+        if ($config != null){
+            $array  = explode(",", $config->getContent());
+            foreach ($array as $item)
+            {
+                $response[] = trim($item);
+            }
+
+        }
+
+        return $response;
+
     }
 
 

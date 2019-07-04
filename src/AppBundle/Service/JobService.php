@@ -155,7 +155,8 @@ class JobService
                 $user = $job->getUser();
 
                 if ( $user != null && ( $user->getStatus() === null || $user->getStatus()->getName() !== "Active" ) ){
-                    $this->emailService->accountIncomplete($user);
+                    $confirmationUrl = $this->router->generate('fos_user_registration_confirm_new', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+                    $this->emailService->accountIncomplete($user, $confirmationUrl);
                 }
                 $job->setCompleted(true);
                 break;

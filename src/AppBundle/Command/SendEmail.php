@@ -168,7 +168,7 @@ class SendEmail extends ContainerAwareCommand
                 break;
 
             case "account_incomplete":
-                $this->emailService->accountIncomplete($user);
+                $this->emailService->accountIncomplete($user, $confirmationUrl);
                 break;
 
             case "account_incomplete_from_invite":
