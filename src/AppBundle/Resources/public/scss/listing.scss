@@ -12,6 +12,10 @@
   cursor: default;
   height: 240px;
 
+  &.market-place {
+    height: 180px;
+  }
+
   @media screen and (min-width: 1400px) {
     //border-top: 3px solid $orange-color;
   }
