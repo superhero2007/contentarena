@@ -720,8 +720,11 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				background-color: lightgray;
+                flex-direction: column;
+                background: #fff;
 				width: 400px;
+                border: 2px solid lightgray;
+                margin-top: -4px;
 
 				.image-wrapper{
 					position: relative;
@@ -733,6 +736,28 @@
 					height: auto;
 					object-fit: cover;
 				}
+
+                .buttons-wrapper{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin: 30px 0;
+
+                    & > button{
+                        width: 300px;
+                        height: 68px;
+                        font-size: 16px;
+                    }
+
+                    .login-wrapper{
+                        margin-top: 15px;
+                        span {
+                            font-weight: 600;
+                            font-size: 16px;
+                            color: $black-color;
+                        }
+                    }
+                }
 			}
 			.listing-data{
 				overflow: auto;
@@ -803,27 +828,6 @@
                     font-size: 13px;
                     white-space: pre-line;
                 }
-				.buttons-wrapper{
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					margin-top: 30px;
-
-					& > button{
-						width: 300px;
-						height: 68px;
-						font-size: 16px;
-					}
-
-					.login-wrapper{
-						margin-top: 15px;
-						span{
-							font-weight: 600;
-							font-size: 16px;
-							color: $black-color;
-						};
-					}
-				}
 			}
 		}
 	}
