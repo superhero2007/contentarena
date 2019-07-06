@@ -121,6 +121,14 @@ class ListingPreview extends PureComponent {
 									)}
 									{getListingImage(listing)}
 								</div>
+
+								<footer className="buttons-wrapper">
+									<button className="yellow-button" onClick={this.handleRegisterClick}><Translate i18nKey="LISTING_PREVIEW_REGISTER" /></button>
+									<span className="login-wrapper">
+										<span className="log-in-text"><Translate i18nKey="LISTING_PREVIEW_HAVE_ACCOUNT" /></span>
+										<button className="link-button" onClick={this.handleLoginClick}><Translate i18nKey="LISTING_PREVIEW_LOG_IN" /></button>
+									</span>
+								</footer>
 							</div>
 							<div className="listing-data">
 								<div className="ca-title">{listing.name.toUpperCase()}</div>
@@ -147,13 +155,6 @@ class ListingPreview extends PureComponent {
 										<div className="event-wrapper">{listing.description}</div>
 									</Fragment>
 								)}
-								<footer className="buttons-wrapper">
-									<button className="yellow-button" onClick={this.handleRegisterClick}><Translate i18nKey="LISTING_PREVIEW_REGISTER" /></button>
-									<span className="login-wrapper">
-										<span className="log-in-text"><Translate i18nKey="LISTING_PREVIEW_HAVE_ACCOUNT" /></span>
-										<button className="link-button" onClick={this.handleLoginClick}><Translate i18nKey="LISTING_PREVIEW_LOG_IN" /></button>
-									</span>
-								</footer>
 							</div>
 						</section>
 					)
