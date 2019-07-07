@@ -27,6 +27,22 @@ $icon-color: #00769A;
   font-weight: 600;
 }
 
+.manager-header-ghost-mode {
+  height: 40px;
+  display: flex;
+  background-color: #FFC94B;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 0 20px;
+  a{
+    margin: 0 10px;
+    color: #1a4b63;
+    font-weight: bold;
+  }
+}
+
 .manager-header {
   display: flex;
   $barHeight: 74px;

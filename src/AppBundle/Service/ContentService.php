@@ -25,7 +25,6 @@ use AppBundle\Entity\Content;
 use AppBundle\Entity\Season;
 use AppBundle\Entity\Tournament;
 use AppBundle\Entity\Sport;
-use Doctrine\ORM\EntityManager;
 
 class ContentService
 {
@@ -38,6 +37,8 @@ class ContentService
 
     private $emailService;
 
+    private $switchUserService;
+
     const SORT_REFERENCE_EVENT = "event";
     const SORT_REFERENCE_UPCOMING = "upcoming";
     const SORT_REFERENCE_EXPIRY = "expiry";
@@ -48,12 +49,14 @@ class ContentService
         EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
-        EmailService $emailService
+        EmailService $emailService,
+        SwitchUserService $switchUserService
     ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
         $this->emailService = $emailService;
+        $this->switchUserService = $switchUserService;
     }
 
     public function findByCustomId( $customId ){
@@ -281,7 +284,6 @@ class ContentService
     /**
      * @param Request $request
      * @return bool
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function checkIfSoldOut (Request $request){
         $soldOut = true;
@@ -416,7 +418,13 @@ class ContentService
             $content->setSalesPackages($salesBundles);
             $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"DRAFT")));
             $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DUPLICATED")));
-            $content->setLastActionUser($user);
+            $ghostMode = $this->switchUserService->isGhostModeActive();
+            $adminUser = $this->switchUserService->getAdminUser();
+            if ($ghostMode && $adminUser){
+                $content->setLastActionUser($adminUser);
+            } else {
+                $content->setLastActionUser($user);
+            }
             $content->setLastActionDate(new \DateTime());
             $this->em->persist($content);
             $this->em->flush();
@@ -435,7 +443,13 @@ class ContentService
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"INACTIVE")));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
-        $content->setLastActionUser($user);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
+        $adminUser = $this->switchUserService->getAdminUser();
+        if ($ghostMode && $adminUser){
+            $content->setLastActionUser($adminUser);
+        } else {
+            $content->setLastActionUser($user);
+        }
         $content->setLastActionDate(new \DateTime());
         $this->em->persist($content);
         $this->em->flush();
@@ -452,7 +466,13 @@ class ContentService
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>"ARCHIVED")));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"ARCHIVED")));
-        $content->setLastActionUser($user);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
+        $adminUser = $this->switchUserService->getAdminUser();
+        if ($ghostMode && $adminUser){
+            $content->setLastActionUser($adminUser);
+        } else {
+            $content->setLastActionUser($user);
+        }
         $content->setLastActionDate(new \DateTime());
         $this->em->persist($content);
         $this->em->flush();
@@ -499,12 +519,14 @@ class ContentService
      * @param User $user
      * @param Request $request
      * @return Content
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function saveContentAsDraft(User $user, Request $request)
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
+        $adminUser = $this->switchUserService->getAdminUser();
 
         /**
          * @var ListingStatus currentStatus
@@ -521,7 +543,13 @@ class ContentService
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=> $newStatus)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
-        $content->setLastActionUser($user);
+
+        if ($ghostMode && $adminUser){
+            $content->setLastActionUser($adminUser);
+        } else {
+            $content->setLastActionUser($user);
+        }
+
         $content->setLastActionDate(new \DateTime());
         /**
          * Save files
@@ -537,12 +565,14 @@ class ContentService
      * @param User $user
      * @param Request $request
      * @return Content
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function saveContentAsInactive(User $user, Request $request)
     {
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
+        $adminUser = $this->switchUserService->getAdminUser();
         $status = 'INACTIVE';
 
         if (isset($data->status)) {
@@ -551,7 +581,11 @@ class ContentService
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$status)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>"DEACTIVATED")));
-        $content->setLastActionUser($user);
+        if ($ghostMode && $adminUser){
+            $content->setLastActionUser($adminUser);
+        } else {
+            $content->setLastActionUser($user);
+        }
         $content->setLastActionDate(new \DateTime());
         /**
          * Save files
@@ -575,6 +609,9 @@ class ContentService
 
         $data = json_decode($request->getContent());
         $content = $this->newContent($user, $data);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
+        $adminUser = $this->switchUserService->getAdminUser();
+
         /**
          * @var ListingStatus currentStatus
          */
@@ -590,7 +627,13 @@ class ContentService
 
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$newStatus)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
-        $content->setLastActionUser($user);
+
+        if ($ghostMode && $adminUser){
+            $content->setLastActionUser($adminUser);
+        } else {
+            $content->setLastActionUser($user);
+        }
+
         $content->setOwner($user);
         $content->setLastActionDate(new \DateTime());
 
@@ -632,13 +675,22 @@ class ContentService
         $company = $user->getCompany();
         $listingCompany = $content->getCompany();
 
+
         if ( $currentStatus != "INACTIVE" || $company->getId() != $listingCompany->getId() ) return $content;
 
         $newStatus = "APPROVED";
         $lastAction = "SUBMITTED";
         $content->setStatus($this->em->getRepository("AppBundle:ListingStatus")->findOneBy(array("name"=>$newStatus)));
         $content->setLastAction($this->em->getRepository("AppBundle:ListingLastAction")->findOneBy(array("name"=>$lastAction)));
-        $content->setLastActionUser($user);
+
+        $ghostMode = $this->switchUserService->isGhostModeActive();
+        $adminUser = $this->switchUserService->getAdminUser();
+        if ($ghostMode && $adminUser){
+            $content->setLastActionUser($adminUser);
+        } else {
+            $content->setLastActionUser($user);
+        }
+
         $content->setOwner($user);
         $content->setLastActionDate(new \DateTime());
         $this->em->persist($content);

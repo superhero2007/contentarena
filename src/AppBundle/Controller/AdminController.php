@@ -64,6 +64,16 @@ class AdminController extends BaseAdminController
 
     }
 
+    public function switchUserAction(){
+
+        $id = $this->request->query->get('id');
+        $entity = $this->em->getRepository(User::class)->find($id);
+
+        return $this->redirectToRoute('homepage', array(
+            '_ghost_mode' => $entity->getEmail(),
+        ));
+    }
+
     public function createCompanyAction()
     {
         // controllers extending the base AdminController can access to the

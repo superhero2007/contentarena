@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Content;
 use AppBundle\Exception\BrowserNotSupportedException;
 use AppBundle\Exception\BrowserUnsupportedException;
+use AppBundle\Service\SwitchUserService;
 use AppBundle\Service\UserService;
 use FOS\UserBundle\Model\User;
 use Psr\Log\LoggerInterface;
@@ -27,9 +28,10 @@ class DefaultController extends BaseController
     /**
      * @Route("/", name="home")
      * @param Request $request
+     * @param SwitchUserService $switchUserService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function homeAction(Request $request)
+    public function homeAction(Request $request, SwitchUserService $switchUserService)
     {
 
         $user = $this->getUser();
@@ -41,7 +43,7 @@ class DefaultController extends BaseController
 
         if ( $user != null ) return $this->redirect("/marketplace");
 
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request, $switchUserService));
 
     }
 
@@ -56,10 +58,9 @@ class DefaultController extends BaseController
     /**
      * @Route("/public/listing/{customId}", name="publicListing")
      * @param Request $request
-     * @param UserService $userService
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function publicListing(Request $request, UserService $userService)
+    public function publicListing(Request $request)
     {
         $user = $this->getUser();
         $email = $request->get("email");
@@ -82,9 +83,10 @@ class DefaultController extends BaseController
      *     defaults={"reactRouting": null}
      *     )
      * @param Request $request
+     * @param SwitchUserService $switchUserService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction( Request $request )
+    public function indexAction( Request $request, SwitchUserService $switchUserService )
     {
         $user = $this->getUser();
         $logger = $this->get('logger');
@@ -94,7 +96,7 @@ class DefaultController extends BaseController
             "Route" => $request->getRequestUri()
         ));
 
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request, $switchUserService));
     }
 
     /**
@@ -103,9 +105,10 @@ class DefaultController extends BaseController
      *     requirements={"reactRouting"="properties|createproperty|register|reset-password|marketplace|listing|bids|messages|contentlisting|commercialoverview|settings|preferences"},
      *     name="homepageParams", defaults={"reactRouting": null, "reactParam" : null})
      * @param Request $request
+     * @param SwitchUserService $switchUserService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexParamsAction(Request $request)
+    public function indexParamsAction(Request $request, SwitchUserService $switchUserService)
     {
         $user = $this->getUser();
         $logger = $this->get('logger');
@@ -117,7 +120,7 @@ class DefaultController extends BaseController
         ));
 
 
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request, $switchUserService));
     }
 
     /**
@@ -126,11 +129,12 @@ class DefaultController extends BaseController
      *     requirements={"reactRouting"="properties|createproperty|register|reset-password|marketplace|listing|contentlisting|commercialoverview"},
      *     name="homepageParams2", defaults={"reactParam2" : null, "reactRouting": null, "reactParam" : null})
      * @param Request $request
+     * @param SwitchUserService $switchUserService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexParams2Action(Request $request)
+    public function indexParams2Action(Request $request, SwitchUserService $switchUserService)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request, $switchUserService));
     }
 
     /**
@@ -140,14 +144,15 @@ class DefaultController extends BaseController
      *     requirements={"reactRouting"="properties|marketplace|listing|contentlisting|commercialoverview"},
      *     defaults={"reactParam3" : null, "reactParam2" : null, "reactRouting": null, "reactParam" : null})
      * @param Request $request
+     * @param SwitchUserService $switchUserService
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexParams3Action(Request $request)
+    public function indexParams3Action(Request $request, SwitchUserService $switchUserService)
     {
-        return $this->render('@App/home.html.twig', $this->getInternalParams($request));
+        return $this->render('@App/home.html.twig', $this->getInternalParams($request, $switchUserService));
     }
 
-    private function getInternalParams(Request $request){
+    private function getInternalParams(Request $request, SwitchUserService $switchUserService){
         $user = $this->getUser();
         $isOwner = false;
         $refererEmail = $request->get("email");
@@ -157,6 +162,7 @@ class DefaultController extends BaseController
         $packages = $this->getDoctrine()
             ->getRepository('AppBundle:RightsPackage')
             ->findAll();
+        $ghostMode = $switchUserService->isGhostModeActive();
 
         if ($listingId && $listingId != "new" && $listingId != "1"){
             $content = $this->getDoctrine()->getRepository('AppBundle:Content')->findOneBy(['customId' => $listingId]);
@@ -178,6 +184,7 @@ class DefaultController extends BaseController
             "testStageMode"     => $this->container->getParameter('test_stage_mode'),
             "properties"        => array(),
             "editTranslation"   => $user && in_array('ROLE_ADMIN', $this->getUser()->getRoles()),
+            'ghostMode'         => $ghostMode,
         );
 
         return [

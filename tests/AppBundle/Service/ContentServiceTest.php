@@ -16,6 +16,7 @@ use AppBundle\Enum\ListingStatusEnum;
 use AppBundle\Service\ContentService;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\FileUploader;
+use AppBundle\Service\SwitchUserService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManager;
@@ -38,12 +39,13 @@ class ContentServiceTest extends TestCase
         $idGenerator = $this->createMock(RandomIdGenerator::class);
         $fileUploader = $this->createMock(FileUploader::class);
         $emailService = $this->createMock(EmailService::class);
+        $switchUserService = $this->createMock(SwitchUserService::class);
 
         $objectManager->expects($this->any())
             ->method('getRepository')
             ->will($this->returnCallback(array($this, 'returnFn')));
 
-        return new ContentService($objectManager, $idGenerator, $fileUploader, $emailService);
+        return new ContentService($objectManager, $idGenerator, $fileUploader, $emailService, $switchUserService);
     }
 
     public function returnFn()
