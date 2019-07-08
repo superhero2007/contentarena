@@ -77,13 +77,12 @@ class CmsCommercialOverview extends React.Component {
 			closedBids,
 			declinedBids,
 	  } = this.state;
-	  console.log(this.props, this.state.listings);
 
 	  if (!listings.length) {
 	  	return (
-	  		<section className="commercial-overview-tab">
-					<EmptyCommercialOverview history={history} propertyId={propertyId} />
-				</section>
+		    <section className="commercial-overview-tab">
+			    <EmptyCommercialOverview history={history} propertyId={propertyId} />
+		    </section>
 			);
 		}
 
@@ -114,110 +113,110 @@ class CmsCommercialOverview extends React.Component {
 		console.log(openBidsList, closedBidsList, declinedBidsList);
 
 	  return (
-	  	<section className="commercial-overview-tab">
-				<div className="region-filter">
-					<div className="d-flex">
-						<div className="split-filter">
-							<div className="region-filter-title">
-								<div className="title-wrapper">
-									{ <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />}
-									<div className="subtitle">
-										{ <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SUBTITLE" />}
-									</div>
-								</div>
-							</div>
-							<div className="manager-filter-container">
-								<div className="listing-filter">
-									<Select
-										name="form-field-name"
-										placeholder={this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER")}
-										isClearable
-										onChange={this.onChangeSelect}
-										multi={false}
-										value={selectedListings[0]}
-										options={listings.map(b => ({ value: b.customId, label: b.name }))}
-									/>
-									<div className="reset-listing-filter" onClick={this.onResetFilter}>
-										<img src={this.reloadIcon} alt="" />
-										<span><Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR" /></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className="split-filter">
-							<div className="region-filter-title">
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
-							</div>
-							<div className="right-legends">
-								<div className="right-legends-item">
-									<img src={nonExclusiveRightAvailable} alt="" />
-									{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE" />}
-								</div>
-								<div className="right-legends-item">
-									<img src={nonExclusiveRightOffered} alt="" />
-									{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED" />}
-								</div>
-								<div className="right-legends-item">
-									<img src={nonExclusiveRightSold} alt="" />
-									{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD" />}
-								</div>
-								<div className="right-legends-item">
-									<img src={exclusiveRightAvailable} alt="" />
-									{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE" />}
-								</div>
-								<div className="right-legends-item">
-									<img src={exclusiveRightOffered} alt="" />
-									{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED" />}
-								</div>
-								<div className="right-legends-item">
-									<img src={exclusiveRightSold} alt="" />
-									{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD" />}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="region-filter-bids">
-						<div className="region-filter-title toggle" onClick={this.toggleOpenBids}>
-							<div className="region-filter-title-text">
-								<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" />{ ` (${openBidsList.length})`}
-							</div>
-							<div className="region-filter-title-dropdown">
-								<i className={`fa fa-angle-${openBids ? "down" : "up"}`} />
-							</div>
-						</div>
-						<div className="region-filter-content">
-							{openBidsList.length > 0 && openBids && <CommercialBidsTable listings={openBidsList} type="openBids" />}
-						</div>
-					</div>
-					<div className="region-filter-bids">
-						<div className="region-filter-title toggle" onClick={this.toggleClosedBids}>
-							<div className="region-filter-title-text">
-								<Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" />{ ` (${closedBidsList.length})`}
-							</div>
-							<div className="region-filter-title-dropdown">
-								<i className={`fa fa-angle-${closedBids ? "down" : "up"}`} />
-							</div>
-						</div>
-						<div className="region-filter-content">
-							{closedBidsList.length > 0 && closedBids && <CommercialBidsTable listings={closedBidsList} type="closedBids" />}
-						</div>
-					</div>
-					<div className="region-filter-bids">
-						<div className="region-filter-title toggle" onClick={this.toggleDeclinedBids}>
-							<div className="region-filter-title-text">
-								<Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" />{ ` (${declinedBidsList.length})`}
-							</div>
-							<div className="region-filter-title-dropdown">
-								<i className={`fa fa-angle-${declinedBids ? "down" : "up"}`} />
-							</div>
-						</div>
-						<div className="region-filter-content">
-							{declinedBidsList.length > 0 && declinedBids && <CommercialBidsTable listings={declinedBidsList} type="declinedBids" />}
-						</div>
-					</div>
-				</div>
-	    </section>
-	  );
+		  <section className="commercial-overview-tab">
+			  <div className="region-filter">
+				  <div className="d-flex">
+					  <div className="split-filter">
+						  <div className="region-filter-title">
+							  <div className="title-wrapper">
+								  { <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />}
+								  <div className="subtitle">
+									  { <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SUBTITLE" />}
+								  </div>
+							  </div>
+						  </div>
+						  <div className="manager-filter-container">
+							  <div className="listing-filter">
+								  <Select
+									  name="form-field-name"
+									  placeholder={this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER")}
+									  isClearable
+									  onChange={this.onChangeSelect}
+									  multi={false}
+									  value={selectedListings[0]}
+									  options={listings.map(b => ({ value: b.customId, label: b.name }))}
+								  />
+								  <div className="reset-listing-filter" onClick={this.onResetFilter}>
+									  <img src={this.reloadIcon} alt="" />
+									  <span><Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR" /></span>
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div className="split-filter">
+						  <div className="region-filter-title">
+							  { <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
+						  </div>
+						  <div className="right-legends">
+							  <div className="right-legends-item">
+								  <img src={nonExclusiveRightAvailable} alt="" />
+								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE" />}
+							  </div>
+							  <div className="right-legends-item">
+								  <img src={nonExclusiveRightOffered} alt="" />
+								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED" />}
+							  </div>
+							  <div className="right-legends-item">
+								  <img src={nonExclusiveRightSold} alt="" />
+								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD" />}
+							  </div>
+							  <div className="right-legends-item">
+								  <img src={exclusiveRightAvailable} alt="" />
+								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE" />}
+							  </div>
+							  <div className="right-legends-item">
+								  <img src={exclusiveRightOffered} alt="" />
+								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED" />}
+							  </div>
+							  <div className="right-legends-item">
+								  <img src={exclusiveRightSold} alt="" />
+								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD" />}
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+				  <div className="region-filter-bids">
+					  <div className="region-filter-title toggle" onClick={this.toggleOpenBids}>
+						  <div className="region-filter-title-text">
+							  <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" />{ ` (${openBidsList.length})`}
+						  </div>
+						  <div className="region-filter-title-dropdown">
+							  <i className={`fa fa-angle-${openBids ? "down" : "up"}`} />
+						  </div>
+					  </div>
+					  <div className="region-filter-content">
+						  {openBidsList.length > 0 && openBids && <CommercialBidsTable listings={openBidsList} type="openBids" />}
+					  </div>
+				  </div>
+				  <div className="region-filter-bids">
+					  <div className="region-filter-title toggle" onClick={this.toggleClosedBids}>
+						  <div className="region-filter-title-text">
+							  <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" />{ ` (${closedBidsList.length})`}
+						  </div>
+						  <div className="region-filter-title-dropdown">
+							  <i className={`fa fa-angle-${closedBids ? "down" : "up"}`} />
+						  </div>
+					  </div>
+					  <div className="region-filter-content">
+						  {closedBidsList.length > 0 && closedBids && <CommercialBidsTable listings={closedBidsList} type="closedBids" />}
+					  </div>
+				  </div>
+				  <div className="region-filter-bids">
+					  <div className="region-filter-title toggle" onClick={this.toggleDeclinedBids}>
+						  <div className="region-filter-title-text">
+							  <Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" />{ ` (${declinedBidsList.length})`}
+						  </div>
+						  <div className="region-filter-title-dropdown">
+							  <i className={`fa fa-angle-${declinedBids ? "down" : "up"}`} />
+						  </div>
+					  </div>
+					  <div className="region-filter-content">
+						  {declinedBidsList.length > 0 && declinedBids && <CommercialBidsTable listings={declinedBidsList} type="declinedBids" />}
+					  </div>
+				  </div>
+			  </div>
+		  </section>
+		);
 	}
 }
 
