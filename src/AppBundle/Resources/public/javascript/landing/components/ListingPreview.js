@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty";
 import Translate from "@components/Translator/Translate";
 import Loader from "../../common/components/Loader";
 import RightsLegend from "../../main/components/RightsLegend";
-import { ROUTE_PATHS } from "@constants";
+import { DATE_FORMAT, TIME_FORMAT, ROUTE_PATHS } from "@constants";
 import ContentListingRightsPackage from "../../buy/components/ContentListingRightsPackage";
 import { getListingImage } from "../../common/utils/listing";
 
@@ -87,7 +87,7 @@ class ListingPreview extends PureComponent {
 					}
 					return (
 						<span key={season.id} className="season-item">
-							{year}
+							{`${year.split("/")[0].length === 2 && "20"}${year}`}
 							{startDate && endDate && ` (${moment(startDate).format("MMM YYYY")} - ${moment(endDate).format("MMM YYYY")})`}
 						</span>
 					);
@@ -98,6 +98,7 @@ class ListingPreview extends PureComponent {
 
 	render() {
 		const { isLoading, listing, error } = this.state;
+		const fixturesBySeason = listing ? [].concat.apply([], listing.fixturesBySeason) : [];
 		return (
 			<section className="sign-in-listing-preview-wrapper">
 				<div className="big-title">
@@ -153,10 +154,57 @@ class ListingPreview extends PureComponent {
 									</Fragment>
 								)}
 								{!!listing.seasons.length && (
-									<Fragment>
-										<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
-										{this.getSeasons()}
-									</Fragment>
+									<div className="d-flex">
+										<div className="seasons-wrapper">
+											<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
+											{this.getSeasons()}
+										</div>
+										<div className="fixtures-wrapper">
+											<div className="title"><Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" /></div>
+											<div>
+												{fixturesBySeason && fixturesBySeason.length > 0 && fixturesBySeason.slice(0, 5).map((fixture, i) => (
+													<div className="row-container" key={i}>
+														<div className="name">
+															{fixture.name}
+														</div>
+														<div className="actions" style={{ minWidth: 230 }}>
+															<div
+																className="item"
+																style={{
+																	width: "50%",
+																	marginLeft: 0,
+																}}
+															>
+																<i className="fa fa-calendar icon" />
+																{!fixture.date && "Date N/A"}
+																{fixture.date && moment(fixture.date)
+																	.format(DATE_FORMAT)}
+															</div>
+															<div
+																className="item"
+																style={{
+																	width: "50%",
+																	marginLeft: 0,
+																}}
+															>
+																<i className="fa fa-clock-o icon" />
+																{!fixture.date && "Time N/A"}
+																{fixture.date && moment(fixture.date)
+																	.format(`${TIME_FORMAT} [UTC]`)}
+															</div>
+														</div>
+													</div>
+												))}
+												{fixturesBySeason && fixturesBySeason.length > 5 && (
+													<div className="row-container">
+														<div className="name">
+															{`And ${fixturesBySeason.length - 5} more fixtures`}
+														</div>
+													</div>
+												)}
+											</div>
+										</div>
+									</div>
 								)}
 								{listing.description && (
 									<Fragment>

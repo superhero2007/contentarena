@@ -413,7 +413,7 @@ class Content implements NotifiableInterface
     /**
      * @var object
      * @ORM\Column(name="fixtures_by_season", type="object", nullable=true)
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "preview"})
      */
     private $fixturesBySeason;
 
