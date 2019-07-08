@@ -433,7 +433,6 @@ $icon-color: #00769A;
 .manager-filter-container {
   display: flex;
   flex-direction: row;
-  flex: 1;
   margin-top: 0;
   height: 60px;
 
@@ -458,6 +457,11 @@ $icon-color: #00769A;
         .Select-placeholder {
           color: $black-color;
           font-size: 13px;
+        }
+
+        input {
+          margin: 0;
+          height: 17px;
         }
       }
     }

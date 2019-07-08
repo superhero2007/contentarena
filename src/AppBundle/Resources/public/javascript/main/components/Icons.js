@@ -4,6 +4,7 @@ export const contentWhiteLogo = <img src={`${assetsBaseDir}app/img/logo_contenta
 
 export const cancelIcon = `${assetsBaseDir}app/images/cancel.png`;
 export const checkIcon = `${assetsBaseDir}app/images/check.png`;
+export const duplicateIcon = `${assetsBaseDir}app/images/duplicate.png`;
 export const bucketIcon = `${assetsBaseDir}app/images/bucket.png`;
 export const addIcon = `${assetsBaseDir}app/images/add.png`;
 export const exclamationRoundIcon = `${assetsBaseDir}app/images/exclamation_round.png`;
