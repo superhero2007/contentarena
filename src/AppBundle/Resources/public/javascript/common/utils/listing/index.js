@@ -4,6 +4,16 @@ import moment from "moment";
 import max from "lodash/max";
 import store from "../../../main/store";
 
+export const UserName = ({ firstName, lastName, roles = [] }) => {
+	const isAdmin = roles.indexOf("ROLE_ADMIN") !== -1;
+	const adminName = (isAdmin) ? "CA Admin " : "";
+	return (
+		<>
+			{`${adminName}${firstName} ${lastName}`}
+		</>
+	);
+};
+
 export const getListingImage = (props) => {
 	const { imageBase64, image, sports } = props;
 	let listingImageUrl = (imageBase64) || (image ? `${assetsBaseDir}../${image}` : null);

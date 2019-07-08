@@ -118,6 +118,11 @@ class User extends BaseUser
     private $company;
 
     /**
+     * @Groups({"board"})
+     */
+    protected $roles;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="profile", type="string", nullable=true)
@@ -299,7 +304,7 @@ class User extends BaseUser
      */
     public function getFirstName()
     {
-        return $this->firstName;
+        return "asdasd" . $this->firstName;
     }
 
     /**
