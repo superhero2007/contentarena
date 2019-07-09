@@ -65,8 +65,16 @@ class ListingPreview extends PureComponent {
 	getSeasons = () => {
 		const { seasons } = this.state.listing;
 		const filteredSeasons = seasons
-			.filter(season => season.endDate || season.startDate) // filter invalid seasons
-			.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+			.filter(season => season.endDate || season.startDate || season.year) // filter invalid seasons
+			.sort((a, b) => {
+				if (a.startDate && b.startDate) {
+					return new Date(a.startDate) - new Date(b.startDate);
+				}
+				if (a.endDate && b.endDate) {
+					return new Date(a.endDate) - new Date(b.endDate);
+				}
+				return parseInt(a.year.split("/")[0], 10) - parseInt(b.year.split("/")[0], 10);
+			});
 		return (
 			<div className="seasons-wrapper">
 				{filteredSeasons.map((season) => {
@@ -79,7 +87,8 @@ class ListingPreview extends PureComponent {
 					}
 					return (
 						<span key={season.id} className="season-item">
-							{`${year} (${moment(startDate).format("MMM YYYY")} - ${moment(endDate).format("MMM YYYY")})`}
+							{year}
+							{startDate && endDate && ` (${moment(startDate).format("MMM YYYY")} - ${moment(endDate).format("MMM YYYY")})`}
 						</span>
 					);
 				})}
@@ -116,11 +125,19 @@ class ListingPreview extends PureComponent {
 								<div className="image-wrapper">
 									{listing.featured && (
 										<div className="featured-badge">
-											<span><Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" /></span>
+											<div className="featured-badge-text"><Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" /></div>
 										</div>
 									)}
 									{getListingImage(listing)}
 								</div>
+
+								<footer className="buttons-wrapper">
+									<button className="yellow-button" onClick={this.handleRegisterClick}><Translate i18nKey="LISTING_PREVIEW_REGISTER" /></button>
+									<span className="login-wrapper">
+										<span className="log-in-text"><Translate i18nKey="LISTING_PREVIEW_HAVE_ACCOUNT" /></span>
+										<button className="link-button" onClick={this.handleLoginClick}><Translate i18nKey="LISTING_PREVIEW_LOG_IN" /></button>
+									</span>
+								</footer>
 							</div>
 							<div className="listing-data">
 								<div className="ca-title">{listing.name.toUpperCase()}</div>
@@ -147,13 +164,6 @@ class ListingPreview extends PureComponent {
 										<div className="event-wrapper">{listing.description}</div>
 									</Fragment>
 								)}
-								<footer className="buttons-wrapper">
-									<button className="yellow-button" onClick={this.handleRegisterClick}><Translate i18nKey="LISTING_PREVIEW_REGISTER" /></button>
-									<span className="login-wrapper">
-										<span className="log-in-text"><Translate i18nKey="LISTING_PREVIEW_HAVE_ACCOUNT" /></span>
-										<button className="link-button" onClick={this.handleLoginClick}><Translate i18nKey="LISTING_PREVIEW_LOG_IN" /></button>
-									</span>
-								</footer>
 							</div>
 						</section>
 					)
