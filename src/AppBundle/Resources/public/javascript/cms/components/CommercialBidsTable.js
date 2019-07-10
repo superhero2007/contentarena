@@ -36,7 +36,7 @@ class CommercialBidsTable extends React.Component {
 
 	getCell = (props) => {
 		const { value, original } = props;
-		const { customId } = original;
+		const { list: { customId } } = original;
 
 		return (
 			<ListingLink customId={customId} name={value}>
@@ -70,7 +70,7 @@ class CommercialBidsTable extends React.Component {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
-		className: "table-header",
+		className: "table-header listing-name",
 		accessor: "list.name",
 		Cell: props => this.getCell(props),
 	}, {

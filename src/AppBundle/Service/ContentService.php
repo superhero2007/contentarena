@@ -221,6 +221,11 @@ class ContentService
 
     }
 
+    public function getContentByProperty($propertyId, $user){
+        $property = $this->em->getRepository('AppBundle:Property')->findOneBy(array("customId" => $propertyId));
+        return $this->em->getRepository('AppBundle:Content')->getContentByProperty($property, $user);
+    }
+
     public function getDrafts($user) {
         $content = $this->em->getRepository('AppBundle:Content')->getDrafts($user);
         return $content;

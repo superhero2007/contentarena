@@ -33,9 +33,10 @@ class CmsCommercialOverview extends React.Component {
 	}
 
 	update = () => {
+		const { history, propertyId } = this.props;
 		this.setState({ loading: true });
 
-		ContentArena.ContentApi.getAllDeals().done((listings) => {
+		ContentArena.ContentApi.getAllDealsByPropertyId(propertyId).done((listings) => {
 			listings.forEach(l => ContentArena.Utils.contentParserFromServer(l));
 
 			this.setState({
@@ -72,10 +73,10 @@ class CmsCommercialOverview extends React.Component {
 	  const { history, propertyId } = this.props;
 	  const {
 	  	listings,
-			selectedListings,
-			openBids,
-			closedBids,
-			declinedBids,
+		  selectedListings,
+		  openBids,
+		  closedBids,
+		  declinedBids,
 	  } = this.state;
 
 	  if (!listings.length) {
@@ -86,9 +87,11 @@ class CmsCommercialOverview extends React.Component {
 			);
 		}
 
+		const allListings = selectedListings.length ? listings.filter(list => selectedListings.indexOf(list.customId) !== -1) : listings;
+
 		const openBidsList = [].concat.apply(
 			[],
-			listings.map(list => [].concat.apply(
+			allListings.map(list => [].concat.apply(
 				[],
 				list.salesPackages.map(sp => sp.bids.filter(b => b.status.name === "PENDING")
 					.map(b => Object.assign({}, { list, sp }, b))),
@@ -96,7 +99,7 @@ class CmsCommercialOverview extends React.Component {
 		);
 		const closedBidsList = [].concat.apply(
 			[],
-			listings.map(list => [].concat.apply(
+			allListings.map(list => [].concat.apply(
 				[],
 				list.salesPackages.map(sp => sp.bids.filter(b => b.status.name === "APPROVED")
 					.map(b => Object.assign({}, { list, sp }, b))),
@@ -104,13 +107,12 @@ class CmsCommercialOverview extends React.Component {
 		);
 		const declinedBidsList = [].concat.apply(
 			[],
-			listings.map(list => [].concat.apply(
+			allListings.map(list => [].concat.apply(
 				[],
 				list.salesPackages.map(sp => sp.bids.filter(b => b.status.name === "REJECTED")
 					.map(b => Object.assign({}, { list, sp }, b))),
 			)),
 		);
-		console.log(openBidsList, closedBidsList, declinedBidsList);
 
 	  return (
 		  <section className="commercial-overview-tab">

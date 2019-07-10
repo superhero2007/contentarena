@@ -246,6 +246,12 @@
         font-size: 13px;
         color: #666;
         font-weight: normal;
+
+        &.listing-name {
+          &:hover a {
+            border-bottom: 1px solid $color-blue-dark;
+          }
+        }
       }
 
       .setting-table-icon {
