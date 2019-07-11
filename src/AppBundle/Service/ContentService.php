@@ -144,15 +144,18 @@ class ContentService
 
             foreach ($content as $key => $listing)
             {
-                $listing_featured[$key] = $listing->getFeatured();
-                $listing_published[$key] = $listing->getPublishedAt();
-                $listing_relevance[$key] = $listing->getRelevance();
+                /* @var Content $listing */
+                $listingFeatured[$key] = $listing->getFeatured();
+                $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
+                $listingPublished[$key] = $listing->getPublishedAt();
+                $listingRelevance[$key] = $listing->getRelevance();
             }
 
             array_multisort(
-                $listing_featured, SORT_DESC,
-                $listing_relevance, SORT_DESC,
-                $listing_published, SORT_DESC,
+                $listingFeatured, SORT_DESC,
+                $listingFeaturedPosition, SORT_ASC,
+                $listingRelevance, SORT_DESC,
+                $listingPublished, SORT_DESC,
                 $content
             );
         }
