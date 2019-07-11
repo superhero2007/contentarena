@@ -124,7 +124,7 @@ class CommercialBidsTable extends React.Component {
 		accessor: "list.law",
 		Cell: props => (
 			<span>
-				{props.value.label}
+				{props.value.name}
 			</span>
 		),
 	}, {
@@ -145,7 +145,7 @@ class CommercialBidsTable extends React.Component {
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
 		width: 100,
-		accessor: "sp",
+		accessor: "salesPackage",
 		Cell: props => (
 			<span>
 				{`${props.value.currency.code === "EUR" ? "€" : "$"} ${parseFloat(props.value.fee).toFixed(3)}`}

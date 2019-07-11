@@ -28,7 +28,7 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="custom_id", type="string")
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property", "propertyList"})
      */
     private $customId;
 
@@ -78,7 +78,7 @@ class Bid
      * @var BidStatus
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidStatus", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property", "propertyList"})
      */
     private $status;
 
@@ -92,7 +92,7 @@ class Bid
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property", "propertyList"})
      */
     private $buyerUser;
 
@@ -118,7 +118,7 @@ class Bid
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SalesPackage", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $salesPackage;
 

@@ -53,9 +53,8 @@ class ApiPropertiesController extends Controller
     {
         $customId = $request->get("propertyId");
         $user = $this->getUser();
-        $company = $user->getCompany();
 
-        $property = $propertyService->getPropertyDetails($customId, $company);
+        $property = $propertyService->getPropertyDetails($customId, $user);
 
         if ($property == null ) {
             $errorCode = PropertyErrors::PROPERTY_DOES_NOT_EXISTS;

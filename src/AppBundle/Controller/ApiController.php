@@ -373,56 +373,6 @@ class ApiController extends BaseController
 
     }
 
-    /**
-     * @Route("/api/bid/property", name="propertyBids")
-     */
-    public function propertyBids(Request $request, BidService $bidService, ContentService $contentService)
-    {
-        $user = $this->getUser();
-        $propertyId = $request->get('propertyId');
-        $listings = $contentService->getContentByProperty($propertyId, $user);
-
-        foreach ( $listings as $key => $listing ){
-
-            $totalBids = 0;
-
-            /* @var $listing Content */
-            foreach ($listing->getSalesPackages() as $salesBundle){
-
-                $bids = ($listing->getStatus()->getName() == "EXPIRED") ?
-                    $bidService->getClosedDealsBySalesBundle($salesBundle) :
-                    $bidService->getAllBidsBySalesBundle($salesBundle);
-                $totalBids += count( $bids );
-
-                /* @var $salesBundle SalesPackage */
-                $salesBundle->setBids($bids);
-            }
-
-            $customBids = $bidService->getAllCustomBidsByContent($listing);
-
-            foreach ($customBids as $customBid){
-                /* @var Bid $customBid */
-                /* @var SalesPackage $bundle */
-                $bundle = $customBid->getSalesPackage();
-                $bundle->setBids(array($customBid));
-                $listing->addSalesPackage($bundle);
-                $totalBids += 1;
-            }
-
-            if ( $totalBids == 0 && $listing->getStatus()->getName() == "EXPIRED" ) unset($listings[$key]);
-        }
-
-        $listings = array_values($listings);
-
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($listings, 'json',SerializationContext::create()->enableMaxDepthChecks()->setGroups(array('commercial')));
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
 
     /**
      * @Route("/api/bid/accept", name="acceptBids")

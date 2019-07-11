@@ -86,14 +86,53 @@ class PropertyService
 
     /**
      * @param $customId
-     * @param Company $company
+     * @param User $user
      * @return Property|null|object
      */
-    public function getPropertyDetails($customId, Company $company){
-        return $this->repo->findOneBy(array(
+    public function getPropertyDetails($customId, User $user){
+        $company = $user->getCompany();
+        $property = $this->repo->findOneBy(array(
             "customId"=>$customId,
             "company" => $company
         ));
+        $listings = $this->contentService->getPropertyListings($property, $user);
+        $totalOpenBids = 0;
+        $totalClosedBids = 0;
+        $totalDeclinedBids = 0;
+
+        foreach ( $listings as $key => $listing ){
+            /* @var $listing Content */
+
+            $totalTerritories = 0;
+
+            foreach ($listing->getSalesPackages() as $bundle){
+                /* @var SalesPackage $bundle  */
+                $totalTerritories += count($bundle->getTerritories());
+            }
+
+            $listing->setTerritories($totalTerritories);
+            $bids = $this->bidService->getAllBidsByContent($listing);
+            $listing->setBids($bids);
+            if ( $bids != null ) $listing->setHasActivity(true);
+
+            foreach ($bids as $bid){
+                /* @var Bid $bid */
+                if ($bid->getStatus()->getName() === BidStatusEnum::PENDING ){
+                    $totalOpenBids++;
+                } else if ($bid->getStatus()->getName() === BidStatusEnum::APPROVED ){
+                    $totalClosedBids++;
+                } else {
+                    $totalDeclinedBids++;
+                }
+            }
+
+        }
+
+        $property->setListings($listings);
+        $property->setClosedBids($totalClosedBids);
+        $property->setOpenBids($totalOpenBids);
+        $property->setDeclinedBids($totalDeclinedBids);
+        return $property;
     }
 
     /**

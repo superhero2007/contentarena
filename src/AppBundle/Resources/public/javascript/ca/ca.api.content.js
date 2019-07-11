@@ -732,28 +732,6 @@ ContentArena.ContentApi = {
 
 		return deferred.promise();
 	},
-	getAllDealsByPropertyId(propertyId) {
-		const deferred = jQuery.Deferred();
-
-		$.ajax({
-			url: `${envhosturl}api/bid/property`,
-			type: "POST",
-			data: {
-				propertyId,
-			},
-			success(response) {
-				deferred.resolve(response);
-			},
-			error(data, status) {
-				deferred.reject({
-					data,
-					status,
-				});
-			},
-		});
-
-		return deferred.promise();
-	},
 	getPendingDeals() {
 		const deferred = jQuery.Deferred();
 

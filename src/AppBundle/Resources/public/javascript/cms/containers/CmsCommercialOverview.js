@@ -29,31 +29,15 @@ class CmsCommercialOverview extends React.Component {
 	}
 
 	componentDidMount() {
-		this.update();
+		const { property: { listings } } = this.props.propertyDetails;
+		this.setState({
+			listings,
+			selectedListings: listings.map(b => b.customId),
+			loading: false,
+		});
 	}
 
-	update = () => {
-		const { history, propertyId } = this.props;
-		this.setState({ loading: true });
-
-		ContentArena.ContentApi.getAllDealsByPropertyId(propertyId).done((listings) => {
-			listings.forEach(l => ContentArena.Utils.contentParserFromServer(l));
-
-			this.setState({
-				listings,
-				selectedListings: listings.map(b => b.customId),
-				loading: false,
-			});
-		});
-	};
-
 	onChangeSelect = (selectedItem) => {
-		// const { history, propertyId } = this.props;
-		// const { filter } = this.state;
-		// const filterString = (filter !== "ALL") ? (selectedItem) ? `&${filter}` : filter : "";
-		// const idString = selectedItem ? selectedItem.value : "";
-		// const prefix = (!selectedItem && filter === "ALL") ? "" : "/filter/";
-		// history.push(`/properties/${propertyId}/commercialoverview${prefix}${idString}${filterString}`);
 		this.setState({ selectedListings: [selectedItem.value] });
 	};
 
@@ -70,7 +54,7 @@ class CmsCommercialOverview extends React.Component {
 	};
 
 	render() {
-	  const { history, propertyId } = this.props;
+	  const { history, propertyId, propertyDetails: { property } } = this.props;
 	  const {
 	  	listings,
 		  selectedListings,
@@ -93,24 +77,24 @@ class CmsCommercialOverview extends React.Component {
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
-				list.salesPackages.map(sp => sp.bids.filter(b => b.status.name === "PENDING")
-					.map(b => Object.assign({}, { list, sp }, b))),
+				list.bids.filter(b => b.status.name === "PENDING")
+					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);
 		const closedBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
-				list.salesPackages.map(sp => sp.bids.filter(b => b.status.name === "APPROVED")
-					.map(b => Object.assign({}, { list, sp }, b))),
+				list.bids.filter(b => b.status.name === "APPROVED")
+					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);
 		const declinedBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
 				[],
-				list.salesPackages.map(sp => sp.bids.filter(b => b.status.name === "REJECTED")
-					.map(b => Object.assign({}, { list, sp }, b))),
+				list.bids.filter(b => b.status.name === "REJECTED")
+					.map(b => Object.assign({}, { list }, b)),
 			)),
 		);
 
@@ -180,40 +164,40 @@ class CmsCommercialOverview extends React.Component {
 				  <div className="region-filter-bids">
 					  <div className="region-filter-title toggle" onClick={this.toggleOpenBids}>
 						  <div className="region-filter-title-text">
-							  <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" />{ ` (${openBidsList.length})`}
+							  <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_OPEN_BIDS" />{ ` (${property.openBids})`}
 						  </div>
 						  <div className="region-filter-title-dropdown">
 							  <i className={`fa fa-angle-${openBids ? "down" : "up"}`} />
 						  </div>
 					  </div>
 					  <div className="region-filter-content">
-						  {openBidsList.length > 0 && openBids && <CommercialBidsTable listings={openBidsList} type="openBids" />}
+						  {property.openBids > 0 && openBids && <CommercialBidsTable listings={openBidsList} type="openBids" />}
 					  </div>
 				  </div>
 				  <div className="region-filter-bids">
 					  <div className="region-filter-title toggle" onClick={this.toggleClosedBids}>
 						  <div className="region-filter-title-text">
-							  <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" />{ ` (${closedBidsList.length})`}
+							  <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_CLOSED_DEALS" />{ ` (${property.closedBids})`}
 						  </div>
 						  <div className="region-filter-title-dropdown">
 							  <i className={`fa fa-angle-${closedBids ? "down" : "up"}`} />
 						  </div>
 					  </div>
 					  <div className="region-filter-content">
-						  {closedBidsList.length > 0 && closedBids && <CommercialBidsTable listings={closedBidsList} type="closedBids" />}
+						  {property.closedBids > 0 && closedBids && <CommercialBidsTable listings={closedBidsList} type="closedBids" />}
 					  </div>
 				  </div>
 				  <div className="region-filter-bids">
 					  <div className="region-filter-title toggle" onClick={this.toggleDeclinedBids}>
 						  <div className="region-filter-title-text">
-							  <Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" />{ ` (${declinedBidsList.length})`}
+							  <Translate i18nKey="COMMERCIAL_ACTIVITY_BID_STATUS_REJECTED" />{ ` (${property.declinedBids})`}
 						  </div>
 						  <div className="region-filter-title-dropdown">
 							  <i className={`fa fa-angle-${declinedBids ? "down" : "up"}`} />
 						  </div>
 					  </div>
 					  <div className="region-filter-content">
-						  {declinedBidsList.length > 0 && declinedBids && <CommercialBidsTable listings={declinedBidsList} type="declinedBids" />}
+						  {property.declinedBids > 0 && declinedBids && <CommercialBidsTable listings={declinedBidsList} type="declinedBids" />}
 					  </div>
 				  </div>
 			  </div>

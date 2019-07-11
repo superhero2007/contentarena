@@ -420,29 +420,6 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
      * @param Property $property
      * @return array
      */
-    public function getContentByProperty($property, $user){
-
-        return $this->createQueryBuilder('c')
-            ->innerJoin("c.status", "status")
-            ->andWhere('status.name = :archived OR status.name = :sold OR status.name = :approved OR status.name = :edited OR status.name = :expired OR status.name = :inactive' )
-            ->setParameter('sold',"SOLD_OUT")
-            ->setParameter('approved',"APPROVED")
-            ->setParameter('edited',"EDITED")
-            ->setParameter('expired',"EXPIRED")
-            ->setParameter('inactive',"INACTIVE")
-            ->setParameter('archived',"ARCHIVED")
-            ->andWhere('c.property = :property')
-            ->setParameter('property',$property)
-            ->setParameter('company',$user->getCompany())
-            ->andWhere('c.company = :company')
-            ->orderBy('c.createdAt','DESC')
-            ->getQuery()->getResult();
-    }
-
-    /**
-     * @param Property $property
-     * @return array
-     */
     public function getPropertyListings(Property $property){
 
         $now = date('Y-m-d H:i:s');
