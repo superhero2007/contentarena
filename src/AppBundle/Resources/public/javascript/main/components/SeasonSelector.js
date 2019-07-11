@@ -88,6 +88,14 @@ class SeasonSelector extends React.Component {
 		updateFromMultiple("seasons", index, "fixtures", fixtures);
 	};
 
+	onChangeFixtureTime = (i, value) => {
+		const { updateFromMultiple, seasons, index } = this.props;
+		const { fixtures } = seasons[index];
+
+		fixtures[i].time = value;
+		updateFromMultiple("seasons", index, "fixtures", fixtures);
+	};
+
 	removeFixture = (i) => {
 		const { updateFromMultiple, seasons, index } = this.props;
 		const fixtures = seasons[index].fixtures || [];
@@ -309,7 +317,9 @@ class SeasonSelector extends React.Component {
 								onAdd={this.addFixture}
 								value={fixture.name}
 								date={fixture.date}
+								time={fixture.time}
 								handleDate={e => this.onChangeFixtureDate(i, e)}
+								handleTime={e => this.onChangeFixtureTime(i, e)}
 								onChange={e => this.onChangeFixture(i, e.target.value)}
 								onRemove={() => this.removeFixture(i)}
 								showAdd={i === list.length - 1}

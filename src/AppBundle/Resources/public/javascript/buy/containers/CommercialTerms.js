@@ -182,9 +182,9 @@ class CommercialTerms extends React.Component {
 													}}
 												>
 													<i className="fa fa-clock-o icon" />
-													{!fixture.date && "Time N/A"}
-													{fixture.date && Moment(fixture.date)
-														.format(`${TIME_FORMAT} [UTC]`)}
+													{!fixture.time && !fixture.date && "Time N/A"}
+													{!fixture.time && fixture.date && Moment(fixture.date).format(`${TIME_FORMAT} [UTC]`)}
+													{fixture.time && `${fixture.time} UTC`}
 												</div>
 											</div>
 										</div>
