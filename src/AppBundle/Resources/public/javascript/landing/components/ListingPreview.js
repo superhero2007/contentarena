@@ -154,7 +154,7 @@ class ListingPreview extends PureComponent {
 									</Fragment>
 								)}
 								{!!listing.seasons.length && (
-									<div className="d-flex">
+									<div className="seasons-container">
 										<div className="seasons-wrapper">
 											<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
 											{this.getSeasons()}
@@ -168,7 +168,7 @@ class ListingPreview extends PureComponent {
 															<div className="name">
 																{fixture.name}
 															</div>
-															<div className="actions" style={{ minWidth: 230 }}>
+															<div className="actions" style={{ minWidth: 200 }}>
 																<div
 																	className="item"
 																	style={{
