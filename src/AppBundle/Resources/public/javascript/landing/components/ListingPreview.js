@@ -87,7 +87,7 @@ class ListingPreview extends PureComponent {
 					}
 					return (
 						<span key={season.id} className="season-item">
-							{`${year.split("/")[0].length === 2 && "20"}${year}`}
+							{`${year.split("/")[0].length === 2 ? "20" : ""}${year}`}
 							{startDate && endDate && ` (${moment(startDate).format("MMM YYYY")} - ${moment(endDate).format("MMM YYYY")})`}
 						</span>
 					);
@@ -159,51 +159,53 @@ class ListingPreview extends PureComponent {
 											<div className="title"><Translate i18nKey="LISTING_PREVIEW_SEASONS_TITLE" /></div>
 											{this.getSeasons()}
 										</div>
-										<div className="fixtures-wrapper">
-											<div className="title"><Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" /></div>
-											<div>
-												{fixturesBySeason && fixturesBySeason.length > 0 && fixturesBySeason.slice(0, 5).map((fixture, i) => (
-													<div className="row-container" key={i}>
-														<div className="name">
-															{fixture.name}
-														</div>
-														<div className="actions" style={{ minWidth: 230 }}>
-															<div
-																className="item"
-																style={{
-																	width: "50%",
-																	marginLeft: 0,
-																}}
-															>
-																<i className="fa fa-calendar icon" />
-																{!fixture.date && "Date N/A"}
-																{fixture.date && moment(fixture.date)
-																	.format(DATE_FORMAT)}
+										{fixturesBySeason && fixturesBySeason.length > 0 && (
+											<div className="fixtures-wrapper">
+												<div className="title"><Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" /></div>
+												<div>
+													{fixturesBySeason.slice(0, 5).map((fixture, i) => (
+														<div className="row-container" key={i}>
+															<div className="name">
+																{fixture.name}
 															</div>
-															<div
-																className="item"
-																style={{
-																	width: "50%",
-																	marginLeft: 0,
-																}}
-															>
-																<i className="fa fa-clock-o icon" />
-																{!fixture.date && "Time N/A"}
-																{fixture.date && moment(fixture.date)
-																	.format(`${TIME_FORMAT} [UTC]`)}
+															<div className="actions" style={{ minWidth: 230 }}>
+																<div
+																	className="item"
+																	style={{
+																		width: "50%",
+																		marginLeft: 0,
+																	}}
+																>
+																	<i className="fa fa-calendar icon" />
+																	{!fixture.date && "Date N/A"}
+																	{fixture.date && moment(fixture.date)
+																		.format(DATE_FORMAT)}
+																</div>
+																<div
+																	className="item"
+																	style={{
+																		width: "50%",
+																		marginLeft: 0,
+																	}}
+																>
+																	<i className="fa fa-clock-o icon" />
+																	{!fixture.date && "Time N/A"}
+																	{fixture.date && moment(fixture.date)
+																		.format(`${TIME_FORMAT} [UTC]`)}
+																</div>
 															</div>
 														</div>
-													</div>
-												))}
-												{fixturesBySeason && fixturesBySeason.length > 5 && (
-													<div className="row-container">
-														<div className="name">
-															{`And ${fixturesBySeason.length - 5} more fixtures`}
+													))}
+													{fixturesBySeason && fixturesBySeason.length > 5 && (
+														<div className="row-container">
+															<div className="name">
+																{`And ${fixturesBySeason.length - 5} more fixtures`}
+															</div>
 														</div>
-													</div>
-												)}
+													)}
+												</div>
 											</div>
-										</div>
+										)}
 									</div>
 								)}
 								{listing.description && (
