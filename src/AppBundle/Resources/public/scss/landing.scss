@@ -818,6 +818,10 @@
                         font-size: 10px;
                         color: #666;
 
+                        &:first-child {
+                          padding-top: 0;
+                        }
+
                         &:last-child {
                             border-bottom: 0;
                         }
