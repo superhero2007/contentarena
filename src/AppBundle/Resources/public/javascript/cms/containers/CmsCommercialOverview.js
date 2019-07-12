@@ -4,14 +4,7 @@ import { PropTypes } from "prop-types";
 import Select from "react-select";
 import Translate from "@components/Translator/Translate";
 import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
-import {
-	exclusiveRightAvailable,
-	nonExclusiveRightAvailable,
-	exclusiveRightOffered,
-	nonExclusiveRightOffered,
-	exclusiveRightSold,
-	nonExclusiveRightSold,
-} from "../../main/components/Icons";
+import RightsLegend from "../../main/components/RightsLegend";
 import CommercialBidsTable from "../components/CommercialBidsTable";
 
 class CmsCommercialOverview extends React.Component {
@@ -133,32 +126,7 @@ class CmsCommercialOverview extends React.Component {
 						  <div className="region-filter-title">
 							  { <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
 						  </div>
-						  <div className="right-legends">
-							  <div className="right-legends-item">
-								  <img src={nonExclusiveRightAvailable} alt="" />
-								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE" />}
-							  </div>
-							  <div className="right-legends-item">
-								  <img src={nonExclusiveRightOffered} alt="" />
-								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED" />}
-							  </div>
-							  <div className="right-legends-item">
-								  <img src={nonExclusiveRightSold} alt="" />
-								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD" />}
-							  </div>
-							  <div className="right-legends-item">
-								  <img src={exclusiveRightAvailable} alt="" />
-								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE" />}
-							  </div>
-							  <div className="right-legends-item">
-								  <img src={exclusiveRightOffered} alt="" />
-								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED" />}
-							  </div>
-							  <div className="right-legends-item">
-								  <img src={exclusiveRightSold} alt="" />
-								  { <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD" />}
-							  </div>
-						  </div>
+						  <RightsLegend isNew />
 					  </div>
 				  </div>
 				  <div className="region-filter-bids">
