@@ -207,13 +207,14 @@
 
     .row {
       display: flex;
-      margin-bottom: 20px;
+      flex-wrap: wrap;
 
       .item {
         margin: 0 20px 0 0;
         display: flex;
-        flex: 0 1 33%;
+        flex: 0 1 30%;
         flex-direction: column;
+        min-width: 200px;
 
         &:last-child {
           margin-right: inherit;
@@ -453,25 +454,35 @@
 
   justify-content: center;
   flex-direction: column;
-  background: url('../images/wall-banner.jpg') no-repeat;
-  background-size: contain;
-  background-color: #eee;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 
   .activate-user-button{
 	display: flex;
 	flex-direction: row;
 	margin: 0 auto;
     justify-content: center;
+    width: 100%;
 	button{
 	  font-size: 18px;
 	  font-weight: 600;
-	  line-height: 46px;
 	  border-radius: 5px;
 	  height: 68px;
 	  width: 290px;
-	  margin: 50px 10px 20px 10px;
+	  margin: 0 10px 20px 10px;
 	  align-items: center;
+      max-width: 100%;
+      line-height: 22px;
+      padding: 0;
 	}
+  }
+
+  .settings-header {
+    background: #eee url('../images/wall-banner.jpg') no-repeat;
+    background-size: cover;
+    padding: 30px;
+    margin: 0 -20px;
   }
 
   .big-title {
@@ -479,7 +490,7 @@
 	color: #fff;
 	font-size: 60px;
 	justify-content: center;
-	margin: 70px auto 10px;
+	margin: 40px auto;
 	line-height: 60px;
 	font-weight: 600;
 
@@ -492,24 +503,38 @@
 	}
   }
 
-  .setting-row{
+  .settings-wrapper {
+    background-color: #fff;
+    @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
+    max-width: 1000px;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 25px 20px;
+  }
+
+  .settings-title {
+    color: #03547C;
+    font-size: 21px;
+    line-height: 24px;
+    margin-bottom: 25px;
+  }
+
+  .setting-row {
 	max-width: 1000px;
 	width: 100%;
 	margin: 30px auto 0;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
 	&.mobile{
 	  flex-direction: column;
 	}
 
-	.setting-password {
-		margin-right: 15px;
-	}
-
 	.setting-validation{
-	  margin-left: 15px;
 	  display: flex;
 	  align-items: center;
 	  justify-content: center;
@@ -520,9 +545,7 @@
 	}
 	.setting-password, .setting-validation {
 	  width: 50%;
-	  background-color: #fff;
-	  padding: 25px 20px;
-	  @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
+      min-width: 260px;
 
 	  .title {
 		color: #03547C;
@@ -582,10 +605,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #fff;
-    padding: 25px 20px;
     position: relative;
-	@include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
 
 	&.mobile{
 	  padding-bottom: 0;

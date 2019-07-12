@@ -6,8 +6,6 @@ import cn from "classnames";
 import Translate from "@components/Translator/Translate";
 import { updateProfile } from "../actions/userActions";
 import PasswordValidationBox from "../components/PasswordValidationBox";
-import GeneralTerms from "../components/GeneralTerms";
-import PrivacyPolicy from "../components/PrivacyPolicy";
 import Loader from "../../common/components/Loader";
 import { initGA, TrackingEvent } from "../../common/components/Tracking";
 
@@ -210,11 +208,8 @@ class Register extends React.Component {
 			passwordCheck,
 			isPassValid,
 			updated,
-			terms,
-			privacy,
 			loading,
 		} = this.state;
-		const { activationCode } = this.props.match.params;
 
 		if (loading) {
 			return (
@@ -227,97 +222,80 @@ class Register extends React.Component {
 		TrackingEvent(`Register ${user.fullName}`, "Password", user.fullName);
 		return (
 			<div className="settings-container activate-user-container">
-				<div className={cn("big-title", { mobile: isMobileOnly, tablet: isTablet })}>
-					<Translate i18nKey="SETTINGS_WELCOME" />
-				</div>
-
-				<div className={cn("setting", { mobile: isMobileOnly })}>
-					<div className="title">
-						<Translate i18nKey="SETTINGS_LABEL_USER_TITLE_INFO" />
+				<div className="settings-header">
+					<div className={cn("big-title", { mobile: isMobileOnly, tablet: isTablet })}>
+						<Translate i18nKey="SETTINGS_WELCOME" />
 					</div>
-					{this.getPersonalInfoBox()}
 				</div>
 
-
-				<div className={cn("setting-row", { mobile: isMobileOnly })}>
-					<div className={cn("setting-password", { mobile: isMobileOnly })}>
+				<div className="settings-wrapper">
+					<div className="settings-title">
+						<Translate i18nKey="SETTINGS_REGISTER_TITLE" />
+					</div>
+					<div className={cn("setting", { mobile: isMobileOnly })}>
 						<div className="title">
-							<Translate i18nKey="REGISTER_LABEL_SELECT_PASSWORD" />
+							<Translate i18nKey="SETTINGS_LABEL_USER_TITLE_INFO" />
 						</div>
-						<div className="subtitle">
-							<Translate i18nKey="SETTINGS_LABEL_CHANGE_PASSWORD_2" />
-						</div>
-						<div className="password">
-							<label><b><Translate i18nKey="SETTINGS_LABEL_TYPE_NEW_PASSWORD" /></b></label>
-							<input
-								type="password"
-								onChange={(e) => {
-									this.setState({
-										password: e.target.value,
-									});
-								}}
-							/>
-
-							<label><b><Translate i18nKey="SETTINGS_LABEL_RETYPE_NEW_PASSWORD" /></b></label>
-							<input
-								type="password"
-								onChange={(e) => {
-									this.setState({
-										passwordCheck: e.target.value,
-									});
-								}}
-							/>
-
-						</div>
+						{this.getPersonalInfoBox()}
 					</div>
 
-					{password && (
-						<div className={cn("setting-validation", { mobile: isMobileOnly })}>
-							<PasswordValidationBox
-								password={password}
-								passwordCheck={passwordCheck}
-								onPasswordValid={this.handlePasswordValid}
-							/>
+
+					<div className={cn("setting-row", { mobile: isMobileOnly })}>
+						<div className={cn("setting-password", { mobile: isMobileOnly })}>
+							<div className="title">
+								<Translate i18nKey="REGISTER_LABEL_SELECT_PASSWORD" />
+							</div>
+							<div className="subtitle">
+								<Translate i18nKey="SETTINGS_LABEL_CHANGE_PASSWORD_2" />
+							</div>
+							<div className="password">
+								<label><b><Translate i18nKey="SETTINGS_LABEL_TYPE_NEW_PASSWORD" /></b></label>
+								<input
+									type="password"
+									onChange={(e) => {
+										this.setState({
+											password: e.target.value,
+										});
+									}}
+								/>
+
+								<label><b><Translate i18nKey="SETTINGS_LABEL_RETYPE_NEW_PASSWORD" /></b></label>
+								<input
+									type="password"
+									onChange={(e) => {
+										this.setState({
+											passwordCheck: e.target.value,
+										});
+									}}
+								/>
+
+							</div>
 						</div>
-					)}
-				</div>
 
-				<div className={cn("setting", { mobile: isMobileOnly })}>
-					<div className="title"><Translate i18nKey="SETTINGS_LABEL_TERMS_TITLE" /></div>
-					<div className="terms-confirm">
-						<GeneralTerms
-							activationCode={activationCode}
-							defaultChecked={terms}
-							value={terms}
-							onChange={(e) => {
-								this.setState({ terms: e.target.checked });
-							}}
-						/>
-
-						<PrivacyPolicy
-							defaultChecked={privacy}
-							value={privacy}
-							onChange={(e) => {
-								this.setState({ privacy: e.target.checked });
-							}}
-						/>
-					</div>
-
-				</div>
-
-				<div className="activate-user-button">
-					<Loader loading={updatingUser} small>
-						{!updatingUser && !updated && (
-							<button
-								onClick={this.updateInfo}
-								disabled={!isPassValid || !privacy || !terms || !this.isUserValid()}
-								className="standard-button"
-								style={{ maxWidth: 300, lineHeight: "22px" }}
-							>
-								<Translate i18nKey="REGISTER_SUCCESS_MESSAGE" />
-							</button>
+						{password && (
+							<div className={cn("setting-validation", { mobile: isMobileOnly })}>
+								<PasswordValidationBox
+									password={password}
+									passwordCheck={passwordCheck}
+									onPasswordValid={this.handlePasswordValid}
+								/>
+							</div>
 						)}
-					</Loader>
+					</div>
+
+					<div className="activate-user-button">
+						<Loader loading={updatingUser} small>
+							{!updatingUser && !updated && (
+								<button
+									onClick={this.updateInfo}
+									disabled={!isPassValid || !this.isUserValid()}
+									className="standard-button"
+								>
+									<Translate i18nKey="REGISTER_SUCCESS_MESSAGE" />
+								</button>
+							)}
+						</Loader>
+					</div>
 				</div>
 			</div>
 		);
