@@ -3,6 +3,8 @@ import React from "react";
 export const contentWhiteLogo = <img src={`${assetsBaseDir}app/img/logo_contentarena.png`} alt="Content Arena" />;
 
 export const cancelIcon = `${assetsBaseDir}app/images/cancel.png`;
+export const checkIcon = `${assetsBaseDir}app/images/check.png`;
+export const duplicateIcon = `${assetsBaseDir}app/images/duplicate.png`;
 export const bucketIcon = `${assetsBaseDir}app/images/bucket.png`;
 export const addIcon = `${assetsBaseDir}app/images/add.png`;
 export const exclamationRoundIcon = `${assetsBaseDir}app/images/exclamation_round.png`;
@@ -35,6 +37,13 @@ export const blueCheckIcon = `${assetsBaseDir}app/images/rights/non-exclusive.sv
 export const greyMinusIcon = `${assetsBaseDir}app/images/rights/non-included.svg`;
 export const yellowCheckOutlined = `${assetsBaseDir}app/images/rights/yellow_check_outlined.svg`;
 export const blueCheckOutlined = `${assetsBaseDir}app/images/rights/blue_check_outlined.svg`;
+
+export const exclusiveRightAvailable = `${assetsBaseDir}app/images/rights/exclusive_right_available.svg`;
+export const nonExclusiveRightAvailable = `${assetsBaseDir}app/images/rights/non_exclusive_right_available.svg`;
+export const exclusiveRightOffered = `${assetsBaseDir}app/images/rights/exclusive_right_offered.svg`;
+export const nonExclusiveRightOffered = `${assetsBaseDir}app/images/rights/non_exclusive_right_offered.svg`;
+export const exclusiveRightSold = `${assetsBaseDir}app/images/rights/exclusive_right_sold.svg`;
+export const nonExclusiveRightSold = `${assetsBaseDir}app/images/rights/non_exclusive_right_sold.svg`;
 
 // events
 export const tournamentIcon = <img src={`${assetsBaseDir}app/images/listing/trophy.svg`} alt="" />;

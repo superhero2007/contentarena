@@ -20,7 +20,7 @@ class SalesPackage
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "propertyList", "property"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class SalesPackage
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
-     * @Groups({"listing","closed", "commercial", "home"})
+     * @Groups({"listing","closed", "commercial", "home", "propertyList", "property"})
      */
     private $name;
 
@@ -36,7 +36,7 @@ class SalesPackage
      * @var int
      *
      * @ORM\Column(name="fee", type="bigint")
-     * @Groups({"listing", "commercial", "home"})
+     * @Groups({"listing", "commercial", "home", "propertyList", "property"})
      */
     private $fee;
 
@@ -66,7 +66,7 @@ class SalesPackage
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Currency")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"listing", "closed", "commercial", "home"})
+     * @Groups({"listing", "closed", "commercial", "home", "propertyList", "property"})
      */
     private $currency;
 
@@ -83,7 +83,7 @@ class SalesPackage
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="sales_package_sales_package_territory_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "closed", "commercial", "home"})
+     * @Groups({"listing", "closed", "commercial", "home", "propertyList", "property"})
      */
     private $territories;
 
@@ -98,7 +98,7 @@ class SalesPackage
     private $excludedCountries;
 
     /**
-     * @Groups({"commercial"})
+     * @Groups({"commercial", "propertyList", "property"})
      * @MaxDepth(4)
      */
     private $bids;

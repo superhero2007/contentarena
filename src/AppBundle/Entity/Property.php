@@ -117,21 +117,27 @@ class Property implements NotifiableInterface
     /**
      * @Serializer\Type("array<AppBundle\Entity\Content>")
      * @var array<AppBundle\Entity\Content>
-     * @Groups({"propertyList"})
+     * @Groups({"property", "propertyList"})
      */
     private $listings;
 
     /**
      * @var integer
-     * @Groups({"propertyList"})
+     * @Groups({"property", "propertyList"})
      */
     private $openBids;
 
     /**
      * @var integer
-     * @Groups({"propertyList"})
+     * @Groups({"property", "propertyList"})
      */
     private $closedBids;
+
+    /**
+     * @var integer
+     * @Groups({"property", "propertyList"})
+     */
+    private $declinedBids;
 
     /**
      * @return mixed
@@ -350,6 +356,22 @@ class Property implements NotifiableInterface
     public function setClosedBids($closedBids)
     {
         $this->closedBids = $closedBids;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclinedBids()
+    {
+        return $this->declinedBids;
+    }
+
+    /**
+     * @param int $declinedBids
+     */
+    public function setDeclinedBids($declinedBids)
+    {
+        $this->declinedBids = $declinedBids;
     }
 
 }

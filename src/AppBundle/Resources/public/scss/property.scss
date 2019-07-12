@@ -284,12 +284,10 @@
     justify-content: flex-start;
     display: flex;
   }
-  .right-legends{
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-    .right-legends-item{
-      display: flex;
+  .RightsLegend{
+    flex-wrap: wrap;
+    margin-top: 10px;
+    .item{
       flex-direction: row;
       flex: 1 0 33%;
       color: #666666;
@@ -297,10 +295,7 @@
       line-height: 14px;
       overflow: hidden;
       margin: 5px 0 25px;
-      align-items: center;
-      img{
-        margin-right: 5px
-      }
+      font-weight: normal;
     }
   }
   .property-cancel-button{
@@ -344,17 +339,40 @@
         }
       }
     }
-    .region-filter-title{
+    .region-filter-title {
       color: #333333;
       font-size: 16px;
       font-weight: bold;
       margin: 25px 0 17px;
       border-bottom: 1px solid #333;
       padding: 0 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .title-wrapper {
+        margin-top: -26px;
+      }
+
+      .subtitle {
+        color: #666666;
+        font-size: 13px;
+        font-weight: 100;
+        line-height: 18px;
+        margin: 4px 0;
+      }
+
+      &.toggle {
+        cursor: pointer;
+      }
 
 	  button{
 		outline: none;
 	  }
+
+      &-dropdown i {
+        font-size: 28px;
+      }
     }
     .region-filter-subtitle{
       color: #333333;
@@ -719,7 +737,12 @@
 	  }
 	}
   }
-  .commercial-overview-tab{}
+  .commercial-overview-tab {
+    .manager-filter-container {
+      margin-top: 10px;
+      align-items: flex-start;
+    }
+  }
   .fixture-tab{
     button{
       height: 40px;

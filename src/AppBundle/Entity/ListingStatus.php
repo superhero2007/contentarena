@@ -26,7 +26,7 @@ class ListingStatus
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"board", "listing", "home", "propertyList"})
+     * @Groups({"board", "listing", "home", "propertyList", "property"})
      */
     private $name;
 

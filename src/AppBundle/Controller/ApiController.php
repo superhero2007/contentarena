@@ -373,6 +373,7 @@ class ApiController extends BaseController
 
     }
 
+
     /**
      * @Route("/api/bid/accept", name="acceptBids")
      * @param Request $request
