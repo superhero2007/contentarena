@@ -226,11 +226,17 @@ class Register extends React.Component {
 					<div className={cn("big-title", { mobile: isMobileOnly, tablet: isTablet })}>
 						<Translate i18nKey="SETTINGS_WELCOME" />
 					</div>
+					<div className={cn("big-subtitle", { mobile: isMobileOnly, tablet: isTablet })}>
+						<Translate i18nKey="SETTINGS_WELCOME_SUBTITLE" />
+					</div>
 				</div>
 
 				<div className="settings-wrapper">
-					<div className="settings-title">
+					<div className={cn("settings-title", { mobile: isMobileOnly })}>
 						<Translate i18nKey="SETTINGS_REGISTER_TITLE" />
+					</div>
+					<div className={cn("settings-subtitle", { mobile: isMobileOnly })}>
+						<Translate i18nKey="SETTINGS_REGISTER_SUBTITLE" />
 					</div>
 					<div className={cn("setting", { mobile: isMobileOnly })}>
 						<div className="title">

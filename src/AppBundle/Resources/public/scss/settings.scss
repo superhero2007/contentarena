@@ -455,10 +455,6 @@
     padding: 0;
     .settings-wrapper{
       margin-top: 0;
-      .settings-title{
-        margin-bottom: 0;
-        font-size: 23px;
-      }
     }
   }
 
@@ -492,28 +488,42 @@
     background: #eee url('../images/wall-banner.jpg') no-repeat;
     background-size: cover;
     padding: 30px;
-    margin: 0 -20px;
     text-align: center;
   }
 
   .big-title {
 	display: flex;
 	color: #fff;
-	font-size: 60px;
+	font-size: 40px;
 	justify-content: center;
-	margin: 40px auto;
-	line-height: 60px;
+	margin: 20px auto;
 	font-weight: 600;
 
 	&.tablet{
-	  font-size: 45px;
+	  font-size: 30px;
 	}
 	&.mobile{
-	  font-size: 26px;
+	  font-size: 20px;
 	  text-align: center;
-      line-height: 26px;
       margin: 0;
 	}
+  }
+
+  .big-subtitle {
+    display: flex;
+    color: #fff;
+    font-size: 21px;
+    justify-content: center;
+    font-weight: 400;
+
+    &.tablet{
+      font-size: 16px;
+    }
+    &.mobile{
+      font-size: 12px;
+      text-align: center;
+      margin: 0;
+    }
   }
 
   .settings-wrapper {
@@ -530,8 +540,19 @@
   .settings-title {
     color: #03547C;
     font-size: 21px;
-    line-height: 24px;
-    margin-bottom: 25px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+
+    &.mobile {
+      font-size: 23px;
+    }
+  }
+
+  .settings-subtitle {
+    color: #4F4F4F;
+    font-size: 16px;
+    font-weight: 100;
   }
 
   .setting-row {
