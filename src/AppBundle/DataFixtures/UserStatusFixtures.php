@@ -17,10 +17,11 @@ class UserStatusFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $content = array(
-            'On Hold',
             'Active',
-            'Deactivated',
-            'Declined'
+            'Archived',
+            'Inactive',
+            'Incomplete',
+            'Invited'
         );
 
         for ($i = 0; $i < count($content); $i++) {

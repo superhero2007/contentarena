@@ -28,6 +28,12 @@ use JMS\Serializer\Annotation\Groups;
 class User extends BaseUser
 {
 
+    public static $ACTIVE_STATUS = "Active";
+    public static $INACTIVE_STATUS = "Inactive";
+    public static $ARCHIVED_STATUS = "Archived";
+    public static $INCOMPLETE_STATUS = "Incomplete";
+
+
     public function __construct()
     {
         parent::__construct();
@@ -235,6 +241,12 @@ class User extends BaseUser
     protected $receivePreferenceNotifications = true;
 
     /**
+     * @var string
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    protected $notes;
+
+    /**
      * @return mixed
      */
     public function getRegisteredAt()
@@ -418,7 +430,7 @@ class User extends BaseUser
      *
      * @param Country $country
      *
-     * @return User
+     * @return void
      */
     public function setCountry($country)
     {
@@ -428,7 +440,7 @@ class User extends BaseUser
     /**
      * Get country
      *
-     * @return Country
+     * @return string
      */
     public function getCountry()
     {
@@ -664,6 +676,31 @@ class User extends BaseUser
     public function setReceivePreferenceNotifications($receivePreferenceNotifications)
     {
         $this->receivePreferenceNotifications = $receivePreferenceNotifications;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param string $notes
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function canLogin()
+    {
+        return $this->getStatus()->getName() !== $this::$ARCHIVED_STATUS &&
+            $this->getStatus()->getName() !== $this::$INACTIVE_STATUS;
     }
 
 
