@@ -278,7 +278,7 @@ class ApiListingController extends Controller
      * @Route("/api/content/preview", name="listingDetailsPreview")
      * @param Request $request
      * @param ContentService $contentService
-     * @return JsonResponse
+     * @return Response
      */
     public function listingDetailsPreview(Request $request, ContentService $contentService){
         $customId = $request->get('id');
@@ -292,7 +292,10 @@ class ApiListingController extends Controller
             return $this->getErrorResponse(ListingErrors::class, 100);
         }
 
-        $data = array('success'=>true, 'listing' => $listingPreview);
-        return $this->getSerializedResponse($data, array('preview'));
+        $namingStrategy = new IdenticalPropertyNamingStrategy();
+        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
+        $data = $serializer->serialize(array('success'=>true, 'listing' => $listingPreview), 'json',SerializationContext::create()->setGroups(array('preview')));
+        $response = new Response($data);
+        return $response;
     }
 }
