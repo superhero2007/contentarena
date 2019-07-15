@@ -118,7 +118,7 @@ class User extends BaseUser
     private $company;
 
     /**
-     * @Groups({"board"})
+     * @Groups({"board", "home"})
      */
     protected $roles;
 

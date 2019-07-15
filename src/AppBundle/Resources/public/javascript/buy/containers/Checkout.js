@@ -23,6 +23,7 @@ import { disableValidation, enableValidation } from "../../main/actions/validati
 import ExtraTerritories from "../../main/components/ExtraTerritories";
 import Loader from "../../common/components/Loader";
 import { BUNDLE_SALES_METHOD } from "../../common/constants";
+import { GhostModeDisabledMessage } from "../../common/components/Utils/Utils";
 
 const labelStyle = {
 	height: "35px",
@@ -59,8 +60,6 @@ class Checkout extends React.Component {
 			content: props.listing,
 			company: props.company,
 			spinner: false,
-			tab: props.tab || "bundles",
-			buyingMode: props.tab && props.tab === "checkout",
 			soldOut: false,
 			selectedPackages: selectedPackages || {},
 			bundles: selectedPackages,
@@ -704,7 +703,7 @@ class Checkout extends React.Component {
 
 	render() {
 		ReactTooltip.rebuild();
-		const { listing, validation } = this.props;
+		const { listing, validation, common } = this.props;
 		const {
 			signature,
 			signatureName,
@@ -714,6 +713,7 @@ class Checkout extends React.Component {
 			bundles,
 		} = this.state;
 
+		const { ghostMode } = common;
 		const isTermsInvalid = !terms && validation;
 
 		const fixedPackages = bundles.filter(item => item.salesMethod === BUNDLE_SALES_METHOD.FIXED);
@@ -851,10 +851,11 @@ class Checkout extends React.Component {
 					<Loader loading={spinner} small>
 						<button
 							className="ca-btn primary"
-							disabled={this.buttonDisabled()}
+							disabled={this.buttonDisabled() || ghostMode}
 							onClick={this.placeBid}
 						>
 							<Translate i18nKey="CHECKOUT_COMPLETE_TRANSACTION" />
+							{ghostMode && <GhostModeDisabledMessage />}
 						</button>
 					</Loader>
 				</div>
@@ -867,7 +868,11 @@ Checkout.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+	validation: state.validation,
+	common: state.common,
+	user: state.user,
+});
 
 const mapDispatchToProps = dispatch => ({
 	enableValidation: () => dispatch(enableValidation()),

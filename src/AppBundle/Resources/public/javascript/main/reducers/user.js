@@ -7,7 +7,7 @@ export const userTypes = {
 
 const defaultUser = {
 	profile: "SELLER",
-
+	roles: [],
 };
 
 export const user = (state = defaultUser, action) => {
@@ -28,3 +28,5 @@ export const user = (state = defaultUser, action) => {
 		return state;
 	}
 };
+
+export const userIsAdmin = state => state.user.roles.filter(role => role === "ROLE_ADMIN").length > 0;

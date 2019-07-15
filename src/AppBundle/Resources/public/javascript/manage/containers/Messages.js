@@ -10,6 +10,9 @@ import ChatMessage from "../../main/components/ChatMessage";
 import AttachmentUploader from "../../main/components/AttachmentUploader";
 import { attachmentClipIcon } from "../../main/components/Icons";
 import Loader from "../../common/components/Loader";
+import api from "../../api";
+import { userIsAdmin } from "../../main/reducers/user";
+import { GhostModeDisabledMessage } from "../../common/components/Utils/Utils";
 
 class Messages extends React.Component {
 	constructor(props) {
@@ -32,26 +35,31 @@ class Messages extends React.Component {
 		});
 
 
-		ContentArena.ContentApi.getThreads().done((threads) => {
-			let selectedThread;
-			const
-				{ customId } = this.props.match.params;
+		api.messages.getThreads()
+			.then(({ data }) => {
+				let selectedThread;
+				const { customId } = this.props.match.params;
+				const threads = data.filter(t => t.lastMessageContent !== undefined || (customId && t.customId === customId));
 
-			threads = threads.filter(t => t.lastMessageContent !== undefined || (customId && t.customId === customId));
+				if (customId) {
+					selectedThread = threads.filter(t => t.customId === this.props.match.params.customId)[0];
+				} else if (threads.length > 0) {
+					selectedThread = threads[0];
+				}
 
-			if (customId) {
-				selectedThread = threads.filter(t => t.customId === this.props.match.params.customId)[0];
-			} else if (threads.length > 0) {
-				selectedThread = threads[0];
-			}
+				this.setState({
+					threads,
+					selectedThread,
+				});
 
-			this.setState({
-				threads,
-				selectedThread,
-				loadingThreads: false,
+				this.updateMessages();
+			})
+			.catch(() => {
+				console.log("fetch messages error");
+			})
+			.finally(() => {
+				this.setState({ loadingThreads: false });
 			});
-			this.updateMessages();
-		});
 	}
 
 	selectThread = (selectedThread) => {
@@ -178,7 +186,8 @@ class Messages extends React.Component {
 			saving,
 		} = this.state;
 
-		const { user } = this.props;
+		const { user, common } = this.props;
+		const { ghostMode } = common;
 
 		return (
 			<React.Fragment>
@@ -258,35 +267,41 @@ class Messages extends React.Component {
 							onCancel={this.cancelAttachment}
 						/>
 						<div className="message-input">
-							{/* <div className={"message-input-title"}>
-
-                            </div> */}
 							<div className="d-flex align-items-center">
-								<textarea
-									value={inputMessage}
-									placeholder={this.context.t("MESSAGES_TITLE")}
-									onChange={(e) => {
-										this.setState({ inputMessage: e.target.value });
-									}}
-									disabled={attachmentReady}
-									className="message-content"
-								/>
+								{!ghostMode && (
+									<textarea
+										value={inputMessage}
+										placeholder={this.context.t("MESSAGES_TITLE")}
+										onChange={(e) => {
+											this.setState({ inputMessage: e.target.value });
+										}}
+										disabled={attachmentReady}
+										className="message-content"
+									/>
+								)}
+								{ghostMode && <GhostModeDisabledMessage />}
+							</div>
 
-							</div>
 						</div>
+
 						<div className="message-input-tools">
-							<div className="attachment-icon" onClick={this.openAttachmentUploader}>
-								{attachmentClipIcon}
-							</div>
-							<button
-								className="standard-button"
-								onClick={this.send}
-								disabled={(!inputMessage || inputMessage === "" || saving) && !attachmentReady}
-							>
-								{!saving && <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
-								{saving && <i className="fa fa-cog fa-spin" />}
-							</button>
+							{!ghostMode && (
+								<div className="attachment-icon" onClick={this.openAttachmentUploader}>
+									{attachmentClipIcon}
+								</div>
+							)}
+							{!ghostMode && (
+								<button
+									className="standard-button"
+									onClick={this.send}
+									disabled={(!inputMessage || inputMessage === "" || saving) && !attachmentReady}
+								>
+									{!saving && <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
+									{saving && <i className="fa fa-cog fa-spin" />}
+								</button>
+							)}
 						</div>
+
 					</div>
 				)}
 
@@ -304,7 +319,10 @@ Messages.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+	user: state.user,
+	common: state.common,
+});
 
 export default connect(
 	mapStateToProps,

@@ -8,18 +8,24 @@ import HeaderNotifications from "./HeaderNotifications";
 import InviteUsersModal from "../../common/modals/InviteUsersModal";
 import { inviteIcon } from "./Icons";
 import { ROUTE_PATHS } from "@constants";
+import { userIsAdmin } from "../reducers/user";
+import api from "../../api";
 
 const HeaderBarTab = ({
 	match, children, route, className = "", linkClass = "", onClick,
 }) => (
 	<div className={(match) ? "tab active-tab" : `tab ${className}`} onClick={onClick}>
-		<Link to={route} className={linkClass}>{children}</Link>
+		<Link to={route} className={linkClass}>
+			{children}
+		</Link>
 	</div>
 );
 
 const CustomLink = ({ match, children, route }) => (
 	<div className={(match) ? "tab active-tab" : "tab"}>
-		<a href={route}>{children}</a>
+		<a href={route}>
+			{children}
+		</a>
 	</div>
 );
 
@@ -110,23 +116,24 @@ class HeaderBar extends React.Component {
 	}
 
 	loadNotifications() {
-		ContentArena.Api.getNotifications().then(({ data }) => {
-			if (!data) {
-				return;
-			}
+		api.notifications.getNotifications()
+			.then(({ data }) => {
+				if (!data) {
+					return;
+				}
 
-			data.sort((a, b) => b.id - a.id);
-			const notifications = data.filter(item => item.type.name !== "MESSAGE");
-			const unseenNotificationsCount = notifications.filter(item => !item.seen).length;
-			const unseenMessagesCount = data.filter(item => item.type.name === "MESSAGE").length;
+				data.sort((a, b) => b.id - a.id);
+				const notifications = data.filter(item => item.type.name !== "MESSAGE");
+				const unseenNotificationsCount = notifications.filter(item => !item.seen).length;
+				const unseenMessagesCount = data.filter(item => item.type.name === "MESSAGE").length;
 
-			this.setState({
-				dataLoading: false,
-				unseenNotificationsCount,
-				unseenMessagesCount,
-				notifications,
+				this.setState({
+					dataLoading: false,
+					unseenNotificationsCount,
+					unseenMessagesCount,
+					notifications,
+				});
 			});
-		});
 	}
 
 	isMarketplaceMatch = url => url === "/marketplace" || url === "/marketplace/filter/multi";
@@ -135,7 +142,7 @@ class HeaderBar extends React.Component {
 
 	render() {
 		const {
-			tab, profile, match, common, user,
+			tab, profile, match, common, user, userIsAdmin,
 		} = this.props;
 		const {
 			inviteModalOpen, dataLoading, notifications, unseenNotificationsCount, unseenMessagesCount, isDownArrowShown,
@@ -301,6 +308,12 @@ class HeaderBar extends React.Component {
 										<i className="fa fa-sign-out" />
 										<Translate i18nKey="HEADER_LINK_LOGOUT" />
 									</a>
+									{userIsAdmin && (
+										<a href="/admin" className="tab popup-item">
+											<i className="fa fa-cog" />
+											Admin
+										</a>
+									)}
 								</div>
 							</div>
 						</div>
@@ -328,13 +341,15 @@ class HeaderBar extends React.Component {
 
 	markMessagesAsSeen = () => {
 		const { unseenMessagesCount } = this.state;
+		const { common } = this.props;
+		const { ghostMode } = common;
 
 		this.setState({
 			unseenMessagesCount: 0,
 		});
 
-		if (unseenMessagesCount) {
-			ContentArena.Api.markMessagesAsSeen();
+		if (unseenMessagesCount && !ghostMode) {
+			api.notifications.markMessagesAsSeen();
 		}
 	};
 }
@@ -347,6 +362,7 @@ HeaderBar.contextTypes = {
 const mapStateToProps = state => ({
 	common: state.common,
 	user: state.user,
+	userIsAdmin: userIsAdmin(state),
 });
 
 export default connect(

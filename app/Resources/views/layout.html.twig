@@ -24,8 +24,10 @@
 
             var assetsBaseDir = "{{ asset('bundles/') }}";
         </script>
-        <script src="https://browser.sentry-cdn.com/4.6.4/bundle.min.js" crossorigin="anonymous" async></script>
-        
+        {% if app.environment != "dev" %}
+            <script src="https://browser.sentry-cdn.com/4.6.4/bundle.min.js" crossorigin="anonymous" async></script>
+        {% endif %}
+
         <title>Content Arena</title>
     </head>
     <body class="page-home">
