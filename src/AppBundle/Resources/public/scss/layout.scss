@@ -338,28 +338,6 @@ h7 {
 //}
 
 textarea {
-  -webkit-writing-mode: horizontal-tb !important;
-  text-rendering: auto;
-  letter-spacing: normal;
-  word-spacing: normal;
-  text-transform: none;
-  text-indent: 0;
-  text-shadow: none;
-  display: inline-block;
-  text-align: start;
-  -webkit-appearance: textarea;
-  background-color: white;
-  -webkit-rtl-ordering: logical;
-  flex-direction: column;
-  cursor: text;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  margin: 0;
-  font: 400 11px system-ui;
-  border: 1px solid initial;
-  border-image: initial;
-  font-family: "Open Sans", sans-serif;
-
   width: 100% !important;
   // min-height: 100px;
   padding: 12px 7px;
