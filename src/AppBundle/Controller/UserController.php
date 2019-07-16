@@ -149,6 +149,13 @@ class UserController extends FOSRestController
         $emailService = $this->container->get("AppBundle\Service\EmailService");
         /** @var User $user */
         if (!$user) $user = $userManager->createUser();
+
+        $userStatus = $this->em
+            ->getRepository('AppBundle:UserStatus')
+            ->findByName(User::$PENDING_STATUS);
+
+        if ($userStatus) $user->setStatus($userStatus);
+
         $user->setEnabled(true);
         $user->setEmail($email);
         $user->setUsername($email);
