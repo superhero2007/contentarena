@@ -158,6 +158,18 @@
     left: -28px;
     top: 20px;
     transform: rotate(45deg);
+    height: 31px;
+  }
+  & > span{
+    transform: rotate(45deg);
+    display: inline-block;
+    color: #fff;
+    font-size: 14px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: absolute;
+    left: 15px;
+    top: 26px;
   }
 
   &:before {

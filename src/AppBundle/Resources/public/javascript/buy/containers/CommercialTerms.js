@@ -104,11 +104,12 @@ class CommercialTerms extends React.Component {
 								</div>
 								<div className="d-flex">
 									<b>
-										{website && website.map(website => (
+										{website && website.map((website, key) => (
 											<a
 												href={ContentArena.Utils.getWebsiteURl(website)}
 												target="_blank"
 												rel="noopener noreferrer"
+												key={key}
 											>
 												{website}
 											</a>
@@ -126,8 +127,8 @@ class CommercialTerms extends React.Component {
 								</div>
 								<div className="d-flex">
 									<b>
-										{attachments.map(a => (
-											<div className="attachment-item">
+										{attachments.map((a, key) => (
+											<div className="attachment-item" key={key}>
 												<a download={a.name} target="_blank" href={this.baseDir + a.file} rel="noopener noreferrer">
 													<img src={pdfIcon} alt="" />
 													{a.name}
