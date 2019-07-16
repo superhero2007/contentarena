@@ -33,7 +33,7 @@ class SuperRightList extends React.Component {
 		if (!rightsPackage.has(superRight.id)) {
 			rightsPackage.set(superRight.id, {
 				...superRight,
-				exclusive: false,
+				exclusive: "",
 			});
 			this.props.superRightsUpdated(rightsPackage);
 		}
@@ -83,9 +83,9 @@ class SuperRightList extends React.Component {
 	};
 
 	getRadioBoxValue = (id) => {
-		const { rightsPackage } = this.state;
+		const { rightsPackage, offers } = this.state;
 		const superRight = rightsPackage.get(id);
-		return superRight && superRight.exclusive || false;
+		return superRight && superRight.exclusive !== "" ? (superRight.exclusive ? offers.EXCLUSIVE : offers.NON_EXCLUSIVE) : "";
 	};
 
 	isInputBoxDisabled = (id) => {
@@ -101,7 +101,7 @@ class SuperRightList extends React.Component {
 	render() {
 		const hasSoldAnyPackage = this.hasSalesPackagesSold();
 		const { validation, rightsPackage } = this.props;
-		const isInvalid = rightsPackage.length === 0 && validation;
+		const isInvalid = rightsPackage.filter(element => element.exclusive !== "").length === 0 && validation;
 
 		return (
 			<div className="right-selector package-selector">
@@ -162,8 +162,7 @@ class SuperRightList extends React.Component {
 									const { offers } = this.state;
 									const exclusiveIdAttr = `exc-id-${shortLabel}`;
 									const nonExclusiveIdAttr = `non-exc-id-${shortLabel}`;
-									const offerValue = this.getRadioBoxValue(id)
-										? offers.EXCLUSIVE : offers.NON_EXCLUSIVE;
+									const offerValue = this.getRadioBoxValue(id);
 									const isDisabled = hasSoldAnyPackage || this.isInputBoxDisabled(id);
 
 									return (

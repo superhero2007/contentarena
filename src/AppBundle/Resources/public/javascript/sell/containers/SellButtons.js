@@ -177,7 +177,7 @@ class SellButtons extends Component {
 	step2Enabled = () => {
 		const { rightsPackage, programDescription } = this.props;
 		const program = this.programIsValid();
-		return rightsPackage.length > 0 && program && programDescription && programDescription.length >= MIN_PROGRAM_DESC_LENGTH;
+		return rightsPackage.filter(element => element.exclusive !== "").length > 0 && program && programDescription && programDescription.length >= MIN_PROGRAM_DESC_LENGTH;
 	};
 
 	step3Enabled = () => {
@@ -229,7 +229,7 @@ class SellButtons extends Component {
 		const { programDescription, rightsPackage } = this.props;
 		let message = "Please complete missing information\n";
 		const program = this.programIsValid();
-		if (rightsPackage.length === 0) message += "<br/>- Select at least one right.\n";
+		if (rightsPackage.filter(element => element.exclusive !== "").length === 0) message += "<br/>- Select at least one right.\n";
 		if (!programDescription || programDescription.length < MIN_PROGRAM_DESC_LENGTH) message += `<br/>- Program description must be at least ${MIN_PROGRAM_DESC_LENGTH} characters length`;
 		if (!program) message += "<br/>-  Enter program information.";
 
