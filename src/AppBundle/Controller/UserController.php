@@ -150,7 +150,7 @@ class UserController extends FOSRestController
         /** @var User $user */
         if (!$user) $user = $userManager->createUser();
 
-        $userStatus = $this->em
+        $userStatus = $this->getDoctrine()
             ->getRepository('AppBundle:UserStatus')
             ->findByName(User::$PENDING_STATUS);
 
