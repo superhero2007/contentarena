@@ -446,13 +446,14 @@
 }
 
 .activate-user-container {
+  padding: 0;
+  background-color: #fff;
   @media only screen and (max-width: 1020px) {
 	background-size: auto;
 	background-position: top center;
   }
 
   &.mobile{
-    padding: 0;
     .settings-wrapper{
       margin-top: 0;
     }
@@ -527,8 +528,6 @@
   }
 
   .settings-wrapper {
-    background-color: #fff;
-    @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
     max-width: 1000px;
     margin: 30px auto;
     display: flex;
