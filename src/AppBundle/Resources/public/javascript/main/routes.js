@@ -138,7 +138,7 @@ const routes = [
 		title: "Properties",
 	},
 	{
-		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?`,
+		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?/:customId?`,
 		header: HeaderBar,
 		main: Property,
 		updateByPath: false,

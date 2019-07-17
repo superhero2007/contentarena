@@ -70,7 +70,7 @@ class CommercialBidsTable extends React.Component {
 		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
 		id: props => `listing-name-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
-		className: "table-header listing-name",
+		className: "table-header",
 		accessor: "list.name",
 		Cell: props => this.getCell(props),
 	}, {
@@ -204,7 +204,6 @@ class CommercialBidsTable extends React.Component {
 	}];
 
 	render() {
-		// TODO YU check this component after BE implemented
 		const { listings, type } = this.props;
 		return (
 			<section className="property-listing-wrapper">
