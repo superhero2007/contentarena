@@ -126,8 +126,9 @@ class ListingPreview extends PureComponent {
 								<div className="image-wrapper">
 									{listing.featured && (
 										<div className="featured-badge">
-											<div className="featured-badge-text" />
-											<Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" />
+											<div className="featured-badge-text">
+												<Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" />
+											</div>
 										</div>
 									)}
 									{getListingImage(listing)}
