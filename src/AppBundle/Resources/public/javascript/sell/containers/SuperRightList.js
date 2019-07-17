@@ -101,7 +101,7 @@ class SuperRightList extends React.Component {
 	render() {
 		const hasSoldAnyPackage = this.hasSalesPackagesSold();
 		const { validation, rightsPackage } = this.props;
-		const isInvalid = rightsPackage.filter(element => element.exclusive !== "").length === 0 && validation;
+		const isInvalid = (!rightsPackage.length || rightsPackage.filter(element => element.exclusive === "").length) && validation;
 
 		return (
 			<div className="right-selector package-selector">
