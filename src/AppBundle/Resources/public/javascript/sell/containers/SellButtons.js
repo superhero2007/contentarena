@@ -230,7 +230,7 @@ class SellButtons extends Component {
 		let message = "Please complete missing information\n";
 		const program = this.programIsValid();
 		if (rightsPackage.length === 0) message += "<br/>- Select at least one right.\n";
-		if (rightsPackage.filter(element => element.exclusive === "").length) message += "<br/>- Select radio button for selected right.\n";
+		if (rightsPackage.filter(element => element.exclusive === "").length) message += "<br/>- Define exclusivity for selected rights categories.\n";
 		if (!programDescription || programDescription.length < MIN_PROGRAM_DESC_LENGTH) message += `<br/>- Program description must be at least ${MIN_PROGRAM_DESC_LENGTH} characters length`;
 		if (!program) message += "<br/>-  Enter program information.";
 
