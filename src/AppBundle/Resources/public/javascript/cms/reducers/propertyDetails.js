@@ -17,6 +17,7 @@ const DEFAULT_STATE = {
 		listings: [],
 		openBids: 0,
 		closedBids: 0,
+		programs: [],
 	},
 	isPropertyDetailFetched: false,
 	errorCode: "",

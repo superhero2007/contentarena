@@ -132,6 +132,7 @@ class PropertyService
         $property->setClosedBids($totalClosedBids);
         $property->setOpenBids($totalOpenBids);
         $property->setDeclinedBids($totalDeclinedBids);
+        $property->setPrograms([]);
         return $property;
     }
 
