@@ -394,6 +394,7 @@ class ContentService
 
 
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
+            $content->setProperty($modelListing->getProperty());
 
             $rights = [];
             $salesBundles = [];

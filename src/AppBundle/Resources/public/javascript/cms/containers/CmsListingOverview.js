@@ -14,7 +14,7 @@ class CmsListingOverview extends React.Component {
 	componentDidMount() { }
 
 	render() {
-		const { listings } = this.props.property;
+		const { listings, customId } = this.props.property;
 		if (!listings.length) {
 			return (
 				<section className="listing-overview-tab">
@@ -36,7 +36,7 @@ class CmsListingOverview extends React.Component {
 					</h6>
 					<div className="region-filter-bids">
 						<div className="region-filter-content">
-							<CmsListingOverviewTable listings={listings} />
+							<CmsListingOverviewTable listings={listings} propertyId={customId} />
 						</div>
 					</div>
 				</div>

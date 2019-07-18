@@ -15,7 +15,14 @@ class CmsListingOverviewTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: false,
+			listings: [],
 		};
+	}
+
+	componentDidMount() {
+		const { listings } = this.props;
+		this.setState({ listings });
 	}
 
 	getHeader = (text, tooltip = "") => (
@@ -50,7 +57,7 @@ class CmsListingOverviewTable extends React.Component {
 		headerClassName: "table-header",
 		className: "table-status",
 		accessor: "status.name",
-		width: 90,
+		width: 120,
 		Cell: ({ value }) => (
 			<span className={cn({
 				"status-active": value !== "REJECTED",
@@ -156,6 +163,8 @@ class CmsListingOverviewTable extends React.Component {
 					customId, status, hasPendingBids,
 				},
 			} = props;
+			const { listings } = this.state;
+			const { propertyId } = this.props;
 			return (
 				<div className="tooltip-container">
 					{
@@ -170,10 +179,13 @@ class CmsListingOverviewTable extends React.Component {
 								defaultAction="EDIT"
 								showEdit
 								showCommericalOverview
+								propertyId={propertyId}
 								showRemove
 								showDuplicate
 								showView={false}
 								onRemove={() => {
+									listings.splice(props.index, 1);
+									this.setState({ listings });
 									ContentArena.ContentApi.removeListing(customId);
 								}}
 								onDuplicate={this.duplicate}
@@ -192,15 +204,20 @@ class CmsListingOverviewTable extends React.Component {
 								}}
 								defaultAction="SUBMIT"
 								showCommericalOverview
+								propertyId={propertyId}
 								showEdit
 								showArchive
 								showDuplicate
 								showSubmit
 								showView
 								onRepublish={() => {
+									listings.splice(props.index, 1);
+									this.setState({ listings });
 									this.republish(listing.customId);
 								}}
 								onArchive={() => {
+									listings.splice(props.index, 1);
+									this.setState({ listings });
 									ContentArena.ContentApi.archiveListing(customId);
 								}}
 								onDuplicate={this.duplicate}
@@ -219,15 +236,20 @@ class CmsListingOverviewTable extends React.Component {
 								}}
 								showEdit={!hasPendingBids}
 								showCommericalOverview
+								propertyId={propertyId}
 								showDeactivate={!hasPendingBids}
 								showDuplicate
 								showArchive={!hasPendingBids}
 								showView
 								defaultAction="VIEW"
 								onDeactivate={() => {
+									listings.splice(props.index, 1);
+									this.setState({ listings });
 									this.deactivate(customId);
 								}}
 								onArchive={() => {
+									listings.splice(props.index, 1);
+									this.setState({ listings });
 									ContentArena.ContentApi.archiveListing(customId);
 								}}
 								onDuplicate={this.duplicate}
@@ -246,10 +268,13 @@ class CmsListingOverviewTable extends React.Component {
 									zIndex: 100 - props.index,
 								}}
 								showCommericalOverview
+								propertyId={propertyId}
 								showDuplicate
 								showArchive
 								showView
 								onArchive={() => {
+									listings.splice(props.index, 1);
+									this.setState({ listings });
 									ContentArena.ContentApi.archiveListing(customId);
 								}}
 								onDuplicate={this.duplicate}
@@ -262,9 +287,54 @@ class CmsListingOverviewTable extends React.Component {
 		},
 	}];
 
+	duplicate = (customId) => {
+		const { listings } = this.state;
+		this.setState({ loading: true });
+		ContentArena.ContentApi.duplicateListing(customId)
+			.done((response) => {
+				if (response.success) {
+					listings.unshift(response.listing);
+					this.setState({
+						listings,
+						loading: false,
+					});
+				}
+			});
+	};
+
+	republish = (customId) => {
+		const { listings } = this.state;
+		this.setState({ loading: true });
+		ContentArena.ContentApi.republishListing(customId)
+			.done((response) => {
+				if (response.success) {
+					listings.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+					this.setState({
+						listings,
+						loading: false,
+					});
+				}
+			});
+	};
+
+	deactivate = (customId) => {
+		const { listings } = this.state;
+		this.setState({ loading: true });
+		ContentArena.ContentApi.deactivateListing(customId)
+			.done((response) => {
+				if (response.success) {
+					listings.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
+					this.setState({
+						listings,
+						loading: false,
+					});
+				}
+			});
+	};
+
 	render() {
 		// TODO YU check this component after BE implemented
-		const { listings } = this.props;
+		const { listings } = this.state;
 		return (
 			<section className="property-listing-overview-wrapper">
 				<ReactTable

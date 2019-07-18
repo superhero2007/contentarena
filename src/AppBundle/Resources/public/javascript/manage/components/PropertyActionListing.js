@@ -64,6 +64,11 @@ class PropertyActionListing extends React.Component {
 		goTo(`listing/${customId}`, true);
 	};
 
+	commericalOverview = () => {
+		const { customId, propertyId } = this.props;
+		goTo(`properties/${propertyId}/commercialoverview/${customId}`);
+	};
+
 	render() {
 		const {
 			customId,
@@ -112,7 +117,7 @@ class PropertyActionListing extends React.Component {
 							</div>
 						)}
 						{showCommericalOverview && (
-							<div className="option">
+							<div className="option" onClick={this.commericalOverview}>
 								<img src={this.commercialIcon} alt="" />
 								{" "}
 								<Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />
@@ -293,12 +298,6 @@ class PropertyActionListing extends React.Component {
 						>
 							<Translate i18nKey="MANAGE_LISTINGS_ARCHIVE_BUTTON_CANCEL" />
 						</button>
-					</div>
-				)}
-
-				{(status.name === "DRAFT") && (
-					<div className="edit-icon" onClick={this.edit}>
-						<i className="fa fa-pencil" />
 					</div>
 				)}
 
