@@ -190,7 +190,8 @@
     border-color: #E6E6E6;
     font-family: inherit;
     color: #666;
-
+    resize: none;
+    overflow: hidden;
     &:disabled {
       background: #EDEDED;
       border-color: #E3E3E3;
