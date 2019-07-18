@@ -163,6 +163,31 @@ class EmailService
     }
 
     /**
+     * @param User $sender
+     * @param Company $recipient
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function internalNewMessageAlert( User $sender, Company $recipient){
+
+        /* @var Company $company*/
+        $subject = "A message was sent!";
+        $parameters = array(
+            "company" => $recipient,
+            "sender" => $sender
+        );
+
+        $this->sendEmail(
+            "email/email.internal.messages.alert.twig",
+            $subject,
+            $this->infoAddress,
+            $parameters
+        );
+
+    }
+
+    /**
      * @param Content $listing
      * @param Bid $bid
      * @throws \Twig_Error_Loader
