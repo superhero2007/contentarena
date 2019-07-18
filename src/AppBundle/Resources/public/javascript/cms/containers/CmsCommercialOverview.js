@@ -11,14 +11,12 @@ class CmsCommercialOverview extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loading: false,
 			listings: [],
-			selectedListings: [],
+			selectedListings: null,
 			openBids: true,
 			closedBids: true,
 			declinedBids: false,
 		};
-		this.reloadIcon = `${assetsBaseDir}app/images/reload.png`;
 	}
 
 	componentDidMount() {
@@ -26,19 +24,15 @@ class CmsCommercialOverview extends React.Component {
 		const { location: { pathname } } = this.props.history;
 		const pathList = pathname.split("/");
 		const customId = pathList[4];
-		const selectedListings = [];
-		if (customId && listings.map(b => b.customId).indexOf(customId) !== -1) {
-			selectedListings.push(customId);
-		} else if (listings.length) {
-			selectedListings.push(listings[0].customId);
-			pathList[4] = listings[0].customId;
-			this.props.history.push(`${pathList.join("/")}`);
+		if (customId) {
+			const selectedItem = listings.find(element => element.customId === customId);
+			if (selectedItem) {
+				const selectedListings = { value: selectedItem.customId, label: selectedItem.name };
+				this.setState({
+					selectedListings,
+				});
+			}
 		}
-		this.setState({
-			listings,
-			selectedListings,
-			loading: false,
-		});
 	}
 
 	onChangeSelect = (selectedItem) => {
@@ -46,7 +40,15 @@ class CmsCommercialOverview extends React.Component {
 		const pathList = pathname.split("/");
 		pathList[4] = selectedItem.value;
 		this.props.history.push(`${pathList.join("/")}`);
-		this.setState({ selectedListings: [selectedItem.value] });
+		this.setState({ selectedListings: selectedItem });
+	};
+
+	onResetFilter = () => {
+		const { location: { pathname } } = this.props.history;
+		const pathList = pathname.split("/");
+		pathList.splice(4, 1);
+		this.props.history.push(`${pathList.join("/")}`);
+		this.setState({ selectedListings: null });
 	};
 
 	toggleOpenBids = () => {
@@ -62,9 +64,8 @@ class CmsCommercialOverview extends React.Component {
 	};
 
 	render() {
-		const { history, propertyId, propertyDetails: { property } } = this.props;
+		const { history, propertyId, propertyDetails: { property: { listings } } } = this.props;
 		const {
-			listings,
 			selectedListings,
 			openBids,
 			closedBids,
@@ -79,7 +80,7 @@ class CmsCommercialOverview extends React.Component {
 			);
 		}
 
-		const allListings = selectedListings.length ? listings.filter(list => selectedListings.indexOf(list.customId) !== -1) : listings;
+		const allListings = selectedListings ? listings.filter(list => selectedListings.value === list.customId) : listings;
 
 		const openBidsList = [].concat.apply(
 			[],
@@ -124,14 +125,13 @@ class CmsCommercialOverview extends React.Component {
 									<Select
 										name="form-field-name"
 										placeholder={this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER")}
-										isClearable
+										clearable={false}
 										onChange={this.onChangeSelect}
 										multi={false}
-										value={selectedListings[0]}
+										value={selectedListings}
 										options={listings.map(b => ({ value: b.customId, label: b.name }))}
 									/>
 									<div className="reset-listing-filter" onClick={this.onResetFilter}>
-										<img src={this.reloadIcon} alt="" />
 										<span><Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR" /></span>
 									</div>
 								</div>
