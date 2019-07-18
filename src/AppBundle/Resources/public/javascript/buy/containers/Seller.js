@@ -9,7 +9,22 @@ class Seller extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
+		this.textArea = React.createRef();
 	}
+
+	componentDidMount() {
+		this.setTextAreaHeight();
+	}
+
+	componentDidUpdate() {
+		this.setTextAreaHeight();
+	}
+
+	setTextAreaHeight = () => {
+		if (this.textArea.current) {
+			this.textArea.current.style.height = `${this.textArea.current.scrollHeight}px`;
+		}
+	};
 
 	render() {
 		const {
@@ -26,7 +41,7 @@ class Seller extends React.Component {
 					)}
 					{description && (
 						<div className="txt description-text">
-							<RepresentationTextArea value={description} />
+							<textarea readOnly className="representation-textarea" ref={this.textArea} value={description} />
 						</div>
 					)}
 				</div>

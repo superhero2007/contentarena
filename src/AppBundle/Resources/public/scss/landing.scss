@@ -125,6 +125,10 @@
     }
 
     .banner-content {
+      span.sign-error{
+        display: inline-block;
+        padding-top: 10px;
+      }
       @media only screen and (max-width: 1230px) {
         padding: 0 15px;
       }
@@ -691,7 +695,7 @@
 		}
 		.title{
 			@extend .big-title;
-			font-size: 21px;
+			font-size: 18px;
 			padding: 25px 0 30px;
 			width: 76%;
 			margin: 0 auto;
@@ -912,6 +916,12 @@
 				}
                 .right-legend-wrapper {
                     margin-top: 20px;
+                    display: flex;
+                    justify-content: flex-end;
+
+                    .item {
+                      font-weight: 400;
+                    }
 
                     img {
                         width: 12px;

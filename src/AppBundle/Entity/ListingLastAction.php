@@ -26,7 +26,7 @@ class ListingLastAction
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Groups({"board", "propertyList"})
+     * @Groups({"board", "propertyList", "property"})
      */
     private $name;
 
@@ -34,7 +34,7 @@ class ListingLastAction
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
-     * @Groups({"board"})
+     * @Groups({"board", "property"})
      */
     private $description;
 

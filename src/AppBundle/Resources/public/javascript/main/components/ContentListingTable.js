@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 import first from "lodash/first";
 import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
-import { YEAR_FORMAT, REGIONS_ENUMS } from "@constants";
 import Moment from "moment/moment";
 import Translate from "@components/Translator/Translate";
+import { YEAR_FORMAT, REGIONS_ENUMS } from "@constants";
 import { blueCheckIcon, yellowCheckIcon } from "./Icons";
 
 class ContentListingTable extends Component {

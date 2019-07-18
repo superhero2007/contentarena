@@ -18,6 +18,7 @@ class UserStatusFixtures extends Fixture
     {
         $content = array(
             'Active',
+            'Applied',
             'Archived',
             'Inactive',
             'Incomplete',

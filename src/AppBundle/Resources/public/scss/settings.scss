@@ -190,7 +190,8 @@
     border-color: #E6E6E6;
     font-family: inherit;
     color: #666;
-
+    resize: none;
+    overflow: hidden;
     &:disabled {
       background: #EDEDED;
       border-color: #E3E3E3;
@@ -446,13 +447,14 @@
 }
 
 .activate-user-container {
+  padding: 0;
+  background-color: #fff;
   @media only screen and (max-width: 1020px) {
 	background-size: auto;
 	background-position: top center;
   }
 
   &.mobile{
-    padding: 0;
     .settings-wrapper{
       margin-top: 0;
     }
@@ -527,14 +529,13 @@
   }
 
   .settings-wrapper {
-    background-color: #fff;
-    @include shadow(0 1px 9px rgba(0, 0, 0, 0.21));
     max-width: 1000px;
-    margin: 30px auto;
+    margin: 30px auto 0;
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 25px 20px;
+    background: #fff;
   }
 
   .settings-title {

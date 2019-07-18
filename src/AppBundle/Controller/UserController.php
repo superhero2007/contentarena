@@ -187,6 +187,63 @@ class UserController extends FOSRestController
 
     /**
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @Rest\Post("/pre/register")
+     * @Rest\RequestParam(name="email", nullable=false,strict=true)
+     * @Rest\RequestParam(name="status", nullable=false,strict=true)
+     * @Rest\RequestParam(name="firstName", nullable=false,strict=true)
+     * @Rest\RequestParam(name="lastName", nullable=false,strict=true)
+     */
+
+    public function postPreRegisterAction(Request $request){
+        $logger = $this->get('logger');
+        $email = $request->get("email");
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errorCode = UserErrors::USER_EMAIL_NOT_VALID;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "email" => $email));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
+        }
+
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->findOneBy(['email' => $email]);
+
+        if ($user && $user->getLastLogin() != null) {
+            $errorCode = UserErrors::USER_ALREADY_EXISTS;
+            $logger->info(UserErrors::getErrorMessage($errorCode), array( "email" => $email));
+            return $this->getErrorResponse(UserErrors::class, $errorCode);
+        }
+
+        $userStatus = $this->getDoctrine()
+            ->getRepository('AppBundle:UserStatus')
+            ->findOneBy(array('name' => $request->get("status")));
+
+        /** @var $userManager UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+
+        /** @var User $user */
+        if (!$user) $user = $userManager->createUser();
+
+        $user->setEnabled(true);
+        $user->setEmail($email);
+        $user->setStatus($userStatus);
+        $user->setUsername($email);
+        $user->setFirstName($request->get("firstName"));
+        $user->setLastName($request->get("lastName"));
+        $user->setRegisteredAt(new \DateTime());
+        $user->setPlainPassword('');
+
+        $userManager->updateUser($user);
+
+        $logger->info("USER ACCOUNT SUCCESSFULLY CREATED", array( "email" => $email));
+
+        $response = array("success" => true, "user" => $user);
+        return $this->getSerializedResponse($response, array("auth"));
+    }
+
+    /**
+     * @param Request $request
      * @return Response
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime

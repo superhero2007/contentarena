@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ROUTE_PATHS } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { ROUTE_PATHS } from "@constants";
 import { cmsFile } from "../../../main/components/Icons";
 
 const EmptyListingOverview = ({ history }, context) => (

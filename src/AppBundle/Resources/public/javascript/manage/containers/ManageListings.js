@@ -113,7 +113,6 @@ class ManageListings extends React.Component {
 		ContentArena.ContentApi.deactivateListing(customId)
 			.done((response) => {
 				if (response.success) {
-					// inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
 					inactive.unshift(ContentArena.Utils.contentParserFromServer(response.listing));
 					this.setState({
 						inactive,

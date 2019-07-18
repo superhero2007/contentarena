@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { CMS_PROPERTY_DETAILS_TABS } from "@constants";
 import PropertyDetailsEditedProgramTab from "../components/PropertyDetailsEditedProgramTab";
 import PropertyDetailsEventTab from "../components/PropertyDetailsEventTab";
 import PropertyDetailsLicenseTab from "../components/PropertyDetailsLicenseTab";

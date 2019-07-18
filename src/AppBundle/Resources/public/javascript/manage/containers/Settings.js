@@ -27,11 +27,11 @@ class Settings extends React.Component {
 			isPassValid: false,
 			activeTab: 1,
 		};
+		this.textArea = React.createRef();
 	}
 
 	componentDidMount() {
 		this.setState({ loading: true });
-
 		ContentArena.ContentApi.getUserInfo().done((user) => {
 			this.originalUser = cloneDeep(user);
 			this.setState({
@@ -43,6 +43,16 @@ class Settings extends React.Component {
 
 		this.loadCompanyUsers();
 	}
+
+	componentDidUpdate() {
+		this.setTextAreaHeight();
+	}
+
+	setTextAreaHeight = () => {
+		if (this.textArea.current) {
+			this.textArea.current.style.height = `${this.textArea.current.scrollHeight}px`;
+		}
+	};
 
 	loadCompanyUsers = () => {
 		this.setState({ loadingCompanyUsers: true });
@@ -278,6 +288,8 @@ class Settings extends React.Component {
 								<Translate i18nKey="SETTINGS_LABEL_COMPANY_DESCRIPTION" />
 							</label>
 							<textarea
+								readOnly
+								ref={this.textArea}
 								value={user.company.description}
 								disabled={!editCompanyInfo}
 								onChange={(e) => {

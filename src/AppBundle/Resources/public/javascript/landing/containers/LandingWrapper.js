@@ -3,15 +3,21 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
 import LandingHeader from "../components/LandingHeader";
-import { LOGIN_VIEW_TYPE, LANDING_LINKS } from "@constants";
+import { LANDING_LINKS, LOGIN_VIEW_TYPE } from "@constants";
 import { contentWhiteLogo } from "../../main/components/Icons";
-import { showRegistrationEmail, hideRegistrationEmail } from "../actions/landingActions";
+import {
+	hideRegistrationEmail,
+	showRegistrationEmail,
+} from "../actions/landingActions";
+import request from "../../common/request";
 
 class LandingWrapper extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			emailError: "",
+		};
 		this.registerEmail = React.createRef();
 		this.props.hideRegistrationEmail();
 	}
@@ -20,14 +26,38 @@ class LandingWrapper extends Component {
 
 	handleRegisterClick = () => {
 		this.props.showRegistrationEmail(this.registerEmail.current.value);
-		this.props.history.push("/registration");
+		if (this.registerEmail.current.value !== "") {
+			request.post(`${envhosturl}api/users/pre/register`, {
+				firstName: "n/a",
+				lastName: "n/a",
+				status: "Applied",
+				email: this.registerEmail.current.value,
+			})
+				.then(
+					(json) => {
+						if (json.data.success === true) {
+							this.props.history.push("/registration");
+						}
+					},
+				)
+				.catch(({ response }) => {
+					const responseData = response.status === 500
+						? response.data.error
+						: response.data;
+					this.setState({ emailError: responseData.message });
+				});
+		} else {
+			this.props.history.push("/registration");
+		}
 	};
 
 	render() {
 		return (
 			<div className="landing-page">
-				<LandingHeader currentView={LOGIN_VIEW_TYPE.LANDING} history={this.props.history} />
-
+				<LandingHeader
+					currentView={LOGIN_VIEW_TYPE.LANDING}
+					history={this.props.history}
+				/>
 				<section className="banner">
 					<div className="banner-content">
 						<div className="title">
@@ -50,6 +80,7 @@ class LandingWrapper extends Component {
 								<Translate i18nKey="LANDING_REGISTER" />
 							</button>
 						</div>
+						<span className="sign-error">{this.state.emailError}</span>
 					</div>
 				</section>
 
@@ -149,7 +180,10 @@ class LandingWrapper extends Component {
 					</div>
 				</section>
 
-				<section className="benefits" id="how-to">
+				<section
+					className="benefits"
+					id="how-to"
+				>
 					<div className="landing-column">
 						<div>
 							<div className="benefit-row">
@@ -162,7 +196,9 @@ class LandingWrapper extends Component {
 									</div>
 								</div>
 								<div className="icon">
-									<a href={`${assetsBaseDir}app/images/landing/globe-icon_content_arena.png`}>
+									<a
+										href={`${assetsBaseDir}app/images/landing/globe-icon_content_arena.png`}
+									>
 										<img
 											src={`${assetsBaseDir}app/images/landing/globe-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
@@ -173,7 +209,9 @@ class LandingWrapper extends Component {
 							</div>
 							<div className="benefit-row">
 								<div className="icon">
-									<a href={`${assetsBaseDir}app/images/landing/screen-icon_content_arena.png`}>
+									<a
+										href={`${assetsBaseDir}app/images/landing/screen-icon_content_arena.png`}
+									>
 										<img
 											src={`${assetsBaseDir}app/images/landing/screen-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
@@ -200,7 +238,9 @@ class LandingWrapper extends Component {
 									</div>
 								</div>
 								<div className="icon">
-									<a href={`${assetsBaseDir}app/images/landing/handshake-icon_content_arena.png`}>
+									<a
+										href={`${assetsBaseDir}app/images/landing/handshake-icon_content_arena.png`}
+									>
 										<img
 											src={`${assetsBaseDir}app/images/landing/handshake-icon_content_arena.png`}
 											className="uk-responsive-width uk-width-medium@m uk-width-small"
@@ -222,7 +262,10 @@ class LandingWrapper extends Component {
 					</div>
 				</section>
 
-				<section className="team" id="team">
+				<section
+					className="team"
+					id="team"
+				>
 					<div className="landing-column">
 						<div className="inner">
 							<div className="item">
@@ -317,7 +360,10 @@ class LandingWrapper extends Component {
 					</div>
 				</section>
 
-				<section className="references" id="references">
+				<section
+					className="references"
+					id="references"
+				>
 					<div className="landing-column">
 						<div className="inner">
 							<div className="icon">
@@ -333,7 +379,10 @@ class LandingWrapper extends Component {
 								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/dazn.400x400.png`} alt="DAZN" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/dazn.400x400.png`}
+									alt="DAZN"
+								/>
 							</div>
 							<div className="icon">
 								<img
@@ -348,7 +397,10 @@ class LandingWrapper extends Component {
 								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/bvb.400x400.png`} alt="BVB" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/bvb.400x400.png`}
+									alt="BVB"
+								/>
 							</div>
 							<div className="icon">
 								<img
@@ -369,13 +421,22 @@ class LandingWrapper extends Component {
 								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/cze.400x400.png`} alt="CZE" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/cze.400x400.png`}
+									alt="CZE"
+								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/dcl.400x400.png`} alt="DCL" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/dcl.400x400.png`}
+									alt="DCL"
+								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/sky.400x400.png`} alt="Sky" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/sky.400x400.png`}
+									alt="Sky"
+								/>
 							</div>
 							<div className="icon">
 								<img
@@ -390,10 +451,16 @@ class LandingWrapper extends Component {
 								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/orf.400x400.png`} alt="ORF" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/orf.400x400.png`}
+									alt="ORF"
+								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/landing/oefb.400x400.png`} alt="OEFB" />
+								<img
+									src={`${assetsBaseDir}app/images/landing/oefb.400x400.png`}
+									alt="OEFB"
+								/>
 							</div>
 							<div className="icon">
 								<img
@@ -402,7 +469,10 @@ class LandingWrapper extends Component {
 								/>
 							</div>
 							<div className="icon">
-								<img src={`${assetsBaseDir}app/images/ATP.png`} alt="ATP" />
+								<img
+									src={`${assetsBaseDir}app/images/ATP.png`}
+									alt="ATP"
+								/>
 							</div>
 							{/*	<div className="icon">
 								<img src={`${assetsBaseDir}app/images/FIBA.png`} alt="FIBA" />
@@ -419,7 +489,10 @@ class LandingWrapper extends Component {
 					</div>
 				</section>
 
-				<section className="get-in-touch" id="contact">
+				<section
+					className="get-in-touch"
+					id="contact"
+				>
 					<a href="mailto:info@contentarena.com">
 						<i className="fa fa-4x fa-envelope-o" />
 						<div className="email">info@contentarena.com</div>
@@ -428,27 +501,46 @@ class LandingWrapper extends Component {
 
 				<footer className="landing-footer">
 					<div className="footer-wrapper">
-						<a className="footer-logo" href={LANDING_LINKS.HOME} target="_self">
+						<a
+							className="footer-logo"
+							href={LANDING_LINKS.HOME}
+							target="_self"
+						>
 							{contentWhiteLogo}
 						</a>
 						<div className="footer-links">
 							<div>
-								<span className="footer-company-name"><Translate i18nKey="LANDING_COMPANY" /></span>
-								<span>
-									{" "}
-									<a href={LANDING_LINKS.PRIVACY}><Translate i18nKey="LOGIN_BAR_PRIVACY_POLICY" /></a>
+								<span className="footer-company-name"><Translate
+									i18nKey="LANDING_COMPANY"
+								/>
 								</span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.TERMS}><Translate i18nKey="LOGIN_BAR_TERMS" /></a>
+									<a href={LANDING_LINKS.PRIVACY}><Translate
+										i18nKey="LOGIN_BAR_PRIVACY_POLICY"
+									/>
+									</a>
 								</span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.COOKIE}><Translate i18nKey="LOGIN_BAR_COOKIE_POLICY" /></a>
+									<a href={LANDING_LINKS.TERMS}><Translate
+										i18nKey="LOGIN_BAR_TERMS"
+									/>
+									</a>
 								</span>
 								<span>
 									{" "}
-									<a href={LANDING_LINKS.FAQ}><Translate i18nKey="LOGIN_BAR_FAQ" /></a>
+									<a href={LANDING_LINKS.COOKIE}><Translate
+										i18nKey="LOGIN_BAR_COOKIE_POLICY"
+									/>
+									</a>
+								</span>
+								<span>
+									{" "}
+									<a href={LANDING_LINKS.FAQ}><Translate
+										i18nKey="LOGIN_BAR_FAQ"
+									/>
+									</a>
 								</span>
 							</div>
 						</div>

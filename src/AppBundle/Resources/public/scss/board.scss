@@ -154,6 +154,39 @@
   }
 }
 
+.listing-menu-tooltip {
+  position: absolute;
+  z-index: 20;
+  background: white;
+  border: 1px solid lightgray;
+  padding: 20px 15px 30px;
+  min-width: 250px;
+  right: -10px;
+  top: 30px;
+  border-radius: 5px;
+  box-shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.21);
+  .last-action {
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    max-width: 220px;
+    padding-top: 10px;
+    border-top: 1px solid #E7E7E7;
+  }
+  .option {
+    cursor: pointer;
+    font-size: 13px;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
 .options-tooltip {
   position: absolute;
   z-index: 20;
@@ -211,6 +244,7 @@
     text-align: center;
     font-size: 14px;
     margin-bottom: 15px;
+    white-space: normal;
   }
   .button {
     border: 1px solid lightgrey;

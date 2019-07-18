@@ -96,7 +96,7 @@ class Content implements NotifiableInterface
      * @var integer
      *
      * @ORM\Column(name="step", type="integer")
-     * @Groups({"board", "home"})
+     * @Groups({"board", "home", "property"})
      */
     protected $step = 1;
 
@@ -459,7 +459,7 @@ class Content implements NotifiableInterface
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"board", "home"})
+     * @Groups({"board", "home", "property"})
      */
     private $lastActionUser;
 

@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
 import { connect } from "react-redux";
 import Translate from "@components/Translator/Translate";
+import { LOGIN_VIEW_TYPE, SIGN_UP_FIELDS } from "@constants";
 import Loader from "../../common/components/Loader";
 import { hideRegistrationEmail } from "../actions/landingActions";
 import { validateEmail } from "../../common/utils/listing";

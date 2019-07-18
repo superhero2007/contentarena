@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
-import { LISTING_SORT_OPTIONS } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { LISTING_SORT_OPTIONS } from "@constants";
 
 class ListingSorting extends PureComponent {
 	constructor(props) {

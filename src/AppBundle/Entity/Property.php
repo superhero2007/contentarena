@@ -140,6 +140,12 @@ class Property implements NotifiableInterface
     private $declinedBids;
 
     /**
+     * @var array
+     * @Groups({"property", "propertyList"})
+     */
+    private $programs;
+
+    /**
      * @return mixed
      */
     public function getRights()
@@ -372,6 +378,22 @@ class Property implements NotifiableInterface
     public function setDeclinedBids($declinedBids)
     {
         $this->declinedBids = $declinedBids;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPrograms()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param array $programs
+     */
+    public function setPrograms($programs)
+    {
+        $this->programs = $programs;
     }
 
 }

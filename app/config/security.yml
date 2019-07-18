@@ -38,6 +38,7 @@ security:
         - { path: ^/listing-preview, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/v1/auth/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/users/pre/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users/password/recover, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users/password/update, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/users/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
