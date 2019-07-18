@@ -8,6 +8,7 @@ import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
 import CmsCommercialOverview from "./CmsCommercialOverview";
 import CmsFixtures from "./CmsFixtures";
+import CmsEditedProgram from "./CmsEditedProgram";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";
 import { fetchRegions, fetchTerritories, fetchPropertyDetails } from "../actions/propertyActions";
@@ -129,6 +130,7 @@ class Property extends React.Component {
 					</div>
 
 					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview />}
+					{tab === CMS_PROPERTY_TABS.EDITED_PROGRAM && <CmsEditedProgram history={history} />}
 					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures />}
 					{tab === CMS_PROPERTY_TABS.COMMERCIAL
 						&& (
