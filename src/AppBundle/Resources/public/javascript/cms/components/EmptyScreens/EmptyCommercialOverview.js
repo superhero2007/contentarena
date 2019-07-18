@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ROUTE_PATHS, CMS_PROPERTY_TABS } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { ROUTE_PATHS, CMS_PROPERTY_TABS } from "@constants";
 import { cmsFile, cmsFlow } from "../../../main/components/Icons";
 
 const EmptyCommercialOverview = ({ history, propertyId }, context) => (

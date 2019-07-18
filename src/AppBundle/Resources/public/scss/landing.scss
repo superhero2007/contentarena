@@ -125,6 +125,10 @@
     }
 
     .banner-content {
+      span.sign-error{
+        display: inline-block;
+        padding-top: 10px;
+      }
       @media only screen and (max-width: 1230px) {
         padding: 0 15px;
       }

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { LOGIN_VIEW_TYPE } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { LOGIN_VIEW_TYPE } from "@constants";
 import Loader from "../../common/components/Loader";
 
 class RecoverPassword extends PureComponent {

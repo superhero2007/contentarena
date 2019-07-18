@@ -4,10 +4,10 @@ import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
 import cn from "classnames";
-import { LISTING_STATUS, DATE_FORMAT } from "@constants";
 import ListingLink from "@components/Links/ListingLink";
 import { getListingBidsUrl } from "@utils/routing";
 import Translate from "@components/Translator/Translate";
+import { LISTING_STATUS, DATE_FORMAT } from "@constants";
 import { yellowCheckIcon } from "../../main/components/Icons";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
 

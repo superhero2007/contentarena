@@ -32,3 +32,5 @@
 /web/assets
 /deploy-*
 *.php~
+/v8-compile-cache-0/*
+_webpack_encore_tmp_module*.js

@@ -3,10 +3,10 @@ import { PropTypes } from "prop-types";
 import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
-import { LISTING_STATUS } from "@constants";
 import ListingLink from "@components/Links/ListingLink";
 import { getListingBidsUrl } from "@utils/routing";
 import Translate from "@components/Translator/Translate";
+import { LISTING_STATUS } from "@constants";
 import { DATE_FORMAT } from "../../common/constants";
 import {
 	exclusiveRightAvailable,

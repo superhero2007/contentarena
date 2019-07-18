@@ -30,6 +30,60 @@ class UserControllerTest extends WebTestCase
         self::$userService->removeUserByEmail(self::$email);
     }
 
+    public function testPostPreRegisterActionWithNewUser()
+    {
+        $client = static::createClient();
+
+        $params = array(
+            "email" => self::$email,
+            "firstName" => "n/a",
+            "lastName" => "n/a",
+            "status" => "Applied"
+        );
+
+        $client->request('POST', '/api/users/pre/register', $params);
+
+        $response = $client->getResponse();
+
+        $content = json_decode($response->getContent(), true);
+        $this->assertArrayHasKey('success', $content);
+        $success = $content["success"];
+        $this->assertEquals(true, $success);
+        $this->assertArrayHasKey('user', $content);
+        $user = $content["user"];
+        $this->assertArrayHasKey('id', $user);
+        $this->assertArrayHasKey('email', $user);
+        $this->assertArrayHasKey('firstName', $user);
+        $this->assertArrayHasKey('lastName', $user);
+    }
+
+    public function testPostPreRegisterActionWithExistingButNotLoggedUser()
+    {
+        $client = static::createClient();
+
+        $params = array(
+            "email" => self::$email,
+            "firstName" => "n/a",
+            "lastName" => "n/a",
+            "status" => "Applied"
+        );
+
+        $client->request('POST', '/api/users/pre/register', $params);
+
+        $response = $client->getResponse();
+
+        $content = json_decode($response->getContent(), true);
+        $this->assertArrayHasKey('success', $content);
+        $success = $content["success"];
+        $this->assertEquals(true, $success);
+        $this->assertArrayHasKey('user', $content);
+        $user = $content["user"];
+        $this->assertArrayHasKey('id', $user);
+        $this->assertArrayHasKey('email', $user);
+        $this->assertArrayHasKey('firstName', $user);
+        $this->assertArrayHasKey('lastName', $user);
+    }
+
     public function testPostRegisterActionWithNewUser()
     {
         $client = static::createClient();

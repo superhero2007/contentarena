@@ -3,8 +3,8 @@ import DatePicker from "@components/DatePicker";
 import moment from "moment";
 import Modal from "react-modal";
 import { PropTypes } from "prop-types";
-import { DATE_FORMAT } from "@constants";
 import Translate from "@components/Translator/Translate";
+import { DATE_FORMAT } from "@constants";
 import { customStyles } from "../../main/styles/custom";
 
 class LicenseDateSelector extends React.Component {
