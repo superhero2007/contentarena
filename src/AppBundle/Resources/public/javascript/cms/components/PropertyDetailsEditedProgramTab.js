@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
+import ReactTooltip from "react-tooltip";
 import { LanguageSelector } from "../../main/components/LanguageSelector";
 
 class PropertyDetailsEditedProgramTab extends Component {
@@ -61,11 +62,44 @@ class PropertyDetailsEditedProgramTab extends Component {
 			invalid.push("PROGRAM_DURATION");
 		}
 		this.setState({ invalid });
+		if (!invalid.length) {
+			// Save
+		}
 	};
 
 	isInvalid = (type) => {
 		const { invalid } = this.state;
 		return invalid.indexOf(type) !== -1;
+	};
+
+	getTooltipMessages = () => {
+		const {
+			PROGRAM_NAME,
+			PROGRAM_EPISODES,
+			PROGRAM_TYPE,
+			PROGRAM_DURATION,
+			PROGRAM_DESCRIPTION,
+		} = this.state;
+		let message = "";
+		if (!PROGRAM_NAME) {
+			message += "<br/>-  Enter program name.";
+		}
+		if (!PROGRAM_DESCRIPTION) {
+			message += "<br/>-  Enter program description.";
+		}
+		if (!PROGRAM_TYPE) {
+			message += "<br/>-  Enter program type.";
+		}
+		if (!PROGRAM_EPISODES) {
+			message += "<br/>-  Enter program type.";
+		}
+		if (!PROGRAM_DURATION) {
+			message += "<br/>-  Enter program duration.";
+		}
+		if (message.length) {
+			message = `Please complete missing information\n${message}`;
+		}
+		return message;
 	};
 
 	render() {
@@ -266,11 +300,12 @@ class PropertyDetailsEditedProgramTab extends Component {
 					</div>
 
 				</div>
-				<div className="property-edited-program-tab__action">
-					<button type="button" className="ca-btn primary" onClick={this.save}>
+				<div className="property-edited-program-tab__action" data-tip={this.getTooltipMessages()}>
+					<button type="button" className={`ca-btn primary ${this.getTooltipMessages() ? "disabled" : ""}`} onClick={this.save}>
 						<Translate i18nKey="Save" />
 					</button>
 				</div>
+				<ReactTooltip html />
 			</section>
 		);
 	}
