@@ -750,6 +750,162 @@
       }
     }
 
+    .property-license-tab {
+      .buttons {
+        align-items: center;
+
+        button {
+          max-width: 400px;
+          border-radius: 5px;
+        }
+      }
+
+      .terms-edit-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 10px 0 0;
+      }
+
+      .terms-edit-header-title {
+        color: #03547C;
+        font-size: 21px;
+        font-weight: bold;
+        line-height: 24px;
+        align-self: center;
+        margin-right: auto;
+      }
+
+      .terms-edit-non-editable {
+        color: #CC0000;
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 25px;
+        font-style: italic;
+        margin-bottom: -10px;
+      }
+
+      .terms-add-definition-button {
+        margin: 20px 0 !important;
+        border-radius: 5px;
+        padding: 10px 20px !important;
+        font-size: 13px !important;
+
+      }
+
+      .terms-restore-button {
+        margin: 0 0 0 10px !important;
+        border-radius: 5px;
+        padding: 10px 15px !important;
+        font-size: 13px !important;
+        min-width: 200px;
+        max-height: 43px;
+      }
+
+      .ca-loader {
+        width: 40px;
+      }
+
+      .ca-tabs {
+        margin-bottom: 15px;
+        margin-top: 0;
+        border: 0;
+
+        .tab {
+          font-size: 18px;
+        }
+      }
+
+      i {
+        margin: 0 5px 0 10px;
+        color: #FFC94B;
+      }
+
+      &:disabled {
+        i {
+          color: #333;
+        }
+      }
+
+      .terms-edit-item {
+        margin: 5px 0;
+        display: flex;
+        position: relative;
+
+        .terms-edit-item-name {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          width: 250px;
+          margin-right: 5px;
+          color: #000000;
+          font-size: 14px;
+          font-weight: bold;
+          line-height: 25px;
+          background-color: #DDDFE2;
+
+          textarea {
+            margin: 0 15px !important;
+          }
+        }
+
+        .terms-edit-item-content {
+          border: 1px solid #CCCCCC;
+          background-color: #F5F5F5;
+          padding: 20px;
+          color: #4f4f4f;
+          font-size: 15px;
+          font-weight: normal;
+          line-height: 25px;
+          width: 95%;
+          min-height: 70px;
+
+        }
+
+        textarea {
+          border: none;
+          background: white;
+          min-height: 100px;
+          margin: 0;
+          padding: 0;
+          font-size: 13px;
+          line-height: 25px;
+          font-family: 'Open Sans', sans-serif;
+          outline: none;
+        }
+
+        .terms-edit-item-disabled {
+          background-color: rgba(204, 204, 204, 0.21);
+          color: #999999;
+        }
+
+        .terms-edit-item-editing {
+          border: 2px solid #FFC94B !important;
+          background-color: #fff !important;
+        }
+
+        .edited {
+          border: 2px solid #FFC94B !important;
+        }
+
+        .terms-edit-item-actions {
+          width: 5%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          i {
+            cursor: pointer;
+            margin: 5px 0;
+            font-size: 27px;
+          }
+        }
+      }
+    }
+
 	.centered-btn{
 	  position: absolute;
 	  left: 50%;

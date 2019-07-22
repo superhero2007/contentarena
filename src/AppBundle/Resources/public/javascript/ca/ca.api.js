@@ -761,4 +761,42 @@ ContentArena.Api = {
 			id,
 		});
 	},
+	getPropertyTerms(propertyId) {
+		return request.post(`${envhosturl}api/property/terms`, {
+			property_id: propertyId,
+		});
+	},
+	getPropertyDefinitions(propertyId) {
+		return request.post(`${envhosturl}api/property/definitions`, {
+			property_id: propertyId,
+		});
+	},
+	restorePropertyTerms(propertyId) {
+		return request.post(`${envhosturl}api/property/terms/restore`, {
+			property_id: propertyId,
+		});
+	},
+	restorePropertyDefinitions(propertyId) {
+		return request.post(`${envhosturl}api/property/definitions/restore`, {
+			property_id: propertyId,
+		});
+	},
+	updatePropertyTerm(propertyId, term) {
+		return request.post(`${envhosturl}api/property/terms/update`, {
+			property_id: propertyId,
+			term,
+		});
+	},
+	updatePropertyDefinition(propertyId, definition) {
+		return request.post(`${envhosturl}api/property/definitions/update`, {
+			property_id: propertyId,
+			definition,
+		});
+	},
+	removePropertyDefinition(propertyId, definition) {
+		return request.post(`${envhosturl}api/property/definitions/remove`, {
+			property_id: propertyId,
+			definition,
+		});
+	},
 };

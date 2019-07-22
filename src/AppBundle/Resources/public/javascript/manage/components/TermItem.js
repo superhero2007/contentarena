@@ -25,6 +25,7 @@ class TermItem extends React.Component {
 	onUpdate = () => {
 		const { id } = this.props;
 		const { content } = this.state;
+		const { isProperty, propertyId } = this.props;
 
 		const term = {
 			content,
@@ -32,14 +33,30 @@ class TermItem extends React.Component {
 		};
 
 		this.setState({ updating: true, editing: false });
-
-		ContentArena.Api.updateTerm(term).done((response) => {
-			this.setState({
-				updating: false,
-				edited: true,
-				content: response.success ? response.term.content : content,
+		if (isProperty) {
+			ContentArena.Api.updatePropertyTerm(propertyId, term).then(({ response }) => {
+				this.setState({
+					updating: false,
+					edited: true,
+					content: response.success ? response.term.content : content,
+				});
+			})
+				.catch(({ response }) => {
+					this.setState({
+						updating: false,
+						edited: true,
+						content,
+					});
+				});
+		} else {
+			ContentArena.Api.updateTerm(term).done((response) => {
+				this.setState({
+					updating: false,
+					edited: true,
+					content: response.success ? response.term.content : content,
+				});
 			});
-		});
+		}
 	};
 
 	restore = () => {

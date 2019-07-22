@@ -14,6 +14,9 @@ use AppBundle\Entity\BidLicenseTermItem;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\CompanyDefinitions;
 use AppBundle\Entity\CompanyLicenseTermItem;
+use AppBundle\Entity\Property;
+use AppBundle\Entity\PropertyDefinitions;
+use AppBundle\Entity\PropertyLicenseTermItem;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use AppBundle\Doctrine\RandomIdGenerator;
@@ -344,4 +347,209 @@ class TermsService
     }
 
 
+
+    /**
+     * @param Property $property
+     * @return array $terms
+     */
+    public function getPropertyTerms(Property $property)
+    {
+        $terms = $this->em
+            ->getRepository('AppBundle:SourceLicenseTerm')
+            ->findAll();
+
+        $propertyTermItemsRepo = $this->em->getRepository('AppBundle:PropertyLicenseTermItem');
+        $propertyTermItems = $propertyTermItemsRepo->findBy(array('property' => $property));
+
+        if ( count($propertyTermItems) == 0 ) $this->restorePropertyTermItems($property);
+
+        foreach ( $terms as $term){
+            $items = $propertyTermItemsRepo->findBy(array('term' => $term, 'property' => $property));
+            $term->setItems($items);
+        }
+
+        return $terms;
+    }
+
+    /**
+     * @param Property $property
+     */
+    public function restorePropertyTermItems(Property $property)
+    {
+        $sourceTermItemsRepo = $this->em->getRepository('AppBundle:SourceLicenseTermItem');
+        $propertyTermItemsRepo = $this->em->getRepository('AppBundle:PropertyLicenseTermItem');
+
+        $propertyItems = $propertyTermItemsRepo->findBy(array(
+            'property' => $property
+        ));
+
+        foreach ($propertyItems as $propertyItem ){
+            $this->em->remove($propertyItem);
+        }
+
+        $this->em->flush();
+
+        $sourceTermItems = $sourceTermItemsRepo->findAll();
+
+        foreach ( $sourceTermItems as $sourceItem){
+            $criteria= array(
+                'term' => $sourceItem->getTerm(),
+                'position' => $sourceItem->getPosition(),
+                'property' => $property
+            );
+            $propertyItem = $propertyTermItemsRepo->findOneBy($criteria);
+
+            if ($propertyItem == null) $propertyItem = new PropertyLicenseTermItem();
+            $propertyItem->setTerm($sourceItem->getTerm());
+            $propertyItem->setPosition($sourceItem->getPosition());
+            $propertyItem->setEditable($sourceItem->isEditable());
+            $propertyItem->setContent($sourceItem->getContent());
+            $propertyItem->setEdited(false);
+            $propertyItem->setProperty($property);
+            $this->em->persist($propertyItem);
+        }
+        $this->em->flush();
+    }
+
+    /**
+     * @param Property $property
+     * @param $term
+     * @return PropertyLicenseTermItem|null|object
+     */
+    public function updatePropertyTermItem(Property $property, $term)
+    {
+        $propertyTermItemsRepo = $this->em->getRepository('AppBundle:PropertyLicenseTermItem');
+
+        $criteria= array(
+            'id' => $term['id'],
+            'property' => $property
+        );
+        $propertyItem = $propertyTermItemsRepo->findOneBy($criteria);
+
+        if ($propertyItem != null && isset( $term['content'])) {
+            $propertyItem->setContent($term['content']);
+            $propertyItem->setEdited(true);
+        }
+        $this->em->flush();
+        return $propertyItem;
+    }
+
+    /**
+     * @param Property $property
+     * @return PropertyDefinitions[]|PropertyLicenseTermItem[]|\AppBundle\Entity\SourceDefinitions[]|\AppBundle\Entity\SourceLicenseTerm[]|\AppBundle\Entity\SourceLicenseTermItem[]|array
+     */
+    public function getPropertyDefinitions(Property $property)
+    {
+        $repo = $this->em->getRepository('AppBundle:PropertyDefinitions');
+        $definitions = $repo->findBy(array('property' => $property));
+
+        if ( count($definitions) == 0 ) $definitions = $this->restorePropertyDefinitions($property);
+
+        return $definitions;
+    }
+
+    /**
+     * @param Property $property
+     * @return PropertyDefinitions[]|\AppBundle\Entity\SourceDefinitions[]|\AppBundle\Entity\SourceLicenseTerm[]|\AppBundle\Entity\SourceLicenseTermItem[]|array
+     */
+    public function restorePropertyDefinitions(Property $property)
+    {
+        $sourceRepo = $this->em->getRepository('AppBundle:SourceDefinitions');
+        $propertyRepo = $this->em->getRepository('AppBundle:PropertyDefinitions');
+        $propertyItems = $propertyRepo->findBy(array(
+            'property' => $property
+        ));
+
+        foreach ($propertyItems as $propertyItem ){
+            $this->em->remove($propertyItem);
+        }
+
+        $this->em->flush();
+
+        $sourceItems = $sourceRepo->findAll();
+
+        foreach ( $sourceItems as $sourceItem){
+            $criteria= array(
+                'name' => $sourceItem->getName(),
+                'property' => $property
+            );
+            $propertyItem = $propertyRepo->findOneBy($criteria);
+
+            if ($propertyItem == null) $propertyItem = new PropertyDefinitions();
+            $propertyItem->setName($sourceItem->getName());
+            $propertyItem->setPosition($sourceItem->getPosition());
+            $propertyItem->setEditable($sourceItem->isEditable());
+            $propertyItem->setContent($sourceItem->getContent());
+            $propertyItem->setProperty($property);
+            $propertyItem->setEdited(false);
+            $propertyItem->setCustom(false);
+            $this->em->persist($propertyItem);
+        }
+        $this->em->flush();
+
+        return $propertyRepo->findAll();
+    }
+
+    /**
+     * @param Property $property
+     * @param $definition
+     * @return PropertyDefinitions|null|object
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updatePropertyDefinition(Property $property, $definition)
+    {
+        $propertyItemsRepo = $this->em->getRepository('AppBundle:PropertyDefinitions');
+
+        if ( !isset($definition['id']) ){
+            $propertyItem = new PropertyDefinitions();
+            if (isset( $definition['content'])) $propertyItem->setContent($definition['content']);
+            if (isset( $definition['name'])) $propertyItem->setName($definition['name']);
+            if (isset( $definition['custom'])) $propertyItem->setCustom($definition['custom']);
+            if (isset( $definition['position'])) $propertyItem->setPosition($definition['position']);
+            $propertyItem->setProperty($property);
+            $propertyItem->setEditable(true);
+            $propertyItem->setCustom(true);
+            $propertyItem->setEdited(false);
+            $this->em->persist($propertyItem);
+        } else {
+            $criteria= array(
+                'id' => $definition['id'],
+                'property' => $property,
+            );
+            $propertyItem = $propertyItemsRepo->findOneBy($criteria);
+            if (isset( $definition['content'])) {
+                $propertyItem->setEdited(true);
+                $propertyItem->setContent($definition['content']);
+            }
+            if ($propertyItem->isCustom() && isset( $definition['name'])) {
+                $propertyItem->setEdited(true);
+                $propertyItem->setName($definition['name']);
+            }
+        }
+        $this->em->flush();
+
+        return $propertyItem;
+    }
+
+    /**
+     * @param Property $property
+     * @param $definition
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function removePropertyDefinition($property, $definition)
+    {
+        $propertyItemsRepo = $this->em->getRepository('AppBundle:PropertyDefinitions');
+
+        $criteria= array(
+            'id' => $definition['id'],
+            'property' => $property,
+        );
+
+        $propertyItem = $propertyItemsRepo->findOneBy($criteria);
+
+        if ($propertyItem != null){
+            $this->em->remove($propertyItem);
+        }
+        $this->em->flush();
+    }
 }
