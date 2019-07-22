@@ -1,0 +1,102 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}
+    Import Company data from file
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        Use a comma separated file (.csv) <br />
+        Columns order should be: <br />
+        <strong>Name, Category, Website, Country, Region, Fed/Club/League Sport</strong>
+    </div>
+    <br />
+    <br />
+
+    {{ form_start(form) }}
+
+    <div class="form-group  field-text">
+        {{ form_label(form.csvFile) }}
+        {{ form_errors(form.csvFile) }}
+        {{ form_widget(form.csvFile) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(form.send) }}
+        {{ form_widget(form.send) }}
+    </div>
+
+    {{ form_end(form) }}
+
+    {% if companiesProcessed > 0 %}
+        <div>
+            <strong>Total companies processed: {{ companiesProcessed }}</strong>
+        </div>
+        <div>
+            <strong>Total companies created: {{ companiesCreated | length }}</strong>
+        </div>
+        <div>
+            <strong>Total companies updated: {{ companiesUpdated | length }}</strong>
+        </div>
+        <div>
+            <strong>Total companies skipped (Wrong country name): {{ companiesSkippedByCountry | length }}</strong>
+        </div>
+        <div>
+            <strong>Total companies skipped (Wrong region name): {{ companiesSkippedByRegion | length }}</strong>
+        </div>
+        <div>
+            <strong>Total companies skipped (Malformed data): {{ companiesSkippedByError | length }}</strong>
+        </div>
+    {% endif %}
+
+    </br>
+
+    {% if companiesSkippedByCountry | length > 0 %}
+        <div> <strong>Companies skipped (Wrong country name): </strong></div>
+        {% for company in companiesSkippedByCountry %}
+            <div>
+               {{ company.row }} - {{ company.name }} - {{ company.country }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if companiesSkippedByRegion | length > 0 %}
+        <div> <strong>Companies skipped (Wrong region name): </strong></div>
+        {% for company in companiesSkippedByRegion %}
+            <div>
+               {{ company.row }} - {{ company.name }} - {{ company.region }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if companiesCreated | length > 0 %}
+        <div><strong>Companies created: </strong></div>
+        {% for company in companiesCreated %}
+            <div>
+               {{ company.row }} - {{ company.name }}
+            </div>
+        {% endfor %}
+        </br>
+    {% endif %}
+
+    {% if companiesUpdated | length > 0 %}
+        <div><strong>Companies updated: </strong></div>
+        {% for company in companiesUpdated %}
+            <div>
+               {{ company.row }} - {{ company.name }}
+            </div>
+        {% endfor %}
+        </br>
+    {% endif %}
+
+    {% if companiesSkippedByError | length > 0 %}
+        <div> <strong>Companies skipped (Malformed data): </strong></div>
+        {% for company in companiesSkippedByError %}
+            <div>
+               {{ company.row }} - {{ company.name }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

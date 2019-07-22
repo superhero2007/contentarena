@@ -111,6 +111,13 @@ class Company
     private $owner;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyCategory", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"settings"})
+     */
+    private $category;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="company", cascade={"persist","remove"})
      * @Groups({"settings"})
      */
@@ -152,9 +159,36 @@ class Company
      */
     private $country;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Territory")
+     * @ORM\JoinColumn(nullable=true)
+     * @Groups({"settings"})
+     */
+    private $region;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="federation", type="string", length=255, nullable=true)
+     * @Groups({"settings"})
+     */
+    private $federation;
+
+    /**
+     * @var string
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    protected $notes;
+
+    /**
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    protected $createdAt;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        if ($this->getCreatedAt() == null) $this->setCreatedAt(new \DateTime());
     }
 
 
@@ -600,6 +634,85 @@ class Company
         $this->address2 = $address2;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFederation()
+    {
+        return $this->federation;
+    }
+
+    /**
+     * @param string $federation
+     */
+    public function setFederation($federation)
+    {
+        $this->federation = $federation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param mixed $region
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * @param string $notes
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
 
 
 

@@ -2,17 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 
 /**
- * Territory
+ * CompanyCategory
  *
- * @ORM\Table(name="territory")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TerritoryRepository")
+ * @ORM\Table(name="company_category")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CompanyCategoryRepository")
  */
-class Territory
+class CompanyCategory
 {
     /**
      * @var int
@@ -31,10 +30,6 @@ class Territory
      */
     private $name;
 
-    public function __toString()
-    {
-        return $this->getName();
-    }
 
     /**
      * Get id
@@ -51,7 +46,7 @@ class Territory
      *
      * @param string $name
      *
-     * @return Territory
+     * @return CompanyCategory
      */
     public function setName($name)
     {
@@ -70,11 +65,9 @@ class Territory
         return $this->name;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
+    public function __toString() {
+        return $this->name;
     }
 
 }
+
