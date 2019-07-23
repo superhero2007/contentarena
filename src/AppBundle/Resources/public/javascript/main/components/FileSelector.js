@@ -86,13 +86,13 @@ class FileSelector extends Component {
 
 		this.cropSize = {
 			max: 1024,
-			min: 450,
+			min: props.minWidth || 450,
 		};
 	}
 
 	handleUploadFile = (event) => {
 		const {
-			isImage, onSelect, target, tmp,
+			isImage, onSelect, target, tmp, isUploading,
 		} = this.props;
 		const _this = this;
 
@@ -103,6 +103,9 @@ class FileSelector extends Component {
 
 		if (tmp) {
 			this.setState({ uploading: true });
+			if (isUploading) {
+				isUploading(true);
+			}
 
 			ContentArena.ContentApi.saveTmpFile(event.target.files)
 				.then((response) => {
@@ -114,6 +117,9 @@ class FileSelector extends Component {
 							failed: [...prev.failed, response.name],
 							uploading: false,
 						}));
+					}
+					if (isUploading) {
+						isUploading(false);
 					}
 				});
 		}
