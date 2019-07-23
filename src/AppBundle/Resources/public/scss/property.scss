@@ -947,6 +947,18 @@
     .manager-filter-container {
       margin-top: 10px;
       align-items: flex-start;
+      height: auto;
+      .listing-filter {
+        height: 100%;
+        &.territories-filter {
+          > * {
+            margin-left: 10px;
+          }
+          .ca-form-control {
+            margin: 0;
+          }
+        }
+      }
     }
   }
   .fixture-tab{

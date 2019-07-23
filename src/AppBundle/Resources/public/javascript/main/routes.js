@@ -138,10 +138,10 @@ const routes = [
 		title: "Properties",
 	},
 	{
-		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?/:customId?`,
+		path: `${ROUTE_PATHS.PROPERTIES}/:propertyId/:tab?`,
 		header: HeaderBar,
 		main: Property,
-		updateByPath: false,
+		updateByPath: true,
 		profile: "SELLER",
 		title: "Properties",
 	},

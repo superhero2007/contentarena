@@ -121,10 +121,10 @@ class CommercialBidsTable extends React.Component {
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
 		width: 130,
-		accessor: "list.law",
+		accessor: "salesPackage.name",
 		Cell: props => (
 			<span>
-				{props.value.name}
+				{props.value}
 			</span>
 		),
 	}, {
