@@ -591,22 +591,24 @@
                       object-fit: contain;
                   }
               }
-              .image-upload-wrapper{
+              .image-upload-wrapper {
                   text-align: center;
 
-                  & label{
-                      margin: 20px 0 25px 0;
-
-                      & input[type="file"]{
-                          display: none;
-                      }
+                  &__button {
+                      margin: 20px auto;
                   }
 
-                  & span{
+                  &__title {
                       text-align: center;
                       font-size: 13px;
                       font-weight: 600;
                       color: $font-color-5;
+                  }
+
+                  .base-input {
+                    > div {
+                      flex-wrap: wrap;
+                    }
                   }
               }
               .image-actions{
@@ -686,23 +688,28 @@
                       width: 48%;
                   }
 
+                  .files-wrapper {
+                    .input-wrapper {
+                      position: relative;
+
+                      .base-input {
+                        width: 100%;
+                      }
+                    }
+                  }
+
                   .input-wrapper{
                       display: flex;
                       flex-direction: row;
 
-                      button{
-                          margin: 0 10px;
-                          padding: 0 40px;
-                      }
-
-                      label{
+                      &__button {
                           display: flex;
                           align-items: center;
-                          margin: 0 10px;
+                          height: 45px;
+                      }
 
-                          input[type="file"]{
-                              display: none;
-                          }
+                      .fa-cog {
+                          padding: 15px;
                       }
 
                       input{
@@ -712,6 +719,11 @@
                   }
               }
           }
+      }
+      .buttons {
+        div {
+          margin: 0;
+        }
       }
     }
 

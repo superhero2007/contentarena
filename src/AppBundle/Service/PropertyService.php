@@ -20,6 +20,8 @@ class PropertyService
 
     private $idGenerator;
 
+    private $fileUploader;
+
     private $contentService;
 
     private $bidService;
@@ -27,12 +29,14 @@ class PropertyService
     public function __construct(
         EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
+        FileUploader $fileUploader,
         ContentService $contentService,
         BidService $bidService
 
     ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
+        $this->fileUploader = $fileUploader;
         $this->repo = $this->em->getRepository("AppBundle:Property");
         $this->contentService = $contentService;
         $this->bidService = $bidService;
@@ -85,16 +89,11 @@ class PropertyService
     }
 
     /**
-     * @param $customId
+     * @param Property $property
      * @param User $user
      * @return Property|null|object
      */
-    public function getPropertyDetails($customId, User $user){
-        $company = $user->getCompany();
-        $property = $this->repo->findOneBy(array(
-            "customId"=>$customId,
-            "company" => $company
-        ));
+    public function getPropertyDetails($property, User $user){
         $listings = $this->contentService->getPropertyListings($property, $user);
         $totalOpenBids = 0;
         $totalClosedBids = 0;
@@ -151,6 +150,36 @@ class PropertyService
         $property->setCreatedAt($createdAt);
         $property->setCompany($company);
         $property->setName($this->createPropertyName($property));
+        $this->em->persist($property);
+        $this->em->flush();
+        return $property;
+    }
+
+    /**
+     * @param Property $property
+     * @param $data
+     * @param User $user
+     * @return Property|null|object
+     */
+    public function updateProperty(Property $property, $data, User $user) {
+        if (isset($data['imageBase64'])) {
+            if (empty($data['imageBase64'])) {
+                $property->setImage('');
+            } else {
+                $fileName = "property_image_" . md5(uniqid()) . '.jpg';
+                $savedImage = $this->fileUploader->saveImage($data['imageBase64'], $fileName);
+                $property->setImage($savedImage);
+            }
+        }
+        if (isset($data['website'])) {
+            $property->setWebsite($data['website']);
+        }
+        if (isset($data['attachments'])) {
+            $property->setAttachments($data['attachments']);
+        }
+        if (isset($data['description'])) {
+            $property->setDescription($data['description']);
+        }
         $this->em->persist($property);
         $this->em->flush();
         return $property;

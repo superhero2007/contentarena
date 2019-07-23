@@ -200,3 +200,31 @@ export const fetchPropertyDetails = propertyId => async (dispatch) => {
 		dispatch(fetchPropertyFail(error));
 	}
 };
+
+export const updatePropertyRequest = () => ({
+	type: propertyDetailsTypes.UPDATE_PROPERTY,
+});
+
+export const updatePropertySuccess = propertyDetail => ({
+	type: propertyDetailsTypes.UPDATE_PROPERTY_SUCCESS,
+	propertyDetail,
+});
+
+export const updatePropertyFail = error => ({
+	type: propertyDetailsTypes.UPDATE_PROPERTY_FAIL,
+	error,
+});
+
+export const updateProperty = updatedProperty => async (dispatch) => {
+	dispatch(updatePropertyRequest());
+	try {
+		const { data: { property } } = await api.properties.updateProperty({ property: updatedProperty });
+		for (const value of property.rights) {
+			value.selectedRights = Object.assign({}, RightDefaults);
+		}
+		dispatch(updatePropertySuccess(property));
+		return property;
+	} catch (error) {
+		dispatch(updatePropertyFail(error));
+	}
+};

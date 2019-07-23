@@ -39,6 +39,29 @@ class Property implements NotifiableInterface
     private $image;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     * @Groups({"property", "propertyList"})
+     */
+    private $website;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     * @Groups({"property", "propertyList"})
+     */
+    private $description;
+
+    /**
+     * @var object
+     * @ORM\Column(name="attachments", type="object", nullable=true)
+     * @Groups({"property", "propertyList"})
+     */
+    private $attachments;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at", nullable=true)
      * @Groups({"property", "propertyList"})
      */
@@ -218,6 +241,62 @@ class Property implements NotifiableInterface
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * @param string $website
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Property
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return object
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param object $attachments
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
     }
 
     /**

@@ -1,61 +1,40 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import { updateSinglePropertyByKeyValue } from "../actions/propertyActions";
+import Loader from "@components/Loader/Loader";
+import FileSelector from "../../main/components/FileSelector";
+import { updateProperty } from "../actions/propertyActions";
 
 class PropertyDetailsEventTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			image: props.image,
-			description: props.description,
-			newDescription: props.description,
-			website: props.website,
-			files: props.files,
-			isEditMode: false,
+			image: props.image || "",
+			imageBase64: "",
+			description: props.description || "",
+			website: props.website || "",
+			attachments: props.attachments || [],
 		};
 	}
 
 	getImage = () => {
-		const { image } = this.state;
+		const { image, imageBase64 } = this.state;
 
-		if (!image) {
+		if (!image && !imageBase64) {
 			return <i className="fa fa-4x fa-camera" />;
 		}
 
-		return <img src={image} alt="" />;
+		return <img src={imageBase64 || `/${image}`} alt="" />;
 	};
 
 	handleRemoveImage = () => {
-		this.setState({ image: "" });
-	};
-
-	handleEditDescription = () => {
-		this.setState(prevState => ({ isEditMode: !prevState.isEditMode }));
-	};
-
-	handleApplyDescription = () => {
-		const { newDescription } = this.state;
-		this.setState({
-			description: newDescription,
-			isEditMode: false,
-		});
-	};
-
-	handleCancelDescription = () => {
-		const { description } = this.state;
-		this.setState({
-			newDescription: description,
-			isEditMode: false,
-		});
+		this.setState({ image: "", imageBase64: "" });
 	};
 
 	handleDescriptionChange = (e) => {
 		const { value } = e.target;
-		this.setState({
-			newDescription: value,
-		});
+		this.setState({ description: value });
 	};
 
 	handleChangeWebsite = (e) => {
@@ -63,73 +42,57 @@ class PropertyDetailsEventTab extends Component {
 		this.setState({ website: value });
 	};
 
-	handleSaveDescriptionAndImage = () => {
-		const { description, image } = this.state;
-		this.props.updateSinglePropertyByKeyValue("description", description);
-		this.props.updateSinglePropertyByKeyValue("image", image);
-
-		console.warn("we should update property on backend");
-	};
-
-	handleSaveWebsite = () => {
-		const { website } = this.state;
-		this.props.updateSinglePropertyByKeyValue("website", website);
-		console.warn("we should update property on backend");
-	};
-
-	getSelectedFiles = () => {
-		const { files } = this.state;
-		if (!files || files.size === 0 || files.length === 0) return "";
-
-		return files.name;
-	};
-
-	isDataChanged = () => this.props.description !== this.state.description
-			|| this.props.image !== this.state.image;
-
-	handleSelectFiles = (e) => {
-		e.preventDefault();
-
-		const fileReader = new FileReader();
-		const files = e.target.files[0];
-
-		fileReader.onloadend = () => {
-			this.setState({
-				files,
-			});
-			this.props.updateSinglePropertyByKeyValue("files", files);
+	handleSave = () => {
+		const {
+			image,
+			imageBase64,
+			description,
+			website,
+			attachments,
+		} = this.state;
+		const { customId, updateProperty } = this.props;
+		const updateObj = {
+			customId,
+			description,
+			website,
+			attachments,
 		};
-
-
-		fileReader.readAsDataURL(files);
+		if (!image) {
+			updateObj.imageBase64 = imageBase64;
+		}
+		updateProperty(updateObj);
 	};
 
-	handleSelectImage = (e) => {
-		e.preventDefault();
+	addFile = (response) => {
+		const { attachments } = this.state;
+		attachments.push({
+			file: response.file,
+			name: response.name,
+		});
+		this.setState({ attachments });
+	};
 
-		const imageReader = new FileReader();
-		const imageFile = e.target.files[0];
+	removeFile = (index) => {
+		const { attachments } = this.state;
+		attachments.splice(index, 1);
+		this.setState({ attachments });
+	};
 
-		imageReader.onloadend = () => {
-			this.setState({
-				image: imageReader.result,
-				imageFile,
-			});
-
-			this.props.updateSinglePropertyByKeyValue("image", imageReader.result);
-			console.warn("we should update property on backend");
-		};
-		imageReader.readAsDataURL(imageFile);
+	handleSelectImage = (key, imageBase64) => {
+		if (key === "imageBase64") {
+			this.setState({ imageBase64 });
+		}
 	};
 
 	render() {
 		const {
 			image,
+			imageBase64,
 			description,
-			newDescription,
 			website,
-			isEditMode,
+			attachments,
 		} = this.state;
+		const { loading } = this.props;
 
 		return (
 			<section className="property-event-tab">
@@ -145,18 +108,20 @@ class PropertyDetailsEventTab extends Component {
 						<div className="image-wrapper">
 							{this.getImage()}
 						</div>
-						{!image && (
+						{!image && !imageBase64 && (
 							<div className="image-upload-wrapper">
-								<span><Translate i18nKey="PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT" /></span>
+								<span className="image-upload-wrapper__title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT" /></span>
 
-								<label htmlFor="select-image" className="ca-btn primary">
-									<Translate i18nKey="PROPERTY_DETAILS_EVENT_UPLOAD" /><input
-										id="select-image"
-										accept=".png, .jpg, .jpeg"
-										type="file"
-										onChange={this.handleSelectImage}
-									/>
-								</label>
+								<FileSelector
+									label=" "
+									isImage
+									accept={[".png", ".jpg", ".jpeg"]}
+									onSelect={this.handleSelectImage}
+									buttonClassName="ca-btn primary image-upload-wrapper__button"
+									imageBase64={imageBase64}
+									target="imageBase64"
+									hideRemoveButton
+								/>
 							</div>
 						)}
 						{image && (
@@ -171,22 +136,9 @@ class PropertyDetailsEventTab extends Component {
 							<div className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_DESCRIPTION_TITLE" /></div>
 							<div className="description-wrapper">
 								<textarea
-									readOnly={!isEditMode}
-									disabled={!isEditMode}
 									onChange={e => this.handleDescriptionChange(e)}
-									value={isEditMode ? newDescription : description}
+									value={description}
 								/>
-								<div className="description-actions">
-									{isEditMode
-										? (
-											<Fragment>
-												<i className="fa fa-check-circle" onClick={this.handleApplyDescription} />
-												<i className="fa fa-times-circle" onClick={this.handleCancelDescription} />
-											</Fragment>
-										)
-										: <i className="fa fa-pencil-square-o" onClick={this.handleEditDescription} />
-									}
-								</div>
 							</div>
 							<div className="files-and-website-wrapper">
 								<div className="website-wrapper">
@@ -200,45 +152,41 @@ class PropertyDetailsEventTab extends Component {
 											type="text"
 											onChange={e => this.handleChangeWebsite(e)}
 										/>
-										<button className="ca-btn primary" onClick={this.handleSaveWebsite}>
-											<Translate i18nKey="PROPERTY_DETAILS_EVENT_WEBSITE_SAVE" />
-										</button>
 									</div>
 								</div>
 								<div className="files-wrapper">
 									<div className="title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_TITLE" /></div>
 									<div className="input-wrapper">
-										<input
-											placeholder={this.context.t("PROPERTY_DETAILS_EVENT_FILES_PLACEHOLDER")}
-											type="text"
-											value={this.getSelectedFiles()}
-											readOnly
+										<FileSelector
+											label=" "
+											target="attachments"
+											selected={attachments}
+											onSelect={this.addFile}
+											onRemove={this.removeFile}
+											accept={["image/png", "image/jpg", ".pdf", ".doc", ".docx", ".cvs", ".ppt", ".xls", ".xlsx"]}
+											acceptType={[
+												"image/jpeg",
+												"image/png",
+												"application/pdf",
+											]}
+											tmp
+											buttonClassName="ca-btn primary input-wrapper__button"
 										/>
-										<label htmlFor="select-files" className="ca-btn primary">
-											<Translate i18nKey="PROPERTY_DETAILS_EVENT_FILES_SAVE" />
-											<input
-												id="select-files"
-												accept="image/png, image/jpg, .pdf, .doc, .docx, .cvs, .ppt, .xls, .xlsx"
-												type="file"
-												onChange={this.handleSelectFiles}
-											/>
-										</label>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</section>
-				{this.isDataChanged() && (
-					<div className="buttons">
-						<button
-							className="yellow-button centered-btn"
-							onClick={this.handleSaveDescriptionAndImage}
-						>
-							<Translate i18nKey="Apply" />
-						</button>
-					</div>
-				)}
+				<div className="buttons">
+					<button
+						className="yellow-button centered-btn"
+						onClick={this.handleSave}
+						disabled={loading}
+					>
+						{loading ? <Loader loading xSmall /> : <Translate i18nKey="Apply" />}
+					</button>
+				</div>
 			</section>
 		);
 	}
@@ -248,15 +196,12 @@ PropertyDetailsEventTab.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-PropertyDetailsEventTab.propTypes = {
-	updateSinglePropertyByKeyValue: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = state => ({
+	loading: state.propertyDetails.loading,
 	...state.propertyDetails.property,
 });
 const mapDispatchToProps = dispatch => ({
-	updateSinglePropertyByKeyValue: (key, value) => dispatch(updateSinglePropertyByKeyValue(key, value)),
+	updateProperty: value => dispatch(updateProperty(value)),
 });
 
 export default connect(

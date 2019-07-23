@@ -11,6 +11,7 @@ const API_ENDPOINTS = {
 	PROPERTIES_ALL: "api/properties/all",
 	PROPERTIES_DETAIL: "api/properties/detail",
 	PROPERTIES_CREATE: "api/properties/create",
+	PROPERTIES_UPDATE: "api/properties/update",
 	MARKETPLACE_LISTINGS: "api/marketplace/listings",
 	SHARE_LISTING: "api/share/listing",
 };

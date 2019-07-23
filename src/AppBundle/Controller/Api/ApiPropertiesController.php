@@ -51,10 +51,16 @@ class ApiPropertiesController extends Controller
         PropertyService $propertyService
     )
     {
-        $customId = $request->get("propertyId");
         $user = $this->getUser();
+        $company = $user->getCompany();
 
-        $property = $propertyService->getPropertyDetails($customId, $user);
+        $customId = $request->get("propertyId");
+        $property = $this->getDoctrine()->getRepository("AppBundle:Property")->findOneBy(array(
+            "customId"=> $customId,
+            "company" => $company
+        ));
+
+        $property = $propertyService->getPropertyDetails($property, $user);
 
         if ($property == null ) {
             $errorCode = PropertyErrors::PROPERTY_DOES_NOT_EXISTS;
@@ -68,13 +74,13 @@ class ApiPropertiesController extends Controller
     }
 
     /**
-     * @Route("/api/properties/create", name="crateProperty")
+     * @Route("/api/properties/create", name="createProperty")
      * @param Request $request
      * @param PropertyService $propertyService
      * @return mixed|string|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function crateProperty(
+    public function createProperty(
         Request $request,
         PropertyService $propertyService
     )
@@ -86,5 +92,39 @@ class ApiPropertiesController extends Controller
         $createdProperty = $propertyService->createProperty($property, $user);
         return $this->getSerializedResponse($createdProperty, array("property"));
 
+    }
+
+    /**
+     * @Route("/api/properties/update", name="updateProperty")
+     * @param Request $request
+     * @param PropertyService $propertyService
+     * @return mixed|string|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function updateProperty(
+        Request $request,
+        PropertyService $propertyService
+    )
+    {
+        /* @var Property $property */
+        $user = $this->getUser();
+        $company = $user->getCompany();
+        $data = $request->get('property');
+        $property = $this->getDoctrine()->getRepository("AppBundle:Property")->findOneBy(array(
+            "customId"=> $data['customId'],
+            "company" => $company
+        ));
+        $property = $propertyService->updateProperty($property, $data, $user);
+        $property = $propertyService->getPropertyDetails($property, $user);
+
+        if ($property == null ) {
+            $errorCode = PropertyErrors::PROPERTY_DOES_NOT_EXISTS;
+            return $this->getErrorResponse(PropertyErrors::class, $errorCode);
+        }
+
+        return $this->getSerializedResponse(array(
+            "success" => true,
+            "property" => $property,
+        ), array("property"));
     }
 }

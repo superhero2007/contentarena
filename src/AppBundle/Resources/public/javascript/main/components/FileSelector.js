@@ -294,7 +294,7 @@ class FileSelector extends Component {
 
 	render() {
 		const {
-			label, isImage, previousImage, selected, onRemove, infoText,
+			label, isImage, previousImage, selected, onRemove, infoText, buttonClassName,
 		} = this.props;
 		const {
 			image, uploading, failed, crop, croppedImage, isImageSizeFit,
@@ -315,7 +315,7 @@ class FileSelector extends Component {
 						)}
 					</label>
 					<button
-						className="standard-button"
+						className={buttonClassName || "standard-button"}
 						disabled={uploading}
 						onClick={() => {
 							$(`#input-${this.props.target}`)
