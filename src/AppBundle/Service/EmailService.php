@@ -37,6 +37,8 @@ class EmailService
 
     private $translator;
 
+    private $contactAddress;
+
     public function __construct(
         EntityManager $entityManager,
         \Twig_Environment $twig,
@@ -45,7 +47,8 @@ class EmailService
         $hostUrl,
         $supportAddress,
         $infoAddress,
-        $alertsAddress
+        $alertsAddress,
+        $contactAddress
     ) {
         $this->em = $entityManager;
         $this->twig = $twig;
@@ -55,6 +58,7 @@ class EmailService
         $this->infoAddress = $infoAddress;
         $this->alertsAddress = $alertsAddress;
         $this->translator = $translator;
+        $this->contactAddress = $contactAddress;
     }
 
     /**
@@ -849,7 +853,7 @@ class EmailService
             $subject->getContent(),
             $user->getEmail(),
             $parameters,
-            $this->infoAddress,
+            $this->contactAddress,
             $bcc
         );
 
@@ -883,7 +887,7 @@ class EmailService
             $subject->getContent(),
             $user->getEmail(),
             $parameters,
-            $this->infoAddress,
+            $this->contactAddress,
             $bcc
         );
 
@@ -922,7 +926,7 @@ class EmailService
             $subject->getContent(),
             $user->getEmail(),
             $parameters,
-            $this->infoAddress,
+            $this->contactAddress,
             $bcc
         );
 

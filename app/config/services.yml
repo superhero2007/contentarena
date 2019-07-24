@@ -66,6 +66,7 @@ services:
             $infoAddress : '%app.email_info%'
             $supportAddress : '%app.email_support%'
             $alertsAddress : '%app.email_alerts%'
+            $contactAddress : '%app.email_contact%'
 
     AppBundle\Service\JobService:
         arguments:

@@ -1,0 +1,18 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}
+    Export companies
+{% endblock %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+
+    <div class="form-group  field-text">
+        {{ form_label(form.send) }}
+        {{ form_widget(form.send) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

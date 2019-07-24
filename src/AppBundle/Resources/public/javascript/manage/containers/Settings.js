@@ -272,13 +272,7 @@ class Settings extends React.Component {
 								<label>
 									<Translate i18nKey="SETTINGS_LABEL_COMPANY_COUNTRY" />
 								</label>
-								<input
-									className="ca-form-control"
-									value={(country) ? country.label : null}
-									disabled
-								/>
-
-								{/* <CountrySelector
+								<CountrySelector
 									multi={false}
 									value={country}
 									disabled={!editCompanyInfo}
@@ -286,44 +280,8 @@ class Settings extends React.Component {
 										user.company.country.name = e.value;
 										this.setState({ user });
 									}}
-								/> */}
-							</div>
-							<div className="item">
-								<label>
-									{this.context.t("Region")}
-								</label>
-								<input
-									className="ca-form-control"
-									value={(user.company.region) ? user.company.region.name : null}
-									disabled
 								/>
-
 							</div>
-						</div>
-						<div className="row">
-							<div className="item">
-								<label>
-									{this.context.t("Category")}
-								</label>
-								<input
-									className="ca-form-control"
-									value={(user.company.category) ? user.company.category.name : null}
-									disabled
-								/>
-
-							</div>
-							<div className="item">
-								<label>
-									{this.context.t("Fed/Club/League Sport")}
-								</label>
-								<input
-									className="ca-form-control"
-									value={(user.company.federation) ? user.company.federation : null}
-									disabled
-								/>
-
-							</div>
-
 						</div>
 						<div>
 							<label>

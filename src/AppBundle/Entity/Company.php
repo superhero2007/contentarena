@@ -167,12 +167,10 @@ class Company
     private $region;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="federation", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Sport")
      * @Groups({"settings"})
      */
-    private $federation;
+    private $sport;
 
     /**
      * @var string
@@ -651,19 +649,19 @@ class Company
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getFederation()
+    public function getSport()
     {
-        return $this->federation;
+        return $this->sport;
     }
 
     /**
-     * @param string $federation
+     * @param mixed $sport
      */
-    public function setFederation($federation)
+    public function setSport($sport)
     {
-        $this->federation = $federation;
+        $this->sport = $sport;
     }
 
     /**

@@ -26,7 +26,7 @@ class UserErrors implements ErrorInterface
         201 => 'Incomplete request. Missing username or password',
         202 => 'Incorrect password',
         1001 => 'User already exists',
-        1002 => 'User was disabled by an administrator',
+        1002 => 'It seems like your account has been deactivated. Please contact info@contentarena.com for more information.',
         204 => 'Password request expired',
         205 => 'Your email address is invalid'
     );

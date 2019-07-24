@@ -34,24 +34,29 @@ class MessageService
 
     private $emailService;
 
+    private $switchUserService;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         NotificationService $notificationService,
         EmailService $emailService,
-        FileUploader $fileUploader
+        FileUploader $fileUploader,
+        SwitchUserService $switchUserService
     ) {
         $this->em = $entityManager;
         $this->idGenerator = $idGenerator;
         $this->fileUploader = $fileUploader;
         $this->notificationService = $notificationService;
         $this->emailService = $emailService;
+        $this->switchUserService = $switchUserService;
     }
 
     public function getAllThreads(Request $request, User $user){
         /* @var Company $ownCompany */
         $ownCompany = $user->getCompany();
         $threads = $this->em->getRepository('AppBundle:Thread')->getAllThreads($ownCompany);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
 
         foreach ($threads as $thread){
             /* @var Thread $thread */
@@ -67,7 +72,7 @@ class MessageService
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
                 $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
-                $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
+                if(!$ghostMode) $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
             } else if ($thread->getCreatedAt() != null) {
                 $thread->setLastMessageDate($thread->getCreatedAt());
             } else {
@@ -87,6 +92,7 @@ class MessageService
         /* @var Company $ownCompany */
         $ownCompany = $user->getCompany();
         $threads = $this->em->getRepository('AppBundle:Thread')->getAllThreads($ownCompany);
+        $ghostMode = $this->switchUserService->isGhostModeActive();
         $unreadThreads = [];
 
         foreach ($threads as $thread){
@@ -103,7 +109,7 @@ class MessageService
                 $thread->setLastMessageDate($lastMessage[0]->getCreatedAt());
                 $thread->setLastMessageUser($lastMessage[0]->getSender());
                 $hasUnreadMessagesForCurrentUser = !$lastMessage[0]->readBy($user);
-                $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
+                if(!$ghostMode) $thread->setUnreadMessagesForCurrentUser($hasUnreadMessagesForCurrentUser);
                 if ($hasUnreadMessagesForCurrentUser) $unreadThreads[] = $thread;
             }
 

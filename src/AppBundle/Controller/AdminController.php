@@ -49,7 +49,9 @@ class AdminController extends BaseAdminController
         "Last Name",
         "Email",
         "Company",
-        "Country",
+        "Company Country",
+        "Company Region",
+        "Company Category",
         "Status",
         "Last Login",
         "Date of Creation",
@@ -420,12 +422,15 @@ class AdminController extends BaseAdminController
             $company = $user->getCompany();
 
             /* @var User $user*/
+            /* @var Company $company*/
             $rows[] = implode(',', array(
                 $user->getFirstName(),
                 $user->getLastName(),
                 $user->getEmail(),
                 ($company != null) ? $company->getLegalName() : "",
                 ($company != null && $company->getCountry() != null) ? $company->getCountry()->getName() : "",
+                ($company != null && $company->getRegion() != null) ? $company->getRegion()->getName() : "",
+                ($company != null && $company->getCategory() != null) ? $company->getCategory()->getName() : "",
                 ( $user->getStatus() != null ) ? $user->getStatus()->getName() : "",
                 ( $user->getLastLogin() != null ) ? $user->getLastLogin()->format('Y-m-d H:i:s'): "",
                 ( $user->getRegisteredAt() != null ) ? $user->getRegisteredAt()->format('Y-m-d H:i:s'): "",
