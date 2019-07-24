@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import first from "lodash/first";
 import { cancelIcon } from "./Icons";
-// import PopupCountrySelector from "./PopupCountrySelector";
+import PopupSeasonSelector from "./PopupSeasonSelector";
 
 const SeasonFilter = ({
 	className, allSeasons, seasons, selectSeasons,
@@ -49,12 +49,11 @@ const SeasonFilter = ({
 				/>
 			)}
 
-			{/*
-			<PopupCountrySelector
+			<PopupSeasonSelector
 				value={seasons}
 				onSelect={selectSeasons}
+				allSeasons={allSeasons}
 			/>
-			*/}
 		</div>
 	);
 };
