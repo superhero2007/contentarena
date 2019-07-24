@@ -236,12 +236,14 @@ class CmsCommercialOverview extends React.Component {
 									updateIncludedCountries={this.updateIncludedCountries}
 								/>
 
-								<SeasonFilter
-									className="listing-filter territories-filter"
-									allSeasons={allSeasons}
-									seasons={seasons}
-									selectSeasons={this.selectSeasons}
-								/>
+								{allSeasons && allSeasons.length > 1 && (
+									<SeasonFilter
+										className="listing-filter territories-filter"
+										allSeasons={allSeasons}
+										seasons={seasons}
+										selectSeasons={this.selectSeasons}
+									/>
+								)}
 							</div>
 						</div>
 						{/*
