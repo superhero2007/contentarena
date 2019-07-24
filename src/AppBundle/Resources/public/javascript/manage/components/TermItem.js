@@ -13,19 +13,24 @@ class TermItem extends React.Component {
 		this.state = {
 			editing: false,
 			content: props.content || "",
-			restoreValue: props.content || "",
+			restoreValue: props.restoreValue || props.content || "",
 			updating: false,
 		};
 	}
 
 	handleChange = (e) => {
-		this.setState({ content: e.target.value });
+		const { onUpdate } = this.props;
+		const { value } = e.target;
+		this.setState({ content: value });
+		if (onUpdate) {
+			onUpdate(value);
+		}
 	};
 
 	onUpdate = () => {
 		const { id } = this.props;
 		const { content } = this.state;
-		const { isProperty, propertyId } = this.props;
+		const { isProperty, propertyId, onSave } = this.props;
 
 		const term = {
 			content,
@@ -34,12 +39,16 @@ class TermItem extends React.Component {
 
 		this.setState({ updating: true, editing: false });
 		if (isProperty) {
-			ContentArena.Api.updatePropertyTerm(propertyId, term).then(({ response }) => {
+			ContentArena.Api.updatePropertyTerm(propertyId, term).then(({ data: response }) => {
 				this.setState({
 					updating: false,
 					edited: true,
 					content: response.success ? response.term.content : content,
+					restoreValue: response.success ? response.term.content : content,
 				});
+				if (response.success && onSave) {
+					onSave(response.term);
+				}
 			})
 				.catch(({ response }) => {
 					this.setState({
@@ -60,8 +69,12 @@ class TermItem extends React.Component {
 	};
 
 	restore = () => {
+		const { onRestore } = this.props;
 		const { restoreValue } = this.state;
 		this.setState({ content: restoreValue });
+		if (onRestore) {
+			onRestore(restoreValue);
+		}
 	};
 
 	render() {

@@ -25,8 +25,12 @@ class PropertyDetailsLicenseTab extends Component {
 		});
 
 		ContentArena.Api.getPropertyTerms(propertyId).then(({ data }) => {
+			const terms = data.map((term) => {
+				const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
+				return Object.assign({}, terms, { items });
+			});
 			this.setState({
-				terms: data,
+				terms,
 				loading: false,
 			});
 		})
@@ -38,8 +42,9 @@ class PropertyDetailsLicenseTab extends Component {
 			});
 
 		ContentArena.Api.getPropertyDefinitions(propertyId).then(({ data }) => {
+			const definitions = data.map(element => Object.assign({}, element, { restoreValue: element.content }));
 			this.setState({
-				definitions: data,
+				definitions,
 				loadingDefinitions: false,
 			});
 		})
@@ -55,7 +60,6 @@ class PropertyDetailsLicenseTab extends Component {
 		const { definitions } = this.state;
 		definitions[index].removed = true;
 		this.setState({ definitions });
-		this.updateTerms();
 	};
 
 	onRemoveTerm = (termIndex, termItemIndex) => {
@@ -63,7 +67,6 @@ class PropertyDetailsLicenseTab extends Component {
 		terms[termIndex].items[termItemIndex].removed = true;
 		terms[termIndex].items[termItemIndex].content = "";
 		this.setState({ terms });
-		this.updateTerms();
 	};
 
 	restoreDefaultTerms = () => {
@@ -71,8 +74,12 @@ class PropertyDetailsLicenseTab extends Component {
 		this.setState({ restoring: true });
 
 		ContentArena.Api.restorePropertyTerms(propertyId).then(({ data }) => {
+			const terms = data.map((term) => {
+				const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
+				return Object.assign({}, terms, { items });
+			});
 			this.setState({
-				terms: data,
+				terms,
 				restoring: false,
 			});
 		})
@@ -89,8 +96,9 @@ class PropertyDetailsLicenseTab extends Component {
 		this.setState({ restoringDefinitions: true });
 
 		ContentArena.Api.restorePropertyDefinitions(propertyId).then(({ data }) => {
+			const definitions = data.map(element => Object.assign({}, element, { restoreValue: element.content }));
 			this.setState({
-				definitions: data,
+				definitions,
 				restoringDefinitions: false,
 			});
 		})
@@ -116,6 +124,42 @@ class PropertyDetailsLicenseTab extends Component {
 
 		definitions.push(definition);
 		this.setState({ definitions });
+	};
+
+	onSaveDefinition = (index, value) => {
+		const { definitions } = this.state;
+		definitions[index] = Object.assign({}, value, { restoreValue: value.content });
+		this.setState({ definitions });
+	};
+
+	onSaveTerm = (termIndex, termItemIndex, value) => {
+		const { terms } = this.state;
+		terms[termIndex].items[termItemIndex] = Object.assign({}, value, { restoreValue: value.content });
+		this.setState({ terms });
+	};
+
+	onUpdateDefinition = (index, value) => {
+		const { definitions } = this.state;
+		definitions[index].content = value;
+		this.setState({ definitions });
+	};
+
+	onUpdateTerm = (termIndex, termItemIndex, value) => {
+		const { terms } = this.state;
+		terms[termIndex].items[termItemIndex].content = value;
+		this.setState({ terms });
+	};
+
+	onRestoreDefinition = (index) => {
+		const { definitions } = this.state;
+		definitions[index].content = definitions[index].restoreValue;
+		this.setState({ definitions });
+	};
+
+	onRestoreTerm = (termIndex, termItemIndex) => {
+		const { terms } = this.state;
+		terms[termIndex].items[termItemIndex].content = terms[termIndex].items[termItemIndex].restoreValue;
+		this.setState({ terms });
 	};
 
 	render() {
@@ -183,6 +227,9 @@ class PropertyDetailsLicenseTab extends Component {
 										key={i}
 										index={i}
 										onRemove={() => this.onRemoveDefinition(i)}
+										onUpdate={value => this.onUpdateDefinition(i, value)}
+										onRestore={() => this.onRestoreDefinition(i)}
+										onSave={value => this.onSaveDefinition(i, value)}
 										isProperty
 										propertyId={propertyId}
 										{...definition}
@@ -208,6 +255,9 @@ class PropertyDetailsLicenseTab extends Component {
 										<TermItem
 											key={k}
 											onRemove={() => this.onRemoveTerm(i, k)}
+											onUpdate={value => this.onUpdateTerm(i, k, value)}
+											onRestore={() => this.onRestoreTerm(i, k)}
+											onSave={value => this.onSaveTerm(i, k, value)}
 											{...item}
 											termPosition={term.position}
 											isProperty
