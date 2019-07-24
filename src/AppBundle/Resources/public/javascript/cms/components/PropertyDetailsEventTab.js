@@ -15,6 +15,7 @@ class PropertyDetailsEventTab extends Component {
 			description: props.description || "",
 			website: props.website || "",
 			attachments: props.attachments || [],
+			uploading: false,
 		};
 	}
 
@@ -84,6 +85,10 @@ class PropertyDetailsEventTab extends Component {
 		}
 	};
 
+	isUploading = (uploading) => {
+		this.setState({ uploading });
+	};
+
 	render() {
 		const {
 			image,
@@ -91,6 +96,7 @@ class PropertyDetailsEventTab extends Component {
 			description,
 			website,
 			attachments,
+			uploading,
 		} = this.state;
 		const { loading } = this.props;
 
@@ -108,7 +114,7 @@ class PropertyDetailsEventTab extends Component {
 						<div className="image-wrapper">
 							{this.getImage()}
 						</div>
-						{!image && !imageBase64 && (
+						{!image && !imageBase64 ? (
 							<div className="image-upload-wrapper">
 								<span className="image-upload-wrapper__title"><Translate i18nKey="PROPERTY_DETAILS_EVENT_NO_IMAGE_TEXT" /></span>
 
@@ -121,12 +127,11 @@ class PropertyDetailsEventTab extends Component {
 									imageBase64={imageBase64}
 									target="imageBase64"
 									hideRemoveButton
+									minWidth={300}
 								/>
 							</div>
-						)}
-						{image && (
+						) : (
 							<div className="image-actions">
-								<i className="fa fa-pencil-square-o" onClick={() => console.warn("not specify")} />
 								<i className="fa fa-trash" onClick={this.handleRemoveImage} />
 							</div>
 						)}
@@ -171,6 +176,7 @@ class PropertyDetailsEventTab extends Component {
 											]}
 											tmp
 											buttonClassName="ca-btn primary input-wrapper__button"
+											isUploading={this.isUploading}
 										/>
 									</div>
 								</div>
@@ -182,9 +188,9 @@ class PropertyDetailsEventTab extends Component {
 					<button
 						className="yellow-button centered-btn"
 						onClick={this.handleSave}
-						disabled={loading}
+						disabled={loading || uploading}
 					>
-						{loading ? <Loader loading xSmall /> : <Translate i18nKey="Apply" />}
+						{(loading || uploading) ? <Loader loading xSmall /> : <Translate i18nKey="Apply" />}
 					</button>
 				</div>
 			</section>
