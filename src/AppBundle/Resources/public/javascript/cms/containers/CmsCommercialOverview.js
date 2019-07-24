@@ -8,6 +8,7 @@ import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialO
 // import RightsLegend from "../../main/components/RightsLegend";
 import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
+import SeasonFilter from "../../main/components/SeasonFilter";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -20,11 +21,12 @@ class CmsCommercialOverview extends React.Component {
 			declinedBids: false,
 			countries: [],
 			includeAllCountries: false,
+			seasons: [],
 		};
 	}
 
 	componentDidMount() {
-		const { property: { listings } } = this.props.propertyDetails;
+		const { property: { listings, seasons } } = this.props.propertyDetails;
 		const { location: { search } } = this.props.history;
 		if (search) {
 			const params = search.replace("?", "").split("&");
@@ -42,6 +44,17 @@ class CmsCommercialOverview extends React.Component {
 				}
 				if (key === "country") {
 					this.setState({ countries: values });
+				}
+				if (key === "season") {
+					const selectedSeasons = values
+						.map((value) => {
+							const selectedSeason = seasons.find(season => season.id === parseInt(value, 10));
+							if (selectedSeason) {
+								return { value: selectedSeason.id, label: selectedSeason.name };
+							}
+							return null;
+						}).filter(value => value);
+					this.setState({ seasons: selectedSeasons });
 				}
 				if (key === "include") {
 					this.setState({ includeAllCountries: true });
@@ -85,13 +98,24 @@ class CmsCommercialOverview extends React.Component {
 		this.onApplyFilter();
 	};
 
+	selectSeasons = (seasons) => {
+		seasons = first(seasons) ? seasons : [];
+		this.setState({ seasons });
+		this.onApplyFilter();
+	};
+
 	onApplyFilter = () => {
 		setTimeout(() => {
-			const { selectedListings, countries, includeAllCountries } = this.state;
+			const {
+				selectedListings, countries, includeAllCountries, seasons,
+			} = this.state;
 			const { location: { pathname } } = this.props.history;
 			let search = [];
 			if (selectedListings) {
 				search.push(`customId=${selectedListings.value}`);
+			}
+			if (seasons.length) {
+				search.push(`season=${seasons.map(element => element.value).join(",")}`);
 			}
 			if (countries.length) {
 				search.push(`country=${countries.join(",")}`);
@@ -107,7 +131,7 @@ class CmsCommercialOverview extends React.Component {
 	};
 
 	render() {
-		const { history, propertyId, propertyDetails: { property: { listings } } } = this.props;
+		const { history, propertyId, propertyDetails: { property: { listings, seasons: allSeasons } } } = this.props;
 		const {
 			selectedListings,
 			openBids,
@@ -126,6 +150,7 @@ class CmsCommercialOverview extends React.Component {
 		const {
 			countries,
 			includeAllCountries,
+			seasons,
 		} = this.state;
 
 		let allListings = listings;
@@ -209,6 +234,13 @@ class CmsCommercialOverview extends React.Component {
 									includeAllCountries={includeAllCountries}
 									selectTerritory={this.selectTerritory}
 									updateIncludedCountries={this.updateIncludedCountries}
+								/>
+
+								<SeasonFilter
+									className="listing-filter territories-filter"
+									allSeasons={allSeasons}
+									seasons={seasons}
+									selectSeasons={this.selectSeasons}
 								/>
 							</div>
 						</div>
