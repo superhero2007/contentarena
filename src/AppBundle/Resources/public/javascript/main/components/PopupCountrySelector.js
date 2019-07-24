@@ -87,7 +87,6 @@ class PopupCountrySelector extends React.Component {
 						value="single"
 						className="ca-radio"
 						style={{ height: "20px", width: 20, marginRight: 15 }}
-						defaultChecked
 						checked={this.state.selectedOption === "single"}
 						onChange={this.handleOptionChange}
 					/>
