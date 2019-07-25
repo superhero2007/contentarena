@@ -957,6 +957,12 @@
       height: auto;
       .listing-filter {
         height: 100%;
+        margin-right: 20px;
+
+        .reset-listing-filter {
+          width: 75px;
+        }
+
         &.territories-filter {
           > * {
             margin-left: 10px;
