@@ -217,15 +217,12 @@ class CmsCommercialOverview extends React.Component {
 									<Select
 										name="form-field-name"
 										placeholder={this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER")}
-										clearable={false}
+										clearable
 										onChange={this.onSelectListing}
 										multi={false}
 										value={selectedListings}
 										options={listings.map(b => ({ value: b.customId, label: b.name }))}
 									/>
-									<div className="reset-listing-filter" onClick={this.onResetListingFilter}>
-										<span><Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR" /></span>
-									</div>
 								</div>
 
 								<TerritoryFilter
