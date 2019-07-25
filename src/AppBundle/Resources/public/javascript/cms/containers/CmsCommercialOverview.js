@@ -158,6 +158,13 @@ class CmsCommercialOverview extends React.Component {
 			allListings = allListings.filter(list => selectedListings.value === list.customId);
 		}
 
+		if (seasons.length) {
+			allListings = allListings.filter((list) => {
+				const selectedSeasons = list.seasons.filter(season => seasons.find(b => b.value === season.id));
+      	return selectedSeasons.length;
+			});
+		}
+
 		let openBidsList = [].concat.apply(
 			[],
 			allListings.map(list => [].concat.apply(
