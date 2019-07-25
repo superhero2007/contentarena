@@ -25,6 +25,11 @@ class CmsListingOverviewTable extends React.Component {
 		this.setState({ listings });
 	}
 
+	componentWillReceiveProps(newProps) {
+		const { listings } = newProps;
+		this.setState({ listings });
+	}
+
 	getHeader = (text, tooltip = "") => (
 		<span data-tip={tooltip && tooltip}>
 			{text && text}

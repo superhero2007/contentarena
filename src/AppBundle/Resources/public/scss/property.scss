@@ -530,7 +530,30 @@
     padding-top: 22px;
     border-top: 1px solid #ECECEC;
   }
-  .listing-overview-tab{}
+  .listing-overview-tab{
+    .manager-filter-container {
+      margin-top: 10px;
+      align-items: flex-start;
+      height: auto;
+      .listing-filter {
+        height: 100%;
+        margin-right: 20px;
+
+        .reset-listing-filter {
+          width: 75px;
+        }
+
+        &.territories-filter {
+          > * {
+            margin-left: 10px;
+          }
+          .ca-form-control {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
   .rights-overview-tab{}
   .property-details-tab{
     .property-production-tab, .property-rights-tab{
