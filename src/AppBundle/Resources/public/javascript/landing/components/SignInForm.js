@@ -94,14 +94,11 @@ class SignInForm extends PureComponent {
 					</div>
 				)}
 
-				{
-					error
-					&& (
-						<span className="sign-error">
-							<Translate i18nKey={error} />
-						</span>
-					)
-				}
+				{error && (
+					<span className="sign-error">
+						<Translate i18nKey={error} />
+					</span>
+				)}
 
 				<div className="username">
 					<label htmlFor="username">
