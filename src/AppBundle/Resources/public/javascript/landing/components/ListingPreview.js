@@ -76,7 +76,7 @@ class ListingPreview extends PureComponent {
 				return parseInt(a.year.split("/")[0], 10) - parseInt(b.year.split("/")[0], 10);
 			});
 		return (
-			<div className="seasons-wrapper">
+			<div className="seasons-content">
 				{filteredSeasons.map((season) => {
 					const { endDate, startDate } = season;
 					let { year } = season;
