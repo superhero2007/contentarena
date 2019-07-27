@@ -14,7 +14,8 @@ class CmsListingOverview extends React.Component {
 		super(props);
 		this.state = {
 			listings: [],
-			selectedListings: null,
+			statuses: [],
+			selectedStatus: null,
 			countries: [],
 			includeAllCountries: false,
 			seasons: [],
@@ -24,19 +25,15 @@ class CmsListingOverview extends React.Component {
 	componentDidMount() {
 		const { property: { listings, seasons } } = this.props;
 		const { location: { search } } = this.props.history;
+		const statuses = uniqBy(listings.map(list => list.status.name));
+		this.setState({ statuses });
 		if (search) {
 			const params = search.replace("?", "").split("&");
 			for (let i = 0; i < params.length; i++) {
 				const key = params[i].split("=")[0];
 				const values = params[i].split("=")[1].split(",");
-				if (key === "customId") {
-					const selectedItem = listings.find(element => values.indexOf(element.customId) !== -1);
-					if (selectedItem) {
-						const selectedListings = { value: selectedItem.customId, label: selectedItem.name };
-						this.setState({
-							selectedListings,
-						});
-					}
+				if (key === "status") {
+					this.setState({ selectedStatus: { value: values[0], label: values[0] } });
 				}
 				if (key === "country") {
 					this.setState({ countries: values });
@@ -59,15 +56,9 @@ class CmsListingOverview extends React.Component {
 		}
 	}
 
-	onSelectListing = (selectedItem) => {
-		this.setState({ selectedListings: selectedItem });
+	onSelectStatus = (selectedStatus) => {
+		this.setState({ selectedStatus });
 		this.onApplyFilter();
-	};
-
-	onResetListingFilter = () => {
-		const { location: { pathname } } = this.props.history;
-		this.props.history.push(pathname);
-		this.setState({ selectedListings: null });
 	};
 
 	selectTerritory = (selectedCountry) => {
@@ -91,12 +82,12 @@ class CmsListingOverview extends React.Component {
 	onApplyFilter = () => {
 		setTimeout(() => {
 			const {
-				selectedListings, countries, includeAllCountries, seasons,
+				selectedStatus, countries, includeAllCountries, seasons,
 			} = this.state;
 			const { location: { pathname } } = this.props.history;
 			let search = [];
-			if (selectedListings) {
-				search.push(`customId=${selectedListings.value}`);
+			if (selectedStatus) {
+				search.push(`status=${selectedStatus.value}`);
 			}
 			if (seasons.length) {
 				search.push(`season=${seasons.map(element => element.value).join(",")}`);
@@ -117,7 +108,8 @@ class CmsListingOverview extends React.Component {
 	render() {
 		const { listings, seasons: allSeasons, customId } = this.props.property;
 		const {
-			selectedListings,
+			selectedStatus,
+			statuses,
 			countries,
 			includeAllCountries,
 			seasons,
@@ -131,8 +123,15 @@ class CmsListingOverview extends React.Component {
 		}
 
 		let allListings = listings;
-		if (selectedListings) {
-			allListings = allListings.filter(list => selectedListings.value === list.customId);
+		if (selectedStatus) {
+			allListings = allListings.filter(list => list.status.name === selectedStatus.value);
+		}
+
+		if (seasons.length) {
+			allListings = allListings.filter((list) => {
+				const selectedSeasons = list.seasons.filter(season => seasons.find(b => b.value === season.id));
+				return selectedSeasons.length;
+			});
 		}
 
 		if (countries.length) {
@@ -155,29 +154,18 @@ class CmsListingOverview extends React.Component {
 					</h6>
 					<div className="d-flex">
 						<div className="split-filter" style={{ width: "100%" }}>
-							<div className="region-filter-title">
-								<div className="title-wrapper">
-									{ <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />}
-									<div className="subtitle">
-										{ <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SUBTITLE" />}
-									</div>
-								</div>
-							</div>
 
 							<div className="manager-filter-container">
 								<div className="listing-filter">
 									<Select
 										name="form-field-name"
-										placeholder={this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER")}
-										clearable={false}
-										onChange={this.onSelectListing}
+										placeholder={this.context.t("STATUS_FILTER_SEARCH_PLACEHOLDER")}
+										clearable
+										onChange={this.onSelectStatus}
 										multi={false}
-										value={selectedListings}
-										options={listings.map(b => ({ value: b.customId, label: b.name }))}
+										value={selectedStatus}
+										options={statuses.map(b => ({ value: b, label: b }))}
 									/>
-									<div className="reset-listing-filter" onClick={this.onResetListingFilter}>
-										<span><Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SEARCH_CLEAR" /></span>
-									</div>
 								</div>
 
 								<TerritoryFilter

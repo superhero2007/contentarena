@@ -13,43 +13,20 @@ const TerritoryFilter = ({
 		value: first(countries),
 	} : "";
 
-	const isMoreThanOneSelected = countries.length > 1;
-	const countriesInputValueObj = {
-		isShown: isMoreThanOneSelected,
-		value: isMoreThanOneSelected ? `${countries.length} territories` : "",
-		isDisabled: isMoreThanOneSelected,
-	};
+	const value = countries.length > 1 ? ({
+		value: `${countries.length} territories`,
+		label: `${countries.length} territories`,
+	}) : countriesValue;
 	return (
 		<div className={className}>
-			{countriesInputValueObj.isShown ? (
-				<Fragment>
-					<input
-						type="text"
-						className="ca-form-control"
-						value={countriesInputValueObj.value}
-						disabled={countriesInputValueObj.isDisabled}
-					/>
-
-					<img
-						className="territories-icon"
-						src={cancelIcon}
-						onClick={() => {
-							selectTerritory([]);
-						}}
-						alt=""
-					/>
-
-				</Fragment>
-			) : (
-				<CountrySelector
-					multi={false}
-					className="base-input-select"
-					value={countriesValue}
-					onChange={(c) => {
-						selectTerritory([c]);
-					}}
-				/>
-			)}
+			<CountrySelector
+				multi={false}
+				className="base-input-select"
+				value={value}
+				onChange={(c) => {
+					selectTerritory([c]);
+				}}
+			/>
 
 			<PopupCountrySelector
 				value={countries}

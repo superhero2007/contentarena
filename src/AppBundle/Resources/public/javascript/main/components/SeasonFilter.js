@@ -7,47 +7,23 @@ import PopupSeasonSelector from "./PopupSeasonSelector";
 
 const SeasonFilter = ({
 	className, allSeasons, seasons, selectSeasons,
-}) => {
+}, context) => {
 	const seasonsValue = first(seasons) || null;
-
-	const isMoreThanOneSelected = seasons.length > 1;
-	const seasonInputValueObj = {
-		isShown: isMoreThanOneSelected,
-		value: isMoreThanOneSelected ? `${seasons.length} seasons` : "",
-		isDisabled: isMoreThanOneSelected,
-	};
+	const value = seasons.length > 1 ? ({
+		value: `${seasons.length} seasons`,
+		label: `${seasons.length} seasons`,
+	}) : seasonsValue;
 	return (
 		<div className={className}>
-			{seasonInputValueObj.isShown ? (
-				<Fragment>
-					<input
-						type="text"
-						className="ca-form-control"
-						value={seasonInputValueObj.value}
-						disabled={seasonInputValueObj.isDisabled}
-					/>
-
-					<img
-						className="territories-icon"
-						src={cancelIcon}
-						onClick={() => {
-							selectSeasons([]);
-						}}
-						alt=""
-					/>
-
-				</Fragment>
-			) : (
-				<Select
-					className="base-input-select"
-					placeholder="Seasons"
-					clearable={false}
-					onChange={c => selectSeasons([c])}
-					multi={false}
-					value={seasonsValue}
-					options={allSeasons.map(b => ({ value: b.id, label: b.name }))}
-				/>
-			)}
+			<Select
+				className="base-input-select"
+				placeholder={context.t("Season")}
+				clearable
+				onChange={c => selectSeasons([c])}
+				multi={false}
+				value={value}
+				options={allSeasons.map(b => ({ value: b.id, label: b.name }))}
+			/>
 
 			<PopupSeasonSelector
 				value={seasons}
@@ -56,6 +32,10 @@ const SeasonFilter = ({
 			/>
 		</div>
 	);
+};
+
+SeasonFilter.contextTypes = {
+	t: PropTypes.func.isRequired,
 };
 
 SeasonFilter.propTypes = {
