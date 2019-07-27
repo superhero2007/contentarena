@@ -381,7 +381,7 @@ class Content implements NotifiableInterface
      *      joinColumns={@ORM\JoinColumn(name="content_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
-     * @Groups({"listing", "board", "commercial", "home", "preview"})
+     * @Groups({"listing", "board", "commercial", "home", "preview", "property"})
      */
     private $seasons;
 
