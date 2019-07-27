@@ -612,6 +612,10 @@
         }
       }
 
+      .description-content {
+        flex: 2;
+      }
+
       .txt {
         color: #666;
         font-size: 13px;
@@ -622,19 +626,67 @@
         font-size: 13px !important;
       }
 
+      .message-wrapper {
+        flex: 1;
+        margin-left: 16px;
+
+        &__container {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          position: relative;
+          background-color: $color-grey-light;
+          padding: 8px;
+          border-radius: 4px;
+
+          &-title {
+            font-size: 15px;
+            color: #333;
+            font-weight: normal;
+          }
+
+          &-content {
+            margin-top: 8px;
+            flex: auto;
+
+            textarea {
+              height: 100%;
+              resize: none;
+              border: 0;
+              outline: 0;
+              font-size: 13px;
+              font-family: "Open Sans", sans-serif;
+            }
+          }
+
+          &-button {
+            display: flex;
+            align-items: center;
+            padding-top: 4px;
+            // background: #fff;
+            justify-content: flex-end;
+          }
+        }
+      }
+
+      .description-container {
+        display: flex;
+      }
+
       .listing-details-tab {
         .additional-items {
           display: flex;
-          align-items: center;
           font-size: 13px;
           margin-bottom: 30px;
+          flex-direction: column;
+          align-items: flex-start;
 
           .item {
             display: flex;
             align-items: center;
             background-color: $color-grey-light;
             padding: 10px 20px;
-            margin-right: 10px;
+            margin-top: 10px;
 
             .attachment-item a {
               line-height: 25px;
@@ -1042,5 +1094,12 @@
       font-weight: bold;
       padding: 15px 0 10px;
     }
+  }
+}
+
+.message-modal {
+  .modal-body {
+    padding: 20px;
+    text-align: center;
   }
 }

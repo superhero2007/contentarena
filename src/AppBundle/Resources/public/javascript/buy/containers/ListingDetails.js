@@ -241,15 +241,6 @@ class ListingDetails extends React.Component {
 							</div>
 						)}
 
-						{profile === "BUYER" && !content.userCanNotBuy && (
-							<a onClick={this.handleOpenContactSellerModal}>
-								<img src={this.contactIcon} className="icon" alt="" />
-								<span>
-									<Translate i18nKey="Contact Seller" />
-								</span>
-							</a>
-						)}
-
 						{<EditButton {...content} />}
 
 						{profile === "BUYER" && (

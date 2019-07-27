@@ -3,17 +3,23 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
 import Translate from "@components/Translator/Translate";
+import Modal from "react-modal";
 import test from "../actions";
 import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
 import { pdfIcon } from "../../main/components/Icons";
 import { DATE_FORMAT, TIME_FORMAT } from "@constants";
 import { getSeasonDateString } from "../../common/utils/listing";
+import { GenericModalStyle } from "../../main/styles/custom";
 
 class CommercialTerms extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			seasons: props.seasons,
+			message: "",
+			isLoading: false,
+			isSuccess: false,
+			isFail: false,
 		};
 		this.baseDir = `${assetsBaseDir}../`;
 		this.textArea = React.createRef();
@@ -64,83 +70,146 @@ class CommercialTerms extends React.Component {
 		});
 	}
 
+	onChangeMessage = (e) => {
+		this.setState({ message: e.target.value });
+	};
+
+	onMessage = () => {
+		const { message } = this.state;
+		const { id, company } = this.props;
+		this.setState({ isLoading: true });
+
+		const payload = {
+			listing: id,
+			recipient: company.id,
+			content: message,
+			role: "BUYER",
+		};
+		ContentArena.ContentApi.sendMessage(payload)
+			.then(
+				() => this.setState({ isSuccess: true }),
+				() => this.setState({ isFail: true }),
+			)
+			.always(
+				() => this.setState({ isLoading: false, message: "" }),
+			);
+	};
+
+	onCloseModal = () => {
+		this.setState({ isSuccess: false });
+	};
+
 	render() {
 		const {
 			website,
 			attachments,
 			description,
 			programDetails,
+			company,
 		} = this.props;
 
-		const { seasons } = this.state;
+		const { seasons, message, isSuccess } = this.state;
 
 		return (
 			<div>
-				{description && !programDetails && (
-					<div className="description-wrapper">
-						<div className="spacer-bottom title">
-							<Translate i18nKey="LISTING_DETAILS_EVENT_DESCRIPTION" />
-						</div>
-						<div className="txt description-text">
-							<textarea
-								readOnly
-								ref={this.textArea}
-								value={description}
-								className="representation-textarea"
-							/>
-						</div>
+				<Modal isOpen={isSuccess} className="modal-wrapper message-modal" style={GenericModalStyle} onRequestClose={this.onCloseModal}>
+					<div className="modal-body">
+						<Translate i18nKey="MESSAGE_CONFIRM" />
 					</div>
-				)}
-
-				{programDetails && programDetails}
-
-				{(website || (attachments && attachments.length > 0)) && (
-					<div className="additional-items">
-						{website && (
-							<div className="item">
-								<i className="fa fa-link icon" />
-								<div className="cap">
-									<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_WEBSITE" />
+					<footer className="modal-footer">
+						<button className="standard-button" onClick={this.onCloseModal}>
+							<Translate i18nKey="MESSAGE_POPUP_BUTTON_CLOSE" />
+						</button>
+					</footer>
+				</Modal>
+				<div className="description-container">
+					<div className="description-content">
+						{description && !programDetails && (
+							<div className="description-wrapper">
+								<div className="spacer-bottom title">
+									<Translate i18nKey="LISTING_DETAILS_EVENT_DESCRIPTION" />
 								</div>
-								<div className="d-flex">
-									<b>
-										{website && website.map((website, key) => (
-											<a
-												href={ContentArena.Utils.getWebsiteURl(website)}
-												target="_blank"
-												rel="noopener noreferrer"
-												key={key}
-											>
-												{website}
-											</a>
-										))}
-									</b>
+								<div className="txt description-text">
+									<textarea
+										readOnly
+										ref={this.textArea}
+										value={description}
+										className="representation-textarea"
+									/>
 								</div>
 							</div>
 						)}
+						{programDetails && programDetails}
 
-						{attachments && attachments.length > 0 && (
-							<div className="item">
-								<i className="fa fa-folder-open-o icon" />
-								<div className="cap">
-									<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS" />
-								</div>
-								<div className="d-flex">
-									<b>
-										{attachments.map((a, key) => (
-											<div className="attachment-item" key={key}>
-												<a download={a.name} target="_blank" href={this.baseDir + a.file} rel="noopener noreferrer">
-													<img src={pdfIcon} alt="" />
-													{a.name}
-												</a>
-											</div>
-										))}
-									</b>
-								</div>
+						{(website || (attachments && attachments.length > 0)) && (
+							<div className="additional-items">
+								{website && (
+									<div className="item">
+										<i className="fa fa-link icon" />
+										<div className="cap">
+											<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_WEBSITE" />
+										</div>
+										<div className="d-flex">
+											<b>
+												{website && website.map((website, key) => (
+													<a
+														href={ContentArena.Utils.getWebsiteURl(website)}
+														target="_blank"
+														rel="noopener noreferrer"
+														key={key}
+													>
+														{website}
+													</a>
+												))}
+											</b>
+										</div>
+									</div>
+								)}
+
+								{attachments && attachments.length > 0 && (
+									<div className="item">
+										<i className="fa fa-folder-open-o icon" />
+										<div className="cap">
+											<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS" />
+										</div>
+										<div className="d-flex">
+											<b>
+												{attachments.map((a, key) => (
+													<div className="attachment-item" key={key}>
+														<a download={a.name} target="_blank" href={this.baseDir + a.file} rel="noopener noreferrer">
+															<img src={pdfIcon} alt="" />
+															{a.name}
+														</a>
+													</div>
+												))}
+											</b>
+										</div>
+									</div>
+								)}
 							</div>
 						)}
 					</div>
-				)}
+					<div className="message-wrapper">
+						<div className="message-wrapper__container">
+							<div className="message-wrapper__container-title">
+								<div><Translate i18nKey="MESSAGE_TITLE" /></div>
+								<div>{company.legalName}</div>
+							</div>
+							<div className="message-wrapper__container-content">
+								<textarea
+									placeholder={this.context.t("MESSAGE_PLACEHOLDER")}
+									value={message}
+									onChange={this.onChangeMessage}
+								/>
+							</div>
+							<div className="message-wrapper__container-button">
+								<button className="ca-btn primary" onClick={this.onMessage}>
+									<Translate i18nKey="MESSAGES_SEND_BUTTON" />
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				{/* SEASON/FIXTURES */}
 				{seasons && seasons.length > 0 && (
