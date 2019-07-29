@@ -629,6 +629,11 @@
       .message-wrapper {
         flex: 1;
         margin-left: 16px;
+        margin-bottom: 20px;
+
+        &.no-description {
+          margin-left: 0;
+        }
 
         &__container {
           display: flex;

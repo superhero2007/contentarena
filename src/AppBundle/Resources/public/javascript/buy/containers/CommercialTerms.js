@@ -106,9 +106,11 @@ class CommercialTerms extends React.Component {
 			description,
 			programDetails,
 			company,
+			profile,
 		} = this.props;
 
 		const { seasons, message, isSuccess } = this.state;
+		const isDescriptionVisible = (description && !programDetails) || programDetails || website || (attachments && !!attachments.length);
 
 		return (
 			<div>
@@ -123,92 +125,96 @@ class CommercialTerms extends React.Component {
 					</footer>
 				</Modal>
 				<div className="description-container">
-					<div className="description-content">
-						{description && !programDetails && (
-							<div className="description-wrapper">
-								<div className="spacer-bottom title">
-									<Translate i18nKey="LISTING_DETAILS_EVENT_DESCRIPTION" />
+					{isDescriptionVisible && (
+						<div className="description-content">
+							{description && !programDetails && (
+								<div className="description-wrapper">
+									<div className="spacer-bottom title">
+										<Translate i18nKey="LISTING_DETAILS_EVENT_DESCRIPTION" />
+									</div>
+									<div className="txt description-text">
+										<textarea
+											readOnly
+											ref={this.textArea}
+											value={description}
+											className="representation-textarea"
+										/>
+									</div>
 								</div>
-								<div className="txt description-text">
+							)}
+							{programDetails && programDetails}
+
+							{(website || (attachments && attachments.length > 0)) && (
+								<div className="additional-items">
+									{website && (
+										<div className="item">
+											<i className="fa fa-link icon" />
+											<div className="cap">
+												<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_WEBSITE" />
+											</div>
+											<div className="d-flex">
+												<b>
+													{website && website.map((website, key) => (
+														<a
+															href={ContentArena.Utils.getWebsiteURl(website)}
+															target="_blank"
+															rel="noopener noreferrer"
+															key={key}
+														>
+															{website}
+														</a>
+													))}
+												</b>
+											</div>
+										</div>
+									)}
+
+									{attachments && attachments.length > 0 && (
+										<div className="item">
+											<i className="fa fa-folder-open-o icon" />
+											<div className="cap">
+												<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS" />
+											</div>
+											<div className="d-flex">
+												<b>
+													{attachments.map((a, key) => (
+														<div className="attachment-item" key={key}>
+															<a download={a.name} target="_blank" href={this.baseDir + a.file} rel="noopener noreferrer">
+																<img src={pdfIcon} alt="" />
+																{a.name}
+															</a>
+														</div>
+													))}
+												</b>
+											</div>
+										</div>
+									)}
+								</div>
+							)}
+						</div>
+					)}
+					{profile === "BUYER" && (
+						<div className={`message-wrapper ${!isDescriptionVisible && "no-description"}`}>
+							<div className="message-wrapper__container">
+								<div className="message-wrapper__container-title">
+									<div><Translate i18nKey="MESSAGE_TITLE" /></div>
+									<div>{company.legalName}</div>
+								</div>
+								<div className="message-wrapper__container-content">
 									<textarea
-										readOnly
-										ref={this.textArea}
-										value={description}
-										className="representation-textarea"
+										placeholder={this.context.t("MESSAGE_PLACEHOLDER")}
+										value={message}
+										onChange={this.onChangeMessage}
 									/>
 								</div>
-							</div>
-						)}
-						{programDetails && programDetails}
-
-						{(website || (attachments && attachments.length > 0)) && (
-							<div className="additional-items">
-								{website && (
-									<div className="item">
-										<i className="fa fa-link icon" />
-										<div className="cap">
-											<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_WEBSITE" />
-										</div>
-										<div className="d-flex">
-											<b>
-												{website && website.map((website, key) => (
-													<a
-														href={ContentArena.Utils.getWebsiteURl(website)}
-														target="_blank"
-														rel="noopener noreferrer"
-														key={key}
-													>
-														{website}
-													</a>
-												))}
-											</b>
-										</div>
-									</div>
-								)}
-
-								{attachments && attachments.length > 0 && (
-									<div className="item">
-										<i className="fa fa-folder-open-o icon" />
-										<div className="cap">
-											<Translate i18nKey="LISTING_DETAILS_EVENT_TITLE_ATTACHMENTS" />
-										</div>
-										<div className="d-flex">
-											<b>
-												{attachments.map((a, key) => (
-													<div className="attachment-item" key={key}>
-														<a download={a.name} target="_blank" href={this.baseDir + a.file} rel="noopener noreferrer">
-															<img src={pdfIcon} alt="" />
-															{a.name}
-														</a>
-													</div>
-												))}
-											</b>
-										</div>
-									</div>
-								)}
-							</div>
-						)}
-					</div>
-					<div className="message-wrapper">
-						<div className="message-wrapper__container">
-							<div className="message-wrapper__container-title">
-								<div><Translate i18nKey="MESSAGE_TITLE" /></div>
-								<div>{company.legalName}</div>
-							</div>
-							<div className="message-wrapper__container-content">
-								<textarea
-									placeholder={this.context.t("MESSAGE_PLACEHOLDER")}
-									value={message}
-									onChange={this.onChangeMessage}
-								/>
-							</div>
-							<div className="message-wrapper__container-button">
-								<button className="ca-btn primary" onClick={this.onMessage}>
-									<Translate i18nKey="MESSAGES_SEND_BUTTON" />
-								</button>
+								<div className="message-wrapper__container-button">
+									<button className="ca-btn primary" onClick={this.onMessage} disabled={!message}>
+										<Translate i18nKey="MESSAGES_SEND_BUTTON" />
+									</button>
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 				</div>
 
 				{/* SEASON/FIXTURES */}
