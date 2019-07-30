@@ -107,6 +107,7 @@ class CommercialTerms extends React.Component {
 			programDetails,
 			company,
 			profile,
+			userCanNotBuy,
 		} = this.props;
 
 		const { seasons, message, isSuccess } = this.state;
@@ -193,7 +194,7 @@ class CommercialTerms extends React.Component {
 							)}
 						</div>
 					)}
-					{profile === "BUYER" && (
+					{profile === "BUYER" && !userCanNotBuy && (
 						<div className={`message-wrapper ${!isDescriptionVisible && "no-description"}`}>
 							<div className="message-wrapper__container">
 								<div className="message-wrapper__container-title">

@@ -10,7 +10,6 @@ import CommercialTerms from "./CommercialTerms";
 import TermSheet from "./TermSheet";
 import ProgramDetails from "./ProgramDetails";
 import Seller from "./Seller";
-import SendMessage from "../../common/modals/SendMessage/SendMessage";
 import ContentListingEventDetails from "../components/ContentListingEventDetails";
 import { customStyles } from "../../main/styles/custom";
 import ContentListingRightsPackage from "../components/ContentListingRightsPackage";
@@ -50,14 +49,12 @@ class ListingDetails extends React.Component {
 			buyingMode: props.tab && props.tab === "checkout",
 			soldOut: false,
 			selectedPackages,
-			openContactSellerModal: false,
 			signatureName: `${props.user.firstName} ${props.user.lastName}`,
 			signaturePosition: props.user.title,
 		};
 
 		if (this.state.selectedPackage) this.state.minimumBid = this.state.selectedPackage.fee;
 		this.checkIcon = `${assetsBaseDir}app/images/check.png`;
-		this.contactIcon = `${assetsBaseDir}app/images/envelope.png`;
 		this.watchlistIcon = `${assetsBaseDir}app/images/watchlist.png`;
 		this.baseDir = `${assetsBaseDir}../`;
 	}
@@ -198,10 +195,6 @@ class ListingDetails extends React.Component {
 
 	isActiveTab = (activeTab, tab) => (activeTab === tab ? "active" : "");
 
-	handleOpenContactSellerModal = () => this.setState({ openContactSellerModal: true });
-
-	handleCloseContactSellerModal = () => this.setState({ openContactSellerModal: false });
-
 	render() {
 		ReactTooltip.rebuild();
 		const { profile, history, listing } = this.props;
@@ -211,7 +204,6 @@ class ListingDetails extends React.Component {
 			tab,
 			content,
 			company,
-			openContactSellerModal,
 		} = this.state;
 
 		const isEditedProgramShown = content.rightsPackage.some(e => e.shortLabel === "PR");
@@ -219,15 +211,6 @@ class ListingDetails extends React.Component {
 
 		return (
 			<div className="listing-details">
-				{openContactSellerModal && (
-					<SendMessage
-						title={content.company.legalName}
-						isOpen={openContactSellerModal}
-						listing={content.id}
-						recipient={content.company.id}
-						onCloseModal={this.handleCloseContactSellerModal}
-					/>
-				)}
 				{this.successScreen()}
 				{!buyingMode && (
 					<div className="listing-details-top-info">
