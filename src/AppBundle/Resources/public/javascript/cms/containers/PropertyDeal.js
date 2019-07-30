@@ -1,38 +1,39 @@
 import React from "react";
 import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { scrollMainContainer } from "@utils/listing";
+import PropTypes from "prop-types";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-// import {
-// 	getSeasonNames, getSportCategoryName, getSportName,
-// 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
-// } from "../reducers/property";
-// import {
-// 	resetProperty,
-// } from "../actions/propertyActions";
-import { ROUTE_PATHS } from "@constants";
+import { BUNDLE_TERRITORIES_METHOD } from "@constants";
 import CmsRightsSelector from "../components/CmsRightsSelector";
-import { getPropertyName } from "../helpers/PropertyHelper";
 import CmsSeasonSelector from "../components/CmsSeasonSelector";
-// import CmsCustomSeason from "../components/CmsCustomSeason";
+import CmsTerritorySelector from "../components/CmsTerritorySelector";
 
-class CreatePropertyEvent extends React.Component {
+class PropertyDeal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isSeasonApplicable: props.property.tournament.length !== 0,
+			isSeasonApplicable: props.property.tournament.length,
 			showCustomSeason: false,
+			territories: [],
+			territoriesMode: props.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
 	}
 
 	componentDidMount() {
-		scrollMainContainer();
+		console.log(this.props.property);
 	}
 
-	componentWillReceiveProps(nextProps) {}
+	componentWillReceiveProps(newProps) {
+		console.log(newProps.property);
+	}
 
-	handleSeasonCheckbox = () => this.setState(prevState => ({ isSeasonApplicable: !prevState.isSeasonApplicable }));
+	handleSeasonCheckbox = () => {
+		this.setState(prevState => ({ isSeasonApplicable: !prevState.isSeasonApplicable }));
+	};
+
+	handleTerritories = (territories, territoriesMode) => {
+		this.setState({ territories, territoriesMode });
+	};
 
 	rightsAreInvalid = () => {
 		const { property } = this.props;
@@ -46,11 +47,11 @@ class CreatePropertyEvent extends React.Component {
 		const { property } = this.props;
 		const { seasons } = property;
 
-		return isSeasonApplicable && !seasons.length;
+		return isSeasonApplicable && seasons.length === 0;
 	};
 
 	render() {
-		const { isSeasonApplicable } = this.state;
+		const { isSeasonApplicable, territories, territoriesMode } = this.state;
 
 		const {
 			history,
@@ -58,20 +59,17 @@ class CreatePropertyEvent extends React.Component {
 		} = this.props;
 
 		const {
+			selectedRights,
+			rights,
 			tournament,
 		} = property;
+		console.log(this.props);
 
 		const rightsInvalid = this.rightsAreInvalid();
 		const seasonsInvalid = this.seasonsAreInvalid();
 
 		return (
 			<div className="default-container no-title property">
-				<DefaultBox>
-					<h4>
-						{getPropertyName(property)}
-					</h4>
-				</DefaultBox>
-
 				<DefaultBox>
 					<h4>
 						<Translate i18nKey="CMS_CREATE_PROPERTY_TITLE" />
@@ -90,7 +88,7 @@ class CreatePropertyEvent extends React.Component {
 							type="checkbox"
 							className="ca-checkbox blue"
 							onClick={this.handleSeasonCheckbox}
-							disabled={!tournament.length}
+							disabled={tournament.length === 0}
 						/>
 						<label htmlFor="season-checkbox">
 							<Translate i18nKey="CMS_FORM_NOT_APPLICABLE" />
@@ -106,17 +104,33 @@ class CreatePropertyEvent extends React.Component {
 					</h6>
 					<CmsRightsSelector />
 				</DefaultBox>
+				{selectedRights.length > 0 && (
+					<DefaultBox>
+						<h4>
+							<Translate i18nKey="CMS_SELECT_TERRITORIES_TITLE" />
+						</h4>
+						<h6>
+							<Translate i18nKey="CMS_SELECT_TERRITORIES_DESCRIPTION" />
+						</h6>
+
+						<CmsTerritorySelector
+							className="small-select"
+							onChange={this.handleTerritories}
+							onSelectRegion={() => { }}
+							value={territories}
+							territoriesMode={territoriesMode}
+							multiple
+							filter={[]}
+							selectedRights={selectedRights}
+							exclusiveSoldTerritories={false}
+						/>
+					</DefaultBox>
+				)
+				}
 				<HorizontalButtonBox>
-					<button
-						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY)}
-						className="yellow-button"
-					>
-						<Translate i18nKey="CMS_CREATE_PROPERTY_BACK_BUTTON" />
-					</button>
 					<button
 						className="yellow-button"
 						disabled={rightsInvalid || seasonsInvalid}
-						onClick={() => history.push(ROUTE_PATHS.CREATE_PROPERTY_STEP_2)}
 					>
 						<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
 					</button>
@@ -126,31 +140,13 @@ class CreatePropertyEvent extends React.Component {
 	}
 }
 
-const mapStateToProps = state => state;
-// const mapStateToProps = state => Object.assign({}, state, {
-// 	sportValue: getSportName(state),
-// 	sportCategoryValue: getSportCategoryName(state),
-// 	seasonValues: getSeasonNames(state),
-// 	tournamentValue: getTournamentName(state),
-// 	hasCustomSport: hasCustomSport(state),
-// 	hasCustomSportCategory: hasCustomSportCategory(state),
-// 	hasCustomTournament: hasCustomTournament(state),
-// 	hasCustomSeason: hasCustomSeason(state),
-//
-// });
-//
-// const mapDispatchToProps = dispatch => ({
-// 	resetProperty: () => dispatch(resetProperty()),
-// });
-//
-//
-// export default connect(
-// 	mapStateToProps,
-// 	mapDispatchToProps,
-// )(CreatePropertyEvent);
+PropertyDeal.contextTypes = {
+	t: PropTypes.func.isRequired,
+};
 
+const mapStateToProps = state => state;
 
 export default connect(
 	mapStateToProps,
 	null,
-)(CreatePropertyEvent);
+)(PropertyDeal);

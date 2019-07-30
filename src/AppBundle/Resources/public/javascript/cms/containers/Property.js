@@ -11,7 +11,10 @@ import CmsFixtures from "./CmsFixtures";
 import CmsEditedProgram from "./CmsEditedProgram";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";
-import { fetchRegions, fetchTerritories, fetchPropertyDetails } from "../actions/propertyActions";
+import PropertyDeal from "./PropertyDeal";
+import {
+	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
+} from "../actions/propertyActions";
 
 class Property extends React.Component {
 	constructor(props) {
@@ -40,6 +43,7 @@ class Property extends React.Component {
 		if (!customId || customId !== propertyId) {
 			this.props.getPropertyDetails(propertyId);
 		}
+		this.props.getCountries();
 		this.props.getTerritories();
 		this.props.getRegions();
 		this.setState({ propertyId, activeTab: tab });
@@ -92,6 +96,12 @@ class Property extends React.Component {
 			);
 		}
 
+		if (tab === CMS_PROPERTY_TABS.DEALS) {
+			return (
+				<PropertyDeal history={history} />
+			);
+		}
+
 		const translatedTabs = this.getTranslatedTabs();
 
 		return (
@@ -104,7 +114,9 @@ class Property extends React.Component {
 								<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
 							</a>
 							<button
-								onClick={() => { console.info("add deal not specified"); }}
+								onClick={() => {
+									history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/deals`);
+								}}
 								className="ca-btn primary"
 							>
 								<Translate i18nKey="CMS_PROPERTY_ADD_DEAL" />
@@ -156,6 +168,7 @@ Property.contextTypes = {
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
+	getCountries: () => dispatch(fetchCountries()),
 	getTerritories: () => dispatch(fetchTerritories()),
 	getRegions: () => dispatch(fetchRegions()),
 	getPropertyDetails: id => dispatch(fetchPropertyDetails(id)),

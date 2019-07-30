@@ -37,6 +37,7 @@ export const CMS_PROPERTY_TABS = {
 	COMMERCIAL: "commercialoverview",
 	LISTING: "listingoverview",
 	DETAILS: "propertydetails",
+	DEALS: "deals",
 };
 
 export const CMS_PROPERTY_DETAILS_TABS = {
