@@ -212,7 +212,7 @@ class CommercialTerms extends React.Component {
 									/>
 								</div>
 								<div className="message-wrapper__container-button">
-									<button className="ca-btn primary" onClick={this.onMessage} disabled={!message || isLoading}>
+									<button className="ca-btn link-border" onClick={this.onMessage} disabled={!message || isLoading}>
 										{isLoading ? <Loader loading xSmall /> : <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
 									</button>
 								</div>

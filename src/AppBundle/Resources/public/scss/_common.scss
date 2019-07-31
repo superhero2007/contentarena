@@ -96,6 +96,17 @@ textarea {
     }
   }
 
+  &.link-border {
+    border: #007bff 1px solid;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+
+    &:hover {
+      background-color: darken(#fff, 7.5%);
+    }
+  }
+
   &.yellow-border {
     background: transparent;
     border: $orange-color 1px solid;
