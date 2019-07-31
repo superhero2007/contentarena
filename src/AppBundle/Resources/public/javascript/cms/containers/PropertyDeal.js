@@ -3,138 +3,95 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-import { BUNDLE_TERRITORIES_METHOD } from "@constants";
-import CmsRightsSelector from "../components/CmsRightsSelector";
-import CmsSeasonSelector from "../components/CmsSeasonSelector";
-import CmsTerritorySelector from "../components/CmsTerritorySelector";
+import CmsStepSelector from "../components/CmsStepSelector";
 
 class PropertyDeal extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isSeasonApplicable: props.property.tournament.length,
-			showCustomSeason: false,
-			territories: [],
-			territoriesMode: props.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			seasons: "",
+			rights: "",
+			territories: "",
 		};
 	}
 
-	componentDidMount() {
-		console.log(this.props.property);
-	}
-
-	componentWillReceiveProps(newProps) {
-		console.log(newProps.property);
-	}
-
-	handleSeasonCheckbox = () => {
-		this.setState(prevState => ({ isSeasonApplicable: !prevState.isSeasonApplicable }));
+	seasonsAreValid = () => {
+		const { seasons } = this.state;
+		return !!seasons.length;
 	};
 
-	handleTerritories = (territories, territoriesMode) => {
-		this.setState({ territories, territoriesMode });
+	rightsAreValid = () => {
+		const { rights } = this.state;
+		return !!rights.length;
 	};
 
-	rightsAreInvalid = () => {
-		const { property } = this.props;
-		const { rights } = property;
-
-		return !rights.length || rights.filter(right => right.exclusive === null).length;
+	territoriesAreValid = () => {
+		const { territories } = this.state;
+		return !!territories.length;
 	};
 
-	seasonsAreInvalid = () => {
-		const { isSeasonApplicable } = this.state;
-		const { property } = this.props;
-		const { seasons } = property;
+	selectSeasons = (e) => {
+		this.setState({ seasons: e.target.value, rights: "", territories: "" });
+	};
 
-		return isSeasonApplicable && seasons.length === 0;
+	selectRights = (e) => {
+		this.setState({ rights: e.target.value, territories: "" });
+	};
+
+	selectTerritories = (e) => {
+		this.setState({ territories: e.target.value });
 	};
 
 	render() {
-		const { isSeasonApplicable, territories, territoriesMode } = this.state;
-
 		const {
-			history,
-			property,
-		} = this.props;
-
-		const {
-			selectedRights,
+			seasons,
 			rights,
-			tournament,
-		} = property;
-		console.log(this.props);
-
-		const rightsInvalid = this.rightsAreInvalid();
-		const seasonsInvalid = this.seasonsAreInvalid();
+			territories,
+		} = this.state;
+		const seasonsValid = this.seasonsAreValid();
+		const rightsValid = this.rightsAreValid();
+		const territoriesValid = this.territoriesAreValid();
 
 		return (
 			<div className="default-container no-title property">
 				<DefaultBox>
-					<h4>
-						<Translate i18nKey="CMS_CREATE_PROPERTY_TITLE" />
-					</h4>
-					<h6>
-						<Translate i18nKey="CMS_CREATE_PROPERTY_DESCRIPTION" />
-					</h6>
+					<CmsStepSelector
+						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
+						button={<Translate i18nKey="CMS_DEALS_STEP1_BUTTON" />}
+						enableNextStep={seasonsValid}
+					>
+						<input type="text" value={seasons} onChange={this.selectSeasons} />
+					</CmsStepSelector>
 
-					{isSeasonApplicable && (
-						<CmsSeasonSelector />
+					{seasonsValid && (
+						<CmsStepSelector
+							title={<Translate i18nKey="CMS_DEALS_STEP2_TITLE" />}
+							button={<Translate i18nKey="CMS_DEALS_STEP2_BUTTON" />}
+							enableNextStep={rightsValid}
+						>
+							<input type="text" value={rights} onChange={this.selectRights} />
+						</CmsStepSelector>
 					)}
 
-					<div className="season-checkbox">
-						<input
-							id="season-checkbox"
-							type="checkbox"
-							className="ca-checkbox blue"
-							onClick={this.handleSeasonCheckbox}
-							disabled={tournament.length === 0}
-						/>
-						<label htmlFor="season-checkbox">
-							<Translate i18nKey="CMS_FORM_NOT_APPLICABLE" />
-						</label>
-					</div>
-				</DefaultBox>
-				<DefaultBox>
-					<h4>
-						<Translate i18nKey="CMS_SELECT_RIGHTS_TITLE" />
-					</h4>
-					<h6>
-						<Translate i18nKey="CMS_SELECT_RIGHTS_DESCRIPTION" />
-					</h6>
-					<CmsRightsSelector />
-				</DefaultBox>
-				{selectedRights.length > 0 && (
-					<DefaultBox>
-						<h4>
-							<Translate i18nKey="CMS_SELECT_TERRITORIES_TITLE" />
-						</h4>
-						<h6>
-							<Translate i18nKey="CMS_SELECT_TERRITORIES_DESCRIPTION" />
-						</h6>
+					{seasonsValid && rightsValid && (
+						<CmsStepSelector
+							title={<Translate i18nKey="CMS_DEALS_STEP3_TITLE" />}
+							button={<Translate i18nKey="CMS_DEALS_STEP3_BUTTON" />}
+							enableNextStep={territoriesValid}
+						>
+							<input type="text" value={territories} onChange={this.selectTerritories} />
+						</CmsStepSelector>
+					)}
 
-						<CmsTerritorySelector
-							className="small-select"
-							onChange={this.handleTerritories}
-							onSelectRegion={() => { }}
-							value={territories}
-							territoriesMode={territoriesMode}
-							multiple
-							filter={[]}
-							selectedRights={selectedRights}
-							exclusiveSoldTerritories={false}
-						/>
-					</DefaultBox>
-				)
-				}
-				<HorizontalButtonBox>
-					<button
-						className="yellow-button"
-						disabled={rightsInvalid || seasonsInvalid}
-					>
-						<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
-					</button>
-				</HorizontalButtonBox>
+					<HorizontalButtonBox>
+						<button
+							className="yellow-button"
+							disabled={!seasonsValid || !rightsValid || !territoriesValid}
+						>
+							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
+						</button>
+					</HorizontalButtonBox>
+				</DefaultBox>
 			</div>
 		);
 	}

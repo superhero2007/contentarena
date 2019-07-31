@@ -51,11 +51,11 @@ class Property extends React.Component {
 
 	isLoadingRegions = () => {
 		const {
-			property: { isRegionsFetched, isTerritoriesFetched },
+			property: { isRegionsFetched, isTerritoriesFetched, isCountryFetched },
 			propertyDetails: { isPropertyDetailFetched },
 		} = this.props;
 
-		return !isRegionsFetched || !isTerritoriesFetched || !isPropertyDetailFetched;
+		return !isRegionsFetched || !isTerritoriesFetched || !isPropertyDetailFetched || !isCountryFetched;
 	};
 
 	render() {
@@ -96,7 +96,7 @@ class Property extends React.Component {
 			);
 		}
 
-		if (tab === CMS_PROPERTY_TABS.DEALS) {
+		if (tab === "deals") {
 			return (
 				<PropertyDeal history={history} />
 			);
