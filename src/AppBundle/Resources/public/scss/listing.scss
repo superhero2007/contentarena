@@ -670,6 +670,22 @@
             padding-top: 4px;
             // background: #fff;
             justify-content: flex-end;
+
+            button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 80px;
+              height: 35px;
+
+              .ca-loader {
+                margin: 0;
+                .spinner {
+                  width: 20px;
+                  height: 20px;
+                }
+              }
+            }
           }
         }
       }
