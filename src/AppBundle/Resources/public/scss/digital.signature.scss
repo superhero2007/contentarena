@@ -33,13 +33,29 @@
 
   &.for-modal {
     width: 100%;
-    margin: 20px 0;
+    margin: 0 0 20px;
     padding: 0 20px;
+
+    .license-bid{
+      display: flex;
+      cursor: pointer;
+      margin: 5px 0 10px;
+    }
 
     #signature-pad .m-signature-pad--body {
       border: none;
       border-radius: 0;
     }
+
+    .signature-name-container {
+      div {
+        margin-top: 0;
+        input{
+          width: 49% !important;
+        }
+      }
+    }
+
   }
 
   .signature-name-container {
