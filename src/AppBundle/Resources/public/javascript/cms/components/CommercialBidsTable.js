@@ -214,7 +214,7 @@ class CommercialBidsTable extends React.Component {
 		id: props => `action-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 150,
+		width: type === "openBids" ? 150 : 100,
 		Cell: props => (
 			<div className="d-flex justify-content-around">
 				{type === "openBids" && (
