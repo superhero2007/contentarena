@@ -137,7 +137,7 @@ class UpdateListingSubscriber implements EventSubscriber
                 }
 
                 if ( ($changed["status"][0]->getName() === "DRAFT" || $changed["status"][0]->getName() === "AUTO_INACTIVE" ||  $changed["status"][0]->getName() === "PENDING" )
-                    && $changed["status"][1]->getName() === "APPROVED"  ){
+                    && ( $changed["status"][1]->getName() === "APPROVED" || $changed["status"][1]->getName() === "PENDING" )){
 
                     // Notify admins
                     $this->mailer->internalUserListingSubmit( $entity->getOwner(), $entity);
