@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import { isMobileOnly } from "react-device-detect";
 import SignInForm from "../components/SignInForm";
 import RecoverPassword from "../components/RecoverPassword";
 import ReviewEmail from "../components/ReviewEmail";
@@ -31,7 +32,12 @@ class LandingWrapper extends Component {
 			<div className="login-page" style={{ minHeight: this.getMinHeight() }}>
 				<LandingHeader currentView={currentView} history={this.props.history} />
 
-				<section className={cn("action-form", { preview: currentView === LOGIN_VIEW_TYPE.LISTING_PREVIEW })}>
+				<section
+					className={cn("action-form", {
+						mobile: isMobileOnly,
+						preview: currentView === LOGIN_VIEW_TYPE.LISTING_PREVIEW,
+					})}
+				>
 					<Component
 						onViewUpdate={this.handleUpdateView}
 						history={this.props.history}

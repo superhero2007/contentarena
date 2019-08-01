@@ -76,7 +76,7 @@ export const ROUTE_PATHS = {
 	MESSAGES: "/messages",
 	BIDS: "/bids",
 	LISTING: "/listing",
-	LISTING_PREVIEW: "/listing-preview",
+	LISTING_PREVIEW: "/public/listing",
 	COMMERCIAL_OVERVIEW_WITH_ACTIVITY: "/commercialoverview/filter/withactivity",
 	COMMERCIAL_OVERVIEW_OPEN_BIDS: "/commercialoverview/filter/openbids",
 	COMMERCIAL_OVERVIEW_CLOSED_DEALS: "/commercialoverview/filter/closeddeals",
