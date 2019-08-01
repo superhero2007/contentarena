@@ -388,6 +388,29 @@ ContentArena.ContentApi = {
 		return deferred.promise();
 	},
 
+	duplicateBid(customId) {
+		const deferred = jQuery.Deferred();
+
+		$.ajax({
+			url: `${envhosturl}api/bid/duplicate`,
+			type: "POST",
+			data: {
+				customId,
+			},
+			success(response) {
+				deferred.resolve(response);
+			},
+			error(data, status) {
+				deferred.reject({
+					data,
+					status,
+				});
+			},
+		});
+
+		return deferred.promise();
+	},
+
 	saveTmpFile(files) {
 		const deferred = jQuery.Deferred();
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { PropTypes } from "prop-types";
+import { Link } from "react-router-dom";
 import ReactTable from "react-table";
 import ReactTooltip from "react-tooltip";
 import Moment from "moment/moment";
@@ -9,24 +10,68 @@ import Translate from "@components/Translator/Translate";
 import { LISTING_STATUS } from "@constants";
 import { DATE_FORMAT } from "../../common/constants";
 import {
-	exclusiveRightAvailable,
-	nonExclusiveRightAvailable,
-	exclusiveRightOffered,
-	nonExclusiveRightOffered,
-	exclusiveRightSold,
-	nonExclusiveRightSold,
+	// exclusiveRightAvailable,
+	// nonExclusiveRightAvailable,
+	// exclusiveRightOffered,
+	// nonExclusiveRightOffered,
+	// exclusiveRightSold,
+	// nonExclusiveRightSold,
 	yellowCheckIcon,
 	checkIcon,
 	cancelIcon,
+	viewIcon,
 	duplicateIcon,
 } from "../../main/components/Icons";
+import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
+import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
 
 class CommercialBidsTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			approveModalIsOpen: false,
+			rejectModalIsOpen: false,
+			selectedBid: null,
+			contentId: null,
+			listingCustomId: null,
 		};
 	}
+
+	acceptBid = (props) => {
+		this.setState({
+			approveModalIsOpen: true,
+			selectedBid: props.original,
+			contentId: props.original.list.id,
+			listingCustomId: props.original.list.customId,
+		});
+	};
+
+	declineBid = (props) => {
+		this.setState({
+			rejectModalIsOpen: true,
+			selectedBid: props.original,
+			contentId: props.original.list.id,
+			listingCustomId: props.original.list.customId,
+		});
+	};
+
+	duplicateBid = (props) => {
+		const { postAction } = this.props;
+		ContentArena.ContentApi.duplicateBid(props.original.customId)
+			.then(
+				() => {
+					postAction();
+				},
+				() => {},
+			);
+	};
+
+	closeModal = () => {
+		this.setState({
+			approveModalIsOpen: false,
+			rejectModalIsOpen: false,
+		});
+	};
 
 	getHeader = (text, tooltip = "") => (
 		<span data-tip={tooltip && tooltip}>
@@ -180,33 +225,69 @@ class CommercialBidsTable extends React.Component {
 		id: props => `action-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 100,
-		Cell: () => {
-			if (type === "openBids") {
-				return (
-					<div className="d-flex justify-content-around">
+		width: 150,
+		Cell: props => (
+			<div className="d-flex justify-content-around">
+				{type === "openBids" && (
+					<div
+						className="d-flex justify-content-center align-items-center"
+						onClick={() => this.acceptBid(props)}
+					>
 						<img src={checkIcon} alt="" />
+					</div>
+				)}
+				{type === "openBids" && (
+					<div
+						className="d-flex justify-content-center align-items-center"
+						onClick={() => this.declineBid(props)}
+					>
 						<img src={cancelIcon} alt="" />
 					</div>
-				);
-			}
-			if (type === "closedBids") {
-				return (
-					<div className="d-flex justify-content-around">
-						<img src={duplicateIcon} alt="" />
-						<img src={duplicateIcon} alt="" />
+				)}
+				<Link
+					className="d-flex justify-content-center align-items-center"
+					to={`/license/bid/${props.original.customId}`}
+					target="_blank"
+				>
+					<img src={viewIcon} alt="" />
+				</Link>
+				{type === "openBids" && (
+					<div
+						className="d-flex justify-content-center align-items-center"
+						onClick={() => this.duplicateBid(props)}
+					>
 						<img src={duplicateIcon} alt="" />
 					</div>
-				);
-			}
-			return <div />;
-		},
+				)}
+			</div>
+		),
 	}];
 
 	render() {
-		const { listings, type } = this.props;
+		const { listings, type, postAction } = this.props;
+		const {
+			approveModalIsOpen, rejectModalIsOpen, selectedBid, contentId, listingCustomId,
+		} = this.state;
 		return (
 			<section className="property-listing-wrapper">
+				{approveModalIsOpen && (
+					<AcceptBidModal
+						selectedBid={selectedBid}
+						postAction={postAction}
+						contentId={contentId}
+						listingCustomId={listingCustomId}
+						isOpen={approveModalIsOpen}
+						onCloseModal={this.closeModal}
+					/>
+				)}
+				{rejectModalIsOpen && (
+					<DeclineBidModal
+						selectedBid={selectedBid}
+						postAction={postAction}
+						isOpen={rejectModalIsOpen}
+						onCloseModal={this.closeModal}
+					/>
+				)}
 				<ReactTable
 					className="ca-table property-listings-table"
 					defaultPageSize={30}

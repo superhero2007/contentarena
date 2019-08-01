@@ -307,6 +307,53 @@ class BidService
         return $bid;
     }
 
+    public function duplicateBid($customId){
+
+        if ($customId == null) return false;
+
+        $modelBid = $this->em->getRepository('AppBundle:Bid')->findOneBy(array(
+            'customId' => $customId
+        ));
+
+        if ($modelBid != null){
+
+            $bid = new Bid();
+
+            $newCustomId = $this->idGenerator->generate($bid);
+            $bid->setCustomId($newCustomId);
+            $bid->setMultiple($modelBid->getMultiple());
+            $bid->setAmount($modelBid->getAmount());
+            $bid->setTotalFee($modelBid->getTotalFee());
+            $bid->setContent($modelBid->getContent());
+            $bid->setSoldListing($modelBid->getSoldListing());
+            $bid->setStatus($modelBid->getStatus());
+            $bid->setType($modelBid->getType());
+            $bid->setBuyerUser($modelBid->getBuyerUser());
+            $bid->setBuyerCompany($modelBid->getBuyerCompany());
+            $bid->setBuyerCompanySnapshot($modelBid->getBuyerCompanySnapshot());
+            $bid->setSellerCompanySnapshot($modelBid->getSellerCompanySnapshot());
+            $bid->setSalesPackage($modelBid->getSalesPackage());
+            $bid->setSignature($modelBid->getSignature());
+            $bid->setSignatureName($modelBid->getSignatureName());
+            $bid->setSignaturePosition($modelBid->getSignaturePosition());
+            $bid->setSellerSignature($modelBid->getSellerSignature());
+            $bid->setSellerSignatureName($modelBid->getSellerSignatureName());
+            $bid->setSellerSignaturePosition($modelBid->getSellerSignaturePosition());
+            $bid->setMessage($modelBid->getMessage());
+            $bid->setSellerSignatureDate($modelBid->getSellerSignatureDate());
+            $bid->setBuyerSignatureDate($modelBid->getBuyerSignatureDate());
+
+            $bid->setStatus($this->em->getRepository("AppBundle:BidStatus")->findOneBy(array("name"=>"PENDING")));
+            $bid->setCreatedAt(new \DateTime());
+            $bid->setUpdatedAt(new \DateTime());
+
+            $this->em->persist($bid);
+            $this->em->flush();
+            return $bid;
+        }
+        return false;
+    }
+
     private function saveCompany($data){
         if ( isset($data['id']) ) {
 

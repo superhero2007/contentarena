@@ -22,7 +22,7 @@ class Content implements NotifiableInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"listing", "closed", "board", "commercial", "thread", "home"})
+     * @Groups({"listing", "closed", "board", "commercial", "thread", "home", "property"})
      */
     private $id;
 

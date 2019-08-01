@@ -120,7 +120,7 @@ class User extends BaseUser
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"commercial", "closed", "settings","messages", "home"})
+     * @Groups({"commercial", "closed", "settings","messages", "home", "property"})
      */
     private $company;
 
@@ -133,7 +133,7 @@ class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="profile", type="string", nullable=true)
-     * @Groups({"commercial", "closed", "settings", "home"})
+     * @Groups({"commercial", "closed", "settings", "home", "property"})
      */
     private $profile = "BUYER";
 

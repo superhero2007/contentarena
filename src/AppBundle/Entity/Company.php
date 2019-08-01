@@ -21,7 +21,7 @@ class Company
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"details", "closed", "commercial", "settings","messages", "thread", "home"})
+     * @Groups({"details", "closed", "commercial", "settings","messages", "thread", "home", "property"})
      */
     private $id;
 

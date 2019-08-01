@@ -20,7 +20,7 @@ class Bid
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $id;
 
@@ -36,7 +36,7 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="multiple", type="string", nullable=true)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $multiple;
 
@@ -44,7 +44,7 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="amount", type="decimal", precision=12, scale=2)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $amount;
 
@@ -52,7 +52,7 @@ class Bid
      * @var int
      *
      * @ORM\Column(name="total_fee", type="decimal", precision=12, scale=2)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $totalFee;
 
@@ -85,7 +85,7 @@ class Bid
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BidType", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $type;
 
@@ -99,7 +99,7 @@ class Bid
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="bid")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $buyerCompany;
 
@@ -168,7 +168,7 @@ class Bid
      * @var mixed
      *
      * @ORM\Column(name="created_at", type="datetime")
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $createdAt;
 
@@ -184,7 +184,7 @@ class Bid
      * @var mixed
      *
      * @ORM\Column(name="updated_at", type="datetime")
-     * @Groups({"closed", "commercial"})
+     * @Groups({"closed", "commercial", "property"})
      */
     private $updatedAt;
 

@@ -9,11 +9,13 @@ import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialO
 import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
+import { fetchPropertyDetails } from "../actions/propertyActions";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: false,
 			listings: [],
 			selectedListings: null,
 			openBids: true,
@@ -21,14 +23,26 @@ class CmsCommercialOverview extends React.Component {
 			declinedBids: false,
 			countries: [],
 			includeAllCountries: false,
+			allSeasons: [],
 			seasons: [],
 		};
 	}
 
 	componentDidMount() {
-		const { property: { listings, seasons } } = this.props.propertyDetails;
-		const { location: { search } } = this.props.history;
+		this.updateData();
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.updateData(newProps);
+	}
+
+	updateData = (newProps) => {
+		const props = newProps || this.props;
+		const { property: { listings, seasons } } = props.propertyDetails;
+		this.setState({ listings, allSeasons: seasons });
+		const { location: { search } } = props.history;
 		if (search) {
+			this.setState({ loading: true });
 			const params = search.replace("?", "").split("&");
 			for (let i = 0; i < params.length; i++) {
 				const key = params[i].split("=")[0];
@@ -60,18 +74,13 @@ class CmsCommercialOverview extends React.Component {
 					this.setState({ includeAllCountries: true });
 				}
 			}
+			this.setState({ loading: false });
 		}
-	}
+	};
 
 	onSelectListing = (selectedItem) => {
 		this.setState({ selectedListings: selectedItem });
 		this.onApplyFilter();
-	};
-
-	onResetListingFilter = () => {
-		const { location: { pathname } } = this.props.history;
-		this.props.history.push(pathname);
-		this.setState({ selectedListings: null });
 	};
 
 	toggleOpenBids = () => {
@@ -130,9 +139,16 @@ class CmsCommercialOverview extends React.Component {
 		}, 1);
 	};
 
+	onPostAction = () => {
+		const { propertyId } = this.props;
+		this.props.getPropertyDetails(propertyId);
+	};
+
 	render() {
-		const { history, propertyId, propertyDetails: { property: { listings, seasons: allSeasons } } } = this.props;
+		const { history, propertyId } = this.props;
 		const {
+			listings,
+			allSeasons,
 			selectedListings,
 			openBids,
 			closedBids,
@@ -269,7 +285,13 @@ class CmsCommercialOverview extends React.Component {
 							</div>
 						</div>
 						<div className="region-filter-content">
-							{openBidsList.length > 0 && openBids && <CommercialBidsTable listings={openBidsList} type="openBids" />}
+							{openBidsList.length > 0 && openBids && (
+								<CommercialBidsTable
+									listings={openBidsList}
+									type="openBids"
+									postAction={this.onPostAction}
+								/>
+							)}
 						</div>
 					</div>
 					<div className="region-filter-bids">
@@ -282,7 +304,12 @@ class CmsCommercialOverview extends React.Component {
 							</div>
 						</div>
 						<div className="region-filter-content">
-							{closedBidsList.length > 0 && closedBids && <CommercialBidsTable listings={closedBidsList} type="closedBids" />}
+							{closedBidsList.length > 0 && closedBids && (
+								<CommercialBidsTable
+									listings={closedBidsList}
+									type="closedBids"
+								/>
+							)}
 						</div>
 					</div>
 					<div className="region-filter-bids">
@@ -295,7 +322,12 @@ class CmsCommercialOverview extends React.Component {
 							</div>
 						</div>
 						<div className="region-filter-content">
-							{declinedBidsList.length > 0 && declinedBids && <CommercialBidsTable listings={declinedBidsList} type="declinedBids" />}
+							{declinedBidsList.length > 0 && declinedBids && (
+								<CommercialBidsTable
+									listings={declinedBidsList}
+									type="declinedBids"
+								/>
+							)}
 						</div>
 					</div>
 				</div>
@@ -310,7 +342,11 @@ CmsCommercialOverview.contextTypes = {
 
 const mapStateToProps = state => state;
 
+const mapDispatchToProps = dispatch => ({
+	getPropertyDetails: id => dispatch(fetchPropertyDetails(id)),
+});
+
 export default connect(
 	mapStateToProps,
-	null,
+	mapDispatchToProps,
 )(CmsCommercialOverview);
