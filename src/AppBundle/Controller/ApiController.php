@@ -323,24 +323,6 @@ class ApiController extends BaseController
     }
 
     /**
-     * @Route("/api/bid/duplicate", name="apiDuplicateBid")
-     */
-    public function apiDuplicateBid(Request $request, BidService $bidService)
-    {
-        $customId =  $request->get("customId");
-        $bid = $bidService->duplicateBid($customId);
-
-        $namingStrategy = new IdenticalPropertyNamingStrategy();
-        $serializer = SerializerBuilder::create()->setPropertyNamingStrategy($namingStrategy)->build();
-        $data = $serializer->serialize($bid, 'json',SerializationContext::create()->setGroups(array('closed', 'listing')));
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
-
-    }
-
-    /**
      * @Route("/api/bid/all", name="apiBids")
      */
     public function apiBids(Request $request, BidService $bidService, ContentService $contentService)
