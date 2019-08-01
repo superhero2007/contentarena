@@ -327,12 +327,12 @@ class CreatePropertyWelcome extends React.Component {
 					)}
 
 					{!searchDone && searchResults.length === 0 && !showCompetitionSelectors && (
-						<p style={{ marginLeft: 20 }}>
+						<div style={{ margin: 20 }}>
 							<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_1" />{" "}
 							<a onClick={this.onCreateManually}>
 								<Translate i18nKey="CMS_WELCOME_SEARCH_PHRASE_2" />
 							</a>
-						</p>
+						</div>
 					)}
 				</DefaultBox>
 				{searchResults.length > 0 && (

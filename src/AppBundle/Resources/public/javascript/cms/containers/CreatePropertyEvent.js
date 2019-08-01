@@ -4,18 +4,18 @@ import { PropTypes } from "prop-types";
 import { scrollMainContainer } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
-import {
-	getSeasonNames, getSportCategoryName, getSportName,
-	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
-} from "../reducers/property";
-import {
-	resetProperty,
-} from "../actions/propertyActions";
+// import {
+// 	getSeasonNames, getSportCategoryName, getSportName,
+// 	getTournamentName, hasCustomSeason, hasCustomSport, hasCustomSportCategory, hasCustomTournament,
+// } from "../reducers/property";
+// import {
+// 	resetProperty,
+// } from "../actions/propertyActions";
 import { ROUTE_PATHS } from "@constants";
 import CmsRightsSelector from "../components/CmsRightsSelector";
 import { getPropertyName } from "../helpers/PropertyHelper";
 import CmsSeasonSelector from "../components/CmsSeasonSelector";
-import CmsCustomSeason from "../components/CmsCustomSeason";
+// import CmsCustomSeason from "../components/CmsCustomSeason";
 
 class CreatePropertyEvent extends React.Component {
 	constructor(props) {
@@ -38,9 +38,7 @@ class CreatePropertyEvent extends React.Component {
 		const { property } = this.props;
 		const { rights } = property;
 
-		if (rights.length === 0) return true;
-
-		return rights.filter(right => right.exclusive === null).length > 0;
+		return !rights.length || rights.filter(right => right.exclusive === null).length;
 	};
 
 	seasonsAreInvalid = () => {
@@ -48,8 +46,7 @@ class CreatePropertyEvent extends React.Component {
 		const { property } = this.props;
 		const { seasons } = property;
 
-		if (isSeasonApplicable && seasons.length === 0) return true;
-		return false;
+		return isSeasonApplicable && !seasons.length;
 	};
 
 	render() {
@@ -93,7 +90,7 @@ class CreatePropertyEvent extends React.Component {
 							type="checkbox"
 							className="ca-checkbox blue"
 							onClick={this.handleSeasonCheckbox}
-							disabled={tournament.length === 0}
+							disabled={!tournament.length}
 						/>
 						<label htmlFor="season-checkbox">
 							<Translate i18nKey="CMS_FORM_NOT_APPLICABLE" />
@@ -129,24 +126,31 @@ class CreatePropertyEvent extends React.Component {
 	}
 }
 
-const mapStateToProps = state => Object.assign({}, state, {
-	sportValue: getSportName(state),
-	sportCategoryValue: getSportCategoryName(state),
-	seasonValues: getSeasonNames(state),
-	tournamentValue: getTournamentName(state),
-	hasCustomSport: hasCustomSport(state),
-	hasCustomSportCategory: hasCustomSportCategory(state),
-	hasCustomTournament: hasCustomTournament(state),
-	hasCustomSeason: hasCustomSeason(state),
-
-});
-
-const mapDispatchToProps = dispatch => ({
-	resetProperty: () => dispatch(resetProperty()),
-});
+const mapStateToProps = state => state;
+// const mapStateToProps = state => Object.assign({}, state, {
+// 	sportValue: getSportName(state),
+// 	sportCategoryValue: getSportCategoryName(state),
+// 	seasonValues: getSeasonNames(state),
+// 	tournamentValue: getTournamentName(state),
+// 	hasCustomSport: hasCustomSport(state),
+// 	hasCustomSportCategory: hasCustomSportCategory(state),
+// 	hasCustomTournament: hasCustomTournament(state),
+// 	hasCustomSeason: hasCustomSeason(state),
+//
+// });
+//
+// const mapDispatchToProps = dispatch => ({
+// 	resetProperty: () => dispatch(resetProperty()),
+// });
+//
+//
+// export default connect(
+// 	mapStateToProps,
+// 	mapDispatchToProps,
+// )(CreatePropertyEvent);
 
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(CreatePropertyEvent);
