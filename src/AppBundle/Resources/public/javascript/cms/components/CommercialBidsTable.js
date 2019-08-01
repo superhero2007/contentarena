@@ -19,8 +19,8 @@ import {
 	yellowCheckIcon,
 	checkIcon,
 	cancelIcon,
-	viewIcon,
-	duplicateIcon,
+	pdfIcon,
+	blueEnvelopeIcon,
 } from "../../main/components/Icons";
 import DeclineBidModal from "../../common/modals/DeclineBidModal/DeclineBidModal";
 import AcceptBidModal from "../../common/modals/AcceptBidModal/AcceptBidModal";
@@ -53,17 +53,6 @@ class CommercialBidsTable extends React.Component {
 			contentId: props.original.list.id,
 			listingCustomId: props.original.list.customId,
 		});
-	};
-
-	duplicateBid = (props) => {
-		const { postAction } = this.props;
-		ContentArena.ContentApi.duplicateBid(props.original.customId)
-			.then(
-				() => {
-					postAction();
-				},
-				() => {},
-			);
 	};
 
 	closeModal = () => {
@@ -225,7 +214,7 @@ class CommercialBidsTable extends React.Component {
 		id: props => `action-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 150,
+		width: type === "openBids" ? 150 : 100,
 		Cell: props => (
 			<div className="d-flex justify-content-around">
 				{type === "openBids" && (
@@ -249,16 +238,15 @@ class CommercialBidsTable extends React.Component {
 					to={`/license/bid/${props.original.customId}`}
 					target="_blank"
 				>
-					<img src={viewIcon} alt="" />
+					<img src={pdfIcon} alt="" />
 				</Link>
-				{type === "openBids" && (
-					<div
-						className="d-flex justify-content-center align-items-center"
-						onClick={() => this.duplicateBid(props)}
-					>
-						<img src={duplicateIcon} alt="" />
-					</div>
-				)}
+				<Link
+					className="d-flex justify-content-center align-items-center"
+					to={`/redirect-integration/messages-by-bid-seller/${props.original.id}`}
+					target="_blank"
+				>
+					<img src={blueEnvelopeIcon} alt="" />
+				</Link>
 			</div>
 		),
 	}];
