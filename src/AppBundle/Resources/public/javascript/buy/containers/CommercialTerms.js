@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Moment from "moment/moment";
 import Translate from "@components/Translator/Translate";
+import Loader from "@components/Loader/Loader";
 import Modal from "react-modal";
 import test from "../actions";
 import TerritoriesSalesPackages from "./TerritoriesSalesPackages";
@@ -110,7 +111,9 @@ class CommercialTerms extends React.Component {
 			userCanNotBuy,
 		} = this.props;
 
-		const { seasons, message, isSuccess } = this.state;
+		const {
+			seasons, message, isSuccess, isLoading,
+		} = this.state;
 		const isDescriptionVisible = (description && !programDetails) || programDetails || website || (attachments && !!attachments.length);
 
 		return (
@@ -209,8 +212,8 @@ class CommercialTerms extends React.Component {
 									/>
 								</div>
 								<div className="message-wrapper__container-button">
-									<button className="ca-btn primary" onClick={this.onMessage} disabled={!message}>
-										<Translate i18nKey="MESSAGES_SEND_BUTTON" />
+									<button className="ca-btn link-border" onClick={this.onMessage} disabled={!message || isLoading}>
+										{isLoading ? <Loader loading xSmall /> : <Translate i18nKey="MESSAGES_SEND_BUTTON" />}
 									</button>
 								</div>
 							</div>
