@@ -16,7 +16,6 @@ class PropertyDetailsEditedProgramTab extends Component {
 		}
 
 		this.state = {
-			invalid: [],
 			years,
 			programName: "",
 			programEpisodes: "",
@@ -32,44 +31,11 @@ class PropertyDetailsEditedProgramTab extends Component {
 	}
 
 	updateContentValue = (key, value) => {
-		let { invalid } = this.state;
-		invalid = invalid.filter(element => element !== key);
-		this.setState({ [key]: value, invalid });
+		this.setState({ [key]: value });
 	};
 
 	save = () => {
-		const {
-			programName,
-			programEpisodes,
-			programType,
-			programDuration,
-			programDescription,
-		} = this.state;
-		const invalid = [];
-		if (!programName) {
-			invalid.push("programName");
-		}
-		if (!programDescription) {
-			invalid.push("programDescription");
-		}
-		if (!programType) {
-			invalid.push("programType");
-		}
-		if (!programEpisodes) {
-			invalid.push("programEpisodes");
-		}
-		if (!programDuration) {
-			invalid.push("programDuration");
-		}
-		this.setState({ invalid });
-		if (!invalid.length) {
-			// Save
-		}
-	};
-
-	isInvalid = (type) => {
-		const { invalid } = this.state;
-		return invalid.indexOf(type) !== -1;
+		console.log(this.state);
 	};
 
 	getTooltipMessages = () => {
@@ -137,7 +103,6 @@ class PropertyDetailsEditedProgramTab extends Component {
 								onChange={(e) => {
 									this.updateContentValue("programName", e.target.value);
 								}}
-								className={`${this.isInvalid("programName") ? "is-invalid" : ""}`}
 							/>
 						</div>
 					</div>
@@ -153,7 +118,6 @@ class PropertyDetailsEditedProgramTab extends Component {
 									this.updateContentValue("programDescription", e.target.value);
 								}}
 								placeholder={this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION_PLACEHOLDER")}
-								className={`${this.isInvalid("programDescription") ? "is-invalid" : ""}`}
 							/>
 						</div>
 					</div>
@@ -168,7 +132,6 @@ class PropertyDetailsEditedProgramTab extends Component {
 								onChange={(e) => {
 									this.updateContentValue("programType", e.target.value);
 								}}
-								className={`${this.isInvalid("programType") ? "is-invalid" : ""}`}
 							>
 								<option value="">Select</option>
 								<option value="HIGHLIGHT_SHOW">Highlight show</option>
@@ -206,7 +169,6 @@ class PropertyDetailsEditedProgramTab extends Component {
 								onChange={(e) => {
 									this.updateContentValue("programEpisodes", Number(e.target.value));
 								}}
-								className={`${this.isInvalid("programEpisodes") ? "is-invalid" : ""}`}
 							/>
 						</div>
 
@@ -220,7 +182,6 @@ class PropertyDetailsEditedProgramTab extends Component {
 								onChange={(e) => {
 									this.updateContentValue("programDuration", Number(e.target.value));
 								}}
-								className={`${this.isInvalid("programDuration") ? "is-invalid" : ""}`}
 							/>
 						</div>
 
