@@ -18,16 +18,16 @@ class PropertyDetailsEditedProgramTab extends Component {
 		this.state = {
 			invalid: [],
 			years,
-			PROGRAM_NAME: "",
-			PROGRAM_EPISODES: "",
-			PROGRAM_YEAR: "",
-			PROGRAM_TYPE: "",
-			PROGRAM_DURATION: "",
-			PROGRAM_DESCRIPTION: "",
-			PROGRAM_LANGUAGE: [],
-			PROGRAM_SUBTITLES: [],
-			PROGRAM_SCRIPT: [],
-			EDIT_PROGRAM_DESCRIPTION_OPTIONAL: true,
+			programName: "",
+			programEpisodes: "",
+			programYear: "",
+			programType: "",
+			programDuration: "",
+			programDescription: "",
+			programLanguage: [],
+			programSubtitles: [],
+			programScript: [],
+			editProgramDescriptionOptional: true,
 		};
 	}
 
@@ -39,27 +39,27 @@ class PropertyDetailsEditedProgramTab extends Component {
 
 	save = () => {
 		const {
-			PROGRAM_NAME,
-			PROGRAM_EPISODES,
-			PROGRAM_TYPE,
-			PROGRAM_DURATION,
-			PROGRAM_DESCRIPTION,
+			programName,
+			programEpisodes,
+			programType,
+			programDuration,
+			programDescription,
 		} = this.state;
 		const invalid = [];
-		if (!PROGRAM_NAME) {
-			invalid.push("PROGRAM_NAME");
+		if (!programName) {
+			invalid.push("programName");
 		}
-		if (!PROGRAM_DESCRIPTION) {
-			invalid.push("PROGRAM_DESCRIPTION");
+		if (!programDescription) {
+			invalid.push("programDescription");
 		}
-		if (!PROGRAM_TYPE) {
-			invalid.push("PROGRAM_TYPE");
+		if (!programType) {
+			invalid.push("programType");
 		}
-		if (!PROGRAM_EPISODES) {
-			invalid.push("PROGRAM_EPISODES");
+		if (!programEpisodes) {
+			invalid.push("programEpisodes");
 		}
-		if (!PROGRAM_DURATION) {
-			invalid.push("PROGRAM_DURATION");
+		if (!programDuration) {
+			invalid.push("programDuration");
 		}
 		this.setState({ invalid });
 		if (!invalid.length) {
@@ -74,26 +74,26 @@ class PropertyDetailsEditedProgramTab extends Component {
 
 	getTooltipMessages = () => {
 		const {
-			PROGRAM_NAME,
-			PROGRAM_EPISODES,
-			PROGRAM_TYPE,
-			PROGRAM_DURATION,
-			PROGRAM_DESCRIPTION,
+			programName,
+			programEpisodes,
+			programType,
+			programDuration,
+			programDescription,
 		} = this.state;
 		let message = "";
-		if (!PROGRAM_NAME) {
+		if (!programName) {
 			message += "<br/>-  Enter program name.";
 		}
-		if (!PROGRAM_DESCRIPTION) {
+		if (!programDescription) {
 			message += "<br/>-  Enter program description.";
 		}
-		if (!PROGRAM_TYPE) {
+		if (!programType) {
 			message += "<br/>-  Enter program type.";
 		}
-		if (!PROGRAM_EPISODES) {
+		if (!programEpisodes) {
 			message += "<br/>-  Enter program type.";
 		}
-		if (!PROGRAM_DURATION) {
+		if (!programDuration) {
 			message += "<br/>-  Enter program duration.";
 		}
 		if (message.length) {
@@ -104,16 +104,16 @@ class PropertyDetailsEditedProgramTab extends Component {
 
 	render() {
 		const {
-			PROGRAM_NAME,
-			PROGRAM_EPISODES,
-			PROGRAM_YEAR,
-			PROGRAM_TYPE,
-			PROGRAM_DURATION,
-			PROGRAM_DESCRIPTION,
-			PROGRAM_SUBTITLES,
-			PROGRAM_SCRIPT,
-			PROGRAM_LANGUAGE,
-			EDIT_PROGRAM_DESCRIPTION_OPTIONAL,
+			programName,
+			programEpisodes,
+			programYear,
+			programType,
+			programDuration,
+			programDescription,
+			programSubtitles,
+			programScript,
+			programLanguage,
+			editProgramDescriptionOptional,
 		} = this.state;
 		return (
 			<section className="property-edited-program-tab">
@@ -133,11 +133,11 @@ class PropertyDetailsEditedProgramTab extends Component {
 							</label>
 							<input
 								type="text"
-								value={PROGRAM_NAME}
+								value={programName}
 								onChange={(e) => {
-									this.updateContentValue("PROGRAM_NAME", e.target.value);
+									this.updateContentValue("programName", e.target.value);
 								}}
-								className={`${this.isInvalid("PROGRAM_NAME") ? "is-invalid" : ""}`}
+								className={`${this.isInvalid("programName") ? "is-invalid" : ""}`}
 							/>
 						</div>
 					</div>
@@ -148,12 +148,12 @@ class PropertyDetailsEditedProgramTab extends Component {
 								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION" />
 							</label>
 							<textarea
-								value={PROGRAM_DESCRIPTION}
+								value={programDescription}
 								onChange={(e) => {
-									this.updateContentValue("PROGRAM_DESCRIPTION", e.target.value);
+									this.updateContentValue("programDescription", e.target.value);
 								}}
 								placeholder={this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION_PLACEHOLDER")}
-								className={`${this.isInvalid("PROGRAM_DESCRIPTION") ? "is-invalid" : ""}`}
+								className={`${this.isInvalid("programDescription") ? "is-invalid" : ""}`}
 							/>
 						</div>
 					</div>
@@ -164,11 +164,11 @@ class PropertyDetailsEditedProgramTab extends Component {
 								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_TYPE" />
 							</label>
 							<select
-								value={PROGRAM_TYPE}
+								value={programType}
 								onChange={(e) => {
-									this.updateContentValue("PROGRAM_TYPE", e.target.value);
+									this.updateContentValue("programType", e.target.value);
 								}}
-								className={`${this.isInvalid("PROGRAM_TYPE") ? "is-invalid" : ""}`}
+								className={`${this.isInvalid("programType") ? "is-invalid" : ""}`}
 							>
 								<option value="">Select</option>
 								<option value="HIGHLIGHT_SHOW">Highlight show</option>
@@ -184,9 +184,9 @@ class PropertyDetailsEditedProgramTab extends Component {
 								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_YEAR" />
 							</label>
 							<select
-								value={PROGRAM_YEAR}
+								value={programYear}
 								onChange={(e) => {
-									this.updateContentValue("PROGRAM_YEAR", e.target.value);
+									this.updateContentValue("programYear", e.target.value);
 								}}
 							>
 								<option value="Year">Year</option>
@@ -202,11 +202,11 @@ class PropertyDetailsEditedProgramTab extends Component {
 							</label>
 							<input
 								type="number"
-								value={PROGRAM_EPISODES}
+								value={programEpisodes}
 								onChange={(e) => {
-									this.updateContentValue("PROGRAM_EPISODES", Number(e.target.value));
+									this.updateContentValue("programEpisodes", Number(e.target.value));
 								}}
-								className={`${this.isInvalid("PROGRAM_EPISODES") ? "is-invalid" : ""}`}
+								className={`${this.isInvalid("programEpisodes") ? "is-invalid" : ""}`}
 							/>
 						</div>
 
@@ -216,11 +216,11 @@ class PropertyDetailsEditedProgramTab extends Component {
 							</label>
 							<input
 								type="number"
-								value={PROGRAM_DURATION}
+								value={programDuration}
 								onChange={(e) => {
-									this.updateContentValue("PROGRAM_DURATION", Number(e.target.value));
+									this.updateContentValue("programDuration", Number(e.target.value));
 								}}
-								className={`${this.isInvalid("PROGRAM_DURATION") ? "is-invalid" : ""}`}
+								className={`${this.isInvalid("programDuration") ? "is-invalid" : ""}`}
 							/>
 						</div>
 
@@ -232,9 +232,9 @@ class PropertyDetailsEditedProgramTab extends Component {
 							<div className="radio-box">
 								<input
 									type="radio"
-									checked={EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
+									checked={editProgramDescriptionOptional}
 									onChange={() => {
-										this.updateContentValue("EDIT_PROGRAM_DESCRIPTION_OPTIONAL", true);
+										this.updateContentValue("editProgramDescriptionOptional", true);
 									}}
 									id="edit-program-optional"
 									className="ca-radio package-selector"
@@ -242,9 +242,9 @@ class PropertyDetailsEditedProgramTab extends Component {
 								<label htmlFor="edit-program-optional"><Translate i18nKey="Yes" /></label>
 								<input
 									type="radio"
-									checked={!EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
+									checked={!editProgramDescriptionOptional}
 									onChange={() => {
-										this.updateContentValue("EDIT_PROGRAM_DESCRIPTION_OPTIONAL", false);
+										this.updateContentValue("editProgramDescriptionOptional", false);
 									}}
 									id="edit-program"
 									className="ca-radio package-selector"
@@ -262,9 +262,9 @@ class PropertyDetailsEditedProgramTab extends Component {
 							</label>
 							<div className="select">
 								<LanguageSelector
-									value={PROGRAM_LANGUAGE}
+									value={programLanguage}
 									onChange={(value) => {
-										this.updateContentValue("PROGRAM_LANGUAGE", value);
+										this.updateContentValue("programLanguage", value);
 									}}
 								/>
 							</div>
@@ -276,9 +276,9 @@ class PropertyDetailsEditedProgramTab extends Component {
 							</label>
 							<div className="select">
 								<LanguageSelector
-									value={PROGRAM_SUBTITLES}
+									value={programSubtitles}
 									onChange={(value) => {
-										this.updateContentValue("PROGRAM_SUBTITLES", value);
+										this.updateContentValue("programSubtitles", value);
 									}}
 								/>
 							</div>
@@ -290,9 +290,9 @@ class PropertyDetailsEditedProgramTab extends Component {
 							</label>
 							<div className="select">
 								<LanguageSelector
-									value={PROGRAM_SCRIPT}
+									value={programScript}
 									onChange={(value) => {
-										this.updateContentValue("PROGRAM_SCRIPT", value);
+										this.updateContentValue("programScript", value);
 									}}
 								/>
 							</div>
@@ -300,8 +300,13 @@ class PropertyDetailsEditedProgramTab extends Component {
 					</div>
 
 				</div>
-				<div className="property-edited-program-tab__action" data-tip={this.getTooltipMessages()}>
-					<button type="button" className={`ca-btn primary ${this.getTooltipMessages() ? "disabled" : ""}`} onClick={this.save}>
+				<div className="buttons" data-tip={this.getTooltipMessages()}>
+					<button
+						type="button"
+						className={`yellow-button centered-btn ${this.getTooltipMessages() ? "disabled" : ""}`}
+						disabled={this.getTooltipMessages()}
+						onClick={this.save}
+					>
 						<Translate i18nKey="Save" />
 					</button>
 				</div>
