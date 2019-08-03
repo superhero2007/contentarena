@@ -30,8 +30,8 @@ class CmsEditedProgramDetail extends Component {
 			programScripts: props.program.scripts || [],
 			editProgramDescriptionOptional: props.program.editProgramDescriptionOptional || true,
 			exclusively: props.program.exclusively || false,
-			territories: [],
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: props.program.territories || [],
+			territoriesMode: props.program.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
 	}
 
@@ -51,20 +51,28 @@ class CmsEditedProgramDetail extends Component {
 			programSubtitles,
 			programScripts,
 			editProgramDescriptionOptional,
+			exclusively,
+			territories,
+			territoriesMode,
 		} = this.state;
 		const { onSave } = this.props;
-		onSave({
-			name: programName,
-			episode: programEpisode,
-			year: programYear,
-			type: programType,
-			duration: programDuration,
-			description: programDescription,
-			languages: programLanguages,
-			subtitles: programSubtitles,
-			scripts: programScripts,
-			editProgramDescriptionOptional,
-		});
+		if (onSave) {
+			onSave({
+				name: programName,
+				episode: programEpisode,
+				year: programYear,
+				type: programType,
+				duration: programDuration,
+				description: programDescription,
+				languages: programLanguages,
+				subtitles: programSubtitles,
+				scripts: programScripts,
+				editProgramDescriptionOptional,
+				exclusively,
+				territories,
+				territoriesMode,
+			});
+		}
 	};
 
 	getTooltipMessages = () => {
@@ -297,9 +305,9 @@ class CmsEditedProgramDetail extends Component {
 					</div>
 					<div className="row">
 						<div className="modal-input w-50">
-							<label>
-								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_DESC" />
-							</label>
+							<div className="region-filter-title">
+								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_EXCLUSIVELY" />
+							</div>
 
 							<div className="radio-box">
 								<input
@@ -322,6 +330,14 @@ class CmsEditedProgramDetail extends Component {
 									className="ca-radio package-selector"
 								/>
 								<label htmlFor="non-exclusively"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" /></label>
+							</div>
+						</div>
+					</div>
+
+					<div className="row">
+						<div className="modal-input w-50">
+							<div className="region-filter-title">
+								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_TERRITORIES" />
 							</div>
 						</div>
 					</div>

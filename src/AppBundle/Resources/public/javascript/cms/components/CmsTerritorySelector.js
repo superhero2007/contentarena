@@ -33,7 +33,7 @@ class CmsTerritorySelector extends React.Component {
 		const { countries, territoriesMode } = this.state;
 
 		this.parseTerritoryCountries(countries);
-		this.handleChangeMode(territoriesMode);
+		// this.handleChangeMode(territoriesMode);
 	}
 
 	componentWillReceiveProps(nextProps) {
