@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
-import { connect } from "react-redux";
-import cn from "classnames";
-import find from "lodash/find";
 
 import Translate from "@components/Translator/Translate";
-import { BUNDLE_TERRITORIES_METHOD } from "@constants";
 
 import { LanguageSelector } from "../../main/components/LanguageSelector";
-import RadioSelector from "../../main/components/RadioSelector";
-import CountrySelector from "../../main/components/CountrySelector";
-import { cmsWorldActive, cmsWorldDisabled } from "../../main/components/Icons";
+import CmsTerritorySelector from "./CmsTerritorySelector";
+import { BUNDLE_TERRITORIES_METHOD } from "@constants";
 
 class CmsEditedProgramDetail extends Component {
 	constructor(props) {
@@ -34,13 +29,8 @@ class CmsEditedProgramDetail extends Component {
 			programSubtitles: props.program.subtitles || [],
 			programScripts: props.program.scripts || [],
 			editProgramDescriptionOptional: props.program.editProgramDescriptionOptional || true,
-			selection: [],
-			territoriesMode: props.program.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-			territoryItems: {},
-			regionItems: {},
-			activeRegions: [],
-			activeTerritories: [],
-			viewAllTerritories: false,
+			territories: [],
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
 	}
 
@@ -106,150 +96,8 @@ class CmsEditedProgramDetail extends Component {
 		return message;
 	};
 
-	handleChangeMode = (territoriesMode) => {
-		const { countries } = this.props;
-		const selection = territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? countries : [];
-		this.setState({
-			territoriesMode,
-			selection,
-		});
-	};
-
-	getTerritoryCountries = (countries, territoryId) => {
-		const {
-			territoryItems,
-		} = this.state;
-
-		const territory = territoryItems[territoryId];
-
-		if (!territory) return [];
-
-		return countries.filter(country => territory.indexOf(country.id) !== -1);
-	};
-
-	countryHasRegions = (country, regions) => {
-		regions = regions.filter(r => country.regions.indexOf(r) !== -1);
-		return regions.length > 0;
-	};
-
-	selectTerritory(region) {
-		const { countries } = this.props;
-		const {
-			territoryItems,
-			activeRegions,
-			activeTerritories,
-		} = this.state;
-		const countriesPerTerritory = this.getTerritoryCountries(this.state.selection, region.id).length;
-		const index = activeTerritories.indexOf(region.id);
-
-		if (index === -1 && countriesPerTerritory < territoryItems[region.id].length) {
-			activeTerritories.push(region.id);
-		} else if (index !== -1 && countriesPerTerritory === territoryItems[region.id].length) {
-			activeTerritories.splice(index, 1);
-		}
-
-		let selection = countries.filter(c => this.countryHasRegions(c, activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1);
-
-		selection = selection.map((item) => {
-			item.value = item.name;
-			item.label = item.name;
-			return item;
-		});
-
-		this.setState({ selection, activeTerritories });
-	}
-
-	getRegionCountries = (countries, regionId) => {
-		const {
-			regionItems,
-		} = this.state;
-
-		const region = regionItems[regionId];
-
-		if (!region) return [];
-
-		return countries.filter(country => region.indexOf(country.id) !== -1).length;
-	};
-
-	selectRegion = (region) => {
-		const {
-			activeRegions,
-			activeTerritories,
-			regionItems,
-		} = this.state;
-		const { countries } = this.props;
-		const countriesPerRegion = this.getRegionCountries(this.state.selection, region.id);
-		const index = activeRegions.indexOf(region.id);
-
-		if (index === -1 && countriesPerRegion < regionItems[region.id].length) {
-			activeRegions.push(region.id);
-		} else if (index !== -1 && countriesPerRegion === regionItems[region.id].length) {
-			activeRegions.splice(index, 1);
-		}
-
-		if (index === -1) {
-			activeRegions.push(region.id);
-		} else {
-			activeRegions.splice(index, 1);
-		}
-		let selection = countries.filter(c => (this.countryHasRegions(c, activeRegions) || activeTerritories.indexOf(c.territoryId) !== -1));
-
-		selection = selection.map((item) => {
-			item.value = item.name;
-			item.label = item.name;
-			return item;
-		});
-
-		this.setState({ selection, activeRegions });
-	};
-
-	getCounterLabel = (name, counter, total) => `${name} (${counter}/${total})`;
-
-	handleChange = (country) => {
-		const index = this.countryIndex(country);
-		const selection = this.state.selection;
-
-		if (index === -1) {
-			selection.push(country);
-		} else {
-			selection.splice(index, 1);
-		}
-
-		this.setState({ selection });
-	};
-
-	handleSearch = (countries) => {
-		this.handleChange(countries[0]);
-	};
-
-	handleViewTerritories = () => {
-		this.setState((prevState => ({
-			viewAllTerritories: !prevState.viewAllTerritories,
-		})));
-	};
-
-	getTerritoriesByViewType = (territories) => {
-		const { viewAllTerritories } = this.state;
-		if (territories.length === 0) return null;
-
-		return viewAllTerritories
-			? territories
-			: territories.filter(country => this.countryIndex(country) !== -1);
-	};
-
-	isSelectedAllTerritories = () => {
-		const { selection } = this.state;
-		const { territories } = this.props;
-		if (!selection.length) return true;
-
-		const getTerretoriesIds = selection.reduce((accum, item) => [...accum, item.territoryId], []);
-
-		const totalTerritories = [...new Set(getTerretoriesIds)].reduce((accum, item) => {
-			const territoryById = find(territories, { id: item });
-			return accum + territoryById.total;
-		}, 0);
-
-		return totalTerritories === selection.length;
+	handleTerritories = (territories, territoriesMode) => {
+		this.setState({ territories, territoriesMode });
 	};
 
 	render() {
@@ -265,12 +113,8 @@ class CmsEditedProgramDetail extends Component {
 			programLanguages,
 			editProgramDescriptionOptional,
 			territoriesMode,
-			selection,
-			territoryItems,
-			regionItems,
+			territories,
 		} = this.state;
-
-		const { territories, regions, countries } = this.props;
 		return (
 			<section>
 				<div className="property-edited-program-tab__container">
@@ -449,171 +293,14 @@ class CmsEditedProgramDetail extends Component {
 							</div>
 						</div>
 					</div>
-
-					<div className="country-selector region-filter">
-						<RadioSelector
-							value={territoriesMode}
-							onChange={this.handleChangeMode}
-							className="sales-packages-filters"
-							items={[
-								{
-									value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-									label: <Translate i18nKey="CMS_RADIO_WORLDWIDE" />,
-								},
-								{
-									value: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-									label: <Translate i18nKey="CMS_RADIO_SELECTED_TERRITORIES" />,
-								},
-								{
-									value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-									label: <Translate i18nKey="CMS_RADIO_WORLDWIDE_EXCLUDING" />,
-								},
-							]}
-						/>
-
-						{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && (
-							<div>
-								<div className="region-filter-title">
-									{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_TITLE" />}
-								</div>
-								<div className="region-filter-subtitle">
-									{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_CONTINENTS" />}
-								</div>
-								<div className="regions">
-									{territories.map((territory, i) => {
-										const territoryCountries = this.getTerritoryCountries(selection, territory.id).length;
-										const totalItems = territoryItems[territory.id] ? territoryItems[territory.id].length : 0;
-										return (
-											<button
-												className={cn({
-													region: true,
-													"region-selected": territoryCountries > 0,
-													excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-												})}
-												key={`territory-${i}`}
-												onClick={() => {
-													this.selectTerritory(territory);
-												}}
-											>
-												{this.getCounterLabel(territory.name, territoryCountries, totalItems)}
-											</button>
-										);
-									})}
-								</div>
-								<div className="region-filter-subtitle">
-									{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_REGIONS" />}
-								</div>
-								<div className="regions">
-									{regions.map((region, i) => {
-										const regionCountries = this.getRegionCountries(selection, region.id);
-										const totalItems = regionItems[region.id] ? regionItems[region.id].length : 0;
-										return (
-											<button
-												className={cn({
-													region: true,
-													"region-selected": regionCountries > 0,
-													excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-												})}
-												key={`region-${i}`}
-												onClick={() => {
-													this.selectRegion(region);
-												}}
-											>
-												{
-													this.getCounterLabel(region.name, regionCountries, totalItems)
-												}
-											</button>
-										);
-									})}
-								</div>
-								<div className="region-filter-subtitle">
-									{ <Translate i18nKey="CMS_TERRITORIES_SELECTOR_SEARCH" />}
-								</div>
-								<CountrySelector
-									filter={selection}
-									onChange={this.handleSearch}
-									exclusiveSoldTerritories={selection}
-								/>
-							</div>
-						)}
-
-						{
-							<div className="region-filter-title">
-								{territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
-								&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_SELECTED_EXCLUDING" />
-								}
-								{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING
-								&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_SELECTED" />
-								}
-								{ ` (${selection.length})` }
-								{territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE
-								&& !this.isSelectedAllTerritories() && (
-									<button className="link-button" onClick={this.handleViewTerritories}>
-										{viewAllTerritories
-											? <Translate i18nKey="CMS_TERRITORIES_VIEW_SELECTED" />
-											: <Translate i18nKey="CMS_TERRITORIES_VIEW_ALL" />
-										}
-									</button>
-								)}
-							</div>
-						}
-
-						{
-							(territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE || selection.length === 0)
-							&& (
-								<div>
-									<div className="region-filter-selection-box">
-										<img src={territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? cmsWorldActive : cmsWorldDisabled} alt="" />
-										<span className="region-filter-selection-word">
-											{
-												territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE
-												&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_ALL_SELECTED" />
-											}
-											{
-												selection.length === 0
-												&& <Translate i18nKey="CMS_TERRITORIES_SELECTOR_EMPTY" />
-											}
-										</span>
-									</div>
-								</div>
-							)
-						}
-
-						{ territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && territories.map((territory, i) => {
-							const selectedCountries = this.getTerritoryCountries(selection, territory.id);
-							const territoryCountries = this.getTerritoryCountries(countries, territory.id);
-
-							if (selectedCountries.length === 0) return undefined;
-
-							return (
-								<div key={`territory-box-${i}`}>
-									<div className="region-filter-subtitle">
-										{
-											this.getCounterLabel(territory.name, selectedCountries.length, territoryCountries.length)
-										}
-									</div>
-									<div className="regions">
-
-										{this.getTerritoriesByViewType(territoryCountries).map(country => (
-											<button
-												className={cn({
-													region: true,
-													"region-selected": this.countryIndex(country) !== -1,
-													excluding: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-												})}
-												onClick={() => {
-													this.handleChange(country);
-												}}
-											>
-												{country.name}
-											</button>
-										))
-										}
-									</div>
-								</div>
-							);
-						})}
-					</div>
+					<CmsTerritorySelector
+						className="small-select"
+						onChange={this.handleTerritories}
+						onSelectRegion={() => { }}
+						value={territories}
+						territoriesMode={territoriesMode}
+						multiple
+					/>
 				</div>
 				<div className="buttons" data-tip={this.getTooltipMessages()}>
 					<button
@@ -635,10 +322,4 @@ CmsEditedProgramDetail.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-	territories: state.property.territories,
-	countries: state.property.countries,
-	regions: state.property.regions,
-});
-
-export default connect(mapStateToProps, null)(CmsEditedProgramDetail);
+export default CmsEditedProgramDetail;

@@ -38,7 +38,7 @@ class Property extends React.Component {
 			propertyDetails: { property: { customId = "" } },
 			match: { params: { propertyId, tab } = {} },
 		} = this.props;
-		if (!propertyId) return false;
+		if (!propertyId) return;
 
 		if (!customId || customId !== propertyId) {
 			this.props.getPropertyDetails(propertyId);
