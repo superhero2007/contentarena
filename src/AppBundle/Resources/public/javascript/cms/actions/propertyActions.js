@@ -228,3 +228,100 @@ export const updateProperty = updatedProperty => async (dispatch) => {
 		dispatch(updatePropertyFail(error));
 	}
 };
+
+export const createProgramRequest = () => ({
+	type: propertyDetailsTypes.CREATE_PROGRAM,
+});
+
+export const createProgramSuccess = program => ({
+	type: propertyDetailsTypes.CREATE_PROGRAM_SUCCESS,
+	program,
+});
+
+export const createProgramFail = error => ({
+	type: propertyDetailsTypes.CREATE_PROGRAM_FAIL,
+	error,
+});
+
+export const updateProgramRequest = () => ({
+	type: propertyDetailsTypes.UPDATE_PROGRAM,
+});
+
+export const updateProgramSuccess = program => ({
+	type: propertyDetailsTypes.UPDATE_PROGRAM_SUCCESS,
+	program,
+});
+
+export const updateProgramFail = error => ({
+	type: propertyDetailsTypes.UPDATE_PROGRAM_FAIL,
+	error,
+});
+
+export const getProgramsRequest = () => ({
+	type: propertyDetailsTypes.GET_PROGRAMS,
+});
+
+export const getProgramsSuccess = programs => ({
+	type: propertyDetailsTypes.GET_PROGRAMS_SUCCESS,
+	programs,
+});
+
+export const getProgramsFail = error => ({
+	type: propertyDetailsTypes.GET_PROGRAMS_FAIL,
+	error,
+});
+
+export const deleteProgramRequest = () => ({
+	type: propertyDetailsTypes.DELETE_PROGRAM,
+});
+
+export const deleteProgramSuccess = customId => ({
+	type: propertyDetailsTypes.DELETE_PROGRAM_SUCCESS,
+	customId,
+});
+
+export const deleteProgramFail = error => ({
+	type: propertyDetailsTypes.DELETE_PROGRAM_FAIL,
+	error,
+});
+
+export const createProgram = program => async (dispatch) => {
+	dispatch(createProgramRequest());
+	try {
+		// const { data: { program } } = await api.properties.createProgram({ program });
+		dispatch(createProgramSuccess(program));
+	} catch (error) {
+		dispatch(createProgramFail(error));
+	}
+};
+
+export const updateProgram = program => async (dispatch) => {
+	dispatch(updateProgramRequest());
+	try {
+		// const { data: { program } } = await api.properties.updateProgram({ program });
+		dispatch(updateProgramSuccess(program));
+	} catch (error) {
+		dispatch(updateProgramFail(error));
+	}
+};
+
+export const getPrograms = () => async (dispatch) => {
+	dispatch(getProgramsRequest());
+	try {
+		// const { data: { programs } } = await api.properties.getPrograms();
+		const programs = [];
+		dispatch(getProgramsSuccess(programs));
+	} catch (error) {
+		dispatch(getProgramsFail());
+	}
+};
+
+export const deleteProgram = customId => async (dispatch) => {
+	dispatch(deleteProgramRequest());
+	try {
+		// const { data: { program } } = await api.properties.deleteProgram({ customId });
+		dispatch(deleteProgramSuccess(customId));
+	} catch (error) {
+		dispatch(deleteProgramFail(error));
+	}
+};

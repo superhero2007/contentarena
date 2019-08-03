@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Translate from "@components/Translator/Translate";
 import CmsEditedProgramDetail from "./CmsEditedProgramDetail";
 import CmsEditedProgramList from "./CmsEditedProgramList";
 import EmptyEditProgram from "./EmptyScreens/EmptyEditProgram";
-// import Translate from "@components/Translator/Translate";
+
+import {
+	createProgram,
+	updateProgram,
+	deleteProgram,
+} from "../actions/propertyActions";
 
 class PropertyDetailsEditedProgramTab extends Component {
 	constructor(props) {
@@ -17,10 +23,11 @@ class PropertyDetailsEditedProgramTab extends Component {
 
 	onSave = (program) => {
 		const { mode } = this.state;
+		const { createProgram, updateProgram } = this.props;
 		if (mode === "create") {
-			// TODO: onCreate
+			createProgram(program);
 		} else {
-			// TODO: onUpdate
+			updateProgram(program);
 		}
 		this.setState({ mode: "list", selected: {} });
 	};
@@ -30,7 +37,8 @@ class PropertyDetailsEditedProgramTab extends Component {
 	};
 
 	onDelete = (program) => {
-		// TODO: onDelete
+		const { deleteProgram } = this.props;
+		deleteProgram(program.customId);
 	};
 
 	onCreate = () => {
@@ -41,7 +49,7 @@ class PropertyDetailsEditedProgramTab extends Component {
 		const { property: { programs } } = this.props;
 		const { mode, selected } = this.state;
 
-		if (mode === "list") {
+		if (mode !== "list") {
 			return (
 				<section className="property-edited-program-tab">
 					<CmsEditedProgramDetail
@@ -64,12 +72,19 @@ class PropertyDetailsEditedProgramTab extends Component {
 
 		return (
 			<section className="property-edited-program-tab">
-				<CmsEditedProgramList
-					programs={programs}
-					onCreate={this.onCreate}
-					onSelect={this.onSelect}
-					onDelete={this.onDelete}
-				/>
+				<button
+					className="ca-btn primary property-edited-program-tab__button"
+					onClick={this.onCreate}
+				>
+					<Translate i18nKey="CMS_EMPTY_EDIT_RIGHTS_BUTTON" />
+				</button>
+				<div className="property-edited-program-tab__list">
+					<CmsEditedProgramList
+						programs={programs}
+						onSelect={this.onSelect}
+						onDelete={this.onDelete}
+					/>
+				</div>
 			</section>
 		);
 	}
@@ -83,7 +98,13 @@ const mapStateToProps = state => ({
 	property: state.propertyDetails.property,
 });
 
+const mapDispatchToProps = dispatch => ({
+	createProgram: program => dispatch(createProgram(program)),
+	updateProgram: program => dispatch(updateProgram(program)),
+	deleteProgram: customId => dispatch(deleteProgram(customId)),
+});
+
 export default connect(
 	mapStateToProps,
-	null,
+	mapDispatchToProps,
 )(PropertyDetailsEditedProgramTab);
