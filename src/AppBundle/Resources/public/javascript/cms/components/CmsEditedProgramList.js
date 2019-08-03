@@ -17,7 +17,8 @@ const CmsEditedProgramList = ({
 				<div className="d-flex">
 					<button className="ca-btn link-button">
 						<img src={cmsWorldActive} alt="" />
-						{program.territories.length} Territories
+						{program.territories.length}&nbsp;
+						<Translate i18nKey="CMS_EMPTY_EDIT_PROGRAM_TERRITORIES_BUTTON" />
 					</button>
 					<button
 						className="ca-btn link-button"
@@ -28,7 +29,7 @@ const CmsEditedProgramList = ({
 						}}
 					>
 						<img src={watchlistIcon} alt="" />
-						View details
+						<Translate i18nKey="CMS_EMPTY_EDIT_PROGRAM_VIEW_BUTTON" />
 					</button>
 					<button
 						className="ca-btn text-danger"
@@ -39,9 +40,8 @@ const CmsEditedProgramList = ({
 						}}
 					>
 						<img src={bucketicon} alt="" />
-						Remove
+						<Translate i18nKey="CMS_EMPTY_EDIT_PROGRAM_REMOVE_BUTTON" />
 					</button>
-					<Translate i18nKey="CMS_EMPTY_EDIT_RIGHTS_BUTTON" />
 				</div>
 			</div>
 		))}
