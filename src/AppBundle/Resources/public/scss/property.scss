@@ -758,18 +758,25 @@
     }
 
     .property-edited-program-tab {
-      &__header {
-        padding: 1rem;
-      }
-
       &__container {
         margin-top: 1rem;
-        .row {
-          .modal-input {
-            width: 100%;
-            padding: 0 1rem;
 
-            .radio-box {
+        .row {
+          justify-content: space-between;
+          margin-left: -10px;
+          margin-right: -10px;
+          margin-bottom: 0;
+
+          input {
+            margin: 0;
+          }
+
+          textarea {
+            height: 150px;
+            min-height: unset;
+          }
+
+          .radio-box {
               display: flex;
 
               label {
@@ -778,11 +785,44 @@
               }
             }
 
-            input {
-              margin: 0;
-            }
+          & + & {
+            margin-top: 20px;
           }
         }
+
+        .w-50 {
+          width: 50%;
+          padding: 10px;
+        }
+
+        .w-66 {
+          width: 66%;
+          padding: 10px;
+        }
+
+        .w-33 {
+          width: 33%;
+          padding: 10px;
+        }
+
+        label {
+          font-size: 13px;
+          font-weight: normal;
+        }
+
+        //textarea {
+        //  min-height: 6rem;
+        //}
+        //
+        //.row {
+        //  width: 100%;
+        //  .modal-input {
+        //    width: 100%;
+        //    padding: 0 1rem;
+        //
+        //
+        //  }
+        //}
       }
     }
 
@@ -1109,12 +1149,12 @@
 	  width: 70px;
 	  height: auto;
 	}
-	& h3{
+	& h3 {
 	  color: $black-color;
 	  font-size: 16px;
 	  font-weight: bold;
 	}
-	& h4{
+	& h4 {
 	  @media only screen and (max-width: 1020px) {
 		width: 100%;
 	  }
@@ -1132,6 +1172,23 @@
       padding: 10px 25px;
       background-color: $property-yellow;
 	}
+
+    &.left-aligned {
+      align-items: flex-start;
+
+      h3 {
+        font-size: 18px;
+      }
+
+      h4 {
+        text-align: left;
+        margin-top: 25px;
+        color: $font-color-5;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 2;
+      }
+    }
   }
 
   .property-list-header{

@@ -12,7 +12,7 @@ class PropertyDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeTab: CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS,
+			activeTab: CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM,
 		};
 	}
 
