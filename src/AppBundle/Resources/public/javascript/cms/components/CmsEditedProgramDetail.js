@@ -29,6 +29,7 @@ class CmsEditedProgramDetail extends Component {
 			programSubtitles: props.program.subtitles || [],
 			programScripts: props.program.scripts || [],
 			editProgramDescriptionOptional: props.program.editProgramDescriptionOptional || true,
+			exclusively: props.program.exclusively || false,
 			territories: [],
 			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 		};
@@ -112,6 +113,7 @@ class CmsEditedProgramDetail extends Component {
 			programScripts,
 			programLanguages,
 			editProgramDescriptionOptional,
+			exclusively,
 			territoriesMode,
 			territories,
 		} = this.state;
@@ -218,7 +220,7 @@ class CmsEditedProgramDetail extends Component {
 							</div>
 							<div className="w-33">
 								<div className="modal-input">
-									<label htmlFor="similar-length">
+									<label>
 										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_DESC" />
 									</label>
 
@@ -290,6 +292,36 @@ class CmsEditedProgramDetail extends Component {
 										this.updateContentValue("programScripts", value);
 									}}
 								/>
+							</div>
+						</div>
+					</div>
+					<div className="row">
+						<div className="modal-input w-50">
+							<label>
+								<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_DESC" />
+							</label>
+
+							<div className="radio-box">
+								<input
+									type="radio"
+									checked={exclusively}
+									onChange={() => {
+										this.updateContentValue("exclusively", true);
+									}}
+									id="exclusively"
+									className="ca-radio package-selector"
+								/>
+								<label htmlFor="exclusively"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE" /></label>
+								<input
+									type="radio"
+									checked={!exclusively}
+									onChange={() => {
+										this.updateContentValue("exclusively", false);
+									}}
+									id="non-exclusively"
+									className="ca-radio package-selector"
+								/>
+								<label htmlFor="non-exclusively"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" /></label>
 							</div>
 						</div>
 					</div>

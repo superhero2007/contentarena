@@ -761,6 +761,64 @@
       &__container {
         margin-top: 1rem;
 
+        input[type="radio"] + label,
+        input[type="radio"] + span {
+          font-weight: 600;
+          color: #666;
+        }
+
+        input[type="radio"]:checked + label,
+        input[type="radio"]:checked + span {
+          font-weight: 900;
+          color: #000;
+        }
+
+        .country-selector {
+          input[type="radio"] {
+            margin-right: 10px !important;
+          }
+
+          .region-filter-title {
+            border: 0;
+            display: block;
+            font-size: 14px;
+            margin-top: 40px;
+            margin-bottom: 10px;
+          }
+
+          .region-filter-subtitle {
+            font-weight: normal;
+            font-size: 13px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+          }
+
+          .regions {
+            margin-bottom: 30px;
+            justify-content: flex-start;
+
+            &::after {
+              content: unset;
+            }
+
+            .region {
+              & + & {
+                margin-right: 20px;
+              }
+            }
+          }
+
+          .Select {
+            margin-top: 5px;
+            max-width: 550px;
+          }
+
+          .link-button {
+            font-size: 14px;
+            margin-left: 20px;
+          }
+        }
+
         .row {
           justify-content: space-between;
           margin-left: -10px;
@@ -776,14 +834,20 @@
             min-height: unset;
           }
 
-          .radio-box {
-              display: flex;
+          input[type="radio"] {
+            margin-right: 10px;
+          }
 
-              label {
-                min-width: 50px;
-                width: 50px;
-              }
+          .radio-box {
+            display: flex;
+            margin-top: 15px;
+
+            label {
+              min-width: unset;
+              width: unset;
+              margin-right: 45px;
             }
+          }
 
           & + & {
             margin-top: 20px;
