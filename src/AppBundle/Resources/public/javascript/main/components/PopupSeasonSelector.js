@@ -62,36 +62,38 @@ class PopupSeasonSelector extends React.Component {
 				style={customStyles}
 				onRequestClose={this.cancelModal}
 			>
+				<div className="season-selector-modal">
+					<div className="modal-title">
+						<Translate i18nKey="Season Selector" />
+						<div className="close" onClick={this.cancelModal}>X</div>
+					</div>
 
-				<div className="modal-title">
-					<Translate i18nKey="Season Selector" />
-					<div className="close" onClick={this.cancelModal}>X</div>
-				</div>
-
-				<div className="step-content">
-					<div className="region-filter">
-						<div className="regions">
-							{allSeasons.map(season => (
-								<button
-									key={season.id}
-									onClick={() => this.handleChangedValue(season)}
-									className={`region ${value.find(element => element.value === season.id) ? "region-selected" : ""}`}
-								>
-									{season.name}
-								</button>
-							))}
+					<div className="step-content">
+						<div className="region-filter">
+							<div className="regions">
+								{allSeasons.map(season => (
+									<button
+										key={season.id}
+										onClick={() => this.handleChangedValue(season)}
+										className={`region ${value.find(element => element.value === season.id) ? "region-selected" : ""}`}
+									>
+										{season.name}
+									</button>
+								))}
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div className="buttons">
-					<button
-						disabled={!value || value.length === 0}
-						className="standard-button"
-						onClick={this.closeModal}
-					>
-						Ok
-					</button>
+					<div className="buttons">
+						<button
+							disabled={!value || value.length === 0}
+							className="yellow-button"
+							onClick={this.closeModal}
+						>
+							Ok
+						</button>
+
+					</div>
 
 				</div>
 

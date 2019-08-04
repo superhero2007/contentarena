@@ -649,6 +649,8 @@
 
   @media only screen and (max-width: 1230px) {
     min-height: inherit !important;
+    background: url(./../img/stadium_background.jpg) no-repeat 0 55px;
+    background-size: contain;
   }
 
   img {
@@ -659,6 +661,7 @@
   .landing-header {
     @media only screen and (max-width: 1230px) {
       position: inherit;
+      background-color: #333;
     }
   }
 
@@ -689,10 +692,30 @@
 
         &.listing-preview-mobile{
           .big-title{
-            font-size: 40px;
+            font-size: 32px;
+            line-height: 36px;
+            margin: 0 20px;
           }
           .title{
             font-size: 18px;
+            line-height: 22px;
+            margin: auto;
+          }
+          .listing-details{
+            .listing-img{
+              max-width: none;
+            }
+            .listing-data{
+              .fixtures-wrapper {
+                .row-container {
+                  flex-direction: column;
+                  align-items: flex-start;
+                  .actions {
+                    flex-direction: row;
+                  }
+                }
+              }
+            }
           }
         }
 
@@ -952,8 +975,11 @@
       width: 100%;
       flex-direction: column;
       justify-content: center;
-
       text-align: center;
+
+      @media only screen and (max-width: 1230px) {
+        padding: 0 20px 20px;
+      }
     }
 
     .reset-wrapper {
