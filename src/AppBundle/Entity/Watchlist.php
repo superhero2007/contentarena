@@ -22,19 +22,19 @@ class Watchlist
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content")
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="watchlist")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
      */
     private $company;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     private $addedBy;
