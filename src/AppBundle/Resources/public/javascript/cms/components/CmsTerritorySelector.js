@@ -33,7 +33,7 @@ class CmsTerritorySelector extends React.Component {
 		const { countries, territoriesMode } = this.state;
 
 		this.parseTerritoryCountries(countries);
-		this.handleChangeMode(territoriesMode);
+		// this.handleChangeMode(territoriesMode);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -434,7 +434,7 @@ class CmsTerritorySelector extends React.Component {
 							</div>
 							<div className="regions">
 
-								{this.getTerritoriesByViewType(territoryCountries).map(country => (
+								{this.getTerritoriesByViewType(territoryCountries).map((country, index) => (
 									<button
 										className={cn({
 											region: true,
@@ -444,6 +444,7 @@ class CmsTerritorySelector extends React.Component {
 										onClick={() => {
 											this.handleChange(country);
 										}}
+										key={index}
 									>
 										{country.name}
 									</button>

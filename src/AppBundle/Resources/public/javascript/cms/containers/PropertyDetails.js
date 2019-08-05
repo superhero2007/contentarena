@@ -10,6 +10,13 @@ import PropertyDetailsRightsTab from "../components/PropertyDetailsRightsTab";
 import CmsTabElement from "../components/CmsTabElement";
 
 class PropertyDetails extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			activeTab: CMS_PROPERTY_DETAILS_TABS.EDIT_PROGRAM,
+		};
+	}
+
 	getTabs = props => ({
 		[CMS_PROPERTY_DETAILS_TABS.EVENT_DETAILS]: {
 			label: <Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EVENT_LABEL" />,
