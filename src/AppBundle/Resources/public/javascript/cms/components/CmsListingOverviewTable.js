@@ -10,6 +10,7 @@ import Translate from "@components/Translator/Translate";
 import { LISTING_STATUS, DATE_FORMAT } from "@constants";
 import { yellowCheckIcon } from "../../main/components/Icons";
 import PropertyActionListing from "../../manage/components/PropertyActionListing";
+import { getRightTableColumns } from "../helpers/PropertyHelper";
 
 class CmsListingOverviewTable extends React.Component {
 	constructor(props) {
@@ -47,16 +48,7 @@ class CmsListingOverviewTable extends React.Component {
 		);
 	};
 
-	getRightCell = (props, shortLabel) => {
-		const { value } = props;
-		const rights = value.map(right => right.shortLabel);
-
-		if (rights.indexOf(shortLabel) !== -1) return <img src={yellowCheckIcon} alt={shortLabel} />;
-
-		return <span />;
-	};
-
-	getColumns = () => [{
+	getInfoColumns = () => [{
 		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_HEADER_STATUS" />,
 		id: props => `status-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
@@ -91,49 +83,9 @@ class CmsListingOverviewTable extends React.Component {
 				{props.value}
 			</span>
 		),
-	}, {
-		Header: () => this.getHeader("LT", "Live transmission"),
-		id: props => `lt-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "rightsPackage",
-		Cell: props => this.getRightCell(props, "LT"),
-	}, {
-		Header: () => this.getHeader("LB", "Live betting"),
-		id: props => `lb-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "rightsPackage",
-		Cell: props => this.getRightCell(props, "LB"),
-	}, {
-		Header: () => this.getHeader("DT", "Delayed & Archive"),
-		id: props => `dt-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "rightsPackage",
-		Cell: props => this.getRightCell(props, "DT"),
-	}, {
-		Header: () => this.getHeader("HL", "Highlights"),
-		id: props => `hl-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "rightsPackage",
-		Cell: props => this.getRightCell(props, "HL"),
-	}, {
-		Header: () => this.getHeader("NA", "News access"),
-		id: props => `na-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "rightsPackage",
-		Cell: props => this.getRightCell(props, "NA"),
-	}, {
-		Header: () => this.getHeader("PR", "Program"),
-		id: props => `pr-${props.customId}-${props.index}`,
-		headerClassName: "table-header-small",
-		className: "table-header-small",
-		accessor: "rightsPackage",
-		Cell: props => this.getRightCell(props, "PR"),
-	}, {
+	}];
+
+	getActionColumns = () => [{
 		Header: () => <Translate i18nKey="CMS_LISTING_OVERVIEW_TABLE_EXPIRY" />,
 		id: props => `expiry-${props.customId}-${props.index}`,
 		headerClassName: "table-header",
@@ -338,8 +290,8 @@ class CmsListingOverviewTable extends React.Component {
 	};
 
 	render() {
-		// TODO YU check this component after BE implemented
 		const { listings } = this.state;
+		const columns = [...this.getInfoColumns(), ...getRightTableColumns(), ...this.getActionColumns()];
 		return (
 			<section className="property-listing-overview-wrapper">
 				<ReactTable
@@ -352,7 +304,7 @@ class CmsListingOverviewTable extends React.Component {
 					multiSort={false}
 					resizable={false}
 					data={listings}
-					columns={this.getColumns()}
+					columns={columns}
 				/>
 				<ReactTooltip place="top" type="dark" effect="solid" />
 			</section>

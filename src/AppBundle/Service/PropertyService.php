@@ -7,6 +7,7 @@ use AppBundle\Entity\Bid;
 use AppBundle\Entity\Company;
 use AppBundle\Entity\Content;
 use AppBundle\Entity\Property;
+use AppBundle\Entity\RightsPackage;
 use AppBundle\Entity\SalesPackage;
 use AppBundle\Entity\Season;
 use AppBundle\Entity\User;
@@ -90,6 +91,23 @@ class PropertyService
     }
 
     /**
+     * @param Content $content
+     * @return array
+     */
+    public function getListingExclusiveRights($content){
+        $exclusiveRights = array();
+        $selected = $content->getSelectedRightsBySuperRight();
+
+        /* @var RightsPackage $right*/
+        foreach ($content->getRightsPackage() as $right){
+
+            if ( $selected[$right->getId()]['exclusive'] ) $exclusiveRights[] = $right->getName();
+        }
+
+        return $exclusiveRights;
+    }
+
+    /**
      * @param Property $property
      * @param User $user
      * @return Property|null|object
@@ -106,6 +124,14 @@ class PropertyService
             /* @var $listing Content */
 
             $totalTerritories = 0;
+            $rights = $listing->getRightsPackage();
+            $selectedRights = $listing->getSelectedRightsBySuperRight();
+            $bids = $this->bidService->getAllBidsByContent($listing);
+
+            /* @var RightsPackage $right*/
+            foreach ($rights as $right){
+                if ( $selectedRights[$right->getId()]['exclusive'] ) $right->setExclusive(true);
+            }
 
             foreach ($listing->getSalesPackages() as $bundle){
                 /* @var SalesPackage $bundle  */
@@ -113,8 +139,8 @@ class PropertyService
             }
 
             $listing->setTerritories($totalTerritories);
-            $bids = $this->bidService->getAllBidsByContent($listing);
             $listing->setBids($bids);
+            $listing->setRightsPackage($rights);
             if ( $bids != null ) $listing->setHasActivity(true);
 
             foreach ($bids as $bid){

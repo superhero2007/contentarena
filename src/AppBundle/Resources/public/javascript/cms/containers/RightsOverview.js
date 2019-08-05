@@ -9,6 +9,8 @@ import CmsSeasonsFilter from "../components/CmsSeasonsFilter";
 import CmsTerritoriesFilter from "../components/CmsTerritoriesFilter";
 import { blueCheckIcon, yellowCheckIcon } from "../../main/components/Icons";
 import { RIGHT_STATUS } from "../../common/constants";
+import RightsLegend from "../../main/components/RightsLegend";
+import CmsRightsLegend from "../components/CmsRightsLegend";
 
 class RightsOverview extends React.Component {
 	constructor(props) {
@@ -188,39 +190,10 @@ class RightsOverview extends React.Component {
 							</div>
 						</div>
 					</div>
-					<div className="split-filter">
-						<div className="region-filter-title">
-							{ <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
-						</div>
-						<div className="right-legends">
-							<div className="right-legends-item">
-								<img src={blueCheckIcon} alt="" />
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_AVAILABLE" />}
-							</div>
-							<div className="right-legends-item">
-								<img src={blueCheckIcon} alt="" />
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_OFFERED" />}
-							</div>
-							<div className="right-legends-item">
-								<img src={blueCheckIcon} alt="" />
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_NON_EXCLUSIVE_SOLD" />}
-							</div>
-							<div className="right-legends-item">
-								<img src={yellowCheckIcon} alt="" />
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_AVAILABLE" />}
-							</div>
-							<div className="right-legends-item">
-								<img src={yellowCheckIcon} alt="" />
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_OFFERED" />}
-							</div>
-							<div className="right-legends-item">
-								<img src={yellowCheckIcon} alt="" />
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_EXCLUSIVE_SOLD" />}
-							</div>
-						</div>
-					</div>
 				</div>
-
+				<div className="d-flex" style={{ marginBottom: 40 }}>
+					<CmsRightsLegend />
+				</div>
 
 				{
 					territories.length > 0

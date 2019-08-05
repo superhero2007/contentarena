@@ -8,6 +8,7 @@ import EmptyListingOverview from "../components/EmptyScreens/EmptyListingOvervie
 import CmsListingOverviewTable from "../components/CmsListingOverviewTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
+import CmsRightsLegend from "../components/CmsRightsLegend";
 
 class CmsListingOverview extends React.Component {
 	constructor(props) {
@@ -186,14 +187,9 @@ class CmsListingOverview extends React.Component {
 								)}
 							</div>
 						</div>
-						{/*
-						<div className="split-filter">
-							<div className="region-filter-title">
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
-							</div>
-							<RightsLegend isNew />
-						</div>
-						*/}
+					</div>
+					<div className="d-flex">
+						<CmsRightsLegend />
 					</div>
 					<div className="region-filter-bids">
 						<div className="region-filter-content">

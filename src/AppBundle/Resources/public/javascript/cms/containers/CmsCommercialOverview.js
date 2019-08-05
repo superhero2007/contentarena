@@ -10,6 +10,7 @@ import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
 import { fetchPropertyDetails } from "../actions/propertyActions";
+import CmsRightsLegend from "../components/CmsRightsLegend";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -224,17 +225,14 @@ class CmsCommercialOverview extends React.Component {
 		return (
 			<section className="commercial-overview-tab">
 				<div className="region-filter">
+					<h5>
+						<Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />
+					</h5>
+					<h6>
+						<Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL_SUBTITLE" />
+					</h6>
 					<div className="d-flex">
 						<div className="split-filter" style={{ width: "100%" }}>
-							<div className="region-filter-title">
-								<div className="title-wrapper">
-									{ <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />}
-									<div className="subtitle">
-										{ <Translate i18nKey="COMMERCIAL_ACTIVITY_FILTER_SUBTITLE" />}
-									</div>
-								</div>
-							</div>
-
 							<div className="manager-filter-container">
 								<div className="listing-filter">
 									<Select
@@ -266,14 +264,9 @@ class CmsCommercialOverview extends React.Component {
 								)}
 							</div>
 						</div>
-						{/*
-						<div className="split-filter">
-							<div className="region-filter-title">
-								{ <Translate i18nKey="CMS_RIGHT_LEGENDS_TITLE" />}
-							</div>
-							<RightsLegend isNew />
-						</div>
-						*/}
+					</div>
+					<div className="d-flex">
+						<CmsRightsLegend />
 					</div>
 					<div className="region-filter-bids">
 						<div className="region-filter-title toggle" onClick={openBidsList.length ? this.toggleOpenBids : null}>

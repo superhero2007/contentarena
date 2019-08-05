@@ -39,6 +39,12 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
      */
     private $shortLabel;
 
+    /**
+     * @var boolean
+     * @Groups({"propertyList", "property"})
+     */
+    private $exclusive;
+
 
     public function __construct() {
     }
@@ -97,6 +103,24 @@ class RightsPackage extends \AppBundle\Helper\SerializerHelper
     {
         $this->shortLabel = $shortLabel;
     }
+
+    /**
+     * @return bool
+     */
+    public function isExclusive()
+    {
+        return $this->exclusive;
+    }
+
+    /**
+     * @param bool $exclusive
+     */
+    public function setExclusive($exclusive)
+    {
+        $this->exclusive = $exclusive;
+    }
+
+
 
 
 
