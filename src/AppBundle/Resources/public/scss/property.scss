@@ -1098,6 +1098,10 @@
 	.centered-btn{
 	  margin-left: auto !important;
       margin-right: auto !important;
+
+      div {
+        margin-top: 0;
+      }
 	}
 	.details-tab {
 	  display: flex;

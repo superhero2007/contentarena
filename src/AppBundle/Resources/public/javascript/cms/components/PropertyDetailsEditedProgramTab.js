@@ -32,6 +32,10 @@ class PropertyDetailsEditedProgramTab extends Component {
 		this.setState({ mode: "list", selected: {} });
 	};
 
+	onCancel = () => {
+		this.setState({ mode: "list", selected: {} });
+	};
+
 	onSelect = (program) => {
 		this.setState({ mode: "edit", selected: program });
 	};
@@ -55,6 +59,7 @@ class PropertyDetailsEditedProgramTab extends Component {
 					<CmsEditedProgramDetail
 						program={selected}
 						onSave={this.onSave}
+						onCancel={this.onCancel}
 					/>
 				</section>
 			);

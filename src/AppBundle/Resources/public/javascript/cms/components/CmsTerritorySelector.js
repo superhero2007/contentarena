@@ -390,8 +390,8 @@ class CmsTerritorySelector extends React.Component {
 						&& !this.isSelectedAllTerritories() && (
 							<button className="link-button" onClick={this.handleViewTerritories}>
 								{viewAllTerritories
-									? <Translate i18nKey="CMS_TERRITORIES_VIEW_SELECTED" />
-									: <Translate i18nKey="CMS_TERRITORIES_VIEW_ALL" />
+									? <Translate key="selected" i18nKey="CMS_TERRITORIES_VIEW_SELECTED" />
+									: <Translate key="all" i18nKey="CMS_TERRITORIES_VIEW_ALL" />
 								}
 							</button>
 						)}
