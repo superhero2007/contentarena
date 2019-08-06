@@ -125,6 +125,7 @@ class CmsEditedProgramDetail extends Component {
 			territoriesMode,
 			territories,
 		} = this.state;
+		const { onCancel } = this.props;
 		return (
 			<section>
 				<div className="property-edited-program-tab__container">
@@ -350,17 +351,30 @@ class CmsEditedProgramDetail extends Component {
 						multiple
 					/>
 				</div>
-				<div className="buttons" data-tip={this.getTooltipMessages()}>
-					<button
-						type="button"
-						className={`yellow-button centered-btn ${this.getTooltipMessages() ? "disabled" : ""}`}
-						disabled={this.getTooltipMessages()}
-						onClick={this.save}
-					>
-						<Translate i18nKey="Save" />
-					</button>
+				<div className="buttons">
+					<div className="centered-btn">
+						<button
+							type="button"
+							className="yellow-button"
+							onClick={onCancel}
+						>
+							<Translate i18nKey="Cancel" />
+						</button>
+						<div data-tip={this.getTooltipMessages()}>
+							<button
+								type="button"
+								className={`yellow-button ${this.getTooltipMessages() ? "disabled" : ""}`}
+								disabled={this.getTooltipMessages()}
+								onClick={this.save}
+
+							>
+								<Translate i18nKey="Save" />
+							</button>
+						</div>
+						<ReactTooltip html />
+					</div>
 				</div>
-				<ReactTooltip html />
+
 			</section>
 		);
 	}
