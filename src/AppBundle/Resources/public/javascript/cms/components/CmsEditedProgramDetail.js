@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 
@@ -17,6 +18,7 @@ class CmsEditedProgramDetail extends Component {
 		for (let i = 0; i < 81; i++) {
 			years.push(startYear - i);
 		}
+		const territoriesMode = props.program.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
 		this.state = {
 			years,
 			programName: props.program.name || "",
@@ -30,8 +32,8 @@ class CmsEditedProgramDetail extends Component {
 			programScripts: props.program.scripts || [],
 			editProgramDescriptionOptional: props.program.editProgramDescriptionOptional || true,
 			exclusively: props.program.exclusively || false,
-			territories: props.program.territories || [],
-			territoriesMode: props.program.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? props.countries : (props.program.territories || []),
+			territoriesMode,
 		};
 	}
 
@@ -384,4 +386,11 @@ CmsEditedProgramDetail.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default CmsEditedProgramDetail;
+const mapStateToProps = state => ({
+	countries: state.property.countries,
+});
+
+export default connect(
+	mapStateToProps,
+	null,
+)(CmsEditedProgramDetail);
