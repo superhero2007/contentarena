@@ -279,13 +279,13 @@ class HeaderBar extends React.Component {
 
 							<div className="popup">
 								<div className="wrap">
-									<HeaderBarTab
+									{/* <HeaderBarTab
 										route="/terms"
 										className="popup-item"
 									>
 										<i className="fa fa-file-pdf-o" />
 										<Translate i18nKey="HEADER_LINK_TERMS" />
-									</HeaderBarTab>
+									</HeaderBarTab> */}
 									<HeaderBarTab
 										route="/preferences"
 										className="popup-item"

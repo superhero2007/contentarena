@@ -19,7 +19,7 @@ class PropertyActionListing extends React.Component {
 		};
 
 		this.bucketIcon = `${assetsBaseDir}app/images/bucket_blue.png`;
-		this.commercialIcon = `${assetsBaseDir}app/images/listing/default-sports/tennis.svg`;
+		this.commercialIcon = `${assetsBaseDir}app/images/dollar.png`;
 		this.editIcon = `${assetsBaseDir}app/images/edit.png`;
 		this.duplicateIcon = `${assetsBaseDir}app/images/duplicate.png`;
 		this.viewIcon = `${assetsBaseDir}app/images/search.png`;
