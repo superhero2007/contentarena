@@ -49,38 +49,68 @@ class PropertyDeal extends React.Component {
 		} else {
 			seasons.push(value);
 		}
-		this.setState({ seasons, currentStep: 1, rights: [] });
+		this.setState({
+			seasons,
+			currentStep: 1,
+			rights: [],
+		});
 	};
 
 	onSelectAllSeasons = () => {
 		const { property: { seasons } } = this.props;
-		this.setState({ seasons, currentStep: 1, rights: [] });
+		this.setState({
+			seasons,
+			currentStep: 1,
+			rights: [],
+		});
 	};
 
 	onUnSelectAllSeasons = () => {
-		this.setState({ seasons: [], currentStep: 1, rights: [] });
+		this.setState({
+			seasons: [],
+			currentStep: 1,
+			rights: [],
+		});
 	};
 
 	onSelectAllRights = () => {
 		const { property: { rights }, countries } = this.props;
 		const newRights = rights.map(element => Object.assign({}, element, { dealExclusive: null }));
-		this.setState({ rights: newRights, currentStep: 2, territories: countries });
+		this.setState({
+			rights: newRights,
+			currentStep: 2,
+			territories: countries,
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+		});
 	};
 
 	onUnSelectAllRights = () => {
-		this.setState({ rights: [], currentStep: 2, territories: countries });
+		const { countries } = this.props;
+		this.setState({
+			rights: [],
+			currentStep: 2,
+			territories: countries,
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+		});
 	};
 
 	onExclusive = (right, dealExclusive) => {
 		let { rights } = this.state;
+		const { countries } = this.props;
 		rights = rights.filter(element => element.id !== right.id);
 		const newValue = Object.assign({}, right, { dealExclusive });
 		rights.push(newValue);
-		this.setState({ rights, currentStep: 2, territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE });
+		this.setState({
+			rights,
+			currentStep: 2,
+			territories: countries,
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+		});
 	};
 
 	onSelectRight = (value) => {
 		let { rights } = this.state;
+		const { countries } = this.props;
 		const selectedRight = rights.find(element => element.id === value.id);
 		if (selectedRight) {
 			rights = rights.filter(element => element.id !== value.id);
@@ -88,15 +118,26 @@ class PropertyDeal extends React.Component {
 			const newValue = Object.assign({}, value, { dealExclusive: null });
 			rights.push(newValue);
 		}
-		this.setState({ rights, currentStep: 2, territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE });
+		this.setState({
+			rights,
+			currentStep: 2,
+			territories: countries,
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+		});
 	};
 
 	onSelectTerritories = (territories, territoriesMode) => {
-		this.setState({ territories, territoriesMode, currentStep: 3 });
+		this.setState({
+			territories,
+			territoriesMode,
+			currentStep: 3,
+		});
 	};
 
 	onNext = (step) => {
-		this.setState({ currentStep: step });
+		this.setState({
+			currentStep: step,
+		});
 	};
 
 	render() {
