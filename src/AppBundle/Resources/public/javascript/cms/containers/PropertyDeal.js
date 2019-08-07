@@ -115,57 +115,55 @@ class PropertyDeal extends React.Component {
 		return (
 			<div className="default-container no-title property property-deal">
 				<DefaultBox>
-					<div className="details-tab">
-						<CmsStepSelector
-							title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
-							button={<Translate i18nKey="CMS_DEALS_STEP1_BUTTON" />}
-							enableNextStep={seasonsValid}
-							onNext={() => this.onNext(2)}
-						>
-							<div className="select-item">
-								<button
-									type="button"
-									onClick={this.onSelectAllSeasons}
-									className="ca-btn link-button"
-								>
-									Select All
-								</button>
-								<button
-									type="button"
-									onClick={this.onUnSelectAllSeasons}
-									className="ca-btn link-button"
-								>
-									UnSelect All
-								</button>
-							</div>
-							<div className="d-flex">
-								{allSeasons.map((season) => {
-									const { endDate, startDate } = season;
-									let { year } = season;
-									if (!year) {
-										const startY = moment(startDate).format("YY");
-										const endY = moment(endDate).format("YY");
-										year = startY === endY ? `${endY}` : `${startY}/${endY}`;
-									}
-									const selectedSeason = seasons.find(element => element.id === season.id);
-									return (
-										<div key={season.id} className="season-item">
-											<input
-												type="checkbox"
-												value={!!selectedSeason}
-												checked={!!selectedSeason}
-												onChange={() => this.onChangeSeason(season)}
-												className="ca-checkbox blue"
-											/>
-											<label>
-												{`${year.split("/")[0].length === 2 ? "20" : ""}${year}`}
-											</label>
-										</div>
-									);
-								})}
-							</div>
-						</CmsStepSelector>
-					</div>
+					<CmsStepSelector
+						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
+						button={<Translate i18nKey="CMS_DEALS_STEP1_BUTTON" />}
+						enableNextStep={seasonsValid}
+						onNext={() => this.onNext(2)}
+					>
+						<div className="select-item">
+							<button
+								type="button"
+								onClick={this.onSelectAllSeasons}
+								className="ca-btn link-button"
+							>
+								Select All
+							</button>
+							<button
+								type="button"
+								onClick={this.onUnSelectAllSeasons}
+								className="ca-btn link-button"
+							>
+								UnSelect All
+							</button>
+						</div>
+						<div className="d-flex">
+							{allSeasons.map((season) => {
+								const { endDate, startDate } = season;
+								let { year } = season;
+								if (!year) {
+									const startY = moment(startDate).format("YY");
+									const endY = moment(endDate).format("YY");
+									year = startY === endY ? `${endY}` : `${startY}/${endY}`;
+								}
+								const selectedSeason = seasons.find(element => element.id === season.id);
+								return (
+									<div key={season.id} className="season-item">
+										<input
+											type="checkbox"
+											value={!!selectedSeason}
+											checked={!!selectedSeason}
+											onChange={() => this.onChangeSeason(season)}
+											className="ca-checkbox blue"
+										/>
+										<label>
+											{`${year.split("/")[0].length === 2 ? "20" : ""}${year}`}
+										</label>
+									</div>
+								);
+							})}
+						</div>
+					</CmsStepSelector>
 
 					{(seasonsValid && currentStep > 1) && (
 						<CmsStepSelector
