@@ -1112,54 +1112,60 @@
         margin-top: 0;
       }
 	}
-	.details-tab {
-	  display: flex;
-	  flex-wrap: wrap;
-	  margin-bottom: 30px;
+  }
 
-      &-element {
-        width: 100%;
-        margin: 10px;
+  .details-tab {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
 
-        &__title {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          padding-bottom: 20px;
-          border-bottom: 2px solid $grey-color;
-          font-size: 20px;
-          cursor: pointer;
+    &-element {
+      width: 100%;
+      margin: 10px;
 
-          i {
-            color: $grey-color;
-          }
+      &__title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 2px solid $grey-color;
+        font-size: 20px;
+        cursor: pointer;
 
-          span {
-            margin-left: 10px;
-          }
+        &.no-border {
+          border: 0;
         }
 
-        &__content {
-          width: 100%;
-          padding: 20px;
+        i {
+          color: $grey-color;
+        }
+
+        span {
+          margin-left: 10px;
         }
       }
 
-	  .tab{
-	    color: $property-blue;
-	    padding-right: 25px;
-		transition: 0.3s;
+      &__content {
+        width: 100%;
+        padding: 20px;
+      }
+    }
 
-		&:hover{
-		  color: #00aadd;
-		  cursor: pointer;
-		}
-		&:last-child{ padding-right: 0; }
-		&.active{ text-decoration: underline; }
+    .tab{
+      color: $property-blue;
+      padding-right: 25px;
+      transition: 0.3s;
 
-	  }
-	}
+      &:hover{
+        color: #00aadd;
+        cursor: pointer;
+      }
+      &:last-child{ padding-right: 0; }
+      &.active{ text-decoration: underline; }
+
+    }
   }
+
   .commercial-overview-tab {
     .manager-filter-container {
       margin-top: 10px;
@@ -1483,5 +1489,28 @@
   .property-listing-overview-wrapper {
     position: relative;
     margin-top: 2rem;
+  }
+
+  &.property-deal {
+    .season-item,
+    .select-item {
+      display: flex;
+      align-items: center;
+      margin: 0 40px 20px;
+
+      input {
+        margin: 0 10px 0 0;
+        width: 20px;
+      }
+    }
+
+    .right-selector {
+      margin: 0 10px 40px;
+
+      .right-selector-item {
+        flex: initial;
+        width: 45%;
+      }
+    }
   }
 }
