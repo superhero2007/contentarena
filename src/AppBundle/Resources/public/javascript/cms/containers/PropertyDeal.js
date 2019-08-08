@@ -9,6 +9,7 @@ import Translate from "@components/Translator/Translate";
 import CmsStepSelector from "../components/CmsStepSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import { BUNDLE_TERRITORIES_METHOD } from "@constants";
+import CmsDealTable from "../components/CmsDealTable";
 
 class PropertyDeal extends React.Component {
 	constructor(props) {
@@ -23,6 +24,7 @@ class PropertyDeal extends React.Component {
 			territories: props.countries,
 			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
 			currentStep: 1,
+			listings: [],
 		};
 	}
 
@@ -140,6 +142,10 @@ class PropertyDeal extends React.Component {
 		});
 	};
 
+	onSave = (listings) => {
+		this.setState({ listings });
+	};
+
 	render() {
 		const {
 			seasons,
@@ -246,7 +252,8 @@ class PropertyDeal extends React.Component {
 											<div className="right-name">
 												<input
 													type="checkbox"
-													checked={selectedRight}
+													value={!!selectedRight}
+													checked={!!selectedRight}
 													className="ca-checkbox blue"
 													onChange={() => this.onSelectRight(right)}
 													id={idAttr}
@@ -324,7 +331,12 @@ class PropertyDeal extends React.Component {
 					)}
 
 					{(territoriesValid && currentStep > 3) && (
-						<div>Table</div>
+						<CmsDealTable
+							seasons={seasons}
+							rights={rights}
+							territories={territories}
+							onSave={this.onSave}
+						/>
 					)}
 
 					<HorizontalButtonBox>

@@ -1512,5 +1512,73 @@
         width: 45%;
       }
     }
+
+    .property-listing-wrapper {
+      margin-bottom: 30px;
+      input {
+        height: 30px !important;
+      }
+    }
+
+    .custom-selector {
+      label {
+        display: none !important;
+      }
+    }
+
+    .overflow-initial {
+      overflow: initial;
+    }
+
+    .select-currency {
+      display: flex !important;
+      overflow: initial !important;
+      align-items: baseline;
+      border-bottom: 4px solid #D4D8DE;
+      margin-bottom: 20px;
+      padding-bottom: 3px;
+      position: relative;
+      max-width: 515px;
+
+      .select-text {
+        display: none;
+      }
+
+      .currency-selector {
+        width: 100%;
+
+        .current {
+          padding: 4px 16px 3px;
+          width: 100%;
+          border: 1px solid #DADADA;
+          text-align: right;
+          i {
+            margin-left: 10px;
+          }
+        }
+
+        .dropdown {
+          right: 0;
+          position: absolute;
+          top: 27px;
+          display: none;
+          width: 100%;
+          z-index: 1;
+
+          .currency-item {
+            padding: 5px 5px 5px 0;
+            color: #000;
+            background: #FFFFFF;
+            border: 1px solid #DADADA;
+            text-align: center;
+            cursor: pointer;
+          }
+        }
+
+        &:hover > .dropdown {
+          display: block;
+        }
+      }
+    }
   }
 }

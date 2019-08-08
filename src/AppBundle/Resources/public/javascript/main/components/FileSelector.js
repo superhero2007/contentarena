@@ -11,6 +11,7 @@ const FileItem = ({ item, onClick }) => (
 		padding: 10,
 		marginTop: 5,
 		cursor: "normal",
+		position: "relative",
 	}}
 	>
 		{item.name}
