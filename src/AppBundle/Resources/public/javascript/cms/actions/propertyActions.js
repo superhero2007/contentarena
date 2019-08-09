@@ -1,6 +1,6 @@
 import { propertyTypes } from "../reducers/property";
 import { propertyDetailsTypes } from "../reducers/propertyDetails";
-import RightDefaults from "../../sell/components/RightDefaults";
+import RightDetailsDefault from "../../common/RightDetailsDefault";
 import api from "../../api";
 
 export const setConfig = config => ({
@@ -119,6 +119,12 @@ export const fetchPropertyFail = error => ({
 	error,
 });
 
+export const updateRightDetails = (key, value) => (dispatch, getState) => {
+	dispatch(updateSinglePropertyByKeyValue(key, value));
+	const property = getState().propertyDetails.property;
+	dispatch(updateProperty(property));
+};
+
 export const updateSinglePropertyByKeyValue = (key, value) => ({
 	type: propertyDetailsTypes.UPDATE_SINGLE_PROPERTY,
 	key,
@@ -192,7 +198,7 @@ export const fetchPropertyDetails = propertyId => async (dispatch) => {
 	try {
 		const { data: { property } } = await api.properties.fetchProperty({ propertyId });
 		for (const value of property.rights) {
-			value.selectedRights = Object.assign({}, RightDefaults);
+			if (!value.details) value.details = Object.assign({}, RightDetailsDefault);
 		}
 		dispatch(fetchPropertySuccess(property));
 		return property;
@@ -219,9 +225,6 @@ export const updateProperty = updatedProperty => async (dispatch) => {
 	dispatch(updatePropertyRequest());
 	try {
 		const { data: { property } } = await api.properties.updateProperty({ property: updatedProperty });
-		for (const value of property.rights) {
-			value.selectedRights = Object.assign({}, RightDefaults);
-		}
 		dispatch(updatePropertySuccess(property));
 		return property;
 	} catch (error) {
@@ -285,21 +288,26 @@ export const deleteProgramFail = error => ({
 	error,
 });
 
-export const createProgram = program => async (dispatch) => {
+export const createProgram = program => async (dispatch, getState) => {
 	dispatch(createProgramRequest());
 	try {
 		// const { data: { program } } = await api.properties.createProgram({ program });
+
 		dispatch(createProgramSuccess(program));
+		const property = getState().propertyDetails.property;
+		dispatch(updateProperty(property));
 	} catch (error) {
 		dispatch(createProgramFail(error));
 	}
 };
 
-export const updateProgram = program => async (dispatch) => {
+export const updateProgram = program => async (dispatch, getState) => {
 	dispatch(updateProgramRequest());
 	try {
 		// const { data: { program } } = await api.properties.updateProgram({ program });
 		dispatch(updateProgramSuccess(program));
+		const property = getState().propertyDetails.property;
+		dispatch(updateProperty(property));
 	} catch (error) {
 		dispatch(updateProgramFail(error));
 	}
@@ -316,11 +324,13 @@ export const getPrograms = () => async (dispatch) => {
 	}
 };
 
-export const deleteProgram = customId => async (dispatch) => {
+export const deleteProgram = customId => async (dispatch, getState) => {
 	dispatch(deleteProgramRequest());
 	try {
 		// const { data: { program } } = await api.properties.deleteProgram({ customId });
 		dispatch(deleteProgramSuccess(customId));
+		const property = getState().propertyDetails.property;
+		dispatch(updateProperty(property));
 	} catch (error) {
 		dispatch(deleteProgramFail(error));
 	}

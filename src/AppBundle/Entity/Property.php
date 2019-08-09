@@ -164,8 +164,13 @@ class Property implements NotifiableInterface
     private $declinedBids;
 
     /**
-     * @var array
-     * @Groups({"property", "propertyList"})
+     * @Serializer\Type("array<AppBundle\Entity\EditedProgram>")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\EditedProgram",cascade={"persist"})
+     * @ORM\JoinTable(name="property_edited_programs",
+     *      joinColumns={@ORM\JoinColumn(name="property_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="property_edited_program_id", referencedColumnName="id")}
+     *      )
+     * @Groups({"property"})
      */
     private $programs;
 

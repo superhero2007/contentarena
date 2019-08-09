@@ -21,7 +21,6 @@ export const getPropertyName = (property) => {
 
 const getRightCell = (props, shortLabel) => {
 	const { value } = props;
-	console.log(value);
 	const right = value.find(right => right.shortLabel === shortLabel);
 
 	if (right) {

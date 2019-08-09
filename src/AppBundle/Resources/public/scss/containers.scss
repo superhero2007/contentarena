@@ -272,12 +272,13 @@
       button{
         font-size: 18px;
         font-weight: 600;
-        line-height: 46px;
         border-radius: 5px;
         height: 68px;
         width: 290px;
         margin: 50px 10px 20px 10px;
         align-items: center;
+        justify-content: center;
+        display: flex;
       }
 
       div {

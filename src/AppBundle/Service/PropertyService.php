@@ -13,6 +13,7 @@ use AppBundle\Entity\Season;
 use AppBundle\Entity\User;
 use AppBundle\Enum\BidStatusEnum;
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\Serializer;
 
 class PropertyService
 {
@@ -28,12 +29,15 @@ class PropertyService
 
     private $bidService;
 
+    private $serializer;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         RandomIdGenerator $idGenerator,
         FileUploader $fileUploader,
         ContentService $contentService,
-        BidService $bidService
+        BidService $bidService,
+        Serializer $serializer
 
     ) {
         $this->em = $entityManager;
@@ -42,6 +46,7 @@ class PropertyService
         $this->repo = $this->em->getRepository("AppBundle:Property");
         $this->contentService = $contentService;
         $this->bidService = $bidService;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -173,7 +178,6 @@ class PropertyService
         $property->setClosedBids($totalClosedBids);
         $property->setOpenBids($totalOpenBids);
         $property->setDeclinedBids($totalDeclinedBids);
-        $property->setPrograms([]);
         return $property;
     }
 
@@ -221,6 +225,13 @@ class PropertyService
         }
         if (isset($data['description'])) {
             $property->setDescription($data['description']);
+        }
+        if (isset($data['rights'])) {
+            $property->setRights($this->serializer->deserialize( json_encode($data['rights']), "array<AppBundle\Entity\PropertyRight>", "json"));
+        }
+
+        if (isset($data['programs'])) {
+            $property->setPrograms($this->serializer->deserialize( json_encode($data['programs']), "array<AppBundle\Entity\EditedProgram>", "json"));
         }
         $this->em->persist($property);
         $this->em->flush();

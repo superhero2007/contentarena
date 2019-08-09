@@ -68,6 +68,14 @@ class PropertyRight
     private $exclusive;
 
     /**
+     * @var object
+     * @Serializer\Type("JsObject")
+     * @ORM\Column(name="details", type="object", nullable=true)
+     * @Groups({"property", "propertyList"})
+     */
+    private $details;
+
+    /**
      * @return string
      */
     public function getName()
@@ -157,5 +165,23 @@ class PropertyRight
     {
         return $this->id;
     }
+
+    /**
+     * @return object
+     */
+    public function getDetails()
+    {
+        return $this->details;
+    }
+
+    /**
+     * @param object $details
+     */
+    public function setDetails($details)
+    {
+        $this->details = $details;
+    }
+
+
 }
 

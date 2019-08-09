@@ -1,4 +1,4 @@
-const RightDefaults = {
+const RightDetailsDefault = {
 	CUTS: "CUT_AVAILABLE_NO",
 	BROADCASTING: "BROADCASTING_NO",
 	SUBLICENSE: "SUBLICENSE_YES_APPROVAL",
@@ -32,4 +32,4 @@ const RightDefaults = {
 	}],
 };
 
-export default RightDefaults;
+export default RightDetailsDefault;

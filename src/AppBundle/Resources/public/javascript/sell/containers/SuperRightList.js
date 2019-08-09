@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
-import RightDefaults from "../components/RightDefaults";
+import RightDetailsDefault from "../../common/RightDetailsDefault";
 import { updateContentValue } from "../actions/contentActions";
 import { SuperRightDefinitions } from "../components/SuperRightDefinitions";
 import RightDefaultsBySuperRight from "../components/RightDefaultsBySuperRight";
@@ -66,7 +66,7 @@ class SuperRightList extends React.Component {
 	parsePackages(packages) {
 		return JSON.parse(packages)
 			.map((pItem) => {
-				pItem.selectedRights = Object.assign({}, RightDefaults);
+				pItem.selectedRights = Object.assign({}, RightDetailsDefault);
 				if (RightDefaultsBySuperRight[pItem.shortLabel] !== undefined) {
 					pItem.selectedRights = Object.assign({},
 						pItem.selectedRights,

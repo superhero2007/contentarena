@@ -2,6 +2,33 @@
 @import "mixins";
 
 .property{
+
+  select, input {
+    background-color: white;
+    border-radius: 0 !important;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+    height: 45px;
+    color: #666;
+    font-size: 13px;
+    font-family: $font-stack;
+  }
+
+  .Select {
+    .Select-control {
+      border-radius: 0;
+      .Select-placeholder{
+        color: #666;
+        font-size: 13px;
+        font-family: $font-stack;
+      }
+      .Select-value {
+        margin-left: 8px;
+        margin-top: 8px;
+      }
+    }
+  }
+
   .property-welcome-title{
     margin: 5px 20px 0;
   }
@@ -540,6 +567,7 @@
     border-top: 1px solid #ECECEC;
   }
   .listing-overview-tab{
+    @extend .property-tab;
     .manager-filter-container {
       margin-top: 10px;
       align-items: flex-start;
@@ -547,6 +575,25 @@
       .listing-filter {
         height: 100%;
         margin-right: 20px;
+
+        .Select {
+          width: 100%;
+
+          .Select-control {
+            border-radius: 0;
+            .Select-placeholder{
+              color: #666;
+              font-size: 13px;
+              font-family: $font-stack;
+            }
+            .Select-value {
+              margin-left: 0;
+              margin-top: 0;
+              color: #666;
+              font-size: 13px;
+            }
+          }
+        }
 
         .reset-listing-filter {
           width: 75px;
@@ -575,7 +622,7 @@
                     flex-wrap: nowrap;
 
                     input{
-                        color: lightgray;
+                        color: #666;
                         font-style: italic;
                         cursor: pointer;
 
@@ -795,6 +842,9 @@
         .sales-packages-filters {
           margin-top: -10px;
         }
+        .radio-selector-container{
+          margin-top: 15px;
+        }
 
         .country-selector {
           input[type="radio"] {
@@ -876,17 +926,17 @@
 
         .w-50 {
           width: 50%;
-          padding: 10px;
+          padding: 0 10px;
         }
 
         .w-66 {
           width: 66%;
-          padding: 10px;
+          padding: 0 10px;
         }
 
         .w-33 {
           width: 33%;
-          padding: 10px;
+          padding: 0 10px;
         }
 
         label {
@@ -931,12 +981,15 @@
             margin-bottom: 1rem;
           }
 
-          button {
+          .action {
             margin-right: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             text-decoration: none;
+            position: relative;
+            padding: 0px 10px 0px 0px;
+            width: 170px;
 
             img {
               max-width: 25px;
@@ -945,6 +998,10 @@
             }
           }
         }
+      }
+
+      h3 {
+        font-size: 15px !important;
       }
     }
 
@@ -1011,7 +1068,7 @@
         border: 0;
 
         .tab {
-          font-size: 18px;
+          font-size: 15px;
         }
       }
 
@@ -1128,9 +1185,12 @@
         justify-content: flex-start;
         align-items: center;
         padding-bottom: 20px;
-        border-bottom: 2px solid $grey-color;
-        font-size: 20px;
+        border-bottom: 1px solid $grey-color;
         cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 36px;
+        color: #333333;
 
         &.no-border {
           border: 0;
@@ -1166,7 +1226,54 @@
     }
   }
 
+  .property-tab{
+    h5 {
+      justify-content: left;
+    }
+    .manager-filter-container {
+      margin-top: 10px;
+      align-items: flex-start;
+      height: auto;
+      .listing-filter {
+        height: 100%;
+        margin-right: 20px;
+
+        .Select {
+          width: 100%;
+
+          .Select-control {
+            border-radius: 0;
+            .Select-placeholder{
+              color: #666;
+              font-size: 13px;
+              font-family: $font-stack;
+            }
+            .Select-value {
+              margin-left: 0;
+              margin-top: 0;
+              color: #666;
+              font-size: 13px;
+            }
+          }
+        }
+
+        .reset-listing-filter {
+          width: 75px;
+        }
+
+        &.territories-filter {
+          > * {
+            margin-left: 10px;
+          }
+          .ca-form-control {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
   .commercial-overview-tab {
+    @extend .property-tab;
     .manager-filter-container {
       margin-top: 10px;
       align-items: flex-start;
@@ -1191,6 +1298,7 @@
     }
   }
   .fixture-tab{
+    @extend .property-tab;
     button{
       height: 40px;
     }

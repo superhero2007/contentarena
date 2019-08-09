@@ -30,8 +30,8 @@ class PropertyRightsProductionModal extends Component {
 		this.props.onCloseModal();
 	};
 
-	isInputBtnChecked = (selectedRights, key, value) => {
-		const property = selectedRights[key];
+	isInputBtnChecked = (details, key, value) => {
+		const property = details[key];
 		const isArray = Array.isArray(property);
 
 		if (isArray) {
@@ -69,8 +69,8 @@ class PropertyRightsProductionModal extends Component {
 
 		for (const [key, right] of rights) {
 			for (const validItem of validations) {
-				const prop = right.selectedRights[validItem.key];
-				const propToCheck = right.selectedRights[validItem.keyToCheck];
+				const prop = right.details[validItem.key];
+				const propToCheck = right.details[validItem.keyToCheck];
 
 				if (prop === validItem.value && (!propToCheck || !this.isValid(propToCheck, validItem.type))) {
 					return true;
@@ -80,9 +80,9 @@ class PropertyRightsProductionModal extends Component {
 		return false;
 	};
 
-	handleChange = (value, selectedRights, key, id) => {
+	handleChange = (value, details, key, id) => {
 		const { rights } = this.state;
-		rights.get(id).selectedRights[key] = value;
+		rights.get(id).details[key] = value;
 
 		this.setState({ rights });
 	};
@@ -91,18 +91,18 @@ class PropertyRightsProductionModal extends Component {
 		const { rights } = this.state;
 
 		for (const [id, right] of rights) {
-			right.selectedRights[key] = value;
+			right.details[key] = value;
 		}
 
 		this.setState({ rights });
 	};
 
-	handleCheckboxBtnChange = (e, selectedRights, key, id) => {
+	handleCheckboxBtnChange = (e, details, key, id) => {
 		const { selectAllCheckbox } = this.props.config;
 		const { rights } = this.state;
 		const { value } = e.target;
 
-		let arr = rights.get(id).selectedRights[key];
+		let arr = rights.get(id).details[key];
 
 		if (selectAllCheckbox && selectAllCheckbox === value) {
 			arr = [value];
@@ -119,7 +119,7 @@ class PropertyRightsProductionModal extends Component {
 			}
 		}
 
-		rights.get(id).selectedRights[key] = arr;
+		rights.get(id).details[key] = arr;
 		this.setState({ rights });
 	};
 
@@ -131,7 +131,7 @@ class PropertyRightsProductionModal extends Component {
 
 		const { rights } = this.state;
 		const dedicatedRights = [...rights.values()]
-			.filter(item => item.selectedRights.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
+			.filter(item => item.details.CONTENT_DELIVERY === "CONTENT_DELIVERY_DEDICATED");
 
 		return dedicatedRights && dedicatedRights.length === 0 ? SuperRightProductionDetailsLabels.LT : label;
 	};
@@ -199,14 +199,14 @@ class PropertyRightsProductionModal extends Component {
 	};
 
 	getSmallLanguageSelector = (index, key, value, right) => {
-		const { selectedRights } = right;
-		const selectorValue = selectedRights[`${key}_LANGUAGES`];
+		const { details } = right;
+		const selectorValue = details[`${key}_LANGUAGES`];
 		return (
 			<LanguageSelector
 				placeholder={this.context.t("CL3_LANGUAGE_SELECTOR_PLACEHOLDER")}
 				onChange={(selectedValue) => {
-					this.handleChange(selectedValue, selectedRights, `${key}_LANGUAGES`, index);
-					this.handleChange(value, selectedRights, key, index);
+					this.handleChange(selectedValue, details, `${key}_LANGUAGES`, index);
+					this.handleChange(value, details, key, index);
 				}}
 				value={selectorValue}
 			/>
@@ -216,7 +216,7 @@ class PropertyRightsProductionModal extends Component {
 	getLanguageSelector = () => {
 		const listKey = "LICENSED_LANGUAGE_LIST";
 		const { rights } = this.state;
-		const selectorValue = rights.values().next().value.selectedRights[listKey];
+		const selectorValue = rights.values().next().value.details[listKey];
 		return (
 			<LanguageSelector
 				placeholder={this.context.t("CL3_LANGUAGE_SELECTOR_PLACEHOLDER")}
@@ -229,13 +229,13 @@ class PropertyRightsProductionModal extends Component {
 	};
 
 	getInputText = (index, key, right) => {
-		const { selectedRights } = right;
+		const { details } = right;
 		const inputKey = `${key}_TEXT`;
-		const value = selectedRights[inputKey];
+		const value = details[inputKey];
 		return (
 			<input
 				className="modal-input-text"
-				onChange={e => this.handleChange(e.target.value, selectedRights, inputKey, index)}
+				onChange={e => this.handleChange(e.target.value, details, inputKey, index)}
 				value={value}
 				type="text"
 			/>
@@ -243,12 +243,12 @@ class PropertyRightsProductionModal extends Component {
 	};
 
 	getInputNumber = (index, key, right) => {
-		const { selectedRights } = right;
-		const value = selectedRights[key];
+		const { details } = right;
+		const value = details[key];
 		return (
 			<input
 				className="modal-input-number"
-				onChange={e => this.handleChange(e.target.value, selectedRights, key, index)}
+				onChange={e => this.handleChange(e.target.value, details, key, index)}
 				value={value}
 				type="number"
 				max={100}
@@ -259,7 +259,7 @@ class PropertyRightsProductionModal extends Component {
 
 	getCheckboxButton = (key, value, right) => {
 		const name = `${right.code}_${key}`;
-		const { selectedRights, id } = right;
+		const { details, id } = right;
 
 		return (
 			<div key={`${right.code}-${value}-${id}`} className="row-item">
@@ -267,8 +267,8 @@ class PropertyRightsProductionModal extends Component {
 					type="checkbox"
 					className="ca-checkbox"
 					name={name}
-					checked={this.isInputBtnChecked(selectedRights, key, value)}
-					onChange={e => this.handleCheckboxBtnChange(e, selectedRights, key, id)}
+					checked={this.isInputBtnChecked(details, key, value)}
+					onChange={e => this.handleCheckboxBtnChange(e, details, key, id)}
 					value={value}
 				/>
 			</div>
@@ -276,13 +276,13 @@ class PropertyRightsProductionModal extends Component {
 	};
 
 	getDeliverySelector = (index, key, value, right) => {
-		const selectValue = right.selectedRights.CONTENT_DELIVERY_NA;
-		const { selectedRights } = right;
+		const selectValue = right.details.CONTENT_DELIVERY_NA;
+		const { details } = right;
 		return (
 			<select
 				className="modal-select"
 				value={selectValue}
-				onChange={(e) => { this.handleChange(e.target.value, selectedRights, "CONTENT_DELIVERY_NA", index); }}
+				onChange={(e) => { this.handleChange(e.target.value, details, "CONTENT_DELIVERY_NA", index); }}
 			>
 				<option disabled>Select</option>
 				<option value="CONTENT_DELIVERY_NA_DEDICATED">dedicated delivery</option>
@@ -292,7 +292,7 @@ class PropertyRightsProductionModal extends Component {
 	};
 
 	getRadioButton = (key, value, right) => {
-		const { selectedRights, id } = right;
+		const { details, id } = right;
 		const name = `${right.code}_${key}`;
 
 		return (
@@ -302,8 +302,8 @@ class PropertyRightsProductionModal extends Component {
 					className="ca-radio"
 					name={name}
 					disabled={this.isInputDisabled(right, value)}
-					checked={this.isInputBtnChecked(selectedRights, key, value)}
-					onChange={e => this.handleChange(e.target.value, selectedRights, key, id)}
+					checked={this.isInputBtnChecked(details, key, value)}
+					onChange={e => this.handleChange(e.target.value, details, key, id)}
 					value={value}
 				/>
 
@@ -365,8 +365,6 @@ class PropertyRightsProductionModal extends Component {
 		const firstRight = this.state.rights.values().next().value;
 		const isDisabled = this.isApplyDisabled();
 
-		console.log(this);
-
 		return (
 			<Modal isOpen={isOpen} className="modal-wrapper rights-production" style={GenericModalStyle} onRequestClose={onCloseModal}>
 				<header className="modal-header">
@@ -393,7 +391,7 @@ class PropertyRightsProductionModal extends Component {
 							className={cn({ required: this.isRequiredTextarea(isDisabled) })}
 							placeholder={this.context.t(textAreaLabelKey)}
 							onChange={e => this.handleChangeInAllRights(e.target.value, `${key}_TEXTAREA`)}
-							value={firstRight.selectedRights[`${key}_TEXTAREA`]}
+							value={firstRight.details[`${key}_TEXTAREA`]}
 						/>
 					</div>
 					{technicalFee && (
@@ -401,7 +399,7 @@ class PropertyRightsProductionModal extends Component {
 							<div>Technical fee</div>
 							<p>
 								<input
-									defaultChecked={firstRight.selectedRights.TECHNICAL_FEE === "INCLUDED"}
+									defaultChecked={firstRight.details.TECHNICAL_FEE === "INCLUDED"}
 									type="radio"
 									className="ca-radio"
 									value="INCLUDED"
@@ -413,7 +411,7 @@ class PropertyRightsProductionModal extends Component {
 							</p>
 							<p>
 								<input
-									checked={firstRight.selectedRights.TECHNICAL_FEE === "ON_TOP"}
+									checked={firstRight.details.TECHNICAL_FEE === "ON_TOP"}
 									type="radio"
 									className="ca-radio"
 									value="ON_TOP"
@@ -424,7 +422,7 @@ class PropertyRightsProductionModal extends Component {
 								<label htmlFor="ON_TOP">{" "} <Translate i18nKey="CL_STEP3_POPUP_TECHNICAL_FEE_2" /></label>
 								<input
 									onChange={e => this.handleChangeInAllRights(e.target.value, "TECHNICAL_FEE_PERCENTAGE")}
-									value={firstRight.selectedRights.TECHNICAL_FEE_PERCENTAGE}
+									value={firstRight.details.TECHNICAL_FEE_PERCENTAGE}
 									type="number"
 									max={100}
 									min={0}

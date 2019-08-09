@@ -27,7 +27,7 @@ class Property extends React.Component {
 	getTranslatedTabs = () => ({
 		[CMS_PROPERTY_TABS.COMMERCIAL]: <Translate i18nKey="CMS_PROPERTY_TAB_COMMERCIAL" />,
 		[CMS_PROPERTY_TABS.RIGHTS]: <Translate i18nKey="CMS_PROPERTY_TAB_RIGHTS" />,
-		[CMS_PROPERTY_TABS.EDITED_PROGRAM]: <Translate i18nKey="CMS_PROPERTY_TAB_EDITED_PROGRAM" />,
+		/* [CMS_PROPERTY_TABS.EDITED_PROGRAM]: <Translate i18nKey="CMS_PROPERTY_TAB_EDITED_PROGRAM" />, */
 		[CMS_PROPERTY_TABS.FIXTURES]: <Translate i18nKey="CMS_PROPERTY_TAB_FIXTURES" />,
 		[CMS_PROPERTY_TABS.LISTING]: <Translate i18nKey="CMS_PROPERTY_TAB_LISTING" />,
 		[CMS_PROPERTY_TABS.DETAILS]: <Translate i18nKey="CMS_PROPERTY_TAB_DETAILS" />,
@@ -142,7 +142,7 @@ class Property extends React.Component {
 					</div>
 
 					{tab === CMS_PROPERTY_TABS.RIGHTS && <RightsOverview />}
-					{tab === CMS_PROPERTY_TABS.EDITED_PROGRAM && <CmsEditedProgram history={history} />}
+					{/* {tab === CMS_PROPERTY_TABS.EDITED_PROGRAM && <CmsEditedProgram history={history} />} */}
 					{tab === CMS_PROPERTY_TABS.FIXTURES && <CmsFixtures />}
 					{tab === CMS_PROPERTY_TABS.COMMERCIAL
 						&& (

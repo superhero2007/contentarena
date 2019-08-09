@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 
@@ -17,21 +18,22 @@ class CmsEditedProgramDetail extends Component {
 		for (let i = 0; i < 81; i++) {
 			years.push(startYear - i);
 		}
+		const territoriesMode = props.program.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
 		this.state = {
 			years,
-			programName: props.program.name || "",
-			programEpisode: props.program.episode || "",
-			programYear: props.program.year || "",
-			programType: props.program.type || "",
-			programDuration: props.program.duration || "",
-			programDescription: props.program.description || "",
-			programLanguages: props.program.languages || [],
-			programSubtitles: props.program.subtitles || [],
-			programScripts: props.program.scripts || [],
-			editProgramDescriptionOptional: props.program.editProgramDescriptionOptional || true,
-			exclusively: props.program.exclusively || false,
-			territories: props.program.territories || [],
-			territoriesMode: props.program.territoriesMode || BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			name: props.program.name || "",
+			episodes: props.program.episodes || "",
+			releaseYear: props.program.releaseYear || "",
+			type: props.program.type || "",
+			episodeDuration: props.program.episodeDuration || "",
+			description: props.program.description || "",
+			languages: props.program.languages || [],
+			subtitles: props.program.subtitles || [],
+			scripts: props.program.scripts || [],
+			similarEpisodesLength: props.program.similarEpisodesLength || true,
+			exclusive: props.program.exclusive || false,
+			territories: territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE ? props.countries : (props.program.territories || []),
+			territoriesMode,
 		};
 	}
 
@@ -41,34 +43,34 @@ class CmsEditedProgramDetail extends Component {
 
 	save = () => {
 		const {
-			programName,
-			programEpisode,
-			programYear,
-			programType,
-			programDuration,
-			programDescription,
-			programLanguages,
-			programSubtitles,
-			programScripts,
-			editProgramDescriptionOptional,
-			exclusively,
+			name,
+			episodes,
+			releaseYear,
+			type,
+			episodeDuration,
+			description,
+			languages,
+			subtitles,
+			scripts,
+			similarEpisodesLength,
+			exclusive,
 			territories,
 			territoriesMode,
 		} = this.state;
 		const { onSave } = this.props;
 		if (onSave) {
 			onSave({
-				name: programName,
-				episode: programEpisode,
-				year: programYear,
-				type: programType,
-				duration: programDuration,
-				description: programDescription,
-				languages: programLanguages,
-				subtitles: programSubtitles,
-				scripts: programScripts,
-				editProgramDescriptionOptional,
-				exclusively,
+				name,
+				episodes,
+				releaseYear,
+				type,
+				episodeDuration,
+				description,
+				languages,
+				subtitles,
+				scripts,
+				similarEpisodesLength,
+				exclusive,
 				territories,
 				territoriesMode,
 			});
@@ -77,26 +79,26 @@ class CmsEditedProgramDetail extends Component {
 
 	getTooltipMessages = () => {
 		const {
-			programName,
-			programEpisode,
-			programType,
-			programDuration,
-			programDescription,
+			name,
+			episodes,
+			type,
+			episodeDuration,
+			description,
 		} = this.state;
 		let message = "";
-		if (!programName) {
+		if (!name) {
 			message += "<br/>-  Enter program name.";
 		}
-		if (!programDescription) {
+		if (!description) {
 			message += "<br/>-  Enter program description.";
 		}
-		if (!programType) {
+		if (!type) {
 			message += "<br/>-  Enter program type.";
 		}
-		if (!programEpisode) {
+		if (!episodes) {
 			message += "<br/>-  Enter program type.";
 		}
-		if (!programDuration) {
+		if (!episodeDuration) {
 			message += "<br/>-  Enter program duration.";
 		}
 		if (message.length) {
@@ -111,17 +113,17 @@ class CmsEditedProgramDetail extends Component {
 
 	render() {
 		const {
-			programName,
-			programEpisode,
-			programYear,
-			programType,
-			programDuration,
-			programDescription,
-			programSubtitles,
-			programScripts,
-			programLanguages,
-			editProgramDescriptionOptional,
-			exclusively,
+			name,
+			episodes,
+			releaseYear,
+			type,
+			episodeDuration,
+			description,
+			subtitles,
+			scripts,
+			languages,
+			similarEpisodesLength,
+			exclusive,
 			territoriesMode,
 			territories,
 		} = this.state;
@@ -137,9 +139,9 @@ class CmsEditedProgramDetail extends Component {
 								</label>
 								<input
 									type="text"
-									value={programName}
+									value={name}
 									onChange={(e) => {
-										this.updateContentValue("programName", e.target.value);
+										this.updateContentValue("name", e.target.value);
 									}}
 								/>
 							</div>
@@ -150,9 +152,9 @@ class CmsEditedProgramDetail extends Component {
 										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_TYPE" />
 									</label>
 									<select
-										value={programType}
+										value={type}
 										onChange={(e) => {
-											this.updateContentValue("programType", e.target.value);
+											this.updateContentValue("type", e.target.value);
 										}}
 									>
 										<option value="">Select</option>
@@ -169,9 +171,9 @@ class CmsEditedProgramDetail extends Component {
 										<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_YEAR" />
 									</label>
 									<select
-										value={programYear}
+										value={releaseYear}
 										onChange={(e) => {
-											this.updateContentValue("programYear", e.target.value);
+											this.updateContentValue("releaseYear", e.target.value);
 										}}
 									>
 										<option value="Year">Year</option>
@@ -187,9 +189,9 @@ class CmsEditedProgramDetail extends Component {
 									<Translate i18nKey="CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION" />
 								</label>
 								<textarea
-									value={programDescription}
+									value={description}
 									onChange={(e) => {
-										this.updateContentValue("programDescription", e.target.value);
+										this.updateContentValue("description", e.target.value);
 									}}
 									placeholder={this.context.t("CMS_PROPERTY_DETAILS_TAB_EDIT_PROGRAM_DESCRIPTION_PLACEHOLDER")}
 								/>
@@ -197,7 +199,7 @@ class CmsEditedProgramDetail extends Component {
 						</div>
 					</div>
 
-					<div className="row">
+					<div className="row" style={{ marginBottom: 30 }}>
 						<div className="row w-50">
 							<div className="w-33">
 								<div className="modal-input">
@@ -206,9 +208,9 @@ class CmsEditedProgramDetail extends Component {
 									</label>
 									<input
 										type="number"
-										value={programEpisode}
+										value={episodes}
 										onChange={(e) => {
-											this.updateContentValue("programEpisode", Number(e.target.value));
+											this.updateContentValue("episodes", Number(e.target.value));
 										}}
 									/>
 								</div>
@@ -220,9 +222,9 @@ class CmsEditedProgramDetail extends Component {
 									</label>
 									<input
 										type="number"
-										value={programDuration}
+										value={episodeDuration}
 										onChange={(e) => {
-											this.updateContentValue("programDuration", Number(e.target.value));
+											this.updateContentValue("episodeDuration", Number(e.target.value));
 										}}
 									/>
 								</div>
@@ -236,9 +238,9 @@ class CmsEditedProgramDetail extends Component {
 									<div className="radio-box">
 										<input
 											type="radio"
-											checked={editProgramDescriptionOptional}
+											checked={similarEpisodesLength}
 											onChange={() => {
-												this.updateContentValue("editProgramDescriptionOptional", true);
+												this.updateContentValue("similarEpisodesLength", true);
 											}}
 											id="edit-program-optional"
 											className="ca-radio package-selector"
@@ -246,9 +248,9 @@ class CmsEditedProgramDetail extends Component {
 										<label htmlFor="edit-program-optional"><Translate i18nKey="Yes" /></label>
 										<input
 											type="radio"
-											checked={!editProgramDescriptionOptional}
+											checked={!similarEpisodesLength}
 											onChange={() => {
-												this.updateContentValue("editProgramDescriptionOptional", false);
+												this.updateContentValue("similarEpisodesLength", false);
 											}}
 											id="edit-program"
 											className="ca-radio package-selector"
@@ -268,9 +270,9 @@ class CmsEditedProgramDetail extends Component {
 							</label>
 							<div className="select">
 								<LanguageSelector
-									value={programLanguages}
+									value={languages}
 									onChange={(value) => {
-										this.updateContentValue("programLanguages", value);
+										this.updateContentValue("languages", value);
 									}}
 								/>
 							</div>
@@ -282,9 +284,9 @@ class CmsEditedProgramDetail extends Component {
 							</label>
 							<div className="select">
 								<LanguageSelector
-									value={programSubtitles}
+									value={subtitles}
 									onChange={(value) => {
-										this.updateContentValue("programSubtitles", value);
+										this.updateContentValue("subtitles", value);
 									}}
 								/>
 							</div>
@@ -296,9 +298,9 @@ class CmsEditedProgramDetail extends Component {
 							</label>
 							<div className="select">
 								<LanguageSelector
-									value={programScripts}
+									value={scripts}
 									onChange={(value) => {
-										this.updateContentValue("programScripts", value);
+										this.updateContentValue("scripts", value);
 									}}
 								/>
 							</div>
@@ -313,24 +315,24 @@ class CmsEditedProgramDetail extends Component {
 							<div className="radio-box">
 								<input
 									type="radio"
-									checked={exclusively}
+									checked={exclusive}
 									onChange={() => {
-										this.updateContentValue("exclusively", true);
+										this.updateContentValue("exclusive", true);
 									}}
-									id="exclusively"
+									id="exclusive"
 									className="ca-radio package-selector"
 								/>
-								<label htmlFor="exclusively"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE" /></label>
+								<label htmlFor="exclusive"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_EXCLUSIVE" /></label>
 								<input
 									type="radio"
-									checked={!exclusively}
+									checked={!exclusive}
 									onChange={() => {
-										this.updateContentValue("exclusively", false);
+										this.updateContentValue("exclusive", false);
 									}}
-									id="non-exclusively"
+									id="non-exclusive"
 									className="ca-radio package-selector"
 								/>
-								<label htmlFor="non-exclusively"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" /></label>
+								<label htmlFor="non-exclusive"><Translate i18nKey="MARKETPLACE_RIGHTS_LABEL_NON_EXCLUSIVE" /></label>
 							</div>
 						</div>
 					</div>
@@ -384,4 +386,11 @@ CmsEditedProgramDetail.contextTypes = {
 	t: PropTypes.func.isRequired,
 };
 
-export default CmsEditedProgramDetail;
+const mapStateToProps = state => ({
+	countries: state.property.countries,
+});
+
+export default connect(
+	mapStateToProps,
+	null,
+)(CmsEditedProgramDetail);

@@ -1,5 +1,3 @@
-import RightDefaults from "./RightDefaults";
-
 const RightDefaultsBySuperRight = {
 	LT: {
 		CONTENT_DELIVERY: "CONTENT_DELIVERY_LIVE",

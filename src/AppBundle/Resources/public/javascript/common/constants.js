@@ -32,7 +32,7 @@ export const RIGHT_STATUS = {
 
 export const CMS_PROPERTY_TABS = {
 	RIGHTS: "rightsoverview",
-	EDITED_PROGRAM: "editedprogram",
+	// EDITED_PROGRAM: "editedprogram",
 	FIXTURES: "fixtures",
 	COMMERCIAL: "commercialoverview",
 	LISTING: "listingoverview",

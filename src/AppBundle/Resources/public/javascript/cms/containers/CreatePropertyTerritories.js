@@ -19,6 +19,7 @@ import { ROUTE_PATHS, BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS } from "@cons
 import CmsAvailableRightsSelector from "../components/CmsAvailableRightsSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
 import api from "../../api";
+import RightDetailsDefault from "../../common/RightDetailsDefault";
 
 class CreatePropertyTerritories extends React.Component {
 	constructor(props) {
@@ -131,6 +132,11 @@ class CreatePropertyTerritories extends React.Component {
 			property,
 			resetProperty,
 		} = this.props;
+		const {
+			rights,
+		} = property;
+
+		rights.forEach(rigth => rigth.details = RightDetailsDefault);
 
 		this.setState({ savingProperty: true });
 
@@ -140,7 +146,7 @@ class CreatePropertyTerritories extends React.Component {
 				sportCategory: property.sportCategory,
 				tournament: property.tournament,
 				seasons: property.seasons,
-				rights: property.rights,
+				rights,
 			},
 		})
 			.then((response) => {
