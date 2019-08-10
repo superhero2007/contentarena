@@ -8,11 +8,29 @@ import FileSelector from "../../main/components/FileSelector";
 class CmsDealTable extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			loading: false,
+			listings: [],
+		};
+	}
+
+	componentDidMount() {
+		this.updateListing();
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.updateListing(newProps);
+	}
+
+	updateListing = (newProps) => {
+		const props = newProps || this.props;
 		const { seasons, rights, territories } = props;
 		const listings = [];
-		territories.forEach((territory) => {
+		territories.forEach((territory, index) => {
 			listings.push({
-				territory,
+				index,
+				territory: territory.territories,
 				company: "",
 				seasons,
 				currency: "",
@@ -21,13 +39,13 @@ class CmsDealTable extends React.Component {
 				type: true,
 			});
 		});
+		listings.splice(-1, 1);
 
-		this.state = {
-			loading: false,
+		this.setState({
 			listings,
-		};
-		props.onSave(listings);
-	}
+		});
+		// props.onSave(listings);
+	};
 
 	addFile = (index, response) => {
 		const { listings } = this.state;
@@ -41,7 +59,7 @@ class CmsDealTable extends React.Component {
 		});
 		listings.splice(index, 1, replaced);
 		this.setState({ listings });
-		onSave(listings);
+		// onSave(listings);
 	};
 
 	removeFile = (index, fileIndex) => {
@@ -51,7 +69,7 @@ class CmsDealTable extends React.Component {
 		selected.attachments.splice(fileIndex, 1);
 		listings.splice(index, 1, selected);
 		this.setState({ listings });
-		onSave(listings);
+		// onSave(listings);
 	};
 
 	updateContent = (index) => {
@@ -65,8 +83,8 @@ class CmsDealTable extends React.Component {
 			}));
 			listings.splice(index, 1, ...replaced);
 		} else {
-			const selectedList = listings.filter(element => element.territory.id === selected.territory.id);
-			const selectedItem = listings.find(element => element.territory.id === selected.territory.id);
+			const selectedList = listings.filter(element => element.index === selected.index);
+			const selectedItem = listings.find(element => element.index === selected.index);
 			const selectedIndex = listings.indexOf(selectedItem);
 			const replaced = Object.assign({}, selected, {
 				seasons: selectedList.map(element => element.seasons[0]),
@@ -75,7 +93,7 @@ class CmsDealTable extends React.Component {
 			listings.splice(selectedIndex, selectedList.length, replaced);
 		}
 		this.setState({ listings });
-		onSave(listings);
+		// onSave(listings);
 	};
 
 	updateValue = (index, key, value) => {
@@ -87,11 +105,11 @@ class CmsDealTable extends React.Component {
 		});
 		listings.splice(index, 1, replaced);
 		this.setState({ listings });
-		onSave(listings);
+		// onSave(listings);
 	};
 
 	getTitleColumns = () => [{
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_ID" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_TERRITORY" />,
 		id: props => `territory-name-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
@@ -99,11 +117,11 @@ class CmsDealTable extends React.Component {
 		width: 200,
 		Cell: props => (
 			<span>
-				{props.value.name}
+				{props.value.map(element => element.name).join(", ")}
 			</span>
 		),
 	}, {
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LISTING" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_COMPANY" />,
 		id: props => `company-name-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header",
@@ -118,7 +136,7 @@ class CmsDealTable extends React.Component {
 	}];
 
 	getDetailColumns = () => [{
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_TERRITORY" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_SEASON" />,
 		id: props => `season-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
@@ -130,7 +148,7 @@ class CmsDealTable extends React.Component {
 			</span>
 		),
 	}, {
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_LICENSE" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_CURRENCY" />,
 		id: props => `currency-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center overflow-initial",
@@ -140,7 +158,7 @@ class CmsDealTable extends React.Component {
 			<CurrencySelector onClick={value => this.updateValue(props.index, "currency", value)} selected={props.value} key={props.index} />
 		),
 	}, {
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_FEE" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_FEE" />,
 		id: props => `fee-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
@@ -154,7 +172,7 @@ class CmsDealTable extends React.Component {
 			/>
 		),
 	}, {
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_USER" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_ATTACHMENTS" />,
 		id: props => `attachments-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
@@ -174,14 +192,18 @@ class CmsDealTable extends React.Component {
 			/>
 		),
 	}, {
-		Header: () => <Translate i18nKey="CMS_COMMERCIAL_OVERVIEW_TABLE_HEADER_ACTION" />,
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_ACTION" />,
 		id: props => `split-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
 		width: 200,
 		accessor: "type",
 		Cell: props => (
-			<button className="standard-button" onClick={() => this.updateContent(props.index)}>
+			<button
+				className="standard-button"
+				onClick={() => this.updateContent(props.index)}
+				disabled={props.value && props.original.seasons.length < 2}
+			>
 				{props.value ? "Split" : "Remove"}
 			</button>
 		),
@@ -189,7 +211,7 @@ class CmsDealTable extends React.Component {
 
 	render() {
 		let { listings } = this.state;
-		listings = listings.sort((a, b) => a.territory.id - b.territory.id);
+		listings = listings.sort((a, b) => a.index - b.index);
 
 		const columns = [...this.getTitleColumns(), ...this.getDetailColumns()];
 
