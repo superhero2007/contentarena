@@ -1169,53 +1169,61 @@
         margin-top: 0;
       }
 	}
-	.details-tab {
-	  display: flex;
-	  flex-wrap: wrap;
-	  margin-bottom: 30px;
+  }
 
-      &-element {
-        width: 100%;
-        margin: 10px;
+  .details-tab {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
 
-        &__title {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          padding-bottom: 20px;
-          border-bottom: 1px solid $grey-color;
-          cursor: pointer;
-          font-weight: bold;
-          font-size: 16px;
-          line-height: 36px;
-          color: #333333;
+    &-element {
+      width: 100%;
+      margin: 10px;
 
-          i {
-            color: $grey-color;
-          }
+      &__title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid $grey-color;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 36px;
+        color: #333333;
 
-          span {
-            margin-left: 10px;
-          }
+        &.no-border {
+          border: 0;
         }
 
-        &__content {
-          width: 100%;
-          padding: 20px;
+        i {
+          color: $grey-color;
+        }
+
+        span {
+          margin-left: 10px;
         }
       }
 
-	  .tab{
-		transition: 0.3s;
+      &__content {
+        width: 100%;
+        padding: 20px;
+      }
+    }
 
-		&:hover{
-		  color: #ccc;
-		  cursor: pointer;
-		}
-		&:last-child{ padding-right: 0; }
+    .tab{
+      color: $property-blue;
+      padding-right: 25px;
+      transition: 0.3s;
 
-	  }
-	}
+      &:hover{
+        color: #00aadd;
+        cursor: pointer;
+      }
+      &:last-child{ padding-right: 0; }
+      &.active{ text-decoration: underline; }
+
+    }
   }
 
   .property-tab{
@@ -1589,5 +1597,96 @@
   .property-listing-overview-wrapper {
     position: relative;
     margin-top: 2rem;
+  }
+
+  &.property-deal {
+    .season-item,
+    .select-item {
+      display: flex;
+      align-items: center;
+      margin: 0 40px 20px;
+
+      input {
+        margin: 0 10px 0 0;
+        width: 20px;
+      }
+    }
+
+    .right-selector {
+      margin: 0 10px 40px;
+
+      .right-selector-item {
+        flex: initial;
+        width: 45%;
+      }
+    }
+
+    .property-listing-wrapper {
+      margin-bottom: 30px;
+      input {
+        height: 30px !important;
+      }
+    }
+
+    .custom-selector {
+      label {
+        display: none !important;
+      }
+    }
+
+    .overflow-initial {
+      overflow: initial;
+    }
+
+    .select-currency {
+      display: flex !important;
+      overflow: initial !important;
+      align-items: baseline;
+      border-bottom: 4px solid #D4D8DE;
+      margin-bottom: 20px;
+      padding-bottom: 3px;
+      position: relative;
+      max-width: 515px;
+
+      .select-text {
+        display: none;
+      }
+
+      .currency-selector {
+        width: 100%;
+
+        .current {
+          padding: 4px 16px 3px;
+          width: 100%;
+          border: 1px solid #DADADA;
+          text-align: right;
+          i {
+            margin-left: 10px;
+          }
+        }
+
+        .dropdown {
+          right: 0;
+          position: absolute;
+          top: 27px;
+          display: none;
+          width: 100%;
+          z-index: 1;
+
+          .currency-item {
+            padding: 5px 5px 5px 0;
+            color: #000;
+            background: #FFFFFF;
+            border: 1px solid #DADADA;
+            text-align: center;
+            cursor: pointer;
+          }
+        }
+
+        &:hover > .dropdown {
+          display: block;
+        }
+      }
+    }
   }
 }

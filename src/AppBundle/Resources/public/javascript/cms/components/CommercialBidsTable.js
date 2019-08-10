@@ -16,7 +16,6 @@ import {
 	// nonExclusiveRightOffered,
 	// exclusiveRightSold,
 	// nonExclusiveRightSold,
-	yellowCheckIcon,
 	checkIcon,
 	cancelIcon,
 	pdfIcon,
@@ -63,12 +62,6 @@ class CommercialBidsTable extends React.Component {
 		});
 	};
 
-	getHeader = (text, tooltip = "") => (
-		<span data-tip={tooltip && tooltip}>
-			{text && text}
-		</span>
-	);
-
 	getCell = (props) => {
 		const { value, original } = props;
 		const { list: { customId } } = original;
@@ -78,15 +71,6 @@ class CommercialBidsTable extends React.Component {
 				{value}
 			</ListingLink>
 		);
-	};
-
-	getRightCell = (props, shortLabel) => {
-		const { value } = props;
-		const rights = value.map(right => right.shortLabel);
-
-		if (rights.indexOf(shortLabel) !== -1) return <img src={yellowCheckIcon} alt={shortLabel} />;
-
-		return <span />;
 	};
 
 	getTitleColumns = () => [{

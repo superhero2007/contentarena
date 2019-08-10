@@ -50,8 +50,9 @@ class PropertyDetails extends Component {
 						<CmsTabElement
 							key={index}
 							label={tabs[tab].label}
-							component={tabs[tab].component}
-						/>
+						>
+							{tabs[tab].component}
+						</CmsTabElement>
 					))}
 				</div>
 			</section>
