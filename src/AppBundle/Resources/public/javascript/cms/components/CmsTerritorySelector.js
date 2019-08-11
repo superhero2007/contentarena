@@ -37,7 +37,7 @@ class CmsTerritorySelector extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ selection: nextProps.value });
+		this.setState({ selection: nextProps.value, territoriesMode: nextProps.territoriesMode });
 	}
 
 	countryHasRegions = (country, regions) => {

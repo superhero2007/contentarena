@@ -21,8 +21,10 @@ class PropertyDeal extends React.Component {
 				EXCLUSIVE: "exclusive",
 				NON_EXCLUSIVE: "non-exclusive",
 			},
-			territories: props.countries,
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: [{
+				territories: props.countries,
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			}],
 			currentStep: 1,
 			listings: [],
 		};
@@ -40,7 +42,7 @@ class PropertyDeal extends React.Component {
 
 	territoriesAreValid = () => {
 		const { territories } = this.state;
-		return !!territories.length;
+		return !!territories[territories.length - 1].territories.length;
 	};
 
 	onChangeSeason = (value) => {
@@ -81,8 +83,10 @@ class PropertyDeal extends React.Component {
 		this.setState({
 			rights: newRights,
 			currentStep: 2,
-			territories: countries,
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: [{
+				territories: countries,
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			}],
 		});
 	};
 
@@ -91,8 +95,10 @@ class PropertyDeal extends React.Component {
 		this.setState({
 			rights: [],
 			currentStep: 2,
-			territories: countries,
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: [{
+				territories: countries,
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			}],
 		});
 	};
 
@@ -105,8 +111,10 @@ class PropertyDeal extends React.Component {
 		this.setState({
 			rights,
 			currentStep: 2,
-			territories: countries,
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: [{
+				territories: countries,
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			}],
 		});
 	};
 
@@ -123,23 +131,38 @@ class PropertyDeal extends React.Component {
 		this.setState({
 			rights,
 			currentStep: 2,
-			territories: countries,
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territories: [{
+				territories: countries,
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			}],
 		});
 	};
 
 	onSelectTerritories = (territories, territoriesMode) => {
-		this.setState({
+		const { territories: allTerritories } = this.state;
+		allTerritories[allTerritories.length - 1] = {
 			territories,
 			territoriesMode,
-			currentStep: 3,
+		};
+		this.setState({
+			territories: allTerritories,
 		});
 	};
 
 	onNext = (step) => {
+		const { countries } = this.props;
 		this.setState({
 			currentStep: step,
 		});
+
+		if (step === 4) {
+			const { territories } = this.state;
+			territories.push({
+				territories: countries,
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			});
+			this.setState({ territories });
+		}
 	};
 
 	onSave = (listings) => {
@@ -151,10 +174,10 @@ class PropertyDeal extends React.Component {
 			seasons,
 			rights,
 			territories,
-			territoriesMode,
 			currentStep,
 		} = this.state;
 		const { property: { seasons: allSeasons, rights: allRights } } = this.props;
+		const lastTerritory = territories[territories.length - 1];
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
@@ -168,22 +191,24 @@ class PropertyDeal extends React.Component {
 						enableNextStep={seasonsValid}
 						onNext={() => this.onNext(2)}
 					>
-						<div className="select-item">
-							<button
-								type="button"
-								onClick={this.onSelectAllSeasons}
-								className="ca-btn link-button"
-							>
-								Select All
-							</button>
-							<button
-								type="button"
-								onClick={this.onUnSelectAllSeasons}
-								className="ca-btn link-button"
-							>
-								UnSelect All
-							</button>
-						</div>
+						{allSeasons.length > 1 && (
+							<div className="select-item">
+								<button
+									type="button"
+									onClick={this.onSelectAllSeasons}
+									className="ca-btn link-button"
+								>
+									Select All
+								</button>
+								<button
+									type="button"
+									onClick={this.onUnSelectAllSeasons}
+									className="ca-btn link-button"
+								>
+									UnSelect All
+								</button>
+							</div>
+						)}
 						<div className="d-flex">
 							{allSeasons.map((season) => {
 								const { endDate, startDate } = season;
@@ -219,22 +244,24 @@ class PropertyDeal extends React.Component {
 							enableNextStep={rightsValid}
 							onNext={() => this.onNext(3)}
 						>
-							<div className="select-item">
-								<button
-									type="button"
-									onClick={this.onSelectAllRights}
-									className="ca-btn link-button"
-								>
-									Select All
-								</button>
-								<button
-									type="button"
-									onClick={this.onUnSelectAllRights}
-									className="ca-btn link-button"
-								>
-									UnSelect All
-								</button>
-							</div>
+							{allRights.length > 1 && (
+								<div className="select-item">
+									<button
+										type="button"
+										onClick={this.onSelectAllRights}
+										className="ca-btn link-button"
+									>
+										Select All
+									</button>
+									<button
+										type="button"
+										onClick={this.onUnSelectAllRights}
+										className="ca-btn link-button"
+									>
+										UnSelect All
+									</button>
+								</div>
+							)}
 							<div className="right-selector">
 								{allRights.map((right) => {
 									const {
@@ -267,7 +294,7 @@ class PropertyDeal extends React.Component {
 													</span>
 													<ReactTooltip id={right.code} effect="solid" className="CaTooltip " delayHide={400}>
 														<div className="body">
-															<Translate i18nKey={`CL_STEP2_RIGHT_DEFINITIONS_${code}`} />
+															<Translate i18nKey={`CMS_DEALS_RIGHT_DEFINITIONS_${code}`} />
 														</div>
 													</ReactTooltip>
 												</div>
@@ -316,21 +343,21 @@ class PropertyDeal extends React.Component {
 					{(rightsValid && currentStep > 2) && (
 						<CmsStepSelector
 							title={<Translate i18nKey="CMS_DEALS_STEP3_TITLE" />}
-							button={<Translate i18nKey="CMS_DEALS_STEP3_BUTTON" />}
+							button={<Translate key={`add_deal${territories.length}`} i18nKey={territories.length < 2 ? "CMS_DEALS_STEP3_BUTTON" : "CMS_DEALS_STEP3_ANOTHER_BUTTON"} />}
 							enableNextStep={territoriesValid}
 							onNext={() => this.onNext(4)}
 						>
 							<CmsTerritorySelector
 								className="small-select"
 								onChange={this.onSelectTerritories}
-								value={territories}
-								territoriesMode={territoriesMode}
+								value={lastTerritory.territories}
+								territoriesMode={lastTerritory.territoriesMode}
 								multiple
 							/>
 						</CmsStepSelector>
 					)}
 
-					{(territoriesValid && currentStep > 3) && (
+					{(territories.length > 1 && currentStep > 2) && (
 						<CmsDealTable
 							seasons={seasons}
 							rights={rights}
@@ -344,7 +371,7 @@ class PropertyDeal extends React.Component {
 							className="yellow-button"
 							disabled={currentStep < 4}
 						>
-							<Translate i18nKey="CMS_CREATE_PROPERTY_CONTINUE_BUTTON" />
+							<Translate i18nKey="CMS_DEALS_CREATE_BUTTON" />
 						</button>
 					</HorizontalButtonBox>
 				</DefaultBox>
