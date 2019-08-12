@@ -122,7 +122,7 @@ class ContentListingCommercialActivity extends ContentListing {
 							<ContentListingRightsPackage rightsPackage={rightsPackage} />
 						</div>
 
-						<div className="sales-and-exp-wrapper">
+						{/* <div className="sales-and-exp-wrapper">
 							<SalesPackages salesPackages={salesPackages} onShowAllClick={this.onSelect} />
 							{expiresAt && (
 								<div className="expires">
@@ -133,7 +133,7 @@ class ContentListingCommercialActivity extends ContentListing {
 									<b>{Moment(expiresAt).format(DATE_FORMAT)}</b>
 								</div>
 							)}
-						</div>
+						</div> */}
 					</div>
 					<div className="bid-listing-details">
 						<div className="item">
@@ -170,7 +170,6 @@ class ContentListingCommercialActivity extends ContentListing {
 							<div className="show-bundle-wrapper" onClick={this.onClickShowBundle}>
 								<div className="bundle-text">
 									{showSalesPackage ? <Translate i18nKey="COMMERCIAL_ACTIVITY_HIDE_BUNDLES_BUTTON" /> : <Translate i18nKey="COMMERCIAL_ACTIVITY_SHOW_BUNDLES_BUTTON" />}
-									{showSalesPackage ? minusGreyIcon : plusGreyIcon}
 								</div>
 							</div>
 						)}

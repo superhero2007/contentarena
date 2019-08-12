@@ -148,7 +148,8 @@ class SellFormStep3 extends React.Component {
 										<Translate i18nKey="LICENSE_PERIOD_EMPTY" />
 									) : (
 										<span>
-											{endDateMode === "LIMITED" && this.props.endDateLimit + <Translate i18nKey="LISTING_DETAILS_LICENSE_END_DAYS" />}
+											{endDateMode === "LIMITED" && this.props.endDateLimit}
+											{endDateMode === "LIMITED" && <Translate i18nKey="LISTING_DETAILS_LICENSE_END_DAYS" />}
 											{endDateMode === "DATE" && Moment(this.props.endDate)
 												.format(DATE_FORMAT)}
 											{endDateMode === "UNLIMITED" && <Translate i18nKey="Unlimited" />}

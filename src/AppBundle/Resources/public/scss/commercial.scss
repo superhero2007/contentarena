@@ -57,7 +57,7 @@
   @include shadow(0px 4px 10px -6px rgba(0, 0, 0, 0.75));
   padding: 0;
   margin-bottom: 5px;
-
+  height: 180px;
   .right {
     padding: 15px 20px 10px;
 
@@ -123,12 +123,13 @@
       border: 1px solid $orange-color;
       background-color: #fff;
 
-      padding: 8px 10px;
+      padding: 5px 10px;
       min-width: 135px;
 
       text-align: center;
       font-weight: bold;
       font-size: 14px;
+      margin-bottom: 3px;
     }
 
     .total-wrapper {
@@ -165,7 +166,7 @@
       .bundle-text {
         display: inline-flex;
         align-items: center;
-        padding: 12px 30px;
+        padding: 6px 15px;
 
         border-radius: 5px;
         background: $orange-color;

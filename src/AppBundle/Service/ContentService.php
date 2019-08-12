@@ -358,6 +358,8 @@ class ContentService
             $content->setSports($modelListing->getSports());
             $content->setSportCategory($modelListing->getSportCategory());
             $content->setTournament($modelListing->getTournament());
+            $content->setCustomTournament($modelListing->getCustomTournament());
+
             $content->setSeason($modelListing->getSeasons());
             $content->setFixturesBySeason($modelListing->getFixturesBySeason());
             $content->setSchedulesBySeason($modelListing->getSchedulesBySeason());
