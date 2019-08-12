@@ -140,17 +140,17 @@ class ContentService
             });
         }
 
+        foreach ($content as $key => $listing)
+        {
+            /* @var Content $listing */
+            $listingFeatured[$key] = $listing->getFeatured();
+            $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
+            $listingPublished[$key] = $listing->getPublishedAt();
+            $listingRelevance[$key] = $listing->getRelevance();
+            $listingExpiry[$key] = $listing->getExpiresAt();
+        }
+
         if ( $sortBy == $this::SORT_REFERENCE_RELEVANCE ){
-
-            foreach ($content as $key => $listing)
-            {
-                /* @var Content $listing */
-                $listingFeatured[$key] = $listing->getFeatured();
-                $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
-                $listingPublished[$key] = $listing->getPublishedAt();
-                $listingRelevance[$key] = $listing->getRelevance();
-            }
-
             array_multisort(
                 $listingFeatured, SORT_DESC,
                 $listingFeaturedPosition, SORT_ASC,
@@ -160,6 +160,23 @@ class ContentService
             );
         }
 
+        if ( $sortBy == $this::SORT_REFERENCE_PUBLISHING ){
+            array_multisort(
+                $listingFeatured, SORT_DESC,
+                $listingFeaturedPosition, SORT_ASC,
+                $listingPublished, SORT_DESC,
+                $content
+            );
+        }
+
+        if ( $sortBy == $this::SORT_REFERENCE_EXPIRY ){
+            array_multisort(
+                $listingFeatured, SORT_DESC,
+                $listingFeaturedPosition, SORT_ASC,
+                $listingExpiry, SORT_DESC,
+                $content
+            );
+        }
 
         if ( $sortBy == $this::SORT_REFERENCE_EVENT || $sortBy == $this::SORT_REFERENCE_UPCOMING ){
 
@@ -188,40 +205,6 @@ class ContentService
                 });
             }
         }
-
-        /**
-         * Sort by featured
-         * @param $listingA
-         * @param $listingB
-         * @return int
-         */
-        $sortByFeatured = function($listingA, $listingB) use ($now){
-            /* @var Content $listingA */
-            /* @var Content $listingB */
-
-            $featuredA = $listingA->isFeatured();
-            $featuredB = $listingB->isFeatured();
-            $positionA = $listingA->getFeaturedPosition();
-            $positionB = $listingB->getFeaturedPosition();
-
-            if ( !$featuredA  && $featuredB ) return 1;
-            if ($featuredA && !$featuredB ) return -1;
-            if (!$featuredA && !$featuredB ) return 0;
-            if ($featuredA == $featuredB) {
-                if ($positionA === null || !$positionA) $positionA = 100;
-                if ($positionB === null || !$positionB) $positionB = 100;
-                if ($positionA < $positionB ) return -1;
-                if ($positionB < $positionA ) return 1;
-                if ($positionA == $positionB) return 0;
-            };
-
-        };
-
-        /**
-         * Sorting featured listings in the top must be applied only if there are no other filters active
-         */
-        // if ($featuredSortActive) usort($content, $sortByFeatured);
-        usort($content, $sortByFeatured);
 
         return $content;
 
@@ -375,6 +358,8 @@ class ContentService
             $content->setSports($modelListing->getSports());
             $content->setSportCategory($modelListing->getSportCategory());
             $content->setTournament($modelListing->getTournament());
+            $content->setCustomTournament($modelListing->getCustomTournament());
+
             $content->setSeason($modelListing->getSeasons());
             $content->setFixturesBySeason($modelListing->getFixturesBySeason());
             $content->setSchedulesBySeason($modelListing->getSchedulesBySeason());

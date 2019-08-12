@@ -96,7 +96,7 @@ class AppExtension extends AbstractExtension
             case "DT" : return "Delayed & Archive Content";
             case "LB" : return "Live Betting Feed";
             case "HL" : return "Highlight & Clip Footage";
-            case "NA" : return "News Footage";
+            case "NA" : return "News Access";
             case "PR" : return "Edited Program";
         }
         return "";
