@@ -13,7 +13,7 @@ class CmsTerritorySelector extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			countries: props.countries || [],
+			countries: props.selectedCountries || props.countries,
 			selection: props.value,
 			territories: props.territories || [],
 			regions: props.regions || [],
@@ -37,7 +37,10 @@ class CmsTerritorySelector extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({ selection: nextProps.value, territoriesMode: nextProps.territoriesMode });
+		this.setState({
+			selection: nextProps.value,
+			territoriesMode: nextProps.territoriesMode,
+		});
 	}
 
 	countryHasRegions = (country, regions) => {
@@ -320,7 +323,7 @@ class CmsTerritorySelector extends React.Component {
 							{territories.map((territory, i) => {
 								const territoryCountries = this.getTerritoryCountries(selection, territory.id).length;
 								const totalItems = territoryItems[territory.id] ? territoryItems[territory.id].length : 0;
-								return (
+								return !!totalItems && (
 									<button
 										className={cn({
 											region: true,
@@ -344,7 +347,7 @@ class CmsTerritorySelector extends React.Component {
 							{regions.map((region, i) => {
 								const regionCountries = this.getRegionCountries(selection, region.id);
 								const totalItems = regionItems[region.id] ? regionItems[region.id].length : 0;
-								return (
+								return !!totalItems && (
 									<button
 										className={cn({
 											region: true,
