@@ -26,7 +26,7 @@ export const SuperRightProductionDetailsLabels = {
 	DT: "Delayed & Archive Content",
 	LB: "Live Betting Feed",
 	HL: "Highlight & Clip Footage",
-	NA: "News Footage",
+	NA: "News Access",
 	PR: "Edited Program",
 };
 

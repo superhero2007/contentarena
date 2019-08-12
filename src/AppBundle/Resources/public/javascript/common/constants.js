@@ -178,7 +178,7 @@ export const RIGHTS = [
 	},
 	{
 		code: "NA",
-		name: "News Footage",
+		name: "News Access",
 		translationKey: "RIGHT_NEWS_NAME",
 		exclusive: null,
 	},
