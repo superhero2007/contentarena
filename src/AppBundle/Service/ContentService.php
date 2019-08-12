@@ -182,7 +182,7 @@ class ContentService
 
         if ( $sortBy == $this::SORT_REFERENCE_EXPIRY ){
 
-            $sortByPublishDate = function($listingB, $listingA) {
+            $sortByExpiry = function($listingB, $listingA) {
                 /* @var Content $listingA */
                 /* @var Content $listingB */
 
@@ -196,7 +196,7 @@ class ContentService
                 return ($listingA->getExpiresAt() < $listingB->getExpiresAt()) ? -1 : 1;
 
             };
-            usort($content, $sortByPublishDate);
+            usort($content, $sortByExpiry);
 
         }
 
@@ -260,7 +260,7 @@ class ContentService
          * Sorting featured listings in the top must be applied only if there are no other filters active
          */
         // if ($featuredSortActive) usort($content, $sortByFeatured);
-        usort($content, $sortByFeatured);
+        //usort($content, $sortByFeatured);
 
         return $content;
 

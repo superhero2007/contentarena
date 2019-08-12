@@ -206,7 +206,7 @@ class ContentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('isApproved','APPROVED')
             ->setParameter('isEdited','EDITED');
 
-        $query->addOrderBy('content.'.$filter->getOrderByKey($sortBy), $filter->getSortByKey($sortBy));
+        //$query->addOrderBy('content.'.$filter->getOrderByKey($sortBy), $filter->getSortByKey($sortBy));
         $query->addOrderBy('content.createdAt', $filter->getSortByKey($sortBy));
 
         $result = $query->getQuery()->getResult();
