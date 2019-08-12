@@ -22,8 +22,8 @@ class PropertyDeal extends React.Component {
 				NON_EXCLUSIVE: "non-exclusive",
 			},
 			territories: [{
-				territories: props.countries,
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+				territories: [],
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 			}],
 			currentStep: 1,
 			listings: [],
@@ -77,50 +77,57 @@ class PropertyDeal extends React.Component {
 		});
 	};
 
+	getTerritoriesFromRights = (rights) => {
+		const territory = {
+			territories: [],
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+		};
+		const worldwideRights = rights.filter(right => right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE);
+		if (worldwideRights.length) {
+			territory.territories = this.props.countries;
+		} else {
+			territory.territories = [].concat(...rights.map(right => right.territories));
+		}
+		return territory;
+	};
+
 	onSelectAllRights = () => {
-		const { property: { rights }, countries } = this.props;
+		const { property: { rights } } = this.props;
 		const newRights = rights.map(element => Object.assign({}, element, { dealExclusive: null }));
+		const territory = this.getTerritoriesFromRights(newRights);
 		this.setState({
 			rights: newRights,
 			currentStep: 2,
-			territories: [{
-				territories: countries,
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-			}],
+			territories: [territory],
 		});
 	};
 
 	onUnSelectAllRights = () => {
-		const { countries } = this.props;
 		this.setState({
 			rights: [],
 			currentStep: 2,
 			territories: [{
-				territories: countries,
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+				territories: [],
+				territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 			}],
 		});
 	};
 
 	onExclusive = (right, dealExclusive) => {
 		let { rights } = this.state;
-		const { countries } = this.props;
 		rights = rights.filter(element => element.id !== right.id);
 		const newValue = Object.assign({}, right, { dealExclusive });
 		rights.push(newValue);
+		const territory = this.getTerritoriesFromRights(rights);
 		this.setState({
 			rights,
 			currentStep: 2,
-			territories: [{
-				territories: countries,
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-			}],
+			territories: [territory],
 		});
 	};
 
 	onSelectRight = (value) => {
 		let { rights } = this.state;
-		const { countries } = this.props;
 		const selectedRight = rights.find(element => element.id === value.id);
 		if (selectedRight) {
 			rights = rights.filter(element => element.id !== value.id);
@@ -128,13 +135,11 @@ class PropertyDeal extends React.Component {
 			const newValue = Object.assign({}, value, { dealExclusive: null });
 			rights.push(newValue);
 		}
+		const territory = this.getTerritoriesFromRights(rights);
 		this.setState({
 			rights,
 			currentStep: 2,
-			territories: [{
-				territories: countries,
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-			}],
+			territories: [territory],
 		});
 	};
 
@@ -150,23 +155,24 @@ class PropertyDeal extends React.Component {
 	};
 
 	onNext = (step) => {
-		const { countries } = this.props;
 		this.setState({
 			currentStep: step,
 		});
 
 		if (step === 4) {
-			const { territories } = this.state;
-			territories.push({
-				territories: countries,
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			const { territories, rights } = this.state;
+			const territory = this.getTerritoriesFromRights(rights);
+			territories.push(territory);
+			this.setState({
+				territories,
 			});
-			this.setState({ territories });
 		}
 	};
 
 	onSave = (listings) => {
-		this.setState({ listings });
+		this.setState({
+			listings,
+		});
 	};
 
 	render() {
@@ -181,6 +187,7 @@ class PropertyDeal extends React.Component {
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
+		const territory = this.getTerritoriesFromRights(rights);
 
 		return (
 			<div className="default-container no-title property property-deal">
@@ -350,6 +357,7 @@ class PropertyDeal extends React.Component {
 							<CmsTerritorySelector
 								className="small-select"
 								onChange={this.onSelectTerritories}
+								selectedCountries={territory.territories}
 								value={lastTerritory.territories}
 								territoriesMode={lastTerritory.territoriesMode}
 								multiple
