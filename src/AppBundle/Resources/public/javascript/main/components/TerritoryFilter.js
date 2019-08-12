@@ -6,7 +6,7 @@ import PopupCountrySelector from "./PopupCountrySelector";
 import CountrySelector from "./CountrySelector";
 
 const TerritoryFilter = ({
-	className, countries, includeAllCountries, selectTerritory, updateIncludedCountries,
+	className, countries, includeAllCountries, selectTerritory, updateIncludedCountries, placeholder,
 }) => {
 	const countriesValue = first(countries) ? {
 		label: first(countries),
@@ -26,6 +26,7 @@ const TerritoryFilter = ({
 				onChange={(c) => {
 					selectTerritory([c]);
 				}}
+				placeholder={placeholder}
 			/>
 
 			<PopupCountrySelector

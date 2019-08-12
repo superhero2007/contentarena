@@ -17,8 +17,8 @@ email:
                 content: User has logged in for the first time.
             listing:
                 submit:
-                    subject: A listing was submitted
-                    content: A listing was submitted.
+                    subject: A listing was approved.
+                    content: A listing was approved.
                 deactivate:
                     subject: A listing was deactivated
                     content: A listing was deactivated.

@@ -191,7 +191,7 @@ class RightsOverview extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="d-flex" style={{ marginBottom: 40 }}>
+				<div className="d-flex" style={{ marginBottom: 40, marginTop: 40 }}>
 					<CmsRightsLegend />
 				</div>
 

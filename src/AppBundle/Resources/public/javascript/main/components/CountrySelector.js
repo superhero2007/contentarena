@@ -98,7 +98,7 @@ class CountrySelector extends React.Component {
 				className={isInvalid ? "is-invalid" : className}
 				name="form-field-name"
 				onChange={onChange}
-				placeholder={placeholder || (disabled ? "Disabled" : "Select...")}
+				placeholder={placeholder || "Select territory"}
 				disabled={disabled}
 				value={value}
 				multi={multi}

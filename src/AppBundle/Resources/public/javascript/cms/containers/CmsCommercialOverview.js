@@ -5,12 +5,11 @@ import Select from "react-select";
 import first from "lodash/first";
 import Translate from "@components/Translator/Translate";
 import EmptyCommercialOverview from "../components/EmptyScreens/EmptyCommercialOverview";
-// import RightsLegend from "../../main/components/RightsLegend";
 import CommercialBidsTable from "../components/CommercialBidsTable";
 import TerritoryFilter from "../../main/components/TerritoryFilter";
 import SeasonFilter from "../../main/components/SeasonFilter";
 import { fetchPropertyDetails } from "../actions/propertyActions";
-import CmsRightsLegend from "../components/CmsRightsLegend";
+import CmsRightsLegendSmall from "../components/CmsRightsLegendSmall";
 
 class CmsCommercialOverview extends React.Component {
 	constructor(props) {
@@ -237,7 +236,7 @@ class CmsCommercialOverview extends React.Component {
 								<div className="listing-filter">
 									<Select
 										name="form-field-name"
-										placeholder={this.context.t("COMMERCIAL_ACTIVITY_FILTER_SEARCH_PLACEHOLDER")}
+										placeholder={this.context.t("CMS_LISTING_FILTER_PLACEHOLDER")}
 										clearable
 										onChange={this.onSelectListing}
 										multi={false}
@@ -252,6 +251,7 @@ class CmsCommercialOverview extends React.Component {
 									includeAllCountries={includeAllCountries}
 									selectTerritory={this.selectTerritory}
 									updateIncludedCountries={this.updateIncludedCountries}
+									placeholder="Filter By Territory"
 								/>
 
 								{allSeasons && allSeasons.length > 1 && (
@@ -266,7 +266,7 @@ class CmsCommercialOverview extends React.Component {
 						</div>
 					</div>
 					<div className="d-flex">
-						<CmsRightsLegend />
+						<CmsRightsLegendSmall />
 					</div>
 					<div className="region-filter-bids">
 						<div className="region-filter-title toggle" onClick={openBidsList.length ? this.toggleOpenBids : null}>

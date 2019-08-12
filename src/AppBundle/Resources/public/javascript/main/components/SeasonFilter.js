@@ -17,7 +17,7 @@ const SeasonFilter = ({
 		<div className={className}>
 			<Select
 				className="base-input-select"
-				placeholder={context.t("Season")}
+				placeholder={context.t("SEASON_FILTER_PLACEHOLDER")}
 				clearable
 				onChange={c => selectSeasons([c])}
 				multi={false}
