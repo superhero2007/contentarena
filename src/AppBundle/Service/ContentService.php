@@ -140,16 +140,17 @@ class ContentService
             });
         }
 
-        foreach ($content as $key => $listing)
-        {
-            /* @var Content $listing */
-            $listingFeatured[$key] = $listing->getFeatured();
-            $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
-            $listingPublished[$key] = $listing->getPublishedAt();
-            $listingRelevance[$key] = $listing->getRelevance();
-        }
-
         if ( $sortBy == $this::SORT_REFERENCE_RELEVANCE ){
+
+            foreach ($content as $key => $listing)
+            {
+                /* @var Content $listing */
+                $listingFeatured[$key] = $listing->getFeatured();
+                $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
+                $listingPublished[$key] = $listing->getPublishedAt();
+                $listingRelevance[$key] = $listing->getRelevance();
+            }
+
             array_multisort(
                 $listingFeatured, SORT_DESC,
                 $listingFeaturedPosition, SORT_ASC,
@@ -160,13 +161,44 @@ class ContentService
         }
 
         if ( $sortBy == $this::SORT_REFERENCE_PUBLISHING ){
-            array_multisort(
-                $listingPublished, SORT_DESC,
-                $listingRelevance, SORT_DESC,
-                $content
-            );
+
+            $sortByPublishDate = function($listingB, $listingA) {
+                /* @var Content $listingA */
+                /* @var Content $listingB */
+
+                $dateA = $listingA->getPublishedAt();
+                $dateB = $listingB->getPublishedAt();
+
+                if ($dateA == null && $dateB != null) return -1;
+                if ($dateA != null && $dateB == null) return 1;
+                if ($dateA == null && $dateB == null) return 0;
+
+                return ($listingA->getPublishedAt() < $listingB->getPublishedAt()) ? -1 : 1;
+
+            };
+            usort($content, $sortByPublishDate);
+
         }
 
+        if ( $sortBy == $this::SORT_REFERENCE_EXPIRY ){
+
+            $sortByPublishDate = function($listingB, $listingA) {
+                /* @var Content $listingA */
+                /* @var Content $listingB */
+
+                $dateA = $listingA->getExpiresAt();
+                $dateB = $listingB->getExpiresAt();
+
+                if ($dateA == null && $dateB != null) return -1;
+                if ($dateA != null && $dateB == null) return 1;
+                if ($dateA == null && $dateB == null) return 0;
+
+                return ($listingA->getExpiresAt() < $listingB->getExpiresAt()) ? -1 : 1;
+
+            };
+            usort($content, $sortByPublishDate);
+
+        }
 
         if ( $sortBy == $this::SORT_REFERENCE_EVENT || $sortBy == $this::SORT_REFERENCE_UPCOMING ){
 
