@@ -140,17 +140,17 @@ class ContentService
             });
         }
 
+        foreach ($content as $key => $listing)
+        {
+            /* @var Content $listing */
+            $listingFeatured[$key] = $listing->getFeatured();
+            $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
+            $listingPublished[$key] = $listing->getPublishedAt();
+            $listingRelevance[$key] = $listing->getRelevance();
+            $listingExpiry[$key] = $listing->getExpiresAt();
+        }
+
         if ( $sortBy == $this::SORT_REFERENCE_RELEVANCE ){
-
-            foreach ($content as $key => $listing)
-            {
-                /* @var Content $listing */
-                $listingFeatured[$key] = $listing->getFeatured();
-                $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
-                $listingPublished[$key] = $listing->getPublishedAt();
-                $listingRelevance[$key] = $listing->getRelevance();
-            }
-
             array_multisort(
                 $listingFeatured, SORT_DESC,
                 $listingFeaturedPosition, SORT_ASC,
@@ -161,59 +161,21 @@ class ContentService
         }
 
         if ( $sortBy == $this::SORT_REFERENCE_PUBLISHING ){
-
-            $sortByPublishDate = function($listingB, $listingA) {
-                /* @var Content $listingA */
-                /* @var Content $listingB */
-
-                $dateA = $listingA->getPublishedAt();
-                $dateB = $listingB->getPublishedAt();
-
-                if ($dateA == null && $dateB != null) return -1;
-                if ($dateA != null && $dateB == null) return 1;
-                if ($dateA == null && $dateB == null) return 0;
-
-                return ($listingA->getPublishedAt() < $listingB->getPublishedAt()) ? -1 : 1;
-
-            };
-            //usort($content, $sortByPublishDate);
-
-            foreach ($content as $key => $listing)
-            {
-                /* @var Content $listing */
-                $listingFeatured[$key] = $listing->getFeatured();
-                $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
-                $listingPublished[$key] = $listing->getPublishedAt();
-                $listingRelevance[$key] = $listing->getRelevance();
-            }
-
             array_multisort(
                 $listingFeatured, SORT_DESC,
                 $listingFeaturedPosition, SORT_ASC,
                 $listingPublished, SORT_DESC,
                 $content
             );
-
         }
 
         if ( $sortBy == $this::SORT_REFERENCE_EXPIRY ){
-
-            $sortByExpiry = function($listingB, $listingA) {
-                /* @var Content $listingA */
-                /* @var Content $listingB */
-
-                $dateA = $listingA->getExpiresAt();
-                $dateB = $listingB->getExpiresAt();
-
-                if ($dateA == null && $dateB != null) return -1;
-                if ($dateA != null && $dateB == null) return 1;
-                if ($dateA == null && $dateB == null) return 0;
-
-                return ($listingA->getExpiresAt() < $listingB->getExpiresAt()) ? -1 : 1;
-
-            };
-            usort($content, $sortByExpiry);
-
+            array_multisort(
+                $listingFeatured, SORT_DESC,
+                $listingFeaturedPosition, SORT_ASC,
+                $listingExpiry, SORT_DESC,
+                $content
+            );
         }
 
         if ( $sortBy == $this::SORT_REFERENCE_EVENT || $sortBy == $this::SORT_REFERENCE_UPCOMING ){
@@ -243,40 +205,6 @@ class ContentService
                 });
             }
         }
-
-        /**
-         * Sort by featured
-         * @param $listingA
-         * @param $listingB
-         * @return int
-         */
-        $sortByFeatured = function($listingA, $listingB) use ($now){
-            /* @var Content $listingA */
-            /* @var Content $listingB */
-
-            $featuredA = $listingA->isFeatured();
-            $featuredB = $listingB->isFeatured();
-            $positionA = $listingA->getFeaturedPosition();
-            $positionB = $listingB->getFeaturedPosition();
-
-            if ( !$featuredA  && $featuredB ) return 1;
-            if ($featuredA && !$featuredB ) return -1;
-            if (!$featuredA && !$featuredB ) return 0;
-            if ($featuredA == $featuredB) {
-                if ($positionA === null || !$positionA) $positionA = 100;
-                if ($positionB === null || !$positionB) $positionB = 100;
-                if ($positionA < $positionB ) return -1;
-                if ($positionB < $positionA ) return 1;
-                if ($positionA == $positionB) return 0;
-            };
-
-        };
-
-        /**
-         * Sorting featured listings in the top must be applied only if there are no other filters active
-         */
-        // if ($featuredSortActive) usort($content, $sortByFeatured);
-        //usort($content, $sortByFeatured);
 
         return $content;
 
