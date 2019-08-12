@@ -161,8 +161,6 @@ class ContentService
 
         if ( $sortBy == $this::SORT_REFERENCE_PUBLISHING ){
             array_multisort(
-                $listingFeatured, SORT_DESC,
-                $listingFeaturedPosition, SORT_ASC,
                 $listingPublished, SORT_DESC,
                 $listingRelevance, SORT_DESC,
                 $content
