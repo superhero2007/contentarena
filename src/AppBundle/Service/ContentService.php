@@ -176,7 +176,23 @@ class ContentService
                 return ($listingA->getPublishedAt() < $listingB->getPublishedAt()) ? -1 : 1;
 
             };
-            usort($content, $sortByPublishDate);
+            //usort($content, $sortByPublishDate);
+
+            foreach ($content as $key => $listing)
+            {
+                /* @var Content $listing */
+                $listingFeatured[$key] = $listing->getFeatured();
+                $listingFeaturedPosition[$key] = $listing->getFeaturedPosition();
+                $listingPublished[$key] = $listing->getPublishedAt();
+                $listingRelevance[$key] = $listing->getRelevance();
+            }
+
+            array_multisort(
+                $listingFeatured, SORT_DESC,
+                $listingFeaturedPosition, SORT_ASC,
+                $listingPublished, SORT_DESC,
+                $content
+            );
 
         }
 
