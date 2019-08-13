@@ -80,11 +80,12 @@ class PropertyDeal extends React.Component {
 	getTerritoriesFromRights = (rights) => {
 		const territory = {
 			territories: [],
-			territoriesMode: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
 		};
 		const worldwideRights = rights.filter(right => right.territoriesMode === BUNDLE_TERRITORIES_METHOD.WORLDWIDE);
 		if (worldwideRights.length) {
 			territory.territories = this.props.countries;
+			territory.territoriesMode = BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
 		} else {
 			territory.territories = [].concat(...rights.map(right => right.territories));
 		}
