@@ -239,6 +239,7 @@ easy_admin:
                         - { property: 'name' }
                         - { property: 'createdAt' }
                         - { property: 'expiresAt' }
+                        - { property: 'publishedAt' }
                         - { property: 'featured' }
                         - { property: 'featuredPosition' }
                         - { property: 'relevance' }
