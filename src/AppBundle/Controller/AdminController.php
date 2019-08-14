@@ -116,6 +116,7 @@ class AdminController extends BaseAdminController
      * @Route("/users/import", name="importUsersPage")
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function importUsersPage(Request $request){
 
@@ -263,9 +264,86 @@ class AdminController extends BaseAdminController
     }
 
     /**
+     * @Route("/users/import/archive", name="importAndArchive")
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function importAndArchive(Request $request)
+    {
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository('AppBundle:User');
+        $userStatusRepo = $doctrine->getRepository('AppBundle:UserStatus');
+        $archivedStatus = $userStatusRepo->findByName("ARCHIVED");
+        $user = $this->getUser();
+        $data = null;
+        $usersDeleted = array();
+        $usersSkippedByError = array();
+        $rows = array();
+
+        $defaultData = array();
+        $form = $this->createFormBuilder($defaultData)
+            ->add('csvFile', FileType::class)
+            ->add('send', SubmitType::class, array(
+                'attr' => array('class' => 'btn btn-primary action-new'),
+                'label' => 'Import'
+            ))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /* @var File $file*/
+            $data = $form->getData();
+            $file = $data['csvFile'];
+            $ignoreFirstLine = true;
+            $rows = array();
+            if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+                $i = 0;
+                while (($data = fgetcsv($handle, null, ";")) !== FALSE) {
+                    $i++;
+                    if ($ignoreFirstLine && $i == 1) { continue; }
+                    $rows[] = explode(",", $data[0]);
+                }
+                fclose($handle);
+            }
+
+            foreach ( $rows as $row){
+                $user = $repo->findOneBy(array("email" => trim($row[0])));
+                if ( $user != null ) {
+                    try {
+                        $user->setStatus($archivedStatus);
+                        $doctrine->getManager()->persist($user);
+                        $usersDeleted[] = $row;
+                    }
+                    catch(\Exception $exception) {
+                        $usersSkippedByError[] = $row;
+                    }
+
+                    $doctrine->getManager()->flush();
+                } else {
+                    $usersSkippedByError[] = $row;
+                }
+            }
+        }
+
+        $viewElements = array(
+            'user' => $user,
+            'form' => $form->createView(),
+            'usersDeleted' => $usersDeleted,
+            'usersSkippedByError' => $usersSkippedByError,
+            'usersProcessed' => count($rows),
+            'hostUrl' => $this->container->getParameter("carena_host_url")
+        );
+
+        return $this->render('users/import.archive.form.html.twig', $viewElements);
+    }
+
+    /**
      * @Route("/users/export", name="exportUsersPage")
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function exportUsersPage(Request $request){
 
