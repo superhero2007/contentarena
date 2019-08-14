@@ -10,6 +10,7 @@ import { updateContentValue, goToStep } from "../actions/contentActions";
 import { enableValidation, disableValidation } from "../../main/actions/validationActions";
 import companyIsValid from "../actions/validationActions";
 import { editedProgramSelected, parseSeasons } from "../../main/actions/utils";
+import { LISTING_STATUS } from "../../common/constants";
 
 const MIN_PROGRAM_DESC_LENGTH = 30;
 
@@ -36,14 +37,17 @@ class SellButtons extends Component {
 
 	componentWillUnmount() {
 		const { validation, disableValidation } = this.props;
-
 		if (validation) disableValidation();
 	}
 
-	saveAndGoNext = () => {
+	saveAndGoNext = (goNextStep = true) => {
 		const { history, goToStep } = this.props;
 		this.props.disableValidation();
-		this.setState({ saving: true });
+		this.setState({
+			saving: goNextStep,
+			savingDraft: !goNextStep,
+			savingSuccess: false,
+		});
 
 		let { content } = store.getState();
 		content = parseSeasons(content);
@@ -64,30 +68,29 @@ class SellButtons extends Component {
 				this.setState({
 					saving: false,
 					savingSuccess: true,
+					savingDraft: false,
 				});
+
+				setTimeout(() => {
+					this.setState({ savingSuccess: false });
+				}, 3000);
 
 				if (currentStep === 1) {
 					history.replace(`/contentlisting/${response.customId}/1`);
 				}
 
-				history.push(`/contentlisting/${response.customId}/${nextStep}`);
-				goToStep(nextStep);
+				if (goNextStep) {
+					history.push(`/contentlisting/${response.customId}/${nextStep}`);
+					goToStep(nextStep);
+				}
 			})
 			.fail(() => {
 				this.setState({
 					saving: false,
+					savingDraft: false,
 					savingSuccess: false,
 				});
-				// history.push("/contentlisting/"+ response.customId + "/" + nextStep);
 			});
-	};
-
-	expireDateIsValid = () => {
-		const { expiresAt, rightsPackage, seasons } = this.props;
-		const maxDate = getMaxDate(rightsPackage, seasons);
-		const expireDateValid = (expiresAt && maxDate) ? (moment(expiresAt) <= maxDate) : true;
-
-		return expireDateValid;
 	};
 
 	/**
@@ -107,7 +110,6 @@ class SellButtons extends Component {
 			&& jurisdiction !== undefined
 			&& jurisdiction !== ""
 			&& salesPackages.length > 0
-			// && this.expireDateIsValid()
 			&& companyIsValid(company);
 	};
 
@@ -122,12 +124,7 @@ class SellButtons extends Component {
 		if (!companyIsValid(company)) message += "<br/>- Enter company information.";
 		if (law === null) message += "<br/>- Select application law";
 		if (jurisdiction === null || jurisdiction === undefined || jurisdiction === "") message += "<br/>- Enter place of jurisdiction";
-
 		if (vat === "yes" && (!vatPercentage || vatPercentage === 0 || vatPercentage === "")) message += "<br/>- Enter VAT percentage.";
-
-		/* if (!this.expireDateIsValid()) {
-			message += "<br/>- The listing must expire before the end of the event.";
-		} */
 
 		return message;
 	};
@@ -310,18 +307,37 @@ class SellButtons extends Component {
 		goToStep(prevStep);
 	};
 
-	goToStep = (step) => {
-		const { history, goToStep } = this.props;
-		const { content } = store.getState();
-		history.push(`/contentlisting/${content.customId}/${step}`);
-		goToStep(step);
+	isSaveButtonDisabled = () => {
+		const { step } = this.props;
+		const { saving, savingDraft } = this.state;
+		const cantReviewAndSign = (step === 4 && !this.reviewAndSignEnabled());
+
+		return saving
+			|| cantReviewAndSign
+			|| savingDraft
+			|| (step === 1 && !this.step1Enabled())
+			|| (step === 2 && !this.step2Enabled())
+			|| (step === 3 && !this.step3Enabled());
+	};
+
+	isSaveDraftButtonDisabled = () => {
+		const { step } = this.props;
+		const { saving, savingDraft } = this.state;
+
+		return saving
+			|| savingDraft
+			|| (step === 1 && !this.step1Enabled());
 	};
 
 	render() {
-		const { step } = this.props;
-		const { lastStep, saving } = this.state;
+		const { step, status } = this.props;
+		const {
+			lastStep, saving, savingDraft, savingSuccess,
+		} = this.state;
 		const cantReviewAndSign = (step === 4 && !this.reviewAndSignEnabled());
-		const isButtonDisabled = (step === 1 && !this.step1Enabled()) || (step === 2 && !this.step2Enabled()) || (step === 3 && !this.step3Enabled()) || (cantReviewAndSign);
+		const isSaveButtonDisabled = this.isSaveButtonDisabled();
+		const isSaveDraftButtonDisabled = this.isSaveDraftButtonDisabled();
+		const statusName = status ? status.name : "";
 
 		return (
 			<div className="buttons cl_buttons">
@@ -337,28 +353,35 @@ class SellButtons extends Component {
 						</button>
 
 						<div
+							data-tip={step === 1 && this.getTooltipMessages()}
+							data-tip-disable={step !== 1}
+						>
+							<button
+								id="next-step"
+								className="yellow-button"
+								disabled={isSaveDraftButtonDisabled}
+								onClick={() => (this.saveAndGoNext(false))}
+								style={{ height: 64 }}
+							>
+								{statusName === LISTING_STATUS.DRAFT && <Translate i18nKey="SAVE_DRAFT" />}
+								{statusName !== LISTING_STATUS.DRAFT && <Translate i18nKey="SAVE" />}
+								{savingDraft && <i className="fa fa-cog fa-spin" />}
+								{savingSuccess && <i className="fa fa-check" />}
+							</button>
+						</div>
+
+						<div
 							data-tip={cantReviewAndSign ? this.getReviewButtonTooltipMessages() : this.getTooltipMessages()}
 						>
-							{isButtonDisabled ? (
-								<button
-									onClick={this.props.enableValidation}
-									className="yellow-button disabled"
-									id="next-step"
-								>
-									<Translate i18nKey="Next" />
-									{" "}
-									<i className="fa fa-arrow-right" />
-								</button>
-							) : (
-								<button
-									id="next-step"
-									className="yellow-button"
-									onClick={() => (step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext())}
-								>
-									<Translate i18nKey="Next" />
-									{saving ? <i className="fa fa-cog fa-spin" /> : <i className="fa fa-arrow-right" />}
-								</button>
-							)}
+							<button
+								id="next-step"
+								className="yellow-button"
+								disabled={isSaveButtonDisabled}
+								onClick={() => (step === 4 ? this.goToReviewAndSign() : this.saveAndGoNext())}
+							>
+								<Translate i18nKey="Next" />
+								{saving ? <i className="fa fa-cog fa-spin" /> : <i className="fa fa-arrow-right" />}
+							</button>
 						</div>
 					</div>
 				)}
