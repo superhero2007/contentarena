@@ -10,6 +10,7 @@ easy_admin:
                 - { entity: 'ArchivedUser', label: 'Archived' }
                 - {label: 'Import', icon: 'file-new', route: 'importUsersPage'}
                 - {label: 'Export', icon: 'file-new', route: 'exportUsersPage'}
+                - {label: 'Archive from file', icon: 'file-new', route: 'importAndArchive'}
             - label: 'Company Information'
               children:
                 - Company
