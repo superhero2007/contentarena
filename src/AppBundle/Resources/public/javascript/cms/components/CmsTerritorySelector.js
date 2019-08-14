@@ -266,6 +266,8 @@ class CmsTerritorySelector extends React.Component {
 			placeholder,
 			isInvalid,
 			selectedRights,
+			selectedCountries: availableCountries,
+			countries: allCountries,
 		} = this.props;
 
 		const {
@@ -278,6 +280,25 @@ class CmsTerritorySelector extends React.Component {
 			territoriesMode,
 			viewAllTerritories,
 		} = this.state;
+
+		const radioSelectors = [
+			{
+				value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
+				label: <Translate i18nKey="CMS_RADIO_WORLDWIDE" />,
+			},
+			{
+				value: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
+				label: <Translate i18nKey="CMS_RADIO_SELECTED_TERRITORIES" />,
+			},
+			{
+				value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
+				label: <Translate i18nKey="CMS_RADIO_WORLDWIDE_EXCLUDING" />,
+			},
+		];
+
+		if (availableCountries && availableCountries.length !== allCountries.length) {
+			radioSelectors.shift();
+		}
 
 		return (
 			<div className="country-selector region-filter">
@@ -295,20 +316,7 @@ class CmsTerritorySelector extends React.Component {
 					value={territoriesMode}
 					onChange={this.handleChangeMode}
 					className="sales-packages-filters"
-					items={[
-						{
-							value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE,
-							label: <Translate i18nKey="CMS_RADIO_WORLDWIDE" />,
-						},
-						{
-							value: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-							label: <Translate i18nKey="CMS_RADIO_SELECTED_TERRITORIES" />,
-						},
-						{
-							value: BUNDLE_TERRITORIES_METHOD.WORLDWIDE_EXCLUDING,
-							label: <Translate i18nKey="CMS_RADIO_WORLDWIDE_EXCLUDING" />,
-						},
-					]}
+					items={radioSelectors}
 				/>
 
 				{!disabled && territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && (
