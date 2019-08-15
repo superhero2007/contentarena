@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\User;
 use AppBundle\Helper\ControllerHelper;
 use AppBundle\Service\EmailService;
 use AppBundle\Service\JobService;
@@ -72,8 +73,13 @@ class ApiCompanyController extends Controller
      */
     public function getCompanyUsers()
     {
+        /* @var User $user */
         $user = $this->getUser();
         $users = $user->getCompany()->getUsers();
+        $users = $users->filter(function($companyUser){
+            /* @var User $companyUser */
+            return !$companyUser->isArchived();
+        });
         return $this->getSerializedResponse($users, array('companyUsers') );
     }
 

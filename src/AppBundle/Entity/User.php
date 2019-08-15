@@ -504,7 +504,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return Company
      */
     public function getCompany()
     {
@@ -702,6 +702,15 @@ class User extends BaseUser
     {
         $status = $this->getStatus();
         return $status == null || ($status->getName() !== $this::$ARCHIVED_STATUS && $status->getName() !== $this::$INACTIVE_STATUS);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isArchived()
+    {
+        $status = $this->getStatus();
+        return $status != null && $status->getName() === $this::$ARCHIVED_STATUS ;
     }
 
 }
