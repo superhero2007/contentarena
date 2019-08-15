@@ -48,15 +48,25 @@ class AppExtension extends AbstractExtension
         );
     }
 
-    public function seasonDuration($season) {
+    /**
+     * @param $season
+     * @param $extraData
+     * @return string
+     * @throws \Exception
+     */
+    public function seasonDuration($season, $extraData) {
         /* @var Season $season */
 
-        if ($season->getStartDate() == null || $season->getEndDate() == null ) return $season->getName();
+        $datesInfo =  $extraData['seasonDurations'][$season->getExternalId()];
+        $startDate = ($season->getStartDate()) ? $season->getStartDate() : (($datesInfo) ? new \DateTime($datesInfo['startDate']) : null);
+        $endDate = ($season->getEndDate()) ? $season->getEndDate() : (($datesInfo) ? new \DateTime($datesInfo['endDate']) : null);
 
-        $startMonth = $season->getStartDate()->format("M");
-        $endMonth = $season->getEndDate()->format("M");
-        $startYear = $season->getStartDate()->format("Y");
-        $endYear = $season->getEndDate()->format("Y");
+        if ($startDate == null || $endDate == null ) return $season->getName();
+
+        $startMonth = $startDate->format("M");
+        $endMonth = $endDate->format("M");
+        $startYear = $startDate->format("Y");
+        $endYear = $endDate->format("Y");
 
         if ( $startYear == $endYear ) return $startYear;
 
