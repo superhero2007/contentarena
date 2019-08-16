@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import TagsInput from "react-tagsinput";
 import { PropTypes } from "prop-types";
+import { Prompt } from "react-router-dom";
 import Translate from "@components/Translator/Translate";
 import FileSelector from "../../main/components/FileSelector";
 import SearchCompetition from "../../main/components/SearchCompetition";
@@ -29,7 +30,7 @@ import {
 	updateFromMultiple,
 } from "../actions/stepOneActions";
 import ListingName from "../components/ListingName";
-
+import { listingEdited, updateStep } from "../actions/contentActions";
 
 class SellFormStep1 extends React.Component {
 	constructor(props) {
@@ -61,6 +62,7 @@ class SellFormStep1 extends React.Component {
 	}
 
 	componentDidMount() {
+		window.addEventListener("beforeunload", this.beforeunload);
 		if (this.props.step !== 1) return;
 		ContentArena.Api.getAllSports(["create"])
 			.done((sports) => {
@@ -79,6 +81,17 @@ class SellFormStep1 extends React.Component {
 
 		this.props.updateContentValue("lastUpdate", new Date().getTime());
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener("beforeunload", this.beforeunload);
+	}
+
+	beforeunload = (e) => {
+		if (this.props.edited) {
+			e.preventDefault();
+			e.returnValue = true;
+		}
+	};
 
 	loadCategories(sport) {
 		const sportId = sport.externalId;
@@ -284,6 +297,8 @@ class SellFormStep1 extends React.Component {
 		) {
 			this.props.updateContentValue("name", newAutoName);
 		}
+
+		if (nextProps.step !== this.props.step) this.props.updateStep(1);
 	}
 
 	/**
@@ -292,11 +307,13 @@ class SellFormStep1 extends React.Component {
 	 * @param key
 	 */
 	updateContentValue = (event, key) => {
+		this.props.listingEdited();
 		this.props.updateContentValue(key, event.target.value);
 	};
 
 	updateTournamentName = (e) => {
 		this.setState({ lastTournamentId: null });
+		this.props.listingEdited();
 		this.updateContentValue(e, "customTournament");
 	};
 
@@ -382,7 +399,7 @@ class SellFormStep1 extends React.Component {
 				sportSelectors: prevState.sportSelectors,
 			};
 		});
-
+		this.props.listingEdited();
 		this.props.removeFromMultiple(i, "sports");
 	};
 
@@ -398,7 +415,7 @@ class SellFormStep1 extends React.Component {
 				seasonSelectors: prevState.seasonSelectors,
 			};
 		});
-
+		this.props.listingEdited();
 		this.props.removeFromMultiple(i, "seasons");
 	};
 
@@ -415,6 +432,7 @@ class SellFormStep1 extends React.Component {
 
 	websitesUpdated = (websites) => {
 		this.setState({ websites });
+		this.props.listingEdited();
 		this.props.updateContentValue("website", websites);
 	};
 
@@ -435,6 +453,7 @@ class SellFormStep1 extends React.Component {
 	addFile = (response) => {
 		const { attachments } = this.props;
 		const index = attachments.length;
+		this.props.listingEdited();
 		this.props.updateAttachments("save", index, {
 			file: response.file,
 			name: response.name,
@@ -442,6 +461,7 @@ class SellFormStep1 extends React.Component {
 	};
 
 	removeFile = (index) => {
+		this.props.listingEdited();
 		this.props.updateAttachments("remove", index, null);
 	};
 
@@ -526,10 +546,15 @@ class SellFormStep1 extends React.Component {
 			};
 		}
 
-		const { validation, name } = this.props;
+		const { validation, name, edited } = this.props;
 
 		return (
 			<div className="step-content">
+
+				<Prompt
+					when={edited}
+					message="Are you sure you want to leave? Changes you made may not be saved."
+				/>
 
 				{this.state.showSearch && (
 					<SearchCompetition
@@ -570,6 +595,7 @@ class SellFormStep1 extends React.Component {
 									remove={() => this.removeSport(i)}
 									showAddNew={list.length > 1 && list.length === i + 1}
 									onUpdateNew={(name) => {
+										this.props.listingEdited();
 										this.props.updateFromMultiple("sports", i, "value", name);
 									}}
 									showClose={i > 0}
@@ -671,6 +697,7 @@ class SellFormStep1 extends React.Component {
 							name={name}
 							onChange={(e) => {
 								this.setState({ nameSet: true });
+								this.props.listingEdited();
 								this.props.updateContentValue("name", e.target.value);
 							}}
 						/>
@@ -679,7 +706,10 @@ class SellFormStep1 extends React.Component {
 							value={this.props.description}
 							title="CL_STEP1_LISTING_DETAILS_TITLE"
 							placeholder={this.context.t("CL_STEP1_LISTING_DETAILS_PLACEHOLDER")}
-							onChange={e => this.updateContentValue(e, "description")}
+							onChange={(e) => {
+								this.props.listingEdited();
+								this.updateContentValue(e, "description");
+							}}
 						/>
 
 						<div
@@ -783,6 +813,8 @@ const mapDispatchToProps = dispatch => ({
 	addNewCategory: () => dispatch(addNewCategory()),
 	addNewTournament: () => dispatch(addNewTournament()),
 	reset: () => dispatch(reset()),
+	updateStep: step => dispatch(updateStep(step)),
+	listingEdited: () => dispatch(listingEdited()),
 	selectTournament: tournament => dispatch({
 		type: "SELECT_TOURNAMENT",
 		tournament,

@@ -4,7 +4,7 @@ import ReactTable from "react-table";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import RightDefaults from "../components/RightDefaults";
-import { updateContentValue } from "../actions/contentActions";
+import { listingEdited, updateContentValue } from "../actions/contentActions";
 import { SuperRightDefinitions } from "../components/SuperRightDefinitions";
 import RightDefaultsBySuperRight from "../components/RightDefaultsBySuperRight";
 
@@ -100,7 +100,7 @@ class SuperRightList extends React.Component {
 
 	render() {
 		const hasSoldAnyPackage = this.hasSalesPackagesSold();
-		const { validation, rightsPackage } = this.props;
+		const { validation, rightsPackage, listingEdited } = this.props;
 		const isInvalid = (!rightsPackage.length || rightsPackage.filter(element => element.exclusive === "").length) && validation;
 
 		return (
@@ -143,6 +143,7 @@ class SuperRightList extends React.Component {
 												checked={this.isCheckBoxChecked(id)}
 												className="ca-checkbox"
 												onChange={(e) => {
+													listingEdited();
 													e.target.checked
 														? this.addRight(props.original)
 														: this.removeRight(props.original);
@@ -171,6 +172,7 @@ class SuperRightList extends React.Component {
 												type="radio"
 												checked={offerValue === offers.EXCLUSIVE}
 												onChange={() => {
+													listingEdited();
 													this.onExclusive(props.original, true);
 												}}
 												id={exclusiveIdAttr}
@@ -186,6 +188,7 @@ class SuperRightList extends React.Component {
 												type="radio"
 												checked={offerValue === offers.NON_EXCLUSIVE}
 												onChange={() => {
+													listingEdited();
 													this.onExclusive(props.original, false);
 												}}
 												id={nonExclusiveIdAttr}
@@ -215,6 +218,7 @@ class SuperRightList extends React.Component {
 												<input
 													type="number"
 													onChange={(e) => {
+														listingEdited();
 														this.props.updateContentValue(inputData.key, Number(e.target.value));
 													}}
 													value={this.props[inputData.key]}
@@ -244,6 +248,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	listingEdited: () => dispatch(listingEdited()),
 	superRightsUpdated: rightsPackage => dispatch({
 		type: "SUPER_RIGHTS_UPDATED",
 		rightsPackage,

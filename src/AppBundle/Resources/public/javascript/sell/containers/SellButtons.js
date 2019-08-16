@@ -6,7 +6,7 @@ import { getMaxDate } from "@utils/listing";
 import moment from "moment";
 import Translate from "@components/Translator/Translate";
 import store from "../../main/store";
-import { updateContentValue, goToStep } from "../actions/contentActions";
+import { listingSaved, updateContentValue } from "../actions/contentActions";
 import { enableValidation, disableValidation } from "../../main/actions/validationActions";
 import companyIsValid from "../actions/validationActions";
 import { editedProgramSelected, parseSeasons } from "../../main/actions/utils";
@@ -41,8 +41,9 @@ class SellButtons extends Component {
 	}
 
 	saveAndGoNext = (goNextStep = true) => {
-		const { history, goToStep } = this.props;
+		const { history } = this.props;
 		this.props.disableValidation();
+		this.props.listingSaved();
 		this.setState({
 			saving: goNextStep,
 			savingDraft: !goNextStep,
@@ -81,7 +82,6 @@ class SellButtons extends Component {
 
 				if (goNextStep) {
 					history.push(`/contentlisting/${response.customId}/${nextStep}`);
-					goToStep(nextStep);
 				}
 			})
 			.fail(() => {
@@ -250,9 +250,9 @@ class SellButtons extends Component {
 	};
 
 	goToReviewAndSign = () => {
-		const { history, goToStep } = this.props;
+		const { history } = this.props;
 		this.props.disableValidation();
-
+		this.props.listingSaved();
 		let savePromise = null;
 		let { content } = store.getState();
 		content = parseSeasons(content);
@@ -293,18 +293,16 @@ class SellButtons extends Component {
 					savingSuccess: true,
 				});
 				history.push(`/contentlisting/${response.customId}/sign`);
-				goToStep(5);
 			}
 		});
 	};
 
 	goToPreviousStep = () => {
-		const { history, goToStep } = this.props;
+		const { history } = this.props;
 		const { content } = store.getState();
 		const prevStep = (Number(content.step) - 1);
 
 		history.push(`/contentlisting/${content.customId}/${prevStep}`);
-		goToStep(prevStep);
 	};
 
 	isSaveButtonDisabled = () => {
@@ -397,7 +395,7 @@ SellButtons.contextTypes = {
 const mapStateToProps = state => state.content;
 
 const mapDispatchToProps = dispatch => ({
-	goToStep: step => dispatch(goToStep(step)),
+	listingSaved: () => dispatch(listingSaved()),
 	updateContentValue: (key, value) => dispatch(updateContentValue(key, value)),
 	updateSalesPackages: (name, salesPackage, index) => dispatch({
 		type: "UPDATE_SALES_PACKAGES",

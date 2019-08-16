@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
+import { Prompt } from "react-router-dom";
 import Translate from "@components/Translator/Translate";
 import FileSelector from "../../main/components/FileSelector";
 import SalesPackageForm from "../components/SalesPackageForm";
@@ -13,6 +14,8 @@ import ApplicableLaw from "../components/ApplicableLaw";
 import CurrencySelector from "../components/CurrencySelector";
 import RightsLegend from "../../main/components/RightsLegend";
 import RightsList from "../../main/components/RightsList";
+import { listingEdited, updateStep } from "../actions/contentActions";
+import ProductionStandardsDefinitions from "../components/ProductionStandardsDefinitions";
 
 class SellFormStep4 extends React.Component {
 	constructor(props) {
@@ -25,7 +28,27 @@ class SellFormStep4 extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		window.addEventListener("beforeunload", this.beforeunload);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("beforeunload", this.beforeunload);
+	}
+
+	componentWillReceiveProps(nextProps, context) {
+		if (nextProps.step === 4 && this.props.step !== 4) this.props.updateStep(4);
+	}
+
+	beforeunload = (e) => {
+		if (this.props.edited) {
+			e.preventDefault();
+			e.returnValue = true;
+		}
+	};
+
 	selectCurrency = (currency) => {
+		this.props.listingEdited();
 		this.props.updateContentValue("currency", currency);
 	};
 
@@ -42,18 +65,22 @@ class SellFormStep4 extends React.Component {
 			sp.currency = { code: currency };
 			return sp;
 		});
+		this.props.listingEdited();
 		this.props.addSalesPackages(salesPackages);
 	};
 
 	updateSalesPackage = (salesPackage, index) => {
+		this.props.listingEdited();
 		this.props.updateSalesPackages("save", salesPackage, index);
 	};
 
 	removeSalesPackage = (index) => {
+		this.props.listingEdited();
 		this.props.updateSalesPackages("remove", null, index);
 	};
 
 	removeAllSalesPackage = () => {
+		this.props.listingEdited();
 		this.props.updateSalesPackages("removeAll");
 	};
 
@@ -69,10 +96,12 @@ class SellFormStep4 extends React.Component {
 	addFile = (response) => {
 		const { annex } = this.props;
 		const index = annex.length;
+		this.props.listingEdited();
 		this.props.updateAnnex("save", index, { file: response.file, name: response.name });
 	};
 
 	removeFile = (index) => {
+		this.props.listingEdited();
 		this.props.updateAnnex("remove", index, null);
 	};
 
@@ -86,12 +115,19 @@ class SellFormStep4 extends React.Component {
 			sportCategory,
 			tournament,
 			seasons,
+			edited,
 		} = this.props;
 
 		if (step !== 4) return (null);
 		return (
 
 			<div className="step-content step-4">
+
+				<Prompt
+					when={edited}
+					message="Are you sure you want to leave? Changes you made may not be saved."
+				/>
+
 				{(sports.length || sportCategory.length || tournament.length || seasons.length) && (
 					<div className="listing-summary">
 						<div>
@@ -176,6 +212,8 @@ SellFormStep4.contextTypes = {
 const mapStateToProps = state => state.content;
 
 const mapDispatchToProps = dispatch => ({
+	updateStep: step => dispatch(updateStep(step)),
+	listingEdited: () => dispatch(listingEdited()),
 	updateContentValue: (key, value) => dispatch({
 		type: "UPDATE_CONTENT_VALUE",
 		key,

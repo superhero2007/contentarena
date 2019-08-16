@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
 import { TranslatedPlaceholderInput } from "@components/Translator";
+import { listingEdited } from "../actions/contentActions";
 
 
 class JurisdictionSelector extends React.Component {
@@ -12,6 +13,7 @@ class JurisdictionSelector extends React.Component {
 	}
 
 	selectTerritory = (e) => {
+		this.props.listingEdited();
 		this.props.updateContentValue("jurisdiction", e.target.value);
 	};
 
@@ -51,6 +53,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	listingEdited: step => dispatch(listingEdited(step)),
 	updateContentValue: (key, value) => dispatch({
 		type: "UPDATE_CONTENT_VALUE",
 		key,

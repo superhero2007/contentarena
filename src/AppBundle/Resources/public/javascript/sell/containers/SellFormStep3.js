@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Moment from "moment";
 import { PropTypes } from "prop-types";
+import { Prompt } from "react-router-dom";
 import Translate from "@components/Translator/Translate";
 import PopupRight from "../components/PopupRight";
 import LicenseDateSelector from "../components/LicenseDateSelector";
@@ -11,6 +12,7 @@ import { SummaryText, TitleBar } from "../components/SellFormItems";
 import { DATE_FORMAT } from "@constants";
 import RightsLegend from "../../main/components/RightsLegend";
 import RightsList from "../../main/components/RightsList";
+import { listingEdited, updateStep } from "../actions/contentActions";
 
 const licenseStyles = {
 	fontSize: "15px",
@@ -36,7 +38,11 @@ class SellFormStep3 extends React.Component {
 		this.yellowCheck = `${assetsBaseDir}app/images/yellow_chech.png`;
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidMount() {
+		window.addEventListener("beforeunload", this.beforeunload);
+	}
+
+	componentWillReceiveProps(nextProps, context) {
 		const { rightsPackage, contentDeliveryConfigured } = this.props;
 
 		if (rightsPackage !== nextProps.rightsPackage || contentDeliveryConfigured !== nextProps.contentDeliveryConfigured) {
@@ -45,17 +51,31 @@ class SellFormStep3 extends React.Component {
 				contentDeliveryConfigured: nextProps.contentDeliveryConfigured,
 			}, () => this.updateContentDeliveryStatus());
 		}
+		if (nextProps.step === 3 && this.props.step !== 3) this.props.updateStep(3);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener("beforeunload", this.beforeunload);
+	}
+
+	beforeunload = (e) => {
+		if (this.props.edited) {
+			e.preventDefault();
+			e.returnValue = true;
+		}
+	};
 
 	closeLicensePopup = () => {
 		this.setState({ licensePopup: false });
 	};
 
 	selectLicenseDates = (key, value) => {
+		this.props.listingEdited();
 		this.props.updateContentValue(key, value);
 	};
 
 	updateRight = (rightsPackage) => {
+		this.props.listingEdited();
 		this.props.superRightsUpdated(rightsPackage);
 	};
 
@@ -86,6 +106,7 @@ class SellFormStep3 extends React.Component {
 			PROGRAM_NAME,
 			LICENSED_LANGUAGES,
 			validation,
+			edited,
 		} = this.props;
 		if (step !== 3) return (null);
 
@@ -94,6 +115,11 @@ class SellFormStep3 extends React.Component {
 		return (
 
 			<div className="step-content step-3">
+
+				<Prompt
+					when={edited}
+					message="Are you sure you want to leave? Changes you made may not be saved."
+				/>
 
 				{/* SUMMARY */}
 				<div className="listing-summary">
@@ -307,14 +333,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	updateStep: step => dispatch(updateStep(step)),
+	listingEdited: () => dispatch(listingEdited()),
 	superRightsUpdated: rightsPackage => dispatch({
 		type: "SUPER_RIGHTS_UPDATED",
 		rightsPackage,
-	}),
-	removeNewSport: index => dispatch({
-		type: "REMOVE_NEW",
-		index,
-		selectorType: "sports",
 	}),
 	updateContentValue: (key, value) => dispatch({
 		type: "UPDATE_CONTENT_VALUE",
