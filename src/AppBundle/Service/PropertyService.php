@@ -226,6 +226,16 @@ class PropertyService
         if (isset($data['description'])) {
             $property->setDescription($data['description']);
         }
+        if (isset($data['seasons'])) {
+            $oldSeasons = $property->getSeasons();
+            $property->setSeasons([]);
+            foreach ($oldSeasons as $season){
+                $this->em->remove($season);
+                $this->em->flush();
+            }
+            $newSeasons = $this->serializer->deserialize( json_encode($data['seasons']), "array<AppBundle\Entity\Season>", "json");
+            $property->setSeasons($newSeasons);
+        }
         if (isset($data['rights'])) {
             $property->setRights($this->serializer->deserialize( json_encode($data['rights']), "array<AppBundle\Entity\PropertyRight>", "json"));
         }

@@ -60,6 +60,7 @@
       min-height: 40px;
       align-items: center;
       position: relative;
+      margin-right: 10px;
       .remove-icon-button{
         position: absolute;
         right: 41px;
@@ -1698,5 +1699,9 @@
         }
       }
     }
+  }
+
+  &.edit-property {
+
   }
 }

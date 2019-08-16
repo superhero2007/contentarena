@@ -197,6 +197,11 @@ export const RIGHTS = [
 
 ];
 
+export const EDIT_TYPE = {
+	create: "CREATE",
+	edit: "EDIT",
+};
+
 export const REGIONS_ENUMS = {
 	Algeria: "DZA",
 	Angola: "AGO",
