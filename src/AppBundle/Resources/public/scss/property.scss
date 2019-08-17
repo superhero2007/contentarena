@@ -1656,8 +1656,9 @@
       align-items: baseline;
       border-bottom: 4px solid #D4D8DE;
       padding-bottom: 3px;
-      position: relative;
       max-width: 515px;
+      position: absolute;
+      width: 180px;
 
       .select-text {
         display: none;
