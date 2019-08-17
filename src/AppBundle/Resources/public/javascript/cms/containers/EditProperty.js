@@ -132,16 +132,9 @@ class EditProperty extends React.Component {
 		const {
 			currentStep,
 			editSeason,
-		} = this.state;
-		let {
 			availableSeasons,
 		} = this.state;
 		const { property: { seasons }, loading } = this.props;
-		if (editSeason === EDIT_TYPE.create) {
-			availableSeasons = availableSeasons.filter(season => !seasons.find(element => element.externalId === season.externalId));
-		} else {
-			availableSeasons = availableSeasons.filter(season => seasons.find(element => element.externalId === season.externalId));
-		}
 		const seasonTypes = [
 			{
 				value: EDIT_TYPE.create,
@@ -180,6 +173,7 @@ class EditProperty extends React.Component {
 									const {
 										externalId,
 									} = season;
+									const selected = seasons.find(element => element.externalId === externalId);
 
 									const idAttr = `checkbox-${externalId}`;
 									return (
@@ -188,7 +182,8 @@ class EditProperty extends React.Component {
 												type="checkbox"
 												className="ca-checkbox blue"
 												value={externalId}
-												checked={this.isCheckBoxChecked(externalId)}
+												checked={selected || this.isCheckBoxChecked(externalId)}
+												disabled={selected}
 												onChange={(e) => {
 													e.target.checked
 														? this.addSeason(season)
