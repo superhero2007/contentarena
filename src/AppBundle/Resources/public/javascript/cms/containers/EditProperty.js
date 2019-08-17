@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
+import moment from "moment/moment";
+import uniqBy from "lodash/uniqBy";
 import { getSeasonMonthString, getSeasonStartYear, SeasonYear } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
@@ -9,6 +11,7 @@ import CmsStepSelector from "../components/CmsStepSelector";
 import RadioSelector from "../../main/components/RadioSelector";
 import { EDIT_TYPE } from "@constants";
 import { updateProperty } from "../actions/propertyActions";
+import CmsCustomSeason from "../components/CmsCustomSeason";
 
 class EditProperty extends React.Component {
 	constructor(props) {
@@ -19,6 +22,10 @@ class EditProperty extends React.Component {
 			loadingSeasons: false,
 			availableSeasons: [],
 			selectedSeasons: [],
+			selectedSeason: null,
+			customSeasonsAdded: false,
+			showCustomSeason: false,
+			showAll: false,
 		};
 	}
 
@@ -66,6 +73,33 @@ class EditProperty extends React.Component {
 				});
 			});
 	}
+
+	addCustomSeason = (season) => {
+		const { availableSeasons } = this.state;
+		const index = availableSeasons.findIndex(s => s.externalId === season.externalId);
+
+		if (index !== -1) {
+			availableSeasons[index] = season;
+		} else {
+			availableSeasons.push(season);
+		}
+
+		availableSeasons.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+
+		this.setState({ availableSeasons, selectedSeason: null, customSeasonsAdded: true }, () => {
+			this.addSeason(season);
+		});
+	};
+
+	removeCustomSeason = (index) => {
+		const { availableSeasons } = this.state;
+		availableSeasons.splice(index, 1);
+		this.setState({ availableSeasons });
+	};
+
+	editSeason = (season) => {
+		this.setState({ showCustomSeason: true, selectedSeason: season });
+	};
 
 	addSeason = (season) => {
 		const { selectedSeasons } = this.state;
@@ -125,7 +159,21 @@ class EditProperty extends React.Component {
 			seasons: allSeasons,
 		};
 		updateProperty(updateObj);
-		this.setState({ selectedSeasons: [] });
+	};
+
+	getFutureSeasons = () => {
+		const {
+			availableSeasons,
+			customSeasonsAdded,
+		} = this.state;
+
+		if (customSeasonsAdded) return availableSeasons;
+
+		return availableSeasons.filter((season) => {
+			const seasonStartYear = +getSeasonStartYear(season);
+			const currentYear = +moment().format("YYYY");
+			return currentYear <= +seasonStartYear;
+		});
 	};
 
 	render() {
@@ -133,8 +181,12 @@ class EditProperty extends React.Component {
 			currentStep,
 			editSeason,
 			availableSeasons,
+			showAll,
+			customSeasonsAdded,
+			selectedSeason,
+			showCustomSeason,
 		} = this.state;
-		const { property: { seasons }, loading } = this.props;
+		const { property: { seasons, tournament }, loading } = this.props;
 		const seasonTypes = [
 			{
 				value: EDIT_TYPE.create,
@@ -145,6 +197,10 @@ class EditProperty extends React.Component {
 				label: <Translate i18nKey="CMS_EDIT_PROPERTY_STEP1_EDIT" />,
 			},
 		];
+
+		const futureSeasons = this.getFutureSeasons();
+		let allSeasons = (showAll || futureSeasons.length === 0) ? availableSeasons : futureSeasons;
+		allSeasons = uniqBy(allSeasons.concat(seasons), "externalId");
 
 		return (
 			<div className="default-container no-title property edit-property">
@@ -169,9 +225,10 @@ class EditProperty extends React.Component {
 							enableNextStep
 						>
 							<div className="season-selector">
-								{availableSeasons.map((season) => {
+								{allSeasons.map((season, index) => {
 									const {
 										externalId,
+										custom,
 									} = season;
 									const selected = seasons.find(element => element.externalId === externalId);
 
@@ -198,10 +255,65 @@ class EditProperty extends React.Component {
 											>
 												<SeasonYear {...season} />
 											</label>
+											{custom && (
+												<span className="remove-icon-button" onClick={() => { this.removeCustomSeason(index); }}>
+													<i className="fa fa-times-circle" />
+												</span>
+											)}
+											{custom && (
+												<span className="edit-season" onClick={() => { this.editSeason(season); }}>
+													<i className="fa fa-pencil" />
+												</span>
+											)}
 										</div>
 									);
 								})}
 							</div>
+
+							<div className="season-buttons" style={{ marginBottom: 20 }}>
+								{!showAll && futureSeasons.length >= 1 && !customSeasonsAdded && (
+									<span
+										className="add-season"
+										onClick={() => {
+											this.setState({ showAll: true });
+										}}
+									>
+										<i className="fa fa-arrow-circle-down small-icon" />
+										<Translate i18nKey="CMS_SEASONS_SHOW_ALL" />
+									</span>
+								)}
+								{!showCustomSeason && (
+									<span
+										className="add-season"
+										onClick={() => {
+											this.setState({ showCustomSeason: true });
+										}}
+									>
+										<i className="fa fa-plus-circle small-icon" />
+										<Translate i18nKey="CMS_FORM_ADD_SEASON" />
+									</span>
+								)}
+							</div>
+
+							{ showCustomSeason && (
+								<>
+									<h4 style={{ marginTop: 20 }}>
+										<Translate i18nKey="CMS_CREATE_PROPERTY_ADD_SEASON_TITLE" />
+									</h4>
+									<h6>
+										<Translate i18nKey="CMS_CREATE_PROPERTY_ADD_SEASON_SUBTITLE" />
+									</h6>
+									<CmsCustomSeason
+										onDelete={() => {
+											this.setState({ showCustomSeason: false });
+										}}
+										season={selectedSeason}
+										existingSeasons={allSeasons}
+										onConfirm={this.addCustomSeason}
+										tournament={tournament}
+									/>
+								</>
+							)}
 						</CmsStepSelector>
 					)}
 
