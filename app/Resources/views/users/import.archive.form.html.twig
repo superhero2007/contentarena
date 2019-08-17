@@ -1,0 +1,48 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block content_title %}
+    Archive users from file
+{% endblock %}
+
+{% block main %}
+
+    {{ form_start(form) }}
+
+    <div class="form-group  field-text">
+        {{ form_label(form.csvFile) }}
+        {{ form_errors(form.csvFile) }}
+        {{ form_widget(form.csvFile) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(form.send) }}
+        {{ form_widget(form.send) }}
+    </div>
+
+    {{ form_end(form) }}
+
+    {% if usersProcessed > 0 %}
+        <div><strong>Total users processed: {{ usersProcessed }}</strong></div>
+        </br>
+    {% endif %}
+
+    {% if usersDeleted | length > 0 %}
+        <div><strong>Users archived: </strong></div>
+        {% for row in usersDeleted %}
+            <div>
+                {{ row[0] }}
+            </div>
+        {% endfor %}
+        </br>
+    {% endif %}
+
+    {% if usersSkippedByError | length > 0 %}
+        <div> <strong>Users skipped (not found): </strong></div>
+        {% for row in usersSkippedByError %}
+            <div>
+                {{ row[0] }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}
