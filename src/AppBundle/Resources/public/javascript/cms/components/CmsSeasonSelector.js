@@ -150,6 +150,8 @@ class CmsSeasonSelector extends React.Component {
 			editSeason,
 		} = this.state;
 
+		const { tournament } = this.props;
+
 		if (loadingSeasons) {
 			return (
 				<div className="item-tools">
@@ -248,6 +250,7 @@ class CmsSeasonSelector extends React.Component {
 							season={editSeason}
 							existingSeasons={seasons}
 							onConfirm={this.addCustomSeason}
+							tournament={tournament}
 						/>
 					</>
 				)}

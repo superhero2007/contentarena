@@ -235,13 +235,9 @@ class CmsCustomSeason extends React.Component {
 
 const mapStateToProps = state => ({
 	seasons: state.property.seasons,
-	tournament: state.property.tournament,
-});
-
-const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps,
+	null,
 )(CmsCustomSeason);

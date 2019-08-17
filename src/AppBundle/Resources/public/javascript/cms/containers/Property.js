@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Translate from "@components/Translator/Translate";
 import { DefaultBox } from "../../common/components/Containers";
@@ -8,10 +9,11 @@ import Loader from "../../common/components/Loader/Loader";
 import RightsOverview from "./RightsOverview";
 import CmsCommercialOverview from "./CmsCommercialOverview";
 import CmsFixtures from "./CmsFixtures";
-import CmsEditedProgram from "./CmsEditedProgram";
+// import CmsEditedProgram from "./CmsEditedProgram";
 import CmsListingOverview from "./CmsListingOverview";
 import PropertyDetails from "./PropertyDetails";
 import PropertyDeal from "./PropertyDeal";
+import EditProperty from "./EditProperty";
 import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
@@ -102,6 +104,12 @@ class Property extends React.Component {
 			);
 		}
 
+		if (tab === "edit") {
+			return (
+				<EditProperty history={history} />
+			);
+		}
+
 		const translatedTabs = this.getTranslatedTabs();
 
 		return (
@@ -113,15 +121,17 @@ class Property extends React.Component {
 							<a className="ca-btn primary" href={ROUTE_PATHS.CREATE_LISTING}>
 								<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
 							</a>
-							<button
-								onClick={() => {
-									history.push(`${ROUTE_PATHS.PROPERTIES}/${propertyId}/deals`);
-								}}
+							<Link
+								to={`${ROUTE_PATHS.PROPERTIES}/${propertyId}/deals`}
 								className="ca-btn primary"
 							>
 								<Translate i18nKey="CMS_PROPERTY_ADD_DEAL" />
-							</button>
-							<i className="fa fa-pencil-square-o" onClick={() => { console.info("pensil icon not specified"); }} />
+							</Link>
+							<Link
+								to={`${ROUTE_PATHS.PROPERTIES}/${propertyId}/edit`}
+							>
+								<i className="fa fa-pencil-square-o" onClick={() => { console.info("pensil icon not specified"); }} />
+							</Link>
 						</div>
 					</h4>
 

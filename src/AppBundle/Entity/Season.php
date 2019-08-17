@@ -65,7 +65,7 @@ class Season
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tournament" )
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"home"})
+     * @Groups({"home", "property"})
      */
     private $tournament;
 
