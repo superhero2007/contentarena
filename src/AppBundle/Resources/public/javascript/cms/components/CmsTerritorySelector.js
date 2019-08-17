@@ -300,6 +300,10 @@ class CmsTerritorySelector extends React.Component {
 			radioSelectors.shift();
 		}
 
+		if (availableCountries.length < 2) {
+			radioSelectors.pop();
+		}
+
 		return (
 			<div className="country-selector region-filter">
 
@@ -312,12 +316,14 @@ class CmsTerritorySelector extends React.Component {
 					)
 				}
 
-				<RadioSelector
-					value={territoriesMode}
-					onChange={this.handleChangeMode}
-					className="sales-packages-filters"
-					items={radioSelectors}
-				/>
+				{radioSelectors.length > 1 && (
+					<RadioSelector
+						value={territoriesMode}
+						onChange={this.handleChangeMode}
+						className="sales-packages-filters"
+						items={radioSelectors}
+					/>
+				)}
 
 				{!disabled && territoriesMode !== BUNDLE_TERRITORIES_METHOD.WORLDWIDE && (
 					<div>

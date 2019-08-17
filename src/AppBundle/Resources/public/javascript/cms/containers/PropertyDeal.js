@@ -120,6 +120,9 @@ class PropertyDeal extends React.Component {
 		const newValue = Object.assign({}, right, { dealExclusive });
 		rights.push(newValue);
 		const territory = this.getTerritoriesFromRights(rights);
+		if (territory.territoriesMode === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES) {
+			territory.territories = [];
+		}
 		this.setState({
 			rights,
 			currentStep: 2,
@@ -163,6 +166,9 @@ class PropertyDeal extends React.Component {
 		if (step === 4) {
 			const { territories, rights } = this.state;
 			const territory = this.getTerritoriesFromRights(rights);
+			if (territory.territoriesMode === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES) {
+				territory.territories = [];
+			}
 			territories.push(territory);
 			this.setState({
 				territories,
@@ -196,9 +202,14 @@ class PropertyDeal extends React.Component {
 					<CmsStepSelector
 						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
 						button={<Translate i18nKey="CMS_DEALS_STEP1_BUTTON" />}
-						enableNextStep={seasonsValid}
+						enableNextStep={seasonsValid || !allSeasons.length}
 						onNext={() => this.onNext(2)}
 					>
+						{!allSeasons.length && (
+							<div className="select-item">
+								<Translate i18nKey="CMS_SEASON_NOT_APPLICABLE" />
+							</div>
+						)}
 						{allSeasons.length > 1 && (
 							<div className="select-item">
 								<button
@@ -221,9 +232,13 @@ class PropertyDeal extends React.Component {
 							{allSeasons.map((season) => {
 								const { endDate, startDate } = season;
 								let { year } = season;
-								if (!year) {
-									const startY = moment(startDate).format("YY");
-									const endY = moment(endDate).format("YY");
+								if (year) {
+									if (year.split("/")[0].length === 2) {
+										year = startDate.substring(0, 2) + year;
+									}
+								} else {
+									const startY = moment(startDate).format("YYYY");
+									const endY = moment(endDate).format("YYYY");
 									year = startY === endY ? `${endY}` : `${startY}/${endY}`;
 								}
 								const selectedSeason = seasons.find(element => element.id === season.id);
@@ -237,7 +252,7 @@ class PropertyDeal extends React.Component {
 											className="ca-checkbox blue"
 										/>
 										<label>
-											{`${year.split("/")[0].length === 2 ? "20" : ""}${year}`}
+											{year}
 										</label>
 									</div>
 								);
@@ -245,7 +260,7 @@ class PropertyDeal extends React.Component {
 						</div>
 					</CmsStepSelector>
 
-					{(seasonsValid && currentStep > 1) && (
+					{(currentStep > 1) && (
 						<CmsStepSelector
 							title={<Translate i18nKey="CMS_DEALS_STEP2_TITLE" />}
 							button={<Translate i18nKey="CMS_DEALS_STEP2_BUTTON" />}
@@ -348,7 +363,7 @@ class PropertyDeal extends React.Component {
 						</CmsStepSelector>
 					)}
 
-					{(rightsValid && currentStep > 2) && (
+					{(currentStep > 2) && (
 						<CmsStepSelector
 							title={<Translate i18nKey="CMS_DEALS_STEP3_TITLE" />}
 							button={<Translate key={`add_deal${territories.length}`} i18nKey={territories.length < 2 ? "CMS_DEALS_STEP3_BUTTON" : "CMS_DEALS_STEP3_ANOTHER_BUTTON"} />}
