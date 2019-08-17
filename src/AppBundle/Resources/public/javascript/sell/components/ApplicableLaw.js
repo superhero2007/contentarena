@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
 import CountrySelector from "../../main/components/CountrySelector";
+import { listingEdited } from "../actions/contentActions";
 
 class ApplicableLaw extends React.Component {
 	constructor(props) {
@@ -11,6 +12,7 @@ class ApplicableLaw extends React.Component {
 	}
 
 	select = (value) => {
+		this.props.listingEdited();
 		this.props.updateContentValue("law", value);
 	};
 
@@ -45,6 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	listingEdited: step => dispatch(listingEdited(step)),
 	updateContentValue: (key, value) => dispatch({
 		type: "UPDATE_CONTENT_VALUE",
 		key,

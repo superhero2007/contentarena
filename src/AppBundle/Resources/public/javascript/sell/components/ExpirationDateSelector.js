@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
 import { SERVER_DATE_TIME_FORMAT, DATE_FORMAT } from "@constants";
+import { listingEdited } from "../actions/contentActions";
 
 class ExpirationDateSelector extends React.Component {
 	constructor(props) {
@@ -13,6 +14,7 @@ class ExpirationDateSelector extends React.Component {
 	}
 
 	handleStartDate = (date) => {
+		this.props.listingEdited();
 		this.props.updateContentValue("expiresAt", date.set({
 			hour: 23,
 			minute: 59,
@@ -59,6 +61,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	listingEdited: step => dispatch(listingEdited(step)),
 	updateContentValue: (key, value) => dispatch({
 		type: "UPDATE_CONTENT_VALUE",
 		key,

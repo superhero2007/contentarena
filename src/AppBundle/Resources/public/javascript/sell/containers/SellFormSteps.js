@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import cn from "classnames";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
-import { goToStep } from "../actions/contentActions";
 
 const SellFormStep = ({
 	step, active, title, onClick, stepVisited, stepFinished,
@@ -50,11 +49,10 @@ class SellFormSteps extends React.Component {
 
 	onClick = (stepSelected) => {
 		const {
-			goToStep, customId, history, maxStep,
+			customId, history, maxStep,
 		} = this.props;
 
 		if (stepSelected <= maxStep) {
-			goToStep(stepSelected);
 			history.push(`/contentlisting/${customId}/${stepSelected}`);
 		}
 	};
@@ -91,7 +89,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-	goToStep: step => dispatch(goToStep(step)),
 });
 
 export default connect(

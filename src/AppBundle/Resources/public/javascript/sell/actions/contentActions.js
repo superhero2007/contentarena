@@ -9,11 +9,11 @@ export const scrollTopMainContent = () => {
 	}
 };
 
-export const goToStep = (step) => {
+export const updateStep = (step) => {
 	scrollTopMainContent();
 	scrollMainContainer();
 	return {
-		type: contentType.GO_TO_STEP,
+		type: contentType.UPDATE_STEP,
 		step,
 	};
 };
@@ -23,3 +23,6 @@ export const updateContentValue = (key, value) => ({
 	key,
 	value,
 });
+
+export const listingEdited = () => ({ type: contentType.LISTING_EDITED });
+export const listingSaved = () => ({ type: contentType.LISTING_SAVED });

@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import cn from "classnames";
 import Translate from "@components/Translator/Translate";
 import { GenericModalStyle } from "../../../main/styles/custom";
+import { listingEdited } from "../../../sell/actions/contentActions";
 
 Modal.setAppElement("#home-wrapper");
 
@@ -116,6 +117,7 @@ class SelectorModal extends Component {
 		}
 
 		this.setState({ updated: false, filterUpdated: false, customCountry: false });
+		this.props.listingEdited();
 		this.props.applySelection(
 			this.props.selectorType,
 			selectedItems,
@@ -441,6 +443,7 @@ const mapStateToProps = state => Object.assign({}, state.selector, {
 });
 
 const mapDispatchToProps = dispatch => ({
+	listingEdited: () => dispatch(listingEdited()),
 	openSelector: () => dispatch({
 		type: "OPEN_SELECTOR",
 	}),

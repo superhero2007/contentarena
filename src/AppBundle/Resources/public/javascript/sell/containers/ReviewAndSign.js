@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { PropTypes } from "prop-types";
+import { Prompt } from "react-router-dom";
 import Translate from "@components/Translator/Translate";
 import store from "../../main/store";
 import SalesPackageForm from "../components/SalesPackageForm";
@@ -16,6 +17,7 @@ import { SummaryText } from "../components/SellFormItems";
 import RightsLegend from "../../main/components/RightsLegend";
 import { disableValidation, enableValidation } from "../../main/actions/validationActions";
 import RightsList from "../../main/components/RightsList";
+import { listingEdited, listingSaved, updateStep } from "../actions/contentActions";
 
 class ReviewAndSign extends React.Component {
 	constructor(props) {
@@ -31,6 +33,10 @@ class ReviewAndSign extends React.Component {
 		this.state = {};
 	}
 
+	componentDidMount() {
+		window.addEventListener("beforeunload", this.beforeunload);
+	}
+
 	componentWillReceiveProps(nextProps) {
 		const { status, step, updateContentValue } = nextProps;
 
@@ -39,7 +45,19 @@ class ReviewAndSign extends React.Component {
 			updateContentValue("termsArena", true);
 			this.termsAutoSelected = true;
 		}
+		if (this.props.step === 5 && this.props.step !== 5) this.props.updateStep(5);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener("beforeunload", this.beforeunload);
+	}
+
+	beforeunload = (e) => {
+		if (this.props.edited) {
+			e.preventDefault();
+			e.returnValue = true;
+		}
+	};
 
 	submit = () => {
 		const { updateContentValue, disableValidation } = this.props;
@@ -49,6 +67,7 @@ class ReviewAndSign extends React.Component {
 		content = parseSeasons(content);
 
 		disableValidation();
+		this.props.listingSaved();
 		this.setState({ showSubmitting: true });
 		ContentArena.ContentApi.saveContentAsActive(content)
 			.done((response) => {
@@ -71,6 +90,7 @@ class ReviewAndSign extends React.Component {
 
 		let { content } = store.getState();
 		content = parseSeasons(content);
+		this.props.listingSaved();
 		ContentArena.ContentApi.saveContentAsDraft(content)
 			.done(() => {
 				this.setState({ showSubmitting: false });
@@ -131,10 +151,12 @@ class ReviewAndSign extends React.Component {
 	);
 
 	updateSalesPackage = (salesPackage, index) => {
+		this.props.listingEdited();
 		this.props.updateSalesPackages("save", salesPackage, index);
 	};
 
 	removeSalesPackage = (index) => {
+		this.props.listingEdited();
 		this.props.updateSalesPackages("remove", null, index);
 	};
 
@@ -177,6 +199,7 @@ class ReviewAndSign extends React.Component {
 			customId,
 			status,
 			COMMENTS_RIGHTS,
+			edited,
 		} = this.props;
 
 		const { showDetails, showSubmitting } = this.state;
@@ -186,6 +209,12 @@ class ReviewAndSign extends React.Component {
 
 		return (
 			<div className="step-content review-sign-container">
+
+				<Prompt
+					when={edited}
+					message="Are you sure you want to leave? Changes you made may not be saved."
+				/>
+
 				{this.successScreen()}
 				<div className="summary-text">
 					<div className="listing-summary">
@@ -295,9 +324,11 @@ class ReviewAndSign extends React.Component {
 								updateContentValue("signature", signature);
 							}}
 							onChangeSignatureName={(e) => {
+								this.props.listingEdited();
 								updateContentValue("signatureName", e.target.value);
 							}}
 							onChangeSignaturePosition={(e) => {
+								this.props.listingEdited();
 								updateContentValue("signaturePosition", e.target.value);
 							}}
 							showTerms
@@ -350,6 +381,9 @@ ReviewAndSign.contextTypes = {
 const mapStateToProps = state => state.content;
 
 const mapDispatchToProps = dispatch => ({
+	listingEdited: () => dispatch(listingEdited()),
+	listingSaved: () => dispatch(listingSaved()),
+	updateStep: step => dispatch(updateStep(step)),
 	updateContentValue: (key, value) => dispatch({
 		type: "UPDATE_CONTENT_VALUE",
 		key,

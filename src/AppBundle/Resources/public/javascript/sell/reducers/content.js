@@ -3,7 +3,7 @@ import { allValue } from "../../main/components/LanguageSelector";
 
 export const contentType = {
 	CONTENT_INIT: "CONTENT_INIT",
-	GO_TO_STEP: "GO_TO_STEP",
+	UPDATE_STEP: "UPDATE_STEP",
 	ADD_NEW: "ADD_NEW",
 	REMOVE_NEW: "REMOVE_NEW",
 	SUPER_RIGHTS_UPDATED: "SUPER_RIGHTS_UPDATED",
@@ -17,6 +17,8 @@ export const contentType = {
 	UPDATE_ANNEX: "UPDATE_ANNEX",
 	ADD_SALES_PACKAGES: "ADD_SALES_PACKAGES",
 	RESET: "RESET",
+	LISTING_EDITED: "LISTING_EDITED",
+	LISTING_SAVED: "LISTING_SAVED",
 };
 
 export const EmptyListing = {
@@ -53,6 +55,7 @@ export const EmptyListing = {
 	image: null,
 	imageBase64: null,
 	tempData: {},
+	edited: false,
 };
 
 export const content = (state = EmptyListing, action) => {
@@ -65,10 +68,11 @@ export const content = (state = EmptyListing, action) => {
 		action.content.initialized = true;
 		return Object.assign({}, state, action.content,
 			{ maxStep: max([action.content.maxStep, state.maxStep]) });
-	case contentType.GO_TO_STEP:
+	case contentType.UPDATE_STEP:
 		return Object.assign({}, state, {
 			step: action.step,
 			stepChange: true,
+			edited: false,
 			maxStep: max([action.step, state.maxStep]),
 		});
 	case contentType.REMOVE_NEW:
@@ -101,9 +105,12 @@ export const content = (state = EmptyListing, action) => {
 	case contentType.UPDATE_CONTENT_VALUE:
 		newState = {};
 		newState[action.key] = action.value;
-		newState.listingEdited = true;
 
 		return Object.assign({}, state, newState);
+	case contentType.LISTING_EDITED:
+		return Object.assign({}, state, { edited: true });
+	case contentType.LISTING_SAVED:
+		return Object.assign({}, state, { edited: false });
 	case contentType.SELECT_TOURNAMENT:
 		newState = {};
 		newState.tournament = [action.tournament];

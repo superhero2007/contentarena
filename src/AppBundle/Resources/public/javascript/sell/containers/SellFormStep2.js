@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Prompt } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import Translate from "@components/Translator/Translate";
 import SuperRightList from "./SuperRightList";
@@ -9,6 +10,7 @@ import { editedProgramSelected } from "../../main/actions/utils";
 import ContentListingEventDetails from "../../buy/components/ContentListingEventDetails";
 import { LanguageSelector } from "../../main/components/LanguageSelector";
 import { SummaryText } from "../components/SellFormItems";
+import { listingEdited, updateStep } from "../actions/contentActions";
 
 class SellFormStep2 extends React.Component {
 	constructor(props) {
@@ -23,6 +25,7 @@ class SellFormStep2 extends React.Component {
 
 		this.state = {
 			years,
+			listingEdited: false,
 			title: "Step 2 - Configure Rights",
 			licensePopup: false,
 			rights: RightDefinitions,
@@ -32,17 +35,23 @@ class SellFormStep2 extends React.Component {
 		this.defaultValue = "";
 	}
 
-	componentWillReceiveProps(nextProps) {
-		// console.log("Step 2 - props", nextProps);
-		window.content = nextProps;
+	componentWillReceiveProps(nextProps, context) {
+		if (nextProps.step === 2 && this.props.step !== 2) this.props.updateStep(2);
 	}
 
-	loadRights = (rightsPackage, group) => {
-		const _this = this;
-		ContentArena.Api.getRights(rightsPackage.map(p => (p.id)), group)
-			.done((rights) => {
-				_this.setState({ rights });
-			});
+	componentDidMount() {
+		window.addEventListener("beforeunload", this.beforeunload);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("beforeunload", this.beforeunload);
+	}
+
+	beforeunload = (e) => {
+		if (this.props.edited) {
+			e.preventDefault();
+			e.returnValue = true;
+		}
 	};
 
 	handleCheckboxChange = (flag) => {
@@ -62,7 +71,6 @@ class SellFormStep2 extends React.Component {
 
 	isInvalid = (type) => {
 		const { validation } = this.props;
-
 		return !type && validation;
 	};
 
@@ -70,6 +78,7 @@ class SellFormStep2 extends React.Component {
 		const {
 			programDescription,
 			updateContentValue,
+			listingEdited,
 			PROGRAM_NAME,
 			PROGRAM_EPISODES,
 			PROGRAM_YEAR,
@@ -88,7 +97,9 @@ class SellFormStep2 extends React.Component {
 			seasons,
 			packages,
 			validation,
+			edited,
 		} = this.props;
+
 		if (step !== 2) return (null);
 
 		const editedProgram = editedProgramSelected(rightsPackage);
@@ -98,6 +109,12 @@ class SellFormStep2 extends React.Component {
 		return (
 
 			<div className="step-content step-2">
+
+				<Prompt
+					when={edited}
+					message="Are you sure you want to leave? Changes you made may not be saved."
+				/>
+
 				{(sports.length || sportCategory.length || tournament.length || seasons.length) && (
 					<div className="listing-summary">
 						<SummaryText {...this.props} />
@@ -115,6 +132,7 @@ class SellFormStep2 extends React.Component {
 						<textarea
 							onChange={(e) => {
 								updateContentValue("programDescription", e.target.value);
+								listingEdited();
 								this.userDescriptionAdded = true;
 							}}
 							value={programDescription}
@@ -149,6 +167,7 @@ class SellFormStep2 extends React.Component {
 									type="text"
 									value={PROGRAM_NAME}
 									onChange={(e) => {
+										listingEdited();
 										updateContentValue("PROGRAM_NAME", e.target.value);
 									}}
 									className={`${this.isInvalid(PROGRAM_NAME) ? "is-invalid" : ""}`}
@@ -163,6 +182,7 @@ class SellFormStep2 extends React.Component {
 									type="number"
 									value={PROGRAM_EPISODES}
 									onChange={(e) => {
+										listingEdited();
 										updateContentValue("PROGRAM_EPISODES", Number(e.target.value));
 									}}
 									className={`${this.isInvalid(PROGRAM_EPISODES) ? "is-invalid" : ""}`}
@@ -177,6 +197,7 @@ class SellFormStep2 extends React.Component {
 									type="number"
 									value={PROGRAM_DURATION}
 									onChange={(e) => {
+										listingEdited();
 										updateContentValue("PROGRAM_DURATION", Number(e.target.value));
 									}}
 									className={`${this.isInvalid(PROGRAM_DURATION) ? "is-invalid" : ""}`}
@@ -193,6 +214,7 @@ class SellFormStep2 extends React.Component {
 										type="radio"
 										checked={EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
 										onChange={() => {
+											listingEdited();
 											this.handleCheckboxChange(true);
 										}}
 										id="edit-program-optional"
@@ -203,6 +225,7 @@ class SellFormStep2 extends React.Component {
 										type="radio"
 										checked={!EDIT_PROGRAM_DESCRIPTION_OPTIONAL}
 										onChange={() => {
+											listingEdited();
 											this.handleCheckboxChange(false);
 										}}
 										id="edit-program"
@@ -224,6 +247,7 @@ class SellFormStep2 extends React.Component {
 								<select
 									value={PROGRAM_TYPE}
 									onChange={(e) => {
+										listingEdited();
 										updateContentValue("PROGRAM_TYPE", e.target.value);
 									}}
 									className={`${this.isInvalid(PROGRAM_TYPE) ? "is-invalid" : ""}`}
@@ -245,6 +269,7 @@ class SellFormStep2 extends React.Component {
 								<select
 									value={PROGRAM_YEAR}
 									onChange={(e) => {
+										listingEdited();
 										updateContentValue("PROGRAM_YEAR", e.target.value);
 									}}
 								>
@@ -261,6 +286,7 @@ class SellFormStep2 extends React.Component {
 										<LanguageSelector
 											value={PROGRAM_LANGUAGE}
 											onChange={(value) => {
+												listingEdited();
 												updateContentValue("PROGRAM_LANGUAGE", value);
 											}}
 										/>
@@ -275,6 +301,7 @@ class SellFormStep2 extends React.Component {
 										<LanguageSelector
 											value={PROGRAM_SUBTITLES}
 											onChange={(value) => {
+												listingEdited();
 												updateContentValue("PROGRAM_SUBTITLES", value);
 											}}
 										/>
@@ -288,6 +315,7 @@ class SellFormStep2 extends React.Component {
 										<LanguageSelector
 											value={PROGRAM_SCRIPT}
 											onChange={(value) => {
+												listingEdited();
 												updateContentValue("PROGRAM_SCRIPT", value);
 											}}
 										/>
@@ -302,6 +330,7 @@ class SellFormStep2 extends React.Component {
 								</label>
 								<textarea
 									onChange={(e) => {
+										listingEdited();
 										updateContentValue("PROGRAM_DESCRIPTION", e.target.value);
 									}}
 									placeholder={this.context.t("CL_STEP2_PROGRAM_DESCRIPTION_OPTIONAL_PLACEHOLDER")}
@@ -327,6 +356,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+	updateStep: step => dispatch(updateStep(step)),
+	listingEdited: () => dispatch(listingEdited()),
 	superRightsUpdated: rightsPackage => dispatch({
 		type: "SUPER_RIGHTS_UPDATED",
 		rightsPackage,

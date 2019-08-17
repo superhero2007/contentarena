@@ -80,7 +80,7 @@ class ApiCompanyController extends Controller
             /* @var User $companyUser */
             return !$companyUser->isArchived();
         });
-        return $this->getSerializedResponse($users, array('companyUsers') );
+        return $this->getSerializedResponse($users->getValues(), array('companyUsers') );
     }
 
     /**

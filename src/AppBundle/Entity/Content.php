@@ -522,7 +522,7 @@ class Content implements NotifiableInterface
     /**
      * @var boolean;
      * @ORM\Column(name="content_delivery_configured", type="boolean")
-     * @Groups({"listing"})
+     * @Groups({"listing", "home"})
      */
     private $contentDeliveryConfigured = false;
 
