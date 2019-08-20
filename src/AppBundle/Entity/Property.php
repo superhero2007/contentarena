@@ -386,7 +386,7 @@ class Property implements NotifiableInterface
     }
 
     /**
-     * @return mixed
+     * @return Season
      */
     public function getSeasons()
     {
@@ -394,7 +394,7 @@ class Property implements NotifiableInterface
     }
 
     /**
-     * @param mixed $seasons
+     * @param array $seasons
      */
     public function setSeasons($seasons)
     {
@@ -402,7 +402,7 @@ class Property implements NotifiableInterface
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getCreatedAt()
     {

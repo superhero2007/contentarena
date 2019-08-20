@@ -225,6 +225,7 @@ class CreatePropertyTerritories extends React.Component {
 							value={territories}
 							territoriesMode={territoriesMode}
 							multiple
+							selectAllDefault
 							filter={[]}
 							selectedRights={selectedRights}
 							exclusiveSoldTerritories={false}

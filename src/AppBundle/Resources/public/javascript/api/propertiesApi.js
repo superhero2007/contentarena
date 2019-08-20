@@ -6,6 +6,7 @@ const propertiesApi = {
 	fetchProperty: data => request.post(API_ENDPOINTS.PROPERTIES_DETAIL, data),
 	createProperty: data => request.post(API_ENDPOINTS.PROPERTIES_CREATE, data),
 	updateProperty: data => request.post(API_ENDPOINTS.PROPERTIES_UPDATE, data),
+	addDeals: data => request.post(API_ENDPOINTS.PROPERTIES_ADD_DEALS, data),
 };
 
 

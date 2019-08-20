@@ -12,6 +12,19 @@ const getUniqueSelectedOptions = (rights, key) => {
 	return [...new Set(values)];
 };
 
+export const getUnique = (arr, comp) => (
+	arr
+		.map(e => e[comp])
+
+		// store the keys of the unique objects
+		.map((e, i, final) => final.indexOf(e) === i && i)
+
+		// eliminate the dead keys & store unique objects
+		.filter(e => arr[e]).map(e => arr[e])
+);
+
+export const sortSeasons = (a, b) => new Date(b.startDate) - new Date(a.startDate);
+
 const getLanguages = (rights, key) => {
 	let values = [];
 	const right = first(rights);

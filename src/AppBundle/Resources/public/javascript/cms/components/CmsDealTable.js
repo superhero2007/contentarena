@@ -4,6 +4,7 @@ import ReactTable from "react-table";
 import Translate from "@components/Translator/Translate";
 import CurrencySelector from "../../sell/components/CurrencySelector";
 import FileSelector from "../../main/components/FileSelector";
+import { trashIconRed } from "../../main/components/Icons";
 
 class CmsDealTable extends React.Component {
 	constructor(props) {
@@ -11,101 +12,80 @@ class CmsDealTable extends React.Component {
 
 		this.state = {
 			loading: false,
-			listings: [],
+			deals: props.deals,
 		};
 	}
 
-	componentDidMount() {
-		this.updateListing();
-	}
-
-	componentWillReceiveProps(newProps) {
-		this.updateListing(newProps);
-	}
-
-	updateListing = (newProps) => {
-		const props = newProps || this.props;
-		const { seasons, rights, territories } = props;
-		const listings = [];
-		territories.forEach((territory, index) => {
-			listings.push({
-				index,
-				territory: territory.territories,
-				company: "",
-				seasons,
-				currency: "",
-				fee: 0,
-				attachments: [],
-				type: true,
-			});
-		});
-		listings.splice(-1, 1);
-
-		this.setState({
-			listings,
-		});
-		// props.onSave(listings);
-	};
-
 	addFile = (index, response) => {
-		const { listings } = this.state;
+		const { deals } = this.state;
 		const { onSave } = this.props;
-		const selected = listings[index];
+		const selected = deals[index];
 		const replaced = Object.assign({}, selected, {
 			attachments: [{
 				file: response.file,
 				name: response.name,
 			}, ...selected.attachments],
 		});
-		listings.splice(index, 1, replaced);
-		this.setState({ listings });
-		// onSave(listings);
+		deals.splice(index, 1, replaced);
+		onSave(deals);
 	};
 
 	removeFile = (index, fileIndex) => {
-		const { listings } = this.state;
+		const { deals } = this.state;
 		const { onSave } = this.props;
-		const selected = listings[index];
+		const selected = deals[index];
 		selected.attachments.splice(fileIndex, 1);
-		listings.splice(index, 1, selected);
-		this.setState({ listings });
-		// onSave(listings);
+		deals.splice(index, 1, selected);
+		onSave(deals);
+	};
+
+	removeDeal = (index) => {
+		const { deals } = this.state;
+		const { onSave } = this.props;
+		deals.splice(index, 1);
+		onSave(deals);
+	};
+
+	selectCurrency = (index, value) => {
+		setTimeout(() => {
+			this.updateValue(index, "currency", value);
+		}, 1);
 	};
 
 	updateContent = (index) => {
-		const { listings } = this.state;
+		const { deals } = this.state;
 		const { onSave } = this.props;
-		const selected = listings[index];
+		const selected = deals[index];
 		if (selected.type) {
 			const replaced = selected.seasons.map(element => Object.assign({}, selected, {
 				seasons: [element],
 				type: false,
 			}));
-			listings.splice(index, 1, ...replaced);
+			deals.splice(index, 1, ...replaced);
 		} else {
-			const selectedList = listings.filter(element => element.index === selected.index);
-			const selectedItem = listings.find(element => element.index === selected.index);
-			const selectedIndex = listings.indexOf(selectedItem);
+			const selectedList = deals.filter(element => element.index === selected.index);
+			const selectedItem = deals.find(element => element.index === selected.index);
+			const selectedIndex = deals.indexOf(selectedItem);
 			const replaced = Object.assign({}, selected, {
 				seasons: selectedList.map(element => element.seasons[0]),
 				type: true,
 			});
-			listings.splice(selectedIndex, selectedList.length, replaced);
+			deals.splice(selectedIndex, selectedList.length, replaced);
 		}
-		this.setState({ listings });
-		// onSave(listings);
+		onSave(deals);
 	};
 
 	updateValue = (index, key, value) => {
-		const { listings } = this.state;
+		const { deals } = this.state;
 		const { onSave } = this.props;
-		const selected = listings[index];
-		const replaced = Object.assign({}, selected, {
-			[key]: value,
-		});
-		listings.splice(index, 1, replaced);
-		this.setState({ listings });
-		// onSave(listings);
+		deals[index][key] = value;
+		onSave(deals);
+	};
+
+	handleKeyDown = (index, key, e) => {
+		if (e.key === "Enter") {
+			this.updateValue(index, key, e.target.value);
+		}
 	};
 
 	getTitleColumns = () => [{
@@ -114,22 +94,25 @@ class CmsDealTable extends React.Component {
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
 		accessor: "territory",
-		width: 200,
-		Cell: props => (
-			<span>
-				{props.value.map(element => element.name).join(", ")}
-			</span>
-		),
+		width: "200",
+		Cell: (props) => {
+			if (props.value.length > 10) {
+				return <div>{`${props.value.length} territories`}</div>;
+			}
+			return props.value.map(element => <div>{element.name}</div>);
+		},
 	}, {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_COMPANY" />,
 		id: props => `company-name-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header",
 		accessor: "company",
+		width: 200,
 		Cell: props => (
 			<input
 				type="text"
 				defaultValue={props.value}
+				onKeyDown={e => this.handleKeyDown(props.index, "company", e)}
 				onBlur={e => this.updateValue(props.index, "company", e.target.value)}
 			/>
 		),
@@ -140,36 +123,34 @@ class CmsDealTable extends React.Component {
 		id: props => `season-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 200,
+		width: 250,
 		accessor: "seasons",
+		Cell: props => props.value.map(season => <div>{season.name}</div>),
+	}, {
+		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_FEE" />,
+		id: props => `fee-${props.index}`,
+		headerClassName: "table-header",
+		className: "table-header justify-content-center",
+		width: 100,
+		accessor: "fee",
 		Cell: props => (
-			<span>
-				{props.value.map(season => season.name).join(", ")}
-			</span>
+			<input
+				type="number"
+				defaultValue={props.value}
+				onFocus={e => e.target.select()}
+				onKeyDown={e => this.handleKeyDown(props.index, "fee", e)}
+				onBlur={e => this.updateValue(props.index, "fee", e.target.value)}
+			/>
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_CURRENCY" />,
 		id: props => `currency-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center overflow-initial",
-		width: 200,
+		width: 120,
 		accessor: "currency",
 		Cell: props => (
-			<CurrencySelector onClick={value => this.updateValue(props.index, "currency", value)} selected={props.value} key={props.index} />
-		),
-	}, {
-		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_FEE" />,
-		id: props => `fee-${props.index}`,
-		headerClassName: "table-header",
-		className: "table-header justify-content-center",
-		width: 200,
-		accessor: "fee",
-		Cell: props => (
-			<input
-				type="text"
-				defaultValue={props.value}
-				onBlur={e => this.updateValue(props.index, "fee", e.target.value)}
-			/>
+			<CurrencySelector onClick={value => this.selectCurrency(props.index, value)} selected={props.value} key={props.index} />
 		),
 	}, {
 		Header: () => <Translate i18nKey="CMS_DEALS_OVERVIEW_TABLE_HEADER_ATTACHMENTS" />,
@@ -196,36 +177,44 @@ class CmsDealTable extends React.Component {
 		id: props => `split-${props.index}`,
 		headerClassName: "table-header",
 		className: "table-header justify-content-center",
-		width: 200,
-		accessor: "type",
+		accessor: "seasons",
 		Cell: props => (
-			<button
-				className="standard-button"
-				onClick={() => this.updateContent(props.index)}
-				disabled={props.value && props.original.seasons.length < 2}
-			>
-				{props.value ? "Split" : "Remove"}
-			</button>
+			<div className="d-flex">
+				{props.value.length > 1 && (
+					<button
+						className="standard-button"
+						onClick={() => this.updateContent(props.index)}
+					>
+						<Translate i18nKey="CMS_DEALS_TABLE_SPLIT_BUTTON" />
+					</button>
+				)}
+				<img
+					className="remove-deal-icon"
+					alt="Remove"
+					src={trashIconRed}
+					onClick={() => this.removeDeal(props.index)}
+				/>
+			</div>
 		),
 	}];
 
 	render() {
-		let { listings } = this.state;
-		listings = listings.sort((a, b) => a.index - b.index);
+		let { deals } = this.state;
+		deals = deals.sort((a, b) => a.index - b.index);
 
 		const columns = [...this.getTitleColumns(), ...this.getDetailColumns()];
 
 		return (
 			<section className="property-listing-wrapper">
 				<ReactTable
-					className="ca-table property-listings-table"
+					className="ca-table property-deals-table"
 					defaultPageSize={30}
 					showPageSizeOptions={false}
 					showPagination={false}
 					minRows={0}
 					multiSort={false}
 					resizable={false}
-					data={listings}
+					data={deals}
 					columns={columns}
 				/>
 			</section>

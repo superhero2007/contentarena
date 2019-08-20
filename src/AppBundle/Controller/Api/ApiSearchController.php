@@ -119,6 +119,9 @@ class ApiSearchController extends BaseController
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
+
+        $response->setSharedMaxAge(3600);
+
         return $response;
 
     }
@@ -152,7 +155,11 @@ class ApiSearchController extends BaseController
             $territory['total'] = $countryRepository->countTerritoriesByTerritoryId($territory['id']);
         }
 
-        return new JsonResponse($territories);
+        $response = new JsonResponse($territories);
+
+        $response->setSharedMaxAge(3600);
+
+        return $response;
     }
 
     /**

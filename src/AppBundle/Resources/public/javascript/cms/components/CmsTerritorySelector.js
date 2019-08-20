@@ -31,9 +31,10 @@ class CmsTerritorySelector extends React.Component {
 
 	componentDidMount() {
 		const { countries, territoriesMode } = this.state;
+		const { selectAllDefault } = this.props;
 
 		this.parseTerritoryCountries(countries);
-		// this.handleChangeMode(territoriesMode);
+		if (selectAllDefault) this.handleChangeMode(territoriesMode);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -298,9 +299,6 @@ class CmsTerritorySelector extends React.Component {
 
 		if (availableCountries && availableCountries.length !== allCountries.length) {
 			radioSelectors.shift();
-		}
-
-		if (availableCountries.length < 2) {
 			radioSelectors.pop();
 		}
 
@@ -390,6 +388,7 @@ class CmsTerritorySelector extends React.Component {
 							exclusiveSoldTerritories={selection}
 							placeholder={placeholder}
 							isInvalid={isInvalid}
+							available={countries}
 						/>
 					</div>
 				)}

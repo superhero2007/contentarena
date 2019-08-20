@@ -17,6 +17,7 @@ import EditProperty from "./EditProperty";
 import {
 	fetchRegions, fetchTerritories, fetchPropertyDetails, fetchCountries,
 } from "../actions/propertyActions";
+import PropertyHeader from "../components/PropertyHeader";
 
 class Property extends React.Component {
 	constructor(props) {
@@ -115,25 +116,7 @@ class Property extends React.Component {
 		return (
 			<div className="default-container no-title property">
 				<DefaultBox>
-					<h4 className="title title-property-wrapper">
-						<span>{property.name}</span>
-						<div className="title-action-wrapper">
-							<a className="ca-btn primary" href={ROUTE_PATHS.CREATE_LISTING}>
-								<Translate i18nKey="CMS_EMPTY_LISTING_CREATE_LISTING" />
-							</a>
-							<Link
-								to={`${ROUTE_PATHS.PROPERTIES}/${propertyId}/deals`}
-								className="ca-btn primary"
-							>
-								<Translate i18nKey="CMS_PROPERTY_ADD_DEAL" />
-							</Link>
-							<Link
-								to={`${ROUTE_PATHS.PROPERTIES}/${propertyId}/edit`}
-							>
-								<i className="fa fa-pencil-square-o" onClick={() => { console.info("pensil icon not specified"); }} />
-							</Link>
-						</div>
-					</h4>
+					<PropertyHeader />
 
 					<div className="ca-tabs">
 						{

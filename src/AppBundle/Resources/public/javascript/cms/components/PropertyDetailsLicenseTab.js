@@ -27,7 +27,7 @@ class PropertyDetailsLicenseTab extends Component {
 		ContentArena.Api.getPropertyTerms(propertyId).then(({ data }) => {
 			const terms = data.map((term) => {
 				const items = term.items.map(element => Object.assign({}, element, { restoreValue: element.content }));
-				return Object.assign({}, terms, { items });
+				return Object.assign({}, term, { items });
 			});
 			this.setState({
 				terms,

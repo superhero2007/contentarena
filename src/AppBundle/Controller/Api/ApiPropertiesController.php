@@ -127,4 +127,25 @@ class ApiPropertiesController extends Controller
             "property" => $property,
         ), array("property"));
     }
+
+    /**
+     * @Route("/api/properties/deals/add", name="addPropertyDeals")
+     * @param Request $request
+     * @param PropertyService $propertyService
+     * @return mixed|string|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
+    public function addPropertyDeals(
+        Request $request,
+        PropertyService $propertyService
+    )
+    {
+        /* @var Property $property */
+        $user = $this->getUser();
+        $data = $request->get('property');
+
+        return $this->getSerializedResponse(array(
+            "success" => true,
+        ), array("property"));
+    }
 }

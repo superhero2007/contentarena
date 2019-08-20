@@ -4,14 +4,17 @@ import PropTypes from "prop-types";
 import cn from "classnames";
 import moment from "moment/moment";
 import uniqBy from "lodash/uniqBy";
+import Loader from "@components/Loader";
 import { getSeasonMonthString, getSeasonStartYear, SeasonYear } from "@utils/listing";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
 import CmsStepSelector from "../components/CmsStepSelector";
 import RadioSelector from "../../main/components/RadioSelector";
-import { EDIT_TYPE } from "@constants";
+import { CMS_PROPERTY_TABS, EDIT_TYPE, ROUTE_PATHS } from "@constants";
 import { updateProperty } from "../actions/propertyActions";
 import CmsCustomSeason from "../components/CmsCustomSeason";
+import { sortSeasons } from "../helpers/PropertyDetailsHelper";
+import PropertyHeader from "../components/PropertyHeader";
 
 class EditProperty extends React.Component {
 	constructor(props) {
@@ -32,6 +35,11 @@ class EditProperty extends React.Component {
 	componentDidMount() {
 		this.loadSeasons();
 	}
+
+	cancel = () => {
+		const { history, property: { customId } } = this.props;
+		history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
+	};
 
 	onNext = (step) => {
 		this.setState({
@@ -84,7 +92,7 @@ class EditProperty extends React.Component {
 			availableSeasons.push(season);
 		}
 
-		availableSeasons.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+		availableSeasons.sort(sortSeasons);
 
 		this.setState({ availableSeasons, selectedSeason: null, customSeasonsAdded: true }, () => {
 			this.addSeason(season);
@@ -136,7 +144,7 @@ class EditProperty extends React.Component {
 		const {
 			selectedSeasons,
 		} = this.state;
-		const { property: { customId, seasons } } = this.props;
+		const { property: { customId, seasons }, history } = this.props;
 		const { updateProperty } = this.props;
 		const allSeasons = [].concat(
 			selectedSeasons.map(element => ({
@@ -154,11 +162,16 @@ class EditProperty extends React.Component {
 				year: element.year,
 			})),
 		);
+
 		const updateObj = {
 			customId,
 			seasons: allSeasons,
 		};
-		updateProperty(updateObj);
+
+		updateProperty(updateObj)
+			.then(() => {
+				history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
+			});
 	};
 
 	getFutureSeasons = () => {
@@ -201,11 +214,14 @@ class EditProperty extends React.Component {
 		const futureSeasons = this.getFutureSeasons();
 		let allSeasons = (showAll || futureSeasons.length === 0) ? availableSeasons : futureSeasons;
 		allSeasons = uniqBy(allSeasons.concat(seasons), "externalId");
+		allSeasons.sort(sortSeasons);
 
 		return (
 			<div className="default-container no-title property edit-property">
 				<DefaultBox>
+					<PropertyHeader edit={false} />
 					<CmsStepSelector
+						style={{ marginTop: 20 }}
 						title={<Translate i18nKey="CMS_EDIT_PROPERTY_STEP1_TITLE" />}
 						enableNextStep
 					>
@@ -320,10 +336,17 @@ class EditProperty extends React.Component {
 					<HorizontalButtonBox>
 						<button
 							className="yellow-button"
+							onClick={this.cancel}
+						>
+							<Translate i18nKey="CMS_DEALS_CREATE_CANCEL_BUTTON" />
+						</button>
+						<button
+							className="yellow-button"
 							disabled={currentStep < 3 || loading}
 							onClick={this.handleSave}
 						>
-							<Translate i18nKey="CMS_EDIT_PROPERTY_BUTTON" />
+							{!loading && <Translate i18nKey="CMS_EDIT_PROPERTY_BUTTON" />}
+							{loading && <Loader xSmall loading />}
 						</button>
 					</HorizontalButtonBox>
 				</DefaultBox>

@@ -232,6 +232,33 @@ export const updateProperty = updatedProperty => async (dispatch) => {
 	}
 };
 
+
+export const addDealsPropertyRequest = () => ({
+	type: propertyDetailsTypes.ADD_DEAL_PROPERTY,
+});
+
+export const addDealsPropertySuccess = propertyDetail => ({
+	type: propertyDetailsTypes.ADD_DEAL_PROPERTY_SUCCESS,
+	propertyDetail,
+});
+
+export const addDealsPropertyFail = error => ({
+	type: propertyDetailsTypes.ADD_DEAL_PROPERTY_FAIL,
+	error,
+});
+
+export const addDealsProperty = newDeals => async (dispatch) => {
+	dispatch(addDealsPropertyRequest());
+	try {
+		const { data: { deals } } = await api.properties.addDeals({ deals: newDeals });
+		dispatch(addDealsPropertySuccess(deals));
+		return deals;
+	} catch (error) {
+		dispatch(addDealsPropertyFail(error));
+	}
+};
+
+
 export const createProgramRequest = () => ({
 	type: propertyDetailsTypes.CREATE_PROGRAM,
 });

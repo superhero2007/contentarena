@@ -12,6 +12,7 @@ const API_ENDPOINTS = {
 	PROPERTIES_DETAIL: "api/properties/detail",
 	PROPERTIES_CREATE: "api/properties/create",
 	PROPERTIES_UPDATE: "api/properties/update",
+	PROPERTIES_ADD_DEALS: "api/properties/deals/add",
 	FIXTURES_CREATE: "api/fixture/create",
 	FIXTURES_UPDATE: "api/fixture/update",
 	FIXTURES_REMOVE: "api/fixture/remove",

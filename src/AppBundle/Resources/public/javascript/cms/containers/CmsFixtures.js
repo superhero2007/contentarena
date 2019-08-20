@@ -9,6 +9,7 @@ import FixtureList from "./FixturesList";
 import FixtureForm from "../components/FixtureForm";
 import api from "../../api";
 import { fetchPropertySuccess, startFetchingPropertyDetails } from "../actions/propertyActions";
+import { sortSeasons } from "../helpers/PropertyDetailsHelper";
 
 
 class CmsFixtures extends React.Component {
@@ -111,6 +112,7 @@ class CmsFixtures extends React.Component {
 
 		const { property } = this.props;
 		const season = this.getSeasonSelected();
+		const fixtures = season.fixtures.sort((a, b) => new Date(a.date) - new Date(b.date));
 
 		return (
 			<section className="fixture-tab region-filter">
@@ -154,7 +156,7 @@ class CmsFixtures extends React.Component {
 
 						{season.fixtures.length > 0 && (
 							<FixtureList
-								fixtures={season.fixtures}
+								fixtures={fixtures}
 								onRemoveFixture={this.onRemoveFixture}
 								onEditFixture={this.onEditFixture}
 							/>

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 const CmsTabElement = ({
-	label, children, noBorder, opened,
+	label, children, noBorder, opened, style,
 }) => {
 	const [toggle, setToggle] = useState(opened);
 	return (
-		<div className="details-tab-element">
+		<div className="details-tab-element" style={style}>
 			<div className={`details-tab-element__title ${noBorder && "no-border"}`} onClick={() => setToggle(!toggle)}>
 				<i className={`fa fa-angle-${toggle ? "down" : "right"}`} />
 				<span>{label}</span>

@@ -6,10 +6,14 @@ import cn from "classnames";
 import ReactTooltip from "react-tooltip";
 import { DefaultBox, HorizontalButtonBox } from "@components/Containers";
 import Translate from "@components/Translator/Translate";
+import Loader from "@components/Loader";
 import CmsStepSelector from "../components/CmsStepSelector";
 import CmsTerritorySelector from "../components/CmsTerritorySelector";
-import { BUNDLE_TERRITORIES_METHOD } from "@constants";
+import { BUNDLE_TERRITORIES_METHOD, CMS_PROPERTY_TABS, ROUTE_PATHS } from "@constants";
 import CmsDealTable from "../components/CmsDealTable";
+import { getUnique, sortSeasons } from "../helpers/PropertyDetailsHelper";
+import { addDealsProperty } from "../actions/propertyActions";
+import PropertyHeader from "../components/PropertyHeader";
 
 class PropertyDeal extends React.Component {
 	constructor(props) {
@@ -17,16 +21,14 @@ class PropertyDeal extends React.Component {
 		this.state = {
 			seasons: [],
 			rights: [],
+			deals: [],
 			offers: {
 				EXCLUSIVE: "exclusive",
 				NON_EXCLUSIVE: "non-exclusive",
 			},
-			territories: [{
-				territories: [],
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-			}],
-			currentStep: 1,
-			listings: [],
+			territories: [],
+			territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
+			currentStep: props.property.seasons && props.property.seasons.length === 0 ? 2 : 1,
 		};
 	}
 
@@ -42,7 +44,12 @@ class PropertyDeal extends React.Component {
 
 	territoriesAreValid = () => {
 		const { territories } = this.state;
-		return !!territories[territories.length - 1].territories.length;
+		return !!territories.length;
+	};
+
+	cancel = () => {
+		const { history, property: { customId } } = this.props;
+		history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.RIGHTS}`);
 	};
 
 	onChangeSeason = (value) => {
@@ -87,7 +94,7 @@ class PropertyDeal extends React.Component {
 			territory.territories = this.props.countries;
 			territory.territoriesMode = BUNDLE_TERRITORIES_METHOD.WORLDWIDE;
 		} else {
-			territory.territories = [].concat(...rights.map(right => right.territories));
+			territory.territories = getUnique([].concat(...rights.map(right => right.territories)), "id");
 		}
 		return territory;
 	};
@@ -95,11 +102,9 @@ class PropertyDeal extends React.Component {
 	onSelectAllRights = () => {
 		const { property: { rights } } = this.props;
 		const newRights = rights.map(element => Object.assign({}, element, { dealExclusive: null }));
-		const territory = this.getTerritoriesFromRights(newRights);
 		this.setState({
 			rights: newRights,
 			currentStep: 2,
-			territories: [territory],
 		});
 	};
 
@@ -107,10 +112,6 @@ class PropertyDeal extends React.Component {
 		this.setState({
 			rights: [],
 			currentStep: 2,
-			territories: [{
-				territories: [],
-				territoriesMode: BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES,
-			}],
 		});
 	};
 
@@ -119,14 +120,9 @@ class PropertyDeal extends React.Component {
 		rights = rights.filter(element => element.id !== right.id);
 		const newValue = Object.assign({}, right, { dealExclusive });
 		rights.push(newValue);
-		const territory = this.getTerritoriesFromRights(rights);
-		if (territory.territoriesMode === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES) {
-			territory.territories = [];
-		}
 		this.setState({
 			rights,
 			currentStep: 2,
-			territories: [territory],
 		});
 	};
 
@@ -139,22 +135,16 @@ class PropertyDeal extends React.Component {
 			const newValue = Object.assign({}, value, { dealExclusive: null });
 			rights.push(newValue);
 		}
-		const territory = this.getTerritoriesFromRights(rights);
 		this.setState({
 			rights,
 			currentStep: 2,
-			territories: [territory],
 		});
 	};
 
 	onSelectTerritories = (territories, territoriesMode) => {
-		const { territories: allTerritories } = this.state;
-		allTerritories[allTerritories.length - 1] = {
+		this.setState({
 			territories,
 			territoriesMode,
-		};
-		this.setState({
-			territories: allTerritories,
 		});
 	};
 
@@ -164,22 +154,53 @@ class PropertyDeal extends React.Component {
 		});
 
 		if (step === 4) {
-			const { territories, rights } = this.state;
-			const territory = this.getTerritoriesFromRights(rights);
-			if (territory.territoriesMode === BUNDLE_TERRITORIES_METHOD.SELECTED_TERRITORIES) {
-				territory.territories = [];
-			}
-			territories.push(territory);
+			const { territories, seasons, deals } = this.state;
+
+			deals.push({
+				territory: territories,
+				company: "",
+				seasons,
+				currency: "",
+				fee: 0,
+				attachments: [],
+				type: true,
+			});
+
 			this.setState({
-				territories,
+				deals,
+				territories: [],
 			});
 		}
 	};
 
-	onSave = (listings) => {
+	onSave = (deals) => {
 		this.setState({
-			listings,
+			deals,
 		});
+	};
+
+	saveDeals = () => {
+		const { deals } = this.state;
+		const { property: { customId }, history } = this.props;
+		this.props.addDealsProperty(deals)
+			.then()
+			.catch()
+			.finally(() => {
+				history.push(`${ROUTE_PATHS.PROPERTIES}/${customId}/${CMS_PROPERTY_TABS.COMMERCIAL}`);
+			});
+	};
+
+	finishButtonDisabled = () => {
+		const { currentStep, deals } = this.state;
+		let invalidDeal = false;
+
+		deals.forEach((deal) => {
+			if (deal.company === "" || deal.currency === "" || deal.fee === 0) {
+				invalidDeal = true;
+			}
+		});
+
+		return currentStep < 4 || invalidDeal;
 	};
 
 	render() {
@@ -187,21 +208,26 @@ class PropertyDeal extends React.Component {
 			seasons,
 			rights,
 			territories,
+			territoriesMode,
 			currentStep,
+			deals,
 		} = this.state;
-		const { property: { seasons: allSeasons, rights: allRights } } = this.props;
-		const lastTerritory = territories[territories.length - 1];
+		const { property: { seasons: allSeasons, rights: allRights }, loading } = this.props;
 		const seasonsValid = this.seasonsAreValid();
 		const rightsValid = this.rightsAreValid();
 		const territoriesValid = this.territoriesAreValid();
 		const territory = this.getTerritoriesFromRights(rights);
+		allSeasons.sort(sortSeasons);
 
 		return (
 			<div className="default-container no-title property property-deal">
 				<DefaultBox>
+					<PropertyHeader deals={false} />
 					<CmsStepSelector
+						style={{ marginTop: 20 }}
 						title={<Translate i18nKey="CMS_DEALS_STEP1_TITLE" />}
 						button={<Translate i18nKey="CMS_DEALS_STEP1_BUTTON" />}
+						disabled={!allSeasons.length}
 						enableNextStep={seasonsValid || !allSeasons.length}
 						onNext={() => this.onNext(2)}
 					>
@@ -210,6 +236,7 @@ class PropertyDeal extends React.Component {
 								<Translate i18nKey="CMS_SEASON_NOT_APPLICABLE" />
 							</div>
 						)}
+
 						{allSeasons.length > 1 && (
 							<div className="select-item">
 								<button
@@ -366,7 +393,7 @@ class PropertyDeal extends React.Component {
 					{(currentStep > 2) && (
 						<CmsStepSelector
 							title={<Translate i18nKey="CMS_DEALS_STEP3_TITLE" />}
-							button={<Translate key={`add_deal${territories.length}`} i18nKey={territories.length < 2 ? "CMS_DEALS_STEP3_BUTTON" : "CMS_DEALS_STEP3_ANOTHER_BUTTON"} />}
+							button={<Translate key={`add_deal${deals.length}`} i18nKey={deals.length === 0 ? "CMS_DEALS_STEP3_BUTTON" : "CMS_DEALS_STEP3_ANOTHER_BUTTON"} />}
 							enableNextStep={territoriesValid}
 							onNext={() => this.onNext(4)}
 						>
@@ -374,28 +401,41 @@ class PropertyDeal extends React.Component {
 								className="small-select"
 								onChange={this.onSelectTerritories}
 								selectedCountries={territory.territories}
-								value={lastTerritory.territories}
-								territoriesMode={lastTerritory.territoriesMode}
+								value={territories}
+								territoriesMode={territoriesMode}
 								multiple
 							/>
 						</CmsStepSelector>
 					)}
 
-					{(territories.length > 1 && currentStep > 2) && (
-						<CmsDealTable
-							seasons={seasons}
-							rights={rights}
-							territories={territories}
-							onSave={this.onSave}
-						/>
+					{(deals.length > 0 && currentStep > 2) && (
+						<div className="details-tab-element">
+							<div className="details-tab-element__content">
+								<CmsDealTable
+									seasons={seasons}
+									rights={rights}
+									territories={territories}
+									deals={deals}
+									onSave={this.onSave}
+								/>
+							</div>
+						</div>
 					)}
 
-					<HorizontalButtonBox>
+					<HorizontalButtonBox style={{ marginTop: 20 }}>
 						<button
 							className="yellow-button"
-							disabled={currentStep < 4}
+							onClick={this.cancel}
 						>
-							<Translate i18nKey="CMS_DEALS_CREATE_BUTTON" />
+							<Translate i18nKey="CMS_DEALS_CREATE_CANCEL_BUTTON" />
+						</button>
+						<button
+							className="yellow-button"
+							disabled={this.finishButtonDisabled() || loading}
+							onClick={this.saveDeals}
+						>
+							{!loading && <Translate i18nKey="CMS_DEALS_CREATE_BUTTON" />}
+							{loading && <Loader xSmall loading />}
 						</button>
 					</HorizontalButtonBox>
 				</DefaultBox>
@@ -409,11 +449,14 @@ PropertyDeal.contextTypes = {
 };
 
 const mapStateToProps = state => ({
-	property: state.propertyDetails.property,
-	countries: state.property.countries,
+	...state.propertyDetails,
+});
+
+const mapDispatchToProps = dispatch => ({
+	addDealsProperty: deals => dispatch(addDealsProperty(deals)),
 });
 
 export default connect(
 	mapStateToProps,
-	null,
+	mapDispatchToProps,
 )(PropertyDeal);

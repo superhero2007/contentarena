@@ -206,8 +206,10 @@ class PropertyService
      * @param $data
      * @param User $user
      * @return Property|null|object
+     * @throws \Exception
      */
     public function updateProperty(Property $property, $data, User $user) {
+        /* @var Property $property */
         if (isset($data['imageBase64'])) {
             if (empty($data['imageBase64'])) {
                 $property->setImage('');
@@ -227,14 +229,20 @@ class PropertyService
             $property->setDescription($data['description']);
         }
         if (isset($data['seasons'])) {
-            $oldSeasons = $property->getSeasons();
-            $property->setSeasons([]);
-            foreach ($oldSeasons as $season){
-                $this->em->remove($season);
-                $this->em->flush();
+            $seasons = $property->getSeasons();
+            $seasonIds = [];
+
+            foreach ($seasons as $season){
+                $seasonIds[] = $season->getExternalId();
             }
-            $newSeasons = $this->serializer->deserialize( json_encode($data['seasons']), "array<AppBundle\Entity\Season>", "json");
-            $property->setSeasons($newSeasons);
+
+            foreach ($data['seasons'] as $season){
+                if (!in_array($season["externalId"], $seasonIds)) {
+                    $seasons->add($this->serializer->deserialize( json_encode($season), "PropertyEventItem<AppBundle\Entity\Season>", "json"));
+                }
+            }
+
+            $property->setSeasons($seasons);
         }
         if (isset($data['rights'])) {
             $property->setRights($this->serializer->deserialize( json_encode($data['rights']), "array<AppBundle\Entity\PropertyRight>", "json"));
