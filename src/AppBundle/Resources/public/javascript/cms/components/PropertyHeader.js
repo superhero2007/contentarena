@@ -43,11 +43,6 @@ class PropertyHeader extends React.Component {
 	}
 }
 
-PropertyHeader.propTypes = {
-	deals: PropTypes.bool.isRequired,
-	edit: PropTypes.bool.isRequired,
-};
-
 const mapStateToProps = state => ({
 	...state.propertyDetails.property,
 });
