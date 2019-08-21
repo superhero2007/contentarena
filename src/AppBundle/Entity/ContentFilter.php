@@ -29,13 +29,13 @@ class ContentFilter
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="contentFilter")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport", inversedBy="contentFilter")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Sport")
      * @ORM\JoinTable(name="content_filter_sports",
      *      joinColumns={@ORM\JoinColumn(name="content_filter_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_filter_sports_id", referencedColumnName="id")}
@@ -44,7 +44,7 @@ class ContentFilter
     private $sports;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country", inversedBy="contentFilter",fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Country",fetch="EAGER")
      * @ORM\JoinTable(name="content_filter_countries",
      *      joinColumns={@ORM\JoinColumn(name="country_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_filter_countries_id", referencedColumnName="id")}
@@ -53,7 +53,7 @@ class ContentFilter
     private $countries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Territory", inversedBy="contentFilter",fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Territory",fetch="EAGER")
      * @ORM\JoinTable(name="content_filter_territories",
      *      joinColumns={@ORM\JoinColumn(name="content_filter_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_filter_territory_id", referencedColumnName="id")}
@@ -62,7 +62,7 @@ class ContentFilter
     private $territories;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage", inversedBy="contentFilter",fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\RightsPackage",fetch="EAGER")
      * @ORM\JoinTable(name="content_filter_super_rights",
      *      joinColumns={@ORM\JoinColumn(name="content_filter_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="content_filter_super_rights_id", referencedColumnName="id")}

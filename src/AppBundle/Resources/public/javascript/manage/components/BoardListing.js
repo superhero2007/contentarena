@@ -42,11 +42,15 @@ class BoardListing extends React.Component {
 	};
 
 	edit = () => {
-		const { customId, step, status } = this.props;
+		const {
+			customId, step, status, maxStep,
+		} = this.props;
 		let stepToShow = 1;
 
-		if (status && status.name === "DRAFT") {
-			stepToShow = step > 3 ? "sign" : (step + 1);
+		if (maxStep <= 5) {
+			stepToShow = maxStep === 5 ? "sign" : maxStep;
+		} else {
+			stepToShow = step;
 		}
 
 		goTo(`contentlisting/${customId}/${stepToShow}`);

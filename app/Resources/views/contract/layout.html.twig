@@ -361,7 +361,7 @@
                 </tr>
             {% endif %}
             {% if content.seasons is not empty %}
-                {% for season in content.seasons %}
+                {% for season in content.seasons | sort_seasons %}
                     <tr>
                         <td>Season</td>
                         <td>

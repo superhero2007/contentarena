@@ -359,6 +359,7 @@ class ContentService
             $content->setSportCategory($modelListing->getSportCategory());
             $content->setTournament($modelListing->getTournament());
             $content->setCustomTournament($modelListing->getCustomTournament());
+            $content->setCustomCategory($modelListing->getCustomCategory());
 
             $content->setSeason($modelListing->getSeasons());
             $content->setFixturesBySeason($modelListing->getFixturesBySeason());
@@ -376,7 +377,6 @@ class ContentService
             $content->setWebsite($modelListing->getWebsite());
             $content->setExtraData($modelListing->getExtraData());
             $content->setContentDeliveryConfigured($modelListing->isContentDeliveryConfigured());
-
 
             $content->setSelectedRightsBySuperRight($modelListing->getSelectedRightsBySuperRight());
             $content->setProperty($modelListing->getProperty());
@@ -837,7 +837,7 @@ class ContentService
         if ( isset($data->expiresAt) ) $content->setExpiresAt(new \DateTime($data->expiresAt));
         if ( isset($data->website) ) $content->setWebsite($data->website);
         if ( isset($data->step) ) $content->setStep($data->step);
-        if ( isset($data->maxStep) ) {
+        if ( isset($data->maxStep) && $data->maxStep != null ) {
             $maxStep = $data->step + 1;
             if ( $maxStep > $content->getMaxStep()) $content->setMaxStep($maxStep);
         }
@@ -1199,6 +1199,11 @@ class ContentService
 
 
             $this->em->persist($season);
+        } else {
+            if ($season->getStartDate() == null && isset($seasonData->customStartDate)){
+                $season->setStartDate(new \DateTime($seasonData->customStartDate));
+                $this->em->persist($season);
+            }
         }
 
         return $season;
