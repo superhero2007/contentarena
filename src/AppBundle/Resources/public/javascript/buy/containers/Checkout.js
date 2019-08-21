@@ -69,6 +69,7 @@ class Checkout extends React.Component {
 			signatureName: `${props.user.firstName} ${props.user.lastName}`,
 			signaturePosition: props.user.title,
 			showSuccessScreen: false,
+			showConfirmScreen: false,
 		};
 	}
 
@@ -93,6 +94,12 @@ class Checkout extends React.Component {
 	closeSuccessScreen = () => {
 		const { history } = this.props;
 		history.push("/marketplace");
+	};
+
+	toggleConfirmScreen = () => {
+		this.setState(state => ({
+			showConfirmScreen: !state.showConfirmScreen,
+		}));
 	};
 
 	getInstallments = () => {
@@ -377,6 +384,62 @@ class Checkout extends React.Component {
 		);
 	};
 
+	confirmScreen = () => {
+		const { showConfirmScreen } = this.state;
+
+		return (
+			<Modal
+				isOpen={showConfirmScreen}
+				onRequestClose={this.toggleConfirmScreen}
+				bodyOpenClassName="selector"
+				style={customStyles}
+			>
+
+				<div style={{
+					color: "grey",
+					padding: 20,
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
+				}}
+				>
+					<div style={{
+						fontSize: 30,
+						width: 600,
+						textAlign: "center",
+						fontWeight: 600,
+					}}
+					>
+						<Translate i18nKey="CMS_CHECKOUT_CONFIRM_TITLE" />
+					</div>
+					<div
+						style={{
+							fontSize: 20,
+							width: 600,
+							margin: 40,
+							textAlign: "center",
+						}}
+					>
+						<Translate i18nKey="CMS_CHECKOUT_CONFIRM_CONTENT" />
+					</div>
+					<div style={{ display: "flex" }}>
+						<button
+							className="standard-button"
+							onClick={this.placeBid}
+						>
+							<Translate i18nKey="CMS_CHECKOUT_CONFIRM_BUTTON" />
+						</button>
+
+						<button className="standard-button" onClick={this.toggleConfirmScreen}>
+							<Translate i18nKey="CMS_CHECKOUT_CONFIRM_CANCEL" />
+						</button>
+					</div>
+				</div>
+
+			</Modal>
+		);
+	};
+
 	getBundleTotalFee = (fee) => {
 		const total = parseFloat(fee);
 		return total + this.getTechnicalFeeValue(total);
@@ -409,7 +472,7 @@ class Checkout extends React.Component {
 		} = this.state;
 
 		this.props.disableValidation();
-		this.setState({ spinner: true });
+		this.setState({ spinner: true, showConfirmScreen: false });
 
 		const bids = bundles.map(bundle => ({
 			amount: parseFloat(bundle.fee),
@@ -726,6 +789,7 @@ class Checkout extends React.Component {
 			<div className="bid-wrapper">
 				{this.editCompany()}
 				{this.successScreen()}
+				{this.confirmScreen()}
 
 				<div className="bid-header">
 					<div className="name">
@@ -852,7 +916,7 @@ class Checkout extends React.Component {
 						<button
 							className="ca-btn primary"
 							disabled={this.buttonDisabled() || ghostMode}
-							onClick={this.placeBid}
+							onClick={this.toggleConfirmScreen}
 						>
 							<Translate i18nKey="CHECKOUT_COMPLETE_TRANSACTION" />
 							{ghostMode && <GhostModeDisabledMessage />}
