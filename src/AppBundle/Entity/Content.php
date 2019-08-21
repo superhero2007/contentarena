@@ -339,14 +339,14 @@ class Content implements NotifiableInterface
     private $expiredNotified = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"listing", "closed", "commercial", "home", "property"})
      */
     private $company;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Property", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Property")
      * @ORM\JoinColumn(nullable=true)
      */
     private $property;
@@ -382,6 +382,7 @@ class Content implements NotifiableInterface
      *      inverseJoinColumns={@ORM\JoinColumn(name="season_content_id", referencedColumnName="id")}
      *      )
      * @Groups({"listing", "board", "commercial", "home", "preview", "property"})
+     * @ORM\OrderBy({"startDate" = "ASC"})
      */
     private $seasons;
 
@@ -450,21 +451,21 @@ class Content implements NotifiableInterface
     private $lastActionDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingLastAction", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ListingLastAction")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"board", "home", "propertyList", "property"})
      */
     private $lastAction;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"board", "home", "property"})
      */
     private $lastActionUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="content")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      * @Groups({"listing","board", "home", "propertyList", "property"})
      */

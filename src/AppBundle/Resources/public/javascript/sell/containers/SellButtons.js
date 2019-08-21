@@ -52,6 +52,9 @@ class SellButtons extends Component {
 
 		let { content } = store.getState();
 		content = parseSeasons(content);
+
+		content.maxStep = (!goNextStep) ? null : 1;
+
 		ContentArena.ContentApi.saveContentAsDraft(content)
 			.done((response) => {
 				const currentStep = Number(content.step);

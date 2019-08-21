@@ -42,7 +42,8 @@ class AppExtension extends AbstractExtension
             new TwigFilter('content_delivery_label', array($this, 'contentDeliveryLabel')),
             new TwigFilter('has_dedicated_highlights', array($this, 'hasDedicatedHighlights')),
             new TwigFilter('get_custom_live', array($this, 'getCustomLive')),
-            new TwigFilter('season_duration', array($this, 'seasonDuration'))
+            new TwigFilter('season_duration', array($this, 'seasonDuration')),
+            new TwigFilter('sort_seasons', array($this, 'sortSeasons'))
 
 
         );
@@ -76,6 +77,15 @@ class AppExtension extends AbstractExtension
 
     public function jsonDecode($str) {
         return json_decode($str);
+    }
+
+    public function sortSeasons($seasons) {
+        return $seasons;
+        return usort($seasons, function ($seasonA, $seasonB){
+            /* @var Season $seasonA */
+            /* @var Season $seasonB */
+            return $seasonA->getStartDate() - $seasonB->getStartDate() ;
+        });
     }
 
     public function kebabFilter($string){
