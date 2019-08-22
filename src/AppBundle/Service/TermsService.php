@@ -441,7 +441,10 @@ class TermsService
     public function getPropertyDefinitions(Property $property)
     {
         $repo = $this->em->getRepository('AppBundle:PropertyDefinitions');
-        $definitions = $repo->findBy(array('property' => $property));
+        $definitions = $repo->findBy(
+            array('property' => $property),
+            array('name' => 'ASC')
+        );
 
         if ( count($definitions) == 0 ) $definitions = $this->restorePropertyDefinitions($property);
 

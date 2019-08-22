@@ -7,7 +7,7 @@ const propertiesApi = {
 	createProperty: data => request.post(API_ENDPOINTS.PROPERTIES_CREATE, data),
 	updateProperty: data => request.post(API_ENDPOINTS.PROPERTIES_UPDATE, data),
 	addDeals: data => request.post(API_ENDPOINTS.PROPERTIES_ADD_DEALS, data),
+	getDefinitions: data => request.post(API_ENDPOINTS.PROPERTY_DEFINITIONS, data),
 };
-
 
 export default propertiesApi;

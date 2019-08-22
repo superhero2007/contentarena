@@ -73,7 +73,7 @@ class ApiPropertyTermsAndDefinitionsController extends Controller
      */
     public function getPropertyDefinitions(Request $request, TermsService $termsService)
     {
-        $propertyId = $request->get('property_id');
+        $propertyId = $request->get('propertyId');
         $property = $this->getDoctrine()->getRepository("AppBundle:Property")->findOneBy(array("customId"=>$propertyId));
         $terms = $termsService->getPropertyDefinitions($property);
         return $this->getSerializedResponse($terms, array('terms'));

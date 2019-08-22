@@ -766,11 +766,6 @@ ContentArena.Api = {
 			property_id: propertyId,
 		});
 	},
-	getPropertyDefinitions(propertyId) {
-		return request.post(`${envhosturl}api/property/definitions`, {
-			property_id: propertyId,
-		});
-	},
 	restorePropertyTerms(propertyId) {
 		return request.post(`${envhosturl}api/property/terms/restore`, {
 			property_id: propertyId,

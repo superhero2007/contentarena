@@ -5,6 +5,7 @@ import Translate from "@components/Translator/Translate";
 import TermItem from "../../manage/components/TermItem";
 import DefinitionItem from "../../manage/components/DefinitionItem";
 import Loader from "../../common/components/Loader";
+import api from "../../api";
 
 class PropertyDetailsLicenseTab extends Component {
 	constructor(props) {
@@ -41,7 +42,7 @@ class PropertyDetailsLicenseTab extends Component {
 				});
 			});
 
-		ContentArena.Api.getPropertyDefinitions(propertyId).then(({ data }) => {
+		api.properties.getDefinitions({ propertyId }).then(({ data }) => {
 			const definitions = data.map(element => Object.assign({}, element, { restoreValue: element.content }));
 			this.setState({
 				definitions,

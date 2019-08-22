@@ -8,11 +8,14 @@ const API_ENDPOINTS = {
 	NOTIFICATIONS_GET_ALL: "api/notifications/",
 	MESSAGES_GET_THREADS: "api/messages/threads",
 	COMPANY_INVITE_USERS: "api/company/invite",
+
 	PROPERTIES_ALL: "api/properties/all",
 	PROPERTIES_DETAIL: "api/properties/detail",
 	PROPERTIES_CREATE: "api/properties/create",
 	PROPERTIES_UPDATE: "api/properties/update",
 	PROPERTIES_ADD_DEALS: "api/properties/deals/add",
+	PROPERTY_DEFINITIONS: "api/property/definitions",
+
 	FIXTURES_CREATE: "api/fixture/create",
 	FIXTURES_UPDATE: "api/fixture/update",
 	FIXTURES_REMOVE: "api/fixture/remove",

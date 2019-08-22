@@ -1221,7 +1221,7 @@
 
       &__content {
         width: 100%;
-        padding: 0 30px;
+        padding: 30px;
       }
     }
 
@@ -1712,9 +1712,23 @@
         }
       }
     }
+
+    .details-tab {
+      &-element {
+        &__content {
+          padding: 0 30px;
+        }
+      }
+    }
   }
 
   &.edit-property {
-
+    .details-tab {
+      &-element {
+        &__content {
+          padding: 0 30px;
+        }
+      }
+    }
   }
 }
