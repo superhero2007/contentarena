@@ -12,6 +12,8 @@ use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AdminContentController extends BaseAdminController
 {
@@ -24,9 +26,29 @@ class AdminContentController extends BaseAdminController
     protected function listAction()
     {
         $this->dispatch(EasyAdminEvents::PRE_LIST);
+        switch ($this->request->query->get('filters')['status']) {
+            case 'draft':
+                $dqlFilter = "status.name = 'DRAFT'";
+                break;
+            case 'active':
+                $dqlFilter = "status.name = 'ACTIVE' OR status.name = 'EDITED'";
+                break;
+            case 'declined':
+                $dqlFilter = "status.name = 'ARCHIVED' OR status.name = 'EXPIRED' OR status.name = 'INACTIVE'";
+                break;
+            default:
+                $dqlFilter = "status.name != 'SOLD_COPY'";
+        }
 
         $fields = $this->entity['list']['fields'];
-        $paginator = $this->findAll($this->entity['class'], $this->request->query->get('page', 1), $this->entity['list']['max_results'], $this->request->query->get('sortField'), $this->request->query->get('sortDirection'), $this->entity['list']['dql_filter']);
+        $paginator = $this->findAll(
+            $this->entity['class'],
+            $this->request->query->get('page', 1),
+            $this->entity['list']['max_results'],
+            $this->request->query->get('sortField'),
+            $this->request->query->get('sortDirection'),
+            $dqlFilter
+        );
         #$paginator = $this->findBy($this->entity['class'], null, array("status.name" => "APPROVED"), $this->request->query->get('page', 1), $this->entity['list']['max_results'], $this->request->query->get('sortField'), $this->request->query->get('sortDirection'), $this->entity['list']['dql_filter']);
 
         $this->dispatch(EasyAdminEvents::POST_LIST, array('paginator' => $paginator));
@@ -35,6 +57,10 @@ class AdminContentController extends BaseAdminController
             'paginator' => $paginator,
             'fields' => $fields,
             'delete_form_template' => $this->createDeleteForm($this->entity['name'], '__id__')->createView(),
+            'filters' => $this->createFilterForm(
+                $this->request->query->get('filters', []),
+                $this->generateUrl('contentListFilter', $this->request->query->all())
+            )->createView()
         );
 
         return $this->executeDynamicMethod('render<EntityName>Template', array('list', $this->entity['templates']['list'], $parameters));
@@ -107,6 +133,48 @@ class AdminContentController extends BaseAdminController
             'entity' => 'Content'
         ));
 
+    }
+
+    public function createFilterForm($requestFilters, $route)
+    {
+        $formBuilder = $this->get('form.factory')
+            ->createNamedBuilder('filter')
+            ->setMethod('POST')
+            ->setAction($route);
+
+        $formBuilder->add(
+            'status',
+            ChoiceType::class,
+            array(
+                'translation_domain' => 'messages',
+                'required' => false,
+                'placeholder' => 'All',
+                'data' => $requestFilters['status'] ? $requestFilters['status'] : null,
+                'choices' => [
+                    'Draft' => 'draft',
+                    'Active' => 'active',
+                    'Declined' => 'declined'
+                ],
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            )
+        );
+
+        $formBuilder->add(
+            'submit',
+            SubmitType::class,
+            [
+                'label' => 'Apply',
+                'attr' => array(
+                    'class' => 'btn btn-primary',
+                )
+            ]
+        );
+
+        $form = $formBuilder->getForm();
+
+        return $form;
     }
 
 }

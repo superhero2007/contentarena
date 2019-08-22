@@ -1,0 +1,14 @@
+{% extends '@EasyAdmin/default/list.html.twig' %}
+
+{% block content_header %}
+    {{ parent() }}
+    {% if filters is defined and filters is not null %}
+        <div class="row">
+            <div class="col-md-3 col-md-offset-9">
+                <div class="pull-right global-actions">
+                    {{ form(filters) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

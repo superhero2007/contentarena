@@ -524,4 +524,27 @@ class AdminController extends BaseAdminController
 
         return implode("\n", $rows);
     }
+
+    /**
+     *
+     * @Route("/contentListFilter", name="contentListFilter")
+     * @param $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function contentListFilter(Request $request)
+    {
+        $filters = ['filters' => $request->get('filter')];
+
+        unset($filters['filters']['_token']);
+        unset($filters['filters']['submit']);
+
+        $params = $request->query->all();
+
+        $params['filters'] = null;
+
+        return $this->redirectToRoute('admin', array_merge(
+            $params,
+            $filters
+        ));
+    }
 }
