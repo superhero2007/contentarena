@@ -423,15 +423,15 @@ class Checkout extends React.Component {
 						<Translate i18nKey="CMS_CHECKOUT_CONFIRM_CONTENT" />
 					</div>
 					<div style={{ display: "flex" }}>
+						<button className="standard-button ca-btn disabled" onClick={this.toggleConfirmScreen}>
+							<Translate i18nKey="CMS_CHECKOUT_CONFIRM_CANCEL" />
+						</button>
+
 						<button
-							className="standard-button"
+							className="standard-button ca-btn"
 							onClick={this.placeBid}
 						>
 							<Translate i18nKey="CMS_CHECKOUT_CONFIRM_BUTTON" />
-						</button>
-
-						<button className="standard-button" onClick={this.toggleConfirmScreen}>
-							<Translate i18nKey="CMS_CHECKOUT_CONFIRM_CANCEL" />
 						</button>
 					</div>
 				</div>
@@ -872,7 +872,9 @@ class Checkout extends React.Component {
 							<Translate i18nKey="SALES_PACKAGE_COMPANY_SUB_TITLE" />
 							<i className="fa fa-pencil-square-o" onClick={this.openEditCompany} />
 						</div>
-						<span>{this.getCompanyAddress()}</span>
+						<span>
+							{this.getCompanyAddress()}
+						</span>
 					</div>
 				</div>
 
