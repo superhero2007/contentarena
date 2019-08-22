@@ -58,7 +58,7 @@ class PropertyService
         $properties = $this->repo->findBy(array("company"=>$company));
 
         foreach ($properties as $property){
-            $listings = $this->contentService->getPropertyListings($property, $user);
+            $listings = $this->contentService->getPropertyListings($property);
             $totalOpenBids = 0;
             $totalClosedBids = 0;
 
