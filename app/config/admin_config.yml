@@ -204,6 +204,8 @@ easy_admin:
             Content:
                 class: AppBundle\Entity\Content
                 controller: AppBundle\Controller\Admin\AdminContentController
+                templates:
+                    list: 'content/list.html.twig'
                 sort: 'status'
                 form:
                     fields:
@@ -231,12 +233,11 @@ easy_admin:
                         - 'programDescription'
                     dql_filter: "status.name != 'SOLD_COPY'"
                 list:
-                    dql_filter: "status.name != 'SOLD_COPY'"
                     sort: 'status'
                     fields:
                         - { property: 'id' }
                         - { property: 'customId' }
-                        #- { property: 'company' }
+                        - { property: 'company' }
                         - { property: 'name' }
                         - { property: 'createdAt' }
                         - { property: 'expiresAt' }
@@ -363,7 +364,7 @@ knp_paginator:
         sort_direction_name: direction  # sort direction query parameter name
         distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
         filter_field_name: filterField  # filter field query parameter name
-        filter_value_name: filterValue  # filter value query paameter name
+        filter_value_name: filterValue  # filter value query parameter name
     template:
         pagination: '@KnpPaginator/Pagination/sliding.html.twig'     # sliding pagination controls template
         sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
