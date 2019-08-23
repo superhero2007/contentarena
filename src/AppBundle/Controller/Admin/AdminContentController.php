@@ -33,7 +33,7 @@ class AdminContentController extends BaseAdminController
             case 'active':
                 $dqlFilter = "status.name = 'ACTIVE' OR status.name = 'EDITED'";
                 break;
-            case 'declined':
+            case 'inactive':
                 $dqlFilter = "status.name = 'ARCHIVED' OR status.name = 'EXPIRED' OR status.name = 'INACTIVE'";
                 break;
             default:
@@ -153,7 +153,7 @@ class AdminContentController extends BaseAdminController
                 'choices' => [
                     'Draft' => 'draft',
                     'Active' => 'active',
-                    'Declined' => 'declined'
+                    'Inactive' => 'inactive'
                 ],
                 'attr' => array(
                     'class' => 'form-control',

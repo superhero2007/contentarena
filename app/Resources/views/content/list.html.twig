@@ -4,9 +4,17 @@
     {{ parent() }}
     {% if filters is defined and filters is not null %}
         <div class="row">
-            <div class="col-md-3 col-md-offset-9">
+            <div class="col-md-3">
                 <div class="pull-right global-actions">
-                    {{ form(filters) }}
+                    {{ form_start(filters) }}
+                    <div class="form-action  action-search">
+                        {{ form_widget(filters.status) }}
+                    </div>
+
+                    <div class="button-action">
+                        {{ form_row(filters.submit, { 'label': 'Filter by Status' }) }}
+                    </div>
+                    {{ form_end(filters) }}
                 </div>
             </div>
         </div>
