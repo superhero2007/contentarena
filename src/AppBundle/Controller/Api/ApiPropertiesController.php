@@ -51,9 +51,13 @@ class ApiPropertiesController extends Controller
         PropertyService $propertyService
     )
     {
+        $user = $this->getUser();
+        $company = $user->getCompany();
+
         $customId = $request->get("propertyId");
         $property = $this->getDoctrine()->getRepository("AppBundle:Property")->findOneBy(array(
-            "customId"=> $customId
+            "customId"=> $customId,
+            "company" => $company
         ));
 
         $property = $propertyService->getPropertyDetails($property);
