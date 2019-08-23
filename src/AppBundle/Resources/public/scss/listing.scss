@@ -643,7 +643,7 @@
           background-color: $color-primary;
           padding: 8px;
           border-radius: 4px;
-
+          max-height: 300px;
           &-title {
             font-size: 15px;
             color: #333;
@@ -661,6 +661,7 @@
               outline: 0;
               font-size: 13px;
               font-family: "Open Sans", sans-serif;
+              min-height: 190px;
             }
           }
 

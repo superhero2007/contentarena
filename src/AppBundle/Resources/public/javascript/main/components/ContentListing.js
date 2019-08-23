@@ -121,8 +121,9 @@ class ContentListing extends Component {
 				<div className="left">
 					{featured && (
 						<div className="featured-badge">
-							<div className="featured-badge-text" />
-							<Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" />
+							<div className="featured-badge-text">
+								<Translate i18nKey="FEATURED_LISTING_BADGE_TEXT" />
+							</div>
 						</div>
 					)}
 					{getListingImage(this.props)}
